@@ -1,0 +1,39 @@
+asyncapi: '1.1.0'
+info:
+  title: AnyOf example
+  version: '1.0.0'
+
+topics:
+  test:
+    publish:
+      $ref: '#/components/messages/testMessages'
+
+components:
+  messages:
+    testMessages:
+      headers:
+        type: object
+        properties:
+          header:
+            type: string
+      payload:
+        anyOf:
+          - $ref: "#/components/schemas/objectWithKey"
+          - $ref: "#/components/schemas/objectWithKey2"
+
+  schemas:
+    objectWithKey:
+      oneOf:
+        - type: object
+          properties:
+            key31:
+              type: string
+        - type: object
+          properties:
+            key32:
+              type: string
+    objectWithKey2:
+      type: object
+      properties:
+        key2:
+          type: string

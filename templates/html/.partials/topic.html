@@ -1,0 +1,49 @@
+<div class="topic">
+  <a name="topic-{{topicName}}"></a>
+  <h3 class="topic__header">
+    {{#if topic.deprecated}}
+    <span class="operation-badge operation-badge--deprecated topic__header__operation-badge">Deprecated</span>
+    {{/if}}
+
+    {{#if topic.publish}}
+    <span class="operation-badge operation-badge--publish topic__header__operation-badge">Publish</span>
+    {{/if}}
+
+    {{#if topic.subscribe}}
+    <span class="operation-badge operation-badge--subscribe topic__header__operation-badge">Subscribe</span>
+    {{/if}}
+
+    {{topicName}}
+  </h3>
+
+  {{#if topic.parameters}}
+  {{~> parameters params=topic.parameters topicName=topicName ~}}
+  {{/if}}
+
+  <h4>Message</h4>
+
+  {{#if topic.publish.oneOf}}
+  <p>You can send one of the following messages:</p>
+  {{/if}}
+  {{#if topic.subscribe.oneOf}}
+  <p>You can send one of the following messages:</p>
+  {{/if}}
+
+  {{~#each topic.publish.oneOf as |op index| ~}}
+    <h4>Message #{{inc index}}</h4>
+    {{~> operation operation=op cssClasses='operation--indented'~}}
+  {{else}}
+    {{~#if topic.publish ~}}
+      {{~> operation operation=topic.publish~}}
+    {{~/if~}}
+  {{~/each~}}
+
+  {{~#each topic.subscribe.oneOf as |op index| ~}}
+    <h4>Message #{{inc index}}</h4>
+    {{~> operation operation=op cssClasses='operation--indented'~}}
+  {{else}}
+    {{~#if topic.subscribe ~}}
+      {{~> operation operation=topic.subscribe~}}
+    {{~/if~}}
+  {{~/each~}}
+</div>

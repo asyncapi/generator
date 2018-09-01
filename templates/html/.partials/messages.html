@@ -1,0 +1,5 @@
+<h2 class="section-header">Messages</h2>
+
+{{#each asyncapi.components.messages}}
+  {{~>message message=. messageName=@key~}}
+{{/each}}

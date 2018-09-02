@@ -52,7 +52,7 @@ Generates a file of a given template, and returns the result as a string.
 |options.template|`string`|Yes|Name of the template you want to use.|
 |options.file|`string`|Yes|Path to the file you want to generate.|
 |options.config|`object`|Yes|An object containing configuration options.|
-|options.config.asyncapi|`string|object`|Yes|Path to the AsyncAPI file to use
+|options.config.asyncapi|`string`&#124;`object`|Yes|Path to the AsyncAPI file to use.
 
 ##### Example
 

@@ -16,7 +16,7 @@
 You can send one of the following messages:
 {{/if}}
 {{#if topic.subscribe.oneOf}}
-You can send one of the following messages:
+You can receive one of the following messages:
 {{/if}}
 
 {{~#each topic.publish.oneOf as |op index| ~}}

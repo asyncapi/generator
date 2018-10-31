@@ -6,10 +6,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Handlers {
-
-    @StreamListener(Bindings.INPUT)
-    public void handle(String lightMeasured) {
-        System.out.println("Received: " + lightMeasured);
+{{#each asyncapi.topics as |topic |}}
+    @StreamListener(Bindings.{{topic.publish.x-operation-id}})
+    public void handle_{{topic.publish.x-operation-id}}(String message) {
+        System.out.println("Received: " + message);
     }
+{{/each}}
 
 }

@@ -18,12 +18,12 @@ public interface Bindings {
   {{#each asyncapi.topics as |topic |}}
     {{#if topic.publish}}
     @Input(Bindings.{{topic.publish.x-operation-id}})
-    SubscribableChannel input();
+    SubscribableChannel input{{topic.publish.x-operation-id}}();
     {{/if}}
 
     {{#if topic.subscribe}}
     @Output(Bindings.{{topic.subscribe.x-operation-id}})
-    MessageChannel hotDrinks();
+    MessageChannel output{{topic.subscribe.x-operation-id}}();
     {{/if}}
   {{/each}}
 

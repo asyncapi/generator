@@ -9,8 +9,8 @@ public class Handlers {
 
 {{#each asyncapi.topics as |topic |}}
   {{#if topic.publish}}
-    @StreamListener(Bindings.{{topic.publish.x-operation-id}})
-    public void handle_{{topic.publish.x-operation-id}}(String message) {
+    @StreamListener(Bindings.{{javaConst topic.publish.x-operation-id}})
+    public void handle{{capFirst topic.publish.x-operation-id}}(String message) {
         System.out.println("Received: " + message);
     }
 {{/if}}

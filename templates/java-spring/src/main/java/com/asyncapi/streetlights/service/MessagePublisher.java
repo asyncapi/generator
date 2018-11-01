@@ -14,8 +14,8 @@ public class MessagePublisher {
 
   {{#each asyncapi.topics as |topic |}}
     {{#if topic.subscribe}}
-    public void send{{topic.subscribe.x-operation-id}}(String message) {
-        bindings.output{{topic.subscribe.x-operation-id}}().send(MessageBuilder.withPayload(message).build());
+    public void send{{capFirst topic.subscribe.x-operation-id}}(String message) {
+        bindings.output{{capFirst topic.subscribe.x-operation-id}}().send(MessageBuilder.withPayload(message).build());
     }
     {{/if}}
   {{/each}}

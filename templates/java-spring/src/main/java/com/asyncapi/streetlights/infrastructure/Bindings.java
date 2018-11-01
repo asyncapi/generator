@@ -8,23 +8,22 @@ import org.springframework.messaging.SubscribableChannel;
 public interface Bindings {
   {{#each asyncapi.topics as |topic |}}
     {{#if topic.publish}}
-    String {{topic.publish.x-operation-id}} = "input{{topic.publish.x-operation-id}}";
+    String {{javaConst topic.publish.x-operation-id}} = "input{{capFirst topic.publish.x-operation-id}}";
     {{/if}}
     {{#if topic.subscribe}}
-    String {{topic.subscribe.x-operation-id}} = "output{{topic.subscribe.x-operation-id}}";
+    String {{javaConst topic.subscribe.x-operation-id}} = "output{{capFirst topic.subscribe.x-operation-id}}";
     {{/if}}
   {{/each}}
-
   {{#each asyncapi.topics as |topic |}}
     {{#if topic.publish}}
-    @Input(Bindings.{{topic.publish.x-operation-id}})
-    SubscribableChannel input{{topic.publish.x-operation-id}}();
-    {{/if}}
 
+    @Input(Bindings.{{javaConst topic.publish.x-operation-id}})
+    SubscribableChannel input{{capFirst topic.publish.x-operation-id}}();
+    {{/if}}
     {{#if topic.subscribe}}
-    @Output(Bindings.{{topic.subscribe.x-operation-id}})
-    MessageChannel output{{topic.subscribe.x-operation-id}}();
+
+    @Output(Bindings.{{javaConst topic.subscribe.x-operation-id}})
+    MessageChannel output{{capFirst topic.subscribe.x-operation-id}}();
     {{/if}}
   {{/each}}
-
 }

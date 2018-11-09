@@ -49,7 +49,7 @@
 {{/if}}
 
 {{#if operation.tags}}
-Tags</h4>
+#### Tags
 
 {{> tags tags=operation.tags}}
 {{/if}}

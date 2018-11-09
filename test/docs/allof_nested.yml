@@ -1,0 +1,71 @@
+asyncapi: '1.2.0'
+info:
+  title: AllOf example (nested allOf)
+  version: '1.0.0'
+
+topics:
+  test:
+    publish:
+      $ref: '#/components/messages/testMessages'
+
+components:
+  messages:
+    testMessages:
+      payload:
+        $ref: "#/components/schemas/FooBarBaz"
+
+  schemas:
+    Foo:
+      type: object
+      required:
+      - foo
+      properties:
+        foo:
+          type: string
+
+    Bar:
+      type: object
+      required:
+      - bar
+      properties:
+        bar:
+          type: string
+
+    Baz:
+      type: object
+      required:
+      - baz
+      properties:
+        baz:
+          type: string
+
+    FooBar:
+      allOf:
+      - $ref: "#/components/schemas/Foo"
+      - $ref: "#/components/schemas/Bar"
+
+    FooBarBaz:
+      allOf:
+      - $ref: "#/components/schemas/FooBar"
+      - $ref: "#/components/schemas/Baz"
+
+    Ourou:
+      type: object
+      properties:
+        ourouValue:
+          type: string
+        boros:
+          $ref: "#/components/schemas/Boros"
+
+    Boros:
+      type: object
+      properties:
+        borosValue:
+          type: string
+        ourou:
+          $ref: "#/components/schemas/Ourou"
+
+    OurouBoros:
+      allOf:
+      - $ref: "#/components/schemas/Ourou"
+      - $ref: "#/components/schemas/Boros"

@@ -47,4 +47,3 @@
 
 {{> tags tags=operation.tags}}
 {{/if}}
-</div>

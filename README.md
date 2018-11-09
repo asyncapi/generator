@@ -21,6 +21,7 @@ npm install -g asyncapi-generator
   Options:
 
     -V, --version                 output the version number
+    -o, --output <outputDir>      directory where to put the generated files (defaults to current directory)
     -t, --templates <templateDir> directory where templates are located (defaults to internal templates directory)
     -h, --help                    output usage information
 ```

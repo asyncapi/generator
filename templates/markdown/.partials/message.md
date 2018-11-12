@@ -1,9 +1,4 @@
-<h3 class="message__header">
-  {{messageName}}
-  {{#if message.deprecated}}
-  <em>Deprecated</em>
-  {{/if}}
-</h3>
+### {{#if message.deprecated}} *Deprecated*{{/if}} {{messageName}}
 {{#if message.summary}}
 {{{message.summary}}}
 

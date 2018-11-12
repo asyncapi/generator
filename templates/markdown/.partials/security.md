@@ -2,29 +2,28 @@
 <a name="security"></a>
 ## Security
 
-<table class="table">
-  <thead class="table__head">
-    <tr class="table__head__row">
-      <th class="table__head__cell">Type</th>
-      <th class="table__head__cell">In</th>
-      <th class="table__head__cell">Name</th>
-      <th class="table__head__cell">Scheme</th>
-      <th class="table__head__cell">Format</th>
-      <th class="table__head__cell">Description</th>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>In</th>
+      <th>Name</th>
+      <th>Scheme</th>
+      <th>Format</th>
+      <th>Description</th>
     </tr>
   </thead>
-  <tbody class="table__body">
+  <tbody>
   {{#each asyncapi._security as |security|}}
-    <tr class="table__body__row">
-      <td class="table__body__cell">{{security.type}}</td>
-      <td class="table__body__cell">{{security.in}}</td>
-      <td class="table__body__cell">{{security.name}}</td>
-      <td class="table__body__cell">{{security.scheme}}</td>
-      <td class="table__body__cell">{{security.bearerFormat}}</td>
-      <td class="table__body__cell">{{{security.descriptionAsHTML}}}</td>
+    <tr>
+      <td>{{security.type}}</td>
+      <td>{{security.in}}</td>
+      <td>{{security.name}}</td>
+      <td>{{security.scheme}}</td>
+      <td>{{security.bearerFormat}}</td>
+      <td>{{{security.descriptionAsHTML}}}</td>
     </tr>
   {{/each}}
-
   </tbody>
 </table>
 {{/if}}

@@ -21,7 +21,7 @@ You can receive one of the following messages:
 
 {{~#each topic.publish.oneOf as |op index| ~}}
   ##### Message #{{inc index}}
-  {{~> operation operation=op cssClasses='operation--indented'~}}
+  {{~> operation operation=op~}}
 {{else}}
   {{~#if topic.publish ~}}
     {{~> operation operation=topic.publish~}}
@@ -30,7 +30,7 @@ You can receive one of the following messages:
 
 {{~#each topic.subscribe.oneOf as |op index| ~}}
   ##### Message #{{inc index}}
-  {{~> operation operation=op cssClasses='operation--indented'~}}
+  {{~> operation operation=op~}}
 {{else}}
   {{~#if topic.subscribe ~}}
     {{~> operation operation=topic.subscribe~}}

@@ -1,4 +1,4 @@
-### {{#if message.deprecated}} *Deprecated*{{/if}} {{messageName}}
+### {{messageName}} {{#if message.deprecated}} (**deprecated**){{/if}} 
 {{#if message.summary}}
 {{{message.summary}}}
 

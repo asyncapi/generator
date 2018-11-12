@@ -1,6 +1,6 @@
 <a name="topic-{{topicName}}"></a>
 
-### {{~#if topic.deprecated}} *Deprecated*{{~/if}}{{~#if topic.publish}} `publish`{{~/if}}{{~#if topic.subscribe}} `subscribe`{{~/if}} {{topicName}}
+### {{~#if topic.publish}} `publish`{{~/if}}{{~#if topic.subscribe}} `subscribe`{{~/if}} {{topicName}} {{~#if topic.deprecated}} (**deprecated**){{~/if}}
 
 {{#if topic.parameters}}
 {{~> parameters params=topic.parameters topicName=topicName ~}}

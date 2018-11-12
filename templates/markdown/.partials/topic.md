@@ -1,10 +1,6 @@
 <a name="topic-{{topicName}}"></a>
-<h3>
-{{~#if topic.deprecated}}<em>Deprecated</em>{{~/if}}
-{{~#if topic.publish}}<code>publish</code>{{~/if}}
-{{~#if topic.subscribe}}<code>subscribe</code>{{~/if}}
-{{topicName}}
-</h3>
+
+### {{~#if topic.publish}} `publish`{{~/if}}{{~#if topic.subscribe}} `subscribe`{{~/if}} {{topicName}} {{~#if topic.deprecated}} (**deprecated**){{~/if}}
 
 {{#if topic.parameters}}
 {{~> parameters params=topic.parameters topicName=topicName ~}}
@@ -21,7 +17,7 @@ You can receive one of the following messages:
 
 {{~#each topic.publish.oneOf as |op index| ~}}
   ##### Message #{{inc index}}
-  {{~> operation operation=op cssClasses='operation--indented'~}}
+  {{~> operation operation=op~}}
 {{else}}
   {{~#if topic.publish ~}}
     {{~> operation operation=topic.publish~}}
@@ -30,7 +26,7 @@ You can receive one of the following messages:
 
 {{~#each topic.subscribe.oneOf as |op index| ~}}
   ##### Message #{{inc index}}
-  {{~> operation operation=op cssClasses='operation--indented'~}}
+  {{~> operation operation=op~}}
 {{else}}
   {{~#if topic.subscribe ~}}
     {{~> operation operation=topic.subscribe~}}

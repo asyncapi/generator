@@ -1,6 +1,6 @@
-package com.asyncapi.streetlights.service;
+package com.asyncapi.service;
 
-import com.asyncapi.streetlights.infrastructure.Bindings;
+import com.asyncapi.infrastructure.Bindings;
 import org.springframework.messaging.support.MessageBuilder;
 
 public class MessagePublisher {
@@ -14,8 +14,8 @@ public class MessagePublisher {
 
   {{#each asyncapi.topics as |topic |}}
     {{#if topic.subscribe}}
-    public void send{{capFirst topic.subscribe.x-operation-id}}(String message) {
-        bindings.output{{capFirst topic.subscribe.x-operation-id}}().send(MessageBuilder.withPayload(message).build());
+    public void send{{capitalize topic.subscribe.x-operation-id}}(String message) {
+        bindings.output{{capitalize topic.subscribe.x-operation-id}}().send(MessageBuilder.withPayload(message).build());
     }
     {{/if}}
   {{/each}}

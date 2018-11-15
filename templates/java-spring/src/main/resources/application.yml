@@ -1,3 +1,27 @@
-spring:
-  rabbitmq:
+{{#each asyncapi.servers as |server|}}
+  {{#compare server.scheme '===' 'amqp'}}
+amqp:
+  broker:
+    host: localhost
     port: 32771
+    username: guest
+    password: guest
+  exchange:
+    exchange1: exchange-1
+  queue:
+    somequeue: some.queue
+    somequeue2: some.queue2
+  {{/compare}}
+  {{#compare server.scheme '===' 'mqtt'}}
+mqtt:
+  broker:
+    host: tcp://{{server.url}}
+    port: {{server.variables.port.default}}
+    username:
+    password:
+  topic:
+{{#each ../../asyncapi.topics as |topic key|}}
+    {{topic.x-service-name}}Topic: {{key}}
+{{/each}}
+  {{/compare}}
+{{/each}}

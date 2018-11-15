@@ -1,6 +1,6 @@
 package com.asyncapi.infrastructure;
 
-import com.asyncapi.service.MqttMessageHandler;
+import com.asyncapi.service.MessageHandlerService;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -61,7 +61,7 @@ public class Config {
     // consumer
 
     @Autowired
-    MqttMessageHandler mqttMessageHandler;
+    MessageHandlerService messageHandlerService;
     {{#each asyncapi.topics as |topic key|}}
 
     {{#if topic.subscribe}}
@@ -69,7 +69,7 @@ public class Config {
     public IntegrationFlow {{camelCase topic.x-service-name}}Flow() {
         return IntegrationFlows.from({{camelCase topic.x-service-name}}Inbound())
                 .transform(p -> p + ", received from MQTT")
-                .handle(mqttMessageHandler::handle{{upperFirst topic.x-service-name}})
+                .handle(messageHandlerService::handle{{upperFirst topic.x-service-name}})
                 .get();
     }
 
@@ -96,10 +96,10 @@ public class Config {
     @Bean
     @ServiceActivator(inputChannel = "{{camelCase topic.x-service-name}}OutboundChannel")
     public MessageHandler {{camelCase topic.x-service-name}}Outbound() {
-        MqttPahoMessageHandler messageHandler = new MqttPahoMessageHandler("{{camelCase topic.x-service-name}}Publisher", mqttClientFactory());
-        messageHandler.setAsync(true);
-        messageHandler.setDefaultTopic({{topic.x-service-name}}Topic);
-        return messageHandler;
+        MqttPahoMessageHandler pahoMessageHandler = new MqttPahoMessageHandler("{{camelCase topic.x-service-name}}Publisher", mqttClientFactory());
+        pahoMessageHandler.setAsync(true);
+        pahoMessageHandler.setDefaultTopic({{topic.x-service-name}}Topic);
+        return pahoMessageHandler;
     }
     {{/if}}
     {{/each}}

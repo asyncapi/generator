@@ -5,10 +5,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MqttCommandLine implements CommandLineRunner {
+public class CommandLinePublisher implements CommandLineRunner {
 
     @Autowired
-    MqttMyGateway myGateway;
+    PublisherService publisherService;
 
     @Override
     public void run(String... args) {
@@ -16,7 +16,7 @@ public class MqttCommandLine implements CommandLineRunner {
 
         {{#each asyncapi.topics as |topic key|}}
         {{#if topic.publish}}
-        myGateway.{{camelCase topic.publish.x-operation-id}}("Hello World from {{topic.publish.x-operation-id}}");
+        publisherService.{{camelCase topic.publish.x-operation-id}}("Hello World from {{topic.publish.x-operation-id}}");
 
         {{/if}}
         {{/each}}

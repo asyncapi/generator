@@ -68,7 +68,6 @@ public class Config {
     @Bean
     public IntegrationFlow {{camelCase topic.x-service-name}}Flow() {
         return IntegrationFlows.from({{camelCase topic.x-service-name}}Inbound())
-                .transform(p -> p + ", received from MQTT")
                 .handle(messageHandlerService::handle{{upperFirst topic.x-service-name}})
                 .get();
     }

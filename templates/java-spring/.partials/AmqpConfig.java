@@ -1,6 +1,6 @@
-package com.asyncapi.streetlights.infrastructure;
+package com.asyncapi.infrastructure;
 
-import com.asyncapi.streetlights.service.AmqpMessageHandler;
+import com.asyncapi.service.MessageHandlerService;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
@@ -33,14 +33,20 @@ public class Config {
     @Value("${amqp.broker.password}")
     private String password;
 
-    @Value("${amqp.exchange.exchange1}")
-    private String exchange1;
+    {{#each asyncapi.topics as |topic key|}}
+    {{#if topic.subscribe}}
+    @Value("${amqp.exchange.{{~topic.x-service-name~}}}")
+    private String {{topic.x-service-name}}Exchange;
 
-    @Value("${amqp.queue.somequeue}")
-    private String someQueue;
+    {{/if}}
+    {{/each}}
+    {{#each asyncapi.topics as |topic key|}}
+    {{#if topic.subscribe}}
+    @Value("${amqp.queue.{{~topic.x-service-name~}}}")
+    private String {{topic.x-service-name}}Queue;
 
-    @Value("${amqp.queue.somequeue2}")
-    private String someQueue2;
+    {{/if}}
+    {{/each}}
 
     @Bean
     public ConnectionFactory connectionFactory() {
@@ -57,56 +63,66 @@ public class Config {
     }
 
     @Bean
-    public Declarables qs() {
+    public Declarables exchanges() {
         return new Declarables(
-                new TopicExchange(exchange1, true, false),
-                new Queue(someQueue, true, false, false),
-                new Binding(someQueue, Binding.DestinationType.QUEUE, exchange1, "#", null),
-                new Queue(someQueue2, true, false, false));
+                {{#each asyncapi.topics as |topic key|}}
+                {{#if topic.publish}}
+                new TopicExchange({{topic.x-service-name}}Exchange, true, false){{#unless @last}},{{/unless}}
+                {{/if}}
+                {{/each}}
+                );
+    }
+
+    @Bean
+    public Declarables queues() {
+        return new Declarables(
+                {{#each asyncapi.topics as |topic key|}}
+                {{#if topic.subscribe}}
+                new Queue({{topic.x-service-name}}Queue, true, false, false){{#unless @last}},{{/unless}}
+                {{/if}}
+                {{/each}}
+                );
     }
 
     // consumer
 
     @Autowired
-    AmqpMessageHandler amqpMessageHandler;
+    MessageHandlerService messageHandlerService;
+    {{#each asyncapi.topics as |topic key|}}
 
+    {{#if topic.subscribe}}
     @Bean
-    public IntegrationFlow amqpInFlow1() {
-        return IntegrationFlows.from(Amqp.inboundGateway(connectionFactory(), someQueue))
-                .transform(p -> p + ", received from AMQP")
-                .handle(amqpMessageHandler::handleMessage1)
+    public IntegrationFlow {{camelCase topic.x-service-name}}Flow() {
+        return IntegrationFlows.from(Amqp.inboundGateway(connectionFactory(), {{topic.x-service-name}}Queue))
+                .handle(messageHandlerService::handle{{upperFirst topic.x-service-name}})
                 .get();
     }
-
-    @Bean
-    public IntegrationFlow amqpInFlow2() {
-        return IntegrationFlows.from(Amqp.inboundGateway(connectionFactory(), someQueue2))
-                .transform(p -> p + ", received from AMQP")
-                .handle(amqpMessageHandler::handleMessage2)
-                .get();
-    }
+    {{/if}}
+    {{/each}}
 
     // publisher
 
     @Bean
-    public MessageChannel amqpOutboundChannel() {
+    public RabbitTemplate rabbitTemplate() {
+        RabbitTemplate template = new RabbitTemplate(connectionFactory());
+        return template;
+    }
+    {{#each asyncapi.topics as |topic key|}}
+
+    {{#if topic.publish}}
+    @Bean
+    public MessageChannel {{camelCase topic.x-service-name}}OutboundChannel() {
         return new DirectChannel();
     }
 
     @Bean
-    public RabbitTemplate rabbitTemplate() {
-        RabbitTemplate template = new RabbitTemplate(connectionFactory());
-//        template.setMessageConverter(jsonMessageConverter());
-        return template;
-    }
-
-    @Bean
-    @ServiceActivator(inputChannel = "amqpOutboundChannel")
-    public AmqpOutboundEndpoint amqpOutbound(AmqpTemplate amqpTemplate) {
+    @ServiceActivator(inputChannel = "{{camelCase topic.x-service-name}}OutboundChannel")
+    public AmqpOutboundEndpoint {{camelCase topic.x-service-name}}Outbound(AmqpTemplate amqpTemplate) {
         AmqpOutboundEndpoint outbound = new AmqpOutboundEndpoint(amqpTemplate);
-        outbound.setExchangeName(exchange1);
-        outbound.setRoutingKey("foo"); // default exchange - route to queue 'foo'
+        outbound.setExchangeName({{topic.x-service-name}}Exchange);
+        outbound.setRoutingKey("#");
         return outbound;
     }
-
+    {{/if}}
+    {{/each}}
 }

@@ -7,10 +7,17 @@ amqp:
     username: guest
     password: guest
   exchange:
-    exchange1: exchange-1
+{{#each ../../asyncapi.topics as |topic key|}}
+  {{#if topic.publish}}
+    {{topic.x-service-name}}: {{key}}
+  {{/if}}
+{{/each}}
   queue:
-    somequeue: some.queue
-    somequeue2: some.queue2
+{{#each ../../asyncapi.topics as |topic key|}}
+  {{#if topic.subscribe}}
+    {{topic.x-service-name}}: {{key}}
+  {{/if}}
+{{/each}}
   {{/compare}}
   {{#compare server.scheme '===' 'mqtt'}}
 mqtt:

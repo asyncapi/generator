@@ -16,7 +16,7 @@ public class CommandLinePublisher implements CommandLineRunner {
 
         {{#each asyncapi.topics as |topic key|}}
         {{#if topic.publish}}
-        publisherService.{{camelCase topic.publish.x-operation-id}}("Hello World from {{topic.publish.x-operation-id}}");
+        publisherService.publish{{capitalize topic.x-service-name}}("Hello World from {{topic.x-service-name}}");
 
         {{/if}}
         {{/each}}

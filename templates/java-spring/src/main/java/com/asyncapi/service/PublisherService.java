@@ -10,7 +10,7 @@ public interface PublisherService {
   {{#if topic.publish}}
 
     @Gateway(requestChannel = "{{camelCase topic.x-service-name}}OutboundChannel")
-    void {{camelCase topic.publish.x-operation-id}}(String data);
+    void publish{{capitalize topic.x-service-name}}(String data);
   {{/if}}
   {{/each}}
 }

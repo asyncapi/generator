@@ -1,0 +1,34 @@
+{{#each asyncapi.servers as |server|}}
+  {{#compare server.scheme '===' 'amqp'}}
+amqp:
+  broker:
+    host: localhost
+    port: 32771
+    username: guest
+    password: guest
+  exchange:
+{{#each ../../asyncapi.topics as |topic key|}}
+  {{#if topic.publish}}
+    {{topic.x-service-name}}: {{key}}
+  {{/if}}
+{{/each}}
+  queue:
+{{#each ../../asyncapi.topics as |topic key|}}
+  {{#if topic.subscribe}}
+    {{topic.x-service-name}}: {{key}}
+  {{/if}}
+{{/each}}
+  {{/compare}}
+  {{#compare server.scheme '===' 'mqtt'}}
+mqtt:
+  broker:
+    host: tcp://{{server.url}}
+    port: {{server.variables.port.default}}
+    username:
+    password:
+  topic:
+{{#each ../../asyncapi.topics as |topic key|}}
+    {{topic.x-service-name}}Topic: {{key}}
+{{/each}}
+  {{/compare}}
+{{/each}}

@@ -1,0 +1,8 @@
+{
+  "nonRenderableFiles": [
+    "**/*.jar"
+  ],
+  "nonParseableFiles": [
+    "**/*.jar"
+  ]
+}

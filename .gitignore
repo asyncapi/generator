@@ -2,3 +2,13 @@
 node_modules
 npm-debug.log
 output
+######################
+# Intellij
+######################
+.idea/
+*.iml
+*.iws
+*.ipr
+*.ids
+*.orig
+out/

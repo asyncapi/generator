@@ -38,7 +38,8 @@
     "mkdirp": "^0.5.1",
     "openapi-sampler": "^1.0.0-beta.9",
     "project-name-generator": "^2.1.5",
-    "z-schema": "^3.18.2"
+    "z-schema": "^3.18.2",
+    "minimatch": "^3.0.4"
   },
   "devDependencies": {}
 }

@@ -96,7 +96,7 @@ ag -o ./src asyncapi.yaml java-spring
 ```
 
 ### Run it
-To run the generated application you need the java virtual machine and gradle installed. After thats done go to the root folder of the generated code and run this command:
+Go to the root folder of the generated code and run this command (you need the JDK1.8):
 ```bash
-gradle bootRun
+./gradlew bootRun
 ```

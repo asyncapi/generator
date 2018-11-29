@@ -43,5 +43,8 @@ module.exports = (Handlebars, _) => {
   // Handlebars.registerHelper('json', function(context) {
   //   return JSON.stringify(context);
   // });
-
+  
+  Handlebars.registerHelper('schemeExists', (collection, scheme) => {
+    return _.some(collection, {'scheme': scheme});
+  });
 };

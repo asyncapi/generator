@@ -96,6 +96,13 @@ ag -o ./src asyncapi.yaml java-spring
 ```
 
 ### Run it
+{{#if (schemeExists asyncapi.servers "amqp") }}
+Start your RabbitMQ with:
+```bash
+docker-compose -f src/main/docker/rabbitmq.yml up -d
+```
+{{/if}}
+
 Go to the root folder of the generated code and run this command (you need the JDK1.8):
 ```bash
 ./gradlew bootRun

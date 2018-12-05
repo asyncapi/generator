@@ -1,0 +1,5 @@
+deploy:
+  provider: script
+  script: npm publish
+  on:
+    branch: master

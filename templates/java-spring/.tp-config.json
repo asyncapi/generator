@@ -1,0 +1,5 @@
+{
+  "nonRenderableFiles": [
+    "**/*.jar"
+  ]
+}

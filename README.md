@@ -121,10 +121,10 @@ If you're a maintainer, take it from here:
 2. Make sure your local `develop` and `master` branches are up to date.
 3. Switch to `develop` branch.
 4. Whenever you think it makes sense, make a release:
-  - From develop branch, run: `git flow release start X.X.X`.
-  - In release branch, update version in `package.json` and `package-lock.json`.
-  - In release branch, run: `git flow release finish X.X.X`.
-  - You should now be in `develop` branch. Run: `git push --tags && git checkout master && git push`.
+    1. From develop branch, run: `git flow release start X.X.X`.
+    2. In release branch, update version in `package.json` and `package-lock.json`.
+    3. In release branch, run: `git flow release finish X.X.X`.
+    4. You should now be in `develop` branch. Run: `git push --tags && git checkout master && git push`.
 5. Release to NPM should happen automatically. You can check status at https://travis-ci.org/asyncapi/asyncapi.
 
 ## Author

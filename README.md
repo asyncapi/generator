@@ -111,8 +111,9 @@ generator.getTemplateFile({
 Contributions are more than welcome. If you want to make a contribution, please make sure you go through the following steps:
 
 1. Pick or create an issue. It's always a good idea to leave a message saying that you're going to work on it before you start any actual work.
-2. Open a Pull Request pointing to `develop` branch.
-3. A maintainer will review and, eventually, merge your Pull Request. Please, be patient as most of us are doing this in our spare time.
+2. Fork the repository and work there.
+3. Open a Pull Request pointing to `develop` branch.
+4. A maintainer will review and, eventually, merge your Pull Request. Please, be patient as most of us are doing this in our spare time.
 
 If you're a maintainer, take it from here:
 
@@ -120,10 +121,10 @@ If you're a maintainer, take it from here:
 2. Make sure your local `develop` and `master` branches are up to date.
 3. Switch to `develop` branch.
 4. Whenever you think it makes sense, make a release:
-  a. From develop branch, run: `git flow release start X.X.X`.
-  b. In release branch, update version in `package.json` and `package-lock.json`.
-  c. In release branch, run: `git flow release finish X.X.X`.
-  d. You should now be in `develop` branch. Run: `git push --tags && git checkout master && git push`.
+  - From develop branch, run: `git flow release start X.X.X`.
+  - In release branch, update version in `package.json` and `package-lock.json`.
+  - In release branch, run: `git flow release finish X.X.X`.
+  - You should now be in `develop` branch. Run: `git push --tags && git checkout master && git push`.
 5. Release to NPM should happen automatically. You can check status at https://travis-ci.org/asyncapi/asyncapi.
 
 ## Author

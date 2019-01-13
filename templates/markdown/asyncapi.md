@@ -19,6 +19,8 @@
 {{/if}}
 {{#if asyncapi.events}}
 * [Events](#events)
+  - [Events a client can receive](#events-receive)
+  - [Events a client can send](#events-send)
 {{/if}}
 {{#if asyncapi.stream}}
 * [Stream](#stream)

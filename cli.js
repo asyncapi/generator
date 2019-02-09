@@ -4,7 +4,7 @@ const path = require('path');
 const program = require('commander');
 const packageInfo = require('./package.json');
 const mkdirp = require('mkdirp');
-const generate = require('./lib/generator').generate;
+const generate = require('./lib/asyncapi1/generator').generate;
 
 const red = text => `\x1b[31m${text}\x1b[0m`;
 const magenta = text => `\x1b[35m${text}\x1b[0m`;

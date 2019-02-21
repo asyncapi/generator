@@ -34,7 +34,7 @@ public class Config {
     private String password;
 
     {{#each asyncapi.topics as |topic key|}}
-    {{#if topic.subscribe}}
+    {{#if topic.publish}}
     @Value("${amqp.exchange.{{~topic.x-service-name~}}}")
     private String {{topic.x-service-name}}Exchange;
 

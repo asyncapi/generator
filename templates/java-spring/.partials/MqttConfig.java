@@ -36,11 +36,9 @@ public class Config {
     private String password;
 
     {{#each asyncapi.topics as |topic key|}}
-    {{#if topic.subscribe}}
     @Value("${mqtt.topic.{{~topic.x-service-name~}}Topic}")
     private String {{topic.x-service-name}}Topic;
 
-    {{/if}}
     {{/each}}
 
     @Bean

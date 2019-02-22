@@ -32,6 +32,7 @@ security:
 
 topics:
   event.{streetlightId}.lighting.measured:
+    x-service-name: measures
     parameters:
       - name: streetlightId
         description: The ID of the streetlight.
@@ -41,14 +42,17 @@ topics:
       $ref: '#/components/messages/lightMeasured'
 
   action.{streetlightId}.turn.on:
+    x-service-name: lightTurnOn
     subscribe:
       $ref: '#/components/messages/turnOnOff'
 
   action.{streetlightId}.turn.off:
+    x-service-name: lightTurnOff
     subscribe:
       $ref: '#/components/messages/turnOnOff'
 
   action.{streetlightId}.dim:
+    x-service-name: dimming
     subscribe:
       $ref: '#/components/messages/dimLight'
 

@@ -33,19 +33,15 @@ public class Config {
     @Value("${amqp.broker.password}")
     private String password;
 
-    {{#each asyncapi.topics as |topic key|}}
-    {{#if topic.publish}}
+    {{#each asyncapi.publishTopics as |topic key|}}
     @Value("${amqp.exchange.{{~topic.x-service-name~}}}")
     private String {{topic.x-service-name}}Exchange;
 
-    {{/if}}
     {{/each}}
-    {{#each asyncapi.topics as |topic key|}}
-    {{#if topic.subscribe}}
+    {{#each asyncapi.subscribeTopics as |topic key|}}
     @Value("${amqp.queue.{{~topic.x-service-name~}}}")
     private String {{topic.x-service-name}}Queue;
 
-    {{/if}}
     {{/each}}
 
     @Bean
@@ -65,10 +61,8 @@ public class Config {
     @Bean
     public Declarables exchanges() {
         return new Declarables(
-                {{#each asyncapi.topics as |topic key|}}
-                {{#if topic.publish}}
+                {{#each asyncapi.publishTopics as |topic key|}}
                 new TopicExchange({{topic.x-service-name}}Exchange, true, false){{#unless @last}},{{/unless}}
-                {{/if}}
                 {{/each}}
                 );
     }
@@ -76,10 +70,8 @@ public class Config {
     @Bean
     public Declarables queues() {
         return new Declarables(
-                {{#each asyncapi.topics as |topic key|}}
-                {{#if topic.subscribe}}
+                {{#each asyncapi.subscribeTopics as |topic key|}}
                 new Queue({{topic.x-service-name}}Queue, true, false, false){{#unless @last}},{{/unless}}
-                {{/if}}
                 {{/each}}
                 );
     }
@@ -88,16 +80,14 @@ public class Config {
 
     @Autowired
     MessageHandlerService messageHandlerService;
-    {{#each asyncapi.topics as |topic key|}}
+    {{#each asyncapi.subscribeTopics as |topic key|}}
 
-    {{#if topic.subscribe}}
     @Bean
     public IntegrationFlow {{camelCase topic.x-service-name}}Flow() {
         return IntegrationFlows.from(Amqp.inboundGateway(connectionFactory(), {{topic.x-service-name}}Queue))
                 .handle(messageHandlerService::handle{{upperFirst topic.x-service-name}})
                 .get();
     }
-    {{/if}}
     {{/each}}
 
     // publisher
@@ -107,9 +97,8 @@ public class Config {
         RabbitTemplate template = new RabbitTemplate(connectionFactory());
         return template;
     }
-    {{#each asyncapi.topics as |topic key|}}
+    {{#each asyncapi.publishTopics as |topic key|}}
 
-    {{#if topic.publish}}
     @Bean
     public MessageChannel {{camelCase topic.x-service-name}}OutboundChannel() {
         return new DirectChannel();
@@ -123,6 +112,5 @@ public class Config {
         outbound.setRoutingKey("#");
         return outbound;
     }
-    {{/if}}
     {{/each}}
 }

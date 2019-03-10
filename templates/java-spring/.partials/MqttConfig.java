@@ -60,9 +60,8 @@ public class Config {
 
     @Autowired
     MessageHandlerService messageHandlerService;
-    {{#each asyncapi.topics as |topic key|}}
+    {{#each asyncapi.subscribeTopics as |topic key|}}
 
-    {{#if topic.subscribe}}
     @Bean
     public IntegrationFlow {{camelCase topic.x-service-name}}Flow() {
         return IntegrationFlows.from({{camelCase topic.x-service-name}}Inbound())
@@ -78,13 +77,11 @@ public class Config {
         adapter.setConverter(new DefaultPahoMessageConverter());
         return adapter;
     }
-    {{/if}}
     {{/each}}
 
     // publisher
-    {{#each asyncapi.topics as |topic key|}}
+    {{#each asyncapi.publishTopics as |topic key|}}
 
-    {{#if topic.publish}}
     @Bean
     public MessageChannel {{camelCase topic.x-service-name}}OutboundChannel() {
         return new DirectChannel();
@@ -98,7 +95,6 @@ public class Config {
         pahoMessageHandler.setDefaultTopic({{topic.x-service-name}}Topic);
         return pahoMessageHandler;
     }
-    {{/if}}
     {{/each}}
 
 }

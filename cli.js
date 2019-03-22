@@ -48,7 +48,7 @@ mkdirp(program.output, err => {
     templates: program.templates,
   }).then(() => {
     console.log(green('Done! ✨'));
-    console.log(yellow('Check out your shiny new API documentation at ') + magenta(program.output) + yellow('.'));
+    console.log(yellow('Check out your shiny new generated files at ') + magenta(program.output) + yellow('.'));
   }).catch(showErrorAndExit);
 });
 

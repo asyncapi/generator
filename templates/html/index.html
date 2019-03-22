@@ -32,6 +32,7 @@
       {{/if}}
     </ul>
 
+    {{#if asyncapi.topics}}
     <h2 class="navigation__header">Topics</h2>
     <ul class="navigation__list">
       {{#each asyncapi.topics}}
@@ -45,6 +46,7 @@
       </li>
       {{/each}}
     </ul>
+    {{/if}}
 
     <h2 class="navigation__header">Messages</h2>
     <ul class="navigation__list">

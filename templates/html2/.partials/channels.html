@@ -1,0 +1,5 @@
+<h2 class="section-header">Channels</h2>
+
+{{#each asyncapi.channels}}
+  {{~>channel channel=. channelName=@key ~}}
+{{/each}}

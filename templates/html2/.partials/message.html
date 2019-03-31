@@ -1,0 +1,48 @@
+<a name="message-{{message.name}}"></a>
+<div class="message">
+  <h3 class="message__header">
+    {{message.name}}
+    {{#if message.deprecated}}
+    <span class="operation-badge operation-badge--deprecated message__header__operation-badge">Deprecated</span>
+    {{/if}}
+  </h3>
+  {{{message.summaryAsHTML}}}
+  {{{message.descriptionAsHTML}}}
+
+  {{#if message.headers}}
+  <h4>Headers</h4>
+
+  {{> schema schema=message.headers schemaName='Message Headers' hideTitle=true}}
+  {{/if}}
+
+
+  {{#unless message.example}}
+  {{#if message.generatedHeadersExample}}
+    <h4>Example of headers <em>(generated)</em></h4>
+
+    <pre class="hljs"><code class="json">{{~message.generatedHeadersExample~}}</code></pre>
+  {{/if}}
+  {{/unless}}
+
+  <h4>Payload</h4>
+
+  {{> schema schema=message.payload schemaName='Message Payload' hideTitle=true}}
+
+  {{#if message.example}}
+  <h4>Example</h4>
+
+  <pre class="hljs"><code class="json">{{~message.formattedExample~}}</code></pre>
+  {{else}}
+    {{#if message.generatedPayloadExample}}
+    <h4>Example of payload <em>(generated)</em></h4>
+
+    <pre class="hljs"><code class="json">{{~message.generatedPayloadExample~}}</code></pre>
+    {{/if}}
+  {{/if}}
+
+{{#if message.tags}}
+<h4>Tags</h4>
+
+{{> tags tags=message.tags}}
+{{/if}}
+</div>

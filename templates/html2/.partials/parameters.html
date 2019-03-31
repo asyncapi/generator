@@ -1,0 +1,18 @@
+<a name="parameters-{{topicName}}"></a>
+<div class="parameters">
+  {{#unless hideTitle}}
+  <h4>Channel Parameters</h4>
+  {{/unless}}
+
+  {{#each params as |param|}}
+    {{#if param.name}}
+    <h4>{{param.name}}</h4>
+    {{/if}}
+
+    {{#if param.descriptionAsHTML}}
+    <p>{{{param.descriptionAsHTML}}}</p>
+    {{/if}}
+
+    {{~> schema schema=param.schema schemaName=param.name hideTitle=true ~}}
+  {{/each}}
+</div>

@@ -70,19 +70,19 @@ html, body {
   background-color: #3e515b;
 }
 
-.navigation__list__item__topic-indicator {
+.navigation__list__item__channel-indicator {
   display: inline-block;
   width: 10px;
   height: 10px;
   border-radius: 3px;
 }
-.navigation__list__item__topic-indicator--publish {
+.navigation__list__item__channel-indicator--publish {
   background: #d4e157;
 }
-.navigation__list__item__topic-indicator--subscribe {
+.navigation__list__item__channel-indicator--subscribe {
   background: #039be5;
 }
-.navigation__list__item__topic-indicator--deprecated {
+.navigation__list__item__channel-indicator--deprecated {
   background: #ffa726;
 }
 
@@ -113,13 +113,13 @@ html, body {
   margin: 40px 0;
 }
 
-.topic {
+.channel {
   margin-bottom: 60px;
 }
-.topic__header {
+.channel__header {
   font-size: 20px;
 }
-.topic__header__operation-badge {
+.channel__header__operation-badge {
   display: block;
   float: left;
   margin-top: -2px;

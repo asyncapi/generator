@@ -2,39 +2,5 @@
 {{{operation.summaryAsHTML}}}
 {{{operation.descriptionAsHTML}}}
 
-{{#if operation.headers}}
-<h4>Headers</h4>
-
-{{> schema schema=operation.headers schemaName='Message Headers' hideTitle=true}}
-
-{{#unless operation.example}}
-{{#if operation.generatedHeadersExample}}
-  <h4>Example of headers <em>(generated)</em></h4>
-
-  <pre class="hljs"><code class="json">{{~operation.generatedHeadersExample~}}</code></pre>
-{{/if}}
-{{/unless}}
-{{/if}}
-
-<h4>Payload</h4>
-
-{{> schema schema=operation.payload schemaName='Message Payload' hideTitle=true}}
-
-{{#if operation.example}}
-<h4>Example</h4>
-
-<pre class="hljs"><code class="json">{{~operation.formattedExample~}}</code></pre>
-{{else}}
-  {{#if operation.generatedPayloadExample}}
-  <h4>Example of payload <em>(generated)</em></h4>
-
-  <pre class="hljs"><code class="json">{{~operation.generatedPayloadExample~}}</code></pre>
-  {{/if}}
-{{/if}}
-
-{{#if operation.tags}}
-<h4>Tags</h4>
-
-{{> tags tags=operation.tags}}
-{{/if}}
+{{~> message message=operation.message ~}}
 </div>

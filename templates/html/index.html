@@ -32,15 +32,15 @@
       {{/if}}
     </ul>
 
-    {{#if asyncapi.topics}}
-    <h2 class="navigation__header">Topics</h2>
+    {{#if asyncapi.channels}}
+    <h2 class="navigation__header">Channels</h2>
     <ul class="navigation__list">
-      {{#each asyncapi.topics}}
+      {{#each asyncapi.channels}}
       <li class="navigation__list__item">
-        <a class="navigation__list__item-text navigation__list__item-text--link" href="#topic-{{@key}}">
-          {{#if ./deprecated}}<span class="navigation__list__item__topic-indicator navigation__list__item__topic-indicator--deprecated" title="Deprecated"></span>{{/if}}
-          {{#if ./publish}}<span class="navigation__list__item__topic-indicator navigation__list__item__topic-indicator--publish" title="Publish"></span>{{/if}}
-          {{#if ./subscribe}}<span class="navigation__list__item__topic-indicator navigation__list__item__topic-indicator--subscribe" title="Subscribe"></span>{{/if}}
+        <a class="navigation__list__item-text navigation__list__item-text--link" href="#channel-{{@key}}">
+          {{#if ./deprecated}}<span class="navigation__list__item__channel-indicator navigation__list__item__channel-indicator--deprecated" title="Deprecated"></span>{{/if}}
+          {{#if ./publish}}<span class="navigation__list__item__channel-indicator navigation__list__item__channel-indicator--publish" title="Publish"></span>{{/if}}
+          {{#if ./subscribe}}<span class="navigation__list__item__channel-indicator navigation__list__item__channel-indicator--subscribe" title="Subscribe"></span>{{/if}}
           {{@key}}
         </a>
       </li>

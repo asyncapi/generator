@@ -17,7 +17,7 @@
     <thead class="table__head">
       <tr class="table__head__row">
         <th class="table__head__cell">URL</th>
-        <th class="table__head__cell">Scheme</th>
+        <th class="table__head__cell">Protocol</th>
         <th class="table__head__cell">Description</th>
       </tr>
     </thead>
@@ -25,7 +25,7 @@
     {{#each asyncapi.servers as |server|}}
       <tr class="table__body__row">
         <td class="table__body__cell">{{#if server.variables}}<div class="table__expand" data-index={{@index}}></div>{{/if}}{{server.url}}</td>
-        <td class="table__body__cell">{{server.scheme}}</td>
+        <td class="table__body__cell">{{server.protocol}}</td>
         <td class="table__body__cell">{{{server.descriptionAsHTML}}}</td>
       </tr>
 

@@ -14,14 +14,17 @@
   <div class="mt-4 mb-4 markdown">{{{operation.descriptionAsHTML}}}</div>
 
   {{#if operation.message.payload}}
+    <p>Accepts the following message:</p>
+
     <div class="bg-grey-lighter rounded p-4 mt-2">
       <p class="text-grey-dark text-sm">{{operation.message.summary}}</p>
       <div class="mt-4 mb-4 markdown">{{{operation.message.descriptionAsHTML}}}</div>
-      {{>schema schema=operation.message.payload schemaName='Payload'}}
+      {{>schema schema=operation.message.payload schemaName='Payload' open=true}}
     </div>
   {{/if}}
 
   {{#if operation.message.oneOf}}
+    <p>Accepts <strong>one of</strong> the following messages:</p>
     {{#each operation.message.oneOf as |msg|}}
       <div class="bg-grey-lighter rounded p-4 mt-2">
         <div class="text-sm text-grey-darker mb-2">
@@ -39,7 +42,7 @@
         </div>
         <p class="text-grey-dark text-sm">{{msg.summary}}</p>
         <div class="mt-4 mb-4 markdown">{{{msg.descriptionAsHTML}}}</div>
-        {{>schema schema=msg.payload schemaName='Payload'}}
+        {{>schema schema=msg.payload schemaName='Payload' open=false}}
       </div>
     {{/each}}
   {{/if}}

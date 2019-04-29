@@ -38,4 +38,15 @@ module.exports = (Handlebars, _) => {
   Handlebars.registerHelper('stringify', (obj) => {
     return JSON.stringify(obj);
   });
+
+  Handlebars.registerHelper('isExpandable', (obj) => {
+    if (
+      obj.type === 'object' ||
+      obj.type === 'array' ||
+      obj.oneOf ||
+      obj.anyOf
+    ) return true;
+
+    return false;
+  });
 };

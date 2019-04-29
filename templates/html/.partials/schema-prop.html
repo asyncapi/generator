@@ -1,9 +1,9 @@
-<div class="{{#if odd}}bg-grey-lightest{{else}}bg-grey-lighter{{/if}} {{#unless root}}pl-8{{/unless}} rounded">
+<div class="{{#if odd}}bg-grey-lighter{{else}}bg-grey-lightest{{/if}} {{#unless root}}pl-8 pr-8{{/unless}} rounded">
   <div class="{{#if open}}is-open{{/if}}">
-    <div class="{{#if (equal prop.type 'object')}}js-prop cursor-pointer{{/if}} flex pb-2 property">
+    <div class="{{#if (isExpandable prop)}}js-prop cursor-pointer py-2{{/if}} flex property">
       <div class="w-1/4" style="margin-top:-2px;">
         <span class="text-sm">{{propName}}</span>
-        {{#if (equal prop.type 'object')}}
+        {{#if (isExpandable prop)}}
         <svg class="expand" version="1.1" viewBox="0 0 24 24" x="0"
           xmlns="http://www.w3.org/2000/svg" y="0">
           <polygon points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "></polygon>
@@ -60,19 +60,21 @@
       </div>
     </div>
 
-    <div class="children py-4 bg-grey-lightest rounded">
-      {{#if prop.properties}}
-        {{#each prop.properties}}
-          {{> schemaProp prop=. propName=@key odd=(not odd) required=(contains ../prop.required @key)}}
-        {{/each}}
-      {{/if}}
+    {{#if (isExpandable prop)}}
+      <div class="children {{#if odd}}bg-grey-lightest{{else}}bg-grey-lighter{{/if}} py-4 rounded">
+        {{#if prop.properties}}
+          {{#each prop.properties}}
+            {{> schemaProp prop=. propName=@key odd=(not ../odd) required=(contains ../prop.required @key)}}
+          {{/each}}
+        {{/if}}
 
-      {{#if prop.oneOf}}
-        {{#each prop.oneOf}}
-          {{> schemaProp prop=. propName=@key odd=(not odd) required=(contains ../prop.required @key)}}
-        {{/each}}
-      {{/if}}
-    </div>
+        {{#if prop.oneOf}}
+          {{#each prop.oneOf}}
+            {{> schemaProp prop=. propName=@key odd=(not ../odd) required=(contains ../prop.required @key)}}
+          {{/each}}
+        {{/if}}
+      </div>
+    {{/if}}
   </div>
 </div>
 

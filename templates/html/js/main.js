@@ -3,7 +3,7 @@ function bindExpanders() {
   props.forEach(function (prop) {
     prop.addEventListener('click', function (ev) {
       ev.stopPropagation();
-      ev.currentTarget.classList.toggle('is-open');
+      ev.currentTarget.parentElement.classList.toggle('is-open');
     });
   });
 }

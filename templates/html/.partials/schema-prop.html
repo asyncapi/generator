@@ -1,6 +1,6 @@
 <div class="{{#if odd}}bg-grey-lightest{{else}}bg-grey-lighter{{/if}} {{#unless root}}pl-8{{/unless}} rounded">
-  <div class="js-prop {{#if open}}is-open{{/if}} cursor-pointer">
-    <div class="flex pb-2 property">
+  <div class="{{#if open}}is-open{{/if}}">
+    <div class="{{#if (equal prop.type 'object')}}js-prop cursor-pointer{{/if}} flex pb-2 property">
       <div class="w-1/4" style="margin-top:-2px;">
         <span class="text-sm">{{propName}}</span>
         {{#if (equal prop.type 'object')}}
@@ -26,19 +26,19 @@
             {{/if}}
             {{#unless (equal prop.minimum undefined)}}
               <span class="bg-purple-dark font-bold no-underline text-white rounded lowercase ml-2"
-                style="height: 20px;font-size: 11px;padding: 3px;">>= {{prop.minimum}}</span>
+                style="height: 20px;font-size: 11px;padding: 3px;" title="At least {{prop.minimum}}">>= {{prop.minimum}}</span>
             {{/unless}}
             {{#unless (equal prop.exclusiveMinimum undefined)}}
               <span class="bg-purple-dark font-bold no-underline text-white rounded lowercase ml-2"
-                style="height: 20px;font-size: 11px;padding: 3px;">> {{prop.exclusiveMinimum}}</span>
+                style="height: 20px;font-size: 11px;padding: 3px;" title="Greater than {{prop.exclusiveMinimum}}">> {{prop.exclusiveMinimum}}</span>
             {{/unless}}
             {{#unless (equal prop.maximum undefined)}}
               <span class="bg-purple-dark font-bold no-underline text-white rounded lowercase ml-2"
-                style="height: 20px;font-size: 11px;padding: 3px;"><= {{prop.maximum}}</span>
+                style="height: 20px;font-size: 11px;padding: 3px;" title="At most {{prop.maximum}}"><= {{prop.maximum}}</span>
             {{/unless}}
             {{#unless (equal prop.exclusiveMaximum undefined)}}
               <span class="bg-purple-dark font-bold no-underline text-white rounded lowercase ml-2"
-                style="height: 20px;font-size: 11px;padding: 3px;">< {{prop.exclusiveMaximum}}</span>
+                style="height: 20px;font-size: 11px;padding: 3px;" title="Less than {{prop.exclusiveMaximum}}">< {{prop.exclusiveMaximum}}</span>
             {{/unless}}
           </div>
         </div>
@@ -60,7 +60,7 @@
       </div>
     </div>
 
-    <div class="children">
+    <div class="children py-4 bg-grey-lightest rounded">
       {{#if prop.properties}}
         {{#each prop.properties}}
           {{> schemaProp prop=. propName=@key odd=(not odd) required=(contains ../prop.required @key)}}

@@ -21,6 +21,7 @@
         <p class="text-grey-dark text-sm">{{operation.message.summary}}</p>
         <div class="mt-4 mb-4 markdown">{{{operation.message.descriptionAsHTML}}}</div>
         {{>schema schema=operation.message.payload schemaName='Payload' open=true}}
+        {{>schema schema=(toObj operation.message.headers) schemaName='Headers' open=true}}
       </div>
     {{/if}}
 
@@ -44,6 +45,7 @@
           <p class="text-grey-dark text-sm">{{msg.summary}}</p>
           <div class="mt-4 mb-4 markdown">{{{msg.descriptionAsHTML}}}</div>
           {{>schema schema=msg.payload schemaName='Payload' open=false}}
+          {{>schema schema=(toObj operation.message.headers) schemaName='Headers' open=true}}
         </div>
       {{/each}}
     {{/if}}

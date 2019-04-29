@@ -67,4 +67,13 @@ module.exports = (Handlebars, _) => {
     if (!Array.isArray(arr)) return false;
     return arr.includes(needle);
   });
+
+  Handlebars.registerHelper('toObj', (obj) => {
+    return {
+      type: 'object',
+      properties: {
+        ...obj
+      }
+    };
+  });
 };

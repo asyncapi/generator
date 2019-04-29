@@ -1,7 +1,7 @@
 <div class="{{#if odd}}bg-grey-lighter{{else}}bg-grey-lightest{{/if}} {{#unless root}}pl-8 pr-8{{/unless}} rounded">
   <div class="{{#if open}}is-open{{/if}}">
     <div class="{{#if (isExpandable prop)}}js-prop cursor-pointer py-2{{/if}} flex property">
-      <div class="w-1/4" style="margin-top:-2px;">
+      <div class="pr-4" style="margin-top:-2px; min-width: 25%;">
         <span class="text-sm {{#if specialName}}italic text-grey{{/if}}">{{propName}}</span>
         {{#if (isExpandable prop)}}
         <svg class="expand" version="1.1" viewBox="0 0 24 24" x="0"

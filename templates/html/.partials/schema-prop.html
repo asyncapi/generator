@@ -73,6 +73,12 @@
             {{> schemaProp prop=. propName=@key odd=(not ../odd) required=(contains ../prop.required @key)}}
           {{/each}}
         {{/if}}
+
+        {{#if prop.anyOf}}
+          {{#each prop.anyOf}}
+            {{> schemaProp prop=. propName=@key odd=(not ../odd) required=(contains ../prop.required @key)}}
+          {{/each}}
+        {{/if}}
       </div>
     {{/if}}
   </div>

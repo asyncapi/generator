@@ -44,9 +44,27 @@ module.exports = (Handlebars, _) => {
       obj.type === 'object' ||
       obj.type === 'array' ||
       obj.oneOf ||
-      obj.anyOf
+      obj.anyOf ||
+      obj.items ||
+      obj.additionalItems ||
+      obj.properties ||
+      obj.additionalProperties ||
+      obj.patternProperties
     ) return true;
 
     return false;
+  });
+
+  Handlebars.registerHelper('isArray', (arr) => {
+    return Array.isArray(arr);
+  });
+
+  Handlebars.registerHelper('array', function () {
+    return Array.prototype.slice.call(arguments, 0, -1);
+  });
+
+  Handlebars.registerHelper('in', (arr, needle) => {
+    if (!Array.isArray(arr)) return false;
+    return arr.includes(needle);
   });
 };

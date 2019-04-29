@@ -1,7 +1,5 @@
-<div class="tags">
-{{#each tags}}
-  <div class="tags__tag">{{./name}}</div>
-{{else}}
-  <div class="tags__no-tags">No tags</div>
-{{/each}}
+<div class="mt-4">
+  {{#each tags}}
+    <span class="bg-grey-dark font-normal text-sm no-underline text-white rounded lowercase mr-2 px-2 py-1" title="{{./description}}">{{./name}}</span>
+  {{/each}}
 </div>

@@ -1,0 +1,14 @@
+{{prop.type}}
+{{~#if prop.items}}
+  &lt;
+  {{~#if prop.items.type}}
+    {{~prop.items.type}}
+  {{~else if (isArray prop.items)}}
+    {{~#each prop.items}}
+      {{~>type prop=.}}{{#unless @last}}, {{/unless}}
+    {{~/each}}
+  {{~else~}}
+    Unknown
+  {{~/if~}}
+  &gt;
+{{~/if}}

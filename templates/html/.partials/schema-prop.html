@@ -2,7 +2,7 @@
   <div class="{{#if open}}is-open{{/if}}">
     <div class="{{#if (isExpandable prop)}}js-prop cursor-pointer py-2{{/if}} flex property">
       <div class="w-1/4" style="margin-top:-2px;">
-        <span class="text-sm">{{propName}}</span>
+        <span class="text-sm {{#if specialName}}italic text-grey{{/if}}">{{propName}}</span>
         {{#if (isExpandable prop)}}
         <svg class="expand" version="1.1" viewBox="0 0 24 24" x="0"
           xmlns="http://www.w3.org/2000/svg" y="0">
@@ -16,7 +16,7 @@
 
       <div>
         <div class="capitalize text-sm text-teal font-bold">
-          {{prop.type}}
+          {{>type prop=prop}}
           {{#if prop.anyOf}}anyOf{{/if}}
           {{#if prop.oneOf}}oneOf{{/if}}
           <div class="inline-block">
@@ -40,6 +40,18 @@
               <span class="bg-purple-dark font-bold no-underline text-white rounded lowercase ml-2"
                 style="height: 20px;font-size: 11px;padding: 3px;" title="Less than {{prop.exclusiveMaximum}}">< {{prop.exclusiveMaximum}}</span>
             {{/unless}}
+            {{#unless (equal prop.minItems undefined)}}
+              <span class="bg-purple-dark font-bold no-underline text-white rounded lowercase ml-2"
+                style="height: 20px;font-size: 11px;padding: 3px;">>= {{prop.minItems}} items</span>
+            {{/unless}}
+            {{#unless (equal prop.maxItems undefined)}}
+              <span class="bg-purple-dark font-bold no-underline text-white rounded lowercase ml-2"
+                style="height: 20px;font-size: 11px;padding: 3px;"><= {{prop.maxItems}} items</span>
+            {{/unless}}
+            {{#if prop.uniqueItems}}
+              <span class="bg-red-dark font-bold no-underline text-white rounded lowercase ml-2"
+                style="height: 20px;font-size: 11px;padding: 3px;" title="Array items must be unique">Unique</span>
+            {{/if}}
           </div>
         </div>
 
@@ -68,6 +80,43 @@
           {{/each}}
         {{/if}}
 
+        {{#if (equal prop.type 'array')}}
+          {{#if prop.items}}
+            <p class="pl-6 mb-2 text-xs font-bold uppercase text-grey-darker">Items:</p>
+            {{#if (isArray prop.items)}}
+              {{#each prop.items}}
+              {{> schemaProp prop=. propName=@key odd=(not ../odd) required=(contains ../prop.required @key)}}
+              {{/each}}
+            {{else}}
+              {{> schemaProp prop=prop.items propName=0 odd=(not odd) required=(contains prop.required @key)}}
+            {{/if}}
+          {{/if}}
+
+          {{#if (in (array undefined true) prop.additionalItems)}}
+            <p class="pl-6 mb-2 mt-4 text-xs text-grey-darker">Additional items are allowed.</p>
+          {{else if (equal prop.additionalItems false)}}
+            <p class="pl-6 mb-2 mt-4 text-xs text-grey-darker">Additional items are NOT allowed.</p>
+          {{else}}
+            <p class="pl-6 mb-2 mt-4 text-xs font-bold text-grey-darker">Additional Items:</p>
+            <div class="{{#if odd}}bg-grey-lightest{{else}}bg-grey-lighter{{/if}} pl-6">
+              {{> schemaProp prop=prop.additionalItems propName='' odd=(not odd)}}
+            </div>
+          {{/if}}
+        {{/if}}
+
+        {{#if (equal prop.type 'object')}}
+          {{#if (in (array undefined true) prop.additionalProperties)}}
+            <p class="pl-6 mb-2 mt-4 text-xs text-grey-darker">Additional properties are allowed.</p>
+          {{else if (equal prop.additionalProperties false)}}
+            <p class="pl-6 mb-2 mt-4 text-xs text-grey-darker">Additional properties are <strong>NOT</strong> allowed.</p>
+          {{else}}
+            <p class="pl-6 mb-2 mt-4 text-xs font-bold text-grey-darker">Additional properties must adhere to the following schema:</p>
+            <div class="{{#if odd}}bg-grey-lightest{{else}}bg-grey-lighter{{/if}} pl-6">
+              {{> schemaProp prop=prop.additionalProperties propName='(property name)' odd=(not odd) open=false specialName=true}}
+            </div>
+          {{/if}}
+        {{/if}}
+
         {{#if prop.oneOf}}
           {{#each prop.oneOf}}
             {{> schemaProp prop=. propName=@key odd=(not ../odd) required=(contains ../prop.required @key)}}
@@ -83,39 +132,3 @@
     {{/if}}
   </div>
 </div>
-
-{{!-- <tr class="table__body__row">
-  <td class="table__body__cell">{{{tree path}}}{{propName}} {{#if required}}<span class="required-badge">(Required)</span>{{/if}}</td>
-  <td class="table__body__cell">{{prop.title}}</td>
-  <td class="table__body__cell">
-    {{prop.type}}
-    {{#if prop.anyOf}}anyOf{{/if}}
-    {{#if prop.oneOf}}oneOf{{/if}}
-    {{#if prop.items.type}}({{prop.items.type}}){{/if}}
-  </td>
-  <td class="table__body__cell">{{prop.format}}</td>
-  <td class="table__body__cell">{{prop.default}}</td>
-  <td class="table__body__cell">{{prop.description}}</td>
-</tr>
-{{#if prop.anyOf}}
-  {{#each prop.anyOf}}
-    {{> schemaProp prop=. propName=@key path=(concat ../path @key '.') required=(contains ../prop.required @key)}}
-  {{/each}}
-{{/if}}
-{{#if prop.oneOf}}
-  {{#each prop.oneOf}}
-    {{> schemaProp prop=. propName=@key path=(concat ../path @key '.') required=(contains ../prop.required @key)}}
-  {{/each}}
-{{/if}}
-{{#if prop.properties}}
-  {{#each prop.properties}}
-  {{> schemaProp prop=. propName=@key path=(concat ../path @key '.') required=(contains ../prop.required @key)}}
-  {{/each}}
-{{/if}}
-{{#if prop.items}}
-  {{#if prop.items.properties}}
-    {{#each prop.items.properties}}
-    {{> schemaProp prop=. propName=@key path=(concat ../path @key '.') required=(contains ../prop.items.required @key)}}
-    {{/each}}
-  {{/if}}
-{{/if}} --}}

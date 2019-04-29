@@ -60,3 +60,26 @@ h1, h2, h3, h4, h5, h6 {
 .is-open > .property .expand {
   transform: rotate(0deg);
 }
+
+.payload-examples,
+.headers-examples {
+  display: none;
+}
+
+.examples-payload-tab:checked + label {
+  background-color: #38a89d;
+  border-color: #38a89d;
+}
+
+.examples-payload-tab:checked ~ .payload-examples {
+  display: block;
+}
+
+.examples-headers-tab:checked + label {
+  background-color: #de751f;
+  border-color: #de751f;
+}
+
+.examples-headers-tab:checked ~ .headers-examples {
+  display: block;
+}

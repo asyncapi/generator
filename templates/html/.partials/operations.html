@@ -1,0 +1,13 @@
+<a name="operations"></a>
+<div class="w-3/5 p-8">
+  <h2 class="mb-4">Operations</h2>
+
+  {{#each asyncapi.channels as |channel channelName|}}
+    {{#if channel.publish}}
+      {{~>operation operation=channel.publish operationName='publish' channelName=channelName ~}}
+    {{/if}}
+    {{#if channel.subscribe}}
+      {{~>operation operation=channel.subscribe operationName='subscribe' channelName=channelName ~}}
+    {{/if}}
+  {{/each}}
+</div>

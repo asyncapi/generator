@@ -34,6 +34,11 @@ servers:
         - streetlights:off
         - streetlights:dim
       - openIdConnectWellKnown: []
+  - url: api.streetlights.smartylighting.com
+    protocol: amqp
+    protocolVersion: '0-9-1'
+    description: Secure connection (TLS) is available through port 8883, Secure connection not the one you expect though.
+    baseChannel: smartylighting/streetlights/1/0
 
 defaultContentType: application/json
 
@@ -42,10 +47,16 @@ channels:
     parameters:
       - $ref: '#/components/parameters/streetlightId'
     subscribe:
-      summary: Receive information about environmental lighting conditions of a particular streetlight.
+      summary: Lighting conditions
+      description: |
+        This is a long description of the streetlight measured event. We can put as many things as we wish here. Even **HTML** and some lists:
+
+        * item 1
+        * item 2
+
       operationId: receiveLightMeasurement
       traits:
-        - 
+        -
           - $ref: '#/components/traits/docs'
           - headerId: 'lighting-measured'
       message:
@@ -57,7 +68,7 @@ channels:
     publish:
       operationId: turnOn
       traits:
-        - 
+        -
           - $ref: '#/components/traits/docs'
           - headerId: 'turn-on'
       message:
@@ -69,7 +80,7 @@ channels:
     publish:
       operationId: turnOff
       traits:
-        - 
+        -
           - $ref: '#/components/traits/docs'
           - headerId: 'turn-off'
       message:
@@ -81,7 +92,7 @@ channels:
     publish:
       operationId: dimLight
       traits:
-        - 
+        -
           - $ref: '#/components/traits/docs'
           - headerId: 'dim'
       message:
@@ -95,7 +106,7 @@ components:
       summary: Inform about environmental lighting conditions for a particular streetlight.
       contentType: application/json
       traits:
-        - 
+        -
           - $ref: '#/components/traits/docs'
           - headerId: 'message-light-measured'
       payload:
@@ -105,7 +116,7 @@ components:
       title: Turn on/off
       summary: Command a particular streetlight to turn the lights on or off.
       traits:
-        - 
+        -
           - $ref: '#/components/traits/docs'
           - headerId: 'message-turn-on-off'
       payload:
@@ -115,7 +126,7 @@ components:
       title: Dim light
       summary: Command a particular streetlight to dim the lights.
       traits:
-        - 
+        -
           - $ref: '#/components/traits/docs'
           - headerId: 'message-dim-light'
       payload:
@@ -124,6 +135,8 @@ components:
   schemas:
     lightMeasuredPayload:
       type: object
+      required:
+        - lumens
       properties:
         lumens:
           type: integer
@@ -195,6 +208,7 @@ components:
     openIdConnectWellKnown:
       type: openIdConnect
       openIdConnectUrl: 'https://authserver.example/.well-known'
+      description: Something here
 
   parameters:
     streetlightId:

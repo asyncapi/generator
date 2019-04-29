@@ -1,4 +1,82 @@
-<tr class="table__body__row">
+<div class="{{#if odd}}bg-grey-lightest{{else}}bg-grey-lighter{{/if}} {{#unless root}}pl-8{{/unless}} rounded">
+  <div class="js-prop {{#if open}}is-open{{/if}} cursor-pointer">
+    <div class="flex pb-2 property">
+      <div class="w-1/4" style="margin-top:-2px;">
+        <span class="text-sm">{{propName}}</span>
+        {{#if (equal prop.type 'object')}}
+        <svg class="expand" version="1.1" viewBox="0 0 24 24" x="0"
+          xmlns="http://www.w3.org/2000/svg" y="0">
+          <polygon points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "></polygon>
+        </svg>
+        {{/if}}
+        {{#if required}}
+          <div class="text-red-dark text-xs">required</div>
+        {{/if}}
+      </div>
+
+      <div>
+        <div class="capitalize text-sm text-teal font-bold">
+          {{prop.type}}
+          {{#if prop.anyOf}}anyOf{{/if}}
+          {{#if prop.oneOf}}oneOf{{/if}}
+          <div class="inline-block">
+            {{#if prop.format}}
+              <span class="bg-yellow-dark font-bold no-underline text-black rounded lowercase ml-2"
+                style="height: 20px;font-size: 11px;padding: 3px;">{{prop.format}}</span>
+            {{/if}}
+            {{#unless (equal prop.minimum undefined)}}
+              <span class="bg-purple-dark font-bold no-underline text-white rounded lowercase ml-2"
+                style="height: 20px;font-size: 11px;padding: 3px;">>= {{prop.minimum}}</span>
+            {{/unless}}
+            {{#unless (equal prop.exclusiveMinimum undefined)}}
+              <span class="bg-purple-dark font-bold no-underline text-white rounded lowercase ml-2"
+                style="height: 20px;font-size: 11px;padding: 3px;">> {{prop.exclusiveMinimum}}</span>
+            {{/unless}}
+            {{#unless (equal prop.maximum undefined)}}
+              <span class="bg-purple-dark font-bold no-underline text-white rounded lowercase ml-2"
+                style="height: 20px;font-size: 11px;padding: 3px;"><= {{prop.maximum}}</span>
+            {{/unless}}
+            {{#unless (equal prop.exclusiveMaximum undefined)}}
+              <span class="bg-purple-dark font-bold no-underline text-white rounded lowercase ml-2"
+                style="height: 20px;font-size: 11px;padding: 3px;">< {{prop.exclusiveMaximum}}</span>
+            {{/unless}}
+          </div>
+        </div>
+
+        {{#if prop.descriptionAsHTML}}
+          <div class="text-sm markdown">{{{prop.descriptionAsHTML}}}</div>
+        {{/if}}
+        {{#unless (equal prop.default undefined)}}
+          <div class="text-xs">Default: {{prop.default}}</div>
+        {{/unless}}
+        {{#if prop.enum}}
+          <div class="text-xs">
+            Enum:
+            {{#each prop.enum as |value|}}
+              <span class="border text-orange rounded lowercase ml-1 py-0 px-2">{{stringify value}}</span>
+            {{/each}}
+          </div>
+        {{/if}}
+      </div>
+    </div>
+
+    <div class="children">
+      {{#if prop.properties}}
+        {{#each prop.properties}}
+          {{> schemaProp prop=. propName=@key odd=(not odd) required=(contains ../prop.required @key)}}
+        {{/each}}
+      {{/if}}
+
+      {{#if prop.oneOf}}
+        {{#each prop.oneOf}}
+          {{> schemaProp prop=. propName=@key odd=(not odd) required=(contains ../prop.required @key)}}
+        {{/each}}
+      {{/if}}
+    </div>
+  </div>
+</div>
+
+{{!-- <tr class="table__body__row">
   <td class="table__body__cell">{{{tree path}}}{{propName}} {{#if required}}<span class="required-badge">(Required)</span>{{/if}}</td>
   <td class="table__body__cell">{{prop.title}}</td>
   <td class="table__body__cell">
@@ -32,4 +110,4 @@
     {{> schemaProp prop=. propName=@key path=(concat ../path @key '.') required=(contains ../prop.items.required @key)}}
     {{/each}}
   {{/if}}
-{{/if}}
+{{/if}} --}}

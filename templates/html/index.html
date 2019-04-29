@@ -3,74 +3,76 @@
 <head>
   <meta charset="UTF-8">
   <title>{{asyncapi.info.title}} {{asyncapi.info.version}} documentation</title>
+  <link href="css/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/atom-one-dark.min.css" />
   <link rel="stylesheet" href="css/main.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css" />
 </head>
 <body>
-  <div class="navigation">
-    <div class="navigation__logo">
+  <div class="relative flex">
+    <div class="fixed pin-t pin-l pin-b w-64 bg-grey-lighter font-sans pt-8 pr-4 pb-4 pl-4">
       {{#if asyncapi.info.x-logo}}
-      <img class="navigation__logo__image" src="{{asyncapi.info.x-logo}}" alt="{{asyncapi.info.title}} logo">
+      <img src="{{asyncapi.info.x-logo}}" alt="{{asyncapi.info.title}} logo">
+      {{else}}
+      <h1 class="text-2xl font-thin">{{asyncapi.info.title}} {{asyncapi.info.version}}</h1>
       {{/if}}
-      <h1 class="navigation__logo__name">{{asyncapi.info.title}}</h1>
-      <div class="navigation__logo__version">{{asyncapi.info.version}}</div>
+
+      <ul class="text-sm mt-10 list-reset mt-2">
+        <li class="mb-3">
+          <a class="text-grey-darkest no-underline" href="#introduction">Introduction</a>
+        </li>
+        {{#if asyncapi.servers}}
+        <li class="mb-3">
+          <a class="text-grey-darkest no-underline" href="#servers">Servers</a>
+        </li>
+        {{/if}}
+      </ul>
+
+      {{#if asyncapi.channels}}
+      <h2 class="text-xs uppercase text-grey mt-10 mb-4 font-thin">Operations</h2>
+      <ul class="text-sm list-reset mt-2">
+        {{#each asyncapi.channels}}
+        <li>
+          {{#if ./publish}}
+            <a class="flex break-words no-underline mb-3 text-grey-darkest" href="#operation-publish-{{@key}}">
+              {{#if ./deprecated}}<span title="Deprecated"></span>{{/if}}
+              <span class="bg-blue-dark font-bold h-6 no-underline text-white uppercase p-1 rounded" style="height: 21px;font-size: 11px;" title="Publish">Pub</span>
+              <span class="pl-2" style="padding-top: 2px;">
+              {{#if ./publish.summary}}
+                {{./publish.summary}}
+              {{else}}
+                {{@key}}
+              {{/if}}
+              </span>
+            </a>
+          {{/if}}
+          {{#if ./subscribe}}
+            <a class="flex break-words no-underline mb-3 text-grey-darkest" href="#operation-subscribe-{{@key}}">
+              {{#if ./deprecated}}<span title="Deprecated"></span>{{/if}}
+              <span class="bg-green-dark font-bold no-underline text-white uppercase p-1 rounded" style="height: 21px;font-size: 11px;" title="Subscribe">Sub</span>
+              <span class="pl-2" style="padding-top: 2px;">
+              {{#if ./subscribe.summary}}
+                {{./subscribe.summary}}
+              {{else}}
+                {{@key}}
+              {{/if}}
+              </span>
+            </a>
+          {{/if}}
+          </a>
+        </li>
+        {{/each}}
+      </ul>
+      {{/if}}
     </div>
-    <h2 class="navigation__header">Introduction</h2>
-    <ul class="navigation__list">
-      <li clas="navigation__list__item">
-        <a class="navigation__list__item-text navigation__list__item-text--link" href="#info">Basic Information</a>
-      </li>
-      {{#if asyncapi.info.termsOfService}}
-      <li clas="navigation__list__item">
-        <a class="navigation__list__item-text navigation__list__item-text--link" href="#termsOfService">Terms of Service</a>
-      </li>
-      {{/if}}
-      {{#if asyncapi.servers}}
-      <li clas="navigation__list__item">
-        <a class="navigation__list__item-text navigation__list__item-text--link" href="#connectionDetails">Connection Details</a>
-      </li>
-      {{/if}}
-    </ul>
+    <div class="flex-1 leading-loose" style="margin-left: 256px;">
+      {{~> content ~}}
+    </div>
+    <div class="absolute pin-t pin-r pin-b" style="background-color: #263238;width:calc((100% - 256px) * 0.4);">
 
-    {{#if asyncapi.channels}}
-    <h2 class="navigation__header">Channels</h2>
-    <ul class="navigation__list">
-      {{#each asyncapi.channels}}
-      <li class="navigation__list__item">
-        <a class="navigation__list__item-text navigation__list__item-text--link" href="#channel-{{@key}}">
-          {{#if ./deprecated}}<span class="navigation__list__item__channel-indicator navigation__list__item__channel-indicator--deprecated" title="Deprecated"></span>{{/if}}
-          {{#if ./publish}}<span class="navigation__list__item__channel-indicator navigation__list__item__channel-indicator--publish" title="Publish"></span>{{/if}}
-          {{#if ./subscribe}}<span class="navigation__list__item__channel-indicator navigation__list__item__channel-indicator--subscribe" title="Subscribe"></span>{{/if}}
-          {{@key}}
-        </a>
-      </li>
-      {{/each}}
-    </ul>
-    {{/if}}
-
-    <h2 class="navigation__header">Messages</h2>
-    <ul class="navigation__list">
-      {{#each asyncapi.components.messages}}
-      <li clas="navigation__list__item">
-        <a class="navigation__list__item-text navigation__list__item-text--link" href="#message-{{@key}}">{{@key}}</a>
-      </li>
-      {{/each}}
-    </ul>
-
-    <h2 class="navigation__header">Schemas</h2>
-    <ul class="navigation__list">
-      {{#each asyncapi.components.schemas}}
-      <li clas="navigation__list__item">
-        <a class="navigation__list__item-text navigation__list__item-text--link" href="#schema-{{@key}}">{{@key}}</a>
-      </li>
-      {{/each}}
-    </ul>
+    </div>
   </div>
-  <div class="documentation">
-    {{~> content ~}}
-  </div>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" type="application/javascript"></script>
+  <script src="js/highlight.min.js" type="application/javascript"></script>
+  <script src="js/main.js" type="application/javascript"></script>
   <script type="application/javascript">
     function removeCurrentLinkSelection () {
       var links = document.querySelectorAll('.navigation__list__item-text--link');
@@ -101,22 +103,9 @@
       }
     }
 
-    function bindExpandButtons () {
-      var buttons = document.querySelectorAll('.table__expand');
-
-      for(var i=0; i < buttons.length; i++) {
-        buttons[i].addEventListener('click', function (e) {
-          var tableRow = document.querySelector('[data-nested-index="' + e.target.attributes['data-index'].value + '"]');
-          tableRow.classList.toggle('table__body__row--with-nested--expanded');
-          e.target.classList.toggle('table__expand--open');
-        });
-      }
-    }
-
     window.addEventListener('hashchange', selectCurrentLink);
     window.addEventListener('load', selectCurrentLink);
     window.addEventListener('load', highlightCode);
-    window.addEventListener('load', bindExpandButtons);
   </script>
 </body>
 </html>

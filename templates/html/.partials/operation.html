@@ -1,6 +1,44 @@
-<div class="operation {{cssClasses}}">
-{{{operation.summaryAsHTML}}}
-{{{operation.descriptionAsHTML}}}
+<a name="operation-{{operationName}}-{{channelName}}"></a>
+<div class="operation pt-8 pb-8">
+  <h3 class="font-mono text-base">
+    {{#if (equal operationName 'publish')}}
+    <span class="font-mono border border-blue text-blue uppercase p-1 rounded" title="Publish">Pub</span>
+    {{/if}}
+    {{#if (equal operationName 'subscribe')}}
+    <span class="font-mono border border-green-dark text-green-dark uppercase p-1 rounded" title="Subscribe">Sub</span>
+    {{/if}}
+    {{channelName}}
+  </h3>
 
-{{~> message message=operation.message ~}}
+  <p class="text-grey text-sm">{{operation.summary}}</p>
+  <div class="mt-4 mb-4 markdown">{{{operation.descriptionAsHTML}}}</div>
+
+  {{#if operation.message.payload}}
+    <p class="text-grey text-sm">{{operation.message.summary}}</p>
+    <div class="mt-4 mb-4 markdown">{{{operation.message.descriptionAsHTML}}}</div>
+    {{>schema schema=operation.message.payload schemaName=Payload}}
+  {{/if}}
+
+  {{#if operation.message.oneOf}}
+    {{#each operation.message.oneOf as |msg|}}
+      <div class="bg-grey-lighter rounded p-4 mt-2">
+        <div class="text-sm text-grey-darker mb-2">
+          <span class="text-grey-darker font-bold mr-2">#{{inc @index}}</span>
+          {{#if msg.title}}
+            {{msg.title}}
+            {{#if msg.name}}
+              <span class="border text-orange rounded lowercase text-xs ml-3 py-0 px-2">{{msg.name}}</span>
+            {{/if}}
+          {{else}}
+            {{#if msg.name}}
+              <span class="border text-orange rounded lowercase text-s py-0 px-2">{{msg.name}}</span>
+            {{/if}}
+          {{/if}}
+        </div>
+        <p class="text-grey-dark text-sm">{{msg.summary}}</p>
+        <div class="mt-4 mb-4 markdown">{{{msg.descriptionAsHTML}}}</div>
+        {{>schema schema=msg.payload schemaName='Payload'}}
+      </div>
+    {{/each}}
+  {{/if}}
 </div>

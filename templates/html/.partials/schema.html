@@ -44,6 +44,7 @@
   </table>
   {{/if}}
 
+{{#unless hideExample}}
 {{#if schema.example}}
 <h4>Example</h4>
 
@@ -55,4 +56,5 @@
   <pre class="hljs"><code class="json">{{~schema.generatedExample~}}</code></pre>
   {{/if}}
 {{/if}}
+{{/unless}}
 </div>

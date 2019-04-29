@@ -18,9 +18,9 @@
 
 <h4>Payload</h4>
 
-{{> schema schema=operation.payload schemaName='Message Payload' hideTitle=true}}
+{{> schema schema=operation.payload schemaName='Message Payload' hideTitle=true hideExample=true}}
 
-{{#if operation.example}}
+{{#if operation.formattedExample}}
 <h4>Example</h4>
 
 <pre class="hljs"><code class="json">{{~operation.formattedExample~}}</code></pre>

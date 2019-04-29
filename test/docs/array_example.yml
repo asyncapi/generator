@@ -1,0 +1,42 @@
+asyncapi: '1.1.0'
+info:
+  title: Array-level example
+  version: '1.0.0'
+
+topics:
+  array_example:
+    subscribe:
+      $ref: '#/components/messages/array_example'
+  number_example:
+    subscribe:
+      $ref: '#/components/messages/number_example'
+  no_example:
+    subscribe:
+      $ref: '#/components/messages/no_example'
+
+components:
+  messages:
+    array_example:
+      description: Array with example
+      payload:
+        $ref: '#/components/schemas/schema1'
+    number_example:
+      description: Number with example
+      payload:
+        $ref: '#/components/schemas/schema2'
+    no_example:
+      description: No examples provided
+      payload:
+        $ref: '#/components/schemas/schema3'
+
+  schemas:
+    schema1:
+      type: array
+      items:
+        type: number
+      example: [35.4, 38.6, 46.7, 66.5]
+    schema2:
+      type: number
+      example: 52.8
+    schema3:
+      type: number

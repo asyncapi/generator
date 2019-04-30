@@ -69,13 +69,13 @@
     {{#if operation.message.hasPayloadExample}}
       <input type="radio" checked id="example-payload-{{channelName}}-{{operation.message.uid}}" name="tab" class="examples-payload-tab hidden" {{#unless operation.message.hasPayloadExample}}disabled{{/unless}}/>
       <label for="example-payload-{{channelName}}-{{operation.message.uid}}"
-        class="py-1 px-2 mr-2 mb-4 text-grey-lightest text-sm border rounded focus:outline-none cursor-pointer {{#unless operation.message.hasPayloadExample}}opacity-25{{/unless}}" {{#unless operation.message.hasPayloadExample}}title="This message does not have payload"{{/unless}}>Payload</label>
+        class="py-1 px-2 mr-2 mb-4 text-grey-lightest text-sm border rounded focus:outline-none cursor-pointer {{#unless operation.message.hasPayloadExample}}text-grey-dark border-grey-dark opacity-25{{else}}text-grey-lightest{{/unless}}" {{#unless operation.message.hasPayloadExample}}title="This message does not have payload"{{/unless}}>Payload</label>
     {{/if}}
 
 
     <input type="radio" id="example-headers-{{channelName}}-{{operation.message.uid}}" name="tab" class="examples-headers-tab hidden" {{#unless operation.message.hasHeadersExample}}disabled{{/unless}} />
     <label for="example-headers-{{channelName}}-{{operation.message.uid}}"
-      class="py-1 px-2 mr-2 mb-4 text-grey-lightest text-sm border rounded focus:outline-none cursor-pointer {{#unless operation.message.hasHeadersExample}}opacity-25{{/unless}}" {{#unless operation.message.hasHeadersExample}}title="This message does not have headers"{{/unless}}>Headers</label>
+      class="py-1 px-2 mr-2 mb-4 text-sm border rounded focus:outline-none cursor-pointer {{#unless operation.message.hasHeadersExample}}text-grey-dark border-grey-dark opacity-25{{else}}text-grey-lightest{{/unless}}" {{#unless operation.message.hasHeadersExample}}title="This message does not have headers"{{/unless}}>Headers</label>
 
     <div class="payload-examples mt-4">
       {{#if operation.message.formattedPayloadExamples}}

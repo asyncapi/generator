@@ -2,7 +2,7 @@
 <h2 class="mb-4 ml-8">Operations</h2>
 
 {{#each asyncapi.channels as |channel channelName|}}
-  <div class="flex">
+  <div class="responsive-container">
     {{#if channel.publish}}
       {{~>operation operation=channel.publish operationName='publish' channelName=channelName ~}}
     {{/if}}

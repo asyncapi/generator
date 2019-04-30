@@ -9,7 +9,7 @@
 </head>
 <body>
   <div class="relative flex">
-    <div class="fixed pin-t pin-l pin-b w-64 bg-grey-lighter font-sans pt-8 pr-4 pb-4 pl-4 sm:hidden md:hidden lg:hidden xl:block">
+    <div class="sidebar-panel fixed pin-t pin-l pin-b w-64 bg-grey-lighter font-sans pt-8 pr-4 pb-4 pl-4">
       {{#if asyncapi.info.x-logo}}
       <img src="{{asyncapi.info.x-logo}}" alt="{{asyncapi.info.title}} logo">
       {{else}}
@@ -64,10 +64,10 @@
       </ul>
       {{/if}}
     </div>
-    <div class="flex-1 leading-loose z-10" style="margin-left: 256px;">
+    <div class="content-panel flex-1 leading-loose z-10">
       {{~> content ~}}
     </div>
-    <div class="absolute pin-t pin-r pin-b sm:hidden md:hidden lg:block xl:block" style="background-color: #263238;width:calc((100% - 256px) * 0.4);"></div>
+    <div class="examples-panel absolute pin-t pin-r pin-b"></div>
   </div>
   <script src="js/highlight.min.js" type="application/javascript"></script>
   <script src="js/main.js" type="application/javascript"></script>

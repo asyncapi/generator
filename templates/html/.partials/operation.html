@@ -21,7 +21,11 @@
         <p class="text-grey-dark text-sm">{{operation.message.summary}}</p>
         <div class="mt-4 mb-4 markdown">{{{operation.message.descriptionAsHTML}}}</div>
         {{>schema schema=operation.message.payload schemaName='Payload' open=true}}
-        {{>schema schema=(toObj operation.message.headers) schemaName='Headers' open=true}}
+        {{#if operation.message.headers}}
+          <div class="mt-4">
+            {{>schema schema=(toObj operation.message.headers) schemaName='Headers' open=true}}
+          </div>
+        {{/if}}
       </div>
     {{/if}}
 
@@ -34,18 +38,22 @@
             {{#if msg.title}}
               {{msg.title}}
               {{#if msg.name}}
-                <span class="border text-orange rounded lowercase text-xs ml-3 py-0 px-2">{{msg.name}}</span>
+                <span class="border text-orange rounded text-xs ml-3 py-0 px-2">{{msg.name}}</span>
               {{/if}}
             {{else}}
               {{#if msg.name}}
-                <span class="border text-orange rounded lowercase text-s py-0 px-2">{{msg.name}}</span>
+                <span class="border text-orange rounded text-s py-0 px-2">{{msg.name}}</span>
               {{/if}}
             {{/if}}
           </div>
           <p class="text-grey-dark text-sm">{{msg.summary}}</p>
           <div class="mt-4 mb-4 markdown">{{{msg.descriptionAsHTML}}}</div>
           {{>schema schema=msg.payload schemaName='Payload' open=false}}
-          {{>schema schema=(toObj operation.message.headers) schemaName='Headers' open=true}}
+          {{#if msg.headers}}
+            <div class="mt-4">
+              {{>schema schema=(toObj msg.headers) schemaName='Headers' open=false}}
+            </div>
+          {{/if}}
         </div>
       {{/each}}
     {{/if}}

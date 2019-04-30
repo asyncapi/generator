@@ -33,6 +33,16 @@ channels:
       message:
         $ref: '#/components/messages/lightMeasured'
 
+  action/{streetlightId}/turn/off:
+    parameters:
+      - $ref: '#/components/parameters/streetlightId'
+    publish:
+      operationId: turnOff
+      message:
+        oneOf:
+          - $ref: '#/components/messages/turnOn'
+          - $ref: '#/components/messages/turnOff'
+
 components:
   messages:
     lightMeasured:
@@ -55,6 +65,56 @@ components:
           $ref: "#/components/schemas/applicationInstanceId"
       payload:
         $ref: "#/components/schemas/lightMeasuredPayload"
+    turnOn:
+      name: turnOn
+      title: Turn on
+      summary: Command a particular streetlight to turn the lights on.
+      headers:
+        MQMD:
+          type: object
+          properties:
+            CorrelId:
+              type: string
+              minLength: 24
+              maxLength: 24
+              format: binary
+        applicationInstanceId:
+          $ref: "#/components/schemas/applicationInstanceId"
+      payload:
+        type: object
+        properties:
+          command:
+            type: string
+            enum:
+              - on
+            description: Turn on the light.
+          sentAt:
+            $ref: "#/components/schemas/sentAt"
+    turnOff:
+      name: turnOff
+      title: Turn off
+      summary: Command a particular streetlight to turn the lights off.
+      headers:
+        MQMD:
+          type: object
+          properties:
+            CorrelId:
+              type: string
+              minLength: 24
+              maxLength: 24
+              format: binary
+        applicationInstanceId:
+          $ref: "#/components/schemas/applicationInstanceId"
+      payload:
+        type: object
+        properties:
+          command:
+            type: string
+            enum:
+              - off
+            description: Turn off the light.
+          sentAt:
+            $ref: "#/components/schemas/sentAt"
 
   schemas:
     lightMeasuredPayload:

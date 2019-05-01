@@ -33,7 +33,7 @@ channels:
       message:
         $ref: '#/components/messages/lightMeasured'
 
-  action/{streetlightId}/turn/off:
+  action/{streetlightId}/switch:
     parameters:
       - $ref: '#/components/parameters/streetlightId'
     publish:
@@ -86,7 +86,7 @@ components:
           command:
             type: string
             enum:
-              - on
+              - 'on'
             description: Turn on the light.
           sentAt:
             $ref: "#/components/schemas/sentAt"
@@ -111,7 +111,7 @@ components:
           command:
             type: string
             enum:
-              - off
+              - 'off'
             description: Turn off the light.
           sentAt:
             $ref: "#/components/schemas/sentAt"

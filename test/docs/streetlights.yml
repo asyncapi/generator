@@ -150,8 +150,8 @@ components:
         command:
           type: string
           enum:
-            - on
-            - off
+            - 'on'
+            - 'off'
           description: Whether to turn on or off the light.
         sentAt:
           $ref: "#/components/schemas/sentAt"

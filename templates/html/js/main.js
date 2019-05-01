@@ -39,7 +39,18 @@ function highlightCode() {
   }
 }
 
+function bindMenuItems() {
+  var items = document.querySelectorAll('.js-menu-item');
+
+  for (var i = 0; i < items.length; i++) {
+    items[i].addEventListener('click', function () {
+      document.getElementById("burger-menu").checked = false;
+    });
+  }
+}
+
 window.addEventListener('hashchange', selectCurrentLink);
 window.addEventListener('load', selectCurrentLink);
 window.addEventListener('load', highlightCode);
 window.addEventListener('load', bindExpanders);
+window.addEventListener('load', bindMenuItems);

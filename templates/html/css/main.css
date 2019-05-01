@@ -6,6 +6,11 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: lighter;
 }
 
+.string-chunk {
+  display:inline-block;
+  word-break: break-all;
+}
+
 .markdown h1,
 .markdown h2,
 .markdown h3,
@@ -90,6 +95,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .sidebar-panel {
   display: none;
+  overflow: auto;
 }
 
 .examples-panel {
@@ -100,6 +106,7 @@ h1, h2, h3, h4, h5, h6 {
   background-color: #263238;
   margin-top: 0;
   margin-bottom: 0;
+  z-index: 1;
 }
 
 @media only screen and (min-width: 992px) {
@@ -132,5 +139,89 @@ h1, h2, h3, h4, h5, h6 {
     margin-top: 2rem;
     margin-bottom: 2rem;
     width: 40%;
+  }
+}
+
+/* BURGER MENU */
+
+#burger-menu {
+  display: none;
+}
+
+@media only screen and (min-width: 992px) {
+  #burger-menu + label {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 991px) {
+  #burger-menu + label {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    position: fixed;
+    background: #4dc0b5;
+    width: 60px;
+    height: 60px;
+    bottom: 60px;
+    right: 20px;
+    border-radius: 50%;
+    z-index: 100;
+  }
+  #burger-menu + label .wrapper {
+    display: block;
+    align-self: center;
+    width: 30px;
+    height: 30px;
+  }
+  #burger-menu + label .wrapper span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    margin-top: 6px;
+    background: white;
+    transition: .5s;
+  }
+  #burger-menu + label:hover {
+    cursor: pointer;
+  }
+  #burger-menu:checked + label .wrapper {
+    margin-top: 12px;
+  }
+  #burger-menu:checked + label .wrapper span {
+    opacity: 0;
+    top: 50%;
+  }
+  #burger-menu:checked + label .wrapper span:first-child {
+    opacity: 1;
+    transform: rotate(405deg);
+  }
+  #burger-menu:checked + label .wrapper span:last-child {
+    opacity: 1;
+    transform: rotate(-405deg);
+    margin-top: -9px;
+  }
+  #burger-menu ~ .sidebar-panel {
+    position: fixed;
+    display: block;
+    height: 0;
+    top: -500px;
+    overflow: hidden;
+    transition: .2s;
+    z-index: 90;
+    opacity: 0;
+  }
+  #burger-menu:checked ~ .sidebar-panel {
+    width: 100%;
+    height: 100%;
+    top: 0;
+    opacity: 1;
+    overflow: auto;
+    text-align: center;
+  }
+  #burger-menu:checked ~ .sidebar-panel .sidebar-panel__content {
+    display: inline-block;
+    text-align: center;
+    margin: 0 auto 200px auto;
   }
 }

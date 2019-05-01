@@ -30,6 +30,12 @@ module.exports = (Handlebars, _) => {
     return array.join(separator);
   });
 
+  Handlebars.registerHelper('split', (string, separator) => {
+    if (typeof string !== 'string') return string;
+    const regex = new RegExp(separator, 'g');
+    return string.split(regex);
+  });
+
   Handlebars.registerHelper('firstKey', (obj) => {
     if (!obj) return '';
     return Object.keys(obj)[0];

@@ -9,7 +9,7 @@
       <div class="flex">
         <div>
           <div class="pr-4 font-mono">
-            {{server.url}}
+            {{>slicedString string=server.url}}
 
             {{#if server.protocolVersion}}
             <span class="bg-teal font-bold no-underline text-white uppercase rounded ml-2"

@@ -8,7 +8,7 @@
       {{#if (equal operationName 'subscribe')}}
       <span class="font-mono border border-green-dark text-green-dark uppercase p-1 rounded" title="Subscribe">Sub</span>
       {{/if}}
-      {{channelName}}
+      {{>slicedString string=channelName}}
     </h3>
 
     <p class="text-grey text-sm">{{operation.summary}}</p>

@@ -2,7 +2,7 @@
   <div class="{{#if open}}is-open{{/if}}">
     <div class="{{#if (isExpandable prop)}}js-prop cursor-pointer py-2{{/if}} flex property">
       <div class="pr-4" style="margin-top:-2px; min-width: 25%;">
-        <span class="text-sm {{#if specialName}}italic text-grey{{/if}}">{{propName}}</span>
+        <span class="text-sm {{#if specialName}}italic text-grey{{/if}}" style="word-break: break-word;">{{propName}}</span>
         {{#if (isExpandable prop)}}
         <svg class="expand" version="1.1" viewBox="0 0 24 24" x="0"
           xmlns="http://www.w3.org/2000/svg" y="0">

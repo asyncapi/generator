@@ -2,33 +2,13 @@
 
 function bindExpanders() {
   var props = document.querySelectorAll('.js-prop');
-  props.forEach(function (prop) {
+  for (let index = 0; index < props.length; index++) {
+    const prop = props[index];
     prop.addEventListener('click', function (ev) {
       ev.stopPropagation();
       ev.currentTarget.parentElement.classList.toggle('is-open');
     });
-  });
-}
-
-function removeCurrentLinkSelection() {
-  var links = document.querySelectorAll('.navigation__list__item-text--link');
-  if (!links) return;
-
-  for (var i = 0; i < links.length; i++) {
-    links[i].classList.remove('navigation__list__item-text--link--active');
   }
-}
-
-function selectCurrentLink() {
-  removeCurrentLinkSelection();
-
-  var hash = window.location.hash;
-  if (!hash) return;
-
-  var link = document.querySelector("a[href='" + hash + "']");
-  if (!link) return;
-
-  link.classList.add('navigation__list__item-text--link--active');
 }
 
 function highlightCode() {
@@ -49,8 +29,6 @@ function bindMenuItems() {
   }
 }
 
-window.addEventListener('hashchange', selectCurrentLink);
-window.addEventListener('load', selectCurrentLink);
 window.addEventListener('load', highlightCode);
 window.addEventListener('load', bindExpanders);
 window.addEventListener('load', bindMenuItems);

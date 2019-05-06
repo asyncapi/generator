@@ -2,12 +2,8 @@
 
 {{> security}}
 
-{{#if asyncapi.topics}}
-{{> topics }}
-{{/if}}
-
-{{#if asyncapi.events}}
-{{> events }}
+{{#if asyncapi.channels}}
+{{> channels }}
 {{/if}}
 
 {{> messages}}

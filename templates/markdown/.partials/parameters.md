@@ -1,5 +1,5 @@
 {{#unless hideTitle}}
-#### Topic Parameters
+#### Channel Parameters
 {{/unless}}
 
 {{#each params as |param|}}

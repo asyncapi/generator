@@ -6,7 +6,7 @@
 
 {{#if asyncapi.servers}}
 <a name="servers"></a>
-## Connection details
+## Servers
 
 <table>
   <thead>

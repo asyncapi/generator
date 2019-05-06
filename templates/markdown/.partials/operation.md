@@ -24,20 +24,20 @@
 
 ##### Payload
 
-{{> schema schema=operation.payload schemaName='Message Payload' hideTitle=true}}
+{{> schema schema=operation.message.payload schemaName='Message Payload' hideTitle=true}}
 
-{{#if operation.payload.example}}
+{{#if operation.message.payload.example}}
 ###### Example
 
 ```json
-{{{operation.formattedExample}}}
+{{{operation.message.formattedExample}}}
 ```
 {{else}}
-{{#if operation.generatedPayloadExample}}
+{{#if operation.message.generatedPayloadExample}}
 ###### Example of payload _(generated)_
 
 ```json
-{{{operation.generatedPayloadExample}}}
+{{{operation.message.generatedPayloadExample}}}
 ```
 {{/if}}
 {{/if}}

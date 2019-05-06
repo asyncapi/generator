@@ -1,5 +1,6 @@
 asyncapi: '2.0.0-rc1'
 id: 'urn:array.example.com'
+
 info:
   title: Array-level example
   version: '1.0.0'

@@ -1,7 +1,5 @@
-{{> info}}
-{{> security}}
-{{#if asyncapi.topics}}
-{{~> topics ~}}
+{{> introduction}}
+{{> servers}}
+{{#if asyncapi.channels}}
+{{~> operations ~}}
 {{/if}}
-{{> messages}}
-{{> schemas}}

@@ -1,7 +1,7 @@
-<a name="message-{{messageName}}"></a>
+<a name="message-{{message.name}}"></a>
 <div class="message">
   <h3 class="message__header">
-    {{messageName}}
+    {{message.name}}
     {{#if message.deprecated}}
     <span class="operation-badge operation-badge--deprecated message__header__operation-badge">Deprecated</span>
     {{/if}}
@@ -40,9 +40,9 @@
     {{/if}}
   {{/if}}
 
-{{#if operation.tags}}
+{{#if message.tags}}
 <h4>Tags</h4>
 
-{{> tags tags=operation.tags}}
+{{> tags tags=message.tags}}
 {{/if}}
 </div>

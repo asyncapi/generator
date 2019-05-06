@@ -1,40 +1,109 @@
-<div class="operation {{cssClasses}}">
-{{{operation.summaryAsHTML}}}
-{{{operation.descriptionAsHTML}}}
+<a name="operation-{{operationName}}-{{channelName}}"></a>
+<div class="center-block p-8">
+  <div class="operation pt-8 pb-8">
+    <h3 class="font-mono text-base">
+      {{#if (equal operationName 'publish')}}
+      <span class="font-mono border border-blue text-blue uppercase p-1 rounded" title="Publish">Pub</span>
+      {{/if}}
+      {{#if (equal operationName 'subscribe')}}
+      <span class="font-mono border border-green-dark text-green-dark uppercase p-1 rounded" title="Subscribe">Sub</span>
+      {{/if}}
+      {{>slicedString string=channelName}}
+    </h3>
 
-{{#if operation.headers}}
-<h4>Headers</h4>
+    <p class="text-grey text-sm">{{operation.summary}}</p>
+    <div class="mt-4 mb-4 markdown">{{{operation.descriptionAsHTML}}}</div>
 
-{{> schema schema=operation.headers schemaName='Message Headers' hideTitle=true}}
+    {{#if operation.message.payload}}
+      <p>Accepts the following message:</p>
 
-{{#unless operation.example}}
-{{#if operation.generatedHeadersExample}}
-  <h4>Example of headers <em>(generated)</em></h4>
+      <div class="bg-grey-lighter rounded p-4 mt-2">
+        <p class="text-grey-dark text-sm">{{operation.message.summary}}</p>
+        <div class="mt-4 mb-4 markdown">{{{operation.message.descriptionAsHTML}}}</div>
+        {{>schema schema=operation.message.payload schemaName='Payload' open=true}}
+        {{#if operation.message.headers}}
+          <div class="mt-4">
+            {{>schema schema=(toObj operation.message.headers) schemaName='Headers' open=true}}
+          </div>
+        {{/if}}
+      </div>
+    {{/if}}
 
-  <pre class="hljs"><code class="json">{{~operation.generatedHeadersExample~}}</code></pre>
-{{/if}}
-{{/unless}}
-{{/if}}
+    {{#if operation.message.oneOf}}
+      <p>Accepts <strong>one of</strong> the following messages:</p>
+      {{#each operation.message.oneOf as |msg|}}
+        <div class="bg-grey-lighter rounded p-4 mt-2">
+          <div class="text-sm text-grey-darker mb-2">
+            <span class="text-grey-darker font-bold mr-2">#{{inc @index}}</span>
+            {{#if msg.title}}
+              {{msg.title}}
+              {{#if msg.name}}
+                <span class="border text-orange rounded text-xs ml-3 py-0 px-2">{{msg.name}}</span>
+              {{/if}}
+            {{else}}
+              {{#if msg.name}}
+                <span class="border text-orange rounded text-s py-0 px-2">{{msg.name}}</span>
+              {{/if}}
+            {{/if}}
+          </div>
+          <p class="text-grey-dark text-sm">{{msg.summary}}</p>
+          <div class="mt-4 mb-4 markdown">{{{msg.descriptionAsHTML}}}</div>
+          {{>schema schema=msg.payload schemaName='Payload' open=false}}
+          {{#if msg.headers}}
+            <div class="mt-4">
+              {{>schema schema=(toObj msg.headers) schemaName='Headers' open=false}}
+            </div>
+          {{/if}}
+        </div>
+      {{/each}}
+    {{/if}}
 
-<h4>Payload</h4>
-
-{{> schema schema=operation.payload schemaName='Message Payload' hideTitle=true hideExample=true}}
-
-{{#if operation.formattedExample}}
-<h4>Example</h4>
-
-<pre class="hljs"><code class="json">{{~operation.formattedExample~}}</code></pre>
-{{else}}
-  {{#if operation.generatedPayloadExample}}
-  <h4>Example of payload <em>(generated)</em></h4>
-
-  <pre class="hljs"><code class="json">{{~operation.generatedPayloadExample~}}</code></pre>
-  {{/if}}
-{{/if}}
-
-{{#if operation.tags}}
-<h4>Tags</h4>
-
-{{> tags tags=operation.tags}}
-{{/if}}
+    {{>tags tags=operation.tags}}
+  </div>
 </div>
+
+<div class="right-block p-8">
+  <h4 class="text-lg text-white mb-4">Examples</h4>
+
+  <form>
+    {{#if operation.message.hasPayloadExample}}
+      <input type="radio" checked id="example-payload-{{channelName}}-{{operation.message.uid}}" name="tab" class="examples-payload-tab hidden" {{#unless operation.message.hasPayloadExample}}disabled{{/unless}}/>
+      <label for="example-payload-{{channelName}}-{{operation.message.uid}}"
+        class="py-1 px-2 mr-2 mb-4 text-grey-lightest text-sm border rounded focus:outline-none cursor-pointer {{#unless operation.message.hasPayloadExample}}text-grey-dark border-grey-dark opacity-25{{else}}text-grey-lightest{{/unless}}" {{#unless operation.message.hasPayloadExample}}title="This message does not have payload"{{/unless}}>Payload</label>
+    {{/if}}
+
+
+    <input type="radio" id="example-headers-{{channelName}}-{{operation.message.uid}}" name="tab" class="examples-headers-tab hidden" {{#unless operation.message.hasHeadersExample}}disabled{{/unless}} />
+    <label for="example-headers-{{channelName}}-{{operation.message.uid}}"
+      class="py-1 px-2 mr-2 mb-4 text-sm border rounded focus:outline-none cursor-pointer {{#unless operation.message.hasHeadersExample}}text-grey-dark border-grey-dark opacity-25{{else}}text-grey-lightest{{/unless}}" {{#unless operation.message.hasHeadersExample}}title="This message does not have headers"{{/unless}}>Headers</label>
+
+    <div class="payload-examples mt-4">
+      {{#if operation.message.formattedPayloadExamples}}
+        {{#each operation.message.formattedPayloadExamples as |ex|}}
+          <h6 class="text-xs font-bold text-grey-darker">Example #{{inc @index}}</h6>
+          <pre class="hljs mb-4 border border-grey-darkest rounded"><code>{{{ex}}}</code></pre>
+        {{/each}}
+      {{else}}
+        {{#if operation.message.generatedPayloadExample}}
+          <pre class="hljs mb-4 border border-grey-darkest rounded"><code>{{{operation.message.generatedPayloadExample}}}</code></pre>
+          <h6 class="text-xs font-bold text-grey-darker italic">This example has been generated automatically.</h6>
+        {{/if}}
+      {{/if}}
+    </div>
+
+    <div class="headers-examples mt-4">
+      {{#if operation.message.formattedHeadersExamples}}
+        {{#each operation.message.formattedHeadersExamples as |ex|}}
+          <h6 class="text-xs font-bold text-grey-darker">Example #{{inc @index}}</h6>
+          <pre class="hljs mb-4 border border-grey-darkest rounded"><code>{{{ex}}}</code></pre>
+        {{/each}}
+      {{else}}
+        {{#if operation.message.generatedHeadersExample}}
+          <pre class="hljs mb-4 border border-grey-darkest rounded"><code>{{{operation.message.generatedHeadersExample}}}</code></pre>
+          <h6 class="text-xs font-bold text-grey-darker italic">This example has been generated automatically.</h6>
+        {{/if}}
+      {{/if}}
+    </div>
+  </form>
+</div>
+

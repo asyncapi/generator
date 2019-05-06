@@ -12,24 +12,10 @@
 * [Terms of Service](#termsOfService)
 {{/if}}
 {{#if asyncapi.servers}}
-* [Connection Details](#servers)
+* [Servers](#servers)
 {{/if}}
-{{#if asyncapi.topics}}
-* [Topics](#topics)
+{{#if asyncapi.channels}}
+* [Channels](#channels)
 {{/if}}
-{{#if asyncapi.events}}
-* [Events](#events)
-  - [Events a client can receive](#events-receive)
-  - [Events a client can send](#events-send)
-{{/if}}
-{{#if asyncapi.stream}}
-* [Stream](#stream)
-{{/if}}
-{{#unless asyncapi.__noMessages}}
-* [Messages](#messages)
-{{/unless}}
-{{#unless asyncapi.__noSchemas}}
-* [Schemas](#schemas)
-{{/unless}}
 
 {{> content}}

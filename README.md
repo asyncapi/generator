@@ -22,7 +22,7 @@ npm install -g asyncapi-generator
 
     -V, --version                 output the version number
     -o, --output <outputDir>      directory where to put the generated files (defaults to current directory)
-    -t, --templates <templateDir> directory where templates are located (defaults to internal templates directory)
+    -t, --templates <templatesDir> directory where templates are located (defaults to internal templates directory)
     -h, --help                    output usage information
 ```
 
@@ -49,7 +49,7 @@ Generates a file of a given template, and returns the result as a string.
 |Name|Type|Required|Description|
 |----|----|--------|-----------|
 |options|`object`|Yes|An object containing all the options.|
-|options.templateDir|`string`|No|Directory where to find the templates. Defaults to internal templates directory.|
+|options.templatesDir|`string`|No|Directory where to find the templates. Defaults to internal templates directory.|
 |options.template|`string`|Yes|Name of the template you want to use.|
 |options.file|`string`|Yes|Path to the file you want to generate.|
 |options.config|`object`|Yes|An object containing configuration options.|
@@ -83,7 +83,7 @@ Gets a file of a given template, and returns the its content as a string.
 |Name|Type|Required|Description|
 |----|----|--------|-----------|
 |options|`object`|Yes|An object containing all the options.|
-|options.templateDir|`string`|No|Directory where to find the templates. Defaults to internal templates directory.|
+|options.templatesDir|`string`|No|Directory where to find the templates. Defaults to internal templates directory.|
 |options.template|`string`|Yes|Name of the template you want to use.|
 |options.file|`string`|Yes|Path to the file you want to generate.|
 

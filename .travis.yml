@@ -5,4 +5,4 @@ deploy:
   provider: script
   script: "cp .npmrc.template $HOME/.npmrc && npm publish"
   on:
-    branch: master
+    tags: true

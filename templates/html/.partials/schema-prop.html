@@ -57,7 +57,7 @@
                   style="height: 20px;font-size: 11px;padding: 3px;">length >= {{prop.minLength}}</span>
             {{/unless}}
             {{#unless (equal prop.pattern undefined)}}
-            <span class="bg-purple-dark font-bold no-underline text-white rounded lowercase ml-2"
+            <span class="bg-purple-dark font-bold no-underline text-white rounded ml-2"
                   style="height: 20px;font-size: 11px;padding: 3px;">must match {{prop.pattern}}</span>
             {{/unless}}
             {{#if prop.uniqueItems}}
@@ -77,7 +77,7 @@
           <div class="text-xs">
             Enum:
             {{#each prop.enum as |value|}}
-              <span class="border text-orange rounded lowercase ml-1 py-0 px-2">{{stringify value}}</span>
+              <span class="border text-orange rounded ml-1 py-0 px-2">{{stringify value}}</span>
             {{/each}}
           </div>
         {{/if}}

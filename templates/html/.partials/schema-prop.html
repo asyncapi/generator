@@ -71,12 +71,23 @@
           <div class="text-sm markdown">{{{prop.descriptionAsHTML}}}</div>
         {{/if}}
         {{#unless (equal prop.default undefined)}}
-          <div class="text-xs">Default: {{prop.default}}</div>
+          <div class="text-xs">Default: {{stringify prop.default}}</div>
+        {{/unless}}
+        {{#unless (equal prop.const undefined)}}
+          <div class="text-xs">Const: {{stringify prop.const}}</div>
         {{/unless}}
         {{#if prop.enum}}
           <div class="text-xs">
             Enum:
             {{#each prop.enum as |value|}}
+              <span class="border text-orange rounded ml-1 py-0 px-2">{{stringify value}}</span>
+            {{/each}}
+          </div>
+        {{/if}}
+        {{#if prop.examples}}
+          <div class="text-xs">
+            Examples:
+            {{#each prop.examples as |value|}}
               <span class="border text-orange rounded ml-1 py-0 px-2">{{stringify value}}</span>
             {{/each}}
           </div>

@@ -23,7 +23,6 @@
       <td>{{server.scheme}}</td>
       <td>{{{server.description}}}</td>
     </tr>
-
     {{#if server.variables}}
     <tr>
       <td colspan="3">

@@ -17,7 +17,11 @@ let template;
 const parseOutput = dir => path.resolve(dir);
 const parseJSON = value => {
   try { return JSON.parse(value); }
-  catch (e) { return {}; }
+  catch (e) {
+    console.log(yellow(`Warning: values of --params will not be available in the templates, there was a error parsing: ${value}`));
+    console.log(magenta(e.message));
+    return {};
+  }
 };
 
 const showErrorAndExit = err => {

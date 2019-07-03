@@ -11,7 +11,5 @@ RUN npm install
 
 # copy code
 COPY . .
-# RUN chmod a+x /app/dockerboot.sh
 
-# CMD [ "node", "cli.js" ]
 ENTRYPOINT [ "/app/dockerboot.sh" ]

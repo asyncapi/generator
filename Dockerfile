@@ -1,6 +1,6 @@
 FROM node:11
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
 # Putting the old one in here until the new one supports node
 RUN npm install -g asyncapi-node-codegen
@@ -9,9 +9,9 @@ RUN npm install -g asyncapi-node-codegen
 COPY package*.json ./
 RUN npm install
 
-
 # copy code
 COPY . .
+# RUN chmod a+x /app/dockerboot.sh
 
-EXPOSE 8080
-CMD [ "node", "cli.js" ]
+# CMD [ "node", "cli.js" ]
+ENTRYPOINT [ "/app/dockerboot.sh" ]

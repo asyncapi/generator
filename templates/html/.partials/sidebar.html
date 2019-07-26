@@ -76,7 +76,9 @@
         </div>
       </div>
       {{/each}}
-      {{/if}}
+
+      {{else}}
+  
       <!--Without tags in sidebar-->
       {{#each asyncapi.channels}}
       <li>
@@ -114,6 +116,7 @@
       </li>
       {{/each}}
     </ul>
+    {{/if}}
     {{/if}}
   </div>
 </div>

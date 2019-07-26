@@ -6,7 +6,6 @@
     <span></span>
   </div>
 </label>
-
 <div class="sidebar-panel fixed pin-t pin-l pin-b w-64 bg-grey-lighter font-sans pt-8 pr-4 pb-4 pl-4">
   <div class="sidebar-panel__content">
     {{#if asyncapi.info.x-logo}}
@@ -14,7 +13,6 @@
     {{else}}
     <h1 class="text-2xl font-thin">{{asyncapi.info.title}} {{asyncapi.info.version}}</h1>
     {{/if}}
-
     <ul class="text-sm mt-10 list-reset mt-2">
       <li class="mb-3">
         <a class="js-menu-item text-grey-darkest no-underline" href="#introduction">Introduction</a>
@@ -25,18 +23,67 @@
       </li>
       {{/if}}
     </ul>
-
     {{#if asyncapi.channels}}
     <h2 class="text-xs uppercase text-grey mt-10 mb-4 font-thin">Operations</h2>
     <ul class="text-sm list-reset mt-2">
+      {{#if params.sidebarOrganization}}
+      <!-- With tags in sidebar -->
+      {{#each asyncapi.tags as |categorytags|}}
+      <div class="{{#if open}}is-open{{/if}}">
+        <div class="js-prop cursor-pointer py-2 flex property">
+          <div class="pr-4" style="margin-top:-2px; min-width: 25%;">
+            <span class="text-sm" style="word-break: break-word;text-transform: capitalize;">{{categorytags.name}}</span>
+            <svg class="expand" version="1.1" viewBox="0 0 24 24" x="0" xmlns="http://www.w3.org/2000/svg" y="0">
+              <polygon points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "></polygon>
+            </svg>
+          </div>
+        </div>
+        <div class="children">
+          {{#each ../asyncapi.channels}}
+          {{#if ./publish}}
+          {{#if (equal categorytags.name publish.tags.[0].name)}}
+          <a class="js-menu-item flex break-words no-underline text-grey-darkest mt-8 sm:mt-8 md:mt-3" href="#operation-publish-{{@key}}">
+            {{#if ./deprecated}}<span title="Deprecated"></span>{{/if}}
+            <span class="bg-blue-dark font-bold h-6 no-underline text-white uppercase p-1 mr-2 rounded" style="height: 21px;font-size: 11px;" title="Publish">Pub</span>
+            {{#if ./publish.summary}}
+            <span style="padding-top: 2px;">
+              {{./publish.summary}}
+            </span>
+            {{else}}
+            <div style="display:inline-block;">
+              {{>slicedString string=@key style='padding-top: 2px;'}}
+            </div>
+            {{/if}}
+          </a>
+          {{/if}}
+          {{/if}}
+          {{#if ./subscribe}}
+          <a class="js-menu-item flex break-words no-underline text-grey-darkest mt-8 sm:mt-8 md:mt-3" href="#operation-subscribe-{{@key}}">
+            {{#if ./deprecated}}<span title="Deprecated"></span>{{/if}}
+            <span class="bg-green-dark font-bold no-underline text-white uppercase p-1 mr-2 rounded" style="height: 21px;font-size: 11px;" title="Subscribe">Sub</span>
+            {{#if ./subscribe.summary}}
+            <span style="padding-top: 2px;">
+              {{./subscribe.summary}}
+            </span>
+            {{else}}
+            <div style="display:inline-block;">
+              {{>slicedString string=@key style='padding-top: 2px;'}}
+            </div>
+            {{/if}}
+          </a>
+          {{/if}}
+          {{/each}}
+        </div>
+      </div>
+      {{/each}}
+      {{/if}}
+      <!--Without tags in sidebar-->
       {{#each asyncapi.channels}}
       <li>
         {{#if ./publish}}
-        <a class="js-menu-item flex break-words no-underline text-grey-darkest mt-8 sm:mt-8 md:mt-3"
-          href="#operation-publish-{{@key}}">
+        <a class="js-menu-item flex break-words no-underline text-grey-darkest mt-8 sm:mt-8 md:mt-3" href="#operation-publish-{{@key}}">
           {{#if ./deprecated}}<span title="Deprecated"></span>{{/if}}
-          <span class="bg-blue-dark font-bold h-6 no-underline text-white uppercase p-1 mr-2 rounded"
-            style="height: 21px;font-size: 11px;" title="Publish">Pub</span>
+          <span class="bg-blue-dark font-bold h-6 no-underline text-white uppercase p-1 mr-2 rounded" style="height: 21px;font-size: 11px;" title="Publish">Pub</span>
           {{#if ./publish.summary}}
           <span style="padding-top: 2px;">
             {{./publish.summary}}
@@ -49,11 +96,9 @@
         </a>
         {{/if}}
         {{#if ./subscribe}}
-        <a class="js-menu-item flex break-words no-underline text-grey-darkest mt-8 sm:mt-8 md:mt-3"
-          href="#operation-subscribe-{{@key}}">
+        <a class="js-menu-item flex break-words no-underline text-grey-darkest mt-8 sm:mt-8 md:mt-3" href="#operation-subscribe-{{@key}}">
           {{#if ./deprecated}}<span title="Deprecated"></span>{{/if}}
-          <span class="bg-green-dark font-bold no-underline text-white uppercase p-1 mr-2 rounded"
-            style="height: 21px;font-size: 11px;" title="Subscribe">Sub</span>
+          <span class="bg-green-dark font-bold no-underline text-white uppercase p-1 mr-2 rounded" style="height: 21px;font-size: 11px;" title="Subscribe">Sub</span>
           {{#if ./subscribe.summary}}
           <span style="padding-top: 2px;">
             {{./subscribe.summary}}

@@ -29,7 +29,7 @@
       {{#if (equal params.sidebarOrganization 'byTags')}}
       <!-- With tags in sidebar -->
       {{#each asyncapi.tags as |categorytags|}}
-      <div class="{{#if open}}is-open{{/if}}">
+      <div class="mt-4 {{#if open}}is-open{{/if}}">
         <div class="js-prop cursor-pointer py-2 flex property">
           <div class="pr-4" style="margin-top:-2px; min-width: 25%;">
             <span class="text-sm" style="word-break: break-word;text-transform: capitalize;">{{categorytags.name}}</span>

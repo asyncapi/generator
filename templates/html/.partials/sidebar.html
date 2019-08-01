@@ -26,7 +26,7 @@
     {{#if asyncapi.channels}}
     <h2 class="text-xs uppercase text-grey mt-10 mb-4 font-thin">Operations</h2>
     <ul class="text-sm list-reset mt-2">
-      {{#if params.sidebarOrganization}}
+      {{#if (equal params.sidebarOrganization 'byTags')}}
       <!-- With tags in sidebar -->
       {{#each asyncapi.tags as |categorytags|}}
       <div class="{{#if open}}is-open{{/if}}">

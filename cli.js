@@ -15,6 +15,14 @@ let asyncapi;
 let template;
 
 const parseOutput = dir => path.resolve(dir);
+const parseJSON = value => {
+  try { return JSON.parse(value); }
+  catch (e) {
+    console.log(yellow(`Warning: values of --params will not be available in the templates, there was a error parsing: ${value}`));
+    console.log(magenta(e.message));
+    return {};
+  }
+};
 
 const showErrorAndExit = err => {
   console.error(red('Something went wrong:'));
@@ -31,6 +39,7 @@ program
   })
   .option('-o, --output <outputDir>', 'directory where to put the generated files (defaults to current directory)', parseOutput, process.cwd())
   .option('-t, --templates <templateDir>', 'directory where templates are located (defaults to internal templates directory)')
+  .option('--params <templateParams>', 'json object with additional params to pass to templates', parseJSON)
   .parse(process.argv);
 
 if (!asyncapi) {
@@ -46,6 +55,7 @@ mkdirp(program.output, err => {
     target_dir: program.output,
     template,
     templates: program.templates,
+    params: program.params,
   }).then(() => {
     console.log(green('Done! ✨'));
     console.log(yellow('Check out your shiny new generated files at ') + magenta(program.output) + yellow('.'));

@@ -10,6 +10,12 @@
 npm install -g asyncapi-generator
 ```
 
+Or use all the commands below using Docker by prefixing them with:
+
+```bash
+docker run --rm -it -v $PWD:/app -w /app asyncapi/generator [COMMAND HERE]
+```
+
 ## Usage
 
 ### From the command-line interface (CLI)
@@ -23,6 +29,7 @@ npm install -g asyncapi-generator
     -V, --version                 output the version number
     -o, --output <outputDir>      directory where to put the generated files (defaults to current directory)
     -t, --templates <templatesDir> directory where templates are located (defaults to internal templates directory)
+    --params <templateParams>     json object with additional params to pass to templates    
     -h, --help                    output usage information
 ```
 
@@ -37,6 +44,13 @@ Specify where to put the result:
 ```bash
 ag -o ./docs asyncapi.yaml markdown
 ```
+
+Passing parameters to templates:
+```bash
+ag -o ./docs --params '{ "title": "Hello from param" }' asyncapi.yaml markdown
+```
+In the template you can use it like this: ` {{ params.title }}`
+
 
 ### As a module
 

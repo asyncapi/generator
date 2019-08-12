@@ -15,6 +15,12 @@ info:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0
 
+tags:
+  - name: actions
+    description: Action messages
+  - name: events
+    description: Event messages
+
 servers:
   - url: api.streetlights.smartylighting.com:{port}
     protocol: mqtt
@@ -61,6 +67,8 @@ channels:
           - headerId: 'lighting-measured'
       message:
         $ref: '#/components/messages/lightMeasured'
+      tags:
+      - name: events
 
   action/{streetlightId}/turn/on:
     parameters:
@@ -73,6 +81,8 @@ channels:
           - headerId: 'turn-on'
       message:
         $ref: '#/components/messages/turnOnOff'
+      tags:
+      - name: actions
 
   action/{streetlightId}/turn/off:
     parameters:
@@ -85,6 +95,8 @@ channels:
           - headerId: 'turn-off'
       message:
         $ref: '#/components/messages/turnOnOff'
+      tags:
+        - name: actions
 
   action/{streetlightId}/dim:
     parameters:
@@ -97,6 +109,8 @@ channels:
           - headerId: 'dim'
       message:
         $ref: '#/components/messages/dimLight'
+      tags:
+        - name: actions
 
 components:
   messages:

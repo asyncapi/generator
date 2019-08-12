@@ -66,6 +66,7 @@ Generates a file of a given template, and returns the result as a string.
 |options.templatesDir|`string`|No|Directory where to find the templates. Defaults to internal templates directory.|
 |options.template|`string`|Yes|Name of the template you want to use.|
 |options.file|`string`|Yes|Path to the file you want to generate.|
+|options.params|`object`|No|Additional params to pass to templates.|
 |options.config|`object`|Yes|An object containing configuration options.|
 |options.config.asyncapi|`string`&#124;`object`|Yes|Path to the AsyncAPI file to use.
 
@@ -79,6 +80,9 @@ generator.generateTemplateFile({
   file: 'index.html',
   config: {
     asyncapi: path.resolve(__dirname, 'asyncapi.yml'),
+  },
+  params: {
+    "title": "Hello from param"    
   }
 })
   .then((result) => {

@@ -1,6 +1,6 @@
 FROM node:11
 
-WORKDIR /app
+WORKDIR /asyncapi
 
 # Putting the old one in here until the new one supports node
 RUN npm install -g asyncapi-node-codegen
@@ -12,4 +12,4 @@ RUN npm install
 # copy code
 COPY . .
 
-ENTRYPOINT [ "/app/dockerboot.sh" ]
+ENTRYPOINT [ "/asyncapi/dockerboot.sh" ]

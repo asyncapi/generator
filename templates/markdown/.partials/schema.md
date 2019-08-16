@@ -1,6 +1,9 @@
-{{#unless hideTitle}}
+{% from "./schema-prop.md" import schemaProp %}
+
+{% macro schema(schema, schemaName, hideTitle=false) %}
+{% if not hideTitle %}
 #### {{schemaName}}
-{{/unless}}
+{% endif %}
 
 <table>
   <thead>
@@ -12,26 +15,25 @@
     </tr>
   </thead>
   <tbody>
-    {{#each schema.properties}}
-      {{> schemaProp prop=. propName=@key required=(isRequired ../schema @key) path=''}}
-    {{else}}
-      {{> schemaProp prop=schema propName=schemaName required=(isRequired ../schema @key) path=''}}
-    {{/each}}
+    {% for propName, prop in schema.properties %}
+      {{ schemaProp(prop, propName, required=(schema | isRequired(propName)), path='') }}
+    {% else %}
+      {{ schemaProp(schema, schemaName,  path='') }}
+    {% endfor %}
   </tbody>
 </table>
 
-{{#if schema.formattedExample}}
+{% if schema.formattedExample %}
 ##### Example
 
 ```json
-{{{schema.formattedExample}}}
+{{ schema.formattedExample | safe }}
 ```
-{{else}}
-{{#if schema.generatedExample}}
+{% elif schema.generatedExample %}
 ##### Example _(generated)_
 
 ```json
-{{{schema.generatedExample}}}
+{{ schema.generatedExample | safe }}
 ```
-{{/if}}
-{{/if}}
+{% endif %}
+{% endmacro %}

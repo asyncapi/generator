@@ -1,11 +1,5 @@
-{{> info}}
+{% include "./info.md" %}
 
-{{> security}}
-
-{{#if asyncapi.channels}}
-{{> channels }}
-{{/if}}
-
-{{> messages}}
-
-{{> schemas}}
+{% if asyncapi.channels %}
+{% include "./channels.md"  %}
+{% endif %}

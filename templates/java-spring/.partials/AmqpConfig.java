@@ -1,3 +1,4 @@
+{% macro amqpConfig(asyncapi) %}
 package com.asyncapi.infrastructure;
 
 import com.asyncapi.service.MessageHandlerService;
@@ -33,16 +34,16 @@ public class Config {
     @Value("${amqp.broker.password}")
     private String password;
 
-    {{#each asyncapi.publishTopics as |topic key|}}
-    @Value("${amqp.exchange.{{~topic.x-service-name~}}}")
+    {% for topicName, topic in asyncapi.publishTopics %}
+    @Value("${amqp.exchange.{{- topic.x-service-name -}}}")
     private String {{topic.x-service-name}}Exchange;
 
-    {{/each}}
-    {{#each asyncapi.subscribeTopics as |topic key|}}
-    @Value("${amqp.queue.{{~topic.x-service-name~}}}")
+    {% endfor %}
+    {% for topicName, topic in asyncapi.subscribeTopics %}
+    @Value("${amqp.queue.{{- topic.x-service-name -}}}")
     private String {{topic.x-service-name}}Queue;
 
-    {{/each}}
+    {% endfor %}
 
     @Bean
     public ConnectionFactory connectionFactory() {
@@ -61,18 +62,18 @@ public class Config {
     @Bean
     public Declarables exchanges() {
         return new Declarables(
-                {{#each asyncapi.publishTopics as |topic key|}}
-                new TopicExchange({{topic.x-service-name}}Exchange, true, false){{#unless @last}},{{/unless}}
-                {{/each}}
+                {% for topicName, topic in asyncapi.publishTopics %}
+                new TopicExchange({{topic.x-service-name}}Exchange, true, false){% if not loop.last %},{% endif %}
+                {% endfor %}
                 );
     }
 
     @Bean
     public Declarables queues() {
         return new Declarables(
-                {{#each asyncapi.subscribeTopics as |topic key|}}
-                new Queue({{topic.x-service-name}}Queue, true, false, false){{#unless @last}},{{/unless}}
-                {{/each}}
+                {% for topicName, topic in asyncapi.subscribeTopics %}
+                new Queue({{topic.x-service-name}}Queue, true, false, false){% if not loop.last %},{% endif %}
+                {% endfor %}
                 );
     }
 
@@ -80,15 +81,15 @@ public class Config {
 
     @Autowired
     MessageHandlerService messageHandlerService;
-    {{#each asyncapi.subscribeTopics as |topic key|}}
+    {% for topicName, topic in asyncapi.subscribeTopics %}
 
     @Bean
-    public IntegrationFlow {{camelCase topic.x-service-name}}Flow() {
+    public IntegrationFlow {{topic.x-service-name | camelCase}}Flow() {
         return IntegrationFlows.from(Amqp.inboundGateway(connectionFactory(), {{topic.x-service-name}}Queue))
-                .handle(messageHandlerService::handle{{upperFirst topic.x-service-name}})
+                .handle(messageHandlerService::handle{{topic.x-service-name | upperFirst}})
                 .get();
     }
-    {{/each}}
+    {% endfor %}
 
     // publisher
 
@@ -97,20 +98,21 @@ public class Config {
         RabbitTemplate template = new RabbitTemplate(connectionFactory());
         return template;
     }
-    {{#each asyncapi.publishTopics as |topic key|}}
+    {% for topicName, topic in asyncapi.publishTopics %}
 
     @Bean
-    public MessageChannel {{camelCase topic.x-service-name}}OutboundChannel() {
+    public MessageChannel {{topic.x-service-name | camelCase}}OutboundChannel() {
         return new DirectChannel();
     }
 
     @Bean
-    @ServiceActivator(inputChannel = "{{camelCase topic.x-service-name}}OutboundChannel")
-    public AmqpOutboundEndpoint {{camelCase topic.x-service-name}}Outbound(AmqpTemplate amqpTemplate) {
+    @ServiceActivator(inputChannel = "{{topic.x-service-name | camelCase}}OutboundChannel")
+    public AmqpOutboundEndpoint {{topic.x-service-name | camelCase}}Outbound(AmqpTemplate amqpTemplate) {
         AmqpOutboundEndpoint outbound = new AmqpOutboundEndpoint(amqpTemplate);
         outbound.setExchangeName({{topic.x-service-name}}Exchange);
         outbound.setRoutingKey("#");
         return outbound;
     }
-    {{/each}}
+    {% endfor %}
 }
+{% endmacro %}

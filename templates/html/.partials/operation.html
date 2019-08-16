@@ -1,64 +1,70 @@
-<a name="operation-{{operationName}}-{{channelName}}"></a>
+{% from "./sliced-string.html" import slicedString %}
+{% from "./schema.html" import schema %}
+{% from "./tags.html" import tags %}
+
+{% macro operation(operation, operationType, channelName) %}
+
+<a name="operation-{{operationType}}-{{channelName}}"></a>
 <div class="center-block p-8">
   <div class="operation pt-8 pb-8">
     <h3 class="font-mono text-base">
-      {{#if (equal operationName 'publish')}}
+      {% if operationType === 'publish' %}
       <span class="font-mono border border-blue text-blue uppercase p-1 rounded" title="Publish">Pub</span>
-      {{/if}}
-      {{#if (equal operationName 'subscribe')}}
+      {% endif %}
+      {% if operationType === 'subscribe' %}
       <span class="font-mono border border-green-dark text-green-dark uppercase p-1 rounded" title="Subscribe">Sub</span>
-      {{/if}}
-      {{>slicedString string=channelName}}
+      {% endif %}
+      {{ slicedString(channelName) }}
     </h3>
 
     <p class="text-grey text-sm">{{operation.summary}}</p>
-    <div class="mt-4 mb-4 markdown">{{{operation.descriptionAsHTML}}}</div>
+    <div class="mt-4 mb-4 markdown">{{ operation.descriptionAsHTML | safe }}</div>
 
-    {{#if operation.message.payload}}
+    {% if operation.message.payload %}
       <p>Accepts the following message:</p>
 
       <div class="bg-grey-lighter rounded p-4 mt-2">
         <p class="text-grey-dark text-sm">{{operation.message.summary}}</p>
-        <div class="mt-4 mb-4 markdown">{{{operation.message.descriptionAsHTML}}}</div>
-        {{>schema schema=operation.message.payload schemaName='Payload' open=true}}
-        {{#if operation.message.headers}}
+        <div class="mt-4 mb-4 markdown">{{ operation.message.descriptionAsHTML | safe }}</div>
+        {{ schema(operation.message.payload, 'Payload', open=true) }}
+        {% if operation.message.headers %}
           <div class="mt-4">
-            {{>schema schema=(toObj operation.message.headers) schemaName='Headers' open=true}}
+            {{ schema(operation.message.headers, 'Headers', open=true) }}
           </div>
-        {{/if}}
+        {% endif %}
       </div>
-    {{/if}}
+    {% endif %}
 
-    {{#if operation.message.oneOf}}
+    {% if operation.message.oneOf %}
       <p>Accepts <strong>one of</strong> the following messages:</p>
-      {{#each operation.message.oneOf as |msg|}}
+      {% for msg in operation.message.oneOf %}
         <div class="bg-grey-lighter rounded p-4 mt-2">
           <div class="text-sm text-grey-darker mb-2">
-            <span class="text-grey-darker font-bold mr-2">#{{inc @index}}</span>
-            {{#if msg.title}}
+            <span class="text-grey-darker font-bold mr-2">#{{loop.index}}</span>
+            {% if msg.title %}
               {{msg.title}}
-              {{#if msg.name}}
+              {% if msg.name %}
                 <span class="border text-orange rounded text-xs ml-3 py-0 px-2">{{msg.name}}</span>
-              {{/if}}
-            {{else}}
-              {{#if msg.name}}
+              {% endif %}
+            {% else %}
+              {% if msg.name %}
                 <span class="border text-orange rounded text-s py-0 px-2">{{msg.name}}</span>
-              {{/if}}
-            {{/if}}
+              {% endif %}
+            {% endif %}
           </div>
           <p class="text-grey-dark text-sm">{{msg.summary}}</p>
-          <div class="mt-4 mb-4 markdown">{{{msg.descriptionAsHTML}}}</div>
-          {{>schema schema=msg.payload schemaName='Payload' open=false}}
-          {{#if msg.headers}}
+          <div class="mt-4 mb-4 markdown">{{ msg.descriptionAsHTML | safe }}</div>
+          {{ schema(msg.payload, 'Payload', open=false) }}
+          {% if msg.headers %}
             <div class="mt-4">
-              {{>schema schema=(toObj msg.headers) schemaName='Headers' open=false}}
+              {{ schema(msg.headers, 'Headers', open=false) }}
             </div>
-          {{/if}}
+          {% endif %}
         </div>
-      {{/each}}
-    {{/if}}
+      {% endfor %}
+    {% endif %}
 
-    {{>tags tags=operation.tags}}
+    {{ tags(operation.tags) }}
   </div>
 </div>
 
@@ -66,44 +72,45 @@
   <h4 class="text-lg text-white mb-4">Examples</h4>
 
   <form>
-    {{#if operation.message.hasPayloadExample}}
-      <input type="radio" checked id="example-payload-{{channelName}}-{{operation.message.uid}}" name="tab" class="examples-payload-tab hidden" {{#unless operation.message.hasPayloadExample}}disabled{{/unless}}/>
+    {% if operation.message.hasPayloadExample %}
+      <input type="radio" checked id="example-payload-{{channelName}}-{{operation.message.uid}}" name="tab" class="examples-payload-tab hidden" {% if not operation.message.hasPayloadExample %}disabled{% endif %}/>
       <label for="example-payload-{{channelName}}-{{operation.message.uid}}"
-        class="py-1 px-2 mr-2 mb-4 text-grey-lightest text-sm border rounded focus:outline-none cursor-pointer {{#unless operation.message.hasPayloadExample}}text-grey-dark border-grey-dark opacity-25{{else}}text-grey-lightest{{/unless}}" {{#unless operation.message.hasPayloadExample}}title="This message does not have payload"{{/unless}}>Payload</label>
-    {{/if}}
+        class="py-1 px-2 mr-2 mb-4 text-grey-lightest text-sm border rounded focus:outline-none cursor-pointer {% if not operation.message.hasPayloadExample %}text-grey-dark border-grey-dark opacity-25{% else %}text-grey-lightest{% endif %}" {% if not operation.message.hasPayloadExample %}title="This message does not have payload"{% endif %}>Payload</label>
+    {% endif %}
 
 
-    <input type="radio" id="example-headers-{{channelName}}-{{operation.message.uid}}" name="tab" class="examples-headers-tab hidden" {{#unless operation.message.hasHeadersExample}}disabled{{/unless}} />
+    <input type="radio" id="example-headers-{{channelName}}-{{operation.message.uid}}" name="tab" class="examples-headers-tab hidden" {% if not operation.message.hasHeadersExample %}disabled{% endif %} />
     <label for="example-headers-{{channelName}}-{{operation.message.uid}}"
-      class="py-1 px-2 mr-2 mb-4 text-sm border rounded focus:outline-none cursor-pointer {{#unless operation.message.hasHeadersExample}}text-grey-dark border-grey-dark opacity-25{{else}}text-grey-lightest{{/unless}}" {{#unless operation.message.hasHeadersExample}}title="This message does not have headers"{{/unless}}>Headers</label>
+      class="py-1 px-2 mr-2 mb-4 text-sm border rounded focus:outline-none cursor-pointer {% if not operation.message.hasHeadersExample %}text-grey-dark border-grey-dark opacity-25{% else %}text-grey-lightest{% endif %}" {% if not operation.message.hasHeadersExample %}title="This message does not have headers"{% endif %}>Headers</label>
 
     <div class="payload-examples mt-4">
-      {{#if operation.message.formattedPayloadExamples}}
-        {{#each operation.message.formattedPayloadExamples as |ex|}}
-          <h6 class="text-xs font-bold text-grey-darker">Example #{{inc @index}}</h6>
-          <pre class="hljs mb-4 border border-grey-darkest rounded"><code>{{{ex}}}</code></pre>
-        {{/each}}
-      {{else}}
-        {{#if operation.message.generatedPayloadExample}}
-          <pre class="hljs mb-4 border border-grey-darkest rounded"><code>{{{operation.message.generatedPayloadExample}}}</code></pre>
+      {% if operation.message.formattedPayloadExamples and operation.message.formattedPayloadExamples.length > 0 %}
+        {% for ex in operation.message.formattedPayloadExamples %}
+          <h6 class="text-xs font-bold text-grey-darker">Example #{{loop.index}}</h6>
+          <pre class="hljs mb-4 border border-grey-darkest rounded"><code>{{ex | safe }}</code></pre>
+        {% endfor %}
+      {% else %}
+        {% if operation.message.generatedPayloadExample %}
+          <pre class="hljs mb-4 border border-grey-darkest rounded"><code>{{ operation.message.generatedPayloadExample | safe }}</code></pre>
           <h6 class="text-xs font-bold text-grey-darker italic">This example has been generated automatically.</h6>
-        {{/if}}
-      {{/if}}
+        {% endif %}
+      {% endif %}
     </div>
 
     <div class="headers-examples mt-4">
-      {{#if operation.message.formattedHeadersExamples}}
-        {{#each operation.message.formattedHeadersExamples as |ex|}}
-          <h6 class="text-xs font-bold text-grey-darker">Example #{{inc @index}}</h6>
-          <pre class="hljs mb-4 border border-grey-darkest rounded"><code>{{{ex}}}</code></pre>
-        {{/each}}
-      {{else}}
-        {{#if operation.message.generatedHeadersExample}}
-          <pre class="hljs mb-4 border border-grey-darkest rounded"><code>{{{operation.message.generatedHeadersExample}}}</code></pre>
+      {% if operation.message.formattedHeadersExamples and operation.message.formattedHeadersExamples.length > 0 %}
+        {% for ex in operation.message.formattedHeadersExamples %}
+          <h6 class="text-xs font-bold text-grey-darker">Example #{{loop.index}}</h6>
+          <pre class="hljs mb-4 border border-grey-darkest rounded"><code>{{ ex | safe }}</code></pre>
+        {% endfor %}
+      {% else %}
+        {% if operation.message.generatedHeadersExample %}
+          <pre class="hljs mb-4 border border-grey-darkest rounded"><code>{{ operation.message.generatedHeadersExample | safe }}</code></pre>
           <h6 class="text-xs font-bold text-grey-darker italic">This example has been generated automatically.</h6>
-        {{/if}}
-      {{/if}}
+        {% endif %}
+      {% endif %}
     </div>
   </form>
 </div>
 
+{% endmacro %}

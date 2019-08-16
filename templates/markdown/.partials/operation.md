@@ -1,49 +1,50 @@
-{{#if operation.summary}}
-{{{operation.summary}}}
+{% from "./schema.md" import schema %}
+{% from "./tags.md" import tags %}
 
-{{/if}}
-{{#if operation.description}}
-{{{operation.description}}}
-{{/if}}
+{% macro operation(operation) %}
+{% if operation.summary %}
+{{ operation.summary | safe }}
 
-{{#if operation.headers}}
+{% endif %}
+{% if operation.description %}
+{{ operation.description | safe }}
+{% endif %}
+
+{% if operation.headers %}
 ##### Headers
 
-{{> schema schema=operation.headers schemaName='Message Headers' hideTitle=true}}
+{{ schema(operation.headers, 'Message Headers', hideTitle=true) }}
 
-{{#unless operation.example}}
-{{#if operation.generatedHeadersExample}}
+{% if not operation.example and operation.generatedHeadersExample %}
 ###### Example of headers _(generated)_
 
 ```json
-{{{operation.generatedHeadersExample}}}
+{{ operation.generatedHeadersExample | safe }}
 ```
-{{/if}}
-{{/unless}}
-{{/if}}
+{% endif %}
+{% endif %}
 
 ##### Payload
 
-{{> schema schema=operation.message.payload schemaName='Message Payload' hideTitle=true}}
+{{ schema(operation.message.payload, 'Message Payload', hideTitle=true) }}
 
-{{#if operation.message.payload.example}}
+{% if operation.message.payload.example %}
 ###### Example
 
 ```json
-{{{operation.message.formattedExample}}}
+{{ operation.message.formattedExample | safe }}
 ```
-{{else}}
-{{#if operation.message.generatedPayloadExample}}
+{% elif operation.message.generatedPayloadExample %}
 ###### Example of payload _(generated)_
 
 ```json
-{{{operation.message.generatedPayloadExample}}}
+{{ operation.message.generatedPayloadExample | safe }}
 ```
-{{/if}}
-{{/if}}
+{% endif %}
 
-{{#if operation.tags}}
+{% if operation.tags %}
 ##### Tags
 
-{{> tags tags=operation.tags}}
-{{/if}}
+{{ tags(operation.tags) }}
+{% endif %}
+{% endmacro %}

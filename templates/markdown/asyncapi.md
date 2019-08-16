@@ -1,21 +1,21 @@
 # {{asyncapi.info.title}} {{asyncapi.info.version}} documentation
 
-{{#if asyncapi.info.x-logo}}
+{% if asyncapi.info.x-logo %}
 ![{{asyncapi.info.title}} logo]({{asyncapi.info.x-logo}})
-{{/if}}
+{% endif %}
 
-{{{asyncapi.info.description}}}
+{{ asyncapi.info.description | safe }}
 
 ## Table of Contents
 
-{{#if asyncapi.info.termsOfService}}
+{% if asyncapi.info.termsOfService %}
 * [Terms of Service](#termsOfService)
-{{/if}}
-{{#if asyncapi.servers}}
+{% endif %}
+{% if asyncapi.servers %}
 * [Servers](#servers)
-{{/if}}
-{{#if asyncapi.channels}}
+{% endif %}
+{% if asyncapi.channels %}
 * [Channels](#channels)
-{{/if}}
+{% endif %}
 
-{{> content}}
+{% include ".partials/content.md" %}

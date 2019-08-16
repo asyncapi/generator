@@ -1,15 +1,19 @@
-{{#unless hideTitle}}
+{% from "./schema.md" import schema %}
+
+{% macro parameters(params, hideTitle=false) %}
+{% if not hideTitle %}
 #### Channel Parameters
-{{/unless}}
+{% endif %}
 
-{{#each params as |param|}}
-{{#if param.name}}
+{% for param in params %}
+{% if param.name %}
 ##### {{param.name}}
-{{/if}}
+{% endif %}
 
-{{#if param.description}}
-{{{param.description}}}
-{{/if}}
+{% if param.description %}
+{{param.description | safe}}
+{% endif %}
 
-{{~> schema schema=param.schema schemaName=param.name hideTitle=true ~}}
-{{/each}}
+{{- schema(param.schema, param.name, hideTitle=true) -}}
+{% endfor %}
+{% endmacro %}

@@ -1,26 +1,28 @@
+{% macro schemaProp(prop, propName, required=false, path='') %}
 <tr>
-  <td>{{tree path}}{{propName}} {{#if required}}<strong>(required)</strong>{{/if}}</td>
+  <td>{{ path | tree }}{{ propName }} {% if required %}<strong>(required)</strong>{% endif %}</td>
   <td>
-    {{prop.type}}
-    {{~#if prop.anyOf}}anyOf{{~/if}}
-    {{~#if prop.oneOf}}oneOf{{~/if}}
-    {{~#if prop.items.type}}({{prop.items.type}}){{~/if}}
+    {{ prop.type }}
+    {%- if prop.anyOf -%}anyOf{%- endif -%}
+    {%- if prop.oneOf %}oneOf{%- endif -%}
+    {%- if prop.items.type %}({{prop.items.type}}){%- endif -%}
   </td>
-  <td>{{{prop.descriptionAsHTML}}}</td>
-  <td>{{{acceptedValues prop.enum}}}</td>
+  <td>{{ prop.descriptionAsHTML | safe }}</td>
+  <td>{{ prop.enum | acceptedValues | safe }}</td>
 </tr>
-{{#each prop.anyOf}}
-{{> schemaProp prop=. propName=@key path=(buildPath ../propName ../path @key)}}
-{{/each}}
-{{#each prop.oneOf}}
-  {{> schemaProp prop=. propName=@key path=(buildPath ../propName ../path @key)}}
-{{/each}}
-{{#each prop.properties}}
-{{> schemaProp prop=. propName=@key required=(isRequired ../prop @key) path=(buildPath ../propName ../path @key)}}
-{{/each}}
-{{#each prop.additionalProperties.properties}}
-{{> schemaProp prop=. propName=@key required=(isRequired ../prop.additionalProperties @key) path=(buildPath ../propName ../path @key)}}
-{{/each}}
-{{#each prop.items.properties}}
-{{> schemaProp prop=. propName=@key required=(isRequired ../prop.items @key) path=(buildPath ../propName ../path @key)}}
-{{/each}}
+{% for pName, p in prop.anyOf %}
+{{ schemaProp(p, pName, path=(propName | buildPath(path, pName))) }}
+{% endfor %}
+{% for pName, p in prop.oneOf %}
+{{ schemaProp(p, pName, path=(propName | buildPath(path, pName))) }}
+{% endfor %}
+{% for pName, p in prop.properties %}
+{{ schemaProp(p, pName, path=(propName | buildPath(path, pName)), required=(prop | isRequired(pName))) }}
+{% endfor %}
+{% for pName, p in prop.additionalProperties.properties %}
+{{ schemaProp(p, pName, path=(propName | buildPath(path, pName)), required=(prop.additionalProperties | isRequired(pName))) }}
+{% endfor %}
+{% for pName, p in prop.items.properties %}
+{{ schemaProp(p, pName, path=(propName | buildPath(path, pName)), required=(prop.items | isRequired(pName))) }}
+{% endfor %}
+{% endmacro %}

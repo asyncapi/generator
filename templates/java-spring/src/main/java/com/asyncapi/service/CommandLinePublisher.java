@@ -14,12 +14,12 @@ public class CommandLinePublisher implements CommandLineRunner {
     public void run(String... args) {
         System.out.println("******* Sending message: *******");
 
-        {{#each asyncapi.topics as |topic key|}}
-        {{#if topic.publish}}
-        publisherService.publish{{capitalize topic.x-service-name}}("Hello World from {{topic.x-service-name}}");
+        {% for topicName, topic in asyncapi.topics %}
+        {% if topic.publish %}
+        publisherService.publish{{topic.x-service-name | capitalize}}("Hello World from {{topic.x-service-name}}");
 
-        {{/if}}
-        {{/each}}
+        {% endif %}
+        {% endfor %}
         System.out.println("Message sent");
     }
 }

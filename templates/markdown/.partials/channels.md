@@ -1,5 +1,7 @@
+{% from "./channel.md" import channel %}
+
 ## Channels
 
-{{#each asyncapi.channels}}
-{{~>channel channel=. channelName=@key ~}}
-{{/each}}
+{% for channelName, chan in asyncapi.channels %}
+{{ channel(chan, channelName) -}}
+{% endfor %}

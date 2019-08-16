@@ -10,9 +10,9 @@
 </head>
 <body>
   <div class="relative md:flex lg:flex xl:flex">
-    {{> sidebar }}
+    {% include ".partials/sidebar.html" %}
     <div class="content-panel flex-1 leading-loose z-10">
-      {{~> content ~}}
+      {% include ".partials/content.html" %}
     </div>
     <div class="examples-panel absolute pin-t pin-r pin-b"></div>
   </div>

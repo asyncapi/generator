@@ -1,34 +1,39 @@
+{% from "./parameters.md" import parameters %}
+{% from "./operation.md" import operation %}
+
+{% macro channel(chan, channelName) %}
 <a name="channel-{{channelName}}"></a>
 
-### {{~#if channel.publish}} `publish`{{~/if}}{{~#if channel.subscribe}} `subscribe`{{~/if}} {{channelName}} {{~#if channel.deprecated}} (**deprecated**){{~/if}}
+### {% if chan.publish %} `publish`{%- endif %}{%- if chan.subscribe %} `subscribe`{%- endif %} {{chanName}} {%- if chan.deprecated %} (**deprecated**){% endif %} {{channelName}}
 
-{{#if channel.parameters}}
-{{~> parameters params=channel.parameters channelName=channelName ~}}
-{{/if}}
+{% if chan.parameters %}
+{{- parameters(chan.parameters) -}}
+{% endif %}
 
 #### Message
 
-{{#if channel.publish.oneOf}}
+{% if chan.publish.oneOf %}
 You can send one of the following messages:
-{{/if}}
-{{#if channel.subscribe.oneOf}}
+{% endif %}
+{% if chan.subscribe.oneOf %}
 You can receive one of the following messages:
-{{/if}}
+{% endif %}
 
-{{~#each channel.publish.oneOf as |op index| ~}}
-  ##### Message #{{inc index}}
-  {{~> operation operation=op~}}
-{{else}}
-  {{~#if channel.publish ~}}
-    {{~> operation operation=channel.publish~}}
-  {{~/if~}}
-{{~/each~}}
+{%- for op in chan.publish.oneOf -%}
+  ##### Message #{{loop.index}}
+  {{ operation(op) }}
+{% else %}
+  {%- if chan.publish -%}
+    {{- operation(chan.publish) -}}
+  {%- endif -%}
+{%- endfor -%}
 
-{{~#each channel.subscribe.oneOf as |op index| ~}}
-  ##### Message #{{inc index}}
-  {{~> operation operation=op~}}
-{{else}}
-  {{~#if channel.subscribe ~}}
-    {{~> operation operation=channel.subscribe~}}
-  {{~/if~}}
-{{~/each~}}
+{% for op in chan.subscribe.oneOf -%}
+  ##### Message #{{loop.index}}
+  {{- operation(op) -}}
+{% else %}
+  {%- if chan.subscribe -%}
+    {{ operation(chan.subscribe) -}}
+  {%- endif -%}
+{% endfor %}
+{% endmacro %}

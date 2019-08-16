@@ -1,3 +1,5 @@
+{% from "./sliced-string.html" import slicedString %}
+
 <input id="burger-menu" type="checkbox" />
 <label for="burger-menu" class="shadow">
   <div class="wrapper">
@@ -8,78 +10,80 @@
 </label>
 <div class="sidebar-panel fixed pin-t pin-l pin-b w-64 bg-grey-lighter font-sans pt-8 pr-4 pb-4 pl-4">
   <div class="sidebar-panel__content">
-    {{#if asyncapi.info.x-logo}}
-    <img src="{{asyncapi.info.x-logo}}" alt="{{asyncapi.info.title}} logo">
-    {{else}}
-    <h1 class="text-2xl font-thin">{{asyncapi.info.title}} {{asyncapi.info.version}}</h1>
-    {{/if}}
+    {% if asyncapi.info.x-logo %}
+    <img src="{{ asyncapi.info.x-logo }}" alt="{{ asyncapi.info.title }} logo">
+    {% else %}
+    <h1 class="text-2xl font-thin">{{ asyncapi.info.title }} {{ asyncapi.info.version }}</h1>
+    {% endif %}
     <ul class="text-sm mt-10 list-reset mt-2">
       <li class="mb-3">
         <a class="js-menu-item text-grey-darkest no-underline" href="#introduction">Introduction</a>
       </li>
-      {{#if asyncapi.servers}}
+      {% if asyncapi.servers %}
       <li class="mb-3">
         <a class="js-menu-item text-grey-darkest no-underline" href="#servers">Servers</a>
       </li>
-      {{/if}}
+      {% endif %}
     </ul>
-    {{#if asyncapi.channels}}
+    {% if asyncapi.channels %}
     <h2 class="text-xs uppercase text-grey mt-10 mb-4 font-thin">Operations</h2>
     <ul class="text-sm list-reset mt-2">
-      {{#if (equal params.sidebarOrganization 'byTags')}}
+      {% if params.sidebarOrganization === 'byTags' %}
       <!-- With tags in sidebar -->
-      {{#each asyncapi.tags as |categorytags|}}
-      <div class="mt-4 {{#if open}}is-open{{/if}}">
+      {% for categorytags in asyncapi.tags %}
+      <div class="mt-4 {% if open %}is-open{% endif %}">
         <div class="js-prop cursor-pointer py-2 flex property">
           <div class="pr-4" style="margin-top:-2px; min-width: 25%;">
-            <span class="text-sm" style="word-break: break-word;text-transform: capitalize;">{{categorytags.name}}</span>
+            <span class="text-sm"
+              style="word-break: break-word;text-transform: capitalize;">{{ categorytags.name }}</span>
             <svg class="expand" version="1.1" viewBox="0 0 24 24" x="0" xmlns="http://www.w3.org/2000/svg" y="0">
               <polygon points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "></polygon>
             </svg>
           </div>
         </div>
         <div class="children">
-          {{#each ../asyncapi.channels}}
-          {{#if ./publish}}
-          {{#if (equal categorytags.name publish.tags.[0].name)}}
-          <a class="js-menu-item flex break-words no-underline text-grey-darkest mt-8 sm:mt-8 md:mt-3" href="#operation-publish-{{@key}}">
-            {{#if ./deprecated}}<span title="Deprecated"></span>{{/if}}
-            <span class="bg-blue-dark font-bold h-6 no-underline text-white uppercase p-1 mr-2 rounded" style="height: 21px;font-size: 11px;" title="Publish">Pub</span>
-            {{#if ./publish.summary}}
-            <span style="padding-top: 2px;">
-              {{./publish.summary}}
-            </span>
-            {{else}}
-            <div style="display:inline-block;">
-              {{>slicedString string=@key style='padding-top: 2px;'}}
-            </div>
-            {{/if}}
-          </a>
-          {{/if}}
-          {{/if}}
-          {{#if ./subscribe}}
-          {{#if (equal categorytags.name subscribe.tags.[0].name)}}
-          <a class="js-menu-item flex break-words no-underline text-grey-darkest mt-8 sm:mt-8 md:mt-3" href="#operation-subscribe-{{@key}}">
-            {{#if ./deprecated}}<span title="Deprecated"></span>{{/if}}
-            <span class="bg-green-dark font-bold no-underline text-white uppercase p-1 mr-2 rounded" style="height: 21px;font-size: 11px;" title="Subscribe">Sub</span>
-            {{#if ./subscribe.summary}}
-            <span style="padding-top: 2px;">
-              {{./subscribe.summary}}
-            </span>
-            {{else}}
-            <div style="display:inline-block;">
-              {{>slicedString string=@key style='padding-top: 2px;'}}
-            </div>
-            {{/if}}
-          </a>
-          {{/if}}
-          {{/if}}
-          {{/each}}
+          {% for channelName, channel in asyncapi.channels %}
+            {% if channel.publish and categorytags.name === channel.publish.tags[0].name %}
+              <a class="js-menu-item flex break-words no-underline text-grey-darkest mt-8 sm:mt-8 md:mt-3"
+                href="#operation-publish-{{ channelName }}">
+                {% if channel.deprecated %}<span title="Deprecated"></span>{% endif %}
+                <span class="bg-blue-dark font-bold h-6 no-underline text-white uppercase p-1 mr-2 rounded"
+                  style="height: 21px;font-size: 11px;" title="Publish">Pub</span>
+                {% if channel.publish.summary %}
+                <span style="padding-top: 2px;">
+                  {{ channel.publish.summary }}
+                </span>
+                {% else %}
+                <div style="display:inline-block;">
+                  {{ slicedString(channelName, 'padding-top: 2px;') }}
+                </div>
+                {% endif %}
+              </a>
+            {% endif %}
+
+            {% if channel.subscribe and categorytags.name === channel.subscribe.tags[0].name %}
+            <a class="js-menu-item flex break-words no-underline text-grey-darkest mt-8 sm:mt-8 md:mt-3"
+              href="#operation-subscribe-{{ channelName }}">
+              {% if channel.deprecated %}<span title="Deprecated"></span>{% endif %}
+              <span class="bg-green-dark font-bold no-underline text-white uppercase p-1 mr-2 rounded"
+                style="height: 21px;font-size: 11px;" title="Subscribe">Sub</span>
+              {% if channel.subscribe.summary %}
+              <span style="padding-top: 2px;">
+                {{ channel.subscribe.summary }}
+              </span>
+              {% else %}
+              <div style="display:inline-block;">
+                {{ slicedString(channelName, 'padding-top: 2px;') }}
+              </div>
+              {% endif %}
+            </a>
+            {% endif %}
+          {% endfor %}
         </div>
       </div>
-      {{/each}}
+      {% endfor %}
       <!-- Untagged operations -->
-      <div class="mt-4 {{#if open}}is-open{{/if}}">
+      <div class="mt-4 {% if open %}is-open{% endif %}">
         <div class="js-prop cursor-pointer py-2 flex property">
           <div class="pr-4" style="margin-top:-2px; min-width: 25%;">
             <span class="text-sm" style="word-break: break-word;text-transform: capitalize;">Untagged</span>
@@ -89,85 +93,89 @@
           </div>
         </div>
         <div class="children">
-          {{#each asyncapi.channels}}
-          {{#if ./publish}}
-          {{#unless publish.tags}}
-          <a class="js-menu-item flex break-words no-underline text-grey-darkest mt-8 sm:mt-8 md:mt-3" href="#operation-publish-{{@key}}">
-            {{#if ./deprecated}}<span title="Deprecated"></span>{{/if}}
-            <span class="bg-blue-dark font-bold h-6 no-underline text-white uppercase p-1 mr-2 rounded" style="height: 21px;font-size: 11px;" title="Publish">Pub</span>
-            {{#if ./publish.summary}}
+          {% for channelName, channel in asyncapi.channels %}
+          {% if channel.publish and not channel.publish.tags %}
+          <a class="js-menu-item flex break-words no-underline text-grey-darkest mt-8 sm:mt-8 md:mt-3"
+            href="#operation-publish-{{ channelName }}">
+            {% if channel.deprecated %}<span title="Deprecated"></span>{% endif %}
+            <span class="bg-blue-dark font-bold h-6 no-underline text-white uppercase p-1 mr-2 rounded"
+              style="height: 21px;font-size: 11px;" title="Publish">Pub</span>
+            {% if channel.publish.summary %}
             <span style="padding-top: 2px;">
-              {{./publish.summary}}
+              {{ channel.publish.summary }}
             </span>
-            {{else}}
+            {% else %}
             <div style="display:inline-block;">
-              {{>slicedString string=@key style='padding-top: 2px;'}}
+              {{ slicedString(channelName, 'padding-top: 2px;') }}
             </div>
-            {{/if}}
+            {% endif %}
           </a>
-          {{/unless}}
-          {{/if}}
-          {{#if ./subscribe}}
-          {{#unless subscribe.tags}}
-          <a class="js-menu-item flex break-words no-underline text-grey-darkest mt-8 sm:mt-8 md:mt-3" href="#operation-subscribe-{{@key}}">
-            {{#if ./deprecated}}<span title="Deprecated"></span>{{/if}}
-            <span class="bg-green-dark font-bold no-underline text-white uppercase p-1 mr-2 rounded" style="height: 21px;font-size: 11px;" title="Subscribe">Sub</span>
-            {{#if ./subscribe.summary}}
+          {% endif %}
+          {% if channel.subscribe and not subscribe.tags %}
+          <a class="js-menu-item flex break-words no-underline text-grey-darkest mt-8 sm:mt-8 md:mt-3"
+            href="#operation-subscribe-{{ channelName }}">
+            {% if channel.deprecated %}<span title="Deprecated"></span>{% endif %}
+            <span class="bg-green-dark font-bold no-underline text-white uppercase p-1 mr-2 rounded"
+              style="height: 21px;font-size: 11px;" title="Subscribe">Sub</span>
+            {% if channel.subscribe.summary %}
             <span style="padding-top: 2px;">
-              {{./subscribe.summary}}
+              {{ channel.subscribe.summary }}
             </span>
-            {{else}}
+            {% else %}
             <div style="display:inline-block;">
-              {{>slicedString string=@key style='padding-top: 2px;'}}
+              {{ slicedString(channelName, 'padding-top: 2px;') }}
             </div>
-            {{/if}}
+            {% endif %}
           </a>
-          {{/unless}}
-          {{/if}}
-          {{/each}}
+          {% endif %}
+          {% endfor %}
         </div>
       </div>
 
-      {{else}}
+      {% else %}
 
       <!--Without tags in sidebar-->
-      {{#each asyncapi.channels}}
+      {% for channelName, channel in asyncapi.channels %}
       <li>
-        {{#if ./publish}}
-        <a class="js-menu-item flex break-words no-underline text-grey-darkest mt-8 sm:mt-8 md:mt-3" href="#operation-publish-{{@key}}">
-          {{#if ./deprecated}}<span title="Deprecated"></span>{{/if}}
-          <span class="bg-blue-dark font-bold h-6 no-underline text-white uppercase p-1 mr-2 rounded" style="height: 21px;font-size: 11px;" title="Publish">Pub</span>
-          {{#if ./publish.summary}}
+        {% if channel.publish %}
+        <a class="js-menu-item flex break-words no-underline text-grey-darkest mt-8 sm:mt-8 md:mt-3"
+          href="#operation-publish-{{ channelName }}">
+          {% if channel.deprecated %}<span title="Deprecated"></span>{% endif %}
+          <span class="bg-blue-dark font-bold h-6 no-underline text-white uppercase p-1 mr-2 rounded"
+            style="height: 21px;font-size: 11px;" title="Publish">Pub</span>
+          {% if channel.publish.summary %}
           <span style="padding-top: 2px;">
-            {{./publish.summary}}
+            {{ channel.publish.summary }}
           </span>
-          {{else}}
+          {% else %}
           <div style="display:inline-block;">
-            {{>slicedString string=@key style='padding-top: 2px;'}}
+            {{ slicedString(channelName, 'padding-top: 2px;') }}
           </div>
-          {{/if}}
+          {% endif %}
         </a>
-        {{/if}}
-        {{#if ./subscribe}}
-        <a class="js-menu-item flex break-words no-underline text-grey-darkest mt-8 sm:mt-8 md:mt-3" href="#operation-subscribe-{{@key}}">
-          {{#if ./deprecated}}<span title="Deprecated"></span>{{/if}}
-          <span class="bg-green-dark font-bold no-underline text-white uppercase p-1 mr-2 rounded" style="height: 21px;font-size: 11px;" title="Subscribe">Sub</span>
-          {{#if ./subscribe.summary}}
+        {% endif %}
+        {% if channel.subscribe %}
+        <a class="js-menu-item flex break-words no-underline text-grey-darkest mt-8 sm:mt-8 md:mt-3"
+          href="#operation-subscribe-{{ channelName }}">
+          {% if channel.deprecated %}<span title="Deprecated"></span>{% endif %}
+          <span class="bg-green-dark font-bold no-underline text-white uppercase p-1 mr-2 rounded"
+            style="height: 21px;font-size: 11px;" title="Subscribe">Sub</span>
+          {% if channel.subscribe.summary %}
           <span style="padding-top: 2px;">
-            {{./subscribe.summary}}
+            {{ channel.subscribe.summary }}
           </span>
-          {{else}}
+          {% else %}
           <div style="display:inline-block;">
-            {{>slicedString string=@key style='padding-top: 2px;'}}
+            {{ slicedString(channelName, 'padding-top: 2px;') }}
           </div>
-          {{/if}}
+          {% endif %}
         </a>
-        {{/if}}
+        {% endif %}
         </a>
       </li>
-      {{/each}}
+      {% endfor %}
     </ul>
-    {{/if}}
-    {{/if}}
+    {% endif %}
+    {% endif %}
   </div>
 </div>

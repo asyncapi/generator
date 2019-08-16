@@ -1,1 +1,0 @@
-{{~#each (split string '(?=[\.\/\{\}])') as |slice|}}<span class="string-chunk" {{#if ../style}}style="{{../style}}"{{/if}}>{{slice}}</span>{{~/each}}

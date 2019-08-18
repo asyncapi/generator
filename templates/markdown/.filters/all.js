@@ -1,4 +1,4 @@
-module.exports = (Nunjucks, _) => {
+module.exports = ({ Nunjucks, OpenAPISampler, Markdown }) => {
 
   Nunjucks.addFilter('log', anything => {
     console.log(anything);
@@ -18,7 +18,7 @@ module.exports = (Nunjucks, _) => {
   });
 
   Nunjucks.addFilter('isRequired', (obj, key) => {
-    return obj && obj.required && !!(obj.required.includes(key));
+    return obj && Array.isArray(obj.required) && !!(obj.required.includes(key));
   });
 
   Nunjucks.addFilter('acceptedValues', items => {
@@ -27,4 +27,36 @@ module.exports = (Nunjucks, _) => {
     return items.map(i => `<code>${i}</code>`).join(', ');
   });
 
+  Nunjucks.addFilter('markdown2html', (md) => {
+    return Markdown().render(md || '');
+  });
+
+  Nunjucks.addFilter('firstKey', (obj) => {
+    if (!obj) return '';
+    return Object.keys(obj)[0];
+  });
+
+  Nunjucks.addFilter('getPayloadExamples', (msg) => {
+    if (Array.isArray(msg.examples()) && msg.find(e => e.payload)) {
+      return msg.filter(e => e.payload);
+    }
+
+    if (msg.payload() && msg.payload().examples()) {
+      return msg.payload().examples();
+    }
+  });
+
+  Nunjucks.addFilter('getHeadersExamples', (msg) => {
+    if (Array.isArray(msg.examples()) && msg.find(e => e.headers)) {
+      return msg.filter(e => e.headers);
+    }
+
+    if (msg.headers() && msg.headers().examples()) {
+      return msg.headers().examples();
+    }
+  });
+
+  Nunjucks.addFilter('generateExample', (schema) => {
+    return JSON.stringify(OpenAPISampler.sample(schema) || '', null, 2);
+  });
 };

@@ -1,5 +1,5 @@
 {% include "./info.md" %}
 
-{% if asyncapi.channels %}
+{% if asyncapi.hasChannels() %}
 {% include "./channels.md"  %}
 {% endif %}

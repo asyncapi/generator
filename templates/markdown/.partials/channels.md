@@ -2,6 +2,6 @@
 
 ## Channels
 
-{% for channelName, chan in asyncapi.channels %}
+{% for channelName, chan in asyncapi.channels() %}
 {{ channel(chan, channelName) -}}
 {% endfor %}

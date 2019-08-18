@@ -15,25 +15,11 @@
     </tr>
   </thead>
   <tbody>
-    {% for propName, prop in schema.properties %}
+    {% for propName, prop in schema.properties() %}
       {{ schemaProp(prop, propName, required=(schema | isRequired(propName)), path='') }}
     {% else %}
       {{ schemaProp(schema, schemaName,  path='') }}
     {% endfor %}
   </tbody>
 </table>
-
-{% if schema.formattedExample %}
-##### Example
-
-```json
-{{ schema.formattedExample | safe }}
-```
-{% elif schema.generatedExample %}
-##### Example _(generated)_
-
-```json
-{{ schema.generatedExample | safe }}
-```
-{% endif %}
 {% endmacro %}

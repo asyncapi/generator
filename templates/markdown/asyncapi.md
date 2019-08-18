@@ -1,20 +1,20 @@
-# {{asyncapi.info.title}} {{asyncapi.info.version}} documentation
+# {{asyncapi.info().title()}} {{asyncapi.info().version()}} documentation
 
-{% if asyncapi.info.x-logo %}
-![{{asyncapi.info.title}} logo]({{asyncapi.info.x-logo}})
+{% if asyncapi.info().ext('x-logo') %}
+![{{asyncapi.info().title()}} logo]({{asyncapi.info().ext('x-logo')}})
 {% endif %}
 
-{{ asyncapi.info.description | safe }}
+{{ asyncapi.info().description() | safe }}
 
 ## Table of Contents
 
-{% if asyncapi.info.termsOfService %}
+{% if asyncapi.info().termsOfService() %}
 * [Terms of Service](#termsOfService)
 {% endif %}
-{% if asyncapi.servers %}
+{% if asyncapi.hasServers() %}
 * [Servers](#servers)
 {% endif %}
-{% if asyncapi.channels %}
+{% if asyncapi.hasChannels() %}
 * [Channels](#channels)
 {% endif %}
 

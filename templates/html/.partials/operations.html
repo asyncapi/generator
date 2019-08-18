@@ -3,13 +3,13 @@
 <a name="operations"></a>
 <h2 class="mb-4 ml-8">Operations</h2>
 
-{% for channelName, channel in asyncapi.channels %}
+{% for channelName, channel in asyncapi.channels() %}
   <div class="responsive-container">
-    {% if channel.publish %}
-      {{ operation(channel.publish, 'publish', channelName) }}
+    {% if channel.hasPublish() %}
+      {{ operation(channel.publish(), 'publish', channelName) }}
     {% endif %}
-    {% if channel.subscribe %}
-      {{ operation(channel.subscribe, 'subscribe', channelName) }}
+    {% if channel.hasSubscribe() %}
+      {{ operation(channel.subscribe(), 'subscribe', channelName) }}
     {% endif %}
   </div>
 {% endfor %}

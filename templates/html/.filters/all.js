@@ -1,4 +1,4 @@
-module.exports = (Nunjucks, _) => {
+module.exports = ({ Nunjucks, Markdown, OpenAPISampler }) => {
   Nunjucks.addFilter('split', (string, separator) => {
     if (typeof string !== 'string') return string;
     const regex = new RegExp(separator, 'g');
@@ -37,5 +37,33 @@ module.exports = (Nunjucks, _) => {
 
   Nunjucks.addFilter('log', (anything) => {
     console.log(anything);
+  });
+
+  Nunjucks.addFilter('markdown2html', (md) => {
+    return Markdown().render(md || '');
+  });
+
+  Nunjucks.addFilter('getPayloadExamples', (msg) => {
+    if (Array.isArray(msg.examples()) && msg.find(e => e.payload)) {
+      return msg.filter(e => e.payload);
+    }
+
+    if (msg.payload() && msg.payload().examples()) {
+      return msg.payload().examples();
+    }
+  });
+
+  Nunjucks.addFilter('getHeadersExamples', (msg) => {
+    if (Array.isArray(msg.examples()) && msg.find(e => e.headers)) {
+      return msg.filter(e => e.headers);
+    }
+
+    if (msg.headers() && msg.headers().examples()) {
+      return msg.headers().examples();
+    }
+  });
+
+  Nunjucks.addFilter('generateExample', (schema) => {
+    return JSON.stringify(OpenAPISampler.sample(schema) || '', null, 2);
   });
 };

@@ -2,7 +2,7 @@
 {% from "./schema.html" import schema %}
 {% from "./tags.html" import tags %}
 
-{% macro operation(operation, operationType, channelName) %}
+{% macro operation(operation, operationType, channelName, channel) %}
 
 <a name="operation-{{operationType}}-{{channelName}}"></a>
 <div class="center-block p-8">
@@ -16,6 +16,8 @@
       {% endif %}
       {{ slicedString(channelName) }}
     </h3>
+
+    <div class="mt-4 mb-4 markdown">{{ channel.descriptionAsHTML | safe }}</div>
 
     <p class="text-grey text-sm">{{operation.summary}}</p>
     <div class="mt-4 mb-4 markdown">{{ operation.descriptionAsHTML | safe }}</div>

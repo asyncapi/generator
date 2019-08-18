@@ -6,11 +6,11 @@ import org.springframework.integration.annotation.MessagingGateway;
 @MessagingGateway
 public interface PublisherService {
 
-  {{#each asyncapi.topics as |topic key|}}
-  {{#if topic.publish}}
+  {% for topicName, topic in asyncapi.topics %}
+  {% if topic.publish %}
 
-    @Gateway(requestChannel = "{{camelCase topic.x-service-name}}OutboundChannel")
-    void publish{{capitalize topic.x-service-name}}(String data);
-  {{/if}}
-  {{/each}}
+    @Gateway(requestChannel = "{{topic.x-service-name | camelCase}}OutboundChannel")
+    void publish{{topic.x-service-name | capitalize}}(String data);
+  {% endif %}
+  {% endfor %}
 }

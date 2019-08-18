@@ -1,5 +1,5 @@
-{{> introduction}}
-{{> servers}}
-{{#if asyncapi.channels}}
-{{~> operations ~}}
-{{/if}}
+{% include "./introduction.html" %}
+{% include "./servers.html" %}
+{% if asyncapi.channels %}
+{% include "./operations.html" %}
+{% endif %}

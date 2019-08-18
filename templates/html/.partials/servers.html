@@ -1,180 +1,181 @@
-{{#if asyncapi.servers}}
+{% from "./sliced-string.html" import slicedString %}
+
+{% if asyncapi.servers %}
 <a name="servers"></a>
 <div class="center-block p-8">
 
   <h2 class="mb-4">Servers</h2>
 
-  {{#each asyncapi.servers as |server|}}
+  {% for server in asyncapi.servers %}
     <div class="shadow bg-grey-lighter mb-3 px-4 py-3">
       <div class="flex">
         <div>
           <div class="pr-4 font-mono">
-            {{>slicedString string=server.url}}
+            {{ slicedString(server.url) }}
 
-            {{#if server.protocolVersion}}
+            {% if server.protocolVersion %}
             <span class="bg-teal font-bold no-underline text-white uppercase rounded ml-2"
               style="height: 20px;font-size: 11px;padding: 3px;">{{server.protocol}}
               {{server.protocolVersion}}</span>
-            {{else}}
+            {% else %}
             <span class="bg-teal font-sans font-bold no-underline text-white uppercase rounded ml-2"
               style="height: 20px;font-size: 11px;padding: 3px;">{{server.protocol}}</span>
-            {{/if}}
+            {% endif %}
           </div>
           <div class="text-xs text-grey-dark">
-            {{{server.descriptionAsHTML}}}
+            {{ server.descriptionAsHTML | safe }}
           </div>
         </div>
       </div>
 
-      {{#if server.variables}}
+      {% if server.variables %}
         <div>
-          {{#each server.variables as |var|}}
+          {% for varName, var in server.variables %}
             <div class="leading-normal">
-              <span class="font-bold no-underline text-grey-dark text-xs uppercase">{{@key}}:</span>
+              <span class="font-bold no-underline text-grey-dark text-xs uppercase">{{varName}}:</span>
               <span class="text-xs">{{var.description}}</span>
               <div class="inline-block">
-                {{#if var.enum }}
+                {% if var.enum  %}
                 <span class="bg-indigo-darker font-bold no-underline text-white rounded ml-2"
-                  style="height: 20px;font-size: 11px;padding: 3px;">ENUM: {{join var.enum ', '}}</span>
-                {{/if}}
-                {{#if var.default }}
+                  style="height: 20px;font-size: 11px;padding: 3px;">ENUM: {{var.enum | join(', ')}}</span>
+                {% endif %}
+                {% if var.default  %}
                 <span class="bg-indigo-darker font-bold no-underline text-white rounded ml-2"
                   style="height: 20px;font-size: 11px;padding: 3px;">DEFAULT: {{var.default}}</span>
-                {{/if}}
+                {% endif %}
               </div>
             </div>
-          {{/each}}
+          {% endfor %}
         </div>
-      {{/if}}
+      {% endif %}
 
-      {{#if server.security}}
+      {% if server.security %}
         <h5 class="text-sm text-grey mt-1">Security:</h5>
         <ul class="list-reset">
-          {{#each server.security as |sec|}}
+          {% for sec in server.security %}
             <li>
-              {{#with (lookup ../../asyncapi.components.securitySchemes (firstKey sec)) as |def|}}
-                <span class="font-bold no-underline text-grey-dark text-xs uppercase mr-1">
-                  {{#if (equal def.type 'apiKey')}}
-                  API key:
-                  {{/if}}
-                  {{#if (equal def.type 'oauth2')}}
-                  OAuth2:
-                  {{/if}}
-                  {{#if (equal def.type 'openIdConnect')}}
-                  Open ID:
-                  {{/if}}
-                  {{#if (equal def.type 'http')}}
-                  HTTP:
-                  {{/if}}
-                  {{#if (equal def.type 'userPassword')}}
-                  User / Password:
-                  {{/if}}
-                  {{#if (equal def.type 'X509')}}
-                  X509:
-                  {{/if}}
-                  {{#if (equal def.type 'symmetricEncryption')}}
-                  Symmetric Encription:
-                  {{/if}}
-                  {{#if (equal def.type 'asymmetricEncryption')}}
-                  Asymmetric Encription:
-                  {{/if}}
-                  {{#if (equal def.type 'httpApiKey')}}
-                  HTTP API key:
-                  {{/if}}
-                </span>
+              {% set def = asyncapi.components.securitySchemes[sec | firstKey] %}
+              <span class="font-bold no-underline text-grey-dark text-xs uppercase mr-1">
+                {% if def.type === 'apiKey' %}
+                API key:
+                {% endif %}
+                {% if def.type === 'oauth2' %}
+                OAuth2:
+                {% endif %}
+                {% if def.type === 'openIdConnect' %}
+                Open ID:
+                {% endif %}
+                {% if def.type === 'http' %}
+                HTTP:
+                {% endif %}
+                {% if def.type === 'userPassword' %}
+                User / Password:
+                {% endif %}
+                {% if def.type === 'X509' %}
+                X509:
+                {% endif %}
+                {% if def.type === 'symmetricEncryption' %}
+                Symmetric Encription:
+                {% endif %}
+                {% if def.type === 'asymmetricEncryption' %}
+                Asymmetric Encription:
+                {% endif %}
+                {% if def.type === 'httpApiKey' %}
+                HTTP API key:
+                {% endif %}
+              </span>
 
-                {{#if def.description}}
-                  <span class="text-xs mr-2">{{def.description}}</span>
-                {{else}}
-                  <span class="text-xs mr-2 italic text-grey-dark">No description</span>
-                {{/if}}
+              {% if def.description %}
+                <span class="text-xs mr-2">{{def.description}}</span>
+              {% else %}
+                <span class="text-xs mr-2 italic text-grey-dark">No description</span>
+              {% endif %}
 
-                {{#if def.bearerFormat}}
-                  <span class="text-xs mr-2">| {{def.bearerFormat}}</span>
-                {{/if}}
+              {% if def.bearerFormat %}
+                <span class="text-xs mr-2">| {{def.bearerFormat}}</span>
+              {% endif %}
 
-                {{#if def.in}}
-                  <span class="font-bold no-underline bg-blue-light text-white text-xs uppercase rounded"
-                    style="height: 20px;font-size: 11px;padding: 3px;">In: {{def.in}}</span>
-                {{/if}}
+              {% if def.in %}
+                <span class="font-bold no-underline bg-blue-light text-white text-xs uppercase rounded"
+                  style="height: 20px;font-size: 11px;padding: 3px;">In: {{def.in}}</span>
+              {% endif %}
 
-                {{#if def.scheme}}
-                  <span class="font-bold no-underline bg-blue-light text-white text-xs uppercase rounded"
-                    style="height: 20px;font-size: 11px;padding: 3px;">{{def.scheme}}</span>
-                {{/if}}
+              {% if def.scheme %}
+                <span class="font-bold no-underline bg-blue-light text-white text-xs uppercase rounded"
+                  style="height: 20px;font-size: 11px;padding: 3px;">{{def.scheme}}</span>
+              {% endif %}
 
-                {{#if def.bearerFormat}}
-                  <span class="font-bold no-underline bg-blue-light text-white text-xs uppercase rounded"
-                    style="height: 20px;font-size: 11px;padding: 3px;">Header: {{def.name}}</span>
-                {{/if}}
+              {% if def.bearerFormat %}
+                <span class="font-bold no-underline bg-blue-light text-white text-xs uppercase rounded"
+                  style="height: 20px;font-size: 11px;padding: 3px;">Header: {{def.name}}</span>
+              {% endif %}
 
-                {{#if def.openIdConnectUrl}}
-                  <div class="px-4 py-2 ml-4 mb-3 border border-grey-light bg-grey-lightest rounded">
-                    <div>
-                      <span class="text-xs font-bold text-grey-dark mt-1 mr-1 uppercase">Connect URL:</span>
-                      <a class="text-grey-dark text-xs font-normal" href="{{def.openIdConnectUrl}}"
-                        target="_blank">{{def.openIdConnectUrl}}</a>
-                    </div>
+              {% if def.openIdConnectUrl %}
+                <div class="px-4 py-2 ml-4 mb-3 border border-grey-light bg-grey-lightest rounded">
+                  <div>
+                    <span class="text-xs font-bold text-grey-dark mt-1 mr-1 uppercase">Connect URL:</span>
+                    <a class="text-grey-dark text-xs font-normal" href="{{def.openIdConnectUrl}}"
+                      target="_blank">{{def.openIdConnectUrl}}</a>
+                  </div>
+                </div>
+
+              {% endif %}
+
+              {% for flowName, flow in def.flows %}
+                <div class="px-4 py-2 ml-4 mb-3 border border-grey-light bg-grey-lightest rounded">
+                  <div>
+                    <span class="text-xs font-bold text-grey-dark mt-1 mr-1 uppercase">Flow:</span>
+                    <span class="text-grey-dark text-xs font-normal capitalize">
+                      {% if flowName === 'clientCredentials' %}
+                        Client Credentials
+                      {% else %}
+                        {% if flowName === 'authorizationCode' %}
+                          Authorization Code
+                        {% else %}
+                          {{flowName}}
+                        {% endif %}
+                      {% endif %}
+                    </span>
                   </div>
 
-                {{/if}}
-
-                {{#each def.flows as |flow flowName|}}
-                  <div class="px-4 py-2 ml-4 mb-3 border border-grey-light bg-grey-lightest rounded">
+                  {% if flow.authorizationUrl %}
                     <div>
-                      <span class="text-xs font-bold text-grey-dark mt-1 mr-1 uppercase">Flow:</span>
-                      <span class="text-grey-dark text-xs font-normal capitalize">
-                        {{#if (equal flowName 'clientCredentials')}}
-                          Client Credentials
-                        {{else}}
-                          {{#if (equal flowName 'authorizationCode')}}
-                            Authorization Code
-                          {{else}}
-                            {{flowName}}
-                          {{/if}}
-                        {{/if}}
-                      </span>
+                      <span class="text-xs font-bold text-grey-dark mt-1 mr-1 uppercase">Auth URL:</span>
+                      <a class="text-grey-dark text-xs font-normal" href="{{flow.authorizationUrl}}" target="_blank">{{flow.authorizationUrl}}</a>
                     </div>
+                  {% endif %}
+                  {% if flow.tokenUrl %}
+                    <div>
+                      <span class="text-xs font-bold text-grey-dark mt-1 mr-1 uppercase">Token URL:</span>
+                      <a class="text-grey-dark text-xs font-normal" href="{{flow.tokenUrl}}"
+                        target="_blank">{{flow.tokenUrl}}</a>
+                    </div>
+                  {% endif %}
+                  {% if flow.refreshUrl %}
+                    <div>
+                      <span class="text-xs font-bold text-grey-dark mt-1 mr-1 uppercase">Refresh URL:</span>
+                      <a class="text-grey-dark text-xs font-normal" href="{{flow.refreshUrl}}"
+                        target="_blank">{{flow.refreshUrl}}</a>
+                    </div>
+                  {% endif %}
+                  {% if flow.scopes %}
+                    <div>
+                      <span class="text-xs font-bold text-grey-dark mt-1 mr-1 uppercase">Scopes:</span>
+                      {% for scopeName, scope in flow.scopes %}
+                        <span class="font-bold no-underline bg-indigo-light text-white text-xs rounded"
+                          style="height: 20px;padding: 3px;" title="{{scope}}">{{scopeName}}</span>
+                      {% endfor %}
+                    </div>
+                  {% endif %}
 
-                    {{#if flow.authorizationUrl}}
-                      <div>
-                        <span class="text-xs font-bold text-grey-dark mt-1 mr-1 uppercase">Auth URL:</span>
-                        <a class="text-grey-dark text-xs font-normal" href="{{flow.authorizationUrl}}" target="_blank">{{flow.authorizationUrl}}</a>
-                      </div>
-                    {{/if}}
-                    {{#if flow.tokenUrl}}
-                      <div>
-                        <span class="text-xs font-bold text-grey-dark mt-1 mr-1 uppercase">Token URL:</span>
-                        <a class="text-grey-dark text-xs font-normal" href="{{flow.tokenUrl}}"
-                          target="_blank">{{flow.tokenUrl}}</a>
-                      </div>
-                    {{/if}}
-                    {{#if flow.refreshUrl}}
-                      <div>
-                        <span class="text-xs font-bold text-grey-dark mt-1 mr-1 uppercase">Refresh URL:</span>
-                        <a class="text-grey-dark text-xs font-normal" href="{{flow.refreshUrl}}"
-                          target="_blank">{{flow.refreshUrl}}</a>
-                      </div>
-                    {{/if}}
-                    {{#if flow.scopes}}
-                      <div>
-                        <span class="text-xs font-bold text-grey-dark mt-1 mr-1 uppercase">Scopes:</span>
-                        {{#each flow.scopes as |scope scopeName|}}
-                          <span class="font-bold no-underline bg-indigo-light text-white text-xs rounded"
-                            style="height: 20px;padding: 3px;" title="{{scope}}">{{scopeName}}</span>
-                        {{/each}}
-                      </div>
-                    {{/if}}
-
-                  </div>
-                {{/each}}
-              {{/with}}
+                </div>
+              {% endfor %}
             </li>
-          {{/each}}
+          {% endfor %}
         </ul>
-      {{/if}}
+      {% endif %}
     </div>
-  {{/each}}
+  {% endfor %}
 
 </div>
-{{/if}}
+{% endif %}

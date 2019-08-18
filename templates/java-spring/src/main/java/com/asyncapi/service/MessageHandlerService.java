@@ -6,14 +6,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class MessageHandlerService {
 
-{{#each asyncapi.topics as |topic |}}
-  {{#if topic.subscribe}}
-    public void handle{{upperFirst topic.x-service-name}}(Message<?> message) {
+{% for topicName, topic in asyncapi.topics %}
+  {% if topic.subscribe %}
+    public void handle{{topic.x-service-name | upperFirst}}(Message<?> message) {
         System.out.println("handler {{topic.x-service-name}}");
         System.out.println(message.getPayload());
     }
-  {{/if}}
+  {% endif %}
 
-{{/each}}
+{% endfor %}
 
 }

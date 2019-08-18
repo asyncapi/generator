@@ -1,13 +1,15 @@
+{% from "./operation.html" import operation %}
+
 <a name="operations"></a>
 <h2 class="mb-4 ml-8">Operations</h2>
 
-{{#each asyncapi.channels as |channel channelName|}}
+{% for channelName, channel in asyncapi.channels %}
   <div class="responsive-container">
-    {{#if channel.publish}}
-      {{~>operation operation=channel.publish operationName='publish' channelName=channelName ~}}
-    {{/if}}
-    {{#if channel.subscribe}}
-      {{~>operation operation=channel.subscribe operationName='subscribe' channelName=channelName ~}}
-    {{/if}}
+    {% if channel.publish %}
+      {{ operation(channel.publish, 'publish', channelName) }}
+    {% endif %}
+    {% if channel.subscribe %}
+      {{ operation(channel.subscribe, 'subscribe', channelName) }}
+    {% endif %}
   </div>
-{{/each}}
+{% endfor %}

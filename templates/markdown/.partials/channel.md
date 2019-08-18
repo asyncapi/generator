@@ -6,6 +6,10 @@
 
 ### {% if chan.publish %} `publish`{%- endif %}{%- if chan.subscribe %} `subscribe`{%- endif %} {{chanName}} {%- if chan.deprecated %} (**deprecated**){% endif %} {{channelName}}
 
+{% if chan.description %}
+{{ chan.description | safe }}
+{% endif %}
+
 {% if chan.parameters %}
 {{- parameters(chan.parameters) -}}
 {% endif %}

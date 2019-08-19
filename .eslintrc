@@ -67,7 +67,6 @@ rules:
   operator-assignment: [2, always]
   padded-blocks: [2, never]
   quote-props: [2, as-needed]
-  space-before-function-paren: [2, always]
   keyword-spacing: [2, {'before': true, 'after': true, 'overrides': {}}]
   space-before-blocks: [2, always]
   array-bracket-spacing: [2, never]

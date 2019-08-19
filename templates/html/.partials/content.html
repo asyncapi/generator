@@ -1,5 +1,7 @@
 {% include "./introduction.html" %}
+{% if asyncapi.hasServers() %}
 {% include "./servers.html" %}
-{% if asyncapi.channels %}
+{% endif %}
+{% if asyncapi.hasChannels() %}
 {% include "./operations.html" %}
 {% endif %}

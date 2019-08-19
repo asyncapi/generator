@@ -29,7 +29,7 @@
   "dependencies": {
     "ajv": "^6.10.0",
     "asyncapi": "^2.2.0",
-    "asyncapi-parser": "^0.3.5",
+    "asyncapi-parser": "^0.6.0",
     "commander": "^2.12.2",
     "fs.extra": "^1.3.2",
     "js-yaml": "^3.13.1",
@@ -39,8 +39,7 @@
     "minimatch": "^3.0.4",
     "mkdirp": "^0.5.1",
     "nunjucks": "^3.2.0",
-    "openapi-sampler": "^1.0.0-beta.9",
-    "project-name-generator": "^2.1.5"
+    "openapi-sampler": "^1.0.0-beta.9"
   },
   "devDependencies": {}
 }

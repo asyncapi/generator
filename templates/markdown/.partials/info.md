@@ -1,10 +1,10 @@
-{% if asyncapi.info.termsOfService %}
+{% if asyncapi.info().termsOfService() %}
 <a name="termsOfService"></a>
 ## Terms of service
-[{{asyncapi.info.termsOfService}}]({{asyncapi.info.termsOfService}})
+[{{asyncapi.info().termsOfService()}}]({{asyncapi.info().termsOfService()}})
 {% endif %}
 
-{% if asyncapi.servers %}
+{% if asyncapi.hasServers() %}
 <a name="servers"></a>
 ## Servers
 
@@ -17,13 +17,13 @@
     </tr>
   </thead>
   <tbody>
-  {% for server in asyncapi.servers -%}
+  {% for serverName, server in asyncapi.servers() -%}
     <tr>
-      <td>{{server.url}}</td>
-      <td>{{server.protocol}}{% if server.protocolVersion %}{{server.protocolVersion}}{% endif %}</td>
-      <td>{{server.description | safe}}</td>
+      <td>{{server.url()}}</td>
+      <td>{{server.protocol()}}{% if server.protocolVersion() %}{{server.protocolVersion()}}{% endif %}</td>
+      <td>{{server.description() | safe}}</td>
     </tr>
-    {% if server.variables -%}
+    {% if server.variables() -%}
     <tr>
       <td colspan="3">
         <details>
@@ -38,20 +38,20 @@
               </tr>
             </thead>
             <tbody>
-              {% for varName, var in server.variables -%}
+              {% for varName, var in server.variables() -%}
               <tr>
                 <td>{{varName}}</td>
                 <td>
-                  {%- if var.default %}
-                    {{var.default}}
+                  {%- if var.hasDefaultValue() %}
+                    {{var.defaultValue()}}
                   {% else %}
                     <em>None</em>
                   {% endif -%}
                 </td>
                 <td>
-                  {%- if var.enum %}
+                  {%- if var.hasAllowedValues() %}
                   <ul>
-                    {%- for value in var.enum -%}
+                    {%- for value in var.allowedValues() -%}
                     <li>{{value}}</li>
                     {%- endfor -%}
                   </ul>
@@ -59,7 +59,7 @@
                     Any
                   {% endif -%}
                 </td>
-                <td>{{ var.description | safe }}</td>
+                <td>{{ var.description() | safe }}</td>
               </tr>
               {% endfor -%}
             </tbody>
@@ -68,7 +68,7 @@
       </td>
     </tr>
     {% endif -%}
-    {% if server._security -%}
+    {% if server.security() -%}
     <tr>
       <td colspan="3">
         <details>
@@ -85,14 +85,15 @@
               </tr>
             </thead>
             <tbody>
-            {%- for security in server._security %}
+            {%- for security in server.security() %}
+              {%- set def = asyncapi.components().securityScheme(security.json() | firstKey) -%}
               <tr>
-                <td>{{security.type}}</td>
-                <td>{{security.in}}</td>
-                <td>{{security.name}}</td>
-                <td>{{security.scheme}}</td>
-                <td>{{security.bearerFormat}}</td>
-                <td>{{security.descriptionAsHTML | safe }}</td>
+                <td>{{def.type()}}</td>
+                <td>{{def.in()}}</td>
+                <td>{{def.name()}}</td>
+                <td>{{def.scheme()}}</td>
+                <td>{{def.bearerFormat()}}</td>
+                <td>{{def.description() | markdown2html | safe }}</td>
               </tr>
             {%- endfor -%}
             </tbody>

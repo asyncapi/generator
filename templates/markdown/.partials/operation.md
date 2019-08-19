@@ -1,50 +1,18 @@
-{% from "./schema.md" import schema %}
-{% from "./tags.md" import tags %}
+{% from "./message.md" import message %}
 
-{% macro operation(operation) %}
-{% if operation.summary %}
-{{ operation.summary | safe }}
+{% macro operation(op, channelName) %}
+### {% if op.isPublish() %} `publish`{%- endif %}{%- if op.isSubscribe() %} `subscribe`{%- endif %} {{channelName}}
 
-{% endif %}
-{% if operation.description %}
-{{ operation.description | safe }}
-{% endif %}
+#### Message
 
-{% if operation.headers %}
-##### Headers
+{% if op.hasMultipleMessages() %}
+Accepts **one of** the following messages:
 
-{{ schema(operation.headers, 'Message Headers', hideTitle=true) }}
-
-{% if not operation.example and operation.generatedHeadersExample %}
-###### Example of headers _(generated)_
-
-```json
-{{ operation.generatedHeadersExample | safe }}
-```
-{% endif %}
-{% endif %}
-
-##### Payload
-
-{{ schema(operation.message.payload, 'Message Payload', hideTitle=true) }}
-
-{% if operation.message.payload.example %}
-###### Example
-
-```json
-{{ operation.message.formattedExample | safe }}
-```
-{% elif operation.message.generatedPayloadExample %}
-###### Example of payload _(generated)_
-
-```json
-{{ operation.message.generatedPayloadExample | safe }}
-```
-{% endif %}
-
-{% if operation.tags %}
-##### Tags
-
-{{ tags(operation.tags) }}
+{%- for msg in op.messages() -%}
+##### Message #{{loop.index}}
+{{ message(msg) }}
+{%- endfor -%}
+{% else %}
+{{- message(op.message(0)) -}}
 {% endif %}
 {% endmacro %}

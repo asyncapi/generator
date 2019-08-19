@@ -1,47 +1,45 @@
 {% from "./sliced-string.html" import slicedString %}
-
-{% if asyncapi.servers %}
 <a name="servers"></a>
 <div class="center-block p-8">
 
   <h2 class="mb-4">Servers</h2>
 
-  {% for server in asyncapi.servers %}
+  {% for serverName, server in asyncapi.servers() %}
     <div class="shadow bg-grey-lighter mb-3 px-4 py-3">
       <div class="flex">
         <div>
           <div class="pr-4 font-mono">
-            {{ slicedString(server.url) }}
+            {{ slicedString(server.url()) }}
 
-            {% if server.protocolVersion %}
+            {% if server.protocolVersion() %}
             <span class="bg-teal font-bold no-underline text-white uppercase rounded ml-2"
-              style="height: 20px;font-size: 11px;padding: 3px;">{{server.protocol}}
-              {{server.protocolVersion}}</span>
+              style="height: 20px;font-size: 11px;padding: 3px;">{{server.protocol()}}
+              {{server.protocolVersion()}}</span>
             {% else %}
             <span class="bg-teal font-sans font-bold no-underline text-white uppercase rounded ml-2"
-              style="height: 20px;font-size: 11px;padding: 3px;">{{server.protocol}}</span>
+              style="height: 20px;font-size: 11px;padding: 3px;">{{server.protocol()}}</span>
             {% endif %}
           </div>
           <div class="text-xs text-grey-dark">
-            {{ server.descriptionAsHTML | safe }}
+            {{ server.description() | markdown2html | safe }}
           </div>
         </div>
       </div>
 
-      {% if server.variables %}
+      {% if server.variables() %}
         <div>
-          {% for varName, var in server.variables %}
+          {% for varName, var in server.variables() %}
             <div class="leading-normal">
               <span class="font-bold no-underline text-grey-dark text-xs uppercase">{{varName}}:</span>
-              <span class="text-xs">{{var.description}}</span>
+              <span class="text-xs">{{var.description()}}</span>
               <div class="inline-block">
-                {% if var.enum  %}
+                {% if var.hasAllowedValues()  %}
                 <span class="bg-indigo-darker font-bold no-underline text-white rounded ml-2"
-                  style="height: 20px;font-size: 11px;padding: 3px;">ENUM: {{var.enum | join(', ')}}</span>
+                  style="height: 20px;font-size: 11px;padding: 3px;">ENUM: {{var.allowedValues() | join(', ')}}</span>
                 {% endif %}
-                {% if var.default  %}
+                {% if var.hasDefaultValue()  %}
                 <span class="bg-indigo-darker font-bold no-underline text-white rounded ml-2"
-                  style="height: 20px;font-size: 11px;padding: 3px;">DEFAULT: {{var.default}}</span>
+                  style="height: 20px;font-size: 11px;padding: 3px;">DEFAULT: {{var.defaultValue()}}</span>
                 {% endif %}
               </div>
             </div>
@@ -49,121 +47,120 @@
         </div>
       {% endif %}
 
-      {% if server.security %}
+      {% if server.security() %}
         <h5 class="text-sm text-grey mt-1">Security:</h5>
         <ul class="list-reset">
-          {% for sec in server.security %}
+          {% for sec in server.security() %}
             <li>
-              {% set def = asyncapi.components.securitySchemes[sec | firstKey] %}
+              {% set def = asyncapi.components().securityScheme(sec.json() | firstKey) %}
+
               <span class="font-bold no-underline text-grey-dark text-xs uppercase mr-1">
-                {% if def.type === 'apiKey' %}
+                {% if def.type() === 'apiKey' %}
                 API key:
                 {% endif %}
-                {% if def.type === 'oauth2' %}
+                {% if def.type() === 'oauth2' %}
                 OAuth2:
                 {% endif %}
-                {% if def.type === 'openIdConnect' %}
+                {% if def.type() === 'openIdConnect' %}
                 Open ID:
                 {% endif %}
-                {% if def.type === 'http' %}
+                {% if def.type() === 'http' %}
                 HTTP:
                 {% endif %}
-                {% if def.type === 'userPassword' %}
+                {% if def.type() === 'userPassword' %}
                 User / Password:
                 {% endif %}
-                {% if def.type === 'X509' %}
+                {% if def.type() === 'X509' %}
                 X509:
                 {% endif %}
-                {% if def.type === 'symmetricEncryption' %}
+                {% if def.type() === 'symmetricEncryption' %}
                 Symmetric Encription:
                 {% endif %}
-                {% if def.type === 'asymmetricEncryption' %}
+                {% if def.type() === 'asymmetricEncryption' %}
                 Asymmetric Encription:
                 {% endif %}
-                {% if def.type === 'httpApiKey' %}
+                {% if def.type() === 'httpApiKey' %}
                 HTTP API key:
                 {% endif %}
               </span>
 
-              {% if def.description %}
-                <span class="text-xs mr-2">{{def.description}}</span>
+              {% if def.description() %}
+                <span class="text-xs mr-2">{{def.description() | markdown2html | safe}}</span>
               {% else %}
                 <span class="text-xs mr-2 italic text-grey-dark">No description</span>
               {% endif %}
 
-              {% if def.bearerFormat %}
-                <span class="text-xs mr-2">| {{def.bearerFormat}}</span>
+              {% if def.bearerFormat() %}
+                <span class="text-xs mr-2">| {{def.bearerFormat()}}</span>
               {% endif %}
 
-              {% if def.in %}
+              {% if def.in() %}
                 <span class="font-bold no-underline bg-blue-light text-white text-xs uppercase rounded"
-                  style="height: 20px;font-size: 11px;padding: 3px;">In: {{def.in}}</span>
+                  style="height: 20px;font-size: 11px;padding: 3px;">In: {{def.in()}}</span>
               {% endif %}
 
-              {% if def.scheme %}
+              {% if def.scheme() %}
                 <span class="font-bold no-underline bg-blue-light text-white text-xs uppercase rounded"
-                  style="height: 20px;font-size: 11px;padding: 3px;">{{def.scheme}}</span>
+                  style="height: 20px;font-size: 11px;padding: 3px;">{{def.scheme()}}</span>
               {% endif %}
 
-              {% if def.bearerFormat %}
+              {% if def.bearerFormat() %}
                 <span class="font-bold no-underline bg-blue-light text-white text-xs uppercase rounded"
-                  style="height: 20px;font-size: 11px;padding: 3px;">Header: {{def.name}}</span>
+                  style="height: 20px;font-size: 11px;padding: 3px;">Header: {{def.name()}}</span>
               {% endif %}
 
-              {% if def.openIdConnectUrl %}
+              {% if def.openIdConnectUrl() %}
                 <div class="px-4 py-2 ml-4 mb-3 border border-grey-light bg-grey-lightest rounded">
                   <div>
                     <span class="text-xs font-bold text-grey-dark mt-1 mr-1 uppercase">Connect URL:</span>
-                    <a class="text-grey-dark text-xs font-normal" href="{{def.openIdConnectUrl}}"
-                      target="_blank">{{def.openIdConnectUrl}}</a>
+                    <a class="text-grey-dark text-xs font-normal" href="{{def.openIdConnectUrl()}}"
+                      target="_blank">{{def.openIdConnectUrl()}}</a>
                   </div>
                 </div>
 
               {% endif %}
 
-              {% for flowName, flow in def.flows %}
+              {% for flowName, flow in def.flows() %}
                 <div class="px-4 py-2 ml-4 mb-3 border border-grey-light bg-grey-lightest rounded">
                   <div>
                     <span class="text-xs font-bold text-grey-dark mt-1 mr-1 uppercase">Flow:</span>
                     <span class="text-grey-dark text-xs font-normal capitalize">
                       {% if flowName === 'clientCredentials' %}
                         Client Credentials
+                      {% elif flowName === 'authorizationCode' %}
+                        Authorization Code
                       {% else %}
-                        {% if flowName === 'authorizationCode' %}
-                          Authorization Code
-                        {% else %}
-                          {{flowName}}
-                        {% endif %}
+                        {{flowName | capitalize}}
                       {% endif %}
                     </span>
                   </div>
 
-                  {% if flow.authorizationUrl %}
+                  {% if flow.authorizationUrl() %}
                     <div>
                       <span class="text-xs font-bold text-grey-dark mt-1 mr-1 uppercase">Auth URL:</span>
-                      <a class="text-grey-dark text-xs font-normal" href="{{flow.authorizationUrl}}" target="_blank">{{flow.authorizationUrl}}</a>
+                      <a class="text-grey-dark text-xs font-normal" href="{{flow.authorizationUrl()}}" target="_blank">{{flow.authorizationUrl()}}</a>
                     </div>
                   {% endif %}
-                  {% if flow.tokenUrl %}
+                  {% if flow.tokenUrl() %}
                     <div>
                       <span class="text-xs font-bold text-grey-dark mt-1 mr-1 uppercase">Token URL:</span>
-                      <a class="text-grey-dark text-xs font-normal" href="{{flow.tokenUrl}}"
-                        target="_blank">{{flow.tokenUrl}}</a>
+                      <a class="text-grey-dark text-xs font-normal" href="{{flow.tokenUrl()}}"
+                        target="_blank">{{flow.tokenUrl()}}</a>
                     </div>
                   {% endif %}
-                  {% if flow.refreshUrl %}
+                  {% if flow.refreshUrl() %}
                     <div>
                       <span class="text-xs font-bold text-grey-dark mt-1 mr-1 uppercase">Refresh URL:</span>
-                      <a class="text-grey-dark text-xs font-normal" href="{{flow.refreshUrl}}"
-                        target="_blank">{{flow.refreshUrl}}</a>
+                      <a class="text-grey-dark text-xs font-normal" href="{{flow.refreshUrl()}}"
+                        target="_blank">{{flow.refreshUrl()}}</a>
                     </div>
                   {% endif %}
-                  {% if flow.scopes %}
+                  {% if flow.scopes() %}
                     <div>
                       <span class="text-xs font-bold text-grey-dark mt-1 mr-1 uppercase">Scopes:</span>
-                      {% for scopeName, scope in flow.scopes %}
+                      {% for scopeName, scopeDescription in flow.scopes() %}
                         <span class="font-bold no-underline bg-indigo-light text-white text-xs rounded"
-                          style="height: 20px;padding: 3px;" title="{{scope}}">{{scopeName}}</span>
+                          style="height: 20px;padding: 3px;" title="{{scopeDescription}}">{{scopeName}}</span>
                       {% endfor %}
                     </div>
                   {% endif %}
@@ -178,4 +175,3 @@
   {% endfor %}
 
 </div>
-{% endif %}

@@ -1,18 +1,18 @@
 <div class="center-block p-8">
   <a name="introduction"></a>
-  <h1>{{asyncapi.info.title}} {{asyncapi.info.version}}</h1>
+  <h1>{{asyncapi.info().title()}} {{asyncapi.info().version()}}</h1>
   <div class="leading-normal mb-4">
-    {% if asyncapi.info.termsOfService %}
+    {% if asyncapi.info().termsOfService() %}
     <a class="border border-solid border-purple-lighter hover:bg-purple-lighter hover:text-purple-dark font-bold no-underline text-purple text-xs uppercase rounded mr-2 px-3 py-1"
-      href="{{asyncapi.info.termsOfService}}" target="_blank">Terms of Service</a>
+      href="{{asyncapi.info().termsOfService()}}" target="_blank">Terms of Service</a>
     {% endif %}
-    {% if asyncapi.info.license %}
+    {% if asyncapi.info().license() %}
       <a class="border border-solid border-orange-lighter hover:bg-orange-lighter hover:text-orange-dark font-bold no-underline text-orange text-xs uppercase rounded mr-2 px-3 py-1"
-        href="{{asyncapi.info.license.url}}" target="_blank">{{asyncapi.info.license.name}}</a>
+        href="{{asyncapi.info().license().url()}}" target="_blank">{{asyncapi.info().license().name()}}</a>
     {% endif %}
   </div>
 
   <div class="markdown">
-    {{ asyncapi.info.descriptionAsHTML | safe }}
+    {{ asyncapi.info().description() | markdown2html | safe }}
   </div>
 </div>

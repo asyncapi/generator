@@ -4,6 +4,10 @@
 {% macro channel(chan, channelName) %}
 <a name="channel-{{channelName}}"></a>
 
+{% if chan.description() %}
+{{ chan.description() | safe }}
+{% endif %}
+
 {% if chan.parameters() %}
 {{- parameters(chan.parameters()) -}}
 {% endif %}

@@ -6,10 +6,10 @@
 {% for channelName, channel in asyncapi.channels() %}
   <div class="responsive-container">
     {% if channel.hasPublish() %}
-      {{ operation(channel.publish(), 'publish', channelName) }}
+      {{ operation(channel.publish(), 'publish', channelName, channel) }}
     {% endif %}
     {% if channel.hasSubscribe() %}
-      {{ operation(channel.subscribe(), 'subscribe', channelName) }}
+      {{ operation(channel.subscribe(), 'subscribe', channelName, channel) }}
     {% endif %}
   </div>
 {% endfor %}

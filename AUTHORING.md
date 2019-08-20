@@ -10,7 +10,7 @@ The AsyncAPI generator has been built with extensibility in mind. The package us
 1. Templates may contain "partials" or reusable chunks. They must be stored in the `.partials` directory under the template directory.
 1. Templates may contain "filters" or helper functions. They must be stored in the `.filters` directory under the template directory. [Read more about filters](#filters).
 1. Templates may have a configuration file. It must be stored in the template directory and its name must be `.tp-config.json`. [Read more about the configuration file](#configuration-file).
-1. There are params with special meaning. [See: Special Params](#special-params).
+1. There are params with special meaning. [Read more about special params](#special-params).
 
 ## Filters
 
@@ -99,4 +99,4 @@ There are some template parameters that have a special meaning:
 
 |Name|Description|
 |---|---|
-|`server`| It is used to let the template know which server we want to use. In some cases, this may be required. For instance, when generating code that connects to a specific server.
+|`server`| It is used to let the template know which server we want to use. In some cases, this may be required. For instance, when generating code that connects to a specific server. If your template need your users to specify a server, use this param.

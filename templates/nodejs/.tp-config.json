@@ -1,0 +1,22 @@
+{
+  "supportedProtocols": ["amqp", "mqtt"],
+  "requiredParams": ["server"],
+  "conditionalFiles": {
+    "src/api/adapters/amqp.js": {
+      "subject": "server.protocol",
+      "validation": {
+        "const": "amqp"
+      }
+    },
+    "src/api/adapters/mqtt.js": {
+      "subject": "server.protocol",
+      "validation": {
+        "const": "mqtt"
+      }
+    }
+  },
+  "nonRenderableFiles": [
+    "src/api/middlewares/*.*",
+    "lib/lib/config.js"
+  ]
+}

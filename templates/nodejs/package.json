@@ -1,0 +1,14 @@
+{
+  "name": "{{ asyncapi.info().title() | kebabCase }}",
+  "description": "{{ asyncapi.info().description() | oneLine }}",
+  "version": "{{ asyncapi.info().version() }}",
+  "scripts": {
+    "start": "node src/api/index.js"
+  },
+  "dependencies": {
+    "hermesjs": "1.x",
+    "hermesjs-router": "1.x",
+    "hermesjs-{{ asyncapi.server(params.server).protocol() }}": "1.x",
+    "node-yaml-config": "0.0.4"
+  }
+}

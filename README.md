@@ -13,7 +13,7 @@ npm install -g asyncapi-generator
 Or use all the commands below using Docker by prefixing them with:
 
 ```bash
-docker run --rm -it -v $PWD:/app -w /app asyncapi/generator [ag|anc] [COMMAND HERE]
+docker run --rm -it -v $PWD:/app -w /app asyncapi/generator ag [COMMAND HERE]
 ```
 
 ## Usage

@@ -8,9 +8,6 @@ fi
 if [ "$1" == "ag" ]; then
     shift
     node /asyncapi/cli "$@"
-elif [ "$1" == "anc" ]; then
-    shift
-    anc "$@"
 else
    echo "Unknown command"
    exit 1

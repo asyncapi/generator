@@ -4,36 +4,41 @@
 
 {% macro operation(operation, operationType, channelName, channel) %}
 
-<a name="operation-{{operationType}}-{{channelName}}"></a>
-<div class="center-block p-8">
-  <div class="operation pt-8 pb-8">
-    <h3 class="font-mono text-base">
-      {% if operationType === 'publish' %}
-      <span class="font-mono border border-blue text-blue uppercase p-1 rounded" title="Publish">Pub</span>
-      {% endif %}
-      {% if operationType === 'subscribe' %}
-      <span class="font-mono border border-green-dark text-green-dark uppercase p-1 rounded" title="Subscribe">Sub</span>
-      {% endif %}
-      {{ slicedString(channelName) }}
-    </h3>
+<div class="responsive-container">
+  <a name="operation-{{operationType}}-{{channelName}}"></a>
+  <div class="center-block p-8">
+    <div class="operation pt-8 pb-8">
+      <h3 class="font-mono text-base">
+        {% if operationType === 'publish' %}
+        <span class="font-mono border border-blue text-blue uppercase p-1 rounded" title="Publish">Pub</span>
+        {% endif %}
+        {% if operationType === 'subscribe' %}
+        <span class="font-mono border border-green-dark text-green-dark uppercase p-1 rounded" title="Subscribe">Sub</span>
+        {% endif %}
+        {{ slicedString(channelName) }}
+      </h3>
 
-    <div class="mt-4 mb-4 markdown">{{ channel.description() | markdown2html | safe }}</div>
+      <div class="mt-4 mb-4 markdown">{{ channel.description() | markdown2html | safe }}</div>
 
-    <p class="text-grey text-sm">{{operation.summary()}}</p>
-    <div class="mt-4 mb-4 markdown">{{ operation.description() | markdown2html | safe }}</div>
+      <p class="text-grey text-sm">{{operation.summary()}}</p>
+      <div class="mt-4 mb-4 markdown">{{ operation.description() | markdown2html | safe }}</div>
 
-    {% if operation.hasMultipleMessages() %}
-      <p>Accepts <strong>one of</strong> the following messages:</p>
-      {% for msg in operation.messages() %}
-        {{ message(msg, showIndex=true, index=loop.index, open=false) }}
-      {% endfor %}
-    {% else %}
-      <p>Accepts the following message:</p>
-      {{ message(operation.message(0), showIndex=false, open=true) }}
-    {% endif %}
 
-    {{ tags(operation.tags()) }}
+      {{ tags(operation.tags()) }}
+    </div>
   </div>
 </div>
+
+{% if operation.hasMultipleMessages() %}
+  {% for msg in operation.messages() %}
+    <div class="responsive-container message-container">
+      {{ message(msg, showIndex=true, index=loop.index, open=false, prefixHtml='<p>Accepts <strong>one of</strong> the following messages:</p>') }}
+    </div>
+  {% endfor %}
+{% else %}
+  <div class="responsive-container message-container">
+    {{ message(operation.message(0), showIndex=false, open=true, prefixHtml='<p>Accepts the following message:</p>') }}
+  </div>
+{% endif %}
 
 {% endmacro %}

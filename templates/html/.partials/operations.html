@@ -4,12 +4,10 @@
 <h2 class="mb-4 ml-8">Operations</h2>
 
 {% for channelName, channel in asyncapi.channels() %}
-  <div class="responsive-container">
-    {% if channel.hasPublish() %}
-      {{ operation(channel.publish(), 'publish', channelName, channel) }}
-    {% endif %}
-    {% if channel.hasSubscribe() %}
-      {{ operation(channel.subscribe(), 'subscribe', channelName, channel) }}
-    {% endif %}
-  </div>
+  {% if channel.hasPublish() %}
+    {{ operation(channel.publish(), 'publish', channelName, channel) }}
+  {% endif %}
+  {% if channel.hasSubscribe() %}
+    {{ operation(channel.subscribe(), 'subscribe', channelName, channel) }}
+  {% endif %}
 {% endfor %}

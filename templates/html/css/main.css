@@ -109,6 +109,10 @@ h1, h2, h3, h4, h5, h6 {
   z-index: 1;
 }
 
+.message-container > .p-8 {
+  padding: 0 2rem;
+}
+
 @media only screen and (min-width: 992px) {
   .sidebar-panel {
     display: block;
@@ -136,7 +140,7 @@ h1, h2, h3, h4, h5, h6 {
 
   .right-block {
     background-color: transparent;
-    margin-top: 2rem;
+    margin-top: 0;
     margin-bottom: 2rem;
     width: 40%;
   }
@@ -155,6 +159,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @media only screen and (max-width: 991px) {
+  .right-block {
+    padding-top: 2rem;
+  }
+
   #burger-menu + label {
     display: flex;
     justify-content: center;

@@ -29,7 +29,7 @@ docker run --rm -it -v $PWD:/app -w /app asyncapi/generator [ag|anc] [COMMAND HE
     -V, --version                  output the version number
     -o, --output <outputDir>       directory where to put the generated files (defaults to current directory)
     -t, --templates <templatesDir> directory where templates are located (defaults to internal templates directory)
-    -p, --param <name=value>       additional param to pass to templates   
+    -p, --param <name=value>       additional param to pass to the template
     -h, --help                     output usage information
 ```
 

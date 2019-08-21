@@ -61,7 +61,7 @@
                   style="height: 20px;font-size: 11px;padding: 3px;">length >= {{prop.minLength()}}</span>
             {% endif %}
             {% if prop.pattern() !== undefined %}
-            <span class="bg-purple-dark font-bold no-underline text-white rounded ml-2"
+            <span class="bg-purple-dark font-bold no-underline text-white rounded normal-case ml-2"
                   style="height: 20px;font-size: 11px;padding: 3px;">must match {{prop.pattern()}}</span>
             {% endif %}
             {% if prop.uniqueItems() %}

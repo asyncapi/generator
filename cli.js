@@ -14,16 +14,17 @@ const green = text => `\x1b[32m${text}\x1b[0m`;
 
 let asyncapiFile;
 let template;
+const params = {};
 
 const parseOutput = dir => path.resolve(dir);
-const parseJSON = value => {
-  try {
-    return JSON.parse(value);
-  } catch (e) {
-    console.log(yellow(`Warning: values of --params will not be available in the templates, there was a error parsing: ${value}`));
-    console.log(magenta(e.message));
-    return {};
-  }
+
+const paramParser = v => {
+  if (!v.includes('=')) throw new Error(`Invalid param ${v}. It must be in the format of --param name=value.`);
+  const chunks = v.split(/=(.+)/, 2);
+  const paramName = chunks[0];
+  const paramValue = chunks[1];
+  params[paramName] = paramValue;
+  return v;
 };
 
 const showErrorAndExit = err => {
@@ -41,7 +42,7 @@ program
   })
   .option('-o, --output <outputDir>', 'directory where to put the generated files (defaults to current directory)', parseOutput, process.cwd())
   .option('-t, --templates <templateDir>', 'directory where templates are located (defaults to internal templates directory)', null, path.resolve(__dirname, 'templates'))
-  .option('--params <templateParams>', 'json object with additional params to pass to templates', parseJSON)
+  .option('-p, --param <name=value>', 'additional param to pass to templates', paramParser)
   .parse(process.argv);
 
 if (!asyncapiFile) {
@@ -52,9 +53,16 @@ if (!asyncapiFile) {
 mkdirp(program.output, err => {
   if (err) return showErrorAndExit(err);
 
-  const generator = new Generator(template, program.output || path.resolve(os.tmpdir(), 'asyncapi-generator'), {
-    templatesDir: program.templates,
-  });
+  let generator;
+
+  try {
+    generator = new Generator(template, program.output || path.resolve(os.tmpdir(), 'asyncapi-generator'), {
+      templatesDir: program.templates,
+      templateParams: params,
+    });
+  } catch (e) {
+    return showErrorAndExit(e);
+  }
 
   generator.generateFromFile(asyncapiFile)
     .then(() => {

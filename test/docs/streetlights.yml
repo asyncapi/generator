@@ -16,10 +16,13 @@ info:
     url: https://www.apache.org/licenses/LICENSE-2.0
 
 servers:
+  mosquitto:
+    url: test.mosquitto.org
+    protocol: mqtt
   production:
     url: api.streetlights.smartylighting.com:{port}
     protocol: mqtt
-    description: Test broker
+    description: Production broker
     variables:
       port:
         description: Secure connection (TLS) is available through port 8883.

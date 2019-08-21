@@ -26,11 +26,11 @@ docker run --rm -it -v $PWD:/app -w /app asyncapi/generator [ag|anc] [COMMAND HE
 
   Options:
 
-    -V, --version                 output the version number
-    -o, --output <outputDir>      directory where to put the generated files (defaults to current directory)
+    -V, --version                  output the version number
+    -o, --output <outputDir>       directory where to put the generated files (defaults to current directory)
     -t, --templates <templatesDir> directory where templates are located (defaults to internal templates directory)
-    --params <templateParams>     json object with additional params to pass to templates    
-    -h, --help                    output usage information
+    -p, --param <name=value>       additional param to pass to the template
+    -h, --help                     output usage information
 ```
 
 #### Examples
@@ -47,78 +47,18 @@ ag -o ./docs asyncapi.yaml markdown
 
 Passing parameters to templates:
 ```bash
-ag -o ./docs --params '{ "title": "Hello from param" }' asyncapi.yaml markdown
+ag -o ./docs --param title='Hello from param' asyncapi.yaml markdown
 ```
 In the template you can use it like this: ` {{ params.title }}`
 
 
 ### As a module
 
-#### .generateTemplateFile(options) : String
+See [API documentation](API.md).
 
-Generates a file of a given template, and returns the result as a string.
+### Authoring templates
 
-##### Parameters
-
-|Name|Type|Required|Description|
-|----|----|--------|-----------|
-|options|`object`|Yes|An object containing all the options.|
-|options.templatesDir|`string`|No|Directory where to find the templates. Defaults to internal templates directory.|
-|options.template|`string`|Yes|Name of the template you want to use.|
-|options.file|`string`|Yes|Path to the file you want to generate.|
-|options.params|`object`|No|Additional params to pass to templates.|
-|options.config|`object`|Yes|An object containing configuration options.|
-|options.config.asyncapi|`string`&#124;`object`|Yes|Path to the AsyncAPI file to use.
-
-##### Example
-
-```js
-const generator = require('asyncapi-generator');
-
-generator.generateTemplateFile({
-  template: 'html',
-  file: 'index.html',
-  config: {
-    asyncapi: path.resolve(__dirname, 'asyncapi.yml'),
-  },
-  params: {
-    "title": "Hello from param"    
-  }
-})
-  .then((result) => {
-    // `result` is a string containing the generated file.
-    console.log(result);
-  })
-  .catch(console.error);
-```
-
-#### .getTemplateFile(options) : String
-
-Gets a file of a given template, and returns the its content as a string.
-
-##### Parameters
-
-|Name|Type|Required|Description|
-|----|----|--------|-----------|
-|options|`object`|Yes|An object containing all the options.|
-|options.templatesDir|`string`|No|Directory where to find the templates. Defaults to internal templates directory.|
-|options.template|`string`|Yes|Name of the template you want to use.|
-|options.file|`string`|Yes|Path to the file you want to generate.|
-
-##### Example
-
-```js
-const generator = require('asyncapi-generator');
-
-generator.getTemplateFile({
-  template: 'html',
-  file: 'css/main.css',
-})
-  .then((content) => {
-    console.log(result);
-  })
-  .catch(console.error);
-```
+See [Authoring templates](AUTHORING.md).
 
 ## Requirements
 

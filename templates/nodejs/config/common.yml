@@ -1,0 +1,41 @@
+default:
+  broker:
+{%- if asyncapi.server(params.server).protocol() === "amqp" %}
+    amqp:
+      exchange:
+      username:
+      password:
+      host: localhost
+      port:
+      topic: {{ asyncapi | commonChannel(true) | toAmqpTopic(true) }}
+      queue: {{ asyncapi.info().title() | queueName(asyncapi.info().version()) }}
+      queue_options:
+        exclusive: false
+        durable: true
+        autoDelete: true
+{%- endif %}
+{%- if asyncapi.server(params.server).protocol() === "mqtt" %}
+    mqtt:
+      host_url: mqtt://localhost
+      topics: {{ asyncapi | commonChannel(true) | toMqttTopic(true) }}
+      qos:
+      protocol: mqtt
+      retain:
+{%- endif %}
+
+development:
+
+test:
+
+staging:
+
+production:
+  broker:
+{%- if asyncapi.server(params.server).protocol() === "amqp" %}
+    amqp:
+      host: {{ asyncapi.server(params.server).url() }}
+{%- endif %}
+{%- if asyncapi.server(params.server).protocol() === "mqtt" %}
+    mqtt:
+      host_url: mqtt://{{ asyncapi.server(params.server).url() }}
+{%- endif %}

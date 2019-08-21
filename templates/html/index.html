@@ -4,9 +4,11 @@
   <meta charset="UTF-8">
   <title>{{asyncapi.info().title()}} {{asyncapi.info().version()}} documentation</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="css/tailwind.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="css/atom-one-dark.min.css" />
-  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/atom-one-dark.min.css" />
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@0.7.4/dist/tailwind.min.css" rel="stylesheet">
+  <style type="text/css">
+    {% include ".partials/main.css" %}
+  </style>
 </head>
 <body>
   <div class="relative md:flex lg:flex xl:flex">
@@ -16,7 +18,9 @@
     </div>
     <div class="examples-panel absolute pin-t pin-r pin-b"></div>
   </div>
-  <script src="js/highlight.min.js" type="application/javascript"></script>
-  <script src="js/main.js" type="application/javascript"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js"></script>
+  <script type="text/javascript">
+    {% include ".partials/main.js" %}
+  </script>
 </body>
 </html>

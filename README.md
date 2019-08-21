@@ -64,7 +64,7 @@ See [Authoring templates](AUTHORING.md).
 
 ## Requirements
 
-* Node.js v7.6+
+* Node.js v8+
 
 ## Contributing
 

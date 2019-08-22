@@ -36,6 +36,10 @@ const showErrorAndExit = err => {
 
 const setEntrypoint = filePath => {
   entrypointPath = filePath;
+
+  if (!params.hasOwnProperty('inline')) {
+    params['inline'] = true;
+  }
 };
 
 program

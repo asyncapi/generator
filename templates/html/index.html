@@ -4,9 +4,18 @@
   <meta charset="UTF-8">
   <title>{{asyncapi.info().title()}} {{asyncapi.info().version()}} documentation</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="css/tailwind.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="css/atom-one-dark.min.css" />
-  <link rel="stylesheet" href="css/main.css" />
+
+  {% if params.inline %}
+    <style type="text/css">
+      {{ loadRaw('css/tailwind.min.css') }}
+      {{ loadRaw('css/atom-one-dark.min.css') }}
+      {{ loadRaw('css/main.css') }}
+    </style>
+  {% else %}
+    <link rel="stylesheet" href="css/tailwind.min.css">
+    <link rel="stylesheet" href="css/atom-one-dark.min.css" />
+    <link rel="stylesheet" href="css/main.css" />
+  {% endif %}
 </head>
 <body>
   <div class="relative md:flex lg:flex xl:flex">
@@ -16,7 +25,16 @@
     </div>
     <div class="examples-panel absolute pin-t pin-r pin-b"></div>
   </div>
-  <script src="js/highlight.min.js" type="application/javascript"></script>
-  <script src="js/main.js" type="application/javascript"></script>
+  {% if params.inline %}
+    <script type="application/javascript">
+      {{ loadRaw('js/highlight.min.js') }}
+    </script>
+    <script type="application/javascript">
+      {{ loadRaw('js/main.js') }}
+    </script>
+  {% else %}
+    <script src="js/highlight.min.js" type="application/javascript"></script>
+    <script src="js/main.js" type="application/javascript"></script>
+  {% endif %}
 </body>
 </html>

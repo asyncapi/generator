@@ -32,6 +32,7 @@ docker run --rm -it -v $PWD:/app -w /app asyncapi/generator ag [COMMAND HERE]
     -o, --output <outputDir>       directory where to put the generated files (defaults to current directory)
     -t, --templates <templatesDir> directory where templates are located (defaults to internal templates directory)
     -p, --param <name=value>       additional param to pass to the template
+    -e, --entrypoint <file>        Name of the file to use as the entry point for the rendering process. Note: this potentially avoids rendering every file in the template.
     -h, --help                     output usage information
 ```
 
@@ -52,6 +53,11 @@ Passing parameters to templates:
 ag -o ./docs --param title='Hello from param' asyncapi.yaml markdown
 ```
 In the template you can use it like this: ` {{ params.title }}`
+
+Specify an entrypoint:
+```bash
+ag -o ./docs --param title='Hello from param' asyncapi.yaml html --entrypoint index.html
+```
 
 
 ### As a module

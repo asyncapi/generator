@@ -15,6 +15,7 @@ const green = text => `\x1b[32m${text}\x1b[0m`;
 let asyncapiFile;
 let template;
 const params = {};
+let entrypointPath;
 
 const parseOutput = dir => path.resolve(dir);
 
@@ -33,6 +34,10 @@ const showErrorAndExit = err => {
   process.exit(1);
 };
 
+const setEntrypoint = filePath => {
+  entrypointPath = filePath;
+};
+
 program
   .version(packageInfo.version)
   .arguments('<asyncapi> <template>')
@@ -43,6 +48,7 @@ program
   .option('-o, --output <outputDir>', 'directory where to put the generated files (defaults to current directory)', parseOutput, process.cwd())
   .option('-t, --templates <templateDir>', 'directory where templates are located (defaults to internal templates directory)', null, path.resolve(__dirname, 'templates'))
   .option('-p, --param <name=value>', 'additional param to pass to templates', paramParser)
+  .option('-e, --entrypoint <file>', 'Name of the file to use as the entry point for the rendering process. Note: this potentially avoids rendering every file in the template.', setEntrypoint)
   .parse(process.argv);
 
 if (!asyncapiFile) {
@@ -59,6 +65,7 @@ mkdirp(program.output, err => {
     generator = new Generator(template, program.output || path.resolve(os.tmpdir(), 'asyncapi-generator'), {
       templatesDir: program.templates,
       templateParams: params,
+      entrypoint: entrypointPath ? path.resolve(`${program.templates}${path.sep}${template}${path.sep}${entrypointPath}`) : null
     });
   } catch (e) {
     return showErrorAndExit(e);

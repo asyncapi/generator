@@ -1,0 +1,10 @@
+default:
+  port: {{ asyncapi.server(params.server).url() | port }}
+
+development:
+
+test:
+
+staging:
+
+production:

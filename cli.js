@@ -15,6 +15,8 @@ const green = text => `\x1b[32m${text}\x1b[0m`;
 let asyncapiFile;
 let template;
 const params = {};
+const noOverwriteGlobs = [];
+const disabledHooks = [];
 
 const parseOutput = dir => path.resolve(dir);
 
@@ -26,6 +28,9 @@ const paramParser = v => {
   params[paramName] = paramValue;
   return v;
 };
+
+const noOverwriteParser = v => noOverwriteGlobs.push(v);
+const disableHooksParser = v => disabledHooks.push(v);
 
 const showErrorAndExit = err => {
   console.error(red('Something went wrong:'));
@@ -41,8 +46,10 @@ program
     template = tmpl;
   })
   .option('-o, --output <outputDir>', 'directory where to put the generated files (defaults to current directory)', parseOutput, process.cwd())
-  .option('-t, --templates <templateDir>', 'directory where templates are located (defaults to internal templates directory)', null, path.resolve(__dirname, 'templates'))
+  .option('-d, --disable-hook <hookName>', 'disable a specific hook', disableHooksParser)
+  .option('-n, --no-overwrite <glob>', 'glob or path of the file(s) to skip when regenerating', noOverwriteParser)
   .option('-p, --param <name=value>', 'additional param to pass to templates', paramParser)
+  .option('-t, --templates <templateDir>', 'directory where templates are located (defaults to internal templates directory)', null, path.resolve(__dirname, 'templates'))
   .parse(process.argv);
 
 if (!asyncapiFile) {
@@ -59,6 +66,8 @@ mkdirp(program.output, err => {
     generator = new Generator(template, program.output || path.resolve(os.tmpdir(), 'asyncapi-generator'), {
       templatesDir: program.templates,
       templateParams: params,
+      noOverwriteGlobs,
+      disabledHooks,
     });
   } catch (e) {
     return showErrorAndExit(e);

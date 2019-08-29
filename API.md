@@ -26,6 +26,8 @@ Instantiates a new Generator object.
 | [options.templatesDir] | <code>String</code> | Path to the directory where to find the given template. Defaults to internal `templates` directory. |
 | [options.templateParams] | <code>String</code> | Optional parameters to pass to the template. Each template define their own params. |
 | [options.entrypoint] | <code>String</code> | Name of the file to use as the entry point for the rendering process. Note: this potentially avoids rendering every file in the template. |
+| [options.noOverwriteGlobs[]] | <code>Array.&lt;String&gt;</code> | List of globs to skip when regenerating the template. |
+| [options.disabledHooks[]] | <code>Array.&lt;String&gt;</code> | List of hooks to disable. |
 
 **Example**  
 ```js

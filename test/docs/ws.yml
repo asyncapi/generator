@@ -1,0 +1,36 @@
+asyncapi: 2.0.0-rc2
+info:
+  title: WebSockets echo server
+  version: 1.0.0
+
+servers:
+  localhost:
+    url: localhost
+    protocol: ws
+
+channels:
+  /echo:
+    bindings:
+      ws:
+        query:
+          type: object
+          properties:
+            times:
+              type: integer
+              description: How many times the message should be echoed.
+              minimum: 1
+        bindingVersion: 0.1.0
+    subscribe:
+      operationId: onEcho
+      message:
+        $ref: '#/components/messages/echo'
+    publish:
+      operationId: sendEcho
+      message:
+        $ref: '#/components/messages/echo'
+
+components:
+  messages:
+    echo:
+      payload:
+        type: string

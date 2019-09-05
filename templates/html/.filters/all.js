@@ -14,13 +14,12 @@ module.exports = ({ Nunjucks, Markdown, OpenAPISampler }) => {
     if (
       obj.type === 'object' ||
       obj.type === 'array' ||
-      obj.oneOf ||
-      obj.anyOf ||
-      obj.items ||
-      obj.additionalItems ||
-      obj.properties ||
-      obj.additionalProperties ||
-      obj.patternProperties
+      obj.oneOf() ||
+      obj.anyOf() ||
+      obj.items() ||
+      obj.properties() ||
+      obj.additionalProperties() ||
+      obj.patternProperties()
     ) return true;
 
     return false;

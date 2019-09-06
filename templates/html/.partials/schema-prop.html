@@ -1,6 +1,6 @@
 {% from "./type.html" import type %}
 
-{% macro schemaProp(prop, propName, open=false, root=fase, odd=false, specialName=false) %}
+{% macro schemaProp(prop, propName, open=false, root=fase, odd=false, specialName=false, required=false) %}
 
 <div class="{% if odd %}bg-grey-lighter{% else %}bg-grey-lightest{% endif %} {% if not root %}pl-8 pr-8{% endif %} rounded">
   <div class="{% if open %}is-open{% endif %}">

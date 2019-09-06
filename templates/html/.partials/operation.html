@@ -1,6 +1,7 @@
 {% from "./sliced-string.html" import slicedString %}
 {% from "./tags.html" import tags %}
 {% from "./message.html" import message %}
+{% from "./example.html" import example %}
 
 {% macro operation(operation, operationType, channelName, channel) %}
 
@@ -35,5 +36,18 @@
     {{ tags(operation.tags()) }}
   </div>
 </div>
+
+<div class="right-block p-8">
+  <h4 class="text-lg text-white mb-4">Examples</h4>
+
+  {% if operation.hasMultipleMessages() %}
+    {% for msg in operation.messages() %}
+      {{ example(msg) }}
+    {% endfor %}
+  {% else %}
+    {{ example(operation.message(0)) }}
+  {% endif %}
+</div>
+
 
 {% endmacro %}

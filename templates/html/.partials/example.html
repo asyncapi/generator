@@ -12,7 +12,7 @@
     {% if msg | getPayloadExamples | length %}
       {% for ex in msg | getPayloadExamples %}
         <h6 class="text-xs font-bold text-grey-darker">Example #{{loop.index}}</h6>
-        <pre class="hljs mb-4 border border-grey-darkest rounded"><code>{{ex | safe }}</code></pre>
+        <pre class="hljs mb-4 border border-grey-darkest rounded"><code>{{ex | dump | safe }}</code></pre>
       {% endfor %}
     {% elif msg.payload() %}
     <pre class="hljs mb-4 border border-grey-darkest rounded"><code>{{ msg.payload().json() | generateExample | safe }}</code></pre>
@@ -24,7 +24,7 @@
     {% if msg | getHeadersExamples | length %}
       {% for ex in msg | getHeadersExamples %}
         <h6 class="text-xs font-bold text-grey-darker">Example #{{loop.index}}</h6>
-        <pre class="hljs mb-4 border border-grey-darkest rounded"><code>{{ ex | safe }}</code></pre>
+        <pre class="hljs mb-4 border border-grey-darkest rounded"><code>{{ ex | dump | safe }}</code></pre>
       {% endfor %}
     {% elif msg.headers() %}
     <pre class="hljs mb-4 border border-grey-darkest rounded"><code>{{ msg.headers().json() | generateExample | safe }}</code></pre>

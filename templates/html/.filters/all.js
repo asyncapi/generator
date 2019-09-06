@@ -12,15 +12,15 @@ module.exports = ({ Nunjucks, Markdown, OpenAPISampler }) => {
 
   Nunjucks.addFilter('isExpandable', (obj) => {
     if (
-      obj.type === 'object' ||
-      obj.type === 'array' ||
-      obj.oneOf ||
-      obj.anyOf ||
-      obj.items ||
-      obj.additionalItems ||
-      obj.properties ||
-      obj.additionalProperties ||
-      obj.patternProperties
+      obj.type() === 'object' ||
+      obj.type() === 'array' ||
+      (obj.oneOf() && obj.oneOf().length) ||
+      (obj.anyOf() && obj.anyOf().length) ||
+      obj.items() ||
+      obj.additionalItems() ||
+      (obj.properties() && Object.keys(obj.properties()).length) ||
+      obj.additionalProperties() ||
+      obj.patternProperties()
     ) return true;
 
     return false;

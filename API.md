@@ -18,16 +18,17 @@
 Instantiates a new Generator object.
 
 
-| Param | Type | Description |
-| --- | --- | --- |
-| templateName | <code>String</code> | Name of the template to generate. |
-| targetDir | <code>String</code> | Path to the directory where the files will be generated. |
-| options | <code>Object</code> |  |
-| [options.templatesDir] | <code>String</code> | Path to the directory where to find the given template. Defaults to internal `templates` directory. |
-| [options.templateParams] | <code>String</code> | Optional parameters to pass to the template. Each template define their own params. |
-| [options.entrypoint] | <code>String</code> | Name of the file to use as the entry point for the rendering process. Note: this potentially avoids rendering every file in the template. |
-| [options.noOverwriteGlobs[]] | <code>Array.&lt;String&gt;</code> | List of globs to skip when regenerating the template. |
-| [options.disabledHooks[]] | <code>Array.&lt;String&gt;</code> | List of hooks to disable. |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| templateName | <code>String</code> |  | Name of the template to generate. |
+| targetDir | <code>String</code> |  | Path to the directory where the files will be generated. |
+| options | <code>Object</code> |  |  |
+| [options.templatesDir] | <code>String</code> |  | Path to the directory where to find the given template. Defaults to internal `templates` directory. |
+| [options.templateParams] | <code>String</code> |  | Optional parameters to pass to the template. Each template define their own params. |
+| [options.entrypoint] | <code>String</code> |  | Name of the file to use as the entry point for the rendering process. Note: this potentially avoids rendering every file in the template. |
+| [options.noOverwriteGlobs] | <code>Array.&lt;String&gt;</code> |  | List of globs to skip when regenerating the template. |
+| [options.disabledHooks] | <code>Array.&lt;String&gt;</code> |  | List of hooks to disable. |
+| [options.output] | <code>String</code> | <code>&#x27;fs&#x27;</code> | Type of output. Can be either 'fs' (default) or 'string'. Only available when entrypoint is set. |
 
 **Example**  
 ```js

@@ -2,6 +2,7 @@
 <tr>
   <td>{{ path | tree }}{{ propName }} {% if required %}<strong>(required)</strong>{% endif %}</td>
   <td>
+    {{ prop | log }}
     {{ prop.type() }}
     {%- if prop.anyOf() -%}anyOf{%- endif -%}
     {%- if prop.oneOf() %}oneOf{%- endif -%}
@@ -10,10 +11,10 @@
   <td>{{ prop.description() | markdown2html | safe }}</td>
   <td>{{ prop.enum() | acceptedValues | safe }}</td>
 </tr>
-{% for pName, p in prop.anyOf() %}
+{% for p in prop.anyOf() %}
 {{ schemaProp(p, pName, path=(propName | buildPath(path, pName))) }}
 {% endfor %}
-{% for pName, p in prop.oneOf() %}
+{% for p in prop.oneOf() %}
 {{ schemaProp(p, pName, path=(propName | buildPath(path, pName))) }}
 {% endfor %}
 {% for pName, p in prop.properties() %}

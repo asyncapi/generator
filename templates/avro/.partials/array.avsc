@@ -1,0 +1,16 @@
+{
+  "name": "{{ schemaName }}",
+  "type": {
+    "type": "array"
+    {% if schema.items() %}
+    , "items":
+      {% if schema.items().type() == "object" %}
+        {% set schemaName = schemaName + "Item" %}
+        {% set schema = schema.items() %}
+        {% include ".partials/record.avsc" %}
+      {% else %}
+        "{{ schema.items().type() | translateType(schema.items().format()) }}"
+      {% endif %}
+    {% endif %}
+  }
+}

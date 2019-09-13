@@ -1,0 +1,8 @@
+{% set schemaName = messageName -%}
+{% set schema = message.payload() -%}
+{% if message.payload()._json.namespace -%}
+  {% set namespace = message.payload()._json.namespace -%}
+{% else -%}
+  {% set namespace = "com.asyncapi" -%}
+{% endif -%}
+{% include ".partials/record.avsc" %}

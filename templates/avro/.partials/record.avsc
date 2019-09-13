@@ -1,0 +1,37 @@
+{
+  "type": "record",
+  "name": "{{ schemaName | upperCamelCase }}",
+  {% if namespace %}"namespace": "{{ namespace }}",{% endif %}
+  "fields" : [
+    {% for propertyName, property in schema.properties() %}
+      {% if property.type() === "object" %}
+        {% if property._json['defined_type'] %}
+          {
+            "name": "{{ propertyName }}",
+            "type": "{{ property._json['defined_type'] }}"
+          }
+        {% else %}
+          {% set schemaName = propertyName %}
+          {% set schema = property %}
+          {% set namespace = null %}
+          {
+            "name": "{{propertyName}}",
+            "type": {% include ".partials/record.avsc" %}
+          }
+        {% endif %}
+      {% elif property.type() === "array" %}
+        {% set schemaName = propertyName %}
+        {% set schema = property %}
+        {% include ".partials/array.avsc" %}
+      {% else %}
+        {
+          "name": "{{ propertyName }}",
+          {% if property.default() %}"default": {{ property.default() | wrapValue(property.type()) | safe }},{% endif %}
+          {% if property.enum() %}"enum": {{ property.enum() | dump | safe }},{% endif %}
+          "type" : "{{ property.type() | translateType(property.format()) }}"
+        }
+      {% endif %}
+      {% if not loop.last %},{% endif %}
+    {% endfor %}
+  ]
+}

@@ -9,4 +9,4 @@ RUN npm install
 # copy code
 COPY . .
 
-ENTRYPOINT [ "/asyncapi/dockerboot.sh" ]
+ENTRYPOINT [ "node", "/asyncapi/cli" ]

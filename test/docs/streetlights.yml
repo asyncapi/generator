@@ -1,5 +1,4 @@
-asyncapi: 'unstable'
-id: 'urn:com:smartylighting:streetlights:server'
+asyncapi: '2.0.0'
 info:
   title: Streetlights API
   version: '1.0.0'
@@ -16,13 +15,10 @@ info:
     url: https://www.apache.org/licenses/LICENSE-2.0
 
 servers:
-  mosquitto:
-    url: test.mosquitto.org
-    protocol: mqtt
   production:
-    url: api.streetlights.smartylighting.com:{port}
+    url: test.mosquitto.org:{port}
     protocol: mqtt
-    description: Production broker
+    description: Test broker
     variables:
       port:
         description: Secure connection (TLS) is available through port 8883.
@@ -46,8 +42,8 @@ channels:
     parameters:
       streetlightId:
         $ref: '#/components/parameters/streetlightId'
-    subscribe:
-      summary: Receive information about environmental lighting conditions of a particular streetlight.
+    publish:
+      summary: Inform about environmental lighting conditions of a particular streetlight.
       operationId: receiveLightMeasurement
       traits:
         - $ref: '#/components/operationTraits/kafka'
@@ -58,7 +54,7 @@ channels:
     parameters:
       streetlightId:
         $ref: '#/components/parameters/streetlightId'
-    publish:
+    subscribe:
       operationId: turnOn
       traits:
         - $ref: '#/components/operationTraits/kafka'
@@ -69,7 +65,7 @@ channels:
     parameters:
       streetlightId:
         $ref: '#/components/parameters/streetlightId'
-    publish:
+    subscribe:
       operationId: turnOff
       traits:
         - $ref: '#/components/operationTraits/kafka'
@@ -80,7 +76,7 @@ channels:
     parameters:
       streetlightId:
         $ref: '#/components/parameters/streetlightId'
-    publish:
+    subscribe:
       operationId: dimLight
       traits:
         - $ref: '#/components/operationTraits/kafka'
@@ -92,7 +88,7 @@ components:
     lightMeasured:
       name: lightMeasured
       title: Light measured
-      summary: Inform about environmental lighting conditions for a particular streetlight.
+      summary: Inform about environmental lighting conditions of a particular streetlight.
       contentType: application/json
       traits:
         - $ref: '#/components/messageTraits/commonHeaders'
@@ -208,6 +204,6 @@ components:
 
   operationTraits:
     kafka:
-      protocolInfo:
+      bindings:
         kafka:
-          applicationId: my-app-id
+          clientId: my-app-id

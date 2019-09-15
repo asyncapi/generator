@@ -1,0 +1,61 @@
+asyncapi: "2.0.0"
+info:
+  title: Store API
+  version: "1.0.0"
+
+servers:
+  local:
+    url: localhost:9091
+    protocol: kafka
+    description: Test broker
+
+defaultContentType: avro/binary
+
+channels:
+  order_created:
+    description: The topic on which order created event may be produced and consumed.
+    subscribe:
+      summary: Receive orders when they are created.
+      operationId: receiveCreatedOrders
+      message:
+        $ref: "#/components/messages/orderCreated"
+
+components:
+  messages:
+    orderCreated:
+      name: orderCreated
+      title: Order Created
+      summary: Order created data
+      contentType: avro/binary
+      payload:
+        $ref: "#/components/schemas/orderCreatedEnvelope"
+  schemas:
+    orderCreatedEnvelope:
+      namespace: com.store
+      type: object
+      properties:
+        payload:
+          $ref: "#/components/schemas/orderCreatedPayload"
+        metadata:
+          $ref: "#/components/schemas/metadata"
+    orderCreatedPayload:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/orderItem"
+    orderItem:
+      type: object
+      properties:
+        productId:
+          type: string
+        amount:
+          type: integer
+    metadata:
+      type: object
+      defined_type: com.store.commons.Metadata
+      properties:
+        timestamp:
+          type: string
+          format: date-time

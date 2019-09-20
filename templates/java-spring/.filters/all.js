@@ -1,4 +1,4 @@
-module.exports = (Nunjucks, _) => {
+module.exports = ({ Nunjucks, _ }) => {
   Nunjucks.addFilter('camelCase', (str) => {
     return _.camelCase(str);
   });

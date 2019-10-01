@@ -23,6 +23,7 @@
           {{ type(prop) }}
           {% if prop.anyOf() %}anyOf{% endif %}
           {% if prop.oneOf() %}oneOf{% endif %}
+          {% if prop.allOf() %}allOf{% endif %}
           <div class="inline-block">
             {% if prop.format() %}
               <span class="bg-yellow-dark font-bold no-underline text-black rounded lowercase ml-2"
@@ -151,7 +152,13 @@
         {% endif %}
 
         {% if prop.anyOf() %}
-          {% for pName, p in prop.anyOf() %}
+          {% for p in prop.anyOf() %}
+            {{ schemaProp(p, loop.index0, odd=(not odd)) }}
+          {% endfor %}
+        {% endif %}
+
+        {% if prop.allOf() %}
+          {% for p in prop.allOf() %}
             {{ schemaProp(p, loop.index0, odd=(not odd)) }}
           {% endfor %}
         {% endif %}

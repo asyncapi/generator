@@ -16,6 +16,7 @@ module.exports = ({ Nunjucks, Markdown, OpenAPISampler }) => {
       obj.type() === 'array' ||
       (obj.oneOf() && obj.oneOf().length) ||
       (obj.anyOf() && obj.anyOf().length) ||
+      (obj.allOf() && obj.allOf().length) ||
       obj.items() ||
       obj.additionalItems() ||
       (obj.properties() && Object.keys(obj.properties()).length) ||

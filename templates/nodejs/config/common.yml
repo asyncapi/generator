@@ -9,7 +9,7 @@ default:
       exchange:
       username:
       password:
-      host: localhost
+      host: {{ asyncapi.server(params.server).url() | host }}
       port:
       topics: {{ asyncapi | channelNamesWithPublish | toAmqpTopic | dump | safe }}
       queue: {{ asyncapi.info().title() | queueName(asyncapi.info().version()) }}
@@ -20,8 +20,8 @@ default:
 {%- endif %}
 {%- if asyncapi.server(params.server).protocol() === "mqtt" %}
     mqtt:
-      url: mqtt://localhost
-      topics: {{ asyncapi | commonChannel(true) | toMqttTopic(true) }}
+      url: mqtt://{{ asyncapi.server(params.server).url() | stripProtocol }}
+      topics: {{ asyncapi | channelNamesWithPublish | toMqttTopic | dump | safe }}
       qos:
       protocol: mqtt
       retain:
@@ -29,7 +29,7 @@ default:
 {%- endif %}
 {%- if asyncapi.server(params.server).protocol() === "kafka" %}
     kafka:
-      kafkaHost: localhost:9092
+      kafkaHost: {{ asyncapi.server(params.server).url() | host }}
       topics: {{ asyncapi | channelNamesWithPublish | toKafkaTopic | dump | safe }}
       consumerGroup: 'replace-me'
       topicSeparator: '__'
@@ -42,16 +42,4 @@ test:
 staging:
 
 production:
-  broker:
-{%- if asyncapi.server(params.server).protocol() === "amqp" %}
-    amqp:
-      host: {{ asyncapi.server(params.server).url() | host }}
-{%- endif %}
-{%- if asyncapi.server(params.server).protocol() === "mqtt" %}
-    mqtt:
-      url: mqtt://{{ asyncapi.server(params.server).url() | stripProtocol }}
-{%- endif %}
-{%- if asyncapi.server(params.server).protocol() === "kafka" %}
-    kafka:
-      kafkaHost: {{ asyncapi.server(params.server).url() | host }}
-{%- endif %}
+

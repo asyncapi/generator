@@ -49,13 +49,18 @@ module.exports = ({ Nunjucks, _ }) => {
     return _.kebabCase(`${title}-${version}`.toLowerCase()).split('-').join('.');
   });
 
-  Nunjucks.addFilter('toMqttTopic', (str, appendWildcard = false) => {
+  function toMqttTopic (str, appendWildcard = false) {
     let result = str;
     if (result === '/') return '#';
     if (result.startsWith('/')) result = result.substr(1);
     result = result.replace(/\{([^}]+)\}/g, '+');
     if (appendWildcard) result += '/#';
     return result;
+  }
+
+  Nunjucks.addFilter('toMqttTopic', (topics, appendWildcard = false) => {
+    if (typeof topics === 'string') return toMqttTopic(topics, appendWildcard);
+    if (Array.isArray(topics)) return topics.map(toMqttTopic);
   });
 
   function toKafkaTopic (str) {

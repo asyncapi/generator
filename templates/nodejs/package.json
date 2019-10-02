@@ -6,9 +6,18 @@
     "start": "node src/api/index.js"
   },
   "dependencies": {
-    "hermesjs": "1.x",
+    "colors": "^1.4.0",
+    "hermesjs": "2.x",
     "hermesjs-router": "1.x",
-    "hermesjs-{{ asyncapi.server(params.server).protocol() }}": "1.x",
+    {% if asyncapi.server(params.server).protocol() === 'mqtt' -%}
+    "hermesjs-mqtt": "2.x",
+    {%- endif -%}
+    {% if asyncapi.server(params.server).protocol() === 'kafka' -%}
+    "hermesjs-kafka": "1.x",
+    {%- endif -%}
+    {% if asyncapi.server(params.server).protocol() === 'amqp' -%}
+    "hermesjs-amqp": "1.x",
+    {%- endif %}
     "node-yaml-config": "0.0.4"
   }
 }

@@ -1,3 +1,5 @@
+const { URL } = require('url');
+
 module.exports = ({ Nunjucks, _ }) => {
   Nunjucks.addFilter('kebabCase', (string) => {
     return _.kebabCase(string);
@@ -56,13 +58,30 @@ module.exports = ({ Nunjucks, _ }) => {
     return result;
   });
 
-  Nunjucks.addFilter('toAmqpTopic', (str, appendWildcard = false) => {
+  function toKafkaTopic (str) {
+    let result = str;
+    if (result.startsWith('/')) result = result.substr(1);
+    result = result.replace(/\//g, '__');
+    return result;
+  }
+
+  Nunjucks.addFilter('toKafkaTopic', (topics) => {
+    if (typeof topics === 'string') return toKafkaTopic(topics);
+    if (Array.isArray(topics)) return topics.map(toKafkaTopic);
+  });
+
+  function toAmqpTopic (str, appendWildcard = false) {
     let result = str;
     if (result === '/') return '#';
     if (result.startsWith('/')) result = result.substr(1);
     result = result.replace(/\//g, '.').replace(/\{([^}]+)\}/g, '*');
     if (appendWildcard) result += '.#';
     return result;
+  }
+
+  Nunjucks.addFilter('toAmqpTopic', (topics, appendWildcard = false) => {
+    if (typeof topics === 'string') return toAmqpTopic(topics, appendWildcard);
+    if (Array.isArray(topics)) return topics.map(toAmqpTopic);
   });
 
   Nunjucks.addFilter('toHermesTopic', (str) => {
@@ -106,5 +125,23 @@ module.exports = ({ Nunjucks, _ }) => {
     }
 
     return result.join('/');
+  });
+
+  Nunjucks.addFilter('channelNamesWithPublish', (asyncapi) => {
+    const result = [];
+    asyncapi.channelNames().forEach(name => {
+      if (asyncapi.channel(name).hasPublish()) result.push(name);
+    });
+    return result;
+  });
+
+  Nunjucks.addFilter('host', (url) => {
+    const u = new URL(url);
+    return u.host;
+  });
+
+  Nunjucks.addFilter('stripProtocol', (url) => {
+    const u = new URL(url);
+    return url.substr(u.protocol.length+2);
   });
 };

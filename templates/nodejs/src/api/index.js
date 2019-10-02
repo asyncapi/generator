@@ -1,32 +1,44 @@
-'use strict';
-
-const hermes = require('hermesjs')();
+const Hermes = require('hermesjs');
+const app = new Hermes();
+const { cyan, gray } = require('colors/safe');
 const buffer2string = require('./middlewares/buffer2string');
 const string2json = require('./middlewares/string2json');
+const json2string = require('./middlewares/json2string');
 const logger = require('./middlewares/logger');
+const errorLogger = require('./middlewares/error-logger');
+const config = require('../lib/config');
 {%- set protocol = asyncapi.server(params.server).protocol() %}
-const {{ protocol | capitalize }}Adapter = require('./adapters/{{protocol}}');
+const {{ protocol | capitalize }}Adapter = require('hermesjs-{{protocol}}');
 {%- for channelName, channel in asyncapi.channels() %}
 const {{ channelName | camelCase }} = require('./routes/{{ channelName | kebabCase }}.js');
 {%- endfor %}
 
-hermes.add('broker', {{ protocol | kebabCase | capitalize }}Adapter);
+app.addAdapter({{ protocol | capitalize }}Adapter, config.broker.{{protocol}});
 
-hermes.on('broker:ready', ({name}) => {
-  console.log(`${name} is listening...`);
-});
+app.use(buffer2string);
+app.use(string2json);
+app.use(logger);
 
-hermes.use(buffer2string);
-hermes.use(string2json);
-hermes.use(logger);
+// Channels
+{%- for channelName, channel in asyncapi.channels() -%}
+{% if channel.hasPublish() -%}
+app.use({{ channelName | camelCase }});
+{% endif %}
+{% if channel.hasSubscribe() -%}
+app.useOutbound({{ channelName | camelCase }});
+{% endif -%}
+{%- endfor -%}
 
-{%- for channelName, channel in asyncapi.channels() %}
-hermes.use({{ channelName | camelCase }});
-{%- endfor %}
+app.use(errorLogger);
+app.useOutbound(logger);
+app.useOutbound(json2string);
 
-hermes.use((err, message, next) => {
-  console.error(err);
-  next();
-});
-
-hermes.listen();
+app
+  .listen()
+  .then((adapters) => {
+    console.log(cyan.underline(`${config.app.name} ${config.app.version}`), gray('is ready!'), '\n');
+    adapters.forEach(adapter => {
+      console.log('🔗 ', adapter.name(), gray('is connected!'));
+    });
+  })
+  .catch(console.error);

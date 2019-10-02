@@ -1,5 +1,5 @@
 {
-  "supportedProtocols": ["amqp", "mqtt"],
+  "supportedProtocols": ["amqp", "mqtt", "kafka"],
   "requiredParams": ["server"],
   "conditionalFiles": {
     "src/api/adapters/amqp.js": {
@@ -12,6 +12,12 @@
       "subject": "server.protocol",
       "validation": {
         "const": "mqtt"
+      }
+    },
+    "src/api/adapters/kafka.js": {
+      "subject": "server.protocol",
+      "validation": {
+        "const": "kafka"
       }
     }
   },

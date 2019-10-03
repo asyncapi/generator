@@ -18,6 +18,9 @@
     {% if asyncapi.server(params.server).protocol() === 'amqp' -%}
     "hermesjs-amqp": "1.x",
     {%- endif %}
+    {% if asyncapi.server(params.server).protocol() === 'ws' -%}
+    "hermesjs-ws": "1.x",
+    {%- endif %}
     "node-yaml-config": "0.0.4"
   }
 }

@@ -2,8 +2,15 @@ default:
   app:
     name: {{ asyncapi.info().title() }}
     version: {{ asyncapi.info().version() }}
-
+{% if asyncapi.server(params.server).protocol() === "ws" %}
+  ws:
+    port: {{ asyncapi.server(params.server).url() | port(80) }}
+    path: /ws
+    topicSeparator: '__'
+{% endif %}
+{%- if asyncapi.server(params.server).protocol() !== "ws" %}
   broker:
+{%- endif %}
 {%- if asyncapi.server(params.server).protocol() === "amqp" %}
     amqp:
       exchange:

@@ -13,7 +13,7 @@ const {{ protocol | capitalize }}Adapter = require('hermesjs-{{protocol}}');
 const {{ channelName | camelCase }} = require('./routes/{{ channelName | kebabCase }}.js');
 {%- endfor %}
 
-app.addAdapter({{ protocol | capitalize }}Adapter, config.broker.{{protocol}});
+app.addAdapter({{ protocol | capitalize }}Adapter, config.{% if protocol === 'ws' %}ws{% else %}broker.{{protocol}}{% endif %});
 
 app.use(buffer2string);
 app.use(string2json);

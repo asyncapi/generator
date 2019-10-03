@@ -1,26 +1,6 @@
 {
-  "supportedProtocols": ["amqp", "mqtt", "kafka"],
+  "supportedProtocols": ["amqp", "mqtt", "kafka", "ws"],
   "requiredParams": ["server"],
-  "conditionalFiles": {
-    "src/api/adapters/amqp.js": {
-      "subject": "server.protocol",
-      "validation": {
-        "const": "amqp"
-      }
-    },
-    "src/api/adapters/mqtt.js": {
-      "subject": "server.protocol",
-      "validation": {
-        "const": "mqtt"
-      }
-    },
-    "src/api/adapters/kafka.js": {
-      "subject": "server.protocol",
-      "validation": {
-        "const": "kafka"
-      }
-    }
-  },
   "nonRenderableFiles": [
     "src/api/middlewares/*.*",
     "lib/lib/config.js"

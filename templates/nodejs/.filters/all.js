@@ -145,6 +145,11 @@ module.exports = ({ Nunjucks, _ }) => {
     return u.host;
   });
 
+  Nunjucks.addFilter('port', (url, defaultPort) => {
+    const u = new URL(url);
+    return u.port || defaultPort;
+  });
+
   Nunjucks.addFilter('stripProtocol', (url) => {
     const u = new URL(url);
     return url.substr(u.protocol.length+2);

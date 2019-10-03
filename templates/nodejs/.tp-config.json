@@ -3,6 +3,6 @@
   "requiredParams": ["server"],
   "nonRenderableFiles": [
     "src/api/middlewares/*.*",
-    "lib/lib/config.js"
+    "src/lib/config.js"
   ]
 }

@@ -20,15 +20,14 @@ app.use(string2json);
 app.use(logger);
 
 // Channels
-{%- for channelName, channel in asyncapi.channels() -%}
+{% for channelName, channel in asyncapi.channels() -%}
 {% if channel.hasPublish() -%}
 app.use({{ channelName | camelCase }});
-{% endif %}
+{% endif -%}
 {% if channel.hasSubscribe() -%}
 app.useOutbound({{ channelName | camelCase }});
 {% endif -%}
-{%- endfor -%}
-
+{% endfor %}
 app.use(errorLogger);
 app.useOutbound(logger);
 app.useOutbound(json2string);

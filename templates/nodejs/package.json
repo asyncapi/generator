@@ -13,7 +13,7 @@
     "hermesjs-mqtt": "2.x",
     {%- endif -%}
     {% if asyncapi.server(params.server).protocol() === 'kafka' -%}
-    "hermesjs-kafka": "1.x",
+    "hermesjs-kafka": "2.x",
     {%- endif -%}
     {% if asyncapi.server(params.server).protocol() === 'amqp' -%}
     "hermesjs-amqp": "1.x",

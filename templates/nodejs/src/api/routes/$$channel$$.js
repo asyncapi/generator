@@ -1,6 +1,6 @@
 const Router = require('hermesjs/lib/router');
 const router = new Router();
-const {{ channelName | camelCase }}Service = require('../services/{{ channelName | kebabCase }}');
+const {{ channelName | camelCase }}Handler = require('../handlers/{{ channelName | kebabCase }}');
 module.exports = router;
 {% if channel.hasPublish() %}
   {%- if channel.publish().summary() %}
@@ -9,7 +9,7 @@ module.exports = router;
  */
   {%- endif %}
 router.use('{{ channelName | toHermesTopic }}', async (message, next) => {
-  await {{ channelName | camelCase }}Service.{{ channel.publish().id() }}({message});
+  await {{ channelName | camelCase }}Handler.{{ channel.publish().id() }}({message});
   next();
 });
 
@@ -21,7 +21,7 @@ router.use('{{ channelName | toHermesTopic }}', async (message, next) => {
  */
   {%- endif %}
 router.useOutbound('{{ channelName | toHermesTopic }}', async (message, next) => {
-  await {{ channelName | camelCase }}Service.{{ channel.subscribe().id() }}({message});
+  await {{ channelName | camelCase }}Handler.{{ channel.subscribe().id() }}({message});
   next();
 });
 

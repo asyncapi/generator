@@ -1,4 +1,4 @@
-const service = module.exports = {};
+const handler = module.exports = {};
 {% if channel.hasPublish() %}
 /**
  * {{ channel.publish().summary() }}
@@ -15,7 +15,7 @@ const service = module.exports = {};
 {%- endfor %}
 {%- endif %}
  */
-service.{{ channel.publish().id() }} = async ({message}) => {
+handler.{{ channel.publish().id() }} = async ({message}) => {
   // Implement your business logic here...
 };
 
@@ -36,7 +36,7 @@ service.{{ channel.publish().id() }} = async ({message}) => {
 {%- endfor %}
 {%- endif %}
  */
-service.{{ channel.subscribe().id() }} = async ({message}) => {
+handler.{{ channel.subscribe().id() }} = async ({message}) => {
   // Implement your business logic here...
 };
 

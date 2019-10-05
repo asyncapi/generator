@@ -37,10 +37,14 @@ default:
 {%- if asyncapi.server(params.server).protocol() === "kafka" %}
     kafka:
       clientId: {{ asyncapi.info().title() | camelCase }}
-      brokers: ["{{ asyncapi.server(params.server).url() | host }}"]
+      brokers:
+        - {{ asyncapi.server(params.server).url() | host }}
       consumerOptions:
         groupId: 'replace-me'
-      topics: {{ asyncapi | channelNamesWithPublish | toKafkaTopic | dump | safe }}
+      topics:
+      {%- for topic in asyncapi | channelNamesWithPublish %}
+        - {{ topic | toKafkaTopic }}
+      {%- endfor %}
       topicSeparator: '__'
 {%- endif %}
 

@@ -9,8 +9,12 @@ module.exports = router;
  */
   {%- endif %}
 router.use('{{ channelName | toHermesTopic }}', async (message, next) => {
-  await {{ channelName | camelCase }}Handler.{{ channel.publish().id() }}({message});
-  next();
+  try {
+    await {{ channelName | camelCase }}Handler.{{ channel.publish().id() }}({message});
+    next();
+  } catch (e) {
+    next(e);
+  }
 });
 
 {%- endif %}
@@ -21,8 +25,12 @@ router.use('{{ channelName | toHermesTopic }}', async (message, next) => {
  */
   {%- endif %}
 router.useOutbound('{{ channelName | toHermesTopic }}', async (message, next) => {
-  await {{ channelName | camelCase }}Handler.{{ channel.subscribe().id() }}({message});
-  next();
+  try {
+    await {{ channelName | camelCase }}Handler.{{ channel.subscribe().id() }}({message});
+    next();
+  } catch (e) {
+    next(e);
+  }
 });
 
 {%- endif %}

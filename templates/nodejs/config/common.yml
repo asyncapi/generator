@@ -55,4 +55,13 @@ test:
 staging:
 
 production:
-
+{%- if asyncapi.server(params.server).protocol() === "kafka" %}
+  broker:
+    kafka:
+      ssl:
+        rejectUnauthorized: true
+      sasl:
+        mechanism: 'plain'
+        username:
+        password:
+{%- endif %}

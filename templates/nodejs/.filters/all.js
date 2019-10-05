@@ -154,4 +154,37 @@ module.exports = ({ Nunjucks, _ }) => {
     const u = new URL(url);
     return url.substr(u.protocol.length+2);
   });
+
+  Nunjucks.addFilter('trimLastChar', (text) => {
+    return text.substr(0, text.length - 1);
+  });
+
+  function toJS(objFromJSON, indent = 2) {
+    if (typeof objFromJSON !== "object" || Array.isArray(objFromJSON)) {
+      // not an object, stringify using native function
+      if (typeof objFromJSON === 'string') {
+        const templateVars = objFromJSON.match(/\$\{[\w\d\.]+\}/g);
+        if (templateVars) return `\`${objFromJSON}\``;
+        return `'${objFromJSON}'`;
+      }
+      return JSON.stringify(objFromJSON);
+    }
+
+    function maybeQuote (str) {
+      if (str.match(/^[\w\d\_\$]+$/g)) return str;
+      return `'${str}'`;
+    }
+
+    // Implements recursive object serialization according to JSON spec
+    // but without quotes around the keys.
+    let props = Object
+      .keys(objFromJSON)
+      .map(key => `${' '.repeat(indent)}${maybeQuote(key)}: ${toJS(objFromJSON[key])}`)
+      .join(",\n");
+    return `{\n${props}\n}`;
+  }
+
+  Nunjucks.addFilter('toJS', (string) => {
+    return toJS(string);
+  });
 };

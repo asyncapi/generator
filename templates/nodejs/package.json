@@ -22,6 +22,7 @@
     {% if asyncapi.server(params.server).protocol() === 'ws' -%}
     "hermesjs-ws": "1.x",
     {%- endif %}
+    "node-fetch": "^2.6.0",
     "node-yaml-config": "0.0.4"
   }
 }

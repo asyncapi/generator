@@ -89,10 +89,8 @@
             {% endfor %}
           </div>
         {% endif %}
-        {% for extensionName, extensionValue in prop._json %}
-            {% if extensionName | isDataExtension %} 
-                <div class="text-sm markdown">{{ extensionName }}: {{ extensionValue }}</div>
-            {% endif %}
+        {% for extensionName, extensionValue in prop.extensions() %}
+            <div class="text-sm markdown">{{ extensionName }}: {{ extensionValue }}</div>
         {% endfor %}
         {% if prop.examples() %}
           <div class="text-xs">

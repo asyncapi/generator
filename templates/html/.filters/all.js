@@ -5,10 +5,6 @@ module.exports = ({ Nunjucks, Markdown, OpenAPISampler }) => {
     return string.split(regex);
   });
 
-Nunjucks.addFilter('isDataExtension', (str) => {
-    return str.includes("x-");
-});
-
   Nunjucks.addFilter('firstKey', (obj) => {
     if (!obj) return '';
     return Object.keys(obj)[0];

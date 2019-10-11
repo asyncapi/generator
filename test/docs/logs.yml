@@ -1,0 +1,22 @@
+asyncapi: 2.0.0
+info:
+  title: WebSockets echo server
+  version: 1.0.0
+
+servers:
+  localhost:
+    url: localhost
+    protocol: ws
+
+channels:
+  /logs:
+    subscribe:
+      operationId: sendLogLine
+      message:
+        $ref: '#/components/messages/log'
+
+components:
+  messages:
+    log:
+      payload:
+        type: string

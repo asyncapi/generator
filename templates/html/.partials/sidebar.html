@@ -44,7 +44,7 @@
         </div>
         <div class="children">
           {% for channelName, channel in asyncapi.channels() %}
-             {% if channel.publish() and categorytags.name() === channel.publish().tags()[0].name() %}
+             {% if channel.publish() and channel.publish().hasTags() and categorytags.name() === channel.publish().tags()[0].name() %}
               <a class="js-menu-item flex break-words no-underline text-grey-darkest mt-8 sm:mt-8 md:mt-3"
                 href="#operation-publish-{{ channelName }}">
                 <span class="bg-blue-dark font-bold h-6 no-underline text-white uppercase p-1 mr-2 rounded"
@@ -61,7 +61,7 @@
               </a>
             {% endif %}
 
-            {% if channel.subscribe() and categorytags.name() === channel.subscribe().tags()[0].name() %}
+            {% if channel.subscribe() and channel.subscribe().hasTags() and categorytags.name() === channel.subscribe().tags()[0].name() %}
             <a class="js-menu-item flex break-words no-underline text-grey-darkest mt-8 sm:mt-8 md:mt-3"
               href="#operation-subscribe-{{ channelName }}">
               {% if channel.deprecated %}<span title="Deprecated"></span>{% endif %}

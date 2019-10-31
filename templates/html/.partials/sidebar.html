@@ -83,6 +83,8 @@
       </div>
       {% endfor %}
       {% endif %}
+
+      {% if asyncapi.channels() | containNoTag(asyncapi.tags()) %}
       <!-- Untagged operations -->
       <div class="mt-4 {% if open %}is-open{% endif %}">
         <div class="js-prop cursor-pointer py-2 flex property">
@@ -95,7 +97,7 @@
         </div>
         <div class="children">
           {% for channelName, channel in asyncapi.channels() %}
-          {% if channel.hasPublish() and not channel.publish().hasTags() %}
+          {% if channel.hasPublish() and (not channel.publish().hasTags() or not channel.publish() | containTags(asyncapi.tags())) %}
           <a class="js-menu-item flex break-words no-underline text-grey-darkest mt-8 sm:mt-8 md:mt-3"
             href="#operation-publish-{{ channelName }}">
             <span class="bg-blue-dark font-bold h-6 no-underline text-white uppercase p-1 mr-2 rounded"
@@ -111,7 +113,7 @@
             {% endif %}
           </a>
           {% endif %}
-          {% if channel.hasSubscribe() and not channel.subscribe().hasTags() %}
+          {% if channel.hasSubscribe() and (not channel.subscribe().hasTags() or not channel.subscribe() | containTags(asyncapi.tags())) %}
           <a class="js-menu-item flex break-words no-underline text-grey-darkest mt-8 sm:mt-8 md:mt-3"
             href="#operation-subscribe-{{ channelName }}">
             <span class="bg-green-dark font-bold no-underline text-white uppercase p-1 mr-2 rounded"
@@ -130,6 +132,7 @@
           {% endfor %}
         </div>
       </div>
+      {% endif %}
 
       {% else %}
 

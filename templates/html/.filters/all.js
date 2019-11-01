@@ -21,6 +21,7 @@ module.exports = ({ Nunjucks, Markdown, OpenAPISampler }) => {
       obj.additionalItems() ||
       (obj.properties() && Object.keys(obj.properties()).length) ||
       obj.additionalProperties() ||
+      obj.extensions() ||
       obj.patternProperties()
     ) return true;
 
@@ -29,6 +30,14 @@ module.exports = ({ Nunjucks, Markdown, OpenAPISampler }) => {
 
   Nunjucks.addFilter('isArray', (arr) => {
     return Array.isArray(arr);
+  });
+  
+  Nunjucks.addFilter('isObject', (obj) => {
+    return typeof obj === 'object' && obj !== null;
+  });
+
+  Nunjucks.addFilter('prettyPrint', (obj) => {
+    return JSON.stringify(obj, null, 4);
   });
 
   Nunjucks.addFilter('contains', (array, element) => {

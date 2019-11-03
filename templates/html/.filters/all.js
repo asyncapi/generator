@@ -34,6 +34,14 @@ module.exports = ({ Nunjucks, Markdown, OpenAPISampler }) => {
 		if (!object) {
       throw new Error("object for containsTag was not provided?");
     }
+		if (!tagsToCheck) {
+      throw new Error("tagsToCheck for containsTag was not provided?");
+    }
+    
+    //Ensure if only 1 tag are provided it is converted to array.
+    if(tagsToCheck && !Array.isArray(tagsToCheck)){
+      tagsToCheck = [tagsToCheck];
+    }
 
     //Check that pubsub does not contain one of the tags to check.
     let check = (tag) => {
@@ -48,10 +56,11 @@ module.exports = ({ Nunjucks, Markdown, OpenAPISampler }) => {
     };
 
     //Ensure pubsub tags are checked for the group tags
-    let publishContainsNoTag = object._json.tags ? object._json.tags.find(check) != null : false;
-    if(publishContainsNoTag === true) return true;
+    let pubsubContainsNoTag = object._json.tags ? object._json.tags.find(check) != null : false;
+    if(pubsubContainsNoTag === true) return true;
     return false;
   });
+
   /**
    * Check if there is a channel which does not have one of the tags specified.
    */

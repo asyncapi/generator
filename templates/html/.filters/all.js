@@ -43,7 +43,7 @@ module.exports = ({ Nunjucks, Markdown, OpenAPISampler }) => {
       tagsToCheck = [tagsToCheck];
     }
 
-    //Check that pubsub does not contain one of the tags to check.
+    //Check if pubsub contain one of the tags to check.
     let check = (tag) => {
       let found = false;
       for(let tagToCheckIndex in tagsToCheck){
@@ -55,10 +55,9 @@ module.exports = ({ Nunjucks, Markdown, OpenAPISampler }) => {
       return found;
     };
 
-    //Ensure pubsub tags are checked for the group tags
-    let pubsubContainsNoTag = object._json.tags ? object._json.tags.find(check) != null : false;
-    if(pubsubContainsNoTag === true) return true;
-    return false;
+    //Ensure tags are checked for the group tags
+    let containTags = object._json.tags ? object._json.tags.find(check) != null : false;
+    return containTags;
   });
 
   /**

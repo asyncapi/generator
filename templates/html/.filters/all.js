@@ -21,7 +21,7 @@ module.exports = ({ Nunjucks, Markdown, OpenAPISampler }) => {
       obj.additionalItems() ||
       (obj.properties() && Object.keys(obj.properties()).length) ||
       obj.additionalProperties() ||
-      obj.extensions() ||
+      (obj.extensions() && Object.keys(obj.extensions()).length) ||
       obj.patternProperties()
     ) return true;
 

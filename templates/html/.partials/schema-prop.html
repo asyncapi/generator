@@ -125,7 +125,7 @@
                 </div>
                 <div class="children">
                   <div class="{% if odd %}bg-grey-lighter{% else %}bg-grey-lightest{% endif %} {% if not root %}pl-8 pr-8{% endif %} rounded">
-                    <pre class="text-sm">{{ extensionValue | prettyPrint }}</pre>
+                    <pre class="text-sm">{{ extensionValue | dump(2) }}</pre>
                   </div>
                 </div>
               </div>

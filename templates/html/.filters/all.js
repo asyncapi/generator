@@ -36,10 +36,6 @@ module.exports = ({ Nunjucks, Markdown, OpenAPISampler }) => {
     return typeof obj === 'object' && obj !== null;
   });
 
-  Nunjucks.addFilter('prettyPrint', (obj) => {
-    return JSON.stringify(obj, null, 4);
-  });
-
   Nunjucks.addFilter('contains', (array, element) => {
     if (!array || !Array.isArray(array)) return false;
     return array.includes(element);

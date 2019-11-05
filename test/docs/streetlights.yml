@@ -207,3 +207,20 @@ components:
       bindings:
         kafka:
           clientId: my-app-id
+
+
+"tags": [{
+	"name": "user1",
+	"description": "User-related messages"
+},
+{
+	"name": "user",
+	"description": "User-related messages"
+}],
+
+"tags": [
+  {
+    "name": "user",
+    "description": "User-related messages"
+  }
+]

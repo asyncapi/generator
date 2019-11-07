@@ -29,11 +29,12 @@ docker run --rm -it -v $PWD:/app -w /app asyncapi/generator [COMMAND HERE]
   Options:
 
     -V, --version                  output the version number
+    -w, --watch                    Watches the the template directory for change, and re-generate the files when they occour.
     -o, --output <outputDir>       directory where to put the generated files (defaults to current directory) (default: /Users/fmvilas/www/asyncapi-generator)
     -d, --disable-hook <hookName>  disable a specific hook
     -n, --no-overwrite <glob>      glob or path of the file(s) to skip when regenerating
     -p, --param <name=value>       additional param to pass to templates
-    -t, --templates <templateDir>  directory where templates are located (defaults to internal templates directory) (default: null)
+    -t, --templates <templateDir>  directory where templates are located (default: Internal template folder)
     -h, --help                     output usage information
 ```
 

@@ -15,4 +15,18 @@
   <div class="markdown">
     {{ asyncapi.info().description() | markdown2html | safe }}
   </div>
+
+
+  <div class="leading-normal mb-4">
+    {% if asyncapi.info().contact() %}
+      {% if asyncapi.info().contact().url() %}
+      Contact link: <a class="border border-solid border-purple-lighter hover:bg-purple-lighter hover:text-purple-dark font-bold no-underline text-purple text-xs uppercase rounded mr-2 px-3 py-1"
+        href="{{asyncapi.info().contact().url()}}" target="_blank">{%- if asyncapi.info().contact().name() %}{{asyncapi.info().contact().name()}}{%- else %}{{asyncapi.info().contact().url()}}{%- endif %}</a>
+      {% endif %}
+      {% if asyncapi.info().contact().email() %}
+      Contact email: <a class="border border-solid border-purple-lighter hover:bg-purple-lighter hover:text-purple-dark font-bold no-underline text-purple text-xs uppercase rounded mr-2 px-3 py-1"
+        href="{{asyncapi.info().contact().email()}}" target="_blank">{{asyncapi.info().contact().email()}}</a>
+      {% endif %}
+    {% endif %}
+  </div>
 </div>

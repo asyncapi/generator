@@ -49,7 +49,7 @@ program
     asyncapiFile = path.resolve(asyncAPIPath);
     template = tmpl;
   })
-  .option('-w, --watch', 'Watch the templates directory (--templates) for changes and re-generate when changes occur')
+  .option('-w, --watch', 'Watch the templates directory (--templates) for changes and re-generate when they occur')
   .option('-o, --output <outputDir>', 'directory where to put the generated files (defaults to current directory)', parseOutput, process.cwd())
   .option('-d, --disable-hook <hookName>', 'disable a specific hook', disableHooksParser)
   .option('-n, --no-overwrite <glob>', 'glob or path of the file(s) to skip when regenerating', noOverwriteParser)
@@ -62,19 +62,19 @@ if (!asyncapiFile) {
   program.help(); // This exits the process
 }
 
-mkdirp(program.output, err => {
+mkdirp(program.output, async err => {
   if (err) return showErrorAndExit(err);
-  generate(program.output);
+  await generate(program.output);
 
   // If we want to watch for changes do that
   if (program.watch) {
     const watchDir = path.resolve(program.templates, template);
     console.log(`[WATCHER] Watching for changes in ${magenta(watchDir)}`);
     const watcher = new Watcher(watchDir);
-    watcher.watch(() => {
+    watcher.watch(async () => {
       console.clear();
       console.log('[WATCHER] Change detected, generating new code.');
-      generate();
+      await generate(program.output);
     });
   }
 });
@@ -83,7 +83,7 @@ mkdirp(program.output, err => {
  * Generates the files based on the template.
  * @param {*} targetDir The path to the target directory.
  */
-function generate(targetDir) {
+async function generate(targetDir) {
   try {
     const generator = new Generator(template, targetDir || path.resolve(os.tmpdir(), 'asyncapi-generator'), {
       templatesDir: program.templates,
@@ -92,7 +92,7 @@ function generate(targetDir) {
       disabledHooks,
     });
 
-    generator.generateFromFile(asyncapiFile);
+    await generator.generateFromFile(asyncapiFile);
     console.log(green('Done! ✨'));
     console.log(`${yellow('Check out your shiny new generated files at ') + magenta(program.output) + yellow('.')}\n`);
   } catch (e) {

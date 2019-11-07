@@ -8,6 +8,8 @@
     {% if channel.hasPublish() %}
       {{ operation(channel.publish(), 'publish', channelName, channel) }}
     {% endif %}
+  </div>
+  <div class="responsive-container">
     {% if channel.hasSubscribe() %}
       {{ operation(channel.subscribe(), 'subscribe', channelName, channel) }}
     {% endif %}

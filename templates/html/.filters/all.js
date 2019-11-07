@@ -30,41 +30,50 @@ module.exports = ({ Nunjucks, Markdown, OpenAPISampler }) => {
   /**
    * Check if there is a channel which does not have one of the tags specified.
    */
-	Nunjucks.addFilter('containTags', (object, tagsToCheck) => {
-		if (!object) {
+  Nunjucks.addFilter('containTags', (object, tagsToCheck) => {
+    if (!object) {
       throw new Error("object for containsTag was not provided?");
     }
 
-    //Check that pubsub does not contain one of the tags to check.
+    if (!tagsToCheck) {
+      throw new Error("tagsToCheck for containsTag was not provided?");
+    }
+
+    //Ensure if only 1 tag are provided it is converted to array.
+    if (tagsToCheck && !Array.isArray(tagsToCheck)) {
+      tagsToCheck = [tagsToCheck];
+    }
+
+    //Check if pubsub contain one of the tags to check.
     let check = (tag) => {
       let found = false;
-      for(let tagToCheckIndex in tagsToCheck){
+      for (let tagToCheckIndex in tagsToCheck) {
         let tagToCheck = tagsToCheck[tagToCheckIndex]._json;
-        if(tagToCheck.name === tag.name){
+        if (tagToCheck.name === tag.name) {
           found = true;
         }
       }
       return found;
     };
 
-    //Ensure pubsub tags are checked for the group tags
-    let publishContainsNoTag = object._json.tags ? object._json.tags.find(check) != null : false;
-    if(publishContainsNoTag === true) return true;
-    return false;
+    //Ensure tags are checked for the group tags
+    let containTags = object._json.tags ? object._json.tags.find(check) != null : false;
+    return containTags;
   });
+
   /**
    * Check if there is a channel which does not have one of the tags specified.
    */
-	Nunjucks.addFilter('containNoTag', (channels, tagsToCheck) => {
-		if (!channels) {
+  Nunjucks.addFilter('containNoTag', (channels, tagsToCheck) => {
+    if (!channels) {
       throw new Error("Channels for containNoTag was not provided?");
     }
-    for(let channelIndex in channels){
+    for (let channelIndex in channels) {
       let channel = channels[channelIndex]._json;
       //Check if the channel contains publish or subscribe which does not contain tags
-      if(channel.publish && (!channel.publish.tags || channel.publish.tags.length == 0) ||
+      if (channel.publish && (!channel.publish.tags || channel.publish.tags.length == 0) ||
         channel.subscribe && (!channel.subscribe.tags || channel.subscribe.tags.length == 0)
-      ){
+      ) {
         //one does not contain tags
         return true;
       }
@@ -72,9 +81,9 @@ module.exports = ({ Nunjucks, Markdown, OpenAPISampler }) => {
       //Check if channel publish or subscribe does not contain one of the tags to check.
       let check = (tag) => {
         let found = false;
-        for(let tagToCheckIndex in tagsToCheck){
+        for (let tagToCheckIndex in tagsToCheck) {
           let tagToCheck = tagsToCheck[tagToCheckIndex]._json;
-          if(tagToCheck.name === tag.name){
+          if (tagToCheck.name === tag.name) {
             found = true;
           }
         }
@@ -83,13 +92,13 @@ module.exports = ({ Nunjucks, Markdown, OpenAPISampler }) => {
 
       //Ensure pubsub tags are checked for the group tags
       let publishContainsNoTag = channel.publish && channel.publish.tags ? channel.publish.tags.find(check) == null : false;
-      if(publishContainsNoTag === true) return true;
+      if (publishContainsNoTag === true) return true;
       let subscribeContainsNoTag = channel.subscribe && channel.subscribe.tags ? channel.subscribe.tags.find(check) == null : false;
-      if(subscribeContainsNoTag === true) return true;
+      if (subscribeContainsNoTag === true) return true;
     }
     return false;
   });
-  
+
   Nunjucks.addFilter('isArray', (arr) => {
     return Array.isArray(arr);
   });

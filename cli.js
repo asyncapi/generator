@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 const path = require('path');
+const fs = require('fs');
 const os = require('os');
 const program = require('commander');
 const packageInfo = require('./package.json');
@@ -48,11 +49,12 @@ program
     asyncapiFile = path.resolve(asyncAPIPath);
     template = tmpl;
   })
+  .option('-w, --watch', 'Watch the templates directory (--templates) for changes and re-generate when changes occur')
   .option('-o, --output <outputDir>', 'directory where to put the generated files (defaults to current directory)', parseOutput, process.cwd())
   .option('-d, --disable-hook <hookName>', 'disable a specific hook', disableHooksParser)
   .option('-n, --no-overwrite <glob>', 'glob or path of the file(s) to skip when regenerating', noOverwriteParser)
   .option('-p, --param <name=value>', 'additional param to pass to templates', paramParser)
-  .option('-t, --templates <templateDir>', 'directory where templates are located (defaults to internal templates directory)', null, path.resolve(__dirname, 'templates'))
+  .option('-t, --templates <templateDir>', 'directory where templates are located (defaults to internal templates directory)', Generator.DEFAULT_TEMPLATES_DIR, path.resolve(__dirname, 'templates'))
   .parse(process.argv);
 
 if (!asyncapiFile) {
@@ -62,26 +64,54 @@ if (!asyncapiFile) {
 
 mkdirp(program.output, err => {
   if (err) return showErrorAndExit(err);
+  generate(program.output);
 
-  let generator;
+  // If we want to watch for changes do that
+  if (program.watch) {
+    watch();
+  }
+});
+/**
+ * Watches the template folder for changes
+ */
+function watch() {
+  const watchDir = path.resolve(program.templates, template);
+  console.log(`[WATCHER] Watching for changes in ${magenta(watchDir)}`);
+  let fsWait = false;
+  const watcher = fs.watch(watchDir, { recursive: true }, (eventType, filename) => {
+    // Since multiple changes can occur, lets wait a bit before processing.
+    if (fsWait) return;
+    fsWait = setTimeout(() => {
+      fsWait = false;
+    }, 100);
+    console.clear();
+    console.log('[WATCHER] Change detected, generating new code.');
+    generate();
+    // Close the previous watcher to ensure no dublicate generations.
+    watcher.close();
+    watch();
+  });
+}
 
+/**
+ * Generates the files based on the template.
+ * @param {*} targetDir The path to the target directory.
+ */
+function generate(targetDir) {
   try {
-    generator = new Generator(template, program.output || path.resolve(os.tmpdir(), 'asyncapi-generator'), {
+    const generator = new Generator(template, targetDir || path.resolve(os.tmpdir(), 'asyncapi-generator'), {
       templatesDir: program.templates,
       templateParams: params,
       noOverwriteGlobs,
       disabledHooks,
     });
+
+    generator.generateFromFile(asyncapiFile);
+    console.log(green('Done! ✨'));
+    console.log(`${yellow('Check out your shiny new generated files at ') + magenta(program.output) + yellow('.')}\n`);
   } catch (e) {
     return showErrorAndExit(e);
   }
-
-  generator.generateFromFile(asyncapiFile)
-    .then(() => {
-      console.log(green('Done! ✨'));
-      console.log(yellow('Check out your shiny new generated files at ') + magenta(program.output) + yellow('.'));
-    })
-    .catch(showErrorAndExit);
-});
+}
 
 process.on('unhandledRejection', showErrorAndExit);

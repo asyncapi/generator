@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 
 const path = require('path');
-const fs = require('fs');
 const os = require('os');
 const program = require('commander');
 const packageInfo = require('./package.json');
 const mkdirp = require('mkdirp');
 const Generator = require('./lib/generator');
+const Watcher = require('./lib/watcher');
 
 const red = text => `\x1b[31m${text}\x1b[0m`;
 const magenta = text => `\x1b[35m${text}\x1b[0m`;
@@ -68,30 +68,16 @@ mkdirp(program.output, err => {
 
   // If we want to watch for changes do that
   if (program.watch) {
-    watch();
+    const watchDir = path.resolve(program.templates, template);
+    console.log(`[WATCHER] Watching for changes in ${magenta(watchDir)}`);
+    const watcher = new Watcher(watchDir);
+    watcher.watch(() => {
+      console.clear();
+      console.log('[WATCHER] Change detected, generating new code.');
+      generate();
+    });
   }
 });
-/**
- * Watches the template folder for changes
- */
-function watch() {
-  const watchDir = path.resolve(program.templates, template);
-  console.log(`[WATCHER] Watching for changes in ${magenta(watchDir)}`);
-  let fsWait = false;
-  const watcher = fs.watch(watchDir, { recursive: true }, (eventType, filename) => {
-    // Since multiple changes can occur, lets wait a bit before processing.
-    if (fsWait) return;
-    fsWait = setTimeout(() => {
-      fsWait = false;
-    }, 100);
-    console.clear();
-    console.log('[WATCHER] Change detected, generating new code.');
-    generate();
-    // Close the previous watcher to ensure no dublicate generations.
-    watcher.close();
-    watch();
-  });
-}
 
 /**
  * Generates the files based on the template.

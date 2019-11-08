@@ -69,8 +69,9 @@ mkdirp(program.output, async err => {
   // If we want to watch for changes do that
   if (program.watch) {
     const watchDir = path.resolve(program.templates, template);
-    console.log(`[WATCHER] Watching for changes in ${magenta(watchDir)}`);
-    const watcher = new Watcher(watchDir);
+    console.log(`[WATCHER] Watching for changes in the template directory ${magenta(watchDir)} and in the async api file ${magenta(asyncapiFile)}`);
+
+    const watcher = new Watcher([asyncapiFile, watchDir]);
     watcher.watch(async () => {
       console.clear();
       console.log('[WATCHER] Change detected, generating new code.');

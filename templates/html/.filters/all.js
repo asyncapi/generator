@@ -117,11 +117,9 @@ module.exports = ({ Nunjucks, Markdown, OpenAPISampler }) => {
   });
 
   Nunjucks.addFilter('getPayloadExamples', (msg) => {
-    if (Array.isArray(msg.examples())) {
-      let payloadElement = msg.examples().find(e => e.payload);
-      if (payloadElement) {
-        return payloadElement.payload;
-      }
+    if (Array.isArray(msg.examples()) && msg.examples().find(e => e.payload)) {
+      const ex = msg.examples().filter(e => e.payload);
+      return ex && ex[0].payload !== undefined ? ex[0].payload : undefined;
     }
 
     if (msg.payload() && msg.payload().examples()) {
@@ -130,11 +128,9 @@ module.exports = ({ Nunjucks, Markdown, OpenAPISampler }) => {
   });
 
   Nunjucks.addFilter('getHeadersExamples', (msg) => {
-    if (Array.isArray(msg.examples())) {
-      let headerElement = msg.examples().find(e => e.headers);
-      if (headerElement) {
-        return headerElement.headers;
-      }
+    if (Array.isArray(msg.examples()) && msg.examples().find(e => e.headers)) {
+      const ex = msg.examples().filter(e => e.headers);
+      return ex && ex[0].headers !== undefined ? ex[0].headers : undefined;
     }
 
     if (msg.headers() && msg.headers().examples()) {

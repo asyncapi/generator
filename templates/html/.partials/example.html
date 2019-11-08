@@ -1,4 +1,4 @@
-{% macro example(msg) %}
+{% macro example(msg, channelName) %}
 
 <form>
   <input type="radio" checked id="example-payload-{{channelName}}-{{msg.uid()}}" name="tab" class="examples-payload-tab hidden" {% if not msg.payload() %}disabled{% endif %}/>

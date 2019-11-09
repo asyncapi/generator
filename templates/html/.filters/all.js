@@ -118,17 +118,8 @@ module.exports = ({ Nunjucks, Markdown, OpenAPISampler }) => {
 
   Nunjucks.addFilter('getPayloadExamples', (msg) => {
     if (Array.isArray(msg.examples()) && msg.examples().find(e => e.payload)) {
-      const ex = msg.examples().filter(e => e.payload);
-      if (ex) {
-        //Go through each found payload from filtering the examples array.
-        let returnArray = [];
-        for (var i in ex) {
-          returnArray = returnArray.concat(ex[i].payload);
-        }
-        return returnArray;
-      } else {
-        return undefined;
-      }
+      // Instead of flat or flatmap use this.
+      return msg.examples().map(e => e.payload).filter(Boolean).reduce((acc, val) => acc.concat(val), []);
     }
 
     if (msg.payload() && msg.payload().examples()) {
@@ -138,17 +129,8 @@ module.exports = ({ Nunjucks, Markdown, OpenAPISampler }) => {
 
   Nunjucks.addFilter('getHeadersExamples', (msg) => {
     if (Array.isArray(msg.examples()) && msg.examples().find(e => e.headers)) {
-      const ex = msg.examples().filter(e => e.headers);
-      if (ex) {
-        //Go through each found header from filtering the examples array.
-        let returnArray = [];
-        for (var i in ex) {
-          returnArray = returnArray.concat(ex[i].headers);
-        }
-        return returnArray;
-      } else {
-        return undefined;
-      }
+      // Instead of flat or flatmap use this.
+      return msg.examples().map(e => e.headers).filter(Boolean).reduce((acc, val) => acc.concat(val), []);
     }
 
     if (msg.headers() && msg.headers().examples()) {

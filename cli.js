@@ -33,12 +33,15 @@ const paramParser = v => {
 const noOverwriteParser = v => noOverwriteGlobs.push(v);
 const disableHooksParser = v => disabledHooks.push(v);
 
-const showErrorAndExit = err => {
+const showError = err => {
   console.error(red('Something went wrong:'));
   console.error(red(err.stack || err.message));
   if (err.errors) {
     console.error(red(JSON.stringify(err.errors)));
   }
+};
+const showErrorAndExit = err => {
+  showError(err);
   process.exit(1);
 };
 
@@ -64,7 +67,11 @@ if (!asyncapiFile) {
 
 mkdirp(program.output, async err => {
   if (err) return showErrorAndExit(err);
-  await generate(program.output);
+  try {
+    await generate(program.output);
+  } catch (e) {
+    return showErrorAndExit(e);
+  }
 
   // If we want to watch for changes do that
   if (program.watch) {
@@ -78,14 +85,14 @@ mkdirp(program.output, async err => {
       for (const [key, value] of Object.entries(changedFiles)) {
         let eventText;
         switch (value.eventType) {
-        case 'change':
-          eventText = green('changed');
+        case 'changed':
+          eventText = green(value.eventType);
           break;
         case 'removed':
-          eventText = red('removed');
+          eventText = red(value.eventType);
           break;
-        case 'rename':
-          eventText = yellow('renamed');
+        case 'renamed':
+          eventText = yellow(value.eventType);
           break;
         default:
           eventText = yellow(value.eventType);
@@ -93,7 +100,11 @@ mkdirp(program.output, async err => {
         console.log(`\t${magenta(value.fileName ? path.resolve(value.path, value.fileName) : value.path)} was ${eventText}`);
       }
       console.log('Generating files');
-      await generate(program.output);
+      try {
+        await generate(program.output);
+      } catch (e) {
+        showError(e);
+      }
     }, (paths) => {
       showErrorAndExit({ message: `[WATCHER] Could not find the file path ${paths}, are you sure it still exists? If it has been deleted or moved please rerun the generator.` });
     });
@@ -104,21 +115,24 @@ mkdirp(program.output, async err => {
  * Generates the files based on the template.
  * @param {*} targetDir The path to the target directory.
  */
-async function generate(targetDir) {
-  try {
-    const generator = new Generator(template, targetDir || path.resolve(os.tmpdir(), 'asyncapi-generator'), {
-      templatesDir: program.templates,
-      templateParams: params,
-      noOverwriteGlobs,
-      disabledHooks,
-    });
+function generate(targetDir) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const generator = new Generator(template, targetDir || path.resolve(os.tmpdir(), 'asyncapi-generator'), {
+        templatesDir: program.templates,
+        templateParams: params,
+        noOverwriteGlobs,
+        disabledHooks,
+      });
 
-    await generator.generateFromFile(asyncapiFile);
-    console.log(green('Done! ✨'));
-    console.log(`${yellow('Check out your shiny new generated files at ') + magenta(program.output) + yellow('.')}\n`);
-  } catch (e) {
-    return showErrorAndExit(e);
-  }
+      await generator.generateFromFile(asyncapiFile);
+      console.log(green('Done! ✨'));
+      console.log(`${yellow('Check out your shiny new generated files at ') + magenta(program.output) + yellow('.')}\n`);
+      resolve();
+    } catch (e) {
+      reject(e);
+    }
+  });
 }
 
 process.on('unhandledRejection', showErrorAndExit);

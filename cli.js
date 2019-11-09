@@ -72,10 +72,30 @@ mkdirp(program.output, async err => {
     console.log(`[WATCHER] Watching for changes in the template directory ${magenta(watchDir)} and in the async api file ${magenta(asyncapiFile)}`);
 
     const watcher = new Watcher([asyncapiFile, watchDir]);
-    watcher.watch(async () => {
+    watcher.watch(async (changedFiles) => {
       console.clear();
-      console.log('[WATCHER] Change detected, generating new code.');
+      console.log('[WATCHER] Change detected');
+      for (const [key, value] of Object.entries(changedFiles)) {
+        let eventText;
+        switch (value.eventType) {
+        case 'change':
+          eventText = green('changed');
+          break;
+        case 'removed':
+          eventText = red('removed');
+          break;
+        case 'rename':
+          eventText = yellow('renamed');
+          break;
+        default:
+          eventText = yellow(value.eventType);
+        }
+        console.log(`\t${magenta(value.fileName ? path.resolve(value.path, value.fileName) : value.path)} was ${eventText}`);
+      }
+      console.log('Generating files');
       await generate(program.output);
+    }, (paths) => {
+      showErrorAndExit({ message: `[WATCHER] Could not find the file path ${paths}, are you sure it still exists? If it has been deleted or moved please rerun the generator.` });
     });
   }
 });

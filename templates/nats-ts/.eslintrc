@@ -1,0 +1,82 @@
+extends: 'eslint:recommended'
+
+parserOptions:
+  ecmaVersion: 8
+
+env:
+  node: true
+  es6: true
+
+ecmaFeatures:
+  forOf: true
+  modules: true
+
+rules:
+  # Possible Errors
+  no-console: 0
+  valid-jsdoc: [0, {requireReturn: false, requireParamDescription: false, requireReturnDescription: false}]
+
+  # Best Practices
+  consistent-return: 0
+  curly: 0
+  block-scoped-var: 2
+  no-else-return: 2
+  no-process-env: 2
+  no-self-compare: 2
+  no-throw-literal: 2
+  no-void: 2
+  radix: 2
+  wrap-iife: [2, outside]
+
+  # Variables
+  no-shadow: 0
+  no-use-before-define: [2, nofunc]
+
+  # Node.js
+  no-process-exit: 0
+  handle-callback-err: [2, err]
+  no-new-require: 2
+  no-path-concat: 2
+
+  # Stylistic Issues
+  quotes: [2, single]
+  camelcase: 0
+  indent: [2, 2]
+  no-lonely-if: 2
+  no-floating-decimal: 2
+  brace-style: [2, 1tbs, { "allowSingleLine": true }]
+  comma-style: [2, last]
+  consistent-this: [0, self]
+  func-style: 0
+  max-nested-callbacks: 0
+  new-cap: 2
+  no-multiple-empty-lines: [2, {max: 1}]
+  no-nested-ternary: 2
+  semi-spacing: [2, {before: false, after: true}]
+  operator-assignment: [2, always]
+  padded-blocks: [2, never]
+  quote-props: [2, as-needed]
+  space-before-function-paren: [2, always]
+  keyword-spacing: [2, {"before": true, "after": true}]
+  space-before-blocks: [2, always]
+  array-bracket-spacing: [2, never]
+  computed-property-spacing: [2, never]
+  space-in-parens: [2, never]
+  space-unary-ops: [2, {words: true, nonwords: false}]
+  #spaced-line-comment: [2, always]
+  wrap-regex: 2
+  linebreak-style: [2, unix]
+  semi: [2, always]
+
+  # ECMAScript 6
+  arrow-spacing: [2, {before: true, after: true}]
+  no-class-assign: 2
+  no-const-assign: 2
+  no-dupe-class-members: 2
+  no-this-before-super: 2
+  no-var: 2
+  object-shorthand: [2, always]
+  prefer-arrow-callback: 2
+  prefer-const: 2
+  prefer-spread: 2
+  prefer-template: 2

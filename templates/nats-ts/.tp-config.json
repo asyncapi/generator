@@ -1,0 +1,4 @@
+{
+  "supportedProtocols": ["ws"],
+  "requiredParams": ["server"]
+}

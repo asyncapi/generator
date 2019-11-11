@@ -108,6 +108,34 @@
           {% endfor %}
         {% endif %}
 
+        {% if prop.extensions() | length > 0 %}
+          <p class="pl-6 mb-2 mt-4 text-sm font-bold text-grey-darker">Specification Extensions:</p>
+          {% for extensionName, extensionValue in prop.extensions() %}
+              <div class="{% if odd %}bg-grey-lightest{% else %}bg-grey-lighter{% endif %} pl-6">
+              {% if extensionValue | isObject  %}
+              <div class="{% if open %}is-open{% endif %}">
+                <div class="js-prop cursor-pointer py-2 property">
+                  <div class="pr-4" style="margin-top:-2px; min-width: 25%;">
+                    <span class="text-sm" style="word-break: break-word;">{{ extensionName }}</span>
+                    <svg class="expand" version="1.1" viewBox="0 0 24 24" x="0"
+                      xmlns="http://www.w3.org/2000/svg" y="0">
+                      <polygon points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "></polygon>
+                    </svg>
+                  </div>
+                </div>
+                <div class="children">
+                  <div class="{% if odd %}bg-grey-lighter{% else %}bg-grey-lightest{% endif %} {% if not root %}pl-8 pr-8{% endif %} rounded">
+                    <pre class="text-sm">{{ extensionValue | dump(2) }}</pre>
+                  </div>
+                </div>
+              </div>
+              {% else %}
+                  <div class="text-sm">{{ extensionName }}: {{ extensionValue }}</div>
+              {% endif %}
+              </div>
+            {% endfor %}
+        {% endif %}
+
         {% if prop.type() === 'array' %}
           {% if prop.items() %}
             <p class="pl-6 mb-2 text-xs font-bold uppercase text-grey-darker">Items:</p>

@@ -40,7 +40,7 @@ channels:
       message:
         $ref: './components/messages.yml#/lightMeasured'
     bindings:
-      $ref: './components/bindings.yml#/smartylightingMeasurement'
+      $ref: './components/channel-bindings.yml#/smartylightingMeasurement'
   smartylighting.streetlights.1.0.event.{streetlightId}.lighting.measured:
     description: Topic for which one can subscribe to measurements on a specific streetlightId.
     parameters:
@@ -51,7 +51,7 @@ channels:
       message:
         $ref: './components/messages.yml#/lightMeasured'
     bindings:
-      $ref: './components/bindings.yml#/smartylightingMeasurement'
+      $ref: './components/channel-bindings.yml#/smartylightingMeasurement'
 
   smartylighting.streetlights.1.0.action.{streetlightId}.turn.on:
     parameters:
@@ -68,7 +68,7 @@ channels:
       message:
         $ref: './components/messages.yml#/turnOnOffResponse'
     bindings:
-      $ref: './components/bindings.yml#/smartylightingTurnOn'
+      $ref: './components/channel-bindings.yml#/smartylightingTurnOn'
 
   smartylighting.streetlights.1.0.action.{streetlightId}.turn.off:
     parameters:
@@ -85,7 +85,7 @@ channels:
       message:
         $ref: './components/messages.yml#/turnOnOff'
     bindings:
-      $ref: './components/bindings.yml#/smartylightingTurnOff'
+      $ref: './components/channel-bindings.yml#/smartylightingTurnOff'
 
   smartylighting.streetlights.1.0.action.{streetlightId}.dim:
     parameters:
@@ -102,7 +102,7 @@ channels:
       message:
         $ref: './components/messages.yml#/dimLight'
     bindings:
-      $ref: './components/bindings.yml#/smartylightingDim'
+      $ref: './components/channel-bindings.yml#/smartylightingDim'
 
 components:
   securitySchemes:

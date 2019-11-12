@@ -1,0 +1,49 @@
+lightMeasuredPayload:
+  type: object
+  properties:
+    lumens:
+      type: integer
+      minimum: 0
+      description: Light intensity measured in lumens.
+      x-pi: false
+    sentAt:
+      $ref: "#/sentAt"
+turnOnOffPayload:
+  type: object
+  properties:
+    command:
+      type: string
+      enum:
+        - on
+        - off
+      description: Whether to turn on or off the light.
+      x-pi: false
+    sentAt:
+      $ref: "#/sentAt"
+dimLightPayload:
+  type: object
+  properties:
+    percentage:
+      type: integer
+      description: Percentage to which the light should be dimmed to.
+      minimum: 0
+      maximum: 100
+    sentAt:
+      $ref: "#/sentAt"
+sentAt:
+  type: string
+  format: date-time
+  description: Date and time when the message was sent.
+response:
+  type: object
+  properties:
+    status:
+      type: integer
+      description: Like http codes
+    statusMessage:
+      type: string
+      enum:
+        - OK
+        - ERROR
+    sentAt:
+      $ref: "#/sentAt"

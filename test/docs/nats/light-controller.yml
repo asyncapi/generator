@@ -59,7 +59,7 @@ channels:
       message:
         $ref: './components/messages.yml#/turnOnOff'
     bindings:
-      $ref: './components/channel-bindings.yml#/smartylightingTurnOnReplier'
+      $ref: './components/channel-bindings.yml#/smartylightingTurnOn'
 
   smartylighting.streetlights.1.0.action.{streetlightId}.turn.off:
     description: Get notified when a streetlight should be turned off. This should only be handled by 1 subscriber but ensured by request reply.
@@ -77,7 +77,7 @@ channels:
       message:
         $ref: './components/messages.yml#/turnOnOff'
     bindings:
-      $ref: './components/channel-bindings.yml#/smartylightingTurnOffReplier'
+      $ref: './components/channel-bindings.yml#/smartylightingTurnOff'
 
   smartylighting.streetlights.1.0.action.{streetlightId}.dim:
     description: Get notified when a streetlight should be dimmed. This should only be handled by 1 subscriber but ensured by request reply.
@@ -95,7 +95,7 @@ channels:
       message:
         $ref: './components/messages.yml#/dimLight'
     bindings:
-      $ref: './components/channel-bindings.yml#/smartylightingDimReplier'
+      $ref: './components/channel-bindings.yml#/smartylightingDim'
 
 components:
   securitySchemes:

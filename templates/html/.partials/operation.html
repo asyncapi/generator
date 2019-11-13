@@ -70,10 +70,10 @@
 
   {% if operation.hasMultipleMessages() %}
   {% for msg in operation.messages() %}
-  {{ example(msg) }}
+  {{ example(msg, channelName) }}
   {% endfor %}
   {% else %}
-  {{ example(operation.message(0)) }}
+  {{ example(operation.message(0), channelName) }}
   {% endif %}
 </div>
 

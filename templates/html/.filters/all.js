@@ -1,4 +1,4 @@
-module.exports = ({ Nunjucks, Markdown, OpenAPISampler }) => {
+module.exports = ({ _, Nunjucks, Markdown, OpenAPISampler }) => {
   Nunjucks.addFilter('split', (string, separator) => {
     if (typeof string !== 'string') return string;
     const regex = new RegExp(separator, 'g');
@@ -124,7 +124,7 @@ module.exports = ({ Nunjucks, Markdown, OpenAPISampler }) => {
   Nunjucks.addFilter('getPayloadExamples', (msg) => {
     if (Array.isArray(msg.examples()) && msg.examples().find(e => e.payload)) {
       // Instead of flat or flatmap use this.
-      return msg.examples().map(e => e.payload).filter(Boolean).reduce((acc, val) => acc.concat(val), []);
+      return _.flatMap(msg.examples().map(e => e.payload).filter(Boolean));
     }
 
     if (msg.payload() && msg.payload().examples()) {
@@ -135,7 +135,7 @@ module.exports = ({ Nunjucks, Markdown, OpenAPISampler }) => {
   Nunjucks.addFilter('getHeadersExamples', (msg) => {
     if (Array.isArray(msg.examples()) && msg.examples().find(e => e.headers)) {
       // Instead of flat or flatmap use this.
-      return msg.examples().map(e => e.headers).filter(Boolean).reduce((acc, val) => acc.concat(val), []);
+      return _.flatMap(msg.examples().map(e => e.headers).filter(Boolean));
     }
 
     if (msg.headers() && msg.headers().examples()) {

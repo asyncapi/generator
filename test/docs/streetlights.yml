@@ -119,6 +119,7 @@ components:
           type: integer
           minimum: 0
           description: Light intensity measured in lumens.
+          x-pi: false
         sentAt:
           $ref: "#/components/schemas/sentAt"
     turnOnOffPayload:
@@ -130,6 +131,7 @@ components:
             - on
             - off
           description: Whether to turn on or off the light.
+          x-pi: false
         sentAt:
           $ref: "#/components/schemas/sentAt"
     dimLightPayload:

@@ -1,0 +1,19 @@
+
+{% macro publish(channelName, publishOperation, payload, encoding) %}
+
+export function publish(requestMessage: {{publishOperation.message(0).name() | camelCase}}, nc?: Client): Promise<void> {
+  return new Promise(async (resolve, reject) => {
+    if (nc) {
+      try{
+        let dataToPublish = utils.beforePublish(requestMessage, Payload.{{payload}}, '{{encoding}}');
+        nc.publish('{{channelName}}', dataToPublish);
+        resolve();
+      }catch(e){
+        reject(e);
+      }
+    }else{
+      reject(new Error("Nats client is not connected"));
+    }
+  });
+};
+{% endmacro %}

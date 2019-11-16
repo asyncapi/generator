@@ -3,19 +3,46 @@ smartylightingMeasurement:
     is: pubsub
     queue:
       name: smartylightingMeasurement
-smartylightingTurnOn:
+smartylightingTurnOnReplier:
   nats:
     is: requestReply
+    requestReply:
+      is: replier
     queue:
       name: smartylightingTurnOn
-smartylightingTurnOff:
+smartylightingTurnOnRequester:
   nats:
     is: requestReply
+    requestReply:
+      is: requester
+    queue:
+      name: smartylightingTurnOn
+smartylightingTurnOffReplier:
+  nats:
+    is: requestReply
+    requestReply:
+      is: replier
     queue:
       name: smartylightingTurnOff
-smartylightingDim:
+smartylightingTurnOffRequester:
   nats:
     is: requestReply
+    requestReply:
+      is: requester
+    queue:
+      name: smartylightingTurnOff
+smartylightingDimReplier:
+  nats:
+    is: requestReply
+    requestReply:
+      is: replier
+    queue:
+      name: smartylightingDim
+smartylightingDimRequester:
+  nats:
+    is: requestReply
+    requestReply:
+      is: requester
     queue:
       name: smartylightingDim
 

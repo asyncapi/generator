@@ -1,25 +1,27 @@
 
-{% macro subscribe(channelName, subscribeOperation, payload, encoding) %}
-export function subscribe(onDataCallback : (err?: NatsError, msg?: {{subscribeOperation.message(0).name() | camelCase}}) => void, nc?: Client): Promise<Subscription> {
+{% macro subscribe(channel, channelName, server) %}
+export function subscribe(onDataCallback : (err?: NatsError, msg?: {{channel.subscribe().message(0).name() | camelCase}}) => void, nc?: Client): Promise<Subscription> {
   return new Promise(async (resolve, reject) => {
     if (nc) {
       try{
         let subscribeOptions: SubscriptionOptions = {};
-        {%- if subscribeOperation.bindings().queue() | length %}
+        {%- if channel.subscribe().message(0) | hasNatsBindings %}
+        {%- if channel.subscribe().message(0).bindings().nats().queue() | length %}
         //If queue
-        subscribeOptions.queue = '{{subscribeOperation.bindings().queue().name()}}';
+        subscribeOptions.queue = '{{channel.subscribe().message(0).bindings().nats().queue().name()}}';
         {%- endif %}
-        {%- if subscribeOperation.bindings().unsubAfter() | length %}
+        {%- if channel.subscribe().message(0).bindings().nats().unsubAfter() | length %}
         //If unsubafter
-        subscribeOptions.max = {{subscribeOperation.bindings().unsubAfter()}};
+        subscribeOptions.max = {{channel.subscribe().message(0).bindings().nats().unsubAfter()}};
+        {%- endif %}
         {%- endif %}
 
         let subscription = nc.subscribe('{{channelName}}', (err, msg) => {
           if(err){
             onDataCallback(err);
           }else{
-            let processedData = utils.processRecievedData(msg.data, Payload.{{payload}}, '{{encoding}}');
-            let publishedData = new {{subscribeOperation.message(0).name() | camelCase}}();
+            let processedData = utils.processRecievedData(msg.data, Payload.{{server | tsPayload}}, '{{server | tsEncoding}}');
+            let publishedData = new {{channel.subscribe().message(0).name() | camelCase}}();
             publishedData.copyFrom(processedData);
             onDataCallback(undefined, publishedData);
           }

@@ -1,5 +1,5 @@
 
-{% macro request(channel, channelName, payload, encoding) %}
+{% macro request(channel, channelName, server) %}
 export function request(requestMessage: {{channel.publish().message(0).name() | camelCase}}, nc?: Client): Promise<{{channel.subscribe().message(0).name() | camelCase}}> {
   return new Promise(async (resolve, reject) => {
     if (nc) {
@@ -9,13 +9,13 @@ export function request(requestMessage: {{channel.publish().message(0).name() | 
           if (err) {
             reject(err);
           } else {
-            let processedData = utils.processRecievedData(msg.data, Payload.{{payload}}, '{{encoding}}');
+            let processedData = utils.processRecievedData(msg.data, Payload.{{server | tsPayload}}, '{{server | tsEncoding}}');
             let response = new {{channel.subscribe().message(0).name() | camelCase}}();
             response.copyFrom(processedData);
             resolve(response);
           }
         }, { max: 1 });
-        let requestData = utils.beforeRequest(requestMessage, Payload.{{payload}}, '{{encoding}}');
+        let requestData = utils.beforeRequest(requestMessage, Payload.{{server | tsPayload}}, '{{server | tsEncoding}}');
         nc.publish('{{channelName}}', requestData, inbox);
       }catch(e){
         reject(e);
@@ -25,3 +25,5 @@ export function request(requestMessage: {{channel.publish().message(0).name() | 
     }
   })
 }
+
+{% endmacro %}

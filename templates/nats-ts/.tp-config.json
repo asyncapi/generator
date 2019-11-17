@@ -1,4 +1,4 @@
 {
-  "supportedProtocols": ["ws"],
+  "supportedProtocols": ["nats"],
   "requiredParams": ["server"]
 }

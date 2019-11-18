@@ -108,9 +108,10 @@
           {% endfor %}
         {% endif %}
 
-        {% if prop.extensions() | length > 0 %}
+        {% set extensions = prop | nonParserExtensions %}
+        {% if extensions.size > 0 %}
           <p class="pl-6 mb-2 mt-4 text-sm font-bold text-grey-darker">Specification Extensions:</p>
-          {% for extensionName, extensionValue in prop.extensions() %}
+          {% for extensionName, extensionValue in extensions %}
               <div class="{% if odd %}bg-grey-lightest{% else %}bg-grey-lighter{% endif %} pl-6">
               {% if extensionValue | isObject  %}
               <div class="{% if open %}is-open{% endif %}">

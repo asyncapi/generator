@@ -21,7 +21,7 @@ module.exports = ({ _, Nunjucks, Markdown, OpenAPISampler }) => {
       obj.additionalItems() ||
       (obj.properties() && Object.keys(obj.properties()).length) ||
       obj.additionalProperties() ||
-      (obj.extensions() && Object.keys(obj.extensions()).length) ||
+      (obj.extensions() && Object.keys(obj.extensions()).filter(e => !e.startsWith('x-parser-')).length) ||
       obj.patternProperties()
     ) return true;
 
@@ -103,7 +103,7 @@ module.exports = ({ _, Nunjucks, Markdown, OpenAPISampler }) => {
   Nunjucks.addFilter('isArray', (arr) => {
     return Array.isArray(arr);
   });
-  
+
   Nunjucks.addFilter('isObject', (obj) => {
     return typeof obj === 'object' && obj !== null;
   });
@@ -145,5 +145,11 @@ module.exports = ({ _, Nunjucks, Markdown, OpenAPISampler }) => {
 
   Nunjucks.addFilter('generateExample', (schema) => {
     return JSON.stringify(OpenAPISampler.sample(schema) || '', null, 2);
+  });
+
+  Nunjucks.addFilter('nonParserExtensions', (schema) => {
+    if (!schema || !schema.extensions || typeof schema.extensions !== 'function') return new Map();
+    const extensions = Object.entries(schema.extensions());
+    return new Map(extensions.filter(e => !e[0].startsWith('x-parser-')).filter(Boolean));
   });
 };

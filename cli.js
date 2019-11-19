@@ -97,7 +97,7 @@ mkdirp(program.output, async err => {
         default:
           eventText = yellow(value.eventType);
         }
-        console.log(`\t${magenta(value.fileName ? path.resolve(value.path, value.fileName) : value.path)} was ${eventText}`);
+        console.log(`\t${magenta(value.path)} was ${eventText}`);
       }
       console.log('Generating files');
       try {

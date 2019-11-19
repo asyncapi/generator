@@ -46,6 +46,7 @@
     "openapi-sampler": "^1.0.0-beta.9"
   },
   "devDependencies": {
+    "chokidar": "^3.3.0",
     "jsdoc-to-markdown": "^5.0.0"
   }
 }

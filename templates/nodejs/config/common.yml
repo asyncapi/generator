@@ -40,7 +40,7 @@ default:
       brokers:
         - {{ asyncapi.server(params.server).url() | host }}
       consumerOptions:
-        groupId: 'replace-me'
+        groupId: {{ asyncapi.info().title() | camelCase }}
       topics:
       {%- for topic in asyncapi | channelNamesWithPublish %}
         - {{ topic | toKafkaTopic }}

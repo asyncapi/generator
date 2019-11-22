@@ -10,7 +10,7 @@ const config = require('../lib/config');
 {%- set protocol = asyncapi.server(params.server).protocol() %}
 const {{ protocol | capitalize }}Adapter = require('hermesjs-{{protocol}}');
 {%- for channelName, channel in asyncapi.channels() %}
-const {{ channelName | camelCase }} = require('./routes/{{ channelName | kebabCase }}.js');
+const {{ channelName | camelCase }} = require('./routes/{{ channelName | filenamify }}.js');
 {%- endfor %}
 
 app.addAdapter({{ protocol | capitalize }}Adapter, config.{% if protocol === 'ws' %}ws{% else %}broker.{{protocol}}{% endif %});

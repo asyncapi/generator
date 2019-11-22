@@ -1,4 +1,5 @@
 const { URL } = require('url');
+const filenamify = require('filenamify');
 
 module.exports = ({ Nunjucks, _ }) => {
   Nunjucks.addFilter('kebabCase', (string) => {
@@ -186,5 +187,9 @@ module.exports = ({ Nunjucks, _ }) => {
 
   Nunjucks.addFilter('toJS', (string) => {
     return toJS(string);
+  });
+
+  Nunjucks.addFilter('filenamify', (string, options) => {
+    return filenamify(string, options || { replacement: '-', maxLength: 255 });
   });
 };

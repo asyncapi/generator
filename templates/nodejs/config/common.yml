@@ -46,6 +46,7 @@ default:
         - {{ topic | toKafkaTopic }}
       {%- endfor %}
       topicSeparator: '__'
+      topicPrefix:
 {%- endif %}
 
 development:

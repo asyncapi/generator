@@ -1,6 +1,6 @@
 const Router = require('hermesjs/lib/router');
 const router = new Router();
-const {{ channelName | camelCase }}Handler = require('../handlers/{{ channelName | kebabCase }}');
+const {{ channelName | camelCase }}Handler = require('../handlers/{{ channelName | filenamify }}');
 module.exports = router;
 {% if channel.hasPublish() %}
   {%- if channel.publish().summary() %}

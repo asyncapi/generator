@@ -5,12 +5,17 @@ import org.springframework.integration.annotation.MessagingGateway;
 
 @MessagingGateway
 public interface PublisherService {
+  {%- for channelName, channel in asyncapi.channels() -%}
+  {%- if channel.hasPublish() -%}
 
-  {% for topicName, topic in asyncapi.topics %}
-  {% if topic.publish %}
+    {%- if channel.description() -%}
+    /**
+     * {{ channel.description() }}
+     */
+    {% endif %}
+    @Gateway(requestChannel = "{{channel.json()['x-service-name'] | camelCase | upperFirst}}OutboundChannel")
+    void publish{{channel.json()['x-service-name'] | camelCase | upperFirst}}(String data);
 
-    @Gateway(requestChannel = "{{topic.x-service-name | camelCase}}OutboundChannel")
-    void publish{{topic.x-service-name | capitalize}}(String data);
-  {% endif %}
+  {%- endif %}
   {% endfor %}
 }

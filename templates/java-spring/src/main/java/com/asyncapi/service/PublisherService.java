@@ -14,7 +14,7 @@ public interface PublisherService {
      */
     {%- endif %}
     @Gateway(requestChannel = "{{channel.publish().id()}}OutboundChannel")
-    void publish{{channel.publish().id() | upperFirst}}(String data);
+    void {{channel | publishMethodName}}(String data);
 
   {%- endif %}
   {% endfor %}

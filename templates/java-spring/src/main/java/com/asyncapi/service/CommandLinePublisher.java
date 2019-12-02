@@ -13,13 +13,12 @@ public class CommandLinePublisher implements CommandLineRunner {
     @Override
     public void run(String... args) {
         System.out.println("******* Sending message: *******");
+        {% for channelName, channel in asyncapi.channels() %}
+        {%- if channel.hasPublish() %}
+        publisherService.{{channel | publishMethodName}}("Hello World from {{channel.publish().id()}}");
+        {%- endif %}
+        {%- endfor %}
 
-        {% for topicName, topic in asyncapi.topics %}
-        {% if topic.publish %}
-        publisherService.publish{{topic.x-service-name | capitalize}}("Hello World from {{topic.x-service-name}}");
-
-        {% endif %}
-        {% endfor %}
         System.out.println("Message sent");
     }
 }

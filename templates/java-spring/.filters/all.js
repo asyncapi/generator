@@ -10,4 +10,8 @@ module.exports = ({ Nunjucks, _ }) => {
   Nunjucks.addFilter('schemeExists', (collection, scheme) => {
     return _.some(collection, {'scheme': scheme});
   });
+
+  Nunjucks.addFilter('publishMethodName', (channel) => {
+    return 'publish' + _.upperFirst(channel.publish().id())
+  })
 };

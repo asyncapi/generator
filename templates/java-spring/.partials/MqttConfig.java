@@ -38,8 +38,8 @@ public class Config {
 
     {%- for channelName, channel in asyncapi.channels() %}
     {% set channelId = channel.publish().id() if channel.hasPublish() else channel.subscribe().id() %}
-    @Value("${mqtt.topic.{{channelId | camelCase}}Topic}")
-    private String {{channelId | camelCase}}Topic;
+    @Value("${mqtt.channel.{{channelId | camelCase}}Channel}")
+    private String {{channelId | camelCase}}Channel;
     {%- endfor %}
 
     @Bean
@@ -72,8 +72,8 @@ public class Config {
 
     @Bean
     public MessageProducerSupport {{channel.subscribe().id() | camelCase}}Inbound() {
-        MqttPahoMessageDrivenChannelAdapter adapter = new MqttPahoMessageDrivenChannelAdapter("{{topic.x-service-name | camelCase}}Subscriber",
-                mqttClientFactory(), {{channel.subscribe().id()}}Topic);
+        MqttPahoMessageDrivenChannelAdapter adapter = new MqttPahoMessageDrivenChannelAdapter("{{channel.subscribe().id() | camelCase}}Subscriber",
+                mqttClientFactory(), {{channel.subscribe().id()}}Channel);
         adapter.setCompletionTimeout(5000);
         adapter.setConverter(new DefaultPahoMessageConverter());
         return adapter;
@@ -94,7 +94,7 @@ public class Config {
     public MessageHandler {{channel.publish().id() | camelCase}}Outbound() {
         MqttPahoMessageHandler pahoMessageHandler = new MqttPahoMessageHandler("{{channel.publish().id() | camelCase}}Publisher", mqttClientFactory());
         pahoMessageHandler.setAsync(true);
-        pahoMessageHandler.setDefaultTopic({{channel.publish().id() | camelCase}}Topic);
+        pahoMessageHandler.setDefaultTopic({{channel.publish().id() | camelCase}}Channel);
         return pahoMessageHandler;
     }
     {%- endif -%}

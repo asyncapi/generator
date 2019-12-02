@@ -1,5 +1,5 @@
-{% for server in asyncapi.servers %}
-  {% if server.scheme === 'amqp' %}
+{% set server = asyncapi.server(params.server) -%}
+  {% if server.protocol() === 'amqp' -%}
 amqp:
   broker:
     host: localhost
@@ -7,28 +7,23 @@ amqp:
     username: guest
     password: guest
   exchange:
-{% for topicName, topic in asyncapi.topics %}
-  {% if topic.publish %}
-    {{topic.x-service-name}}: {{topic}}
-  {% endif %}
-{% endfor %}
+{%- for channelName, channel in asyncapi | publishChannels %}
+    {{channel.publish().id()}}: {{channelName}}
+{%- endfor %}
   queue:
-{% for topicName, topic in asyncapi.topics %}
-  {% if topic.subscribe %}
-    {{topic.x-service-name}}: {{topic}}
-  {% endif %}
-{% endfor %}
-  {% endif %}
-  {% if server.scheme === 'mqtt' %}
+{%- for channelName, channel in asyncapi | subscribeChannels %}
+    {{channel.subscribe().id()}}: {{channelName}}
+{%- endfor %}
+  {%- endif -%}
+  {% if server.protocol() === 'mqtt' -%}
 mqtt:
   broker:
-    host: tcp://{{server.url}}
-    port: {{server.variables.port.default}}
+    host: tcp://{{server.url()}}
+    port: {{server.variable('port').defaultValue()}}
     username:
     password:
-  topic:
-{% for topicName, topic in asyncapi.topics %}
-    {{topic.x-service-name}}Topic: {{topic}}
-{% endfor %}
+  channel:
+{%- for channelName, channel in asyncapi.channels() %}
+    {{channel.publish().id() if channel.hasPublish() else channel.subscribe().id()}}Channel: {{channelName}}
+{%- endfor %}
   {% endif %}
-{% endfor %}

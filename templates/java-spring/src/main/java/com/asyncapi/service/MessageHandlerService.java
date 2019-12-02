@@ -5,15 +5,18 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class MessageHandlerService {
+  {%- for channelName, channel in asyncapi.channels() -%}
+  {%- if channel.hasSubscribe() -%}
 
-{% for topicName, topic in asyncapi.topics %}
-  {% if topic.subscribe %}
-    public void handle{{topic.x-service-name | upperFirst}}(Message<?> message) {
-        System.out.println("handler {{topic.x-service-name}}");
+    {%- if channel.description() %}
+    /**
+     * {{ channel.description() }}
+     */
+    {%- endif %}
+    public void handle{{channel.subscribe().id() | upperFirst}}(Message<?> message) {
+        System.out.println("handler {{channel.subscribe().id()}}");
         System.out.println(message.getPayload());
     }
-  {% endif %}
-
-{% endfor %}
-
+  {%- endif -%}
+  {% endfor %}
 }

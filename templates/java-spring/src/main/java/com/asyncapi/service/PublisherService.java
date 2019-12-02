@@ -8,13 +8,13 @@ public interface PublisherService {
   {%- for channelName, channel in asyncapi.channels() -%}
   {%- if channel.hasPublish() -%}
 
-    {%- if channel.description() -%}
+    {%- if channel.description() %}
     /**
      * {{ channel.description() }}
      */
-    {% endif %}
-    @Gateway(requestChannel = "{{channel.json()['x-service-name'] | camelCase | upperFirst}}OutboundChannel")
-    void publish{{channel.json()['x-service-name'] | camelCase | upperFirst}}(String data);
+    {%- endif %}
+    @Gateway(requestChannel = "{{channel.publish().id()}}OutboundChannel")
+    void publish{{channel.publish().id() | upperFirst}}(String data);
 
   {%- endif %}
   {% endfor %}

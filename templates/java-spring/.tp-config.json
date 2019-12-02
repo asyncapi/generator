@@ -1,4 +1,6 @@
 {
+  "supportedProtocols": ["amqp", "mqtt"],
+  "requiredParams": ["server"],
   "nonRenderableFiles": [
     "**/*.jar"
   ]

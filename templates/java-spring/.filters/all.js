@@ -12,6 +12,10 @@ module.exports = ({ Nunjucks, _ }) => {
   });
 
   Nunjucks.addFilter('publishMethodName', (channel) => {
-    return 'publish' + _.upperFirst(channel.publish().id())
-  })
+    return 'publish' + _.upperFirst(channel.publish().id());
+  });
+
+  Nunjucks.addFilter('handlerMethodName', (channel) => {
+    return 'handle' + _.upperFirst(channel.subscribe().id());
+  });
 };

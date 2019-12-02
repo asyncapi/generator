@@ -1,4 +1,4 @@
-{% macro mqttConfig(asyncapi) %}
+{% macro mqttConfig(asyncapi) -%}
 package com.asyncapi.infrastructure;
 
 import com.asyncapi.service.MessageHandlerService;
@@ -36,11 +36,11 @@ public class Config {
     @Value("${mqtt.broker.password}")
     private String password;
 
-    {% for topicName, topic in asyncapi.topics %}
-    @Value("${mqtt.topic.{{-topic.x-service-name-}}Topic}")
-    private String {{topic.x-service-name}}Topic;
-
-    {% endfor %}
+    {%- for channelName, channel in asyncapi.channels() %}
+    {% set channelId = channel.publish().id() if channel.hasPublish() else channel.subscribe().id() %}
+    @Value("${mqtt.topic.{{channelId | camelCase}}Topic}")
+    private String {{channelId | camelCase}}Topic;
+    {%- endfor %}
 
     @Bean
     public MqttPahoClientFactory mqttClientFactory() {
@@ -60,43 +60,44 @@ public class Config {
     // consumer
 
     @Autowired
-    MessageHandlerService messageHandlerService;
-    {% for topicName, topic in asyncapi.subscribeTopics %}
-
+    private MessageHandlerService messageHandlerService;
+    {% for channelName, channel in asyncapi.channels() %}
+    {%- if channel.hasSubscribe() %}
     @Bean
-    public IntegrationFlow {{topic.x-service-name | camelCase}}Flow() {
-        return IntegrationFlows.from({{topic.x-service-name | camelCase}}Inbound())
-                .handle(messageHandlerService::handle{{topic.x-service-name | upperFirst}})
+    public IntegrationFlow {{channel.subscribe().id() | camelCase}}Flow() {
+        return IntegrationFlows.from({{channel.subscribe().id() | camelCase}}Inbound())
+                .handle(messageHandlerService::{{channel | handlerMethodName}})
                 .get();
     }
 
     @Bean
-    public MessageProducerSupport {{topic.x-service-name | camelCase}}Inbound() {
+    public MessageProducerSupport {{channel.subscribe().id() | camelCase}}Inbound() {
         MqttPahoMessageDrivenChannelAdapter adapter = new MqttPahoMessageDrivenChannelAdapter("{{topic.x-service-name | camelCase}}Subscriber",
-                mqttClientFactory(), {{topic.x-service-name}}Topic);
+                mqttClientFactory(), {{channel.subscribe().id()}}Topic);
         adapter.setCompletionTimeout(5000);
         adapter.setConverter(new DefaultPahoMessageConverter());
         return adapter;
     }
-    {% endfor %}
+    {%- endif %}
+    {%- endfor %}
 
     // publisher
-    {% for topicName, topic in asyncapi.publishTopics %}
-
+    {%- for channelName, channel in asyncapi.channels() %}
+    {%- if channel.hasPublish() %}
     @Bean
-    public MessageChannel {{topic.x-service-name | camelCase}}OutboundChannel() {
+    public MessageChannel {{channel.publish().id() | camelCase}}OutboundChannel() {
         return new DirectChannel();
     }
 
     @Bean
-    @ServiceActivator(inputChannel = "{{topic.x-service-name | camelCase}}OutboundChannel")
-    public MessageHandler {{topic.x-service-name | camelCase}}Outbound() {
-        MqttPahoMessageHandler pahoMessageHandler = new MqttPahoMessageHandler("{{topic.x-service-name | camelCase}}Publisher", mqttClientFactory());
+    @ServiceActivator(inputChannel = "{{channel.publish().id() | camelCase}}OutboundChannel")
+    public MessageHandler {{channel.publish().id() | camelCase}}Outbound() {
+        MqttPahoMessageHandler pahoMessageHandler = new MqttPahoMessageHandler("{{channel.publish().id() | camelCase}}Publisher", mqttClientFactory());
         pahoMessageHandler.setAsync(true);
-        pahoMessageHandler.setDefaultTopic({{topic.x-service-name}}Topic);
+        pahoMessageHandler.setDefaultTopic({{channel.publish().id() | camelCase}}Topic);
         return pahoMessageHandler;
     }
+    {%- endif -%}
     {% endfor %}
-
 }
-{% endmacro %}
+{%- endmacro %}

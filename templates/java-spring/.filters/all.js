@@ -7,8 +7,8 @@ module.exports = ({ Nunjucks, _ }) => {
     return _.upperFirst(str);
   });
 
-  Nunjucks.addFilter('schemeExists', (collection, scheme) => {
-    return _.some(collection, {'scheme': scheme});
+  Nunjucks.addFilter('protocolExists', (collection, protocol) => {
+    return _.some(collection, (server) => { return server.protocol() === protocol; });
   });
 
   Nunjucks.addFilter('publishMethodName', (channel) => {

@@ -24,6 +24,9 @@ import org.springframework.util.StringUtils;
 @Configuration
 public class Config {
 
+    @Value("${mqtt.broker.scheme}")
+    private String scheme;
+
     @Value("${mqtt.broker.host}")
     private String host;
 
@@ -46,7 +49,7 @@ public class Config {
     public MqttPahoClientFactory mqttClientFactory() {
         DefaultMqttPahoClientFactory factory = new DefaultMqttPahoClientFactory();
         MqttConnectOptions options = new MqttConnectOptions();
-        options.setServerURIs(new String[] { host + ":" + port });
+        options.setServerURIs(new String[] { scheme + "://" + host + ":" + port });
         if (!StringUtils.isEmpty(username)) {
             options.setUserName(username);
         }

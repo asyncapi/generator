@@ -1,6 +1,7 @@
 {% set server = asyncapi.server(params.server) -%}
   {% if server.protocol() === 'amqp' -%}
 amqp:
+  # {{server.description()}}
   broker:
     host: localhost
     port: 5672
@@ -17,8 +18,10 @@ amqp:
   {%- endif -%}
   {% if server.protocol() === 'mqtt' -%}
 mqtt:
+  # {{server.description()}}
   broker:
-    host: tcp://{{server.url()}}
+    scheme: tcp
+    host: {{server.url()}}
     port: {{server.variable('port').defaultValue()}}
     username:
     password:

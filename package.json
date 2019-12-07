@@ -9,7 +9,7 @@
   },
   "scripts": {
     "docs": "jsdoc2md lib/generator.js > API.md",
-    "test": "mocha ./test/integration/templates/html"
+    "test": "mocha --recursive ./test/**/*.spec.js"
   },
   "preferGlobal": true,
   "bugs": {

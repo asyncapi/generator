@@ -9,7 +9,7 @@
   },
   "scripts": {
     "docs": "jsdoc2md lib/generator.js > API.md",
-    "test": ""
+    "test": "mocha ./test/integration/templates/html"
   },
   "preferGlobal": true,
   "bugs": {
@@ -46,10 +46,11 @@
     "openapi-sampler": "^1.0.0-beta.9"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
     "chokidar": "^3.3.0",
+    "dir-compare": "^1.8.0",
     "jsdoc-to-markdown": "^5.0.0",
     "mocha": "6.2.2",
-    "nyc": "14.1.1",
-    "dir-compare": "^1.8.0"
+    "nyc": "14.1.1"
   }
 }

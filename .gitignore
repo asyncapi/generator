@@ -16,6 +16,3 @@ out/
 
 
 test/integration/templates/actual
-test/templates/*
-!test/templates/scripts
-!test/templates/scripts/*

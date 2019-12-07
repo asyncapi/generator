@@ -1,6 +1,7 @@
 #/bin/bash
 BASH_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 CURRENT_DIR=$(pwd)
+JAVA_SPRING_TEMPLATE_DIR="./test/templates/java-spring"
 cd "$BASH_DIR/../../../../"
 echo -e "\e[93mGenerating java-spring templates\x1b[0m"
 
@@ -15,9 +16,14 @@ generatejava-spring(){
   fi
 }
 
-#Regular
-generatejava-spring --output "./test/templates/java-spring/no-params"
-cd "$CURRENT_DIR"
+# Remove existing folders to have a clean slade
+rm -r ${JAVA_SPRING_TEMPLATE_DIR}
 
+#Regular
+generatejava-spring --output "${JAVA_SPRING_TEMPLATE_DIR}/no-params"
+
+
+
+cd "$CURRENT_DIR"
 echo -e "\e[92mDone generating java-spring templates"
 

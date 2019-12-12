@@ -1,5 +1,6 @@
 node_modules
 npm-debug.log
 out
-
+coverage
 test
+.nyc_output

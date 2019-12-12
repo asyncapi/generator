@@ -1,3 +1,5 @@
 test/
 .DS_Store
 *.swp
+coverage
+.nyc_output

@@ -13,6 +13,6 @@ output
 *.ids
 *.orig
 out/
-
-
+.nyc_output
+coverage
 test/integration/templates/actual

@@ -1,14 +1,19 @@
-const generateHtml = require('./utils/generateHtml');
-const generateJavaSpring = require('./utils/generateJavaSpring');
-const pathToExpectedTemplates = './test/integration/templates/expected/html';
+const generateHtml = require('./templates/generateHtml');
+const generateJavaSpring = require('./templates/generateJavaSpring');
+const CONSTANTS = require('../CONSTANTS');
+const pathToExpectedTemplates = CONSTANTS.DEFAULT_PATH_TO_EXTPECTED_TEMPLATES;
+const {handlePromiseGracefully} = require('../../../utils/utils');
 async function generate() {
   try {
-    await generateHtml(pathToExpectedTemplates);
-    await generateJavaSpring(pathToExpectedTemplates);
+    await generateHtml(`${pathToExpectedTemplates}/html`);
+    await generateJavaSpring(`${pathToExpectedTemplates}/java-spring`);
     // ... more templates to generate
-    console.log('Done generating html templates');
+    console.log('Done generating templates');
   } catch (e) {
     console.log(e);
   }
 }
-generate();
+module.exports = async () => await handlePromiseGracefully(generate());
+module.exports.generateHtml = async () => await handlePromiseGracefully(generateHtml(pathToExpectedTemplates));
+module.exports.generateJavaSpring = async () => await handlePromiseGracefully(generateJavaSpring(pathToExpectedTemplates));
+

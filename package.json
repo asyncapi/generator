@@ -9,7 +9,8 @@
   },
   "scripts": {
     "docs": "jsdoc2md lib/generator.js > API.md",
-    "test": "mocha --recursive ./test/**/*.spec.js"
+    "test": "mocha --recursive ./test/**/*.spec.js",
+    "generateTestTemplates": "node -e 'require(\"./test/integration/templates/generation\\ scripts/generate.js\")()'"
   },
   "preferGlobal": true,
   "bugs": {

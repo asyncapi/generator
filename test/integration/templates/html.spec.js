@@ -1,8 +1,9 @@
 const dircompare = require('dir-compare');
 const options = { compareSize: true };
-const pathToExpectedTemplates = './test/integration/templates/expected/html';
-const pathToactualTemplates = './test/integration/templates/actual/html';
-const generateHtml = require('./generation scripts/utils/generateHtml');
+const constants = require('./CONSTANTS');
+const pathToExpectedTemplates = `${constants.DEFAULT_PATH_TO_EXTPECTED_TEMPLATES}/html`;
+const pathToactualTemplates = `${constants.DEFAULT_PATH_TO_ACTUAL_TEMPLATES}/html`;
+const generateHtml = require('./generation scripts/templates/generateHtml');
 const expect = require('chai').expect;
 const { describe, before, it } = require('mocha');
 const { deleteFolderRecursive } = require('../../utils/utils');

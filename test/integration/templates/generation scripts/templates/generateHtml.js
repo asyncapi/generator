@@ -1,5 +1,5 @@
 
-const { generateTemplate } = require('./utils');
+const { generateTemplate } = require('../../../../utils/utils');
 const asyncFile = './test/docs/streetlights.yml';
 
 function generate(pathToTemplates) {

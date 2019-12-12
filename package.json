@@ -9,7 +9,7 @@
   },
   "scripts": {
     "docs": "jsdoc2md lib/generator.js > API.md",
-    "test": "mocha --recursive ./test/**/*.spec.js",
+    "test": "node ./node_modules/nyc/bin/nyc --reporter=html --exclude=templates --exclude=coverage --exclude=test ./node_modules/mocha/bin/mocha --recursive ./test/**/*.spec.js",
     "generateTestTemplates": "node -e 'require(\"./test/integration/templates/generation\\ scripts/generate.js\")()'"
   },
   "preferGlobal": true,
@@ -52,6 +52,8 @@
     "dir-compare": "^1.8.0",
     "jsdoc-to-markdown": "^5.0.0",
     "mocha": "6.2.2",
-    "nyc": "14.1.1"
+    "nyc": "14.1.1",
+    "sinon": "^7.5.0",
+    "sinon-chai": "^3.3.0"
   }
 }

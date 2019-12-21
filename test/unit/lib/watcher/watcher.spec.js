@@ -11,6 +11,11 @@ describe('Watcher class', () => {
   before(() => {
   });
 
+  it('should not be able to create empty path watcher', () => {
+  });
+  it('should be create watcher if path and not array are supplied', () => {
+  });
+
   describe('fileChanged function', () => {
 
   });

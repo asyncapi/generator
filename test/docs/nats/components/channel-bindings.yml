@@ -1,0 +1,23 @@
+smartylightingMeasurement:
+  nats:
+    is: pubsub
+    queue:
+      name: smartylightingMeasurement
+smartylightingTurnOn:
+  nats:
+    is: requestReply
+    queue:
+      name: smartylightingTurnOn
+smartylightingTurnOff:
+  nats:
+    is: requestReply
+    queue:
+      name: smartylightingTurnOff
+smartylightingDim:
+  nats:
+    is: requestReply
+    queue:
+      name: smartylightingDim
+
+
+

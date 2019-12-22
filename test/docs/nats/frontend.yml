@@ -1,0 +1,112 @@
+asyncapi: '2.0.0'
+info:
+  title: Streetlights Nats API for the frontend
+  version: '1.0.0'
+  description: |
+    The Smartylighting Streetlights API allows you to remotely manage the city lights.
+
+    This is for the frontend where the lights can be controlled, which assumed are multiple instances to ensure availability.
+
+    ### Check out its awesome features:
+
+    * Turn a specific streetlight on/off 🌃
+    * Dim a specific streetlight 😎
+    * Receive real-time information about environmental lighting conditions 📈
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+
+servers:
+  production:
+    url: test.nats.org:{port}
+    protocol: nats
+    description: Test broker
+    variables:
+      port:
+        default: '4444'
+    security:
+      - apiKey: []
+    bindings:
+      nats:
+        payload: binary
+
+defaultContentType: application/json
+
+channels:
+  smartylighting.streetlights.1.0.event.*:
+    description: Topic for which one can subscribe to all measurements regardless of id.
+    subscribe:
+      operationId: receiveAllLightMeasurements
+      message:
+        $ref: './components/messages.yml#/lightMeasured'
+    bindings:
+      $ref: './components/channel-bindings.yml#/smartylightingMeasurement'
+  smartylighting.streetlights.1.0.event.{streetlightId}.lighting.measured:
+    description: Topic for which one can subscribe to measurements on a specific streetlightId.
+    parameters:
+      streetlightId:
+        $ref: './components/parameters.yml#/streetlightId'
+    subscribe:
+      operationId: receiveLightMeasurements
+      message:
+        $ref: './components/messages.yml#/lightMeasured'
+    bindings:
+      $ref: './components/channel-bindings.yml#/smartylightingMeasurement'
+
+  smartylighting.streetlights.1.0.action.{streetlightId}.turn.on:
+    parameters:
+      streetlightId:
+        $ref: './components/parameters.yml#/streetlightId'
+    publish:
+      operationId: turnOn
+      description: The turn on request send to the light controller.
+      message:
+        $ref: './components/messages.yml#/turnOnOff'
+    subscribe:
+      operationId: turnOnResponse
+      description: The response returned by the light controller.
+      message:
+        $ref: './components/messages.yml#/turnOnOffResponse'
+    bindings:
+      $ref: './components/channel-bindings.yml#/smartylightingTurnOn'
+
+  smartylighting.streetlights.1.0.action.{streetlightId}.turn.off:
+    parameters:
+      streetlightId:
+        $ref: './components/parameters.yml#/streetlightId'
+    subscribe:
+      operationId: turnOffResponse
+      description: The response returned by the light controller.
+      message:
+        $ref: './components/messages.yml#/turnOnOffResponse'
+    publish:
+      operationId: turnOff
+      description: The turn off request send to the light controller.
+      message:
+        $ref: './components/messages.yml#/turnOnOff'
+    bindings:
+      $ref: './components/channel-bindings.yml#/smartylightingTurnOff'
+
+  smartylighting.streetlights.1.0.action.{streetlightId}.dim:
+    parameters:
+      streetlightId:
+        $ref: './components/parameters.yml#/streetlightId'
+    subscribe:
+      operationId: dimLightResponse
+      description: The response returned by the light controller.
+      message:
+        $ref: './components/messages.yml#/dimLightResponse'
+    publish:
+      operationId: dimLight
+      description: The dim light request send to the light controller.
+      message:
+        $ref: './components/messages.yml#/dimLight'
+    bindings:
+      $ref: './components/channel-bindings.yml#/smartylightingDim'
+
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: user
+      description: Provide your API key as the user and leave the password empty.

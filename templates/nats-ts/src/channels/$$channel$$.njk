@@ -1,8 +1,8 @@
 
-{%- from "../../.partials/channel/publish.ts.njk" import publish %}
-{%- from "../../.partials/channel/reply.ts.njk" import reply %}
-{%- from "../../.partials/channel/request.ts.njk" import request %}
-{%- from "../../.partials/channel/subscribe.ts.njk" import subscribe %}
+{%- from "../../.partials/channel/publish.njk" import publish %}
+{%- from "../../.partials/channel/reply.njk" import reply %}
+{%- from "../../.partials/channel/request.njk" import request %}
+{%- from "../../.partials/channel/subscribe.njk" import subscribe %}
 {%- if channel.hasPublish() %}
 import {{ channel.publish().message(0).uid() | camelCase }} from '../message/{{ channel.publish().message(0).uid() | kebabCase}}'
 {%- endif %}

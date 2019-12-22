@@ -50,7 +50,13 @@ export default class NatsAsyncApiClient {
   }
 
   {%- for channelName, channel in asyncapi.channels() %}
-    {{channel | isRequester}}
+  /**
+   *  Wrapper for
+   * @param requestMessage The message to publish.
+   */
+  public {{channelName}}(requestMessage: TestRequest): Promise<void> {
+    return TestPub.publish(requestMessage, this.nc);
+  }
   {%- endfor %}
 
   /**

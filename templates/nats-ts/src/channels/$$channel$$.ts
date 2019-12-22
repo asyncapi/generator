@@ -4,10 +4,10 @@
 {%- from "../../.partials/channel/request.ts.njk" import request %}
 {%- from "../../.partials/channel/subscribe.ts.njk" import subscribe %}
 {%- if channel.hasPublish() %}
-import {{ channel.publish().message(0).name() | camelCase }} from '../message/{{ channel.publish().message(0).name() | kebabCase}}'
+import {{ channel.publish().message(0).uid() | camelCase }} from '../message/{{ channel.publish().message(0).uid() | kebabCase}}'
 {%- endif %}
 {%- if channel.hasSubscribe() %}
-import {{ channel.subscribe().message(0).name() | camelCase }} from '../message/{{ channel.subscribe().message(0).name() | kebabCase}}'
+import {{ channel.subscribe().message(0).uid() | camelCase }} from '../message/{{ channel.subscribe().message(0).uid() | kebabCase}}'
 {%- endif %}
 
 import { Client, NatsError, Subscription, SubscriptionOptions, Payload } from 'ts-nats';

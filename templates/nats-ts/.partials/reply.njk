@@ -1,0 +1,60 @@
+
+{% macro reply(channel, channelName, server) %}
+export function reply(onRequest: (err?: NatsError, msg?: {{channel.subscribe().message(0).name() | camelCase}}) => {{channel.publish().message(0).name() | camelCase}}, onReplyError: (err: NatsError) => void, nc?: Client): Promise<Subscription> {
+  return new Promise(async (resolve, reject) => {
+    if (nc) {
+      try {
+
+        let subscribeOptions: SubscriptionOptions = {};
+        {%- if channel.subscribe().message(0) | hasNatsBindings %}
+        {%- if channel.subscribe().message(0).bindings().nats().queue() | length %}
+        //If queue
+        subscribeOptions.queue = '{{channel.subscribe().message(0).bindings().nats().queue().name()}}';
+        {%- endif %}
+        {%- if channel.subscribe().message(0).bindings().nats().unsubAfter() | length %}
+        //If unsubafter
+        subscribeOptions.max = {{channel.subscribe().message(0).bindings().nats().unsubAfter()}};
+        {%- endif %}
+        {%- endif %}
+
+        let subscription = nc.subscribe('{{channelName}}', (err, msg) => {
+          if (err) {
+            onRequest(err);
+          } else {
+            let processedData = utils.processRecievedData(msg.data, Payload.{{server | tsPayload}}, '{{server | tsEncoding}}');
+            let requestData = new {{channel.subscribe().message(0).name() | camelCase}}();
+            requestData.copyFrom(processedData);
+
+            let responseObject = onRequest(undefined, requestData);
+            if (msg.reply) {
+              try {
+                let requestData = utils.beforeResponse(responseObject, Payload.{{server | tsPayload}}, '{{server | tsEncoding}}');
+                nc.publish(msg.reply, requestData);
+              } catch (e) {
+                if (onReplyError) {
+                  onReplyError(e)
+                } else {
+                  console.error(e)
+                }
+              }
+            } else {
+              let error = new NatsError('Expected request to need a reply, did not..', '000');
+              if (onReplyError) {
+                onReplyError(error)
+              } else {
+                console.error(error)
+              }
+            }
+          }
+        }, subscribeOptions);
+        resolve(subscription);
+      } catch (e) {
+        reject(e);
+      }
+    } else {
+      reject(new Error("Nats client is not connected"));
+    }
+  })
+}
+
+{% endmacro %}

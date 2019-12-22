@@ -1,5 +1,5 @@
 
-const { describe, before, it } = require('mocha');
+const { describe, before, it , afterEach} = require('mocha');
 const chai = require('chai');
 const sinonChai = require('sinon-chai');
 const sinon = require('sinon');
@@ -7,11 +7,13 @@ chai.use(sinonChai);
 const expect = chai.expect;
 const Watcher = require('../../../../lib/watcher');
 const fs = require('fs');
+const nodePath = require('path');
 describe('Watcher class', () => {
   before(() => {
   });
 
   it('should not be able to create empty path watcher', () => {
+
   });
   it('should be create watcher if path and not array are supplied', () => {
   });
@@ -36,6 +38,7 @@ describe('Watcher class', () => {
   });
   describe('watch function', () => {
     it('should not keep notifying when no data was change in the file.', () => {
+
     });
     it('should handle the deletion of a watched file path correctly, when more paths can be watched', () => {
     });
@@ -46,11 +49,83 @@ describe('Watcher class', () => {
     it('should handle the deletion of a watched directory path correctly, when more paths can be watched', () => {
     });
     describe('should be able to watch a single file path', () => {
+      let watcher;
+      const filePath = 'testfile.temp';
+      before(() => {
+        const stream = fs.createWriteStream(filePath, { flags: 'a' });
+        stream.write('Text');
+        stream.end();
+        watcher = new Watcher(filePath);
+      });
+      afterEach(() => {
+        watcher.closeWatchers();
+        try{
+          fs.unlinkSync(filePath);
+        }catch(e){}
+      });
       it('and give correct notice when the watched file are changed', () => {
+        let expectedChangeObj;
+        return new Promise((resolve, reject) => {
+          watcher.watch((filechanges) => {
+            try {
+              expect(filechanges).to.not.be.null;
+              expect(filechanges[filePath]).to.deep.equal(expectedChangeObj);
+              resolve();
+            } catch (e) {
+              reject(e);
+            }
+          }, () => {
+            reject('Should not have failed.');
+          });
+          expectedChangeObj = createFile(filePath);
+        });
       });
       it('and give correct notice when the watched file are renamed', () => {
+        let expectedChangeObj;
+        const newPath = './testfile2.temp';
+        createFile(filePath);
+        return new Promise((resolve, reject) => {
+          watcher.watch((filechanges) => {
+            try {
+              expect(filechanges).to.not.be.null;
+              expect(filechanges[filePath]).to.deep.equal(expectedChangeObj);
+              resolve();
+            } catch (e) {
+              reject(e);
+            }
+          }, () => {
+            reject('Should not have failed.');
+          });
+          expectedChangeObj = renamePath(filePath, newPath);
+        });
       });
     });
+
+    function updateFile(path) {
+      const stream = fs.createWriteStream(nodePath.resolve(path), { flags: 'a' });
+      stream.write('append');
+      stream.end();
+    }
+    function createFile(path) {
+      const stream = fs.createWriteStream(nodePath.resolve(path));
+      stream.write('created', (error) => {
+        if (error) {
+          console.error(`Something went wrong when creating file with path: ${path}, error was ${error}`);
+        }
+      });
+      stream.end();
+      return {
+        eventType: 'changed',
+        path
+      };
+    }
+    function renamePath(oldPath, newPath) {
+      fs.renameSync(nodePath.resolve(oldPath), nodePath.resolve(newPath));
+      return {
+        eventType: 'changed',
+        path: newPath
+      };
+    }
     describe('should be able to watch multiple file paths', () => {
       it('and give correct notice when 1 watched file are changed', () => {
       });

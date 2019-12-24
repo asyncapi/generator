@@ -1,7 +1,7 @@
 
 {% macro publish(channel, channelName, server) %}
 
-export function publish(requestMessage: {{channel.publish().message(0).name() | camelCase}}, nc?: Client): Promise<void> {
+export function publish(requestMessage: {{channel.publish().message(0).uid() | camelCase}}, nc?: Client): Promise<void> {
   return new Promise(async (resolve, reject) => {
     if (nc) {
       try{

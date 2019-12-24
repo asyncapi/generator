@@ -1,6 +1,6 @@
 
 {% macro reply(channel, channelName, server) %}
-export function reply(onRequest: (err?: NatsError, msg?: {{channel.subscribe().message(0).name() | camelCase}}) => {{channel.publish().message(0).name() | camelCase}}, onReplyError: (err: NatsError) => void, nc?: Client): Promise<Subscription> {
+export function reply(onRequest: (err?: NatsError, msg?: {{channel.subscribe().message(0).uid() | camelCase}}) => {{channel.publish().message(0).uid() | camelCase}}, onReplyError: (err: NatsError) => void, nc?: Client): Promise<Subscription> {
   return new Promise(async (resolve, reject) => {
     if (nc) {
       try {

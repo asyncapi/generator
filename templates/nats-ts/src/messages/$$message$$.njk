@@ -1,5 +1,5 @@
 
-export default class {{ message.name() }} {
+export default class {{ message.uid() }} {
     {%- for propertyName, property in message.payload().properties() %}
     public {{ propertyName }}?:{{ property.type() }};
     {%- endfor %}

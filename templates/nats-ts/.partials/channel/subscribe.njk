@@ -1,6 +1,6 @@
 
 {% macro subscribe(channel, channelName, server) %}
-export function subscribe(onDataCallback : (err?: NatsError, msg?: {{channel.subscribe().message(0).name() | camelCase}}) => void, nc?: Client): Promise<Subscription> {
+export function subscribe(onDataCallback : (err?: NatsError, msg?: {{channel.subscribe().message(0).uid() | camelCase}}) => void, nc?: Client): Promise<Subscription> {
   return new Promise(async (resolve, reject) => {
     if (nc) {
       try{

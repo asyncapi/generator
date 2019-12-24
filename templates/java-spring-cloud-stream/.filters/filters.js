@@ -27,7 +27,7 @@ module.exports = ({ Nunjucks, _ }) => {
         return ret
     })
 
-    Nunjucks.addFilter('bindingName', ([channelName, channel]) => {
+    Nunjucks.addFilter('bindingClassName', ([channelName, channel]) => {
         let className = channel.json()['x-java-class']
         if (!className) {
             throw new Error("Please set the x-java-class property on the channel " + channelName);

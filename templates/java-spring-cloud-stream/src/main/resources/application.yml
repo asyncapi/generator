@@ -1,0 +1,9 @@
+spring:
+  cloud:
+    stream:
+      bindings:
+{% for channel in asyncapi._json.channels %}
+{{ channel | dump }}
+{% endfor %}
+{{ asyncapi._json.channels | dump }}
+

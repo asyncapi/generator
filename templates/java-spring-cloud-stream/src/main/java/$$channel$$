@@ -1,0 +1,16 @@
+channel
+{%- set topicInfo = [channelName, channel] | topicInfo %}
+{%- set queueInfo = [channelName, channel, topicInfo.subscribeTopic] | queueInfo %}
+{%- set className = channel.json()['x-java-class'] -%}
+{%- set bindingName = [channelName, channel] | bindingName -%}
+{%- set messageClass = [channelName, channel] | messageClass -%}
+{%- set payloadClass = [channelName, channel] | payloadClass -%}
+{%- set contentType = channel | contentType -%}
+{%- include '.partials/java-package' -%}
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.stream.annotation;
+
+@EnableBinding({{className}}.{{bindingName.class}})
+
+public class {{className }} {
+}

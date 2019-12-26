@@ -13,6 +13,27 @@ module.exports = ({ Nunjucks, _ }) => {
   Nunjucks.addFilter('firstLowerCase', string => {
     return _.lowerFirst(string);
   });
+  function getTypeFromOneOf(oneFromSchema){
+    let type = '';
+
+    if(oneFromSchema.oneOf().length > 0){
+      type += getTypeFromOneOf(oneFromSchema.oneOf());
+    }
+
+    for(var i = 0; i < oneOfSchema.length; i++){
+      let schema = oneOfSchema[i];
+      if(type !== ''){
+        type += '|';
+      }
+      if(oneOfSchema.length == i+1){
+        type += schema.uid()
+      }else{
+        type += schema.uid() + '|'
+      }
+    }
+    return type;
+  }
+  Nunjucks.addFilter('oneOfSchemaType', getTypeFromOneOf);
 
   Nunjucks.addFilter('fileName', string => {
     return _.camelCase(string);

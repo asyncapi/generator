@@ -89,6 +89,14 @@
             {% endfor %}
           </div>
         {% endif %}
+        {% if prop.examples() %}
+          <div class="text-xs">
+            Examples:
+            {% for value in prop.examples() %}
+              <span class="border text-orange rounded ml-1 py-0 px-2">{{value | dump(2) | safe }}</span>
+            {% endfor %}
+          </div>
+        {% endif %}
       </div>
     </div>
 

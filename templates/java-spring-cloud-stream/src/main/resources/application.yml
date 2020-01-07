@@ -2,8 +2,48 @@ spring:
   cloud:
     stream:
       bindings:
-{% for channel in asyncapi._json.channels %}
-{{ channel | dump }}
-{% endfor %}
-{{ asyncapi._json.channels | dump }}
-
+{%- for channelName in asyncapi.channelNames() -%}
+{%- set channel = asyncapi.channel(channelName) -%}
+{%- set bindingClassName = [channelName, channel] | bindingClassName -%}
+{%- set bindingName = bindingClassName | lowerFirst -%}
+{%- if channel.hasSubscribe() -%}
+{%- set destination = [channelName, channel] | subscribeDestination %}
+{%- set group = channel.json()['x-scs-consumer-group'] %}
+        {{bindingName}}Input:
+          destination: {{destination}}
+          binder: solace
+{%- if group %}
+          group: {{group}}
+{%- endif %}
+{%- endif %}
+{%- if channel.hasPublish() %}
+        {{bindingName}}Output:
+          destination: {{channelName}}
+          binder: solace
+{%- endif %}
+{%- endfor %}
+      binders:
+        solace:
+          environment:
+            solace:
+              java:
+                host:
+                msgVpn:
+                clientUsername:
+                clientPassword:
+      solace:
+        bindings:
+{%- for channelName in asyncapi.channelNames() -%}
+{%- set channel = asyncapi.channel(channelName) -%}
+{%- set bindingClassName = [channelName, channel] | bindingClassName -%}
+{%- set bindingName = bindingClassName | lowerFirst -%}
+{%- if channel.hasSubscribe() -%}
+{%- set queue = channel.json()['x-scs-queue'] %}
+{%- if queue %}
+          {{bindingName}}Input:
+            consumer:
+              queueAdditionalSubscriptions:
+                {{channelName}}
+{%- endif %}
+{%- endif %}
+{%- endfor %}

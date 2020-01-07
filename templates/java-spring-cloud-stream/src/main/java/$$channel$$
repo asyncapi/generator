@@ -12,7 +12,7 @@
 import org.springframework.beans.factory.annotation.Autowired;
 {% endif %}
 import org.springframework.cloud.stream.annotation.EnableBinding;
-{%- if channel.hasSubscribe() -%}
+{% if channel.hasSubscribe() -%}
 import org.springframework.cloud.stream.annotation.Input;
 {% endif -%}
 {%- if channel.hasPublish() %}
@@ -21,6 +21,7 @@ import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
 {% endif -%}
 {%- if channel.hasSubscribe() -%}
+import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.messaging.SubscribableChannel;;
 {% endif -%}
 {%- if channel.hasPublish() -%}
@@ -35,7 +36,7 @@ import java.util.function.Consumer;
 public class {{className }} {
 
 {% if channel.hasSubscribe() %}
-    Consumer<SensorReading> callback;
+    Consumer<{{payloadClass}}> callback;
 {% endif %}
 
 {% if channel.hasPublish() %}
@@ -61,7 +62,7 @@ public class {{className }} {
         Message<{{payloadClass}}> message = MessageBuilder
             .withPayload({{lowerPayloadName}})
             .build();
-        {{bindingName}}.output.send(message);
+        {{bindingName}}.output().send(message);
     }
 {% endif %}
 

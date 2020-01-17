@@ -42,6 +42,17 @@ module.exports = register => {
       console.log("Renaming " + newName + " to " + className)
       fs.renameSync(path.resolve(sourcePath, newName), path.resolve(sourcePath, className + ".java"))
     }
+
+    // Rename the pom file if necessary
+    let artifactType = generator.templateParams['artifact-type']
+
+    if (!artifactType || artifactType === "library") {
+      fs.renameSync(path.resolve(generator.targetDir, "pom.lib"), path.resolve(generator.targetDir, "pom.xml"))
+      fs.unlinkSync(path.resolve(generator.targetDir, "pom.app"))
+    } else {
+      fs.renameSync(path.resolve(generator.targetDir, "pom.app"), path.resolve(generator.targetDir, "pom.xml"))
+      fs.unlinkSync(path.resolve(generator.targetDir, "pom.lib"))
+    }
   })
 }
 

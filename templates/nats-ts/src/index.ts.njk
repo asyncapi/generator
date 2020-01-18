@@ -5,7 +5,7 @@ import { Client, NatsConnectionOptions, connect, Payload, NatsError, Subscriptio
 import * as {{ channelName | camelCase }}Channel from "./channels/{{ channelName | camelCase }}";
 {%- endfor %}
 
-{%- for messageName, message in asyncapi.components().messages() %}
+{%- for messageName, message in asyncapi.allMessages() %}
 import * as {{ messageName | camelCase }}Message from "./messages/{{ messageName | camelCase }}";
 {%- endfor %}
 

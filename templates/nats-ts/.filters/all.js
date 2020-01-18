@@ -13,21 +13,85 @@ module.exports = ({ Nunjucks, _ }) => {
   Nunjucks.addFilter('firstLowerCase', string => {
     return _.lowerFirst(string);
   });
-  function getTypeFromOneOf(oneFromSchema){
+
+  Nunjucks.addFilter('toTsType', jsonType => {
+    switch (jsonType.toLowerCase()) {
+      case 'string':
+        return 'String';
+      case 'integer':
+      case 'number':
+        return 'Number';
+      case 'boolean':
+        return 'Boolean';
+    }
+  });
+
+  Nunjucks.addFilter('constructurParameters', schema => {
+    let returnString = '';
+    console.log(schema);
+    if (schema.allOf()) {
+      console.log('all of');
+      schema.allOf().forEach(element => {
+        returnString += `${element.uid()},`;
+      });
+    }
+
+    if (schema.oneOf()) {
+      console.log('one of');
+      schema.oneOf().forEach(element => {
+        returnString += `${element.uid()},`;
+      });
+    }
+
+    if (schema.anyOf()) {
+      console.log('any of');
+      schema.anyOf().forEach(element => {
+        returnString += `${element.uid()},`;
+      });
+    }
+
+    if (schema.uid()) {
+      console.log('uid');
+      returnString += `${schema.uid()},`;
+    }
+    if (returnString.length > 1) {
+      returnString = returnString.slice(0, -1);
+    }
+    console.log(returnString);
+    return returnString;
+  });
+
+  Nunjucks.addFilter('schemaConstructor', properties => {
+    let returnString = '';
+    for (const [key, value] of Object.entries(properties)) {
+      returnString += `${key},`;
+    }
+    if (returnString.length > 1) {
+      returnString = returnString.slice(0, -1);
+    }
+    return returnString;
+  });
+
+  Nunjucks.addFilter('oneLine', string => {
+    if (!string) return string;
+    return string.replace(/\n/g, ' ');
+  });
+
+  function getTypeFromOneOf(oneFromSchema) {
     let type = '';
 
-    if(oneFromSchema.oneOf().length > 0){
+    if (oneFromSchema.oneOf().length > 0) {
       type += getTypeFromOneOf(oneFromSchema.oneOf());
     }
 
-    for(var i = 0; i < oneOfSchema.length; i++){
+    for (var i = 0; i < oneOfSchema.length; i++) {
       let schema = oneOfSchema[i];
-      if(type !== ''){
+      if (type !== '') {
         type += '|';
       }
-      if(oneOfSchema.length == i+1){
+      if (oneOfSchema.length == i + 1) {
         type += schema.uid()
-      }else{
+      } else {
         type += schema.uid() + '|'
       }
     }
@@ -39,11 +103,6 @@ module.exports = ({ Nunjucks, _ }) => {
     return _.camelCase(string);
   });
 
-  Nunjucks.addFilter('oneLine', string => {
-    if (!string) return string;
-    return string.replace(/\n/g, ' ');
-  });
-
   Nunjucks.addFilter('containsTag', (array, tag) => {
     if (!array || !tag) {
       return false;
@@ -53,96 +112,14 @@ module.exports = ({ Nunjucks, _ }) => {
     });
   });
 
-  Nunjucks.addFilter('docline', (field, fieldName, scopePropName) => {
-    const buildLine = (f, fName, pName) => {
-      const type = f.type() ? f.type() : 'string';
-      const description = f.description()
-        ? ` - ${f.description().replace(/\r?\n|\r/g, '')}`
-        : '';
-      let def = f.default();
 
-      if (def && type === 'string') def = `'${def}'`;
-
-      let line;
-      if (def !== undefined) {
-        line = ` * @param {${type}} [${
-          pName ? `${pName}.` : ''
-          }${fName}=${def}]`;
-      } else {
-        line = ` * @param {${type}} ${pName ? `${pName}.` : ''}${fName}`;
-      }
-
-      if (type === 'object') {
-        let lines = `${line}\n`;
-        let first = true;
-        for (const propName in f.properties()) {
-          lines = `${lines}${first ? '' : '\n'}${buildLine(
-            f.properties()[propName],
-            propName,
-            `${pName ? `${pName}.` : ''}${fName}`
-          )}`;
-          first = false;
-        }
-        return lines;
-      }
-
-      return `${line}${description}`;
-    };
-
-    return buildLine(field, fieldName, scopePropName);
+  Nunjucks.addFilter('tsPayload', (str) => {
+    return "str";
+  });
+  Nunjucks.addFilter('tsEncoding', (str) => {
+    return "str";
   });
 
-  Nunjucks.addFilter('port', (url, defaultPort) => {
-    const parsed = URL.parse(url);
-    return parsed.port || defaultPort || 80;
-  });
-
-  Nunjucks.addFilter('pathResolve', (pathName, basePath = '/') => {
-    return path.resolve(basePath, pathName);
-  });
-
-  Nunjucks.addFilter('hasNatsBindings', obj => {
-    try {
-      let tempObj = obj._json;
-      return tempObj.bindings && tempObj.bindings.nats ? true : false;
-    } catch (e) {
-      throw new Error("Could not find ts payload: " + e);
-    }
-  });
-
-  Nunjucks.addFilter('tsPayload', server => {
-    try {
-      let tempServer = server._json;
-      return tempServer.bindings && tempServer.bindings.nats && tempServer.bindings.nats.payload ? tempServer.bindings.nats.payload.toUpperCase() : 'STRING';
-    } catch (e) {
-      throw new Error("Could not find ts payload: " + e);
-    }
-  });
-
-  Nunjucks.addFilter('tsEncoding', server => {
-    let tempServer = server._json;
-    let tempEncoding = tempServer.bindings && tempServer.bindings.nats && tempServer.bindings.nats.payload ? tempServer.bindings.nats.encoding : 'utf8';
-    switch (tempEncoding) {
-      case 'utf8':
-        return 'utf8';
-      case 'utf16le':
-        return 'utf16le';
-      case 'ascii':
-        return 'ascii';
-      case 'ucs2':
-        return 'ucs2';
-      case 'base64':
-        return 'base64';
-      case 'latin1':
-        return 'latin1';
-      case 'binary':
-        return 'binary';
-      case 'hex':
-        return 'hex';
-      default:
-        return 'utf8';
-    }
-  });
 
   Nunjucks.addFilter('isPubsub', channel => {
     let tempChannel = channel._json;
@@ -151,6 +128,7 @@ module.exports = ({ Nunjucks, _ }) => {
     }
     return false;
   });
+
   Nunjucks.addFilter('isRequestReply', channel => {
     let tempChannel = channel._json;
     if (tempChannel.bindings.nats && tempChannel.bindings.nats.is == 'requestReply') {
@@ -173,14 +151,5 @@ module.exports = ({ Nunjucks, _ }) => {
       return true;
     }
     return false;
-  });
-
-
-  Nunjucks.addFilter('print', obj => {
-    console.log(JSON.stringify(obj, null, 4));
-  });
-
-  Nunjucks.addFilter('throw', message => {
-    throw new Error(message);
   });
 };

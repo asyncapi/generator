@@ -1,0 +1,70 @@
+
+{% macro initProperties(schema, required=true) %}
+  {%- if schema.allOf() | length %}
+    {%- for allOfSchema in schema.allOf() %}
+    {{initProperties(allOfSchema)}}
+    {%- endfor %}
+  {%- endif %}
+
+  {%- if schema.oneOf() | length %}
+    test:{{schema.oneOf() | oneOfSchemaType}}
+  {%- endif %}
+
+  {%- if schema.anyOf() | length %}
+    {%- for oneOfSchema in schema.anyOf() %}
+    {{initProperties(oneOfSchema, false)}}
+    {%- endfor %}
+  {%- endif %}
+
+  {%- if schema.uid() | length %}
+    {{ schema.uid() | camelCase}}{% if not required %}?{% endif %}: {{ schema.uid() }}
+  {%- endif %}
+
+{% endmacro %}
+
+
+{%- macro initProperty(propertyName, propertyType) %}
+    {{propertyName}}:{{propertyType}};
+{% endmacro %}
+
+{%- macro setProperty(propertyName) %}
+    this.{{propertyName}} = {{propertyName}};
+{% endmacro %}
+export default class {{ message.name() }} {
+    {{ initProperties(message.payload()) }}
+
+    constructor();
+    constructor(
+      {{message.payload() | constructurParameters}}
+    ){
+    {%- if message.payload().allOf() | length %}
+        {%- for allOfSchema in message.payload().allOf() %}
+        {{setProperty(allOfSchema.uid())}}
+        {%- endfor %}
+    {%- endif %}
+    {%- if message.payload().oneOf() | length %}
+        {%- for oneOfSchemas in message.payload().oneOf() %}
+        {{setProperty(oneOfSchemas.uid())}}
+        {%- endfor %}
+    {%- endif %}
+    {%- if message.payload().anyOf() | length %}
+        {%- for anyOfSchema in message.payload().anyOf() %}
+        {{setProperty(anyOfSchema.uid())}}
+        {%- endfor %}
+    {%- endif %}
+    {%- if message.payload().properties() | length %}
+        {%- for propertyName, property in message.payload().properties() %}
+        {{setProperty(propertyName)}}
+        {%- endfor %}
+    {%- endif %}
+    {%- if message.payload().uid() | length %}
+        {{setProperty(message.payload().uid())}}
+    {%- endif %}
+    }
+
+    copyInto(jsonObject: any){
+        {%- for propertyName, property in message.payload().properties() %}
+        this.{{ propertyName }}=jsonObject.{{ propertyName }};
+        {%- endfor %}
+    }
+}

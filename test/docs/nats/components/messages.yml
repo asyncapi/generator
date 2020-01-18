@@ -21,7 +21,10 @@ dimLight:
   title: Dim light
   summary: Command a particular streetlight to dim the lights.
   payload:
-    $ref: "./schemas.yml#/dimLightPayload"
+    anyOf:
+      - $ref: "./schemas.yml#/dimLightPayload"
+      - $ref: "./schemas.yml#/response"
+
 dimLightResponse:
   name: dimLightResponse
   title: Dim light response when processed.

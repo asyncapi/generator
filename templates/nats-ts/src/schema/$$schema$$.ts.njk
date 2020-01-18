@@ -1,0 +1,32 @@
+
+{% macro initProperties(schema, required=true) %}
+  {%- if schema.allOf() | length %}
+    {%- for allOfSchema in schema.allOf() %}
+    {{initProperties(allOfSchema)}}
+    {%- endfor %}
+  {%- endif %}
+
+  {%- if schema.oneOf() | length %}
+    test:{{schema.oneOf() | oneOfSchemaType}}
+  {%- endif %}
+
+  {%- if schema.anyOf() | length %}
+    {%- for oneOfSchema in schema.anyOf() %}
+    {{initProperties(oneOfSchema, false)}}
+    {%- endfor %}
+  {%- endif %}
+
+  {%- if schema.properties() | length %}
+      {%- for propertyName, property in schema.properties() %}
+      {{ propertyName}}{% if not required or not property.required() %}?{% endif %}: {{ property.type() | toTsType }}
+      {%- endfor %}
+  {%- endif %}
+
+{% endmacro %}
+
+
+export default class {{ schema.uid() | camelCase }} {
+
+  {{ initProperties(schema) }}
+
+}

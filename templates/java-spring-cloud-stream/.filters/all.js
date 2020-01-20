@@ -1,5 +1,6 @@
 module.exports = ({ Nunjucks, _ }) => {
 
+  var yaml = require('yaml')
   const typeMap = new Map()
   typeMap.set('boolean', 'Boolean')
   typeMap.set('integer', 'Integer')
@@ -12,6 +13,17 @@ module.exports = ({ Nunjucks, _ }) => {
   formatMap.set('integer', '%d')
   formatMap.set('number', '%f')
   formatMap.set('string', '%s')
+
+  Nunjucks.addFilter('appProperties', (asyncapi) => {
+    let doc = {}
+    doc.spring = {}
+    doc.spring.cloud = {}
+    doc.spring.cloud.stream = {}
+    let scs = doc.spring.cloud.stream
+    scs.function = {}
+    scs.function.definitions = getFunctionDefinitions(asyncapi)
+    return yaml.stringify(doc)
+  })
 
   Nunjucks.addFilter('artifactId', ([info, params]) => {
     let ret = ''
@@ -69,10 +81,6 @@ module.exports = ({ Nunjucks, _ }) => {
 
     return ret;
   })
-
-  function contentType(pubOrSub) {
-    return pubOrSub._json.message.contentType
-  }
 
   Nunjucks.addFilter('dump', dump)
 
@@ -300,6 +308,10 @@ module.exports = ({ Nunjucks, _ }) => {
     return _.upperFirst(str)
   })
 
+  function contentType(pubOrSub) {
+    return pubOrSub._json.message.contentType
+  }
+
   function dump(obj) {
     let s = typeof obj
     for (let p in obj) {
@@ -307,6 +319,23 @@ module.exports = ({ Nunjucks, _ }) => {
       s += p
     }
     return s
+  }
+
+  function getFunctionDefinitions(asyncapi) {
+    let ret = ""
+
+    for (let channelIndex in asyncapi.channels()) {
+        let channel = asyncapi.channels()[channelIndex]._json;
+        let name = _.camelCase(channelIndex)
+        if (channel.publish) {
+            ret += name + "Supplier;"
+        }
+        if (channel.subscribe) {
+            ret += name + "Consumer;"
+       }
+    }
+
+    return ret
   }
 
   function indent(numTabs) {

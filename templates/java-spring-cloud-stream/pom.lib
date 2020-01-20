@@ -7,6 +7,7 @@
   <groupId>{{ [asyncapi.info(), params] | groupId }}</groupId>
   <artifactId>{{ [asyncapi.info(), params] | artifactId }}</artifactId>
   <version>{{ asyncapi.info().version() }}</version>
+  <name>scs-generated</name>
   <packaging>jar</packaging>
 
   <build>

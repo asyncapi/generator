@@ -1,7 +1,6 @@
-spring:
-  cloud:
-    stream:
-      bindings:
+spring.cloud.stream:
+  function.definitions:
+  bindings:
 {%- for channelName in asyncapi.channelNames() -%}
 {%- set channel = asyncapi.channel(channelName) -%}
 {%- set bindingClassName = [channelName, channel] | bindingClassName -%}

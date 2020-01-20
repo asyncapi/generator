@@ -16,23 +16,52 @@ import java.util.function.Supplier;
 @Configuration
 public class Messaging {
 
-    private static final Logger log = LoggerFactory.getLogger(Messaging.class);
+	private static final String SPRING_DESTINATION_HEADER = "spring.cloud.stream.sendto.destination";
+	private static final Logger log = LoggerFactory.getLogger(Messaging.class);
 
 {% for channelName, channel in asyncapi.channels() -%}
 {%- set name = channelName | camelCase %}
+{%- set upperName = name | upperFirst %}
 {%- set messageClass = [channelName, channel] | messageClass -%}
-// channel: {{ channelName }} {{ name }} {{ messageClass }}
+{%- set payloadClass = [channelName, channel] | payloadClass -%}
+{%- set lowerPayloadName = payloadClass | lowerFirst %}
+	// channel: {{ channelName }}
 
-{% if channel.hasPublish() -%}
-// publisher
+{%- if channel.hasPublish() %}
+	// publisher
+{%- set emitterName = name + "EmitterProcessor" %}
+	EmitterProcessor<Message<{{payloadClass}}>> {{emitterName}} = EmitterProcessor.create();
+
+	@Bean
+	public Supplier<Flux<Message<{{payloadClass}}>>> {{name}}Supplier() {
+		return () -> {{emitterName}};
+	}
+
+	public void send{{upperName}}({{payloadClass}} payload) {
+		Message<SensorReading> message = MessageBuilder
+			.withPayload(payload)
+			.build();
+		log.debug("Sending message " + message);
+		{{emitterName}}.onNext(message);
+	}
+
 {% endif %}
-
-{% if channel.hasSubscribe() -%}
-// subscriber
+{%- if channel.hasSubscribe() %}
+	// subscriber
 {%- set callbackName = name + "Callback" %}
-	private Supplier<{{messageClass}}> {{callbackName}};
-{% endif %}
+{%- set upperCallbackName = callbackName | upperFirst %}
+	private Consumer<Message<{{payloadClass}}>> {{callbackName}};
 
+	public void set{{upperCallbackName}}( Consumer<Message<{{payloadClass}}>> callback ) {
+		{{callbackName}} = callback;
+	}
+
+	@Bean
+	Consumer<Message<{{payloadClass}}>> {{name}}Consumer() {
+		return message -> {{callbackName}}.accept(message);
+	}
+
+{% endif %}
 {% endfor %}
 
 }

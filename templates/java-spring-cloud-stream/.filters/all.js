@@ -1,3 +1,4 @@
+// vim: set ts=2 sw=2 sts=2 expandtab :
 module.exports = ({ Nunjucks, _ }) => {
 
   var yaml = require('yaml')
@@ -21,7 +22,8 @@ module.exports = ({ Nunjucks, _ }) => {
     doc.spring.cloud.stream = {}
     let scs = doc.spring.cloud.stream
     scs.function = {}
-    scs.function.definitions = getFunctionDefinitions(asyncapi)
+    scs.function.definition = getFunctionDefinitions(asyncapi)
+    scs.bindings = getBindings(asyncapi)
     return yaml.stringify(doc)
   })
 
@@ -53,8 +55,6 @@ module.exports = ({ Nunjucks, _ }) => {
   })
 
   Nunjucks.addFilter('contentType', (channel) => {
-
-    //console.log("contentType start")
     let ret;
 
     if (channel.hasPublish()) {
@@ -64,7 +64,6 @@ module.exports = ({ Nunjucks, _ }) => {
       ret = contentType(channel.subscribe())
     }
 
-    //console.log("contentType " + ret)
     return ret
   })
 
@@ -321,20 +320,48 @@ module.exports = ({ Nunjucks, _ }) => {
     return s
   }
 
+  function getBindings1(asyncapi) {
+    let ret = {}
+    let chan = 'channel1'
+    ret[chan] = {}
+    ret[chan].destination = "bar"
+    return ret
+  }
+
+  function getBindings(asyncapi) {
+    let ret = {}
+
+    for (let channelName in asyncapi.channels()) {
+      let channel = asyncapi.channels()[channelName]._json;
+      let functionName = _.camelCase(channelName)
+      if (channel.publish) {
+        bindingName = functionName + "Supplier-out-0"
+        ret[bindingName] = {}
+        ret[bindingName].destination = channelName
+      }
+      if (channel.subscribe) {
+        bindingName = functionName + "Consumer-in-0"
+        ret[bindingName] = {}
+        ret[bindingName].destination = channelName
+     }
+    }
+
+    return ret
+  }
+
   function getFunctionDefinitions(asyncapi) {
     let ret = ""
 
-    for (let channelIndex in asyncapi.channels()) {
-        let channel = asyncapi.channels()[channelIndex]._json;
-        let name = _.camelCase(channelIndex)
-        if (channel.publish) {
-            ret += name + "Supplier;"
-        }
-        if (channel.subscribe) {
-            ret += name + "Consumer;"
-       }
+    for (let channelName in asyncapi.channels()) {
+      let channel = asyncapi.channels()[channelName]._json;
+      let functionName = _.camelCase(channelName)
+      if (channel.publish) {
+        ret += functionName + "Supplier;"
+      }
+      if (channel.subscribe) {
+        ret += functionName + "Consumer;"
+      }
     }
-
     return ret
   }
 

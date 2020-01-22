@@ -34,12 +34,13 @@ module.exports = register => {
       sourcePath = overridePath
     }
 
-    // Rename the pom file if necessary
+    // Rename the pom file if necessary, and only include Application.java when an app is requested.
     let artifactType = generator.templateParams['artifact-type']
 
     if (!artifactType || artifactType === "library") {
       fs.renameSync(path.resolve(generator.targetDir, "pom.lib"), path.resolve(generator.targetDir, "pom.xml"))
       fs.unlinkSync(path.resolve(generator.targetDir, "pom.app"))
+      fs.unlinkSync(path.resolve(sourcePath, "Application.java"))
     } else {
       fs.renameSync(path.resolve(generator.targetDir, "pom.app"), path.resolve(generator.targetDir, "pom.xml"))
       fs.unlinkSync(path.resolve(generator.targetDir, "pom.lib"))

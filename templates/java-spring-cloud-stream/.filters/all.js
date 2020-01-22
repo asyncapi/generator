@@ -1,7 +1,7 @@
 // vim: set ts=2 sw=2 sts=2 expandtab :
 module.exports = ({ Nunjucks, _ }) => {
 
-  var yaml = require('yaml')
+  var yaml = require('js-yaml')
   const typeMap = new Map()
   typeMap.set('boolean', 'Boolean')
   typeMap.set('integer', 'Integer')
@@ -15,7 +15,7 @@ module.exports = ({ Nunjucks, _ }) => {
   formatMap.set('number', '%f')
   formatMap.set('string', '%s')
 
-  Nunjucks.addFilter('appProperties', (asyncapi) => {
+  Nunjucks.addFilter('appProperties', ([asyncapi, params]) => {
     let doc = {}
     doc.spring = {}
     doc.spring.cloud = {}
@@ -24,7 +24,25 @@ module.exports = ({ Nunjucks, _ }) => {
     scs.function = {}
     scs.function.definition = getFunctionDefinitions(asyncapi)
     scs.bindings = getBindings(asyncapi)
-    return yaml.stringify(doc)
+    doc.solace = getSolace(params)
+    doc.logging = {}
+    doc.logging.level = {}
+    doc.logging.level.root = 'info'
+    doc.logging.level.org = {}
+    doc.logging.level.org.springframework = 'info'
+
+    if (params.actuator === 'true') {
+      doc.server = {}
+      doc.server.port = 8080
+      doc.management = {}
+      doc.management.endpoints = {}
+      doc.management.endpoints.web = {}
+      doc.management.endpoints.web.exposure = {}
+      doc.management.endpoints.web.exposure.include = '*'
+    }
+    let ym = yaml.safeDump(doc, { lineWidth: 200 } )
+    //console.log(ym)
+    return ym
   })
 
   Nunjucks.addFilter('artifactId', ([info, params]) => {
@@ -363,6 +381,25 @@ module.exports = ({ Nunjucks, _ }) => {
       }
     }
     return ret
+  }
+
+  function getParamOrXs(params, param) {
+    let ret = params[param]
+    if (!ret) {
+      ret = "xxxxx"
+    }
+
+    return ret
+  }
+
+  function getSolace(params) {
+    let ret = {}
+    ret.java = {}
+    ret.java.host = getParamOrXs(params, 'host')
+    ret.java.msgVpn = getParamOrXs(params, 'msgVpn')
+    ret.java.clientUsername = getParamOrXs(params, 'clientUsername')
+    ret.java.clientPassword = getParamOrXs(params, 'clientPassword')
+    return ret;
   }
 
   function indent(numTabs) {

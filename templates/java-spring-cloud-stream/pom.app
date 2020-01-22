@@ -2,16 +2,17 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>dynamic-destination-source-solace</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <groupId>{{ [asyncapi.info(), params] | groupId }}</groupId>
+    <artifactId>{{ [asyncapi.info(), params] | artifactId }}</artifactId>
+    <version>{{ asyncapi.info().version() }}</version>
     <packaging>jar</packaging>
     <name>scs-generated</name>
-    <description>Dynamic source destinations with Solace binder</description>
+    <description>Auto-generated Spring Cloud Stream AsyncAPI application</description>
 
     <parent>
-        <groupId>{{ [asyncapi.info(), params] | groupId }}</groupId>
-        <artifactId>{{ [asyncapi.info(), params] | artifactId }}</artifactId>
-        <version>{{ asyncapi.info().version() }}</version>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.2.0.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -51,20 +52,22 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
+{% if params.actuator === 'true' %}
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus</artifactId>
         </dependency>
+{% endif %}
     </dependencies>
 
     <build>

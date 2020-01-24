@@ -2,18 +2,27 @@
 module.exports = ({ Nunjucks, _ }) => {
 
   var yaml = require('js-yaml')
-  const typeMap = new Map()
-  typeMap.set('boolean', 'Boolean')
-  typeMap.set('integer', 'Integer')
-  typeMap.set('number', 'Double')
-  typeMap.set('string', 'String')
 
+  // This maps json schema types to Java format strings.
   const formatMap = new Map()
   formatMap.set('boolean', '%s')
   formatMap.set('enum', '%s')
   formatMap.set('integer', '%d')
   formatMap.set('number', '%f')
   formatMap.set('string', '%s')
+
+  // This maps json schema types to Java format strings.
+  const sampleMap = new Map()
+  sampleMap.set('boolean', 'true')
+  sampleMap.set('integer', '1')
+  sampleMap.set('number', '1.1')
+  sampleMap.set('string', '"string"')
+
+  const typeMap = new Map()
+  typeMap.set('boolean', 'Boolean')
+  typeMap.set('integer', 'Integer')
+  typeMap.set('number', 'Double')
+  typeMap.set('string', 'String')
 
   Nunjucks.addFilter('appProperties', ([asyncapi, params]) => {
     let doc = {}
@@ -24,21 +33,31 @@ module.exports = ({ Nunjucks, _ }) => {
     scs.function = {}
     scs.function.definition = getFunctionDefinitions(asyncapi)
     scs.bindings = getBindings(asyncapi)
-    doc.solace = getSolace(params)
-    doc.logging = {}
-    doc.logging.level = {}
-    doc.logging.level.root = 'info'
-    doc.logging.level.org = {}
-    doc.logging.level.org.springframework = 'info'
 
-    if (params.actuator === 'true') {
-      doc.server = {}
-      doc.server.port = 8080
-      doc.management = {}
-      doc.management.endpoints = {}
-      doc.management.endpoints.web = {}
-      doc.management.endpoints.web.exposure = {}
-      doc.management.endpoints.web.exposure.include = '*'
+    let additionalSubs = getAdditionalSubs(asyncapi)
+
+    if (additionalSubs) {
+      scs.solace = additionalSubs
+    }
+
+    let type = params.artifactType
+    if (type && type === "application") {
+      doc.solace = getSolace(params)
+      doc.logging = {}
+      doc.logging.level = {}
+      doc.logging.level.root = 'info'
+      doc.logging.level.org = {}
+      doc.logging.level.org.springframework = 'info'
+
+      if (params.actuator === 'true') {
+        doc.server = {}
+        doc.server.port = 8080
+        doc.management = {}
+        doc.management.endpoints = {}
+        doc.management.endpoints.web = {}
+        doc.management.endpoints.web.exposure = {}
+        doc.management.endpoints.web.exposure.include = '*'
+      }
     }
     let ym = yaml.safeDump(doc, { lineWidth: 200 } )
     //console.log(ym)
@@ -261,64 +280,8 @@ module.exports = ({ Nunjucks, _ }) => {
   })
 
   Nunjucks.addFilter('topicInfo', ([channelName, channel]) => {
-    const ret = {}
-    let publishTopic = String(channelName)
-    let subscribeTopic = String(channelName)
-    const params = []
-    let functionParamList = ""
-    let functionArgList = ""
-    let first = true
-
-    //console.log("params: " + JSON.stringify(channel.parameters()))
-    for (let name in channel.parameters()) {
-      const nameWithBrackets = "{" + name + "}"
-      const schema = channel.parameter(name)['_json']['schema']
-      //console.log("schema: " + dump(schema))
-      const type = schema.type
-      const param = { "name": _.lowerFirst(name) }
-
-      if (first) {
-        first = false
-      } else {
-        functionParamList += ", "
-        functionArgList += ", "
-      }
-
-      if (type) {
-        //console.log("It's a type: " + type)
-        const javaType = typeMap.get(type)
-        if (!javaType) throw new Error("topicInfo filter: type not found in typeMap: " + type)
-        param.type = javaType
-        const printfArg = formatMap.get(type)
-        //console.log("printf: " + printfArg)
-        if (!printfArg) throw new Error("topicInfo filter: type not found in formatMap: " + type)
-        //console.log("Replacing " + nameWithBrackets)
-        publishTopic = publishTopic.replace(nameWithBrackets, printfArg)
-      } else {
-        const en = schema.enum
-        if (en) {
-          //console.log("It's an enum: " + en)
-          param.type = _.upperFirst(name)
-          param.enum = en
-          //console.log("Replacing " + nameWithBrackets)
-          publishTopic = publishTopic.replace(nameWithBrackets, "%s")
-        } else {
-          throw new Error("topicInfo filter: Unknown parameter type: " + JSON.stringify(schema))
-        }
-      }
-
-      subscribeTopic = subscribeTopic.replace(nameWithBrackets, "*")
-      functionParamList += param.type + " " + param.name
-      functionArgList += param.name
-      params.push(param)
-    }
-    ret.functionArgList = functionArgList
-    ret.functionParamList = functionParamList
-    ret.channelName = channelName
-    ret.params = params
-    ret.publishTopic = publishTopic
-    ret.subscribeTopic = subscribeTopic
-    return ret
+    let p = channel.parameters()
+    return getTopicInfo(channelName, channel)
   })
 
   Nunjucks.addFilter('upperFirst', (str) => {
@@ -338,11 +301,29 @@ module.exports = ({ Nunjucks, _ }) => {
     return s
   }
 
-  function getBindings1(asyncapi) {
-    let ret = {}
-    let chan = 'channel1'
-    ret[chan] = {}
-    ret[chan].destination = "bar"
+  function getAdditionalSubs(asyncapi) {
+    let ret
+
+    for (let channelName in asyncapi.channels()) {
+      let channel = asyncapi.channels()[channelName]
+      let channelJson = channel._json
+      
+      if (channelJson.subscribe) {
+        let functionName = _.camelCase(channelName)
+        let topicInfo = getTopicInfo(channelName, channel)
+        if (topicInfo.hasParams) {
+          if (!ret) {
+            ret = {}
+            ret.bindings = {}
+          }
+          let bindingName = functionName + "Consumer-in-0"
+          ret.bindings[bindingName] = {}
+          ret.bindings[bindingName].consumer = {}
+          ret.bindings[bindingName].consumer.queueAdditionalSubscriptions = topicInfo.subscribeTopic
+        }
+      }
+    } 
+
     return ret
   }
 
@@ -350,17 +331,44 @@ module.exports = ({ Nunjucks, _ }) => {
     let ret = {}
 
     for (let channelName in asyncapi.channels()) {
-      let channel = asyncapi.channels()[channelName]._json;
+      let channel = asyncapi.channels()[channelName]
+      let channelJson = channel._json
       let functionName = _.camelCase(channelName)
-      if (channel.publish) {
+      //console.log("topicFunc: " + topicFunc)
+      //console.log("channelName: " + channelName)
+      //console.log("channelJson: " + channelJson)
+      let topicInfo = getTopicInfo(channelName, channel)
+      if (channelJson.publish) {
         bindingName = functionName + "Supplier-out-0"
         ret[bindingName] = {}
         ret[bindingName].destination = channelName
       }
-      if (channel.subscribe) {
+      if (channelJson.subscribe) {
+        let subDestination
+        const channelBindings = channelJson.bindings
+        let groupId
+        if (channelBindings) {
+          //console.log("bindings: " + JSON.stringify(channelBindings))
+          const scsBinding = channelBindings.scs
+          if (scsBinding) {
+            const queueName = scsBinding.queue
+            if (queueName) {
+              subDestination = queueName
+            }
+            groupId = scsBinding.groupId
+          }          
+        }
+
+        if (topicInfo.hasParams && !subDestination) {
+          throw new Error("channel " + channelName + " has parameters but no queue has been specified. A queue is required when a topic has parameters.");
+        }
+        subDestination = subDestination || topicInfo.subscribeTopic
         bindingName = functionName + "Consumer-in-0"
         ret[bindingName] = {}
-        ret[bindingName].destination = channelName
+        ret[bindingName].destination = subDestination
+        if (groupId) {
+          ret[bindingName].group = groupId
+        }
      }
     }
 
@@ -400,6 +408,76 @@ module.exports = ({ Nunjucks, _ }) => {
     ret.java.clientUsername = getParamOrXs(params, 'clientUsername')
     ret.java.clientPassword = getParamOrXs(params, 'clientPassword')
     return ret;
+  }
+
+  function getTopicInfo(channelName, channel) {
+    const ret = {}
+    let publishTopic = String(channelName)
+    let subscribeTopic = String(channelName)
+    const params = []
+    let functionParamList = ""
+    let functionArgList = ""
+    let sampleArgList = ""
+    let first = true
+
+    //console.log("params: " + JSON.stringify(channel.parameters()))
+    for (let name in channel.parameters()) {
+      const nameWithBrackets = "{" + name + "}"
+      const schema = channel.parameter(name)['_json']['schema']
+      //console.log("schema: " + dump(schema))
+      const type = schema.type
+      const param = { "name": _.lowerFirst(name) }
+      let sampleArg = 1
+
+      if (first) {
+        first = false
+      } else {
+        functionParamList += ", "
+        functionArgList += ", "
+      }
+
+      sampleArgList += ", "
+
+      if (type) {
+        //console.log("It's a type: " + type)
+        const javaType = typeMap.get(type)
+        if (!javaType) throw new Error("topicInfo filter: type not found in typeMap: " + type)
+        param.type = javaType
+        const printfArg = formatMap.get(type)
+        //console.log("printf: " + printfArg)
+        if (!printfArg) throw new Error("topicInfo filter: type not found in formatMap: " + type)
+        //console.log("Replacing " + nameWithBrackets)
+        publishTopic = publishTopic.replace(nameWithBrackets, printfArg)
+        sampleArg = sampleMap.get(type)
+      } else {
+        const en = schema.enum
+        if (en) {
+          //console.log("It's an enum: " + en)
+          param.type = _.upperFirst(name)
+          param.enum = en
+          sampleArg = "Messaging." + param.type + "." + en[0]
+          //console.log("Replacing " + nameWithBrackets)
+          publishTopic = publishTopic.replace(nameWithBrackets, "%s")
+        } else {
+          throw new Error("topicInfo filter: Unknown parameter type: " + JSON.stringify(schema))
+        }
+      }
+
+      subscribeTopic = subscribeTopic.replace(nameWithBrackets, "*")
+      functionParamList += param.type + " " + param.name
+      functionArgList += param.name
+      sampleArgList += sampleArg
+      params.push(param)
+    }
+    ret.functionArgList = functionArgList
+    ret.functionParamList = functionParamList
+    ret.sampleArgList = sampleArgList
+    ret.channelName = channelName
+    ret.params = params
+    ret.publishTopic = publishTopic
+    ret.subscribeTopic = subscribeTopic
+    ret.hasParams = params.length > 0
+    return ret
   }
 
   function indent(numTabs) {

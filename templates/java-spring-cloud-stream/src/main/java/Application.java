@@ -36,8 +36,10 @@ public class Application implements CommandLineRunner {
 {%- set upperName = name | upperFirst %}
 {%- set payloadClass = [channelName, channel] | payloadClass %}
 {%- set payloadName = name + "Payload" %}
+{%- set topicInfo = [channelName, channel] | topicInfo %}
+
 			{{payloadClass}} {{payloadName}} = new {{payloadClass}}();
-			messaging.send{{upperName}}( {{payloadName}} );
+			messaging.send{{upperName}}( {{payloadName}}{{topicInfo.sampleArgList}} );
 {% endfor %}
 			Thread.sleep(1000);
 		}

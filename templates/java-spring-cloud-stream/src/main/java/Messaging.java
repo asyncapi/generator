@@ -12,6 +12,7 @@ import reactor.core.publisher.Flux;
 
 import java.util.function.Consumer;
 import java.util.function.Supplier;
+import java.util.Map;
 
 @Configuration
 public class Messaging {
@@ -25,8 +26,13 @@ public class Messaging {
 {%- set messageClass = [channelName, channel] | messageClass -%}
 {%- set payloadClass = [channelName, channel] | payloadClass -%}
 {%- set lowerPayloadName = payloadClass | lowerFirst %}
+{%- set topicInfo = [channelName, channel] | topicInfo %}
 	// channel: {{ channelName }}
-
+{% for param in topicInfo.params -%}
+{%- if param.enum %}
+    public static enum {{ param.type }} { {{ param.enum }} }
+{% endif -%}
+{%- endfor -%}
 {%- if channel.hasPublish() %}
 	// publisher
 {%- set emitterName = name + "EmitterProcessor" %}
@@ -37,14 +43,41 @@ public class Messaging {
 		return () -> {{emitterName}};
 	}
 
+{% if topicInfo.hasParams %}
+	public void send{{upperName}}({{payloadClass}} payload, {{ topicInfo.functionParamList }}) {
+		send{{upperName}}( payload, {{topicInfo.functionArgList}}, null);
+	}
+
+	public void send{{upperName}}({{payloadClass}} payload, {{ topicInfo.functionParamList }}, Map<String, Object> headers) {
+		String topic = String.format("{{topicInfo.publishTopic}}", {{topicInfo.functionArgList}});
+		MessageBuilder messageBuilder = MessageBuilder.withPayload(payload);
+		messageBuilder.setHeader(SPRING_DESTINATION_HEADER, topic);
+
+		if (headers != null) {
+			headers.forEach( (k, v ) -> {messageBuilder.setHeader(k, v);});
+		}
+
+		Message<SensorReading> message = messageBuilder.build();
+		log.debug("Sending a message to the topic " + topic);
+		{{emitterName}}.onNext(message);
+	}
+{% else %}
 	public void send{{upperName}}({{payloadClass}} payload) {
-		Message<SensorReading> message = MessageBuilder
-			.withPayload(payload)
-			.build();
+		send(payload, null);
+	}
+
+	public void send{{upperName}}({{payloadClass}} payload, Map<String, Object> headers) {
+		MessageBuilder messageBuilder = MessageBuilder.withPayload(payload);
+
+		if (headers != null) {
+			headers.forEach( (k, v ) -> {messageBuilder.setHeader(k, v);});
+		}
+
+		Message<SensorReading> message = messageBuilder.build();
 		log.debug("Sending message " + message);
 		{{emitterName}}.onNext(message);
 	}
-
+{% endif %}
 {% endif %}
 {%- if channel.hasSubscribe() %}
 	// subscriber

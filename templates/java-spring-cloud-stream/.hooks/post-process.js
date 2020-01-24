@@ -8,7 +8,7 @@ module.exports = register => {
     const asyncapi = generator.asyncapi
     let sourcePath = generator.targetDir + sourceHead
     const info = asyncapi.info()
-    let package = generator.templateParams['java-package']
+    let package = generator.templateParams['javaPackage']
 
     if (!package && info) {
       const extensions = info.extensions()
@@ -20,7 +20,7 @@ module.exports = register => {
     if (package) {
       //console.log("package: " + package)
       const overridePath = generator.targetDir + sourceHead + package.replace(/\./g, '/') + '/'
-      console.log("Moving files from " + sourcePath + " to " + overridePath)
+      //console.log("Moving files from " + sourcePath + " to " + overridePath)
       let first = true
       fs.readdirSync(sourcePath).forEach(file => {
         if (first) {
@@ -35,7 +35,7 @@ module.exports = register => {
     }
 
     // Rename the pom file if necessary, and only include Application.java when an app is requested.
-    let artifactType = generator.templateParams['artifact-type']
+    let artifactType = generator.templateParams['artifactType']
 
     if (!artifactType || artifactType === "library") {
       fs.renameSync(path.resolve(generator.targetDir, "pom.lib"), path.resolve(generator.targetDir, "pom.xml"))

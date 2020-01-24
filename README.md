@@ -30,7 +30,7 @@ docker run --rm -it -v $PWD:/app -w /app asyncapi/generator [COMMAND HERE]
 
     -V, --version                  output the version number
     -w, --watch                    watches the template directory and the AsyncAPI document for change, and re-generate the files when they occur.
-    -o, --output <outputDir>       directory where to put the generated files (defaults to the current directory)
+    -o, --output <outputDir>       directory where to put the generated files (default: the current directory)
     -d, --disable-hook <hookName>  disable a specific hook
     -n, --no-overwrite <glob>      glob or path of the file(s) to skip when regenerating
     -p, --param <name=value>       additional param to pass to templates

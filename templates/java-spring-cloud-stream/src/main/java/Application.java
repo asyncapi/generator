@@ -27,12 +27,13 @@ public class Application implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 
 {% for channelName, channel in asyncapi.channels() -%}
-{%- set upperName = channelName | camelCase | upperFirst %}
+{%- set name = [channelName, channel] | functionName %}
+{%- set upperName = name | upperFirst %}
 		messaging.set{{upperName}}Callback(this::receive);
 {% endfor %}
 		while (true) {
 {% for channelName, channel in asyncapi.channels() -%}
-{%- set name = channelName | camelCase %}
+{%- set name = [channelName, channel] | functionName %}
 {%- set upperName = name | upperFirst %}
 {%- set payloadClass = [channelName, channel] | payloadClass %}
 {%- set payloadName = name + "Payload" %}

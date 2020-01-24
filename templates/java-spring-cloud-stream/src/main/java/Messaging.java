@@ -21,7 +21,7 @@ public class Messaging {
 	private static final Logger log = LoggerFactory.getLogger(Messaging.class);
 
 {% for channelName, channel in asyncapi.channels() -%}
-{%- set name = channelName | camelCase %}
+{%- set name = [channelName, channel] | functionName %}
 {%- set upperName = name | upperFirst %}
 {%- set messageClass = [channelName, channel] | messageClass -%}
 {%- set payloadClass = [channelName, channel] | payloadClass -%}

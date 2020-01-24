@@ -118,7 +118,9 @@ module.exports = ({ Nunjucks, _ }) => {
     return ret;
   })
 
-  Nunjucks.addFilter('dump', dump)
+  Nunjucks.addFilter('functionName', ([channelName, channel]) => {
+    return getFunctionName(channelName, channel)
+  })
 
   Nunjucks.addFilter('indent1', (numTabs) => {
     return indent(numTabs)
@@ -309,7 +311,7 @@ module.exports = ({ Nunjucks, _ }) => {
       let channelJson = channel._json
       
       if (channelJson.subscribe) {
-        let functionName = _.camelCase(channelName)
+        let functionName = getFunctionName(channelName, channel)
         let topicInfo = getTopicInfo(channelName, channel)
         if (topicInfo.hasParams) {
           if (!ret) {
@@ -333,12 +335,13 @@ module.exports = ({ Nunjucks, _ }) => {
     for (let channelName in asyncapi.channels()) {
       let channel = asyncapi.channels()[channelName]
       let channelJson = channel._json
-      let functionName = _.camelCase(channelName)
+      let functionName = getFunctionName(channelName, channel)
       //console.log("topicFunc: " + topicFunc)
       //console.log("channelName: " + channelName)
       //console.log("channelJson: " + channelJson)
       let topicInfo = getTopicInfo(channelName, channel)
-      if (channelJson.publish) {
+      // if there are topic parameters, it doesn't make sense to include the publish destination.
+      if (channelJson.publish && !topicInfo.hasParams) {
         bindingName = functionName + "Supplier-out-0"
         ret[bindingName] = {}
         ret[bindingName].destination = channelName
@@ -375,12 +378,30 @@ module.exports = ({ Nunjucks, _ }) => {
     return ret
   }
 
+  function getFunctionName(channelName, channel) {
+    let ret = _.camelCase(channelName)
+    let channelJson = channel._json
+    const channelBindings = channelJson.bindings
+    if (channelBindings) {
+      //console.log("bindings: " + JSON.stringify(channelBindings))
+      const scsBinding = channelBindings.scs
+      if (scsBinding) {
+        const functionName = scsBinding.functionName
+        if (functionName) {
+          ret = functionName
+        }
+      }
+    }
+    return ret
+  }
+
   function getFunctionDefinitions(asyncapi) {
     let ret = ""
 
     for (let channelName in asyncapi.channels()) {
-      let channel = asyncapi.channels()[channelName]._json;
-      let functionName = _.camelCase(channelName)
+      let channel = asyncapi.channels()[channelName]
+      let channelJson = channel._json
+      let functionName = getFunctionName(channelName, channel)
       if (channel.publish) {
         ret += functionName + "Supplier;"
       }

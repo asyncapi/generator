@@ -116,6 +116,7 @@ h1, h2, h3, h4, h5, h6 {
 
   .content-panel {
     margin-left: 256px;
+    width: calc((100% - 256px) * 0.4);
   }
 }
 

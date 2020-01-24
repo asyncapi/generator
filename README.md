@@ -29,8 +29,8 @@ docker run --rm -it -v $PWD:/app -w /app asyncapi/generator [COMMAND HERE]
   Options:
 
     -V, --version                  output the version number
-    -w, --watch                    watches the the template directory and the async api document for change, and re-generate the files when they occour.
-    -o, --output <outputDir>       directory where to put the generated files (defaults to current directory) (default: /Users/fmvilas/www/asyncapi-generator)
+    -w, --watch                    watches the template directory and the AsyncAPI document for change, and re-generate the files when they occur.
+    -o, --output <outputDir>       directory where to put the generated files (default: the current directory)
     -d, --disable-hook <hookName>  disable a specific hook
     -n, --no-overwrite <glob>      glob or path of the file(s) to skip when regenerating
     -p, --param <name=value>       additional param to pass to templates
@@ -57,9 +57,7 @@ ag -o ./docs --param title='Hello from param' asyncapi.yaml markdown
 In the template you can use it like this: ` {{ params.title }}`
 
 ### File templating
-To separate functionality into files, one can specify a filename like `$$channel$$.js` to generate a file for each channel defined in your specification. The following separations are supported: `$$channel$$`, `$$message$$`, `$$schema$$`, `$$parameter$$` and `$$securityScheme$$`.
-
-> As of right now `$$message$$`, `$$schema$$`, `$$parameter$$` and `$$securityScheme$$` are only supported if it is defined in the component section ([#170](https://github.com/asyncapi/generator/issues/170)).
+To separate functionality into files, one can specify a filename like `$$channel$$.js` to generate a file for each channel defined in your AsyncAPI document. The following separations are supported: `$$channel$$`, `$$message$$`, `$$schema$$`, `$$parameter$$` and `$$securityScheme$$`.
 
 
 ### As a module

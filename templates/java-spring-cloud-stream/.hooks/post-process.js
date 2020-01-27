@@ -1,5 +1,7 @@
+// vim: set ts=2 sw=2 sts=2 expandtab :
 const fs = require('fs')
 const path = require('path')
+const _ = require('lodash');
 
 const sourceHead = '/src/main/java/'
 
@@ -44,6 +46,24 @@ module.exports = register => {
     } else {
       fs.renameSync(path.resolve(generator.targetDir, "pom.app"), path.resolve(generator.targetDir, "pom.xml"))
       fs.unlinkSync(path.resolve(generator.targetDir, "pom.lib"))
+    }
+
+    // Rename schema objects if necessary
+
+    const schemas = asyncapi._json.components.schemas
+    //console.log("schemas: " + JSON.stringify(schemas))
+    for (let schema in schemas) {
+      let schemaObject = schemas[schema]
+      let title = _.upperFirst(schemaObject.title)
+      //console.log("schema "  + schema + " title: " + title)
+      if (title && title != schema) {
+        let pathBySchema = path.resolve(sourcePath, schema + ".java")
+        let pathByTitle = path.resolve(sourcePath, title + ".java")
+
+        if (fs.existsSync(pathBySchema) && !fs.existsSync(pathByTitle)) {
+          fs.renameSync(pathBySchema, pathByTitle)
+        }
+      }
     }
   })
 }

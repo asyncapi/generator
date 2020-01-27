@@ -1,5 +1,5 @@
-{% if params['java-package'] %}
-package {{ params['java-package'] }};
+{% if params['javaPackage'] %}
+package {{ params['javaPackage'] }};
 {% elif asyncapi.info().extensions()['x-java-package'] %}
 package {{ asyncapi.info().extensions()['x-java-package'] }};
 {% endif -%}

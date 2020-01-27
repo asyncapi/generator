@@ -184,12 +184,12 @@ module.exports = ({ Nunjucks, _ }) => {
 
   Nunjucks.addFilter('groupId', ([info, params]) => {
     let ret = ''
-    if (params['group-id']) {
-      ret = params['group-id']
+    if (params['groupId']) {
+      ret = params['groupId']
     } else if (info.extensions()['x-group-id']) {
       ret = info.extensions()['x-group-id']
     } else {
-      throw new Error("Can't determine the group id. Please set the param group-id or element info.x-group-id.")
+      throw new Error("Can't determine the group id. Please set the param groupId or element info.x-group-id.")
     }
     return ret
   })
@@ -267,12 +267,12 @@ module.exports = ({ Nunjucks, _ }) => {
 
   Nunjucks.addFilter('springCloudStreamVersion', ([info, params]) => {
     let ret = ''
-    if (params['spring-cloud-stream-version']) {
-      ret = params['spring-cloud-stream-version']
+    if (params['springCloudStreamVersion']) {
+      ret = params['springCloudStreamVersion']
     } else if (info.extensions()['x-spring-cloud-stream-version']) {
       ret = info.extensions()['x-spring-cloud-stream-version']
     } else {
-      throw new Error("Can't determine the Spring Cloud Stream version. Please set the param spring-cloud-stream-version or info.x-spring-cloud-stream-version.")
+      throw new Error("Can't determine the Spring Cloud Stream version. Please set the param springCloudStreamVersion or info.x-spring-cloud-stream-version.")
     }
     return ret
   })
@@ -508,16 +508,19 @@ module.exports = ({ Nunjucks, _ }) => {
   function messageClass(pubOrSub) {
     let ret
 
+    console.log("messageClass : " + JSON.stringify(pubOrSub))
     if (pubOrSub && pubOrSub._json && pubOrSub._json.message) {
       ret = _.upperFirst(pubOrSub._json.message.name)
     }
 
+    console.log("messageClass : " + ret)
     return ret
   }
 
   function payloadClass(pubOrSub) {
     let ret
 
+    //console.log("payloadClass: "  + JSON.stringify(pubOrSub._json.message))
     if (pubOrSub && pubOrSub._json && pubOrSub._json.message && pubOrSub._json.message.payload) {
       ret = _.upperFirst(pubOrSub._json.message.payload.title)
     }

@@ -23,7 +23,6 @@ public class Messaging {
 {% for channelName, channel in asyncapi.channels() -%}
 {%- set name = [channelName, channel] | functionName %}
 {%- set upperName = name | upperFirst %}
-{%- set messageClass = [channelName, channel] | messageClass -%}
 {%- set payloadClass = [channelName, channel] | payloadClass -%}
 {%- set lowerPayloadName = payloadClass | lowerFirst %}
 {%- set topicInfo = [channelName, channel] | topicInfo %}
@@ -57,13 +56,13 @@ public class Messaging {
 			headers.forEach( (k, v ) -> {messageBuilder.setHeader(k, v);});
 		}
 
-		Message<SensorReading> message = messageBuilder.build();
+		Message<{{payloadClass}}> message = messageBuilder.build();
 		log.debug("Sending a message to the topic " + topic);
 		{{emitterName}}.onNext(message);
 	}
 {% else %}
 	public void send{{upperName}}({{payloadClass}} payload) {
-		send(payload, null);
+		send{{upperName}}(payload, null);
 	}
 
 	public void send{{upperName}}({{payloadClass}} payload, Map<String, Object> headers) {
@@ -73,7 +72,7 @@ public class Messaging {
 			headers.forEach( (k, v ) -> {messageBuilder.setHeader(k, v);});
 		}
 
-		Message<SensorReading> message = messageBuilder.build();
+		Message<{{payloadClass}}> message = messageBuilder.build();
 		log.debug("Sending message " + message);
 		{{emitterName}}.onNext(message);
 	}

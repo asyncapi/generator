@@ -1,14 +1,18 @@
-{%- macro javaClass(name, props, indentLevel, isStatic) %}
+{%- macro javaClass(name, schema, indentLevel, isStatic) %}
+{%- if (schema.title()) %}
+{%- set className = schema.title() | upperFirst %}
+{%- else %}
 {%- set className = name | upperFirst %}
+{% endif %}
 {% set indent1 = indentLevel | indent1 -%}
 {% set indent2 = indentLevel | indent2 -%}
 {% set indent3 = indentLevel | indent3 -%}
 {{ indent1 }}public {% if isStatic %}static {% endif %} class {{ className }} {
-{% for name, prop in props -%}
+{% for name, prop in schema.properties() -%}
 {%- set type = [name, prop] | fixType %}
 {{ indent2 }}private {{ type }} {{ name }};
 {%- endfor -%}
-{%- for name, prop in props %}
+{%- for name, prop in schema.properties() %}
 {% set type = [name, prop] | fixType %}
 {{ indent2 }}public {{ type }} get{{- name | upperFirst }}() {
 {{ indent3 }}return {{ name }};

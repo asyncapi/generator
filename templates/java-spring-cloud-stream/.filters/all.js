@@ -25,6 +25,10 @@ module.exports = ({ Nunjucks, _ }) => {
   typeMap.set('string', 'String')
 
   Nunjucks.addFilter('appProperties', ([asyncapi, params]) => {
+    if (!params.binder || (params.binder != 'kafka' && params.binder != 'rabbit' && params.binder != 'solace')) {
+      throw new Error("Please provide a parameter named 'binder' with the value kafka, rabbit or solace.")
+    }
+
     let doc = {}
     doc.spring = {}
     doc.spring.cloud = {}
@@ -32,17 +36,22 @@ module.exports = ({ Nunjucks, _ }) => {
     let scs = doc.spring.cloud.stream
     scs.function = {}
     scs.function.definition = getFunctionDefinitions(asyncapi)
-    scs.bindings = getBindings(asyncapi)
+    scs.bindings = getBindings(asyncapi, params)
 
-    let additionalSubs = getAdditionalSubs(asyncapi)
+    if (params.binder === 'solace') {
+      let additionalSubs = getAdditionalSubs(asyncapi)
 
-    if (additionalSubs) {
-      scs.solace = additionalSubs
+      if (additionalSubs) {
+        scs.solace = additionalSubs
+      }
     }
 
     let type = params.artifactType
-    if (type && type === "application") {
-      doc.solace = getSolace(params)
+    if (type && type === 'application') {
+      if (params.binder === 'solace') {
+        doc.solace = getSolace(params)
+      }
+
       doc.logging = {}
       doc.logging.level = {}
       doc.logging.level.root = 'info'
@@ -242,7 +251,7 @@ module.exports = ({ Nunjucks, _ }) => {
       if (solaceBinding) {
         ret.isQueue = bindings.is === 'queue'
         if (!ret.isQueue && bindings.queue && !bindings.queue.name) {
-          throw new Exception("Channel " + channelName + " please provide a queue name.");
+          throw new Error("Channel " + channelName + " please provide a queue name.");
         }
         ret.needQueue = ret.isQueue || bindings.queue.name
         ret.queueName = bindings.queue && bindings.queue.name ? bindings.queue.name : channelName
@@ -329,7 +338,7 @@ module.exports = ({ Nunjucks, _ }) => {
     return ret
   }
 
-  function getBindings(asyncapi) {
+  function getBindings(asyncapi, params) {
     let ret = {}
 
     for (let channelName in asyncapi.channels()) {
@@ -351,12 +360,16 @@ module.exports = ({ Nunjucks, _ }) => {
         const channelBindings = channelJson.bindings
         let groupId
         if (channelBindings) {
-          //console.log("bindings: " + JSON.stringify(channelBindings))
+          console.log("bindings: " + JSON.stringify(channelBindings))
+          console.log("params: " + JSON.stringify(params))
           const scsBinding = channelBindings.scs
           if (scsBinding) {
-            const queueName = scsBinding.queue
-            if (queueName) {
-              subDestination = queueName
+            // With Solace, we want to subscribe to the queue and not the topic.
+            if (params.binding === 'solace') {
+              const queueName = scsBinding.queue
+              if (queueName) {
+                subDestination = queueName
+              }
             }
             groupId = scsBinding.groupId
           }          

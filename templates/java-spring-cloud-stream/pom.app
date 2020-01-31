@@ -30,6 +30,7 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+{%- if params.binder === 'solace' %}
             <dependency>
                 <groupId>com.solace.spring.cloud</groupId>
                 <artifactId>solace-spring-cloud-bom</artifactId>
@@ -37,14 +38,29 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+{%- endif %}
         </dependencies>
     </dependencyManagement>
 
     <dependencies>
+{%- if params.binder === 'kafka' %}
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-stream-binder-kafka</artifactId>
+        </dependency>
+{%- endif %}
+{%- if params.binder === 'rabbit' %}
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-stream-binder-rabbit</artifactId>
+		</dependency>
+{%- endif %}
+{%- if params.binder === 'solace' %}
         <dependency>
             <groupId>com.solace.spring.cloud</groupId>
             <artifactId>spring-cloud-starter-stream-solace</artifactId>
         </dependency>
+{%- endif %}
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -54,7 +70,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
-{% if params.actuator === 'true' %}
+{%- if params.actuator === 'true' %}
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -67,7 +83,7 @@
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus</artifactId>
         </dependency>
-{% endif %}
+{%- endif %}
     </dependencies>
 
     <build>

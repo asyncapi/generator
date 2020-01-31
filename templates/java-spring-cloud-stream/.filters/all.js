@@ -66,8 +66,8 @@ module.exports = ({ Nunjucks, _ }) => {
 
   Nunjucks.addFilter('artifactId', ([info, params]) => {
     let ret = ''
-    if (params['artifact-id']) {
-      ret = params['artifact-id']
+    if (params['artifactId']) {
+      ret = params['artifactId']
     } else if (info.extensions()['x-artifact-id']) {
       ret = info.extensions()['x-artifact-id']
     } else if (info.title()) {
@@ -508,7 +508,7 @@ module.exports = ({ Nunjucks, _ }) => {
   function messageClass(pubOrSub) {
     let ret
 
-    console.log("messageClass : " + JSON.stringify(pubOrSub))
+    //console.log("messageClass : " + JSON.stringify(pubOrSub))
     if (pubOrSub && pubOrSub._json && pubOrSub._json.message) {
       ret = _.upperFirst(pubOrSub._json.message.name)
     }

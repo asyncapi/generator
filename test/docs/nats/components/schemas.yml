@@ -1,5 +1,6 @@
 lightMeasuredPayload:
   type: object
+  $id: lightMeasuredPayload
   properties:
     lumens:
       type: integer
@@ -10,6 +11,7 @@ lightMeasuredPayload:
       $ref: "#/sentAt"
 turnOnOffPayload:
   type: object
+  $id: turnOnOffPayload
   properties:
     command:
       type: string
@@ -22,6 +24,7 @@ turnOnOffPayload:
       $ref: "#/sentAt"
 dimLightPayload:
   type: object
+  $id: dimLightPayload
   properties:
     percentage:
       type: integer
@@ -36,6 +39,7 @@ sentAt:
   description: Date and time when the message was sent.
 response:
   type: object
+  $id: response
   properties:
     status:
       type: integer

@@ -24,7 +24,6 @@ dimLight:
     anyOf:
       - $ref: "./schemas.yml#/dimLightPayload"
       - $ref: "./schemas.yml#/response"
-
 dimLightResponse:
   name: dimLightResponse
   title: Dim light response when processed.

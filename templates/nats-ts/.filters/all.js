@@ -7,12 +7,23 @@ module.exports = ({ Nunjucks, _ }) => {
   });
 
   Nunjucks.addFilter('camelCase', string => {
-    return _.camelCase(string);
+    return camelCase(string);
   });
+  function camelCase(string) {
+    return _.camelCase(string);
+  }
 
   Nunjucks.addFilter('firstLowerCase', string => {
     return _.lowerFirst(string);
   });
+
+  Nunjucks.addFilter('pascalCase', string => {
+    return pascalCase(string);
+  });
+  function pascalCase(string) {
+    string = _.camelCase(string);
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
 
   Nunjucks.addFilter('toTsType', jsonType => {
     switch (jsonType.toLowerCase()) {
@@ -28,36 +39,23 @@ module.exports = ({ Nunjucks, _ }) => {
 
   Nunjucks.addFilter('constructurParameters', schema => {
     let returnString = '';
-    console.log(schema);
+    console.log(JSON.stringify(schema, null, 4));
     if (schema.allOf()) {
-      console.log('all of');
       schema.allOf().forEach(element => {
-        returnString += `${element.uid()},`;
+        returnString += `${camelCase(element.uid())}: ${pascalCase(element.uid())},`;
       });
-    }
-
-    if (schema.oneOf()) {
-      console.log('one of');
-      schema.oneOf().forEach(element => {
-        returnString += `${element.uid()},`;
-      });
-    }
-
-    if (schema.anyOf()) {
-      console.log('any of');
+    } else if (schema.oneOf()) {
+      returnString += `oneOf: ${getTypeFromOneOf(schema.oneOf())},`;
+    } else if (schema.anyOf()) {
       schema.anyOf().forEach(element => {
-        returnString += `${element.uid()},`;
+        returnString += `${camelCase(element.uid())}: ${pascalCase(element.uid())},`;
       });
-    }
-
-    if (schema.uid()) {
-      console.log('uid');
-      returnString += `${schema.uid()},`;
+    } else if (schema.uid()) {
+      returnString += `${camelCase(schema.uid())}: ${pascalCase(schema.uid())},`;
     }
     if (returnString.length > 1) {
       returnString = returnString.slice(0, -1);
     }
-    console.log(returnString);
     return returnString;
   });
 
@@ -103,15 +101,6 @@ module.exports = ({ Nunjucks, _ }) => {
     return _.camelCase(string);
   });
 
-  Nunjucks.addFilter('containsTag', (array, tag) => {
-    if (!array || !tag) {
-      return false;
-    }
-    return array.find(value => {
-      return tag === value.name();
-    });
-  });
-
 
   Nunjucks.addFilter('tsPayload', (str) => {
     return "str";
@@ -124,6 +113,13 @@ module.exports = ({ Nunjucks, _ }) => {
   Nunjucks.addFilter('isPubsub', channel => {
     let tempChannel = channel._json;
     if (tempChannel.bindings.nats && tempChannel.bindings.nats.is == 'pubsub') {
+      return true;
+    }
+    return false;
+  });
+
+  Nunjucks.addFilter('hasNatsBindings', obj => {
+    if (obj.bindings.nats) {
       return true;
     }
     return false;

@@ -1,35 +1,65 @@
-
 {% macro initProperties(schema, required=true) %}
   {%- if schema.allOf() | length %}
     {%- for allOfSchema in schema.allOf() %}
     {{initProperties(allOfSchema)}}
     {%- endfor %}
-  {%- endif %}
-
-  {%- if schema.oneOf() | length %}
-    test:{{schema.oneOf() | oneOfSchemaType}}
-  {%- endif %}
-
-  {%- if schema.anyOf() | length %}
-    {%- for oneOfSchema in schema.anyOf() %}
-    {{initProperties(oneOfSchema, false)}}
+  {%- elif schema.oneOf() | length %}
+    oneOf:{{schema.oneOf() | oneOfSchemaType}}
+  {%- elif schema.anyOf() | length %}
+    {%- for anyOfSchema in schema.anyOf() %}
+    {{initProperties(anyOfSchema, false)}}
     {%- endfor %}
+  {%- elif schema.uid() | length %}
+    {{initProperty(schema.uid(), schema.uid())}}
   {%- endif %}
-
-  {%- if schema.uid() | length %}
-    {{ schema.uid() | camelCase}}{% if not required %}?{% endif %}: {{ schema.uid() }}
+{% endmacro %}
+{% macro setConstructorProperties(schema) %}
+  {%- if schema.allOf() | length %}
+    {%- for allOfSchema in schema.allOf() %}
+    {{setConstructorProperties(allOfSchema)}}
+    {%- endfor %}
+  {%- elif schema.oneOf() | length %}
+    {{setProperty("oneOf")}}
+  {%- elif schema.anyOf() | length %}
+    {%- for anyOfSchema in schema.anyOf() %}
+    {{setConstructorProperties(anyOfSchema)}}
+    {%- endfor %}
+  {%- elif schema.uid() | length %}
+    {{setProperty(schema.uid())}}
   {%- endif %}
-
 {% endmacro %}
 
-
+{% macro importSchemas(schema) %}
+  {%- if schema.allOf() | length %}
+    {%- for allOfSchema in schema.allOf() %}
+    {{importSchemas(allOfSchema)}}
+    {%- endfor %}
+  {%- elif schema.oneOf() | length %}
+    {{importSchema("OneOf")}}
+    {%- for oneOfSchema in schema.oneOf() %}
+    {{importSchemas(oneOfSchema)}}
+    {%- endfor %}
+  {%- elif schema.anyOf() | length %}
+    {%- for anyOfSchema in schema.anyOf() %}
+    {{importSchemas(anyOfSchema)}}
+    {%- endfor %}
+  {%- elif schema.uid() | length %}
+    {{importSchema(schema.uid())}}
+  {%- endif %}
+{% endmacro %}
 {%- macro initProperty(propertyName, propertyType) %}
-    {{propertyName}}:{{propertyType}};
+    {{propertyName | camelCase}}:{{propertyType | pascalCase}};
 {% endmacro %}
 
 {%- macro setProperty(propertyName) %}
-    this.{{propertyName}} = {{propertyName}};
+    this.{{propertyName | camelCase}} = {{propertyName | camelCase}};
 {% endmacro %}
+
+{%- macro importSchema(propertyName) %}
+    import * as {{propertyName | pascalCase}} from '../schema/{{propertyName | pascalCase}}';
+{% endmacro %}
+{{ importSchemas(message.payload()) }}
+
 export default class {{ message.name() }} {
     {{ initProperties(message.payload()) }}
 
@@ -37,29 +67,7 @@ export default class {{ message.name() }} {
     constructor(
       {{message.payload() | constructurParameters}}
     ){
-    {%- if message.payload().allOf() | length %}
-        {%- for allOfSchema in message.payload().allOf() %}
-        {{setProperty(allOfSchema.uid())}}
-        {%- endfor %}
-    {%- endif %}
-    {%- if message.payload().oneOf() | length %}
-        {%- for oneOfSchemas in message.payload().oneOf() %}
-        {{setProperty(oneOfSchemas.uid())}}
-        {%- endfor %}
-    {%- endif %}
-    {%- if message.payload().anyOf() | length %}
-        {%- for anyOfSchema in message.payload().anyOf() %}
-        {{setProperty(anyOfSchema.uid())}}
-        {%- endfor %}
-    {%- endif %}
-    {%- if message.payload().properties() | length %}
-        {%- for propertyName, property in message.payload().properties() %}
-        {{setProperty(propertyName)}}
-        {%- endfor %}
-    {%- endif %}
-    {%- if message.payload().uid() | length %}
-        {{setProperty(message.payload().uid())}}
-    {%- endif %}
+    {{setConstructorProperties(message.payload())}}
     }
 
     copyInto(jsonObject: any){

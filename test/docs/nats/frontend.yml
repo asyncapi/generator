@@ -40,7 +40,8 @@ channels:
       message:
         $ref: './components/messages.yml#/lightMeasured'
     bindings:
-      $ref: './components/channel-bindings.yml#/smartylightingMeasurement'
+      nats:
+        is: pubsub
   smartylighting.streetlights.1.0.event.{streetlightId}.lighting.measured:
     description: Topic for which one can subscribe to measurements on a specific streetlightId.
     parameters:
@@ -51,7 +52,8 @@ channels:
       message:
         $ref: './components/messages.yml#/lightMeasured'
     bindings:
-      $ref: './components/channel-bindings.yml#/smartylightingMeasurement'
+      nats:
+        is: pubsub
 
   smartylighting.streetlights.1.0.action.{streetlightId}.turn.on:
     parameters:
@@ -68,7 +70,12 @@ channels:
       message:
         $ref: './components/messages.yml#/turnOnOffResponse'
     bindings:
-      $ref: './components/channel-bindings.yml#/smartylightingTurnOn'
+      nats:
+        is: requestReply
+        requestReply:
+          is: requester
+        queue:
+          name: smartylightingTurnOn
 
   smartylighting.streetlights.1.0.action.{streetlightId}.turn.off:
     parameters:
@@ -85,7 +92,12 @@ channels:
       message:
         $ref: './components/messages.yml#/turnOnOff'
     bindings:
-      $ref: './components/channel-bindings.yml#/smartylightingTurnOff'
+      nats:
+        is: requestReply
+        requestReply:
+          is: requester
+        queue:
+          name: smartylightingTurnOff
 
   smartylighting.streetlights.1.0.action.{streetlightId}.dim:
     parameters:
@@ -102,7 +114,12 @@ channels:
       message:
         $ref: './components/messages.yml#/dimLight'
     bindings:
-      $ref: './components/channel-bindings.yml#/smartylightingDim'
+      nats:
+        is: requestReply
+        requestReply:
+          is: requester
+        queue:
+          name: smartylightingDim
 
 components:
   securitySchemes:

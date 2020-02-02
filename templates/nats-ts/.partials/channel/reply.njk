@@ -1,6 +1,6 @@
 
 {% macro reply(channel, channelName, server) %}
-export function reply(onRequest: (err?: NatsError, msg?: {{channel.subscribe().message(0).uid() | camelCase}}) => {{channel.publish().message(0).uid() | camelCase}}, onReplyError: (err: NatsError) => void, nc?: Client): Promise<Subscription> {
+export function reply(onRequest: (err?: NatsError, msg?: {{channel.subscribe().message(0).uid() | pascalCase}}Message) => {{channel.publish().message(0).uid() | pascalCase}}Message, onReplyError: (err: NatsError) => void, nc?: Client): Promise<Subscription> {
   return new Promise(async (resolve, reject) => {
     if (nc) {
       try {
@@ -22,7 +22,7 @@ export function reply(onRequest: (err?: NatsError, msg?: {{channel.subscribe().m
             onRequest(err);
           } else {
             let processedData = utils.processRecievedData(msg.data, Payload.{{server | tsPayload}}, '{{server | tsEncoding}}');
-            let requestData = new {{channel.subscribe().message(0).name() | camelCase}}();
+            let requestData = new {{channel.subscribe().message(0).name() | pascalCase}}Message();
             requestData.copyFrom(processedData);
 
             let responseObject = onRequest(undefined, requestData);

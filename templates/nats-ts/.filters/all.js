@@ -39,19 +39,18 @@ module.exports = ({ Nunjucks, _ }) => {
 
   Nunjucks.addFilter('constructurParameters', schema => {
     let returnString = '';
-    console.log(JSON.stringify(schema, null, 4));
     if (schema.allOf()) {
       schema.allOf().forEach(element => {
-        returnString += `${camelCase(element.uid())}: ${pascalCase(element.uid())},`;
+        returnString += `${camelCase(element.uid())}: ${pascalCase(element.uid())}Schema,`;
       });
     } else if (schema.oneOf()) {
       returnString += `oneOf: ${getTypeFromOneOf(schema.oneOf())},`;
     } else if (schema.anyOf()) {
       schema.anyOf().forEach(element => {
-        returnString += `${camelCase(element.uid())}: ${pascalCase(element.uid())},`;
+        returnString += `${camelCase(element.uid())}: ${pascalCase(element.uid())}Schema,`;
       });
     } else if (schema.uid()) {
-      returnString += `${camelCase(schema.uid())}: ${pascalCase(schema.uid())},`;
+      returnString += `${camelCase(schema.uid())}: ${pascalCase(schema.uid())}Schema,`;
     }
     if (returnString.length > 1) {
       returnString = returnString.slice(0, -1);
@@ -79,7 +78,7 @@ module.exports = ({ Nunjucks, _ }) => {
     let type = '';
 
     if (oneFromSchema.oneOf().length > 0) {
-      type += getTypeFromOneOf(oneFromSchema.oneOf());
+      type += `${getTypeFromOneOf(oneFromSchema.oneOf())}Schema`;
     }
 
     for (var i = 0; i < oneOfSchema.length; i++) {
@@ -102,11 +101,11 @@ module.exports = ({ Nunjucks, _ }) => {
   });
 
 
-  Nunjucks.addFilter('tsPayload', (str) => {
-    return "str";
+  Nunjucks.addFilter('tsPayload', (server) => {
+    return "STRING";
   });
-  Nunjucks.addFilter('tsEncoding', (str) => {
-    return "str";
+  Nunjucks.addFilter('tsEncoding', (server) => {
+    return "STRING";
   });
 
 

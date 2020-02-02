@@ -2,11 +2,11 @@
 import { Client, NatsConnectionOptions, connect, Payload, NatsError, Subscription } from 'ts-nats';
 
 {%- for channelName, channel in asyncapi.channels() %}
-import * as {{ channelName | camelCase }}Channel from "./channels/{{ channelName | camelCase }}";
+import * as {{ channelName | camelCase }}Channel from "./channels/{{ channelName }}";
 {%- endfor %}
 
 {%- for messageName, message in asyncapi.allMessages() %}
-import * as {{ messageName | camelCase }}Message from "./messages/{{ messageName | camelCase }}";
+import {default as {{ messageName | pascalCase }}Message} from "./messages/{{ messageName | pascalCase }}";
 {%- endfor %}
 
 export default class NatsAsyncApiClient {
@@ -41,47 +41,53 @@ export default class NatsAsyncApiClient {
     return options;
   }
 
-  /**
-   *  Wrapper
-   * @param requestMessage The request message to send.
-   */
-  public testChannelRequest(requestMessage: TestRequest): Promise<TestResponse> {
-    return TestRequestChannel.request(requestMessage, this.nc);
-  }
-
   {%- for channelName, channel in asyncapi.channels() %}
+
+  {%- if channel | isRequestReply %}
+    {%- if channel | isRequester %}
   /**
-   *  Wrapper for
-   * @param requestMessage The message to publish.
-   */
-  public {{channelName}}(requestMessage: TestRequest): Promise<void> {
-    return TestPub.publish(requestMessage, this.nc);
+  *  Wrapper
+  * @param requestMessage The request message to send.
+  */
+  public {{channelName | camelCase }}Request(requestMessage: {{ channel.publish().message(0).uid() | pascalCase }}Message): Promise<{{ channel.subscribe().message(0).uid() | pascalCase }}Message> {
+    return {{ channelName | camelCase }}Channel.request(requestMessage, this.nc);
   }
+    {%- endif %}
+    {%- if channel | isReplier %}
+  /**
+  *  Wrapper
+  * @param onRequest Called when request recieved.
+  * @param onReplyError Called when it was not possible to send the reply.
+  */
+  public {{channelName | camelCase }}Reply(onRequest : (err?: NatsError, msg?: {{ channel.subscribe().message(0).uid() | pascalCase }}Message) => {{ channel.publish().message(0).uid() | pascalCase }}Message, onReplyError : (err: NatsError) => void): Promise<Subscription> {
+    return {{ channelName | camelCase }}Channel.reply(onRequest, onReplyError, this.nc);
+  }
+    {%- endif %}
+  {%- endif %}
+
+  {%- if channel | isPubsub %}
+    {%- if channel.hasSubscribe() %}
+  /**
+    *  Wrapper
+    * @param onDataCallback Called when message recieved.
+    */
+  public {{channelName | camelCase }}Subscribe(onDataCallback : (err?: NatsError, msg?: {{ channel.subscribe().message(0).uid() | pascalCase }}Message) => void): Promise<Subscription> {
+    return {{ channelName | camelCase }}Channel.subscribe(onDataCallback, this.nc);
+  }
+    {%- endif %}
+    {%- if channel.hasPublish() %}
+  /**
+  *  Wrapper for
+  * @param requestMessage The message to publish.
+  */
+  public {{channelName | camelCase }}(requestMessage: {{ channel.publish().message(0).uid() | pascalCase }}Message): Promise<void> {
+    return {{ channelName | camelCase }}Channel.publish(requestMessage, this.nc);
+  }
+    {%- endif %}
+  {%- endif %}
+
   {%- endfor %}
 
-  /**
-   *  Wrapper
-   * @param requestMessage The message to publish.
-   */
-  public testPubPublish(requestMessage: TestRequest): Promise<void> {
-    return TestPub.publish(requestMessage, this.nc);
-  }
-
-  /**
-   *  Wrapper
-   * @param onDataCallback Called when message recieved.
-   */
-  public testSubscribeSubscribe(onDataCallback : (err?: NatsError, msg?: TestRequest) => void): Promise<Subscription> {
-    return TestSub.subscribe(onDataCallback, this.nc);
-  }
 
 
-  /**
-   *  Wrapper
-   * @param onRequest Called when request recieved.
-   * @param onReplyError Called when it was not possible to send the reply.
-   */
-  public testResponseReply(onRequest : (err?: NatsError, msg?: TestRequest) => TestResponse, onReplyError : (err: NatsError) => void): Promise<Subscription> {
-    return TestResponseChannel.reply(onRequest, onReplyError, this.nc);
-  }
 }

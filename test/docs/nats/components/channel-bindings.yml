@@ -16,6 +16,8 @@ smartylightingTurnOff:
 smartylightingDim:
   nats:
     is: requestReply
+    requestReply:
+      is: requester
     queue:
       name: smartylightingDim
 

@@ -1,6 +1,7 @@
 lightMeasuredPayload:
   type: object
   $id: lightMeasuredPayload
+  x-parser-schema-id: lightMeasuredPayload
   properties:
     lumens:
       type: integer
@@ -12,6 +13,7 @@ lightMeasuredPayload:
 turnOnOffPayload:
   type: object
   $id: turnOnOffPayload
+  x-parser-schema-id: turnOnOffPayload
   properties:
     command:
       type: string
@@ -22,9 +24,10 @@ turnOnOffPayload:
       x-pi: false
     sentAt:
       $ref: "#/sentAt"
-dimLightPayload:
+dimLightPayloadserere:
   type: object
-  $id: dimLightPayload
+  $id: dimLightPayloadserere
+  x-parser-schema-id: dimLightPayloadserere
   properties:
     percentage:
       type: integer
@@ -40,6 +43,7 @@ sentAt:
 response:
   type: object
   $id: response
+  x-parser-schema-id: response
   properties:
     status:
       type: integer

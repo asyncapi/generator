@@ -1,4 +1,4 @@
-{% macro initProperties(schema, required=true) %}
+{%- macro initProperties(schema, required=true) %}
   {%- if schema.allOf() | length %}
     {%- for allOfSchema in schema.allOf() %}
     {{initProperties(allOfSchema)}}
@@ -12,8 +12,8 @@
   {%- elif schema.uid() | length %}
     {{initProperty(schema.uid(), schema.uid())}}
   {%- endif %}
-{% endmacro %}
-{% macro setConstructorProperties(schema) %}
+{%- endmacro %}
+{%- macro setConstructorProperties(schema) %}
   {%- if schema.allOf() | length %}
     {%- for allOfSchema in schema.allOf() %}
     {{setConstructorProperties(allOfSchema)}}
@@ -27,9 +27,8 @@
   {%- elif schema.uid() | length %}
     {{setProperty(schema.uid())}}
   {%- endif %}
-{% endmacro %}
-
-{% macro importSchemas(schema) %}
+{%- endmacro %}
+{%- macro importSchemas(schema) %}
   {%- if schema.allOf() | length %}
     {%- for allOfSchema in schema.allOf() %}
     {{importSchemas(allOfSchema)}}
@@ -46,9 +45,9 @@
   {%- elif schema.uid() | length %}
     {{importSchema(schema.uid())}}
   {%- endif %}
-{% endmacro %}
+{%- endmacro %}
 {%- macro initProperty(propertyName, propertyType) %}
-    {{propertyName | camelCase}}:{{propertyType | pascalCase}};
+  {{propertyName | camelCase}}:{{propertyType | pascalCase}}Schema;
 {% endmacro %}
 
 {%- macro setProperty(propertyName) %}
@@ -56,23 +55,25 @@
 {% endmacro %}
 
 {%- macro importSchema(propertyName) %}
-    import * as {{propertyName | pascalCase}} from '../schema/{{propertyName | pascalCase}}';
+import { default as {{propertyName | pascalCase}}Schema } from '../schema/{{propertyName | pascalCase}}';
 {% endmacro %}
 {{ importSchemas(message.payload()) }}
 
-export default class {{ message.name() }} {
-    {{ initProperties(message.payload()) }}
+export default class {{ message.name() | pascalCase}} {
+  {{ initProperties(message.payload()) }}
 
-    constructor();
-    constructor(
-      {{message.payload() | constructurParameters}}
-    ){
-    {{setConstructorProperties(message.payload())}}
-    }
+  constructor(
+    {{message.payload() | constructurParameters}}
+  ){
+  {{setConstructorProperties(message.payload())}}
+  }
 
-    copyInto(jsonObject: any){
-        {%- for propertyName, property in message.payload().properties() %}
-        this.{{ propertyName }}=jsonObject.{{ propertyName }};
-        {%- endfor %}
-    }
+  public static toMessage(json: string): {{ message.name() | pascalCase }} {
+    return JSON.parse(json);
+  }
+
+  public static toJson(value: {{ message.name() | pascalCase }}): string {
+    return JSON.stringify(value);
+  }
+
 }

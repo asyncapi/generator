@@ -233,14 +233,6 @@ module.exports = ({ Nunjucks, _ }) => {
     return ret
   })
 
-  Nunjucks.addFilter('subscribeDestination', ([channelName, channel]) => {
-    let queue = channel.json()['x-scs-queue']
-    if (!queue) {
-      queue = channelName
-    }
-    return queue
-  })
-
   Nunjucks.addFilter('queueInfo', ([channelName, channel, subscribeTopic]) => {
     let ret = {}
     ret.isQueue = false;
@@ -322,7 +314,8 @@ module.exports = ({ Nunjucks, _ }) => {
       if (channelJson.subscribe) {
         let functionName = getFunctionName(channelName, channel)
         let topicInfo = getTopicInfo(channelName, channel)
-        if (topicInfo.hasParams) {
+        let queue = channelJson['x-scs-queue']
+        if (topicInfo.hasParams || queue) {
           if (!ret) {
             ret = {}
             ret.bindings = {}
@@ -357,35 +350,26 @@ module.exports = ({ Nunjucks, _ }) => {
       }
       if (channelJson.subscribe) {
         let subDestination
-        const channelBindings = channelJson.bindings
-        let groupId
-        if (channelBindings) {
-          console.log("bindings: " + JSON.stringify(channelBindings))
-          console.log("params: " + JSON.stringify(params))
-          const scsBinding = channelBindings.scs
-          if (scsBinding) {
-            // With Solace, we want to subscribe to the queue and not the topic.
-            if (params.binding === 'solace') {
-              const queueName = scsBinding.queue
-              if (queueName) {
-                subDestination = queueName
-              }
-            }
-            groupId = scsBinding.groupId
-          }          
+        let consumerGroup = channelJson['x-scs-consumer-group']
+        let queue = channelJson['x-scs-queue']
+        //console.log('channel ' + channelName + ' consumerGroup: ' + consumerGroup + ' queue: ' + queue  );
+
+        if (queue && params.binder === 'solace') {
+          subDestination = queue
         }
 
         if (topicInfo.hasParams && !subDestination) {
           throw new Error("channel " + channelName + " has parameters but no queue has been specified. A queue is required when a topic has parameters.");
         }
+
         subDestination = subDestination || topicInfo.subscribeTopic
         bindingName = functionName + "Consumer-in-0"
         ret[bindingName] = {}
         ret[bindingName].destination = subDestination
-        if (groupId) {
-          ret[bindingName].group = groupId
+        if (consumerGroup) {
+          ret[bindingName].group = consumerGroup
         }
-     }
+      }
     }
 
     return ret
@@ -394,16 +378,11 @@ module.exports = ({ Nunjucks, _ }) => {
   function getFunctionName(channelName, channel) {
     let ret = _.camelCase(channelName)
     let channelJson = channel._json
-    const channelBindings = channelJson.bindings
-    if (channelBindings) {
-      //console.log("bindings: " + JSON.stringify(channelBindings))
-      const scsBinding = channelBindings.scs
-      if (scsBinding) {
-        const functionName = scsBinding.functionName
-        if (functionName) {
-          ret = functionName
-        }
-      }
+    //console.log('functionName channel: ' + JSON.stringify(channelJson))
+    let functionName = channelJson['x-scs-function-name']
+    //console.log('function name for channel ' + channelName + ': ' + functionName);
+    if (functionName) {
+      ret = functionName
     }
     return ret
   }

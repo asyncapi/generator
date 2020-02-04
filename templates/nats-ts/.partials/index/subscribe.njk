@@ -1,0 +1,10 @@
+
+{% macro subscribe(channelName, message) %}
+  /**
+    *  Wrapper
+    * @param onDataCallback Called when message recieved.
+    */
+  public subscribeTo{{channelName | pascalCase }}(onDataCallback : (err?: NatsError, msg?: {{ message.uid() | pascalCase }}Message) => void): Promise<Subscription> {
+    return {{ channelName | camelCase }}Channel.subscribe(onDataCallback, this.nc);
+  }
+{% endmacro %}

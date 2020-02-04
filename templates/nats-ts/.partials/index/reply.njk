@@ -1,0 +1,11 @@
+
+{% macro reply(channelName, subscribeMessage, publishMessage) %}
+/**
+*  Wrapper
+* @param onRequest Called when request recieved.
+* @param onReplyError Called when it was not possible to send the reply.
+*/
+public replyTo{{channelName | pascalCase }}(onRequest : (err?: NatsError, msg?: {{ subscribeMessage.uid() | pascalCase }}Message) => {{ publishMessage.uid() | pascalCase }}Message, onReplyError : (err: NatsError) => void): Promise<Subscription> {
+  return {{ channelName | camelCase }}Channel.reply(onRequest, onReplyError, this.nc);
+}
+{% endmacro %}

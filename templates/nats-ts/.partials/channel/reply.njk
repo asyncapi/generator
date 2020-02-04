@@ -1,19 +1,19 @@
 
-{% macro reply(channel, channelName, server) %}
-export function reply(onRequest: (err?: NatsError, msg?: {{channel.subscribe().message(0).uid() | pascalCase}}Message) => {{channel.publish().message(0).uid() | pascalCase}}Message, onReplyError: (err: NatsError) => void, nc?: Client): Promise<Subscription> {
+{% macro reply(channelName, subscribeMessage, publishMessage, server) %}
+export function reply(onRequest: (err?: NatsError, msg?: {{subscribeMessage.uid() | pascalCase}}Message) => {{publishMessage.uid() | pascalCase}}Message, onReplyError: (err: NatsError) => void, nc?: Client): Promise<Subscription> {
   return new Promise(async (resolve, reject) => {
     if (nc) {
       try {
 
         let subscribeOptions: SubscriptionOptions = {};
-        {%- if channel.subscribe().message(0) | hasNatsBindings %}
-        {%- if channel.subscribe().message(0).bindings().nats().queue() | length %}
+        {%- if subscribeMessage | hasNatsBindings %}
+        {%- if subscribeMessage.bindings().nats().queue() | length %}
         //If queue
-        subscribeOptions.queue = '{{channel.subscribe().message(0).bindings().nats().queue().name()}}';
+        subscribeOptions.queue = '{{subscribeMessage.bindings().nats().queue().name()}}';
         {%- endif %}
-        {%- if channel.subscribe().message(0).bindings().nats().unsubAfter() | length %}
+        {%- if subscribeMessage.bindings().nats().unsubAfter() | length %}
         //If unsubafter
-        subscribeOptions.max = {{channel.subscribe().message(0).bindings().nats().unsubAfter()}};
+        subscribeOptions.max = {{subscribeMessage.bindings().nats().unsubAfter()}};
         {%- endif %}
         {%- endif %}
 
@@ -22,7 +22,7 @@ export function reply(onRequest: (err?: NatsError, msg?: {{channel.subscribe().m
             onRequest(err);
           } else {
             let processedData = utils.processRecievedData(msg.data, Payload.{{server | tsPayload}}, '{{server | tsEncoding}}');
-            let requestData = new {{channel.subscribe().message(0).name() | pascalCase}}Message();
+            let requestData = new {{subscribeMessage.name() | pascalCase}}Message();
             requestData.copyFrom(processedData);
 
             let responseObject = onRequest(undefined, requestData);

@@ -17,6 +17,12 @@ module.exports = ({ Nunjucks, _ }) => {
     return _.lowerFirst(string);
   });
 
+  Nunjucks.addFilter('firstUpperCase', string => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  });
+
+
+
   Nunjucks.addFilter('pascalCase', string => {
     return pascalCase(string);
   });

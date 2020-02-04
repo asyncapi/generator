@@ -1,7 +1,7 @@
 
-{% macro request(channel, channelName, server) %}
-export function request(requestMessage: {{channel.publish().message(0).uid() | pascalCase}}Message, nc?: Client): Promise<{{channel.subscribe().message(0).uid() | pascalCase}}Message> {
-  return new Promise<{{channel.subscribe().message(0).uid() | pascalCase}}Message>(async (resolve, reject) => {
+{% macro request(channelName, publishMessage, subscribeMessage, server) %}
+export function request(requestMessage: {{publishMessage.uid() | pascalCase}}Message, nc?: Client): Promise<{{subscribeMessage.uid() | pascalCase}}Message> {
+  return new Promise<{{subscribeMessage.uid() | pascalCase}}Message>(async (resolve, reject) => {
     if (nc) {
       try {
         let inbox = nc.createInbox();
@@ -10,7 +10,7 @@ export function request(requestMessage: {{channel.publish().message(0).uid() | p
             reject(err);
           } else {
             let processedData = utils.processRecievedData(msg.data, Payload.{{server | tsPayload}}, '{{server | tsEncoding}}');
-            resolve({{channel.subscribe().message(0).uid() | pascalCase}}Message.toMessage(processedData));
+            resolve({{subscribeMessage.uid() | pascalCase}}Message.toMessage(processedData));
           }
         }, { max: 1 });
         let requestData = utils.beforeRequest(requestMessage, Payload.{{server | tsPayload}}, '{{server | tsEncoding}}');

@@ -15,18 +15,18 @@ import * as utils from '../utils';
 
 {%- if channel | isRequestReply %}
   {%- if channel | isRequester %}
-  {{ request(channel, channelName, asyncapi.server(params.server)) }}
+  {{ request(channelName, channel.publish().message(0), channel.subscribe().message(0), asyncapi.server(params.server)) }}
   {%- endif %}
   {%- if channel | isReplier %}
-  {{ reply(channel, channelName, asyncapi.server(params.server)) }}
+  {{ reply(channelName, channel.subscribe().message(0), channel.publish().message(0), asyncapi.server(params.server)) }}
   {%- endif %}
 {%- endif %}
 
 {%- if channel | isPubsub %}
   {%- if channel.hasSubscribe() %}
-  {{ subscribe(channel, channelName, asyncapi.server(params.server)) }}
+  {{ subscribe(channelName, channel.subscribe().message(0), asyncapi.server(params.server)) }}
   {%- endif %}
   {%- if channel.hasPublish() %}
-  {{ publish(channel, channelName, asyncapi.server(params.server)) }}
+  {{ publish(channelName, channel.publish().message(0), asyncapi.server(params.server)) }}
   {%- endif %}
 {%- endif %}

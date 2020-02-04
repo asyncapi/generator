@@ -1,17 +1,17 @@
 
-{%- from "../.partials/index/publish.njk" import publish %}
-{%- from "../.partials/index/reply.njk" import reply %}
-{%- from "../.partials/index/request.njk" import request %}
-{%- from "../.partials/index/subscribe.njk" import subscribe %}
+{%- from "../../../.partials/index/publish.njk" import publish %}
+{%- from "../../../.partials/index/reply.njk" import reply %}
+{%- from "../../../.partials/index/request.njk" import request %}
+{%- from "../../../.partials/index/subscribe.njk" import subscribe %}
 
 import { Client, NatsConnectionOptions, connect, Payload, NatsError, Subscription } from 'ts-nats';
 
 {%- for channelName, channel in asyncapi.channels() %}
-import * as {{ channelName | camelCase }}Channel from "./channels/{{ channelName | firstUpperCase }}";
+import * as {{ channelName | camelCase }}Channel from "./testchannels/{{ channelName | firstUpperCase }}";
 {%- endfor %}
 
 {%- for messageName, message in asyncapi.allMessages() %}
-import {default as {{ messageName | pascalCase }}Message} from "./messages/{{ messageName | pascalCase }}";
+import {default as {{ messageName | pascalCase }}Message} from "../../messages/{{ messageName | pascalCase }}";
 {%- endfor %}
 
 export default class NatsAsyncApiClient {
@@ -50,19 +50,19 @@ export default class NatsAsyncApiClient {
 
   {%- if channel | isRequestReply %}
     {%- if channel | isRequester %}
-    {{request(channelName, channel.publish().message(0), channel.subscribe().message(0))}}
+    {{reply(channelName, channel.publish().message(0), channel.subscribe().message(0))}}
     {%- endif %}
     {%- if channel | isReplier %}
-    {{reply(channelName, channel.subscribe().message(0), channel.publish().message(0))}}
+    {{request(channelName, channel.subscribe().message(0), channel.publish().message(0))}}
     {%- endif %}
   {%- endif %}
 
   {%- if channel | isPubsub %}
     {%- if channel.hasSubscribe() %}
-    {{subscribe(channelName, channel.subscribe().message(0))}}
+    {{publish(channelName, channel.subscribe().message(0))}}
     {%- endif %}
     {%- if channel.hasPublish() %}
-    {{publish(channelName, channel.publish().message(0))}}
+    {{subscribe(channelName, channel.publish().message(0))}}
     {%- endif %}
   {%- endif %}
 

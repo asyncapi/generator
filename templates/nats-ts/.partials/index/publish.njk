@@ -1,10 +1,10 @@
 
-{% macro publish(channelName, message) %}
-/**
-*  Wrapper for
-* @param requestMessage The message to publish.
-*/
-public publishTo{{channelName | pascalCase }}(requestMessage: {{ message.uid() | pascalCase }}Message): Promise<void> {
-  return {{ channelName | camelCase }}Channel.publish(requestMessage, this.nc);
-}
+{% macro publish(channelName, message, channel) %}
+  /**
+  *  {{channel.description()}}
+  * @param requestMessage The message to publish.
+  */
+  public publishTo{{channelName | pascalCase }}(requestMessage: {{ message.uid() | pascalCase }}Message): Promise<void> {
+    return {{ channelName | camelCase }}Channel.publish(requestMessage, this.nc);
+  }
 {% endmacro %}

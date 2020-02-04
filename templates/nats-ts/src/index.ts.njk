@@ -50,19 +50,19 @@ export default class NatsAsyncApiClient {
 
   {%- if channel | isRequestReply %}
     {%- if channel | isRequester %}
-    {{request(channelName, channel.publish().message(0), channel.subscribe().message(0))}}
+    {{request(channelName, channel.publish().message(0), channel.subscribe().message(0), channel)}}
     {%- endif %}
     {%- if channel | isReplier %}
-    {{reply(channelName, channel.subscribe().message(0), channel.publish().message(0))}}
+    {{reply(channelName, channel.subscribe().message(0), channel.publish().message(0), channel)}}
     {%- endif %}
   {%- endif %}
 
   {%- if channel | isPubsub %}
     {%- if channel.hasSubscribe() %}
-    {{subscribe(channelName, channel.subscribe().message(0))}}
+    {{subscribe(channelName, channel.subscribe().message(0), channel)}}
     {%- endif %}
     {%- if channel.hasPublish() %}
-    {{publish(channelName, channel.publish().message(0))}}
+    {{publish(channelName, channel.publish().message(0), channel)}}
     {%- endif %}
   {%- endif %}
 

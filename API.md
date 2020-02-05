@@ -40,7 +40,8 @@ const generator = new Generator('html', path.resolve(__dirname, 'example'));
 const path = require('path');
 const generator = new Generator('html', path.resolve(__dirname, 'example'), {
   templateParams: {
-    sidebarOrganization: 'byTags'
+    sidebarOrganization: 'byTags',
+    baseHref: '/async-docs/'
   }
 });
 ```

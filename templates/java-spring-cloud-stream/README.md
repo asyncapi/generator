@@ -5,7 +5,7 @@
 {{ asyncapi.info().description() | safe }}
 
 
-# Genenerator Instructions
+# Generator Instructions
 
 This template generates Spring Cloud Stream (SCSt) code, either a library or a complete application. It uses version 3
 of SCSt which uses function names rather than annotations to configure the channels. See the [reference](https://cloud.spring.io/spring-cloud-static/spring-cloud-stream/3.0.1.RELEASE/reference/html/spring-cloud-stream.html).

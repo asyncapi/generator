@@ -12,13 +12,13 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.2.3.RELEASE</version>
+        <version>2.2.4.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
     <properties>
-        <spring-cloud.version>Hoxton.RELEASE</spring-cloud.version>
-        <solace-spring-cloud-bom.version>1.0.0-SNAPSHOT</solace-spring-cloud-bom.version>
+        <spring-cloud.version>{{ [asyncapi.info(), params] | springCloudVersion }}</spring-cloud.version>
+        <solace-spring-cloud-bom.version>{{ [asyncapi.info(), params] | solaceSpringCloudVersion }}</solace-spring-cloud-bom.version>
     </properties>
 
     <dependencyManagement>
@@ -43,33 +43,22 @@
     </dependencyManagement>
 
     <dependencies>
-{%- if params.binder === 'kafka' %}
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-stream-binder-kafka</artifactId>
-        </dependency>
-{%- endif %}
 {%- if params.binder === 'rabbit' %}
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-stream-binder-rabbit</artifactId>
 		</dependency>
-{%- endif %}
-{%- if params.binder === 'solace' %}
+{%- elif params.binder === 'solace' %}
         <dependency>
             <groupId>com.solace.spring.cloud</groupId>
             <artifactId>spring-cloud-starter-stream-solace</artifactId>
         </dependency>
+{%- else %}
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-stream-binder-kafka</artifactId>
+        </dependency>
 {%- endif %}
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-        </dependency>
 {%- if params.actuator === 'true' %}
         <dependency>
             <groupId>org.springframework.boot</groupId>

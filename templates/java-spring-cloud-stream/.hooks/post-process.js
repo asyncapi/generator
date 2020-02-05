@@ -11,6 +11,12 @@ module.exports = register => {
     let sourcePath = generator.targetDir + sourceHead
     const info = asyncapi.info()
     let package = generator.templateParams['javaPackage']
+    let generateMessagingClass = true
+    let gen = generator.templateParams['generateMessagingClass']
+
+    if (gen === 'false') {
+      generateMessagingClass = false
+    }
 
     if (!package && info) {
       const extensions = info.extensions()
@@ -27,10 +33,13 @@ module.exports = register => {
       fs.readdirSync(sourcePath).forEach(file => {
         if (first) {
           first = false
+          console.log("Making " + overridePath)
           fs.mkdirSync(overridePath, { recursive: true })
         }
-        //console.log("file: " + file)
-        fs.copyFileSync(path.resolve(sourcePath, file), path.resolve(overridePath, file))
+
+        if ((file != 'Messaging.java') || generateMessagingClass) {
+          fs.copyFileSync(path.resolve(sourcePath, file), path.resolve(overridePath, file))
+        }
         fs.unlinkSync(path.resolve(sourcePath, file))
       })
       sourcePath = overridePath

@@ -25,7 +25,8 @@ module.exports = ({ Nunjucks, _ }) => {
   typeMap.set('string', 'String')
 
   Nunjucks.addFilter('appProperties', ([asyncapi, params]) => {
-    if (!params.binder || (params.binder != 'kafka' && params.binder != 'rabbit' && params.binder != 'solace')) {
+    params.binder = params.binder || 'kafka'
+    if (params.binder != 'kafka' && params.binder != 'rabbit' && params.binder != 'solace') {
       throw new Error("Please provide a parameter named 'binder' with the value kafka, rabbit or solace.")
     }
 
@@ -85,46 +86,6 @@ module.exports = ({ Nunjucks, _ }) => {
       throw new Error("Can't determine the artifact id. Please set the param artifact-id, or element info.title or info.x-artifact-id.")
     }
     return ret
-  })
-
-  Nunjucks.addFilter('bindingClassName', ([channelName, channel]) => {
-    let className = channel.json()['x-java-class']
-    if (!className) {
-      throw new Error("Please set the x-java-class property on the channel " + channelName);
-    }
-
-    return _.upperFirst(className) + "Binding";
-  })
-
-  Nunjucks.addFilter('camelCase', (str) => {
-    return _.camelCase(str)
-  })
-
-  Nunjucks.addFilter('contentType', (channel) => {
-    let ret;
-
-    if (channel.hasPublish()) {
-      ret = contentType(channel.publish())
-    }
-    if (!ret && channel.hasSubscribe()) {
-      ret = contentType(channel.subscribe())
-    }
-
-    return ret
-  })
-
-  Nunjucks.addFilter('deliveryMode', (channel) => {
-    let val = channel.publish()._json.bindings.solace.deliveryMode
-    if (!val) {
-      ret = 'DIRECT'
-    } else {
-      ret = _.upperCase(val)
-      if (ret != 'DIRECT' && ret != 'PERSISTENT') {
-        throw new Error("delivery mode must be direct or persistent. Found: " + val)
-      }
-    }
-
-    return ret;
   })
 
   Nunjucks.addFilter('functionName', ([channelName, channel]) => {
@@ -203,23 +164,8 @@ module.exports = ({ Nunjucks, _ }) => {
     return ret
   })
 
-  Nunjucks.addFilter('kebabCase', (str) => {
-    return _.kebabCase(str)
-  })
-
   Nunjucks.addFilter('lowerFirst', (str) => {
     return _.lowerFirst(str)
-  })
-
-  Nunjucks.addFilter('messageClass', ([channelName, channel]) => {
-    let ret = messageClass(channel.publish())
-    if (!ret) {
-      ret = messageClass(channel.subscribe())
-    }
-    if (!ret) {
-      throw new Error("Channel " + channelName + ": no message class has been defined.")
-    }
-    return ret
   })
 
   Nunjucks.addFilter('payloadClass', ([channelName, channel]) => {
@@ -233,37 +179,16 @@ module.exports = ({ Nunjucks, _ }) => {
     return ret
   })
 
-  Nunjucks.addFilter('queueInfo', ([channelName, channel, subscribeTopic]) => {
-    let ret = {}
-    ret.isQueue = false;
-    const bindings = channel._json.bindings
-    if (bindings) {
-      //console.log("bindings: " + JSON.stringify(bindings))
-      const solaceBinding = bindings.solace
-      if (solaceBinding) {
-        ret.isQueue = bindings.is === 'queue'
-        if (!ret.isQueue && bindings.queue && !bindings.queue.name) {
-          throw new Error("Channel " + channelName + " please provide a queue name.");
-        }
-        ret.needQueue = ret.isQueue || bindings.queue.name
-        ret.queueName = bindings.queue && bindings.queue.name ? bindings.queue.name : channelName
-        ret.accessType = bindings.queue && bindings.queue.exclusive ? "ACCESSTYPE_EXCLUSIVE" : "ACCESSTYPE_NONEXCLUSIVE"
-        if (bindings.queue && bindings.queue.subscription) {
-          ret.subscription = bindings.queue.subscription
-        } else if (!ret.isQueue) {
-          ret.subscription = subscribeTopic
-        }
-      }
+  Nunjucks.addFilter('solaceSpringCloudVersion', ([info, params]) => {
+    let ret = ''
+    if (params['solaceSpringCloudVersion']) {
+      ret = params['solaceSpringCloudVersion']
+    } else if (info.extensions()['x-solace-spring-cloud-version']) {
+      ret = info.extensions()['x-solace-spring-cloud-version']
+    } else {
+      throw new Error("Can't determine the Solace Spring Cloud version. Please set the param solaceSpringCloudVersion or info.x-solace-spring-cloud-version. Example: 1.0.0.RELEASE")
     }
-    //console.log("queueInfo: " + JSON.stringify(ret))
-    return ret;
-  })
-
-  Nunjucks.addFilter('seeProp', ([name, prop]) => {
-    //if (name == 'account') {
-    //console.log("prop: " + name + " " + dump(prop) + "|" + prop.title() + " " + dump(prop._json))
-    console.log("prop: " + name + " type: " + prop.type() + " title: " + prop.title())
-    //}
+    return ret
   })
 
   Nunjucks.addFilter('springCloudStreamVersion', ([info, params]) => {
@@ -273,13 +198,21 @@ module.exports = ({ Nunjucks, _ }) => {
     } else if (info.extensions()['x-spring-cloud-stream-version']) {
       ret = info.extensions()['x-spring-cloud-stream-version']
     } else {
-      throw new Error("Can't determine the Spring Cloud Stream version. Please set the param springCloudStreamVersion or info.x-spring-cloud-stream-version.")
+      throw new Error("Can't determine the Spring Cloud Stream version. Please set the param springCloudStreamVersion or info.x-spring-cloud-stream-version. Example: 3.0.1.RELEASE")
     }
     return ret
   })
 
-  Nunjucks.addFilter('toJson', (object) => {
-    return JSON.stringify(object)
+  Nunjucks.addFilter('springCloudVersion', ([info, params]) => {
+    let ret = ''
+    if (params['springCloudVersion']) {
+      ret = params['springCloudVersion']
+    } else if (info.extensions()['x-spring-cloud-version']) {
+      ret = info.extensions()['x-spring-cloud-version']
+    } else {
+      throw new Error("Can't determine the Spring Cloud version. Please set the param springCloudVersion or info.x-spring-cloud-version. Example: Hoxton.RELEASE")
+    }
+    return ret
   })
 
   Nunjucks.addFilter('topicInfo', ([channelName, channel]) => {
@@ -290,10 +223,6 @@ module.exports = ({ Nunjucks, _ }) => {
   Nunjucks.addFilter('upperFirst', (str) => {
     return _.upperFirst(str)
   })
-
-  function contentType(pubOrSub) {
-    return pubOrSub._json.message.contentType
-  }
 
   function dump(obj) {
     let s = typeof obj
@@ -314,7 +243,7 @@ module.exports = ({ Nunjucks, _ }) => {
       if (channelJson.subscribe) {
         let functionName = getFunctionName(channelName, channel)
         let topicInfo = getTopicInfo(channelName, channel)
-        let queue = channelJson['x-scs-queue']
+        let queue = channelJson.subscribe['x-scs-destination']
         if (topicInfo.hasParams || queue) {
           if (!ret) {
             ret = {}
@@ -349,25 +278,26 @@ module.exports = ({ Nunjucks, _ }) => {
         ret[bindingName].destination = channelName
       }
       if (channelJson.subscribe) {
+        //console.log("sub: " + JSON.stringify(channelJson.subscribe))
         let subDestination
-        let consumerGroup = channelJson['x-scs-consumer-group']
-        let queue = channelJson['x-scs-queue']
-        //console.log('channel ' + channelName + ' consumerGroup: ' + consumerGroup + ' queue: ' + queue  );
+        let group = channelJson.subscribe['x-scs-group']
+        let queue = channelJson.subscribe['x-scs-destination']
+        //console.log('channel ' + channelName + ' group: ' + group + ' queue: ' + queue  );
 
         if (queue && params.binder === 'solace') {
           subDestination = queue
         }
 
         if (topicInfo.hasParams && !subDestination) {
-          throw new Error("channel " + channelName + " has parameters but no queue has been specified. A queue is required when a topic has parameters.");
+          throw new Error("channel " + channelName + " has parameters but no queue has been specified. A queue is required when a topic has parameters. Add a value: channel.subscribe.x-scs-destination");
         }
 
         subDestination = subDestination || topicInfo.subscribeTopic
         bindingName = functionName + "Consumer-in-0"
         ret[bindingName] = {}
         ret[bindingName].destination = subDestination
-        if (consumerGroup) {
-          ret[bindingName].group = consumerGroup
+        if (group) {
+          ret[bindingName].group = group
         }
       }
     }
@@ -418,8 +348,8 @@ module.exports = ({ Nunjucks, _ }) => {
     ret.java = {}
     ret.java.host = getParamOrXs(params, 'host')
     ret.java.msgVpn = getParamOrXs(params, 'msgVpn')
-    ret.java.clientUsername = getParamOrXs(params, 'clientUsername')
-    ret.java.clientPassword = getParamOrXs(params, 'clientPassword')
+    ret.java.clientUsername = getParamOrXs(params, 'username')
+    ret.java.clientPassword = getParamOrXs(params, 'password')
     return ret;
   }
 

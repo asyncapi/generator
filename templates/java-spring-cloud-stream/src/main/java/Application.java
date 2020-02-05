@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.Message;
 
 @SpringBootApplication
-@Configuration
 public class Application implements CommandLineRunner {
 
 	private static final Logger log = LoggerFactory.getLogger(Application.class);
@@ -25,23 +24,26 @@ public class Application implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-
 {% for channelName, channel in asyncapi.channels() -%}
+{%- if channel.hasSubscribe() %}
 {%- set name = [channelName, channel] | functionName %}
 {%- set upperName = name | upperFirst %}
 		messaging.set{{upperName}}Callback(this::receive);
-{% endfor %}
+{%- endif %}
+{%- endfor %}
+
 		while (true) {
-{% for channelName, channel in asyncapi.channels() -%}
+{%- for channelName, channel in asyncapi.channels() -%}
+{%- if channel.hasPublish() %}
 {%- set name = [channelName, channel] | functionName %}
 {%- set upperName = name | upperFirst %}
 {%- set payloadClass = [channelName, channel] | payloadClass %}
 {%- set payloadName = name + "Payload" %}
 {%- set topicInfo = [channelName, channel] | topicInfo %}
-
 			{{payloadClass}} {{payloadName}} = new {{payloadClass}}();
 			messaging.send{{upperName}}( {{payloadName}}{{topicInfo.sampleArgList}} );
-{% endfor %}
+{% endif %}
+{%- endfor %}
 			Thread.sleep(1000);
 		}
 

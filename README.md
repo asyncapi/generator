@@ -38,6 +38,8 @@ docker run --rm -it -v $PWD:/app -w /app asyncapi/generator [COMMAND HERE]
     -h, --help                     output usage information
 ```
 
+Please check out the **templates directory** to get a list of the supported languages/formats.
+
 #### Examples
 
 The shortest possible syntax:

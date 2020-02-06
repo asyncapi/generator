@@ -31,5 +31,13 @@
 {{ indent2 }}public static enum {{ type }} { {{ prop._json.enum }} }
 {% endif -%}
 {%- endfor %}
+
+{{ indent2 }}public String toString() {
+{{ indent3 }}return "{{ className }} ["
+{%- for name, prop in properties %}
+{{ indent3 }}+ " {{ name }}: " + {{ name }}
+{%- endfor %}
+{{ indent3 }}+ " ]";
+{{ indent2 }}}
 {{ indent1 }}}
 {% endmacro -%}

@@ -141,8 +141,8 @@
           {% if prop.items() %}
             <p class="pl-6 mb-2 text-xs font-bold uppercase text-grey-darker">Items:</p>
             {% if prop.items() | isArray %}
-              {% for itName, it in prop.items() %}
-              {{ schemaProp(it, itName, odd=(not odd), required=(prop.required() | contains(pName))) }}
+              {% for it in prop.items() %}
+              {{ schemaProp(it, loop.index0, odd=(not odd), required=(prop.required() | contains(pName))) }}
               {% endfor %}
             {% else %}
               {{ schemaProp(prop.items(), '0', odd=(not odd)) }}

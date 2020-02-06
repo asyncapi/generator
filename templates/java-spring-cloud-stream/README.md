@@ -70,7 +70,7 @@ There are a couple of specification extentions you can use to shape how the bind
 
 ## Parameters
 
-Parameters can be passed to the generator using command line arguments in the form ```-p param=value```. Here is a list of the parameters that can be used with this template. In some cases these can be put into the AsyncAPI documents using the specification extensions feature.
+Parameters can be passed to the generator using command line arguments in the form ```-p param=value```. Here is a list of the parameters that can be used with this template. In some cases these can be put into the AsyncAPI documents using the specification extensions feature. In those cases, the 'info' prefix means that it belongs in the info section of the document.
 
 Parameter   |   Extension  |    Description
 ------------|--------------|------------------
@@ -89,6 +89,21 @@ springCloudVersion | info.x-spring-cloud-version | The version of the spring-clo
 springCloudStreamVersion | info.x-spring-cloud-stream-version | The version of the spring-cloud-stream dependency specified in the Maven file, when generating a library. When generating an application, the spring-cloud-dependencies BOM is used instead.
 username | | The client username connection property. Currently this only works with the Solace binder.
 
+## Specification Extensions
+
+The following specification extensions are supported. In some cases their value can be provided as a command line parameter. The 'info' prefix means that it belongs in the info section of the document.
+
+Extension | Parameter | Description
+------------|--------------|------------------
+info.x-artifact-id | artifactId | The Maven artifact id.
+info.x-group-id | groupId | The Maven group id.
+info.x-java-package | javaPackage | The Java package of the generated classes.
+info.x-solace-spring-cloud-version | solaceSpringCloudVersion | The version of the solace-spring-cloud BOM dependency used when generating an application.
+info.x-spring-cloud-version | info.x-spring-cloud-version | The version of the spring-cloud-dependencies BOM dependency used when generating an application.
+info.x-spring-cloud-stream-version | springCloudStreamVersion | The version of the spring-cloud-stream dependency specified in the Maven file, when generating a library. When generating an application, the spring-cloud-dependencies BOM is used instead.
+channel.x-scs-function-name | | This specifies the base function name to use on a channel. For example, if it is set to myFunction, then the template will create functions myFunctionSupplier and/or myFunctionConsumer.
+channel.subscription.x-scs-destination | | This overrides the destination on an incoming binding. It can be used to specify, for example, the name of a queue to subscribe to instead of a topic.
+channel.subscription.x-scs-group | | This is used to specify the group property of an incoming binding.
 
 
 

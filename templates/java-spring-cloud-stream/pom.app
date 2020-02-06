@@ -1,3 +1,4 @@
+{% if params.artifactType === 'application' -%}
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
@@ -18,7 +19,9 @@
 
     <properties>
         <spring-cloud.version>{{ [asyncapi.info(), params] | springCloudVersion }}</spring-cloud.version>
+{%- if params.binder === 'solace' %}
         <solace-spring-cloud-bom.version>{{ [asyncapi.info(), params] | solaceSpringCloudVersion }}</solace-spring-cloud-bom.version>
+{%- endif %}
     </properties>
 
     <dependencyManagement>
@@ -85,3 +88,4 @@
     </build>
 
 </project>
+{%- endif %}

@@ -11,19 +11,21 @@ module.exports = ({ Nunjucks, _ }) => {
   formatMap.set('number', '%f')
   formatMap.set('string', '%s')
 
-  // This maps json schema types to Java format strings.
+  // This maps json schema types to examples of values.
   const sampleMap = new Map()
   sampleMap.set('boolean', 'true')
   sampleMap.set('integer', '1')
   sampleMap.set('number', '1.1')
   sampleMap.set('string', '"string"')
 
+  // This maps json schema types to Java types.
   const typeMap = new Map()
   typeMap.set('boolean', 'Boolean')
   typeMap.set('integer', 'Integer')
   typeMap.set('number', 'Double')
   typeMap.set('string', 'String')
 
+  // This generates the object that gets rendered in the application.yaml file.
   Nunjucks.addFilter('appProperties', ([asyncapi, params]) => {
     params.binder = params.binder || 'kafka'
     if (params.binder != 'kafka' && params.binder != 'rabbit' && params.binder != 'solace') {
@@ -75,19 +77,10 @@ module.exports = ({ Nunjucks, _ }) => {
   })
 
   Nunjucks.addFilter('artifactId', ([info, params]) => {
-    let ret = ''
-    if (params['artifactId']) {
-      ret = params['artifactId']
-    } else if (info.extensions()['x-artifact-id']) {
-      ret = info.extensions()['x-artifact-id']
-    } else if (info.title()) {
-      ret = _.kebabCase(info.title())
-    } else {
-      throw new Error("Can't determine the artifact id. Please set the param artifact-id, or element info.title or info.x-artifact-id.")
-    }
-    return ret
+    return getParamOrExtension(info, params, 'artifactId', 'x-artifact-id', 'Maven artifact ID', 'my-application')
   })
 
+  // This determines the base function name that we will use for the SCSt mapping between functions and bindings.
   Nunjucks.addFilter('functionName', ([channelName, channel]) => {
     return getFunctionName(channelName, channel)
   })
@@ -104,6 +97,7 @@ module.exports = ({ Nunjucks, _ }) => {
     return indent(numTabs + 2)
   })
 
+  // This returns the proper Java type for a schema property.
   Nunjucks.addFilter('fixType', ([name, property]) => {
 
     // For message headers, type is a property.
@@ -153,25 +147,18 @@ module.exports = ({ Nunjucks, _ }) => {
   })
 
   Nunjucks.addFilter('groupId', ([info, params]) => {
-    let ret = ''
-    if (params['groupId']) {
-      ret = params['groupId']
-    } else if (info.extensions()['x-group-id']) {
-      ret = info.extensions()['x-group-id']
-    } else {
-      throw new Error("Can't determine the group id. Please set the param groupId or element info.x-group-id.")
-    }
-    return ret
+    return getParamOrExtension(info, params, 'groupId', 'x-group-id', 'Maven group ID.', 'com.company')
   })
 
   Nunjucks.addFilter('lowerFirst', (str) => {
     return _.lowerFirst(str)
   })
 
+  // This returns the Java class name of the payload.
   Nunjucks.addFilter('payloadClass', ([channelName, channel]) => {
-    let ret = payloadClass(channel.publish())
+    let ret = getPayloadClass(channel.publish())
     if (!ret) {
-      ret = payloadClass(channel.subscribe())
+      ret = getPayloadClass(channel.subscribe())
     }
     if (!ret) {
       throw new Error("Channel " + channelName + ": no payload class has been defined.")
@@ -180,41 +167,18 @@ module.exports = ({ Nunjucks, _ }) => {
   })
 
   Nunjucks.addFilter('solaceSpringCloudVersion', ([info, params]) => {
-    let ret = ''
-    if (params['solaceSpringCloudVersion']) {
-      ret = params['solaceSpringCloudVersion']
-    } else if (info.extensions()['x-solace-spring-cloud-version']) {
-      ret = info.extensions()['x-solace-spring-cloud-version']
-    } else {
-      throw new Error("Can't determine the Solace Spring Cloud version. Please set the param solaceSpringCloudVersion or info.x-solace-spring-cloud-version. Example: 1.0.0.RELEASE")
-    }
-    return ret
+    return getParamOrExtension(info, params, 'solaceSpringCloudVersion', 'x-solace-spring-cloud-version', 'Solace Spring Cloud version', '1.0.0-SNAPSHOT')
   })
 
   Nunjucks.addFilter('springCloudStreamVersion', ([info, params]) => {
-    let ret = ''
-    if (params['springCloudStreamVersion']) {
-      ret = params['springCloudStreamVersion']
-    } else if (info.extensions()['x-spring-cloud-stream-version']) {
-      ret = info.extensions()['x-spring-cloud-stream-version']
-    } else {
-      throw new Error("Can't determine the Spring Cloud Stream version. Please set the param springCloudStreamVersion or info.x-spring-cloud-stream-version. Example: 3.0.1.RELEASE")
-    }
-    return ret
+    return getParamOrExtension(info, params, 'springCloudStreamVersion', 'x-spring-cloud-stream-version', 'Spring Cloud Stream version', '3.0.1.RELEASE')
   })
 
   Nunjucks.addFilter('springCloudVersion', ([info, params]) => {
-    let ret = ''
-    if (params['springCloudVersion']) {
-      ret = params['springCloudVersion']
-    } else if (info.extensions()['x-spring-cloud-version']) {
-      ret = info.extensions()['x-spring-cloud-version']
-    } else {
-      throw new Error("Can't determine the Spring Cloud version. Please set the param springCloudVersion or info.x-spring-cloud-version. Example: Hoxton.RELEASE")
-    }
-    return ret
+    return getParamOrExtension(info, params, 'springCloudVersion', 'x-spring-cloud-version', 'Spring Cloud version', 'Hoxton.SR1')
   })
 
+  // This returns an object containing information the template needs to render topic strings.
   Nunjucks.addFilter('topicInfo', ([channelName, channel]) => {
     let p = channel.parameters()
     return getTopicInfo(channelName, channel)
@@ -233,6 +197,7 @@ module.exports = ({ Nunjucks, _ }) => {
     return s
   }
 
+  // For the Solace binder. This determines the topic that must be subscribed to on a queue, when the x-scs-destination is given (which is the queue name.)
   function getAdditionalSubs(asyncapi) {
     let ret
 
@@ -260,6 +225,7 @@ module.exports = ({ Nunjucks, _ }) => {
     return ret
   }
 
+  // This returns the SCSt bindings config that will appear in application.yaml.
   function getBindings(asyncapi, params) {
     let ret = {}
 
@@ -305,6 +271,7 @@ module.exports = ({ Nunjucks, _ }) => {
     return ret
   }
 
+  // This returns the base function name that SCSt will use to map functions with bindings.
   function getFunctionName(channelName, channel) {
     let ret = _.camelCase(channelName)
     let channelJson = channel._json
@@ -317,6 +284,7 @@ module.exports = ({ Nunjucks, _ }) => {
     return ret
   }
 
+  // This returns the string that gets rendered in the function.definition part of application.yaml.
   function getFunctionDefinitions(asyncapi) {
     let ret = ""
 
@@ -334,6 +302,20 @@ module.exports = ({ Nunjucks, _ }) => {
     return ret
   }
 
+  // This returns the value of a param, or specification extention if the param isn't set. If neither are set it throws an error.
+  function getParamOrExtension(info, params, paramName, extensionName, description, example) {
+    let ret = ''
+    if (params[paramName]) {
+      ret = params[paramName]
+    } else if (info.extensions()[extensionName]) {
+      ret = info.extensions()[extensionName]
+    } else {
+      throw new Error(`Can't determine the ${description}. Please set the param ${paramName} or info.${extensionName}. Example: ${example}`)
+    }
+    return ret
+  }
+
+  // This returns the value of a param, or 'xxxxx' if not found. This is for generating connection string placeholders in application.yaml.
   function getParamOrXs(params, param) {
     let ret = params[param]
     if (!ret) {
@@ -343,6 +325,18 @@ module.exports = ({ Nunjucks, _ }) => {
     return ret
   }
 
+  function getPayloadClass(pubOrSub) {
+    let ret
+
+    //console.log("getPayloadClass: "  + JSON.stringify(pubOrSub._json.message))
+    if (pubOrSub && pubOrSub._json && pubOrSub._json.message && pubOrSub._json.message.payload) {
+      ret = _.upperFirst(pubOrSub._json.message.payload.title)
+    }
+
+    return ret
+  }
+
+  // This returns the connection properties for a solace binder, for application.yaml.
   function getSolace(params) {
     let ret = {}
     ret.java = {}
@@ -353,6 +347,7 @@ module.exports = ({ Nunjucks, _ }) => {
     return ret;
   }
 
+  // This returns an object containing information the template needs to render topic strings.
   function getTopicInfo(channelName, channel) {
     const ret = {}
     let publishTopic = String(channelName)
@@ -425,29 +420,6 @@ module.exports = ({ Nunjucks, _ }) => {
 
   function indent(numTabs) {
     return "\t".repeat(numTabs)
-  }
-
-  function messageClass(pubOrSub) {
-    let ret
-
-    //console.log("messageClass : " + JSON.stringify(pubOrSub))
-    if (pubOrSub && pubOrSub._json && pubOrSub._json.message) {
-      ret = _.upperFirst(pubOrSub._json.message.name)
-    }
-
-    console.log("messageClass : " + ret)
-    return ret
-  }
-
-  function payloadClass(pubOrSub) {
-    let ret
-
-    //console.log("payloadClass: "  + JSON.stringify(pubOrSub._json.message))
-    if (pubOrSub && pubOrSub._json && pubOrSub._json.message && pubOrSub._json.message.payload) {
-      ret = _.upperFirst(pubOrSub._json.message.payload.title)
-    }
-
-    return ret
   }
 
 }

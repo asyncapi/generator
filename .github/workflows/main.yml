@@ -1,8 +1,9 @@
 name: Publish docker image
 
 on:
-  release:
-    types: [created]
+  push:
+    tags:
+    - '*'
 
 jobs:
   build:

@@ -60,7 +60,9 @@ The `.tp-config.json` file contains a JSON object that may have the following in
 |Name|Type|Description|
 |---|---|---|
 |`supportedProtocols`| [String] | A list with all the protocols this template supports.
-|`requiredParams`| [String] | A list with all the params that must be passed when generating the template. When using the command line, it's done by indicating `--param name=value`.
+|`parameters`| Object[String, Object] | An object with all the params that can be passed when generating the template. When using the command line, it's done by indicating `--param name=value` or `-p name=value`.
+|`parameters[param].description`| String | A user-friendly description about the parameter.
+|`parameters[param].required`| Boolean | Whether the parameter is required or not.
 |`conditionalFiles`| Object[String, Object] | An object containing all the file paths that should be conditionally rendered. Each key represents a file path and each value must be an object with the keys `subject` and `validation`.
 |`conditionalFiles[filePath].subject`| String | The `subject` is a [JMESPath](http://jmespath.org/) query to grab the value you want to apply the condition to. It queries an object with the whole AsyncAPI document and, when specified, the given server. The object looks like this: `{ asyncapi: { ... }, server: { ... } }`.
 |`conditionalFiles[filePath].validation`| Object | The `validation` is a JSON Schema Draft 07 object. This JSON Schema definition will be applied to the JSON value resulting from the `subject` query. If validation doesn't have errors, the condition is met, and therefore the given file will be rendered. Otherwise, the file is ignored.
@@ -71,7 +73,12 @@ The `.tp-config.json` file contains a JSON object that may have the following in
 ```json
 {
   "supportedProtocols": ["amqp", "mqtt"],
-  "requiredParams": ["server"],
+  "parameters": {
+    "server": {
+      "description": "The server you want to use in the code.",
+      "required": true
+    }
+  },
   "conditionalFiles": {
     "src/api/adapters/amqp.js": {
       "subject": "server.protocol",

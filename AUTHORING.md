@@ -73,7 +73,12 @@ The `.tp-config.json` file contains a JSON object that may have the following in
 ```json
 {
   "supportedProtocols": ["amqp", "mqtt"],
-  "requiredParams": ["server"],
+  "parameters": {
+    "server": {
+      "description": "The server you want to use in the code.",
+      "required": true
+    }
+  },
   "conditionalFiles": {
     "src/api/adapters/amqp.js": {
       "subject": "server.protocol",

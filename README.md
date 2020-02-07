@@ -2,6 +2,9 @@
 <p align="center">
   <em>Use your AsyncAPI definition to generate literally anything. Markdown documentation, Node.js code, HTML documentation, anything!</em>
 </p>
+
+![npm](https://img.shields.io/npm/v/asyncapi-generator?style=for-the-badge) ![npm](https://img.shields.io/npm/dt/asyncapi-generator?style=for-the-badge)
+
 <br><br>
 
 > :warning: This package doesn't support AsyncAPI 1.x anymore. We recommend to upgrade to the latest AsyncAPI version using the [AsyncAPI converter](https://github.com/asyncapi/converter). If you need to convert documents on the fly, you may use the [Node.js](https://github.com/asyncapi/converter) or [Go](https://github.com/asyncapi/converter-go) converters.
@@ -12,10 +15,12 @@
 npm install -g asyncapi-generator
 ```
 
-Or use all the commands below using Docker by replacing `ag` in all the commands below with:
+Or just use Docker:
 
 ```bash
 docker run --rm -it -v $PWD:/app -w /app asyncapi/generator [COMMAND HERE]
+# Example that you can run inside generator directory after cloning this repository
+docker run --rm -it -v $PWD:/app -w /app asyncapi/generator -o ag -o ./my_output ./test/docs/streetlights.yml markdown
 ```
 
 ## Usage

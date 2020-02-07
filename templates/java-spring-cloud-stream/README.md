@@ -77,16 +77,16 @@ Parameter   |   Extension  |    Description
 actuator    |              | If present, it adds the dependencies for spring-boot-starter-web, spring-boot-starter-actuator and micrometer-registry-prometheus.
 artifactId  |  info.x-artifact-id | The Maven artifact id.
 artifactType | | The type of project to generate, application or library. The default is library. When generating an application, the pom.xml file will contain the complete set of dependencies required to run an app, and it will contain an Application class with a main function. Otherwise the pom file will include only the dependencies required to compile a library.
-binder | | The name of the binder implementation, one of kafka, rabbit or solace. Default: kafka
+binder | | The name of the binder implementation, one of kafka, rabbit or solace. Default: kafka. If you need other binders to be supported, please let us know!
 generateMessagingClass | | By default the Messaging.java class is generated. If you don't want it, set this parameter to 'false'.
 groupId | info.x-group-id | The Maven group id.
 host | | The host connection property. Currently this only works with the Solace binder. Example: tcp://myhost.com:55555
 javaPackage | info.x-java-package	| The Java package of the generated classes.
 msgVpn | | The message vpn connection property. Currently this only works with the Solace binder.
 password | | The client password connection property. Currently this only works with the Solace binder.
-solaceSpringCloudVersion | info.x-solace-spring-cloud-version | The version of the solace-spring-cloud BOM dependency used when generating an application.
-springCloudVersion | info.x-spring-cloud-version | The version of the spring-cloud-dependencies BOM dependency used when generating an application.
-springCloudStreamVersion | info.x-spring-cloud-stream-version | The version of the spring-cloud-stream dependency specified in the Maven file, when generating a library. When generating an application, the spring-cloud-dependencies BOM is used instead.
+solaceSpringCloudVersion | info.x-solace-spring-cloud-version | The version of the solace-spring-cloud-bom dependency used when generating an application.
+springCloudVersion | info.x-spring-cloud-version | The version of the spring-cloud-dependencies BOM dependency used when generating an application. Example: Hoxton.RELEASE.
+springCloudStreamVersion | info.x-spring-cloud-stream-version | The version of the spring-cloud-stream dependency specified in the Maven file, when generating a library. When generating an application, the spring-cloud-dependencies BOM is used instead. Example: 3.0.1.RELEASE.
 username | | The client username connection property. Currently this only works with the Solace binder.
 
 ## Specification Extensions

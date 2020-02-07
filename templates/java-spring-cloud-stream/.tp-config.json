@@ -1,0 +1,64 @@
+{
+  "parameters": {
+    "actuator": {
+      "description": "If present, it adds the dependencies for spring-boot-starter-web, spring-boot-starter-actuator and micrometer-registry-prometheus.",
+      "required": false
+    },
+    "artifactId": {
+      "description": "The Maven artifact id. Alternatively you can set the specification extension info.x-artifact-id",
+      "required": false
+    },
+    "artifactType": {
+      "description": "The type of project to generate, application or library. The default is library. When generating an application, the pom.xml file will contain the complete set of dependencies required to run an app, and it will contain an Application class with a main function. Otherwise the pom file will include only the dependencies required to compile a library.",
+      "required": false
+    },
+    "binder": {
+      "description": "The name of the binder implementation, one of kafka, rabbit or solace. Default: kafka. If you need other binders to be supported, please let us know!",
+      "required": false
+    },
+    "generateMessagingClass": {
+      "description": "By default the Messaging.java class is generated. If you don't want it, set this parameter to 'false'.",
+      "required": false
+    },
+    "groupId": {
+      "description": "The Maven group id. Alternatively you can set the specification extension info.x-group-id",
+      "required": false
+    },
+    "host": {
+      "description": "The host connection property. Currently this only works with the Solace binder. Example: tcp://myhost.com:55555.",
+      "required": false
+    },
+    "javaPackage": {
+      "description": "The Java package of the generated classes. Alternatively you can set the specification extension info.x-java-package",
+      "required": false
+    },
+    "msgVpn": {
+      "description": "The message vpn connection property. Currently this only works with the Solace binder.",
+      "required": false
+    },
+    "password": {
+      "description": "The client password connection property. Currently this only works with the Solace binder.",
+      "required": false
+    },
+    "solaceSpringCloudVersion": {
+      "description": "The version of the solace-spring-cloud-bom dependency used when generating an application. Alternatively you can set the specification extension info.x-solace-spring-cloud-version.",
+      "required": false
+    },
+    "springCloudVersion": {
+      "description": "The version of the spring-cloud-dependencies BOM dependency used when generating an application. Alternatively you can set the specification extension info.x-spring-cloud-version. Example: Hoxton.RELEASE.",
+      "required": false
+    },
+    "springCloudStreamVersion": {
+      "description": "The version of the spring-cloud-stream dependency specified in the Maven file, when generating a library. When generating an application, the spring-cloud-dependencies BOM is used instead. Example: 3.0.1.RELEASE",
+      "required": false
+    },
+    "username": {
+      "description": "The client username connection property. Currently this only works with the Solace binder",
+      "required": false
+    },
+    "artifactType": {
+      "description": "The type of artifact that will be generated, either library or application.",
+      "required": false
+    }
+  }
+}

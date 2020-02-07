@@ -1,6 +1,6 @@
 .PHONY: docker
 docker: 
-	docker build -t derberg/generator:latest .
+	docker build -t asyncapi/generator:latest .
 
 .PHONY: release
 release:

@@ -1,18 +1,17 @@
 {
-  "name": "@asyncapi/html-template",
+  "name": "@asyncapi/java-spring-template",
   "version": "0.1.0",
-  "description": "HTML template for the AsyncAPI generator.",
+  "description": "Java Spring template for AsyncAPI generator.",
   "keywords": [
     "asyncapi",
     "generator",
-    "html",
+    "java",
+    "spring",
     "template"
   ],
   "author": "Fran Mendez <fmvilas@gmail.com> (fmvilas.com)",
   "license": "Apache-2.0",
   "dependencies": {
-    "lodash": "^4.17.15",
-    "markdown-it": "^10.0.0",
-    "openapi-sampler": "^1.0.0-beta.15"
+    "lodash": "^4.17.15"
   }
 }

@@ -1,14 +1,18 @@
 {
-  "name": "{{ asyncapi.info().title() | kebabCase }}",
-  "description": "{{ asyncapi.info().description() | oneLine }}",
-  "version": "{{ asyncapi.info().version() }}",
-  "scripts": {
-    "start": "node src/api/index.js"
-  },
+  "name": "@asyncapi/nodejs-ws-template",
+  "version": "0.1.0",
+  "description": "Node.js WebSockets template for AsyncAPI generator.",
+  "keywords": [
+    "asyncapi",
+    "generator",
+    "nodejs",
+    "websockets",
+    "ws",
+    "template"
+  ],
+  "author": "Fran Mendez <fmvilas@gmail.com> (fmvilas.com)",
+  "license": "Apache-2.0",
   "dependencies": {
-    "asyncapi-parser": "0.x",
-    "express": "4.17.1",
-    "express-ws": "4.0.0",
-    "node-yaml-config": "0.0.4"
+    "lodash": "^4.17.15"
   }
 }

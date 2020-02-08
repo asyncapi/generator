@@ -41,6 +41,7 @@
     "lodash": "^4.17.15",
     "markdown-it": "^8.4.1",
     "minimatch": "^3.0.4",
+    "npmi": "^4.0.0",
     "nunjucks": "^3.2.0",
     "openapi-sampler": "^1.0.0-beta.9"
   },

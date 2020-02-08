@@ -2,6 +2,8 @@
 
 const path = require('path');
 const os = require('os');
+const fs = require('fs');
+const npmi = require('npmi');
 const program = require('commander');
 const packageInfo = require('./package.json');
 const mkdirp = require('mkdirp');
@@ -15,6 +17,7 @@ const green = text => `\x1b[32m${text}\x1b[0m`;
 
 let asyncapiFile;
 let template;
+let templatesDir = Generator.DEFAULT_TEMPLATES_DIR;
 const params = {};
 const noOverwriteGlobs = [];
 const disabledHooks = [];
@@ -28,6 +31,10 @@ const paramParser = v => {
   const paramValue = chunks[1];
   params[paramName] = paramValue;
   return v;
+};
+
+const parseTemplatesDir = v => {
+  templatesDir = v;
 };
 
 const noOverwriteParser = v => noOverwriteGlobs.push(v);
@@ -57,7 +64,8 @@ program
   .option('-d, --disable-hook <hookName>', 'disable a specific hook', disableHooksParser)
   .option('-n, --no-overwrite <glob>', 'glob or path of the file(s) to skip when regenerating', noOverwriteParser)
   .option('-p, --param <name=value>', 'additional param to pass to templates', paramParser)
-  .option('-t, --templates <templateDir>', 'directory where templates are located (defaults to internal templates directory)', Generator.DEFAULT_TEMPLATES_DIR, path.resolve(__dirname, 'templates'))
+  .option('-t, --templates <templateDir>', 'directory where templates are located (defaults to internal templates directory)', parseTemplatesDir, Generator.DEFAULT_TEMPLATES_DIR)
+  .option('--force-install', 'forces the installation of the template dependencies')
   .parse(process.argv);
 
 if (!asyncapiFile) {
@@ -68,6 +76,7 @@ if (!asyncapiFile) {
 mkdirp(program.output, async err => {
   if (err) return showErrorAndExit(err);
   try {
+    await installTemplate(program.forceInstall);
     await generate(program.output);
   } catch (e) {
     return showErrorAndExit(e);
@@ -126,12 +135,38 @@ function generate(targetDir) {
       });
 
       await generator.generateFromFile(asyncapiFile);
-      console.log(green('Done! ✨'));
+      console.log(green('\n\nDone! ✨'));
       console.log(`${yellow('Check out your shiny new generated files at ') + magenta(program.output) + yellow('.')}\n`);
       resolve();
     } catch (e) {
       reject(e);
     }
+  });
+}
+
+/**
+ * Installs template dependencies.
+ *
+ * @param {Boolean} [force=false] Whether to force installation or not.
+ */
+function installTemplate(force = false) {
+  return new Promise((resolve, reject) => {
+    const nodeModulesDir = path.resolve(templatesDir, template, 'node_modules');
+    if (!force && fs.existsSync(nodeModulesDir)) return resolve();
+
+    console.log(magenta('Installing template dependencies...'));
+
+    npmi({
+      path: path.resolve(templatesDir, template),
+    }, err => {
+      if (err) {
+        console.error(err.message);
+        return reject(err);
+      }
+
+      console.log(magenta('Finished installing template dependencies.'));
+      resolve();
+    });
   });
 }
 

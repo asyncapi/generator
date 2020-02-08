@@ -1,0 +1,22 @@
+{
+  "name": "@asyncapi/html-template",
+  "version": "0.1.0",
+  "description": "HTML template for the AsyncAPI generator.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "asyncapi",
+    "generator",
+    "html",
+    "template"
+  ],
+  "author": "Fran Mendez <fmvilas@gmail.com> (fmvilas.com)",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "lodash": "^4.17.15",
+    "markdown-it": "^10.0.0",
+    "openapi-sampler": "^1.0.0-beta.15"
+  }
+}

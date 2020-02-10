@@ -18,9 +18,15 @@ npm install -g asyncapi-generator
 Or just use Docker:
 
 ```bash
-docker run --rm -it -v [ASYNCAPI FILES LOCATION]:/app/my_files asyncapi/generator [COMMAND HERE]
-# Example that you can run inside generator directory after cloning this repository
-docker run --rm -it -v ${PWD}/test/docs:/app/my_files asyncapi/generator -o ./my_files my_files/streetlights.yml markdown
+docker run --rm -it \
+-v [ASYNCAPI FILE LOCATION]:/app/asyncapi.yml \
+-v [GENERATED FILES LOCATION]:/app/output \
+asyncapi/generator [COMMAND HERE]
+# Example that you can run inside generator directory after cloning this repository. First you specify mount in location of your AsyncAPI file and then you mount in directory where generation result should be saved.
+docker run --rm -it \
+-v ${PWD}/test/docs/streetlights.yml:/app/asyncapi.yml \
+-v ${PWD}/output:/app/output \
+asyncapi/generator -o ./output asyncapi.yml markdown
 ```
 
 ## Usage

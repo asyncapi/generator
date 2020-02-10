@@ -90,7 +90,7 @@ public class Messaging {
 
 	@Bean
 	Consumer<Message<{{payloadClass}}>> {{name}}Consumer() {
-		return message -> {{callbackName}}.accept(message);
+		return message -> { if ({{callbackName}} != null) {{callbackName}}.accept(message); };
 	}
 
 {% endif %}

@@ -7,7 +7,7 @@
     <artifactId>{{ [asyncapi.info(), params] | artifactId }}</artifactId>
     <version>{{ asyncapi.info().version() }}</version>
     <packaging>jar</packaging>
-    <name>scs-generated</name>
+    <name>{{ [asyncapi.info(), params] | artifactId }}</name>
     <description>Auto-generated Spring Cloud Stream AsyncAPI application</description>
 
     <parent>

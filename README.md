@@ -20,7 +20,7 @@ Or just use Docker:
 ```bash
 docker run --rm -it -v ${PWD}:/app -w /app asyncapi/generator [COMMAND HERE]
 # Example that you can run inside generator directory after cloning this repository
-docker run --rm -it -v ${PWD}:/app -w /app asyncapi/generator -o ag -o ./my_output ./test/docs/streetlights.yml markdown
+docker run --rm -it -v ${PWD}:/app asyncapi/generator -o ./my_output ./test/docs/streetlights.yml markdown
 ```
 
 ## Usage

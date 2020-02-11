@@ -9,10 +9,12 @@
 {% set indent3 = indentLevel | indent3 -%}
 {{ indent1 }}public {% if isStatic %}static {% endif %} class {{ className }} {
 {% for name, prop in properties -%}
+{% set name = name | camelCase %}
 {%- set type = [name, prop] | fixType %}
 {{ indent2 }}private {{ type }} {{ name }};
 {%- endfor -%}
 {%- for name, prop in properties %}
+{% set name = name | camelCase %}
 {% set type = [name, prop] | fixType %}
 {{ indent2 }}public {{ type }} get{{- name | upperFirst }}() {
 {{ indent3 }}return {{ name }};
@@ -35,6 +37,7 @@
 {{ indent2 }}public String toString() {
 {{ indent3 }}return "{{ className }} ["
 {%- for name, prop in properties %}
+{%- set name = name | camelCase %}
 {{ indent3 }}+ " {{ name }}: " + {{ name }}
 {%- endfor %}
 {{ indent3 }}+ " ]";

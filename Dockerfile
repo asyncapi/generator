@@ -1,12 +1,13 @@
-FROM node:11
+FROM node:13.8.0-alpine3.11
 
-WORKDIR /asyncapi
+WORKDIR /app
 
-# install dependencies
+# Install dependencies
 COPY package*.json ./
+
 RUN npm install
 
-# copy code
+# Copy sources
 COPY . .
 
-ENTRYPOINT [ "node", "/asyncapi/cli" ]
+ENTRYPOINT [ "node", "/app/cli" ]

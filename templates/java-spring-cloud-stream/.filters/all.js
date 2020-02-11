@@ -292,10 +292,10 @@ module.exports = ({ Nunjucks, _ }) => {
       let channel = asyncapi.channels()[channelName]
       let channelJson = channel._json
       let functionName = getFunctionName(channelName, channel)
-      if (channel.publish) {
+      if (channelJson.publish) {
         ret += functionName + "Supplier;"
       }
-      if (channel.subscribe) {
+      if (channelJson.subscribe) {
         ret += functionName + "Consumer;"
       }
     }

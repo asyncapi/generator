@@ -80,6 +80,10 @@ module.exports = ({ Nunjucks, _ }) => {
     return getParamOrExtension(info, params, 'artifactId', 'x-artifact-id', 'Maven artifact ID', 'my-application')
   })
 
+  Nunjucks.addFilter('camelCase', (str) => {
+    return _.camelCase(str)
+  })
+
   // This determines the base function name that we will use for the SCSt mapping between functions and bindings.
   Nunjucks.addFilter('functionName', ([channelName, channel]) => {
     return getFunctionName(channelName, channel)

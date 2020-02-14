@@ -7,8 +7,9 @@
     * [new Generator(templateName, targetDir, options)](#new_Generator_new)
     * _instance_
         * [.generate(asyncapiDocument)](#Generator+generate) ⇒ <code>Promise</code>
-        * [.generateFromString(asyncapiString)](#Generator+generateFromString) ⇒ <code>Promise</code>
+        * [.generateFromString(asyncapiString, [asyncApiFileLocation])](#Generator+generateFromString) ⇒ <code>Promise</code>
         * [.generateFromFile(asyncapiFile)](#Generator+generateFromFile) ⇒ <code>Promise</code>
+        * [.getAllParameters(asyncapiDocument)](#Generator+getAllParameters)
     * _static_
         * [.getTemplateFile(templateName, filePath, options)](#Generator.getTemplateFile) ⇒ <code>Promise</code>
 
@@ -40,8 +41,7 @@ const generator = new Generator('html', path.resolve(__dirname, 'example'));
 const path = require('path');
 const generator = new Generator('html', path.resolve(__dirname, 'example'), {
   templateParams: {
-    sidebarOrganization: 'byTags',
-    baseHref: '/async-docs/'
+    sidebarOrganization: 'byTags'
   }
 });
 ```
@@ -83,7 +83,7 @@ try {
 ```
 <a name="Generator+generateFromString"></a>
 
-### generator.generateFromString(asyncapiString) ⇒ <code>Promise</code>
+### generator.generateFromString(asyncapiString, [asyncApiFileLocation]) ⇒ <code>Promise</code>
 Generates files from a given template and AsyncAPI string.
 
 **Kind**: instance method of [<code>Generator</code>](#Generator)  
@@ -91,6 +91,7 @@ Generates files from a given template and AsyncAPI string.
 | Param | Type | Description |
 | --- | --- | --- |
 | asyncapiString | <code>String</code> | AsyncAPI string to use as source. |
+| [asyncApiFileLocation] | <code>String</code> | AsyncAPI file location, used by the asyncapi-parser for references. |
 
 **Example**  
 ```js
@@ -154,6 +155,15 @@ try {
   console.error(e);
 }
 ```
+<a name="Generator+getAllParameters"></a>
+
+### generator.getAllParameters(asyncapiDocument)
+**Kind**: instance method of [<code>Generator</code>](#Generator)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| asyncapiDocument | <code>AsyncAPIDocument</code> | AsyncAPI document to use as the source. |
+
 <a name="Generator.getTemplateFile"></a>
 
 ### Generator.getTemplateFile(templateName, filePath, options) ⇒ <code>Promise</code>

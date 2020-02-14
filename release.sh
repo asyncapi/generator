@@ -3,8 +3,6 @@
 version=$(docker run --rm -v $PWD:/app treeder/bump --extract --filename package.json)
 echo "version $version"
 
-make docker
-
 docker tag asyncapi/generator:latest asyncapi/generator:$version
 docker push asyncapi/generator:$version
 docker push asyncapi/generator:latest

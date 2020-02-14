@@ -68,12 +68,12 @@ export default class {{ message.name() | pascalCase}} {
   {{setConstructorProperties(message.payload())}}
   }
 
+  /**
+   * Parses a JSON string to an object of {{ message.name() | pascalCase}} message class.
+   * @param json string to be parsed as {{ message.name() | pascalCase}}.
+   */
   public static toMessage(json: string): {{ message.name() | pascalCase }} {
     return JSON.parse(json);
-  }
-
-  public static toJson(value: {{ message.name() | pascalCase }}): string {
-    return JSON.stringify(value);
   }
 
 }

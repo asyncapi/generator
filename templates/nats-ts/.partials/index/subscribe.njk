@@ -1,7 +1,7 @@
 
-{% macro subscribe(channelName, message, channel) %}
+{% macro subscribe(channelName, message, messageDescription) %}
   /**
-  *  {{channel.description()}}
+  *  {{messageDescription}}
   * @param onDataCallback Called when message recieved.
   */
   public subscribeTo{{channelName | pascalCase }}(onDataCallback : (err?: NatsError, msg?: {{ message.uid() | pascalCase }}Message) => void): Promise<Subscription> {

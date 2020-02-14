@@ -1,18 +1,18 @@
 
-{% macro subscribe(channelName, subscribeMessage, server) %}
-export function subscribe(onDataCallback : (err?: NatsError, msg?: {{subscribeMessage.uid() | camelCase}}) => void, nc?: Client): Promise<Subscription> {
+{% macro subscribe(channelName, subscribtionMessage, server) %}
+export function subscribe(onDataCallback : (err?: NatsError, msg?: {{subscribtionMessage.uid() | camelCase}}) => void, nc?: Client): Promise<Subscription> {
   return new Promise(async (resolve, reject) => {
     if (nc) {
       try{
         let subscribeOptions: SubscriptionOptions = {};
-        {%- if subscribeMessage | hasNatsBindings %}
-        {%- if subscribeMessage.bindings().nats().queue() | length %}
+        {%- if subscribtionMessage | hasNatsBindings %}
+        {%- if subscribtionMessage.bindings().nats().queue() | length %}
         //If queue
-        subscribeOptions.queue = '{{subscribeMessage.bindings().nats().queue().name()}}';
+        subscribeOptions.queue = '{{subscribtionMessage.bindings().nats().queue().name()}}';
         {%- endif %}
-        {%- if subscribeMessage.bindings().nats().unsubAfter() | length %}
+        {%- if subscribtionMessage.bindings().nats().unsubAfter() | length %}
         //If unsubafter
-        subscribeOptions.max = {{subscribeMessage.bindings().nats().unsubAfter()}};
+        subscribeOptions.max = {{subscribtionMessage.bindings().nats().unsubAfter()}};
         {%- endif %}
         {%- endif %}
 
@@ -21,7 +21,7 @@ export function subscribe(onDataCallback : (err?: NatsError, msg?: {{subscribeMe
             onDataCallback(err);
           }else{
             let processedData = utils.processRecievedData(msg.data, Payload.{{server | tsPayload}}, '{{server | tsEncoding}}');
-            let publishedData = new {{subscribeMessage.name() | camelCase}}();
+            let publishedData = new {{subscribtionMessage.name() | camelCase}}();
             publishedData.copyFrom(processedData);
             onDataCallback(undefined, publishedData);
           }

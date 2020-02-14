@@ -1,7 +1,7 @@
 
-{% macro reply(channelName, subscribeMessage, publishMessage, channel) %}
+{% macro reply(channelName, subscribeMessage, publishMessage, messageDescription) %}
   /**
-  *  {{channel.description()}}
+  *  {{messageDescription}}
   * @param onRequest Called when request recieved.
   * @param onReplyError Called when it was not possible to send the reply.
   */

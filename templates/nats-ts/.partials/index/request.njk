@@ -1,7 +1,7 @@
 
-{% macro request(channelName, publishMessage, subscribeMessage, channel) %}
+{% macro request(channelName, publishMessage, subscribeMessage, messageDescription) %}
   /**
-  *  {{channel.description()}}
+  *  {{messageDescription}}
   * @param requestMessage The request message to send.
   */
   public request{{channelName | pascalCase }}(requestMessage: {{ publishMessage.uid() | pascalCase }}Message): Promise<{{ subscribeMessage.uid() | pascalCase }}Message> {

@@ -1,7 +1,7 @@
 
-{% macro publish(channelName, message, channel) %}
+{% macro publish(channelName, message, messageDescription) %}
   /**
-  *  {{channel.description()}}
+  *  {{messageDescription}}
   * @param requestMessage The message to publish.
   */
   public publishTo{{channelName | pascalCase }}(requestMessage: {{ message.uid() | pascalCase }}Message): Promise<void> {

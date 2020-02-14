@@ -59,7 +59,7 @@ program
     asyncapiFile = path.resolve(asyncAPIPath);
     template = tmpl;
   })
-  .option('-w, --watch', 'Watch the templates directory (--templates) for changes and re-generate when they occur')
+  .option('-w, --watch', 'watches the templates directory and the AsyncAPI document for changes, and re-generate the files when they occur')
   .option('-o, --output <outputDir>', 'directory where to put the generated files (defaults to current directory)', parseOutput, process.cwd())
   .option('-d, --disable-hook <hookName>', 'disable a specific hook', disableHooksParser)
   .option('-n, --no-overwrite <glob>', 'glob or path of the file(s) to skip when regenerating', noOverwriteParser)

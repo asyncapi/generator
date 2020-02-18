@@ -58,7 +58,7 @@ program
   .option('-n, --no-overwrite <glob>', 'glob or path of the file(s) to skip when regenerating', noOverwriteParser)
   .option('-p, --param <name=value>', 'additional param to pass to templates', paramParser)
   .option('-t, --templates <templateDir>', 'directory where templates are located (defaults to internal templates directory)', Generator.DEFAULT_TEMPLATES_DIR, path.resolve(__dirname, 'templates'))
-  .option('--force-write', 'force writing of the generated files to given directory even if it is a git repo with unstaged files or not empty dir (default is set to false)')
+  .option('--force-write', 'force writing of the generated files to given directory even if it is a git repo with unstaged files or not empty dir')
   .parse(process.argv);
 
 if (!asyncapiFile) {

@@ -92,7 +92,7 @@ Contributions are more than welcome. If you want to contribute, please make sure
 
 1. Pick or create an issue. It's always a good idea to leave a message saying that you're going to work on it before you start any actual work.
 2. Fork the repository and work there.
-3. Open a Pull Request pointing to a `master` branch.
+3. Open a Pull Request pointing to the `master` branch.
 4. A maintainer will review and, eventually, merge your Pull Request. Please, be patient as most of us are doing this in our spare time.
 
 ## Author

@@ -77,11 +77,11 @@ To separate functionality into files, one can specify a filename like `$$channel
 
 ### As a module
 
-See [API documentation](API.md).
+See [API documentation](docs/api.md).
 
 ### Authoring templates
 
-See [Authoring templates](AUTHORING.md).
+See [authoring templates](docs/authoring.md) and the [list of templates recipes](docs/recipes.md).
 
 ## Requirements
 

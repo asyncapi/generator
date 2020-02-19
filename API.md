@@ -26,11 +26,11 @@ Instantiates a new Generator object.
 | options | <code>Object</code> |  |  |
 | [options.templatesDir] | <code>String</code> |  | Path to the directory where to find the given template. Defaults to internal `templates` directory. |
 | [options.templateParams] | <code>String</code> |  | Optional parameters to pass to the template. Each template define their own params. |
-| [options.entrypoint] | <code>String</code> |  | Name of the file to use as the entry point for the rendering process. Note: this potentially avoids rendering every file in the template. |
+| [options.entrypoint] | <code>String</code> |  | Name of the file to use as the entry point for the rendering process. Use in case you want to use only a specific template file. Note: this potentially avoids rendering every file in the template. |
 | [options.noOverwriteGlobs] | <code>Array.&lt;String&gt;</code> |  | List of globs to skip when regenerating the template. |
 | [options.disabledHooks] | <code>Array.&lt;String&gt;</code> |  | List of hooks to disable. |
 | [options.output] | <code>String</code> | <code>&#x27;fs&#x27;</code> | Type of output. Can be either 'fs' (default) or 'string'. Only available when entrypoint is set. |
-| [options.forceWrite] | <code>String</code> |  | Force writing of the generated files to given directory even if it is a git repo with unstaged files or not empty dir. |
+| [options.forceWrite] | <code>Boolean</code> | <code>false</code> | Force writing of the generated files to given directory even if it is a git repo with unstaged files or not empty dir. Default is set to false. |
 
 **Example**  
 ```js

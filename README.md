@@ -47,6 +47,7 @@ asyncapi/generator -o ./output asyncapi.yml markdown
     -p, --param <name=value>       additional param to pass to templates
     -t, --templates <templateDir>  directory where templates are located (default: Internal template folder)
     -h, --help                     output usage information
+    --force-write                  force writing of the generated files to given directory even if it is a git repo with unstaged files or not empty dir (default is set to false)
 ```
 
 Please check out the **templates** directory to get a list of the supported languages/formats.
@@ -87,11 +88,11 @@ See [Authoring templates](AUTHORING.md).
 
 ## Contributing
 
-Contributions are more than welcome. If you want to make a contribution, please make sure you go through the following steps:
+Contributions are more than welcome. If you want to contribute, please make sure you go through the following steps:
 
 1. Pick or create an issue. It's always a good idea to leave a message saying that you're going to work on it before you start any actual work.
 2. Fork the repository and work there.
-3. Open a Pull Request pointing to `master` branch.
+3. Open a Pull Request pointing to the `master` branch.
 4. A maintainer will review and, eventually, merge your Pull Request. Please, be patient as most of us are doing this in our spare time.
 
 ## Author

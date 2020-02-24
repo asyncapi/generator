@@ -1,14 +1,15 @@
 # Authoring templates
 
-The AsyncAPI generator has been built with extensibility in mind. The package uses a set of default templates to let you generate documentation and code. However, you can create and use your own templates. In this section, we'll learn how to create your own one.
+The AsyncAPI generator has been built with extensibility in mind. The package uses a set of default templates to let you generate documentation and code. However, you can create and use your own templates. In this section, you learn how to create your own one.
 
 ## Common assumptions
 
 1. A template is a directory in your file system.
 1. Templates may contain multiple files. Unless stated otherwise, all files will be rendered.
 1. The template engine is [Nunjucks](https://mozilla.github.io/nunjucks).
-1. Templates may contain "partials" or reusable chunks. They must be stored in the `.partials` directory under the template directory.
-1. Templates may contain "filters" or helper functions. They must be stored in the `.filters` directory under the template directory. [Read more about filters](#filters).
+1. Templates may contain `filters` or helper functions. They must be stored in the `.filters` directory under the template directory. [Read more about filters](#filters).
+1. Templates may contain `hooks` that are functions invoked after the generation. They must be stored in the `.hooks` directory under the template directory. [Read more about hooks](#hooks).
+1. Templates may contain `partials` (reusable chunks). They must be stored in the `.partials` directory under the template directory. [Read more about partials](#partials).
 1. Templates may have a configuration file. It must be stored in the template directory and its name must be `.tp-config.json`. [Read more about the configuration file](#configuration-file).
 1. There are params with special meaning. [Read more about special params](#special-params).
 
@@ -47,6 +48,52 @@ And then you can use the filter in your template as follows:
 
 ```js
 const {{ channelName | camelCase }} = '{{ channelName }}';
+```
+
+## Hooks
+
+Hooks are functions called by the generator on a specific moment in the generation process. For now there is one hook supported called `generate:after` that is called at the very end of the generation. The generator will parse all the files in the `.hooks` directory.
+
+Below you have an example Hook that after generation creates an AsyncAPI file.
+
+```js
+const fs = require('fs');
+const path = require('path');
+
+module.exports = register => {
+  register('generate:after', generator => {
+    const asyncapi = generator.originalAsyncAPI;
+    let extension;
+
+    try {
+      JSON.parse(asyncapi);
+      extension = 'json';
+    } catch (e) {
+      extension = 'yaml';
+    }
+
+    fs.writeFileSync(path.resolve(generator.targetDir, `asyncapi.${extension}`), asyncapi);
+  });
+};
+```
+
+## Partials
+
+Files from the `.partials` directory do not end up with other generated files in the target directory. In this directory you should keep reusable templates chunks that you can [include](https://mozilla.github.io/nunjucks/templating.html#include) in your templates. You can also put there [macros](https://mozilla.github.io/nunjucks/templating.html#macro) to use them in templates, like in below example:
+
+```html
+{# tags.html #}
+{% macro tags(tagList) %}
+<div class="mt-4">
+  {% for tag in tagList %}
+    <span class="bg-grey-dark font-normal text-sm no-underline text-white rounded lowercase mr-2 px-2 py-1" title="{{tag.description()}}">{{tag.name()}}</span>
+  {% endfor %}
+</div>
+{% endmacro %}
+
+{# operations.html #}
+{% from "./tags.html" import tags %}
+{{ tags(operation.tags()) }}
 ```
 
 ## Configuration File
@@ -102,4 +149,4 @@ There are some template parameters that have a special meaning:
 
 |Name|Description|
 |---|---|
-|`server`| It is used to let the template know which server we want to use. In some cases, this may be required. For instance, when generating code that connects to a specific server. If your template need your users to specify a server, use this param.
+|`server`| It is used to let the template know which server you want to use. In some cases, this may be required. For instance, when generating code that connects to a specific server. If your template need your users to specify a server, use this param.

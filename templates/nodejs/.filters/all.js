@@ -199,7 +199,7 @@ module.exports = ({ Nunjucks }) => {
    * Replace is performed only if there are variables in the URL and they are declared for a server
    * @private
    * @param {String} url The server url value.
-   * @param {Object} serverVariables object containins server variables.
+   * @param {Object} serverVariables object containing server variables.
    * @return {String}
    */
   function replaceVariablesWithValues(url, serverVariables) {

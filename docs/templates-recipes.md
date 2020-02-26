@@ -1,11 +1,19 @@
-Here you can find recipes for templates that you might want to copy and reuse them for your need to speed up template development. Feel free to create a Pull Request with your recipe.
+# Templates recipes
+
+In this document you can find recipes for templates that you might want to copy and reuse them for your need to speed up template development. Feel free to create a Pull Request with your recipe.
+
+## Prerequisites
+
+You must be familiar with [Nunjucks](https://mozilla.github.io/nunjucks/) templating engine and [how it is supported in the generator](./authoring.md).
+
+## Recipes
 
 - [Using Schema objects to generate types for a given programming language](#using-schema-objects-to-generate-types-for-a-given-programming-language)
 - [Displaying separate lists for different channels operations](#displaying-separate-lists-for-different-channels-operations)
 
 ### Using Schema objects to generate types for a given programming language
 
-* Java example where `$$schema$$.java` file looks like this. You need to provide your own implementation of `toJavaType` filter:
+* Java example where `$$schema$$.java` file looks like this:
     ```java
     package com.async.generated;
 
@@ -33,6 +41,21 @@ Here you can find recipes for templates that you might want to copy and reuse th
         {%- endfor %}
         }
     }
+    ```
+    The `toJavaType` filter:
+    ```js
+    Nunjucks.addFilter('toJavaType', jsonSchemaType => {
+    switch (jsonSchemaType.toLowerCase()) {
+        case 'string':
+        return 'String';
+        case 'integer':
+        return  'Integer'
+        case 'number':
+        return 'Double';
+        case 'boolean':
+        return 'boolean';
+    }
+    });
     ```
 * Nodejs example where `$$schema$$.js` file looks like this:
     ```js

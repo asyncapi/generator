@@ -12,6 +12,9 @@ The AsyncAPI generator has been built with extensibility in mind. The package us
 1. Templates may contain `partials` (reusable chunks). They must be stored in the `.partials` directory under the template directory. [Read more about partials](#partials).
 1. Templates may have a configuration file. It must be stored in the template directory and its name must be `.tp-config.json`. [Read more about the configuration file](#configuration-file).
 1. There are params with special meaning. [Read more about special params](#special-params).
+1. Default parameters that you can use in your templates, except the ones that you defined on your own in the config,  are:
+   - `asyncapi` that is a parsed spec file object. Read the [API](https://github.com/asyncapi/parser-js/blob/master/API.md#AsyncAPIDocument) of the Parser to understand to what structure you have access in this parameter.
+   - `originalAsyncAPI` that is an original spec file before it is parsed. 
 
 ## Filters
 

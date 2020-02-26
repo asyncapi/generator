@@ -204,10 +204,14 @@ module.exports = ({ Nunjucks }) => {
    */
   function replaceVariablesWithValues(url, serverVariables) {
     const urlVariables = getVariablesNamesFromUrl(url);
-    const isVariableDeclared =
-      urlVariables.filter(el => serverVariables.hasOwnProperty(el[1])) !== 0;
-
-    if (urlVariables.length !== 0 && isVariableDeclared) {
+    const declaredVariables =
+      urlVariables.filter(el => serverVariables.hasOwnProperty(el[1]))
+    
+    if (declaredVariables.length !== 0) {
+      console.log("dupa")
+    }
+    console.log(declaredVariables)
+    if (urlVariables.length !== 0 && declaredVariables.length !== 0) {
       let value;
       let newUrl = url;
 

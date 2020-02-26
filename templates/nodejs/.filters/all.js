@@ -207,10 +207,6 @@ module.exports = ({ Nunjucks }) => {
     const declaredVariables =
       urlVariables.filter(el => serverVariables.hasOwnProperty(el[1]))
     
-    if (declaredVariables.length !== 0) {
-      console.log("dupa")
-    }
-    console.log(declaredVariables)
     if (urlVariables.length !== 0 && declaredVariables.length !== 0) {
       let value;
       let newUrl = url;

@@ -193,4 +193,55 @@ module.exports = ({ Nunjucks }) => {
   Nunjucks.addFilter('filenamify', (string, options) => {
     return filenamify(string, options || { replacement: '-', maxLength: 255 });
   });
+
+  /**
+   * Replaces variables in the server url with its declared values. Default or first enum in case of default is not declared
+   * Replace is performed only if there are variables in the URL and they are declared for a server
+   * @private
+   * @param {String} url The server url value.
+   * @param {Object} serverVariables object containins server variables.
+   * @return {String}
+   */
+  function replaceVariablesWithValues(url, serverVariables) {
+    const urlVariables = getVariablesNamesFromUrl(url);
+    const isVariableDeclared =
+      urlVariables.filter(el => serverVariables.hasOwnProperty(el[1])) !== 0;
+
+    if (urlVariables.length !== 0 && isVariableDeclared) {
+      let value;
+      let newUrl = url;
+
+      urlVariables.forEach(el => {
+        value = getVariableValue(serverVariables, el[1]);
+
+        if (value) {
+          newUrl = newUrl.replace(el[0], value);
+        }
+      });
+      return newUrl;
+    }
+    return url;
+
+    function getVariablesNamesFromUrl(url) {
+      let result = [],
+        array;
+      const regEx = /{([^}]+)}/g;
+  
+      while ((array = regEx.exec(url)) !== null) {
+        result.push([array[0], array[1]]);
+      }
+  
+      return result;
+    }
+  
+    function getVariableValue(object, variable) {
+      const keyValue = object[variable]._json;
+  
+      if (keyValue) return keyValue.default || (keyValue.enum && keyValue.enum[0]);
+    }
+  }
+
+  Nunjucks.addFilter('replaceVariablesWithValues', (string, options) => {
+    return replaceVariablesWithValues(string, options);
+  });
 };

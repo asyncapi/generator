@@ -16,7 +16,7 @@ info:
 
 servers:
   production:
-    url: mqtt://test.mosquitto.org
+    url: mqtt://test.mosquitto.org:{port}
     protocol: mqtt
     description: Test broker
     variables:

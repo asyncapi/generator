@@ -33,21 +33,17 @@ module.exports = ({ Nunjucks, _, Markdown, OpenAPISampler }) => {
 };
 ```
 
-For example:
+An example filter called `camelCase` which uses the Lodash function `_.camelCase(String)` to convert a template string as camel case:
 
 ```js
 module.exports = ({ Nunjucks, _, Markdown, OpenAPISampler }) => {
   Nunjucks.addFilter('camelCase', (str) => {
     return _.camelCase(str);
   });
-  
-  Nunjucks.addFilter('generateExample', (schema) => {
-    return OpenAPISampler.sample(schema);
-  });
 };
 ```
 
-And then you can use the filters in your template as follows:
+And then you can use the filter in your template as follows:
 
 ```js
 const {{ channelName | camelCase }} = '{{ channelName }}';

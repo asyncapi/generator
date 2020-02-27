@@ -150,6 +150,7 @@ function generate(targetDir) {
 function installTemplate(force = false) {
   return new Promise((resolve, reject) => {
     const nodeModulesDir = path.resolve(templatesDir, template, 'node_modules');
+    if (!fs.existsSync(path.resolve(templatesDir, template))) return reject(new Error(`Template "${template}" does not exist.`));
     if (!force && fs.existsSync(nodeModulesDir)) return resolve();
 
     console.log(magenta('Installing template dependencies...'));

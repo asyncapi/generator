@@ -149,8 +149,13 @@ function generate(targetDir) {
  */
 function installTemplate(force = false) {
   return new Promise((resolve, reject) => {
-    const nodeModulesDir = path.resolve(templatesDir, template, 'node_modules');
-    if (!fs.existsSync(path.resolve(templatesDir, template))) return reject(new Error(`Template "${template}" does not exist.`));
+    const templateDir = path.resolve(templatesDir, template);
+    const nodeModulesDir = path.resolve(templateDir, 'node_modules');
+    const templatePackageFile = path.resolve(templateDir, 'package.json');
+    const templateDirExists = fs.existsSync(templateDir);
+    const templatePackageExists = fs.existsSync(templatePackageFile);
+    if (!templateDirExists) return reject(new Error(`Template "${template}" does not exist.`));
+    if (!templatePackageExists) return reject(new Error(`Directory "${template}" is not a valid template. Please provide a package.json file.`));
     if (!force && fs.existsSync(nodeModulesDir)) return resolve();
 
     console.log(magenta('Installing template dependencies...'));

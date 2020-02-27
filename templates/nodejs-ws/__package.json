@@ -1,0 +1,14 @@
+{
+  "name": "{{ asyncapi.info().title() | kebabCase }}",
+  "description": "{{ asyncapi.info().description() | oneLine }}",
+  "version": "{{ asyncapi.info().version() }}",
+  "scripts": {
+    "start": "node src/api/index.js"
+  },
+  "dependencies": {
+    "asyncapi-parser": "0.x",
+    "express": "4.17.1",
+    "express-ws": "4.0.0",
+    "node-yaml-config": "0.0.4"
+  }
+}

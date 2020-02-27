@@ -1,7 +1,8 @@
 const URL = require('url');
 const path = require('path');
+const _ = require('lodash');
 
-module.exports = ({ Nunjucks, _ }) => {
+module.exports = ({ Nunjucks }) => {
   Nunjucks.addFilter('kebabCase', (string) => {
     return _.kebabCase(string);
   });

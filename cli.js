@@ -2,6 +2,8 @@
 
 const path = require('path');
 const os = require('os');
+const fs = require('fs');
+const npmi = require('npmi');
 const program = require('commander');
 const packageInfo = require('./package.json');
 const mkdirp = require('mkdirp');
@@ -15,6 +17,7 @@ const green = text => `\x1b[32m${text}\x1b[0m`;
 
 let asyncapiFile;
 let template;
+const templatesDir = Generator.DEFAULT_TEMPLATES_DIR;
 const params = {};
 const noOverwriteGlobs = [];
 const disabledHooks = [];
@@ -52,13 +55,14 @@ program
     asyncapiFile = path.resolve(asyncAPIPath);
     template = tmpl;
   })
-  .option('-w, --watch', 'Watch the templates directory (--templates) for changes and re-generate when they occur')
+  .option('-w, --watch', 'watches the templates directory and the AsyncAPI document for changes, and re-generate the files when they occur')
   .option('-o, --output <outputDir>', 'directory where to put the generated files (defaults to current directory)', parseOutput, process.cwd())
   .option('-d, --disable-hook <hookName>', 'disable a specific hook', disableHooksParser)
   .option('-n, --no-overwrite <glob>', 'glob or path of the file(s) to skip when regenerating', noOverwriteParser)
   .option('-p, --param <name=value>', 'additional param to pass to templates', paramParser)
   .option('-t, --templates <templateDir>', 'directory where templates are located (defaults to internal templates directory)', Generator.DEFAULT_TEMPLATES_DIR, path.resolve(__dirname, 'templates'))
-  .option('--force-write', 'force writing of the generated files to given directory even if it is a git repo with unstaged files or not empty dir (default is set to false)')
+  .option('--force-install', 'forces the installation of the template dependencies. By default, dependencies are installed and this flag is taken into account only if `node_modules` is not in place.')
+  .option('--force-write', 'force writing of the generated files to given directory even if it is a git repo with unstaged files or not empty dir (defaults to false)')
   .parse(process.argv);
 
 if (!asyncapiFile) {
@@ -69,6 +73,7 @@ if (!asyncapiFile) {
 mkdirp(program.output, async err => {
   if (err) return showErrorAndExit(err);
   try {
+    await installTemplate(program.forceInstall);
     await generate(program.output);
   } catch (e) {
     return showErrorAndExit(e);
@@ -128,12 +133,44 @@ function generate(targetDir) {
       });
 
       await generator.generateFromFile(asyncapiFile);
-      console.log(green('Done! ✨'));
+      console.log(green('\n\nDone! ✨'));
       console.log(`${yellow('Check out your shiny new generated files at ') + magenta(program.output) + yellow('.')}\n`);
       resolve();
     } catch (e) {
       reject(e);
     }
+  });
+}
+
+/**
+ * Installs template dependencies.
+ *
+ * @param {Boolean} [force=false] Whether to force installation or not.
+ */
+function installTemplate(force = false) {
+  return new Promise((resolve, reject) => {
+    const templateDir = path.resolve(templatesDir, template);
+    const nodeModulesDir = path.resolve(templateDir, 'node_modules');
+    const templatePackageFile = path.resolve(templateDir, 'package.json');
+    const templateDirExists = fs.existsSync(templateDir);
+    const templatePackageExists = fs.existsSync(templatePackageFile);
+    if (!templateDirExists) return reject(new Error(`Template "${template}" does not exist.`));
+    if (!templatePackageExists) return reject(new Error(`Directory "${template}" is not a valid template. Please provide a package.json file.`));
+    if (!force && fs.existsSync(nodeModulesDir)) return resolve();
+
+    console.log(magenta('Installing template dependencies...'));
+
+    npmi({
+      path: path.resolve(templatesDir, template),
+    }, err => {
+      if (err) {
+        console.error(err.message);
+        return reject(err);
+      }
+
+      console.log(magenta('Finished installing template dependencies.'));
+      resolve();
+    });
   });
 }
 

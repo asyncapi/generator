@@ -65,8 +65,8 @@ program
   .option('-n, --no-overwrite <glob>', 'glob or path of the file(s) to skip when regenerating', noOverwriteParser)
   .option('-p, --param <name=value>', 'additional param to pass to templates', paramParser)
   .option('-t, --templates <templateDir>', 'directory where templates are located (defaults to internal templates directory)', Generator.DEFAULT_TEMPLATES_DIR, path.resolve(__dirname, 'templates'))
-  .option('--force-install', 'forces the installation of the template dependencies. By default dependencies are installed and this flag is taken into account only if `node-modules` is not in place.')
-  .option('--force-write', 'force writing of the generated files to given directory even if it is a git repo with unstaged files or not empty dir (default is set to false)')
+  .option('--force-install', 'forces the installation of the template dependencies. By default, dependencies are installed and this flag is taken into account only if `node_modules` is not in place.')
+  .option('--force-write', 'force writing of the generated files to given directory even if it is a git repo with unstaged files or not empty dir (defaults to false)')
   .parse(process.argv);
 
 if (!asyncapiFile) {

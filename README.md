@@ -46,9 +46,9 @@ asyncapi/generator -o ./output asyncapi.yml markdown
     -n, --no-overwrite <glob>      glob or path of the file(s) to skip when regenerating
     -p, --param <name=value>       additional param to pass to templates
     -t, --templates <templateDir>  directory where templates are located (defaults to internal templates directory)
-    --force-install                forces the installation of the template dependencies. By default dependencies are installed and this flag is taken into account only if `node-modules` is not in place.
+    --force-install                forces the installation of the template dependencies. By default, dependencies are installed and this flag is taken into account only if `node_modules` is not in place.
     -h, --help                     output usage information
-    --force-write                  force writing of the generated files to given directory even if it is a git repo with unstaged files or not empty dir (default is set to false)
+    --force-write                  force writing of the generated files to given directory even if it is a git repo with unstaged files or not empty dir (defaults to false)
 ```
 
 Please check out the **templates** directory to get a list of the supported languages/formats.

@@ -46,7 +46,7 @@ asyncapi/generator -o ./output asyncapi.yml markdown
     -n, --no-overwrite <glob>      glob or path of the file(s) to skip when regenerating
     -p, --param <name=value>       additional param to pass to templates
     -t, --templates <templateDir>  directory where templates are located (defaults to internal templates directory)
-    --force-install                forces the installation of the template dependencies
+    --force-install                forces the installation of the template dependencies. By default dependencies are installed and this flag is taken into account only if `node-modules` is not in place.
     -h, --help                     output usage information
 ```
 

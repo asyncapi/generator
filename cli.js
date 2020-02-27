@@ -17,7 +17,7 @@ const green = text => `\x1b[32m${text}\x1b[0m`;
 
 let asyncapiFile;
 let template;
-let templatesDir = Generator.DEFAULT_TEMPLATES_DIR;
+const templatesDir = Generator.DEFAULT_TEMPLATES_DIR;
 const params = {};
 const noOverwriteGlobs = [];
 const disabledHooks = [];
@@ -31,10 +31,6 @@ const paramParser = v => {
   const paramValue = chunks[1];
   params[paramName] = paramValue;
   return v;
-};
-
-const parseTemplatesDir = v => {
-  templatesDir = v;
 };
 
 const noOverwriteParser = v => noOverwriteGlobs.push(v);

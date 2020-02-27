@@ -15,7 +15,12 @@ The AsyncAPI generator has been built with extensibility in mind. The package us
 1. The default variables you have access to in any the template file are the following:
    - `asyncapi` that is a parsed spec file object. Read the [API](https://github.com/asyncapi/parser-js/blob/master/API.md#AsyncAPIDocument) of the Parser to understand to what structure you have access in this parameter.
    - `originalAsyncAPI` that is an original spec file before it is parsed. 
-
+1. When using [file templating](https://github.com/asyncapi/generator#file-templating) you have access to the following extra variables:
+   - When using `$$channel$$` you have access to two variables `channel` and `channelName`. Where `channel` contains the current channel being rendered.
+   - When using `$$message$$` you have access to two variables `message` and `messageName`. Where `message` contains the current message being rendered.
+   - When using `$$schema$$` you have access to two variables `schema` and `schemaName`. Where `schema` contains the current schema being rendered.
+   - When using `$$parameter$$` you have access to two variables `parameter` and `parameterName`. Where `parameter` contains the current parameter being rendered.
+   - When using `$$securityScheme$$` you have access to two variables `securityScheme` and `securitySchemeName`. Where `securityScheme` contains the current security scheme being rendered.
 ## Filters
 
 A filter is a helper function that you can create to perform complex tasks. They are JavaScript files that register one or many [Nunjuck filters](https://mozilla.github.io/nunjucks/api.html#custom-filters). The generator will parse all the files in the `.filters` directory.

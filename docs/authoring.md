@@ -11,21 +11,22 @@ The AsyncAPI generator has been built with extensibility in mind. The package us
 1. Templates may contain `hooks` that are functions invoked after the generation. They must be stored in the `.hooks` directory under the template directory. [Read more about hooks](#hooks).
 1. Templates may contain `partials` (reusable chunks). They must be stored in the `.partials` directory under the template directory. [Read more about partials](#partials).
 1. Templates may have a configuration file. It must be stored in the template directory and its name must be `.tp-config.json`. [Read more about the configuration file](#configuration-file).
-1. There are params with special meaning. [Read more about special params](#special-params).
+1. There are parameters with special meaning. [Read more about special parameters](#special-parameters).
 1. The default variables you have access to in any the template file are the following:
    - `asyncapi` that is a parsed spec file object. Read the [API](https://github.com/asyncapi/parser-js/blob/master/API.md#AsyncAPIDocument) of the Parser to understand to what structure you have access in this parameter.
    - `originalAsyncAPI` that is an original spec file before it is parsed. 
-1. When using [file templating](https://github.com/asyncapi/generator#file-templating) you have access to the following extra variables:
+1. To separate functionality into files, you can specify a filename like `$$channel$$.js` to generate a file for each channel defined in your AsyncAPI document. Such files templating gives you access to the following extra variables:
    - When using `$$channel$$` you have access to two variables `channel` and `channelName`. Where `channel` contains the current channel being rendered.
    - When using `$$message$$` you have access to two variables `message` and `messageName`. Where `message` contains the current message being rendered.
    - When using `$$schema$$` you have access to two variables `schema` and `schemaName`. Where `schema` contains the current schema being rendered.
    - When using `$$parameter$$` you have access to two variables `parameter` and `parameterName`. Where `parameter` contains the current parameter being rendered.
    - When using `$$securityScheme$$` you have access to two variables `securityScheme` and `securitySchemeName`. Where `securityScheme` contains the current security scheme being rendered.
+   
 ## Filters
 
 A filter is a helper function that you can create to perform complex tasks. They are JavaScript files that register one or many [Nunjuck filters](https://mozilla.github.io/nunjucks/api.html#custom-filters). The generator will parse all the files in the `.filters` directory.
 
-Each file must export a function that will receive the following params:
+Each file must export a function that will receive the following parameters:
 
 * `Nunjucks`: a reference to the [Nunjucks](https://mozilla.github.io/nunjucks) template engine used internally by the generator.
 * `_`: a convenient [Lodash](https://www.lodash.com) reference.
@@ -111,7 +112,7 @@ The `.tp-config.json` file contains a JSON object that may have the following in
 |Name|Type|Description|
 |---|---|---|
 |`supportedProtocols`| [String] | A list with all the protocols this template supports.
-|`parameters`| Object[String, Object] | An object with all the params that can be passed when generating the template. When using the command line, it's done by indicating `--param name=value` or `-p name=value`.
+|`parameters`| Object[String, Object] | An object with all the parameters that can be passed when generating the template. When using the command line, it's done by indicating `--param name=value` or `-p name=value`.
 |`parameters[param].description`| String | A user-friendly description about the parameter.
 |`parameters[param].required`| Boolean | Whether the parameter is required or not.
 |`conditionalFiles`| Object[String, Object] | An object containing all the file paths that should be conditionally rendered. Each key represents a file path and each value must be an object with the keys `subject` and `validation`.
@@ -151,10 +152,10 @@ The `.tp-config.json` file contains a JSON object that may have the following in
 }
 ```
 
-## Special Params
+## Special parameters
 
 There are some template parameters that have a special meaning:
 
 |Name|Description|
 |---|---|
-|`server`| It is used to let the template know which server you want to use. In some cases, this may be required. For instance, when generating code that connects to a specific server. If your template need your users to specify a server, use this param.
+|`server`| It is used to let the template know which server you want to use. In some cases, this may be required. For instance, when generating code that connects to a specific server. If your template need your users to specify a server, use this parameter.

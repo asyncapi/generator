@@ -71,10 +71,6 @@ ag -o ./docs --param title='Hello from param' asyncapi.yaml markdown
 ```
 In the template you can use it like this: ` {{ params.title }}`
 
-### File templating
-To separate functionality into files, one can specify a filename like `$$channel$$.js` to generate a file for each channel defined in your AsyncAPI document. The following separations are supported: `$$channel$$`, `$$message$$`, `$$schema$$`, `$$parameter$$` and `$$securityScheme$$`.
-
-
 ### As a module
 
 See [API documentation](docs/api.md).

@@ -65,7 +65,7 @@ program
   .option('-n, --no-overwrite <glob>', 'glob or path of the file(s) to skip when regenerating', noOverwriteParser)
   .option('-p, --param <name=value>', 'additional param to pass to templates', paramParser)
   .option('-t, --templates <templateDir>', 'directory where templates are located (defaults to internal templates directory)', parseTemplatesDir, Generator.DEFAULT_TEMPLATES_DIR)
-  .option('--force-install', 'forces the installation of the template dependencies')
+  .option('--force-install', 'forces the installation of the template dependencies. By default dependencies are installed and this flag is taken into account only if `node-modules` is not in place.')
   .parse(process.argv);
 
 if (!asyncapiFile) {

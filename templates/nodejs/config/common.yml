@@ -16,7 +16,7 @@ default:
       exchange:
       username:
       password:
-      host: amqp://{{ asyncapi.server(params.server).url() | replaceVariablesWithValues(asyncapi.server(params.server).variables())  | host }}
+      host: {{ asyncapi.server(params.server).url() | replaceVariablesWithValues(asyncapi.server(params.server).variables())  | host }}
       port:
       topics: {{ asyncapi | channelNamesWithPublish | toAmqpTopic | dump | safe }}
       queue: {{ asyncapi.info().title() | queueName(asyncapi.info().version()) }}

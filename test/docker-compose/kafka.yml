@@ -1,0 +1,11 @@
+version: '2'
+services:
+  kafka:
+    image: spotify/kafka
+    ports:
+      - 9092:9092
+    container_name: kafka
+    environment:
+      - "ADVERTISED_HOST=127.0.0.1"
+      - "ADVERTISED_PORT=9092"
+      - "AUTO_CREATE_TOPICS=true"

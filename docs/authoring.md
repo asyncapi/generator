@@ -5,6 +5,7 @@ The AsyncAPI generator has been built with extensibility in mind. The package us
 ## Common assumptions
 
 1. A template is a directory in your file system.
+1. The template can have own dependencies. Just create `package.json` for the template. The generator makes sure to trigger the installation of dependencies.
 1. Templates may contain multiple files. Unless stated otherwise, all files will be rendered.
 1. The template engine is [Nunjucks](https://mozilla.github.io/nunjucks).
 1. Templates may contain `filters` or helper functions. They must be stored in the `.filters` directory under the template directory. [Read more about filters](#filters).

@@ -10,6 +10,7 @@
         * [.generateFromString(asyncapiString, [asyncApiFileLocation])](#Generator+generateFromString) ⇒ <code>Promise</code>
         * [.generateFromFile(asyncapiFile)](#Generator+generateFromFile) ⇒ <code>Promise</code>
         * [.getAllParameters(asyncapiDocument)](#Generator+getAllParameters)
+        * [.installTemplate([force])](#Generator+installTemplate)
     * _static_
         * [.getTemplateFile(templateName, filePath, options)](#Generator.getTemplateFile) ⇒ <code>Promise</code>
 
@@ -31,6 +32,7 @@ Instantiates a new Generator object.
 | [options.disabledHooks] | <code>Array.&lt;String&gt;</code> |  | List of hooks to disable. |
 | [options.output] | <code>String</code> | <code>&#x27;fs&#x27;</code> | Type of output. Can be either 'fs' (default) or 'string'. Only available when entrypoint is set. |
 | [options.forceWrite] | <code>Boolean</code> | <code>false</code> | Force writing of the generated files to given directory even if it is a git repo with unstaged files or not empty dir. Default is set to false. |
+| [options.forceInstall] | <code>Boolean</code> | <code>false</code> | Force the installation of the template dependencies. By default, dependencies are installed and this flag is taken into account only if `node_modules` is not in place. |
 
 **Example**  
 ```js
@@ -164,6 +166,17 @@ try {
 | Param | Type | Description |
 | --- | --- | --- |
 | asyncapiDocument | <code>AsyncAPIDocument</code> | AsyncAPI document to use as the source. |
+
+<a name="Generator+installTemplate"></a>
+
+### generator.installTemplate([force])
+Installs template dependencies.
+
+**Kind**: instance method of [<code>Generator</code>](#Generator)  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| [force] | <code>Boolean</code> | <code>false</code> | Whether to force installation or not. |
 
 <a name="Generator.getTemplateFile"></a>
 

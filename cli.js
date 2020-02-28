@@ -2,8 +2,6 @@
 
 const path = require('path');
 const os = require('os');
-const fs = require('fs');
-const npmi = require('npmi');
 const program = require('commander');
 const packageInfo = require('./package.json');
 const mkdirp = require('mkdirp');
@@ -17,7 +15,6 @@ const green = text => `\x1b[32m${text}\x1b[0m`;
 
 let asyncapiFile;
 let template;
-const templatesDir = Generator.DEFAULT_TEMPLATES_DIR;
 const params = {};
 const noOverwriteGlobs = [];
 const disabledHooks = [];
@@ -73,7 +70,6 @@ if (!asyncapiFile) {
 mkdirp(program.output, async err => {
   if (err) return showErrorAndExit(err);
   try {
-    await installTemplate(program.forceInstall);
     await generate(program.output);
   } catch (e) {
     return showErrorAndExit(e);
@@ -129,7 +125,8 @@ function generate(targetDir) {
         templateParams: params,
         noOverwriteGlobs,
         disabledHooks,
-        forceWrite: program.forceWrite
+        forceWrite: program.forceWrite,
+        forceInstall: program.forceInstall,
       });
 
       await generator.generateFromFile(asyncapiFile);
@@ -139,38 +136,6 @@ function generate(targetDir) {
     } catch (e) {
       reject(e);
     }
-  });
-}
-
-/**
- * Installs template dependencies.
- *
- * @param {Boolean} [force=false] Whether to force installation or not.
- */
-function installTemplate(force = false) {
-  return new Promise((resolve, reject) => {
-    const templateDir = path.resolve(templatesDir, template);
-    const nodeModulesDir = path.resolve(templateDir, 'node_modules');
-    const templatePackageFile = path.resolve(templateDir, 'package.json');
-    const templateDirExists = fs.existsSync(templateDir);
-    const templatePackageExists = fs.existsSync(templatePackageFile);
-    if (!templateDirExists) return reject(new Error(`Template "${template}" does not exist.`));
-    if (!templatePackageExists) return reject(new Error(`Directory "${template}" is not a valid template. Please provide a package.json file.`));
-    if (!force && fs.existsSync(nodeModulesDir)) return resolve();
-
-    console.log(magenta('Installing template dependencies...'));
-
-    npmi({
-      path: path.resolve(templatesDir, template),
-    }, err => {
-      if (err) {
-        console.error(err.message);
-        return reject(err);
-      }
-
-      console.log(magenta('Finished installing template dependencies.'));
-      resolve();
-    });
   });
 }
 

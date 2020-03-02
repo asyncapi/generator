@@ -77,7 +77,7 @@ See [API documentation](docs/api.md).
 
 ### Authoring templates
 
-See [authoring templates](docs/authoring.md) and the [list of templates recipes](docs/recipes.md).
+See [authoring templates](docs/authoring.md) and the [list of templates recipes](docs/templates-recipes.md).
 
 ## Requirements
 

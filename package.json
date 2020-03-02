@@ -8,7 +8,7 @@
         "ag": "./cli.js"
     },
     "scripts": {
-        "docs": "jsdoc2md lib/generator.js > API.md"
+        "docs": "jsdoc2md lib/generator.js > docs/api.md"
     },
     "preferGlobal": true,
     "bugs": {

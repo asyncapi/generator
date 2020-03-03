@@ -1,7 +1,8 @@
 // vim: set ts=2 sw=2 sts=2 expandtab :
-module.exports = ({ Nunjucks, _ }) => {
+module.exports = ({ Nunjucks }) => {
 
   var yaml = require('js-yaml')
+  var _ = require('lodash')
 
   // This maps json schema types to Java format strings.
   const formatMap = new Map()

@@ -1,9 +1,7 @@
-module.exports = ({ Nunjucks, OpenAPISampler, Markdown }) => {
+const Markdown = require('markdown-it');
+const OpenAPISampler = require('openapi-sampler');
 
-  Nunjucks.addFilter('log', anything => {
-    console.log(anything);
-  });
-
+module.exports = ({ Nunjucks }) => {
   Nunjucks.addFilter('tree', path => {
     const filteredPaths = path.split('.').filter(Boolean);
     if (!filteredPaths.length) return;

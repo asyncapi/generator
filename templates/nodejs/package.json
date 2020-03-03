@@ -1,28 +1,17 @@
 {
-  "name": "{{ asyncapi.info().title() | kebabCase }}",
-  "description": "{{ asyncapi.info().description() | oneLine }}",
-  "version": "{{ asyncapi.info().version() }}",
-  "scripts": {
-    "start": "node src/api/index.js"
-  },
+  "name": "@asyncapi/nodejs-template",
+  "version": "0.1.0",
+  "description": "Node.js template for the AsyncAPI generator.",
+  "keywords": [
+    "asyncapi",
+    "generator",
+    "nodejs",
+    "template"
+  ],
+  "author": "Fran Mendez <fmvilas@gmail.com> (fmvilas.com)",
+  "license": "Apache-2.0",
   "dependencies": {
-    "colors": "^1.4.0",
-    "dotenv": "^8.1.0",
-    "hermesjs": "2.x",
-    "hermesjs-router": "1.x",
-    {% if asyncapi.server(params.server).protocol() === 'mqtt' -%}
-    "hermesjs-mqtt": "2.x",
-    {%- endif -%}
-    {% if asyncapi.server(params.server).protocol() === 'kafka' -%}
-    "hermesjs-kafka": "2.x",
-    {%- endif -%}
-    {% if asyncapi.server(params.server).protocol() === 'amqp' -%}
-    "hermesjs-amqp": "1.x",
-    {%- endif %}
-    {% if asyncapi.server(params.server).protocol() === 'ws' -%}
-    "hermesjs-ws": "1.x",
-    {%- endif %}
-    "node-fetch": "^2.6.0",
-    "node-yaml-config": "0.0.4"
+    "filenamify": "^4.1.0",
+    "lodash": "^4.17.15"
   }
 }

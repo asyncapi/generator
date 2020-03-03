@@ -1,4 +1,8 @@
-module.exports = ({ _, Nunjucks, Markdown, OpenAPISampler }) => {
+const _ = require('lodash');
+const Markdown = require('markdown-it');
+const OpenAPISampler = require('openapi-sampler');
+
+module.exports = ({ Nunjucks }) => {
   Nunjucks.addFilter('split', (string, separator) => {
     if (typeof string !== 'string') return string;
     const regex = new RegExp(separator, 'g');

@@ -1,0 +1,28 @@
+{
+  "name": "{{ asyncapi.info().title() | kebabCase }}",
+  "description": "{{ asyncapi.info().description() | oneLine }}",
+  "version": "{{ asyncapi.info().version() }}",
+  "scripts": {
+    "start": "node src/api/index.js"
+  },
+  "dependencies": {
+    "colors": "^1.4.0",
+    "dotenv": "^8.1.0",
+    "hermesjs": "2.x",
+    "hermesjs-router": "1.x",
+    {% if asyncapi.server(params.server).protocol() === 'mqtt' -%}
+    "hermesjs-mqtt": "2.x",
+    {%- endif -%}
+    {% if asyncapi.server(params.server).protocol() === 'kafka' -%}
+    "hermesjs-kafka": "2.x",
+    {%- endif -%}
+    {% if asyncapi.server(params.server).protocol() === 'amqp' -%}
+    "hermesjs-amqp": "1.x",
+    {%- endif %}
+    {% if asyncapi.server(params.server).protocol() === 'ws' -%}
+    "hermesjs-ws": "1.x",
+    {%- endif %}
+    "node-fetch": "^2.6.0",
+    "node-yaml-config": "0.0.4"
+  }
+}

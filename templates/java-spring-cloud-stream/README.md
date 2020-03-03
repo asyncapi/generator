@@ -1,10 +1,3 @@
-# {{ asyncapi.info().title() }}
-
-## Version {{ asyncapi.info().version() }}
-
-{{ asyncapi.info().description() | safe }}
-
-
 # Generator Instructions
 
 This template generates Spring Cloud Stream (SCSt) code, either a library or a complete application. It uses version 3
@@ -53,7 +46,7 @@ Consumer<Message<Order>> storeProcessConsumer() {
 
 The names of the functions that are generated can be overridden for each channel by providing a channel specification extension of the form ```x-function-name: myFunctionName```. This is useful when the channel names are long and/or contain parameters that would not read nicely in function names. For example if you have a channel:
 
-```orders/v1/operations/{orderType}/{operationThype}```
+```orders/v1/operations/{orderType}/{operationType}```
 
 the supplier function would be named ```ordersV1OperationsOrderTypeOperationTypeSupplier```, so in cases like this you could override it to generate something like ```orderSupplier```.
 

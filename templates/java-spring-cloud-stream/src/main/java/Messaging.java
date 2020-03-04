@@ -20,6 +20,7 @@ public class Messaging {
 	private static final String SPRING_DESTINATION_HEADER = "spring.cloud.stream.sendto.destination";
 	private static final Logger log = LoggerFactory.getLogger(Messaging.class);
 
+
 {% for channelName, channel in asyncapi.channels() -%}
 {%- set name = [channelName, channel] | functionName %}
 {%- set upperName = name | upperFirst %}
@@ -41,7 +42,6 @@ public class Messaging {
 	public Supplier<Flux<Message<{{payloadClass}}>>> {{name}}Supplier() {
 		return () -> {{emitterName}};
 	}
-
 {% if topicInfo.hasParams %}
 	public void send{{upperName}}({{payloadClass}} payload, {{ topicInfo.functionParamList }}) {
 		send{{upperName}}( payload, {{topicInfo.functionArgList}}, null);

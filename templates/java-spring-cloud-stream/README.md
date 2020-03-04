@@ -7,7 +7,7 @@ Ths template can generate a library which can be deployed and imported using Mav
 
 When generating an application, you can set the parameter ```binder={binderType}``` to specify which binder will get pulled in via a Maven dependency. Supported values are kafka, rabbit and solace.
 
-The template as follows. For each channel, if there is a publisher operation, a Supplier function will be generated with the name ```{channelName}Supplier```. For example, if there is a channel called store/process with a publisher operation with a payload called Order, this code will be generated in a class called Messaging:
+The template works as follows: for each channel, if there is a publisher operation, a Supplier function will be generated with the name ```{channelName}Supplier```. For example, if there is a channel called store/process with a publisher operation with a payload called Order, this code will be generated in a class called Messaging:
 
  ```
 EmitterProcessor<Message<Order>> storeProcessEmitterProcessor = EmitterProcessor.create();

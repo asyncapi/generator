@@ -64,10 +64,13 @@ module.exports = register => {
 
     const schemas = asyncapi._json.components.schemas
     //console.log("schemas: " + JSON.stringify(schemas))
+
+    // this renames schema objects according to the title field. By default we won't do this, we might add this as an option.
+    /*
     for (let schema in schemas) {
       let schemaObject = schemas[schema]
       let title = _.upperFirst(schemaObject.title)
-      //console.log("schema "  + schema + " title: " + title)
+      console.log("schema "  + schema + " title: " + title)
       if (title && title != schema) {
         let pathBySchema = path.resolve(sourcePath, schema + ".java")
         let pathByTitle = path.resolve(sourcePath, title + ".java")
@@ -77,6 +80,7 @@ module.exports = register => {
         }
       }
     }
+    */
   })
 }
 

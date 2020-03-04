@@ -10,12 +10,14 @@ module.exports = ({ Nunjucks }) => {
   formatMap.set('enum', '%s')
   formatMap.set('integer', '%d')
   formatMap.set('number', '%f')
+  formatMap.set('null', '%s')
   formatMap.set('string', '%s')
 
   // This maps json schema types to examples of values.
   const sampleMap = new Map()
   sampleMap.set('boolean', 'true')
   sampleMap.set('integer', '1')
+  sampleMap.set('null', 'string')
   sampleMap.set('number', '1.1')
   sampleMap.set('string', '"string"')
 
@@ -23,6 +25,7 @@ module.exports = ({ Nunjucks }) => {
   const typeMap = new Map()
   typeMap.set('boolean', 'Boolean')
   typeMap.set('integer', 'Integer')
+  typeMap.set('null', 'String')
   typeMap.set('number', 'Double')
   typeMap.set('string', 'String')
 
@@ -104,6 +107,8 @@ module.exports = ({ Nunjucks }) => {
 
   // This returns the proper Java type for a schema property.
   Nunjucks.addFilter('fixType', ([name, property]) => {
+    
+    let isArrayOfObjects = false;
 
     // For message headers, type is a property.
     // For schema properties, type is a function.
@@ -113,7 +118,8 @@ module.exports = ({ Nunjucks }) => {
       type = property.type()
     }
 
-    // console.log('fixType: ' + name + ' ' + type + ' ' + dump(property._json) + ' ' )
+    //console.log('fixType: ' + name + ' ' + type + ' ' + JSON.stringify(property._json) + ' ' )
+    //console.log("");
 
     // If a schema has a property that is a ref to another schema,
     // the type is undefined, and the title gives the title of the referenced schema.
@@ -125,20 +131,15 @@ module.exports = ({ Nunjucks }) => {
         ret = property.title()
       }
     } else if (type === 'array') {
+      //console.log('fixtype: ' + JSON.stringify(propery._json.items));
       let itemsType = property._json.items.type
       if (itemsType) {
         itemsType = typeMap.get(itemsType)
-        if (!itemsType) {
-          throw new Error("Can't determine the type of the array property " + name)
-        }
       }
       if (!itemsType) {
-        itemsType = property._json.items.title
-        if (!itemsType) {
-          throw new Error("Can't determine the type of the array property " + name)
-        }
+        itemsType = _.upperFirst(name);
+        isArrayOfObjects = true;
       }
-      //console.log('array: ' + title)
       ret = _.upperFirst(itemsType) + "[]"
     } else if (type === 'object') {
       ret = _.upperFirst(name)
@@ -148,7 +149,7 @@ module.exports = ({ Nunjucks }) => {
         ret = type
       }
     }
-    return ret
+    return [ret, isArrayOfObjects];
   })
 
   Nunjucks.addFilter('groupId', ([info, params]) => {
@@ -333,9 +334,9 @@ module.exports = ({ Nunjucks }) => {
   function getPayloadClass(pubOrSub) {
     let ret
 
-    //console.log("getPayloadClass: "  + JSON.stringify(pubOrSub._json.message))
     if (pubOrSub && pubOrSub._json && pubOrSub._json.message && pubOrSub._json.message.payload) {
-      ret = _.upperFirst(pubOrSub._json.message.payload.title)
+      //console.log("getPayloadClass: "  + JSON.stringify(pubOrSub._json.message))
+      ret = _.upperFirst(pubOrSub._json.message.payload['x-parser-schema-id'])
     }
 
     return ret

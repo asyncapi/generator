@@ -1,4 +1,4 @@
-name: Handling PRs
+name: Validating PR
 
 on:
   pull_request:
@@ -9,7 +9,7 @@ on:
       - synchronize
 
 jobs:
-  pr-title:
+  pr-title-check:
     runs-on: ubuntu-latest
     steps:
     - name: 'Check for PR title with conventional commits'

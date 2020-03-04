@@ -52,12 +52,14 @@ program
     asyncapiFile = path.resolve(asyncAPIPath);
     template = tmpl;
   })
-  .option('-w, --watch', 'Watch the templates directory (--templates) for changes and re-generate when they occur')
+  .option('-w, --watch', 'watches the templates directory and the AsyncAPI document for changes, and re-generate the files when they occur')
   .option('-o, --output <outputDir>', 'directory where to put the generated files (defaults to current directory)', parseOutput, process.cwd())
   .option('-d, --disable-hook <hookName>', 'disable a specific hook', disableHooksParser)
   .option('-n, --no-overwrite <glob>', 'glob or path of the file(s) to skip when regenerating', noOverwriteParser)
   .option('-p, --param <name=value>', 'additional param to pass to templates', paramParser)
   .option('-t, --templates <templateDir>', 'directory where templates are located (defaults to internal templates directory)', Generator.DEFAULT_TEMPLATES_DIR, path.resolve(__dirname, 'templates'))
+  .option('--force-install', 'forces the installation of the template dependencies. By default, dependencies are installed and this flag is taken into account only if `node_modules` is not in place.')
+  .option('--force-write', 'force writing of the generated files to given directory even if it is a git repo with unstaged files or not empty dir (defaults to false)')
   .parse(process.argv);
 
 if (!asyncapiFile) {
@@ -123,10 +125,12 @@ function generate(targetDir) {
         templateParams: params,
         noOverwriteGlobs,
         disabledHooks,
+        forceWrite: program.forceWrite,
+        forceInstall: program.forceInstall,
       });
 
       await generator.generateFromFile(asyncapiFile);
-      console.log(green('Done! ✨'));
+      console.log(green('\n\nDone! ✨'));
       console.log(`${yellow('Check out your shiny new generated files at ') + magenta(program.output) + yellow('.')}\n`);
       resolve();
     } catch (e) {

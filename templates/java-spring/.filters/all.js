@@ -1,4 +1,6 @@
-module.exports = ({ Nunjucks, _ }) => {
+const _ = require('lodash');
+
+module.exports = ({ Nunjucks }) => {
   Nunjucks.addFilter('camelCase', (str) => {
     return _.camelCase(str);
   });

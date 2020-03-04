@@ -1,18 +1,18 @@
 {
-  "name": "@asyncapi/nodejs-ws-template",
+  "name": "@asyncapi/html-template",
   "version": "0.1.0",
-  "description": "Node.js WebSockets template for AsyncAPI generator.",
+  "description": "HTML template for the AsyncAPI generator.",
   "keywords": [
     "asyncapi",
     "generator",
-    "nodejs",
-    "websockets",
-    "ws",
+    "html",
     "template"
   ],
   "author": "Fran Mendez <fmvilas@gmail.com> (fmvilas.com)",
   "license": "Apache-2.0",
   "dependencies": {
-    "lodash": "^4.17.15"
+    "lodash": "^4.17.15",
+    "markdown-it": "^10.0.0",
+    "openapi-sampler": "^1.0.0-beta.15"
   }
 }

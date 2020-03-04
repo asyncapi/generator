@@ -15,7 +15,7 @@ jobs:
     - name: Checking PR title 
       uses: aslafy-z/conventional-pr-title-action@v2.2.0
       with:
-        success-state: 'Pull request title follows the Conventional Commits specification.'
+        success-state: :heart: Pull request title follows the Conventional Commits specification.
         failure-state: 'Pull request title does not follow the the Conventional Commits specification. Consult the contribution guide.'
         context-name: Checking PR title 
       env:

@@ -31,8 +31,8 @@ module.exports = ({ Nunjucks, _ }) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
-  Nunjucks.addFilter('toTsType', jsonType => {
-    switch (jsonType.toLowerCase()) {
+  Nunjucks.addFilter('toTsType', jsonSchemaType => {
+    switch (jsonSchemaType.toLowerCase()) {
       case 'string':
         return 'String';
       case 'integer':
@@ -43,7 +43,7 @@ module.exports = ({ Nunjucks, _ }) => {
     }
   });
 
-  Nunjucks.addFilter('constructurParameters', schema => {
+  Nunjucks.addFilter('constructorParameters', schema => {
     let returnString = '';
     if (schema.allOf()) {
       schema.allOf().forEach(element => {
@@ -110,6 +110,7 @@ module.exports = ({ Nunjucks, _ }) => {
   Nunjucks.addFilter('tsPayload', (server) => {
     return "STRING";
   });
+  
   Nunjucks.addFilter('tsEncoding', (server) => {
     return "STRING";
   });

@@ -15,7 +15,9 @@ import {default as {{ messageName | pascalCase }}Message} from "./messages/{{ me
 {%- endfor %}
 
 export default class NatsAsyncApiClient {
-  public nc?: Client;
+  public jsonClient?: Client;
+  public stringClient?: Client;
+  public binaryClient?: Client;
   public options: NatsConnectionOptions;
   constructor(options : NatsConnectionOptions) {
     options = this.setDefaultOptions(options);
@@ -29,6 +31,9 @@ export default class NatsAsyncApiClient {
    */
   private async connect(options : NatsConnectionOptions){
     try{
+      {%- if asyncapi | containsJsonPayload %}
+
+      {%- endif %}
       this.nc = await connect(options);
     }catch(e){
       console.error("Could not connect to NATS: " + e)
@@ -36,8 +41,8 @@ export default class NatsAsyncApiClient {
   }
 
   /**
-   * Set the default options from the AsyncAPI file.
-   * @param options The options to set
+   * Set the default options based on the AsyncAPI file.
+   * @param options to set
    */
   private setDefaultOptions(options: NatsConnectionOptions){
     //If server binding options sat set the options

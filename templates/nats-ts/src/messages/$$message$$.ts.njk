@@ -63,7 +63,7 @@ export default class {{ message.name() | pascalCase}} {
   {{ initProperties(message.payload()) }}
 
   constructor(
-    {{message.payload() | constructurParameters}}
+    {{message.payload() | constructorParameters}}
   ){
   {{setConstructorProperties(message.payload())}}
   }

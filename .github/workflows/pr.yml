@@ -1,0 +1,21 @@
+name: Handling PRs
+
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - edited
+      - synchronize
+
+jobs:
+  pr-title:
+    runs-on: ubuntu-latest
+    steps:
+    - name: conventional-pr-title
+      uses: aslafy-z/conventional-pr-title-action@v2.2.0
+      with:
+        success-state: ':heart: Pull request title follows the Conventional Commits specification.'
+        failure-state: ':broken_heart: Pull request title does not follow the the Conventional Commits specification. Consult the contribution guide.'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

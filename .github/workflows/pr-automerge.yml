@@ -21,14 +21,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Automerging if all conditions are met
-        uses: "pascalgn/automerge-action@v0.7.5"
-        env:
-          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-          GITHUB_LOGIN: asyncapi-bot
-          MERGE_LABELS: "automerge"
-          MERGE_REMOVE_LABELS: "automerge"
-          MERGE_METHOD: "squash"
-          MERGE_COMMIT_MESSAGE: "pull-request-title"
-          MERGE_FORKS: "true"
-          MERGE_RETRIES: "10"
-          MERGE_RETRY_SLEEP: "10000"
+        uses: ridedott/merge-me-action@v1.1.8
+        with:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}

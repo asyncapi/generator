@@ -19,4 +19,4 @@ jobs:
         failure-state: 'Pull request title does not follow the the Conventional Commits specification. Consult the contribution guide.'
         context-name: 'Verifying PR / pr-title-check (pull_request)'
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}

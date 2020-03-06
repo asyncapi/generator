@@ -1,4 +1,5 @@
-name: automerge
+name: PR Automerge
+
 on:
   pull_request:
     types:
@@ -14,6 +15,7 @@ on:
     types:
       - submitted
   status: {}
+  
 jobs:
   automerge:
     runs-on: ubuntu-latest

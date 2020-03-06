@@ -1,5 +1,5 @@
 {
-    "name": "asyncapi-generator",
+    "name": "asyncapi-generator-test",
     "version": "0.32.0",
     "description": "The AsyncAPI generator. It can generate documentation, code, anything!",
     "main": "./lib/generator.js",
@@ -10,7 +10,7 @@
     "scripts": {
         "docs": "jsdoc2md lib/generator.js > docs/api.md",
         "release": "semantic-release",
-        "docker-build": "docker build -t asyncapi/generator:latest .",
+        "docker-build": "docker build -t derberg/generator:latest .",
         "get-version": "echo $npm_package_version"
 
     },

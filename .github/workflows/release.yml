@@ -24,9 +24,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           GIT_AUTHOR_NAME: asyncapi-bot
-          GIT_AUTHOR_EMAIL: derberg@wp.pl
+          GIT_AUTHOR_EMAIL: info@asyncapi.io
           GIT_COMMITTER_NAME: asyncapi-bot
-          GIT_COMMITTER_EMAIL: derberg@wp.pl
+          GIT_COMMITTER_EMAIL: info@asyncapi.io
         run: npm run release
   #This job creates and pushes a new Docker image to the registry only if NPM job was successful
   release-docker:
@@ -44,8 +44,8 @@ jobs:
       - name: Build image with tag latest
         run: npm run docker-build
       - name: Tag image with version used in package.json
-        run: docker tag asyncapi/generator:latest asyncapi/generator:${{ steps.extractver.outputs.version }}
+        run: docker tag derberg/generator:latest derberg/generator:${{ steps.extractver.outputs.version }}
       - name: Push to Docker registry
         run: |
-          docker push asyncapi/generator:${{ steps.extractver.outputs.version }}
-          docker push asyncapi/generator:latest
+          docker push derberg/generator:${{ steps.extractver.outputs.version }}
+          docker push derberg/generator:latest

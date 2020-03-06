@@ -44,8 +44,8 @@ jobs:
       - name: Build image with tag latest
         run: npm run docker-build
       - name: Tag image with version used in package.json
-        run: docker tag derberg/generator:latest derberg/generator:${{ steps.extractver.outputs.version }}
+        run: docker tag asyncapibot/generator:latest asyncapibot/generator:${{ steps.extractver.outputs.version }}
       - name: Push to Docker registry
         run: |
-          docker push derberg/generator:${{ steps.extractver.outputs.version }}
-          docker push derberg/generator:latest
+          docker push asyncapibot/generator:${{ steps.extractver.outputs.version }}
+          docker push asyncapibot/generator:latest

@@ -24,3 +24,4 @@ jobs:
         uses: ridedott/merge-me-action@v1.1.8
         with:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_LOGIN: derberg

@@ -3,7 +3,7 @@ name: Release
 on:
   push:
     branches:
-      - conventional-commits
+      - master
 
 jobs:
   #This job with support of semantic-release checks if release is needed, bumps package.json, tags repo, pushes package to NPM and create GitHub Release with proper changelog

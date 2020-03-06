@@ -1,9 +1,18 @@
 html, body {
   font-weight: lighter;
+  background-color: white;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-weight: lighter;
+}
+
+a {
+  color: #333;
+}
+
+a:hover {
+  color: black;
 }
 
 .string-chunk {

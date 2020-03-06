@@ -1,9 +1,7 @@
-
+.PHONY: docker
 docker: 
 	docker build -t asyncapi/generator:latest .
 
+.PHONY: release
 release:
-	# todo: do this using CI
 	./release.sh
-
-.PHONY: docker release

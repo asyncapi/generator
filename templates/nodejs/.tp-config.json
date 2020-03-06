@@ -1,6 +1,11 @@
 {
   "supportedProtocols": ["amqp", "mqtt", "kafka", "ws"],
-  "requiredParams": ["server"],
+  "parameters": {
+    "server": {
+      "description": "The server you want to use in the code.",
+      "required": true
+    }
+  },
   "nonRenderableFiles": [
     "src/api/middlewares/*.*",
     "src/lib/config.js"

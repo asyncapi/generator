@@ -4,7 +4,7 @@ default:
     version: {{ asyncapi.info().version() }}
 {% if asyncapi.server(params.server).protocol() === "ws" %}
   ws:
-    port: {{ asyncapi.server(params.server).url() | port(80) }}
+    port: {{ asyncapi.server(params.server).url() | replaceVariablesWithValues(asyncapi.server(params.server).variables()) | port(80) }}
     path: /ws
     topicSeparator: '__'
 {% endif %}
@@ -16,7 +16,7 @@ default:
       exchange:
       username:
       password:
-      host: {{ asyncapi.server(params.server).url() | host }}
+      host: {{ asyncapi.server(params.server).url() | replaceVariablesWithValues(asyncapi.server(params.server).variables())  | host }}
       port:
       topics: {{ asyncapi | channelNamesWithPublish | toAmqpTopic | dump | safe }}
       queue: {{ asyncapi.info().title() | queueName(asyncapi.info().version()) }}
@@ -27,7 +27,7 @@ default:
 {%- endif %}
 {%- if asyncapi.server(params.server).protocol() === "mqtt" %}
     mqtt:
-      url: mqtt://{{ asyncapi.server(params.server).url() | stripProtocol }}
+      url: mqtt://{{ asyncapi.server(params.server).url() | replaceVariablesWithValues(asyncapi.server(params.server).variables()) | stripProtocol  }}
       topics: {{ asyncapi | channelNamesWithPublish | toMqttTopic | dump | safe }}
       qos:
       protocol: mqtt
@@ -38,7 +38,7 @@ default:
     kafka:
       clientId: {{ asyncapi.info().title() | camelCase }}
       brokers:
-        - {{ asyncapi.server(params.server).url() | host }}
+        - {{ asyncapi.server(params.server).url() | replaceVariablesWithValues(asyncapi.server(params.server).variables()) | host }}
       consumerOptions:
         groupId: {{ asyncapi.info().title() | camelCase }}
       topics:

@@ -23,9 +23,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           GIT_AUTHOR_NAME: asyncapi-bot
-          GIT_AUTHOR_EMAIL: derberg@wp.pl
+          GIT_AUTHOR_EMAIL: info@asyncapi.io
           GIT_COMMITTER_NAME: asyncapi-bot
-          GIT_COMMITTER_EMAIL: derberg@wp.pl
+          GIT_COMMITTER_EMAIL: info@asyncapi.io
         run: npm run release
       - name: Login to Docker registry
         run: echo ${{secrets.DOCKER_PASSWORD}} | docker login -u ${{secrets.DOCKER_USERNAME}} --password-stdin
@@ -35,8 +35,8 @@ jobs:
       - name: Build image with tag latest
         run: npm run docker-build
       - name: Tag image with version used in package.json
-        run: docker tag asyncapibot/generator:latest asyncapibot/generator:${{ steps.extractver.outputs.version }}
+        run: docker tag asyncapi/generator:latest asyncapi/generator:${{ steps.extractver.outputs.version }}
       - name: Push to Docker registry
         run: |
-          docker push asyncapibot/generator:${{ steps.extractver.outputs.version }}
-          docker push asyncapibot/generator:latest
+          docker push asyncapi/generator:${{ steps.extractver.outputs.version }}
+          docker push asyncapi/generator:latest

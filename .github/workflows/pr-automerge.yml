@@ -24,6 +24,7 @@ jobs:
         uses: "pascalgn/automerge-action@v0.7.5"
         env:
           GITHUB_TOKEN: "${{ secrets.GH_TOKEN }}"
+          GITHUB_LOGIN: asyncapi-bot
           MERGE_LABELS: "automerge"
           MERGE_REMOVE_LABELS: "automerge"
           MERGE_METHOD: "squash"

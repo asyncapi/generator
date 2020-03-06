@@ -1,16 +1,51 @@
-name: Publish docker image
+name: Release
 
 on:
   push:
-    tags:
-    - '*'
+    branches:
+      - master
 
 jobs:
-  build:
+  #This job with support of semantic-release checks if release is needed, bumps package.json, tags repo, pushes package to NPM and create GitHub Release with proper changelog
+  release-npm-github:
+    name: Release to NPM and GitHub
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Start release
-      run: |
-        echo ${{secrets.DOCKER_PASSWORD}} | docker login -u ${{secrets.DOCKER_USERNAME}} --password-stdin
-        make docker release
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 13
+      - name: Install dependencies
+        run: npm ci
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GIT_AUTHOR_NAME: asyncapi-bot
+          GIT_AUTHOR_EMAIL: derberg@wp.pl
+          GIT_COMMITTER_NAME: asyncapi-bot
+          GIT_COMMITTER_EMAIL: derberg@wp.pl
+        run: npm run release
+  #This job creates and pushes a new Docker image to the registry only if NPM job was successful
+  release-docker:
+    needs: release-npm-github
+    name: Release to Docker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Login to Docker registry
+        run: echo ${{secrets.DOCKER_PASSWORD}} | docker login -u ${{secrets.DOCKER_USERNAME}} --password-stdin
+      - name: Get version from package.json
+        id: extractver
+        run: echo "::set-output name=version::$(npm run get-version --silent)"
+      - name: Build image with tag latest
+        run: npm run docker-build
+      - name: Tag image with version used in package.json
+        run: docker tag asyncapi/generator:latest asyncapi/generator:${{ steps.extractver.outputs.version }}
+      - name: Push to Docker registry
+        run: |
+          docker push asyncapi/generator:${{ steps.extractver.outputs.version }}
+          docker push asyncapi/generator:latest

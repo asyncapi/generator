@@ -1,5 +1,5 @@
 {
-    "name": "asyncapi-generator",
+    "name": "@asyncapi/asyncapi-generator",
     "version": "0.31.0",
     "description": "The AsyncAPI generator. It can generate documentation, code, anything!",
     "main": "./lib/generator.js",
@@ -9,7 +9,10 @@
     },
     "scripts": {
         "docs": "jsdoc2md lib/generator.js > docs/api.md",
-        "release": "semantic-release --no-ci"
+        "release": "semantic-release",
+        "docker-build": "docker build -t asyncapi/generator:latest .",
+        "get-version": "echo $npm_package_version"
+
     },
     "preferGlobal": true,
     "bugs": {
@@ -53,27 +56,38 @@
         "@semantic-release/npm": "^7.0.3",
         "@semantic-release/release-notes-generator": "^9.0.1",
         "chokidar": "^3.3.0",
+        "conventional-changelog-conventionalcommits": "^4.2.3",
         "jsdoc-to-markdown": "^5.0.0",
         "semantic-release": "^17.0.4"
     },
     "release": {
         "branches": [
-            "master"
+          "master"
         ],
         "plugins": [
-            "@semantic-release/npm",
-            "@semantic-release/github",
+          [
             "@semantic-release/commit-analyzer",
+            {
+              "preset": "conventionalcommits"
+            }
+          ],
+          [
             "@semantic-release/release-notes-generator",
-            [
-              "@semantic-release/git",
-              {
-                "assets": [
-                    "package.json, package-lock.json"
-                ],
-                "message": "chore(release): ${nextRelease.version} \n\n${nextRelease.notes}"
-              }
-            ]
+            {
+              "preset": "conventionalcommits"
+            }
+          ],
+          "@semantic-release/npm",
+          "@semantic-release/github",
+          [
+            "@semantic-release/git",
+            {
+              "assets": [
+                "package.json", "package-lock.json"
+              ],
+              "message": "chore(release): ${nextRelease.version} \n\n${nextRelease.notes}"
+            }
           ]
-    }
+        ]
+      }
 }

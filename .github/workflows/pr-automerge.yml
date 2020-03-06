@@ -27,7 +27,7 @@ jobs:
           MERGE_LABELS: "automerge"
           MERGE_REMOVE_LABELS: "automerge"
           MERGE_METHOD: "squash"
-          MERGE_COMMIT_MESSAGE: "pull-request-title"
+          MERGE_COMMIT_MESSAGE: "pull-request-description"
           MERGE_FORKS: "true"
           MERGE_RETRIES: "10"
           MERGE_RETRY_SLEEP: "10000"

@@ -10,7 +10,7 @@
     "scripts": {
         "docs": "jsdoc2md lib/generator.js > docs/api.md",
         "release": "semantic-release",
-        "docker-build": "docker build -t derberg/generator:latest .",
+        "docker-build": "docker build -t asyncapibot/generator:latest .",
         "get-version": "echo $npm_package_version"
 
     },

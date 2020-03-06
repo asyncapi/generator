@@ -12,11 +12,7 @@ jobs:
   pr-title-check:
     runs-on: ubuntu-latest
     steps:
-    - name: Checking PR title 
-      uses: aslafy-z/conventional-pr-title-action@v2.2.0
-      with:
-        success-state: 'Pull request title follows the Conventional Commits specification.'
-        failure-state: 'Pull request title does not follow the the Conventional Commits specification. Consult the contribution guide.'
-        context-name: 'Verifying PR / pr-title-check (pull_request)'
+    - name: semantic-pull-request
+      uses: amannn/action-semantic-pull-request@v1.2.0
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

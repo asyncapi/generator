@@ -22,8 +22,6 @@ jobs:
     steps:
       - name: Automerging if all conditions are met
         uses: "pascalgn/automerge-action@v0.7.5"
-        with:
-          args: "--trace"
         env:
           GITHUB_TOKEN: "${{ secrets.GH_TOKEN }}"
           MERGE_LABELS: "automerge"

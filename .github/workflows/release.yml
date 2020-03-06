@@ -28,7 +28,7 @@ jobs:
           GIT_COMMITTER_NAME: asyncapi-bot
           GIT_COMMITTER_EMAIL: info@asyncapi.io
         run: npm run release
-  #This job creates and pushes a new Docker image to the registry only if NPM job was successful
+  #This job creates and pushes a new Docker image to the registry. Runs after the release to NPM and GitHub
   release-docker:
     needs: release-npm-github
     name: Release to Docker

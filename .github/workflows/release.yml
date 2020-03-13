@@ -39,9 +39,9 @@ jobs:
         run: | 
           echo ${{secrets.DOCKER_PASSWORD}} | docker login -u ${{secrets.DOCKER_USERNAME}} --password-stdin
           npm run docker-build
-          docker tag asyncapibot/generator:latest asyncapibot/generator:${{ steps.extractver.outputs.version }}
-          docker push asyncapibot/generator:${{ steps.extractver.outputs.version }}
-          docker push asyncapibot/generator:latest
+          docker tag asyncapi/generator:latest asyncapi/generator:${{ steps.extractver.outputs.version }}
+          docker push asyncapi/generator:${{ steps.extractver.outputs.version }}
+          docker push asyncapi/generator:latest
       - name: Create Pull Request with updated package files
         if: steps.initversion.outputs.version != steps.extractver.outputs.version
         uses: peter-evans/create-pull-request@v2.4.4

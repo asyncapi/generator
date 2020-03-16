@@ -81,7 +81,7 @@ See [authoring templates](docs/authoring.md) and the [list of templates recipes]
 
 ## Requirements
 
-* Node.js v8.5+
+* Node.js v12.16+
 
 ## Contributing
 

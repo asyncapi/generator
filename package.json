@@ -31,6 +31,9 @@
     "name": "Fran Mendez",
     "email": "fmvilas@gmail.com"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "license": "Apache-2.0",
   "homepage": "https://github.com/asyncapi/generator",
   "dependencies": {

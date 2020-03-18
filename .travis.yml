@@ -1,8 +1,0 @@
-language: node_js
-node_js:
-  - "8"
-deploy:
-  provider: script
-  script: "cp .npmrc.template $HOME/.npmrc && npm install && npm test && npm publish"
-  on:
-    tags: true

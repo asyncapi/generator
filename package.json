@@ -84,7 +84,9 @@
       [
         "semantic-release-slack-bot",
         {
-          "notifyOnSuccess": true
+          "notifyOnSuccess": true,
+          "packageName": "https://github.com/asyncapi/generator",
+          "markdownReleaseNotes": true
         }
       ],
       "@semantic-release/npm",

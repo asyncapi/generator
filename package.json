@@ -61,7 +61,8 @@
     "chokidar": "^3.3.0",
     "conventional-changelog-conventionalcommits": "^4.2.3",
     "jsdoc-to-markdown": "^5.0.0",
-    "semantic-release": "^17.0.4"
+    "semantic-release": "^17.0.4",
+    "semantic-release-slack-bot": "^1.5.0"
   },
   "release": {
     "branches": [
@@ -78,6 +79,12 @@
         "@semantic-release/release-notes-generator",
         {
           "preset": "conventionalcommits"
+        }
+      ],
+      [
+        "semantic-release-slack-bot",
+        {
+          "notifyOnSuccess": true
         }
       ],
       "@semantic-release/npm",

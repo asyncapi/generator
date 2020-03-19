@@ -30,6 +30,7 @@ jobs:
           GIT_AUTHOR_EMAIL: info@asyncapi.io
           GIT_COMMITTER_NAME: asyncapi-bot
           GIT_COMMITTER_EMAIL: info@asyncapi.io
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
         run: npm run release
       - name: Get version from package.json after release step
         id: extractver

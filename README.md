@@ -12,7 +12,7 @@
 ## Install
 
 ```bash
-npm install -g asyncapi-generator
+npm install -g @asyncapi/generator
 ```
 
 Or just use Docker:

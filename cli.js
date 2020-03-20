@@ -59,7 +59,7 @@ program
   .option('-o, --output <outputDir>', 'directory where to put the generated files (defaults to current directory)', parseOutput, process.cwd())
   .option('-p, --param <name=value>', 'additional param to pass to templates', paramParser)
   .option('--force-write', 'force writing of the generated files to given directory even if it is a git repo with unstaged files or not empty dir (defaults to false)')
-  .option('--watch-template', 'watches the template directory and the AsyncAPI document, and re-generate the files when changes they occur')
+  .option('--watch-template', 'watches the template directory and the AsyncAPI document, and re-generate the files when changes occur')
   .parse(process.argv);
 
 if (!asyncapiFile) {

@@ -2,6 +2,12 @@ env:
   node: true
   es6: true
 
+plugins: 
+  - sonarjs
+
+extends: 
+  - plugin:sonarjs/recommended
+
 parserOptions:
   ecmaVersion: 2018
 

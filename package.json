@@ -11,7 +11,8 @@
     "docs": "jsdoc2md lib/generator.js > docs/api.md",
     "release": "semantic-release",
     "docker-build": "docker build -t asyncapi/generator:latest .",
-    "get-version": "echo $npm_package_version"
+    "get-version": "echo $npm_package_version",
+    "eslint": "eslint --config .eslintrc ."
   },
   "preferGlobal": true,
   "bugs": {
@@ -60,6 +61,8 @@
     "@semantic-release/release-notes-generator": "^9.0.1",
     "chokidar": "^3.3.0",
     "conventional-changelog-conventionalcommits": "^4.2.3",
+    "eslint": "^6.8.0",
+    "eslint-plugin-sonarjs": "^0.5.0",
     "jsdoc-to-markdown": "^5.0.0",
     "semantic-release": "^17.0.4",
     "semantic-release-slack-bot": "^1.5.0"

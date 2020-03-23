@@ -9,7 +9,15 @@ Contributions are more than welcome. If you want to contribute, please make sure
 3. Open a Pull Request pointing to the `master` branch.
 4. A maintainer will review and, eventually, merge your Pull Request. Please, be patient as most of us are doing this in our spare time.
 
-### Developing with Docker
+## Code validation
+
+Before creating a Pull Request you should validate your code with ESLint.
+
+```
+npm run eslint
+```
+
+## Developing with Docker
 
 In case you want to quickly build a docker image locally to check if it works then run `npm run docker-build`
 

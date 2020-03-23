@@ -13,7 +13,7 @@ Start Kafka `docker-compose -f kafka.yml up`
 
 ### Manual testing with generated Node.js
 
-1. Generate server `node cli.js -o ./output ./test/docs/streetlights-amqp.yml nodejs -p server=production`
+1. Generate server `node cli.js -o ./output ./test/docs/streetlights-kafka.yml nodejs -p server=production`
 1. `cd output`
 1. `nmp install`
 1. `npm start`

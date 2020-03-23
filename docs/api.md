@@ -94,7 +94,7 @@ Generates files from a given template and AsyncAPI string.
 | Param | Type | Description |
 | --- | --- | --- |
 | asyncapiString | <code>String</code> | AsyncAPI string to use as source. |
-| [asyncApiFileLocation] | <code>String</code> | AsyncAPI file location, used by the asyncapi-parser for references. |
+| [asyncApiFileLocation] | <code>String</code> | AsyncAPI file location, used by the @asyncapi/parser for references. |
 
 **Example**  
 ```js

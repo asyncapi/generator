@@ -1,0 +1,56 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  release:
+    name: 'Release NPM, GitHub, Docker'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 13
+      - name: Install dependencies
+        run: npm ci
+      - name: Get version from package.json before release step
+        id: initversion
+        run: echo "::set-output name=version::$(npm run get-version --silent)"
+      - name: Release to NPM and GitHub
+        id: release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GIT_AUTHOR_NAME: asyncapi-bot
+          GIT_AUTHOR_EMAIL: info@asyncapi.io
+          GIT_COMMITTER_NAME: asyncapi-bot
+          GIT_COMMITTER_EMAIL: info@asyncapi.io
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        run: npm run release
+      - name: Get version from package.json after release step
+        id: extractver
+        run: echo "::set-output name=version::$(npm run get-version --silent)"
+      - name: Release to Docker
+        if: steps.initversion.outputs.version != steps.extractver.outputs.version
+        run: | 
+          echo ${{secrets.DOCKER_PASSWORD}} | docker login -u ${{secrets.DOCKER_USERNAME}} --password-stdin
+          npm run docker-build
+          docker tag asyncapi/generator:latest asyncapi/generator:${{ steps.extractver.outputs.version }}
+          docker push asyncapi/generator:${{ steps.extractver.outputs.version }}
+          docker push asyncapi/generator:latest
+      - name: Create Pull Request with updated package files
+        if: steps.initversion.outputs.version != steps.extractver.outputs.version
+        uses: peter-evans/create-pull-request@v2.4.4
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+          commit-message: 'chore(release): ${{ steps.extractver.outputs.version }}'
+          committer: asyncapi-bot <info@asyncapi.io>
+          author: asyncapi-bot <info@asyncapi.io>
+          title: 'chore(release): ${{ steps.extractver.outputs.version }}'
+          body: 'Version bump in package.json and package-lock.json for release [${{ steps.extractver.outputs.version }}](https://github.com/${{github.repository}}/releases/tag/v${{ steps.extractver.outputs.version }})'
+          branch: version-bump/${{ steps.extractver.outputs.version }}

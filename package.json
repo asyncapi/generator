@@ -1,54 +1,99 @@
 {
-    "name": "asyncapi-generator",
-    "version": "0.33.0",
-    "description": "The AsyncAPI generator. It can generate documentation, code, anything!",
-    "main": "./lib/generator.js",
-    "bin": {
-        "asyncapi-generator": "./cli.js",
-        "ag": "./cli.js"
-    },
-    "scripts": {
-        "docs": "jsdoc2md lib/generator.js > docs/api.md"
-    },
-    "preferGlobal": true,
-    "bugs": {
-        "url": "https://github.com/asyncapi/generator/issues"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git://github.com/asyncapi/generator.git"
-    },
-    "keywords": [
-        "asyncapi",
-        "documentation",
-        "generator",
-        "markdown"
+  "name": "@asyncapi/generator",
+  "version": "0.34.3",
+  "description": "The AsyncAPI generator. It can generate documentation, code, anything!",
+  "main": "./lib/generator.js",
+  "bin": {
+    "asyncapi-generator": "./cli.js",
+    "ag": "./cli.js"
+  },
+  "scripts": {
+    "docs": "jsdoc2md lib/generator.js > docs/api.md",
+    "release": "semantic-release",
+    "docker-build": "docker build -t asyncapi/generator:latest .",
+    "get-version": "echo $npm_package_version",
+    "eslint": "eslint --config .eslintrc ."
+  },
+  "preferGlobal": true,
+  "bugs": {
+    "url": "https://github.com/asyncapi/generator/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/asyncapi/generator.git"
+  },
+  "keywords": [
+    "asyncapi",
+    "documentation",
+    "generator",
+    "markdown"
+  ],
+  "author": {
+    "name": "Fran Mendez",
+    "email": "fmvilas@gmail.com"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/asyncapi/generator",
+  "dependencies": {
+    "@asyncapi/openapi-schema-parser": "^1.0.0",
+    "@asyncapi/raml-dt-schema-parser": "^1.0.4",
+    "ajv": "^6.10.2",
+    "@asyncapi/parser": "^0.16.0",
+    "commander": "^2.12.2",
+    "filenamify": "^4.1.0",
+    "fs.extra": "^1.3.2",
+    "jmespath": "^0.15.0",
+    "js-yaml": "^3.13.1",
+    "klaw-sync": "^6.0.0",
+    "markdown-it": "^8.4.1",
+    "minimatch": "^3.0.4",
+    "npmi": "^4.0.0",
+    "nunjucks": "^3.2.0",
+    "simple-git": "^1.131.0"
+  },
+  "devDependencies": {
+    "@semantic-release/commit-analyzer": "^8.0.1",
+    "@semantic-release/github": "^7.0.4",
+    "@semantic-release/npm": "^7.0.3",
+    "@semantic-release/release-notes-generator": "^9.0.1",
+    "chokidar": "^3.3.0",
+    "conventional-changelog-conventionalcommits": "^4.2.3",
+    "eslint": "^6.8.0",
+    "eslint-plugin-sonarjs": "^0.5.0",
+    "jsdoc-to-markdown": "^5.0.0",
+    "semantic-release": "^17.0.4",
+    "semantic-release-slack-bot": "^1.5.0"
+  },
+  "release": {
+    "branches": [
+      "master"
     ],
-    "author": {
-        "name": "Fran Mendez",
-        "email": "fmvilas@gmail.com"
-    },
-    "license": "Apache-2.0",
-    "homepage": "https://github.com/asyncapi/generator",
-    "dependencies": {
-        "@asyncapi/openapi-schema-parser": "^1.0.0",
-        "@asyncapi/raml-dt-schema-parser": "^1.0.4",
-        "ajv": "^6.10.2",
-        "asyncapi-parser": "^0.15.0",
-        "commander": "^2.12.2",
-        "filenamify": "^4.1.0",
-        "fs.extra": "^1.3.2",
-        "jmespath": "^0.15.0",
-        "js-yaml": "^3.13.1",
-        "klaw-sync": "^6.0.0",
-        "markdown-it": "^8.4.1",
-        "minimatch": "^3.0.4",
-        "npmi": "^4.0.0",
-        "nunjucks": "^3.2.0",
-        "simple-git": "^1.131.0"
-    },
-    "devDependencies": {
-        "chokidar": "^3.3.0",
-        "jsdoc-to-markdown": "^5.0.0"
-    }
+    "plugins": [
+      [
+        "@semantic-release/commit-analyzer",
+        {
+          "preset": "conventionalcommits"
+        }
+      ],
+      [
+        "@semantic-release/release-notes-generator",
+        {
+          "preset": "conventionalcommits"
+        }
+      ],
+      [
+        "semantic-release-slack-bot",
+        {
+          "notifyOnSuccess": true,
+          "packageName": "https://github.com/asyncapi/generator",
+          "markdownReleaseNotes": true
+        }
+      ],
+      "@semantic-release/npm",
+      "@semantic-release/github"
+    ]
+  }
 }

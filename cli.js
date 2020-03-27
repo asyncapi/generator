@@ -7,6 +7,7 @@ const packageInfo = require('./package.json');
 const mkdirp = require('mkdirp');
 const Generator = require('./lib/generator');
 const Watcher = require('./lib/watcher');
+const { isLocalTemplate } = require('./lib/utils');
 
 const red = text => `\x1b[31m${text}\x1b[0m`;
 const magenta = text => `\x1b[35m${text}\x1b[0m`;
@@ -52,14 +53,13 @@ program
     asyncapiFile = path.resolve(asyncAPIPath);
     template = tmpl;
   })
-  .option('-w, --watch', 'watches the templates directory and the AsyncAPI document for changes, and re-generate the files when they occur')
-  .option('-o, --output <outputDir>', 'directory where to put the generated files (defaults to current directory)', parseOutput, process.cwd())
   .option('-d, --disable-hook <hookName>', 'disable a specific hook', disableHooksParser)
+  .option('-i, --install', 'installs the template and its dependencies (defaults to false)')
   .option('-n, --no-overwrite <glob>', 'glob or path of the file(s) to skip when regenerating', noOverwriteParser)
+  .option('-o, --output <outputDir>', 'directory where to put the generated files (defaults to current directory)', parseOutput, process.cwd())
   .option('-p, --param <name=value>', 'additional param to pass to templates', paramParser)
-  .option('-t, --templates <templateDir>', 'directory where templates are located (defaults to internal templates directory)', Generator.DEFAULT_TEMPLATES_DIR, path.resolve(__dirname, 'templates'))
-  .option('--force-install', 'forces the installation of the template dependencies. By default, dependencies are installed and this flag is taken into account only if `node_modules` is not in place.')
   .option('--force-write', 'force writing of the generated files to given directory even if it is a git repo with unstaged files or not empty dir (defaults to false)')
+  .option('--watch-template', 'watches the template directory and the AsyncAPI document, and re-generate the files when changes occur')
   .parse(process.argv);
 
 if (!asyncapiFile) {
@@ -76,15 +76,19 @@ mkdirp(program.output, async err => {
   }
 
   // If we want to watch for changes do that
-  if (program.watch) {
-    const watchDir = path.resolve(program.templates, template);
-    console.log(`[WATCHER] Watching for changes in the template directory ${magenta(watchDir)} and in the async api file ${magenta(asyncapiFile)}`);
+  if (program.watchTemplate) {
+    const watchDir = path.resolve(Generator.DEFAULT_TEMPLATES_DIR, template);
+    console.log(`[WATCHER] Watching for changes in the template directory ${magenta(watchDir)} and in the AsyncAPI file ${magenta(asyncapiFile)}`);
+
+    if (!(await isLocalTemplate(watchDir))) {
+      console.warn(`WARNING: ${template} is a remote template. Changes may be lost on subsequent installations.`);
+    }
 
     const watcher = new Watcher([asyncapiFile, watchDir]);
     watcher.watch(async (changedFiles) => {
       console.clear();
       console.log('[WATCHER] Change detected');
-      for (const [key, value] of Object.entries(changedFiles)) {
+      for (const [, value] of Object.entries(changedFiles)) {
         let eventText;
         switch (value.eventType) {
         case 'changed':
@@ -121,12 +125,11 @@ function generate(targetDir) {
   return new Promise(async (resolve, reject) => {
     try {
       const generator = new Generator(template, targetDir || path.resolve(os.tmpdir(), 'asyncapi-generator'), {
-        templatesDir: program.templates,
         templateParams: params,
         noOverwriteGlobs,
         disabledHooks,
         forceWrite: program.forceWrite,
-        forceInstall: program.forceInstall,
+        forceInstall: program.install,
       });
 
       await generator.generateFromFile(asyncapiFile);

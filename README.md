@@ -34,42 +34,69 @@ asyncapi/generator -o ./output asyncapi.yml markdown
 ### From the command-line interface (CLI)
 
 ```bash
-  Usage: ag [options] <asyncapi> <template>
+Usage: cli [options] <asyncapi> <template>
 
-
-  Options:
-
-    -V, --version                  output the version number
-    -w, --watch                    watches the templates directory and the AsyncAPI document for changes, and re-generate the files when they occur
-    -o, --output <outputDir>       directory where to put the generated files (defaults to current directory)
-    -d, --disable-hook <hookName>  disable a specific hook
-    -n, --no-overwrite <glob>      glob or path of the file(s) to skip when regenerating
-    -p, --param <name=value>       additional param to pass to templates
-    -t, --templates <templateDir>  directory where templates are located (defaults to internal templates directory)
-    --force-install                forces the installation of the template dependencies. By default, dependencies are installed and this flag is taken into account only if `node_modules` is not in place.
-    -h, --help                     output usage information
-    --force-write                  force writing of the generated files to given directory even if it is a git repo with unstaged files or not empty dir (defaults to false)
+Options:
+  -V, --version                  output the version number
+  -d, --disable-hook <hookName>  disable a specific hook
+  -i, --install                  installs the template and its dependencies (defaults to false)
+  -n, --no-overwrite <glob>      glob or path of the file(s) to skip when regenerating
+  -o, --output <outputDir>       directory where to put the generated files (defaults to current directory)
+  -p, --param <name=value>       additional param to pass to templates
+  --force-write                  force writing of the generated files to given directory even if it is a git repo with unstaged files or not empty dir (defaults to false)
+  --watch-template               watches the template directory and the AsyncAPI document, and re-generate the files when changes occur
+  -h, --help                     output usage information
 ```
 
-Please check out the **templates** directory to get a list of the supported languages/formats.
+<details>
+  <summary>Click here to read more about supported values for the <code>&lt;template&gt;</code> parameter.</summary>
+  <br>
+  Templates are installable npm packages. Therefore, the value of <code>&lt;template&gt;</code> can be anything supported by <code>npm install</code>. Here's a summary of the possibilities:
+  <br><br>
+  <pre><code>
+  npm install [&lt;@scope&gt;/]&lt;name&gt;
+  npm install [&lt;@scope&gt;/]&lt;name&gt;@&lt;tag&gt;
+  npm install [&lt;@scope&gt;/]&lt;name&gt;@&lt;version&gt;
+  npm install [&lt;@scope&gt;/]&lt;name&gt;@&lt;version range&gt;
+  npm install &lt;git-host&gt;:&lt;git-user&gt;/&lt;repo-name&gt;
+  npm install &lt;git repo url&gt;
+  npm install &lt;tarball file&gt;
+  npm install &lt;tarball url&gt;
+  npm install &lt;folder&gt;</code></pre>
+</details>
+<br>
+
+:mag: Do you want to find a template? **[Click here!](https://github.com/search?q=topic%3Aasyncapi+topic%3Agenerator+topic%3Atemplate)**
 
 #### Examples
 
-The shortest possible syntax:
+**The shortest possible syntax:**
 ```bash
-ag asyncapi.yaml markdown
+ag asyncapi.yaml @asyncapi/html-template
 ```
 
-Specify where to put the result:
+**Specify where to put the result:**
 ```bash
-ag -o ./docs asyncapi.yaml markdown
+ag asyncapi.yaml @asyncapi/html-template -o ./docs
 ```
 
-Passing parameters to templates:
+**Passing parameters to templates:**
 ```bash
-ag -o ./docs --param title='Hello from param' asyncapi.yaml markdown
+ag asyncapi.yaml @asyncapi/html-template -o ./docs -p title='Hello from param'
 ```
 In the template you can use it like this: ` {{ params.title }}`
+
+**Installing the template from a folder:**
+```bash
+ag asyncapi.yaml ~/my-template
+```
+
+It creates a symbolic link to the target directory (`~/my-template` in this case).
+
+**Installing the template from a git URL:**
+```bash
+ag asyncapi.yaml https://github.com/asyncapi/html-template.git
+```
 
 ### As a module
 

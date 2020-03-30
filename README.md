@@ -26,7 +26,7 @@ asyncapi/generator [COMMAND HERE]
 docker run --rm -it \
 -v ${PWD}/test/docs/streetlights.yml:/app/asyncapi.yml \
 -v ${PWD}/output:/app/output \
-asyncapi/generator -o ./output asyncapi.yml markdown
+asyncapi/generator -o ./output asyncapi.yml @asyncapi/html-template --force-write
 ```
 
 ## Usage

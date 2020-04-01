@@ -50,7 +50,6 @@
     "klaw-sync": "^6.0.0",
     "markdown-it": "^8.4.1",
     "minimatch": "^3.0.4",
-    "mkdirp": "^1.0.3",
     "npmi": "^4.0.0",
     "nunjucks": "^3.2.0",
     "simple-git": "^1.131.0"

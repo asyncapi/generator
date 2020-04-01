@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
+const fs = require('fs');
 const path = require('path');
 const os = require('os');
 const program = require('commander');
 const packageInfo = require('./package.json');
-const mkdirp = require('mkdirp');
 const Generator = require('./lib/generator');
 const Watcher = require('./lib/watcher');
 const { isLocalTemplate } = require('./lib/utils');
@@ -67,7 +67,7 @@ if (!asyncapiFile) {
   program.help(); // This exits the process
 }
 
-mkdirp(program.output, async err => {
+fs.mkdir(program.output, { recursive: true }, async err => {
   if (err) return showErrorAndExit(err);
   try {
     await generate(program.output);

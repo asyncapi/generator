@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
-const fs = require('fs');
 const path = require('path');
 const os = require('os');
 const program = require('commander');
+const xfs = require('fs.extra');
 const packageInfo = require('./package.json');
 const Generator = require('./lib/generator');
 const Watcher = require('./lib/watcher');
@@ -67,7 +67,7 @@ if (!asyncapiFile) {
   program.help(); // This exits the process
 }
 
-fs.mkdir(program.output, { recursive: true }, async err => {
+xfs.mkdirp(program.output, async err => {
   if (err) return showErrorAndExit(err);
   try {
     await generate(program.output);

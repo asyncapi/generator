@@ -9,6 +9,13 @@
 
 > :warning: This package doesn't support AsyncAPI 1.x anymore. We recommend to upgrade to the latest AsyncAPI version using the [AsyncAPI converter](https://github.com/asyncapi/converter). If you need to convert documents on the fly, you may use the [Node.js](https://github.com/asyncapi/converter) or [Go](https://github.com/asyncapi/converter-go) converters.
 
+## Requirements
+
+* Node.js v12.16+
+* npm v6.13.7+
+
+Install both packages using [official installer](https://nodejs.org/en/download/). After installation make sure both packages have proper version by running `node -v` and `npm -v`. To upgrade invalid npm version run `npm install npm@latest -g`
+
 ## Install
 
 ```bash
@@ -105,10 +112,6 @@ See [API documentation](docs/api.md).
 ### Authoring templates
 
 See [authoring templates](docs/authoring.md) and the [list of templates recipes](docs/templates-recipes.md).
-
-## Requirements
-
-* Node.js v12.16+
 
 ## Contributing
 

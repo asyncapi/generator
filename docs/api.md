@@ -11,7 +11,7 @@
         * [.generateFromFile(asyncapiFile)](#Generator+generateFromFile) ⇒ <code>Promise</code>
         * [.installTemplate([force])](#Generator+installTemplate)
     * _static_
-        * [.getTemplateFile(templateName, filePath, options)](#Generator.getTemplateFile) ⇒ <code>Promise</code>
+        * [.getTemplateFile(templateName, filePath, [templatesDir])](#Generator.getTemplateFile) ⇒ <code>Promise</code>
 
 <a name="new_Generator_new"></a>
 
@@ -30,7 +30,7 @@ Instantiates a new Generator object.
 | [options.disabledHooks] | <code>Array.&lt;String&gt;</code> |  | List of hooks to disable. |
 | [options.output] | <code>String</code> | <code>&#x27;fs&#x27;</code> | Type of output. Can be either 'fs' (default) or 'string'. Only available when entrypoint is set. |
 | [options.forceWrite] | <code>Boolean</code> | <code>false</code> | Force writing of the generated files to given directory even if it is a git repo with unstaged files or not empty dir. Default is set to false. |
-| [options.forceInstall] | <code>Boolean</code> | <code>false</code> | Force the installation of the template and its dependencies. |
+| [options.install] | <code>Boolean</code> | <code>false</code> | Install the template and its dependencies, even when the template has already been installed. |
 
 **Example**  
 ```js
@@ -162,19 +162,24 @@ Downloads and installs a template and its dependencies.
 
 <a name="Generator.getTemplateFile"></a>
 
-### Generator.getTemplateFile(templateName, filePath, options) ⇒ <code>Promise</code>
+### Generator.getTemplateFile(templateName, filePath, [templatesDir]) ⇒ <code>Promise</code>
 Returns the content of a given template file.
 
 **Kind**: static method of [<code>Generator</code>](#Generator)  
 
-| Param | Type | Description |
-| --- | --- | --- |
-| templateName | <code>String</code> | Name of the template to generate. |
-| filePath | <code>String</code> | Path to the file to render. Relative to the template directory. |
-| options | <code>Object</code> |  |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| templateName | <code>String</code> |  | Name of the template to generate. |
+| filePath | <code>String</code> |  | Path to the file to render. Relative to the template directory. |
+| [templatesDir] | <code>String</code> | <code>DEFAULT_TEMPLATES_DIR</code> | Path to the directory where the templates are installed. |
 
 **Example**  
 ```js
 const Generator = require('asyncapi-generator');
-const content = await Generator.getTemplateFile('html', '.partials/content.html');
+const content = await Generator.getTemplateFile('@asyncapi/html-template', 'partials/content.html');
+```
+**Example** *(Using a custom &#x60;templatesDir&#x60;)*  
+```js
+const Generator = require('asyncapi-generator');
+const content = await Generator.getTemplateFile('@asyncapi/html-template', 'partials/content.html', '~/my-templates');
 ```

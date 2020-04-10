@@ -7,6 +7,10 @@
     "asyncapi-generator": "./cli.js",
     "ag": "./cli.js"
   },
+  "engines": {
+    "node": ">=12.16",
+    "npm": ">=6.13.7"
+  },
   "scripts": {
     "docs": "jsdoc2md lib/generator.js > docs/api.md",
     "release": "semantic-release",

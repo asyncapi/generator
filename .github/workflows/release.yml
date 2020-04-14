@@ -18,6 +18,8 @@ jobs:
           node-version: 13
       - name: Install dependencies
         run: npm ci
+      - name: Regenerate docs
+        run: npm run docs
       - name: Get version from package.json before release step
         id: initversion
         run: echo "::set-output name=version::$(npm run get-version --silent)"

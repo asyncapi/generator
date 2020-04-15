@@ -16,14 +16,52 @@ The AsyncAPI generator has been built with extensibility in mind. The package us
 1. The default variables you have access to in any the template file are the following:
    - `asyncapi` that is a parsed spec file object. Read the [API](https://github.com/asyncapi/parser-js/blob/master/API.md#AsyncAPIDocument) of the Parser to understand to what structure you have access in this parameter.
    - `originalAsyncAPI` that is an original spec file before it is parsed. 
-1. To separate functionality into files, you can specify a filename like `$$channel$$.js` to generate a file for each channel defined in your AsyncAPI document. Such files templating gives you access to the following extra variables:
-   - When using `$$channel$$` you have access to two variables [`channel`](https://github.com/asyncapi/parser-js/blob/master/API.md#Channel) and [`channelName`](https://github.com/asyncapi/parser-js/blob/master/API.md#AsyncAPIDocument+channels). Where `channel` contains the current channel being rendered.
-   - When using `$$message$$` you have access to two variables [`message`](https://github.com/asyncapi/parser-js/blob/master/API.md#Message) and [`messageName`](https://github.com/asyncapi/parser-js/blob/master/API.md#Message+uid). Where `message` contains the current message being rendered.
-   - When using `$$schema$$` you have access to two variables [`schema`](https://github.com/asyncapi/parser-js/blob/master/API.md#Schema) and [`schemaName`](https://github.com/asyncapi/parser-js/blob/master/API.md#Schema+uid). Where `schema` contains the current schema being rendered. Only schemas from [Components object](https://www.asyncapi.com/docs/specifications/2.0.0/#a-name-componentsobject-a-components-object) are used. 
-   - When using `$$everySchema$$` you have access to two variables [`schema`](https://github.com/asyncapi/parser-js/blob/master/API.md#Schema) and [`schemaName`](https://github.com/asyncapi/parser-js/blob/master/API.md#Schema+uid). Where `schema` contains the current schema being rendered. Every [Schema object](https://www.asyncapi.com/docs/specifications/2.0.0/#schemaObject) from the entire AsyncAPI file is used.
-   - When using `$$parameter$$` you have access to two variables [`parameter`](https://github.com/asyncapi/parser-js/blob/master/API.md#ChannelParameter) and [`parameterName`](https://github.com/asyncapi/parser-js/blob/master/API.md#Channel+parameters). Where `parameter` contains the current parameter being rendered.
-   - When using `$$securityScheme$$` you have access to two variables [`securityScheme`](https://github.com/asyncapi/parser-js/blob/master/API.md#SecurityScheme) and [`securitySchemeName`](https://github.com/asyncapi/parser-js/blob/master/API.md#Components+securitySchemes). Where `securityScheme` contains the current security scheme being rendered.
-   
+## File templates
+
+It is possible to generate files for each specific object in your AsyncAPI documentation. 
+For example, you can specify a filename like `$$channel$$.js` to generate a file for each channel defined in your AsyncAPI. 
+The following file-template names and extra variables in them are available:
+   - `$$channel$$`, within the template-file you have access to two variables [`channel`](https://github.com/asyncapi/parser-js/blob/master/API.md#Channel) and [`channelName`](https://github.com/asyncapi/parser-js/blob/master/API.md#AsyncAPIDocument+channels). Where `channel` contains the current channel being rendered.
+   - `$$message$$`, within the template-file you have access to two variables [`message`](https://github.com/asyncapi/parser-js/blob/master/API.md#Message) and [`messageName`](https://github.com/asyncapi/parser-js/blob/master/API.md#Message+uid). Where `message` contains the current message being rendered.
+   - `$$schema$$`, within the template-file you have access to two variables [`schema`](https://github.com/asyncapi/parser-js/blob/master/API.md#Schema) and [`schemaName`](https://github.com/asyncapi/parser-js/blob/master/API.md#Schema+uid). Where `schema` contains the current schema being rendered. Only schemas from [Components object](https://www.asyncapi.com/docs/specifications/2.0.0/#a-name-componentsobject-a-components-object) are used. 
+   - `$$everySchema$$`, within the template-file you have access to two variables [`schema`](https://github.com/asyncapi/parser-js/blob/master/API.md#Schema) and [`schemaName`](https://github.com/asyncapi/parser-js/blob/master/API.md#Schema+uid). Where `schema` contains the current schema being rendered. Every [Schema object](https://www.asyncapi.com/docs/specifications/2.0.0/#schemaObject) from the entire AsyncAPI file is used.
+   - `$$parameter$$`, within the template-file you have access to two variables [`parameter`](https://github.com/asyncapi/parser-js/blob/master/API.md#ChannelParameter) and [`parameterName`](https://github.com/asyncapi/parser-js/blob/master/API.md#Channel+parameters). Where `parameter` contains the current parameter being rendered.
+   - `$$securityScheme$$`, within the template-file you have access to two variables [`securityScheme`](https://github.com/asyncapi/parser-js/blob/master/API.md#SecurityScheme) and [`securitySchemeName`](https://github.com/asyncapi/parser-js/blob/master/API.md#Components+securitySchemes). Where `securityScheme` contains the current security scheme being rendered.
+
+The file name will be equal to `*Name` variable
+##### Example
+The file name is `$$schema$$.txt`, the content of this file is:
+```
+Schema name is '{{schemaName}}' and properties are:
+{% for propName, prop in schema.properties() %}
+- {{prop.uid()}}
+{% endfor %}
+```
+With following AsyncAPI:
+```
+components:
+  schemas: 
+    peoplePayload:
+      type: object
+      properties:
+        event:
+          $ref: "#/components/schemas/people"
+    people:
+      type: object
+      properties:
+        id:
+          type: integer
+```
+Will generate two files `peoplePayload.txt` and `people.txt` with following content:
+```
+Schema name is 'peoplePayload' and properties are:
+- people
+```
+and
+```
+Schema name is 'people' and properties are:
+- id
+```
 ## Filters
 
 A filter is a helper function that you can create to perform complex tasks. They are JavaScript files that register one or many [Nunjuck filters](https://mozilla.github.io/nunjucks/api.html#custom-filters). The generator will parse all the files in the `.filters` directory.

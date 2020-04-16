@@ -52,7 +52,7 @@ components:
         id:
           type: integer
 ```
-Will generate two files `peoplePayload.txt` and `people.txt` with following content:
+The generator creates two files `peoplePayload.txt` and `people.txt` with the following content:
 ```
 Schema name is 'peoplePayload' and properties are:
 - people

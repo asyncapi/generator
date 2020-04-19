@@ -64,7 +64,7 @@ Schema name is 'people' and properties are:
 ```
 ## Filters
 
-A filter is a helper function that you can create to perform complex tasks. They are JavaScript files that register one or many [Nunjuck filters](https://mozilla.github.io/nunjucks/api.html#custom-filters). The generator parses all the files in the `.filters` directory. Functions exported from these files are registered as filters.
+A filter is a helper function that you can create to perform complex tasks. They are JavaScript files that register one or many [Nunjuck filters](https://mozilla.github.io/nunjucks/api.html#custom-filters). The generator parses all the files in the `filters` directory. Functions exported from these files are registered as filters.
 
 You can use the filter function in your template as in the following example:
 
@@ -72,7 +72,7 @@ You can use the filter function in your template as in the following example:
 const {{ channelName | camelCase }} = '{{ channelName }}';
 ```
 
-In case you have more than one template and want to reuse filters, you can put them in a single library. You can configure such a library in the template configuration under `filter` property. You can also use the official AsyncAPI [filters library](https://github.com/asyncapi/generator-filters). To learn how to add such filters to configuration [read more about the configuration file](#configuration-file).
+In case you have more than one template and want to reuse filters, you can put them in a single library. You can configure such a library in the template configuration under `filters` property. You can also use the official AsyncAPI [filters library](https://github.com/asyncapi/generator-filters). To learn how to add such filters to configuration [read more about the configuration file](#configuration-file).
 
 ## Hooks
 

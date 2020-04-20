@@ -7,7 +7,7 @@
     * [new Generator(templateName, targetDir, options)](#new_Generator_new)
     * _instance_
         * [.generate(asyncapiDocument)](#Generator+generate) ⇒ <code>Promise</code>
-        * [.generateFromString(asyncapiString, [asyncApiFileLocation])](#Generator+generateFromString) ⇒ <code>Promise</code>
+        * [.generateFromString(asyncapiString, [parserOptions])](#Generator+generateFromString) ⇒ <code>Promise</code>
         * [.generateFromFile(asyncapiFile)](#Generator+generateFromFile) ⇒ <code>Promise</code>
         * [.installTemplate([force])](#Generator+installTemplate)
     * _static_
@@ -77,15 +77,15 @@ try {
 ```
 <a name="Generator+generateFromString"></a>
 
-### generator.generateFromString(asyncapiString, [asyncApiFileLocation]) ⇒ <code>Promise</code>
+### generator.generateFromString(asyncapiString, [parserOptions]) ⇒ <code>Promise</code>
 Generates files from a given template and AsyncAPI string.
 
 **Kind**: instance method of [<code>Generator</code>](#Generator)  
 
-| Param | Type | Description |
-| --- | --- | --- |
-| asyncapiString | <code>String</code> | AsyncAPI string to use as source. |
-| [asyncApiFileLocation] | <code>String</code> | AsyncAPI file location, used by the @asyncapi/parser for references. |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| asyncapiString | <code>String</code> |  | AsyncAPI string to use as source. |
+| [parserOptions] | <code>Object</code> | <code>{}</code> | AsyncAPI parser options. Check out [@asyncapi/parser](https://www.github.com/asyncapi/parser-js) for more information. |
 
 **Example**  
 ```js

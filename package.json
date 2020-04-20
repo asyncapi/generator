@@ -16,7 +16,7 @@
     "release": "semantic-release",
     "docker-build": "docker build -t asyncapi/generator:latest .",
     "get-version": "echo $npm_package_version",
-    "eslint": "eslint --config .eslintrc ."
+    "lint": "eslint --config .eslintrc ."
   },
   "preferGlobal": true,
   "bugs": {

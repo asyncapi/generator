@@ -43,7 +43,7 @@
   "homepage": "https://github.com/asyncapi/generator",
   "dependencies": {
     "@asyncapi/openapi-schema-parser": "^1.0.0",
-    "@asyncapi/parser": "^0.18.1",
+    "@asyncapi/parser": "^0.18.3",
     "@asyncapi/raml-dt-schema-parser": "^1.0.4",
     "ajv": "^6.10.2",
     "commander": "^2.12.2",

@@ -159,6 +159,7 @@ The `.tp-config.json` file contains a JSON object that may have the following in
 |`conditionalFiles[filePath].subject`| String | The `subject` is a [JMESPath](http://jmespath.org/) query to grab the value you want to apply the condition to. It queries an object with the whole AsyncAPI document and, when specified, the given server. The object looks like this: `{ asyncapi: { ... }, server: { ... } }`.
 |`conditionalFiles[filePath].validation`| Object | The `validation` is a JSON Schema Draft 07 object. This JSON Schema definition will be applied to the JSON value resulting from the `subject` query. If validation doesn't have errors, the condition is met, and therefore the given file will be rendered. Otherwise, the file is ignored.
 |`nonRenderableFiles`| [String] | A list of file paths or [globs](https://en.wikipedia.org/wiki/Glob_(programming)) that must be copied "as-is" to the target directory, i.e., without performing any rendering process. This is useful when you want to copy binary files.
+|`generator`| [String] | A string representing the Generator version-range the template is compatible with. This value must follow the [semver](https://docs.npmjs.com/misc/semver) syntax. E.g., `>=1.0.0`, `>=1.0.0 <=2.0.0`, `~1.0.0`, `^1.0.0`, `1.0.0`, etc.
 
 ### Example
 
@@ -188,7 +189,8 @@ The `.tp-config.json` file contains a JSON object that may have the following in
   "nonRenderableFiles": [
     "src/api/middlewares/*.*",
     "lib/lib/config.js"
-  ]
+  ],
+  "generator": "<2.0.0"
 }
 ```
 

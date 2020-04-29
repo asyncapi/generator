@@ -1,11 +1,13 @@
 env:
   node: true
   es6: true
+  jest/globals: true
 
-plugins: 
+plugins:
   - sonarjs
+  - jest
 
-extends: 
+extends:
   - plugin:sonarjs/recommended
 
 parserOptions:

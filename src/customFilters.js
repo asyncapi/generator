@@ -112,6 +112,7 @@ filter.oneLine = oneLine;
  * @returns {string} JSDoc compatible entry
  */
 function docline(field, fieldName, scopePropName) {
+  /* eslint-disable sonarjs/cognitive-complexity */
   const buildLine = (f, fName, pName) => {
     const type = f.type() ? f.type() : 'string';
     const description = f.description() ? ` - ${f.description().replace(/\r?\n|\r/g, '')}` : '';

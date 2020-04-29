@@ -13,6 +13,7 @@
   },
   "scripts": {
     "test": "jest",
+    "test:dev": "jest --watchAll",
     "docs": "jsdoc2md lib/generator.js > docs/api.md",
     "release": "semantic-release",
     "docker-build": "docker build -t asyncapi/generator:latest .",
@@ -71,7 +72,6 @@
     "eslint-plugin-jest": "^23.8.2",
     "eslint-plugin-sonarjs": "^0.5.0",
     "jest": "^25.5.0",
-    "jest-file-snapshot": "^0.3.8",
     "jsdoc-to-markdown": "^5.0.0",
     "semantic-release": "^17.0.4",
     "semantic-release-slack-bot": "^1.5.0"

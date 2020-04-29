@@ -1,19 +1,10 @@
 const fs = require('fs');
 const path = require('path');
-const { toMatchFile } = require('jest-file-snapshot');
 const Generator = require('../lib/generator');
 
-expect.extend({ toMatchFile });
-
-const LONG_TIMEOUT = 20000;
-const outputDir = path.resolve(__dirname, 'output');
-const emptyOutputDir = () => {
-  fs.rmdirSync(outputDir, { recursive: true });
-  fs.mkdirSync(outputDir);
-};
-
-const simpleTemplatePath = path.resolve(__dirname, './templates/simple');
 const streetlightYAML = fs.readFileSync(path.resolve(__dirname, './docs/streetlights.yml'), 'utf8');
+
+jest.mock('../lib/utils');
 
 describe('Generator', () => {
   describe('constructor', () => {
@@ -75,32 +66,79 @@ describe('Generator', () => {
   });
 
   describe('#generateFromString', () => {
-    beforeEach(emptyOutputDir);
+    let generateMock;
+    let parserMock;
 
-    it('works with simple template and variable interpolation', async () => {
-      const gen = new Generator(simpleTemplatePath, path.resolve(outputDir, 'simple/1'));
+    beforeAll(() => {
+      parserMock = require('@asyncapi/parser');
+      generateMock = jest.fn().mockResolvedValue();
+    });
+
+    it('calls parser.parse and this.generate', async () => {
+      const gen = new Generator('myTemplate', __dirname);
+      gen.generate = generateMock;
       await gen.generateFromString(streetlightYAML);
-      expect('Static text\n').toMatchFile(path.resolve(outputDir, 'simple/1/static.md'));
-      expect('### Your API title is Streetlights API\n').toMatchFile(path.resolve(outputDir, 'simple/1/test.md'));
-    }, LONG_TIMEOUT);
 
-    it('works with simple template and variable interpolation as string', async () => {
-      const gen = new Generator(simpleTemplatePath, path.resolve(outputDir, 'simple/2'), { output: 'string', entrypoint: 'test.md' });
-      const out = await gen.generateFromString(streetlightYAML);
-      expect(out).toStrictEqual('### Your API title is Streetlights API\n');
-    }, LONG_TIMEOUT);
+      expect(generateMock.mock.calls.length).toBe(1);
+      expect(parserMock.parse.mock.calls.length).toBe(1);
+      expect(parserMock.parse.mock.calls[0][0]).toBe(streetlightYAML);
+      expect(parserMock.parse.mock.calls[0][1]).toStrictEqual({});
+    });
 
-    it('fails when entrypoint is not set and output is equal to "string"', async () => {
-      const gen = new Generator(simpleTemplatePath, path.resolve(outputDir, 'simple/2'), { output: 'string' });
-      const t = () => gen.generateFromString(streetlightYAML);
-      expect(t).rejects.toThrow('Parameter entrypoint is required when using output = "string"');
-    }, LONG_TIMEOUT);
+    it('calls parser.parse with the right options', async () => {
+      const gen = new Generator('myTemplate', __dirname);
+      const fakeOptions = { test: true };
+      gen.generate = generateMock;
+      await gen.generateFromString(streetlightYAML, fakeOptions);
+
+      expect(parserMock.parse.mock.calls.length).toBe(1);
+      expect(parserMock.parse.mock.calls[0][0]).toBe(streetlightYAML);
+      expect(parserMock.parse.mock.calls[0][1]).toStrictEqual(fakeOptions);
+    });
+
+    it('fails if asyncapiString is not provided', async () => {
+      const gen = new Generator('myTemplate', __dirname);
+      gen.generate = generateMock;
+      expect(() => gen.generateFromString()).rejects.toThrow('Parameter "asyncapiString" must be a non-empty string.');
+    });
+
+    it('fails if asyncapiString is not a string', async () => {
+      const gen = new Generator('myTemplate', __dirname);
+      gen.generate = generateMock;
+      expect(() => gen.generateFromString(1)).rejects.toThrow('Parameter "asyncapiString" must be a non-empty string.');
+    });
+
+    it('stores the original asyncapi document', async () => {
+      const gen = new Generator('myTemplate', __dirname);
+      gen.generate = generateMock;
+      await gen.generateFromString(streetlightYAML);
+      expect(gen.originalAsyncAPI).toBe(streetlightYAML);
+    });
   });
 
   describe('.getTemplateFile', () => {
     it('retrieves the content of a template file', async () => {
-      const content = await Generator.getTemplateFile('simple', 'template/static.md', path.resolve(__dirname, 'templates'));
-      expect(content).toStrictEqual('Static text\n');
+      const utils = require('../lib/utils');
+      const filePath = path.resolve(Generator.DEFAULT_TEMPLATES_DIR, 'simple', 'template/static.md');
+      utils.__files__ = {
+        [filePath]: 'test content',
+      };
+      const content = await Generator.getTemplateFile('simple', 'template/static.md');
+      expect(utils.readFile.mock.calls.length).toBe(1);
+      expect(utils.readFile.mock.calls[0][0]).toBe(filePath);
+      expect(content).toBe(utils.__files__[filePath]);
+    });
+
+    it('retrieves the content of a template file overriding the default template dir', async () => {
+      const utils = require('../lib/utils');
+      const filePath = path.resolve('~', 'templates', 'simple', 'template/static.md');
+      utils.__files__ = {
+        [filePath]: 'test content',
+      };
+      const content = await Generator.getTemplateFile('simple', 'template/static.md', path.resolve('~', 'templates'));
+      expect(utils.readFile.mock.calls.length).toBe(1);
+      expect(utils.readFile.mock.calls[0][0]).toBe(filePath);
+      expect(content).toBe(utils.__files__[filePath]);
     });
   });
 });

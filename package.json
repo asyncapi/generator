@@ -1,0 +1,75 @@
+{
+  "name": "@asyncapi/generator-filters",
+  "version": "0.1.0",
+  "description": "Library with Nunjucks filters for templates using AsyncAPI Generator",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "ava",
+    "docs": "jsdoc2md src/customFilters.js > docs/api.md",
+    "lint": "eslint --config .eslintrc .",
+    "get-version": "echo $npm_package_version",
+    "release": "semantic-release",
+    "lint-fix": "eslint --fix --config .eslintrc ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/asyncapi/generator-filters.git"
+  },
+  "keywords": [
+    "asyncapi",
+    "generator",
+    "nunjucks"
+  ],
+  "author": "Lukasz Gornicki <lpgornicki@gmail.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/asyncapi/generator-filters/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "homepage": "https://github.com/asyncapi/generator-filters#readme",
+  "devDependencies": {
+    "ava": "^3.7.0",
+    "eslint": "^6.8.0",
+    "eslint-plugin-sonarjs": "^0.5.0",
+    "jsdoc-to-markdown": "^5.0.3",
+    "@semantic-release/commit-analyzer": "^8.0.1",
+    "@semantic-release/github": "^7.0.4",
+    "@semantic-release/npm": "^7.0.3",
+    "@semantic-release/release-notes-generator": "^9.0.1",
+    "conventional-changelog-conventionalcommits": "^4.2.3",
+    "semantic-release": "^17.0.4"
+  },
+  "dependencies": {
+    "lodash": "^4.17.15",
+    "markdown-it": "^10.0.0",
+    "openapi-sampler": "^1.0.0-beta.15"
+  },
+  "ava": {
+    "files": [
+      "./src/*.test.js"
+    ]
+  },
+  "release": {
+    "branches": [
+      "master"
+    ],
+    "plugins": [
+      [
+        "@semantic-release/commit-analyzer",
+        {
+          "preset": "conventionalcommits"
+        }
+      ],
+      [
+        "@semantic-release/release-notes-generator",
+        {
+          "preset": "conventionalcommits"
+        }
+      ],
+      "@semantic-release/npm",
+      "@semantic-release/github"
+    ]
+  }
+}

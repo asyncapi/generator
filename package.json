@@ -12,8 +12,8 @@
     "npm": ">=6.13.7"
   },
   "scripts": {
-    "test": "jest",
-    "test:dev": "jest --watchAll",
+    "test": "jest --coverage",
+    "test:dev": "jest --watchAll --coverage",
     "docs": "jsdoc2md lib/generator.js > docs/api.md",
     "release": "semantic-release",
     "docker-build": "docker build -t asyncapi/generator:latest .",

@@ -13,3 +13,4 @@ output
 *.ids
 *.orig
 out/
+coverage

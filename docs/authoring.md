@@ -134,7 +134,7 @@ Example hook for changing the filename of a template file. Replaces all '-' char
 ```js
 module.exports = register => {
 	register('generate:changeFilename', (generator, hookArguments) => {
-		const currentFilename = hookArguments.filename;
+		const currentFilename = hookArguments.originalFilename ;
 		return currentFilename.replace('-', '_')
 	});
 };

@@ -76,13 +76,14 @@ In case you have more than one template and want to reuse filters, you can put t
 
 ## Hooks
 
-Hooks are functions called by the generator on a specific moment in the generation process.
+Hooks are functions called by the generator on a specific moment in the generation process. These hooks can have arguments provided to them or being expected to return a value.
 The following types of hooks are currently supported:
 
-|Hook name|Description|
-|---|---|
-| `generate:before` | Called after registration of all filters and before generator starts processing of the template.|
-| `generate:after` | Called at the very end of the generation. |
+|Hook name|Description| Return type | Arguments 
+|---|---|---|---|
+| `generate:before` | Called after registration of all filters and before generator starts processing of the template.| void | none
+| `generate:after` | Called at the very end of the generation. | void | none
+| `generate:changeFilename` | Called right before saving a file template. | string : a new filename for the generator to use for the file template | { "filename" : string }
 
 The generator will parse all the files in the `.hooks` directory.
 #### Examples
@@ -129,6 +130,15 @@ module.exports = register => {
 };
 ```
 
+Example hook for changing the filename of a template file. Replaces all '-' characters with '_'.
+```js
+module.exports = register => {
+	register('generate:changeFilename', (generator, hookArguments) => {
+		const currentFilename = hookArguments.filename;
+		return currentFilename.replace('-', '_')
+	});
+};
+```
 
 ## Partials
 

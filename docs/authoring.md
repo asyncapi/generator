@@ -76,10 +76,16 @@ In case you have more than one template and want to reuse filters, you can put t
 
 ## Hooks
 
-Hooks are functions called by the generator on a specific moment in the generation process. 
-For now there is two hooks supported called `generate:before` and `generate:after` that are called before processing the template and at the very end of the generation respectively. 
-The generator will parse all the files in the `.hooks` directory.
+Hooks are functions called by the generator on a specific moment in the generation process.
+The following types of hooks are currently supported:
 
+|Hook name|Description|
+|---|---|
+| `generator:before` | Called after registration of all filters and before generator starts processing of the template.|
+| `generator:after` | Called at the very end of the generation. |
+
+The generator will parse all the files in the `.hooks` directory.
+#### Examples
 Below you have an example Hook that after generation creates an AsyncAPI file.
 
 ```js

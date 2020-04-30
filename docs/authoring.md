@@ -76,8 +76,16 @@ In case you have more than one template and want to reuse filters, you can put t
 
 ## Hooks
 
-Hooks are functions called by the generator on a specific moment in the generation process. For now there is one hook supported called `generate:after` that is called at the very end of the generation. The generator will parse all the files in the `.hooks` directory.
+Hooks are functions called by the generator on a specific moment in the generation process.
+The following types of hooks are currently supported:
 
+|Hook name|Description|
+|---|---|
+| `generate:before` | Called after registration of all filters and before generator starts processing of the template.|
+| `generate:after` | Called at the very end of the generation. |
+
+The generator will parse all the files in the `.hooks` directory.
+#### Examples
 Below you have an example Hook that after generation creates an AsyncAPI file.
 
 ```js
@@ -100,6 +108,27 @@ module.exports = register => {
   });
 };
 ```
+And here an example Hook that before generation switches `publish` and `subscribe` operations for each channel.
+
+```js
+module.exports = register => {
+  register('generate:before', generator => {
+    const asyncapi = generator.asyncapi;
+    for (let [key, value] of Object.entries(asyncapi.channels())) {
+      let publish = value._json.publish;
+      value._json.publish = value._json.subscribe;
+      value._json.subscribe = publish;
+      if (!value._json.subscribe) {
+        delete value._json.subscribe;
+      }
+      if (!value._json.publish) {
+        delete value._json.publish;
+      }
+    }
+  });
+};
+```
+
 
 ## Partials
 

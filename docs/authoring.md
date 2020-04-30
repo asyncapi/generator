@@ -81,8 +81,8 @@ The following types of hooks are currently supported:
 
 |Hook name|Description|
 |---|---|
-| `generator:before` | Called after registration of all filters and before generator starts processing of the template.|
-| `generator:after` | Called at the very end of the generation. |
+| `generate:before` | Called after registration of all filters and before generator starts processing of the template.|
+| `generate:after` | Called at the very end of the generation. |
 
 The generator will parse all the files in the `.hooks` directory.
 #### Examples
@@ -108,7 +108,7 @@ module.exports = register => {
   });
 };
 ```
-And here an example Hook that before generation switch publish and subscribe operations for each channel.
+And here an example Hook that before generation switches `publish` and `subscribe` operations for each channel.
 
 ```js
 module.exports = register => {

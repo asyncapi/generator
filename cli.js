@@ -54,6 +54,7 @@ program
     template = tmpl;
   })
   .option('-d, --disable-hook <hookName>', 'disable a specific hook', disableHooksParser)
+  .option('--debug', 'enable more specific errors about filters. Keep in mind that as a result errors about template are less descriptive')
   .option('-i, --install', 'installs the template and its dependencies (defaults to false)')
   .option('-n, --no-overwrite <glob>', 'glob or path of the file(s) to skip when regenerating', noOverwriteParser)
   .option('-o, --output <outputDir>', 'directory where to put the generated files (defaults to current directory)', parseOutput, process.cwd())
@@ -130,6 +131,7 @@ function generate(targetDir) {
         disabledHooks,
         forceWrite: program.forceWrite,
         forceInstall: program.install,
+        debug: program.debug
       });
 
       await generator.generateFromFile(asyncapiFile);

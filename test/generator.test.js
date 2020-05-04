@@ -6,6 +6,7 @@ const Generator = require('../lib/generator');
 const streetlightYAML = fs.readFileSync(path.resolve(__dirname, './docs/streetlights.yml'), 'utf8');
 
 jest.mock('../lib/utils');
+jest.mock('../lib/filtersRegistry');
 
 describe('Generator', () => {
   describe('constructor', () => {
@@ -70,6 +71,7 @@ describe('Generator', () => {
     let asyncApiDocumentMock;
     let xfsMock;
     let util;
+    let filtersRegistry;
 
     const mockMethods = (gen) => {
       gen.verifyTargetDir = jest.fn();
@@ -87,6 +89,7 @@ describe('Generator', () => {
 
     beforeAll(() => {
       util = require('../lib/utils');
+      filtersRegistry = require('../lib/filtersRegistry');
       xfsMock = require('fs.extra');
       const parserMock = require('@asyncapi/parser');
       asyncApiDocumentMock = new parserMock.AsyncAPIDocument();
@@ -103,7 +106,7 @@ describe('Generator', () => {
       expect(gen.configNunjucks).toHaveBeenCalled();
       expect(gen.loadTemplateConfig).toHaveBeenCalled();
       expect(gen.registerHooks).toHaveBeenCalled();
-      expect(gen.registerFilters).toHaveBeenCalled();
+      expect(filtersRegistry.registerFilters).toHaveBeenCalled();
       expect(gen.validateTemplateConfig).toHaveBeenCalledWith(asyncApiDocumentMock);
       expect(gen.generateDirectoryStructure).toHaveBeenCalledWith(asyncApiDocumentMock);
       expect(gen.launchHook).toHaveBeenCalledWith('generate:after');
@@ -125,7 +128,7 @@ describe('Generator', () => {
       expect(gen.configNunjucks).toHaveBeenCalled();
       expect(gen.loadTemplateConfig).toHaveBeenCalled();
       expect(gen.registerHooks).toHaveBeenCalled();
-      expect(gen.registerFilters).toHaveBeenCalled();
+      expect(filtersRegistry.registerFilters).toHaveBeenCalled();
       expect(gen.validateTemplateConfig).toHaveBeenCalledWith(asyncApiDocumentMock);
       expect(gen.generateDirectoryStructure).toHaveBeenCalledWith(asyncApiDocumentMock);
       expect(gen.launchHook).toHaveBeenCalledWith('generate:after');
@@ -146,7 +149,7 @@ describe('Generator', () => {
       expect(gen.configNunjucks).toHaveBeenCalled();
       expect(gen.loadTemplateConfig).toHaveBeenCalled();
       expect(gen.registerHooks).toHaveBeenCalled();
-      expect(gen.registerFilters).toHaveBeenCalled();
+      expect(filtersRegistry.registerFilters).toHaveBeenCalled();
       expect(gen.validateTemplateConfig).toHaveBeenCalledWith(asyncApiDocumentMock);
       expect(gen.generateDirectoryStructure).toHaveBeenCalledWith(asyncApiDocumentMock);
       expect(gen.launchHook).toHaveBeenCalledWith('generate:after');
@@ -168,7 +171,7 @@ describe('Generator', () => {
       expect(gen.configNunjucks).toHaveBeenCalled();
       expect(gen.loadTemplateConfig).toHaveBeenCalled();
       expect(gen.registerHooks).toHaveBeenCalled();
-      expect(gen.registerFilters).toHaveBeenCalled();
+      expect(filtersRegistry.registerFilters).toHaveBeenCalled();
       expect(gen.validateTemplateConfig).toHaveBeenCalledWith(asyncApiDocumentMock);
       expect(gen.generateDirectoryStructure).toHaveBeenCalledWith(asyncApiDocumentMock);
       expect(gen.launchHook).toHaveBeenCalledWith('generate:after');
@@ -192,7 +195,7 @@ describe('Generator', () => {
       expect(gen.configNunjucks).toHaveBeenCalled();
       expect(gen.loadTemplateConfig).toHaveBeenCalled();
       expect(gen.registerHooks).toHaveBeenCalled();
-      expect(gen.registerFilters).toHaveBeenCalled();
+      expect(filtersRegistry.registerFilters).toHaveBeenCalled();
       expect(gen.validateTemplateConfig).toHaveBeenCalledWith(asyncApiDocumentMock);
       expect(gen.launchHook).toHaveBeenCalledWith('generate:after');
       expect(util.exists).toHaveBeenCalledWith('/path/to/template/nameOfTestTemplate/template/file.js');

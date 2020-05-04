@@ -1,6 +1,6 @@
 {
   "name": "@asyncapi/generator",
-  "version": "0.40.0",
+  "version": "0.42.1",
   "description": "The AsyncAPI generator. It can generate documentation, code, anything!",
   "main": "./lib/generator.js",
   "bin": {
@@ -18,7 +18,7 @@
     "release": "semantic-release",
     "docker-build": "docker build -t asyncapi/generator:latest .",
     "get-version": "echo $npm_package_version",
-    "eslint": "eslint --config .eslintrc ."
+    "lint": "eslint --config .eslintrc ."
   },
   "preferGlobal": true,
   "bugs": {

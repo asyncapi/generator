@@ -8,7 +8,7 @@ The AsyncAPI generator has been built with extensibility in mind. The package us
 1. The template can have own dependencies. Just create `package.json` for the template. The generator makes sure to trigger the installation of dependencies.
 1. Templates may contain multiple files. Unless stated otherwise, all files will be rendered.
 1. The template engine is [Nunjucks](https://mozilla.github.io/nunjucks).
-1. Templates may contain `filters` or helper functions. They must be stored in the `.filters` directory under the template directory. [Read more about filters](#filters).
+1. Templates may contain [Nunjucks filters or helper functions](https://mozilla.github.io/nunjucks/templating.html#builtin-filters). [Read more about filters](#filters).
 1. Templates may contain `hooks` that are functions invoked after the generation. They must be stored in the `.hooks` directory under the template directory. [Read more about hooks](#hooks).
 1. Templates may contain `partials` (reusable chunks). They must be stored in the `.partials` directory under the template directory. [Read more about partials](#partials).
 1. Templates may have a configuration file. It must be stored in the template directory and its name must be `.tp-config.json`. [Read more about the configuration file](#configuration-file).
@@ -64,45 +64,28 @@ Schema name is 'people' and properties are:
 ```
 ## Filters
 
-A filter is a helper function that you can create to perform complex tasks. They are JavaScript files that register one or many [Nunjuck filters](https://mozilla.github.io/nunjucks/api.html#custom-filters). The generator will parse all the files in the `.filters` directory.
+A filter is a helper function that you can create to perform complex tasks. They are JavaScript files that register one or many [Nunjuck filters](https://mozilla.github.io/nunjucks/api.html#custom-filters). The generator parses all the files in the `filters` directory. Functions exported from these files are registered as filters.
 
-Each file must export a function that will receive the following parameters:
-
-* `Nunjucks`: a reference to the [Nunjucks](https://mozilla.github.io/nunjucks) template engine used internally by the generator.
-* `_`: a convenient [Lodash](https://www.lodash.com) reference.
-* `Markdown`: a reference to the [markdown-it](https://github.com/markdown-it/markdown-it) package. Use it to convert Markdown to HTML.
-* `OpenAPISampler`: a reference to the [openapi-sampler](https://github.com/Redocly/openapi-sampler) package. It generates examples from OpenAPI/AsyncAPI schemas.
-
-The common structure for one of these files is the following:
-
-```js
-module.exports = ({ Nunjucks, _, Markdown, OpenAPISampler }) => {
-  Nunjucks.addFilter('yourFilterName', (yourFilterParams) => {
-    return 'doSomething';
-  });
-};
-```
-
-An example filter called `camelCase` which uses the Lodash function `_.camelCase(String)` to convert a template string as camel case:
-
-```js
-module.exports = ({ Nunjucks, _, Markdown, OpenAPISampler }) => {
-  Nunjucks.addFilter('camelCase', (str) => {
-    return _.camelCase(str);
-  });
-};
-```
-
-And then you can use the filter in your template as follows:
+You can use the filter function in your template as in the following example:
 
 ```js
 const {{ channelName | camelCase }} = '{{ channelName }}';
 ```
 
+In case you have more than one template and want to reuse filters, you can put them in a single library. You can configure such a library in the template configuration under `filters` property. You can also use the official AsyncAPI [filters library](https://github.com/asyncapi/generator-filters). To learn how to add such filters to configuration [read more about the configuration file](#configuration-file).
+
 ## Hooks
 
-Hooks are functions called by the generator on a specific moment in the generation process. For now there is one hook supported called `generate:after` that is called at the very end of the generation. The generator will parse all the files in the `.hooks` directory.
+Hooks are functions called by the generator on a specific moment in the generation process.
+The following types of hooks are currently supported:
 
+|Hook name|Description|
+|---|---|
+| `generate:before` | Called after registration of all filters and before generator starts processing of the template.|
+| `generate:after` | Called at the very end of the generation. |
+
+The generator will parse all the files in the `.hooks` directory.
+#### Examples
 Below you have an example Hook that after generation creates an AsyncAPI file.
 
 ```js
@@ -125,6 +108,27 @@ module.exports = register => {
   });
 };
 ```
+And here an example Hook that before generation switches `publish` and `subscribe` operations for each channel.
+
+```js
+module.exports = register => {
+  register('generate:before', generator => {
+    const asyncapi = generator.asyncapi;
+    for (let [key, value] of Object.entries(asyncapi.channels())) {
+      let publish = value._json.publish;
+      value._json.publish = value._json.subscribe;
+      value._json.subscribe = publish;
+      if (!value._json.subscribe) {
+        delete value._json.subscribe;
+      }
+      if (!value._json.publish) {
+        delete value._json.publish;
+      }
+    }
+  });
+};
+```
+
 
 ## Partials
 
@@ -160,6 +164,7 @@ The `.tp-config.json` file contains a JSON object that may have the following in
 |`conditionalFiles[filePath].validation`| Object | The `validation` is a JSON Schema Draft 07 object. This JSON Schema definition will be applied to the JSON value resulting from the `subject` query. If validation doesn't have errors, the condition is met, and therefore the given file will be rendered. Otherwise, the file is ignored.
 |`nonRenderableFiles`| [String] | A list of file paths or [globs](https://en.wikipedia.org/wiki/Glob_(programming)) that must be copied "as-is" to the target directory, i.e., without performing any rendering process. This is useful when you want to copy binary files.
 |`generator`| [String] | A string representing the Generator version-range the template is compatible with. This value must follow the [semver](https://docs.npmjs.com/misc/semver) syntax. E.g., `>=1.0.0`, `>=1.0.0 <=2.0.0`, `~1.0.0`, `^1.0.0`, `1.0.0`, etc.
+|`filters`| [String] | A list of modules containing functions that can be uses as Nunjucks filters. In case of external modules, remember they need to be added as a dependency in `package.json` of your template.
 
 ### Example
 
@@ -190,7 +195,10 @@ The `.tp-config.json` file contains a JSON object that may have the following in
     "src/api/middlewares/*.*",
     "lib/lib/config.js"
   ],
-  "generator": "<2.0.0"
+  "generator": "<2.0.0",
+  "filters": [
+    "@asyncapi/generator-filters"
+  ]
 }
 ```
 

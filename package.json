@@ -1,6 +1,6 @@
 {
   "name": "@asyncapi/generator",
-  "version": "0.42.0",
+  "version": "0.44.0",
   "description": "The AsyncAPI generator. It can generate documentation, code, anything!",
   "main": "./lib/generator.js",
   "bin": {
@@ -12,6 +12,8 @@
     "npm": ">=6.13.7"
   },
   "scripts": {
+    "test": "jest --coverage",
+    "test:dev": "jest --watchAll --coverage",
     "docs": "jsdoc2md lib/generator.js > docs/api.md",
     "release": "semantic-release",
     "docker-build": "docker build -t asyncapi/generator:latest .",
@@ -67,7 +69,9 @@
     "chokidar": "^3.3.0",
     "conventional-changelog-conventionalcommits": "^4.2.3",
     "eslint": "^6.8.0",
+    "eslint-plugin-jest": "^23.8.2",
     "eslint-plugin-sonarjs": "^0.5.0",
+    "jest": "^25.5.0",
     "jsdoc-to-markdown": "^5.0.0",
     "semantic-release": "^17.0.4",
     "semantic-release-slack-bot": "^1.5.0"

@@ -1,11 +1,13 @@
 env:
   node: true
   es6: true
+  jest/globals: true
 
-plugins: 
+plugins:
   - sonarjs
+  - jest
 
-extends: 
+extends:
   - plugin:sonarjs/recommended
 
 parserOptions:
@@ -25,6 +27,7 @@ rules:
   consistent-this: [0, self]
   func-style: 0
   max-nested-callbacks: 0
+  camelcase: 0
 
   # Warnings
   no-debugger: 1
@@ -33,7 +36,7 @@ rules:
   no-unused-expressions: 1
   no-native-reassign: 1
   no-fallthrough: 1
-  camelcase: 0
+  sonarjs/cognitive-complexity: 1
 
   # Errors
   eqeqeq: 2

@@ -16,7 +16,7 @@ info:
 
 servers:
   production:
-    url: test.mosquitto.org:{port}
+    url: mqtt://test.mosquitto.org:{port}
     protocol: mqtt
     description: Test broker
     variables:
@@ -26,13 +26,6 @@ servers:
         enum:
           - '1883'
           - '8883'
-    security:
-      - apiKey: []
-      - supportedOauthFlows:
-        - streetlights:on
-        - streetlights:off
-        - streetlights:dim
-      - openIdConnectWellKnown: []
 
 defaultContentType: application/json
 
@@ -119,6 +112,7 @@ components:
           type: integer
           minimum: 0
           description: Light intensity measured in lumens.
+          x-pi: false
         sentAt:
           $ref: "#/components/schemas/sentAt"
     turnOnOffPayload:
@@ -130,6 +124,7 @@ components:
             - on
             - off
           description: Whether to turn on or off the light.
+          x-pi: false
         sentAt:
           $ref: "#/components/schemas/sentAt"
     dimLightPayload:
@@ -207,20 +202,3 @@ components:
       bindings:
         kafka:
           clientId: my-app-id
-
-
-"tags": [{
-	"name": "user1",
-	"description": "User-related messages"
-},
-{
-	"name": "user",
-	"description": "User-related messages"
-}],
-
-"tags": [
-  {
-    "name": "user",
-    "description": "User-related messages"
-  }
-]

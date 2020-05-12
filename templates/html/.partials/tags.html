@@ -1,8 +1,0 @@
-{% macro tags(tagList) %}
-<div class="mt-4">
-  {% for tag in tagList %}
-    <span class="bg-grey-dark font-normal text-sm no-underline text-white rounded lowercase mr-2 px-2 py-1" title="{{tag.description()}}">{{tag.name()}}</span>
-  {% endfor %}
-</div>
-
-{% endmacro %}

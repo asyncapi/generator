@@ -92,14 +92,24 @@ The generator parses:
 - All modules listed in the template configuration and triggers only hooks that names were added to the config. You can use the official AsyncAPI [hooks library](https://github.com/asyncapi/generator-hooks). To learn how to add hooks to configuration [read more about the configuration file](#configuration-file).
 
 #### Examples
+
+> Some examples have name of functions provided and some not. Keep in mind that hook functions kept in template in default location do not require a name.
+
+Most basic module with hooks looke like this:
+```js
+module.exports = {
+  'generate:after': generator => {console.log(generator);}
+}
+```
+
 Below you have an example Hook that after generation creates an AsyncAPI file.
 
 ```js
 const fs = require('fs');
 const path = require('path');
 
-module.exports = register => {
-  register('generate:after', generator => {
+module.exports = {
+  'generate:after': generator => {
     const asyncapi = generator.originalAsyncAPI;
     let extension;
 
@@ -111,14 +121,14 @@ module.exports = register => {
     }
 
     fs.writeFileSync(path.resolve(generator.targetDir, `asyncapi.${extension}`), asyncapi);
-  });
+  }
 };
 ```
 And here an example Hook that before generation switches `publish` and `subscribe` operations for each channel.
 
 ```js
-module.exports = register => {
-  register('generate:before', generator => {
+module.exports = {
+  'generate:before': function switchOperations(generator) {
     const asyncapi = generator.asyncapi;
     for (let [key, value] of Object.entries(asyncapi.channels())) {
       let publish = value._json.publish;
@@ -131,17 +141,17 @@ module.exports = register => {
         delete value._json.publish;
       }
     }
-  });
+  };
 };
 ```
 
 Example hook for changing the filename of a template file. Replaces all '-' characters with '_'.
 ```js
-module.exports = register => {
-   register('setFileTemplateName ', (generator, hookArguments) => {
-      const currentFilename = hookArguments.originalFilename ;
-      return currentFilename.replace('-', '_')
-   });
+module.exports = {
+	'setFileTemplateName': (generator, hookArguments) => {
+		const currentFilename = hookArguments.originalFilename ;
+		return currentFilename.replace('-', '_')
+	};
 };
 ```
 

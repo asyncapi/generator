@@ -16,6 +16,7 @@ The AsyncAPI generator has been built with extensibility in mind. The package us
 1. The default variables you have access to in any the template file are the following:
    - `asyncapi` that is a parsed spec file object. Read the [API](https://github.com/asyncapi/parser-js/blob/master/API.md#AsyncAPIDocument) of the Parser to understand to what structure you have access in this parameter.
    - `originalAsyncAPI` that is an original spec file before it is parsed. 
+   - `params` that contains the parameters provided when generating.
 ## File templates
 
 It is possible to generate files for each specific object in your AsyncAPI documentation. 

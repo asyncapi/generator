@@ -60,7 +60,7 @@ program
   .option('-o, --output <outputDir>', 'directory where to put the generated files (defaults to current directory)', parseOutput, process.cwd())
   .option('-p, --param <name=value>', 'additional param to pass to templates', paramParser)
   .option('--force-write', 'force writing of the generated files to given directory even if it is a git repo with unstaged files or not empty dir (defaults to false)')
-  .option('--watch-template', 'watches the template directory and the AsyncAPI document, and re-generate the files when changes occur')
+  .option('--watch-template', 'watches the template directory and the AsyncAPI document, and re-generate the files when changes occur. Ignores the output directory')
   .parse(process.argv);
 
 if (!asyncapiFile) {
@@ -78,14 +78,14 @@ xfs.mkdirp(program.output, async err => {
 
   // If we want to watch for changes do that
   if (program.watchTemplate) {
-    const watchDir = path.resolve(Generator.DEFAULT_TEMPLATES_DIR, template);
+    const watchDir = path.resolve(template);
     console.log(`[WATCHER] Watching for changes in the template directory ${magenta(watchDir)} and in the AsyncAPI file ${magenta(asyncapiFile)}`);
 
     if (!(await isLocalTemplate(watchDir))) {
       console.warn(`WARNING: ${template} is a remote template. Changes may be lost on subsequent installations.`);
     }
-
-    const watcher = new Watcher([asyncapiFile, watchDir]);
+    const outputPath = path.resolve(watchDir, program.output);
+    const watcher = new Watcher([asyncapiFile, watchDir], outputPath);
     watcher.watch(async (changedFiles) => {
       console.clear();
       console.log('[WATCHER] Change detected');

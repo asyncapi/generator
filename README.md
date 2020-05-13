@@ -52,7 +52,7 @@ Options:
   -o, --output <outputDir>       directory where to put the generated files (defaults to current directory)
   -p, --param <name=value>       additional param to pass to templates
   --force-write                  force writing of the generated files to given directory even if it is a git repo with unstaged files or not empty dir (defaults to false)
-  --watch-template               watches the template directory and the AsyncAPI document, and re-generate the files when changes occur
+  --watch-template               watches the template directory and the AsyncAPI document, and re-generate the files when changes occur. Ignores the output directory
   -h, --help                     output usage information
 ```
 

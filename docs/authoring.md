@@ -78,7 +78,7 @@ In case you have more than one template and want to reuse filters, you can put t
 
 ## Hooks
 
-Hooks are functions called by the generator on a specific moment in the generation process. These hooks can have arguments provided to them or being expected to return a value.
+Hooks are functions called by the generator on a specific moment in the generation process. Hooks can be anonymous functions but you can also add function names. These hooks can have arguments provided to them or being expected to return a value.
 The following types of hooks are currently supported:
 
 |Hook type|Description| Return type | Arguments 
@@ -93,7 +93,7 @@ The generator parses:
 
 #### Examples
 
-> Some examples have name of functions provided and some not. Keep in mind that hook functions kept in template in default location do not require a name.
+> Some of examples have name of hook functions provided and some not. Keep in mind that hook functions kept in template in default location do not require a name. Name is required only if you keep hooks in non default location or in a separate library, because such hooks need to be explicitly configured in the configuration file. For more details on hooks configuration [read more about the configuration file](#configuration-file).
 
 Most basic module with hooks looke like this:
 ```js
@@ -190,7 +190,7 @@ The `.tp-config.json` file contains a JSON object that may have the following in
 |`nonRenderableFiles`| [String] | A list of file paths or [globs](https://en.wikipedia.org/wiki/Glob_(programming)) that must be copied "as-is" to the target directory, i.e., without performing any rendering process. This is useful when you want to copy binary files.
 |`generator`| [String] | A string representing the Generator version-range the template is compatible with. This value must follow the [semver](https://docs.npmjs.com/misc/semver) syntax. E.g., `>=1.0.0`, `>=1.0.0 <=2.0.0`, `~1.0.0`, `^1.0.0`, `1.0.0`, etc.
 |`filters`| [String] | A list of modules containing functions that can be used as Nunjucks filters. In case of external modules, remember they need to be added as a dependency in `package.json` of your template.
-|`hooks`| Object[String, String] or Object[String, Array[String]] | A list of modules containing hooks. For each module you must specify exact name of the hook that should be used in the template. For single hook you can specify is as a string, more more you must pass an array of strings. In case of external modules, remember they need to be added as a dependency in `package.json` of your template.
+|`hooks`| Object[String, String] or Object[String, Array[String]] | A list of modules containing hooks, except of the ones you keep locally in your template in default location. For each module you must specify exact name of the hook that should be used in the template. For single hook you can specify it as a string, for more you must pass an array of strings. In case of external modules, remember they need to be added as a dependency in `package.json` of your template.
 
 ### Example
 

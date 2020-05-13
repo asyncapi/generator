@@ -79,9 +79,14 @@ xfs.mkdirp(program.output, async err => {
   // If we want to watch for changes do that
   if (program.watchTemplate) {
     const watchDir = path.resolve(template);
+    // Template name is needed as it is not always a part of the cli commad
+    // There is a use case that you run generator from a root of the template with `./` path
+    const templateName = require(path.resolve(watchDir,'./package.json')).name;
+
     console.log(`[WATCHER] Watching for changes in the template directory ${magenta(watchDir)} and in the AsyncAPI file ${magenta(asyncapiFile)}`);
 
-    if (!(await isLocalTemplate(watchDir))) {
+    // Must check template in its installation path in generator to use isLocalTemplate function
+    if (!await isLocalTemplate(path.resolve(Generator.DEFAULT_TEMPLATES_DIR, templateName))) {
       console.warn(`WARNING: ${template} is a remote template. Changes may be lost on subsequent installations.`);
     }
     const outputPath = path.resolve(watchDir, program.output);

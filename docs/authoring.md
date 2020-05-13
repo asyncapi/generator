@@ -98,7 +98,7 @@ The generator parses:
 Most basic module with hooks looke like this:
 ```js
 module.exports = {
-  'generate:after': generator => {console.log(generator);}
+  'generate:after': generator => console.log('This runs after generation is complete')
 }
 ```
 

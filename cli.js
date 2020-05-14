@@ -81,7 +81,7 @@ xfs.mkdirp(program.output, async err => {
     const watchDir = path.resolve(template);
     // Template name is needed as it is not always a part of the cli commad
     // There is a use case that you run generator from a root of the template with `./` path
-    const templateName = require(path.resolve(watchDir,'./package.json')).name;
+    const templateName = require(path.resolve(watchDir,'package.json')).name;
 
     console.log(`[WATCHER] Watching for changes in the template directory ${magenta(watchDir)} and in the AsyncAPI file ${magenta(asyncapiFile)}`);
 

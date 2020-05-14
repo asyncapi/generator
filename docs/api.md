@@ -6,6 +6,17 @@
 * [Generator](#Generator)
     * [new Generator(templateName, targetDir, options)](#new_Generator_new)
     * _instance_
+        * [.templateName](#Generator+templateName) : <code>String</code>
+        * [.targetDir](#Generator+targetDir) : <code>String</code>
+        * [.entrypoint](#Generator+entrypoint) : <code>String</code>
+        * [.noOverwriteGlobs](#Generator+noOverwriteGlobs) : <code>Array.&lt;String&gt;</code>
+        * [.disabledHooks](#Generator+disabledHooks) : <code>Array.&lt;String&gt;</code>
+        * [.output](#Generator+output) : <code>String</code>
+        * [.forceWrite](#Generator+forceWrite) : <code>Boolean</code>
+        * [.debug](#Generator+debug) : <code>Boolean</code>
+        * [.install](#Generator+install) : <code>Boolean</code>
+        * [.templateConfig](#Generator+templateConfig) : <code>Object</code>
+        * [.templateParams](#Generator+templateParams) : <code>Object</code>
         * [.generate(asyncapiDocument)](#Generator+generate) ⇒ <code>Promise</code>
         * [.generateFromString(asyncapiString, [parserOptions])](#Generator+generateFromString) ⇒ <code>Promise</code>
         * [.generateFromFile(asyncapiFile)](#Generator+generateFromFile) ⇒ <code>Promise</code>
@@ -47,6 +58,72 @@ const generator = new Generator('html', path.resolve(__dirname, 'example'), {
   }
 });
 ```
+<a name="Generator+templateName"></a>
+
+### generator.templateName : <code>String</code>
+Name of the template to generate.
+
+**Kind**: instance property of [<code>Generator</code>](#Generator)  
+<a name="Generator+targetDir"></a>
+
+### generator.targetDir : <code>String</code>
+Path to the directory where the files will be generated.
+
+**Kind**: instance property of [<code>Generator</code>](#Generator)  
+<a name="Generator+entrypoint"></a>
+
+### generator.entrypoint : <code>String</code>
+Name of the file to use as the entry point for the rendering process. Use in case you want to use only a specific template file. Note: this potentially avoids rendering every file in the template.
+
+**Kind**: instance property of [<code>Generator</code>](#Generator)  
+<a name="Generator+noOverwriteGlobs"></a>
+
+### generator.noOverwriteGlobs : <code>Array.&lt;String&gt;</code>
+List of globs to skip when regenerating the template.
+
+**Kind**: instance property of [<code>Generator</code>](#Generator)  
+<a name="Generator+disabledHooks"></a>
+
+### generator.disabledHooks : <code>Array.&lt;String&gt;</code>
+List of hooks to disable.
+
+**Kind**: instance property of [<code>Generator</code>](#Generator)  
+<a name="Generator+output"></a>
+
+### generator.output : <code>String</code>
+Type of output. Can be either 'fs' (default) or 'string'. Only available when entrypoint is set.
+
+**Kind**: instance property of [<code>Generator</code>](#Generator)  
+<a name="Generator+forceWrite"></a>
+
+### generator.forceWrite : <code>Boolean</code>
+Force writing of the generated files to given directory even if it is a git repo with unstaged files or not empty dir. Default is set to false.
+
+**Kind**: instance property of [<code>Generator</code>](#Generator)  
+<a name="Generator+debug"></a>
+
+### generator.debug : <code>Boolean</code>
+Enable more specific errors in the console. At the moment it only shows specific errors about filters. Keep in mind that as a result errors about template are less descriptive.
+
+**Kind**: instance property of [<code>Generator</code>](#Generator)  
+<a name="Generator+install"></a>
+
+### generator.install : <code>Boolean</code>
+Install the template and its dependencies, even when the template has already been installed.
+
+**Kind**: instance property of [<code>Generator</code>](#Generator)  
+<a name="Generator+templateConfig"></a>
+
+### generator.templateConfig : <code>Object</code>
+The template configuration.
+
+**Kind**: instance property of [<code>Generator</code>](#Generator)  
+<a name="Generator+templateParams"></a>
+
+### generator.templateParams : <code>Object</code>
+The template parameters. The structure for this object is based on each individual template.
+
+**Kind**: instance property of [<code>Generator</code>](#Generator)  
 <a name="Generator+generate"></a>
 
 ### generator.generate(asyncapiDocument) ⇒ <code>Promise</code>

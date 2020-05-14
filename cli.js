@@ -53,7 +53,7 @@ program
     asyncapiFile = path.resolve(asyncAPIPath);
     template = tmpl;
   })
-  .option('-d, --disable-hook <hookName>', 'disable a specific hook', disableHooksParser)
+  .option('-d, --disable-hook <hookType>', 'disable a specific hook type', disableHooksParser)
   .option('--debug', 'enable more specific errors in the console. At the moment it only shows specific errors about filters. Keep in mind that as a result errors about template are less descriptive')
   .option('-i, --install', 'installs the template and its dependencies (defaults to false)')
   .option('-n, --no-overwrite <glob>', 'glob or path of the file(s) to skip when regenerating', noOverwriteParser)

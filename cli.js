@@ -64,7 +64,7 @@ program
   .parse(process.argv);
 
 if (!asyncapiDocPath) {
-  console.error(red('> Path or Link to AsyncAPI file not provided.'));
+  console.error(red('> Path or URL to AsyncAPI file not provided.'));
   program.help(); // This exits the process
 }
 const isAsyncapiDocLocal = isFilePath(asyncapiDocPath);

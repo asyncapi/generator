@@ -391,22 +391,23 @@ describe('Generator', () => {
           test: true
         }
       });
-      const json = '{"parameters": {' +
-        '  "paramWithDefault": {' +
-        '    "description": "Parameter with default value",' +
-        '    "default": "default",' +
-        '    "required": false' +
-        '  },' +
-        '  "paramWithoutDefault": {' +
-        '    "description": "Parameter without default value",' +
-        '    "required": false' +
-        '  },' +
-        '  "test": {' +
-        '    "description": "test",' +
-        '    "required": false' +
-        '  }' +
-        '}}';
-      gen.templateConfig = JSON.parse(json);
+      gen.templateConfig  = {
+        parameters: {
+          paramWithDefault: {
+            description: 'Parameter with default value',
+            default: 'default',
+            required: false
+          },
+          paramWithoutDefault: {
+            description: 'Parameter without default value',
+            required: false
+          },
+          test: {
+            description: 'test',
+            required: false
+          }
+        }
+      };
 
       await gen.loadDefaultValues();
 
@@ -422,14 +423,41 @@ describe('Generator', () => {
           test: true
         }
       });
-      const json = '{"parameters": {' +
-        '  "test": {' +
-        '    "description": "Parameter with default value",' +
-        '    "default": false,' +
-        '    "required": false' +
-        '  }' +
-        '}}';
-      gen.templateConfig = JSON.parse(json);
+      gen.templateConfig = {
+        parameters: {
+          test: {
+            description: 'Parameter with default value',
+            default: false,
+            required: false
+          }
+        }
+      };
+
+      await gen.loadDefaultValues();
+
+      expect(gen.templateParams).toStrictEqual({
+        test: true
+      });
+    });
+
+    it('no default values', async () => {
+      const gen = new Generator('testTemplate', __dirname, {
+        templateParams: {
+          test: true
+        }
+      });
+      gen.templateConfig = {
+        parameters: {
+          test: {
+            description: 'Parameter with default value',
+            required: false
+          },
+          anotherParam: {
+            description: 'Yeat another param',
+            required: false
+          }
+        }
+      };
 
       await gen.loadDefaultValues();
 

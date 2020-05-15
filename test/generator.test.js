@@ -387,11 +387,11 @@ describe('Generator', () => {
   describe('#loadDefaultValues', () => {
     it('default value of parameter is set', async () => {
       const gen = new Generator('testTemplate', __dirname, {
-                                  templateParams: {
-                                    test: true
-                                  }
-                                });
-      let json = '{"parameters": {' +
+        templateParams: {
+          test: true
+        }
+      });
+      const json = '{"parameters": {' +
         '  "paramWithDefault": {' +
         '    "description": "Parameter with default value",' +
         '    "default": "default",' +
@@ -412,7 +412,7 @@ describe('Generator', () => {
 
       expect(gen.templateParams).toStrictEqual({
         test: true,
-        paramWithDefault: "default"
+        paramWithDefault: 'default'
       });
     });
 
@@ -422,7 +422,7 @@ describe('Generator', () => {
           test: true
         }
       });
-      let json = '{"parameters": {' +
+      const json = '{"parameters": {' +
         '  "test": {' +
         '    "description": "Parameter with default value",' +
         '    "default": false,' +

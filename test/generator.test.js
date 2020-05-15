@@ -383,4 +383,59 @@ describe('Generator', () => {
       expect(content).toBe(utils.__files[filePath]);
     });
   });
+
+  describe('#loadDefaultValues', () => {
+    it('default value of parameter is set', async () => {
+      const gen = new Generator('testTemplate', __dirname, {
+                                  templateParams: {
+                                    test: true
+                                  }
+                                });
+      let json = '{"parameters": {' +
+        '  "paramWithDefault": {' +
+        '    "description": "Parameter with default value",' +
+        '    "default": "default",' +
+        '    "required": false' +
+        '  },' +
+        '  "paramWithoutDefault": {' +
+        '    "description": "Parameter without default value",' +
+        '    "required": false' +
+        '  },' +
+        '  "test": {' +
+        '    "description": "test",' +
+        '    "required": false' +
+        '  }' +
+        '}}';
+      gen.templateConfig = JSON.parse(json);
+
+      await gen.loadDefaultValues();
+
+      expect(gen.templateParams).toStrictEqual({
+        test: true,
+        paramWithDefault: "default"
+      });
+    });
+
+    it('default value of parameter is not override user value', async () => {
+      const gen = new Generator('testTemplate', __dirname, {
+        templateParams: {
+          test: true
+        }
+      });
+      let json = '{"parameters": {' +
+        '  "test": {' +
+        '    "description": "Parameter with default value",' +
+        '    "default": false,' +
+        '    "required": false' +
+        '  }' +
+        '}}';
+      gen.templateConfig = JSON.parse(json);
+
+      await gen.loadDefaultValues();
+
+      expect(gen.templateParams).toStrictEqual({
+        test: true
+      });
+    });
+  });
 });

@@ -183,7 +183,7 @@ The `.tp-config.json` file contains a JSON object that may have the following in
 |`supportedProtocols`| [String] | A list with all the protocols this template supports.
 |`parameters`| Object[String, Object] | An object with all the parameters that can be passed when generating the template. When using the command line, it's done by indicating `--param name=value` or `-p name=value`.
 |`parameters[param].description`| String | A user-friendly description about the parameter.
-|`parameters[param].default`| Any | Default value of the parameter if not specified.
+|`parameters[param].default`| Any | Default value of the parameter if not specified. Shouldn't be used for mandatory `required=true` parameters.
 |`parameters[param].required`| Boolean | Whether the parameter is required or not.
 |`conditionalFiles`| Object[String, Object] | An object containing all the file paths that should be conditionally rendered. Each key represents a file path and each value must be an object with the keys `subject` and `validation`.
 |`conditionalFiles[filePath].subject`| String | The `subject` is a [JMESPath](http://jmespath.org/) query to grab the value you want to apply the condition to. It queries an object with the whole AsyncAPI document and, when specified, the given server. The object looks like this: `{ asyncapi: { ... }, server: { ... } }`.
@@ -203,7 +203,7 @@ The `.tp-config.json` file contains a JSON object that may have the following in
       "description": "The server you want to use in the code.",
       "required": true
     },
-    "pathToApiFile": {
+    "asyncapiFileDir": {
       "description": "The path to store original AsyncAPI file.",
       "default": "./api",
       "required": false
@@ -244,3 +244,4 @@ There are some template parameters that have a special meaning:
 |Name|Description|
 |---|---|
 |`server`| It is used to let the template know which server you want to use. In some cases, this may be required. For instance, when generating code that connects to a specific server. If your template need your users to specify a server, use this parameter.
+|`asyncapiFileDir`| It is used by `@asyncapi/generator-hooks#`[`createAsyncapiFile`](https://github.com/asyncapi/generator-hooks/blob/62c50cac6156110e1325152cb2599d916a310055/src/index.js#L5) to specify directory where original AsyncAPI file will be stored. Defining a default parameter value allows template maintainers to pre-set this location. |

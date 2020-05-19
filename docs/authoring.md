@@ -203,9 +203,9 @@ The `.tp-config.json` file contains a JSON object that may have the following in
       "description": "The server you want to use in the code.",
       "required": true
     },
-    "asyncapiFileDir": {
-      "description": "The path to store original AsyncAPI file.",
-      "default": "./api",
+    "dummyParameter": {
+      "description": "Example of parameter with default value.",
+      "default": "just a string",
       "required": false
     }
   },
@@ -244,4 +244,3 @@ There are some template parameters that have a special meaning:
 |Name|Description|
 |---|---|
 |`server`| It is used to let the template know which server you want to use. In some cases, this may be required. For instance, when generating code that connects to a specific server. If your template need your users to specify a server, use this parameter.
-|`asyncapiFileDir`| It is used by `@asyncapi/generator-hooks#`[`createAsyncapiFile`](https://github.com/asyncapi/generator-hooks/blob/62c50cac6156110e1325152cb2599d916a310055/src/index.js#L5) to specify directory where original AsyncAPI file will be stored. Defining a default parameter value allows template maintainers to pre-set this location. |

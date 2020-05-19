@@ -183,6 +183,7 @@ The `.tp-config.json` file contains a JSON object that may have the following in
 |`supportedProtocols`| [String] | A list with all the protocols this template supports.
 |`parameters`| Object[String, Object] | An object with all the parameters that can be passed when generating the template. When using the command line, it's done by indicating `--param name=value` or `-p name=value`.
 |`parameters[param].description`| String | A user-friendly description about the parameter.
+|`parameters[param].default`| Any | Default value of the parameter if not specified. Shouldn't be used for mandatory `required=true` parameters.
 |`parameters[param].required`| Boolean | Whether the parameter is required or not.
 |`conditionalFiles`| Object[String, Object] | An object containing all the file paths that should be conditionally rendered. Each key represents a file path and each value must be an object with the keys `subject` and `validation`.
 |`conditionalFiles[filePath].subject`| String | The `subject` is a [JMESPath](http://jmespath.org/) query to grab the value you want to apply the condition to. It queries an object with the whole AsyncAPI document and, when specified, the given server. The object looks like this: `{ asyncapi: { ... }, server: { ... } }`.
@@ -201,6 +202,11 @@ The `.tp-config.json` file contains a JSON object that may have the following in
     "server": {
       "description": "The server you want to use in the code.",
       "required": true
+    },
+    "dummyParameter": {
+      "description": "Example of parameter with default value.",
+      "default": "just a string",
+      "required": false
     }
   },
   "conditionalFiles": {

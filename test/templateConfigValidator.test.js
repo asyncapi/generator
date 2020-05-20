@@ -84,13 +84,13 @@ describe('Template Configuration Validator', () => {
     const templateConfig  = {
       conditionalFiles: {
         'my/path/to/file.js': {
-          subject: 'server.protocol',
-          validation: 'myprotocol'
+          subject: 'server.url',
+          validation: 'http://example.com'
         }
       }
     };
 
-    expect(() => validateTemplateConfig(templateConfig, templateParams, asyncapiDocument)).toThrow('Invalid conditional file validation object for my/path/to/file.js: myprotocol.');
+    expect(() => validateTemplateConfig(templateConfig, templateParams, asyncapiDocument)).toThrow('Invalid conditional file validation object for my/path/to/file.js: http://example.com.');
   });
 
   it('Validation enrich conditional files object with validate object', () => {

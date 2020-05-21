@@ -3,6 +3,8 @@ const fs = require('fs');
 const path = require('path');
 const streetlightYAML = fs.readFileSync(path.resolve(__dirname, './docs/streetlights.yml'), 'utf8');
 
+jest.mock('../lib/utils');
+
 describe('Template Configuration Validator', () => {
   let asyncapiDocument;
 
@@ -21,12 +23,15 @@ describe('Template Configuration Validator', () => {
   });
 
   it('Validation throw error if template is not compatible', () => {
+    const utils = require('../lib/utils');
+    utils.__generatorVersion = '1.0.0';
+
     const templateParams = {};
     const templateConfig  = {
-      generator: '>100'
+      generator: '>1.0.1'
     };
 
-    expect(() => validateTemplateConfig(templateConfig, templateParams, asyncapiDocument)).toThrow('This template is not compatible with the current version of the generator (0.47.0). This template is compatible with the following version range: >100.');
+    expect(() => validateTemplateConfig(templateConfig, templateParams)).toThrow('This template is not compatible with the current version of the generator (1.0.0). This template is compatible with the following version range: >1.0.1.');
   });
 
   it('Validation throw error if required params not provided', () => {
@@ -40,7 +45,34 @@ describe('Template Configuration Validator', () => {
       }
     };
 
-    expect(() => validateTemplateConfig(templateConfig, templateParams, asyncapiDocument)).toThrow('This template requires the following missing params: test.');
+    expect(() => validateTemplateConfig(templateConfig, templateParams)).toThrow('This template requires the following missing params: test.');
+  });
+
+  it('Validation throw error if provided param is not in the list of params supported by the template', () => {
+    console.warn = jest.fn();
+    const templateParams = {
+      test1: 'myTest'
+    };
+    const templateConfig  = {
+      parameters: {
+        test: {
+          description: 'test'
+        }
+      }
+    };
+    validateTemplateConfig(templateConfig, templateParams);
+    expect(console.warn).toHaveBeenCalledWith('Warning: This template doesn\'t have the following params: test1.');
+  });
+
+  it('Validation throw error if provided param is not supported by the template as template has no params specified', () => {
+    console.warn = jest.fn();
+    const templateParams = {
+      test1: 'myTest'
+    };
+    const templateConfig  = {};
+
+    validateTemplateConfig(templateConfig, templateParams);
+    expect(console.warn).toHaveBeenCalledWith('Warning: This template doesn\'t have the following params: test1.');
   });
 
   it('Validation throw error if specified server is not in asyncapi document', () => {
@@ -76,7 +108,7 @@ describe('Template Configuration Validator', () => {
       }
     };
 
-    expect(() => validateTemplateConfig(templateConfig, templateParams, asyncapiDocument)).toThrow('Invalid conditional file subject for my/path/to/file.js: server.protocol.');
+    expect(() => validateTemplateConfig(templateConfig, templateParams)).toThrow('Invalid conditional file subject for my/path/to/file.js: server.protocol.');
   });
 
   it('Validation throw error if validation in condition files is not object', () => {
@@ -90,7 +122,7 @@ describe('Template Configuration Validator', () => {
       }
     };
 
-    expect(() => validateTemplateConfig(templateConfig, templateParams, asyncapiDocument)).toThrow('Invalid conditional file validation object for my/path/to/file.js: http://example.com.');
+    expect(() => validateTemplateConfig(templateConfig, templateParams)).toThrow('Invalid conditional file validation object for my/path/to/file.js: http://example.com.');
   });
 
   it('Validation enrich conditional files object with validate object', () => {
@@ -105,7 +137,7 @@ describe('Template Configuration Validator', () => {
         }
       }
     };
-    validateTemplateConfig(templateConfig, templateParams, asyncapiDocument);
+    validateTemplateConfig(templateConfig, templateParams);
 
     expect(templateConfig.conditionalFiles['my/path/to/file.js']).toBeDefined();
   });

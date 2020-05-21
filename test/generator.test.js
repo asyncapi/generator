@@ -485,44 +485,4 @@ describe('Generator', () => {
       });
     });
   });
-
-  describe('#verifyParameters', () => {
-    it('required parameter is missed', () => {
-      const gen = new Generator('testTemplate', __dirname, {
-        templateParams: {
-          test: true
-        }
-      });
-      const params = {
-        requiredParam: {
-          required: true
-        },
-        test: {
-          required: false
-        }
-      };
-
-      expect(() => {
-        gen.verifyParameters(params);
-      }).toThrow(/requiredParam/);
-    });
-    it('wrong parameter is passed', () => {
-      const gen = new Generator('testTemplate', __dirname, {
-        templateParams: {
-          notExistInConf: true
-        }
-      });
-      const params = {
-        existInConf: {
-          required: false
-        }
-      };
-      console.warn = jest.fn();
-
-      gen.verifyParameters(params);
-
-      expect(console.warn).toBeCalledWith(expect.stringContaining('notExistInConf'));
-      expect(console.warn).toBeCalledWith(expect.not.stringContaining('existInConf'));
-    });
-  });
 });

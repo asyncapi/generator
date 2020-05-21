@@ -55,6 +55,7 @@
     "js-yaml": "^3.13.1",
     "markdown-it": "^8.4.1",
     "minimatch": "^3.0.4",
+    "node-fetch": "^2.6.0",
     "npmi": "^4.0.0",
     "nunjucks": "^3.2.0",
     "semver": "^7.3.2",

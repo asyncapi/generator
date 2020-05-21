@@ -83,6 +83,11 @@ Options:
 ag asyncapi.yaml @asyncapi/html-template
 ```
 
+**Generating from a URL:**
+```bash
+ag https://raw.githubusercontent.com/asyncapi/asyncapi/master/examples/2.0.0/streetlights.yml @asyncapi/html-template
+```
+
 **Specify where to put the result:**
 ```bash
 ag asyncapi.yaml @asyncapi/html-template -o ./docs

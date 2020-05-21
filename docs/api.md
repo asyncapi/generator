@@ -49,12 +49,12 @@ Instantiates a new Generator object.
 **Example**  
 ```js
 const path = require('path');
-const generator = new Generator('html', path.resolve(__dirname, 'example'));
+const generator = new Generator('@asyncapi/html-template', path.resolve(__dirname, 'example'));
 ```
 **Example** *(Passing custom params to the template)*  
 ```js
 const path = require('path');
-const generator = new Generator('html', path.resolve(__dirname, 'example'), {
+const generator = new Generator('@asyncapi/html-template', path.resolve(__dirname, 'example'), {
   templateParams: {
     sidebarOrganization: 'byTags'
   }

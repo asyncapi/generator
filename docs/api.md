@@ -215,7 +215,7 @@ Generates files from a given template and AsyncAPI file stored on external serve
 
 | Param | Type | Description |
 | --- | --- | --- |
-| asyncapiURL | <code>String</code> | Link to server and AsyncAPI file. |
+| asyncapiURL | <code>String</code> | Link to AsyncAPI file |
 
 **Example**  
 ```js

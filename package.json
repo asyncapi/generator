@@ -18,7 +18,8 @@
     "release": "semantic-release",
     "docker-build": "docker build -t asyncapi/generator:latest .",
     "get-version": "echo $npm_package_version",
-    "lint": "eslint --config .eslintrc ."
+    "lint": "eslint --config .eslintrc .",
+    "lint-tpl-validator": "eslint --fix --config .eslintrc .github/templates-list-validator"
   },
   "preferGlobal": true,
   "bugs": {

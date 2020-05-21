@@ -41,6 +41,8 @@ There is a large number of templates that are ready to use and are officially su
 
 ## List of official generator templates
 
+<!-- TEMPLATES-LIST:START -->
+
 Template Name | Description | Source code
 ---|---|---
 `@asyncapi/nodejs-template` | Generates Nodejs service that uses Hermes package | [click here](https://github.com/asyncapi/nodejs-template)
@@ -51,7 +53,7 @@ Template Name | Description | Source code
 `@asyncapi/html-template` | Generates HTML documentation site | [click here](https://github.com/asyncapi/markdown-template)
 `@asyncapi/markdown-template` | Generates documentation in Markdown file | [click here](https://github.com/asyncapi/html-template)
 
-You can find source code of these templates **[Click here!](https://github.com/search?q=topic%3Aasyncapi+topic%3Agenerator+topic%3Atemplate)**
+<!-- TEMPLATES-LIST:END -->
 
 ## Requirements
 

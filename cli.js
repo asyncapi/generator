@@ -7,14 +7,14 @@ const xfs = require('fs.extra');
 const packageInfo = require('./package.json');
 const Generator = require('./lib/generator');
 const Watcher = require('./lib/watcher');
-const { isLocalTemplate } = require('./lib/utils');
+const { isLocalTemplate, isFilePath } = require('./lib/utils');
 
 const red = text => `\x1b[31m${text}\x1b[0m`;
 const magenta = text => `\x1b[35m${text}\x1b[0m`;
 const yellow = text => `\x1b[33m${text}\x1b[0m`;
 const green = text => `\x1b[32m${text}\x1b[0m`;
 
-let asyncapiFile;
+let asyncapiDocPath;
 let template;
 const params = {};
 const noOverwriteGlobs = [];
@@ -49,8 +49,8 @@ const showErrorAndExit = err => {
 program
   .version(packageInfo.version)
   .arguments('<asyncapi> <template>')
-  .action((asyncAPIPath, tmpl) => {
-    asyncapiFile = path.resolve(asyncAPIPath);
+  .action((path, tmpl) => {
+    asyncapiDocPath = path;
     template = tmpl;
   })
   .option('-d, --disable-hook <hookType>', 'disable a specific hook type', disableHooksParser)
@@ -63,10 +63,11 @@ program
   .option('--watch-template', 'watches the template directory and the AsyncAPI document, and re-generate the files when changes occur. Ignores the output directory. This flag should be used only for template development.')
   .parse(process.argv);
 
-if (!asyncapiFile) {
-  console.error(red('> Path to AsyncAPI file not provided.'));
+if (!asyncapiDocPath) {
+  console.error(red('> Path or URL to AsyncAPI file not provided.'));
   program.help(); // This exits the process
 }
+const isAsyncapiDocLocal = isFilePath(asyncapiDocPath);
 
 xfs.mkdirp(program.output, async err => {
   if (err) return showErrorAndExit(err);
@@ -78,19 +79,25 @@ xfs.mkdirp(program.output, async err => {
 
   // If we want to watch for changes do that
   if (program.watchTemplate) {
+    let watcher;
     const watchDir = path.resolve(template);
+    const outputPath = path.resolve(watchDir, program.output);
     // Template name is needed as it is not always a part of the cli commad
     // There is a use case that you run generator from a root of the template with `./` path
     const templateName = require(path.resolve(watchDir,'package.json')).name;
 
-    console.log(`[WATCHER] Watching for changes in the template directory ${magenta(watchDir)} and in the AsyncAPI file ${magenta(asyncapiFile)}`);
-
+    if (isAsyncapiDocLocal) {
+      console.log(`[WATCHER] Watching for changes in the template directory ${magenta(watchDir)} and in the AsyncAPI file ${magenta(asyncapiDocPath)}`);
+      watcher = new Watcher([asyncapiDocPath, watchDir], outputPath);
+    } else {
+      console.log(`[WATCHER] Watching for changes in the template directory ${magenta(watchDir)}`);
+      watcher = new Watcher(watchDir, outputPath);
+    }
     // Must check template in its installation path in generator to use isLocalTemplate function
     if (!await isLocalTemplate(path.resolve(Generator.DEFAULT_TEMPLATES_DIR, templateName))) {
       console.warn(`WARNING: ${template} is a remote template. Changes may be lost on subsequent installations.`);
     }
-    const outputPath = path.resolve(watchDir, program.output);
-    const watcher = new Watcher([asyncapiFile, watchDir], outputPath);
+    
     watcher.watch(async (changedFiles) => {
       console.clear();
       console.log('[WATCHER] Change detected');
@@ -139,7 +146,11 @@ function generate(targetDir) {
         debug: program.debug
       });
 
-      await generator.generateFromFile(asyncapiFile);
+      if (isAsyncapiDocLocal) {
+        await generator.generateFromFile(path.resolve(asyncapiDocPath));
+      } else {
+        await generator.generateFromURL(asyncapiDocPath);
+      }
       console.log(green('\n\nDone! ✨'));
       console.log(`${yellow('Check out your shiny new generated files at ') + magenta(program.output) + yellow('.')}\n`);
       resolve();

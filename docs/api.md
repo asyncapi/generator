@@ -16,9 +16,11 @@
         * [.debug](#Generator+debug) : <code>Boolean</code>
         * [.install](#Generator+install) : <code>Boolean</code>
         * [.templateConfig](#Generator+templateConfig) : <code>Object</code>
+        * [.hooks](#Generator+hooks) : <code>Object</code>
         * [.templateParams](#Generator+templateParams) : <code>Object</code>
         * [.generate(asyncapiDocument)](#Generator+generate) ⇒ <code>Promise</code>
         * [.generateFromString(asyncapiString, [parserOptions])](#Generator+generateFromString) ⇒ <code>Promise</code>
+        * [.generateFromURL(asyncapiURL)](#Generator+generateFromURL) ⇒ <code>Promise</code>
         * [.generateFromFile(asyncapiFile)](#Generator+generateFromFile) ⇒ <code>Promise</code>
         * [.installTemplate([force])](#Generator+installTemplate)
     * _static_
@@ -118,6 +120,12 @@ Install the template and its dependencies, even when the template has already be
 The template configuration.
 
 **Kind**: instance property of [<code>Generator</code>](#Generator)  
+<a name="Generator+hooks"></a>
+
+### generator.hooks : <code>Object</code>
+Hooks object with hooks functionst grouped by the hook type.
+
+**Kind**: instance property of [<code>Generator</code>](#Generator)  
 <a name="Generator+templateParams"></a>
 
 ### generator.templateParams : <code>Object</code>
@@ -193,6 +201,35 @@ info:
 
 try {
   await generator.generateFromString(asyncapiString);
+  console.log('Done!');
+} catch (e) {
+  console.error(e);
+}
+```
+<a name="Generator+generateFromURL"></a>
+
+### generator.generateFromURL(asyncapiURL) ⇒ <code>Promise</code>
+Generates files from a given template and AsyncAPI file stored on external server.
+
+**Kind**: instance method of [<code>Generator</code>](#Generator)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| asyncapiURL | <code>String</code> | Link to AsyncAPI file |
+
+**Example**  
+```js
+generator
+  .generateFromURL('https://example.com/asyncapi.yaml')
+  .then(() => {
+    console.log('Done!');
+  })
+  .catch(console.error);
+```
+**Example** *(Using async/await)*  
+```js
+try {
+  await generator.generateFromURL('https://example.com/asyncapi.yaml');
   console.log('Done!');
 } catch (e) {
   console.error(e);

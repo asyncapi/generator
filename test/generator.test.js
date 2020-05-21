@@ -274,12 +274,28 @@ describe('Generator', () => {
       const generateFromStringMock = jest.fn().mockResolvedValue();
       const gen = new Generator('testTemplate', __dirname);
       gen.generateFromString = generateFromStringMock;
-      await gen.generateFromFile('fake-asyncapi.yml');
+      await gen.generateFromFile(filePath);
       expect(utils.readFile).toHaveBeenCalled();
       expect(utils.readFile.mock.calls[0][0]).toBe(filePath);
       expect(utils.readFile.mock.calls[0][1]).toStrictEqual({ encoding: 'utf8' });
       expect(generateFromStringMock.mock.calls[0][0]).toBe('test content');
       expect(generateFromStringMock.mock.calls[0][1]).toStrictEqual({ path: filePath });
+    });
+  });
+
+  describe('#generateFromURL', () => {
+    it('calls fetch and generateFromString with the right params', async () => {
+      const utils = require('../lib/utils');
+      const asyncapiURL = 'http://example.com/fake-asyncapi.yml';
+      utils.__contentOfFetchedFile = 'fake text';
+      
+      const generateFromStringMock = jest.fn().mockResolvedValue();
+      const gen = new Generator('testTemplate', __dirname);
+      gen.generateFromString = generateFromStringMock;
+      await gen.generateFromURL(asyncapiURL);
+      expect(utils.fetchSpec).toHaveBeenCalled();
+      expect(utils.fetchSpec.mock.calls[0][0]).toBe(asyncapiURL);
+      expect(generateFromStringMock.mock.calls[0][0]).toBe('fake text');
     });
   });
 
@@ -467,6 +483,46 @@ describe('Generator', () => {
       expect(gen.templateParams).toStrictEqual({
         test: true
       });
+    });
+  });
+
+  describe('#verifyParameters', () => {
+    it('required parameter is missed', () => {
+      const gen = new Generator('testTemplate', __dirname, {
+        templateParams: {
+          test: true
+        }
+      });
+      const params = {
+        requiredParam: {
+          required: true
+        },
+        test: {
+          required: false
+        }
+      };
+
+      expect(() => {
+        gen.verifyParameters(params);
+      }).toThrow(/requiredParam/);
+    });
+    it('wrong parameter is passed', () => {
+      const gen = new Generator('testTemplate', __dirname, {
+        templateParams: {
+          notExistInConf: true
+        }
+      });
+      const params = {
+        existInConf: {
+          required: false
+        }
+      };
+      console.warn = jest.fn();
+
+      gen.verifyParameters(params);
+
+      expect(console.warn).toBeCalledWith(expect.stringContaining('notExistInConf'));
+      expect(console.warn).toBeCalledWith(expect.not.stringContaining('existInConf'));
     });
   });
 });

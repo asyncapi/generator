@@ -11,6 +11,6 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
-      - uses: ./
+      - uses: ./.github/templates-list-validator
         with:
           token: ${{ secrets.GITHUB_TOKEN }} 

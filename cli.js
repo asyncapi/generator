@@ -49,8 +49,8 @@ const showErrorAndExit = err => {
 program
   .version(packageInfo.version)
   .arguments('<asyncapi> <template>')
-  .action((path, tmpl) => {
-    asyncapiDocPath = path;
+  .action((fileLoc, tmpl) => {
+    asyncapiDocPath = fileLoc;
     template = tmpl;
   })
   .option('-d, --disable-hook <hookType>', 'disable a specific hook type', disableHooksParser)

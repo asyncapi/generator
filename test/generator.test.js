@@ -8,6 +8,7 @@ const streetlightYAML = fs.readFileSync(path.resolve(__dirname, './docs/streetli
 jest.mock('../lib/utils');
 jest.mock('../lib/filtersRegistry');
 jest.mock('../lib/hooksRegistry');
+jest.mock('../lib/templateConfigValidator');
 
 describe('Generator', () => {
   describe('constructor', () => {
@@ -44,7 +45,7 @@ describe('Generator', () => {
       expect(gen.output).toStrictEqual('string');
       expect(gen.forceWrite).toStrictEqual(true);
       expect(gen.install).toStrictEqual(true);
-      expect(() => gen.templateParams.test).toThrow('Template parameter "test" has not been defined in the .tp-config.json file. Please make sure it\'s listed there before you use it in your template.');
+      expect(() => gen.templateParams.test).toThrow('Template parameter "test" has not been defined in the package.json file under generator property. Please make sure it\'s listed there before you use it in your template.');
 
       // Mock params on templateConfig so it doesn't fail.
       gen.templateConfig.parameters = { test: {} };
@@ -74,6 +75,7 @@ describe('Generator', () => {
     let util;
     let filtersRegistry;
     let hooksRegistry;
+    let templateConfigValidator;
 
     const mockMethods = (gen) => {
       gen.verifyTargetDir = jest.fn();
@@ -93,6 +95,7 @@ describe('Generator', () => {
       util = require('../lib/utils');
       filtersRegistry = require('../lib/filtersRegistry');
       hooksRegistry = require('../lib/hooksRegistry');
+      templateConfigValidator = require('../lib/templateConfigValidator');
       xfsMock = require('fs.extra');
       const parserMock = require('@asyncapi/parser');
       asyncApiDocumentMock = new parserMock.AsyncAPIDocument();
@@ -110,7 +113,7 @@ describe('Generator', () => {
       expect(gen.loadTemplateConfig).toHaveBeenCalled();
       expect(hooksRegistry.registerHooks).toHaveBeenCalled();
       expect(filtersRegistry.registerFilters).toHaveBeenCalled();
-      expect(gen.validateTemplateConfig).toHaveBeenCalledWith(asyncApiDocumentMock);
+      expect(templateConfigValidator.validateTemplateConfig).toHaveBeenCalled();
       expect(gen.generateDirectoryStructure).toHaveBeenCalledWith(asyncApiDocumentMock);
       expect(gen.launchHook).toHaveBeenCalledWith('generate:after');
 
@@ -132,7 +135,7 @@ describe('Generator', () => {
       expect(gen.loadTemplateConfig).toHaveBeenCalled();
       expect(hooksRegistry.registerHooks).toHaveBeenCalled();
       expect(filtersRegistry.registerFilters).toHaveBeenCalled();
-      expect(gen.validateTemplateConfig).toHaveBeenCalledWith(asyncApiDocumentMock);
+      expect(templateConfigValidator.validateTemplateConfig).toHaveBeenCalled();
       expect(gen.generateDirectoryStructure).toHaveBeenCalledWith(asyncApiDocumentMock);
       expect(gen.launchHook).toHaveBeenCalledWith('generate:after');
 
@@ -153,7 +156,7 @@ describe('Generator', () => {
       expect(gen.loadTemplateConfig).toHaveBeenCalled();
       expect(hooksRegistry.registerHooks).toHaveBeenCalled();
       expect(filtersRegistry.registerFilters).toHaveBeenCalled();
-      expect(gen.validateTemplateConfig).toHaveBeenCalledWith(asyncApiDocumentMock);
+      expect(templateConfigValidator.validateTemplateConfig).toHaveBeenCalled();
       expect(gen.generateDirectoryStructure).toHaveBeenCalledWith(asyncApiDocumentMock);
       expect(gen.launchHook).toHaveBeenCalledWith('generate:after');
 
@@ -175,7 +178,7 @@ describe('Generator', () => {
       expect(gen.loadTemplateConfig).toHaveBeenCalled();
       expect(hooksRegistry.registerHooks).toHaveBeenCalled();
       expect(filtersRegistry.registerFilters).toHaveBeenCalled();
-      expect(gen.validateTemplateConfig).toHaveBeenCalledWith(asyncApiDocumentMock);
+      expect(templateConfigValidator.validateTemplateConfig).toHaveBeenCalled();
       expect(gen.generateDirectoryStructure).toHaveBeenCalledWith(asyncApiDocumentMock);
       expect(gen.launchHook).toHaveBeenCalledWith('generate:after');
 
@@ -199,7 +202,7 @@ describe('Generator', () => {
       expect(gen.loadTemplateConfig).toHaveBeenCalled();
       expect(hooksRegistry.registerHooks).toHaveBeenCalled();
       expect(filtersRegistry.registerFilters).toHaveBeenCalled();
-      expect(gen.validateTemplateConfig).toHaveBeenCalledWith(asyncApiDocumentMock);
+      expect(templateConfigValidator.validateTemplateConfig).toHaveBeenCalled();
       expect(gen.launchHook).toHaveBeenCalledWith('generate:after');
       expect(util.exists).toHaveBeenCalledWith('/path/to/template/nameOfTestTemplate/template/file.js');
       expect(gen.generateFile).toHaveBeenCalledWith(asyncApiDocumentMock, 'file.js', '/path/to/template/nameOfTestTemplate/template');
@@ -480,46 +483,6 @@ describe('Generator', () => {
       expect(gen.templateParams).toStrictEqual({
         test: true
       });
-    });
-  });
-
-  describe('#verifyParameters', () => {
-    it('required parameter is missed', () => {
-      const gen = new Generator('testTemplate', __dirname, {
-        templateParams: {
-          test: true
-        }
-      });
-      const params = {
-        requiredParam: {
-          required: true
-        },
-        test: {
-          required: false
-        }
-      };
-
-      expect(() => {
-        gen.verifyParameters(params);
-      }).toThrow(/requiredParam/);
-    });
-    it('wrong parameter is passed', () => {
-      const gen = new Generator('testTemplate', __dirname, {
-        templateParams: {
-          notExistInConf: true
-        }
-      });
-      const params = {
-        existInConf: {
-          required: false
-        }
-      };
-      console.warn = jest.fn();
-
-      gen.verifyParameters(params);
-
-      expect(console.warn).toBeCalledWith(expect.stringContaining('notExistInConf'));
-      expect(console.warn).toBeCalledWith(expect.not.stringContaining('existInConf'));
     });
   });
 });

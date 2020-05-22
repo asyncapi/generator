@@ -11,7 +11,7 @@ The AsyncAPI generator has been built with extensibility in mind. The package us
 1. Templates may contain [Nunjucks filters or helper functions](https://mozilla.github.io/nunjucks/templating.html#builtin-filters). [Read more about filters](#filters).
 1. Templates may contain `hooks` that are functions invoked during specific moment of the generation. In the template, they must be stored in the `.hooks` directory under the template directory. They can also be stored in other modules and external libraries and configured inside the template [Read more about hooks](#hooks).
 1. Templates may contain `partials` (reusable chunks). They must be stored in the `.partials` directory under the template directory. [Read more about partials](#partials).
-1. Templates may have a configuration file. It must be stored in the template directory and its name must be `.tp-config.json`. [Read more about the configuration file](#configuration-file).
+1. Templates can be configured. Configuration must be stored in the `package.json` file under custom `generator` property. [Read more about the configuration file](#configuration-file).
 1. There are parameters with special meaning. [Read more about special parameters](#special-parameters).
 1. The default variables you have access to in any the template file are the following:
    - `asyncapi` that is a parsed spec file object. Read the [API](https://github.com/asyncapi/parser-js/blob/master/API.md#AsyncAPIDocument) of the Parser to understand to what structure you have access in this parameter.
@@ -176,7 +176,7 @@ Files from the `.partials` directory do not end up with other generated files in
 
 ## Configuration File
 
-The `.tp-config.json` file contains a JSON object that may have the following information:
+The `generator` property from `package.json` file must contain a JSON object that may have the following information:
 
 |Name|Type|Description|
 |---|---|---|
@@ -196,6 +196,7 @@ The `.tp-config.json` file contains a JSON object that may have the following in
 ### Example
 
 ```json
+"generator":
 {
   "supportedProtocols": ["amqp", "mqtt"],
   "parameters": {

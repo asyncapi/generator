@@ -9,7 +9,7 @@ async function run() {
     const templatesListContent = getReadmeContent();
     const officialTemplates = await searchOfficialTemplates(token);
 
-    const missingTemplates = officialTemplates.filter(str => templatesListContent.indexOf(str) === -1);
+    const missingTemplates = officialTemplates.filter(str => !templatesListContent.includes(str));
 
     if (missingTemplates) core.setFailed(
         `The following templates are not in the README.md: ${missingTemplates}. Make sure missing templates are added to the list in the README of this repository and also to the website to the list of offecial tools: https://github.com/asyncapi/website/blob/master/content/docs/tooling.md`

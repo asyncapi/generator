@@ -19,7 +19,8 @@
     "docker-build": "docker build -t asyncapi/generator:latest .",
     "get-version": "echo $npm_package_version",
     "lint": "eslint --config .eslintrc .",
-    "lint-tpl-validator": "eslint --fix --config .eslintrc .github/templates-list-validator"
+    "lint-tpl-validator": "eslint --fix --config .eslintrc .github/templates-list-validator",
+    "gen-readme-toc": "markdown-toc -i README.md"
   },
   "preferGlobal": true,
   "bugs": {
@@ -75,6 +76,7 @@
     "eslint-plugin-sonarjs": "^0.5.0",
     "jest": "^25.5.0",
     "jsdoc-to-markdown": "^5.0.0",
+    "markdown-toc": "^1.2.0",
     "semantic-release": "^17.0.4",
     "semantic-release-slack-bot": "^1.5.0"
   },

@@ -20,6 +20,8 @@ jobs:
         run: npm ci
       - name: Regenerate docs
         run: npm run docs
+      - name: Generate README ToC
+        run: npm run gen-readme-toc
       - name: Get version from package.json before release step
         id: initversion
         run: echo "::set-output name=version::$(npm run get-version --silent)"

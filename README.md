@@ -9,27 +9,27 @@
 
 > :warning: This package doesn't support AsyncAPI 1.x anymore. We recommend to upgrade to the latest AsyncAPI version using the [AsyncAPI converter](https://github.com/asyncapi/converter-js). If you need to convert documents on the fly, you may use the [Node.js](https://github.com/asyncapi/converter-js) or [Go](https://github.com/asyncapi/converter-go) converters.
 
-<!-- TOC -->
+<!-- toc is generated with GitHub Actions do not remove toc markers -->
+<!-- toc -->
 
 - [Overview](#overview)
 - [List of official generator templates](#list-of-official-generator-templates)
 - [Requirements](#requirements)
 - [Using from the command-line interface (CLI)](#using-from-the-command-line-interface-cli)
-    - [Install the CLI](#install-the-cli)
-    - [Options](#options)
-    - [Examples using the CLI](#examples-using-the-cli)
-    - [You don't like technical requirements for the CLI?](#you-dont-like-technical-requirements-for-the-cli)
-        - [Run with npx](#run-with-npx)
-        - [Run with Docker](#run-with-docker)
+  * [Install the CLI](#install-the-cli)
+  * [Options](#options)
+  * [Examples using the CLI](#examples-using-the-cli)
+  * [You don't like technical requirements for the CLI?](#you-dont-like-technical-requirements-for-the-cli)
+    + [Run with npx](#run-with-npx)
+    + [Run with Docker](#run-with-docker)
 - [Using as a module/package](#using-as-a-modulepackage)
-    - [Install the module](#install-the-module)
-    - [Example using the module](#example-using-the-module)
+  * [Install the module](#install-the-module)
+  * [Example using the module](#example-using-the-module)
 - [How to create a template](#how-to-create-a-template)
 - [Contributing](#contributing)
-- [Contributors ✨](#contributors-✨)
+- [Contributors ✨](#contributors-%E2%9C%A8)
 
-<!-- /TOC -->
-
+<!-- tocstop -->
 
 ## Overview
 
@@ -41,6 +41,7 @@ There is a large number of templates that are ready to use and are officially su
 
 ## List of official generator templates
 
+<!-- templates list is validated with GitHub Actions do not remove list markers -->
 <!-- TEMPLATES-LIST:START -->
 
 Template Name | Description | Source code

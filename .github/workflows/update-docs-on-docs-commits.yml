@@ -39,7 +39,7 @@ jobs:
       - name: console.log event 
         # PR should be created within this GH action only if it is a docs: commit
         # Otherwise it will conflict with release workflow
-        if: github.event.pull_request.title == docs:*
+        if: github.event.pull_request.title == "docs:*""
         run: echo "we did it!"
      # - name: Create Pull Request with updated docs
       #  uses: peter-evans/create-pull-request@v2.4.4

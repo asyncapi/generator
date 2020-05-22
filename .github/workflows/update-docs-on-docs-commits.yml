@@ -1,4 +1,4 @@
-name: Update generated parts of documentation on docs: commits
+name: 'Update generated parts of documentation on docs: commits'
 
 on:
   pull_request:

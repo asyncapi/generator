@@ -36,7 +36,9 @@ function getReadmeContent() {
 
   if (endOfOpeningTagIndex === -1 || endOfClosingTagIndex === -1) {
     core.setFailed();
-    throw new Error('Templates list is missing or someone removed markers that indicate the list');
+    throw new Error(
+        `Templates list is missing or someone removed markers that indicate the list. Table with list of templates that is in the README should be wrapped in markers like <!-- TEMPLATES-LIST:START --> and <!-- TEMPLATES-LIST:END -->`
+    );
   }
 
   return readmeContent.slice(endOfOpeningTagIndex + closingTag.length, endOfClosingTagIndex);

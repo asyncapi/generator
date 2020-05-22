@@ -1,23 +1,9 @@
 name: 'Update generated parts of documentation on docs: commits'
 
 on:
-  pull_request:
-    types:
-      - labeled
-      - unlabeled
-      - synchronize
-      - opened
-      - edited
-      - ready_for_review
-      - reopened
-      - unlocked
-  pull_request_review:
-    types:
-      - submitted
-  check_suite: 
-    types:
-      - completed
-  status: {}
+  push:
+    branches:
+      - master
 
 jobs:
   docs-gen:
@@ -36,18 +22,16 @@ jobs:
         run: npm run docs
       - name: Generate README ToC
         run: npm run gen-readme-toc
-      - name: console.log event 
+      - name: Create Pull Request with updated docs
         # PR should be created within this GH action only if it is a docs: commit
         # Otherwise it will conflict with release workflow
-        if: startsWith(github.event.pull_request.title, 'docs:')
-        run: echo "we did it!"
-     # - name: Create Pull Request with updated docs
-      #  uses: peter-evans/create-pull-request@v2.4.4
-       # with:
-        #  token: ${{ secrets.GH_TOKEN }}
-         # commit-message: 'chore: update generated docs'
-    #      committer: asyncapi-bot <info@asyncapi.io>
-     #     author: asyncapi-bot <info@asyncapi.io>
-      #    title: 'chore: update generated docs'
-       #   body: 'Update of docs that are generated and were forgotten on PR level.'
-        #  branch: gen-docs-update
+        if: startsWith(github.event.commits[0].message, 'docs:')
+        uses: peter-evans/create-pull-request@v2.4.4
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+          commit-message: 'chore: update generated docs'
+          committer: asyncapi-bot <info@asyncapi.io>
+          author: asyncapi-bot <info@asyncapi.io>
+          title: 'chore: update generated docs'
+          body: 'Update of docs that are generated and were forgotten on PR level.'
+          branch: gen-docs-update

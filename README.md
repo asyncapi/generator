@@ -56,6 +56,8 @@ Template Name | Description | Source code
 
 <!-- TEMPLATES-LIST:END -->
 
+You can find above templates and the ones provided by the community in **[this list](https://github.com/search?q=topic%3Aasyncapi+topic%3Agenerator+topic%3Atemplate)**
+
 ## Requirements
 
 * Node.js v12.16+

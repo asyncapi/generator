@@ -62,6 +62,7 @@ describe('Template Configuration Validator', () => {
     };
     validateTemplateConfig(templateConfig, templateParams);
     expect(console.warn).toHaveBeenCalledWith('Warning: This template doesn\'t have the following params: test1.');
+    expect(console.warn).toHaveBeenCalledWith('Did you mean "test"?');
   });
 
   it('Validation throw error if provided param is not supported by the template as template has no params specified', () => {
@@ -73,6 +74,7 @@ describe('Template Configuration Validator', () => {
 
     validateTemplateConfig(templateConfig, templateParams);
     expect(console.warn).toHaveBeenCalledWith('Warning: This template doesn\'t have the following params: test1.');
+    expect(console.warn).toHaveBeenCalledWith('This template doesn\'t have any params!');
   });
 
   it('Validation throw error if specified server is not in asyncapi document', () => {

@@ -82,16 +82,16 @@ npm install -g @asyncapi/generator
 
 You might want to update your local installation of generator for different reasons:
 
-* You want latest generator to have it's latest features. Perform usual installation and in case you had generator installed already, it will upgrade to latest available:
+* You want the latest generator to have its latest features. Perform usual installation and in case you had generator installed already, it will upgrade to latest available:
     ```bash
     npm install -g @asyncapi/generator
     ```
-* You want specific version of the generator because your template might not be compatible with latest generator. Check [what version you need](https://github.com/asyncapi/generator/releases) and perform installation, specifying exact version with `@` character:
+* You want a specific version of the generator because your template might not be compatible with the latest generator. Check [what version you need](https://github.com/asyncapi/generator/releases) and perform installation, specifying the exact version with the `@` character:
     ```bash
     npm install -g @asyncapi/generator@0.50.0
     ```
 
-### Options
+### CLI usage
 
 ```bash
 Usage: cli [options] <asyncapi> <template>

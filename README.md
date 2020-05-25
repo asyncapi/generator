@@ -19,7 +19,7 @@
 - [Using from the command-line interface (CLI)](#using-from-the-command-line-interface-cli)
   * [Install the CLI](#install-the-cli)
   * [Update the CLI](#update-the-cli)
-  * [Options](#options)
+  * [CLI usage](#cli-usage)
   * [Examples using the CLI](#examples-using-the-cli)
   * [Generator version vs Template version](#generator-version-vs-template-version)
   * [You don't like technical requirements for the CLI?](#you-dont-like-technical-requirements-for-the-cli)
@@ -90,6 +90,8 @@ You might want to update your local installation of generator for different reas
     ```bash
     npm install -g @asyncapi/generator@0.50.0
     ```
+
+> Sometimes you have to force additional npm installation like this: `npm install -g --force @asyncapi/generator`
 
 ### CLI usage
 

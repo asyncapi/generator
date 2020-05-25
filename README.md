@@ -10,6 +10,7 @@
 > :warning: This package doesn't support AsyncAPI 1.x anymore. We recommend to upgrade to the latest AsyncAPI version using the [AsyncAPI converter](https://github.com/asyncapi/converter-js). If you need to convert documents on the fly, you may use the [Node.js](https://github.com/asyncapi/converter-js) or [Go](https://github.com/asyncapi/converter-go) converters.
 
 <!-- toc is generated with GitHub Actions do not remove toc markers -->
+
 <!-- toc -->
 
 - [Overview](#overview)
@@ -17,8 +18,10 @@
 - [Requirements](#requirements)
 - [Using from the command-line interface (CLI)](#using-from-the-command-line-interface-cli)
   * [Install the CLI](#install-the-cli)
+  * [Update the CLI](#update-the-cli)
   * [Options](#options)
   * [Examples using the CLI](#examples-using-the-cli)
+  * [Generator version vs Template version](#generator-version-vs-template-version)
   * [You don't like technical requirements for the CLI?](#you-dont-like-technical-requirements-for-the-cli)
     + [Run with npx](#run-with-npx)
     + [Run with Docker](#run-with-docker)

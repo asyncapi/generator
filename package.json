@@ -59,7 +59,8 @@
     "npmi": "^4.0.0",
     "nunjucks": "^3.2.0",
     "semver": "^7.3.2",
-    "simple-git": "^1.131.0"
+    "simple-git": "^1.131.0",
+    "levenshtein-edit-distance": "^2.0.5"
   },
   "devDependencies": {
     "@semantic-release/commit-analyzer": "^8.0.1",

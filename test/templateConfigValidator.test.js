@@ -51,17 +51,20 @@ describe('Template Configuration Validator', () => {
   it('Validation throw error if provided param is not in the list of params supported by the template', () => {
     console.warn = jest.fn();
     const templateParams = {
-      test1: 'myTest'
+      tsets: 'myTest'
     };
     const templateConfig  = {
       parameters: {
         test: {
-          description: 'test'
+          description: 'this param distance to test1 equals 3 according to levenshtein-edit-distance'
+        },
+        thisissomethingsodifferent: {
+          description: 'this param distance to test1 equals 21 according to levenshtein-edit-distance'
         }
       }
     };
     validateTemplateConfig(templateConfig, templateParams);
-    expect(console.warn).toHaveBeenCalledWith('Warning: This template doesn\'t have the following params: test1.');
+    expect(console.warn).toHaveBeenCalledWith('Warning: This template doesn\'t have the following params: tsets.');
     expect(console.warn).toHaveBeenCalledWith('Did you mean "test"?');
   });
 

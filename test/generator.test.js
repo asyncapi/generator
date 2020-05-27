@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const Generator = require('../lib/generator');
 
-const streetlightYAML = fs.readFileSync(path.resolve(__dirname, './docs/dummy.yml'), 'utf8');
+const dummyYAML = fs.readFileSync(path.resolve(__dirname, './docs/dummy.yml'), 'utf8');
 
 jest.mock('../lib/utils');
 jest.mock('../lib/filtersRegistry');
@@ -225,11 +225,11 @@ describe('Generator', () => {
     it('calls parser.parse and this.generate', async () => {
       const gen = new Generator('testTemplate', __dirname);
       gen.generate = generateMock;
-      await gen.generateFromString(streetlightYAML);
+      await gen.generateFromString(dummyYAML);
 
       expect(generateMock).toHaveBeenCalled();
       expect(parserMock.parse).toHaveBeenCalled();
-      expect(parserMock.parse.mock.calls[0][0]).toBe(streetlightYAML);
+      expect(parserMock.parse.mock.calls[0][0]).toBe(dummyYAML);
       expect(parserMock.parse.mock.calls[0][1]).toStrictEqual({});
     });
 
@@ -237,10 +237,10 @@ describe('Generator', () => {
       const gen = new Generator('testTemplate', __dirname);
       const fakeOptions = { test: true };
       gen.generate = generateMock;
-      await gen.generateFromString(streetlightYAML, fakeOptions);
+      await gen.generateFromString(dummyYAML, fakeOptions);
 
       expect(parserMock.parse).toHaveBeenCalled();
-      expect(parserMock.parse.mock.calls[0][0]).toBe(streetlightYAML);
+      expect(parserMock.parse.mock.calls[0][0]).toBe(dummyYAML);
       expect(parserMock.parse.mock.calls[0][1]).toStrictEqual(fakeOptions);
     });
 
@@ -259,8 +259,8 @@ describe('Generator', () => {
     it('stores the original asyncapi document', async () => {
       const gen = new Generator('testTemplate', __dirname);
       gen.generate = generateMock;
-      await gen.generateFromString(streetlightYAML);
-      expect(gen.originalAsyncAPI).toBe(streetlightYAML);
+      await gen.generateFromString(dummyYAML);
+      expect(gen.originalAsyncAPI).toBe(dummyYAML);
     });
   });
 

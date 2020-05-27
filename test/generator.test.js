@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const Generator = require('../lib/generator');
 
-const streetlightYAML = fs.readFileSync(path.resolve(__dirname, './docs/streetlights.yml'), 'utf8');
+const streetlightYAML = fs.readFileSync(path.resolve(__dirname, './docs/dummy.yml'), 'utf8');
 
 jest.mock('../lib/utils');
 jest.mock('../lib/filtersRegistry');

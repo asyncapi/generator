@@ -2,6 +2,10 @@
 
 The AsyncAPI generator has been built with extensibility in mind. The package uses a set of default templates to let you generate documentation and code. However, you can create and use your own templates. In this section, you learn how to create your own one.
 
+To work on a template, you need an AsyncAPI specification file that you can use for testing. For this purpose, you can use [this](test/docs/dummy.yml) dummy file as it's purpose is to cover as many features of AsyncAPI as possible. 
+
+> In case you find some features missing or other possible improvements in the dummy file, suggest changes. The goal is to build a file that all templates can use and check their specification features coverage.
+
 ## Common assumptions
 
 1. A template is a directory in your file system.
@@ -17,6 +21,7 @@ The AsyncAPI generator has been built with extensibility in mind. The package us
    - `asyncapi` that is a parsed spec file object. Read the [API](https://github.com/asyncapi/parser-js/blob/master/API.md#AsyncAPIDocument) of the Parser to understand to what structure you have access in this parameter.
    - `originalAsyncAPI` that is an original spec file before it is parsed. 
    - `params` that contains the parameters provided when generating.
+
 ## File templates
 
 It is possible to generate files for each specific object in your AsyncAPI documentation. 

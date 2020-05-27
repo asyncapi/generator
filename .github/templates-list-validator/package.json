@@ -1,0 +1,16 @@
+{
+  "name": "templates-list-validator",
+  "description": "Simple action to validate if official list of templates has changed",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "node index.js",
+    "package": "ncc build index.js -o dist"
+  },
+  "dependencies": {
+    "@actions/core": "^1.2.4",
+    "@actions/github": "^2.2.0"
+  },
+  "devDependencies": {
+    "@zeit/ncc": "^0.22.2"
+  }
+}

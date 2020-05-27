@@ -1,0 +1,104 @@
+{
+  "projectName": "generator",
+  "projectOwner": "asyncapi",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "commitConvention": "none",
+  "contributors": [
+    {
+      "login": "fmvilas",
+      "name": "Fran Méndez",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/242119?v=4",
+      "profile": "http://www.fmvilas.com",
+      "contributions": [
+        "question",
+        "bug",
+        "code",
+        "doc",
+        "ideas",
+        "maintenance",
+        "plugin",
+        "review",
+        "test",
+        "tutorial"
+      ]
+    },
+    {
+      "login": "jonaslagoni",
+      "name": "Jonas Lagoni",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/13396189?v=4",
+      "profile": "https://github.com/jonaslagoni",
+      "contributions": [
+        "question",
+        "bug",
+        "code",
+        "doc",
+        "ideas",
+        "plugin",
+        "review",
+        "test"
+      ]
+    },
+    {
+      "login": "derberg",
+      "name": "Lukasz Gornicki",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/6995927?v=4",
+      "profile": "https://resume.github.io/?derberg",
+      "contributions": [
+        "question",
+        "bug",
+        "blog",
+        "code",
+        "doc",
+        "ideas",
+        "maintenance",
+        "plugin",
+        "review",
+        "test",
+        "tutorial",
+        "infra"
+      ]
+    },
+    {
+      "login": "treeder",
+      "name": "Travis Reeder",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/75826?v=4",
+      "profile": "https://twitter.com/treeder",
+      "contributions": [
+        "infra",
+        "doc"
+      ]
+    },
+    {
+      "login": "Tenischev",
+      "name": "Semen",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/4137916?v=4",
+      "profile": "https://github.com/Tenischev",
+      "contributions": [
+        "bug",
+        "code",
+        "doc",
+        "ideas",
+        "plugin",
+        "review",
+        "test"
+      ]
+    },
+    {
+      "login": "WaleedAshraf",
+      "name": "Waleed Ashraf",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/8335457?v=4",
+      "profile": "https://waleedashraf.me/",
+      "contributions": [
+        "code",
+        "bug"
+      ]
+    }
+  ],
+  "contributorsPerLine": 3
+}

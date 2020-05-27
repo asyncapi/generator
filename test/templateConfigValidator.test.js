@@ -1,7 +1,7 @@
 const { validateTemplateConfig } = require('../lib/templateConfigValidator');
 const fs = require('fs');
 const path = require('path');
-const streetlightYAML = fs.readFileSync(path.resolve(__dirname, './docs/dummy.yml'), 'utf8');
+const dummyYAML = fs.readFileSync(path.resolve(__dirname, './docs/dummy.yml'), 'utf8');
 
 jest.mock('../lib/utils');
 
@@ -10,7 +10,7 @@ describe('Template Configuration Validator', () => {
 
   beforeAll(async () => {
     const { parse } = jest.requireActual('@asyncapi/parser');
-    asyncapiDocument = await parse(streetlightYAML);
+    asyncapiDocument = await parse(dummyYAML);
   });
       
   it('Validation doesn\'t throw errors if params are not passed and template has no config', () => {

@@ -244,4 +244,4 @@ There are some template parameters that have a special meaning:
 
 |Name|Description|
 |---|---|
-|`server`| It is used to let the template know which server you want to use. In some cases, this may be required. For instance, when generating code that connects to a specific server. If your template need your users to specify a server, use this parameter.
+|`server`| It is used to let the template know which server from the AsyncAPI specification file you want to use. In some cases, this may be required. For instance, when generating code that connects to a specific server. Use this parameter in case your template relies on users information about what server from the specification file they want to use during generation. You also need this parameter if you want to use `server.protocol` notation within `conditionalFiles` configuration option.

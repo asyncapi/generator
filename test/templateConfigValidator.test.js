@@ -1,7 +1,7 @@
 const { validateTemplateConfig } = require('../lib/templateConfigValidator');
 const fs = require('fs');
 const path = require('path');
-const streetlightYAML = fs.readFileSync(path.resolve(__dirname, './docs/streetlights.yml'), 'utf8');
+const dummyYAML = fs.readFileSync(path.resolve(__dirname, './docs/dummy.yml'), 'utf8');
 
 jest.mock('../lib/utils');
 
@@ -10,7 +10,7 @@ describe('Template Configuration Validator', () => {
 
   beforeAll(async () => {
     const { parse } = jest.requireActual('@asyncapi/parser');
-    asyncapiDocument = await parse(streetlightYAML);
+    asyncapiDocument = await parse(dummyYAML);
   });
       
   it('Validation doesn\'t throw errors if params are not passed and template has no config', () => {
@@ -91,13 +91,13 @@ describe('Template Configuration Validator', () => {
 
   it('Validation throw error if given protocol is not supported by template', () => {
     const templateParams = {
-      server: 'production'
+      server: 'dummy-mqtt'
     };
     const templateConfig  = {
       supportedProtocols: ['myprotocol']
     };
 
-    expect(() => validateTemplateConfig(templateConfig, templateParams, asyncapiDocument)).toThrow('Server \"production\" uses the mqtt protocol but this template only supports the following ones: myprotocol.');
+    expect(() => validateTemplateConfig(templateConfig, templateParams, asyncapiDocument)).toThrow('Server \"dummy-mqtt\" uses the mqtt protocol but this template only supports the following ones: myprotocol.');
   });
 
   it('Validation throw error if subject in condition files is not string', () => {

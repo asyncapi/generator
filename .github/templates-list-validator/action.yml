@@ -1,0 +1,9 @@
+name: 'Templates list validator'
+description: 'Use this action to generate docs or code from your AsyncAPI document. Use default templates or provide your custom ones.'
+inputs:
+  token: 
+    description: 'GitHub Token used to call GitHub API for list of templates'
+    required: true
+runs:
+  using: 'node12'
+  main: 'dist/index.js'

@@ -46,7 +46,7 @@ Usage: cli [options] <asyncapi> <template>
 Options:
   -V, --version                  output the version number
   -d, --disable-hook <hookType>  disable a specific hook type
-  --debug                        enable more specific errors in the console. At the moment it only shows specific errors about filters. Keep in mind that as a result errors about template are less descriptive
+  --debug                        enable more specific errors in the console.
   -i, --install                  installs the template and its dependencies (defaults to false)
   -n, --no-overwrite <glob>      glob or path of the file(s) to skip when regenerating
   -o, --output <outputDir>       directory where to put the generated files (defaults to current directory)

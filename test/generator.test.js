@@ -2,6 +2,7 @@
 const fs = require('fs');
 const path = require('path');
 const Generator = require('../lib/generator');
+const log = require('loglevel');
 
 const dummyYAML = fs.readFileSync(path.resolve(__dirname, './docs/dummy.yml'), 'utf8');
 
@@ -343,13 +344,13 @@ describe('Generator', () => {
     });
 
     it('works with an npm package that has already been installed as a local template', async () => {
-      console.info = jest.fn();
+      log.debug = jest.fn();
       utils.__isFileSystemPathValue = false;
       utils.__isLocalTemplateValue = true;
       utils.__getLocalTemplateDetailsResolvedLinkValue = '/path/to/template/nameOfTestTemplate';
-      const gen = new Generator('nameOfTestTemplate', __dirname);
+      const gen = new Generator('nameOfTestTemplate', __dirname, {debug: true});
       await gen.installTemplate();
-      expect(console.info).toHaveBeenCalledWith('This template has already been installed and it\'s pointing to your filesystem at /path/to/template/nameOfTestTemplate.');
+      expect(log.debug).toHaveBeenCalledWith('This template has already been installed and it\'s pointing to your filesystem at /path/to/template/nameOfTestTemplate.');
       expect(npmiMock).toHaveBeenCalledTimes(0);
     });
 

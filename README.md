@@ -20,14 +20,13 @@
   * [Install the CLI](#install-the-cli)
   * [Update the CLI](#update-the-cli)
   * [CLI usage](#cli-usage)
-  * [Examples using the CLI](#examples-using-the-cli)
-  * [Generator version vs Template version](#generator-version-vs-template-version)
-  * [You don't like technical requirements for the CLI?](#you-dont-like-technical-requirements-for-the-cli)
-    + [Run with npx](#run-with-npx)
-    + [Run with Docker](#run-with-docker)
+  * [CLI usage examples](#cli-usage-examples)
+  * [CLI usage with Docker](#cli-usage-with-docker)
+  * [CLI usage with npx instead of npm](#cli-usage-with-npx-instead-of-npm)
 - [Using as a module/package](#using-as-a-modulepackage)
   * [Install the module](#install-the-module)
   * [Example using the module](#example-using-the-module)
+- [Generator version vs Template version](#generator-version-vs-template-version)
 - [How to create a template](#how-to-create-a-template)
 - [Contributing](#contributing)
 - [Contributors ✨](#contributors-%E2%9C%A8)
@@ -132,7 +131,7 @@ Options:
 </details>
 <br>
 
-### Examples using the CLI
+### CLI usage examples
 
 **The shortest possible syntax:**
 ```bash
@@ -167,7 +166,57 @@ It creates a symbolic link to the target directory (`~/my-template` in this case
 ag asyncapi.yaml https://github.com/asyncapi/html-template.git
 ```
 
-### Generator version vs Template version
+### CLI usage with Docker
+
+Install [Docker](https://docs.docker.com/get-docker/) first. Thanks to Docker you do not need Node.js even though the generator is written with it.
+
+```bash
+docker run --rm -it \
+-v [ASYNCAPI SPEC FILE LOCATION]:/app/asyncapi.yml \
+-v [GENERATED FILES LOCATION]:/app/output \
+asyncapi/generator [COMMAND HERE]
+# Example that you can run inside generator directory after cloning this repository. First you specify mount in location of your AsyncAPI specification file and then you mount in directory where generation result should be saved.
+docker run --rm -it \
+-v ${PWD}/test/docs/streetlights.yml:/app/asyncapi.yml \
+-v ${PWD}/output:/app/output \
+asyncapi/generator -o ./output asyncapi.yml @asyncapi/html-template --force-write
+```
+
+### CLI usage with npx instead of npm
+
+The [npx](https://www.npmjs.com/package/npx) is very useful when you want to run generator in CI/CD environment. In such scenario you do not want to install generator globally and most environments that provide Node.js and npm, also provide npx out of the box.
+
+```bash
+npx -p @asyncapi/generator ag ./asyncapi.yaml @asyncapi/html-template
+```
+
+## Using as a module/package
+
+### Install the module
+
+```bash
+npm install @asyncapi/generator --save
+```
+
+### Example using the module 
+
+Below you can find an example of HTML generation using official `@asyncapi/html-template` template and fetching the spec document from server like `https://raw.githubusercontent.com/asyncapi/asyncapi/2.0.0/examples/2.0.0/streetlights.yml` :
+
+```js
+const path = require('path');
+const generator = new Generator('@asyncapi/html-template', path.resolve(__dirname, 'example'));
+
+try {
+  await generator.generateFromURL('https://raw.githubusercontent.com/asyncapi/asyncapi/2.0.0/examples/2.0.0/streetlights.yml');
+  console.log('Done!');
+} catch (e) {
+  console.error(e);
+}
+```
+
+See [API documentation](docs/api.md) for more example and full API reference information.
+
+## Generator version vs Template version
 
 The generator is a tool that you can use to generate whatever you want, taking AsyncAPI specification file as an input. A template is a tool that uses Generator features and helpers to specify what should be generated.
 
@@ -204,58 +253,6 @@ ag asyncapi.yaml @asyncapi/html-template@0.7.0 -o ./docs
 ```
 
 Before using newer versions of the template, always look at the [changlelog](https://github.com/asyncapi/html-template/releases) first. Generator features are not important for you, just make sure to use the version compatible with the template.
-
-### You don't like technical requirements for the CLI?
-
-#### Run with npx
-
-The [npx](https://www.npmjs.com/package/npx) is very useful when you want to run generator in CI/CD environment. In such scenario you do not want to install generator globally and most environments that provide Node.js and npm, also provide npx out of the box.
-
-```bash
-npx -p @asyncapi/generator ag ./asyncapi.yaml @asyncapi/html-template
-```
-
-#### Run with Docker
-
-Install [Docker](https://docs.docker.com/get-docker/) first. Thanks to Docker you do not need Node.js even though the generator is written with it.
-
-```bash
-docker run --rm -it \
--v [ASYNCAPI SPEC FILE LOCATION]:/app/asyncapi.yml \
--v [GENERATED FILES LOCATION]:/app/output \
-asyncapi/generator [COMMAND HERE]
-# Example that you can run inside generator directory after cloning this repository. First you specify mount in location of your AsyncAPI specification file and then you mount in directory where generation result should be saved.
-docker run --rm -it \
--v ${PWD}/test/docs/streetlights.yml:/app/asyncapi.yml \
--v ${PWD}/output:/app/output \
-asyncapi/generator -o ./output asyncapi.yml @asyncapi/html-template --force-write
-```
-
-## Using as a module/package
-
-### Install the module
-
-```bash
-npm install @asyncapi/generator --save
-```
-
-### Example using the module 
-
-Below you can find an example of HTML generation using official `@asyncapi/html-template` template and fetching the spec document from server like `https://raw.githubusercontent.com/asyncapi/asyncapi/2.0.0/examples/2.0.0/streetlights.yml` :
-
-```js
-const path = require('path');
-const generator = new Generator('@asyncapi/html-template', path.resolve(__dirname, 'example'));
-
-try {
-  await generator.generateFromURL('https://raw.githubusercontent.com/asyncapi/asyncapi/2.0.0/examples/2.0.0/streetlights.yml');
-  console.log('Done!');
-} catch (e) {
-  console.error(e);
-}
-```
-
-See [API documentation](docs/api.md) for more example and full API reference information.
 
 ## How to create a template
 

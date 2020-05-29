@@ -1,6 +1,7 @@
 const github = require('@actions/github');
 const core = require('@actions/core');
-const { readFileSync } = require('fs');
+const path = require('path');
+const fs = require('fs');
 
 async function run() {
   try {
@@ -11,7 +12,7 @@ async function run() {
 
     const missingTemplates = officialTemplates.filter(str => !templatesListContent.includes(str));
 
-    if (missingTemplates) core.setFailed(
+    if (missingTemplates.length) core.setFailed(
         `The following templates are not in the README.md: ${missingTemplates}. Make sure missing templates are added to the list in the README of this repository and also to the website to the list of offecial tools: https://github.com/asyncapi/website/blob/master/content/docs/tooling.md`
     );
 
@@ -27,7 +28,7 @@ async function run() {
    * @return {String}
    */
 function getReadmeContent() {
-  const readmeContent = readFileSync('../../README.md', 'utf8');
+  const readmeContent = fs.readFileSync(path.resolve(__dirname,'../../README.md'), 'utf8');
   const startingTag = '<!-- TEMPLATES-LIST:';
   const closingTag = '-->';
   const startOfOpeningTagIndex = readmeContent.indexOf(`${startingTag}START`);

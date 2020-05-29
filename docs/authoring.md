@@ -211,13 +211,13 @@ The `generator` property from `package.json` file must contain a JSON object tha
     }
   },
   "conditionalFiles": {
-    "template/dir/relative/path/to/file/test-amqp.js": {
+    "path/to/file/that/is/relative/to/template/dir/test-amqp.js": {
       "subject": "server.protocol",
       "validation": {
         "const": "amqp"
       }
     },
-    "template/dir/relative/path/to/file/support.html": {
+    "path/to/file/that/is/relative/to/template/dir/support.html": {
       "subject": "info.contact",
         "validation": {
           "required": ["url"]

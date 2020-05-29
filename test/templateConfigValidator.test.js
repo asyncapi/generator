@@ -49,7 +49,6 @@ describe('Template Configuration Validator', () => {
   });
 
   it('Validation throw error if provided param is not in the list of params supported by the template', () => {
-    console.warn = jest.fn();
     const templateParams = {
       tsets: 'myTest'
     };
@@ -63,9 +62,7 @@ describe('Template Configuration Validator', () => {
         }
       }
     };
-    validateTemplateConfig(templateConfig, templateParams);
-    expect(console.warn).toHaveBeenCalledWith('Warning: This template doesn\'t have the following params: tsets.');
-    expect(console.warn).toHaveBeenCalledWith('Did you mean "test"?');
+    expect(() => validateTemplateConfig(templateConfig, templateParams, asyncapiDocument)).toThrow('This template doesn\'t have the following params: tsets.\nDid you mean \"test\" instead of \"tsets\"?');
   });
 
   it('Validation throw error if provided param is not supported by the template as template has no params specified', () => {
@@ -75,16 +72,20 @@ describe('Template Configuration Validator', () => {
     };
     const templateConfig  = {};
 
-    validateTemplateConfig(templateConfig, templateParams);
-    expect(console.warn).toHaveBeenCalledWith('Warning: This template doesn\'t have the following params: test1.');
-    expect(console.warn).toHaveBeenCalledWith('This template doesn\'t have any params!');
+    expect(() => validateTemplateConfig(templateConfig, templateParams, asyncapiDocument)).toThrow('This template doesn\'t have any params.');
   });
 
   it('Validation throw error if specified server is not in asyncapi document', () => {
     const templateParams = {
       server: 'myserver'
     };
-    const templateConfig  = {};
+    const templateConfig  = {
+      parameters: {
+        server: {
+          description: ''
+        }
+      }
+    };
 
     expect(() => validateTemplateConfig(templateConfig, templateParams, asyncapiDocument)).toThrow('Couldn\'t find server with name myserver.');
   });
@@ -94,7 +95,12 @@ describe('Template Configuration Validator', () => {
       server: 'dummy-mqtt'
     };
     const templateConfig  = {
-      supportedProtocols: ['myprotocol']
+      supportedProtocols: ['myprotocol'],
+      parameters: {
+        server: {
+          description: ''
+        }
+      }
     };
 
     expect(() => validateTemplateConfig(templateConfig, templateParams, asyncapiDocument)).toThrow('Server \"dummy-mqtt\" uses the mqtt protocol but this template only supports the following ones: myprotocol.');

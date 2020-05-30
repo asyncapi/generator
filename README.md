@@ -252,7 +252,7 @@ npm install -g @asyncapi/generator@0.50.0
 ag asyncapi.yaml @asyncapi/html-template@0.7.0 -o ./docs
 ```
 
-Before using newer versions of the template, always look at the [changlelog](https://github.com/asyncapi/html-template/releases) first. Generator features are not important for you, just make sure to use the version compatible with the template.
+Before using newer versions of the template, always look at the [changelog](https://github.com/asyncapi/html-template/releases) first. Generator features are not important for you, just make sure to use the version compatible with the template.
 
 ## How to create a template
 

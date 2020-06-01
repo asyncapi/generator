@@ -20,14 +20,13 @@
   * [Install the CLI](#install-the-cli)
   * [Update the CLI](#update-the-cli)
   * [CLI usage](#cli-usage)
-  * [Examples using the CLI](#examples-using-the-cli)
-  * [Generator version vs Template version](#generator-version-vs-template-version)
-  * [You don't like technical requirements for the CLI?](#you-dont-like-technical-requirements-for-the-cli)
-    + [Run with npx](#run-with-npx)
-    + [Run with Docker](#run-with-docker)
+  * [CLI usage examples](#cli-usage-examples)
+  * [CLI usage with Docker](#cli-usage-with-docker)
+  * [CLI usage with npx instead of npm](#cli-usage-with-npx-instead-of-npm)
 - [Using as a module/package](#using-as-a-modulepackage)
   * [Install the module](#install-the-module)
   * [Example using the module](#example-using-the-module)
+- [Generator version vs Template version](#generator-version-vs-template-version)
 - [How to create a template](#how-to-create-a-template)
 - [Contributing](#contributing)
 - [Contributors ✨](#contributors-%E2%9C%A8)
@@ -132,7 +131,7 @@ Options:
 </details>
 <br>
 
-### Examples using the CLI
+### CLI usage examples
 
 **The shortest possible syntax:**
 ```bash
@@ -167,55 +166,7 @@ It creates a symbolic link to the target directory (`~/my-template` in this case
 ag asyncapi.yaml https://github.com/asyncapi/html-template.git
 ```
 
-### Generator version vs Template version
-
-The generator is a tool that you can use to generate whatever you want, taking AsyncAPI specification file as an input. A template is a tool that uses Generator features and helpers to specify what should be generated.
-
-In other words, a template depends on the generator and its features. For example it might work with the latest version of the generator but not the previous ones. 
-
-Owner of the template specifies in the configuration what version of the generator is the template compatible with:
-```bash
-"generator": ">=0.50.0 <2.0.0",
-```
-
-The generator doesn't work in case template is not compatible:
-```bash
-Something went wrong:
-Error: This template is not compatible with the current version of the generator (0.50.0). This template is compatible with the following version range: >=0.60.0 <2.0.0.
-    at Generator.validateTemplateConfig (/Users/wookiee/.nvm/versions/node/v12.16.1/lib/node_modules/@asyncapi/generator/lib/generator.js:678:13)
-    at Generator.loadTemplateConfig (/Users/wookiee/.nvm/versions/node/v12.16.1/lib/node_modules/@asyncapi/generator/lib/generator.js:663:16)
-    at Generator.generate (/Users/wookiee/.nvm/versions/node/v12.16.1/lib/node_modules/@asyncapi/generator/lib/generator.js:146:18)
-    at processTicksAndRejections (internal/process/task_queues.js:97:5)
-    at async /Users/wookiee/.nvm/versions/node/v12.16.1/lib/node_modules/@asyncapi/generator/cli.js:135:7
-```
-
-In case you use generator CLI and a specific template on production, it is safer to lock to a specific version of the template and the generator. 
-
-Instead of generating HTML with latest `html-template` and the generator CLI:
-```bash
-npm install -g @asyncapi/generator
-ag asyncapi.yaml @asyncapi/html-template -o ./docs
-```
-
-Generate HTML with the version of the `html-template` and the generator CLI that you are happy with:
-```bash
-npm install -g @asyncapi/generator@0.50.0
-ag asyncapi.yaml @asyncapi/html-template@0.7.0 -o ./docs
-```
-
-Before using newer versions of the template, always look at the [changlelog](https://github.com/asyncapi/html-template/releases) first. Generator features are not important for you, just make sure to use the version compatible with the template.
-
-### You don't like technical requirements for the CLI?
-
-#### Run with npx
-
-The [npx](https://www.npmjs.com/package/npx) is very useful when you want to run generator in CI/CD environment. In such scenario you do not want to install generator globally and most environments that provide Node.js and npm, also provide npx out of the box.
-
-```bash
-npx -p @asyncapi/generator ag ./asyncapi.yaml @asyncapi/html-template
-```
-
-#### Run with Docker
+### CLI usage with Docker
 
 Install [Docker](https://docs.docker.com/get-docker/) first. Thanks to Docker you do not need Node.js even though the generator is written with it.
 
@@ -229,6 +180,14 @@ docker run --rm -it \
 -v ${PWD}/test/docs/streetlights.yml:/app/asyncapi.yml \
 -v ${PWD}/output:/app/output \
 asyncapi/generator -o ./output asyncapi.yml @asyncapi/html-template --force-write
+```
+
+### CLI usage with npx instead of npm
+
+The [npx](https://www.npmjs.com/package/npx) is very useful when you want to run Generator in CI/CD environment. In such a scenario, you do not want to install generator globally and most environments that provide Node.js and npm, also provide npx out of the box.
+
+```bash
+npx -p @asyncapi/generator ag ./asyncapi.yaml @asyncapi/html-template
 ```
 
 ## Using as a module/package
@@ -256,6 +215,44 @@ try {
 ```
 
 See [API documentation](docs/api.md) for more example and full API reference information.
+
+## Generator version vs Template version
+
+The Generator is a tool that you can use to generate whatever you want, taking an AsyncAPI specification file as the input. A template is a tool that uses Generator features and helpers to specify what should be generated.
+
+In other words, a template depends on the Generator and its features. For example, it might work with the latest version of the Generator but not the previous ones. 
+
+The owner of the template specifies in the configuration what version of the Generator it is compatible with:
+```bash
+"generator": ">=0.50.0 <2.0.0",
+```
+
+The Generator doesn't work in case the template is not compatible:
+```bash
+Something went wrong:
+Error: This template is not compatible with the current version of the generator (0.50.0). This template is compatible with the following version range: >=0.60.0 <2.0.0.
+    at Generator.validateTemplateConfig (/Users/wookiee/.nvm/versions/node/v12.16.1/lib/node_modules/@asyncapi/generator/lib/generator.js:678:13)
+    at Generator.loadTemplateConfig (/Users/wookiee/.nvm/versions/node/v12.16.1/lib/node_modules/@asyncapi/generator/lib/generator.js:663:16)
+    at Generator.generate (/Users/wookiee/.nvm/versions/node/v12.16.1/lib/node_modules/@asyncapi/generator/lib/generator.js:146:18)
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+    at async /Users/wookiee/.nvm/versions/node/v12.16.1/lib/node_modules/@asyncapi/generator/cli.js:135:7
+```
+
+In case you use Generator CLI and a specific template on production, it is safer to lock to a specific version of the template and the Generator. 
+
+Instead of generating HTML with latest `html-template` and the generator CLI:
+```bash
+npm install -g @asyncapi/generator
+ag asyncapi.yaml @asyncapi/html-template -o ./docs
+```
+
+Generate HTML with the version of the `html-template` and the Generator CLI that you are happy with:
+```bash
+npm install -g @asyncapi/generator@0.50.0
+ag asyncapi.yaml @asyncapi/html-template@0.7.0 -o ./docs
+```
+
+Before using newer versions of the template, always look at the [changelog](https://github.com/asyncapi/html-template/releases) first. Generator features are not important for you, just make sure to use a version compatible with the template.
 
 ## How to create a template
 

@@ -504,7 +504,8 @@ module.exports = require("os");
 
 const github = __webpack_require__(469);
 const core = __webpack_require__(470);
-const { readFileSync } = __webpack_require__(747);
+const path = __webpack_require__(622);
+const fs = __webpack_require__(747);
 
 async function run() {
   try {
@@ -515,10 +516,9 @@ async function run() {
 
     const missingTemplates = officialTemplates.filter(str => !templatesListContent.includes(str));
 
-    if (missingTemplates) core.setFailed(
-        `The following templates are not in the README.md: ${missingTemplates}. Make sure missing templates are added to the list in the README of this repository and also to the website to the list of offecial tools: https://github.com/asyncapi/website/blob/master/content/docs/tooling.md`
+    if (missingTemplates.length) core.setFailed(
+      `The following templates are not in the README.md: ${missingTemplates}. Make sure missing templates are added to the list in the README of this repository and also to the website to the list of offecial tools: https://github.com/asyncapi/website/blob/master/content/docs/tooling.md`
     );
-
   } catch (error) {
     core.setFailed(error.message);
   }
@@ -531,7 +531,8 @@ async function run() {
    * @return {String}
    */
 function getReadmeContent() {
-  const readmeContent = readFileSync('../../README.md', 'utf8');
+  console.log(path.resolve(__dirname,'../../README.md'));
+  const readmeContent = fs.readFileSync(path.resolve(__dirname,'../../README.md'), 'utf8');
   const startingTag = '<!-- TEMPLATES-LIST:';
   const closingTag = '-->';
   const startOfOpeningTagIndex = readmeContent.indexOf(`${startingTag}START`);
@@ -541,7 +542,7 @@ function getReadmeContent() {
   if (endOfOpeningTagIndex === -1 || endOfClosingTagIndex === -1) {
     core.setFailed();
     throw new Error(
-        `Templates list is missing or someone removed markers that indicate the list. Table with list of templates that is in the README should be wrapped in markers like <!-- TEMPLATES-LIST:START --> and <!-- TEMPLATES-LIST:END -->`
+      'Templates list is missing or someone removed markers that indicate the list. Table with list of templates that is in the README should be wrapped in markers like <!-- TEMPLATES-LIST:START --> and <!-- TEMPLATES-LIST:END -->'
     );
   }
 

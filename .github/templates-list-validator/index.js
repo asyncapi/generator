@@ -27,8 +27,8 @@ async function run() {
    * @return {String}
    */
 function getReadmeContent() {
-  console.log(path.resolve(__dirname,'../../README.md'));
-  const readmeContent = fs.readFileSync(path.resolve(__dirname,'../../README.md'), 'utf8');
+  //README.md must be read 3levels above ../../../README.md because the action code is run from the bundle of the action, dist folder
+  const readmeContent = fs.readFileSync(path.resolve(__dirname,'../../../README.md'), 'utf8');
   const startingTag = '<!-- TEMPLATES-LIST:';
   const closingTag = '-->';
   const startOfOpeningTagIndex = readmeContent.indexOf(`${startingTag}START`);

@@ -98,7 +98,17 @@
         "code",
         "bug"
       ]
+    },
+    {
+      "login": "sebastian-palma",
+      "name": "Sebastián",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/11888191?v=4",
+      "profile": "https://github.com/sebastian-palma",
+      "contributions": [
+        "code"
+      ]
     }
   ],
-  "contributorsPerLine": 3
+  "contributorsPerLine": 3,
+  "skipCi": true
 }

@@ -54,6 +54,36 @@ describe('Generator', () => {
       expect(gen.templateParams.test).toStrictEqual(true);
     });
 
+    it('throws an error indicating an unexpected param was given', () => {
+      const t = () => new Generator('testTemplate', __dirname, {
+        entrypoint: 'test-entrypoint',
+        noOverwriteGlobs: ['test-globs'],
+        disabledHooks: ['test-hooks'],
+        output: 'string',
+        forceWrite: true,
+        forceInstall: true,
+        templateParams: {
+          test: true,
+        }
+      });
+      expect(t).toThrow('These options are not supported by the generator: forceInstall');
+    });
+
+    it('throws an error indicating multiple unexpected params were given', () => {
+      const t = () => new Generator('testTemplate', __dirname, {
+        entrypoint: 'test-entrypoint',
+        noOverwriteGlobs: ['test-globs'],
+        disabledHooks: ['test-hooks'],
+        output: 'string',
+        write: true,
+        forceInstall: true,
+        templateParams: {
+          test: true,
+        }
+      });
+      expect(t).toThrow('These options are not supported by the generator: write, forceInstall');
+    });
+
     it('fails if no templateName is given', () => {
       const t = () => new Generator();
       expect(t).toThrow('No template name has been specified.');

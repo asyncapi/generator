@@ -142,7 +142,7 @@ function generate(targetDir) {
         noOverwriteGlobs,
         disabledHooks,
         forceWrite: program.forceWrite,
-        forceInstall: program.install,
+        install: program.install,
         debug: program.debug
       });
 

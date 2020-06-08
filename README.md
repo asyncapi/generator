@@ -140,7 +140,7 @@ ag asyncapi.yaml @asyncapi/html-template
 
 **Generating from a URL:**
 ```bash
-ag https://raw.githubusercontent.com/asyncapi/asyncapi/2.0.0/examples/2.0.0/streetlights.yml @asyncapi/html-template
+ag https://bit.ly/asyncapi @asyncapi/html-template
 ```
 
 **Specify where to put the result:**

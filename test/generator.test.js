@@ -362,6 +362,7 @@ describe('Generator', () => {
           save: false,
           audit: false,
           progress: false,
+          only: 'prod'
         },
       });
     });

@@ -24,7 +24,7 @@ To work on a template, you need an AsyncAPI specification file that you can use 
 
 ## Special file names
 
-There are certain files that can't be named as you would usually do it. We use NPM behind the scenes to download the templates. Because NPM will not fetch files like `.gitignore`, you should name them differently. No worries, the Generator will take care of renaming them back for you. The following is a table of the special file names:
+We use NPM behind the scenes to download and install the templates. Since NPM will not fetch files like `.gitignore`, you should name them differently. Luckily, the Generator will take care of renaming them back for you. The following is a table of the special file names:
 
 |Special file name|Output file name|
 |---|---|

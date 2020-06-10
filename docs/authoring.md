@@ -22,6 +22,15 @@ To work on a template, you need an AsyncAPI specification file that you can use 
    - `originalAsyncAPI` that is an original spec file before it is parsed. 
    - `params` that contains the parameters provided when generating.
 
+## Special file names
+
+We use NPM behind the scenes to download and install the templates. Since NPM will not fetch files like `.gitignore`, you should name them differently. Luckily, the Generator will take care of renaming them back for you. The following is a table of the special file names:
+
+|Special file name|Output file name|
+|---|---|
+|`{.gitignore}`|`.gitignore`|
+|`{.npmignore}`|`.npmignore`|
+
 ## File templates
 
 It is possible to generate files for each specific object in your AsyncAPI documentation. 

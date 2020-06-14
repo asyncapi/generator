@@ -53,8 +53,8 @@ Template Name | Description | Source code
 `@asyncapi/java-spring-template` | Generates Java Spring service | [click here](https://github.com/asyncapi/java-spring-template)
 `@asyncapi/java-spring-cloud-stream-template` | Generates Java Spring Cloud Stream service | [click here](https://github.com/asyncapi/java-spring-cloud-stream-template)
 `@asyncapi/python-paho-template` | Generates Python service that uses Paho library | [click here](https://github.com/asyncapi/python-paho-template)
-`@asyncapi/html-template` | Generates HTML documentation site | [click here](https://github.com/asyncapi/markdown-template)
-`@asyncapi/markdown-template` | Generates documentation in Markdown file | [click here](https://github.com/asyncapi/html-template)
+`@asyncapi/html-template` | Generates HTML documentation site | [click here](https://github.com/asyncapi/html-template)
+`@asyncapi/markdown-template` | Generates documentation in Markdown file | [click here](https://github.com/asyncapi/markdown-template)
 
 <!-- TEMPLATES-LIST:END -->
 

@@ -46,9 +46,9 @@
   "license": "Apache-2.0",
   "homepage": "https://github.com/asyncapi/generator",
   "dependencies": {
-    "@asyncapi/openapi-schema-parser": "^1.0.0",
-    "@asyncapi/parser": "^0.18.3",
-    "@asyncapi/raml-dt-schema-parser": "^1.0.4",
+    "@asyncapi/openapi-schema-parser": "https://github.com/derberg/openapi-schema-parser#new-reg",
+    "@asyncapi/parser": "https://github.com/derberg/parser-js#mime-types",
+    "@asyncapi/raml-dt-schema-parser": "https://github.com/derberg/raml-dt-schema-parser#new-reg",
     "ajv": "^6.10.2",
     "all-contributors-cli": "^6.14.2",
     "commander": "^2.12.2",

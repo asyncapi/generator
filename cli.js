@@ -37,9 +37,8 @@ const disableHooksParser = v => disabledHooks.push(v);
 const showError = err => {
   console.error(red('Something went wrong:'));
   console.error(red(err.stack || err.message));
-  if (err.errors) {
-    console.error(red(JSON.stringify(err.errors)));
-  }
+  if (err.errors) console.error(red(JSON.stringify(err.errors)));
+  if (err.validationErrors) console.error(red(JSON.stringify(err.validationErrors, null, 4)));
 };
 const showErrorAndExit = err => {
   showError(err);

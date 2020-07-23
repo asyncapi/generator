@@ -67,7 +67,7 @@ You can find above templates and the ones provided by the community in **[this l
 * Git v1+
 
 
-Install both packages using [official installer](https://nodejs.org/en/download/). After installation make sure both packages have proper version by running `node -v` and `npm -v`. To upgrade invalid npm version run `npm install npm@latest -g`. Git is a required dependency because of certain features in the generator and temporarily required by the used parser dependency.
+Install both packages using [official installer](https://nodejs.org/en/download/). After installation make sure both packages have proper version by running `node -v` and `npm -v`. To upgrade invalid npm version run `npm install npm@latest -g`. 
 
 ## Using from the command-line interface (CLI)
 

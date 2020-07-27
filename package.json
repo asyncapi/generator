@@ -1,6 +1,6 @@
 {
   "name": "@asyncapi/generator",
-  "version": "1.0.0-rc.4",
+  "version": "1.0.0-rc.6",
   "description": "The AsyncAPI generator. It can generate documentation, code, anything!",
   "main": "./lib/generator.js",
   "bin": {
@@ -47,7 +47,7 @@
   "homepage": "https://github.com/asyncapi/generator",
   "dependencies": {
     "@asyncapi/openapi-schema-parser": "^2.0.0",
-    "@asyncapi/parser": "^0.27.0",
+    "@asyncapi/parser": "^0.27.1",
     "@asyncapi/raml-dt-schema-parser": "^2.0.0",
     "ajv": "^6.10.2",
     "all-contributors-cli": "^6.14.2",

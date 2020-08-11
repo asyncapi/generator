@@ -7,3 +7,4 @@ lib/__mocks__
 .dockerignore
 .editorconfig
 jest.config.js
+coverage

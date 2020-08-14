@@ -1,6 +1,6 @@
 {
   "name": "@asyncapi/generator",
-  "version": "1.0.0-rc.8",
+  "version": "1.0.0-rc.9",
   "description": "The AsyncAPI generator. It can generate documentation, code, anything!",
   "main": "./lib/generator.js",
   "bin": {
@@ -20,7 +20,8 @@
     "get-version": "echo $npm_package_version",
     "lint": "eslint --config .eslintrc .",
     "lint-tpl-validator": "eslint --fix --config .eslintrc .github/templates-list-validator",
-    "gen-readme-toc": "markdown-toc -i README.md"
+    "gen-readme-toc": "markdown-toc -i README.md",
+    "prepublishOnly": "npm run docs"
   },
   "preferGlobal": true,
   "bugs": {
@@ -48,8 +49,8 @@
   "dependencies": {
     "@asyncapi/avro-schema-parser": "^0.1.2",
     "@asyncapi/openapi-schema-parser": "^2.0.0",
-    "@asyncapi/parser": "^1.0.0-rc.1",
     "@asyncapi/raml-dt-schema-parser": "^2.0.0",
+    "@asyncapi/parser": "^1.0.0-rc.2",
     "ajv": "^6.10.2",
     "all-contributors-cli": "^6.14.2",
     "commander": "^2.12.2",

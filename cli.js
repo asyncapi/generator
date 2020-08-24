@@ -97,33 +97,7 @@ xfs.mkdirp(program.output, async err => {
       console.warn(`WARNING: ${template} is a remote template. Changes may be lost on subsequent installations.`);
     }
     
-    watcher.watch(async (changedFiles) => {
-      console.clear();
-      console.log('[WATCHER] Change detected');
-      for (const [, value] of Object.entries(changedFiles)) {
-        let eventText;
-        switch (value.eventType) {
-        case 'changed':
-          eventText = green(value.eventType);
-          break;
-        case 'removed':
-          eventText = red(value.eventType);
-          break;
-        case 'renamed':
-          eventText = yellow(value.eventType);
-          break;
-        default:
-          eventText = yellow(value.eventType);
-        }
-        console.log(`\t${magenta(value.path)} was ${eventText}`);
-      }
-      console.log('Generating files');
-      try {
-        await generate(program.output);
-      } catch (e) {
-        showError(e);
-      }
-    }, (paths) => {
+    watcher.watch(watcherHandler, (paths) => {
       showErrorAndExit({ message: `[WATCHER] Could not find the file path ${paths}, are you sure it still exists? If it has been deleted or moved please rerun the generator.` });
     });
   }
@@ -157,6 +131,34 @@ function generate(targetDir) {
       reject(e);
     }
   });
+}
+
+async function watcherHandler(changedFiles) {
+  console.clear();
+  console.log('[WATCHER] Change detected');
+  for (const [, value] of Object.entries(changedFiles)) {
+    let eventText;
+    switch (value.eventType) {
+    case 'changed':
+      eventText = green(value.eventType);
+      break;
+    case 'removed':
+      eventText = red(value.eventType);
+      break;
+    case 'renamed':
+      eventText = yellow(value.eventType);
+      break;
+    default:
+      eventText = yellow(value.eventType);
+    }
+    console.log(`\t${magenta(value.path)} was ${eventText}`);
+  }
+  console.log('Generating files');
+  try {
+    await generate(program.output);
+  } catch (e) {
+    showError(e);
+  }
 }
 
 process.on('unhandledRejection', showErrorAndExit);

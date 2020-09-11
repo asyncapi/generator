@@ -69,7 +69,8 @@ Extracts example from the message header
 Generate string with example from provided schema
 
 **Kind**: global function  
-**Msg**: <code>object</code> - A OpenAPI Schema Object  
+**Schema**: <code>object</code> - Schema object as JSON and not Schema model map  
+**Options**: <code>object</code> - Options object. Supported options are listed here https://github.com/Redocly/openapi-sampler#usage  
 <a name="oneLine"></a>
 
 ## oneLine() ⇒ <code>string</code>

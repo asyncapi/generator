@@ -178,11 +178,12 @@ docker run --rm -it \
 -v [ASYNCAPI SPEC FILE LOCATION]:/app/asyncapi.yml \
 -v [GENERATED FILES LOCATION]:/app/output \
 asyncapi/generator [COMMAND HERE]
+
 # Example that you can run inside generator directory after cloning this repository. First you specify mount in location of your AsyncAPI specification file and then you mount in directory where generation result should be saved.
 docker run --rm -it \
 -v ${PWD}/test/docs/dummy.yml:/app/asyncapi.yml \
 -v ${PWD}/output:/app/output \
-asyncapi/generator -o ./output asyncapi.yml @asyncapi/html-template --force-write
+asyncapi/generator -o /app/output /app/asyncapi.yml @asyncapi/html-template --force-write
 ```
 
 ### CLI usage with npx instead of npm

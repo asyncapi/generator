@@ -98,7 +98,7 @@ You might want to update your local installation of generator for different reas
 ### CLI usage
 
 ```bash
-Usage: cli [options] <asyncapi> <template>
+Usage: ag [options] <asyncapi> <template>
 
 - <asyncapi>: Local path or URL pointing to AsyncAPI specification file
 - <template>: Name of the generator template like for example @asyncapi/html-template or https://github.com/asyncapi/html-template

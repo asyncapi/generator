@@ -10,6 +10,7 @@ RUN apk --update add git && \
 # Installing latest version of npm 6. The one packaged with node:12.16.1-alpine3.11 has a bug.
 RUN npm install -g npm@6
 
+# Installing latest released npm package
 RUN npm install -g @asyncapi/generator
 
 ENTRYPOINT [ "ag" ]

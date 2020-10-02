@@ -1,5 +1,7 @@
+# Base Image Tag is node:12-alpine
 FROM node:12-alpine
 
+# Set working directory as /app
 WORKDIR /app
 
 # Since 0.30.0 release Git is supported and required as a dependency

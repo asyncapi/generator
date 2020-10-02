@@ -46,7 +46,7 @@ function getPayloadExamples(msg) {
   if (msg.payload() && msg.payload().examples()) {
     return msg.payload().examples();
   }
-};
+}
 filter.getPayloadExamples = getPayloadExamples;
 
 /**
@@ -63,7 +63,7 @@ function getHeadersExamples(msg) {
   if (msg.headers() && msg.headers().examples()) {
     return msg.headers().examples();
   }
-};
+}
 filter.getHeadersExamples = getHeadersExamples;
 
 /**
@@ -74,7 +74,7 @@ filter.getHeadersExamples = getHeadersExamples;
  */
 function generateExample(schema, options) {
   return JSON.stringify(OpenAPISampler.sample(schema, options || {}) || '', null, 2);
-};
+}
 filter.generateExample = generateExample;
 
 /**
@@ -85,7 +85,7 @@ filter.generateExample = generateExample;
 function oneLine(str) {
   if (!str) return str;
   return str.replace(/\n/g, ' ');
-};
+}
 filter.oneLine = oneLine;
 
 /**
@@ -142,5 +142,5 @@ function docline(field, fieldName, scopePropName) {
   };
 
   return buildLine(field, fieldName, scopePropName);
-};
+}
 filter.docline = docline;

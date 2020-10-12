@@ -2,7 +2,6 @@
 const fs = require('fs');
 const path = require('path');
 const Generator = require('../lib/generator');
-const log = require('loglevel');
 
 const dummyYAML = fs.readFileSync(path.resolve(__dirname, './docs/dummy.yml'), 'utf8');
 
@@ -319,7 +318,7 @@ describe('Generator', () => {
       const utils = require('../lib/utils');
       const asyncapiURL = 'http://example.com/fake-asyncapi.yml';
       utils.__contentOfFetchedFile = 'fake text';
-      
+
       const generateFromStringMock = jest.fn().mockResolvedValue();
       const gen = new Generator('testTemplate', __dirname);
       gen.generateFromString = generateFromStringMock;
@@ -332,20 +331,11 @@ describe('Generator', () => {
 
   describe('#installTemplate', () => {
     let npmiMock;
-    let utils;
 
     beforeEach(() => {
       npmiMock = require('npmi');
-      utils = require('../lib/utils');
       jest.mock(path.resolve('./testTemplate', 'package.json'), () => ({ name: 'nameOfTestTemplate' }), { virtual: true });
       jest.mock(path.resolve(Generator.DEFAULT_TEMPLATES_DIR, 'nameOfTestTemplate', 'package.json'), () => ({ name: 'nameOfTestTemplate' }), { virtual: true });
-    });
-
-    it('works with a file system path', async () => {
-      utils.__isFileSystemPathValue = true;
-      const gen = new Generator('./testTemplate', __dirname);
-      await gen.installTemplate();
-      expect(npmiMock).toHaveBeenCalledTimes(0);
     });
 
     it('works with a file system path and force = true', async () => {
@@ -367,37 +357,10 @@ describe('Generator', () => {
       });
     });
 
-    it('works with an npm package', async () => {
-      utils.__isFileSystemPathValue = false;
-      const gen = new Generator('nameOfTestTemplate', __dirname);
-      await gen.installTemplate();
-      expect(npmiMock).toHaveBeenCalledTimes(0);
-    });
-
-    it('works with an npm package that has already been installed as a local template', async () => {
-      log.debug = jest.fn();
-      utils.__isFileSystemPathValue = false;
-      utils.__isLocalTemplateValue = true;
-      utils.__getLocalTemplateDetailsResolvedLinkValue = '/path/to/template/nameOfTestTemplate';
-      const gen = new Generator('nameOfTestTemplate', __dirname, {debug: true});
-      await gen.installTemplate();
-      expect(log.debug).toHaveBeenCalledWith('This template has already been installed and it\'s pointing to your filesystem at /path/to/template/nameOfTestTemplate.');
-      expect(npmiMock).toHaveBeenCalledTimes(0);
-    });
-
     it('works with an npm package and force = true', async () => {
       const gen = new Generator('nameOfTestTemplate', __dirname);
       gen.installTemplate(true);
       expect(npmiMock).toHaveBeenCalled();
-    });
-
-    it('works with a url', async () => {
-      utils.__isFileSystemPathValue = false;
-      const gen = new Generator('https://my-test-template.com', __dirname);
-      gen.installTemplate();
-      setTimeout(() => { // This puts the call at the end of the Node.js event loop queue.
-        expect(npmiMock).toHaveBeenCalledTimes(1);
-      }, 0);
     });
 
     it('works with a url and force = true', async () => {

@@ -170,7 +170,10 @@ components:
           description: Dummy prop2
         sentAt:
           $ref: "#/components/schemas/sentAt"
-      additionalProperties: false
+        dummyArray:
+          $ref: "#/components/schemas/dummyArray"
+        dummyObject:
+          $ref: "#/components/schemas/dummyObject"
     dummyInfo:
       type: object
       properties:
@@ -182,6 +185,24 @@ components:
           description: Dummy prop1
         sentAt:
           $ref: "#/components/schemas/sentAt"
+    dummyArray:
+      type: array
+      items:
+        $ref: "#/components/schemas/dummyInfo"
+    dummyObject:
+      type: object
+      properties:
+        dummyObjectProp1:
+          $ref: "#/components/schemas/sentAt"
+        dummyObjectProp2:
+          $ref: "#/components/schemas/dummyRecursiveObject"
+    dummyRecursiveObject:
+      type: object
+      properties:
+        dummyRecursiveProp1:
+          $ref: "#/components/schemas/dummyObject"
+        dummyRecursiveProp2:
+          type: string  
     sentAt:
       type: string
       format: date-time

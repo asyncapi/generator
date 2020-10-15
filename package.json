@@ -65,6 +65,7 @@
     "node-fetch": "^2.6.0",
     "npmi": "^4.0.0",
     "nunjucks": "^3.2.0",
+    "resolve-pkg": "^2.0.0",
     "semver": "^7.3.2",
     "simple-git": "^1.131.0"
   },

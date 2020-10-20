@@ -155,6 +155,12 @@ components:
           payload:
             prop1: option1
             sentAt: 2020-01-31T13:24:53Z
+        - headers:
+            my-app-header: 13
+        - payload:
+            prop1: option2
+            sentAt: 2020-01-31T13:24:53Z
+          
 
   schemas:
     dummyCreated:

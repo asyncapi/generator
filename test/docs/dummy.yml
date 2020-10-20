@@ -22,7 +22,7 @@ info:
 
 tags:
   - name: root-tag1
-    externalDocs: 
+    externalDocs:
       description: External docs description 1
       url: https://www.asyncapi.com/
   - name: root-tag2
@@ -33,7 +33,7 @@ tags:
   - name: root-tag4
     description: Description 4
   - name: root-tag5
-    externalDocs:  
+    externalDocs:
       url: "https://www.asyncapi.com/"
 
 servers:
@@ -82,7 +82,7 @@ channels:
       operationId: receiveNewDummyInfo
       tags:
         - name: oparation-tag1
-          externalDocs: 
+          externalDocs:
             description: External docs description 1
             url: https://www.asyncapi.com/
         - name: oparation-tag2
@@ -93,7 +93,7 @@ channels:
         - name: oparation-tag4
           description: Description 4
         - name: oparation-tag5
-          externalDocs:  
+          externalDocs:
             url: "https://www.asyncapi.com/"
       traits:
         - $ref: '#/components/operationTraits/kafka'
@@ -117,7 +117,7 @@ components:
       summary: This is just a dummy create message
       tags:
         - name: message-tag1
-          externalDocs: 
+          externalDocs:
             description: External docs description 1
             url: https://www.asyncapi.com/
         - name: message-tag2
@@ -128,7 +128,7 @@ components:
         - name: message-tag4
           description: Description 4
         - name: message-tag5
-          externalDocs:  
+          externalDocs:
             url: "https://www.asyncapi.com/"
       headers:
         type: object
@@ -202,7 +202,7 @@ components:
         dummyRecursiveProp1:
           $ref: "#/components/schemas/dummyObject"
         dummyRecursiveProp2:
-          type: string  
+          type: string
     sentAt:
       type: string
       format: date-time
@@ -250,6 +250,7 @@ components:
       description: The ID of the new dummy message.
       schema:
         type: string
+        description: Description that not be rendered, as parameter has explicit description.
 
   messageTraits:
     commonHeaders:

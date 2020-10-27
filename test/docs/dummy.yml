@@ -22,7 +22,7 @@ info:
 
 tags:
   - name: root-tag1
-    externalDocs: 
+    externalDocs:
       description: External docs description 1
       url: https://www.asyncapi.com/
   - name: root-tag2
@@ -33,7 +33,7 @@ tags:
   - name: root-tag4
     description: Description 4
   - name: root-tag5
-    externalDocs:  
+    externalDocs:
       url: "https://www.asyncapi.com/"
 
 servers:
@@ -82,7 +82,7 @@ channels:
       operationId: receiveNewDummyInfo
       tags:
         - name: oparation-tag1
-          externalDocs: 
+          externalDocs:
             description: External docs description 1
             url: https://www.asyncapi.com/
         - name: oparation-tag2
@@ -93,7 +93,7 @@ channels:
         - name: oparation-tag4
           description: Description 4
         - name: oparation-tag5
-          externalDocs:  
+          externalDocs:
             url: "https://www.asyncapi.com/"
       traits:
         - $ref: '#/components/operationTraits/kafka'
@@ -117,7 +117,7 @@ components:
       summary: This is just a dummy create message
       tags:
         - name: message-tag1
-          externalDocs: 
+          externalDocs:
             description: External docs description 1
             url: https://www.asyncapi.com/
         - name: message-tag2
@@ -128,7 +128,7 @@ components:
         - name: message-tag4
           description: Description 4
         - name: message-tag5
-          externalDocs:  
+          externalDocs:
             url: "https://www.asyncapi.com/"
       headers:
         type: object
@@ -150,12 +150,17 @@ components:
       payload:
         $ref: "#/components/schemas/dummyInfo"
       examples:
-        - one:
-            prop1: option1
-            sentAt: 2020-01-26T13:00:00Z
-        - two:
+        - headers:
+            my-app-header: 12
+          payload:
             prop1: option1
             sentAt: 2020-01-31T13:24:53Z
+        - headers:
+            my-app-header: 13
+        - payload:
+            prop1: option2
+            sentAt: 2020-01-31T13:24:53Z
+          
 
   schemas:
     dummyCreated:
@@ -170,7 +175,10 @@ components:
           description: Dummy prop2
         sentAt:
           $ref: "#/components/schemas/sentAt"
-      additionalProperties: false
+        dummyArray:
+          $ref: "#/components/schemas/dummyArray"
+        dummyObject:
+          $ref: "#/components/schemas/dummyObject"
     dummyInfo:
       type: object
       properties:
@@ -182,6 +190,24 @@ components:
           description: Dummy prop1
         sentAt:
           $ref: "#/components/schemas/sentAt"
+    dummyArray:
+      type: array
+      items:
+        $ref: "#/components/schemas/dummyInfo"
+    dummyObject:
+      type: object
+      properties:
+        dummyObjectProp1:
+          $ref: "#/components/schemas/sentAt"
+        dummyObjectProp2:
+          $ref: "#/components/schemas/dummyRecursiveObject"
+    dummyRecursiveObject:
+      type: object
+      properties:
+        dummyRecursiveProp1:
+          $ref: "#/components/schemas/dummyObject"
+        dummyRecursiveProp2:
+          type: string
     sentAt:
       type: string
       format: date-time
@@ -229,6 +255,7 @@ components:
       description: The ID of the new dummy message.
       schema:
         type: string
+        description: Description that not be rendered, as parameter has explicit description.
 
   messageTraits:
     commonHeaders:

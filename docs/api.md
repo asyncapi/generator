@@ -19,7 +19,7 @@
         * [.hooks](#Generator+hooks) : <code>Object</code>
         * [.templateParams](#Generator+templateParams) : <code>Object</code>
         * [.originalAsyncAPI](#Generator+originalAsyncAPI) : <code>String</code>
-        * [.asyncapi](#Generator+asyncapi) : <code>Object</code>
+        * [.asyncapi](#Generator+asyncapi) : <code>AsyncAPIDocument</code>
         * [.generate(asyncapiDocument)](#Generator+generate) ⇒ <code>Promise</code>
         * [.generateFromString(asyncapiString, [parserOptions])](#Generator+generateFromString) ⇒ <code>Promise</code>
         * [.generateFromURL(asyncapiURL)](#Generator+generateFromURL) ⇒ <code>Promise</code>
@@ -142,8 +142,8 @@ AsyncAPI string to use as a source.
 **Kind**: instance property of [<code>Generator</code>](#Generator)  
 <a name="Generator+asyncapi"></a>
 
-### generator.asyncapi : <code>Object</code>
-Parsed AsyncAPI schema.
+### generator.asyncapi : <code>AsyncAPIDocument</code>
+Parsed AsyncAPI schema. See [AsyncAPIDocument](https://github.com/asyncapi/parser-js/blob/master/API.md#module_@asyncapi/parser+AsyncAPIDocument) for details on object structure.
 
 **Kind**: instance property of [<code>Generator</code>](#Generator)  
 <a name="Generator+generate"></a>

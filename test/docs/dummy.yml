@@ -115,6 +115,9 @@ components:
       name: dummyCreated
       title: Dummy created message
       summary: This is just a dummy create message
+      correlationId:
+        description: This is a dummy correlation ID.
+        location: $message.header#/correlationId
       tags:
         - name: message-tag1
           externalDocs:
@@ -135,12 +138,16 @@ components:
         properties:
           my-custom-app-header:
             type: string
+          correlationId:
+            type: string
       payload:
         $ref: "#/components/schemas/dummyCreated"
     dummyInfo:
       name: dummyInfo
       title: Dummy system info
       summary: This is just a dummy info message
+      correlationId:
+        location: $message.header#/correlationId
       description: |
         More description for a dummy message.
 
@@ -266,6 +273,8 @@ components:
             type: integer
             minimum: 0
             maximum: 100
+          correlationId:
+            type: string
 
   operationTraits:
     kafka:

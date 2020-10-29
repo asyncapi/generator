@@ -172,6 +172,8 @@ components:
   schemas:
     dummyCreated:
       type: object
+      required:
+        - prop2
       properties:
         prop1:
           type: integer
@@ -188,6 +190,8 @@ components:
           $ref: "#/components/schemas/dummyObject"
     dummyInfo:
       type: object
+      required:
+        - prop1
       properties:
         prop1:
           type: string

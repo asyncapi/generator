@@ -33,7 +33,7 @@ const noOverwriteParser = v => noOverwriteGlobs.push(v);
 
 const disableHooksParser = v => {
   const [hookType, hookNames] = v.split(/=/);
-  if (!hookType) throw new Error(`Invalid --disable-hook flag. It must be in the format of: --disable-hook <hookType> or --disable-hook <hookType>=<hookName1>,<hookName2>,...`);
+  if (!hookType) throw new Error('Invalid --disable-hook flag. It must be in the format of: --disable-hook <hookType> or --disable-hook <hookType>=<hookName1>,<hookName2>,...');
   if (hookNames) {
     disabledHooks[hookType] = hookNames.split(/,/);
   } else {

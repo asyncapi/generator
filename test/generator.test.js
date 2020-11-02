@@ -30,7 +30,7 @@ describe('Generator', () => {
       const gen = new Generator('testTemplate', __dirname, {
         entrypoint: 'test-entrypoint',
         noOverwriteGlobs: ['test-globs'],
-        disabledHooks: { 'test-hooks': true, "generate:after": ["foo", "bar"] },
+        disabledHooks: { 'test-hooks': true, 'generate:after': ['foo', 'bar'] },
         output: 'string',
         forceWrite: true,
         install: true,
@@ -42,7 +42,7 @@ describe('Generator', () => {
       expect(gen.targetDir).toStrictEqual(__dirname);
       expect(gen.entrypoint).toStrictEqual('test-entrypoint');
       expect(gen.noOverwriteGlobs).toStrictEqual(['test-globs']);
-      expect(gen.disabledHooks).toStrictEqual({ 'test-hooks': true });
+      expect(gen.disabledHooks).toStrictEqual({ 'test-hooks': true, 'generate:after': ['foo', 'bar'] });
       expect(gen.output).toStrictEqual('string');
       expect(gen.forceWrite).toStrictEqual(true);
       expect(gen.install).toStrictEqual(true);

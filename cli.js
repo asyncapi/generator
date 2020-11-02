@@ -33,7 +33,7 @@ const noOverwriteParser = v => noOverwriteGlobs.push(v);
 
 const disableHooksParser = v => {
   const [hookType, hookNames] = v.split(/=/);
-  if (!hookType) throw new Error(`Invalid --disable-hook flag. It must be not empty.`);
+  if (!hookType) throw new Error(`Invalid --disable-hook flag. It must be in the format of: --disable-hook <hookType> or --disable-hook <hookType>=<hookName1>,<hookName2>,...`);
   if (hookNames) {
     disabledHooks[hookType] = hookNames.split(/,/);
   } else {
@@ -59,7 +59,7 @@ program
     asyncapiDocPath = fileLoc;
     template = tmpl;
   })
-  .option('-d, --disable-hook <hookType?=hookNames>', 'disable a specific hook type', disableHooksParser)
+  .option('-d, --disable-hook [hooks...]', 'disable a specific hook type or hooks from given hook type', disableHooksParser)
   .option('--debug', 'enable more specific errors in the console')
   .option('-i, --install', 'installs the template and its dependencies (defaults to false)')
   .option('-n, --no-overwrite <glob>', 'glob or path of the file(s) to skip when regenerating', noOverwriteParser)
@@ -76,6 +76,9 @@ if (!asyncapiDocPath) {
 const isAsyncapiDocLocal = isFilePath(asyncapiDocPath);
 
 xfs.mkdirp(program.output, async err => {
+  console.log(disabledHooks);
+  return;
+
   if (err) return showErrorAndExit(err);
   try {
     await generate(program.output);

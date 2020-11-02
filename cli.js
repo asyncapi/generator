@@ -76,9 +76,6 @@ if (!asyncapiDocPath) {
 const isAsyncapiDocLocal = isFilePath(asyncapiDocPath);
 
 xfs.mkdirp(program.output, async err => {
-  console.log(disabledHooks);
-  return;
-
   if (err) return showErrorAndExit(err);
   try {
     await generate(program.output);

@@ -109,7 +109,7 @@ Options:
   --debug                        enable more specific errors in the console
   -i, --install                  installs the template and its dependencies (defaults to false)
   -n, --no-overwrite <glob>      glob or path of the file(s) to skip when regenerating
-  -o, --output <outputDir>       directory where to put the generated files (defaults to current directory) (default: "C:\\AsyncAPI\\generator")
+  -o, --output <outputDir>       directory where to put the generated files (defaults to current directory)
   -p, --param <name=value>       additional param to pass to templates
   --force-write                  force writing of the generated files to given directory even if it is a git repo with unstaged files or not empty dir (defaults to false)
   --watch-template               watches the template directory and the AsyncAPI document, and re-generate the files when changes occur. Ignores the output directory. This flag should be used only for template development.
@@ -158,7 +158,7 @@ ag asyncapi.yaml @asyncapi/html-template -o ./docs -p title='Hello from param'
 
 In the template you can use it like this: ` {{ params.title }}`
 
-**Disable the given hooks:**
+**Disabling the hooks:**
 ```bash
 ag asyncapi.yaml @asyncapi/html-template -o ./docs -d generate:before generate:after=foo,bar
 ```

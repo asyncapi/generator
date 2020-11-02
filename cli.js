@@ -55,7 +55,7 @@ const showErrorAndExit = err => {
 program
   .version(packageInfo.version)
   .arguments('<asyncapi> <template>')
-  .action((fileLoc, tmpl, ...rest) => {
+  .action((fileLoc, tmpl) => {
     asyncapiDocPath = fileLoc;
     template = tmpl;
   })

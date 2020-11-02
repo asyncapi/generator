@@ -19,7 +19,7 @@ describe('Generator', () => {
       expect(gen.targetDir).toStrictEqual(__dirname);
       expect(gen.entrypoint).toStrictEqual(undefined);
       expect(gen.noOverwriteGlobs).toStrictEqual([]);
-      expect(gen.disabledHooks).toStrictEqual([]);
+      expect(gen.disabledHooks).toStrictEqual({});
       expect(gen.output).toStrictEqual('fs');
       expect(gen.forceWrite).toStrictEqual(false);
       expect(gen.install).toStrictEqual(false);
@@ -30,7 +30,7 @@ describe('Generator', () => {
       const gen = new Generator('testTemplate', __dirname, {
         entrypoint: 'test-entrypoint',
         noOverwriteGlobs: ['test-globs'],
-        disabledHooks: ['test-hooks'],
+        disabledHooks: { 'test-hooks': true, "generate:after": ["foo", "bar"] },
         output: 'string',
         forceWrite: true,
         install: true,
@@ -42,7 +42,7 @@ describe('Generator', () => {
       expect(gen.targetDir).toStrictEqual(__dirname);
       expect(gen.entrypoint).toStrictEqual('test-entrypoint');
       expect(gen.noOverwriteGlobs).toStrictEqual(['test-globs']);
-      expect(gen.disabledHooks).toStrictEqual(['test-hooks']);
+      expect(gen.disabledHooks).toStrictEqual({ 'test-hooks': true });
       expect(gen.output).toStrictEqual('string');
       expect(gen.forceWrite).toStrictEqual(true);
       expect(gen.install).toStrictEqual(true);
@@ -58,7 +58,7 @@ describe('Generator', () => {
       const t = () => new Generator('testTemplate', __dirname, {
         entrypoint: 'test-entrypoint',
         noOverwriteGlobs: ['test-globs'],
-        disabledHooks: ['test-hooks'],
+        disabledHooks: { 'test-hooks': true },
         output: 'string',
         forceWrite: true,
         forceInstall: true,
@@ -73,7 +73,7 @@ describe('Generator', () => {
       const t = () => new Generator('testTemplate', __dirname, {
         entrypoint: 'test-entrypoint',
         noOverwriteGlobs: ['test-globs'],
-        disabledHooks: ['test-hooks'],
+        disabledHooks: { 'test-hooks': true },
         output: 'string',
         write: true,
         forceInstall: true,

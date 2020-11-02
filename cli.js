@@ -18,21 +18,28 @@ let asyncapiDocPath;
 let template;
 const params = {};
 const noOverwriteGlobs = [];
-const disabledHooks = [];
+const disabledHooks = {};
 
 const parseOutput = dir => path.resolve(dir);
 
 const paramParser = v => {
   if (!v.includes('=')) throw new Error(`Invalid param ${v}. It must be in the format of --param name=value.`);
-  const chunks = v.split(/=(.+)/, 2);
-  const paramName = chunks[0];
-  const paramValue = chunks[1];
+  const [paramName, paramValue] = v.split(/=(.+)/, 2);
   params[paramName] = paramValue;
   return v;
 };
 
 const noOverwriteParser = v => noOverwriteGlobs.push(v);
-const disableHooksParser = v => disabledHooks.push(v);
+
+const disableHooksParser = v => {
+  const [hookType, hookNames] = v.split(/=/);
+  if (!hookType) throw new Error(`Invalid --disable-hook flag. It must be not empty.`);
+  if (hookNames) {
+    disabledHooks[hookType] = hookNames.split(/,/);
+  } else {
+    disabledHooks[hookType] = true;
+  }
+};
 
 const showError = err => {
   console.error(red('Something went wrong:'));
@@ -48,11 +55,11 @@ const showErrorAndExit = err => {
 program
   .version(packageInfo.version)
   .arguments('<asyncapi> <template>')
-  .action((fileLoc, tmpl) => {
+  .action((fileLoc, tmpl, ...rest) => {
     asyncapiDocPath = fileLoc;
     template = tmpl;
   })
-  .option('-d, --disable-hook <hookType>', 'disable a specific hook type', disableHooksParser)
+  .option('-d, --disable-hook <hookType?=hookNames>', 'disable a specific hook type', disableHooksParser)
   .option('--debug', 'enable more specific errors in the console')
   .option('-i, --install', 'installs the template and its dependencies (defaults to false)')
   .option('-n, --no-overwrite <glob>', 'glob or path of the file(s) to skip when regenerating', noOverwriteParser)

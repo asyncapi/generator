@@ -105,15 +105,15 @@ Usage: ag [options] <asyncapi> <template>
 
 Options:
   -V, --version                  output the version number
-  -d, --disable-hook <hookType>  disable a specific hook type
-  --debug                        enable more specific errors in the console.
+  -d, --disable-hook [hooks...]  disable a specific hook type or hooks from given hook type
+  --debug                        enable more specific errors in the console
   -i, --install                  installs the template and its dependencies (defaults to false)
   -n, --no-overwrite <glob>      glob or path of the file(s) to skip when regenerating
   -o, --output <outputDir>       directory where to put the generated files (defaults to current directory)
   -p, --param <name=value>       additional param to pass to templates
   --force-write                  force writing of the generated files to given directory even if it is a git repo with unstaged files or not empty dir (defaults to false)
-  --watch-template               watches the template directory and the AsyncAPI specification file, and re-generate the files when changes occur. Ignores the output directory. This flag should be used only for template development.
-  -h, --help                     output usage information
+  --watch-template               watches the template directory and the AsyncAPI document, and re-generate the files when changes occur. Ignores the output directory. This flag should be used only for template development.
+  -h, --help                     display help for command
 ```
 
 <details>
@@ -155,7 +155,15 @@ ag asyncapi.yaml @asyncapi/html-template -o ./docs
 ```bash
 ag asyncapi.yaml @asyncapi/html-template -o ./docs -p title='Hello from param'
 ```
+
 In the template you can use it like this: ` {{ params.title }}`
+
+**Disabling the hooks:**
+```bash
+ag asyncapi.yaml @asyncapi/html-template -o ./docs -d generate:before generate:after=foo,bar
+```
+
+The generator skips all hooks of the `generate:before` type and `foo`, `bar` hooks of the `generate:after` type.
 
 **Installing the template from a folder:**
 ```bash

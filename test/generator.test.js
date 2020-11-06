@@ -19,7 +19,7 @@ describe('Generator', () => {
       expect(gen.targetDir).toStrictEqual(__dirname);
       expect(gen.entrypoint).toStrictEqual(undefined);
       expect(gen.noOverwriteGlobs).toStrictEqual([]);
-      expect(gen.disabledHooks).toStrictEqual([]);
+      expect(gen.disabledHooks).toStrictEqual({});
       expect(gen.output).toStrictEqual('fs');
       expect(gen.forceWrite).toStrictEqual(false);
       expect(gen.install).toStrictEqual(false);
@@ -30,7 +30,7 @@ describe('Generator', () => {
       const gen = new Generator('testTemplate', __dirname, {
         entrypoint: 'test-entrypoint',
         noOverwriteGlobs: ['test-globs'],
-        disabledHooks: ['test-hooks'],
+        disabledHooks: { 'test-hooks': true, 'generate:after': ['foo', 'bar'], foo: 'bar' },
         output: 'string',
         forceWrite: true,
         install: true,
@@ -42,7 +42,7 @@ describe('Generator', () => {
       expect(gen.targetDir).toStrictEqual(__dirname);
       expect(gen.entrypoint).toStrictEqual('test-entrypoint');
       expect(gen.noOverwriteGlobs).toStrictEqual(['test-globs']);
-      expect(gen.disabledHooks).toStrictEqual(['test-hooks']);
+      expect(gen.disabledHooks).toStrictEqual({ 'test-hooks': true, 'generate:after': ['foo', 'bar'], foo: 'bar' });
       expect(gen.output).toStrictEqual('string');
       expect(gen.forceWrite).toStrictEqual(true);
       expect(gen.install).toStrictEqual(true);
@@ -58,7 +58,7 @@ describe('Generator', () => {
       const t = () => new Generator('testTemplate', __dirname, {
         entrypoint: 'test-entrypoint',
         noOverwriteGlobs: ['test-globs'],
-        disabledHooks: ['test-hooks'],
+        disabledHooks: { 'test-hooks': true },
         output: 'string',
         forceWrite: true,
         forceInstall: true,
@@ -73,7 +73,7 @@ describe('Generator', () => {
       const t = () => new Generator('testTemplate', __dirname, {
         entrypoint: 'test-entrypoint',
         noOverwriteGlobs: ['test-globs'],
-        disabledHooks: ['test-hooks'],
+        disabledHooks: { 'test-hooks': true },
         output: 'string',
         write: true,
         forceInstall: true,
@@ -515,6 +515,75 @@ describe('Generator', () => {
       expect(gen.templateParams).toStrictEqual({
         test: true
       });
+    });
+  });
+
+  describe('#launchHook', () => {
+    it('launch given hook', async () => {
+      let iteration = 0;
+      const gen = new Generator('testTemplate', __dirname);
+      gen.hooks = { 'test-hooks': [function a() { iteration++; }, function b() { iteration++; }] };
+      await gen.launchHook('test-hooks');
+      expect(iteration).toStrictEqual(2);
+    });
+
+    it('launch given hook which is disabled', async () => {
+      let iteration = 0;
+      const gen = new Generator('testTemplate', __dirname, { disabledHooks: { 'test-hooks': true } });
+      gen.hooks = { 'test-hooks': [function a() { iteration++; }, function b() { iteration++; }] };
+      await gen.launchHook('test-hooks');
+      expect(iteration).toStrictEqual(0);
+    });
+
+    it('launch given hook where disabledHooks key has array format for given hook type', async () => {
+      let iteration = 0;
+      const gen = new Generator('testTemplate', __dirname, { disabledHooks: { 'test-hooks': ['a', 'b'] } });
+      gen.hooks = { 'test-hooks': [function a() { iteration++; }, function b() { iteration++; }, function c() { iteration++; }] };
+      await gen.launchHook('test-hooks');
+      expect(iteration).toStrictEqual(1);
+    });
+
+    it('launch given hook where disabledHooks key has array format for given hook type', async () => {
+      let iteration = 0;
+      const gen = new Generator('testTemplate', __dirname, { disabledHooks: { 'test-hooks': 'c' } });
+      gen.hooks = { 'test-hooks': [function a() { iteration++; }, function b() { iteration++; }, function c() { iteration++; }] };
+      await gen.launchHook('test-hooks');
+      expect(iteration).toStrictEqual(2);
+    });
+  });
+
+  describe('#isHookAvailable', () => {
+    it('given hook type not exist or has empty array', async () => {
+      const gen = new Generator('testTemplate', __dirname);
+      gen.hooks = { 'test-hooks': [] };
+      expect(gen.isHookAvailable('foo-bar')).toStrictEqual(false);
+      expect(gen.isHookAvailable('test-hooks')).toStrictEqual(false);
+    });
+
+    it('given hook type exist and has hooks', async () => {
+      const gen = new Generator('testTemplate', __dirname);
+      gen.hooks = { 'test-hooks': ['foo-bar'] };
+      expect(gen.isHookAvailable('test-hooks')).toStrictEqual(true);
+    });
+
+    it('given hook type is disabled', async () => {
+      const gen = new Generator('testTemplate', __dirname, { disabledHooks: { 'test-hooks': true } });
+      gen.hooks = { 'test-hooks': ['foo-bar'] };
+      expect(gen.isHookAvailable('test-hooks')).toStrictEqual(false);
+    });
+
+    it('for given hook type only some hooks are disabled', async () => {
+      const gen = new Generator('testTemplate', __dirname, { disabledHooks: { 'test-hooks': ['fooBar'], 'string-test-hooks': 'fooBar' } });
+      gen.hooks = { 'test-hooks': [function fooBar() {}, function barFoo() {}], 'string-test-hooks': [function fooBar() {}, function barFoo() {}] };
+      expect(gen.isHookAvailable('test-hooks')).toStrictEqual(true);
+      expect(gen.isHookAvailable('string-test-hooks')).toStrictEqual(true);
+    });
+
+    it('for given hook type whole hooks are disabled', async () => {
+      const gen = new Generator('testTemplate', __dirname, { disabledHooks: { 'test-hooks': ['fooBar', 'barFoo'], 'string-test-hooks': 'fooBar' } });
+      gen.hooks = { 'test-hooks': [function fooBar() {}, function barFoo() {}], 'string-test-hooks': [function fooBar() {}] };
+      expect(gen.isHookAvailable('test-hooks')).toStrictEqual(false);
+      expect(gen.isHookAvailable('string-test-hooks')).toStrictEqual(false);
     });
   });
 });

@@ -184,8 +184,10 @@ components:
           description: Dummy prop2
         sentAt:
           $ref: "#/components/schemas/sentAt"
-        dummyArray:
-          $ref: "#/components/schemas/dummyArray"
+        dummyArrayWithObject:
+          $ref: "#/components/schemas/dummyArrayWithObject"
+        dummyArrayWithArray:
+          $ref: "#/components/schemas/dummyArrayWithArray"
         dummyObject:
           $ref: "#/components/schemas/dummyObject"
     dummyInfo:
@@ -201,10 +203,16 @@ components:
           description: Dummy prop1
         sentAt:
           $ref: "#/components/schemas/sentAt"
-    dummyArray:
+    dummyArrayWithObject:
       type: array
       items:
         $ref: "#/components/schemas/dummyInfo"
+    dummyArrayWithArray:
+      type: array
+      items:
+        - $ref: "#/components/schemas/dummyInfo"
+        - type: string
+        - type: number
     dummyObject:
       type: object
       properties:

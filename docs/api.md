@@ -10,7 +10,7 @@
         * [.targetDir](#Generator+targetDir) : <code>String</code>
         * [.entrypoint](#Generator+entrypoint) : <code>String</code>
         * [.noOverwriteGlobs](#Generator+noOverwriteGlobs) : <code>Array.&lt;String&gt;</code>
-        * [.disabledHooks](#Generator+disabledHooks) : <code>Array.&lt;String&gt;</code>
+        * [.disabledHooks](#Generator+disabledHooks) : <code>Object.&lt;String, (Boolean\|String\|Array.&lt;String&gt;)&gt;</code>
         * [.output](#Generator+output) : <code>String</code>
         * [.forceWrite](#Generator+forceWrite) : <code>Boolean</code>
         * [.debug](#Generator+debug) : <code>Boolean</code>
@@ -42,7 +42,7 @@ Instantiates a new Generator object.
 | [options.templateParams] | <code>String</code> |  | Optional parameters to pass to the template. Each template define their own params. |
 | [options.entrypoint] | <code>String</code> |  | Name of the file to use as the entry point for the rendering process. Use in case you want to use only a specific template file. Note: this potentially avoids rendering every file in the template. |
 | [options.noOverwriteGlobs] | <code>Array.&lt;String&gt;</code> |  | List of globs to skip when regenerating the template. |
-| [options.disabledHooks] | <code>Array.&lt;String&gt;</code> |  | List of hook types to disable. |
+| [options.disabledHooks] | <code>Object.&lt;String, (Boolean\|String\|Array.&lt;String&gt;)&gt;</code> |  | Object with hooks to disable. The key is a hook type. If key has "true" value, then the generator skips all hooks from the given type. If the value associated with a key is a string with the name of a single hook, then the generator skips only this single hook name. If the value associated with a key is an array of strings, then the generator skips only hooks from the array. |
 | [options.output] | <code>String</code> | <code>&#x27;fs&#x27;</code> | Type of output. Can be either 'fs' (default) or 'string'. Only available when entrypoint is set. |
 | [options.forceWrite] | <code>Boolean</code> | <code>false</code> | Force writing of the generated files to given directory even if it is a git repo with unstaged files or not empty dir. Default is set to false. |
 | [options.install] | <code>Boolean</code> | <code>false</code> | Install the template and its dependencies, even when the template has already been installed. |
@@ -88,8 +88,8 @@ List of globs to skip when regenerating the template.
 **Kind**: instance property of [<code>Generator</code>](#Generator)  
 <a name="Generator+disabledHooks"></a>
 
-### generator.disabledHooks : <code>Array.&lt;String&gt;</code>
-List of hooks to disable.
+### generator.disabledHooks : <code>Object.&lt;String, (Boolean\|String\|Array.&lt;String&gt;)&gt;</code>
+Object with hooks to disable. The key is a hook type. If key has "true" value, then the generator skips all hooks from the given type. If the value associated with a key is a string with the name of a single hook, then the generator skips only this single hook name. If the value associated with a key is an array of strings, then the generator skips only hooks from the array.
 
 **Kind**: instance property of [<code>Generator</code>](#Generator)  
 <a name="Generator+output"></a>
@@ -125,7 +125,7 @@ The template configuration.
 <a name="Generator+hooks"></a>
 
 ### generator.hooks : <code>Object</code>
-Hooks object with hooks functionst grouped by the hook type.
+Hooks object with hooks functions grouped by the hook type.
 
 **Kind**: instance property of [<code>Generator</code>](#Generator)  
 <a name="Generator+templateParams"></a>

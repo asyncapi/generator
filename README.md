@@ -269,7 +269,7 @@ Before using newer versions of the template, always look at the [changelog](http
 ## How to create a template
 
 To create your own template, for example code generator for some specific language and technology, learn from the following resources:
-- Documentation about [authoring templates](docs/authoring.md),
+- Read the documentation about [authoring templates](docs/authoring.md),
 - Use [Template for Generator Templates](https://github.com/asyncapi/template-for-generator-templates) that showcases Generator features,
 - Check the [list of templates recipes](docs/templates-recipes.md)
 

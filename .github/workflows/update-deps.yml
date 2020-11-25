@@ -1,4 +1,4 @@
-name: Update dependencies
+name: Update npm package dependencies
 
 on:
   repository_dispatch:

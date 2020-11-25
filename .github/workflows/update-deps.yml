@@ -1,0 +1,32 @@
+name: Update dependencies
+
+on:
+  repository_dispatch:
+    types: [asyncapi/parser-js/release]
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+
+      - name: Update dependency version
+        run: npm i ${{ github.event.client_payload.name }}@${{ github.event.client_payload.version }}
+
+      - name: Create Pull Request with updated package files
+        uses: peter-evans/create-pull-request@v3
+        with:
+          base: master
+          token: ${{ secrets.GH_TOKEN }}
+          commit-message: 'chore(deps): update ${{ github.event.client_payload.name }} to ${{ github.event.client_payload.version }}'
+          committer: asyncapi-bot <info@asyncapi.io>
+          author: asyncapi-bot <info@asyncapi.io>
+          title: 'chore(deps): update ${{ github.event.client_payload.name }} to ${{ github.event.client_payload.version }}'
+          body: 'Version update in package.json and package-lock.json dependencies: ${{ github.event.client_payload.name }}@${{ github.event.client_payload.version }}.'
+          branch: update-deps/${{ github.event.client_payload.name }}-${{ github.event.client_payload.version }}

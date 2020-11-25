@@ -36,11 +36,9 @@ jobs:
     steps:
       - name: Automerging
         uses: pascalgn/automerge-action@v0.7.5
-        if: github.actor == 'asyncapi-bot' || github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]'
         env:
           GITHUB_TOKEN: "${{ secrets.GH_TOKEN }}"
           GITHUB_LOGIN: asyncapi-bot
-          MERGE_LABELS: ""
           MERGE_METHOD: "squash"
           MERGE_COMMIT_MESSAGE: "pull-request-title"
           MERGE_RETRIES: "10"

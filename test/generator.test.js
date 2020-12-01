@@ -111,7 +111,7 @@ describe('Generator', () => {
     const mockMethods = (gen) => {
       gen.verifyTargetDir = jest.fn();
       gen.installTemplate = jest.fn().mockResolvedValue({ name: 'nameOfTestTemplate', path: '/path/to/template/nameOfTestTemplate' });
-      gen.configNunjucks = jest.fn();
+      gen.configureTemplate = jest.fn();
       gen.loadTemplateConfig = jest.fn();
       gen.registerHooks = jest.fn();
       gen.registerFilters = jest.fn();
@@ -140,8 +140,8 @@ describe('Generator', () => {
       expect(xfsMock.mkdirpSync).toHaveBeenCalledWith(__dirname);
       expect(gen.verifyTargetDir).toHaveBeenCalledWith(__dirname);
       expect(gen.installTemplate).toHaveBeenCalledWith(false);
-      expect(gen.configNunjucks).toHaveBeenCalled();
       expect(gen.loadTemplateConfig).toHaveBeenCalled();
+      expect(gen.configureTemplate).toHaveBeenCalled();
       expect(hooksRegistry.registerHooks).toHaveBeenCalled();
       expect(filtersRegistry.registerFilters).toHaveBeenCalled();
       expect(templateConfigValidator.validateTemplateConfig).toHaveBeenCalled();
@@ -162,8 +162,8 @@ describe('Generator', () => {
       expect(xfsMock.mkdirpSync).toHaveBeenCalledWith(__dirname);
       expect(gen.verifyTargetDir).toHaveBeenCalledWith(__dirname);
       expect(gen.installTemplate).toHaveBeenCalledWith(true);
-      expect(gen.configNunjucks).toHaveBeenCalled();
       expect(gen.loadTemplateConfig).toHaveBeenCalled();
+      expect(gen.configureTemplate).toHaveBeenCalled();
       expect(hooksRegistry.registerHooks).toHaveBeenCalled();
       expect(filtersRegistry.registerFilters).toHaveBeenCalled();
       expect(templateConfigValidator.validateTemplateConfig).toHaveBeenCalled();
@@ -183,8 +183,7 @@ describe('Generator', () => {
 
       expect(xfsMock.mkdirpSync).toHaveBeenCalledWith(__dirname);
       expect(gen.installTemplate).toHaveBeenCalledWith(false);
-      expect(gen.configNunjucks).toHaveBeenCalled();
-      expect(gen.loadTemplateConfig).toHaveBeenCalled();
+      expect(gen.configureTemplate).toHaveBeenCalled();
       expect(hooksRegistry.registerHooks).toHaveBeenCalled();
       expect(filtersRegistry.registerFilters).toHaveBeenCalled();
       expect(templateConfigValidator.validateTemplateConfig).toHaveBeenCalled();
@@ -205,7 +204,7 @@ describe('Generator', () => {
 
       expect(xfsMock.mkdirpSync).toHaveBeenCalledWith(__dirname);
       expect(gen.installTemplate).toHaveBeenCalledWith(true);
-      expect(gen.configNunjucks).toHaveBeenCalled();
+      expect(gen.loadTemplateConfig).toHaveBeenCalled();
       expect(gen.loadTemplateConfig).toHaveBeenCalled();
       expect(hooksRegistry.registerHooks).toHaveBeenCalled();
       expect(filtersRegistry.registerFilters).toHaveBeenCalled();
@@ -229,7 +228,7 @@ describe('Generator', () => {
       expect(xfsMock.mkdirpSync).toHaveBeenCalledWith(__dirname);
       expect(gen.verifyTargetDir).toHaveBeenCalledWith(__dirname);
       expect(gen.installTemplate).toHaveBeenCalledWith(false);
-      expect(gen.configNunjucks).toHaveBeenCalled();
+      expect(gen.loadTemplateConfig).toHaveBeenCalled();
       expect(gen.loadTemplateConfig).toHaveBeenCalled();
       expect(hooksRegistry.registerHooks).toHaveBeenCalled();
       expect(filtersRegistry.registerFilters).toHaveBeenCalled();

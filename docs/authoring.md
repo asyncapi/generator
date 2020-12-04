@@ -227,17 +227,17 @@ There are some template parameters that have a special meaning:
 
 
 ## React
-[React](https://reactjs.org) is the newest render engine which we strongly suggest you should use for any new templates. It is only the default render engine to enable backward compatibility.
+[React](https://reactjs.org) is the render engine which we strongly suggest you should use for any new templates. The only reason it is not the default render engine is to stay backward compatibility.
 * It enables the possiblity of [debugging](#debugging-react-template) your template (this is not possible with Nunjucks).
-* It provides better stack traces once something is not working.
-* Provides better support for separating code into more manageable chunks.
+* It provides better error stack traces once something is not working.
+* Provides better support for separating code into more manageable chunks/components.
 * The readability of the template are much better then Nunjucks syntax.
 * Better tool support for development.
 
 When writing react templates you decide whether to use CommonJS, ES5 or ES6 modules since everything is bundles together before the rendering process takes over. We use our own React renderer which can be found in the [Generator React SDK](https://github.com/asyncapi/generator-react-sdk). 
 There you can find information about how the renderer works or how we transpile your template files.
 
-Your React template always require 2 dependencies `react` and `@asyncapi/generator-react-sdk`. The `react` dependency is pretty self explanitory, it allows us to render the template. `@asyncapi/generator-react-sdk` is required since react files does not export default function where the root component is not of type `File` will not be rendered, furthermore it provide some support components to easy your development. 
+Your React template always require 3 dependencies `react`, `source-map-support` and `@asyncapi/generator-react-sdk`. The `react` dependency is required to declare React components inside the template. `source-map-support` ensure that the transpiled files are mapped to the actual template files, this is only to enable correct error stack trace. `@asyncapi/generator-react-sdk` is required to access the `File` component which is required as a root component for a file to be rendered. Furthermore it provides some common components to make your development easier, like `Text` or `Indent`.
 
 Lets consider a basic react template as the one below called `MyTemplate.js`:
 ```js
@@ -251,7 +251,7 @@ export default function({ asyncapi, params, originalAsyncAPI}) {
   );
 }
 ```
-The react component returns a `File` component as root component which the React renderer uses to figure out what what file should be generated. In our case we overwrite the default functionality of saving the file as `MyTemplate.js` but instead use the filename `asyncapi.md`. It is then specified that we should render `Some text that should render as is` within that file.
+The exported default function returns a `File` component as a root component which the [Generator](https://github.com/asyncapi/generator) uses to figure out what file should be generated. In our case we overwrite the default functionality of saving the file as `MyTemplate.js` but instead use the filename `asyncapi.md`. It is then specified that we should render `Some text that should render as is\n` within that file. Notice the `\n` character at the end, this is something that is automatically added after each children in the `File` and `Indent` component. 
 
 For further information about components, props etc. see the [Generator React SDK](https://github.com/asyncapi/generator-react-sdk)
 
@@ -266,25 +266,25 @@ We will use a `Visual studio code` launch configuration as an example on how to 
 Add the following launch configuration in your workspace:
 ```json
 {
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "type": "node",
-            "request": "launch",
-            "name": "Debug template",
-            "timeout": 10000,
-            "sourceMaps": true,
-            "args": [
-                "./asyncapi.yml",
-                "./template",
-                "--output",
-                "./output",
-                "--install",
-                "--force-write"
-            ],
-            "program": "ag"
-        }
-    ]
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug template",
+      "timeout": 10000,
+      "sourceMaps": true,
+      "args": [
+        "./asyncapi.yml",
+        "./template",
+        "--output",
+        "./output",
+        "--install",
+        "--force-write"
+      ],
+      "program": "ag"
+    }
+  ]
 }
 ```
 Now replace `./asyncapi.yml` with your document of choice. Replace `./template` with the path to your React template. You can now debug your template by adding any breakpoints you want and inspect your code.
@@ -321,8 +321,7 @@ Files from the `.partials` directory do not end up with other generated files in
 {{ tags(operation.tags()) }}
 ```
 
-
-## Filters
+### Filters
 
 A filter is a helper function that you can create to perform complex tasks. They are JavaScript files that register one or many [Nunjuck filters](https://mozilla.github.io/nunjucks/api.html#custom-filters). The generator parses all the files in the `filters` directory. Functions exported from these files are registered as filters.
 

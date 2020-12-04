@@ -11,7 +11,6 @@ To work on a template, you need an AsyncAPI specification file that you can use 
 1. A template is a directory in your file system.
 1. The template can have own dependencies. Just create `package.json` for the template. The generator makes sure to trigger the installation of dependencies.
 1. Templates can be configured. Configuration must be stored in the `package.json` file under custom `generator` property. [Read more about the configuration file](#configuration-file).
-1. Templates may contain multiple files. Unless stated otherwise, all files will be rendered.
 1. The template engine is either [Nunjucks](#nunjucks)(default) or [React](#react). This can be controlled with the `renderer` configuration.
 1. Templates may contain `hooks` that are functions invoked during specific moment of the generation. In the template, they must be stored in the `.hooks` directory under the template directory. They can also be stored in other modules and external libraries and configured inside the template [Read more about hooks](#hooks).
 1. There are parameters with special meaning. [Read more about special parameters](#special-parameters).
@@ -256,12 +255,39 @@ The react component returns a `File` component as root component which the React
 
 For further information about components, props etc. see the [Generator React SDK](https://github.com/asyncapi/generator-react-sdk)
 
+### Common assumptions
+
+1. All files within the template directory are rendered if their root component is of type `File` and the path is not part of the `nonRenderableFiles` configuration.
+1. New lines are automatically added for each componet you initialize within the File component. 
+
 ### Debugging React template
 We will use a `Visual studio code` launch configuration as an example on how to debug your template.
 
+Add the following launch configuration in your workspace:
+```json
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Debug template",
+            "timeout": 10000,
+            "sourceMaps": true,
+            "args": [
+                "./asyncapi.yml",
+                "./template",
+                "--output",
+                "./output",
+                "--install",
+                "--force-write"
+            ],
+            "program": "ag"
+        }
+    ]
+}
 ```
-
-```
+Now replace `./asyncapi.yml` with your document of choice. Replace `./template` with the path to your React template. You can now debug your template by adding any breakpoints you want and inspect your code.
 
 ## Nunjucks
 [Nunjucks](https://mozilla.github.io/nunjucks) is the default render engine, however we strongly suggest you to consider adapting to the [React](#react) engine.
@@ -269,6 +295,7 @@ We will use a `Visual studio code` launch configuration as an example on how to 
 
 1. Templates may contain [Nunjucks filters or helper functions](https://mozilla.github.io/nunjucks/templating.html#builtin-filters). [Read more about filters](#filters).
 1. Templates may contain `partials` (reusable chunks). They must be stored in the `.partials` directory under the template directory. [Read more about partials](#partials).
+1. Templates may contain multiple files. Unless stated otherwise, all files will be rendered.
 1. The default variables you have access to in any the template file are the following:
    - `asyncapi` that is a parsed spec file object. Read the [API](https://github.com/asyncapi/parser-js/blob/master/API.md#AsyncAPIDocument) of the Parser to understand to what structure you have access in this parameter.
    - `originalAsyncAPI` that is an original spec file before it is parsed. 

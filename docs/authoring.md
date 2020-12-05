@@ -12,7 +12,7 @@ To work on a template, you need an AsyncAPI specification file that you can use 
 1. The template can have own dependencies. Just create `package.json` for the template. The generator makes sure to trigger the installation of dependencies.
 1. Templates can be configured. Configuration must be stored in the `package.json` file under custom `generator` property. [Read more about the configuration file](#configuration-file).
 1. The template engine is either [Nunjucks](#nunjucks)(default) or [React](#react). This can be controlled with the `renderer` configuration.
-1. Templates may contain `hooks` that are functions invoked during specific moment of the generation. In the template, they must be stored in the `.hooks` directory under the template directory. They can also be stored in other modules and external libraries and configured inside the template [Read more about hooks](#hooks).
+1. Templates may contain `hooks` that are functions invoked during specific moment of the generation. In the template, they must be stored in the `hooks` directory under the template directory. They can also be stored in other modules and external libraries and configured inside the template [Read more about hooks](#hooks).
 1. There are parameters with special meaning. [Read more about special parameters](#special-parameters).
 
 ## Special file names
@@ -332,4 +332,3 @@ const {{ channelName | camelCase }} = '{{ channelName }}';
 ```
 
 In case you have more than one template and want to reuse filters, you can put them in a single library. You can configure such a library in the template configuration under `filters` property. You can also use the official AsyncAPI [filters library](https://github.com/asyncapi/generator-filters). To learn how to add such filters to configuration [read more about the configuration file](#configuration-file).
-

@@ -251,18 +251,19 @@ export default function({ asyncapi, params, originalAsyncAPI}) {
   );
 }
 ```
-The exported default function returns a `File` component as a root component which the [Generator](https://github.com/asyncapi/generator) uses to figure out what file should be generated. In our case we overwrite the default functionality of saving the file as `MyTemplate.js` but instead use the filename `asyncapi.md`. It is then specified that we should render `Some text that should render as is\n` within that file. Notice the `\n` character at the end, this is something that is automatically added after each children in the `File` and `Indent` component. 
+The exported default function returns a `File` component as a root component which the [Generator](https://github.com/asyncapi/generator) uses to figure out what file should be generated. In our case we overwrite the default functionality of saving the file as `MyTemplate.js` but instead use the filename `asyncapi.md`. It is then specified that we should render `Some text that should render as is\n` within that file. Notice the `\n` character at the end, this is something that is automatically added after `Text` component. 
 
 For further information about components, props etc. see the [Generator React SDK](https://github.com/asyncapi/generator-react-sdk)
 
 ### Common assumptions
 
 1. All files within the template directory are rendered if their root component is of type `File` and the path is not part of the `nonRenderableFiles` configuration.
-1. New lines are automatically added for each child in `File` and `Indent` component.
+1. New lines are automatically added after each `Text` component.
 
 ### Debugging React template
-We will use a `Visual studio code` launch configuration as an example on how to debug your template.
+With react it enables you to debug your templates. Below are a section of common idé's and how to enable debugging. 
 
+#### VSCode
 Add the following launch configuration in your workspace:
 ```json
 {

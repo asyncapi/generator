@@ -229,7 +229,7 @@ There are some template parameters that have a special meaning:
 ## React
 [React](https://reactjs.org) is the render engine that we strongly suggest you should use for any new templates. The only reason it is not the default render engine is to stay backward compatible.
 * It enables the possiblity of [debugging](#debugging-react-template) your template (this is not possible with Nunjucks).
-* It provides better error stack traces once something is not working.
+* It provides better error stack traces.
 * Provides better support for separating code into more manageable chunks/components.
 * The readability of the template are much better then Nunjucks syntax.
 * Better tool support for development.

@@ -11,7 +11,7 @@ To work on a template, you need an AsyncAPI specification file that you can use 
 1. A template is a directory in your file system.
 1. The template can have own dependencies. Just create `package.json` for the template. The generator makes sure to trigger the installation of dependencies.
 1. Templates can be configured. Configuration must be stored in the `package.json` file under custom `generator` property. [Read more about the configuration file](#configuration-file).
-1. The template engine is either [Nunjucks](#nunjucks)(default) or [React](#react). This can be controlled with the `renderer` configuration.
+1. The template engine can be either [React](#react) (recommended) or [Nunjucks](#nunjucks) (default). This can be controlled with the `renderer` property in the [template configuration](#template-configuration).
 1. Templates may contain `hooks` that are functions invoked during specific moment of the generation. In the template, they must be stored in the `hooks` directory under the template directory. They can also be stored in other modules and external libraries and configured inside the template [Read more about hooks](#hooks).
 1. There are parameters with special meaning. [Read more about special parameters](#special-parameters).
 

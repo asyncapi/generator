@@ -231,7 +231,7 @@ There are some template parameters that have a special meaning:
 * It enables the possiblity of [debugging](#debugging-react-template) your template (this is not possible with Nunjucks).
 * It provides better error stack traces.
 * Provides better support for separating code into more manageable chunks/components.
-* The readability of the template are much better then Nunjucks syntax.
+* The readability of the template is much better compared to Nunjucks syntax.
 * Better tool support for development.
 
 When writing react templates you decide whether to use CommonJS, ES5 or ES6 modules since everything is bundles together before the rendering process takes over. We use our own React renderer which can be found in the [Generator React SDK](https://github.com/asyncapi/generator-react-sdk). 

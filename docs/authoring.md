@@ -157,7 +157,7 @@ The `generator` property from `package.json` file must contain a JSON object tha
 
 |Name|Type|Description|
 |---|---|---|
-|`renderer`| String | Supports either `react` or `nunjucks`(default).
+|`renderer`| String | Its value can be either `react` or `nunjucks` (default).
 |`supportedProtocols`| [String] | A list with all the protocols this template supports.
 |`parameters`| Object[String, Object] | An object with all the parameters that can be passed when generating the template. When using the command line, it's done by indicating `--param name=value` or `-p name=value`.
 |`parameters[param].description`| String | A user-friendly description about the parameter.

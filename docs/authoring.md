@@ -234,18 +234,18 @@ There are some template parameters that have a special meaning:
 * The readability of the template is much better compared to Nunjucks syntax.
 * Better tool support for development.
 
-When writing react templates you decide whether to use CommonJS, ES5 or ES6 modules since everything is bundles together before the rendering process takes over. We use our own React renderer which can be found in the [Generator React SDK](https://github.com/asyncapi/generator-react-sdk). 
+When writing React templates you decide whether to use CommonJS, ES5, or ES6 modules since everything is bundled together before the rendering process takes over. We use our own React renderer which can be found in the [Generator React SDK](https://github.com/asyncapi/generator-react-sdk). 
 There you can find information about how the renderer works or how we transpile your template files.
 
 Your React template always require 3 dependencies `react`, `source-map-support` and `@asyncapi/generator-react-sdk`. The `react` dependency is required to declare React components inside the template. `source-map-support` ensure that the transpiled files are mapped to the actual template files, this is only to enable correct error stack trace. `@asyncapi/generator-react-sdk` is required to access the `File` component which is required as a root component for a file to be rendered. Furthermore it provides some common components to make your development easier, like `Text` or `Indent`.
 
-Lets consider a basic react template as the one below called `MyTemplate.js`:
+Let's consider a basic React template as the one below called `MyTemplate.js`:
 ```js
 import React from "react";
 import { File, Text } from "@asyncapi/generator-react-sdk";
 export default function({ asyncapi, params, originalAsyncAPI}) {
   return (
-    <File name={'asyncapi.md'}>
+    <File name="asyncapi.md">
       <Text>Some text that should render as is</Text>
     </File>
   );
@@ -261,7 +261,7 @@ For further information about components, props etc. see the [Generator React SD
 1. New lines are automatically added after each `Text` component.
 
 ### Debugging React template
-With react it enables you to debug your templates. Below are a section of common idé's and how to enable debugging. 
+With React, it enables you to debug your templates. Below is a section of common IDE's and how to enable debugging. 
 
 #### VSCode
 Add the following launch configuration in your workspace:
@@ -291,7 +291,7 @@ Add the following launch configuration in your workspace:
 Now replace `./asyncapi.yml` with your document of choice. Replace `./template` with the path to your React template. You can now debug your template by adding any breakpoints you want and inspect your code.
 
 ## Nunjucks
-[Nunjucks](https://mozilla.github.io/nunjucks) is the default render engine, however we strongly suggest you to consider adapting to the [React](#react) engine.
+[Nunjucks](https://mozilla.github.io/nunjucks) is the default render engine, however, we strongly recommend adopting the [React](#react) engine.
 ### Common assumptions
 
 1. Templates may contain [Nunjucks filters or helper functions](https://mozilla.github.io/nunjucks/templating.html#builtin-filters). [Read more about filters](#filters).

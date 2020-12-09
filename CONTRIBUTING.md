@@ -14,7 +14,7 @@ Contributions are more than welcome. If you want to contribute, please make sure
 Before creating a Pull Request you should validate your code with ESLint.
 
 ```
-npm run eslint
+npm run lint
 ```
 
 ## Developing with Docker

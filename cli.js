@@ -19,6 +19,7 @@ let template;
 const params = {};
 const noOverwriteGlobs = [];
 const disabledHooks = {};
+const mapBaseUrlToFolder = { url: '', folder: process.cwd()};
 
 const parseOutput = dir => path.resolve(dir);
 
@@ -39,6 +40,13 @@ const disableHooksParser = v => {
   } else {
     disabledHooks[hookType] = true;
   }
+};
+
+const mapFromBaseUrlParser = v => {
+  mapBaseUrlToFolder.url = v;
+};
+const mapToBaseFolderParser = v => {
+  mapBaseUrlToFolder.folder = v;
 };
 
 const showError = err => {
@@ -67,6 +75,8 @@ program
   .option('-p, --param <name=value>', 'additional param to pass to templates', paramParser)
   .option('--force-write', 'force writing of the generated files to given directory even if it is a git repo with unstaged files or not empty dir (defaults to false)')
   .option('--watch-template', 'watches the template directory and the AsyncAPI document, and re-generate the files when changes occur. Ignores the output directory. This flag should be used only for template development.')
+  .option('--mapFromBaseUrl <url>','maps all schema references with this base url to folder specified by --mapToBaseFolder',mapFromBaseUrlParser)
+  .option('--mapToBaseFolder <baseFolder>','maps all schema references starting with url specified by --mapFromBaseUrl to this folder',mapToBaseFolderParser)
   .parse(process.argv);
 
 if (!asyncapiDocPath) {
@@ -105,7 +115,7 @@ xfs.mkdirp(program.output, async err => {
     if (!await isLocalTemplate(path.resolve(Generator.DEFAULT_TEMPLATES_DIR, templateName))) {
       console.warn(`WARNING: ${template} is a remote template. Changes may be lost on subsequent installations.`);
     }
-    
+
     watcher.watch(watcherHandler, (paths) => {
       showErrorAndExit({ message: `[WATCHER] Could not find the file path ${paths}, are you sure it still exists? If it has been deleted or moved please rerun the generator.` });
     });
@@ -125,7 +135,8 @@ function generate(targetDir) {
         disabledHooks,
         forceWrite: program.forceWrite,
         install: program.install,
-        debug: program.debug
+        debug: program.debug,
+        mapBaseUrlToFolder
       });
 
       if (isAsyncapiDocLocal) {

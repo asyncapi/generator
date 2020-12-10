@@ -237,7 +237,7 @@ There are some template parameters that have a special meaning:
 When writing React templates you decide whether to use CommonJS, ES5, or ES6 modules since everything is bundled together before the rendering process takes over. We use our own React renderer which can be found in the [Generator React SDK](https://github.com/asyncapi/generator-react-sdk). 
 There you can find information about how the renderer works or how we transpile your template files.
 
-Your React template always require 3 dependencies `react`, `source-map-support` and `@asyncapi/generator-react-sdk`. The `react` dependency is required to declare React components inside the template. `source-map-support` ensure that the transpiled files are mapped to the actual template files, this is only to enable correct error stack trace. `@asyncapi/generator-react-sdk` is required to access the `File` component which is required as a root component for a file to be rendered. Furthermore it provides some common components to make your development easier, like `Text` or `Indent`.
+Your React template always require `@asyncapi/generator-react-sdk` as a dependency. `@asyncapi/generator-react-sdk` is required to access the `File` component which is required as a root component for a file to be rendered. Furthermore it provides some common components to make your development easier, like `Text` or `Indent`.
 
 Let's consider a basic React template as the one below called `MyTemplate.js`:
 ```js

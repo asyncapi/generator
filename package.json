@@ -18,6 +18,7 @@
     "release": "semantic-release",
     "docker-build": "docker build -t asyncapi/generator:latest .",
     "get-version": "echo $npm_package_version",
+    "get-name": "echo $npm_package_name",
     "lint": "eslint --max-warnings 0 --config .eslintrc .",
     "lint-tpl-validator": "eslint --fix --config .eslintrc .github/templates-list-validator",
     "gen-readme-toc": "markdown-toc -i README.md",

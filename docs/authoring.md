@@ -264,7 +264,7 @@ For further information about components, props etc. see the [Generator React SD
 With React, it enables you to debug your templates. Below is a section of common IDE's and how to enable debugging. 
 
 #### VSCode
-For Visual Studio Code we have created a boiler plate [launch configuration](https://code.visualstudio.com/docs/editor/debugging#_launch-configurations) to enable debug in your template. Add the following launch configuration:
+For Visual Studio Code, we have created a boilerplate [launch configuration](https://code.visualstudio.com/docs/editor/debugging#_launch-configurations) to enable debug in your template. Add the following launch configuration:
 ```json
 {
   "version": "0.2.0",

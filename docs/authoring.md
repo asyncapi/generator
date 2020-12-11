@@ -227,7 +227,9 @@ There are some template parameters that have a special meaning:
 
 
 ## React
+
 [React](https://reactjs.org) is the render engine that we strongly suggest you should use for any new templates. The only reason it is not the default render engine is to stay backward compatible.
+
 * It enables the possiblity of [debugging](#debugging-react-template) your template (this is not possible with Nunjucks).
 * It provides better error stack traces.
 * Provides better support for separating code into more manageable chunks/components.
@@ -240,10 +242,11 @@ There you can find information about how the renderer works or how we transpile 
 Your React template always require `@asyncapi/generator-react-sdk` as a dependency. `@asyncapi/generator-react-sdk` is required to access the `File` component which is required as a root component for a file to be rendered. Furthermore it provides some common components to make your development easier, like `Text` or `Indent`.
 
 Let's consider a basic React template as the one below called `MyTemplate.js`:
+
 ```js
-import React from "react";
 import { File, Text } from "@asyncapi/generator-react-sdk";
-export default function({ asyncapi, params, originalAsyncAPI}) {
+
+export default function({ asyncapi, params, originalAsyncAPI }) {
   return (
     <File name="asyncapi.md">
       <Text>Some text that should render as is</Text>
@@ -251,6 +254,7 @@ export default function({ asyncapi, params, originalAsyncAPI}) {
   );
 }
 ```
+
 The exported default function returns a `File` component as a root component which the [Generator](https://github.com/asyncapi/generator) uses to figure out what file should be generated. In our case we overwrite the default functionality of saving the file as `MyTemplate.js` but instead use the filename `asyncapi.md`. It is then specified that we should render `Some text that should render as is\n` within that file. Notice the `\n` character at the end, this is something that is automatically added after `Text` component. 
 
 For further information about components, props etc. see the [Generator React SDK](https://github.com/asyncapi/generator-react-sdk)

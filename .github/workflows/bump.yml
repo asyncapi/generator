@@ -1,0 +1,32 @@
+name: Bump package version in dependent repos
+
+on:
+  #It cannot run on release event as when release is created then version is not yet bumped in package.json
+  #This means we cannot extract easily latest version and have a risk that package is not yet on npm
+  push:
+    branches:
+      - master
+
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+      - name: Get version from package.json before release step
+        id: extractver
+        run: echo "::set-output name=version::$(npm run get-version --silent)"
+      - name: Get name of package from package.json
+        id: extractname
+        run: echo "::set-output name=packname::$(npm run get-name --silent)"
+      - if: startsWith(github.event.commits[0].message, ' chore(release):')
+        name: Bumping latest version of this package in other repositories
+        uses: derberg/org-projects-dependency-manager@v1
+        with:
+          github_token: ${{ secrets.GH_TOKEN }}
+          committer_username: asyncapi-bot
+          committer_email: info@asyncapi.io
+          #This is commit message and PR title for repos where this package is in dependencies
+          commit_message_prod: 'fix: update ${{ steps.extractname.outputs.packname }} to ${{ steps.extractver.outputs.version }} version'
+          #This is commit message and PR title for repos where this package is in devDependencies
+          commit_message_dev: 'chore: update ${{ steps.extractname.outputs.packname }} to ${{ steps.extractver.outputs.version }} version'

@@ -6,8 +6,9 @@
   "scripts": {
     "test": "ava",
     "docs": "jsdoc2md src/customFilters.js > docs/api.md",
-    "lint": "eslint --config .eslintrc .",
+    "lint": "eslint --max-warnings 0 --config .eslintrc .",
     "get-version": "echo $npm_package_version",
+    "get-name": "echo $npm_package_name",
     "release": "semantic-release",
     "lint-fix": "eslint --fix --config .eslintrc ."
   },

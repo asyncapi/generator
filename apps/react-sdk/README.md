@@ -53,9 +53,7 @@ Restrictions:
 
 ### The debug flag
 
-When rendering you have the option of passing a `debug` flag which does
-
-* Does not remove the transpiled files after the rendering process is done.
+When rendering you have the option of passing a `debug` flag which does not remove the transpiled files after the rendering process is done.
 
 ## Example
 

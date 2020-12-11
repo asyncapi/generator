@@ -20,9 +20,6 @@
 <dt><a href="#transpileFiles">transpileFiles(directory, outputDir, options)</a></dt>
 <dd><p>Transpile files in a given directory (and sub directory if recursive option are passed) and write it to an output directory, if no errors are thrown it completed successfully.</p>
 </dd>
-<dt><a href="#getFilesInDir">getFilesInDir(dir, includeSubDirs)</a></dt>
-<dd><p>Function which finds all the files in directories</p>
-</dd>
 </dl>
 
 <a name="IndentationTypes"></a>
@@ -128,16 +125,4 @@ Transpile files in a given directory (and sub directory if recursive option are 
 | directory | to transpile. |
 | outputDir | to write the transpiled files to. |
 | options | any extra options that should be passed. |
-
-<a name="getFilesInDir"></a>
-
-## getFilesInDir(dir, includeSubDirs)
-Function which finds all the files in directories
-
-**Kind**: global function  
-
-| Param | Description |
-| --- | --- |
-| dir | directory to find files in. |
-| includeSubDirs | should the function iterate through subdirectories to search for files? |
 

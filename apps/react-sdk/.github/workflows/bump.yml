@@ -19,7 +19,7 @@ jobs:
       - name: Get name of package from package.json
         id: extractname
         run: echo "::set-output name=packname::$(npm run get-name --silent)"
-      - if: startsWith(github.event.commits[0].message, ' chore(release):')
+      - if: startsWith(github.event.commits[0].message, 'chore(release):')
         name: Bumping latest version of this package in other repositories
         uses: derberg/org-projects-dependency-manager@v1
         with:

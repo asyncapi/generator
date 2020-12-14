@@ -288,7 +288,7 @@ try {
 <a name="Generator+installTemplate"></a>
 
 ### generator.installTemplate([force])
-Downloads and installs a template and its dependencies
+Downloads and installs a template and its dependencies.
 
 **Kind**: instance method of [<code>Generator</code>](#Generator)  
 

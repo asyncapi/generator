@@ -262,7 +262,7 @@ For further information about components, props etc. see the [Generator React SD
 ### Common assumptions
 
 1. All files within the template directory are rendered if their root component is of type `File` and the path is not part of the `nonRenderableFiles` configuration.
-1. New lines are automatically added after each `Text` component.
+1. Newline is automatically added after each `Text` component.
 
 ### Debugging React template
 With React, it enables you to debug your templates. Below is a section of common IDE's and how to enable debugging. 

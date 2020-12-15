@@ -265,6 +265,13 @@ For further information about components, props etc. see the [Generator React SD
     - `File` is the root component
     - The file is not in the list of `nonRenderableFiles` in the template configuration
 1. New lines are automatically added after each `Text` component.
+1. The props you have access to in rendering function is:
+   - `asyncapi` that is a parsed spec file object. Read the [API](https://github.com/asyncapi/parser-js/blob/master/API.md#AsyncAPIDocument) of the Parser to understand to what structure you have access in this parameter.
+   - `originalAsyncAPI` that is an original spec file before it is parsed. 
+   - `params` that contains the parameters provided when generating.
+1. All the file templates are supported where the variables are provided after the default props as listed above. 
+
+
 
 ### Debugging React template in VSCode
 With React, it enables you to debug your templates. For Visual Studio Code, we have created a boilerplate [launch configuration](https://code.visualstudio.com/docs/editor/debugging#_launch-configurations) to enable debug in your template. Add the following launch configuration:

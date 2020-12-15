@@ -266,7 +266,7 @@ For further information about components, props etc. see the [Generator React SD
     - The file is not in the list of `nonRenderableFiles` in the template configuration
 1. New lines are automatically added after each `Text` component.
 
-### Debugging React template
+### Debugging React template in VSCode
 With React, it enables you to debug your templates. Below is a section of common IDE's and how to enable debugging. 
 
 #### VSCode

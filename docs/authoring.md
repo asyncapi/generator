@@ -10,17 +10,10 @@ To work on a template, you need an AsyncAPI specification file that you can use 
 
 1. A template is a directory in your file system.
 1. The template can have own dependencies. Just create `package.json` for the template. The generator makes sure to trigger the installation of dependencies.
-1. Templates may contain multiple files. Unless stated otherwise, all files will be rendered.
-1. The template engine is [Nunjucks](https://mozilla.github.io/nunjucks).
-1. Templates may contain [Nunjucks filters or helper functions](https://mozilla.github.io/nunjucks/templating.html#builtin-filters). [Read more about filters](#filters).
-1. Templates may contain `hooks` that are functions invoked during specific moment of the generation. In the template, they must be stored in the `.hooks` directory under the template directory. They can also be stored in other modules and external libraries and configured inside the template [Read more about hooks](#hooks).
-1. Templates may contain `partials` (reusable chunks). They must be stored in the `.partials` directory under the template directory. [Read more about partials](#partials).
 1. Templates can be configured. Configuration must be stored in the `package.json` file under custom `generator` property. [Read more about the configuration file](#configuration-file).
+1. The template engine can be either [React](#react) (recommended) or [Nunjucks](#nunjucks) (default). This can be controlled with the `renderer` property in the [template configuration](#template-configuration).
+1. Templates may contain `hooks` that are functions invoked during specific moment of the generation. In the template, they must be stored in the `hooks` directory under the template directory. They can also be stored in other modules and external libraries and configured inside the template [Read more about hooks](#hooks).
 1. There are parameters with special meaning. [Read more about special parameters](#special-parameters).
-1. The default variables you have access to in any the template file are the following:
-   - `asyncapi` that is a parsed spec file object. Read the [API](https://github.com/asyncapi/parser-js/blob/master/API.md#AsyncAPIDocument) of the Parser to understand to what structure you have access in this parameter.
-   - `originalAsyncAPI` that is an original spec file before it is parsed. 
-   - `params` that contains the parameters provided when generating.
 
 ## Special file names
 
@@ -78,18 +71,6 @@ and
 Schema name is 'people' and properties are:
 - id
 ```
-## Filters
-
-A filter is a helper function that you can create to perform complex tasks. They are JavaScript files that register one or many [Nunjuck filters](https://mozilla.github.io/nunjucks/api.html#custom-filters). The generator parses all the files in the `filters` directory. Functions exported from these files are registered as filters.
-
-You can use the filter function in your template as in the following example:
-
-```js
-const {{ channelName | camelCase }} = '{{ channelName }}';
-```
-
-In case you have more than one template and want to reuse filters, you can put them in a single library. You can configure such a library in the template configuration under `filters` property. You can also use the official AsyncAPI [filters library](https://github.com/asyncapi/generator-filters). To learn how to add such filters to configuration [read more about the configuration file](#configuration-file).
-
 ## Hooks
 
 Hooks are functions called by the generator on a specific moment in the generation process. Hooks can be anonymous functions but you can also add function names. These hooks can have arguments provided to them or being expected to return a value.
@@ -169,24 +150,6 @@ module.exports = {
 };
 ```
 
-## Partials
-
-Files from the `.partials` directory do not end up with other generated files in the target directory. In this directory you should keep reusable templates chunks that you can [include](https://mozilla.github.io/nunjucks/templating.html#include) in your templates. You can also put there [macros](https://mozilla.github.io/nunjucks/templating.html#macro) to use them in templates, like in below example:
-
-```html
-{# tags.html #}
-{% macro tags(tagList) %}
-<div class="mt-4">
-  {% for tag in tagList %}
-    <span class="bg-grey-dark font-normal text-sm no-underline text-white rounded lowercase mr-2 px-2 py-1" title="{{tag.description()}}">{{tag.name()}}</span>
-  {% endfor %}
-</div>
-{% endmacro %}
-
-{# operations.html #}
-{% from "./tags.html" import tags %}
-{{ tags(operation.tags()) }}
-```
 
 ## Configuration File
 
@@ -194,6 +157,7 @@ The `generator` property from `package.json` file must contain a JSON object tha
 
 |Name|Type|Description|
 |---|---|---|
+|`renderer`| String | Its value can be either `react` or `nunjucks` (default).
 |`supportedProtocols`| [String] | A list with all the protocols this template supports.
 |`parameters`| Object[String, Object] | An object with all the parameters that can be passed when generating the template. When using the command line, it's done by indicating `--param name=value` or `-p name=value`.
 |`parameters[param].description`| String | A user-friendly description about the parameter.
@@ -212,6 +176,7 @@ The `generator` property from `package.json` file must contain a JSON object tha
 ```json
 "generator":
 {
+  "renderer": "react",
   "supportedProtocols": ["amqp", "mqtt"],
   "parameters": {
     "server": {
@@ -259,3 +224,123 @@ There are some template parameters that have a special meaning:
 |Name|Description|
 |---|---|
 |`server`| It is used to let the template know which server from the AsyncAPI specification file you want to use. In some cases, this may be required. For instance, when generating code that connects to a specific server. Use this parameter in case your template relies on users' information about what server from the specification file they want to use during generation. You also need this parameter if you want to use `server.protocol` notation within `conditionalFiles` configuration option. Once you decide to specify this parameter for your template, it is recommended you make it a mandatory parameter otherwise feature like `conditionalFiles` is not going to work if your users do not use this parameter obligatory.
+
+
+## React
+
+[React](https://reactjs.org) is the render engine that we strongly suggest you should use for any new templates. The only reason it is not the default render engine is to stay backward compatible.
+
+* It enables the possiblity of [debugging](#debugging-react-template) your template (this is not possible with Nunjucks).
+* It provides better error stack traces.
+* Provides better support for separating code into more manageable chunks/components.
+* The readability of the template is much better compared to Nunjucks syntax.
+* Better tool support for development.
+* Introduces testability of components which is not possible with Nunjucks.
+
+When writing React templates you decide whether to use CommonJS, ES5, or ES6 modules since everything is bundled together before the rendering process takes over. We use our own React renderer which can be found in the [Generator React SDK](https://github.com/asyncapi/generator-react-sdk). 
+There you can find information about how the renderer works or how we transpile your template files.
+
+Your React template always require `@asyncapi/generator-react-sdk` as a dependency. `@asyncapi/generator-react-sdk` is required to access the `File` component which is required as a root component for a file to be rendered. Furthermore it provides some common components to make your development easier, like `Text` or `Indent`.
+
+Let's consider a basic React template as the one below called `MyTemplate.js`:
+
+```js
+import { File, Text } from "@asyncapi/generator-react-sdk";
+
+export default function({ asyncapi, params, originalAsyncAPI }) {
+  return (
+    <File name="asyncapi.md">
+      <Text>Some text that should render as is</Text>
+    </File>
+  );
+}
+```
+
+The exported default function returns a `File` component as a root component which the [Generator](https://github.com/asyncapi/generator) uses to figure out what file should be generated. In our case we overwrite the default functionality of saving the file as `MyTemplate.js` but instead use the filename `asyncapi.md`. It is then specified that we should render `Some text that should render as is\n` within that file. Notice the `\n` character at the end, this is something that is automatically added after the `Text` component. 
+
+For further information about components, props etc. see the [Generator React SDK](https://github.com/asyncapi/generator-react-sdk)
+
+### Common assumptions
+
+1. Generator renders all files located in the `template` directory if they meet the following conditions:
+    - `File` is the root component
+    - The file is not in the list of `nonRenderableFiles` in the template configuration
+1. New lines are automatically added after each `Text` component.
+1. The props you have access to in rendering function is:
+   - `asyncapi` that is a parsed spec file object. Read the [API](https://github.com/asyncapi/parser-js/blob/master/API.md#AsyncAPIDocument) of the Parser to understand to what structure you have access in this parameter.
+   - `originalAsyncAPI` that is an original spec file before it is parsed. 
+   - `params` that contains the parameters provided when generating.
+1. All the file templates are supported where the variables are provided after the default props as listed above. 
+
+
+
+### Debugging React template in VSCode
+With React, it enables you to debug your templates. For Visual Studio Code, we have created a boilerplate [launch configuration](https://code.visualstudio.com/docs/editor/debugging#_launch-configurations) to enable debug in your template. Add the following launch configuration:
+```json
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug template",
+      "timeout": 10000,
+      "sourceMaps": true,
+      "args": [
+        "./asyncapi.yml",
+        "./template",
+        "--output",
+        "./output",
+        "--install",
+        "--force-write"
+      ],
+      "program": "ag"
+    }
+  ]
+}
+```
+Now replace `./asyncapi.yml` with your document of choice. Replace `./template` with the path to your React template. You can now debug your template by adding any breakpoints you want and inspect your code.
+
+## Nunjucks
+[Nunjucks](https://mozilla.github.io/nunjucks) is the default render engine, however, we strongly recommend adopting the [React](#react) engine.
+### Common assumptions
+
+1. Templates may contain [Nunjucks filters or helper functions](https://mozilla.github.io/nunjucks/templating.html#builtin-filters). [Read more about filters](#filters).
+1. Templates may contain `partials` (reusable chunks). They must be stored in the `.partials` directory under the template directory. [Read more about partials](#partials).
+1. Templates may contain multiple files. Unless stated otherwise, all files will be rendered.
+1. The default variables you have access to in any the template file are the following:
+   - `asyncapi` that is a parsed spec file object. Read the [API](https://github.com/asyncapi/parser-js/blob/master/API.md#AsyncAPIDocument) of the Parser to understand to what structure you have access in this parameter.
+   - `originalAsyncAPI` that is an original spec file before it is parsed. 
+   - `params` that contains the parameters provided when generating.
+
+
+### Partials
+
+Files from the `.partials` directory do not end up with other generated files in the target directory. In this directory you should keep reusable templates chunks that you can [include](https://mozilla.github.io/nunjucks/templating.html#include) in your templates. You can also put there [macros](https://mozilla.github.io/nunjucks/templating.html#macro) to use them in templates, like in below example:
+
+```html
+{# tags.html #}
+{% macro tags(tagList) %}
+<div class="mt-4">
+  {% for tag in tagList %}
+    <span class="bg-grey-dark font-normal text-sm no-underline text-white rounded lowercase mr-2 px-2 py-1" title="{{tag.description()}}">{{tag.name()}}</span>
+  {% endfor %}
+</div>
+{% endmacro %}
+
+{# operations.html #}
+{% from "./tags.html" import tags %}
+{{ tags(operation.tags()) }}
+```
+
+### Filters
+
+A filter is a helper function that you can create to perform complex tasks. They are JavaScript files that register one or many [Nunjuck filters](https://mozilla.github.io/nunjucks/api.html#custom-filters). The generator parses all the files in the `filters` directory. Functions exported from these files are registered as filters.
+
+You can use the filter function in your template as in the following example:
+
+```js
+const {{ channelName | camelCase }} = '{{ channelName }}';
+```
+
+In case you have more than one template and want to reuse filters, you can put them in a single library. You can configure such a library in the template configuration under `filters` property. You can also use the official AsyncAPI [filters library](https://github.com/asyncapi/generator-filters). To learn how to add such filters to configuration [read more about the configuration file](#configuration-file).

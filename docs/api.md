@@ -21,6 +21,7 @@
         * [.originalAsyncAPI](#Generator+originalAsyncAPI) : <code>String</code>
         * [.asyncapi](#Generator+asyncapi) : <code>AsyncAPIDocument</code>
         * [.generate(asyncapiDocument)](#Generator+generate) ⇒ <code>Promise</code>
+        * [.configureTemplate()](#Generator+configureTemplate)
         * [.generateFromString(asyncapiString, [parserOptions])](#Generator+generateFromString) ⇒ <code>Promise</code>
         * [.generateFromURL(asyncapiURL)](#Generator+generateFromURL) ⇒ <code>Promise</code>
         * [.generateFromFile(asyncapiFile)](#Generator+generateFromFile) ⇒ <code>Promise</code>
@@ -175,6 +176,12 @@ try {
   console.error(e);
 }
 ```
+<a name="Generator+configureTemplate"></a>
+
+### generator.configureTemplate()
+Configure the templates based the desired renderer.
+
+**Kind**: instance method of [<code>Generator</code>](#Generator)  
 <a name="Generator+generateFromString"></a>
 
 ### generator.generateFromString(asyncapiString, [parserOptions]) ⇒ <code>Promise</code>

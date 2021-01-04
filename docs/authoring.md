@@ -2,7 +2,7 @@
 
 The AsyncAPI generator has been built with extensibility in mind. The package uses a set of default templates to let you generate documentation and code. However, you can create and use your own templates. In this section, you learn how to create your own one.
 
-To work on a template, you need an AsyncAPI specification file that you can use for testing. For this purpose, you can use [this](test/docs/dummy.yml) dummy file as it's purpose is to cover as many features of AsyncAPI as possible. Do not copy this file to your template but use it directly from this repo like this: `ag https://raw.githubusercontent.com/asyncapi/generator/master/test/docs/dummy.yml ./your-template`
+To work on a template, you need an AsyncAPI specification file that you can use for testing. For this purpose, you can use [this](../test/docs/dummy.yml) dummy file as it's purpose is to cover as many features of AsyncAPI as possible. Do not copy this file to your template but use it directly from this repo like this: `ag https://raw.githubusercontent.com/asyncapi/generator/master/test/docs/dummy.yml ./your-template`
 
 > In case you find some features missing or other possible improvements in the dummy file, suggest changes. The goal is to build a file that all templates can use and check their specification features coverage.
 

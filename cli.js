@@ -88,16 +88,18 @@ xfs.mkdirp(program.output, async err => {
     let watcher;
     const watchDir = path.resolve(template);
     const outputPath = path.resolve(watchDir, program.output);
+    const transpiledTemplatePath = path.resolve(watchDir, Generator.TRANSPILED_TEMPLATE_LOCATION);
+    const ignorePaths = [outputPath, transpiledTemplatePath];
     // Template name is needed as it is not always a part of the cli commad
     // There is a use case that you run generator from a root of the template with `./` path
     const templateName = require(path.resolve(watchDir,'package.json')).name;
 
     if (isAsyncapiDocLocal) {
       console.log(`[WATCHER] Watching for changes in the template directory ${magenta(watchDir)} and in the AsyncAPI file ${magenta(asyncapiDocPath)}`);
-      watcher = new Watcher([asyncapiDocPath, watchDir], outputPath);
+      watcher = new Watcher([asyncapiDocPath, watchDir], ignorePaths);
     } else {
       console.log(`[WATCHER] Watching for changes in the template directory ${magenta(watchDir)}`);
-      watcher = new Watcher(watchDir, outputPath);
+      watcher = new Watcher(watchDir, ignorePaths);
     }
     // Must check template in its installation path in generator to use isLocalTemplate function
     if (!await isLocalTemplate(path.resolve(Generator.DEFAULT_TEMPLATES_DIR, templateName))) {

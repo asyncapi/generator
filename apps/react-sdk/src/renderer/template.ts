@@ -13,7 +13,13 @@ export async function renderTemplate(filepath: string, context: TemplateContext)
   if (!isJsFile(filepath)) {
     return undefined;
   }
-  const data = await importComponent(filepath, context);
+
+  let data = undefined;
+  try {
+    data = await importComponent(filepath, context);
+  } catch(err) {
+    throw err;
+  }
 
   // undefined, null etc. cases
   if (!data) {
@@ -28,10 +34,22 @@ export async function renderTemplate(filepath: string, context: TemplateContext)
  * @private
  * @param filepath to import
  */
-function importComponent(filepath: string, context: TemplateContext): Promise<React.ReactElement> {
-  return new Promise((resolve) => {
-    import(filepath).then(component => { resolve(component.default !== undefined ? component.default(context) : undefined) })
-  })
+function importComponent(filepath: string, context: TemplateContext): Promise<React.ReactElement | undefined> {
+  return new Promise((resolve, reject) => {
+    try {
+      // we should import component only in NodeJS
+      if (require === undefined) resolve(undefined);
+      // remove from cache imported file
+      delete require.cache[require.resolve(filepath)];
+
+      const component = require(filepath);
+      if (typeof component === "function") resolve(component(context));
+      if (typeof component.default === "function") resolve(component.default(context));
+      resolve(undefined);
+    } catch(err) {
+      reject(err);
+    }
+  });
 }
 
 /**

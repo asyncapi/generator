@@ -58,6 +58,7 @@ Template Name | Description | Source code
 `@asyncapi/python-paho-template` | Generates Python service that uses Paho library | [click here](https://github.com/asyncapi/python-paho-template)
 `@asyncapi/html-template` | Generates HTML documentation site | [click here](https://github.com/asyncapi/html-template)
 `@asyncapi/markdown-template` | Generates documentation in Markdown file | [click here](https://github.com/asyncapi/markdown-template)
+`@asyncapi/ts-nats-template` | Generates TypeScript NATS client | [click here](https://github.com/asyncapi/ts-nats-template/)
 
 <!-- TEMPLATES-LIST:END -->
 

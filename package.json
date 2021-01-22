@@ -16,13 +16,14 @@
     "test:dev": "jest --watchAll --coverage",
     "docs": "jsdoc2md lib/generator.js > docs/api.md",
     "release": "semantic-release",
-    "docker-build": "docker build -t asyncapi/generator:latest .",
-    "get-version": "echo $npm_package_version",
-    "get-name": "echo $npm_package_name",
+    "docker:build": "docker build -t asyncapi/generator:latest .",
+    "get:version": "echo $npm_package_version",
+    "get:name": "echo $npm_package_name",
     "lint": "eslint --max-warnings 0 --config .eslintrc .",
-    "lint-tpl-validator": "eslint --fix --config .eslintrc .github/templates-list-validator",
-    "gen-readme-toc": "markdown-toc -i README.md",
-    "prepublishOnly": "npm run docs"
+    "lint:tpl:validator": "eslint --fix --config .eslintrc .github/templates-list-validator",
+    "generate:readme:toc": "markdown-toc -i README.md",
+    "generate:assets": "npm run docs && npm run generate:readme:toc",
+    "bump:version": "npm --no-git-tag-version --allow-same-version version $VERSION"
   },
   "preferGlobal": true,
   "bugs": {
@@ -83,7 +84,6 @@
     "jsdoc-to-markdown": "^5.0.0",
     "markdown-toc": "^1.2.0",
     "semantic-release": "^17.2.2",
-    "semantic-release-slack-bot": "^1.5.0",
     "all-contributors-cli": "^6.14.2"
   },
   "release": {
@@ -101,14 +101,6 @@
         "@semantic-release/release-notes-generator",
         {
           "preset": "conventionalcommits"
-        }
-      ],
-      [
-        "semantic-release-slack-bot",
-        {
-          "notifyOnSuccess": true,
-          "packageName": "https://github.com/asyncapi/generator",
-          "markdownReleaseNotes": true
         }
       ],
       "@semantic-release/npm",

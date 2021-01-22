@@ -15,10 +15,10 @@ jobs:
         uses: actions/checkout@v2
       - name: Get version from package.json before release step
         id: extractver
-        run: echo "::set-output name=version::$(npm run get-version --silent)"
+        run: echo "::set-output name=version::$(npm run get:version --silent)"
       - name: Get name of package from package.json
         id: extractname
-        run: echo "::set-output name=packname::$(npm run get-name --silent)"
+        run: echo "::set-output name=packname::$(npm run get:name --silent)"
       - if: startsWith(github.event.commits[0].message, 'chore(release):')
         name: Bumping latest version of this package in other repositories
         uses: derberg/org-projects-dependency-manager@v1

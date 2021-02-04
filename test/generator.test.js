@@ -235,7 +235,8 @@ describe('Generator', () => {
       expect(filtersRegistry.registerFilters).toHaveBeenCalled();
       expect(templateConfigValidator.validateTemplateConfig).toHaveBeenCalled();
       expect(gen.launchHook).toHaveBeenCalledWith('generate:after');
-      expect(slash(util.exists.mock.calls[0][0])).toHaveBeenCalledWith('/path/to/template/nameOfTestTemplate/template/file.js');
+      expect(slash(util.exists.mock.calls[0][0])).toEqual('/path/to/template/nameOfTestTemplate/template/file.js');
+      console.log('mock call', gen.generateFile.mock.calls[0][0]);
       expect(gen.generateFile).toHaveBeenCalledWith(asyncApiDocumentMock, 'file.js', '/path/to/template/nameOfTestTemplate/template');
 
       expect(util.readFile).toHaveBeenCalledTimes(0);

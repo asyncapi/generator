@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const Generator = require('../lib/generator');
 const log = require('loglevel');
+const slash = require('slash');
 
 const dummyYAML = fs.readFileSync(path.resolve(__dirname, './docs/dummy.yml'), 'utf8');
 
@@ -234,7 +235,7 @@ describe('Generator', () => {
       expect(filtersRegistry.registerFilters).toHaveBeenCalled();
       expect(templateConfigValidator.validateTemplateConfig).toHaveBeenCalled();
       expect(gen.launchHook).toHaveBeenCalledWith('generate:after');
-      expect(util.exists).toHaveBeenCalledWith('/path/to/template/nameOfTestTemplate/template/file.js');
+      expect(util.exists).toHaveBeenCalledWith(slash('/path/to/template/nameOfTestTemplate/template/file.js'));
       expect(gen.generateFile).toHaveBeenCalledWith(asyncApiDocumentMock, 'file.js', '/path/to/template/nameOfTestTemplate/template');
 
       expect(util.readFile).toHaveBeenCalledTimes(0);

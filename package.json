@@ -75,6 +75,7 @@
     "@semantic-release/github": "^7.0.4",
     "@semantic-release/npm": "^7.0.6",
     "@semantic-release/release-notes-generator": "^9.0.1",
+    "all-contributors-cli": "^6.14.2",
     "chokidar": "^3.4.0",
     "conventional-changelog-conventionalcommits": "^4.4.0",
     "eslint": "^6.8.0",
@@ -84,7 +85,7 @@
     "jsdoc-to-markdown": "^5.0.0",
     "markdown-toc": "^1.2.0",
     "semantic-release": "^17.2.2",
-    "all-contributors-cli": "^6.14.2"
+    "slash": "^3.0.0"
   },
   "release": {
     "branches": [

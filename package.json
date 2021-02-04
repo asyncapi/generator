@@ -85,7 +85,7 @@
     "jsdoc-to-markdown": "^5.0.0",
     "markdown-toc": "^1.2.0",
     "semantic-release": "^17.2.2",
-    "slash": "^3.0.0"
+    "unixify": "^1.0.0"
   },
   "release": {
     "branches": [

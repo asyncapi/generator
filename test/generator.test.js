@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const Generator = require('../lib/generator');
 const log = require('loglevel');
-const slash = require('slash');
+const unixify = require('unixify');
 
 const dummyYAML = fs.readFileSync(path.resolve(__dirname, './docs/dummy.yml'), 'utf8');
 
@@ -235,10 +235,10 @@ describe('Generator', () => {
       expect(filtersRegistry.registerFilters).toHaveBeenCalled();
       expect(templateConfigValidator.validateTemplateConfig).toHaveBeenCalled();
       expect(gen.launchHook).toHaveBeenCalledWith('generate:after');
-      expect(slash(util.exists.mock.calls[0][0])).toEqual('/path/to/template/nameOfTestTemplate/template/file.js');
-      console.log('mock call', gen.generateFile.mock.calls[0][0]);
-      expect(gen.generateFile).toHaveBeenCalledWith(asyncApiDocumentMock, 'file.js', '/path/to/template/nameOfTestTemplate/template');
-
+      expect(unixify(util.exists.mock.calls[0][0])).toEqual('/path/to/template/nameOfTestTemplate/template/file.js');
+      expect(gen.generateFile.mock.calls[0][0]).toEqual(asyncApiDocumentMock);
+      expect(gen.generateFile.mock.calls[0][1]).toEqual('file.js');
+      expect(unixify(gen.generateFile.mock.calls[0][2])).toEqual('/path/to/template/nameOfTestTemplate/template');
       expect(util.readFile).toHaveBeenCalledTimes(0);
       expect(gen.renderString).toHaveBeenCalledTimes(0);
       expect(gen.generateDirectoryStructure).toHaveBeenCalledTimes(0);

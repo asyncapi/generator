@@ -8,8 +8,8 @@
     "ag": "./cli.js"
   },
   "engines": {
-    "node": ">12.16 <15",
-    "npm": ">6.13.7 <7"
+    "node": ">12.16",
+    "npm": ">6.13.7"
   },
   "scripts": {
     "test": "jest --coverage",

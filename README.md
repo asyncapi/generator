@@ -66,10 +66,12 @@ You can find above templates and the ones provided by the community in **[this l
 
 ## Requirements
 
-* v12.16+ < Node.js < 15
-* v6.13.7+ < npm < 7
+* v12.16+ < Node.js
+* v6.13.7+ < npm
 
 Install both packages using [official installer](https://nodejs.org/en/download/). After installation make sure both packages have proper version by running `node -v` and `npm -v`. To upgrade invalid npm version run `npm install npm@latest -g`
+
+**Please note that non-LTS versions of Node and npm are not supported. **
 
 ## Using from the command-line interface (CLI)
 

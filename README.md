@@ -71,7 +71,9 @@ You can find above templates and the ones provided by the community in **[this l
 
 Install both packages using [official installer](https://nodejs.org/en/download/). After installation make sure both packages have proper version by running `node -v` and `npm -v`. To upgrade invalid npm version run `npm install npm@latest -g`
 
-**Please note that non-LTS versions of Node and npm are not supported. **
+**Generator is tested at the moment against Node 14 and NPM 6. Using newer versions is enabled but we do not guarantee they work well. Please provide feedback on the issues.**
+
+how about this?
 
 ## Using from the command-line interface (CLI)
 

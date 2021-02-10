@@ -1,0 +1,35 @@
+name: 'Update generated parts of documentation on docs: commits'
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  docs-gen:
+    name: 'Generate docs and create PR'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - name: Install dependencies
+        run: npm ci
+      - name: Regenerate docs
+        run: npm run generate:assets
+      - name: Create Pull Request with updated docs
+        # PR should be created within this GH action only if it is a docs: commit
+        # Otherwise it will conflict with release workflow
+        if: startsWith(github.event.commits[0].message, 'docs:')
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+          commit-message: 'chore: update generated docs'
+          committer: asyncapi-bot <info@asyncapi.io>
+          author: asyncapi-bot <info@asyncapi.io>
+          title: 'chore: update generated docs'
+          body: 'Update of docs that are generated and were forgotten on PR level.'
+          branch: gen-docs-update

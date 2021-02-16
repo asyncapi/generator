@@ -68,7 +68,8 @@
     "npmi": "^4.0.0",
     "nunjucks": "^3.2.0",
     "semver": "^7.3.2",
-    "simple-git": "^1.131.0"
+    "simple-git": "^1.131.0",
+    "chokidar": "^3.4.0"
   },
   "devDependencies": {
     "@semantic-release/commit-analyzer": "^8.0.1",
@@ -76,7 +77,6 @@
     "@semantic-release/npm": "^7.0.6",
     "@semantic-release/release-notes-generator": "^9.0.1",
     "all-contributors-cli": "^6.14.2",
-    "chokidar": "^3.4.0",
     "conventional-changelog-conventionalcommits": "^4.4.0",
     "eslint": "^6.8.0",
     "eslint-plugin-jest": "^23.8.2",

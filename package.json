@@ -14,7 +14,7 @@
   "scripts": {
     "test": "jest --coverage && npm run test:integration",
     "test:dev": "jest --watchAll --coverage",
-    "test:integration": "npm ci --production && ./cli.js https://bit.ly/asyncapi @asyncapi/html-template -o output --force-write && test -e test/output/index.html",
+    "test:integration": "npm ci --production && ./cli.js https://bit.ly/asyncapi @asyncapi/html-template -o test/output --force-write && test -e test/output/index.html",
     "docs": "jsdoc2md lib/generator.js > docs/api.md",
     "release": "semantic-release",
     "docker:build": "docker build -t asyncapi/generator:latest .",

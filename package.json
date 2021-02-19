@@ -12,8 +12,10 @@
     "npm": ">6.13.7"
   },
   "scripts": {
-    "test": "jest --coverage",
-    "test:dev": "jest --watchAll --coverage",
+    "test": "npm run test:unit && npm run test:integration",
+    "test:unit": "jest --coverage",
+    "test:dev": "npm run test:unit -- --watchAll",
+    "test:integration": "node cli.js https://bit.ly/asyncapi @asyncapi/html-template -o test/output --force-write && test -e test/output/index.html",
     "docs": "jsdoc2md lib/generator.js > docs/api.md",
     "release": "semantic-release",
     "docker:build": "docker build -t asyncapi/generator:latest .",
@@ -23,6 +25,7 @@
     "lint:tpl:validator": "eslint --fix --config .eslintrc .github/templates-list-validator",
     "generate:readme:toc": "markdown-toc -i README.md",
     "generate:assets": "npm run docs && npm run generate:readme:toc",
+    "postinstall": "cd \"node_modules/npmi\" && npm install global-npm@0.4.1",
     "bump:version": "npm --no-git-tag-version --allow-same-version version $VERSION"
   },
   "preferGlobal": true,

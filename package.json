@@ -24,6 +24,7 @@
     "lint:tpl:validator": "eslint --fix --config .eslintrc .github/templates-list-validator",
     "generate:readme:toc": "markdown-toc -i README.md",
     "generate:assets": "npm run docs && npm run generate:readme:toc",
+    "postinstall": "cd \"node_modules/npmi\" && npm install global-npm@0.4.1",
     "bump:version": "npm --no-git-tag-version --allow-same-version version $VERSION"
   },
   "preferGlobal": true,

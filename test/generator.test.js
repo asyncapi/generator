@@ -332,21 +332,21 @@ describe('Generator', () => {
   });
 
   describe('#installTemplate', () => {
-    let Arborist;
     let arboristMock;
-    let resolvedMock;
     let utils;
 
     beforeEach(() => {
-      Arborist = require('@npmcli/arborist');
-      arboristMock = new Arborist({});
-      resolvedMock = Symbol.for('resolvedAdd');
-      arboristMock[resolvedMock] = [{
-        name: 'test'
-      }];
+      arboristMock = require('@npmcli/arborist');
       utils = require('../lib/utils');
       jest.mock(path.resolve('./testTemplate', 'package.json'), () => ({ name: 'nameOfTestTemplate' }), { virtual: true });
       jest.mock(path.resolve(Generator.DEFAULT_TEMPLATES_DIR, 'nameOfTestTemplate', 'package.json'), () => ({ name: 'nameOfTestTemplate' }), { virtual: true });
+      
+      jest.mock('@npmcli/arborist', () => {
+        return {
+          reify: jest.fn().mockImplementation(async () => { return {}; }),
+          [Symbol.for('resolvedAdd')]: jest.fn().mockImplementation(() => { return {}; }),
+        };
+      });
     });
 
     it('works with a file system path', async () => {

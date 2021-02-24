@@ -343,4 +343,21 @@ You can use the filter function in your template as in the following example:
 const {{ channelName | camelCase }} = '{{ channelName }}';
 ```
 
+The generator supports also asynchronous filters. Asynchronous filters receive as last argument a callback to resume rendering. Asynchronous filters must be annotated with the `async` keyword. See the example of how to use asynchronous filters:
+
+```js
+async function asyncCamelCase(str, callback) {
+  try {
+    const result = // logic for camel casing str
+    callback(null, result);
+  } catch (error) {
+    callback(error);
+  }
+}
+filter.renderAsyncContent = renderAsyncContent;
+
+// using in template
+{{ channelName | asyncCamelCase }}
+```
+
 In case you have more than one template and want to reuse filters, you can put them in a single library. You can configure such a library in the template configuration under `filters` property. You can also use the official AsyncAPI [filters library](https://github.com/asyncapi/generator-filters). To learn how to add such filters to configuration [read more about the configuration file](#configuration-file).

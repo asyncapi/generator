@@ -343,7 +343,7 @@ You can use the filter function in your template as in the following example:
 const {{ channelName | camelCase }} = '{{ channelName }}';
 ```
 
-The generator supports also asynchronous filters. Asynchronous filters receive as last argument a callback to resume rendering. Asynchronous filters must be annotated with the `async` keyword. See the example of how to use asynchronous filters:
+The generator supports also asynchronous filters. Asynchronous filters receive as last argument a callback to resume rendering. Asynchronous filters must be annotated with the `async` keyword. Make sure to call the callback with two arguments: `callback(err, res)`. `err` can be `null`. See the example of how to use asynchronous filters:
 
 ```js
 async function asyncCamelCase(str, callback) {

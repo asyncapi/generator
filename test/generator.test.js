@@ -332,21 +332,16 @@ describe('Generator', () => {
   });
 
   describe('#installTemplate', () => {
+    let ArboristMock;
     let arboristMock;
     let utils;
 
     beforeEach(() => {
-      arboristMock = require('@npmcli/arborist');
+      ArboristMock = require('@npmcli/arborist');
+      arboristMock = new ArboristMock();
       utils = require('../lib/utils');
       jest.mock(path.resolve('./testTemplate', 'package.json'), () => ({ name: 'nameOfTestTemplate' }), { virtual: true });
       jest.mock(path.resolve(Generator.DEFAULT_TEMPLATES_DIR, 'nameOfTestTemplate', 'package.json'), () => ({ name: 'nameOfTestTemplate' }), { virtual: true });
-      
-      jest.mock('@npmcli/arborist', () => {
-        return {
-          reify: jest.fn().mockImplementation(async () => { return {}; }),
-          [Symbol.for('resolvedAdd')]: jest.fn().mockImplementation(() => { return {}; }),
-        };
-      });
     });
 
     it('works with a file system path', async () => {
@@ -359,14 +354,15 @@ describe('Generator', () => {
     it('works with a file system path and force = true', async () => {
       const gen = new Generator('./testTemplate', __dirname);
       await gen.installTemplate(true);
-      expect(arboristMock.reify).toHaveBeenCalledTimes(1);
-      expect(arboristMock.reify.mock.calls[0][0]).toStrictEqual({
-        add: ['./testTemplate'],
-        saveType: 'prod',
-        save: false
-      });
+      setTimeout(() => { // This puts the call at the end of the Node.js event loop queue.
+        expect(arboristMock.reify).toHaveBeenCalledTimes(1);
+        expect(arboristMock.reify.mock.calls[0][0]).toStrictEqual({
+          add: ['./testTemplate'],
+          saveType: 'prod',
+          save: false
+        });
+      }, 0);
     });
-
     it('works with an npm package', async () => {
       utils.__isFileSystemPathValue = false;
       const gen = new Generator('nameOfTestTemplate', __dirname);
@@ -388,7 +384,9 @@ describe('Generator', () => {
     it('works with an npm package and force = true', async () => {
       const gen = new Generator('nameOfTestTemplate', __dirname);
       await gen.installTemplate(true);
-      expect(arboristMock.reify).toHaveBeenCalledTimes(1);
+      setTimeout(() => { // This puts the call at the end of the Node.js event loop queue.
+        expect(arboristMock.reify).toHaveBeenCalledTimes(1);
+      }, 0);
     });
 
     it('works with a url', async () => {

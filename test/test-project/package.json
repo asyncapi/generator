@@ -1,0 +1,14 @@
+{
+    "description": "Test project. More info in the readme.",
+    "scripts": {
+        "test": "npm run setup && jest",
+        "setup": "cd node_modules/@asyncapi/generator && npm install --only=prod"
+    },
+    "dependencies": {
+        "@asyncapi/generator": "../../",
+        "@asyncapi/html-template": "0.16.0"
+    },
+    "devDependencies": {
+        "jest": "^25.5.0"
+    }
+}

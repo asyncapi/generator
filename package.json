@@ -13,7 +13,7 @@
   },
   "scripts": {
     "test": "npm run test:unit && npm run test:integration && npm run test:cli",
-    "test:unit": "jest --coverage --testPathIgnorePatterns=integration",
+    "test:unit": "jest --coverage --testPathIgnorePatterns=integration --testPathIgnorePatterns=test-project",
     "test:dev": "npm run test:unit -- --watchAll",
     "test:integration": "jest --testPathPattern=integration --modulePathIgnorePatterns='./__mocks__'",
     "test:cli": "node cli.js ./test/docs/dummy.yml @asyncapi/html-template -o test/output --force-write && test -e test/output/index.html",

@@ -1,0 +1,27 @@
+#This test runs test on the test projects to make sure generator works as a library where it is a Node dependency along with the template
+name: Test using test project
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, ready_for_review]
+
+jobs:
+  test:
+    if: github.event.pull_request.draft == false
+    name: Test generator as dependency with Node ${{ matrix.node }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [ '12', '14', '15' ]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Install dependencies in test project
+        run: npm install
+        working-directory: ./test/test-project
+      - name: Run test
+        run: npm test

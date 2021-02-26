@@ -12,10 +12,11 @@
     "npm": ">6.13.7"
   },
   "scripts": {
-    "test": "npm run test:unit && npm run test:integration",
-    "test:unit": "jest --coverage",
+    "test": "npm run test:unit && npm run test:integration && npm run test:cli",
+    "test:unit": "jest --coverage --testPathIgnorePatterns=integration",
     "test:dev": "npm run test:unit -- --watchAll",
-    "test:integration": "node cli.js https://bit.ly/asyncapi @asyncapi/html-template -o test/output --force-write && test -e test/output/index.html",
+    "test:integration": "jest --testPathPattern=integration --modulePathIgnorePatterns='./__mocks__'",
+    "test:cli": "node cli.js ./test/docs/dummy.yml @asyncapi/html-template -o test/output --force-write && test -e test/output/index.html",
     "docs": "jsdoc2md lib/generator.js > docs/api.md",
     "release": "semantic-release",
     "docker:build": "docker build -t asyncapi/generator:latest .",
@@ -74,6 +75,8 @@
     "simple-git": "^1.131.0"
   },
   "devDependencies": {
+    "@asyncapi/html-template": "0.17.0",
+    "@asyncapi/markdown-template": "^0.13.0",
     "@semantic-release/commit-analyzer": "^8.0.1",
     "@semantic-release/github": "^7.0.4",
     "@semantic-release/npm": "^7.0.6",

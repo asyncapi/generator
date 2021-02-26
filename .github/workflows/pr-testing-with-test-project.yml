@@ -25,3 +25,4 @@ jobs:
         working-directory: ./test/test-project
       - name: Run test
         run: npm test
+        working-directory: ./test/test-project

@@ -2,7 +2,7 @@
     "description": "Test project. More info in the readme.",
     "scripts": {
         "test": "npm run setup && jest",
-        "setup": "cd node_modules/@asyncapi/generator && npm install --only=prod"
+        "setup": "cd node_modules/@asyncapi/generator && npm install"
     },
     "dependencies": {
         "@asyncapi/generator": "../../",

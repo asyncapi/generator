@@ -26,9 +26,8 @@ We use NPM behind the scenes to download and install the templates. Since NPM wi
 
 ## File templates
 
-It is possible to generate files for each specific object in your AsyncAPI documentation. 
-For example, you can specify a filename like `$$channel$$.js` to generate a file for each channel defined in your AsyncAPI. 
-The following file-template names and extra variables in them are available:
+It is possible to generate files for each specific object in your AsyncAPI documentation. For example, you can specify a filename like `$$channel$$.js` to generate a file for each channel defined in your AsyncAPI. The following file-template names and extra variables in them are available:
+
    - `$$channel$$`, within the template-file you have access to two variables [`channel`](https://github.com/asyncapi/parser-js/blob/master/API.md#Channel) and [`channelName`](https://github.com/asyncapi/parser-js/blob/master/API.md#AsyncAPIDocument+channels). Where `channel` contains the current channel being rendered.
    - `$$message$$`, within the template-file you have access to two variables [`message`](https://github.com/asyncapi/parser-js/blob/master/API.md#Message) and [`messageName`](https://github.com/asyncapi/parser-js/blob/master/API.md#Message+uid). Where `message` contains the current message being rendered.
    - `$$schema$$`, within the template-file you have access to two variables [`schema`](https://github.com/asyncapi/parser-js/blob/master/API.md#Schema) and [`schemaName`](https://github.com/asyncapi/parser-js/blob/master/API.md#Schema+uid). Where `schema` contains the current schema being rendered. Only schemas from [Components object](https://www.asyncapi.com/docs/specifications/2.0.0/#a-name-componentsobject-a-components-object) are used. 
@@ -37,8 +36,10 @@ The following file-template names and extra variables in them are available:
    - `$$parameter$$`, within the template-file you have access to two variables [`parameter`](https://github.com/asyncapi/parser-js/blob/master/API.md#ChannelParameter) and [`parameterName`](https://github.com/asyncapi/parser-js/blob/master/API.md#Channel+parameters). Where `parameter` contains the current parameter being rendered.
    - `$$securityScheme$$`, within the template-file you have access to two variables [`securityScheme`](https://github.com/asyncapi/parser-js/blob/master/API.md#SecurityScheme) and [`securitySchemeName`](https://github.com/asyncapi/parser-js/blob/master/API.md#Components+securitySchemes). Where `securityScheme` contains the current security scheme being rendered.
 
-The file name will be equal to `*Name` variable
-##### Example
+The file name will be equal to `{name}` variable.
+
+### Example
+
 The file name is `$$schema$$.txt`, the content of this file is:
 ```
 Schema name is '{{schemaName}}' and properties are:
@@ -46,6 +47,7 @@ Schema name is '{{schemaName}}' and properties are:
 - {{prop.uid()}}
 {% endfor %}
 ```
+
 With following AsyncAPI:
 ```
 components:
@@ -61,16 +63,44 @@ components:
         id:
           type: integer
 ```
+
 The generator creates two files `peoplePayload.txt` and `people.txt` with the following content:
 ```
 Schema name is 'peoplePayload' and properties are:
 - people
 ```
+
 and
 ```
 Schema name is 'people' and properties are:
 - id
 ```
+
+### React
+
+The above way of rendering **file templates** works for both `nunjucks` and `react` render engine, but `react` also has another, more generic way to render multiple files. It is enough to return an array of `File` components in the rendering component. Check example:
+
+```tsx
+export default function({ asyncapi }) {
+  if (!asyncapi.components().hasSchemas()) {
+    return null;
+  }
+
+  const schemas = asyncapi.components().schemas();
+  return Object.entries(schemas).map(([schemaName, schema]) => {
+    return (
+      <File name={`${schemaName}.html`}>
+        <SchemaFile schemaName={schemaName} schema={schema} />
+      </File>
+    );
+  });
+}
+
+function SchemaFile({ schemaName, schema }) {
+  // implementation...
+}
+```
+
 ## Hooks
 
 Hooks are functions called by the generator on a specific moment in the generation process. Hooks can be anonymous functions but you can also add function names. These hooks can have arguments provided to them or being expected to return a value.
@@ -86,7 +116,7 @@ The generator parses:
 - All the files in the `.hooks` directory inside the template.
 - All modules listed in the template configuration and triggers only hooks that names were added to the config. You can use the official AsyncAPI [hooks library](https://github.com/asyncapi/generator-hooks). To learn how to add hooks to configuration [read more about the configuration file](#configuration-file).
 
-#### Examples
+### Examples
 
 > Some of examples have name of hook functions provided and some not. Keep in mind that hook functions kept in template in default location do not require a name. Name is required only if you keep hooks in non default location or in a separate library, because such hooks need to be explicitly configured in the configuration file. For more details on hooks configuration [read more about the configuration file](#configuration-file).
 
@@ -149,7 +179,6 @@ module.exports = {
 	};
 };
 ```
-
 
 ## Configuration File
 
@@ -225,7 +254,6 @@ There are some template parameters that have a special meaning:
 |---|---|
 |`server`| It is used to let the template know which server from the AsyncAPI specification file you want to use. In some cases, this may be required. For instance, when generating code that connects to a specific server. Use this parameter in case your template relies on users' information about what server from the specification file they want to use during generation. You also need this parameter if you want to use `server.protocol` notation within `conditionalFiles` configuration option. Once you decide to specify this parameter for your template, it is recommended you make it a mandatory parameter otherwise feature like `conditionalFiles` is not going to work if your users do not use this parameter obligatory.
 
-
 ## React
 
 [React](https://reactjs.org) is the render engine that we strongly suggest you should use for any new templates. The only reason it is not the default render engine is to stay backward compatible.
@@ -272,10 +300,10 @@ For further information about components, props etc. see the [Generator React SD
    - `params` that contains the parameters provided when generating.
 1. All the file templates are supported where the variables are provided after the default props as listed above. 
 
-
-
 ### Debugging React template in VSCode
+
 With React, it enables you to debug your templates. For Visual Studio Code, we have created a boilerplate [launch configuration](https://code.visualstudio.com/docs/editor/debugging#_launch-configurations) to enable debug in your template. Add the following launch configuration:
+
 ```json
 {
   "version": "0.2.0",
@@ -299,10 +327,13 @@ With React, it enables you to debug your templates. For Visual Studio Code, we h
   ]
 }
 ```
+
 Now replace `./asyncapi.yml` with your document of choice. Replace `./template` with the path to your React template. You can now debug your template by adding any breakpoints you want and inspect your code.
 
 ## Nunjucks
+
 [Nunjucks](https://mozilla.github.io/nunjucks) is the default render engine, however, we strongly recommend adopting the [React](#react) engine.
+
 ### Common assumptions
 
 1. Templates may contain [Nunjucks filters or helper functions](https://mozilla.github.io/nunjucks/templating.html#builtin-filters). [Read more about filters](#filters).
@@ -312,7 +343,6 @@ Now replace `./asyncapi.yml` with your document of choice. Replace `./template` 
    - `asyncapi` that is a parsed spec file object. Read the [API](https://github.com/asyncapi/parser-js/blob/master/API.md#AsyncAPIDocument) of the Parser to understand to what structure you have access in this parameter.
    - `originalAsyncAPI` that is an original spec file before it is parsed. 
    - `params` that contains the parameters provided when generating.
-
 
 ### Partials
 

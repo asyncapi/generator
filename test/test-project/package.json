@@ -1,7 +1,7 @@
 {
     "description": "Test project. More info in the readme.",
     "scripts": {
-        "test": "npm run test:cleanup && jest",
+        "test": "npm run test:cleanup && jest --detectOpenHandles",
         "test:cleanup": "rimraf \"../temp\""
     },
     "dependencies": {

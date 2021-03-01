@@ -391,3 +391,12 @@ async function asyncCamelCase(str, callback) {
 ```
 
 In case you have more than one template and want to reuse filters, you can put them in a single library. You can configure such a library in the template configuration under `filters` property. You can also use the official AsyncAPI [filters library](https://github.com/asyncapi/generator-filters). To learn how to add such filters to configuration [read more about the configuration file](#configuration-file).
+
+## TypeScript support 
+
+The AsyncAPI generator has support for the TypeScript for [hooks](#hooks) and Nunjucks's [filters](#filters). Assumptions:
+
+- Installing the `typescript` package and creating the` tsconfig.json` file isn't necessary.
+- Source code of the hook/filter must have `ts` or `tsx` extension.
+- Each package related with the typings for TypeScript like `@types/node` must be installed in the template under `dependencies` array. This is because the Generator transpiles the TypeScript code on-the-fly while rendering the template.
+- Each package should have installed `@types/node` package to support typings for Node.

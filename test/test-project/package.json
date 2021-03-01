@@ -1,11 +1,11 @@
 {
     "description": "Test project. More info in the readme.",
     "scripts": {
-        "test": "npm run setup && jest",
-        "setup": "cd node_modules/@asyncapi/generator && npm install"
+        "test": "npm run test:cleanup && jest",
+        "test:cleanup": "rimraf \"../temp\""
     },
     "dependencies": {
-        "@asyncapi/generator": "../../",
+        "@asyncapi/generator": "file:../..",
         "@asyncapi/html-template": "0.16.0"
     },
     "devDependencies": {

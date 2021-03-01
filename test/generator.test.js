@@ -345,10 +345,16 @@ describe('Generator', () => {
     });
 
     it('works with a file system path', async () => {
+      log.debug = jest.fn();
       utils.__isFileSystemPathValue = true;
-      const gen = new Generator('./testTemplate', __dirname);
+      const templatePath = './testTemplate';
+      const gen = new Generator(templatePath, __dirname);
       await gen.installTemplate();
-      expect(arboristMock.reify).toHaveBeenCalledTimes(0);
+      expect(log.debug).toHaveBeenCalledWith('Remember that your local template must have its own node_modules, \"npm install\" is not triggered.');
+      expect(log.debug).toHaveBeenCalledWith(`Template sources taken from ${path.resolve(__dirname, '../', templatePath)}.`);
+      setTimeout(() => { // This puts the call at the end of the Node.js event loop queue.
+        expect(arboristMock.reify).toHaveBeenCalledTimes(0);
+      }, 0);
     });
 
     it('works with a file system path and force = true', async () => {
@@ -367,23 +373,28 @@ describe('Generator', () => {
       utils.__isFileSystemPathValue = false;
       const gen = new Generator('nameOfTestTemplate', __dirname);
       await gen.installTemplate();
-      expect(arboristMock.reify).toHaveBeenCalledTimes(0);
+      setTimeout(() => { // This puts the call at the end of the Node.js event loop queue.
+        expect(arboristMock.reify).toHaveBeenCalledTimes(0);
+      }, 0);
     });
 
-    it('works with an npm package that has already been installed as a local template', async () => {
+    it('works with an npm package that is installed for the first time', async () => {
       log.debug = jest.fn();
       utils.__isFileSystemPathValue = false;
-      utils.__isLocalTemplateValue = true;
-      utils.__getLocalTemplateDetailsResolvedLinkValue = '/path/to/template/nameOfTestTemplate';
       const gen = new Generator('nameOfTestTemplate', __dirname, {debug: true});
       await gen.installTemplate();
-      expect(log.debug).toHaveBeenCalledWith('This template has already been installed and it\'s pointing to your filesystem at /path/to/template/nameOfTestTemplate.');
-      expect(arboristMock.reify).toHaveBeenCalledTimes(0);
+      expect(log.debug).toHaveBeenCalledWith('Template installation started because the template cannot be found on disk');
+      setTimeout(() => { // This puts the call at the end of the Node.js event loop queue.
+        expect(arboristMock.reify).toHaveBeenCalledTimes(1);
+      }, 0);
     });
 
     it('works with an npm package and force = true', async () => {
+      log.debug = jest.fn();
+      utils.__isFileSystemPathValue = false;
       const gen = new Generator('nameOfTestTemplate', __dirname);
       await gen.installTemplate(true);
+      expect(log.debug).toHaveBeenCalledWith('Template installation started as you passed --install flag');
       setTimeout(() => { // This puts the call at the end of the Node.js event loop queue.
         expect(arboristMock.reify).toHaveBeenCalledTimes(1);
       }, 0);

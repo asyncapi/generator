@@ -9,6 +9,7 @@
         "@asyncapi/html-template": "0.16.0"
     },
     "devDependencies": {
-        "jest": "^25.5.0"
+        "jest": "^25.5.0",
+        "fs-extra": "^9.1.0"
     }
 }

@@ -20,6 +20,8 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node }}
+      - name: Install generator
+        run: npm install
       - name: Install dependencies in test project
         run: npm install
         working-directory: ./test/test-project

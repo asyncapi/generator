@@ -74,7 +74,9 @@
     "nunjucks": "^3.2.0",
     "resolve-pkg": "^2.0.0",
     "semver": "^7.3.2",
-    "simple-git": "^1.131.0"
+    "simple-git": "^1.131.0",
+    "source-map-support": "^0.5.19",
+    "ts-node": "^9.1.1"
   },
   "devDependencies": {
     "@semantic-release/commit-analyzer": "^8.0.1",

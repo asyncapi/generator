@@ -9,7 +9,8 @@
         "@asyncapi/html-template": "0.16.0"
     },
     "devDependencies": {
+        "fs-extra": "^9.1.0",
         "jest": "^25.5.0",
-        "fs-extra": "^9.1.0"
+        "rimraf": "^3.0.2"
     }
 }

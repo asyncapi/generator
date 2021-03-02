@@ -360,4 +360,14 @@ filter.renderAsyncContent = renderAsyncContent;
 {{ channelName | asyncCamelCase }}
 ```
 
+Unfornatelly, if you need to use Promise, filter still must be annotated with the `async` keyword:
+
+```js
+async function asyncCamelCase(str, callback) {
+  return new Promise((resolve, reject) => {
+    // logic with callback
+  });
+}
+```
+
 In case you have more than one template and want to reuse filters, you can put them in a single library. You can configure such a library in the template configuration under `filters` property. You can also use the official AsyncAPI [filters library](https://github.com/asyncapi/generator-filters). To learn how to add such filters to configuration [read more about the configuration file](#configuration-file).

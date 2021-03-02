@@ -78,28 +78,15 @@ Schema name is 'people' and properties are:
 
 ### React
 
-The above way of rendering **file templates** works for both `nunjucks` and `react` render engine, but `react` also has another, more generic way to render multiple files. It is enough to return an array of `File` components in the rendering component. Check example:
+The above way of rendering **file templates** works for both `nunjucks` and `react` render engines, but `react` also has another, more generic way to render multiple files. It is enough to return an array of `File` components in the rendering component. See the following example:
 
 ```tsx
 export default function({ asyncapi }) {
-  if (!asyncapi.components().hasSchemas()) {
-    return null;
-  }
-
-  const schemas = asyncapi.components().schemas();
-  return Object.entries(schemas).map(([schemaName, schema]) => {
-    return (
-      <File name={`${schemaName}.html`}>
-        <SchemaFile schemaName={schemaName} schema={schema} />
-      </File>
-    );
-  });
+  return [
+    <File name={`file1.html`}>//Content</File>,
+    <File name={`file2.html`}>//Content</File>
+  ]
 }
-
-function SchemaFile({ schemaName, schema }) {
-  // implementation...
-}
-```
 
 ## Hooks
 

@@ -11,7 +11,7 @@ const strThatShouldBeMissing = '<div class="text-sm text-gray-700 mb-2">Correlat
 const templateName = '@asyncapi/html-template';
 const tempOutputResults = '../temp/integrationTestResult';
 const fileToCheck = 'index.html';
-const templateInstallStartedMsg = 'Template installation started as you passed --install flag';
+const templateInstallStartedMsg = 'Template installation started because you passed --install flag';
 //we do not want to download chromium for html-template if it is not needed
 process.env['PUPPETEER_SKIP_CHROMIUM_DOWNLOAD'] = true;
 console.log = jest.fn();

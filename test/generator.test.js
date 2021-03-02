@@ -394,7 +394,7 @@ describe('Generator', () => {
       utils.__isFileSystemPathValue = false;
       const gen = new Generator('nameOfTestTemplate', __dirname);
       await gen.installTemplate(true);
-      expect(log.debug).toHaveBeenCalledWith('Template installation started as you passed --install flag');
+      expect(log.debug).toHaveBeenCalledWith('Template installation started because you passed --install flag');
       setTimeout(() => { // This puts the call at the end of the Node.js event loop queue.
         expect(arboristMock.reify).toHaveBeenCalledTimes(1);
       }, 0);

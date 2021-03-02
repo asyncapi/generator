@@ -83,8 +83,8 @@ The above way of rendering **file templates** works for both `nunjucks` and `rea
 ```tsx
 export default function({ asyncapi }) {
   return [
-    <File name={`file1.html`}>//Content</File>,
-    <File name={`file2.html`}>//Content</File>
+    <File name={`file1.html`}>Content</File>,
+    <File name={`file2.html`}>Content</File>
   ]
 }
 

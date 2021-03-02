@@ -1,4 +1,4 @@
-#This test runs test on the test projects to make sure generator works as a library where it is a Node dependency along with the template
+#This workflow runs the tests in the test projects to make sure the generator works as a library where it is a Node dependency along with the template.
 name: Test using test project
 
 on:

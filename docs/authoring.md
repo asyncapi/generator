@@ -87,6 +87,7 @@ export default function({ asyncapi }) {
     <File name={`file2.html`}>Content</File>
   ]
 }
+```
 
 ## Hooks
 

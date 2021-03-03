@@ -1,3 +1,4 @@
 output
 node_modules
 .github/templates-list-validator/dist
+test/temp

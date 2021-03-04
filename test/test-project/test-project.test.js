@@ -12,12 +12,14 @@ const templateName = '@asyncapi/html-template';
 const tempOutputResults = '../temp/integrationTestResult';
 const fileToCheck = 'index.html';
 const templateInstallStartedMsg = 'Template installation started because you passed --install flag';
+
 //we do not want to download chromium for html-template if it is not needed
 process.env['PUPPETEER_SKIP_CHROMIUM_DOWNLOAD'] = true;
 console.log = jest.fn();
 
 describe('Testing if html was generated with proper version of the template', () => {
-  jest.setTimeout(50000);
+  jest.setTimeout(120000);
+
   it('generated html should not contain information about correlationId because of older html-template version that is already installed', async () => {
     //you always want to generate to new directory to make sure test runs in clear environment
     const outputDir = path.resolve(tempOutputResults, Math.random().toString(36).substring(7));

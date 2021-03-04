@@ -9,7 +9,7 @@ import { TemplateContext, TemplateRenderResult } from "../types";
  * 
  * @param filepath the path to file to render
  */
-export async function renderTemplate(filepath: string, context: TemplateContext): Promise<TemplateRenderResult | undefined> {
+export async function renderTemplate(filepath: string, context: TemplateContext): Promise<TemplateRenderResult[] | TemplateRenderResult | undefined> {
   if (!isJsFile(filepath)) {
     return undefined;
   }
@@ -24,6 +24,10 @@ export async function renderTemplate(filepath: string, context: TemplateContext)
   // undefined, null etc. cases
   if (!data) {
     return undefined;
+  }
+
+  if (Array.isArray(data)) {
+    return data.map(file => file && renderFile(file)).filter(Boolean);
   }
   return renderFile(data);
 }

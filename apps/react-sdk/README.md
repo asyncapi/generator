@@ -52,7 +52,7 @@ Restrictions:
 - HTML tags at the moment is not supported.
 - React internal components like Fragments, Suspense etc. are skipped.
 
-### The debug flag
+## The debug flag
 
 When rendering you have the option of passing a `debug` flag which does not remove the transpiled files after the rendering process is done.
 

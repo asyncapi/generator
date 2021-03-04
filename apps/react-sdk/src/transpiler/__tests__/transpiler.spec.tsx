@@ -1,11 +1,13 @@
-import { transpileFiles } from "../";
 import fs from 'fs';
 import path from 'path';
 import { promisify } from 'util';
-import { renderTemplate } from "../../renderer/index";
 import { AsyncAPIDocument } from "@asyncapi/parser";
-const readFile = promisify(fs.readFile);
 
+import { transpileFiles } from "../transpiler";
+import { renderTemplate } from "../../renderer";
+import { TemplateRenderResult } from "../../types";
+
+const readFile = promisify(fs.readFile);
 
 describe('Transpiler', () => {
   const testFiles = path.resolve(__dirname, './testfiles');
@@ -34,7 +36,7 @@ describe('Transpiler', () => {
       });
       test('and render correctly', async () => {
         const content = await renderTemplate(commonjs_testFile, { asyncapi: {} as AsyncAPIDocument, originalAsyncAPI: "", params: {} });
-        expect(content?.content).toBe("hello Test"); 
+        expect((content as TemplateRenderResult)?.content).toBe("hello Test"); 
       });
     });
   });
@@ -51,7 +53,7 @@ describe('Transpiler', () => {
       });
       test('and render correctly', async () => {
         const content = await renderTemplate(es5_testFile, { asyncapi: {} as AsyncAPIDocument, originalAsyncAPI: "", params: {} });
-        expect(content?.content).toBe("hello Test"); 
+        expect((content as TemplateRenderResult)?.content).toBe("hello Test"); 
       });
     });
   });
@@ -68,7 +70,7 @@ describe('Transpiler', () => {
       });
       test('and render correctly', async () => {
         const content = await renderTemplate(es6_testFile, { asyncapi: {} as AsyncAPIDocument, originalAsyncAPI: "", params: {} });
-        expect(content?.content).toBe("hello Test"); 
+        expect((content as TemplateRenderResult)?.content).toBe("hello Test"); 
       });
     });
   });

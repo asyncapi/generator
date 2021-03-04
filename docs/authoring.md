@@ -397,6 +397,6 @@ In case you have more than one template and want to reuse filters, you can put t
 The AsyncAPI generator has support for the TypeScript for [hooks](#hooks) and Nunjucks's [filters](#filters). Assumptions:
 
 - Installing the `typescript` package and creating the` tsconfig.json` file isn't necessary.
-- Source code of the hook/filter must have `ts` or `tsx` extension.
+- Source code of the hook/filter must have `ts` extension.
 - Each package related with the typings for TypeScript like `@types/node` must be installed in the template under `dependencies` array. This is because the Generator transpiles the TypeScript code on-the-fly while rendering the template.
 - Each package should have installed `@types/node` package to support typings for Node.

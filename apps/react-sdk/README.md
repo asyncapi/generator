@@ -18,7 +18,7 @@ AsyncAPI React SDK is a set of components/functions to use React as render engin
 - [How it works](#how-it-works)
   * [The Transpile Process](#the-transpile-process)
   * [The Rendering Process](#the-rendering-process)
-  * [The debug flag](#the-debug-flag)
+- [The debug flag](#the-debug-flag)
 - [Example](#example)
 - [Resources](#resources)
 - [Development](#development)

@@ -18,7 +18,7 @@ process.env['PUPPETEER_SKIP_CHROMIUM_DOWNLOAD'] = true;
 console.log = jest.fn();
 
 describe('Testing if html was generated with proper version of the template', () => {
-  jest.setTimeout(90000);
+  jest.setTimeout(120000);
 
   it('generated html should not contain information about correlationId because of older html-template version that is already installed', async () => {
     //you always want to generate to new directory to make sure test runs in clear environment

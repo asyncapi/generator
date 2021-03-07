@@ -1,0 +1,16 @@
+{
+    "description": "Test project. More info in the readme.",
+    "scripts": {
+        "test": "npm run test:cleanup && jest --detectOpenHandles",
+        "test:cleanup": "rimraf \"../temp\""
+    },
+    "dependencies": {
+        "@asyncapi/generator": "file:../..",
+        "@asyncapi/html-template": "0.16.0"
+    },
+    "devDependencies": {
+        "fs-extra": "^9.1.0",
+        "jest": "^25.5.0",
+        "rimraf": "^3.0.2"
+    }
+}

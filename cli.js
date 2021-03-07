@@ -42,11 +42,16 @@ const disableHooksParser = v => {
   }
 };
 
-const mapFromBaseUrlParser = v => {
-  mapBaseUrlToFolder.url = v;
-};
-const mapToBaseFolderParser = v => {
-  mapBaseUrlToFolder.folder = v;
+const mapBaseUrlParser = v => {
+  const re = /(.*):(.*)/g;
+  let mapping = [];
+  if ((mapping = re.exec(v))===null || mapping.length!==3) {
+    throw new Error('Invalid --map-base-url flag. A mapping <url>:<baseFolder> with delimiter : expected.');
+  }
+  // folder is without trailing slash, so make sure that url has also no trailing slash:
+  mapBaseUrlToFolder.url = mapping[1].replace(/\/$/, '');
+  mapBaseUrlToFolder.folder = path.resolve(mapping[2]);
+  console.log(`mapping url ${mapBaseUrlToFolder.url} to folder ${mapBaseUrlToFolder.folder}`);
 };
 
 const showError = err => {
@@ -75,8 +80,7 @@ program
   .option('-p, --param <name=value>', 'additional param to pass to templates', paramParser)
   .option('--force-write', 'force writing of the generated files to given directory even if it is a git repo with unstaged files or not empty dir (defaults to false)')
   .option('--watch-template', 'watches the template directory and the AsyncAPI document, and re-generate the files when changes occur. Ignores the output directory. This flag should be used only for template development.')
-  .option('--mapFromBaseUrl <url>','maps all schema references with this base url to folder specified by --mapToBaseFolder',mapFromBaseUrlParser)
-  .option('--mapToBaseFolder <baseFolder>','maps all schema references starting with url specified by --mapFromBaseUrl to this folder',mapToBaseFolderParser)
+  .option('--map-base-url <url>:<baseFolder>','maps all schema references with this base url to folder',mapBaseUrlParser)
   .parse(process.argv);
 
 if (!asyncapiDocPath) {

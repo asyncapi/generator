@@ -21,6 +21,16 @@ npm run lint
 
 In case you want to quickly build a docker image locally to check if it works then run `npm run docker-build`
 
+In case you don't have a local node environment you can run 
+
+```
+docker build -t asyncapi/generator:latest .
+docker run -v `pwd`:`pwd` -w `pwd` -it --rm --entrypoint /bin/sh  asyncapi/generator:latest
+npm install
+npm run lint
+./cli.js --help
+```
+
 ## Conventional commits
 
 This project follows [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/#summary) specification. Releasing to GitHub and NPM is done with the support of [semantic-release](https://semantic-release.gitbook.io/semantic-release/).

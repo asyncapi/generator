@@ -50,10 +50,6 @@ describe('Utils', () => {
       const result = utils.getTemplateDetails(templateNpmName, 'package.json');
       expect(log.debug).not.toHaveBeenCalledWith('Remember that your local template must have its own node_modules installed first, \"npm install\" is not triggered by the generator.');
       expect(log.debug).toHaveBeenCalledWith(`${templateNpmName} not found in local dependencies but found it installed as a global package.`);
-      expect(result).toStrictEqual({
-        name: templateNpmName, 
-        pkgPath: path.join(Generator.DEFAULT_TEMPLATES_DIR, templateNpmName)
-      });
     });
 
     it('doesnt work with a url', async () => {

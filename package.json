@@ -16,7 +16,7 @@
     "test:unit": "jest --coverage --testPathIgnorePatterns=integration --testPathIgnorePatterns=test-project",
     "test:dev": "npm run test:unit -- --watchAll",
     "test:integration": "npm run test:cleanup && jest --testPathPattern=integration --modulePathIgnorePatterns='./__mocks__'",
-    "test:cli": "node cli.js ./test/docs/dummy.yml @asyncapi/html-template -o test/output --force-write && test -e test/output/index.html",
+    "test:cli": "node cli.js ./test/docs/dummy.yml @asyncapi/html-template -o test/output --force-write --debug && test -e test/output/index.html",
     "test:cleanup": "rimraf \"test/temp\"",
     "docs": "jsdoc2md lib/generator.js > docs/api.md",
     "release": "semantic-release",

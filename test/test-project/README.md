@@ -2,3 +2,9 @@ It is a test project where AsyncAPI Generator and AsyncAPI html-template are use
 The purpose of this project is to test AsyncAPI Generator library use case outside the Generator code base.
 
 The version of the html-template must be hardcoded to version `0.16.0` because tests check if output is generated using this given version of the template, that newer version is not downloaded even though `0.16.0` was installed with `npm install` first.
+
+There are two test scripts:
+- `npm test` starts library integration tests that can run the same way both on local and CI
+- `npm test:global` always fail on local as it tests installation of template under global location. This would mean you have to install template globally before running the test. It means messing with your developer setup. Instead you have a docker compose configuration that you can use to run all tests from the test project in an isolated environment
+
+Make sure you have Docker Compose and run `TAG=15 docker-compose up` where `TAG` is the version of Node image that you want to use in test.

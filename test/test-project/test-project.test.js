@@ -18,8 +18,8 @@ process.env['PUPPETEER_SKIP_CHROMIUM_DOWNLOAD'] = true;
 console.log = jest.fn();
 
 describe('Testing if html was generated with proper version of the template', () => {
-  jest.setTimeout(120000);
-
+  jest.setTimeout(200000);
+  
   it('generated html should not contain information about correlationId because of older html-template version that is already installed', async () => {
     //you always want to generate to new directory to make sure test runs in clear environment
     const outputDir = path.resolve(tempOutputResults, Math.random().toString(36).substring(7));
@@ -69,7 +69,7 @@ describe('Testing if html was generated with proper version of the template', ()
     const localHtmlTemplate = path.resolve(tempOutputResults, templateName);
     const templateVersion = '0.16.0';
 
-    //we copy already installed html template out from the node_modules to simulate a local tempalte that is stored in different location than the project
+    //we copy already installed html template out from the node_modules to simulate a local template that is stored in different location than the project
     await xfs.copy(path.resolve('node_modules', templateName), localHtmlTemplate);
 
     //we need to install local template before we can use it
@@ -80,7 +80,7 @@ describe('Testing if html was generated with proper version of the template', ()
     await arb.reify({
       save: false
     });
- 
+
     //run generation by passing path to local template without passing install flag, sources should be taken from local path
     const generatorWithoutInstallFlag = new Generator(localHtmlTemplate, outputDir, { forceWrite: true, debug: true, templateParams: { singleFile: true } });
     await generatorWithoutInstallFlag.generateFromFile(dummySpecPath);    
@@ -92,7 +92,7 @@ describe('Testing if html was generated with proper version of the template', ()
     expect(isCorelationIdInHtml).toStrictEqual(false);
     expect(console.log).toHaveBeenCalledWith(`Template sources taken from ${localHtmlTemplate}.`);
     expect(console.log).toHaveBeenCalledWith(`Version of the template is ${templateVersion}.`);
-    expect(console.log).toHaveBeenCalledWith('Remember that your local template must have its own node_modules, \"npm install\" is not triggered.');
+    expect(console.log).toHaveBeenCalledWith('Remember that your local template must have its own node_modules installed first, \"npm install\" is not triggered by the generator.');
 
     //run generation by passing path to local template and passing install flag, sources should be taken from local path and simlink created
     const generatorWithInstallFlag = new Generator(localHtmlTemplate, outputDir, { install: true, forceWrite: true, debug: true, templateParams: { singleFile: true } });

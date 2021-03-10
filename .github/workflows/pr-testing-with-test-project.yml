@@ -16,10 +16,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-      - name: Setup Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node }}
       - name: Run test
-        run: TAG=${{ matrix.node }} docker-compose up
+        run: TAG=${{ matrix.node }} docker-compose up --abort-on-container-exit
         working-directory: ./test/test-project

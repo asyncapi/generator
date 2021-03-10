@@ -3,7 +3,6 @@
  */
 
 const { readFile } = require('fs').promises;
-const xfs = require('fs-extra');
 const path = require('path');
 const Generator = require('@asyncapi/generator');
 const dummySpecPath = path.resolve(__dirname, '../docs/dummy.yml');

@@ -7,4 +7,4 @@ There are two custom test scripts:
 - `npm test:project` starts library integration tests that can run the same way both on local and CI
 - `npm test:global` always fail on local as it tests installation of template under global location. This would mean you have to install template globally before running the test. It means messing with your developer setup. Instead you have a docker compose configuration that you can use to run all tests from the test project in an isolated environment
 
-Instead of running tests with `npm test`, make sure you have Docker Compose and run `TAG=14 docker-compose up`. `TAG` is the version of Node image that you want to use in test.
+Instead of running tests with `npm test`, make sure you have Docker Compose and run `NODE_IMAGE_TAG=14 docker-compose up`.

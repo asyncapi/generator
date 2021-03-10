@@ -17,5 +17,5 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Run test
-        run: TAG=${{ matrix.node }} docker-compose up --abort-on-container-exit --remove-orphans
+        run: NODE_IMAGE_TAG=${{ matrix.node }} docker-compose up --abort-on-container-exit --remove-orphans
         working-directory: ./test/test-project

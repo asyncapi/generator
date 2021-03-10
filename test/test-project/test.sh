@@ -7,4 +7,4 @@ npm test
 npm install -g @asyncapi/html-template@0.16.0
 rm -rf /node_modules/@asyncapi/html-template
 rm -rf ../../node_modules/@asyncapi/html-template
-npm test:global
+npm run test:global

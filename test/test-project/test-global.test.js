@@ -30,7 +30,7 @@ describe('Testing if html was generated using global template', () => {
     const file = await readFile(path.join(outputDir, fileToCheck), 'utf8');
     const isCorelationIdInHtml = file.includes(strThatShouldBeMissing);
 
-    //we make sure that index.html file doesn't contain any infromation about correlationId because this feature was added in html-template 0.17.0 while this test uses template 0.16.0
+    //we make sure that index.html file doesn't contain any information about correlationId because this feature was added in html-template 0.17.0 while this test uses template 0.16.0
     expect(isCorelationIdInHtml).toStrictEqual(false);
     //we make sure that logs indicate that global package was used
     expect(console.log).toHaveBeenCalledWith(`${templateName} not found in local dependencies but found it installed as a global package.`);

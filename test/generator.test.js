@@ -346,12 +346,10 @@ describe('Generator', () => {
 
     it('works with a file system path', async () => {
       log.debug = jest.fn();
-      utils.__isFileSystemPathValue = true;
+      utils.__getTemplateDetails = { pkgPath: '/path', name: 'test-template' };
       const templatePath = './testTemplate';
       const gen = new Generator(templatePath, __dirname);
       await gen.installTemplate();
-      expect(log.debug).toHaveBeenCalledWith('Remember that your local template must have its own node_modules, \"npm install\" is not triggered.');
-      expect(log.debug).toHaveBeenCalledWith(`Template sources taken from ${path.resolve(__dirname, '../', templatePath)}.`);
       setTimeout(() => { // This puts the call at the end of the Node.js event loop queue.
         expect(arboristMock.reify).toHaveBeenCalledTimes(0);
       }, 0);
@@ -380,7 +378,7 @@ describe('Generator', () => {
 
     it('works with an npm package that is installed for the first time', async () => {
       log.debug = jest.fn();
-      utils.__isFileSystemPathValue = false;
+      utils.__getTemplateDetails = undefined;
       const gen = new Generator('nameOfTestTemplate', __dirname, {debug: true});
       await gen.installTemplate();
       expect(log.debug).toHaveBeenCalledWith('Template installation started because the template cannot be found on disk');
@@ -402,6 +400,7 @@ describe('Generator', () => {
 
     it('works with a url', async () => {
       utils.__isFileSystemPathValue = false;
+      utils.__getTemplateDetails = undefined;
       const gen = new Generator('https://my-test-template.com', __dirname);
       await gen.installTemplate();
       setTimeout(() => { // This puts the call at the end of the Node.js event loop queue.

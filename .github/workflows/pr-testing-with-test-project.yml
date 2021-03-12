@@ -9,22 +9,13 @@ jobs:
   test:
     if: github.event.pull_request.draft == false
     name: Test generator as dependency with Node ${{ matrix.node }}
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         node: [ '12', '14', '15' ]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-      - name: Setup Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node }}
-      - name: Install generator
-        run: npm install
-      - name: Install dependencies in test project
-        run: npm install
-        working-directory: ./test/test-project
       - name: Run test
-        run: npm test
+        run: NODE_IMAGE_TAG=${{ matrix.node }} docker-compose up --abort-on-container-exit --remove-orphans
         working-directory: ./test/test-project

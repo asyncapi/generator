@@ -23,6 +23,7 @@
   * [Install the CLI](#install-the-cli)
   * [Update the CLI](#update-the-cli)
   * [CLI usage](#cli-usage)
+  * [Global templates installed with yarn or npm](#global-templates-installed-with-yarn-or-npm)
   * [CLI usage examples](#cli-usage-examples)
   * [CLI usage with Docker](#cli-usage-with-docker)
   * [CLI usage with npx instead of npm](#cli-usage-with-npx-instead-of-npm)
@@ -136,6 +137,16 @@ Options:
   npm install &lt;folder&gt;</code></pre>
 </details>
 <br>
+
+### Global templates installed with yarn or npm
+
+You can preinstall templates globally. The generator first tries to locate template in local dependencies and then in location where global packages are installed.
+
+```bash
+npm install -g @asyncapi/html-template@0.16.0
+ag asyncapi.yaml @asyncapi/html-template
+# The generator uses template in version 0.16.0 and not latest
+```
 
 ### CLI usage examples
 

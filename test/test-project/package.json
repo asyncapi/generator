@@ -1,7 +1,9 @@
 {
     "description": "Test project. More info in the readme.",
     "scripts": {
-        "test": "npm run test:cleanup && jest --detectOpenHandles",
+        "test": "npm run test:cleanup && npm run test:project && npm run test:global",
+        "test:project": "jest --detectOpenHandles --testPathIgnorePatterns=test-global --modulePathIgnorePatterns='./__mocks__'",
+        "test:global": "jest --detectOpenHandles --testPathPattern=test-global --modulePathIgnorePatterns='./__mocks__'",
         "test:cleanup": "rimraf \"../temp\""
     },
     "dependencies": {

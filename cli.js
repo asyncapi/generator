@@ -51,7 +51,7 @@ const mapBaseUrlParser = v => {
   // folder is without trailing slash, so make sure that url has also no trailing slash:
   mapBaseUrlToFolder.url = mapping[1].replace(/\/$/, '');
   mapBaseUrlToFolder.folder = path.resolve(mapping[2]);
-  console.log(`mapping url ${mapBaseUrlToFolder.url} to folder ${mapBaseUrlToFolder.folder}`);
+  // console.debug(`mapping url ${mapBaseUrlToFolder.url} to folder ${mapBaseUrlToFolder.folder}`);
 };
 
 const showError = err => {

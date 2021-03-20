@@ -10,7 +10,7 @@ const strThatShouldBeMissing = '<div class="text-sm text-gray-700 mb-2">Correlat
 const templateName = '@asyncapi/html-template';
 const tempOutputResults = '../temp/integrationTestResult';
 const fileToCheck = 'index.html';
-const templateNotfoundInGlobalPackage = require('../../lib/logMessages').templateNotFound()
+const templateNotfoundInGlobalPackage = require('../../lib/logMessages').templateNotFound();
 
 //we do not want to download chromium for html-template if it is not needed
 process.env['PUPPETEER_SKIP_CHROMIUM_DOWNLOAD'] = true;
@@ -18,16 +18,16 @@ console.log = jest.fn();
 
 describe('Testing if html was generated using global template', () => {
   jest.setTimeout(200000);
-  
+
   it('generated html should not contain information about correlationId because of older html-template version that is installed globally', async () => {
     //you always want to generate to new directory to make sure test runs in clear environment
     const outputDir = path.resolve(tempOutputResults, Math.random().toString(36).substring(7));
-        
+
     //we setup generator using template name, not path, without explicitly running installation
     //generator picks up template that is already in node_modules as it was installed before as node dependency in global packages location
     const generator = new Generator(templateName, outputDir, { forceWrite: true, debug: true, templateParams: { singleFile: true } });
     await generator.generateFromFile(dummySpecPath);
-    
+
     const file = await readFile(path.join(outputDir, fileToCheck), 'utf8');
     const isCorelationIdInHtml = file.includes(strThatShouldBeMissing);
 

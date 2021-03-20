@@ -11,11 +11,11 @@ const strThatShouldBeMissing = '<div class="text-sm text-gray-700 mb-2">Correlat
 const templateName = '@asyncapi/html-template';
 const tempOutputResults = '../temp/integrationTestResult';
 const fileToCheck = 'index.html';
-const templateInstallStartedMsg = require( '../../lib/logMessages.js').templateInstallStartedMsg;
-const firstInstallNode_modules = require( '../../lib/logMessages.js').node_modulesInstall;
-const tempVersion =  require( '../../lib/logMessages.js').templateVersion()
-const templateSource =  require( '../../lib/logMessages.js').templateSource()
-const npmInstallNotTriggered = require( '../../lib/logMessages.js').npmInstallTrigger
+const templateInstallStartedMsg = require('../../lib/logMessages.js').templateInstallStartedMsg;
+const firstInstallNode_modules = require('../../lib/logMessages.js').node_modulesInstall;
+const tempVersion = require('../../lib/logMessages.js').templateVersion();
+const templateSource = require('../../lib/logMessages.js').templateSource();
+const npmInstallNotTriggered = require('../../lib/logMessages.js').npmInstallTrigger;
 
 //we do not want to download chromium for html-template if it is not needed
 process.env['PUPPETEER_SKIP_CHROMIUM_DOWNLOAD'] = true;
@@ -23,16 +23,16 @@ console.log = jest.fn();
 
 describe('Testing if html was generated with proper version of the template', () => {
   jest.setTimeout(200000);
-  
+
   it('generated html should not contain information about correlationId because of older html-template version that is already installed', async () => {
     //you always want to generate to new directory to make sure test runs in clear environment
     const outputDir = path.resolve(tempOutputResults, Math.random().toString(36).substring(7));
-        
+
     //we setup generator using template name, not path, without explicitly running installation
     //generator picks up template that is already in node_modules as it was installed before as node dependency
     const generator = new Generator(templateName, outputDir, { forceWrite: true, debug: true, templateParams: { singleFile: true } });
     await generator.generateFromFile(dummySpecPath);
-    
+
     const file = await readFile(path.join(outputDir, fileToCheck), 'utf8');
     const isCorelationIdInHtml = file.includes(strThatShouldBeMissing);
 
@@ -47,7 +47,7 @@ describe('Testing if html was generated with proper version of the template', ()
   it('generated html should contain information about correlationId because of explicit fresh installation of different template version (install: true)', async () => {
     //you always want to generate to new directory to make sure test runs in clear environment
     const outputDir = path.resolve(tempOutputResults, Math.random().toString(36).substring(7));
-    const templateVersion= '0.17.0';
+    const templateVersion = '0.17.0';
 
     const generator = new Generator(`${templateName}@${templateVersion}`, outputDir, { forceWrite: true, install: true, debug: true, templateParams: { singleFile: true } });
     await generator.generateFromFile(dummySpecPath);
@@ -87,8 +87,8 @@ describe('Testing if html was generated with proper version of the template', ()
 
     //run generation by passing path to local template without passing install flag, sources should be taken from local path
     const generatorWithoutInstallFlag = new Generator(localHtmlTemplate, outputDir, { forceWrite: true, debug: true, templateParams: { singleFile: true } });
-    await generatorWithoutInstallFlag.generateFromFile(dummySpecPath);    
-    
+    await generatorWithoutInstallFlag.generateFromFile(dummySpecPath);
+
     file = await readFile(path.join(outputDir, fileToCheck), 'utf8');
     isCorelationIdInHtml = file.includes(strThatShouldBeMissing);
 
@@ -100,8 +100,8 @@ describe('Testing if html was generated with proper version of the template', ()
 
     //run generation by passing path to local template and passing install flag, sources should be taken from local path and simlink created
     const generatorWithInstallFlag = new Generator(localHtmlTemplate, outputDir, { install: true, forceWrite: true, debug: true, templateParams: { singleFile: true } });
-    await generatorWithInstallFlag.generateFromFile(dummySpecPath);    
-    
+    await generatorWithInstallFlag.generateFromFile(dummySpecPath);
+
     file = await readFile(path.join(outputDir, fileToCheck), 'utf8');
     isCorelationIdInHtml = file.includes(strThatShouldBeMissing);
 

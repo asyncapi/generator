@@ -11,11 +11,8 @@ const strThatShouldBeMissing = '<div class="text-sm text-gray-700 mb-2">Correlat
 const templateName = '@asyncapi/html-template';
 const tempOutputResults = '../temp/integrationTestResult';
 const fileToCheck = 'index.html';
-const templateInstallStartedMsg = require('../../lib/logMessages.js').templateInstallStartedMsg;
-const firstInstallNode_modules = require('../../lib/logMessages.js').node_modulesInstall;
-const tempVersion = require('../../lib/logMessages.js').templateVersion();
-const templateSource = require('../../lib/logMessages.js').templateSource();
-const npmInstallNotTriggered = require('../../lib/logMessages.js').npmInstallTrigger;
+
+const logMessage = require('../../lib/logMessages.js');
 
 //we do not want to download chromium for html-template if it is not needed
 process.env['PUPPETEER_SKIP_CHROMIUM_DOWNLOAD'] = true;
@@ -39,7 +36,7 @@ describe('Testing if html was generated with proper version of the template', ()
     //we make sure that index.html file doesn't contain any infromation about correlationId because this feature was added in html-template 0.17.0 while this test uses template 0.16.0
     expect(isCorelationIdInHtml).toStrictEqual(false);
     //we make sure that logs do not indicate that new installation is started
-    expect(console.log).not.toHaveBeenCalledWith(templateInstallStartedMsg);
+    expect(console.log).not.toHaveBeenCalledWith(logMessage.template_Install_Started_Msg);
     expect(console.log).toHaveBeenCalledWith(`Template sources taken from ${path.join(__dirname, 'node_modules', templateName)}.`);
     expect(console.log).toHaveBeenCalledWith('Version of the template is 0.16.0.');
   });
@@ -57,8 +54,8 @@ describe('Testing if html was generated with proper version of the template', ()
 
     //we make sure that index.html file doesn't contain any infromation about correlationId because this feature was added in html-template 0.17.0 while this test uses template 0.16.0
     expect(isCorelationIdInHtml).toStrictEqual(true);
-    expect(console.log).toHaveBeenCalledWith(templateInstallStartedMsg);
-    expect(console.log).toHaveBeenCalledWith(tempVersion(templateVersion));
+    expect(console.log).toHaveBeenCalledWith(logMessage.template_Install_Started_Msg);
+    expect(console.log).toHaveBeenCalledWith(logMessage.tempVersion(templateVersion));
   });
 
   it('generated html should not contain information about correlationId because local version of the template is old and does not have this feature (with and without install:true)', async () => {
@@ -94,9 +91,9 @@ describe('Testing if html was generated with proper version of the template', ()
 
     //we make sure that index.html file doesn't contain any infromation about correlationId because this feature was added in html-template 0.17.0 while this test uses template 0.16.0
     expect(isCorelationIdInHtml).toStrictEqual(false);
-    expect(console.log).toHaveBeenCalledWith(templateSource(localHtmlTemplate));
-    expect(console.log).toHaveBeenCalledWith(tempVersion(templateVersion));
-    expect(console.log).toHaveBeenCalledWith(firstInstallNode_modules);
+    expect(console.log).toHaveBeenCalledWith(logMessage.templateSource(localHtmlTemplate));
+    expect(console.log).toHaveBeenCalledWith(logMessage.tempVersion(templateVersion));
+    expect(console.log).toHaveBeenCalledWith(logMessage.node_modules_Install);
 
     //run generation by passing path to local template and passing install flag, sources should be taken from local path and simlink created
     const generatorWithInstallFlag = new Generator(localHtmlTemplate, outputDir, { install: true, forceWrite: true, debug: true, templateParams: { singleFile: true } });
@@ -107,8 +104,8 @@ describe('Testing if html was generated with proper version of the template', ()
 
     //we make sure that index.html file doesn't contain any infromation about correlationId because this feature was added in html-template 0.17.0 while this test uses template 0.16.0
     expect(isCorelationIdInHtml).toStrictEqual(false);
-    expect(console.log).toHaveBeenCalledWith(templateInstallStartedMsg);
-    expect(console.log).toHaveBeenCalledWith(tempVersion(templateVersion));
-    expect(console.log).toHaveBeenCalledWith(npmInstallNotTriggered);
+    expect(console.log).toHaveBeenCalledWith(logMessage.template_Install_Started_Msg);
+    expect(console.log).toHaveBeenCalledWith(logMessage.tempVersion(templateVersion));
+    expect(console.log).toHaveBeenCalledWith(logMessage.npm_Install_Trigger);
   });
 });

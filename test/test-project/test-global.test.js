@@ -10,7 +10,7 @@ const strThatShouldBeMissing = '<div class="text-sm text-gray-700 mb-2">Correlat
 const templateName = '@asyncapi/html-template';
 const tempOutputResults = '../temp/integrationTestResult';
 const fileToCheck = 'index.html';
-const templateNotfoundInGlobalPackage = require('../../lib/logMessages');
+const logMessage = require('../../lib/logMessages');
 
 //we do not want to download chromium for html-template if it is not needed
 process.env['PUPPETEER_SKIP_CHROMIUM_DOWNLOAD'] = true;
@@ -34,7 +34,7 @@ describe('Testing if html was generated using global template', () => {
     //we make sure that index.html file doesn't contain any information about correlationId because this feature was added in html-template 0.17.0 while this test uses template 0.16.0
     expect(isCorelationIdInHtml).toStrictEqual(false);
     //we make sure that logs indicate that global package was used
-    expect(console.log).toHaveBeenCalledWith(templateNotfoundInGlobalPackage.templateNotFound(templateName));
+    expect(console.log).toHaveBeenCalledWith(logMessage.templateNotFound(templateName));
     expect(console.log).toHaveBeenCalledWith('Version of the template is 0.16.0.');
   });
 });

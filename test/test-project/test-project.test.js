@@ -36,7 +36,7 @@ describe('Testing if html was generated with proper version of the template', ()
     //we make sure that index.html file doesn't contain any infromation about correlationId because this feature was added in html-template 0.17.0 while this test uses template 0.16.0
     expect(isCorelationIdInHtml).toStrictEqual(false);
     //we make sure that logs do not indicate that new installation is started
-    expect(console.log).not.toHaveBeenCalledWith(logMessage.template_Install_Started_Msg);
+    expect(console.log).not.toHaveBeenCalledWith(logMessage.installationDebugMessage(logMessage.TEMPLATE_INSTALL_FLAG_MSG));
     expect(console.log).toHaveBeenCalledWith(`Template sources taken from ${path.join(__dirname, 'node_modules', templateName)}.`);
     expect(console.log).toHaveBeenCalledWith('Version of the template is 0.16.0.');
   });
@@ -54,7 +54,7 @@ describe('Testing if html was generated with proper version of the template', ()
 
     //we make sure that index.html file doesn't contain any infromation about correlationId because this feature was added in html-template 0.17.0 while this test uses template 0.16.0
     expect(isCorelationIdInHtml).toStrictEqual(true);
-    expect(console.log).toHaveBeenCalledWith(logMessage.template_Install_Started_Msg);
+    expect(console.log).toHaveBeenCalledWith(logMessage.installationDebugMessage(logMessage.TEMPLATE_INSTALL_FLAG_MSG));
     expect(console.log).toHaveBeenCalledWith(logMessage.tempVersion(templateVersion));
   });
 
@@ -93,7 +93,7 @@ describe('Testing if html was generated with proper version of the template', ()
     expect(isCorelationIdInHtml).toStrictEqual(false);
     expect(console.log).toHaveBeenCalledWith(logMessage.templateSource(localHtmlTemplate));
     expect(console.log).toHaveBeenCalledWith(logMessage.tempVersion(templateVersion));
-    expect(console.log).toHaveBeenCalledWith(logMessage.node_modules_Install);
+    expect(console.log).toHaveBeenCalledWith(logMessage.NODE_MODULES_INSTALL);
 
     //run generation by passing path to local template and passing install flag, sources should be taken from local path and simlink created
     const generatorWithInstallFlag = new Generator(localHtmlTemplate, outputDir, { install: true, forceWrite: true, debug: true, templateParams: { singleFile: true } });
@@ -104,8 +104,8 @@ describe('Testing if html was generated with proper version of the template', ()
 
     //we make sure that index.html file doesn't contain any infromation about correlationId because this feature was added in html-template 0.17.0 while this test uses template 0.16.0
     expect(isCorelationIdInHtml).toStrictEqual(false);
-    expect(console.log).toHaveBeenCalledWith(logMessage.template_Install_Started_Msg);
+    expect(console.log).toHaveBeenCalledWith(logMessage.installationDebugMessage(logMessage.TEMPLATE_INSTALL_FLAG_MSG));
     expect(console.log).toHaveBeenCalledWith(logMessage.tempVersion(templateVersion));
-    expect(console.log).toHaveBeenCalledWith(logMessage.npm_Install_Trigger);
+    expect(console.log).toHaveBeenCalledWith(logMessage.NPM_INSTALL_TRIGGER);
   });
 });

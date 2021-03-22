@@ -4,8 +4,8 @@
   "description": "The AsyncAPI generator. It can generate documentation, code, anything!",
   "main": "./lib/generator.js",
   "bin": {
-    "asyncapi-generator": "cli.js",
-    "ag": "cli.js"
+    "asyncapi-generator": "./cli.js",
+    "ag": "./cli.js"
   },
   "engines": {
     "node": ">12.16",
@@ -115,10 +115,5 @@
       "@semantic-release/npm",
       "@semantic-release/github"
     ]
-  },
-  "directories": {
-    "doc": "docs",
-    "lib": "lib",
-    "test": "test"
   }
 }

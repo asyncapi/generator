@@ -4,6 +4,8 @@ const Generator = require('../lib/generator');
 const log = require('loglevel');
 const utils = jest.requireActual('../lib/utils');
 
+const logMessage = require('./../lib/logMessages.js');
+
 describe('Utils', () => {
   describe('#getTemplateDetails', () => {
     let resolvePkg, resolveFrom;
@@ -21,7 +23,7 @@ describe('Utils', () => {
       utils.isFileSystemPath = jest.fn(() => true);
       const templatePath = './testTemplate';
       const result = utils.getTemplateDetails(templatePath, 'package.json');
-      expect(log.debug).toHaveBeenCalledWith('Remember that your local template must have its own node_modules installed first, \"npm install\" is not triggered by the generator.');
+      expect(log.debug).toHaveBeenCalledWith(logMessage.NODE_MODULES_INSTALL);
       expect(result).toStrictEqual({
         name: templateNpmName, 
         pkgPath: path.resolve('./testTemplate')
@@ -34,8 +36,8 @@ describe('Utils', () => {
       const packagePath = path.join(Generator.DEFAULT_TEMPLATES_DIR, templateNpmName);
       resolvePkg.__resolvePkgValue = packagePath;
       const result = utils.getTemplateDetails(templateNpmName, 'package.json');
-      expect(log.debug).not.toHaveBeenCalledWith('Remember that your local template must have its own node_modules installed first, \"npm install\" is not triggered by the generator.');
-      expect(log.debug).not.toHaveBeenCalledWith(`${templateNpmName} not found in local dependencies but found it installed as a global package.`);
+      expect(log.debug).not.toHaveBeenCalledWith(logMessage.NODE_MODULES_INSTALL);
+      expect(log.debug).not.toHaveBeenCalledWith(logMessage.templateNotFound(templateNpmName));
       expect(result).toStrictEqual({
         name: templateNpmName, 
         pkgPath: packagePath
@@ -48,8 +50,8 @@ describe('Utils', () => {
       resolvePkg.__resolvePkgValue = undefined;
       resolveFrom.__resolveFromValue = path.join(Generator.DEFAULT_TEMPLATES_DIR, templateNpmName, 'package.json');
       utils.getTemplateDetails(templateNpmName, 'package.json');
-      expect(log.debug).not.toHaveBeenCalledWith('Remember that your local template must have its own node_modules installed first, \"npm install\" is not triggered by the generator.');
-      expect(log.debug).toHaveBeenCalledWith(`${templateNpmName} not found in local dependencies but found it installed as a global package.`);
+      expect(log.debug).not.toHaveBeenCalledWith(logMessage.NODE_MODULES_INSTALL);
+      expect(log.debug).toHaveBeenCalledWith(logMessage.templateNotFound(templateNpmName));
     });
 
     it('doesnt work with a url', async () => {

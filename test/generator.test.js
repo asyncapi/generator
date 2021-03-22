@@ -7,6 +7,8 @@ const unixify = require('unixify');
 
 const dummyYAML = fs.readFileSync(path.resolve(__dirname, './docs/dummy.yml'), 'utf8');
 
+const logMessage = require('./../lib/logMessages.js');
+
 jest.mock('../lib/utils');
 jest.mock('../lib/filtersRegistry');
 jest.mock('../lib/hooksRegistry');
@@ -381,7 +383,7 @@ describe('Generator', () => {
       utils.__getTemplateDetails = undefined;
       const gen = new Generator('nameOfTestTemplate', __dirname, {debug: true});
       await gen.installTemplate();
-      expect(log.debug).toHaveBeenCalledWith('Template installation started because the template cannot be found on disk');
+      expect(log.debug).toHaveBeenCalledWith(logMessage.installationDebugMessage(logMessage.TEMPLATE_INSTALL_DISK_MSG));
       setTimeout(() => { // This puts the call at the end of the Node.js event loop queue.
         expect(arboristMock.reify).toHaveBeenCalledTimes(1);
       }, 0);
@@ -392,7 +394,7 @@ describe('Generator', () => {
       utils.__isFileSystemPathValue = false;
       const gen = new Generator('nameOfTestTemplate', __dirname);
       await gen.installTemplate(true);
-      expect(log.debug).toHaveBeenCalledWith('Template installation started because you passed --install flag');
+      expect(log.debug).toHaveBeenCalledWith(logMessage.installationDebugMessage(logMessage.TEMPLATE_INSTALL_FLAG_MSG));
       setTimeout(() => { // This puts the call at the end of the Node.js event loop queue.
         expect(arboristMock.reify).toHaveBeenCalledTimes(1);
       }, 0);

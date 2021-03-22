@@ -43,10 +43,7 @@
     "generator",
     "markdown"
   ],
-  "author": {
-    "name": "Fran Mendez",
-    "email": "fmvilas@gmail.com"
-  },
+  "author": "Fran Mendez <fmvilas@gmail.com>",
   "publishConfig": {
     "access": "public"
   },

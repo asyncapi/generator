@@ -20,6 +20,11 @@ export interface TemplateContext<P = Record<string, any>>{
 }
 
 /**
+ * Signature for template function
+ */
+export type TemplateFunction<R = React.ReactElement | undefined> = (context: TemplateContext) => R | Promise<R>;
+
+/**
  * Options for transpiling files.
  */
 export type TranspileFilesOptions = {

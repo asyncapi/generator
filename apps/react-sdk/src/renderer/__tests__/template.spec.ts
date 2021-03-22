@@ -24,4 +24,13 @@ describe('renderTemplate', () => {
     expect(renderedContent[1].content).toEqual('Content2');
     expect(renderedContent[1].metadata.fileName).toEqual('file2.html');
   });
+
+  test('should render a single async File template', async () => {
+    const filePath = path.resolve(__dirname, './file-tests/async-template.js');
+    const renderedContent = await renderTemplate(filePath, {} as any) as TemplateRenderResult;
+
+    expect(typeof renderedContent).toEqual('object');
+    expect(renderedContent.content).toEqual('Content');
+    expect(renderedContent.metadata.fileName).toEqual('file.html');
+  });
 });

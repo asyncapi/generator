@@ -11,6 +11,7 @@ const templateName = '@asyncapi/html-template';
 const tempOutputResults = '../temp/integrationTestResult';
 const fileToCheck = 'index.html';
 const logMessage = require('../../lib/logMessages');
+const version = '0.16.0';
 
 //we do not want to download chromium for html-template if it is not needed
 process.env['PUPPETEER_SKIP_CHROMIUM_DOWNLOAD'] = true;
@@ -35,6 +36,6 @@ describe('Testing if html was generated using global template', () => {
     expect(isCorelationIdInHtml).toStrictEqual(false);
     //we make sure that logs indicate that global package was used
     expect(console.log).toHaveBeenCalledWith(logMessage.templateNotFound(templateName));
-    expect(console.log).toHaveBeenCalledWith('Version of the template is 0.16.0.');
+    expect(console.log).toHaveBeenCalledWith(logMessage.templateVersion(version));
   });
 });

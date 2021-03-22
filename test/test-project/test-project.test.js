@@ -11,7 +11,8 @@ const strThatShouldBeMissing = '<div class="text-sm text-gray-700 mb-2">Correlat
 const templateName = '@asyncapi/html-template';
 const tempOutputResults = '../temp/integrationTestResult';
 const fileToCheck = 'index.html';
-
+const version = '0.16.0';
+const source = path.join(__dirname, 'node_modules', templateName);
 const logMessage = require('../../lib/logMessages.js');
 
 //we do not want to download chromium for html-template if it is not needed
@@ -37,8 +38,8 @@ describe('Testing if html was generated with proper version of the template', ()
     expect(isCorelationIdInHtml).toStrictEqual(false);
     //we make sure that logs do not indicate that new installation is started
     expect(console.log).not.toHaveBeenCalledWith(logMessage.installationDebugMessage(logMessage.TEMPLATE_INSTALL_FLAG_MSG));
-    expect(console.log).toHaveBeenCalledWith(`Template sources taken from ${path.join(__dirname, 'node_modules', templateName)}.`);
-    expect(console.log).toHaveBeenCalledWith('Version of the template is 0.16.0.');
+    expect(console.log).toHaveBeenCalledWith(logMessage.templateSource(source));
+    expect(console.log).toHaveBeenCalledWith(logMessage.templateVersion(version));
   });
 
   it('generated html should contain information about correlationId because of explicit fresh installation of different template version (install: true)', async () => {

@@ -55,7 +55,7 @@ describe('Testing if html was generated with proper version of the template', ()
     //we make sure that index.html file doesn't contain any infromation about correlationId because this feature was added in html-template 0.17.0 while this test uses template 0.16.0
     expect(isCorelationIdInHtml).toStrictEqual(true);
     expect(console.log).toHaveBeenCalledWith(logMessage.installationDebugMessage(logMessage.TEMPLATE_INSTALL_FLAG_MSG));
-    expect(console.log).toHaveBeenCalledWith(logMessage.tempVersion(templateVersion));
+    expect(console.log).toHaveBeenCalledWith(logMessage.templateVersion(templateVersion));
   });
 
   it('generated html should not contain information about correlationId because local version of the template is old and does not have this feature (with and without install:true)', async () => {
@@ -92,7 +92,7 @@ describe('Testing if html was generated with proper version of the template', ()
     //we make sure that index.html file doesn't contain any infromation about correlationId because this feature was added in html-template 0.17.0 while this test uses template 0.16.0
     expect(isCorelationIdInHtml).toStrictEqual(false);
     expect(console.log).toHaveBeenCalledWith(logMessage.templateSource(localHtmlTemplate));
-    expect(console.log).toHaveBeenCalledWith(logMessage.tempVersion(templateVersion));
+    expect(console.log).toHaveBeenCalledWith(logMessage.templateVersion(templateVersion));
     expect(console.log).toHaveBeenCalledWith(logMessage.NODE_MODULES_INSTALL);
 
     //run generation by passing path to local template and passing install flag, sources should be taken from local path and simlink created
@@ -105,7 +105,7 @@ describe('Testing if html was generated with proper version of the template', ()
     //we make sure that index.html file doesn't contain any infromation about correlationId because this feature was added in html-template 0.17.0 while this test uses template 0.16.0
     expect(isCorelationIdInHtml).toStrictEqual(false);
     expect(console.log).toHaveBeenCalledWith(logMessage.installationDebugMessage(logMessage.TEMPLATE_INSTALL_FLAG_MSG));
-    expect(console.log).toHaveBeenCalledWith(logMessage.tempVersion(templateVersion));
+    expect(console.log).toHaveBeenCalledWith(logMessage.templateVersion(templateVersion));
     expect(console.log).toHaveBeenCalledWith(logMessage.NPM_INSTALL_TRIGGER);
   });
 });

@@ -51,7 +51,7 @@
   "homepage": "https://github.com/asyncapi/generator",
   "dependencies": {
     "@asyncapi/avro-schema-parser": "^0.2.0",
-    "@asyncapi/generator-react-sdk": "^0.2.3",
+    "@asyncapi/generator-react-sdk": "^0.2.4",
     "@asyncapi/openapi-schema-parser": "^2.0.0",
     "@asyncapi/parser": "^1.4.2",
     "@asyncapi/raml-dt-schema-parser": "^2.0.0",

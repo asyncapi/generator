@@ -35,7 +35,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Automerging
-        uses: pascalgn/automerge-action@v0.7.5
+        uses: pascalgn/automerge-action@v0.13.0
         if: github.actor == 'asyncapi-bot' || github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]'
         env:
           GITHUB_TOKEN: "${{ secrets.GH_TOKEN }}"

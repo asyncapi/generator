@@ -2182,7 +2182,7 @@ object
 >
   <div class=\\"\\">
     <div
-      class=\\" flex property\\"
+      class=\\"js-prop cursor-pointer py-2 flex property\\"
     >
       <div class=\\"pr-4\\" style=\\"margin-top: -2px; min-width: 25%\\">
         <span
@@ -2190,7 +2190,20 @@ object
           style=\\"word-break: break-word\\"
           >prop1</span
         >
-            
+          
+        <svg
+          class=\\"expand inline align-baseline\\"
+          version=\\"1.1\\"
+          viewBox=\\"0 0 24 24\\"
+          x=\\"0\\"
+          xmlns=\\"http://www.w3.org/2000/svg\\"
+          y=\\"0\\"
+        >
+          <polygon
+            points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"
+          ></polygon>
+        </svg>
+          
       </div>
 
       <div>
@@ -2218,6 +2231,23 @@ integer
       </div>
     </div>
 
+    
+    <div
+      class=\\"children bg-gray-200 py-4 rounded\\"
+    >
+          
+      <p class=\\"pl-6 mb-2 mt-4 text-sm font-bold text-gray-700\\">
+        Specification Extensions:
+      </p>
+      
+      <div class=\\"bg-gray-200 pl-6\\">
+        
+        <div class=\\"text-sm\\">x-prop1-dummy: dummy extension</div>
+        
+      </div>
+          
+       
+    </div>
     
   </div>
 </div>
@@ -3045,7 +3075,97 @@ string
   </div>
 </div>
 
+     
+      <p class=\\"pl-6 mb-2 mt-4 text-sm font-bold text-gray-700\\">
+        Specification Extensions:
+      </p>
+      
+      <div class=\\"bg-gray-100 pl-6\\">
         
+        <div class=\\"is-open\\">
+          <div class=\\"js-prop cursor-pointer py-2 property\\">
+            <div class=\\"pr-4\\" style=\\"margin-top: -2px; min-width: 25%\\">
+              <span class=\\"text-sm\\" style=\\"word-break: break-word\\"
+                >x-schema-extensions-as-object</span
+              >
+              <svg
+                class=\\"expand inline align-baseline\\"
+                version=\\"1.1\\"
+                viewBox=\\"0 0 24 24\\"
+                x=\\"0\\"
+                xmlns=\\"http://www.w3.org/2000/svg\\"
+                y=\\"0\\"
+              >
+                <polygon
+                  points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"
+                ></polygon>
+              </svg>
+            </div>
+          </div>
+          <div class=\\"children\\">
+            <div
+              class=\\"bg-gray-200  rounded\\"
+            >
+              <pre class=\\"text-sm\\">{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {
+    &quot;prop1&quot;: {
+      &quot;type&quot;: &quot;string&quot;
+    },
+    &quot;prop2&quot;: {
+      &quot;type&quot;: &quot;integer&quot;,
+      &quot;minimum&quot;: 0
+    }
+  }
+}</pre>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      
+      <div class=\\"bg-gray-100 pl-6\\">
+        
+        <div class=\\"text-sm\\">x-schema-extensions-as-primitive: dummy</div>
+        
+      </div>
+      
+      <div class=\\"bg-gray-100 pl-6\\">
+        
+        <div class=\\"is-open\\">
+          <div class=\\"js-prop cursor-pointer py-2 property\\">
+            <div class=\\"pr-4\\" style=\\"margin-top: -2px; min-width: 25%\\">
+              <span class=\\"text-sm\\" style=\\"word-break: break-word\\"
+                >x-schema-extensions-as-array</span
+              >
+              <svg
+                class=\\"expand inline align-baseline\\"
+                version=\\"1.1\\"
+                viewBox=\\"0 0 24 24\\"
+                x=\\"0\\"
+                xmlns=\\"http://www.w3.org/2000/svg\\"
+                y=\\"0\\"
+              >
+                <polygon
+                  points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"
+                ></polygon>
+              </svg>
+            </div>
+          </div>
+          <div class=\\"children\\">
+            <div
+              class=\\"bg-gray-200  rounded\\"
+            >
+              <pre class=\\"text-sm\\">[
+  &quot;item1&quot;,
+  &quot;item2&quot;
+]</pre>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+          
       <p class=\\"pl-6 mb-2 mt-4 text-xs text-gray-700\\">
         Additional properties are allowed.
       </p>
@@ -3973,7 +4093,7 @@ object
 >
   <div class=\\"\\">
     <div
-      class=\\" flex property\\"
+      class=\\"js-prop cursor-pointer py-2 flex property\\"
     >
       <div class=\\"pr-4\\" style=\\"margin-top: -2px; min-width: 25%\\">
         <span
@@ -3981,7 +4101,20 @@ object
           style=\\"word-break: break-word\\"
           >prop1</span
         >
-            
+          
+        <svg
+          class=\\"expand inline align-baseline\\"
+          version=\\"1.1\\"
+          viewBox=\\"0 0 24 24\\"
+          x=\\"0\\"
+          xmlns=\\"http://www.w3.org/2000/svg\\"
+          y=\\"0\\"
+        >
+          <polygon
+            points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"
+          ></polygon>
+        </svg>
+          
       </div>
 
       <div>
@@ -4009,6 +4142,23 @@ integer
       </div>
     </div>
 
+    
+    <div
+      class=\\"children bg-gray-200 py-4 rounded\\"
+    >
+          
+      <p class=\\"pl-6 mb-2 mt-4 text-sm font-bold text-gray-700\\">
+        Specification Extensions:
+      </p>
+      
+      <div class=\\"bg-gray-200 pl-6\\">
+        
+        <div class=\\"text-sm\\">x-prop1-dummy: dummy extension</div>
+        
+      </div>
+          
+       
+    </div>
     
   </div>
 </div>
@@ -4836,7 +4986,97 @@ string
   </div>
 </div>
 
+     
+      <p class=\\"pl-6 mb-2 mt-4 text-sm font-bold text-gray-700\\">
+        Specification Extensions:
+      </p>
+      
+      <div class=\\"bg-gray-100 pl-6\\">
         
+        <div class=\\"\\">
+          <div class=\\"js-prop cursor-pointer py-2 property\\">
+            <div class=\\"pr-4\\" style=\\"margin-top: -2px; min-width: 25%\\">
+              <span class=\\"text-sm\\" style=\\"word-break: break-word\\"
+                >x-schema-extensions-as-object</span
+              >
+              <svg
+                class=\\"expand inline align-baseline\\"
+                version=\\"1.1\\"
+                viewBox=\\"0 0 24 24\\"
+                x=\\"0\\"
+                xmlns=\\"http://www.w3.org/2000/svg\\"
+                y=\\"0\\"
+              >
+                <polygon
+                  points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"
+                ></polygon>
+              </svg>
+            </div>
+          </div>
+          <div class=\\"children\\">
+            <div
+              class=\\"bg-gray-200  rounded\\"
+            >
+              <pre class=\\"text-sm\\">{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {
+    &quot;prop1&quot;: {
+      &quot;type&quot;: &quot;string&quot;
+    },
+    &quot;prop2&quot;: {
+      &quot;type&quot;: &quot;integer&quot;,
+      &quot;minimum&quot;: 0
+    }
+  }
+}</pre>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      
+      <div class=\\"bg-gray-100 pl-6\\">
+        
+        <div class=\\"text-sm\\">x-schema-extensions-as-primitive: dummy</div>
+        
+      </div>
+      
+      <div class=\\"bg-gray-100 pl-6\\">
+        
+        <div class=\\"\\">
+          <div class=\\"js-prop cursor-pointer py-2 property\\">
+            <div class=\\"pr-4\\" style=\\"margin-top: -2px; min-width: 25%\\">
+              <span class=\\"text-sm\\" style=\\"word-break: break-word\\"
+                >x-schema-extensions-as-array</span
+              >
+              <svg
+                class=\\"expand inline align-baseline\\"
+                version=\\"1.1\\"
+                viewBox=\\"0 0 24 24\\"
+                x=\\"0\\"
+                xmlns=\\"http://www.w3.org/2000/svg\\"
+                y=\\"0\\"
+              >
+                <polygon
+                  points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"
+                ></polygon>
+              </svg>
+            </div>
+          </div>
+          <div class=\\"children\\">
+            <div
+              class=\\"bg-gray-200  rounded\\"
+            >
+              <pre class=\\"text-sm\\">[
+  &quot;item1&quot;,
+  &quot;item2&quot;
+]</pre>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+          
       <p class=\\"pl-6 mb-2 mt-4 text-xs text-gray-700\\">
         Additional properties are allowed.
       </p>

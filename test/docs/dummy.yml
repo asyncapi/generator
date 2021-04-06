@@ -174,11 +174,24 @@ components:
       type: object
       required:
         - prop2
+      x-schema-extensions-as-object:
+            type: object
+            properties:
+              prop1:
+                type: string
+              prop2:
+                type: integer
+                minimum: 0
+      x-schema-extensions-as-primitive: dummy
+      x-schema-extensions-as-array: 
+        - "item1"
+        - "item2"
       properties:
         prop1:
           type: integer
           minimum: 0
           description: Dummy prop1
+          x-prop1-dummy: dummy extension
         prop2:
           type: string
           description: Dummy prop2

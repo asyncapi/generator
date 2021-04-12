@@ -38,7 +38,7 @@ It's goal is to support development of documentation and code generation with th
 |-|-|-|-|-|-|
 | userPassword | - | - | - | - | - |
 
-### **dommy-kafka** Server
+### **dummy-kafka** Server
 
 | URL | Protocol | Description |
 |-|-|-|

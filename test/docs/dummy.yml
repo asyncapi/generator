@@ -171,6 +171,8 @@ components:
           contentEncoding: gzip
           messageType: 'user.signup'
           bindingVersion: 0.1.0
+      x-response:
+        $ref: "#/components/messages/dummyInfo"
     dummyInfo:
       name: dummyInfo
       title: Dummy system info

@@ -57,7 +57,7 @@ servers:
           - '5672'
     security:
       - user-password: []
-  dommy-kafka:
+  dummy-kafka:
     url: http://localhost:{port}
     protocol: kafka
     description: dummy Kafka broker
@@ -106,6 +106,19 @@ channels:
         is: routingKey
     subscribe:
       operationId: receiveSystemInfo
+      bindings:
+        amqp:
+          expiration: 100000
+          userId: guest
+          cc: [ 'user.logs' ]
+          priority: 10
+          deliveryMode: 2
+          mandatory: false
+          bcc: [ 'external.audit' ]
+          replyTo: user.signedup
+          timestamp: true
+          ack: false
+          bindingVersion: 0.1.0
       message:
         $ref: '#/components/messages/dummyInfo'
 
@@ -142,6 +155,24 @@ components:
             type: string
       payload:
         $ref: "#/components/schemas/dummyCreated"
+      bindings:
+        kafka:
+          key:
+            type: object
+            properties:
+              id:
+                type: string
+                format: uuid
+              type:
+                type: string
+                enum: [ 'type1', "type2" ]
+          bindingVersion: '0.1.0'
+        amqp:
+          contentEncoding: gzip
+          messageType: 'user.signup'
+          bindingVersion: 0.1.0
+      x-response:
+        $ref: "#/components/messages/dummyInfo"
     dummyInfo:
       name: dummyInfo
       title: Dummy system info
@@ -167,18 +198,31 @@ components:
         - payload:
             prop1: option2
             sentAt: 2020-01-31T13:24:53Z
-          
+
 
   schemas:
     dummyCreated:
       type: object
       required:
         - prop2
+      x-schema-extensions-as-object:
+            type: object
+            properties:
+              prop1:
+                type: string
+              prop2:
+                type: integer
+                minimum: 0
+      x-schema-extensions-as-primitive: dummy
+      x-schema-extensions-as-array:
+        - "item1"
+        - "item2"
       properties:
         prop1:
           type: integer
           minimum: 0
           description: Dummy prop1
+          x-prop1-dummy: dummy extension
         prop2:
           type: string
           description: Dummy prop2
@@ -292,4 +336,6 @@ components:
     kafka:
       bindings:
         kafka:
-          clientId: my-app-id
+          groupId: my-app-group-id
+          clientId: my-app-client-id
+          bindingVersion: '0.1.0'

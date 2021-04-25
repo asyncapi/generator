@@ -27,7 +27,6 @@ In case you don't have a local node environment you can run
 docker build -t asyncapi/generator:latest .
 docker run -v `pwd`:`pwd` -w `pwd` -it --rm --entrypoint /bin/sh  asyncapi/generator:latest
 npm install
-npm run lint
 ./cli.js --help
 ```
 

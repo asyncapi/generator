@@ -191,6 +191,13 @@ It creates a symbolic link to the target directory (`~/my-template` in this case
 ag asyncapi.yaml https://github.com/asyncapi/html-template.git
 ```
 
+**Map schema references from baseUrl to local folder:**
+```bash
+ag test/docs/apiwithref.json @asyncapi/html-template -o ./build/ --force-write --map-base-url https://schema.example.com/crm/:./test/docs/
+```
+
+The parameter `--map-base-url` maps external schema references to local folders.
+
 ### CLI usage with Docker
 
 Install [Docker](https://docs.docker.com/get-docker/) first. Thanks to Docker you do not need Node.js even though the generator is written with it.

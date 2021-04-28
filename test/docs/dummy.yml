@@ -264,6 +264,12 @@ components:
           $ref: "#/components/schemas/sentAt"
         dummyObjectProp2:
           $ref: "#/components/schemas/dummyRecursiveObject"
+        dummyObjectProp3:
+          type: object
+          additionalProperties: true
+        dummyObjectProp4:
+          type: object
+          additionalProperties: false
     dummyRecursiveObject:
       type: object
       properties:

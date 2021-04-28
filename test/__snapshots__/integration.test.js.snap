@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Integration testing generateFromFile() to make sure the result of the generation is not changend comparing to snapshot generate using React template 1`] = `
+exports[`Integration testing generateFromFile() to make sure the result of the generation is not changed comparing to snapshot generate using React template 1`] = `
 "# Dummy example with all spec features included 0.0.1 documentation
 
 This is an example of AsyncAPI specification file that is suppose to include all possible features of the AsyncAPI specification. Do not use it on production.
@@ -109,6 +109,8 @@ Still dummy though.
 | dummyObject.dummyObjectProp2 | object | - | _Any_ |
 | dummyObject.dummyObjectProp2.dummyRecursiveProp1 | object | **[CIRCULAR]** | _Any_ |
 | dummyObject.dummyObjectProp2.dummyRecursiveProp2 | string | - | _Any_ |
+| dummyObject.dummyObjectProp3 | object | - | _Any_ |
+| dummyObject.dummyObjectProp4 | object | - | _Any_ |
 
 > Examples of payload _(generated)_
 
@@ -136,7 +138,9 @@ Still dummy though.
     \\"dummyObjectProp2\\": {
       \\"dummyRecursiveProp1\\": {},
       \\"dummyRecursiveProp2\\": \\"string\\"
-    }
+    },
+    \\"dummyObjectProp3\\": {},
+    \\"dummyObjectProp4\\": {}
   }
 }
 \`\`\`
@@ -218,7 +222,7 @@ It is a dummy system info message.
 "
 `;
 
-exports[`Integration testing generateFromFile() to make sure the result of the generation is not changend comparing to snapshot generated using Nunjucks template 1`] = `
+exports[`Integration testing generateFromFile() to make sure the result of the generation is not changed comparing to snapshot generated using Nunjucks template 1`] = `
 "<!DOCTYPE html>
 
 <html lang=\\"en\\">
@@ -3064,6 +3068,132 @@ string
   </div>
 </div>
 
+      
+
+<div
+  class=\\"bg-gray-200 pl-8 pr-8 rounded\\"
+>
+  <div class=\\"\\">
+    <div
+      class=\\"js-prop cursor-pointer py-2 flex property\\"
+    >
+      <div class=\\"pr-4\\" style=\\"margin-top: -2px; min-width: 25%\\">
+        <span
+          class=\\"text-sm\\"
+          style=\\"word-break: break-word\\"
+          >dummyObjectProp3</span
+        >
+          
+        <svg
+          class=\\"expand inline align-baseline\\"
+          version=\\"1.1\\"
+          viewBox=\\"0 0 24 24\\"
+          x=\\"0\\"
+          xmlns=\\"http://www.w3.org/2000/svg\\"
+          y=\\"0\\"
+        >
+          <polygon
+            points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"
+          ></polygon>
+        </svg>
+          
+      </div>
+
+      <div>
+        <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
+          
+object   
+          <div class=\\"inline-block\\">
+                      
+          </div>
+        </div>
+
+        
+
+<div class=\\"text-sm markdown\\"></div>
+
+    
+      </div>
+    </div>
+
+    
+    <div
+      class=\\"children bg-gray-100 py-4 rounded\\"
+    >
+             
+      <p class=\\"pl-6 mb-2 mt-4 text-xs text-gray-700\\">
+        Additional properties are allowed.
+      </p>
+        
+       
+    </div>
+    
+  </div>
+</div>
+
+      
+
+<div
+  class=\\"bg-gray-200 pl-8 pr-8 rounded\\"
+>
+  <div class=\\"\\">
+    <div
+      class=\\"js-prop cursor-pointer py-2 flex property\\"
+    >
+      <div class=\\"pr-4\\" style=\\"margin-top: -2px; min-width: 25%\\">
+        <span
+          class=\\"text-sm\\"
+          style=\\"word-break: break-word\\"
+          >dummyObjectProp4</span
+        >
+          
+        <svg
+          class=\\"expand inline align-baseline\\"
+          version=\\"1.1\\"
+          viewBox=\\"0 0 24 24\\"
+          x=\\"0\\"
+          xmlns=\\"http://www.w3.org/2000/svg\\"
+          y=\\"0\\"
+        >
+          <polygon
+            points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"
+          ></polygon>
+        </svg>
+          
+      </div>
+
+      <div>
+        <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
+          
+object   
+          <div class=\\"inline-block\\">
+                      
+          </div>
+        </div>
+
+        
+
+<div class=\\"text-sm markdown\\"></div>
+
+    
+      </div>
+    </div>
+
+    
+    <div
+      class=\\"children bg-gray-100 py-4 rounded\\"
+    >
+             
+      <p class=\\"pl-6 mb-2 mt-4 text-xs text-gray-700\\">
+        Additional properties are <strong>NOT</strong> allowed.
+      </p>
+        
+       
+    </div>
+    
+  </div>
+</div>
+
         
       <p class=\\"pl-6 mb-2 mt-4 text-xs text-gray-700\\">
         Additional properties are allowed.
@@ -3410,7 +3540,9 @@ string
     \\"dummyObjectProp2\\": {
       \\"dummyRecursiveProp1\\": {},
       \\"dummyRecursiveProp2\\": \\"string\\"
-    }
+    },
+    \\"dummyObjectProp3\\": {},
+    \\"dummyObjectProp4\\": {}
   }
 }</code></pre>
         <h6 class=\\"text-xs font-bold text-gray-700 italic\\">This example has been generated automatically.</h6>
@@ -4967,6 +5099,132 @@ string
         
       <p class=\\"pl-6 mb-2 mt-4 text-xs text-gray-700\\">
         Additional properties are allowed.
+      </p>
+        
+       
+    </div>
+    
+  </div>
+</div>
+
+      
+
+<div
+  class=\\"bg-gray-200 pl-8 pr-8 rounded\\"
+>
+  <div class=\\"\\">
+    <div
+      class=\\"js-prop cursor-pointer py-2 flex property\\"
+    >
+      <div class=\\"pr-4\\" style=\\"margin-top: -2px; min-width: 25%\\">
+        <span
+          class=\\"text-sm\\"
+          style=\\"word-break: break-word\\"
+          >dummyObjectProp3</span
+        >
+          
+        <svg
+          class=\\"expand inline align-baseline\\"
+          version=\\"1.1\\"
+          viewBox=\\"0 0 24 24\\"
+          x=\\"0\\"
+          xmlns=\\"http://www.w3.org/2000/svg\\"
+          y=\\"0\\"
+        >
+          <polygon
+            points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"
+          ></polygon>
+        </svg>
+          
+      </div>
+
+      <div>
+        <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
+          
+object   
+          <div class=\\"inline-block\\">
+                      
+          </div>
+        </div>
+
+        
+
+<div class=\\"text-sm markdown\\"></div>
+
+    
+      </div>
+    </div>
+
+    
+    <div
+      class=\\"children bg-gray-100 py-4 rounded\\"
+    >
+             
+      <p class=\\"pl-6 mb-2 mt-4 text-xs text-gray-700\\">
+        Additional properties are allowed.
+      </p>
+        
+       
+    </div>
+    
+  </div>
+</div>
+
+      
+
+<div
+  class=\\"bg-gray-200 pl-8 pr-8 rounded\\"
+>
+  <div class=\\"\\">
+    <div
+      class=\\"js-prop cursor-pointer py-2 flex property\\"
+    >
+      <div class=\\"pr-4\\" style=\\"margin-top: -2px; min-width: 25%\\">
+        <span
+          class=\\"text-sm\\"
+          style=\\"word-break: break-word\\"
+          >dummyObjectProp4</span
+        >
+          
+        <svg
+          class=\\"expand inline align-baseline\\"
+          version=\\"1.1\\"
+          viewBox=\\"0 0 24 24\\"
+          x=\\"0\\"
+          xmlns=\\"http://www.w3.org/2000/svg\\"
+          y=\\"0\\"
+        >
+          <polygon
+            points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"
+          ></polygon>
+        </svg>
+          
+      </div>
+
+      <div>
+        <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
+          
+object   
+          <div class=\\"inline-block\\">
+                      
+          </div>
+        </div>
+
+        
+
+<div class=\\"text-sm markdown\\"></div>
+
+    
+      </div>
+    </div>
+
+    
+    <div
+      class=\\"children bg-gray-100 py-4 rounded\\"
+    >
+             
+      <p class=\\"pl-6 mb-2 mt-4 text-xs text-gray-700\\">
+        Additional properties are <strong>NOT</strong> allowed.
       </p>
         
        

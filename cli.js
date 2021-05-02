@@ -43,13 +43,14 @@ const disableHooksParser = v => {
 };
 
 const mapBaseUrlParser = v => {
-  // example value for regular expression: https://schema.example.com/crm/:./test/docs/
+  // Example value for regular expression: https://schema.example.com/crm/:./test/docs/
+  // it splits on last occurrence of : into the groups all, url and folder
   const re = /(.*):(.*)/g;
   let mapping = [];
   if ((mapping = re.exec(v))===null || mapping.length!==3) {
     throw new Error('Invalid --map-base-url flag. A mapping <url>:<baseFolder> with delimiter : expected.');
   }
-  // folder is without trailing slash, so make sure that url has also no trailing slash:
+  // Folder is without trailing slash, so make sure that url has also no trailing slash:
   mapBaseUrlToFolder.url = mapping[1].replace(/\/$/, '');
   mapBaseUrlToFolder.folder = path.resolve(mapping[2]);
 };

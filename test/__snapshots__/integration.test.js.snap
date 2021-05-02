@@ -6,16 +6,16 @@ exports[`Integration testing generateFromFile() to make sure the result of the g
 <html lang=\\"en\\">
 <head>
   <meta charset=\\"UTF-8\\">
+  
 
-
-  <title>This is Async API with a schema reference
-
-
-
+  <title>This is Async API with a schema reference 
+    
+    
+    
     <span>0.0.1</span>
  documentation</title>
   <meta name=\\"viewport\\" content=\\"width=device-width, initial-scale=1.0\\">
-
+  
     <style type=\\"text/css\\">
     /*! modern-normalize v1.0.0 | MIT License | https://github.com/sindresorhus/modern-normalize */
 
@@ -1427,11 +1427,11 @@ a:hover {
 }
 
     </style>
-
+  
 </head>
 <body>
   <div class=\\"relative md:flex lg:flex xl:flex\\">
-
+    
 
 
 <input id=\\"burger-menu\\" type=\\"checkbox\\" />
@@ -1445,105 +1445,105 @@ a:hover {
 
 <div class=\\"sidebar-panel fixed top-0 left-0 bottom-0 w-64 bg-gray-200 font-sans pt-8 pr-4 pb-4 pl-4\\">
   <div class=\\"sidebar-panel__content\\">
-
+    
       <h1 class=\\"text-2xl font-thin\\">
-        This is Async API with a schema reference
-
-
-
+        This is Async API with a schema reference 
+    
+    
+    
     <span>0.0.1</span>
 
       </h1>
-
+    
     <ul class=\\"text-sm mt-10 mt-2\\">
       <li class=\\"mb-3\\">
         <a class=\\"js-menu-item text-gray-700 no-underline\\" href=\\"#introduction\\">Introduction</a>
       </li>
-
+      
         <li class=\\"mb-3\\">
           <a class=\\"js-menu-item text-gray-700 no-underline\\" href=\\"#servers\\">Servers</a>
         </li>
-
+      
     </ul>
 
-
+    
       <h2 class=\\"text-xs uppercase text-gray-500 mt-10 mb-4 font-thin\\">Operations</h2>
       <ul class=\\"text-sm mt-2\\">
         <!-- With tags in sidebar -->
-
+        
           <!--Without tags in sidebar-->
-
+          
             <li>
-
+              
                 <a class=\\"js-menu-item flex break-words no-underline text-gray-700 mt-8 sm:mt-8 md:mt-3\\" href=\\"#operation-publish-VirtualTopic.crmservice\\">
                   <span class=\\"bg-blue-600 font-bold h-6 no-underline text-white uppercase p-1 mr-2 rounded\\" style=\\"height: 21px;font-size: 11px;\\" title=\\"Publish\\">
                     Pub
                   </span>
-
+                  
                     <div style=\\"display:inline-block;\\">
-
+                      
 <span class=\\"string-chunk\\" style=\\"padding-top: 2px;\\">VirtualTopic.crmservice</span>
 
                     </div>
-
+                  
                 </a>
+              
 
-
-
+              
               </a>
             </li>
-
-
+          
+        
       </ul>
 
       <h2 class=\\"text-xs uppercase text-gray-500 mt-10 mb-4 font-thin\\">Messages</h2>
       <ul class=\\"text-sm mt-2\\">
-
+        
           <a class=\\"js-menu-item flex break-words no-underline text-gray-700 mt-8 sm:mt-8 md:mt-3\\" href=\\"#message-crm:Customer.Created\\">
             <div style=\\"display:inline-block;\\">
-
+              
 <span class=\\"string-chunk\\" style=\\"padding-top: 2px;\\">crm:Customer.Created</span>
 
             </div>
           </a>
-
+        
           <a class=\\"js-menu-item flex break-words no-underline text-gray-700 mt-8 sm:mt-8 md:mt-3\\" href=\\"#message-crm:Customer.Updated\\">
             <div style=\\"display:inline-block;\\">
-
+              
 <span class=\\"string-chunk\\" style=\\"padding-top: 2px;\\">crm:Customer.Updated</span>
 
             </div>
           </a>
-
+        
       </ul>
-
+    
   </div>
 </div>
 
     <div class=\\"content-panel flex-1 leading-loose z-10\\">
-
+      
 
 <div class=\\"center-block p-8\\">
   <a name=\\"introduction\\"></a>
 
-  <h1>This is Async API with a schema reference
-
-
-
+  <h1>This is Async API with a schema reference 
+    
+    
+    
     <span>0.0.1</span>
 </h1>
   <div class=\\"leading-normal mb-4\\">
-
-
+    
+    
   </div>
 
   <div class=\\"markdown\\">
-
+    
   </div>
 
 
   <div class=\\"leading-normal mb-4\\">
-
+    
   </div>
 </div>
 
@@ -1556,18 +1556,18 @@ a:hover {
 
 
   <div class=\\"responsive-container\\">
-
-
+    
+      
 
 <a name=\\"operation-publish-VirtualTopic.crmservice\\"></a>
 <div class=\\"center-block p-8\\">
   <div class=\\"operation pt-8 pb-8\\">
     <h3 class=\\"font-mono text-base\\">
-
+      
       <span class=\\"font-mono border border-blue-500 text-blue-500 uppercase p-1 rounded\\" title=\\"Publish\\">Pub</span>
-
-
-
+      
+      
+      
 <span class=\\"string-chunk\\" >VirtualTopic.crmservice</span>
 
     </h3>
@@ -1579,42 +1579,42 @@ a:hover {
 
 
 
+    
 
 
-
-
+    
     <p>Accepts <strong>one of</strong> the following messages:</p>
-
-
+    
+    
 
 <div class=\\"bg-gray-200 rounded p-4 mt-2\\">
   <div class=\\"text-sm text-gray-700 mb-2\\">
-
+    
     <span class=\\"text-gray-700 font-bold mr-2\\">#1</span>
-
-
+    
+    
       <span class=\\"border text-orange-600 rounded text-s py-0 px-2\\">crm:Customer.Created</span>
-
+    
   </div>
   <p class=\\"text-gray-600 text-sm\\">A customer was created</p>
-
-
+  
+  
 
 <div class=\\"mt-4\\">
-
+  
 </div>
 
 
 
 
-
-
+  
+  
 
   <div class=\\"mt-4 mb-4 markdown\\"></div>
-
-
+  
+    
 <div>
-
+  
 
 <div
   class=\\"bg-gray-200  rounded\\"
@@ -1629,11 +1629,11 @@ a:hover {
           style=\\"word-break: break-word\\"
           >Payload</span
         >
-
+         
         <span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\"
           >https://schema.example.com/crm/shared.json</span
         >
-
+         
         <svg
           class=\\"expand inline align-baseline\\"
           version=\\"1.1\\"
@@ -1646,32 +1646,32 @@ a:hover {
             points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"
           ></polygon>
         </svg>
-
+          
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-object
+          
+object   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"><p>Shared Customer Relationship Management models</p>
 </div>
 
-
+    
       </div>
     </div>
 
-
+    
     <div
       class=\\"children bg-gray-100 py-4 rounded\\"
     >
-
+           
 
 <div
   class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
@@ -1686,39 +1686,39 @@ object
           style=\\"word-break: break-word\\"
           >type</span
         >
-
+            
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-
+          
+   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"></div>
 
-
+   
         <div class=\\"text-xs\\">
-          Enum:
+          Enum: 
           <span class=\\"border text-orange-600 rounded ml-1 py-0 px-2\\"
             >\\"CustomerProfile\\"</span
           >
-
+          
         </div>
-
+         
       </div>
     </div>
 
-
+    
   </div>
 </div>
 
-
+      
 
 <div
   class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
@@ -1733,37 +1733,37 @@ object
           style=\\"word-break: break-word\\"
           >id</span
         >
-
+            
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-string
+          
+string   
           <div class=\\"inline-block\\">
-
+            
             <span
               class=\\"bg-yellow-600 font-bold no-underline text-black rounded lowercase ml-2\\"
               style=\\"height: 20px; font-size: 11px; padding: 3px\\"
               >uuid</span
             >
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"></div>
 
-
+    
       </div>
     </div>
 
-
+    
   </div>
 </div>
 
-
+      
 
 <div
   class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
@@ -1778,7 +1778,7 @@ string
           style=\\"word-break: break-word\\"
           >attributes</span
         >
-
+          
         <svg
           class=\\"expand inline align-baseline\\"
           version=\\"1.1\\"
@@ -1791,31 +1791,31 @@ string
             points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"
           ></polygon>
         </svg>
-
+          
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-object
+          
+object   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"></div>
 
-
+    
       </div>
     </div>
 
-
+    
     <div
       class=\\"children bg-gray-200 py-4 rounded\\"
     >
-
+           
 
 <div
   class=\\"bg-gray-200 pl-8 pr-8 rounded\\"
@@ -1830,91 +1830,91 @@ object
           style=\\"word-break: break-word\\"
           >name</span
         >
-
+            
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-string
+          
+string   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"></div>
 
-
+    
       </div>
     </div>
 
-
+    
   </div>
 </div>
 
-
+        
       <p class=\\"pl-6 mb-2 mt-4 text-xs text-gray-700\\">
         Additional properties are allowed.
       </p>
-
-
+        
+       
     </div>
-
+    
   </div>
 </div>
 
-
+        
       <p class=\\"pl-6 mb-2 mt-4 text-xs text-gray-700\\">
         Additional properties are allowed.
       </p>
-
-
+        
+       
     </div>
-
+    
   </div>
 </div>
 
 
 </div>
 
-
-
+  
+  
 </div>
 
 
-
-
+    
+    
 
 <div class=\\"bg-gray-200 rounded p-4 mt-2\\">
   <div class=\\"text-sm text-gray-700 mb-2\\">
-
+    
     <span class=\\"text-gray-700 font-bold mr-2\\">#2</span>
-
-
+    
+    
       <span class=\\"border text-orange-600 rounded text-s py-0 px-2\\">crm:Customer.Updated</span>
-
+    
   </div>
   <p class=\\"text-gray-600 text-sm\\">A customer was created</p>
-
-
+  
+  
 
 <div class=\\"mt-4\\">
-
+  
 </div>
 
 
 
 
-
-
+  
+  
 
   <div class=\\"mt-4 mb-4 markdown\\"></div>
-
-
+  
+    
 <div>
-
+  
 
 <div
   class=\\"bg-gray-200  rounded\\"
@@ -1929,11 +1929,11 @@ string
           style=\\"word-break: break-word\\"
           >Payload</span
         >
-
+         
         <span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\"
           >https://schema.example.com/crm/shared.json</span
         >
-
+         
         <svg
           class=\\"expand inline align-baseline\\"
           version=\\"1.1\\"
@@ -1946,32 +1946,32 @@ string
             points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"
           ></polygon>
         </svg>
-
+          
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-object
+          
+object   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"><p>Shared Customer Relationship Management models</p>
 </div>
 
-
+    
       </div>
     </div>
 
-
+    
     <div
       class=\\"children bg-gray-100 py-4 rounded\\"
     >
-
+           
 
 <div
   class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
@@ -1986,39 +1986,39 @@ object
           style=\\"word-break: break-word\\"
           >type</span
         >
-
+            
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-
+          
+   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"></div>
 
-
+   
         <div class=\\"text-xs\\">
-          Enum:
+          Enum: 
           <span class=\\"border text-orange-600 rounded ml-1 py-0 px-2\\"
             >\\"CustomerProfile\\"</span
           >
-
+          
         </div>
-
+         
       </div>
     </div>
 
-
+    
   </div>
 </div>
 
-
+      
 
 <div
   class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
@@ -2033,37 +2033,37 @@ object
           style=\\"word-break: break-word\\"
           >id</span
         >
-
+            
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-string
+          
+string   
           <div class=\\"inline-block\\">
-
+            
             <span
               class=\\"bg-yellow-600 font-bold no-underline text-black rounded lowercase ml-2\\"
               style=\\"height: 20px; font-size: 11px; padding: 3px\\"
               >uuid</span
             >
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"></div>
 
-
+    
       </div>
     </div>
 
-
+    
   </div>
 </div>
 
-
+      
 
 <div
   class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
@@ -2078,7 +2078,7 @@ string
           style=\\"word-break: break-word\\"
           >attributes</span
         >
-
+          
         <svg
           class=\\"expand inline align-baseline\\"
           version=\\"1.1\\"
@@ -2091,31 +2091,31 @@ string
             points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"
           ></polygon>
         </svg>
-
+          
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-object
+          
+object   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"></div>
 
-
+    
       </div>
     </div>
 
-
+    
     <div
       class=\\"children bg-gray-200 py-4 rounded\\"
     >
-
+           
 
 <div
   class=\\"bg-gray-200 pl-8 pr-8 rounded\\"
@@ -2130,67 +2130,67 @@ object
           style=\\"word-break: break-word\\"
           >name</span
         >
-
+            
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-string
+          
+string   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"></div>
 
-
+    
       </div>
     </div>
 
-
+    
   </div>
 </div>
 
-
+        
       <p class=\\"pl-6 mb-2 mt-4 text-xs text-gray-700\\">
         Additional properties are allowed.
       </p>
-
-
+        
+       
     </div>
-
+    
   </div>
 </div>
 
-
+        
       <p class=\\"pl-6 mb-2 mt-4 text-xs text-gray-700\\">
         Additional properties are allowed.
       </p>
-
-
+        
+       
     </div>
-
+    
   </div>
 </div>
 
 
 </div>
 
-
-
+  
+  
 </div>
 
 
+    
+    
 
-
-
-
+    
 
 <div class=\\"mt-4\\">
-
+  
 </div>
 
 
@@ -2201,25 +2201,25 @@ string
 <div class=\\"right-block p-8\\">
   <h4 class=\\"text-lg text-white mb-4\\">Examples</h4>
 
-
-
-
+  
+  
+  
 
 <form>
   <h5 class=\\"examples-uid text-orange-600 mt-4\\">crm:Customer.Created</h5>
-
+  
     <div class=\\"payload-examples mb-4 \\">
       <div class=\\"js-prop cursor-pointer  flex property\\">
         <span class=\\"px-2 mr-2 text-gray-200 text-sm border rounded focus:outline-none cursor-pointer\\">Payload</span>
-
+        
           <svg class=\\"expand inline align-baseline\\" version=\\"1.1\\" viewBox=\\"0 0 24 24\\" x=\\"0\\"
             xmlns=\\"http://www.w3.org/2000/svg\\" y=\\"0\\">
             <polygon points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"></polygon>
           </svg>
-
+        
       </div>
       <div class=\\"children payload-examples mt-4\\">
-
+        
         <pre class=\\"hljs mb-4 border border-gray-800 rounded\\"><code>{
   \\"type\\": \\"CustomerProfile\\",
   \\"id\\": \\"c0e5e95a-e26a-4d16-a185-32cb8f9725fc\\",
@@ -2228,33 +2228,33 @@ string
   }
 }</code></pre>
         <h6 class=\\"text-xs font-bold text-gray-700 italic\\">This example has been generated automatically.</h6>
-
+        
       </div>
     </div>
+  
 
-
-
+  
 </form>
 
 
-
-
+  
+  
 
 <form>
   <h5 class=\\"examples-uid text-orange-600 mt-4\\">crm:Customer.Updated</h5>
-
+  
     <div class=\\"payload-examples mb-4 \\">
       <div class=\\"js-prop cursor-pointer  flex property\\">
         <span class=\\"px-2 mr-2 text-gray-200 text-sm border rounded focus:outline-none cursor-pointer\\">Payload</span>
-
+        
           <svg class=\\"expand inline align-baseline\\" version=\\"1.1\\" viewBox=\\"0 0 24 24\\" x=\\"0\\"
             xmlns=\\"http://www.w3.org/2000/svg\\" y=\\"0\\">
             <polygon points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"></polygon>
           </svg>
-
+        
       </div>
       <div class=\\"children payload-examples mt-4\\">
-
+        
         <pre class=\\"hljs mb-4 border border-gray-800 rounded\\"><code>{
   \\"type\\": \\"CustomerProfile\\",
   \\"id\\": \\"c0e5e95a-e26a-4d16-a185-32cb8f9725fc\\",
@@ -2263,25 +2263,25 @@ string
   }
 }</code></pre>
         <h6 class=\\"text-xs font-bold text-gray-700 italic\\">This example has been generated automatically.</h6>
-
+        
       </div>
     </div>
+  
 
-
-
+  
 </form>
 
 
-
-
+  
+  
 </div>
 
 
 
-
+    
   </div>
   <div class=\\"responsive-container\\">
-
+    
   </div>
 
 
@@ -2294,38 +2294,38 @@ string
 <div class=\\"responsive-container\\">
   <div class=\\"center-block p-8\\">
     <div class=\\"all-messages pb-8\\">
-
+      
       <a name=\\"message-crm:Customer.Created\\"></a>
-
+      
 
 <div class=\\"bg-gray-200 rounded p-4 mt-2\\">
   <div class=\\"text-sm text-gray-700 mb-2\\">
-
+    
     <span class=\\"text-gray-700 font-bold mr-2\\">#1</span>
-
-
+    
+    
       <span class=\\"border text-orange-600 rounded text-s py-0 px-2\\">crm:Customer.Created</span>
-
+    
   </div>
   <p class=\\"text-gray-600 text-sm\\">A customer was created</p>
-
-
+  
+  
 
 <div class=\\"mt-4\\">
-
+  
 </div>
 
 
 
 
-
-
+  
+  
 
   <div class=\\"mt-4 mb-4 markdown\\"></div>
-
-
+  
+    
 <div>
-
+  
 
 <div
   class=\\"bg-gray-200  rounded\\"
@@ -2340,11 +2340,11 @@ string
           style=\\"word-break: break-word\\"
           >Payload</span
         >
-
+         
         <span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\"
           >https://schema.example.com/crm/shared.json</span
         >
-
+         
         <svg
           class=\\"expand inline align-baseline\\"
           version=\\"1.1\\"
@@ -2357,32 +2357,32 @@ string
             points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"
           ></polygon>
         </svg>
-
+          
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-object
+          
+object   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"><p>Shared Customer Relationship Management models</p>
 </div>
 
-
+    
       </div>
     </div>
 
-
+    
     <div
       class=\\"children bg-gray-100 py-4 rounded\\"
     >
-
+           
 
 <div
   class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
@@ -2397,39 +2397,39 @@ object
           style=\\"word-break: break-word\\"
           >type</span
         >
-
+            
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-
+          
+   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"></div>
 
-
+   
         <div class=\\"text-xs\\">
-          Enum:
+          Enum: 
           <span class=\\"border text-orange-600 rounded ml-1 py-0 px-2\\"
             >\\"CustomerProfile\\"</span
           >
-
+          
         </div>
-
+         
       </div>
     </div>
 
-
+    
   </div>
 </div>
 
-
+      
 
 <div
   class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
@@ -2444,37 +2444,37 @@ object
           style=\\"word-break: break-word\\"
           >id</span
         >
-
+            
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-string
+          
+string   
           <div class=\\"inline-block\\">
-
+            
             <span
               class=\\"bg-yellow-600 font-bold no-underline text-black rounded lowercase ml-2\\"
               style=\\"height: 20px; font-size: 11px; padding: 3px\\"
               >uuid</span
             >
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"></div>
 
-
+    
       </div>
     </div>
 
-
+    
   </div>
 </div>
 
-
+      
 
 <div
   class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
@@ -2489,7 +2489,7 @@ string
           style=\\"word-break: break-word\\"
           >attributes</span
         >
-
+          
         <svg
           class=\\"expand inline align-baseline\\"
           version=\\"1.1\\"
@@ -2502,31 +2502,31 @@ string
             points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"
           ></polygon>
         </svg>
-
+          
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-object
+          
+object   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"></div>
 
-
+    
       </div>
     </div>
 
-
+    
     <div
       class=\\"children bg-gray-200 py-4 rounded\\"
     >
-
+           
 
 <div
   class=\\"bg-gray-200 pl-8 pr-8 rounded\\"
@@ -2541,92 +2541,92 @@ object
           style=\\"word-break: break-word\\"
           >name</span
         >
-
+            
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-string
+          
+string   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"></div>
 
-
+    
       </div>
     </div>
 
-
+    
   </div>
 </div>
 
-
+        
       <p class=\\"pl-6 mb-2 mt-4 text-xs text-gray-700\\">
         Additional properties are allowed.
       </p>
-
-
+        
+       
     </div>
-
+    
   </div>
 </div>
 
-
+        
       <p class=\\"pl-6 mb-2 mt-4 text-xs text-gray-700\\">
         Additional properties are allowed.
       </p>
-
-
+        
+       
     </div>
-
+    
   </div>
 </div>
 
 
 </div>
 
-
-
+  
+  
 </div>
 
 
-
+      
       <a name=\\"message-crm:Customer.Updated\\"></a>
-
+      
 
 <div class=\\"bg-gray-200 rounded p-4 mt-2\\">
   <div class=\\"text-sm text-gray-700 mb-2\\">
-
+    
     <span class=\\"text-gray-700 font-bold mr-2\\">#2</span>
-
-
+    
+    
       <span class=\\"border text-orange-600 rounded text-s py-0 px-2\\">crm:Customer.Updated</span>
-
+    
   </div>
   <p class=\\"text-gray-600 text-sm\\">A customer was created</p>
-
-
+  
+  
 
 <div class=\\"mt-4\\">
-
+  
 </div>
 
 
 
 
-
-
+  
+  
 
   <div class=\\"mt-4 mb-4 markdown\\"></div>
-
-
+  
+    
 <div>
-
+  
 
 <div
   class=\\"bg-gray-200  rounded\\"
@@ -2641,11 +2641,11 @@ string
           style=\\"word-break: break-word\\"
           >Payload</span
         >
-
+         
         <span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\"
           >https://schema.example.com/crm/shared.json</span
         >
-
+         
         <svg
           class=\\"expand inline align-baseline\\"
           version=\\"1.1\\"
@@ -2658,32 +2658,32 @@ string
             points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"
           ></polygon>
         </svg>
-
+          
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-object
+          
+object   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"><p>Shared Customer Relationship Management models</p>
 </div>
 
-
+    
       </div>
     </div>
 
-
+    
     <div
       class=\\"children bg-gray-100 py-4 rounded\\"
     >
-
+           
 
 <div
   class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
@@ -2698,39 +2698,39 @@ object
           style=\\"word-break: break-word\\"
           >type</span
         >
-
+            
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-
+          
+   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"></div>
 
-
+   
         <div class=\\"text-xs\\">
-          Enum:
+          Enum: 
           <span class=\\"border text-orange-600 rounded ml-1 py-0 px-2\\"
             >\\"CustomerProfile\\"</span
           >
-
+          
         </div>
-
+         
       </div>
     </div>
 
-
+    
   </div>
 </div>
 
-
+      
 
 <div
   class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
@@ -2745,37 +2745,37 @@ object
           style=\\"word-break: break-word\\"
           >id</span
         >
-
+            
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-string
+          
+string   
           <div class=\\"inline-block\\">
-
+            
             <span
               class=\\"bg-yellow-600 font-bold no-underline text-black rounded lowercase ml-2\\"
               style=\\"height: 20px; font-size: 11px; padding: 3px\\"
               >uuid</span
             >
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"></div>
 
-
+    
       </div>
     </div>
 
-
+    
   </div>
 </div>
 
-
+      
 
 <div
   class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
@@ -2790,7 +2790,7 @@ string
           style=\\"word-break: break-word\\"
           >attributes</span
         >
-
+          
         <svg
           class=\\"expand inline align-baseline\\"
           version=\\"1.1\\"
@@ -2803,31 +2803,31 @@ string
             points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"
           ></polygon>
         </svg>
-
+          
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-object
+          
+object   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"></div>
 
-
+    
       </div>
     </div>
 
-
+    
     <div
       class=\\"children bg-gray-200 py-4 rounded\\"
     >
-
+           
 
 <div
   class=\\"bg-gray-200 pl-8 pr-8 rounded\\"
@@ -2842,61 +2842,61 @@ object
           style=\\"word-break: break-word\\"
           >name</span
         >
-
+            
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-string
+          
+string   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"></div>
 
-
+    
       </div>
     </div>
 
-
+    
   </div>
 </div>
 
-
+        
       <p class=\\"pl-6 mb-2 mt-4 text-xs text-gray-700\\">
         Additional properties are allowed.
       </p>
-
-
+        
+       
     </div>
-
+    
   </div>
 </div>
 
-
+        
       <p class=\\"pl-6 mb-2 mt-4 text-xs text-gray-700\\">
         Additional properties are allowed.
       </p>
-
-
+        
+       
     </div>
-
+    
   </div>
 </div>
 
 
 </div>
 
-
-
+  
+  
 </div>
 
 
-
+      
     </div>
   </div>
 </div>
@@ -2905,7 +2905,7 @@ string
     </div>
     <div class=\\"examples-panel absolute top-0 right-0 bottom-0\\"></div>
   </div>
-
+  
     <script type=\\"text/javascript\\">
       /*
   Highlight.js 10.2.0 (da7d149b)
@@ -2987,7 +2987,7 @@ window.addEventListener('load', bindExpanders);
 window.addEventListener('load', bindMenuItems);
 
     </script>
-
+  
 </body>
 </html>
 "
@@ -3215,22 +3215,22 @@ It is a dummy system info message.
 "
 `;
 
-exports[`Integration testing generateFromFile() to make sure the result of the generation is not changed comparing to snapshot generated using Nunjucks template 1`] = `
+exports[`Integration testing generateFromFile() to make sure the result of the generation is not changend comparing to snapshot generated using Nunjucks template 1`] = `
 "<!DOCTYPE html>
 
 <html lang=\\"en\\">
 <head>
   <meta charset=\\"UTF-8\\">
+  
 
-
-  <title>Dummy example with all spec features included
-
-
-
+  <title>Dummy example with all spec features included 
+    
+    
+    
     <span>0.0.1</span>
  documentation</title>
   <meta name=\\"viewport\\" content=\\"width=device-width, initial-scale=1.0\\">
-
+  
     <style type=\\"text/css\\">
     /*! modern-normalize v1.0.0 | MIT License | https://github.com/sindresorhus/modern-normalize */
 
@@ -4642,11 +4642,11 @@ a:hover {
 }
 
     </style>
-
+  
 </head>
 <body>
   <div class=\\"relative md:flex lg:flex xl:flex\\">
-
+    
 
 
 <input id=\\"burger-menu\\" type=\\"checkbox\\" />
@@ -4660,117 +4660,117 @@ a:hover {
 
 <div class=\\"sidebar-panel fixed top-0 left-0 bottom-0 w-64 bg-gray-200 font-sans pt-8 pr-4 pb-4 pl-4\\">
   <div class=\\"sidebar-panel__content\\">
-
+    
       <h1 class=\\"text-2xl font-thin\\">
-        Dummy example with all spec features included
-
-
-
+        Dummy example with all spec features included 
+    
+    
+    
     <span>0.0.1</span>
 
       </h1>
-
+    
     <ul class=\\"text-sm mt-10 mt-2\\">
       <li class=\\"mb-3\\">
         <a class=\\"js-menu-item text-gray-700 no-underline\\" href=\\"#introduction\\">Introduction</a>
       </li>
-
+      
         <li class=\\"mb-3\\">
           <a class=\\"js-menu-item text-gray-700 no-underline\\" href=\\"#servers\\">Servers</a>
         </li>
-
+      
     </ul>
 
-
+    
       <h2 class=\\"text-xs uppercase text-gray-500 mt-10 mb-4 font-thin\\">Operations</h2>
       <ul class=\\"text-sm mt-2\\">
         <!-- With tags in sidebar -->
-
+        
           <!--Without tags in sidebar-->
-
+          
             <li>
-
+              
                 <a class=\\"js-menu-item flex break-words no-underline text-gray-700 mt-8 sm:mt-8 md:mt-3\\" href=\\"#operation-publish-dummy/channel/with/{dummy}/parameter/create\\">
                   <span class=\\"bg-blue-600 font-bold h-6 no-underline text-white uppercase p-1 mr-2 rounded\\" style=\\"height: 21px;font-size: 11px;\\" title=\\"Publish\\">
                     Pub
                   </span>
-
+                  
                     <span style=\\"padding-top: 2px;\\">
                       Inform whenever something dummy is created.
                     </span>
-
+                  
                 </a>
+              
 
-
-
+              
               </a>
             </li>
-
+          
             <li>
+              
 
-
-
+              
                 <a class=\\"js-menu-item flex break-words no-underline text-gray-700 mt-8 sm:mt-8 md:mt-3\\" href=\\"#operation-subscribe-dummy/channel/without/parameter\\">
                   <span class=\\"bg-green-600 font-bold no-underline text-white uppercase p-1 mr-2 rounded\\" style=\\"height: 21px;font-size: 11px;\\" title=\\"Subscribe\\">
                     Sub
                   </span>
-
+                  
                     <div style=\\"display:inline-block;\\">
-
+                      
 <span class=\\"string-chunk\\" style=\\"padding-top: 2px;\\">dummy/channel/without/parameter</span>
 
                     </div>
-
+                  
                 </a>
-
+              
               </a>
             </li>
-
-
+          
+        
       </ul>
 
       <h2 class=\\"text-xs uppercase text-gray-500 mt-10 mb-4 font-thin\\">Messages</h2>
       <ul class=\\"text-sm mt-2\\">
-
+        
           <a class=\\"js-menu-item flex break-words no-underline text-gray-700 mt-8 sm:mt-8 md:mt-3\\" href=\\"#message-dummyCreated\\">
             <div style=\\"display:inline-block;\\">
-
+              
 <span class=\\"string-chunk\\" style=\\"padding-top: 2px;\\">dummyCreated</span>
 
             </div>
           </a>
-
+        
           <a class=\\"js-menu-item flex break-words no-underline text-gray-700 mt-8 sm:mt-8 md:mt-3\\" href=\\"#message-dummyInfo\\">
             <div style=\\"display:inline-block;\\">
-
+              
 <span class=\\"string-chunk\\" style=\\"padding-top: 2px;\\">dummyInfo</span>
 
             </div>
           </a>
-
+        
       </ul>
-
+    
   </div>
 </div>
 
     <div class=\\"content-panel flex-1 leading-loose z-10\\">
-
+      
 
 <div class=\\"center-block p-8\\">
   <a name=\\"introduction\\"></a>
 
-  <h1>Dummy example with all spec features included
-
-
-
+  <h1>Dummy example with all spec features included 
+    
+    
+    
     <span>0.0.1</span>
 </h1>
   <div class=\\"leading-normal mb-4\\">
-
-
+    
+    
       <a class=\\"border border-solid border-orange-300 hover:bg-orange-300 hover:text-orange-600 font-bold no-underline text-orange-500 text-xs uppercase rounded mr-2 px-3 py-1\\"
         href=\\"https://www.apache.org/licenses/LICENSE-2.0\\" target=\\"_blank\\">Apache 2.0</a>
-
+    
   </div>
 
   <div class=\\"markdown\\">
@@ -4781,16 +4781,16 @@ a:hover {
 
 
   <div class=\\"leading-normal mb-4\\">
-
-
+    
+      
       Contact link: <a class=\\"border border-solid border-purple-300 hover:bg-purple-300 hover:text-purple-600 font-bold no-underline text-purple-500 text-xs uppercase rounded mr-2 px-3 py-1\\"
         href=\\"http://www.asyncapi.com/support\\" target=\\"_blank\\">API Support</a>
-
-
+      
+      
       Contact email: <a class=\\"border border-solid border-purple-300 hover:bg-purple-300 hover:text-purple-600 font-bold no-underline text-purple-500 text-xs uppercase rounded mr-2 px-3 py-1\\"
         href=\\"mailto:info@asyncapi.io\\" target=\\"_blank\\">info@asyncapi.io</a>
-
-
+      
+    
   </div>
 </div>
 
@@ -4801,19 +4801,19 @@ a:hover {
 
   <h2 class=\\"mb-4\\">Servers</h2>
 
-
+  
     <div class=\\"shadow bg-gray-200 mb-3 px-4 py-3\\">
       <div class=\\"flex\\">
         <div>
           <div class=\\"pr-4 font-mono\\">
-
+            
 <span class=\\"string-chunk\\" >mqtt://localhost</span>
 
 
-
+            
             <span class=\\"bg-teal-500 font-sans font-bold no-underline text-white uppercase rounded ml-2\\"
               style=\\"height: 20px;font-size: 11px;padding: 3px;\\">mqtt</span>
-
+            
           </div>
           <div class=\\"text-xs text-gray-600\\">
             <p>dummy MQTT broker</p>
@@ -4822,28 +4822,28 @@ a:hover {
         </div>
       </div>
 
-
+      
         <div>
-
+          
         </div>
+      
 
-
-
+      
     </div>
-
+  
     <div class=\\"shadow bg-gray-200 mb-3 px-4 py-3\\">
       <div class=\\"flex\\">
         <div>
           <div class=\\"pr-4 font-mono\\">
-
+            
 <span class=\\"string-chunk\\" >amqp://localhost:{port}</span>
 
 
-
+            
             <span class=\\"bg-teal-500 font-bold no-underline text-white uppercase rounded ml-2\\"
               style=\\"height: 20px;font-size: 11px;padding: 3px;\\">amqp
               0.9.1</span>
-
+            
           </div>
           <div class=\\"text-xs text-gray-600\\">
             <p>dummy AMQP broker</p>
@@ -4852,78 +4852,78 @@ a:hover {
         </div>
       </div>
 
-
+      
         <div>
-
+          
             <div class=\\"leading-normal\\">
               <span class=\\"font-bold no-underline text-gray-600 text-xs uppercase\\">port:</span>
               <span class=\\"text-xs\\"></span>
               <div class=\\"inline-block\\">
-
+                
                 <span class=\\"bg-indigo-700 font-bold no-underline text-white rounded ml-2\\"
                   style=\\"height: 20px;font-size: 11px;padding: 3px;\\">ENUM: 15672, 5672</span>
-
-
+                
+                
               </div>
             </div>
-
+          
         </div>
+      
 
-
-
+      
         <h5 class=\\"text-sm text-gray-500 mt-1\\">Security:</h5>
         <ul>
-
+          
             <li>
-
+              
 
               <span class=\\"font-bold no-underline text-gray-600 text-xs uppercase mr-1\\">
-
-
-
-
-
+                
+                
+                
+                
+                
                 User / Password:
-
-
-
-
-
+                
+                
+                
+                
+                
               </span>
 
-
+              
                 <span class=\\"text-xs mr-2 italic text-gray-600\\">No description</span>
+              
 
+              
 
+              
 
+              
 
+              
 
+              
 
-
-
-
-
-
-
-
+              
             </li>
-
+          
         </ul>
-
+      
     </div>
-
+  
     <div class=\\"shadow bg-gray-200 mb-3 px-4 py-3\\">
       <div class=\\"flex\\">
         <div>
           <div class=\\"pr-4 font-mono\\">
-
+            
 <span class=\\"string-chunk\\" >http://localhost:{port}</span>
 
 
-
+            
             <span class=\\"bg-teal-500 font-sans font-bold no-underline text-white uppercase rounded ml-2\\"
               style=\\"height: 20px;font-size: 11px;padding: 3px;\\">kafka</span>
-
+            
           </div>
           <div class=\\"text-xs text-gray-600\\">
             <p>dummy Kafka broker</p>
@@ -4932,27 +4932,27 @@ a:hover {
         </div>
       </div>
 
-
+      
         <div>
-
+          
             <div class=\\"leading-normal\\">
               <span class=\\"font-bold no-underline text-gray-600 text-xs uppercase\\">port:</span>
               <span class=\\"text-xs\\"></span>
               <div class=\\"inline-block\\">
-
-
+                
+                
                 <span class=\\"bg-indigo-700 font-bold no-underline text-white rounded ml-2\\"
                   style=\\"height: 20px;font-size: 11px;padding: 3px;\\">DEFAULT: 9092</span>
-
+                
               </div>
             </div>
-
+          
         </div>
+      
 
-
-
+      
     </div>
-
+  
 
 </div>
 
@@ -4965,18 +4965,18 @@ a:hover {
 
 
   <div class=\\"responsive-container\\">
-
-
+    
+      
 
 <a name=\\"operation-publish-dummy/channel/with/{dummy}/parameter/create\\"></a>
 <div class=\\"center-block p-8\\">
   <div class=\\"operation pt-8 pb-8\\">
     <h3 class=\\"font-mono text-base\\">
-
+      
       <span class=\\"font-mono border border-blue-500 text-blue-500 uppercase p-1 rounded\\" title=\\"Publish\\">Pub</span>
-
-
-
+      
+      
+      
 <span class=\\"string-chunk\\" >dummy/channel/with/{dummy}/parameter/create</span>
 
     </h3>
@@ -4991,7 +4991,7 @@ a:hover {
 
 
 
-
+    
     <div class=\\"mt-2\\">
         <div class=\\"is-open\\">
           <div class=\\"js-prop cursor-pointer py-2 flex property\\">
@@ -5004,8 +5004,8 @@ a:hover {
           </div>
           <div class=\\"children bg-gray-200 p-4 rounded\\">
             <div class=\\"bg-gray-200 pr-8 rounded\\">
-
-
+              
+                
 
 <div
   class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
@@ -5020,103 +5020,103 @@ a:hover {
           style=\\"word-break: break-word\\"
           >dummy</span
         >
-
+           
         <div class=\\"text-red-600 text-xs\\">required</div>
-
+         
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-string
+          
+string   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"><p>The ID of the new dummy message.</p>
 </div>
 
-
+    
       </div>
     </div>
 
-
+    
   </div>
 </div>
 
 
-
+              
             </div>
           </div>
         </div>
       </div>
+    
 
 
-
-
+    
     <p>Accepts the following message:</p>
-
+    
 
 <div class=\\"bg-gray-200 rounded p-4 mt-2\\">
   <div class=\\"text-sm text-gray-700 mb-2\\">
-
-
+    
+    
       Dummy created message
       <span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\">dummyCreated</span>
-
+    
   </div>
   <p class=\\"text-gray-600 text-sm\\">This is just a dummy create message</p>
-
-
+  
+  
 
 <div class=\\"mt-4\\">
-
-
+  
+      
         <a href=\\"https://www.asyncapi.com/\\" target=\\"_blank\\" class=\\"border text-blue-400 font-normal text-sm rounded lowercase mr-2 px-2 py-1\\" title=\\"\\">message-tag1</a>
-
-
-
+      
+  
+      
         <a href=\\"https://www.asyncapi.com/\\" target=\\"_blank\\" class=\\"border text-blue-400 font-normal text-sm rounded lowercase mr-2 px-2 py-1\\" title=\\"Description 2\\">message-tag2</a>
-
-
-
+      
+  
+      
         <span class=\\"border font-normal text-sm no-underline text-blue-400 rounded lowercase mr-2 px-2 py-1\\" title=\\"\\">message-tag3</span>
-
-
-
+      
+  
+      
         <span class=\\"border font-normal text-sm no-underline text-blue-400 rounded lowercase mr-2 px-2 py-1\\" title=\\"Description 4\\">message-tag4</span>
-
-
-
+      
+  
+      
         <a href=\\"https://www.asyncapi.com/\\" target=\\"_blank\\" class=\\"border text-blue-400 font-normal text-sm rounded lowercase mr-2 px-2 py-1\\" title=\\"\\">message-tag5</a>
-
-
+      
+  
 </div>
 
 
 
 
-
-
+  
+  
     <div class=\\"border border-gray-400 bg-gray-200 rounded p-4 mt-2\\">
       <div class=\\"text-sm text-gray-700 mb-2\\">Correlation ID<span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\">$message.header#/correlationId</span>
 
       </div>
-
+      
         <div class=\\"text-gray-600 text-sm\\"><p>This is a dummy correlation ID.</p>
 </div>
-
+      
     </div>
-
+  
 
   <div class=\\"mt-4 mb-4 markdown\\"></div>
-
-
+  
+    
 <div>
-
+  
 
 <div
   class=\\"bg-gray-200  rounded\\"
@@ -5131,11 +5131,11 @@ string
           style=\\"word-break: break-word\\"
           >Payload</span
         >
-
+         
         <span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\"
           >dummyCreated</span
         >
-
+         
         <svg
           class=\\"expand inline align-baseline\\"
           version=\\"1.1\\"
@@ -5148,31 +5148,31 @@ string
             points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"
           ></polygon>
         </svg>
-
+          
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-object
+          
+object   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"></div>
 
-
+    
       </div>
     </div>
 
-
+    
     <div
       class=\\"children bg-gray-100 py-4 rounded\\"
     >
-
+           
 
 <div
   class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
@@ -5187,7 +5187,7 @@ object
           style=\\"word-break: break-word\\"
           >prop1</span
         >
-
+          
         <svg
           class=\\"expand inline align-baseline\\"
           version=\\"1.1\\"
@@ -5200,56 +5200,56 @@ object
             points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"
           ></polygon>
         </svg>
-
+          
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-integer
+          
+integer   
           <div class=\\"inline-block\\">
-
+             
             <span
               class=\\"bg-purple-600 font-bold no-underline text-white rounded lowercase ml-2\\"
               style=\\"height: 20px; font-size: 11px; padding: 3px\\"
               title=\\"At least 0\\"
               >>= 0</span
             >
-
+                     
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"><p>Dummy prop1</p>
 </div>
 
-
+    
       </div>
     </div>
 
-
+    
     <div
       class=\\"children bg-gray-200 py-4 rounded\\"
     >
-
+          
       <p class=\\"pl-6 mb-2 mt-4 text-sm font-bold text-gray-700\\">
         Specification Extensions:
       </p>
-
+      
       <div class=\\"bg-gray-200 pl-6\\">
-
+        
         <div class=\\"text-sm\\">x-prop1-dummy: dummy extension</div>
-
+        
       </div>
-
-
+          
+       
     </div>
-
+    
   </div>
 </div>
 
-
+      
 
 <div
   class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
@@ -5264,34 +5264,34 @@ integer
           style=\\"word-break: break-word\\"
           >prop2</span
         >
-
+           
         <div class=\\"text-red-600 text-xs\\">required</div>
-
+         
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-string
+          
+string   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"><p>Dummy prop2</p>
 </div>
 
-
+    
       </div>
     </div>
 
-
+    
   </div>
 </div>
 
-
+      
 
 <div
   class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
@@ -5306,42 +5306,42 @@ string
           style=\\"word-break: break-word\\"
           >sentAt</span
         >
-
+         
         <span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\"
           >sentAt</span
         >
-
+           
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-string
+          
+string   
           <div class=\\"inline-block\\">
-
+            
             <span
               class=\\"bg-yellow-600 font-bold no-underline text-black rounded lowercase ml-2\\"
               style=\\"height: 20px; font-size: 11px; padding: 3px\\"
               >date-time</span
             >
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"><p>Date and time when the message was sent.</p>
 </div>
 
-
+    
       </div>
     </div>
 
-
+    
   </div>
 </div>
 
-
+      
 
 <div
   class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
@@ -5356,11 +5356,11 @@ string
           style=\\"word-break: break-word\\"
           >dummyArrayWithObject</span
         >
-
+         
         <span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\"
           >dummyArrayWithObject</span
         >
-
+         
         <svg
           class=\\"expand inline align-baseline\\"
           version=\\"1.1\\"
@@ -5373,31 +5373,31 @@ string
             points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"
           ></polygon>
         </svg>
-
+          
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-array&lt;object&gt;
+          
+array&lt;object&gt;   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"></div>
 
-
+    
       </div>
     </div>
 
-
+    
     <div
       class=\\"children bg-gray-200 py-4 rounded\\"
     >
-
+                  
 
 <div
   class=\\"bg-gray-200 pl-8 pr-8 rounded\\"
@@ -5412,46 +5412,46 @@ array&lt;object&gt;
           style=\\"word-break: break-word\\"
           >prop1</span
         >
-
+           
         <div class=\\"text-red-600 text-xs\\">required</div>
-
+         
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-string
+          
+string   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"><p>Dummy prop1</p>
 </div>
 
-
+   
         <div class=\\"text-xs\\">
-          Enum:
+          Enum: 
           <span class=\\"border text-orange-600 rounded ml-1 py-0 px-2\\"
             >\\"option1\\"</span
           >
-
+          
           <span class=\\"border text-orange-600 rounded ml-1 py-0 px-2\\"
             >\\"option2\\"</span
           >
-
+          
         </div>
-
+         
       </div>
     </div>
 
-
+    
   </div>
 </div>
 
-
+     
 
 <div
   class=\\"bg-gray-200 pl-8 pr-8 rounded\\"
@@ -5466,53 +5466,53 @@ string
           style=\\"word-break: break-word\\"
           >sentAt</span
         >
-
+         
         <span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\"
           >sentAt</span
         >
-
+           
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-string
+          
+string   
           <div class=\\"inline-block\\">
-
+            
             <span
               class=\\"bg-yellow-600 font-bold no-underline text-black rounded lowercase ml-2\\"
               style=\\"height: 20px; font-size: 11px; padding: 3px\\"
               >date-time</span
             >
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"><p>Date and time when the message was sent.</p>
 </div>
 
-
+    
       </div>
     </div>
 
-
+    
   </div>
 </div>
 
-
+    
       <p class=\\"pl-6 mb-2 mt-4 text-xs text-gray-700\\">
         Additional items are allowed.
       </p>
-
-
+         
+       
     </div>
-
+    
   </div>
 </div>
 
-
+      
 
 <div
   class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
@@ -5527,11 +5527,11 @@ string
           style=\\"word-break: break-word\\"
           >dummyArrayWithArray</span
         >
-
+         
         <span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\"
           >dummyArrayWithArray</span
         >
-
+         
         <svg
           class=\\"expand inline align-baseline\\"
           version=\\"1.1\\"
@@ -5544,36 +5544,36 @@ string
             points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"
           ></polygon>
         </svg>
-
+          
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
+          
 array&lt;
-object,
-string,
-number&gt;
+object, 
+string, 
+number&gt;   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"></div>
 
-
+    
       </div>
     </div>
 
-
+    
     <div
       class=\\"children bg-gray-200 py-4 rounded\\"
     >
-
+             
       <p class=\\"pl-6 mb-2 text-xs font-bold uppercase text-gray-700\\">Items:</p>
-
+        
 
 <div
   class=\\"bg-gray-200 pl-8 pr-8 rounded\\"
@@ -5588,11 +5588,11 @@ number&gt;
           style=\\"word-break: break-word\\"
           >0</span
         >
-
+         
         <span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\"
           >dummyInfo</span
         >
-
+         
         <svg
           class=\\"expand inline align-baseline\\"
           version=\\"1.1\\"
@@ -5605,31 +5605,31 @@ number&gt;
             points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"
           ></polygon>
         </svg>
-
+          
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-object
+          
+object   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"></div>
 
-
+    
       </div>
     </div>
 
-
+    
     <div
       class=\\"children bg-gray-100 py-4 rounded\\"
     >
-
+           
 
 <div
   class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
@@ -5644,46 +5644,46 @@ object
           style=\\"word-break: break-word\\"
           >prop1</span
         >
-
+           
         <div class=\\"text-red-600 text-xs\\">required</div>
-
+         
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-string
+          
+string   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"><p>Dummy prop1</p>
 </div>
 
-
+   
         <div class=\\"text-xs\\">
-          Enum:
+          Enum: 
           <span class=\\"border text-orange-600 rounded ml-1 py-0 px-2\\"
             >\\"option1\\"</span
           >
-
+          
           <span class=\\"border text-orange-600 rounded ml-1 py-0 px-2\\"
             >\\"option2\\"</span
           >
-
+          
         </div>
-
+         
       </div>
     </div>
 
-
+    
   </div>
 </div>
 
-
+      
 
 <div
   class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
@@ -5698,53 +5698,53 @@ string
           style=\\"word-break: break-word\\"
           >sentAt</span
         >
-
+         
         <span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\"
           >sentAt</span
         >
-
+           
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-string
+          
+string   
           <div class=\\"inline-block\\">
-
+            
             <span
               class=\\"bg-yellow-600 font-bold no-underline text-black rounded lowercase ml-2\\"
               style=\\"height: 20px; font-size: 11px; padding: 3px\\"
               >date-time</span
             >
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"><p>Date and time when the message was sent.</p>
 </div>
 
-
+    
       </div>
     </div>
 
-
+    
   </div>
 </div>
 
-
+        
       <p class=\\"pl-6 mb-2 mt-4 text-xs text-gray-700\\">
         Additional properties are allowed.
       </p>
-
-
+        
+       
     </div>
-
+    
   </div>
 </div>
 
-
+  
 
 <div
   class=\\"bg-gray-200 pl-8 pr-8 rounded\\"
@@ -5759,31 +5759,31 @@ string
           style=\\"word-break: break-word\\"
           >1</span
         >
-
+            
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-string
+          
+string   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"></div>
 
-
+    
       </div>
     </div>
 
-
+    
   </div>
 </div>
 
-
+  
 
 <div
   class=\\"bg-gray-200 pl-8 pr-8 rounded\\"
@@ -5798,42 +5798,42 @@ string
           style=\\"word-break: break-word\\"
           >2</span
         >
-
+            
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-number
+          
+number   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"></div>
 
-
+    
       </div>
     </div>
 
-
+    
   </div>
 </div>
 
-
+     
       <p class=\\"pl-6 mb-2 mt-4 text-xs text-gray-700\\">
         Additional items are allowed.
       </p>
-
-
+         
+       
     </div>
-
+    
   </div>
 </div>
 
-
+      
 
 <div
   class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
@@ -5848,11 +5848,11 @@ number
           style=\\"word-break: break-word\\"
           >dummyObject</span
         >
-
+         
         <span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\"
           >dummyObject</span
         >
-
+         
         <svg
           class=\\"expand inline align-baseline\\"
           version=\\"1.1\\"
@@ -5865,31 +5865,31 @@ number
             points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"
           ></polygon>
         </svg>
-
+          
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-object
+          
+object   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"></div>
 
-
+    
       </div>
     </div>
 
-
+    
     <div
       class=\\"children bg-gray-200 py-4 rounded\\"
     >
-
+           
 
 <div
   class=\\"bg-gray-200 pl-8 pr-8 rounded\\"
@@ -5904,42 +5904,42 @@ object
           style=\\"word-break: break-word\\"
           >dummyObjectProp1</span
         >
-
+         
         <span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\"
           >sentAt</span
         >
-
+           
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-string
+          
+string   
           <div class=\\"inline-block\\">
-
+            
             <span
               class=\\"bg-yellow-600 font-bold no-underline text-black rounded lowercase ml-2\\"
               style=\\"height: 20px; font-size: 11px; padding: 3px\\"
               >date-time</span
             >
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"><p>Date and time when the message was sent.</p>
 </div>
 
-
+    
       </div>
     </div>
 
-
+    
   </div>
 </div>
 
-
+      
 
 <div
   class=\\"bg-gray-200 pl-8 pr-8 rounded\\"
@@ -5954,11 +5954,11 @@ string
           style=\\"word-break: break-word\\"
           >dummyObjectProp2</span
         >
-
+         
         <span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\"
           >dummyRecursiveObject</span
         >
-
+         
         <svg
           class=\\"expand inline align-baseline\\"
           version=\\"1.1\\"
@@ -5971,32 +5971,32 @@ string
             points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"
           ></polygon>
         </svg>
-
+          
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-object
+          
+object   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"></div>
 
-
+    
       </div>
     </div>
 
-
+    
     <div
       class=\\"children bg-gray-100 py-4 rounded\\"
     >
-
-
+          
+      
 
 <div class=\\"bg-gray-100 pl-8 pr-8 rounded\\">
     <div class=\\"js-prop cursor-pointer py-2 flex property\\">
@@ -6006,12 +6006,12 @@ object
         <div>
             <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
                 [CIRCULAR]
-            </div>
+            </div>        
         </div>
     </div>
 </div>
 
-
+      
 
 <div
   class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
@@ -6026,42 +6026,42 @@ object
           style=\\"word-break: break-word\\"
           >dummyRecursiveProp2</span
         >
-
+            
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-string
+          
+string   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"></div>
 
-
+    
       </div>
     </div>
 
-
+    
   </div>
 </div>
 
-
+        
       <p class=\\"pl-6 mb-2 mt-4 text-xs text-gray-700\\">
         Additional properties are allowed.
       </p>
-
-
+        
+       
     </div>
-
+    
   </div>
 </div>
 
-
+      
 
 <div
   class=\\"bg-gray-200 pl-8 pr-8 rounded\\"
@@ -6076,7 +6076,7 @@ string
           style=\\"word-break: break-word\\"
           >dummyObjectProp3</span
         >
-
+          
         <svg
           class=\\"expand inline align-baseline\\"
           version=\\"1.1\\"
@@ -6089,42 +6089,42 @@ string
             points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"
           ></polygon>
         </svg>
-
+          
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-object
+          
+object   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"></div>
 
-
+    
       </div>
     </div>
 
-
+    
     <div
       class=\\"children bg-gray-100 py-4 rounded\\"
     >
-
+             
       <p class=\\"pl-6 mb-2 mt-4 text-xs text-gray-700\\">
         Additional properties are allowed.
       </p>
-
-
+        
+       
     </div>
-
+    
   </div>
 </div>
 
-
+      
 
 <div
   class=\\"bg-gray-200 pl-8 pr-8 rounded\\"
@@ -6139,7 +6139,7 @@ object
           style=\\"word-break: break-word\\"
           >dummyObjectProp4</span
         >
-
+          
         <svg
           class=\\"expand inline align-baseline\\"
           version=\\"1.1\\"
@@ -6152,59 +6152,59 @@ object
             points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"
           ></polygon>
         </svg>
-
+          
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-object
+          
+object   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"></div>
 
-
+    
       </div>
     </div>
 
-
+    
     <div
       class=\\"children bg-gray-100 py-4 rounded\\"
     >
-
+             
       <p class=\\"pl-6 mb-2 mt-4 text-xs text-gray-700\\">
         Additional properties are <strong>NOT</strong> allowed.
       </p>
-
-
+        
+       
     </div>
-
+    
   </div>
 </div>
 
-
+        
       <p class=\\"pl-6 mb-2 mt-4 text-xs text-gray-700\\">
         Additional properties are allowed.
       </p>
-
-
+        
+       
     </div>
-
+    
   </div>
 </div>
 
-
+     
       <p class=\\"pl-6 mb-2 mt-4 text-sm font-bold text-gray-700\\">
         Specification Extensions:
       </p>
-
+      
       <div class=\\"bg-gray-100 pl-6\\">
-
+        
         <div class=\\"is-open\\">
           <div class=\\"js-prop cursor-pointer py-2 property\\">
             <div class=\\"pr-4\\" style=\\"margin-top: -2px; min-width: 25%\\">
@@ -6244,17 +6244,17 @@ object
             </div>
           </div>
         </div>
-
+        
       </div>
-
+      
       <div class=\\"bg-gray-100 pl-6\\">
-
+        
         <div class=\\"text-sm\\">x-schema-extensions-as-primitive: dummy</div>
-
+        
       </div>
-
+      
       <div class=\\"bg-gray-100 pl-6\\">
-
+        
         <div class=\\"is-open\\">
           <div class=\\"js-prop cursor-pointer py-2 property\\">
             <div class=\\"pr-4\\" style=\\"margin-top: -2px; min-width: 25%\\">
@@ -6286,28 +6286,28 @@ object
             </div>
           </div>
         </div>
-
+        
       </div>
-
+          
       <p class=\\"pl-6 mb-2 mt-4 text-xs text-gray-700\\">
         Additional properties are allowed.
       </p>
-
-
+        
+       
     </div>
-
+    
   </div>
 </div>
 
 
 </div>
 
-
-
+  
+  
     <div class=\\"mt-4\\">
-
+      
 <div>
-
+  
 
 <div
   class=\\"bg-gray-200  rounded\\"
@@ -6322,7 +6322,7 @@ object
           style=\\"word-break: break-word\\"
           >Headers</span
         >
-
+          
         <svg
           class=\\"expand inline align-baseline\\"
           version=\\"1.1\\"
@@ -6335,31 +6335,31 @@ object
             points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"
           ></polygon>
         </svg>
-
+          
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-object
+          
+object   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"></div>
 
-
+    
       </div>
     </div>
 
-
+    
     <div
       class=\\"children bg-gray-100 py-4 rounded\\"
     >
-
+           
 
 <div
   class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
@@ -6374,31 +6374,31 @@ object
           style=\\"word-break: break-word\\"
           >my-custom-app-header</span
         >
-
+            
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-string
+          
+string   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"></div>
 
-
+    
       </div>
     </div>
 
-
+    
   </div>
 </div>
 
-
+      
 
 <div
   class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
@@ -6413,38 +6413,38 @@ string
           style=\\"word-break: break-word\\"
           >correlationId</span
         >
-
+            
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-string
+          
+string   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"></div>
 
-
+    
       </div>
     </div>
 
-
+    
   </div>
 </div>
 
-
+        
       <p class=\\"pl-6 mb-2 mt-4 text-xs text-gray-700\\">
         Additional properties are allowed.
       </p>
-
-
+        
+       
     </div>
-
+    
   </div>
 </div>
 
@@ -6452,36 +6452,36 @@ string
 </div>
 
     </div>
-
+  
 </div>
 
 
+    
 
-
-
+    
 
 <div class=\\"mt-4\\">
-
-
+  
+      
         <a href=\\"https://www.asyncapi.com/\\" target=\\"_blank\\" class=\\"border text-blue-400 font-normal text-sm rounded lowercase mr-2 px-2 py-1\\" title=\\"\\">oparation-tag1</a>
-
-
-
+      
+  
+      
         <a href=\\"https://www.asyncapi.com/\\" target=\\"_blank\\" class=\\"border text-blue-400 font-normal text-sm rounded lowercase mr-2 px-2 py-1\\" title=\\"Description 2\\">oparation-tag2</a>
-
-
-
+      
+  
+      
         <span class=\\"border font-normal text-sm no-underline text-blue-400 rounded lowercase mr-2 px-2 py-1\\" title=\\"\\">oparation-tag3</span>
-
-
-
+      
+  
+      
         <span class=\\"border font-normal text-sm no-underline text-blue-400 rounded lowercase mr-2 px-2 py-1\\" title=\\"Description 4\\">oparation-tag4</span>
-
-
-
+      
+  
+      
         <a href=\\"https://www.asyncapi.com/\\" target=\\"_blank\\" class=\\"border text-blue-400 font-normal text-sm rounded lowercase mr-2 px-2 py-1\\" title=\\"\\">oparation-tag5</a>
-
-
+      
+  
 </div>
 
 
@@ -6492,24 +6492,24 @@ string
 <div class=\\"right-block p-8\\">
   <h4 class=\\"text-lg text-white mb-4\\">Examples</h4>
 
-
-
+  
+  
 
 <form>
   <h5 class=\\"examples-uid text-orange-600 mt-4\\">dummyCreated</h5>
-
+  
     <div class=\\"payload-examples mb-4 \\">
       <div class=\\"js-prop cursor-pointer  flex property\\">
         <span class=\\"px-2 mr-2 text-gray-200 text-sm border rounded focus:outline-none cursor-pointer\\">Payload</span>
-
+        
           <svg class=\\"expand inline align-baseline\\" version=\\"1.1\\" viewBox=\\"0 0 24 24\\" x=\\"0\\"
             xmlns=\\"http://www.w3.org/2000/svg\\" y=\\"0\\">
             <polygon points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"></polygon>
           </svg>
-
+        
       </div>
       <div class=\\"children payload-examples mt-4\\">
-
+        
         <pre class=\\"hljs mb-4 border border-gray-800 rounded\\"><code>{
   \\"prop1\\": 0,
   \\"prop2\\": \\"string\\",
@@ -6539,64 +6539,64 @@ string
   }
 }</code></pre>
         <h6 class=\\"text-xs font-bold text-gray-700 italic\\">This example has been generated automatically.</h6>
-
+        
       </div>
     </div>
+  
 
-
-
+  
     <div class=\\"headers-examples mb-4 \\">
       <div class=\\"js-prop cursor-pointer  flex property\\">
         <span class=\\"px-2 mr-2 text-gray-200 text-sm border rounded focus:outline-none cursor-pointer\\">Headers</span>
-
+        
           <svg class=\\"expand inline align-baseline\\" version=\\"1.1\\" viewBox=\\"0 0 24 24\\" x=\\"0\\"
             xmlns=\\"http://www.w3.org/2000/svg\\" y=\\"0\\">
             <polygon points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"></polygon>
           </svg>
-
+        
       </div>
       <div class=\\"children headers-examples mt-4\\">
-
+        
         <pre class=\\"hljs mb-4 border border-gray-800 rounded\\"><code>{
   \\"my-custom-app-header\\": \\"string\\",
   \\"correlationId\\": \\"string\\"
 }</code></pre>
         <h6 class=\\"text-xs font-bold text-gray-700 italic\\">This example has been generated automatically.</h6>
-
+        
       </div>
     </div>
-
+  
 </form>
 
 
-
+  
 </div>
 
 
 
-
+    
   </div>
   <div class=\\"responsive-container\\">
-
+    
   </div>
 
   <div class=\\"responsive-container\\">
-
+    
   </div>
   <div class=\\"responsive-container\\">
-
-
+    
+      
 
 <a name=\\"operation-subscribe-dummy/channel/without/parameter\\"></a>
 <div class=\\"center-block p-8\\">
   <div class=\\"operation pt-8 pb-8\\">
     <h3 class=\\"font-mono text-base\\">
-
-
+      
+      
       <span class=\\"font-mono border border-green-600 text-green-600 uppercase p-1 rounded\\"
         title=\\"Subscribe\\">Sub</span>
-
-
+      
+      
 <span class=\\"string-chunk\\" >dummy/channel/without/parameter</span>
 
     </h3>
@@ -6608,49 +6608,49 @@ string
 
 
 
+    
 
 
-
-
+    
     <p>Accepts the following message:</p>
-
+    
 
 <div class=\\"bg-gray-200 rounded p-4 mt-2\\">
   <div class=\\"text-sm text-gray-700 mb-2\\">
-
-
+    
+    
       Dummy system info
       <span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\">dummyInfo</span>
-
+    
   </div>
   <p class=\\"text-gray-600 text-sm\\">This is just a dummy info message</p>
-
-
+  
+  
 
 <div class=\\"mt-4\\">
-
+  
 </div>
 
 
 
 
-
-
+  
+  
     <div class=\\"border border-gray-400 bg-gray-200 rounded p-4 mt-2\\">
       <div class=\\"text-sm text-gray-700 mb-2\\">Correlation ID<span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\">$message.header#/correlationId</span>
 
       </div>
-
+      
     </div>
-
+  
 
   <div class=\\"mt-4 mb-4 markdown\\"><p>More description for a dummy message.</p>
 <p>It is a dummy system info message.</p>
 </div>
-
-
+  
+    
 <div>
-
+  
 
 <div
   class=\\"bg-gray-200  rounded\\"
@@ -6665,11 +6665,11 @@ string
           style=\\"word-break: break-word\\"
           >Payload</span
         >
-
+         
         <span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\"
           >dummyInfo</span
         >
-
+         
         <svg
           class=\\"expand inline align-baseline\\"
           version=\\"1.1\\"
@@ -6682,31 +6682,31 @@ string
             points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"
           ></polygon>
         </svg>
-
+          
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-object
+          
+object   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"></div>
 
-
+    
       </div>
     </div>
 
-
+    
     <div
       class=\\"children bg-gray-100 py-4 rounded\\"
     >
-
+           
 
 <div
   class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
@@ -6721,46 +6721,46 @@ object
           style=\\"word-break: break-word\\"
           >prop1</span
         >
-
+           
         <div class=\\"text-red-600 text-xs\\">required</div>
-
+         
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-string
+          
+string   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"><p>Dummy prop1</p>
 </div>
 
-
+   
         <div class=\\"text-xs\\">
-          Enum:
+          Enum: 
           <span class=\\"border text-orange-600 rounded ml-1 py-0 px-2\\"
             >\\"option1\\"</span
           >
-
+          
           <span class=\\"border text-orange-600 rounded ml-1 py-0 px-2\\"
             >\\"option2\\"</span
           >
-
+          
         </div>
-
+         
       </div>
     </div>
 
-
+    
   </div>
 </div>
 
-
+      
 
 <div
   class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
@@ -6775,61 +6775,61 @@ string
           style=\\"word-break: break-word\\"
           >sentAt</span
         >
-
+         
         <span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\"
           >sentAt</span
         >
-
+           
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-string
+          
+string   
           <div class=\\"inline-block\\">
-
+            
             <span
               class=\\"bg-yellow-600 font-bold no-underline text-black rounded lowercase ml-2\\"
               style=\\"height: 20px; font-size: 11px; padding: 3px\\"
               >date-time</span
             >
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"><p>Date and time when the message was sent.</p>
 </div>
 
-
+    
       </div>
     </div>
 
-
+    
   </div>
 </div>
 
-
+        
       <p class=\\"pl-6 mb-2 mt-4 text-xs text-gray-700\\">
         Additional properties are allowed.
       </p>
-
-
+        
+       
     </div>
-
+    
   </div>
 </div>
 
 
 </div>
 
-
-
+  
+  
     <div class=\\"mt-4\\">
-
+      
 <div>
-
+  
 
 <div
   class=\\"bg-gray-200  rounded\\"
@@ -6844,7 +6844,7 @@ string
           style=\\"word-break: break-word\\"
           >Headers</span
         >
-
+          
         <svg
           class=\\"expand inline align-baseline\\"
           version=\\"1.1\\"
@@ -6857,31 +6857,31 @@ string
             points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"
           ></polygon>
         </svg>
-
+          
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-object
+          
+object   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"></div>
 
-
+    
       </div>
     </div>
 
-
+    
     <div
       class=\\"children bg-gray-100 py-4 rounded\\"
     >
-
+           
 
 <div
   class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
@@ -6896,45 +6896,45 @@ object
           style=\\"word-break: break-word\\"
           >my-app-header</span
         >
-
+            
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-integer
+          
+integer   
           <div class=\\"inline-block\\">
-
+             
             <span
               class=\\"bg-purple-600 font-bold no-underline text-white rounded lowercase ml-2\\"
               style=\\"height: 20px; font-size: 11px; padding: 3px\\"
               title=\\"At least 0\\"
               >>= 0</span
             >
-
+              
             <span
               class=\\"bg-purple-600 font-bold no-underline text-white rounded lowercase ml-2\\"
               style=\\"height: 20px; font-size: 11px; padding: 3px\\"
               title=\\"At most 100\\"
               ><= 100</span
             >
-
+                   
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"></div>
 
-
+    
       </div>
     </div>
 
-
+    
   </div>
 </div>
 
-
+      
 
 <div
   class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
@@ -6949,38 +6949,38 @@ integer
           style=\\"word-break: break-word\\"
           >correlationId</span
         >
-
+            
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-string
+          
+string   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"></div>
 
-
+    
       </div>
     </div>
 
-
+    
   </div>
 </div>
 
-
+        
       <p class=\\"pl-6 mb-2 mt-4 text-xs text-gray-700\\">
         Additional properties are allowed.
       </p>
-
-
+        
+       
     </div>
-
+    
   </div>
 </div>
 
@@ -6988,16 +6988,16 @@ string
 </div>
 
     </div>
-
+  
 </div>
 
 
+    
 
-
-
+    
 
 <div class=\\"mt-4\\">
-
+  
 </div>
 
 
@@ -7008,79 +7008,79 @@ string
 <div class=\\"right-block p-8\\">
   <h4 class=\\"text-lg text-white mb-4\\">Examples</h4>
 
-
-
+  
+  
 
 <form>
   <h5 class=\\"examples-uid text-orange-600 mt-4\\">dummyInfo</h5>
-
+  
     <div class=\\"payload-examples mb-4 \\">
       <div class=\\"js-prop cursor-pointer  flex property\\">
         <span class=\\"px-2 mr-2 text-gray-200 text-sm border rounded focus:outline-none cursor-pointer\\">Payload</span>
-
+        
           <svg class=\\"expand inline align-baseline\\" version=\\"1.1\\" viewBox=\\"0 0 24 24\\" x=\\"0\\"
             xmlns=\\"http://www.w3.org/2000/svg\\" y=\\"0\\">
             <polygon points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"></polygon>
           </svg>
-
+        
       </div>
       <div class=\\"children payload-examples mt-4\\">
-
-
+        
+          
             <h6 class=\\"text-xs font-bold text-gray-700\\">Example #1</h6>
             <pre class=\\"hljs mb-4 border border-gray-800 rounded\\"><code>{
   \\"prop1\\": \\"option1\\",
   \\"sentAt\\": \\"2020-01-31T13:24:53.000Z\\"
 }</code></pre>
-
+          
             <h6 class=\\"text-xs font-bold text-gray-700\\">Example #2</h6>
             <pre class=\\"hljs mb-4 border border-gray-800 rounded\\"><code>{
   \\"prop1\\": \\"option2\\",
   \\"sentAt\\": \\"2020-01-31T13:24:53.000Z\\"
 }</code></pre>
-
-
+          
+        
       </div>
     </div>
+  
 
-
-
+  
     <div class=\\"headers-examples mb-4 \\">
       <div class=\\"js-prop cursor-pointer  flex property\\">
         <span class=\\"px-2 mr-2 text-gray-200 text-sm border rounded focus:outline-none cursor-pointer\\">Headers</span>
-
+        
           <svg class=\\"expand inline align-baseline\\" version=\\"1.1\\" viewBox=\\"0 0 24 24\\" x=\\"0\\"
             xmlns=\\"http://www.w3.org/2000/svg\\" y=\\"0\\">
             <polygon points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"></polygon>
           </svg>
-
+        
       </div>
       <div class=\\"children headers-examples mt-4\\">
-
-
+        
+          
             <h6 class=\\"text-xs font-bold text-gray-700\\">Example #1</h6>
             <pre class=\\"hljs mb-4 border border-gray-800 rounded\\"><code>{
   \\"my-app-header\\": 12
 }</code></pre>
-
+          
             <h6 class=\\"text-xs font-bold text-gray-700\\">Example #2</h6>
             <pre class=\\"hljs mb-4 border border-gray-800 rounded\\"><code>{
   \\"my-app-header\\": 13
 }</code></pre>
-
-
+          
+        
       </div>
     </div>
-
+  
 </form>
 
 
-
+  
 </div>
 
 
 
-
+    
   </div>
 
 
@@ -7093,69 +7093,69 @@ string
 <div class=\\"responsive-container\\">
   <div class=\\"center-block p-8\\">
     <div class=\\"all-messages pb-8\\">
-
+      
       <a name=\\"message-dummyCreated\\"></a>
-
+      
 
 <div class=\\"bg-gray-200 rounded p-4 mt-2\\">
   <div class=\\"text-sm text-gray-700 mb-2\\">
-
+    
     <span class=\\"text-gray-700 font-bold mr-2\\">#1</span>
-
-
+    
+    
       Dummy created message
       <span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\">dummyCreated</span>
-
+    
   </div>
   <p class=\\"text-gray-600 text-sm\\">This is just a dummy create message</p>
-
-
+  
+  
 
 <div class=\\"mt-4\\">
-
-
+  
+      
         <a href=\\"https://www.asyncapi.com/\\" target=\\"_blank\\" class=\\"border text-blue-400 font-normal text-sm rounded lowercase mr-2 px-2 py-1\\" title=\\"\\">message-tag1</a>
-
-
-
+      
+  
+      
         <a href=\\"https://www.asyncapi.com/\\" target=\\"_blank\\" class=\\"border text-blue-400 font-normal text-sm rounded lowercase mr-2 px-2 py-1\\" title=\\"Description 2\\">message-tag2</a>
-
-
-
+      
+  
+      
         <span class=\\"border font-normal text-sm no-underline text-blue-400 rounded lowercase mr-2 px-2 py-1\\" title=\\"\\">message-tag3</span>
-
-
-
+      
+  
+      
         <span class=\\"border font-normal text-sm no-underline text-blue-400 rounded lowercase mr-2 px-2 py-1\\" title=\\"Description 4\\">message-tag4</span>
-
-
-
+      
+  
+      
         <a href=\\"https://www.asyncapi.com/\\" target=\\"_blank\\" class=\\"border text-blue-400 font-normal text-sm rounded lowercase mr-2 px-2 py-1\\" title=\\"\\">message-tag5</a>
-
-
+      
+  
 </div>
 
 
 
 
-
-
+  
+  
     <div class=\\"border border-gray-400 bg-gray-200 rounded p-4 mt-2\\">
       <div class=\\"text-sm text-gray-700 mb-2\\">Correlation ID<span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\">$message.header#/correlationId</span>
 
       </div>
-
+      
         <div class=\\"text-gray-600 text-sm\\"><p>This is a dummy correlation ID.</p>
 </div>
-
+      
     </div>
-
+  
 
   <div class=\\"mt-4 mb-4 markdown\\"></div>
-
-
+  
+    
 <div>
-
+  
 
 <div
   class=\\"bg-gray-200  rounded\\"
@@ -7170,11 +7170,11 @@ string
           style=\\"word-break: break-word\\"
           >Payload</span
         >
-
+         
         <span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\"
           >dummyCreated</span
         >
-
+         
         <svg
           class=\\"expand inline align-baseline\\"
           version=\\"1.1\\"
@@ -7187,31 +7187,31 @@ string
             points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"
           ></polygon>
         </svg>
-
+          
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-object
+          
+object   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"></div>
 
-
+    
       </div>
     </div>
 
-
+    
     <div
       class=\\"children bg-gray-100 py-4 rounded\\"
     >
-
+           
 
 <div
   class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
@@ -7226,7 +7226,7 @@ object
           style=\\"word-break: break-word\\"
           >prop1</span
         >
-
+          
         <svg
           class=\\"expand inline align-baseline\\"
           version=\\"1.1\\"
@@ -7239,56 +7239,56 @@ object
             points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"
           ></polygon>
         </svg>
-
+          
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-integer
+          
+integer   
           <div class=\\"inline-block\\">
-
+             
             <span
               class=\\"bg-purple-600 font-bold no-underline text-white rounded lowercase ml-2\\"
               style=\\"height: 20px; font-size: 11px; padding: 3px\\"
               title=\\"At least 0\\"
               >>= 0</span
             >
-
+                     
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"><p>Dummy prop1</p>
 </div>
 
-
+    
       </div>
     </div>
 
-
+    
     <div
       class=\\"children bg-gray-200 py-4 rounded\\"
     >
-
+          
       <p class=\\"pl-6 mb-2 mt-4 text-sm font-bold text-gray-700\\">
         Specification Extensions:
       </p>
-
+      
       <div class=\\"bg-gray-200 pl-6\\">
-
+        
         <div class=\\"text-sm\\">x-prop1-dummy: dummy extension</div>
-
+        
       </div>
-
-
+          
+       
     </div>
-
+    
   </div>
 </div>
 
-
+      
 
 <div
   class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
@@ -7303,34 +7303,34 @@ integer
           style=\\"word-break: break-word\\"
           >prop2</span
         >
-
+           
         <div class=\\"text-red-600 text-xs\\">required</div>
-
+         
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-string
+          
+string   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"><p>Dummy prop2</p>
 </div>
 
-
+    
       </div>
     </div>
 
-
+    
   </div>
 </div>
 
-
+      
 
 <div
   class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
@@ -7345,42 +7345,42 @@ string
           style=\\"word-break: break-word\\"
           >sentAt</span
         >
-
+         
         <span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\"
           >sentAt</span
         >
-
+           
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-string
+          
+string   
           <div class=\\"inline-block\\">
-
+            
             <span
               class=\\"bg-yellow-600 font-bold no-underline text-black rounded lowercase ml-2\\"
               style=\\"height: 20px; font-size: 11px; padding: 3px\\"
               >date-time</span
             >
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"><p>Date and time when the message was sent.</p>
 </div>
 
-
+    
       </div>
     </div>
 
-
+    
   </div>
 </div>
 
-
+      
 
 <div
   class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
@@ -7395,11 +7395,11 @@ string
           style=\\"word-break: break-word\\"
           >dummyArrayWithObject</span
         >
-
+         
         <span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\"
           >dummyArrayWithObject</span
         >
-
+         
         <svg
           class=\\"expand inline align-baseline\\"
           version=\\"1.1\\"
@@ -7412,31 +7412,31 @@ string
             points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"
           ></polygon>
         </svg>
-
+          
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-array&lt;object&gt;
+          
+array&lt;object&gt;   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"></div>
 
-
+    
       </div>
     </div>
 
-
+    
     <div
       class=\\"children bg-gray-200 py-4 rounded\\"
     >
-
+                  
 
 <div
   class=\\"bg-gray-200 pl-8 pr-8 rounded\\"
@@ -7451,46 +7451,46 @@ array&lt;object&gt;
           style=\\"word-break: break-word\\"
           >prop1</span
         >
-
+           
         <div class=\\"text-red-600 text-xs\\">required</div>
-
+         
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-string
+          
+string   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"><p>Dummy prop1</p>
 </div>
 
-
+   
         <div class=\\"text-xs\\">
-          Enum:
+          Enum: 
           <span class=\\"border text-orange-600 rounded ml-1 py-0 px-2\\"
             >\\"option1\\"</span
           >
-
+          
           <span class=\\"border text-orange-600 rounded ml-1 py-0 px-2\\"
             >\\"option2\\"</span
           >
-
+          
         </div>
-
+         
       </div>
     </div>
 
-
+    
   </div>
 </div>
 
-
+     
 
 <div
   class=\\"bg-gray-200 pl-8 pr-8 rounded\\"
@@ -7505,53 +7505,53 @@ string
           style=\\"word-break: break-word\\"
           >sentAt</span
         >
-
+         
         <span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\"
           >sentAt</span
         >
-
+           
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-string
+          
+string   
           <div class=\\"inline-block\\">
-
+            
             <span
               class=\\"bg-yellow-600 font-bold no-underline text-black rounded lowercase ml-2\\"
               style=\\"height: 20px; font-size: 11px; padding: 3px\\"
               >date-time</span
             >
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"><p>Date and time when the message was sent.</p>
 </div>
 
-
+    
       </div>
     </div>
 
-
+    
   </div>
 </div>
 
-
+    
       <p class=\\"pl-6 mb-2 mt-4 text-xs text-gray-700\\">
         Additional items are allowed.
       </p>
-
-
+         
+       
     </div>
-
+    
   </div>
 </div>
 
-
+      
 
 <div
   class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
@@ -7566,11 +7566,11 @@ string
           style=\\"word-break: break-word\\"
           >dummyArrayWithArray</span
         >
-
+         
         <span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\"
           >dummyArrayWithArray</span
         >
-
+         
         <svg
           class=\\"expand inline align-baseline\\"
           version=\\"1.1\\"
@@ -7583,36 +7583,36 @@ string
             points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"
           ></polygon>
         </svg>
-
+          
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
+          
 array&lt;
-object,
-string,
-number&gt;
+object, 
+string, 
+number&gt;   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"></div>
 
-
+    
       </div>
     </div>
 
-
+    
     <div
       class=\\"children bg-gray-200 py-4 rounded\\"
     >
-
+             
       <p class=\\"pl-6 mb-2 text-xs font-bold uppercase text-gray-700\\">Items:</p>
-
+        
 
 <div
   class=\\"bg-gray-200 pl-8 pr-8 rounded\\"
@@ -7627,11 +7627,11 @@ number&gt;
           style=\\"word-break: break-word\\"
           >0</span
         >
-
+         
         <span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\"
           >dummyInfo</span
         >
-
+         
         <svg
           class=\\"expand inline align-baseline\\"
           version=\\"1.1\\"
@@ -7644,31 +7644,31 @@ number&gt;
             points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"
           ></polygon>
         </svg>
-
+          
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-object
+          
+object   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"></div>
 
-
+    
       </div>
     </div>
 
-
+    
     <div
       class=\\"children bg-gray-100 py-4 rounded\\"
     >
-
+           
 
 <div
   class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
@@ -7683,46 +7683,46 @@ object
           style=\\"word-break: break-word\\"
           >prop1</span
         >
-
+           
         <div class=\\"text-red-600 text-xs\\">required</div>
-
+         
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-string
+          
+string   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"><p>Dummy prop1</p>
 </div>
 
-
+   
         <div class=\\"text-xs\\">
-          Enum:
+          Enum: 
           <span class=\\"border text-orange-600 rounded ml-1 py-0 px-2\\"
             >\\"option1\\"</span
           >
-
+          
           <span class=\\"border text-orange-600 rounded ml-1 py-0 px-2\\"
             >\\"option2\\"</span
           >
-
+          
         </div>
-
+         
       </div>
     </div>
 
-
+    
   </div>
 </div>
 
-
+      
 
 <div
   class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
@@ -7737,53 +7737,53 @@ string
           style=\\"word-break: break-word\\"
           >sentAt</span
         >
-
+         
         <span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\"
           >sentAt</span
         >
-
+           
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-string
+          
+string   
           <div class=\\"inline-block\\">
-
+            
             <span
               class=\\"bg-yellow-600 font-bold no-underline text-black rounded lowercase ml-2\\"
               style=\\"height: 20px; font-size: 11px; padding: 3px\\"
               >date-time</span
             >
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"><p>Date and time when the message was sent.</p>
 </div>
 
-
+    
       </div>
     </div>
 
-
+    
   </div>
 </div>
 
-
+        
       <p class=\\"pl-6 mb-2 mt-4 text-xs text-gray-700\\">
         Additional properties are allowed.
       </p>
-
-
+        
+       
     </div>
-
+    
   </div>
 </div>
 
-
+  
 
 <div
   class=\\"bg-gray-200 pl-8 pr-8 rounded\\"
@@ -7798,31 +7798,31 @@ string
           style=\\"word-break: break-word\\"
           >1</span
         >
-
+            
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-string
+          
+string   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"></div>
 
-
+    
       </div>
     </div>
 
-
+    
   </div>
 </div>
 
-
+  
 
 <div
   class=\\"bg-gray-200 pl-8 pr-8 rounded\\"
@@ -7837,42 +7837,42 @@ string
           style=\\"word-break: break-word\\"
           >2</span
         >
-
+            
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-number
+          
+number   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"></div>
 
-
+    
       </div>
     </div>
 
-
+    
   </div>
 </div>
 
-
+     
       <p class=\\"pl-6 mb-2 mt-4 text-xs text-gray-700\\">
         Additional items are allowed.
       </p>
-
-
+         
+       
     </div>
-
+    
   </div>
 </div>
 
-
+      
 
 <div
   class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
@@ -7887,11 +7887,11 @@ number
           style=\\"word-break: break-word\\"
           >dummyObject</span
         >
-
+         
         <span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\"
           >dummyObject</span
         >
-
+         
         <svg
           class=\\"expand inline align-baseline\\"
           version=\\"1.1\\"
@@ -7904,31 +7904,31 @@ number
             points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"
           ></polygon>
         </svg>
-
+          
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-object
+          
+object   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"></div>
 
-
+    
       </div>
     </div>
 
-
+    
     <div
       class=\\"children bg-gray-200 py-4 rounded\\"
     >
-
+           
 
 <div
   class=\\"bg-gray-200 pl-8 pr-8 rounded\\"
@@ -7943,42 +7943,42 @@ object
           style=\\"word-break: break-word\\"
           >dummyObjectProp1</span
         >
-
+         
         <span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\"
           >sentAt</span
         >
-
+           
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-string
+          
+string   
           <div class=\\"inline-block\\">
-
+            
             <span
               class=\\"bg-yellow-600 font-bold no-underline text-black rounded lowercase ml-2\\"
               style=\\"height: 20px; font-size: 11px; padding: 3px\\"
               >date-time</span
             >
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"><p>Date and time when the message was sent.</p>
 </div>
 
-
+    
       </div>
     </div>
 
-
+    
   </div>
 </div>
 
-
+      
 
 <div
   class=\\"bg-gray-200 pl-8 pr-8 rounded\\"
@@ -7993,11 +7993,11 @@ string
           style=\\"word-break: break-word\\"
           >dummyObjectProp2</span
         >
-
+         
         <span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\"
           >dummyRecursiveObject</span
         >
-
+         
         <svg
           class=\\"expand inline align-baseline\\"
           version=\\"1.1\\"
@@ -8010,32 +8010,32 @@ string
             points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"
           ></polygon>
         </svg>
-
+          
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-object
+          
+object   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"></div>
 
-
+    
       </div>
     </div>
 
-
+    
     <div
       class=\\"children bg-gray-100 py-4 rounded\\"
     >
-
-
+          
+      
 
 <div class=\\"bg-gray-100 pl-8 pr-8 rounded\\">
     <div class=\\"js-prop cursor-pointer py-2 flex property\\">
@@ -8045,12 +8045,12 @@ object
         <div>
             <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
                 [CIRCULAR]
-            </div>
+            </div>        
         </div>
     </div>
 </div>
 
-
+      
 
 <div
   class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
@@ -8065,42 +8065,42 @@ object
           style=\\"word-break: break-word\\"
           >dummyRecursiveProp2</span
         >
-
+            
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-string
+          
+string   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"></div>
 
-
+    
       </div>
     </div>
 
-
+    
   </div>
 </div>
 
-
+        
       <p class=\\"pl-6 mb-2 mt-4 text-xs text-gray-700\\">
         Additional properties are allowed.
       </p>
-
-
+        
+       
     </div>
-
+    
   </div>
 </div>
 
-
+      
 
 <div
   class=\\"bg-gray-200 pl-8 pr-8 rounded\\"
@@ -8115,7 +8115,7 @@ string
           style=\\"word-break: break-word\\"
           >dummyObjectProp3</span
         >
-
+          
         <svg
           class=\\"expand inline align-baseline\\"
           version=\\"1.1\\"
@@ -8128,42 +8128,42 @@ string
             points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"
           ></polygon>
         </svg>
-
+          
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-object
+          
+object   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"></div>
 
-
+    
       </div>
     </div>
 
-
+    
     <div
       class=\\"children bg-gray-100 py-4 rounded\\"
     >
-
+             
       <p class=\\"pl-6 mb-2 mt-4 text-xs text-gray-700\\">
         Additional properties are allowed.
       </p>
-
-
+        
+       
     </div>
-
+    
   </div>
 </div>
 
-
+      
 
 <div
   class=\\"bg-gray-200 pl-8 pr-8 rounded\\"
@@ -8178,7 +8178,7 @@ object
           style=\\"word-break: break-word\\"
           >dummyObjectProp4</span
         >
-
+          
         <svg
           class=\\"expand inline align-baseline\\"
           version=\\"1.1\\"
@@ -8191,59 +8191,59 @@ object
             points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"
           ></polygon>
         </svg>
-
+          
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-object
+          
+object   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"></div>
 
-
+    
       </div>
     </div>
 
-
+    
     <div
       class=\\"children bg-gray-100 py-4 rounded\\"
     >
-
+             
       <p class=\\"pl-6 mb-2 mt-4 text-xs text-gray-700\\">
         Additional properties are <strong>NOT</strong> allowed.
       </p>
-
-
+        
+       
     </div>
-
+    
   </div>
 </div>
 
-
+        
       <p class=\\"pl-6 mb-2 mt-4 text-xs text-gray-700\\">
         Additional properties are allowed.
       </p>
-
-
+        
+       
     </div>
-
+    
   </div>
 </div>
 
-
+     
       <p class=\\"pl-6 mb-2 mt-4 text-sm font-bold text-gray-700\\">
         Specification Extensions:
       </p>
-
+      
       <div class=\\"bg-gray-100 pl-6\\">
-
+        
         <div class=\\"\\">
           <div class=\\"js-prop cursor-pointer py-2 property\\">
             <div class=\\"pr-4\\" style=\\"margin-top: -2px; min-width: 25%\\">
@@ -8283,17 +8283,17 @@ object
             </div>
           </div>
         </div>
-
+        
       </div>
-
+      
       <div class=\\"bg-gray-100 pl-6\\">
-
+        
         <div class=\\"text-sm\\">x-schema-extensions-as-primitive: dummy</div>
-
+        
       </div>
-
+      
       <div class=\\"bg-gray-100 pl-6\\">
-
+        
         <div class=\\"\\">
           <div class=\\"js-prop cursor-pointer py-2 property\\">
             <div class=\\"pr-4\\" style=\\"margin-top: -2px; min-width: 25%\\">
@@ -8325,28 +8325,28 @@ object
             </div>
           </div>
         </div>
-
+        
       </div>
-
+          
       <p class=\\"pl-6 mb-2 mt-4 text-xs text-gray-700\\">
         Additional properties are allowed.
       </p>
-
-
+        
+       
     </div>
-
+    
   </div>
 </div>
 
 
 </div>
 
-
-
+  
+  
     <div class=\\"mt-4\\">
-
+      
 <div>
-
+  
 
 <div
   class=\\"bg-gray-200  rounded\\"
@@ -8361,7 +8361,7 @@ object
           style=\\"word-break: break-word\\"
           >Headers</span
         >
-
+          
         <svg
           class=\\"expand inline align-baseline\\"
           version=\\"1.1\\"
@@ -8374,31 +8374,31 @@ object
             points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"
           ></polygon>
         </svg>
-
+          
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-object
+          
+object   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"></div>
 
-
+    
       </div>
     </div>
 
-
+    
     <div
       class=\\"children bg-gray-100 py-4 rounded\\"
     >
-
+           
 
 <div
   class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
@@ -8413,31 +8413,31 @@ object
           style=\\"word-break: break-word\\"
           >my-custom-app-header</span
         >
-
+            
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-string
+          
+string   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"></div>
 
-
+    
       </div>
     </div>
 
-
+    
   </div>
 </div>
 
-
+      
 
 <div
   class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
@@ -8452,38 +8452,38 @@ string
           style=\\"word-break: break-word\\"
           >correlationId</span
         >
-
+            
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-string
+          
+string   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"></div>
 
-
+    
       </div>
     </div>
 
-
+    
   </div>
 </div>
 
-
+        
       <p class=\\"pl-6 mb-2 mt-4 text-xs text-gray-700\\">
         Additional properties are allowed.
       </p>
-
-
+        
+       
     </div>
-
+    
   </div>
 </div>
 
@@ -8491,52 +8491,52 @@ string
 </div>
 
     </div>
-
+  
 </div>
 
 
-
+      
       <a name=\\"message-dummyInfo\\"></a>
-
+      
 
 <div class=\\"bg-gray-200 rounded p-4 mt-2\\">
   <div class=\\"text-sm text-gray-700 mb-2\\">
-
+    
     <span class=\\"text-gray-700 font-bold mr-2\\">#2</span>
-
-
+    
+    
       Dummy system info
       <span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\">dummyInfo</span>
-
+    
   </div>
   <p class=\\"text-gray-600 text-sm\\">This is just a dummy info message</p>
-
-
+  
+  
 
 <div class=\\"mt-4\\">
-
+  
 </div>
 
 
 
 
-
-
+  
+  
     <div class=\\"border border-gray-400 bg-gray-200 rounded p-4 mt-2\\">
       <div class=\\"text-sm text-gray-700 mb-2\\">Correlation ID<span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\">$message.header#/correlationId</span>
 
       </div>
-
+      
     </div>
-
+  
 
   <div class=\\"mt-4 mb-4 markdown\\"><p>More description for a dummy message.</p>
 <p>It is a dummy system info message.</p>
 </div>
-
-
+  
+    
 <div>
-
+  
 
 <div
   class=\\"bg-gray-200  rounded\\"
@@ -8551,11 +8551,11 @@ string
           style=\\"word-break: break-word\\"
           >Payload</span
         >
-
+         
         <span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\"
           >dummyInfo</span
         >
-
+         
         <svg
           class=\\"expand inline align-baseline\\"
           version=\\"1.1\\"
@@ -8568,31 +8568,31 @@ string
             points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"
           ></polygon>
         </svg>
-
+          
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-object
+          
+object   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"></div>
 
-
+    
       </div>
     </div>
 
-
+    
     <div
       class=\\"children bg-gray-100 py-4 rounded\\"
     >
-
+           
 
 <div
   class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
@@ -8607,46 +8607,46 @@ object
           style=\\"word-break: break-word\\"
           >prop1</span
         >
-
+           
         <div class=\\"text-red-600 text-xs\\">required</div>
-
+         
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-string
+          
+string   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"><p>Dummy prop1</p>
 </div>
 
-
+   
         <div class=\\"text-xs\\">
-          Enum:
+          Enum: 
           <span class=\\"border text-orange-600 rounded ml-1 py-0 px-2\\"
             >\\"option1\\"</span
           >
-
+          
           <span class=\\"border text-orange-600 rounded ml-1 py-0 px-2\\"
             >\\"option2\\"</span
           >
-
+          
         </div>
-
+         
       </div>
     </div>
 
-
+    
   </div>
 </div>
 
-
+      
 
 <div
   class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
@@ -8661,61 +8661,61 @@ string
           style=\\"word-break: break-word\\"
           >sentAt</span
         >
-
+         
         <span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\"
           >sentAt</span
         >
-
+           
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-string
+          
+string   
           <div class=\\"inline-block\\">
-
+            
             <span
               class=\\"bg-yellow-600 font-bold no-underline text-black rounded lowercase ml-2\\"
               style=\\"height: 20px; font-size: 11px; padding: 3px\\"
               >date-time</span
             >
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"><p>Date and time when the message was sent.</p>
 </div>
 
-
+    
       </div>
     </div>
 
-
+    
   </div>
 </div>
 
-
+        
       <p class=\\"pl-6 mb-2 mt-4 text-xs text-gray-700\\">
         Additional properties are allowed.
       </p>
-
-
+        
+       
     </div>
-
+    
   </div>
 </div>
 
 
 </div>
 
-
-
+  
+  
     <div class=\\"mt-4\\">
-
+      
 <div>
-
+  
 
 <div
   class=\\"bg-gray-200  rounded\\"
@@ -8730,7 +8730,7 @@ string
           style=\\"word-break: break-word\\"
           >Headers</span
         >
-
+          
         <svg
           class=\\"expand inline align-baseline\\"
           version=\\"1.1\\"
@@ -8743,31 +8743,31 @@ string
             points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"
           ></polygon>
         </svg>
-
+          
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-object
+          
+object   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"></div>
 
-
+    
       </div>
     </div>
 
-
+    
     <div
       class=\\"children bg-gray-100 py-4 rounded\\"
     >
-
+           
 
 <div
   class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
@@ -8782,45 +8782,45 @@ object
           style=\\"word-break: break-word\\"
           >my-app-header</span
         >
-
+            
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-integer
+          
+integer   
           <div class=\\"inline-block\\">
-
+             
             <span
               class=\\"bg-purple-600 font-bold no-underline text-white rounded lowercase ml-2\\"
               style=\\"height: 20px; font-size: 11px; padding: 3px\\"
               title=\\"At least 0\\"
               >>= 0</span
             >
-
+              
             <span
               class=\\"bg-purple-600 font-bold no-underline text-white rounded lowercase ml-2\\"
               style=\\"height: 20px; font-size: 11px; padding: 3px\\"
               title=\\"At most 100\\"
               ><= 100</span
             >
-
+                   
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"></div>
 
-
+    
       </div>
     </div>
 
-
+    
   </div>
 </div>
 
-
+      
 
 <div
   class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
@@ -8835,38 +8835,38 @@ integer
           style=\\"word-break: break-word\\"
           >correlationId</span
         >
-
+            
       </div>
 
       <div>
         <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
-
-string
+          
+string   
           <div class=\\"inline-block\\">
-
+                      
           </div>
         </div>
 
-
+        
 
 <div class=\\"text-sm markdown\\"></div>
 
-
+    
       </div>
     </div>
 
-
+    
   </div>
 </div>
 
-
+        
       <p class=\\"pl-6 mb-2 mt-4 text-xs text-gray-700\\">
         Additional properties are allowed.
       </p>
-
-
+        
+       
     </div>
-
+    
   </div>
 </div>
 
@@ -8874,11 +8874,11 @@ string
 </div>
 
     </div>
-
+  
 </div>
 
 
-
+      
     </div>
   </div>
 </div>
@@ -8887,7 +8887,7 @@ string
     </div>
     <div class=\\"examples-panel absolute top-0 right-0 bottom-0\\"></div>
   </div>
-
+  
     <script type=\\"text/javascript\\">
       /*
   Highlight.js 10.2.0 (da7d149b)
@@ -8969,7 +8969,7 @@ window.addEventListener('load', bindExpanders);
 window.addEventListener('load', bindMenuItems);
 
     </script>
-
+  
 </body>
 </html>
 "

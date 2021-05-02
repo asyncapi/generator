@@ -19,7 +19,7 @@ let template;
 const params = {};
 const noOverwriteGlobs = [];
 const disabledHooks = {};
-const mapBaseUrlToFolder = { url: '', folder: process.cwd()};
+const mapBaseUrlToFolder = {};
 
 const parseOutput = dir => path.resolve(dir);
 

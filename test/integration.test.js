@@ -10,8 +10,8 @@ const mainTestResultPath = 'test/temp/integrationTestResult';
 //we do not want to download chromium for html-template if it is not needed
 process.env['PUPPETEER_SKIP_CHROMIUM_DOWNLOAD'] = true;
 
-describe('Integration testing generateFromFile() to make sure the result of the generation is not changend comparing to snapshot', () => {
-  jest.setTimeout(30000);
+describe('Integration testing generateFromFile() to make sure the result of the generation is not changed comparing to snapshot', () => {
+  jest.setTimeout(120000);
 
   it('generated using Nunjucks template', async () => {
     //you always want to generate to new directory to make sure test runs in clear environment

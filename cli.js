@@ -81,7 +81,7 @@ program
   .option('-p, --param <name=value>', 'additional param to pass to templates', paramParser)
   .option('--force-write', 'force writing of the generated files to given directory even if it is a git repo with unstaged files or not empty dir (defaults to false)')
   .option('--watch-template', 'watches the template directory and the AsyncAPI document, and re-generate the files when changes occur. Ignores the output directory. This flag should be used only for template development.')
-  .option('--map-base-url <url>:<baseFolder>','maps all schema references with this base url to folder',mapBaseUrlParser)
+  .option('--map-base-url <url>:<baseFolder>','maps all schema references from base url to local folder',mapBaseUrlParser)
   .parse(process.argv);
 
 if (!asyncapiDocPath) {

@@ -118,6 +118,7 @@ Options:
   --map-base-url <url:folder>    map schema references from baseUrl to local folder
   --force-write                  force writing of the generated files to given directory even if it is a git repo with unstaged files or not empty dir (defaults to false)
   --watch-template               watches the template directory and the AsyncAPI document, and re-generate the files when changes occur. Ignores the output directory. This flag should be used only for template development.
+  --map-base-url <url:folder>    maps all schema references from base url to local folder
   -h, --help                     display help for command
 ```
 

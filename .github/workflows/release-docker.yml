@@ -14,9 +14,12 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: master
-      - name: Get version from package.json
+      - name: Get version without v character
         id: version
-        run: echo "::set-output name=value::$(npm run get:version --silent)"
+        run: |
+          VERSION=${{github.event.release.tag_name}}
+          VERSION_WITHOUT_V=${VERSION:1}
+          echo "::set-output name=value::$(echo $VERSION_WITHOUT_V)"
       - name: Release to Docker
         run: | 
           echo ${{secrets.DOCKER_PASSWORD}} | docker login -u ${{secrets.DOCKER_USERNAME}} --password-stdin

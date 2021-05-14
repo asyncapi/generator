@@ -17,6 +17,7 @@
         * [.install](#Generator+install) : <code>Boolean</code>
         * [.templateConfig](#Generator+templateConfig) : <code>Object</code>
         * [.hooks](#Generator+hooks) : <code>Object</code>
+        * [.mapBaseUrlToFolder](#Generator+mapBaseUrlToFolder) : <code>Object</code>
         * [.templateParams](#Generator+templateParams) : <code>Object</code>
         * [.originalAsyncAPI](#Generator+originalAsyncAPI) : <code>String</code>
         * [.asyncapi](#Generator+asyncapi) : <code>AsyncAPIDocument</code>
@@ -48,6 +49,7 @@ Instantiates a new Generator object.
 | [options.forceWrite] | <code>Boolean</code> | <code>false</code> | Force writing of the generated files to given directory even if it is a git repo with unstaged files or not empty dir. Default is set to false. |
 | [options.install] | <code>Boolean</code> | <code>false</code> | Install the template and its dependencies, even when the template has already been installed. |
 | [options.debug] | <code>Boolean</code> | <code>false</code> | Enable more specific errors in the console. At the moment it only shows specific errors about filters. Keep in mind that as a result errors about template are less descriptive. |
+| [options.mapBaseUrlToFolder] | <code>Object.&lt;String, String&gt;</code> |  | Optional parameter to map schema references from a base url to a local base folder e.g. url=https://schema.example.com/crm/  folder=./test/docs/ . |
 
 **Example**  
 ```js
@@ -127,6 +129,12 @@ The template configuration.
 
 ### generator.hooks : <code>Object</code>
 Hooks object with hooks functions grouped by the hook type.
+
+**Kind**: instance property of [<code>Generator</code>](#Generator)  
+<a name="Generator+mapBaseUrlToFolder"></a>
+
+### generator.mapBaseUrlToFolder : <code>Object</code>
+Maps schema URL to folder.
 
 **Kind**: instance property of [<code>Generator</code>](#Generator)  
 <a name="Generator+templateParams"></a>

@@ -19,6 +19,7 @@ let template;
 const params = {};
 const noOverwriteGlobs = [];
 const disabledHooks = {};
+const mapBaseUrlToFolder = {};
 
 const parseOutput = dir => path.resolve(dir);
 
@@ -38,6 +39,25 @@ const disableHooksParser = v => {
     disabledHooks[hookType] = hookNames.split(/,/);
   } else {
     disabledHooks[hookType] = true;
+  }
+};
+
+const mapBaseUrlParser = v => {
+  // Example value for regular expression: https://schema.example.com/crm/:./test/docs/
+  // it splits on last occurrence of : into the groups all, url and folder
+  const re = /(.*):(.*)/g;
+  let mapping = [];
+  if ((mapping = re.exec(v))===null || mapping.length!==3) {
+    throw new Error('Invalid --map-base-url flag. A mapping <url>:<folder> with delimiter : expected.');
+  }
+
+  // Folder is without trailing slash, so make sure that url has also no trailing slash:
+  mapBaseUrlToFolder.url = mapping[1].replace(/\/$/, '');
+  mapBaseUrlToFolder.folder = path.resolve(mapping[2]);
+
+  const isURL = /^https?:/;
+  if (!isURL.test(mapBaseUrlToFolder.url.toLowerCase())) {
+    throw new Error('Invalid --map-base-url flag. The mapping <url>:<folder> requires a valid http/https url and valid folder with delimiter `:`.');
   }
 };
 
@@ -67,6 +87,7 @@ program
   .option('-p, --param <name=value>', 'additional param to pass to templates', paramParser)
   .option('--force-write', 'force writing of the generated files to given directory even if it is a git repo with unstaged files or not empty dir (defaults to false)')
   .option('--watch-template', 'watches the template directory and the AsyncAPI document, and re-generate the files when changes occur. Ignores the output directory. This flag should be used only for template development.')
+  .option('--map-base-url <url:folder>','maps all schema references from base url to local folder',mapBaseUrlParser)
   .parse(process.argv);
 
 if (!asyncapiDocPath) {
@@ -105,7 +126,7 @@ xfs.mkdirp(program.output, async err => {
     if (!await isLocalTemplate(path.resolve(Generator.DEFAULT_TEMPLATES_DIR, templateName))) {
       console.warn(`WARNING: ${template} is a remote template. Changes may be lost on subsequent installations.`);
     }
-    
+
     watcher.watch(watcherHandler, (paths) => {
       showErrorAndExit({ message: `[WATCHER] Could not find the file path ${paths}, are you sure it still exists? If it has been deleted or moved please rerun the generator.` });
     });
@@ -125,7 +146,8 @@ function generate(targetDir) {
         disabledHooks,
         forceWrite: program.forceWrite,
         install: program.install,
-        debug: program.debug
+        debug: program.debug,
+        mapBaseUrlToFolder
       });
 
       if (isAsyncapiDocLocal) {

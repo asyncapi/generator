@@ -117,6 +117,7 @@ Options:
   -p, --param <name=value>       additional param to pass to templates
   --force-write                  force writing of the generated files to given directory even if it is a git repo with unstaged files or not empty dir (defaults to false)
   --watch-template               watches the template directory and the AsyncAPI document, and re-generate the files when changes occur. Ignores the output directory. This flag should be used only for template development.
+  --map-base-url <url:folder>    maps all schema references from base url to local folder
   -h, --help                     display help for command
 ```
 
@@ -190,6 +191,13 @@ It creates a symbolic link to the target directory (`~/my-template` in this case
 ```bash
 ag asyncapi.yaml https://github.com/asyncapi/html-template.git
 ```
+
+**Map schema references from baseUrl to local folder:**
+```bash
+ag test/docs/apiwithref.json @asyncapi/html-template -o ./build/ --force-write --map-base-url https://schema.example.com/crm/:./test/docs/
+```
+
+The parameter `--map-base-url` maps external schema references to local folders.
 
 ### CLI usage with Docker
 

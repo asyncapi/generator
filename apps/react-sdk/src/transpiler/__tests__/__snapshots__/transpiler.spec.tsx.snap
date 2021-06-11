@@ -3,7 +3,7 @@
 exports[`Transpiler should transpile CommonJS files with a simple setup and import correctly 1`] = `
 "'use strict';
 
-var jsxRuntime = require('react/jsx-runtime');
+var jsxRuntime = require('react/cjs/react-jsx-runtime.production.min');
 require('source-map-support/register');
 
 /* eslint-disable no-undef */
@@ -34,7 +34,7 @@ exports[`Transpiler should transpile CommonJS files with a simple setup and impo
 exports[`Transpiler should transpile ES5 files with a simple setup and import correctly 1`] = `
 "'use strict';
 
-var jsxRuntime = require('react/jsx-runtime');
+var jsxRuntime = require('react/cjs/react-jsx-runtime.production.min');
 require('source-map-support/register');
 var path = require('path');
 
@@ -69,7 +69,7 @@ exports[`Transpiler should transpile ES5 files with a simple setup and import co
 exports[`Transpiler should transpile ES6 files with a simple setup and import correctly 1`] = `
 "'use strict';
 
-var jsxRuntime = require('react/jsx-runtime');
+var jsxRuntime = require('react/cjs/react-jsx-runtime.production.min');
 require('source-map-support/register');
 var path = require('path');
 

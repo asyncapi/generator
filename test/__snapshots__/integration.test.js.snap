@@ -5020,7 +5020,11 @@ a:hover {
           style=\\"word-break: break-word\\"
           >dummy</span
         >
-           
+         
+        <span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\"
+          >dummy</span
+        >
+          
         <div class=\\"text-red-600 text-xs\\">required</div>
          
       </div>

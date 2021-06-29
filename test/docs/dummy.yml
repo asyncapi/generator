@@ -1,4 +1,4 @@
-asyncapi: '2.0.0'
+asyncapi: '2.1.0'
 
 externalDocs:
   description: Find more info here
@@ -188,12 +188,15 @@ components:
       payload:
         $ref: "#/components/schemas/dummyInfo"
       examples:
-        - headers:
+        - name: option1example
+          summary: this is dummy summary for option1example
+          headers:
             my-app-header: 12
           payload:
             prop1: option1
             sentAt: 2020-01-31T13:24:53Z
-        - headers:
+        - name: headerExample
+          headers:
             my-app-header: 13
         - payload:
             prop1: option2

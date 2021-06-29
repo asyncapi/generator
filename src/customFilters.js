@@ -38,13 +38,28 @@ filter.logError = logError;
  * @returns {object}
  */
 function getPayloadExamples(msg) {
-  if (Array.isArray(msg.examples()) && msg.examples().find(e => e.payload)) {
+  const examples = msg.examples();
+  if (Array.isArray(examples) && examples.some(e => e.payload)) {
     // Instead of flat or flatmap use this.
-    return _.flatMap(msg.examples().map(e => e.payload).filter(Boolean));
+    const messageExamples = _.flatMap(examples)
+      .map(e => {
+        if (!e.payload) return;
+        return {
+          name: e.name,
+          summary: e.summary,
+          example: e.payload,
+        };
+      })
+      .filter(Boolean);
+
+    if (messageExamples.length > 0) {
+      return messageExamples;
+    }
   }
-  
-  if (msg.payload() && msg.payload().examples()) {
-    return msg.payload().examples();
+
+  const payload = msg.payload();
+  if (payload && payload.examples()) {
+    return payload.examples().map(example => ({ example }));
   }
 }
 filter.getPayloadExamples = getPayloadExamples;
@@ -55,13 +70,28 @@ filter.getPayloadExamples = getPayloadExamples;
  * @returns {object}
  */
 function getHeadersExamples(msg) {
-  if (Array.isArray(msg.examples()) && msg.examples().find(e => e.headers)) {
+  const examples = msg.examples();
+  if (Array.isArray(examples) && examples.some(e => e.headers)) {
     // Instead of flat or flatmap use this.
-    return _.flatMap(msg.examples().map(e => e.headers).filter(Boolean));
+    const messageExamples = _.flatMap(examples)
+      .map(e => {
+        if (!e.headers) return;
+        return {
+          name: e.name,
+          summary: e.summary,
+          example: e.headers,
+        };
+      })
+      .filter(Boolean);
+
+    if (messageExamples.length > 0) {
+      return messageExamples;
+    }
   }
-  
-  if (msg.headers() && msg.headers().examples()) {
-    return msg.headers().examples();
+
+  const headers = msg.headers();
+  if (headers && headers.examples()) {
+    return headers.examples().map(example => ({ example }));
   }
 }
 filter.getHeadersExamples = getHeadersExamples;

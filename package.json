@@ -33,15 +33,16 @@
   },
   "homepage": "https://github.com/asyncapi/generator-filters#readme",
   "devDependencies": {
-    "ava": "^3.7.0",
-    "eslint": "^6.8.0",
-    "eslint-plugin-sonarjs": "^0.5.0",
-    "jsdoc-to-markdown": "^5.0.3",
+    "@asyncapi/parser": "^1.7.0",
     "@semantic-release/commit-analyzer": "^8.0.1",
     "@semantic-release/github": "^7.0.4",
     "@semantic-release/npm": "^7.0.3",
     "@semantic-release/release-notes-generator": "^9.0.1",
+    "ava": "^3.7.0",
     "conventional-changelog-conventionalcommits": "^4.2.3",
+    "eslint": "^6.8.0",
+    "eslint-plugin-sonarjs": "^0.5.0",
+    "jsdoc-to-markdown": "^5.0.3",
     "semantic-release": "^17.0.4"
   },
   "dependencies": {

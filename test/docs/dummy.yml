@@ -69,6 +69,8 @@ defaultContentType: application/json
 
 channels:
   dummy/channel/with/{dummy}/parameter/create:
+    x-dummy-security:
+      $ref: '#/components/securitySchemes/supportedOauthFlows/flows/clientCredentials'
     description: Dummy channel description.
     parameters:
       dummy:
@@ -237,6 +239,8 @@ components:
           $ref: "#/components/schemas/dummyArrayWithArray"
         dummyObject:
           $ref: "#/components/schemas/dummyObject"
+        dummyArrayRank:
+          $ref: '#/components/schemas/dummyArrayRank'
     dummyInfo:
       type: object
       required:
@@ -284,6 +288,37 @@ components:
       type: string
       format: date-time
       description: Date and time when the message was sent.
+    dummyArrayRank:
+      type: object
+      properties:
+        dummyArrayValueRank: 
+          $ref: '#/components/schemas/dummyArrayValueRank'
+        dummyArrayDimensions: 
+          $ref: '#/components/schemas/dummyArrayArrayDimensions'
+    dummyArrayValueRank:
+      description: >
+        This Attribute indicates whether the val Attribute of the datapoint is an
+        array and how many dimensions the array has.
+      type: integer
+      default: -1
+      examples:
+        - 2
+      oneOf:
+        - const: -1
+          description: 'Scalar: The value is not an array.'
+        - const: 0
+          description: 'OneOrMoreDimensions: The value is an array with one or more dimensions.'
+        - const: 1
+          description: 'OneDimension: The value is an array with one dimension.'
+        - const: 2
+          description: 'The value is an array with two dimensions.'
+    dummyArrayArrayDimensions:
+      type: array
+      items:
+        type: integer
+        minimum: 0
+      examples:
+        - [3, 5]
 
   securitySchemes:
     user-password:

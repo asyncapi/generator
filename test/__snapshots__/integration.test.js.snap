@@ -3104,6 +3104,13 @@ Still dummy though.
 | dummyObject.dummyObjectProp2.dummyRecursiveProp2 | string | - | _Any_ |
 | dummyObject.dummyObjectProp3 | object | - | _Any_ |
 | dummyObject.dummyObjectProp4 | object | - | _Any_ |
+| dummyArrayRank | object | - | _Any_ |
+| dummyArrayRank.dummyArrayValueRank | integeroneOf | This Attribute indicates whether the val Attribute of the datapoint is an array and how many dimensions the array has. | _Any_ |
+| dummyArrayRank.dummyArrayValueRank.0 |  | Scalar: The value is not an array. | _Any_ |
+| dummyArrayRank.dummyArrayValueRank.1 |  | OneOrMoreDimensions: The value is an array with one or more dimensions. | _Any_ |
+| dummyArrayRank.dummyArrayValueRank.2 |  | OneDimension: The value is an array with one dimension. | _Any_ |
+| dummyArrayRank.dummyArrayValueRank.3 |  | The value is an array with two dimensions. | _Any_ |
+| dummyArrayRank.dummyArrayDimensions | arrayinteger | - | _Any_ |
 
 > Examples of payload _(generated)_
 
@@ -3134,6 +3141,13 @@ Still dummy though.
     },
     \\"dummyObjectProp3\\": {},
     \\"dummyObjectProp4\\": {}
+  },
+  \\"dummyArrayRank\\": {
+    \\"dummyArrayValueRank\\": -1,
+    \\"dummyArrayDimensions\\": [
+      3,
+      5
+    ]
   }
 }
 \`\`\`
@@ -6202,6 +6216,461 @@ object
   </div>
 </div>
 
+      
+
+<div
+  class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
+>
+  <div class=\\"\\">
+    <div
+      class=\\"js-prop cursor-pointer py-2 flex property\\"
+    >
+      <div class=\\"pr-4\\" style=\\"margin-top: -2px; min-width: 25%\\">
+        <span
+          class=\\"text-sm\\"
+          style=\\"word-break: break-word\\"
+          >dummyArrayRank</span
+        >
+         
+        <span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\"
+          >dummyArrayRank</span
+        >
+         
+        <svg
+          class=\\"expand inline align-baseline\\"
+          version=\\"1.1\\"
+          viewBox=\\"0 0 24 24\\"
+          x=\\"0\\"
+          xmlns=\\"http://www.w3.org/2000/svg\\"
+          y=\\"0\\"
+        >
+          <polygon
+            points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"
+          ></polygon>
+        </svg>
+          
+      </div>
+
+      <div>
+        <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
+          
+object   
+          <div class=\\"inline-block\\">
+                      
+          </div>
+        </div>
+
+        
+
+<div class=\\"text-sm markdown\\"></div>
+
+    
+      </div>
+    </div>
+
+    
+    <div
+      class=\\"children bg-gray-200 py-4 rounded\\"
+    >
+           
+
+<div
+  class=\\"bg-gray-200 pl-8 pr-8 rounded\\"
+>
+  <div class=\\"\\">
+    <div
+      class=\\"js-prop cursor-pointer py-2 flex property\\"
+    >
+      <div class=\\"pr-4\\" style=\\"margin-top: -2px; min-width: 25%\\">
+        <span
+          class=\\"text-sm\\"
+          style=\\"word-break: break-word\\"
+          >dummyArrayValueRank</span
+        >
+         
+        <span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\"
+          >dummyArrayValueRank</span
+        >
+         
+        <svg
+          class=\\"expand inline align-baseline\\"
+          version=\\"1.1\\"
+          viewBox=\\"0 0 24 24\\"
+          x=\\"0\\"
+          xmlns=\\"http://www.w3.org/2000/svg\\"
+          y=\\"0\\"
+        >
+          <polygon
+            points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"
+          ></polygon>
+        </svg>
+          
+      </div>
+
+      <div>
+        <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
+          
+integer  oneOf 
+          <div class=\\"inline-block\\">
+                      
+          </div>
+        </div>
+
+        
+
+<div class=\\"text-sm markdown\\"><p>This Attribute indicates whether the val Attribute of the datapoint is an array and how many dimensions the array has.</p>
+</div>
+
+ 
+        <div class=\\"text-xs\\">Default: -1</div>
+           
+        <div class=\\"text-xs\\">
+          Examples: 
+          <span class=\\"border text-orange-600 rounded ml-1 py-0 px-2\\"
+            >2</span
+          >
+          
+        </div>
+        
+      </div>
+    </div>
+
+    
+    <div
+      class=\\"children bg-gray-100 py-4 rounded\\"
+    >
+              
+      
+
+<div
+  class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
+>
+  <div class=\\"\\">
+    <div
+      class=\\" flex property\\"
+    >
+      <div class=\\"pr-4\\" style=\\"margin-top: -2px; min-width: 25%\\">
+        <span
+          class=\\"text-sm\\"
+          style=\\"word-break: break-word\\"
+          >0</span
+        >
+         
+        <span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\"
+          ></span
+        >
+           
+      </div>
+
+      <div>
+        <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
+          
+   
+          <div class=\\"inline-block\\">
+                      
+          </div>
+        </div>
+
+        
+
+<div class=\\"text-sm markdown\\"><p>Scalar: The value is not an array.</p>
+</div>
+
+  
+        <div class=\\"text-xs\\">Const: -1</div>
+          
+      </div>
+    </div>
+
+    
+  </div>
+</div>
+
+ 
+      
+
+<div
+  class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
+>
+  <div class=\\"\\">
+    <div
+      class=\\" flex property\\"
+    >
+      <div class=\\"pr-4\\" style=\\"margin-top: -2px; min-width: 25%\\">
+        <span
+          class=\\"text-sm\\"
+          style=\\"word-break: break-word\\"
+          >1</span
+        >
+         
+        <span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\"
+          ></span
+        >
+           
+      </div>
+
+      <div>
+        <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
+          
+   
+          <div class=\\"inline-block\\">
+                      
+          </div>
+        </div>
+
+        
+
+<div class=\\"text-sm markdown\\"><p>OneOrMoreDimensions: The value is an array with one or more dimensions.</p>
+</div>
+
+  
+        <div class=\\"text-xs\\">Const: 0</div>
+          
+      </div>
+    </div>
+
+    
+  </div>
+</div>
+
+ 
+      
+
+<div
+  class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
+>
+  <div class=\\"\\">
+    <div
+      class=\\" flex property\\"
+    >
+      <div class=\\"pr-4\\" style=\\"margin-top: -2px; min-width: 25%\\">
+        <span
+          class=\\"text-sm\\"
+          style=\\"word-break: break-word\\"
+          >2</span
+        >
+         
+        <span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\"
+          ></span
+        >
+           
+      </div>
+
+      <div>
+        <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
+          
+   
+          <div class=\\"inline-block\\">
+                      
+          </div>
+        </div>
+
+        
+
+<div class=\\"text-sm markdown\\"><p>OneDimension: The value is an array with one dimension.</p>
+</div>
+
+  
+        <div class=\\"text-xs\\">Const: 1</div>
+          
+      </div>
+    </div>
+
+    
+  </div>
+</div>
+
+ 
+      
+
+<div
+  class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
+>
+  <div class=\\"\\">
+    <div
+      class=\\" flex property\\"
+    >
+      <div class=\\"pr-4\\" style=\\"margin-top: -2px; min-width: 25%\\">
+        <span
+          class=\\"text-sm\\"
+          style=\\"word-break: break-word\\"
+          >3</span
+        >
+         
+        <span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\"
+          ></span
+        >
+           
+      </div>
+
+      <div>
+        <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
+          
+   
+          <div class=\\"inline-block\\">
+                      
+          </div>
+        </div>
+
+        
+
+<div class=\\"text-sm markdown\\"><p>The value is an array with two dimensions.</p>
+</div>
+
+  
+        <div class=\\"text-xs\\">Const: 2</div>
+          
+      </div>
+    </div>
+
+    
+  </div>
+</div>
+
+  
+       
+    </div>
+    
+  </div>
+</div>
+
+      
+
+<div
+  class=\\"bg-gray-200 pl-8 pr-8 rounded\\"
+>
+  <div class=\\"\\">
+    <div
+      class=\\"js-prop cursor-pointer py-2 flex property\\"
+    >
+      <div class=\\"pr-4\\" style=\\"margin-top: -2px; min-width: 25%\\">
+        <span
+          class=\\"text-sm\\"
+          style=\\"word-break: break-word\\"
+          >dummyArrayDimensions</span
+        >
+         
+        <span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\"
+          >dummyArrayArrayDimensions</span
+        >
+         
+        <svg
+          class=\\"expand inline align-baseline\\"
+          version=\\"1.1\\"
+          viewBox=\\"0 0 24 24\\"
+          x=\\"0\\"
+          xmlns=\\"http://www.w3.org/2000/svg\\"
+          y=\\"0\\"
+        >
+          <polygon
+            points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"
+          ></polygon>
+        </svg>
+          
+      </div>
+
+      <div>
+        <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
+          
+array&lt;integer&gt;   
+          <div class=\\"inline-block\\">
+                      
+          </div>
+        </div>
+
+        
+
+<div class=\\"text-sm markdown\\"></div>
+
+    
+        <div class=\\"text-xs\\">
+          Examples: 
+          <span class=\\"border text-orange-600 rounded ml-1 py-0 px-2\\"
+            >[
+  3,
+  5
+]</span
+          >
+          
+        </div>
+        
+      </div>
+    </div>
+
+    
+    <div
+      class=\\"children bg-gray-100 py-4 rounded\\"
+    >
+             
+      <p class=\\"pl-6 mb-2 text-xs font-bold uppercase text-gray-700\\">Items:</p>
+       
+
+<div
+  class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
+>
+  <div class=\\"\\">
+    <div
+      class=\\" flex property\\"
+    >
+      <div class=\\"pr-4\\" style=\\"margin-top: -2px; min-width: 25%\\">
+        <span
+          class=\\"text-sm\\"
+          style=\\"word-break: break-word\\"
+          >0</span
+        >
+            
+      </div>
+
+      <div>
+        <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
+          
+integer   
+          <div class=\\"inline-block\\">
+             
+            <span
+              class=\\"bg-purple-600 font-bold no-underline text-white rounded lowercase ml-2\\"
+              style=\\"height: 20px; font-size: 11px; padding: 3px\\"
+              title=\\"At least 0\\"
+              >>= 0</span
+            >
+                     
+          </div>
+        </div>
+
+        
+
+<div class=\\"text-sm markdown\\"></div>
+
+    
+      </div>
+    </div>
+
+    
+  </div>
+</div>
+
+    
+      <p class=\\"pl-6 mb-2 mt-4 text-xs text-gray-700\\">
+        Additional items are allowed.
+      </p>
+         
+       
+    </div>
+    
+  </div>
+</div>
+
+        
+      <p class=\\"pl-6 mb-2 mt-4 text-xs text-gray-700\\">
+        Additional properties are allowed.
+      </p>
+        
+       
+    </div>
+    
+  </div>
+</div>
+
      
       <p class=\\"pl-6 mb-2 mt-4 text-sm font-bold text-gray-700\\">
         Specification Extensions:
@@ -6540,6 +7009,13 @@ string
     },
     \\"dummyObjectProp3\\": {},
     \\"dummyObjectProp4\\": {}
+  },
+  \\"dummyArrayRank\\": {
+    \\"dummyArrayValueRank\\": -1,
+    \\"dummyArrayDimensions\\": [
+      3,
+      5
+    ]
   }
 }</code></pre>
         <h6 class=\\"text-xs font-bold text-gray-700 italic\\">This example has been generated automatically.</h6>
@@ -8224,6 +8700,461 @@ object
         Additional properties are <strong>NOT</strong> allowed.
       </p>
         
+       
+    </div>
+    
+  </div>
+</div>
+
+        
+      <p class=\\"pl-6 mb-2 mt-4 text-xs text-gray-700\\">
+        Additional properties are allowed.
+      </p>
+        
+       
+    </div>
+    
+  </div>
+</div>
+
+      
+
+<div
+  class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
+>
+  <div class=\\"\\">
+    <div
+      class=\\"js-prop cursor-pointer py-2 flex property\\"
+    >
+      <div class=\\"pr-4\\" style=\\"margin-top: -2px; min-width: 25%\\">
+        <span
+          class=\\"text-sm\\"
+          style=\\"word-break: break-word\\"
+          >dummyArrayRank</span
+        >
+         
+        <span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\"
+          >dummyArrayRank</span
+        >
+         
+        <svg
+          class=\\"expand inline align-baseline\\"
+          version=\\"1.1\\"
+          viewBox=\\"0 0 24 24\\"
+          x=\\"0\\"
+          xmlns=\\"http://www.w3.org/2000/svg\\"
+          y=\\"0\\"
+        >
+          <polygon
+            points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"
+          ></polygon>
+        </svg>
+          
+      </div>
+
+      <div>
+        <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
+          
+object   
+          <div class=\\"inline-block\\">
+                      
+          </div>
+        </div>
+
+        
+
+<div class=\\"text-sm markdown\\"></div>
+
+    
+      </div>
+    </div>
+
+    
+    <div
+      class=\\"children bg-gray-200 py-4 rounded\\"
+    >
+           
+
+<div
+  class=\\"bg-gray-200 pl-8 pr-8 rounded\\"
+>
+  <div class=\\"\\">
+    <div
+      class=\\"js-prop cursor-pointer py-2 flex property\\"
+    >
+      <div class=\\"pr-4\\" style=\\"margin-top: -2px; min-width: 25%\\">
+        <span
+          class=\\"text-sm\\"
+          style=\\"word-break: break-word\\"
+          >dummyArrayValueRank</span
+        >
+         
+        <span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\"
+          >dummyArrayValueRank</span
+        >
+         
+        <svg
+          class=\\"expand inline align-baseline\\"
+          version=\\"1.1\\"
+          viewBox=\\"0 0 24 24\\"
+          x=\\"0\\"
+          xmlns=\\"http://www.w3.org/2000/svg\\"
+          y=\\"0\\"
+        >
+          <polygon
+            points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"
+          ></polygon>
+        </svg>
+          
+      </div>
+
+      <div>
+        <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
+          
+integer  oneOf 
+          <div class=\\"inline-block\\">
+                      
+          </div>
+        </div>
+
+        
+
+<div class=\\"text-sm markdown\\"><p>This Attribute indicates whether the val Attribute of the datapoint is an array and how many dimensions the array has.</p>
+</div>
+
+ 
+        <div class=\\"text-xs\\">Default: -1</div>
+           
+        <div class=\\"text-xs\\">
+          Examples: 
+          <span class=\\"border text-orange-600 rounded ml-1 py-0 px-2\\"
+            >2</span
+          >
+          
+        </div>
+        
+      </div>
+    </div>
+
+    
+    <div
+      class=\\"children bg-gray-100 py-4 rounded\\"
+    >
+              
+      
+
+<div
+  class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
+>
+  <div class=\\"\\">
+    <div
+      class=\\" flex property\\"
+    >
+      <div class=\\"pr-4\\" style=\\"margin-top: -2px; min-width: 25%\\">
+        <span
+          class=\\"text-sm\\"
+          style=\\"word-break: break-word\\"
+          >0</span
+        >
+         
+        <span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\"
+          ></span
+        >
+           
+      </div>
+
+      <div>
+        <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
+          
+   
+          <div class=\\"inline-block\\">
+                      
+          </div>
+        </div>
+
+        
+
+<div class=\\"text-sm markdown\\"><p>Scalar: The value is not an array.</p>
+</div>
+
+  
+        <div class=\\"text-xs\\">Const: -1</div>
+          
+      </div>
+    </div>
+
+    
+  </div>
+</div>
+
+ 
+      
+
+<div
+  class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
+>
+  <div class=\\"\\">
+    <div
+      class=\\" flex property\\"
+    >
+      <div class=\\"pr-4\\" style=\\"margin-top: -2px; min-width: 25%\\">
+        <span
+          class=\\"text-sm\\"
+          style=\\"word-break: break-word\\"
+          >1</span
+        >
+         
+        <span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\"
+          ></span
+        >
+           
+      </div>
+
+      <div>
+        <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
+          
+   
+          <div class=\\"inline-block\\">
+                      
+          </div>
+        </div>
+
+        
+
+<div class=\\"text-sm markdown\\"><p>OneOrMoreDimensions: The value is an array with one or more dimensions.</p>
+</div>
+
+  
+        <div class=\\"text-xs\\">Const: 0</div>
+          
+      </div>
+    </div>
+
+    
+  </div>
+</div>
+
+ 
+      
+
+<div
+  class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
+>
+  <div class=\\"\\">
+    <div
+      class=\\" flex property\\"
+    >
+      <div class=\\"pr-4\\" style=\\"margin-top: -2px; min-width: 25%\\">
+        <span
+          class=\\"text-sm\\"
+          style=\\"word-break: break-word\\"
+          >2</span
+        >
+         
+        <span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\"
+          ></span
+        >
+           
+      </div>
+
+      <div>
+        <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
+          
+   
+          <div class=\\"inline-block\\">
+                      
+          </div>
+        </div>
+
+        
+
+<div class=\\"text-sm markdown\\"><p>OneDimension: The value is an array with one dimension.</p>
+</div>
+
+  
+        <div class=\\"text-xs\\">Const: 1</div>
+          
+      </div>
+    </div>
+
+    
+  </div>
+</div>
+
+ 
+      
+
+<div
+  class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
+>
+  <div class=\\"\\">
+    <div
+      class=\\" flex property\\"
+    >
+      <div class=\\"pr-4\\" style=\\"margin-top: -2px; min-width: 25%\\">
+        <span
+          class=\\"text-sm\\"
+          style=\\"word-break: break-word\\"
+          >3</span
+        >
+         
+        <span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\"
+          ></span
+        >
+           
+      </div>
+
+      <div>
+        <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
+          
+   
+          <div class=\\"inline-block\\">
+                      
+          </div>
+        </div>
+
+        
+
+<div class=\\"text-sm markdown\\"><p>The value is an array with two dimensions.</p>
+</div>
+
+  
+        <div class=\\"text-xs\\">Const: 2</div>
+          
+      </div>
+    </div>
+
+    
+  </div>
+</div>
+
+  
+       
+    </div>
+    
+  </div>
+</div>
+
+      
+
+<div
+  class=\\"bg-gray-200 pl-8 pr-8 rounded\\"
+>
+  <div class=\\"\\">
+    <div
+      class=\\"js-prop cursor-pointer py-2 flex property\\"
+    >
+      <div class=\\"pr-4\\" style=\\"margin-top: -2px; min-width: 25%\\">
+        <span
+          class=\\"text-sm\\"
+          style=\\"word-break: break-word\\"
+          >dummyArrayDimensions</span
+        >
+         
+        <span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\"
+          >dummyArrayArrayDimensions</span
+        >
+         
+        <svg
+          class=\\"expand inline align-baseline\\"
+          version=\\"1.1\\"
+          viewBox=\\"0 0 24 24\\"
+          x=\\"0\\"
+          xmlns=\\"http://www.w3.org/2000/svg\\"
+          y=\\"0\\"
+        >
+          <polygon
+            points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"
+          ></polygon>
+        </svg>
+          
+      </div>
+
+      <div>
+        <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
+          
+array&lt;integer&gt;   
+          <div class=\\"inline-block\\">
+                      
+          </div>
+        </div>
+
+        
+
+<div class=\\"text-sm markdown\\"></div>
+
+    
+        <div class=\\"text-xs\\">
+          Examples: 
+          <span class=\\"border text-orange-600 rounded ml-1 py-0 px-2\\"
+            >[
+  3,
+  5
+]</span
+          >
+          
+        </div>
+        
+      </div>
+    </div>
+
+    
+    <div
+      class=\\"children bg-gray-100 py-4 rounded\\"
+    >
+             
+      <p class=\\"pl-6 mb-2 text-xs font-bold uppercase text-gray-700\\">Items:</p>
+       
+
+<div
+  class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
+>
+  <div class=\\"\\">
+    <div
+      class=\\" flex property\\"
+    >
+      <div class=\\"pr-4\\" style=\\"margin-top: -2px; min-width: 25%\\">
+        <span
+          class=\\"text-sm\\"
+          style=\\"word-break: break-word\\"
+          >0</span
+        >
+            
+      </div>
+
+      <div>
+        <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
+          
+integer   
+          <div class=\\"inline-block\\">
+             
+            <span
+              class=\\"bg-purple-600 font-bold no-underline text-white rounded lowercase ml-2\\"
+              style=\\"height: 20px; font-size: 11px; padding: 3px\\"
+              title=\\"At least 0\\"
+              >>= 0</span
+            >
+                     
+          </div>
+        </div>
+
+        
+
+<div class=\\"text-sm markdown\\"></div>
+
+    
+      </div>
+    </div>
+
+    
+  </div>
+</div>
+
+    
+      <p class=\\"pl-6 mb-2 mt-4 text-xs text-gray-700\\">
+        Additional items are allowed.
+      </p>
+         
        
     </div>
     

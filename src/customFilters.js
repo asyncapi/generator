@@ -174,3 +174,51 @@ function docline(field, fieldName, scopePropName) {
   return buildLine(field, fieldName, scopePropName);
 }
 filter.docline = docline;
+
+/*
+*  Helper function to replace, server variables in the url with actual values
+*  @url {string} - url string
+*  @serverserverVariables {Object} - Varibles model map
+*  @returns {string} 
+*/
+function replaceServerVariablesWithValues(url, serverVariables) {
+  const getVariablesNamesFromUrl = (inputUrl) => {
+    const result = [];
+    let array = [];
+
+    const regEx = /{([^}]+)}/g;
+
+    while ((array = regEx.exec(inputUrl)) !== null) {
+      result.push([array[0], array[1]]);
+    }
+
+    return result;
+  };
+
+  const getVariableValue = (object, variable) => {
+    const keyValue = object[variable]._json;
+
+    if (keyValue) return keyValue.default || (keyValue.enum && keyValue.enum[0]);
+  };
+
+  const urlVariables = getVariablesNamesFromUrl(url);
+  const declaredVariables =
+    urlVariables.filter(el => serverVariables.hasOwnProperty(el[1]));
+
+  if (urlVariables.length !== 0 && declaredVariables.length !== 0) {
+    let value;
+    let newUrl = url;
+
+    urlVariables.forEach(el => {
+      value = getVariableValue(serverVariables, el[1]);
+
+      if (value) {
+        newUrl = newUrl.replace(el[0], value);
+      }
+    });
+    return newUrl;
+  }
+  return url;
+}
+
+filter.replaceServerVariablesWithValues = replaceServerVariablesWithValues;

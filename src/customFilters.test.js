@@ -1,6 +1,7 @@
 const test = require('ava');
-const { markdown2html, generateExample, getPayloadExamples, getHeadersExamples, oneLine } = require('./customFilters');
+const { markdown2html, generateExample, getPayloadExamples, getHeadersExamples, oneLine, replaceServerVariablesWithValues } = require('./customFilters');
 const Message = require('@asyncapi/parser/lib/models/message');
+const ServerVariable = require('@asyncapi/parser/lib/models/server-variable');
 
 const exampleName = 'example name';
 const exampleSummary = 'example summary';
@@ -189,4 +190,24 @@ test('.getHeadersExamples() should return examples for headers - case when at le
       example: { bar: 'foo' },
     },
   ]);
+});
+
+test('.replaceServerVariablesWithValues() should replace placeholder with default value', t => {
+  const is = t.is;
+  const inputUrl = 'localhost:{port}'; 
+  const serverVariables = { port: new ServerVariable({ default: '9092', enum: ['8080','8883'] }) }; 
+  const expected = 'localhost:9092';
+  const value    = replaceServerVariablesWithValues(inputUrl, serverVariables);
+  
+  is(value, expected);
+});
+
+test('.replaceServerVariablesWithValues() should replace placeholder with first enum value when no default is specified', t => {
+  const is = t.is;
+  const inputUrl = 'localhost:{port}'; 
+  const serverVariables = { port: new ServerVariable({ enum: ['8080','8883'] }) }; 
+  const expected = 'localhost:8080';
+  const value    = replaceServerVariablesWithValues(inputUrl, serverVariables);
+  
+  is(value, expected);
 });

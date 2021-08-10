@@ -25,9 +25,6 @@
 <dt><a href="#docline">docline()</a> ⇒ <code>string</code></dt>
 <dd><p>Generate JSDoc from message properties of the header and the payload</p>
 </dd>
-<dt><a href="#replaceServerVariablesWithValues">replaceServerVariablesWithValues()</a> ⇒ <code>string</code></dt>
-<dd><p>Helper function toreplace server varaibles in the URL</p>
-</dd>
 </dl>
 
 <a name="markdown2html"></a>
@@ -108,10 +105,3 @@ docline(
 
 Returned value will be ->  * @param {integer} options.message.headers.my-app-header
 ```
-## replaceServerVariablesWithValues () ⇒ <code>string</code>
-Helper function to replace server variables in the URL
-
-**Kind**: Global function  
-**Returns**: <code>string</code> - URL string with replaced variable values  
-**url**: <code>string</code> - Input URL with variables  
-**serverVariables**: <code>Object</code> - Varibles model map

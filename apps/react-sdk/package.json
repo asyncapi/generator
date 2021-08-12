@@ -70,8 +70,6 @@
     "docs:markdown": "./node_modules/.bin/jsdoc2md lib/index.js -f lib/**/*.js > API.md",
     "lint": "eslint --max-warnings 0 --config .eslintrc .",
     "lint:fix": "eslint --max-warnings 0 --config .eslintrc . --fix",
-    "get:version": "echo $npm_package_version",
-    "get:name": "echo $npm_package_name",
     "release": "semantic-release",
     "generate:assets": "npm run prepublishOnly && npm run docs",
     "generate:readme:toc": "markdown-toc -i README.md",

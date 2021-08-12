@@ -1,4 +1,10 @@
-name: Bump package version in dependent repos
+#This action is centrally managed in https://github.com/asyncapi/.github/
+#Don't make changes to this file in this repo as they will be overwritten with changes made to the same file in above mentioned repo
+
+#Purpose of this action is to update npm package in libraries that use it. It is like dependabot for asyncapi npm modules only. 
+#It runs in a repo after merge of release commit and searches for other packages that use released package. Every found package gets updated with lates version
+
+name: Bump package version in dependent repos - if Node project
 
 on:
   #It cannot run on release event as when release is created then version is not yet bumped in package.json
@@ -13,20 +19,14 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
-      - name: Get version from package.json before release step
-        id: extractver
-        run: echo "::set-output name=version::$(npm run get:version --silent)"
-      - name: Get name of package from package.json
-        id: extractname
-        run: echo "::set-output name=packname::$(npm run get:name --silent)"
-      - if: startsWith(github.event.commits[0].message, 'chore(release):')
+      - name: Check if Node.js project and has package.json
+        id: packagejson
+        run: test -e ./package.json && echo "::set-output name=exists::true" || echo "::set-output name=exists::false"
+      - if: steps.packagejson.outputs.exists == 'true' && startsWith(github.event.commits[0].message, 'chore(release):')
         name: Bumping latest version of this package in other repositories
-        uses: derberg/org-projects-dependency-manager@v1
+        uses: derberg/custom-dependabot-for-your-github-org@v2
         with:
           github_token: ${{ secrets.GH_TOKEN }}
           committer_username: asyncapi-bot
           committer_email: info@asyncapi.io
-          #This is commit message and PR title for repos where this package is in dependencies
-          commit_message_prod: 'fix: update ${{ steps.extractname.outputs.packname }} to ${{ steps.extractver.outputs.version }} version'
-          #This is commit message and PR title for repos where this package is in devDependencies
-          commit_message_dev: 'chore: update ${{ steps.extractname.outputs.packname }} to ${{ steps.extractver.outputs.version }} version'
+          repos_to_ignore: html-template #this is temporary until react component releases 1.0, then it can be removed

@@ -116,6 +116,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "btimby",
+      "name": "Ben Timby",
+      "avatar_url": "https://avatars.githubusercontent.com/u/669270?v=4",
+      "profile": "http://ben.timby.com/",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 3,

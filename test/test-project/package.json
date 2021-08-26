@@ -8,7 +8,7 @@
     },
     "dependencies": {
         "@asyncapi/generator": "file:../..",
-        "@asyncapi/html-template": "0.16.0"
+        "@asyncapi/html-template": "^0.23.7"
     },
     "devDependencies": {
         "fs-extra": "^9.1.0",

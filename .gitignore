@@ -15,3 +15,10 @@ output
 out/
 coverage
 test/temp/integrationTestResult
+#we must commit this single package to the repo as integration tests depend on it and we do not want our auto bump workflows to affect package version
+#yes, below looks strange but this is how it is done with git. Read more https://stackoverflow.com/questions/5533050/gitignore-exclude-folder-but-include-specific-subfolder
+!test/test-project/node_modules/
+test/test-project/node_modules/*
+!test/test-project/node_modules/@asyncapi/
+test/test-project/node_modules/@asyncapi/*
+!test/test-project/node_modules/@asyncapi/html-template/

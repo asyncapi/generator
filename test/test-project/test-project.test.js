@@ -28,6 +28,7 @@ describe('Testing if html was generated with proper version of the template', ()
 
     //we setup generator using template name, not path, without explicitly running installation
     //generator picks up template that is already in node_modules as it was installed before as node dependency
+    //it was installed before as it is part of package.json file and should be fixed to 0.16.0 there
     const generator = new Generator(templateName, outputDir, { forceWrite: true, debug: true, templateParams: { singleFile: true } });
     await generator.generateFromFile(dummySpecPath);
 

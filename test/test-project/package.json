@@ -7,8 +7,7 @@
         "test:cleanup": "rimraf \"../temp\""
     },
     "dependencies": {
-        "@asyncapi/generator": "file:../..",
-        "@asyncapi/html-template": "^0.23.8"
+        "@asyncapi/generator": "file:../.."
     },
     "devDependencies": {
         "fs-extra": "^9.1.0",

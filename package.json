@@ -63,6 +63,7 @@
     "jmespath": "^0.15.0",
     "js-yaml": "^3.13.1",
     "levenshtein-edit-distance": "^2.0.5",
+    "libnpmconfig": "^1.2.1",
     "loglevel": "^1.6.8",
     "markdown-it": "^8.4.1",
     "minimatch": "^3.0.4",

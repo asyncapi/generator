@@ -48,7 +48,7 @@
   "license": "Apache-2.0",
   "homepage": "https://github.com/asyncapi/generator",
   "dependencies": {
-    "@asyncapi/avro-schema-parser": "^0.5.0",
+    "@asyncapi/avro-schema-parser": "^0.6.0",
     "@asyncapi/generator-react-sdk": "^0.2.16",
     "@asyncapi/openapi-schema-parser": "^2.0.1",
     "@asyncapi/parser": "^1.10.0",

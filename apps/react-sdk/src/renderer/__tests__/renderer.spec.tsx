@@ -106,6 +106,22 @@ describe('Renderer', () => {
     expect(content).toEqual("some text");
   });
 
+  test('should works with array as returned value', () => {
+    function Component({ text }: { text: string }) {
+      return <>{text}</>
+    }
+
+    function Test() {
+      return [
+        <Component text={'some'} />,
+        <Component text={' text'} />,
+        <Component text={' is rendered'} />,
+      ] as any;
+    }
+
+    const content = render(<Test />);
+    expect(content).toEqual("some text is rendered");
+  });
   
   test('should throws error due to using React hooks', () => {
     function Component() {

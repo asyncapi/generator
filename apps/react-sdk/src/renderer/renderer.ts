@@ -46,7 +46,7 @@ function createElement(element: React.ReactElement): React.ReactElement | string
     return createElement(type(normalizeProps(element.props)));
   }
 
-  return element || "";
+  return render(element) || "";
 }
 
 /**

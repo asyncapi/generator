@@ -1,5 +1,38 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Transpiler should keep names of files, even if special chars with a simple setup and import correctly 1`] = `
+"'use strict';
+
+var jsxRuntime = require('react/cjs/react-jsx-runtime.production.min');
+require('source-map-support/register');
+var path = require('path');
+
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var path__default = /*#__PURE__*/_interopDefaultLegacy(path);
+
+// eslint-disable-next-line security/detect-non-literal-require, no-undef
+
+const {
+  File
+} = require(path__default[\\"default\\"].resolve(__dirname, '../../../../components'));
+
+const greetings = name => \`hello \${name}\`; // eslint-disable-next-line react/display-name
+
+
+function $$simple$$ () {
+  return /*#__PURE__*/jsxRuntime.jsx(File, {
+    children: greetings('Test')
+  });
+}
+
+module.exports = $$simple$$;
+//# sourceMappingURL=$$simple$$.js.map
+"
+`;
+
+exports[`Transpiler should keep names of files, even if special chars with a simple setup and import correctly 2`] = `"{\\"version\\":3,\\"file\\":\\"$$simple$$.js\\",\\"sources\\":[\\"../../testfiles/SpecialChars/$$simple$$.js\\"],\\"sourcesContent\\":[\\"import path from 'path';\\\\n// this weird import are only necessary because we test within the SDK itself.\\\\n// eslint-disable-next-line security/detect-non-literal-require, no-undef\\\\nconst {File} = require(path.resolve(__dirname, '../../../../components'));\\\\nconst greetings = name => \`hello \${name}\`;\\\\n// eslint-disable-next-line react/display-name\\\\nexport default function() {\\\\n  return (\\\\n    <File>\\\\n      {greetings('Test')}\\\\n    </File>\\\\n  );\\\\n}\\"],\\"names\\":[\\"File\\",\\"require\\",\\"path\\",\\"resolve\\",\\"__dirname\\",\\"greetings\\",\\"name\\",\\"_jsx\\"],\\"mappings\\":\\";;;;;;;;;;AAEA;;AACA,MAAM;AAACA,EAAAA;AAAD,IAASC,OAAO,CAACC,wBAAI,CAACC,OAAL,CAAaC,SAAb,EAAwB,wBAAxB,CAAD,CAAtB;;AACA,MAAMC,SAAS,GAAGC,IAAI,IAAK,SAAQA,IAAK,EAAxC;;;AAEe,uBAAW;AACxB,sBACEC,eAAC,IAAD;AAAA,cACGF,SAAS,CAAC,MAAD;AADZ,IADF;AAKD;;;;\\"}"`;
+
 exports[`Transpiler should transpile CommonJS files with a simple setup and import correctly 1`] = `
 "'use strict';
 
@@ -46,7 +79,7 @@ var path__default = /*#__PURE__*/_interopDefaultLegacy(path);
 
 const {
   File
-} = require(path__default['default'].resolve(__dirname, '../../../../components'));
+} = require(path__default[\\"default\\"].resolve(__dirname, '../../../../components'));
 
 function greetings(name) {
   return \`hello \${name}\`;
@@ -81,7 +114,7 @@ var path__default = /*#__PURE__*/_interopDefaultLegacy(path);
 
 const {
   File
-} = require(path__default['default'].resolve(__dirname, '../../../../components'));
+} = require(path__default[\\"default\\"].resolve(__dirname, '../../../../components'));
 
 const greetings = name => \`hello \${name}\`; // eslint-disable-next-line react/display-name
 

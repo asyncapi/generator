@@ -44,7 +44,7 @@ export async function transpileFiles(directory: string, outputDir: string, optio
                         }],
                     ],
                 })
-            ]
+            ],
         })
         await bundles.write({
             format: "commonjs",
@@ -53,7 +53,8 @@ export async function transpileFiles(directory: string, outputDir: string, optio
             exports: "auto",
             paths: {
               'react/jsx-runtime': 'react/cjs/react-jsx-runtime.production.min',
-            }
+            },
+            sanitizeFileName: false,
         })
     }
 

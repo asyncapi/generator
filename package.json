@@ -53,7 +53,7 @@
     "@asyncapi/openapi-schema-parser": "^2.0.1",
     "@asyncapi/parser": "^1.11.1",
     "@asyncapi/raml-dt-schema-parser": "^2.0.1",
-    "@npmcli/arborist": "^2.2.4",
+    "@npmcli/arborist": "^2.10.0",
     "ajv": "^6.10.2",
     "chokidar": "^3.4.0",
     "commander": "^6.1.0",

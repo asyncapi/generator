@@ -1,6 +1,6 @@
 {
   "name": "@asyncapi/generator-react-sdk",
-  "version": "0.2.21",
+  "version": "0.2.22",
   "description": "The React SDK for templates.",
   "license": "Apache-2.0",
   "homepage": "https://github.com/asyncapi/generator-react-sdk",

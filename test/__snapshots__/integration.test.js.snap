@@ -6355,11 +6355,7 @@ integer  oneOf
           style=\\"word-break: break-word\\"
           >0</span
         >
-         
-        <span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\"
-          ></span
-        >
-           
+            
       </div>
 
       <div>
@@ -6402,11 +6398,7 @@ integer  oneOf
           style=\\"word-break: break-word\\"
           >1</span
         >
-         
-        <span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\"
-          ></span
-        >
-           
+            
       </div>
 
       <div>
@@ -6449,11 +6441,7 @@ integer  oneOf
           style=\\"word-break: break-word\\"
           >2</span
         >
-         
-        <span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\"
-          ></span
-        >
-           
+            
       </div>
 
       <div>
@@ -6496,11 +6484,7 @@ integer  oneOf
           style=\\"word-break: break-word\\"
           >3</span
         >
-         
-        <span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\"
-          ></span
-        >
-           
+            
       </div>
 
       <div>
@@ -8856,11 +8840,7 @@ integer  oneOf
           style=\\"word-break: break-word\\"
           >0</span
         >
-         
-        <span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\"
-          ></span
-        >
-           
+            
       </div>
 
       <div>
@@ -8903,11 +8883,7 @@ integer  oneOf
           style=\\"word-break: break-word\\"
           >1</span
         >
-         
-        <span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\"
-          ></span
-        >
-           
+            
       </div>
 
       <div>
@@ -8950,11 +8926,7 @@ integer  oneOf
           style=\\"word-break: break-word\\"
           >2</span
         >
-         
-        <span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\"
-          ></span
-        >
-           
+            
       </div>
 
       <div>
@@ -8997,11 +8969,7 @@ integer  oneOf
           style=\\"word-break: break-word\\"
           >3</span
         >
-         
-        <span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\"
-          ></span
-        >
-           
+            
       </div>
 
       <div>

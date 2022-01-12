@@ -61,6 +61,7 @@ Template Name | Description | Source code
 `@asyncapi/html-template` | Generates HTML documentation site | [click here](https://github.com/asyncapi/html-template)
 `@asyncapi/markdown-template` | Generates documentation in Markdown file | [click here](https://github.com/asyncapi/markdown-template)
 `@asyncapi/ts-nats-template` | Generates TypeScript NATS client | [click here](https://github.com/asyncapi/ts-nats-template/)
+`@asyncapi/go-watermill-template` | Generates Go client using Watermill | [click here](https://github.com/asyncapi/go-watermill-template)
 
 <!-- TEMPLATES-LIST:END -->
 

@@ -45,7 +45,7 @@
   },
   "dependencies": {
     "lodash": "^4.17.15",
-    "markdown-it": "^10.0.0",
+    "markdown-it": "^12.3.2",
     "openapi-sampler": "1.0.0-beta.17"
   },
   "ava": {

@@ -1,4 +1,4 @@
-asyncapi: '2.2.0'
+asyncapi: '2.3.0'
 
 externalDocs:
   description: Find more info here
@@ -38,13 +38,7 @@ tags:
 
 servers:
   dummy-mqtt:
-    url: mqtt://localhost
-    protocol: mqtt
-    description: dummy MQTT broker
-    bindings:
-        mqtt:
-          clientId: guest
-          cleanSession: true
+    $ref: '#/components/servers/dummyMQTT'
   dummy-amqp:
     url: amqp://localhost:{port}
     protocol: amqp
@@ -103,28 +97,39 @@ channels:
         $ref: '#/components/messages/dummyCreated'
 
   dummy/channel/without/parameter:
-    bindings:
-      amqp:
-        is: routingKey
-    subscribe:
-      operationId: receiveSystemInfo
+    $ref: '#/components/channels/dummyChannel'
+components:
+  servers: 
+    dummyMQTT:
+      url: mqtt://localhost
+      protocol: mqtt
+      description: dummy MQTT broker
+      bindings:
+          mqtt:
+            clientId: guest
+            cleanSession: true
+  channels:
+    dummyChannel:
       bindings:
         amqp:
-          expiration: 100000
-          userId: guest
-          cc: [ 'user.logs' ]
-          priority: 10
-          deliveryMode: 2
-          mandatory: false
-          bcc: [ 'external.audit' ]
-          replyTo: user.signedup
-          timestamp: true
-          ack: false
-          bindingVersion: 0.1.0
-      message:
-        $ref: '#/components/messages/dummyInfo'
-
-components:
+          is: routingKey
+      subscribe:
+        operationId: receiveSystemInfo
+        bindings:
+          amqp:
+            expiration: 100000
+            userId: guest
+            cc: [ 'user.logs' ]
+            priority: 10
+            deliveryMode: 2
+            mandatory: false
+            bcc: [ 'external.audit' ]
+            replyTo: user.signedup
+            timestamp: true
+            ack: false
+            bindingVersion: 0.1.0
+        message:
+          $ref: '#/components/messages/dummyInfo'
   messages:
     dummyCreated:
       name: dummyCreated

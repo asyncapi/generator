@@ -22,3 +22,4 @@ test/test-project/node_modules/*
 !test/test-project/node_modules/@asyncapi/
 test/test-project/node_modules/@asyncapi/*
 !test/test-project/node_modules/@asyncapi/html-template/
+test/test-project/package-lock.json

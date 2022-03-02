@@ -95,7 +95,8 @@
   },
   "release": {
     "branches": [
-      "master"
+      "master",
+      "next-major"
     ],
     "plugins": [
       [

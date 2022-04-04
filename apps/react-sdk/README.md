@@ -1,12 +1,4 @@
-<h5 align="center">
-  <br>
-  <a href="https://www.asyncapi.org"><img src="https://github.com/asyncapi/parser-nodejs/raw/master/assets/logo.png" alt="AsyncAPI logo" width="200"></a>
-  <br>
-  AsyncAPI React SDK
-</h5>
-<p align="center">
-  <em>The official SDK to use React in your template</em>
-</p>
+[![AsyncAPI React SDK](./assets/readme-banner.png)](https://www.asyncapi.com)
 
 AsyncAPI React SDK is a set of components/functions to use React as render engine in the [Generator](https://github.com/asyncapi/generator).
 

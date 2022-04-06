@@ -1,5 +1,5 @@
-#This action is centrally managed in https://github.com/asyncapi/.github/
-#Don't make changes to this file in this repo as they will be overwritten with changes made to the same file in above mentioned repo
+# This action is centrally managed in https://github.com/asyncapi/.github/
+# Don't make changes to this file in this repo as they will be overwritten with changes made to the same file in above mentioned repo
 
 name: Lint PR title
 
@@ -8,7 +8,8 @@ on:
     types: [opened, reopened, synchronize, edited, ready_for_review]
 
 jobs:
-  lint:
+  lint-pr-title:
+    name: Lint PR title
     runs-on: ubuntu-latest
     steps:
       # Since this workflow is REQUIRED for a PR to be mergable, we have to have this 'if' statement in step level instead of job level.

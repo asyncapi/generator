@@ -1,38 +1,61 @@
-## Overview
+# Contributing to AsyncAPI
+We love your input! We want to make contributing to this project as easy and transparent as possible.
 
-Contributions are more than welcome. If you want to contribute, please make sure you go through the following steps:
+## Contribution recogniton
 
-1. Pick or create an issue. 
-    - It's always a good idea to leave a message saying that you're going to work on it before you start any actual work.
-    - Consider contacting us on [slack](https://www.asyncapi.com/slack-invite/) to discuss the topic first
-2. Fork the repository and work there.
-3. Open a Pull Request pointing to the `master` branch.
-4. A maintainer will review and, eventually, merge your Pull Request. Please, be patient as most of us are doing this in our spare time.
+We use [All Contributors](https://allcontributors.org/docs/en/specification) specification to handle recognitions. For more details read [this](https://github.com/asyncapi/community/blob/master/recognize-contributors.md) document.
 
-## Code validation
+## Summary of the contribution flow
 
-Before creating a Pull Request you should validate your code with ESLint.
+The following is a summary of the ideal contribution flow. Please, note that Pull Requests can also be rejected by the maintainers when appropriate.
 
 ```
-npm run lint
+    ┌───────────────────────┐
+    │                       │
+    │    Open an issue      │
+    │  (a bug report or a   │
+    │   feature request)    │
+    │                       │
+    └───────────────────────┘
+               ⇩
+    ┌───────────────────────┐
+    │                       │
+    │  Open a Pull Request  │
+    │   (only after issue   │
+    │     is approved)      │
+    │                       │
+    └───────────────────────┘
+               ⇩
+    ┌───────────────────────┐
+    │                       │
+    │   Your changes will   │
+    │     be merged and     │
+    │ published on the next │
+    │        release        │
+    │                       │
+    └───────────────────────┘
 ```
 
-## Developing with Docker
+## Code of Conduct
+AsyncAPI has adopted a Code of Conduct that we expect project participants to adhere to. Please [read the full text](./CODE_OF_CONDUCT.md) so that you can understand what sort of behaviour is expected.
 
-In case you want to quickly build a docker image locally to check if it works then run `npm run docker-build`
+## Our Development Process
+We use Github to host code, to track issues and feature requests, as well as accept pull requests.
 
-In case you don't have a local node environment you can run 
+## Issues
+[Open an issue](https://github.com/asyncapi/asyncapi/issues/new) **only** if you want to report a bug or a feature. Don't open issues for questions or support, instead join our [Slack workspace](https://www.asyncapi.com/slack-invite) and ask there. Don't forget to follow our [Slack Etiquette](https://github.com/asyncapi/community/blob/master/slack-etiquette.md) while interacting with community members! It's more likely you'll get help, and much faster!
 
-```
-docker build -t asyncapi/generator:latest .
-docker run -v `pwd`:`pwd` -w `pwd` -it --rm --entrypoint /bin/sh  asyncapi/generator:latest
-npm install
-./cli.js --help
-```
+## Bug Reports and Feature Requests
+
+Please use our issues templates that provide you with hints on what information we need from you to help you out.
+
+## Pull Requests
+
+**Please, make sure you open an issue before starting with a Pull Request, unless it's a typo or a really obvious error.** Pull requests are the best way to propose changes to the specification. Get familiar with our document that explains [Git workflow](https://github.com/asyncapi/community/blob/master/git-workflow.md) used in our repositories.
 
 ## Conventional commits
 
-This project follows [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/#summary) specification. Releasing to GitHub and NPM is done with the support of [semantic-release](https://semantic-release.gitbook.io/semantic-release/).
+Our repositories follow [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/#summary) specification. Releasing to GitHub and NPM is done with the support of [semantic-release](https://semantic-release.gitbook.io/semantic-release/).
 
 Pull requests should have a title that follows the specification, otherwise, merging is blocked. If you are not familiar with the specification simply ask maintainers to modify. You can also use this cheatsheet if you want:
 
@@ -48,3 +71,9 @@ What about MAJOR release? just add `!` to the prefix, like `fix!: ` or `refactor
 Prefix that follows specification is not enough though. Remember that the title must be clear and descriptive with usage of [imperative mood](https://chris.beams.io/posts/git-commit/#imperative).
 
 Happy contributing :heart:
+
+## License
+When you submit changes, your submissions are understood to be under the same [Apache 2.0 License](https://github.com/asyncapi/asyncapi/blob/master/LICENSE) that covers the project. Feel free to [contact the maintainers](https://www.asyncapi.com/slack-invite) if that's a concern.
+
+## References
+This document was adapted from the open-source contribution guidelines for [Facebook's Draft](https://github.com/facebook/draft-js/blob/master/CONTRIBUTING.md).

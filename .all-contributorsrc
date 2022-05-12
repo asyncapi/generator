@@ -125,6 +125,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "lkmandy",
+      "name": "Amanda  Shafack ",
+      "avatar_url": "https://avatars.githubusercontent.com/u/17765231?v=4",
+      "profile": "https://github.com/lkmandy",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 3,

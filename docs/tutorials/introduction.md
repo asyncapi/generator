@@ -1,4 +1,4 @@
-#Overview
+## Overview
 
 Generator is a tool that you can use to generate whatever you want basing on the AsyncAPI specification file as an input.
 

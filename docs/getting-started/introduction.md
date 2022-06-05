@@ -13,5 +13,5 @@ The generator tool comes with lots of cool features and services you can't miss.
 
 - Highly extensible : Don't see your programming language of choice? Want to generate docs that meet your brand look and feel? Create your custom templates or extend existing ones.
 
-If your purpose is to automate the code and documentation generation process, Generator tool might just be the perfect solution for you! There are a large number of templates that are ready to use and are officially supported by the AsyncAPI Initiative. To see them, go to the section [List of official generator templates]() provided by AsyncAPI initiative.
+If your purpose is to automate the code and documentation generation process, Generator tool might just be the perfect solution for you! There are a large number of templates that are ready to use and are officially supported by the AsyncAPI Initiative. To see them, go to the section [List of official generator templates](https://github.com/pratik2315/generator/blob/gsod1-pratik/docs/tutorials/how-to-create-a-template.md) provided by AsyncAPI initiative.
 

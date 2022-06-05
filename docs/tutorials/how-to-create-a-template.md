@@ -2,6 +2,8 @@
 
 As you know, AsyncAPI provides a large number of templates that are ready to use and provide official support for multiple programming languages and frameworks. You can spot some of them in the list below. 
 
+## List of Official Generator templates
+
 Template Name | Description | Source code
 ---|---|---
 `@asyncapi/nodejs-template` | Generates Nodejs service that uses Hermes package | [click here](https://github.com/asyncapi/nodejs-template)

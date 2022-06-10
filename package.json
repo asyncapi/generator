@@ -41,7 +41,7 @@
     "eslint": "^6.8.0",
     "eslint-plugin-sonarjs": "^0.5.0",
     "jsdoc-to-markdown": "^5.0.3",
-    "semantic-release": "^17.0.4"
+    "semantic-release": "^19.0.3"
   },
   "dependencies": {
     "lodash": "^4.17.15",

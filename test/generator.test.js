@@ -367,7 +367,7 @@ describe('Generator', () => {
           saveType: 'prod',
           save: false
         });
-      }, 0);
+      }, 1);
     });
     it('works with an npm package', async () => {
       utils.__isFileSystemPathValue = false;

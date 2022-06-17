@@ -553,7 +553,7 @@ describe('Generator', () => {
       expect(iteration).toStrictEqual(1);
     });
 
-    it('launch given hook where disabledHooks key has array format for given hook type', async () => {
+    it('launch given hook where disabledHooks key has array format for given hook type 2', async () => {
       let iteration = 0;
       const gen = new Generator('testTemplate', __dirname, { disabledHooks: { 'test-hooks': 'c' } });
       gen.hooks = { 'test-hooks': [function a() { iteration++; }, function b() { iteration++; }, function c() { iteration++; }] };

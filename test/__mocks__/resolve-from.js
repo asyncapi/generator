@@ -1,4 +1,4 @@
-let resolveFrom = jest.genMockFromModule('resolve-from');
+let resolveFrom = jest.createMockFromModule('resolve-from');
 
 resolveFrom.__resolveFromValue = '';
 resolveFrom = jest.fn((path) => {

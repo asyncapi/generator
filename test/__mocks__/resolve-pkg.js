@@ -1,4 +1,4 @@
-let resolvePkg = jest.genMockFromModule('resolve-pkg');
+let resolvePkg = jest.createMockFromModule('resolve-pkg');
 
 resolvePkg.__resolvePkgValue = '';
 resolvePkg = jest.fn((path) => {

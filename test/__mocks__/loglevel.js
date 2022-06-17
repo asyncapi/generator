@@ -1,3 +1,3 @@
-const log = jest.genMockFromModule('loglevel');
+const log = jest.createMockFromModule('loglevel');
 
 module.exports = log;

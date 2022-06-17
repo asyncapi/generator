@@ -359,7 +359,7 @@ describe('Generator', () => {
 
     it('works with a file system path and force = true', async () => {
       const gen = new Generator('./testTemplate', __dirname);
-      await gen.installTemplate(true);
+      await gen.installTemplate(true, arboristMock);
       setTimeout(() => { // This puts the call at the end of the Node.js event loop queue.
         expect(arboristMock.reify).toHaveBeenCalledTimes(1);
         expect(arboristMock.reify.mock.calls[0][0]).toStrictEqual({
@@ -372,7 +372,7 @@ describe('Generator', () => {
     it('works with an npm package', async () => {
       utils.__isFileSystemPathValue = false;
       const gen = new Generator('nameOfTestTemplate', __dirname);
-      await gen.installTemplate();
+      await gen.installTemplate(false, arboristMock);
       setTimeout(() => { // This puts the call at the end of the Node.js event loop queue.
         expect(arboristMock.reify).toHaveBeenCalledTimes(0);
       }, 0);
@@ -382,7 +382,7 @@ describe('Generator', () => {
       log.debug = jest.fn();
       utils.__getTemplateDetails = undefined;
       const gen = new Generator('nameOfTestTemplate', __dirname, {debug: true});
-      await gen.installTemplate();
+      await gen.installTemplate(false, arboristMock);
       expect(log.debug).toHaveBeenCalledWith(logMessage.installationDebugMessage(logMessage.TEMPLATE_INSTALL_DISK_MSG));
       setTimeout(() => { // This puts the call at the end of the Node.js event loop queue.
         expect(arboristMock.reify).toHaveBeenCalledTimes(1);
@@ -393,7 +393,7 @@ describe('Generator', () => {
       log.debug = jest.fn();
       utils.__isFileSystemPathValue = false;
       const gen = new Generator('nameOfTestTemplate', __dirname);
-      await gen.installTemplate(true);
+      await gen.installTemplate(true, arboristMock);
       expect(log.debug).toHaveBeenCalledWith(logMessage.installationDebugMessage(logMessage.TEMPLATE_INSTALL_FLAG_MSG));
       setTimeout(() => { // This puts the call at the end of the Node.js event loop queue.
         expect(arboristMock.reify).toHaveBeenCalledTimes(1);
@@ -404,7 +404,7 @@ describe('Generator', () => {
       utils.__isFileSystemPathValue = false;
       utils.__getTemplateDetails = undefined;
       const gen = new Generator('https://my-test-template.com', __dirname);
-      await gen.installTemplate();
+      await gen.installTemplate(false, arboristMock);
       setTimeout(() => { // This puts the call at the end of the Node.js event loop queue.
         expect(arboristMock.reify).toHaveBeenCalledTimes(1);
       }, 0);
@@ -412,7 +412,7 @@ describe('Generator', () => {
 
     it('works with a url and force = true', async () => {
       const gen = new Generator('https://my-test-template.com', __dirname);
-      await gen.installTemplate(true);
+      await gen.installTemplate(true, arboristMock);
       setTimeout(() => { // This puts the call at the end of the Node.js event loop queue.
         expect(arboristMock.reify).toHaveBeenCalledTimes(1);
       }, 0);

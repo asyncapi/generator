@@ -1,4 +1,7 @@
-### Filters
+---
+title: "Filters"
+weight: 70
+---
 
 A filter is a helper function that you can create to perform complex tasks. They are JavaScript files that register one or many Nunjuck filters. The generator parses all the files in the filters directory. Functions exported from these files are registered as filters.
 

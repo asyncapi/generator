@@ -1,6 +1,7 @@
-## Overview
-
-### What is a Generator Tool, anyway?
+---
+title: "Introduction"
+weight: 3
+---
 
 AsyncAPI generator is a tool that you can use to generate whatever you want based on the AsyncAPI specification file as an input. The Generator is our solution to automatically generate documentation and code from your AsyncAPI files
 

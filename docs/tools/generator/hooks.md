@@ -1,4 +1,7 @@
-### Hooks
+---
+title: "Hooks"
+weight: 50
+---
 
 A Hook is like a code you can add to your template. You can plug it in at a specific moment in the generation process. Hooks are the functions which are called by the Generator itself. Hooks can be used in many ways, You can have a code that executes after the generation. For example, generating some diagrams after the execution is done. The Hooks code will instruct the template to generate diagrams based on the code instructions.
 Moreover, theese allow us to use reusable hooks. You can have your own npm package with a number hooks that anyone can use in their code. For example, A hook that generates pdf files using a npm library. 
@@ -15,7 +18,7 @@ The generator parses:
 - All the files in the .hooks directory inside the template.
 - All modules listed in the template configuration and triggers only hooks that names were added to the config. You can use the official AsyncAPI [hooks library](https://github.com/asyncapi/generator-hooks). To learn how to add hooks to configuration [read more about the configuration file](https://github.com/pratik2315/generator/blob/gsod1-pratik/docs/authoring.md#configuration-file).
 
-Most basic module with hooks looke like this:
+Most basic modules with hooks look like this:
 ```js
 module.exports = {
   'generate:after': generator => console.log('This runs after generation is complete')

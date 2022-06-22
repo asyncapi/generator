@@ -25,6 +25,13 @@ jobs:
         id: packagejson
         run: test -e ./package.json && echo "::set-output name=exists::true" || echo "::set-output name=exists::false"
       - if: steps.packagejson.outputs.exists == 'true'
+        name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+          cache: 'npm'
+          cache-dependency-path: '**/package-lock.json'
+      - if: steps.packagejson.outputs.exists == 'true'
         name: Install dependencies
         run: npm install
       - if: steps.packagejson.outputs.exists == 'true'
@@ -46,4 +53,13 @@ jobs:
           author: asyncapi-bot <info@asyncapi.io>
           title: 'chore(release): ${{github.event.release.tag_name}}'
           body: 'Version bump in package.json for release [${{github.event.release.tag_name}}](${{github.event.release.html_url}})'
-          branch: version-bump/${{github.event.release.tag_name}} 
+          branch: version-bump/${{github.event.release.tag_name}}
+      - if: failure() # Only, on failure, send a message on the 94_bot-failing-ci slack channel
+        name: Report workflow run status to Slack
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          fields: repo,action,workflow
+          text: 'Unable to bump the version in package.json after the release'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_CI_FAIL_NOTIFY }}

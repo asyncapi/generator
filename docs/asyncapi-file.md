@@ -1,6 +1,6 @@
 ---
 title: "AsyncAPI Specification File"
-weight: 30
+weight: 20
 ---
 
 content will be added later

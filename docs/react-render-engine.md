@@ -1,6 +1,6 @@
 ---
 title: "React Render Engine"
-weight: 3
+weight: 100
 ---
 
 [React](https://reactjs.org) is the render engine that we strongly suggest you should use for any new templates. The only reason it is not the default render engine is to stay backward compatible.

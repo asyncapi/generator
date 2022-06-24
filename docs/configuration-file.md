@@ -1,6 +1,6 @@
 ---
 title: "Configuration File"
-weight: 3
+weight: 30
 ---
 
 The `generator` property from `package.json` file must contain a JSON object that may have the following information:

@@ -1,6 +1,6 @@
 ---
 title: "Authoring Templates"
-weight: 40
+weight: 60
 ---
 
 The AsyncAPI generator has been built with extensibility in mind. The package uses a set of default templates to let you generate documentation and code. However, you can create and use your own templates. In this section, you learn how to create your own one.

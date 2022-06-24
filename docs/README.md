@@ -1,10 +1,10 @@
 Table of Contents
 
-- Introduction
+- [Introduction]()
 - AsyncAPI Specification File
 - Configuration File
    - Special parameters
-   
+
 - Templates
 - File Templates
 - Authoring Templates

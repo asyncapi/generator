@@ -24,3 +24,5 @@ Table of Contents
    - [Filters](https://github.com/pratik2315/generator/blob/gsod1-pratik/docs/nunjucks-render-engine.md#filters)
 
 - [TypeScript Support](https://github.com/pratik2315/generator/blob/gsod1-pratik/docs/typescript-support.md)
+
+- [Sample](parser.md)

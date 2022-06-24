@@ -1,6 +1,6 @@
 Table of Contents
 
-- [Introduction](https://github.com/pratik2315/generator/blob/gsod1-pratik/docs/index.md)
+- [Introduction](index.md)
 - [AsyncAPI Specification File](https://github.com/pratik2315/generator/blob/gsod1-pratik/docs/asyncapi-file.md)
 - [Configuration File](https://github.com/pratik2315/generator/blob/gsod1-pratik/docs/configuration-file.md)
    - [Special parameters](https://github.com/pratik2315/generator/blob/gsod1-pratik/docs/configuration-file.md#special-parameters)

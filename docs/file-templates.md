@@ -1,6 +1,6 @@
 ---
 title: "File templates"
-weight: 50
+weight: 110
 ---
 
 It is possible to generate files for each specific object in your AsyncAPI documentation. For example, you can specify a filename like `$$channel$$.js` to generate a file for each channel defined in your AsyncAPI. The following file-template names and extra variables in them are available:

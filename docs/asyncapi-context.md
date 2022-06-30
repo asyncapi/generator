@@ -1,6 +1,6 @@
 ---
 title: "AsyncAPI Context"
-weight: 90
+weight: 80
 ---
 
 This document is under construction.

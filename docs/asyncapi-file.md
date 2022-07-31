@@ -8,7 +8,7 @@ The **AsyncAPI specification** defines a standard, protocol-agnostic interface t
 
 The specification allows you to define the structure and format of your API including the channels the end user can subscribe to and the format of the messages they will be receiving.
 
-This specification file when fed as an input to the generator library using the *asyncAPI CLI command, shown in the code snippet below, will generates API documentation(how to use the API) or generate API boilerplate code with it.(TBD)
+This specification file when fed as an input to the generator library using the *asyncAPI CLI command, shown in the code snippet below, will generates API documentation(how to use the API) or generate API boilerplate code, also refered to as the template, with it.(TBD)
 
 ```bash
 ag asyncapi.yaml ~/my-template
@@ -33,7 +33,7 @@ In this documentation you'll learn about the inner working of the generator and 
 <aside class="info"> If you are looking to learn how to build your own custom template please check out our [documentation](authoring-templates.md)
 </aside>
 
-The generator library receives the template and AsyncAPI specification file as inputs. In order to validate that the specification file is valid, the generator passes the stringified version of the original specification document to the [parser](parser.md). if valid, the parser then manipulates the original json/yml specification file into funtions and properties and bundles them together into an **asyncapiDocument**. The generator library then passes the originalapiString, the asyncapiDocument and the extra parameters provided by the user to the render engine. The render engine renders a template (where the originalapiString, the asyncapiDocument and the extra parameters) can be accessed from by the end user(developer?) from and  writes the generated output into a file.
+The generator library receives the template and AsyncAPI specification file as inputs. In order to validate that the specification file is valid, the generator passes the stringified version of the original specification document to the [parser](parser.md). if valid, the parser then manipulates the original json/yml specification file into funtions and properties and bundles them together into an **asyncapiDocument**. The generator library then passes the originalapiString, the asyncapiDocument and the extra parameters provided by the user to the renderer engine. The renderer engine renders a template (where the originalapiString, the asyncapiDocument and the extra parameters) can be accessed from by the end user(developer?) from and  writes the generated output into a file.
 
 The illustration below clearly depicts the whole proccess from when you pass the template and your specification file as arguments to the asyncapi CLI tool, to how the generator library uses the input to generate the output you need.
 
@@ -57,50 +57,62 @@ graph LR
 
 <aside class="info"> You can check the structure of the asyncapiDocument [here](https://github.com/asyncapi/parser-js/blob/master/API.md#module_@asyncapi/parser+AsyncAPIDocument)
 
+In the section below, you will learn how to use either the **asyncapiString** or the **asyncapiDocument** in your template.
 #### Method 1: asyncapiString + template ##
-The **asynapiString** is a stringified version of your specification yaml that your template gets access to using the templates hook `createAsyncapiFile(generator)`. The template then gets the original specification file by calling `generator.originalAsyncAPI` which returns a stringified version of the original spec file. You can therefore use it in your generatoed application code.
-Example: **Give uber eats example**
+This first way to generate an asynchronous API template using the generator tool is by using the asyncapiString. The asynapiString is a stringified version of the specification yaml/json file you pass as parameter to the CLI ag command. During the generation process, the generator library calls `generator.originalAsyncAPI` which returns a stringified version of the original spec file. This stringified version is what the generator library passes to the renderer engine and the renderer engine makes it accesible in your output/template.
+
+**An example of an asyncapiString:**
 ```
 const asyncapiString = `
 asyncapi: 2.0.0
 info:
   title: Example to show stringified specification file
-  version: 0.1.0
-channels:
-  example:
-    publish:
-      message:
-        schemaFormat: 'application/vnd.oai.openapi;version=3.0.0'
-        payload: # The following is an OpenAPI schema
-          type: object
-          properties:
-            title:
-              type: string
-              nullable: true
-            author:
-              type: string
-              example: Jack Johnson
-`
-```
+  version: 1.0.0
+...
+`;
 
+```
+The generator library generates templates using the `generator.generateFromString` instance method as shown in the code snippet below
+
+```
+generator
+  .generateFromString(asyncapiString)
+  .then(() => {
+    console.log('Done!');
+  })
+  .catch(console.error);
+  ```
+<aside class="info"> To learn more about hooks, check our official documentation [here](hooks.md)
+
+##### How to use the asyncapiString in your template?
 
 
 #### Method 2: asyncapiDocument+ template ##
-Once the specification yml or json is passed as an input to the generator library, it is passed on to the Parser library which then manipulates the file to a more structured document called the [asyncapiDocument](https://github.com/asyncapi/parser-js/blob/master/API.md#module_@asyncapi/parser+AsyncAPIDocument). It should be used to access the documents content for example, to extract the version of the spec file used for your Readme.md, you can do that using the asyncapiDocument by running `asyncapiDocument.version` or to get the message payload using `asyncapiDocument.allMessages`
+Once the specification yml or json is passed as an input to the generator library, it is passed on to the Parser library which then manipulates the file to a more structured document called the [asyncapiDocument](https://github.com/asyncapi/parser-js/blob/master/API.md#module_@asyncapi/parser+AsyncAPIDocument). Once the parser returns the document to the generator, the generator passes it to the renderer engine. The renderer engine will make the asyncapiDocument accessible from your template.
 
-> Please check [this file](https://github.com/asyncapi/template-for-generator-templates/blob/master/template/index.js) 
-to see how the content of the asyncapiDocument gets accessed.
-Using the asyncapiString above, we'll see int= the code snippet below how data from the asyncapiDocument gets accessed in your template.
+From the template, you can access the documents content for example, to extract the version of the spec file used for your Readme.md, you can do that by running `asyncapiDocument.version()` or to get the message payload you use `asyncapiDocument.allMessages()` method.
+
+
+In the code snippet below, you'll see how you can access document contents of the asyncapiDocument in your template.
 
 ```
-/*
- * Notice also how to retrieve passed properties to custom component, by the destruction of the first argument.
- * Accessing document data is made easier thanks to the AsyncAPI JavaScript Parser - https://github.com/asyncapi/parser-js.
- */
-function BodyContent({ asyncapi }) {
   const apiName = asyncapi.info().title();
   const channels = asyncapi.channels();
-
-  // rest of implementation...
-}
+...
 ```
+
+> To learn about the various instances you can use to access the documents' content, please check [this file](https://github.com/asyncapi/template-for-generator-templates/blob/master/template/index.js) 
+
+
+## Advantages of using the asyncApiDocument instaed of the asyncapiString in your template
+1. It simplifies the structure of the spec file which is complex and nested.
+2. 
+
+Note 2: Mention how you can check to see how these 2 docs are used in the written templates e.g node.js template
+Note 3: https://github.com/asyncapi/template-for-generator-templates#template-context
+Note 4: Both files are passed to the renderer engines ie React ans nunjucks DONE
+Note 5: You get access to these 2 files in the templates you will use DONE
+Note 6: Adv of one over the other
+Note 7: Link to the parser docs or talk about the parser
+Note 8: Show the structure of the asyncapiDocument as a code snippet
+Note 9: Listen to the last section of the recording again

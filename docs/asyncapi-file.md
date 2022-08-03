@@ -10,7 +10,7 @@ The specification allows you to define the structure and format of your API incl
 
 The files describing the message-driven API in accordance with the AsyncAPI Specification are represented as JSON objects and conform to the JSON standards. YAML, being a superset of JSON, can be used as well to represent a A2S (AsyncAPI Specification) file.
 
-This specification file when fed as an input to the generator library using the *asyncAPI CLI command, shown in the code snippet below, will generates API documentation(how to use the API) or generate API boilerplate code, also refered to as the template, with it.(TBD)
+This specification file when fed as an input to the generator library using the asyncAPI CLI command, shown in the code snippet below, will generates API documentation(how to use the API) or generate API boilerplate code, also refered to as the template, with it.(TBD)
 
 ```bash
 ag asyncapi.yaml ~/my-template
@@ -89,7 +89,7 @@ generator
 > To learn more about hooks, check our official documentation [here](hooks.md)
 
 ##### How to use the asyncapiString in your template?
-
+TBD
 
 #### Method 2: asyncapiDocument+ template ##
 Once the specification yml or json is passed as an input to the generator library, it is passed on to the Parser library which then manipulates the file to a more structured document called the [asyncapiDocument](https://github.com/asyncapi/parser-js/blob/master/API.md#module_@asyncapi/parser+AsyncAPIDocument). Once the parser returns the document to the generator, the generator passes it to the renderer engine. The renderer engine will make the asyncapiDocument accessible from your template.

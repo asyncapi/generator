@@ -81,7 +81,12 @@ jobs:
         name: Install dependencies
         run: npm install
       - if: steps.packagejson.outputs.exists == 'true'
+        name: Add plugin for conventional commits
+        run: npm install conventional-changelog-conventionalcommits
+        working-directory: ./.github
+      - if: steps.packagejson.outputs.exists == 'true'
         name: Publish to any of NPM, Github, and Docker Hub
+        working-directory: ./.github
         id: release
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
@@ -92,7 +97,7 @@ jobs:
           GIT_AUTHOR_EMAIL: info@asyncapi.io
           GIT_COMMITTER_NAME: asyncapi-bot
           GIT_COMMITTER_EMAIL: info@asyncapi.io
-        run: npm run release
+        run: npx semantic-release
       - if: failure() # Only, on failure, send a message on the 94_bot-failing-ci slack channel
         name: Report workflow run status to Slack
         uses: 8398a7/action-slack@v3

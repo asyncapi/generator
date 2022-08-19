@@ -5,7 +5,7 @@ weight: 10
 
 
 ## AsyncAPI CLI Installation
-In order to use the AsyncAPI generator, you will need to install the AsyncApi generator CLI tool. The CLI tool allows you to generate message-based APIs boilerplate code or documentation. This guide will show you how to set up your local developer environment to start using the generator library.
+To use the AsyncAPI generator, you will need to install the AsyncApi generator CLI tool. The CLI tool allows you to generate message-based API boilerplate code or documentation. This guide will show you how to set up your local development environment to start using the generator library.
 
 ### Pre-installation
 Before you install and use the AsyncAPI CLI, you'll need to have installed:
@@ -61,7 +61,7 @@ You might want to update the generator CLi for various reasons:
 ```
 npm install -g @asyncapi/generator
 ```
-1. Your template might not be compatible with the latest generator version so you update to a specific version of the generator. Check the [version you need](https://github.com/asyncapi/generator/releases) and specify the version you want to use using the **@** symbol as shown in the command below:
+2. Your template might not be compatible with the latest generator version so you update to a specific version of the generator. Check the [version you need](https://github.com/asyncapi/generator/releases) and specify the version you want to use using the **@** symbol as shown in the command below:
 ```
 npm install -g @asyncapi/generator@1.9.3
 ```

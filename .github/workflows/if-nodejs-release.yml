@@ -85,7 +85,7 @@ jobs:
         run: npm install conventional-changelog-conventionalcommits@5.0.0
         working-directory: ./.github
       - if: steps.packagejson.outputs.exists == 'true'
-        name: Publish to any of NPM, Github, and Docker Hub
+        name: Publish to any of NPM, and Github
         working-directory: ./.github
         id: release
         env:

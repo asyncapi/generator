@@ -83,10 +83,8 @@ jobs:
       - if: steps.packagejson.outputs.exists == 'true'
         name: Add plugin for conventional commits
         run: npm install conventional-changelog-conventionalcommits@5.0.0
-        working-directory: ./.github
       - if: steps.packagejson.outputs.exists == 'true'
         name: Publish to any of NPM, and Github
-        working-directory: ./.github
         id: release
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}

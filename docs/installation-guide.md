@@ -27,6 +27,7 @@ If you have the right versions installed, you can proceed to the CLI installatio
 > The generator library is tested at the moment against Node 14 and NPM 6. Using newer versions is enabled but we do not guarantee they work well. Please provide feedback on the issues.
 
 ### Installation
+#### npm
 Install the AsyncAPI CLI globally on your computer using the npm command below:
 ```
 npm install -g @asyncapi/cli
@@ -38,8 +39,8 @@ npm install -g @asyncapi/generator@{version}
 ```
 
 #### MacOS
-1. **Using Brew**
-For MACOS users you can install the CLI using the brew command below:
+1. **Using homebrew**
+For MACOS users you can install the CLI using the [brew](https://brew.sh/) command below:
 ```
 # Install brew 
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -55,6 +56,24 @@ curl -OL https://github.com/asyncapi/cli/releases/latest/download/asyncapi.pkg
 # Install AsyncAPI CLI
 sudo installer -pkg asyncapi.pkg -target /
 ```
+
+#### Docker
+The AsyncApi Generator has a docker image which can be used as an alternative to using npm or homebrew/pkg on Mac to install the genarator.
+Below is an example of a docker command that you can run inside generator directory after cloning the [generator repository](https://github.com/asyncapi/generator). First you specify mount in location of your AsyncAPI specification file and then you mount in directory where generation result should be saved.
+```
+docker run --rm -it \
+-v [ASYNCAPI SPEC FILE LOCATION]:/app/asyncapi.yml \
+-v [GENERATED FILES LOCATION]:/app/output \
+asyncapi/generator [COMMAND HERE]
+```
+Below is an example generating HTML using the html template:
+```
+docker run --rm -it \
+-v ${PWD}/test/docs/dummy.yml:/app/asyncapi.yml \
+-v ${PWD}/output:/app/output \
+asyncapi/generator -o /app/output /app/asyncapi.yml @asyncapi/html-template --force-write
+```
+
 #### Updating the CLI
 You might want to update the generator CLi for various reasons:
 1. You have the generator CLI installed but you want to use the latest released features. To upgrade to the latest version, use the command below:

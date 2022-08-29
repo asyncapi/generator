@@ -58,7 +58,8 @@ graph LR
 > :memo: **Note:** 
 > Check out the [asyncapiDocument structure](https://github.com/asyncapi/parser-js/blob/master/API.md#module_@asyncapi/parser+AsyncAPIDocument)
 
-In the section below, you will learn how to use either the **asyncapiString** or the **asyncapiDocument** in your template.
+In the following sections, you will learn how to use either the **asyncapiString** or the **asyncapiDocument** in your template.
+
 #### Method 1: asyncapiString + template ##
 The first way to generate an message-based API template using the generator tool is by using the asyncapiString. The asynapiString is a stringified version of the specification YAML or JSON file you pass as a parameter to the CLI `ag` command. During the generation process, the generator library calls `generator.originalAsyncAPI` which returns a stringified version of the original spec file. This stringified version is what the generator library passes to the renderer engine and the renderer engine makes it accessible in your output alias the template.
 

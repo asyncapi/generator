@@ -34,7 +34,7 @@ In the following sections, you'll learn about the inner working of the generator
 ### The generation process
 The generator library receives the template and AsyncAPI specification file as inputs. To validate the json/yaml specification file, the generator passes the stringified version of the original specification document to the [parser](parser.md). The parser validates the AsyncAPI specification using either the OpenAPI, RAML, or Avro schema defined in the spec files. If valid, the parser then manipulates the original JSON or YML specification file into functions and properties, bundling them together into an **asyncapiDocument**. At this point, the generator library passes the original apiString, the asyncapiDocument, and the extra parameters provided by the user to the render engine. The render engine renders a template where the original apiString, the asyncapiDocument, and the extra parameters are accessible to the template developer. Thus, they can access functions that extract data from the AsyncAPI file.
 
-The illustration below clearly depicts the whole process from when you pass the template and your specification file as arguments to the asyncapi CLI tool, to how the generator library uses the input to generate the output you need.
+The diagram below depicts the entire process of passing the template and specification file as arguments to the AsyncAPI CLI tool, and how the generator library then uses these inputs to generate the output you need.
 
 ``` mermaid
 graph LR

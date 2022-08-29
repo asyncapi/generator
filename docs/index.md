@@ -2,5 +2,54 @@
 title: "Introduction"
 weight: 10
 ---
+The specification file, when fed as an input to the generator library via the AsyncAPI CLI command, shown in the code snippet below, will generate API documentation or generate message-based API boilerplate code.
 
->This document is under construction.
+```bash
+ag asyncapi.yaml ~/my-template
+```
+1. **ag** is the AsyncAPI generator
+2. **asyncapi.yaml** is the specification file
+3. **~/my-template** is the template you are using
+
+> :bulb: **Note:** 
+If you haven't set up the AsyncAPI CLI tool, please refer to our [AsyncAPI CLI installation guide](installation.md)
+
+### The generation process
+1. The **generator library** receives the **[template](template.md)** and **[AsyncAPI specification file](asyncapi-file.md)** as inputs. 
+2. To validate the json/yaml specification file, the generator passes the stringified version of the original specification document to the **[parser](parser.md)**. 
+3. The parser validates the AsyncAPI specification using either the OpenAPI, RAML, or Avro schema defined in the spec files. 
+4. If valid, the parser then manipulates the original JSON or YML specification file into functions and properties, bundling them together into an **asyncapiDocument**. 
+5. At this point, the generator library passes the **original apiString**, the **asyncapiDocument**, and the **extra parameters** provided by the user to the **render engine**. 
+6. The **render engine** renders a template where the original apiString, the asyncapiDocument, and the extra parameters are accessible to the template developer. Thus, they can access functions that extract data from the AsyncAPI file.
+
+**TODO::::::** Talk about the template context and template files
+
+The diagram below depicts the entire process of passing the template and specification file as arguments to the AsyncAPI CLI tool, and how the generator library then uses these inputs to generate the output you need.
+
+``` mermaid
+graph LR
+    A[Template Context]
+    B{Generator}
+    C[Parser]
+    D[Render Engine]
+    E[AsyncAPI File] --> B
+    F[Template] --> B
+  subgraph Generator Library
+    B -->| asyncapiString | C
+    C --> | AsyncAPI | A
+    B--> | originalAsyncAPI | A
+    B--> | params | A
+    A --> D
+    B --> | Template Files | D
+  end
+  D --> O[HTML]
+  D --> M[Markdown]
+  D --> N[Node.js]
+  D --> J[Java Spring Boot]
+  D --> K[Anything else]
+  ```
+### Use cases of the Generator
+- Interactive and clear API documentation.
+- Generation of message-based APIs boilerplate code.
+- Validation of messages the client receives using the JSON schema that defines validation rules for your objects in the spec file. 
+- Application of API management policies to messages before they arrive to the broker.

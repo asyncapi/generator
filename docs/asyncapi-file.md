@@ -8,23 +8,7 @@ The **AsyncAPI specification** defines a standard, protocol-agnostic interface t
 
 The specification allows you to define the structure and format of your API, including the channels the end user can subscribe to and the format of the messages they will be receiving. 
 
-The files describing the message-driven API under the AsyncAPI Specification are represented as JSON objects and conform to the JSON standards. YAML, a superset of JSON, can also be used to represent an A2S (AsyncAPI Specification) file. The specification file, when fed as an input to the generator library via the AsyncAPI CLI command, shown in the code snippet below, will generate API documentation or generate message-based API boilerplate code.
-
-```bash
-ag asyncapi.yaml ~/my-template
-```
-1. **ag** is the AsyncAPI generator
-2. **asyncapi.yaml** is the specification file
-3. **~/my-template** is the template you are using
-
-> :bulb: **Note:** 
-If you haven't set up the AsyncAPI CLI tool, please refer to our [AsyncAPI CLI installation guide](installation.md)
-
-### Use cases of the API definition file
-- Interactive and clear API documentation.
-- Generation of message-based APIs boilerplate code.
-- Validation of messages the client receives using the JSON schema that defines validation rules for your objects in the spec file. 
-- Application of API management policies to messages before they arrive to the broker.
+The files describing the message-driven API under the AsyncAPI Specification are represented as JSON objects and conform to the JSON standards. YAML, a superset of JSON, can also be used to represent an A2S (AsyncAPI Specification) file.
 
 > :bulb: **Remember:** 
 If you want to learn how to create an AsyncAPI specification file or refresh your knowledge about the syntax and structure of the AsyncAPI Specification file, check out our official [documentation](https://www.asyncapi.com/docs/reference/specification/v2.4.0).
@@ -32,24 +16,21 @@ If you want to learn how to create an AsyncAPI specification file or refresh you
 In the following sections, you'll learn about the inner working of the generator, what happens once the specification file is fed to the generator, and how you can use the content of the specification file with either an AsyncAPI document or AsyncAPI string in your template.
 
 ### The generation process
-The generator library receives the [template](template.md) and AsyncAPI specification file as inputs. To validate the json/yaml specification file, the generator passes the stringified version of the original specification document to the [parser](parser.md). The parser validates the AsyncAPI specification using either the OpenAPI, RAML, or Avro schema defined in the spec files. If valid, the parser then manipulates the original JSON or YML specification file into functions and properties, bundling them together into an **asyncapiDocument**. At this point, the generator library passes the original apiString, the asyncapiDocument, and the extra parameters provided by the user to the render engine. The render engine renders a template where the original apiString, the asyncapiDocument, and the extra parameters are accessible to the template developer. Thus, they can access functions that extract data from the AsyncAPI file.
 
-The diagram below depicts the entire process of passing the template and specification file as arguments to the AsyncAPI CLI tool, and how the generator library then uses these inputs to generate the output you need.
 
 ``` mermaid
 graph LR
-    E[ AsyncAPI Document ] --> B{Generator}
-    F[ Template ] --> B{Generator}
+    A[Template Context]
+    B{Generator}
+    C[Parser]
+    D[Render Engine]
+    E[AsyncAPI File] --> B
   subgraph Generator Library
-    B -->| asyncapiString| C[Parser]
-    C[Parser] --> |AsyncAPI| D(Render Engine)
-    B{Generator}--> | originalAsyncAPI | D(Render Engine)
-    B{Generator}--> | params | D(Render Engine)
+    B -->| asyncapiString | C
+    C --> | asyncapi -> AsyncAPIDocument type | A
+    B--> | originalAsyncAPI -> Stringified document | A
+    A --> D
   end
-  D(Render Engine) --> O(HTML)
-  D(Render Engine) --> M(Markdown)
-  D(Render Engine) --> N(Node.js)
-  D(Render Engine) --> J(Java Spring Boot)
   ```
 
 > :bulb: **Remember**

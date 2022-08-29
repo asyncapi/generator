@@ -38,11 +38,11 @@ The diagram below depicts the entire process of passing the template and specifi
 
 ``` mermaid
 graph LR
-    E[ AsyncApi Document ] --> B{Generator}
+    E[ AsyncAPI Document ] --> B{Generator}
     F[ Template ] --> B{Generator}
   subgraph Generator Library
     B -->| asyncapiString| C[Parser]
-    C[Parser] --> |asyncapi| D(Render Engine)
+    C[Parser] --> |AsyncAPI| D(Render Engine)
     B{Generator}--> | originalAsyncAPI | D(Render Engine)
     B{Generator}--> | params | D(Render Engine)
   end
@@ -50,7 +50,6 @@ graph LR
   D(Render Engine) --> M(Markdown)
   D(Render Engine) --> N(Node.js)
   D(Render Engine) --> J(Java Spring Boot)
-```
 
 > :bulb: **Remember**
 > 

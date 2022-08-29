@@ -18,7 +18,7 @@ ag asyncapi.yaml ~/my-template
 3. **~/my-template** is the template you are using
 
 > :bulb: **Note:** 
-If you haven't set up the asyncapi CLI tool, please refer to our [installation guide](installation.md)
+If you haven't set up the AsyncAPI CLI tool, please refer to our [AsyncAPI CLI installation guide](installation.md)
 
 ### Use cases of the API definition file
 - Interactive and clear API documentation.
@@ -27,9 +27,9 @@ If you haven't set up the asyncapi CLI tool, please refer to our [installation g
 - Application of API management policies to messages before they arrive to the broker.
 
 > :bulb: **Remember:** 
-If you are looking to learn how to create an asyncapi specification file or you need to refresh your knowledge about the syntax and structure of the AsyncAPI Specification file, check out our official [documentation](https://www.asyncapi.com/docs/reference/specification/v2.4.0).
+If you want to learn how to create an AsyncAPI specification file or refresh your knowledge about the syntax and structure of the AsyncAPI Specification file, check out our official [documentation](https://www.asyncapi.com/docs/reference/specification/v2.4.0).
 
-In this documentation you'll learn about the inner working of the generator and what happens once the specification file is fed to the generator and how you can use the content of specification file using the asyncAPI document or asyncAPI string in your template.
+In the following sections, you'll learn about the inner working of the generator, what happens once the specification file is fed to the generator, and how you can use the content of the specification file with either an AsyncAPI document or AsyncAPI string in your template.
 
 ### The generation process
 The generator library receives the template and AsyncAPI specification file as inputs. To validate that the json/yaml specification file is valid, the generator passes the stringified version of the original specification document to the [parser](parser.md). The parser validates the asyncapi specification using either the openapi schema, raml schema or the avro schema defined in the spec files. If valid, the parser then manipulates the original JSON or YML specification file into functions and properties and bundles them together into an **asyncapiDocument**. The generator library then passes the originalapiString, the asyncapiDocument, and the extra parameters provided by the user to the renderer engine. The renderer engine renders a template where the originalapiString, the asyncapiDocument and the extra parameters are made accessible to the template developer so they access functions that extract some data from the asyncapi file.

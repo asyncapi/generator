@@ -6,11 +6,9 @@ weight: 20
 ### What is the Asyncapi Specification?
 The **AsyncAPI specification** defines a standard, protocol-agnostic interface that describes message-based or event-driven APIs. The AsyncAPI specification allows people or machines communicating with one another, to understand the capabilities of an event-driven API without requiring access to the source code, documentation, or inspecting the network traffic.
 
-The specification allows you to define the structure and format of your API including the channels the end user can subscribe to and the format of the messages they will be receiving.
+The specification allows you to define the structure and format of your API, including the channels the end user can subscribe to and the format of the messages they will be receiving. 
 
-The files describing the message-driven API in accordance with the AsyncAPI Specification are represented as JSON objects and conform to the JSON standards. YAML, being a superset of JSON, can be used as well to represent a A2S (AsyncAPI Specification) file.
-
-The specification file when fed as an input to the generator library via the asyncAPI CLI command, shown in the code snippet below, will generate API documentation or generate message-based API boilerplate code.
+The files describing the message-driven API under the AsyncAPI Specification are represented as JSON objects and conform to the JSON standards. YAML, a superset of JSON, can also be used to represent an A2S (AsyncAPI Specification) file. The specification file, when fed as an input to the generator library via the AsyncAPI CLI command, shown in the code snippet below, will generate API documentation or generate message-based API boilerplate code.
 
 ```bash
 ag asyncapi.yaml ~/my-template

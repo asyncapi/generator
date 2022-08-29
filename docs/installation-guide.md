@@ -33,7 +33,7 @@ Install the AsyncAPI CLI globally on your computer using the npm command below:
 npm install -g @asyncapi/cli
 ```
 
-To install a specific version of the tool, pass the version during installation:
+To install a specific version of the generator tool, pass the version during installation:
 ```
 npm install -g @asyncapi/generator@{version}
 ```

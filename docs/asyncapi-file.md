@@ -4,7 +4,7 @@ weight: 20
 ---
 
 ### What is the Asyncapi Specification?
-The **AsyncAPI specification** defines a standard, protocol-agnostic interface that describes message-based or event-driven APIs. The AsyncAPI specification allows people or machines communicating with one another, to understand the capabilities of an event-driven APIs without requiring access to the source code, documentation, or inspecting the network traffic.
+The **AsyncAPI specification** defines a standard, protocol-agnostic interface that describes message-based or event-driven APIs. The AsyncAPI specification allows people or machines communicating with one another, to understand the capabilities of an event-driven API without requiring access to the source code, documentation, or inspecting the network traffic.
 
 The specification allows you to define the structure and format of your API including the channels the end user can subscribe to and the format of the messages they will be receiving.
 

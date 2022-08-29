@@ -53,7 +53,7 @@ graph LR
 
 > :bulb: **Remember**
 > 
-> When you are writing your template, you get access to the specification file in two different forms; the originalAsyncApi which is a stringified version of the specification `.yml` file and the second is the asyncapiDocument.
+> When you are writing your template, you get access to the specification file in two different forms; the originalAsyncAPI which is a stringified version of the specification `.yml` file, and the asyncapiDocument.
 
 > :memo: **Note:** 
 > You can check out the structure of the asyncapiDocument [here](https://github.com/asyncapi/parser-js/blob/master/API.md#module_@asyncapi/parser+AsyncAPIDocument)

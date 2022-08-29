@@ -102,6 +102,5 @@ In the sample code snippet below, notice how you can access document contents of
 > :memo: **Note:**  
 > To learn about the various instances you can use to access the documents' content, read these [AsyncAPIDocument and parser files](https://github.com/asyncapi/parser-js/blob/master/API.md#module_@asyncapi/parser+AsyncAPIDocument) 
 
-## Advantage of using the asyncApiDocument instead of the asyncapiString in your template
 The asyncApiDocument simplifies the structure of the spec file which is complex and nested enabling the developer to easily access the specification files content by simply invoking a function
   

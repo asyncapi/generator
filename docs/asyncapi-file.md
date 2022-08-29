@@ -13,7 +13,7 @@ The files describing the message-driven API under the AsyncAPI Specification are
 ```bash
 ag asyncapi.yaml ~/my-template
 ```
-1. **ag** is the asyncAPI generator
+1. **ag** is the AsyncAPI generator
 2. **asyncapi.yaml** is the specification file
 3. **~/my-template** is the template you are using
 

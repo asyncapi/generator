@@ -60,8 +60,8 @@ graph LR
 
 In the following sections, you will learn how to use either the **asyncapiString** or the **asyncapiDocument** in your template.
 
-#### Method 1: asyncapiString + template ##
-The first way to generate an message-based API template using the generator tool is by using the asyncapiString. The asynapiString is a stringified version of the specification YAML or JSON file you pass as a parameter to the CLI `ag` command. During the generation process, the generator library calls `generator.originalAsyncAPI` which returns a stringified version of the original spec file. This stringified version is what the generator library passes to the renderer engine and the renderer engine makes it accessible in your output alias the template.
+#### Method 1: asyncapiString + template 
+The first way to generate a message-based API template using the generator tool is by using the asyncapiString. The asynapiString is a stringified version of the specification YAML or JSON file you pass as a parameter to the CLI `ag` command. During the generation process, the generator library calls `generator.originalAsyncAPI`, which returns a stringified version of the original spec file. This stringified version is what the generator library passes to the render engine, and the render engine makes it accessible in your output alias the template.
 
 **An example of an asyncapiString:**
 ```
@@ -74,7 +74,7 @@ info:
 `;
 
 ```
-The generator library generates templates using the `generator.generateFromString` instance method as shown in the code snippet below
+The generator library generates templates using the `generator.generateFromString` instance method, as shown in the sample code snippet below:
 
 ```
 generator
@@ -85,12 +85,14 @@ generator
   .catch(console.error);
   ```
 
-#### Method 2: asyncapiDocument+ template ##
-Once the specification YAML or JSON file is passed as an input to the generator library, it is passed on to the [Parser](parser.md) library which then manipulates the file to a more structured document called the asyncapiDocument. Once the parser returns the document to the generator, the generator passes it to the renderer engine. The renderer engine will make the asyncapiDocument accessible from your output alias the template.
+#### Method 2: asyncapiDocument + template
+A major advantage of using the asyncApiDocument is that it simplifies the structure of the more complex spec file, enabling the developer to easily access the specification files' content by simply invoking a function. 
 
-From the template, you can access the document's content, for example, to extract the version of the spec file used for your Readme, you can do that by running `asyncapiDocument.version()` or to get the message payload you use `asyncapiDocument.allMessages()` method.
+Once the specification YAML or JSON file is passed as an input to the generator library, it is passed on to the [Parser](parser.md) library, which then manipulates the file to a more structured document called the asyncapiDocument. Once the parser returns the document to the generator, the generator passes it to the render engine. The render engine makes the asyncapiDocument accessible from your output alias, the template.
 
-In the code snippet below, you'll see how you can access document contents of the asyncapiDocument in your template.
+From the template, you can access the document's content. For example, if you wished to extract the spec file version used in your ReadME, you can do that by running `asyncapiDocument.version()`. Or, to get the message payload, you can use the `asyncapiDocument.allMessages()` method.
+
+In the sample code snippet below, notice how you can access document contents of the asyncapiDocument in your template:
 
 ```
   const apiName = asyncapi.info().title();

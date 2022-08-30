@@ -52,10 +52,9 @@ asyncapi: 2.4.0
 info:
   title: Example to show stringified specification file
   version: 1.0.0
-...
-`;
+  `
+...```
 
-```
 The generator library generates templates using the `generator.generateFromString` instance method, as shown in the sample code snippet below:
 
 ```

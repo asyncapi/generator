@@ -2,7 +2,7 @@
 title: "Introduction"
 weight: 10
 ---
-The specification file, when fed as an input to the generator library via the AsyncAPI CLI command, shown in the code snippet below, will generate API documentation or generate message-based API boilerplate code.
+The [specification file](asyncapi-file.md), when fed as an input to the generator library via the AsyncAPI CLI command, shown in the code snippet below, will generate API documentation or generate message-based API boilerplate code.
 
 ```bash
 ag asyncapi.yaml ~/my-template
@@ -17,12 +17,14 @@ If you haven't set up the AsyncAPI CLI tool, please refer to our [AsyncAPI CLI i
 ### The generation process
 1. The **generator library** receives the **[template](template.md)** and **[AsyncAPI specification file](asyncapi-file.md)** as inputs. 
 2. To validate the json/yaml specification file, the generator passes the stringified version of the original specification document to the **[parser](parser.md)**. 
-3. The parser validates the AsyncAPI specification using either the OpenAPI, RAML, or Avro schema defined in the spec files. 
+3. The parser validates the AsyncAPI specification using either the OpenAPI, RAML, or Avro schema defined in the specification files. 
 4. If valid, the parser then manipulates the original JSON or YML specification file into functions and properties, bundling them together into an **asyncapiDocument**. 
-5. At this point, the generator library passes the **original apiString**, the **asyncapiDocument**, and the **extra parameters** provided by the user to the **render engine**. 
-6. The **render engine** renders a template where the original apiString, the asyncapiDocument, and the extra parameters are accessible to the template developer. Thus, they can access functions that extract data from the AsyncAPI file.
+5. At this point, the generator library passes the **original apiString**, the **asyncapiDocument**, and the **extra parameters** which collectively make up the [template context](asyncapi-context.md). 
+6. The generator passes the **template context** to the render engine therefore making it accessible in the templates.
+7. Either the [react](react-render-engine.md) or [nunjucks](nunjucks-render-engine.md) **render engine** renders a template where the original apiString, the asyncapiDocument, and the extra parameters are accessible to the template developer. Thus, they can access functions that extract data from the AsyncAPI file.
+8. One the generator receives the template as an input, the generator provides all the **template files** that are generated using the available generator features to the render engine. These generated files are then used by the user in the template.
 
-**TODO::::::** Talk about the template context and template files
+### The rendering process
 
 The diagram below depicts the entire process of passing the template and specification file as arguments to the AsyncAPI CLI tool, and how the generator library then uses these inputs to generate the output you need.
 

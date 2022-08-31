@@ -16,8 +16,13 @@ If you want to learn how to create an AsyncAPI specification file or refresh you
 In the following sections, you'll learn about the inner working of the generator, what happens once the specification file is fed to the generator, and how you can use the content of the specification file with either an AsyncAPI document or AsyncAPI string in your template.
 
 ### The generation process
-
-
+1. The **generator library** receives **[AsyncAPI specification file](asyncapi-file.md)** as an input. 
+2. To validate the json/yaml specification file, the generator passes the stringified version of the original specification document to the **[parser](parser.md)**. 
+3. The parser validates the AsyncAPI specification using either the OpenAPI, RAML, or Avro schema defined in the specification files. 
+4. If valid, the parser then manipulates the original JSON or YML specification file into functions and properties, bundling them together into an **asyncapiDocument**. 
+5. At this point, the generator library passes the **original asyncAPIString** and the the **asyncAPIDocument** which make up part of the [template context](asyncapi-context.md). 
+6. The generator passes the **template context** to either the [react](react-render-engine.md) or [nunjucks](nunjucks-render-engine.md)render engine therefore making it accessible in the templates.
+   
 ``` mermaid
 graph LR
     A[Template Context]

@@ -25,8 +25,9 @@ If you haven't set up the AsyncAPI CLI tool, please refer to our [AsyncAPI CLI i
 8. One the generator receives the template as an input, the generator provides all the **template files** that are generated using the available generator features to the render engine. These generated files are then used by the user in the template.
 
 ### The rendering process
-- AsyncAPI has two render engines(react and nunjucks) and depending on whichever one of them you've specified in your `package.json` you will be able to access either **nunjucks** or **React** based templates.
-- The render engine will then be responsible for populating all the dynamic values in your react or nunjucks template files and generate markdown, pdf, boilerplate code and anything else you want genarated.
+1. AsyncAPI has two **render engines**(react and nunjucks) and depending on whichever one of them you've specified in your `package.json` the generator will be able to know the right render engine to pass the **template files** and the **template context**.
+2. The **render engine** will then be responsible for populating all the dynamic values in your react or nunjucks **template files** using the **template context** it receives from the generator tool. 
+3. As a result, the render engine will genarte **markdown**, **pdf**, **boilerplate code** and **anything else you want generated** as output.
 
 The diagram below depicts the entire process of passing the template and specification file as arguments to the AsyncAPI CLI tool, and how the generator library then uses these inputs to generate the output you need and the kind of output you can get from the render engine.
 

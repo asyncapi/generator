@@ -54,7 +54,7 @@ graph LR
   D --> K[Anything else]
   ```
 ### Use cases of the Generator
-- Interactive and clear API documentation.
+- Generation of interactive and clear API documentation.
 - Generation of message-based APIs boilerplate code.
 - Validation of messages the client receives using the JSON schema that defines validation rules for your objects in the spec file. 
 - Application of API management policies to messages before they arrive to the broker.

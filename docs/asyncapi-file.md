@@ -43,12 +43,12 @@ graph LR
 > When you are writing your template, you get access to the specification file in two different forms; the `originalAsyncAPI`, which is a stringified version of the AsyncAPI file provided as input, without any modifications, and `asyncapi` (`AsyncAPIDocument` type), which is an object with a set of functions, coming from AsyncAPI Parser, that make it easier to access contents of AsyncAPI file.
 
 > :memo: **Note:** 
-> Check out the [asyncapiDocument structure](https://github.com/asyncapi/parser-js/blob/master/API.md#module_@asyncapi/parser+AsyncAPIDocument)
+> Check out the structure of [asyncapiDocument](https://github.com/asyncapi/parser-js/blob/master/API.md#module_@asyncapi/parser+AsyncAPIDocument)
 
-In the following sections, you will learn how to use either the **asyncapiString** or the **asyncapiDocument** in your template.
+In the following sections, you will learn how to use either the **originalAsyncAPI** or the **asyncapi** in your template.
 
-#### Method 1: asyncapiString + template 
-The first way to generate a message-based API template using the generator tool is by using the asyncapiString. The asynapiString is a stringified version of the specification YAML or JSON file you pass as a parameter to the CLI `ag` command. During the generation process, the generator library calls `generator.originalAsyncAPI`, which returns a stringified version of the original spec file. This stringified version is what the generator library passes to the render engine, and the render engine makes it accessible in your output alias the template.
+#### Method 1: `originalAsyncAPI` and Template 
+One way of using the contents of AsyncAPI file inside your template files is by using its stringified version that reflects exactly the same contents as the file provided as an input. You can access this stringified AsyncAPI file directly in your templates through `originalAsyncAPI` variable. You also have access to it in hooks functionality because `originalAsyncAPI` is also a part of the Generator instance that is passed to hooks so that you can access it like `generator.originalAsyncAPI`.
 
 **An example of an asyncapiString:**
 ```

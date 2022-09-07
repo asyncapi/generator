@@ -32,10 +32,12 @@ The recommended method to interact with the generator tool is by using its CLI. 
 npm install -g @asyncapi/generator
 ```
 
-> **Note:** To install a specific version of the generator tool, pass the version during installation:
+To install a specific version of the generator tool, pass the version during installation:
 ```
 npm install -g @asyncapi/generator@{version}
 ```
+> :memo: **Note:** 
+> Learn more about the difference of the generator version and template version [here](versioning.md)
 
 ## Updating the generator
 You might want to update your version of the generator for various reasons:

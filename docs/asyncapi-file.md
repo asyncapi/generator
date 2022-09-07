@@ -71,21 +71,20 @@ generator
   .catch(console.error);
   ```
 
-#### Method 2: asyncapiDocument + template
-A major advantage of using the asyncApiDocument is that it simplifies the structure of the more complex spec file, enabling the developer to easily access the specification files' content by simply invoking a function. 
+#### Method 2: `asyncapi` and Template
+A major advantage of using `asyncapi` (which is an instance of `AsyncAPIDocument`) is that it enables the developer to easily access the specification files' content by simply invoking a function. 
 
-Once the specification YAML or JSON file is passed as an input to the generator library, it is passed on to the [Parser](parser.md) library, which then manipulates the file to a more structured document called the asyncapiDocument. Once the parser returns the document to the generator, the generator passes it to the render engine. The render engine makes the asyncapiDocument accessible from your output alias, the template.
+Once the specification YAML or JSON file is passed as an input to the generator library, it is passed on to the [Parser](parser.md) library, which then manipulates the file to a more structured document called the `AsyncAPIDocument`. Once the parser returns the document to the generator, the generator passes it to the render engine. The render engine makes the `AsyncAPIDocument` object accessible from your template through `asyncapi` variable.
 
-From the template, you can access the document's content. For example, if you wished to extract the spec file version used in your ReadME, you can do that by running `asyncapiDocument.version()`. Or, to get the message payload, you can use the `asyncapiDocument.allMessages()` method.
+For example, if you want to extract the version of your API from AsyncAPI document, you can do that by calling `asyncapi.version()`. You can say that this one is easy to access from JSON objects, but there are more complex scenarios. For example, to get access to all messages from all channels, you can call `asyncapi.allMessages()` instead of iterating through a complex JSON object on your own.
 
-In the sample code snippet below, notice how you can access document contents of the asyncapiDocument in your template:
+In the sample code snippet below, notice how you can access contents of AsyncAPI file in your template:
 
 ```
   const apiName = asyncapi.info().title();
   const channels = asyncapi.channels();
-...
 ```
 > :memo: **Note:**  
-> To learn about the various instances you can use to access the documents' content, read these [AsyncAPIDocument and parser files](https://github.com/asyncapi/parser-js/blob/master/API.md#module_@asyncapi/parser+AsyncAPIDocument) 
+> To learn about the various instances you can use to access the documents' content, look at the API of AsyncAPI JavaScript Parser and the structure of [AsyncAPIDocument](https://github.com/asyncapi/parser-js/blob/master/API.md#module_@asyncapi/parser+AsyncAPIDocument) 
 
   

@@ -23,8 +23,6 @@ If you don't have either Node or Npm installed, do so using the [official node.j
 
 If you have the right versions installed, you can proceed to the CLI installation guide below else, upgrade the version of npm or node if lower than the recommended versions specified above.
 
-> The generator library is tested at the moment against Node 14 and NPM 6. Using newer versions is enabled but we do not guarantee they work well. Please provide feedback on the issues.
-
 ## Installation
 ### npm
 The recommended method to interact with the generator tool is by using its CLI. To use the CLI, install the generator using the following `npm` command:

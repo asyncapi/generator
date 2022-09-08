@@ -1,5 +1,5 @@
 ---
-title: "AsyncAPI Specification File"
+title: "AsyncAPI file"
 weight: 20
 ---
 
@@ -11,16 +11,16 @@ The specification allows you to define the structure and format of your API, inc
 The files describing the message-driven API under the AsyncAPI Specification are represented as JSON objects and conform to the JSON standards. YAML, a superset of JSON, can also be used to represent an A2S (AsyncAPI Specification) file.
 
 > :bulb: **Remember:** 
-If you want to learn how to create an AsyncAPI specification file or refresh your knowledge about the syntax and structure of the AsyncAPI Specification file, check out our official [documentation](https://www.asyncapi.com/docs/reference/specification/latest).
+If you want to learn how to create an AsyncAPI file or refresh your knowledge about the syntax and structure of the AsyncAPI file, check out our official [documentation](https://www.asyncapi.com/docs/reference/specification/latest).
 
 In the following sections, you'll learn about the inner working of the generator, what happens once the specification file is fed to the generator, and how you can use the content of the specification file with either an AsyncAPI document or AsyncAPI string in your template.
 
 ### The generation process
-1. The **generator library** receives **[AsyncAPI specification file](asyncapi-file.md)** as an input. 
-2. To validate the json/yaml specification file, the generator passes the stringified version of the original specification document to the **[parser](parser.md)**. 
+1. The **Generator** receives the **AsyncAPI file** as an input. 
+2. To validate the JSON/YAML specification file, the generator passes the stringified version of the original specification document to the **[parser](parser.md)**. 
 3. The parser validates the AsyncAPI specification using either the OpenAPI, RAML, or Avro schema defined in the specification files. 
-4. If valid, the parser then manipulates the original JSON or YML specification file into functions and properties, bundling them together into an **asyncapiDocument**. 
-5. At this point, the generator library passes the **original asyncAPIString** and the the **asyncAPIDocument** which make up part of the [template context](asyncapi-context.md). 
+4. If valid, the parser then manipulates the original JSON/YAML specification file into functions and properties, bundling them together into an **asyncapiDocument**. 
+5. At this point, the Generator passes the **original asyncAPIString** and the the **asyncAPIDocument** which make up part of the [template context](asyncapi-context.md). 
 6. The generator passes the **template context** to either the [react](react-render-engine.md) or [nunjucks](nunjucks-render-engine.md)render engine therefore making it accessible in the templates.
    
 ``` mermaid
@@ -30,7 +30,7 @@ graph LR
     C[Parser]
     D[Render Engine]
     E[AsyncAPI File] --> B
-  subgraph Generator Library
+  subgraph Generator
     B -->| asyncapiString | C
     C --> | asyncapi -> AsyncAPIDocument type | A
     B--> | originalAsyncAPI -> Stringified document | A
@@ -48,19 +48,33 @@ graph LR
 In the following sections, you will learn how to use either the **originalAsyncAPI** or the **asyncapi** in your template.
 
 #### Method 1: `originalAsyncAPI` and Template 
-One way of using the contents of AsyncAPI file inside your template files is by using its stringified version that reflects exactly the same contents as the file provided as an input. You can access this stringified AsyncAPI file directly in your templates through `originalAsyncAPI` variable. You also have access to it in hooks functionality because `originalAsyncAPI` is also a part of the Generator instance that is passed to hooks so that you can access it like `generator.originalAsyncAPI`.
+One way of using the contents of AsyncAPI file inside your template files is by using its stringified version that reflects exactly the same contents as the file provided as an input. You can access this stringified AsyncAPI file directly in your templates through `originalAsyncAPI` variable. You also have access to it in [hooks](hooks.md) functionality because `originalAsyncAPI` is also a part of the Generator instance that is passed to hooks so that you can access it like `generator.originalAsyncAPI`.
 
-**An example of an asyncapiString:**
 ```
-const asyncapiString = `
-asyncapi: 2.4.0
-info:
-  title: Example to show stringified specification file
-  version: 1.0.0
-  `
-...```
+//example usecase for using stringified AsyncAPI file inside template hooks
 
-The generator library generates templates using the `generator.generateFromString` instance method, as shown in the sample code snippet below:
+const fs = require('fs');
+const path = require('path');
+
+function createAsyncapiFile(generator) {
+  const asyncapi = generator.originalAsyncAPI;
+  let extension;
+  
+  try {
+    JSON.parse(asyncapi);
+    extension = 'json';
+  } catch (e) {
+    extension = 'yaml';
+  }
+
+  const outputFileName = `asyncapi.${extension}`;
+
+  const asyncapiOutputLocation = path.resolve('./'', outputFileName);
+
+  fs.writeFileSync(asyncapiOutputLocation, asyncapi);
+```
+
+The Generator generates templates using the `generator.generateFromString` instance method, as shown in the sample code snippet below:
 
 ```
 generator
@@ -74,7 +88,7 @@ generator
 #### Method 2: `asyncapi` and Template
 A major advantage of using `asyncapi` (which is an instance of `AsyncAPIDocument`) is that it enables the developer to easily access the specification files' content by simply invoking a function. 
 
-Once the specification YAML or JSON file is passed as an input to the generator library, it is passed on to the [Parser](parser.md) library, which then manipulates the file to a more structured document called the `AsyncAPIDocument`. Once the parser returns the document to the generator, the generator passes it to the render engine. The render engine makes the `AsyncAPIDocument` object accessible from your template through `asyncapi` variable.
+Once the specification YAML or JSON file is passed as an input to the Generator, it is passed on to the [Parser](parser.md) library, which then manipulates the file to a more structured document called the `AsyncAPIDocument`. Once the parser returns the document to the generator, the generator passes it to the render engine. The render engine makes the `AsyncAPIDocument` object accessible from your template through `asyncapi` variable.
 
 For example, if you want to extract the version of your API from AsyncAPI document, you can do that by calling `asyncapi.version()`. You can say that this one is easy to access from JSON objects, but there are more complex scenarios. For example, to get access to all messages from all channels, you can call `asyncapi.allMessages()` instead of iterating through a complex JSON object on your own.
 

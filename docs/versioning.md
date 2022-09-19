@@ -5,15 +5,10 @@ weight: 60
 
 The generator tool generates whatever you want, as long as it can be defined in a template, based on the [AsyncAPI specification file](asyncapi-file.md). On the other hand, a **template** is a file or group of files that specify the kind of output you expect from using the generators features. For example, you may want to use the [nodejs template](https://github.com/asyncapi/nodejs-template) to build boilerplate code for your message based APIs.
 
-Templates are dependent on the generators' features. For example, the template you want to use may be compatible with the latest version of the generator but incompatible with the previous versions. Check the configuration file or ReadMe of the template to see the version of the Generator it supports. The generator won't work if the the version you have installed isn't supported by the template you want to use. In such a scenario, you will see an error output similar to the following on your terminal:
+Templates are dependent on the generators' features. For example, the template you want to use may be compatible with the latest version of the generator but incompatible with the previous versions. Check the configuration file or ReadMe of the template to see the version of the Generator it supports. The generator has a `isTemplateCompatible` function that checks if the template is compatible with the version of generator you want to use. If the template isn't compatible, you will see an error output similar to the following on your terminal:
 ```
 Something went wrong:
-Error: This template is not compatible with the current version of the generator (0.50.0). This template is compatible with the following version range: >=0.60.0 <2.0.0.
-    at Generator.validateTemplateConfig (/Users/wookiee/.nvm/versions/node/v12.16.1/lib/node_modules/@asyncapi/generator/lib/generator.js:678:13)
-    at Generator.loadTemplateConfig (/Users/wookiee/.nvm/versions/node/v12.16.1/lib/node_modules/@asyncapi/generator/lib/generator.js:663:16)
-    at Generator.generate (/Users/wookiee/.nvm/versions/node/v12.16.1/lib/node_modules/@asyncapi/generator/lib/generator.js:146:18)
-    at processTicksAndRejections (internal/process/task_queues.js:97:5)
-    at async /Users/wookiee/.nvm/versions/node/v12.16.1/lib/node_modules/@asyncapi/generator/cli.js:135:7
+Error: This template is not compatible with the current version of the generator (${generatorVersion}). This template is compatible with the following version range: ${generator}.`)
 ```
 
 > Use the following command to check the version of the AsyncAPI Generator CLI you have installed;  `ag --version`

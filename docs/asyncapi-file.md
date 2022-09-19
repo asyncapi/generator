@@ -17,10 +17,10 @@ In the following sections, you'll learn about the inner working of the generator
 ### The Generation Process
 1. The **Generator** receives the **AsyncAPI file** as an input. 
 2. The Generator then sends to the **[Parser](parser.md)** the stringified version of the original specification file in order to validate the JSON/YAML **AsyncAPI file**.
-3. The parser validates the AsyncAPI file using either the OpenAPI, RAML, or Avro schemas defined in the specification files. 
+3. The **parser** validates the **AsyncAPI file** using either the OpenAPI, RAML, or Avro schemas defined in the specification files. 
 4. If the **parser** determines that the **AsyncAPI file** is valid, it manipulates the original JSON/YAML specification file into functions and properties, bundling them together into an **asyncapi**(asyncapiDocument). 
-5. At this point, the Generator passes the **originalAsyncAPI** and the the **asyncapi** which make up part of the [template context](asyncapi-context.md) to the **render engine**. 
-6. The **template context** is accessible to the template files that are passed to the [react](react-render-engine.md) or [nunjucks](nunjucks-render-engine.md)render engines by the Generator.
+5. At this point, the **Generator** passes the **originalAsyncAPI** and the the **asyncapi** which make up part of the **[template context](asyncapi-context.md)** to the **render engine**. 
+6. The **template context** is accessible to the template files that are passed to the [react](react-render-engine.md) or [nunjucks](nunjucks-render-engine.md) **render engines** by the **Generator**.
    
 ``` mermaid
 graph LR

@@ -8,8 +8,7 @@ There are various ways you can use the Generator library to generate whaterver y
 - [1. Using the AsyncAPI Generator CLI](#1-using-the-asyncapi-generator-cli)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
-    - [npm](#npm)
-    - [Updating the AsyncAPI Generator CLI](#updating-the-asyncapi-generator-cli)
+  - [Updating the AsyncAPI Generator CLI](#updating-the-asyncapi-generator-cli)
   - [Uninstall the AsyncAPI Generator CLI](#uninstall-the-asyncapi-generator-cli)
 - [2. Use the Generator Library In Your Node.js Apps](#2-use-the-generator-library-in-your-nodejs-apps)
   - [Prerequisites](#prerequisites-1)
@@ -36,8 +35,7 @@ If you have the right versions installed, you can proceed to the CLI installatio
 
 ### Installation
 
-#### npm
-The recommended method to interact with the generator tool is by using its CLI. To use the CLI, install the generator using the following `npm` command:
+The recommended method to interact with the generator tool is by using its CLI. To use the CLI, install it  using the following `npm` command:
 ```
 npm install -g @asyncapi/generator
 ```
@@ -47,9 +45,9 @@ To install a specific version of the generator tool, pass the version during ins
 npm install -g @asyncapi/generator@{version}
 ```
 > :memo: **Note:** 
-> Learn more about the difference of the generator version and template version [here](versioning.md)
+> Each template that has been developed is dependent on a certain version of the generator for it to work correctly. So before you install the generator CLI, check the templates' WIKI for the version of the Generator CLI your template is compatible with. To learn more about the generator version and how it correlates to the template you use check the [versioning docs](versioning.md)
 
-#### Updating the AsyncAPI Generator CLI
+### Updating the AsyncAPI Generator CLI
 You might want to update your version of the generator for various reasons:
 1. You have the generator tool installed but you want to use the latest released features. To upgrade to the latest version, use the command below:
 ```

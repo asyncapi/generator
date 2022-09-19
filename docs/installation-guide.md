@@ -4,9 +4,20 @@ weight: 10
 ---
 
 
-To use the AsyncAPI generator, you will need to install the AsyncApi generator CLI tool. The CLI tool allows you to generate message-based API boilerplate code or documentation. This guide will show you how to set up your local development environment to start using the generator library.
+There are various ways you can use the Generator library to generate whaterver you want in your event driven architecture apps. Find your prefered method below:
+- [1. Using the AsyncAPI Generator CLI](#1-using-the-asyncapi-generator-cli)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+    - [npm](#npm)
+    - [Updating the AsyncAPI Generator CLI](#updating-the-asyncapi-generator-cli)
+  - [Uninstall the AsyncAPI Generator CLI](#uninstall-the-asyncapi-generator-cli)
+- [2. Use the Generator Library In Your Node.js Apps](#2-use-the-generator-library-in-your-nodejs-apps)
+  - [Prerequisites](#prerequisites-1)
+ 
+## 1. Using the AsyncAPI Generator CLI
+The CLI tool allows you to generate message-based API boilerplate code, documentation or anything else you need as long as you specify it in your [template](template.md). To use the Generator via the CLI with your event driven architecture, you will need to install the AsyncApi Generator CLI tool in your local development environment.
 
-## Prerequisites
+### Prerequisites
 Before you install and use the AsyncAPI CLI, make sure you meet the prerequisites below then [install the CLI](#installation).
 1. Node.js v12.16 and higher
 2. Npm v6.13.7 and higher
@@ -23,8 +34,9 @@ If you don't have either Node or Npm installed, do so using the [official node.j
 
 If you have the right versions installed, you can proceed to the CLI installation guide below else, upgrade the version of npm or node if lower than the recommended versions specified above.
 
-## Installation
-### npm
+### Installation
+
+#### npm
 The recommended method to interact with the generator tool is by using its CLI. To use the CLI, install the generator using the following `npm` command:
 ```
 npm install -g @asyncapi/generator
@@ -37,7 +49,7 @@ npm install -g @asyncapi/generator@{version}
 > :memo: **Note:** 
 > Learn more about the difference of the generator version and template version [here](versioning.md)
 
-## Updating the generator
+#### Updating the AsyncAPI Generator CLI
 You might want to update your version of the generator for various reasons:
 1. You have the generator tool installed but you want to use the latest released features. To upgrade to the latest version, use the command below:
 ```
@@ -49,8 +61,16 @@ npm install -g @asyncapi/generator@{version}
 ```
 > Sometimes you have to force additional npm installation like this: `npm install -g --force @asyncapi/generator`
 
-## Uninstall
+### Uninstall the AsyncAPI Generator CLI
 To uninstall the generator, use the following command:
 ```
 npm uninstall @asyncapi/generator -gnpm uninstall @asyncapi/generator -g
 ```
+
+> **Note:** If you want to use the Generator CLI in your CI/CD pipeline to automate whatever you want generated for your event driven architecture apps, install the AsyncAPI Generator CLI in your pipeline. Incase you are using Github Actions, you can use [Github Actions for Generator](https://github.com/marketplace/actions/generator-for-asyncapi-documents)
+
+## 2. Use the Generator Library In Your Node.js Apps
+You can use the generator library in your Nodejs projects by installing it using the `npm install @asyncapi/generator` command withing your nodejs project.
+
+### Prerequisites
+Check the [prerequisites](#prerequisites) above before you install the Generator CLI in your project.

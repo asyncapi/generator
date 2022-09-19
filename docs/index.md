@@ -2,35 +2,32 @@
 title: "Introduction"
 weight: 10
 ---
-AsyncAPI Generator is a fast, feature-packed and ready to use Javascript based Npm library. The generator generates whatever you want based on the **[AsyncAPI file](asyncapi-file.md)** and **[template](template.md)** as fed as inputs to the AsyncAPI Generator CLI. Generator has been built with extensibility in mind; you can generate anything you want using the genrator as long as it can be defined in a template e.g code, diagrams, markdown files, microservices and applications etc.  There is also a number of [community-maintained templates](https://github.com/search?q=topic%3Aasyncapi+topic%3Agenerator+topic%3Atemplate) that you can use out of the box.
+The AsyncAPI Generator is a tool that generates anything you want using the **[AsyncAPI file](asyncapi-file.md)** and **[template](template.md)** that are supplied as inputs to the AsyncAPI Generator CLI. The Generator was built with extensibility in mind; you can use the generator to generate anything you want provided that it can be defined in a template, such as code, diagrams, markdown files, microservices and applications for example. A number of [community-maintained templates](https://github.com/search?q=topic%3Aasyncapi+topic%3Agenerator+topic%3Atemplate) are now available for immediate usage.
 
-### Use cases of the Generator
-- Generation of interactive and clear API documentation.
-- Generation of message-based APIs boilerplate code.
+### Use Cases of the Generator
+- Generation of interactive and understandable API documentation.
+- Generation of APIs'client libraries
+- Generation of APIs' boilerplate code
 
-### Benefits of using Generator:
+### Advantages of Using the Generator:
+- Quick set up and easy to use on a regular basis
+- Effortless generation of complex documents
+- List of readily available AsyncAPI templates
+- Support for render engines such as React and Nunjucks
 
-1. Quick set up and easy to use on a regular basis
-2. Effortless generation of complex documents
-3. List of readily available AsyncAPI templates
-4. Support for render engines such as React and Nunjucks
-
-### The generation process
+### The Generation Process
 1. The **Generator** receives the **[template](template.md)** and **[AsyncAPI file](asyncapi-file.md)** as inputs. 
-2. To validate the JSON/YAML **AsyncAPI file**, the generator passes the stringified version of the original specification file to the **[AsyncAPI Parser](parser.md)**. 
-3. The parser validates the AsyncAPI specification. To parse and validate custom schemas of messages' payloads, the parser uses additional plugins for either the OpenAPI, RAML, or Avro schemas. 
-4. If valid, the parser then manipulates the original JSON/YAML AsyncAPI file and returns functions and properties that enable easier access to file contents, bundling them together into an **asyncapi**(asyncapiDocument). 
-5. At this point, the generator library passes the **asyncapi*, the ****originalAsyncAPI****, and the **params** which collectively make up the **[template context](asyncapi-context.md)**. 
-6. The Generator passes the **Template Context** to the **render engine** therefore making it accessible in the templates.
-7. Either the [react](react-render-engine.md) or [nunjucks](nunjucks-render-engine.md) **Render Engine** renders a template using all the data injected with **Template Context**. The render engines also get access to the **template files**. 
-8. AsyncAPI has two **render engines**(react and nunjucks) and depending on whichever one of them you've specified in your `package.json` the generator will be able to know the right render engine to pass the **template files** and the **template context**.
-9.  The **render engine** will then be responsible for populating all the dynamic values in your react or nunjucks **template files** using the **template context** it receives from the generator tool. 
-10. As a result, the render engine will generates **markdown**, **pdf**, **boilerplate code** and **anything else you want generated** as output.
+2. The Generator then sends to the **[Parser](parser.md)** the stringified version of the original specification file in order to validate the JSON/YAML **AsyncAPI file**.
+3. The **parser** uses additional plugins such as the OpenAPI, RAML, or Avro schemas to validate custom schemas of messages' payloads defined in the  **AsyncAPI file**.
+4. If the **parser** determines that the original **AsyncAPI file** is valid, it then manipulates the original JSON/YAML **AsyncAPI file** and returns functions and properties that enable easier access to file contents, bundling them together into an **asyncapi**(asyncapiDocument). 
+5. At this point, the generator library passes the **asyncapi**, the **originalAsyncAPI**, and the **params** which collectively make up the **[template context](asyncapi-context.md)** to the **render engine**. 
+6. AsyncAPI has two **render engines**([react](react-render-engine.md) and [nunjucks](nunjucks-render-engine.md)) and depending on whichever one of them you've specified in your `package.json` the generator will be able to know the right render engine to pass the **template files** and the **template context** to.
+7. Once the **render engine** receives the **template files** and the **template context**, it will inject all the dynamic values in your react or nunjucks based **template files** using the **template context**. As a result, the render engine will generates **markdown**, **pdf**, **boilerplate code** and **anything else you specified to be generated** as output.
 
-> **Note:** 
+> :bulb: **Remember:** 
 > You can generate anything you want using the Generator as long as it can be defined in a **template**.
 
-The diagram below depicts the entire process of passing the template and **AsyncAPI file** as arguments to the AsyncAPI Generator CLI tool, and how the generator library then uses these inputs to generate the output you need and the kind of output you can get from the render engine.
+The diagram below depicts the entire process of passing the **template** and **AsyncAPI file** as parameters to the AsyncAPI Generator CLI tool, how the Generator uses these inputs to generate the desired output and examples of output you can get from the render engine.
 
 ``` mermaid
 graph LR

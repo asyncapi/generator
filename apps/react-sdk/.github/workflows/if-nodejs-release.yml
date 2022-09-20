@@ -9,12 +9,12 @@ on:
     branches:
       - master
       # below lines are not enough to have release supported for these branches
-      # make sure configuration of `semantic-release` package mentiones these branches
-      - next
+      # make sure configuration of `semantic-release` package mentions these branches
+      - next-spec
       - next-major
+      - next-major-spec
       - beta
       - alpha
-      - '**-release' # custom
 
 jobs:
 
@@ -48,6 +48,15 @@ jobs:
       - if: steps.packagejson.outputs.exists == 'true'
         name: Run test
         run: npm test
+      - if: failure() # Only, on failure, send a message on the 94_bot-failing-ci slack channel
+        name: Report workflow run status to Slack
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          fields: repo,action,workflow
+          text: 'Release workflow failed in testing job'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_CI_FAIL_NOTIFY }}
 
   release:
     needs: [test-nodejs]
@@ -84,3 +93,12 @@ jobs:
           GIT_COMMITTER_NAME: asyncapi-bot
           GIT_COMMITTER_EMAIL: info@asyncapi.io
         run: npm run release
+      - if: failure() # Only, on failure, send a message on the 94_bot-failing-ci slack channel
+        name: Report workflow run status to Slack
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          fields: repo,action,workflow
+          text: 'Release workflow failed in release job'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_CI_FAIL_NOTIFY }}

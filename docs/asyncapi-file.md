@@ -45,7 +45,7 @@ The AsyncAPI file's content is accessible to you while writing your template in 
 In the following sections, you will learn how to use either the **originalAsyncAPI** or the **asyncapi** in your template.
 
 #### Method 1: `originalAsyncAPI` and Template 
-One way of using the contents of AsyncAPI file inside your template files is by using its stringified version that reflects exactly the same contents as the AsyncAPI file provided as an input to the AsyncAPI Generator CLI. You can access this stringified AsyncAPI file directly in your templates using the `originalAsyncAPI` variable. You also have access to it in [hooks](hooks.md) functionality because `originalAsyncAPI` is also a part of the Generator instance that is passed to hooks so that you can access it usimg `generator.originalAsyncAPI`.
+One way of using the contents of AsyncAPI file inside your template files is by using its stringified version that reflects exactly the same contents as the AsyncAPI file provided as an input to the AsyncAPI Generator CLI. You can access this stringified AsyncAPI file directly in your templates using the `originalAsyncAPI` variable. You also access it via the [hooks](hooks.md) `generator.originalAsyncAPI` functionality because `originalAsyncAPI` is also a part of the Generator instance that is passed to hooks.
 
 ```
 //example usecase for using stringified AsyncAPI file inside template hooks

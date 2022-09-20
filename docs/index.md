@@ -15,7 +15,7 @@ The AsyncAPI Generator is a tool that generates anything you want using the **[A
 - List of readily available AsyncAPI templates
 - Support for render engines such as React and Nunjucks
 
-### The Generation Process
+### Generation process
 1. The **Generator** receives the **[template](template.md)** and **[AsyncAPI file](asyncapi-file.md)** as inputs. 
 2. The **Generator** then sends to the **[Parser](parser.md)** the stringified version of the original specification file in order to validate the JSON/YAML **AsyncAPI file**.
 3. The **parser** uses additional plugins such as the OpenAPI, RAML, or Avro schemas to validate custom schemas of messages' payloads defined in the **AsyncAPI file**.

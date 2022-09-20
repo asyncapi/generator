@@ -48,7 +48,7 @@ In the following sections, you will learn how to use either the **originalAsyncA
 One way of using the contents of AsyncAPI file inside your template files is by using its stringified version that reflects exactly the same contents as the AsyncAPI file provided as an input to the AsyncAPI Generator CLI. You can access this stringified AsyncAPI file directly in your templates using the `originalAsyncAPI` variable. You also access it via the [hooks](hooks.md) `generator.originalAsyncAPI` functionality because `originalAsyncAPI` is also a part of the Generator instance that is passed to hooks.
 
 ```
-//example usecase for using stringified AsyncAPI file inside template hooks
+//example use case for using a stringified AsyncAPI file inside template hooks
 
 const fs = require('fs');
 const path = require('path');

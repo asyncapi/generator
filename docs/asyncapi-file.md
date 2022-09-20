@@ -8,7 +8,7 @@ The **AsyncAPI file** defines a standard, protocol-agnostic interface that descr
 
 The file allows you to define the structure and format of your API, including the channels the end user can subscribe to and the format of the messages they will be receiving. 
 
-The files describing the message-driven API under the AsyncAPI Specification are represented as JSON objects and conform to the JSON standards. YAML, a superset of JSON, can also be used to represent an A2S (AsyncAPI Specification) file.
+The files describing the message-driven API under the AsyncAPI Specification are represented as JSON objects and conform to JSON standards. YAML, a superset of JSON, can also be used to represent an A2S (AsyncAPI Specification) file.
 
 > If you want to learn how to create an AsyncAPI file or refresh your knowledge about the syntax and structure of the AsyncAPI file, check out our official [documentation](https://www.asyncapi.com/docs/reference/specification/latest).
 

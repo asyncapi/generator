@@ -3,7 +3,7 @@ title: "AsyncAPI File"
 weight: 20
 ---
 
-### What is the Asyncapi File?
+### What is the AsyncAPI file?
 The **AsyncAPI file** defines a standard, protocol-agnostic interface that describes message-based or event-driven APIs. The AsyncAPI file allows people or machines communicating with one another, to understand the capabilities of an event-driven API without requiring access to the source code, documentation, or inspecting the network traffic.
 
 The file allows you to define the structure and format of your API, including the channels the end user can subscribe to and the format of the messages they will be receiving. 

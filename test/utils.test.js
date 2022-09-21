@@ -25,7 +25,7 @@ describe('Utils', () => {
       const result = utils.getTemplateDetails(templatePath, 'package.json');
       expect(log.debug).toHaveBeenCalledWith(logMessage.NODE_MODULES_INSTALL);
       expect(result).toStrictEqual({
-        name: templateNpmName, 
+        name: templateNpmName,
         pkgPath: path.resolve('./testTemplate')
       });
     });
@@ -39,7 +39,7 @@ describe('Utils', () => {
       expect(log.debug).not.toHaveBeenCalledWith(logMessage.NODE_MODULES_INSTALL);
       expect(log.debug).not.toHaveBeenCalledWith(logMessage.templateNotFound(templateNpmName));
       expect(result).toStrictEqual({
-        name: templateNpmName, 
+        name: templateNpmName,
         pkgPath: packagePath
       });
     });
@@ -59,6 +59,18 @@ describe('Utils', () => {
       resolveFrom.__resolveFromValue = undefined;
       const result = utils.getTemplateDetails(templateNpmName, 'package.json');
       expect(result).toStrictEqual(undefined);
+    });
+  });
+
+  describe('#exists', () => {
+    it('should return true if file exist', async () => {
+      const exists = await utils.exists(`${process.cwd()}/package.json`);
+      expect(exists).toBeTruthy();
+    });
+
+    it('should return false if file does not exist', async () => {
+      const exists = await utils.exists('./invalid-file');
+      expect(exists).toBeFalsy();
     });
   });
 });

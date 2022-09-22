@@ -27,7 +27,7 @@ The AsyncAPI Generator is a tool that generates anything you want using the **[A
 > :bulb: **Remember:** 
 > You can generate anything you want using the Generator as long as it can be defined in a **template**.
 
-The diagram below depicts the entire process of passing the **template** and **AsyncAPI file** as parameters to the AsyncAPI Generator CLI tool, how the Generator uses these inputs to generate the desired output and examples of output you can get from the render engine.
+The diagram below depicts the entire process of passing the **template** and **AsyncAPI file** as parameters to the AsyncAPI Generator CLI tool, how the Generator uses these inputs to generate the desired output, and example outputs you can get from the render engine.
 
 ``` mermaid
 graph LR

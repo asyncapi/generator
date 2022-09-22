@@ -3,7 +3,7 @@ title: "AsyncAPI File"
 weight: 20
 ---
 
-### What is the AsyncAPI file?
+## What is the AsyncAPI file?
 The **AsyncAPI file** defines a standard, protocol-agnostic interface that describes message-based or event-driven APIs. The AsyncAPI file allows people or machines communicating with one another, to understand the capabilities of an event-driven API without requiring access to the source code, documentation, or inspecting the network traffic.
 
 This file allows you to define your API structures and formats, including channels the end user can subscribe to and the message formats they receive. 
@@ -14,7 +14,7 @@ The files describing the message-driven API under the AsyncAPI Specification are
 
 In the following sections, you'll learn about the inner working of the generator, what happens once the specification file is fed to the generator, and how you can use the content of the specification file with either an AsyncAPI document or AsyncAPI string in your template.
 
-### The generation process
+## The generation process
 1. The **Generator** receives the **AsyncAPI file** as an input. 
 2. The Generator sends to the **[Parser](parser.md)** a stringified version of the original specification file to validate the JSON/YAML **AsyncAPI file**.
 3. The **parser** validates the **AsyncAPI file** using either the OpenAPI, RAML, or Avro schemas defined in the specification files. 
@@ -44,7 +44,7 @@ The AsyncAPI file's content is accessible to you while writing your template in 
 
 In the following sections, you will learn how to use either the **originalAsyncAPI** or the **asyncapi** in your template.
 
-#### Method 1: `originalAsyncAPI` and Template 
+### Method 1: `originalAsyncAPI` and template 
 One way of using the contents of AsyncAPI file inside your template files is by using its stringified version that reflects exactly the same contents as the AsyncAPI file provided as an input to the AsyncAPI Generator CLI. You can access this stringified AsyncAPI file directly in your templates using the `originalAsyncAPI` variable. You also access it via the [hooks](hooks.md) `generator.originalAsyncAPI` functionality because `originalAsyncAPI` is also a part of the Generator instance that is passed to hooks.
 
 ```
@@ -82,7 +82,7 @@ generator
   .catch(console.error);
   ```
 
-#### Method 2: `asyncapi` and Template
+### Method 2: `asyncapi` and template
 A major advantage of using `asyncapi` (which is an instance of `AsyncAPIDocument`) is that it enables the developer to easily access the specification files' content by simply invoking a function. 
 
 Once the specification YAML or JSON file is passed as an input to the Generator, it is passed on to the [Parser](parser.md) library, which then manipulates the asyncAPI file to a more structured document called the `AsyncAPIDocument`. Once the parser returns the document to the generator, the generator passes it to the render engine. The render engine makes the `AsyncAPIDocument` object accessible to your template through the `asyncapi` variable.
@@ -96,5 +96,4 @@ In the sample code snippet below, notice how you can access the contents of the 
   const channels = asyncapi.channels();
 ```
 > :memo: **Note:**  
-> To learn about the various instances you can use to access the documents' content, look at the API of the AsyncAPI JavaScript Parser and the structure of [AsyncAPIDocument](https://github.com/asyncapi/parser-js/blob/master/API.md#module_@asyncapi/parser+AsyncAPIDocument) 
-> 
+> To learn about the various instances you can use to access the documents' content, look at the API of the AsyncAPI JavaScript Parser and the structure of [AsyncAPIDocument](https://github.com/asyncapi/parser-js/blob/master/API.md#module_@asyncapi/parser+AsyncAPIDocument)

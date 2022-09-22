@@ -9,7 +9,7 @@ The AsyncAPI Generator is a tool that generates anything you want using the **[A
 - Generation of APIs' client libraries
 - Generation of APIs' boilerplate code
 
-### Advantages of Using the Generator:
+### Generator advantages
 - Quick set up and easy to use on a regular basis
 - Effortless generation of complex documents
 - List of readily available AsyncAPI templates

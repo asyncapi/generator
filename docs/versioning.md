@@ -3,7 +3,7 @@ title: "Generator Version vs Template Version"
 weight: 60
 ---
 
-The generator tool generates whatever you want, as long as it can be defined in a template, based on the [AsyncAPI specification file](asyncapi-file.md). On the other hand, a **template** is a file or group of files that specify the kind of output you expect from using the generators features. For example, you may want to use the [nodejs template](https://github.com/asyncapi/nodejs-template) to build boilerplate code for your message based APIs.
+The generator tool generates whatever you want, as long as it can be defined in a template, based on the [AsyncAPI specification file](asyncapi-file.md). On the other hand, a **template** is a file or group of files that specify the kind of output you expect from using the generators features. For example, you may want to use the [nodejs template](https://github.com/asyncapi/nodejs-template) to generate boilerplate code for your message based APIs.
 
 Templates are dependent on the generators' features. For example, the template you want to use may be compatible with the latest version of the generator but incompatible with the previous versions. Check the configuration file or ReadMe of the template to see the version of the Generator it supports. The generator has a `isTemplateCompatible` function that checks if the template is compatible with the version of generator you want to use. If the template isn't compatible, you will see an error output similar to the following on your terminal:
 ```
@@ -28,4 +28,4 @@ npm install -g @asyncapi/generator@0.50.0
 ag asyncapi.yaml @asyncapi/html-template@0.7.0 -o ./docs
 ```
 
-> Before using newer versions of the template, always look at the [changelog](https://github.com/asyncapi/html-template/releases) first. if the generator's features are not important for you, just make sure to use a version compatible with the template.
+> Before using newer versions of the template, always look at the [changelog](https://github.com/asyncapi/html-template/releases) first. If the generator's features are not important to you, just make sure to use a version compatible with your template.

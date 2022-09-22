@@ -22,7 +22,7 @@ The AsyncAPI Generator is a tool that generates anything you want using the **[A
 4. If the **parser** determines that the original **AsyncAPI file** is valid, it then manipulates the original JSON/YAML **AsyncAPI file** and returns functions and properties that enable easier access to file contents, bundling them together into an **asyncapi**(asyncapiDocument). 
 5. At this point, the **generator** passes the **asyncapi**, the **originalAsyncAPI**, and the **params** which collectively make up the **[template context](asyncapi-context.md)** to the **render engine**. 
 6. AsyncAPI has two **render engines**([react](react-render-engine.md) and [nunjucks](nunjucks-render-engine.md)). Depending on which one you've specified in your `package.json`, the generator knows the right render engine to pass both the **template files** and the **template context**.
-7. Once the **render engine** receives the **template files** and the **template context**, it will inject all the dynamic values in your react or nunjucks based **template files** using the **template context**. As a result, the render engine will generates **markdown**, **pdf**, **boilerplate code** and **anything else** you specified to be generated as output.
+7. Once the **render engine** receives the **template files** and the **template context**, it injects all the dynamic values in your react or nunjucks based **template files** using the **template context**. As a result, the render engine generates **markdown**, **pdf**, **boilerplate code**, and **anything else** you specified to be generated as output.
 
 > :bulb: **Remember:** 
 > You can generate anything you want using the Generator as long as it can be defined in a **template**.

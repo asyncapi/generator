@@ -17,7 +17,7 @@ The AsyncAPI Generator is a tool that generates anything you want using the **[A
 
 ### Generation process
 1. The **Generator** receives the **[template](template.md)** and **[AsyncAPI file](asyncapi-file.md)** as inputs. 
-2. The **Generator** then sends to the **[Parser](parser.md)** the stringified version of the original specification file in order to validate the JSON/YAML **AsyncAPI file**.
+2. The **Generator** sends to the **[Parser](parser.md)** the stringified version of the original specification file in order to validate the JSON/YAML **AsyncAPI file**.
 3. The **parser** uses additional plugins such as the OpenAPI, RAML, or Avro schemas to validate custom schemas of message payloads defined in the **AsyncAPI file**.
 4. If the **parser** determines that the original **AsyncAPI file** is valid, it then manipulates the original JSON/YAML **AsyncAPI file** and returns functions and properties that enable easier access to file contents, bundling them together into an **asyncapi**(asyncapiDocument). 
 5. At this point, the **generator** passes the **asyncapi**, the **originalAsyncAPI**, and the **params** which collectively make up the **[template context](asyncapi-context.md)** to the **render engine**. 

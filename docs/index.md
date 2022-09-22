@@ -6,7 +6,7 @@ The AsyncAPI Generator is a tool that generates anything you want using the **[A
 
 ### Generator use cases 
 - Generation of interactive and understandable API documentation.
-- Generation of APIs'client libraries
+- Generation of APIs' client libraries
 - Generation of APIs' boilerplate code
 
 ### Advantages of Using the Generator:

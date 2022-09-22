@@ -89,7 +89,7 @@ Once the specification YAML or JSON file is passed as an input to the Generator,
 
 For example, if you want to extract the version of your API from AsyncAPI document, you can do that by calling `asyncapi.version()`. You can say that this one is easy to access from JSON objects, but there are more complex scenarios. For example, to get access to all messages from all channels, you can call `asyncapi.allMessages()` instead of iterating through a complex JSON object on your own.
 
-In the sample code snippet below, notice how you can access contents of AsyncAPI file in your template:
+In the sample code snippet below, notice how you can access the contents of the AsyncAPI file in your template:
 
 ```
   const apiName = asyncapi.info().title();

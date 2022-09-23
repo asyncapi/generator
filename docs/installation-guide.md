@@ -41,7 +41,7 @@ npm install -g @asyncapi/generator@{version}
 > :bulb: **Remember:** 
 > Each [community developed template](https://github.com/search?q=topic%3Aasyncapi+topic%3Agenerator+topic%3Atemplate) is dependent on a certain version of the generator for it to work correctly. So before you install the generator CLI, check the templates' `package.json` for the version of the Generator CLI your template is compatible with. To learn more about the generator version and how it correlates to the template you use check the [versioning docs](versioning.md).
 
-### Updating the AsyncAPI Generator CLI
+### Update Generator CLI
 There are several reasons why you might want to update your generator version:
 1. You have the generator tool installed but you want to use the latest released features. To upgrade to the latest version, use the command below:
 ```

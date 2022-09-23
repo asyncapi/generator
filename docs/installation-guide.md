@@ -3,7 +3,7 @@ title: "Installation Guide"
 weight: 10
 ---
 
-There are various ways you can use the Generator library to generate whaterver you want in your event driven architecture apps. Find your prefered method below:
+You can use the Generator library to generate whatever you want in your event-driven architecture apps. Find your preferred method below:
 - [Using the AsyncAPI Generator CLI](#1-using-the-asyncapi-generator-cli)
 - [Use the Generator Library In Your Node.js Apps](#2-use-the-generator-library-in-your-nodejs-apps)
   

@@ -5,7 +5,7 @@ weight: 10
 
 You can use the Generator library to generate whatever you want in your event-driven architecture apps. Find your preferred method below:
 - [Using the AsyncAPI Generator CLI](#1-using-the-asyncapi-generator-cli)
-- [Use the Generator Library In Your Node.js Apps](#2-use-the-generator-library-in-your-nodejs-apps)
+- [Use the Generator Library in Node.js Apps](#2-use-the-generator-library-in-your-nodejs-apps)
   
 ## Prerequisites
 Before you install and use the AsyncAPI CLI and the generator library, make sure you meet the prerequisites below then [install the CLI](#installation).

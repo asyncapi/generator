@@ -8,7 +8,7 @@ You can use the Generator library to generate whatever you want in your event-dr
 - [Use the Generator Library in Node.js Apps](#2-use-the-generator-library-in-your-nodejs-apps)
   
 ## Prerequisites
-Before you install and use the AsyncAPI CLI and the generator library, make sure you meet the prerequisites below then [install the CLI](#installation).
+Before you install and use the AsyncAPI CLI and the generator library, ensure you meet the prerequisites below, then [install the CLI](#installation).
 1. Node.js v12.16 and higher
 2. Npm v6.13.7 and higher
    

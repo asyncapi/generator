@@ -25,7 +25,7 @@ If you don't have either Node or Npm installed, use the [official node.js instal
 If you have the right versions installed, proceed to the CLI installation guide below else, upgrade the version of npm or node if lower than the recommended versions specified above.
 
 ## Generator CLI
-The CLI tool allows you to generate message-based API boilerplate code, documentation or anything else you need as long as you specify it in your [template](template.md). To use the Generator via the CLI, you will need to install the AsyncApi Generator CLI tool in your local development environment.
+The CLI tool allows you to generate message-based API boilerplate code, documentation, or anything else you need as long as you specify it in your [template](template.md). To use the Generator via the CLI, you will need to install the AsyncApi Generator CLI tool in your local development environment.
 
 ### Installation
 

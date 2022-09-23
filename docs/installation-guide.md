@@ -20,7 +20,7 @@ npm -v
 node -v
 ```
 
-If you don't have either Node or Npm installed, do so using the [official node.js installer](https://nodejs.org/en/download/).
+If you don't have either Node or Npm installed, use the [official node.js installer](https://nodejs.org/en/download/).
 
 If you have the right versions installed, proceed to the CLI installation guide below else, upgrade the version of npm or node if lower than the recommended versions specified above.
 

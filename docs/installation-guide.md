@@ -53,7 +53,7 @@ npm install -g @asyncapi/generator@{version}
 ```
 > Sometimes you have to force additional npm installation like this: `npm install -g --force @asyncapi/generator`
 
-### Uninstall the AsyncAPI Generator CLI
+### Uninstall Generator CLI
 To uninstall the generator, use the following command:
 ```
 npm uninstall @asyncapi/generator -gnpm uninstall @asyncapi/generator -g

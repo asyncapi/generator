@@ -19,7 +19,7 @@ The most basic template must have the following:
 
 - `template directory`: This is where you keep the files that determine the output that will be generated. In other words, the Generator processes all the files stored in this directory.
 
-```
+```js
 import { File, Text } from "@asyncapi/generator-react-sdk";
 
 export default function({ asyncapi, params, originalAsyncAPI }) {
@@ -38,7 +38,7 @@ return (
 
 Following example shows components of `package.json` file and select dependencies:
 
-```
+```json
 "generator": {
     "renderer": "react",
     "parameters": {

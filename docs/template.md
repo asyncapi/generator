@@ -40,7 +40,7 @@ return (
 
 This file is necessary even if your template doesn't need any external dependencies. Before the generation process runs, the Generator must install the template into its dependencies, and `package.json` is necessary to identify the template name.
 
-Following block shows an example `package.json` file and select dependencies:
+Following block shows an example `package.json` file and some select dependencies:
 
 ```json
 "generator": {
@@ -57,6 +57,11 @@ Following block shows an example `package.json` file and select dependencies:
     "@asyncapi/generator-react-sdk": "^0.2.16"
   },
 ```
+
+Templates are reusable. Same template can be modified and used for different purposes. [Hooks](hooks.md) allow Templates to perform multiple tasks. Hooks are fractions of code that can be added to your Template. They can be plugged-in into the generation process to perform multiple actions. For example, we can configure a hook that generates a pdf after the generation process is completed. 
+
+
+
 
 
 

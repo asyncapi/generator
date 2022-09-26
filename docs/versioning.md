@@ -5,7 +5,7 @@ weight: 60
 
 The generator tool generates whatever you want, as long as it can be defined in a template, based on the [AsyncAPI file](asyncapi-file.md). On the other hand, a **template** is a file or group of files that specify the kind of output you expect from using the generator's features. For example, you may want to use the [nodejs template](https://github.com/asyncapi/nodejs-template) to generate boilerplate code for your message-based APIs.
 
-Templates are dependent on the generators' features. For example, the template you want to use may be compatible with the latest version of the generator but incompatible with the previous versions. Check the configuration file or ReadMe of the template to see the version of the Generator it supports. The generator has a `isTemplateCompatible` function that checks if the template is compatible with the version of generator you want to use. If the template isn't compatible, you will see an error output similar to the following on your terminal:
+Templates are dependent on the generators' features. For example, the template you want to use may be compatible with the latest generator version but incompatible with the previous versions. Check the configuration file or ReadME of the template to see the version of the generator it supports. The generator has an `isTemplateCompatible` function that checks if the template is compatible with the version of the generator you want to use. If the template isn't compatible, you will see a terminal error output similar to the following:
 ```
 Something went wrong:
 Error: This template is not compatible with the current version of the generator (${generatorVersion}). This template is compatible with the following version range: ${generator}.`)

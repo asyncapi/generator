@@ -1,5 +1,6 @@
+---
 title: "Usage"
-weight: 20
+weight: 30
 ---
 
 There are two ways you can use the Generator. Find your preferred method below:
@@ -15,15 +16,15 @@ Usage: ag <asyncapi> <template> [<options>]
 
 - <options>:
   -V, --version                  output the Generator version
-  -d, --disable-hook [hooks...]  disable a specific hook type or hooks from given hook type
+  -d, --disable-hook [hooks...]  disable a specific hook type or hooks from a given hook type
   --debug                        enable more specific errors in the console
-  -i, --install                  installs the template and its dependencies (defaults to false)
+  -i, --install                  install the template and its dependencies (defaults to false)
   -n, --no-overwrite <glob>      glob or path of the file(s) to skip when regenerating
   -o, --output <outputDir>       directory to put the generated files (defaults to current directory)
   -p, --param <name=value>       additional parameters to pass to templates
   --force-write                  force writing of the generated files to a given directory even if it is a Git repository with unstaged files or not empty dir (defaults to false)
   --watch-template               watches the template directory and the AsyncAPI document, and re-generate the files when changes occur. Ignores the output directory. This flag should be used only for template development.
-  --map-base-url <url:folder>    maps all schema references from base url to local folder
+  --map-base-url <url:folder>    maps all schema references from base URL to local folder
   -h, --help                     display help for command
 ```
 
@@ -117,7 +118,7 @@ docker run --rm -it \
 -v [GENERATED FILES LOCATION]:/app/output \
 asyncapi/generator [COMMAND HERE]
 
-# Example that you can run inside generator directory after cloning this repository. First you specify mount in location of your AsyncAPI specification file and then you mount in directory where generation result should be saved.
+# Example that you can run inside generator directory after cloning this repository. First, you specify the mount in the location of your AsyncAPI specification file and then you mount it in the directory where the generation result should be saved.
 docker run --rm -it \
 -v ${PWD}/test/docs/dummy.yml:/app/asyncapi.yml \
 -v ${PWD}/output:/app/output \
@@ -133,7 +134,7 @@ npx -p @asyncapi/generator ag ./asyncapi.yaml @asyncapi/html-template
 ```
 
 ## Generator library
-Once you install the generator in your project, you can use the Generator to generate whateer you want. The following code snipper is an example of HTML generation using the official `@asyncapi/html-template` template and fetching the spec document from the server like `https://raw.githubusercontent.com/asyncapi/asyncapi/2.0.0/examples/2.0.0/streetlights.yml`:
+Once you install the generator in your project, you can use the Generator to generate whatever you want. The following code snippet is an example of HTML generation using the official `@asyncapi/html-template` template and fetching the spec document from the server like `https://raw.githubusercontent.com/asyncapi/asyncapi/2.0.0/examples/2.0.0/streetlights.yml`:
 
 ```js
 const path = require('path');
@@ -147,4 +148,4 @@ try {
 }
 ```
 
-See the [API documentation](api.md) for more example and full API reference information.
+See the [API documentation](api.md) for more examples and full API reference information.

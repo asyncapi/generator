@@ -15,7 +15,7 @@ Error: This template is not compatible with the current version of the generator
 
 It is better to lock a specific version of the template and the Generator if you plan to use the Generator CLI and a particular template in production. The differences between using the version of the Generator CLI you have installed and locking a certain version on production are demonstrated in the following code snippets.
 
-To generate HTML with latest AsyncAPI Generator CLI using the html-template.
+Generate HTML with the latest AsyncAPI Generator CLI using the html-template.
 ```
 npm install -g @asyncapi/generator
 ag asyncapi.yaml @asyncapi/html-template -o ./docs

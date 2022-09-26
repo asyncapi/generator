@@ -2,7 +2,7 @@ title: "Usage"
 weight: 20
 ---
 
-There are two ways you can use the Generator library. Find your preferred method below:
+There are two ways you can use the Generator. Find your preferred method below:
 - [Generator CLI](#generator-in-cli)
 - [Generator library](#generator-library)
 

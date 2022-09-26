@@ -1,6 +1,6 @@
 ---
 title: "Installation Guide"
-weight: 10
+weight: 20
 ---
 
 You can use the Generator library to generate whatever you want in your event-driven architecture apps. Find your preferred method below:

@@ -12,7 +12,7 @@ Before you install and use the AsyncAPI CLI and the generator library, ensure yo
 1. Node.js v12.16 and higher
 2. Npm v6.13.7 and higher
    
-To verify the versions of node and npm you have, run the following command on your terminal:
+To verify the versions of Node and Npm you have, run the following command on your terminal:
 ```
 npm -v
 ```
@@ -22,7 +22,7 @@ node -v
 
 If you don't have either Node or Npm installed, use the [official node.js installer](https://nodejs.org/en/download/).
 
-If you have the correct versions installed, proceed to the CLI installation guide below. Otherwise, upgrading the npm or node version is lower than the recommended versions specified above.
+If you have the correct versions installed, proceed to the CLI installation guide below. Otherwise, upgrading the Npm or Node version is lower than the recommended versions specified above.
 
 ## Generator CLI
 The CLI tool allows you to generate message-based API boilerplate code, documentation, or anything else you need as long as you specify it in your [template](template.md). To use the Generator via the CLI, you will need to install the AsyncApi Generator CLI tool in your local development environment.

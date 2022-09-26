@@ -5,7 +5,7 @@ weight: 60
 
 The generator tool generates whatever you want, as long as it can be defined in a template, based on the [AsyncAPI file](asyncapi-file.md). On the other hand, a **template** is a file or group of files that specify the kind of output you expect from using the generator's features. For example, you may want to use the [nodejs template](https://github.com/asyncapi/nodejs-template) to generate boilerplate code for your message-based APIs.
 
-Templates are dependent on the generators' features. For example, the template you want to use may be compatible with the latest version of the generator but incompatible with the previous versions. Check the configuration file or ReadMe of the template to see the version of the Generator it supports. The generator has a `isTemplateCompatible` function that checks if the template is compatible with the version of generator you want to use. If the template isn't compatible, you will see an error output similar to the following on your terminal:
+Templates are dependent on the generator's features. For example, the template you want to use may be compatible with the latest version of the generator but incompatible with the previous versions. Check the configuration file or ReadMe of the template to see the version of the Generator it supports. The generator has a `isTemplateCompatible` function that checks if the template is compatible with the version of generator you want to use. If the template isn't compatible, you will see an error output similar to the following on your terminal:
 ```
 Something went wrong:
 Error: This template is not compatible with the current version of the generator (${generatorVersion}). This template is compatible with the following version range: ${generator}.`)
@@ -15,7 +15,7 @@ Error: This template is not compatible with the current version of the generator
 
 It is better to lock to a specific version of the template and the Generator if you plan to use the Generator CLI and a particular template in production. The differences between using the version of the Generator CLI you have installed and locking a certain version on production are demonstrated in the following code snippets.
 
-To generate HTML with latest AsyncAPI Generator CLI using the html-template.
+To generate HTML with latest AsyncAPI Generator CLI using the [html-template](https://github.com/asyncapi/html-template).
 ```
 npm install -g @asyncapi/generator
 ag asyncapi.yaml @asyncapi/html-template -o ./docs

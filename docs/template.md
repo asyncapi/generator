@@ -17,7 +17,7 @@ The following section talks about the minimum components your template should ha
 
 The most basic template must have the following:
 
-### 1. template directory
+### 1. `template` directory
 
 This is where you keep the files that determine the output that will be generated. In other words, the Generator processes all the files stored in this directory.
 
@@ -36,7 +36,7 @@ return (
 
 > code sample developed is stored under template/index.js folder
 
-### 2. package.json
+### 2. `package.json` file
 
 This file is necessary even if your template doesn't need any external dependencies. Before the generation process runs, the Generator must install the template into its dependencies, and `package.json` is necessary to identify the template name.
 

@@ -29,7 +29,7 @@ The CLI tool allows you to generate message-based API boilerplate code, document
 
 ### Installation
 
-The recommended method to interact with the generator tool is by using its CLI. To use the CLI, install it  using the following `npm` command:
+The recommended method to interact with the generator tool is its CLI. To use the CLI, install it  using the following `npm` command:
 ```
 npm install -g @asyncapi/generator
 ```

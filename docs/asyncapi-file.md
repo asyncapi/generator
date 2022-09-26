@@ -21,7 +21,7 @@ In the following sections, you'll learn about the inner working of the generator
 3. The **parser** validates the **AsyncAPI file** using either the OpenAPI, RAML, or Avro schemas defined in the specification files. 
 4. If the **parser** determines that the **AsyncAPI file** is valid, it manipulates the original JSON/YAML specification file into functions and properties, bundling them together into an **asyncapi**(asyncapiDocument). 
 5. At this point, the **Generator** passes the **originalAsyncAPI** and the **asyncapi** which make up part of the **[template context](asyncapi-context.md)** to the **render engine**. 
-6. The **template context** is accessible to the template files that are passed to the [react](react-render-engine.md) or [nunjucks](nunjucks-render-engine.md) **render engines** by the **Generator**.
+6. The **template context** is accessible to the template files that are passed to either the [react](react-render-engine.md) or [nunjucks](nunjucks-render-engine.md) **render engines** by the **Generator**.
    
 ``` mermaid
 graph LR
@@ -75,9 +75,7 @@ function createAsyncapiFile(generator) {
 The Generator generates templates using the `generator.generateFromString` instance method, as shown in the sample code snippet below:
 
 ```
-generator
-  .generateFromString(asyncapiString)
-  .then(() => {
+generator.generateFromString(asyncapiString).then(() => {
     console.log('Done!');
   })
   .catch(console.error);

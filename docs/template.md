@@ -34,7 +34,7 @@ return (
 }
 ```
 
-> Code sample developed is stored under template/index.js folder
+> code sample developed is stored under template/index.js folder
 
 ### 2. package.json
 

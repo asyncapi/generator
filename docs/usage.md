@@ -134,7 +134,7 @@ npx -p @asyncapi/generator ag ./asyncapi.yaml @asyncapi/html-template
 ```
 
 ## Generator library
-Once you install the generator in your project, you can use the Generator to generate whatever you want. The following code snippet is an example of HTML generation using the official `@asyncapi/html-template` template and fetching the spec document from the server like `https://raw.githubusercontent.com/asyncapi/asyncapi/2.0.0/examples/2.0.0/streetlights.yml`:
+Once you install the generator in your project, you can use the Generator to generate whatever you want. The following code snippet is an example of HTML generation using the official `@asyncapi/html-template` template and fetching the spec document from the server using https://raw.githubusercontent.com/asyncapi/asyncapi/2.0.0/examples/2.0.0/streetlights.yml:
 
 ```js
 const path = require('path');

@@ -10,8 +10,8 @@ This file allows you to define your API structures and formats, including channe
 
 The files describing the message-driven API under the AsyncAPI Specification are represented as JSON objects and conform to JSON standards. YAML, a superset of JSON, can also be used to represent an A2S (AsyncAPI Specification) file.
 
-> If you want to learn how to create an AsyncAPI file or refresh your knowledge about the syntax and structure of the AsyncAPI file, check out our [latest specification documentation](https://www.asyncapi.com/docs/reference/specification/latest). 
-> If you want to check your specification file in a more readable way, you can copy and paste it to the [AsyncAPI Studio](https://studio.asyncapi.com/).
+> - To learn how to create an AsyncAPI file or refresh your knowledge about the syntax and structure of the AsyncAPI file, check out our [latest specification documentation](https://www.asyncapi.com/docs/reference/specification/latest). 
+> - You can develop, validate, convert the AsyncAPI file to the latest version or preview your AsyncAPI file in a more readable way using the [AsyncAPI Studio](https://studio.asyncapi.com/).
 
 In the following sections, you'll learn about the inner working of the generator, what happens once the specification file is fed to the generator, and how you can use the content of the specification file with either an AsyncAPI document or AsyncAPI string in your template.
 

@@ -8,20 +8,20 @@ There are two ways you can use the Generator. Find your preferred method below:
 
 ## Generator CLI
 ```bash
-Usage: ag [options] <asyncapi> <template>
+Usage: ag <asyncapi> <template> [<options>]
 
-- <asyncapi>: Local path or URL pointing to AsyncAPI specification file
+- <asyncapi>: Local path or URL pointing to AsyncAPI file for example https://bit.ly/asyncapi
 - <template>: Name of the generator template like for example @asyncapi/html-template or https://github.com/asyncapi/html-template
 
-Options:
-  -V, --version                  output the version number
+- <options>:
+  -V, --version                  output the Generator version
   -d, --disable-hook [hooks...]  disable a specific hook type or hooks from given hook type
   --debug                        enable more specific errors in the console
   -i, --install                  installs the template and its dependencies (defaults to false)
   -n, --no-overwrite <glob>      glob or path of the file(s) to skip when regenerating
-  -o, --output <outputDir>       directory where to put the generated files (defaults to current directory)
-  -p, --param <name=value>       additional param to pass to templates
-  --force-write                  force writing of the generated files to given directory even if it is a git repo with unstaged files or not empty dir (defaults to false)
+  -o, --output <outputDir>       directory to put the generated files (defaults to current directory)
+  -p, --param <name=value>       additional parameters to pass to templates
+  --force-write                  force writing of the generated files to a given directory even if it is a Git repository with unstaged files or not empty dir (defaults to false)
   --watch-template               watches the template directory and the AsyncAPI document, and re-generate the files when changes occur. Ignores the output directory. This flag should be used only for template development.
   --map-base-url <url:folder>    maps all schema references from base url to local folder
   -h, --help                     display help for command
@@ -30,7 +30,7 @@ Options:
 <details>
   <summary>Click here to read more about supported values for the <code>&lt;template&gt;</code> parameter.</summary>
   <br>
-  Templates are installable npm packages. Therefore, the value of <code>&lt;template&gt;</code> can be anything supported by <code>npm install</code>. Here's a summary of the possibilities:
+  All [templates](template.md) are installable npm packages. Therefore, the value of <code>&lt;template&gt;</code> can be anything supported by <code>npm install</code>. Here's a summary of the possibilities:
   <br><br>
   <pre><code>
   npm install [&lt;@scope&gt;/]&lt;name&gt;
@@ -47,12 +47,12 @@ Options:
 
 ### Global templates installed with yarn or npm
 
-You can preinstall templates globally. The generator first tries to locate template in local dependencies and then in location where global packages are installed.
+You can preinstall templates globally before installing the Generator CLI. The generator first tries to locate the template in local dependencies; if absent it checks where the global generator packages are installed.
 
 ```bash
 npm install -g @asyncapi/html-template@0.16.0
 ag asyncapi.yaml @asyncapi/html-template
-# The generator uses template in version 0.16.0 and not latest
+# The generator uses html-template version 0.16.0 and not the latest version.
 ```
 
 ### CLI usage examples
@@ -107,7 +107,9 @@ The parameter `--map-base-url` maps external schema references to local folders.
 
 ### CLI usage with Docker
 
-Install [Docker](https://docs.docker.com/get-docker/) first. Thanks to Docker you do not need Node.js even though the generator is written with it.
+We have a docker image that we regularly update and by using it you do not need to install Node.js or npm even though the generator is written with it since the Docker image has the Generator installed.
+
+Install [Docker](https://docs.docker.com/get-docker/) first, then use docker to pull and run the image using the following command:
 
 ```bash
 docker run --rm -it \
@@ -124,23 +126,14 @@ asyncapi/generator -o /app/output /app/asyncapi.yml @asyncapi/html-template --fo
 
 ### CLI usage with npx instead of npm
 
-The [npx](https://www.npmjs.com/package/npx) is very useful when you want to run Generator in CI/CD environment. In such a scenario, you do not want to install generator globally and most environments that provide Node.js and npm, also provide npx out of the box.
+[npx](https://www.npmjs.com/package/npx) is very useful when you want to run Generator in a CI/CD environment. In such a scenario, you do not want to install the generator globally and most environments that provide Node.js and Npm, also provide npx out of the box. Use the following npx command on your terminal:
 
 ```bash
 npx -p @asyncapi/generator ag ./asyncapi.yaml @asyncapi/html-template
 ```
 
 ## Generator library
-
-### Install the module
-
-```bash
-npm install @asyncapi/generator --save
-```
-
-### Example using the module 
-
-Below you can find an example of HTML generation using official `@asyncapi/html-template` template and fetching the spec document from server like `https://raw.githubusercontent.com/asyncapi/asyncapi/2.0.0/examples/2.0.0/streetlights.yml` :
+Once you install the generator in your project, you can use the Generator to generate whateer you want. The following code snipper is an example of HTML generation using the official `@asyncapi/html-template` template and fetching the spec document from the server like `https://raw.githubusercontent.com/asyncapi/asyncapi/2.0.0/examples/2.0.0/streetlights.yml`:
 
 ```js
 const path = require('path');
@@ -154,4 +147,4 @@ try {
 }
 ```
 
-See [API documentation](docs/api.md) for more example and full API reference information.
+See the [API documentation](api.md) for more example and full API reference information.

@@ -21,7 +21,7 @@ npm install -g @asyncapi/generator
 ag asyncapi.yaml @asyncapi/html-template -o ./docs
 ```
 
-To generate HTML using a partcular version of the AsyncAPI Generator CLI using the html-template.
+Generate HTML using a particular version of the AsyncAPI Generator CLI using the html-template.
 
 ```
 npm install -g @asyncapi/generator@0.50.0

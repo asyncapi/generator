@@ -47,7 +47,7 @@ There are several reasons why you might want to update your generator version:
 ```
 npm install -g @asyncapi/generator
 ```
-2. Your template might not be compatible with the latest generator version so you update to a specific version of the generator. Check the [version you need](https://github.com/asyncapi/generator/releases) and specify the version you want to use using the **@** symbol as shown in the command below:
+2. If your template isn't compatible with the latest generator version, you can update it to a specific version of the generator. Check the [version you need](https://github.com/asyncapi/generator/releases) and specify the version you want by using the **@** symbol as shown in the command below:
 ```
 npm install -g @asyncapi/generator@{version}
 ```

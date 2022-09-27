@@ -5,13 +5,15 @@ weight: 40
 
 # What's a Template?
 
-Template is a project designed to give you some form of output with the help of Generator and [AsyncAPI file](asyncapi-file.md) as an input. It is just a set of files where you describe what you would like the Generator to generate as an output. Some examples of these outputs can be things such as—code, documentation, diagrams, python and java applications, and much more. 
+A Template is a project that specifies what exactly you get as an output of the generation process using AsyncAPI Generator and the [AsyncAPI file](asyncapi-file.md). It is just a set of files where you describe what should be the result of the generation depending on the contents of the AsyncAPI file. Some examples of these outputs can be things such as: code, documentation, diagrams, python and java applications, and much more. 
 
-Template is an independent NodeJS project that’s not related to the Generator repository. AsyncAPI templates are managed, released and published separately. Generator uses the Arborist library. Arborist connects both Template and Generator, It is also the dependency tree manager for npm. 
+A template is an independent NodeJS project that’s not related to the `generator` repository. AsyncAPI templates are managed, released, and published separately. You can also create your own templates and manage them on your own.
 
-Arborist helps the generator fetch source code or hooks of the template and use that for the generation process. It also means templates are a set of customly designed files which can be stored anywhere like–in npm, on local during the development process, or just as a github repository. You can do anything that is already possible with `npm install`.
+The generator uses the official NPM library for installing NodeJS dependencies called [Arborist](https://www.npmjs.com/package/@npmcli/arborist). This means templates do not have to be published to package managers to use them, just make sure they have `package.json`.
 
-The following section talks about the minimum components your template should have in any given situation:
+Arborist helps the generator fetch the source code of the template and use that for the generation process. You can store template projects on a local drive during the development process, or just as a git repository. You can do anything that is already possible with `npm install`.
+
+The following section talks about the bare minimum components your template should have in any given situation:
 
 # Minimum for your template
 
@@ -34,33 +36,31 @@ return (
 }
 ```
 
-> Code sample developed is stored under template/index.js folder
+The above example of `template/index.js` file shows as a result of the generation process. A user of such a minimal template will receive `asyncapi.md` file with some hardcoded information and some dynamic information extracted for the AsyncAPI file.
+
+Important to notice is that every template must depend on [`@asyncapi/generator-react-sdk`](https://github.com/asyncapi/generator-react-sdk) package containing a set of basic components to use in template files.
 
 ### 2. `package.json` file
 
-This file is necessary even if your template doesn't need any external dependencies. Before the generation process runs, the Generator must install the template into its dependencies, and `package.json` is necessary to identify the template name.
+Before the generation process runs, the Generator must install the template into its dependencies, and `package.json` is necessary to identify the template name.
 
 Following block shows an example `package.json` file and some select dependencies:
 
 ```json
-"generator": {
-    "renderer": "react",
-    "parameters": {
-      "server": {
-        "description": "The server you want to use in the code.",
-        "required": true
-      },
-
-"dependencies": {
-    "@asyncapi/generator-filters": "^2.1.0",
-    "@asyncapi/generator-hooks": "^0.1.0",
-    "@asyncapi/generator-react-sdk": "^0.2.16"
+{
+  "name": "myTemplate",
+  "generator": {
+    "renderer": "react"
   },
+  "dependencies": {
+    "@asyncapi/generator-react-sdk": "^0.2.25"
+  }
+}
 ```
 
 > Whenever you make a change to package.json make sure you perform an update with `npm install` to synchronize with package-lock.json and validate if the file is not broken after your changes.
 
-Templates are reusable. Same template can be modified and used for different purposes. [Hooks](hooks.md) allow Templates to perform multiple tasks. Hooks are fractions of code that can be added to your Template. They can be plugged-in onto the generation process to perform multiple actions. For example, we can configure a hook that generates a pdf after the generation process is completed. 
+Templates are reusable. Same template can be modified and used for different purposes. [Hooks](hooks.md) enable templates to perform multiple tasks. Hooks are fractions of code that can be added to your Template. They can be plugged-in onto the generation process to perform multiple actions. For example, we can configure a hook that generates a pdf after the generation process is completed.
 
 Similarly, you can have your Template perform multiple actions before or after the generation process with the help of Hooks.
 
@@ -72,8 +72,11 @@ Each rendering engine has its own process and unique set of features. Hence, you
 
 The diagram below shows how Template functions in accordance with generator to produce an output in whatever format you want:
 
-> This section is under construction
+```mermaid
 
+flowchart
+   A --> C
+```
 
 
 

@@ -58,7 +58,18 @@ Following block shows an example `package.json` file and some select dependencie
   },
 ```
 
-Templates are reusable. Same template can be modified and used for different purposes. [Hooks](hooks.md) allow Templates to perform multiple tasks. Hooks are fractions of code that can be added to your Template. They can be plugged-in into the generation process to perform multiple actions. For example, we can configure a hook that generates a pdf after the generation process is completed. 
+> Note: Whenever you make a change to package.json make sure you perform an update with `npm install` to synchronize with package-lock.json and validate if the file is not broken after your changes.
+
+Templates are reusable. Same template can be modified and used for different purposes. [Hooks](hooks.md) allow Templates to perform multiple tasks. Hooks are fractions of code that can be added to your Template. They can be plugged-in onto the generation process to perform multiple actions. For example, we can configure a hook that generates a pdf after the generation process is completed. 
+
+Similarly, you can have your Template perform multiple actions before or after the generation process with the help of Hooks.
+
+Render engines are actually responsible for generating–code, documentation, markdown, diagrams, or anything else you may have specified to be generated as output. AsyncAPI templates support multiple render engines including Nunjucks and React. 
+
+Each rendering engine has its own process and unique set of features. Hence, your choice of render engine greatly affects how you write a Template. Even though you are free to use the render engine of your choice, AsyncAPI recommends you to use React render engine for your projects.
+
+
+
 
 
 

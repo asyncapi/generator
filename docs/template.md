@@ -58,7 +58,7 @@ Following block shows an example `package.json` file and some select dependencie
   },
 ```
 
-> Note: Whenever you make a change to package.json make sure you perform an update with `npm install` to synchronize with package-lock.json and validate if the file is not broken after your changes.
+> Whenever you make a change to package.json make sure you perform an update with `npm install` to synchronize with package-lock.json and validate if the file is not broken after your changes.
 
 Templates are reusable. Same template can be modified and used for different purposes. [Hooks](hooks.md) allow Templates to perform multiple tasks. Hooks are fractions of code that can be added to your Template. They can be plugged-in onto the generation process to perform multiple actions. For example, we can configure a hook that generates a pdf after the generation process is completed. 
 
@@ -68,6 +68,7 @@ Render engines are actually responsible for generating–code, documentation, ma
 
 Each rendering engine has its own process and unique set of features. Hence, your choice of render engine greatly affects how you write a Template. Even though you are free to use the render engine of your choice, AsyncAPI recommends you to use React render engine for your projects.
 
+> AsyncAPI [React SDK](https://github.com/asyncapi/generator-react-sdk) is a set of components/functions to use React as render engine in the Generator.
 
 
 

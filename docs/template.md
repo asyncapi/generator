@@ -34,7 +34,7 @@ return (
 }
 ```
 
-> code sample developed is stored under template/index.js folder
+> Code sample developed is stored under template/index.js folder
 
 ### 2. `package.json` file
 
@@ -64,13 +64,15 @@ Templates are reusable. Same template can be modified and used for different pur
 
 Similarly, you can have your Template perform multiple actions before or after the generation process with the help of Hooks.
 
-Render engines are actually responsible for generating–code, documentation, markdown, diagrams, or anything else you may have specified to be generated as output. AsyncAPI templates support multiple render engines including Nunjucks and React. 
+Render engines are actually responsible for generating–code, documentation, markdown, diagrams, or anything else you may have specified to be generated as output. AsyncAPI templates support multiple render engines including both [Nunjucks](nunjucks-render-engine.md) and [React](react-render-engine.md). 
 
 Each rendering engine has its own process and unique set of features. Hence, your choice of render engine greatly affects how you write a Template. Even though you are free to use the render engine of your choice, AsyncAPI recommends you to use React render engine for your projects.
 
 > AsyncAPI [React SDK](https://github.com/asyncapi/generator-react-sdk) is a set of components/functions to use React as render engine in the Generator.
 
+The diagram below shows how Template functions in accordance with generator to produce an output in whatever format you want:
 
+> This section is under construction
 
 
 

@@ -9,8 +9,10 @@ describe('Template Configuration Validator', () => {
   let asyncapiDocument;
 
   beforeAll(async () => {
-    const { parse } = jest.requireActual('@asyncapi/parser');
-    asyncapiDocument = await parse(dummyYAML);
+    const { Parser } = jest.requireActual('@asyncapi/parser');
+    const parser = new Parser();
+    const { document } = await parser.parse(dummyYAML);
+    asyncapiDocument = document;
   });
       
   it('Validation doesn\'t throw errors if params are not passed and template has no config', () => {

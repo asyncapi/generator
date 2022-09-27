@@ -72,12 +72,7 @@ Each rendering engine has its own process and unique set of features. Hence, you
 
 The diagram below shows how Template functions in accordance with generator to produce an output in whatever format you want:
 
-```mermaid
-
-flowchart
-   A --> C
-```
-
+> This section is under construction
 
 
 

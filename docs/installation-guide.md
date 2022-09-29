@@ -58,7 +58,7 @@ npm install -g @asyncapi/generator@{version}
 ### Uninstall Generator CLI
 To uninstall the generator, use the following command:
 ```
-npm uninstall @asyncapi/generator -gnpm uninstall @asyncapi/generator -g
+npm uninstall @asyncapi/cli -g
 ``` 
 
 > :memo: **Note:**  To use the Generator CLI in your CI/CD pipeline to automate whatever you generate for your event-driven architecture apps, install the AsyncAPI Generator CLI in your pipeline. If you are using GitHub Actions, use [Github Actions for Generator](https://github.com/marketplace/actions/generator-for-asyncapi-documents).

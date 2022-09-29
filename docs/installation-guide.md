@@ -31,7 +31,7 @@ The AsyncAPI CLI tool allows you to do many different things with AsyncAPI files
 
 The recommended method to interact with the generator tool is its CLI. To use the CLI, install it  using the following `npm` command:
 ```
-npm install -g @asyncapi/generator
+npm install -g @asyncapi/cli
 ```
 
 To install a specific version of the generator tool, pass the version during installation:

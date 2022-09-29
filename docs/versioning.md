@@ -18,7 +18,7 @@ It is better to lock a specific version of the template and the Generator if you
 Generate HTML with the latest AsyncAPI Generator CLI using the html-template.
 ```
 npm install -g @asyncapi/generator
-ag asyncapi.yaml @asyncapi/html-template -o ./docs
+asyncapi generate fromTemplate asyncapi.yaml @asyncapi/html-template -o ./docs
 ```
 
 Generate HTML using a particular version of the AsyncAPI Generator CLI using the html-template.

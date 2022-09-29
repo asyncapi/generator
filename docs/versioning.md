@@ -11,7 +11,7 @@ Something went wrong:
 Error: This template is not compatible with the current version of the generator (${generatorVersion}). This template is compatible with the following version range: ${generator}.`)
 ```
 
-> Use the following command to check the version of the AsyncAPI Generator CLI you have installed;  `ag --version`
+> Use the following command to check the version of the AsyncAPI CLI you have installed;  `asyncapi --version`
 
 It is better to lock a specific version of the template and the Generator if you plan to use the Generator CLI and a particular template in production. The differences between using the version of the Generator CLI you have installed and locking a certain version on production are demonstrated in the following code snippets.
 

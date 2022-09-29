@@ -24,7 +24,7 @@ asyncapi generate fromTemplate asyncapi.yaml @asyncapi/html-template -o ./docs
 Generate HTML using a particular version of the AsyncAPI Generator CLI using the html-template.
 
 ```
-npm install -g @asyncapi/generator@0.50.0
+npm install -g @asyncapi/cli@0.20.0
 asyncapi generate fromTemplate asyncapi.yaml @asyncapi/html-template@0.7.0 -o ./docs
 ```
 

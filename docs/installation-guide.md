@@ -51,7 +51,7 @@ npm install -g @asyncapi/cli
 ```
 2. If your template isn't compatible with the latest generator version, you can update it to a specific version of the generator. Check the [version you need](https://github.com/asyncapi/generator/releases) and specify the version you want by using the **@** symbol as shown in the command below:
 ```
-npm install -g @asyncapi/generator@{version}
+npm install -g @asyncapi/cli@{version}
 ```
 > Sometimes you have to force additional npm installation like this: `npm install -g --force @asyncapi/cli`
 

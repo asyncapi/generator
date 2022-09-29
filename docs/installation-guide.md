@@ -47,7 +47,7 @@ npm install -g @asyncapi/cli@{version}
 There are several reasons why you might want to update your generator version:
 1. You have the generator tool installed but want to use the latest released features. To upgrade to the latest version, use the command below:
 ```
-npm install -g @asyncapi/generator
+npm install -g @asyncapi/cli
 ```
 2. If your template isn't compatible with the latest generator version, you can update it to a specific version of the generator. Check the [version you need](https://github.com/asyncapi/generator/releases) and specify the version you want by using the **@** symbol as shown in the command below:
 ```

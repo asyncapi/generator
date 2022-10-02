@@ -108,7 +108,7 @@ The parameter `--map-base-url` maps external schema references to local folders.
 
 ### CLI usage with Docker
 
-We have a docker image that we regularly update and by using it you do not need to install Node.js or npm even though the generator is written with it since the Docker image has the Generator installed.
+When using our docker image that we regularly update, you do not need to install Node.js or npm, even though the Generator is written with it since the Docker image has the Generator installed.
 
 Install [Docker](https://docs.docker.com/get-docker/) first, then use docker to pull and run the image using the following command:
 

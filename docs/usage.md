@@ -127,7 +127,9 @@ asyncapi/generator -o /app/output /app/asyncapi.yml @asyncapi/html-template --fo
 
 ### CLI usage with npx instead of npm
 
-[npx](https://www.npmjs.com/package/npx) is very useful when you want to run Generator in a CI/CD environment. In such a scenario, you do not want to install the generator globally and most environments that provide Node.js and Npm, also provide npx out of the box. Use the following npx command on your terminal:
+[npx](https://www.npmjs.com/package/npx) is very useful when you want to run Generator in a CI/CD environment. In such a scenario, do not install the generator globally because most environments that provide Node.js and Npm, also provide npx out of the box. 
+
+Use the following npx command on your terminal:
 
 ```bash
 npx -p @asyncapi/generator ag ./asyncapi.yaml @asyncapi/html-template

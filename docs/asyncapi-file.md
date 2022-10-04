@@ -11,7 +11,7 @@ This document allows you to define your API structures and formats, including ch
 The documents describing the message-driven API under the AsyncAPI specification are represented as JSON objects and conform to JSON standards. YAML, a superset of JSON, can also be used to represent an API.
 
 > - To learn how to create an AsyncAPI document or refresh your knowledge about the syntax and structure of the AsyncAPI document, check out our [latest specification documentation](https://www.asyncapi.com/docs/reference/specification/latest). 
-> - You can develop, validate, convert the AsyncAPI file to the latest version or preview your AsyncAPI file in a more readable way using the [AsyncAPI Studio](https://studio.asyncapi.com/).
+> - You can develop, validate, convert the AsyncAPI document to the latest version or preview your AsyncAPI document in a more readable way using the [AsyncAPI Studio](https://studio.asyncapi.com/).
 
 In the following sections, you'll learn about the inner working of the generator, what happens once the AsyncAPI document is fed to the generator, and how you can access the content of the document in your template.
 
@@ -39,7 +39,7 @@ graph LR
   ```
 The AsyncAPI document's content is accessible to you while writing your template in two distinct ways:
 * The `originalAsyncAPI`, which is a stringified version of the AsyncAPI document provided as input, without any modifications.
-2. The `asyncapi` (`AsyncAPIDocument`) which is an object with a set of helper functions, that comes as a result of the `Parser` manipulating the `originalAyncAPI` .The `asyncapi` functions make it easier to access the contents of AsyncAPI documents in your templates.
+* The `asyncapi` (`AsyncAPIDocument`) which is an object with a set of helper functions, that comes as a result of the `Parser` manipulating the `originalAyncAPI` .The `asyncapi` functions make it easier to access the contents of AsyncAPI documents in your templates.
 
 > Check out the structure of the [AsyncAPIDocument](https://github.com/asyncapi/parser-js/blob/master/API.md#module_@asyncapi/parser+AsyncAPIDocument)
 
@@ -76,7 +76,7 @@ function createAsyncapiFile(generator) {
 ### Method 2: `asyncapi` and template
 A major advantage of using `asyncapi` (which is an instance of `AsyncAPIDocument`) is that it enables the developer to easily access the AsyncAPI documents' content by simply invoking a function. 
 
-Once the specification YAML or JSON file is passed as an input to the Generator, it is passed on to the [Parser](parser.md) library, which then manipulates the asyncAPI file to a more structured document called the `AsyncAPIDocument`. Once the parser returns the document to the generator, the generator passes it to the render engine. The render engine makes the `AsyncAPIDocument` object accessible to your template through the `asyncapi` variable.
+Once the specification YAML or JSON document is passed as an input to the Generator, it is passed on to the [Parser](parser.md) library, which then manipulates the asyncAPI document to a more structured document called the `AsyncAPIDocument`. Once the parser returns the document to the generator, the generator passes it to the render engine. The render engine makes the `AsyncAPIDocument` object accessible to your template through the `asyncapi` variable.
 
 For example, if you want to extract the version of your API from AsyncAPI document, you can do that by calling `asyncapi.version()`. You can say that this one is easy to access from JSON objects, but there are more complex scenarios. For example, to get access to all messages from all channels, you can call `asyncapi.allMessages()` instead of iterating through a complex JSON object on your own.
 

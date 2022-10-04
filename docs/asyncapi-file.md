@@ -16,7 +16,7 @@ The files describing the message-driven API under the AsyncAPI Specification are
 In the following sections, you'll learn about the inner working of the generator, what happens once the specification file is fed to the generator, and how you can use the content of the specification file with either an AsyncAPI document or AsyncAPI string in your template.
 
 ## The generation process
-1. The **Generator** receives the **AsyncAPI file** as an input. 
+1. The **Generator** receives the **AsyncAPI document** as an input. 
 2. The Generator sends to the **[Parser](parser.md)** a stringified version of the original specification file to validate the JSON/YAML **AsyncAPI file**.
 3. The **parser** validates the **AsyncAPI file** using either the OpenAPI, RAML, or Avro schemas defined in the specification files. 
 4. If the **parser** determines that the **AsyncAPI file** is valid, it manipulates the original JSON/YAML specification file into functions and properties, bundling them together into an **asyncapi**(asyncapiDocument). 

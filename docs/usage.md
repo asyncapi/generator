@@ -11,7 +11,7 @@ There are two ways to use the Generator:
 ```bash
 Usage: asyncapi generate fromTemplate <asyncapi> <template> [<options>]
 
-- <asyncapi>: Local path or URL pointing to AsyncAPI file for example https://bit.ly/asyncapi
+- <asyncapi>: Local path or URL pointing to AsyncAPI document for example https://bit.ly/asyncapi
 - <template>: Name of the generator template like for example @asyncapi/html-template or https://github.com/asyncapi/html-template
 
 - <options>:

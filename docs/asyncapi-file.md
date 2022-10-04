@@ -72,14 +72,6 @@ function createAsyncapiFile(generator) {
   fs.writeFileSync(asyncapiOutputLocation, asyncapi);
 ```
 
-The Generator generates templates using the `generator.generateFromString` instance method, as shown in the sample code snippet below:
-
-```
-generator.generateFromString(asyncapiString).then(() => {
-    console.log('Done!');
-  })
-  .catch(console.error);
-  ```
 
 ### Method 2: `asyncapi` and template
 A major advantage of using `asyncapi` (which is an instance of `AsyncAPIDocument`) is that it enables the developer to easily access the AsyncAPI documents' content by simply invoking a function. 

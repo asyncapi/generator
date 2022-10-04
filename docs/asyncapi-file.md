@@ -13,7 +13,7 @@ The documents describing the message-driven API under the AsyncAPI specification
 > - To learn how to create an AsyncAPI document or refresh your knowledge about the syntax and structure of the AsyncAPI document, check out our [latest specification documentation](https://www.asyncapi.com/docs/reference/specification/latest). 
 > - You can develop, validate, convert the AsyncAPI file to the latest version or preview your AsyncAPI file in a more readable way using the [AsyncAPI Studio](https://studio.asyncapi.com/).
 
-In the following sections, you'll learn about the inner working of the generator, what happens once the AsyncAPI document is fed to the generator, and how you can access the content of the document.
+In the following sections, you'll learn about the inner working of the generator, what happens once the AsyncAPI document is fed to the generator, and how you can access the content of the document in your template.
 
 ## The generation process
 1. The **Generator** receives the **AsyncAPI document** as an input. 

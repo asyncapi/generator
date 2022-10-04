@@ -3,7 +3,7 @@ title: "Introduction"
 weight: 10
 ---
 
-The AsyncAPI Generator is a tool that generates anything you want using the **[AsyncAPI file](asyncapi-file.md)** and **[template](template.md)** that are supplied as inputs to the AsyncAPI Generator CLI. The Generator was built with extensibility in mind; you can use the generator to generate anything you want provided that it can be defined in a template, such as code, diagrams, markdown files, microservices, and applications. A number of [community-maintained templates](https://github.com/search?q=topic%3Aasyncapi+topic%3Agenerator+topic%3Atemplate) are now available for immediate usage.
+The AsyncAPI Generator is a tool that generates anything you want using the **[AsyncAPI document](asyncapi-file.md)** and **[template](template.md)** that are supplied as inputs to the AsyncAPI Generator. The Generator was built with extensibility in mind; you can use the generator to generate anything you want, provided that it can be defined in a template, such as code, diagrams, markdown files, microservices, and applications. A number of [community-maintained templates](https://github.com/search?q=topic%3Aasyncapi+topic%3Agenerator+topic%3Atemplate) are now available for immediate usage.
 
 ### Generator use cases 
 - Generation of interactive and understandable API documentation
@@ -13,11 +13,11 @@ The AsyncAPI Generator is a tool that generates anything you want using the **[A
 ### Generator advantages
 - Quick set up and easy to use on a regular basis
 - Effortless generation of complex documents
-- List of readily available AsyncAPI templates
+- Number of AsyncAPI templates
 - Support for render engines such as React and Nunjucks
 
 ### Generation process
-1. The **Generator** receives the **[template](template.md)** and **[AsyncAPI file](asyncapi-file.md)** as inputs. 
+1. The **Generator** receives the **[template](template.md)** and **[AsyncAPI document](asyncapi-file.md)** as inputs. 
 2. The **Generator** sends to the **[Parser](parser.md)** the stringified version of the original specification file in order to validate the JSON/YAML **AsyncAPI file**.
 3. The **parser** uses additional plugins such as the OpenAPI, RAML, or Avro schemas to validate custom schemas of message payloads defined in the **AsyncAPI file**.
 4. If the **parser** determines that the original **AsyncAPI file** is valid, it then manipulates the original JSON/YAML **AsyncAPI file** and returns functions and properties that enable easier access to file contents, bundling them together into an **asyncapi**(asyncapiDocument). 
@@ -27,7 +27,7 @@ The AsyncAPI Generator is a tool that generates anything you want using the **[A
 
 > You can generate anything you want using the Generator as long as it can be defined in a **template**.
 
-The diagram below depicts the entire process of passing the **template** and **AsyncAPI file** as parameters to the AsyncAPI Generator CLI tool, how the Generator uses these inputs to generate the desired output, and example outputs you can get from the render engine.
+The diagram below depicts the entire process of passing the **template** and **AsyncAPI document** to the AsyncAPI Generator tool, how the Generator uses these inputs to generate the desired output, and example outputs you can get from the render engine.
 
 ``` mermaid
 graph LR
@@ -35,7 +35,7 @@ graph LR
     B{Generator}
     C[Parser]
     D[Render Engine]
-    E[AsyncAPI File] --> B
+    E[AsyncAPI Document] --> B
     F[Template] --> B
   subgraph Generator Library
     B -->| asyncapiString | C

@@ -14,7 +14,6 @@ The AsyncAPI Generator is a tool that generates anything you want using the **[A
 - Quick set up and easy to use on a regular basis
 - Effortless generation of complex documents
 - Number of AsyncAPI templates
-- Support for render engines such as React and Nunjucks
 
 ### Generation process
 1. The **Generator** receives the **[template](template.md)** and **[AsyncAPI document](asyncapi-file.md)** as inputs. 

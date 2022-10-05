@@ -15,7 +15,7 @@ The documents describing the message-driven API under the AsyncAPI specification
 
 In the following sections, you'll learn about the inner working of the generator, what happens once the AsyncAPI document is fed to the generator, and how you can access the content of the document in your template.
 
-## The generation process
+## The generation process related to AsyncAPI document
 1. The **Generator** receives the **AsyncAPI document** as an input. 
 2. The Generator sends to the **[Parser](parser.md)** a stringified version of the original **AsyncAPI document** to validate and parse it.
 3. The **Parser** validates the **AsyncAPI document** using additional schema-related plugins, either the OpenAPI schema, RAML data types, or Avro schema. 

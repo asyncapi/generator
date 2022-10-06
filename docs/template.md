@@ -5,7 +5,14 @@ weight: 40
 
 # What's a Template?
 
-A Template is a project that specifies what exactly you get as an output of the generation process using AsyncAPI Generator and the [AsyncAPI file](asyncapi-file.md). It is just a set of files where you describe what should be the result of the generation depending on the contents of the AsyncAPI file. Some examples of these outputs can be things such as: code, documentation, diagrams, python and java applications, and much more. 
+A Template is a project that specifies what exactly you get as an output of the generation process using AsyncAPI Generator and the [AsyncAPI file](asyncapi-file.md). It is just a set of files where you describe what should be the result of the generation depending on the contents of the AsyncAPI file. 
+
+Some examples of these outputs can be things such as:
+
+- Code
+- Documentation
+- Markdown diagrams
+- Python and java applications
 
 A template is an independent NodeJS project that’s not related to the `generator` repository. AsyncAPI templates are managed, released, and published separately. You can also create your own templates and manage them on your own.
 

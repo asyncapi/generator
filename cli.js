@@ -4,6 +4,7 @@ const path = require('path');
 const os = require('os');
 const program = require('commander');
 const xfs = require('fs.extra');
+const { DiagnosticSeverity } = require('@asyncapi/parser/cjs');
 const packageInfo = require('./package.json');
 const Generator = require('./lib/generator');
 const Watcher = require('./lib/watcher');
@@ -64,8 +65,10 @@ const mapBaseUrlParser = v => {
 const showError = err => {
   console.error(red('Something went wrong:'));
   console.error(red(err.stack || err.message));
-  if (err.errors) console.error(red(JSON.stringify(err.errors)));
-  if (err.validationErrors) console.error(red(JSON.stringify(err.validationErrors, null, 4)));
+  if (err.diagnostics) {
+    const errorDiagnostics = err.diagnostics.filter(diagnostic => diagnostic.severity === DiagnosticSeverity.Error);
+    console.error(red(`Errors:\n${JSON.stringify(errorDiagnostics, undefined, 2)}`));
+  }
 };
 const showErrorAndExit = err => {
   showError(err);

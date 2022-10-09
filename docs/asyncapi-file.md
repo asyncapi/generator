@@ -15,11 +15,11 @@ The documents describing the message-driven API under the AsyncAPI specification
 
 In the following sections, you'll learn about the inner working of the generator, what happens once the AsyncAPI document is fed to the generator, and how you can access the content of the document in your template.
 
-## The generation process related to AsyncAPI document
-1. The **Generator** receives the **AsyncAPI document** as an input. 
-2. The Generator sends to the **[Parser](parser.md)** a stringified version of the original **AsyncAPI document** to validate and parse it.
-3. The **Parser** validates the **AsyncAPI document** using additional schema-related plugins, either the OpenAPI schema, RAML data types, or Avro schema. 
-4. If the **Parser** determines that the **AsyncAPI document** is valid, it manipulates the original JSON/YAML and provides a set of helper functions in return, bundling them together into an **asyncapi** variable that is an instance of [**AsyncAPIDocument**](https://github.com/asyncapi/parser-js/blob/master/API.md#module_@asyncapi/parser+AsyncAPIDocument). 
+## AsyncAPI document generation process
+1. The **Generator** receives the **AsyncAPI Document** as an input. 
+2. The Generator sends to the **[Parser](parser.md)** the **asyncapiString** which is a stringified version of the original **AsyncAPI Document** to validate and parse it.
+3. The **Parser** validates the **AsyncAPI Document** using additional schema-related plugins, either the OpenAPI schema, RAML data types, or Avro schema. 
+4. If the **Parser** determines that the **AsyncAPI Document** is valid, it manipulates the original JSON/YAML document and provides a set of helper functions in return, bundling them together into an **asyncapi** variable that is an instance of [**AsyncAPIDocument**](https://github.com/asyncapi/parser-js/blob/master/API.md#module_@asyncapi/parser+AsyncAPIDocument). 
 5. At this point, the **Generator** passes the **originalAsyncAPI** and the **asyncapi** which make up part of the **[Template Context](asyncapi-context.md)** to the **Render Engine**. 
 6. The **Template Context** is accessible to the template files that are passed to either the [react](react-render-engine.md) or [nunjucks](nunjucks-render-engine.md) **Render Engines**.
    
@@ -40,8 +40,6 @@ graph LR
 The AsyncAPI document's content is accessible to you while writing your template in two distinct ways:
 * The `originalAsyncAPI`, which is a stringified version of the AsyncAPI document provided as input, without any modifications.
 * The `asyncapi` (`AsyncAPIDocument`) which is an object with a set of helper functions, that comes as a result of the `Parser` manipulating the `originalAyncAPI` .The `asyncapi` functions make it easier to access the contents of AsyncAPI documents in your templates.
-
-> Check out the structure of the [AsyncAPIDocument](https://github.com/asyncapi/parser-js/blob/master/API.md#module_@asyncapi/parser+AsyncAPIDocument)
 
 In the following sections, you will learn how to use either the **originalAsyncAPI** or the **asyncapi** in your template.
 

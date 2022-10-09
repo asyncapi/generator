@@ -17,9 +17,9 @@ The AsyncAPI Generator is a tool that generates anything you want using the **[A
 
 ### Generation process
 1. The **Generator** receives the **[Template](template.md)** and **[AsyncAPI Document](asyncapi-file.md)** as inputs. 
-2. The **Generator** sends to the **[Parser](parser.md)** the stringified version of the original specification document in order to validate the JSON/YAML **AsyncAPI Document**.
+2. The **Generator** sends to the **[Parser](parser.md)** the **asyncapiString** which is a stringified version of the original **AsyncAPI Document**.
 3. The **Parser** uses additional plugins such as the OpenAPI, RAML, or Avro schemas to validate custom schemas of message payloads defined in the **AsyncAPI Document**.
-4. If the **Parser** determines that the original **AsyncAPI Document** is valid, it manipulates the original JSON/YAML **AsyncAPI Document** and returns functions and properties making it easier to access to the content of the original document.These functions and properties are bundled together into an **asyncapi**(asyncapiDocument).
+4. If the **Parser** determines that the original **AsyncAPI Document** is valid, it manipulates the document and returns functions and properties making it easier to access to the content of the original **AsyncAPI Document**.These functions and properties are bundled together into an **asyncapi**(asyncapiDocument).
 5. At this point, the **Generator** passes the **asyncapi**, the **originalAsyncAPI**, and the **params** which collectively make up the **[Template Context](asyncapi-context.md)** to the **Render Engine**. 
 6. AsyncAPI has two **Render Engines**([react](react-render-engine.md) and [nunjucks](nunjucks-render-engine.md). Depending on which one you've specified in your `package.json`, the generator knows the right **Render Engine** to pass both the **Template Files** and the **Template Context**.
 7. Once the **Render Engine** receives the **Template Files** and the **Template Context**, it injects all the dynamic values in your react or nunjucks based **Template Files** using the **Template Context**. As a result, the **Render Engine** generates **markdown**, **pdf**, **boilerplate code**, and **anything else** you specified to be generated as output.

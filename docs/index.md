@@ -3,7 +3,7 @@ title: "Introduction"
 weight: 10
 ---
 
-The AsyncAPI Generator is a tool that generates anything you want using the **[AsyncAPI Document](asyncapi-file.md)** and **[template](template.md)** that are supplied as inputs to the AsyncAPI CLI. The Generator was built with extensibility in mind; you can use the generator to generate anything you want, provided that it can be defined in a template, such as code, diagrams, markdown files, microservices, and applications. A number of [community-maintained templates](https://github.com/search?q=topic%3Aasyncapi+topic%3Agenerator+topic%3Atemplate) are now available for immediate usage.
+The AsyncAPI Generator is a tool that generates anything you want using the **[AsyncAPI Document](asyncapi-file.md)** and **[Template](template.md)** that are supplied as inputs to the AsyncAPI CLI. The Generator was built with extensibility in mind; you can use the generator to generate anything you want, provided that it can be defined in a template, such as code, diagrams, markdown files, microservices, and applications. A number of [community-maintained templates](https://github.com/search?q=topic%3Aasyncapi+topic%3Agenerator+topic%3Atemplate) are now available for immediate usage.
 
 ### Generator use cases 
 - Generation of interactive and understandable API documentation
@@ -16,7 +16,7 @@ The AsyncAPI Generator is a tool that generates anything you want using the **[A
 - Number of community maintained AsyncAPI templates
 
 ### Generation process
-1. The **Generator** receives the **[template](template.md)** and **[AsyncAPI Document](asyncapi-file.md)** as inputs. 
+1. The **Generator** receives the **[Template](template.md)** and **[AsyncAPI Document](asyncapi-file.md)** as inputs. 
 2. The **Generator** sends to the **[Parser](parser.md)** the stringified version of the original specification document in order to validate the JSON/YAML **AsyncAPI Document**.
 3. The **Parser** uses additional plugins such as the OpenAPI, RAML, or Avro schemas to validate custom schemas of message payloads defined in the **AsyncAPI Document**.
 4. If the **Parser** determines that the original **AsyncAPI Document** is valid, it manipulates the original JSON/YAML **AsyncAPI Document** and returns functions and properties making it easier to access to the content of the original document.These functions and properties are bundled together into an **asyncapi**(asyncapiDocument).

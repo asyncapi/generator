@@ -58,6 +58,13 @@ Each rendering engine has its own process and unique set of features. Hence, you
 
 > AsyncAPI [React SDK](https://github.com/asyncapi/generator-react-sdk) is a set of components/functions to use React as render engine in the Generator.
 
+AsyncAPI has a list of readily available templates you can use to enhance your generation process. These templates are stored as github repositories on AsyncAPI organization’s](https://github.com/asyncapi) official github profile.
+Some of these templates are maintained by various third party organizations. The readme file usually contains this information along with additional stuff such as–configuration options that user can pass to template, usage, technical requirements, and usage etc.
+
+
+
+
+
 
 
 

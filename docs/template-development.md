@@ -3,7 +3,7 @@ title: "Template"
 weight: 50
 ---
 
-# Minimum for your template
+# Minimum template requirements
 
 The following section talks about the bare minimum components your template should have in any given situation:
 
@@ -58,9 +58,6 @@ Each rendering engine has its own process and unique set of features. Hence, you
 
 > AsyncAPI [React SDK](https://github.com/asyncapi/generator-react-sdk) is a set of components/functions to use React as render engine in the Generator.
 
-The diagram below shows how Template functions in accordance with generator to produce an output in whatever format you want:
-
-> This section is under construction
 
 
 

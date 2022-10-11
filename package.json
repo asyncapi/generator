@@ -1,6 +1,6 @@
 {
   "name": "@asyncapi/generator",
-  "version": "1.9.4",
+  "version": "1.9.12",
   "description": "The AsyncAPI generator. It can generate documentation, code, anything!",
   "main": "./lib/generator.js",
   "bin": {
@@ -19,7 +19,6 @@
     "test:cli": "node cli.js ./test/docs/dummy.yml @asyncapi/html-template -o test/output --force-write --debug && test -e test/output/index.html",
     "test:cleanup": "rimraf \"test/temp\"",
     "docs": "jsdoc2md lib/generator.js > docs/api.md",
-    "release": "semantic-release",
     "docker:build": "docker build -t asyncapi/generator:latest .",
     "lint": "eslint --max-warnings 0 --config .eslintrc .",
     "lint:tpl:validator": "eslint --fix --config .eslintrc .github/templates-list-validator",
@@ -48,10 +47,10 @@
   "license": "Apache-2.0",
   "homepage": "https://github.com/asyncapi/generator",
   "dependencies": {
-    "@asyncapi/avro-schema-parser": "^1.0.0",
+    "@asyncapi/avro-schema-parser": "^1.1.0",
     "@asyncapi/generator-react-sdk": "^0.2.23",
     "@asyncapi/openapi-schema-parser": "^2.0.1",
-    "@asyncapi/parser": "^1.15.1",
+    "@asyncapi/parser": "^1.17.0",
     "@asyncapi/raml-dt-schema-parser": "^2.0.1",
     "@npmcli/arborist": "^2.2.4",
     "ajv": "^6.10.2",
@@ -77,41 +76,13 @@
     "typescript": "^4.2.2"
   },
   "devDependencies": {
-    "@semantic-release/commit-analyzer": "^8.0.1",
-    "@semantic-release/github": "^7.0.4",
-    "@semantic-release/npm": "^7.0.6",
-    "@semantic-release/release-notes-generator": "^9.0.1",
-    "all-contributors-cli": "^6.14.2",
-    "conventional-changelog-conventionalcommits": "^4.4.0",
     "eslint": "^6.8.0",
     "eslint-plugin-jest": "^23.8.2",
     "eslint-plugin-sonarjs": "^0.5.0",
     "jest": "^25.5.0",
-    "jsdoc-to-markdown": "^5.0.0",
+    "jsdoc-to-markdown": "^7.1.1",
     "markdown-toc": "^1.2.0",
     "rimraf": "^3.0.2",
-    "semantic-release": "^19.0.3",
     "unixify": "^1.0.0"
-  },
-  "release": {
-    "branches": [
-      "master"
-    ],
-    "plugins": [
-      [
-        "@semantic-release/commit-analyzer",
-        {
-          "preset": "conventionalcommits"
-        }
-      ],
-      [
-        "@semantic-release/release-notes-generator",
-        {
-          "preset": "conventionalcommits"
-        }
-      ],
-      "@semantic-release/npm",
-      "@semantic-release/github"
-    ]
   }
 }

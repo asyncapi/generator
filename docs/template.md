@@ -18,11 +18,3 @@ A template is an independent NodeJS project that’s not related to the `generat
 
 The generator uses the official NPM library for installing NodeJS dependencies called [Arborist](https://www.npmjs.com/package/@npmcli/arborist). This means templates do not have to be published to package managers to use them, just make sure they have `package.json`.
 Arborist helps the generator fetch the source code of the template and use that for the generation process. You can store template projects on a local drive during the development process, or just as a git repository. You can do anything that is already possible with `npm install`.
-
-
-
-
-
-
-
-

@@ -19,9 +19,9 @@ A template is an independent NodeJS project that’s not related to the `generat
 The generator uses the official NPM library for installing NodeJS dependencies called [Arborist](https://www.npmjs.com/package/@npmcli/arborist). This means templates do not have to be published to package managers to use them.
 Arborist helps the generator fetch the source code of the template and use that for the generation process. You can store template projects on a local drive during the development process, or just as a git repository. You can do anything that is already possible with `npm install`.
 
-AsyncAPI has a list of readily available templates you can use to enhance your generation process. These templates are stored as github repositories on [AsyncAPI organization’s](https://github.com/asyncapi) official github profile.
-
 ## List of official generator templates
+
+AsyncAPI has a list of readily available templates you can use to enhance your generation process. These templates are stored as github repositories on AsyncAPI organization’s official github profile.
 
 <!-- templates list is validated with GitHub Actions do not remove list markers -->
 <!-- TEMPLATES-LIST:START -->

@@ -32,7 +32,7 @@ Important to notice is that every template must depend on [`@asyncapi/generator-
 
 Before the generation process runs, the Generator must install the template into its dependencies, and `package.json` is necessary to identify the template name.
 
-Following block shows an example `package.json` file and some select dependencies:
+Following block shows an example `package.json` file with configuration pointing to [React Render Engine](react-render-engine.md) and necessary dependancies:
 
 ```json
 {

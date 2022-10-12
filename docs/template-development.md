@@ -48,14 +48,13 @@ Following block shows an example `package.json` file with configuration pointing
 
 > Whenever you make a change to package.json make sure you perform an update with `npm install` to synchronize with package-lock.json and validate if the file is not broken after your changes.
 
+## Render Engines
+
 Render engines are actually responsible for generating–code, documentation, markdown, diagrams, or anything else you may have specified to be generated as output. AsyncAPI templates support multiple render engines including both [Nunjucks](nunjucks-render-engine.md) and [React](react-render-engine.md). 
 
 Each rendering engine has its own process and unique set of features. Hence, your choice of render engine greatly affects how you write a Template. Even though you are free to use the render engine of your choice, AsyncAPI recommends you to use React render engine for your projects.
 
 > AsyncAPI [React SDK](https://github.com/asyncapi/generator-react-sdk) is a set of components/functions to use React as render engine in the Generator.
-
-AsyncAPI has a list of readily available templates you can use to enhance your generation process. These templates are stored as github repositories on [AsyncAPI organization’s](https://github.com/asyncapi) official github profile.
-Some of these templates are maintained by various third party organizations. The readme file usually contains this information along with additional stuff such as–configuration options that user can pass to template, usage, technical requirements, and usage etc.
 
 ## Hooks
 

@@ -48,6 +48,8 @@ Following block shows an example `package.json` file and some select dependencie
 
 > Whenever you make a change to package.json make sure you perform an update with `npm install` to synchronize with package-lock.json and validate if the file is not broken after your changes.
 
+## Hooks
+
 [Hooks](hooks.md) enable templates to perform multiple tasks. Hooks are fractions of code that can be added to your Template. They can be plugged-in onto the generation process to perform multiple actions. For example, we can configure a hook that generates a pdf after the generation process is completed.
 
 Similarly, you can have your Template perform multiple actions before or after the generation process with the help of Hooks.

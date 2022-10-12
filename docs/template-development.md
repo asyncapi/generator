@@ -48,6 +48,8 @@ Following block shows an example `package.json` file with configuration pointing
 
 > Whenever you make a change to package.json make sure you perform an update with `npm install` to synchronize with package-lock.json and validate if the file is not broken after your changes.
 
+## Hooks
+
 [Hooks](hooks.md) enable templates to perform multiple tasks. Hooks are fractions of code that can be added to your Template. They can be plugged-in onto the generation process to perform multiple actions. For example, we can configure a hook that generates a pdf after the generation process is completed.
 
 Similarly, you can have your Template perform multiple actions before or after the generation process with the help of Hooks.
@@ -60,13 +62,3 @@ Each rendering engine has its own process and unique set of features. Hence, you
 
 AsyncAPI has a list of readily available templates you can use to enhance your generation process. These templates are stored as github repositories on [AsyncAPI organization’s](https://github.com/asyncapi) official github profile.
 Some of these templates are maintained by various third party organizations. The readme file usually contains this information along with additional stuff such as–configuration options that user can pass to template, usage, technical requirements, and usage etc.
-
-
-
-
-
-
-
-
-
-

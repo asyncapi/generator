@@ -42,7 +42,8 @@ Template Name | Description | Source code
 
 <!-- TEMPLATES-LIST:END -->
 
+> Some of these templates are maintained by various third party organizations. The readme file usually contains this information along with additional stuff such as–configuration options that user can pass to template, usage, technical requirements, and usage etc.
+
 You can find above templates and the ones provided by the community in **[this list](https://github.com/search?q=topic%3Aasyncapi+topic%3Agenerator+topic%3Atemplate)**
 
-Some of these templates are maintained by various third party organizations. The readme file usually contains this information along with additional stuff such as–configuration options that user can pass to template, usage, technical requirements, and usage etc.
 

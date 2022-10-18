@@ -46,7 +46,7 @@ Usage: asyncapi generate fromTemplate <asyncapi> <template> [<options>]
 </details>
 <br>
 
-### Global templates installed with yarn or npm
+### Global templates installed with `yarn` or `npm`
 
 You can preinstall templates globally before installing the Generator CLI. The generator first tries to locate the template in local dependencies; if absent it checks where the global generator packages are installed.
 

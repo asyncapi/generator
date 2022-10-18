@@ -125,7 +125,7 @@ docker run --rm -it \
 asyncapi/generator -o /app/output /app/asyncapi.yml @asyncapi/html-template --force-write
 ```
 
-### CLI usage with npx instead of npm
+### CLI usage with `npx` instead of `npm`
 
 [npx](https://www.npmjs.com/package/npx) is very useful when you want to run Generator in a CI/CD environment. In such a scenario, do not install the generator globally because most environments that provide Node.js and Npm, also provide npx out of the box. 
 

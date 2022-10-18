@@ -90,7 +90,9 @@ You might want to update your local installation of generator for different reas
 
 > Sometimes you have to force additional npm installation like this: `npm install -g --force @asyncapi/generator`
 
-> Refer to the [usage](usage.md) docs to lean how to use the asyncapi CLI.
+### CLI usage 
+
+Learn more about different ways of using the CLI from the [usage document](usage.md).
 
 ## Using as a module/package
 

@@ -4,7 +4,7 @@ weight: 30
 ---
 
 There are two ways to use the Generator:
-- [Generator CLI](#generator-in-cli)
+- [Generator CLI](#generator-cli)
 - [Generator library](#generator-library)
 
 ## Generator CLI

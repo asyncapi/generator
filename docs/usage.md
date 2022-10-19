@@ -3,7 +3,7 @@ title: "Usage"
 weight: 30
 ---
 
-There are two ways to use the Generator:
+There are two ways to use the generator:
 - [Generator CLI](#generator-cli)
 - [Generator library](#generator-library)
 
@@ -15,7 +15,7 @@ Usage: asyncapi generate fromTemplate <asyncapi> <template> [<options>]
 - <template>: Name of the generator template like for example @asyncapi/html-template or https://github.com/asyncapi/html-template
 
 - <options>:
-  -V, --version                  output the Generator version
+  -V, --version                  output the generator version
   -d, --disable-hook [hooks...]  disable a specific hook type or hooks from a given hook type
   --debug                        enable more specific errors in the console
   -i, --install                  install the template and its dependencies (defaults to false)

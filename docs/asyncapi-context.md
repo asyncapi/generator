@@ -8,7 +8,7 @@ The **template context** allows you to inject dynamic values to the template fil
 
 ## Template context generation process
 
-```mermaid.js
+``` mermaid
 graph LR
     A[Template Context]
     B{Generator}

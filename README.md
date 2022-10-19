@@ -72,7 +72,7 @@ Install both packages using [official installer](https://nodejs.org/en/download/
 ## Using from the command-line interface (CLI)
 
 ### CLI installation
-To install the CLI reference the [installation guide](installation-guide.md).
+Learn to install the asyncAPI CLI from the [installation guide](installation-guide.md).
 
 ### CLI usage
 

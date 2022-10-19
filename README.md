@@ -227,41 +227,7 @@ See [API documentation](docs/api.md) for more example and full API reference inf
 
 ## Generator version vs Template version
 
-The Generator is a tool that you can use to generate whatever you want, taking an AsyncAPI specification file as the input. A template is a tool that uses Generator features and helpers to specify what should be generated.
-
-In other words, a template depends on the Generator and its features. For example, it might work with the latest version of the Generator but not the previous ones. 
-
-The owner of the template specifies in the configuration what version of the Generator it is compatible with:
-```bash
-"generator": ">=0.50.0 <2.0.0",
-```
-
-The Generator doesn't work in case the template is not compatible:
-```bash
-Something went wrong:
-Error: This template is not compatible with the current version of the generator (0.50.0). This template is compatible with the following version range: >=0.60.0 <2.0.0.
-    at Generator.validateTemplateConfig (/Users/wookiee/.nvm/versions/node/v12.16.1/lib/node_modules/@asyncapi/generator/lib/generator.js:678:13)
-    at Generator.loadTemplateConfig (/Users/wookiee/.nvm/versions/node/v12.16.1/lib/node_modules/@asyncapi/generator/lib/generator.js:663:16)
-    at Generator.generate (/Users/wookiee/.nvm/versions/node/v12.16.1/lib/node_modules/@asyncapi/generator/lib/generator.js:146:18)
-    at processTicksAndRejections (internal/process/task_queues.js:97:5)
-    at async /Users/wookiee/.nvm/versions/node/v12.16.1/lib/node_modules/@asyncapi/generator/cli.js:135:7
-```
-
-In case you use Generator CLI and a specific template on production, it is safer to lock to a specific version of the template and the Generator. 
-
-Instead of generating HTML with latest `html-template` and the generator CLI:
-```bash
-npm install -g @asyncapi/generator
-ag asyncapi.yaml @asyncapi/html-template -o ./docs
-```
-
-Generate HTML with the version of the `html-template` and the Generator CLI that you are happy with:
-```bash
-npm install -g @asyncapi/generator@0.50.0
-ag asyncapi.yaml @asyncapi/html-template@0.7.0 -o ./docs
-```
-
-Before using newer versions of the template, always look at the [changelog](https://github.com/asyncapi/html-template/releases) first. Generator features are not important for you, just make sure to use a version compatible with the template.
+Learn more about versioning from the [versioning document](versioning.md).
 
 ## How to create a template
 

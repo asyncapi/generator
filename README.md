@@ -14,7 +14,6 @@
 - [Using from the command-line interface (CLI)](#using-from-the-command-line-interface-cli)
   * [Install the CLI](#install-the-cli)
   * [Update the CLI](#update-the-cli)
-  * [CLI usage](usage.md)
 - [Using as a module/package](#using-as-a-modulepackage)
   * [Install the module](#install-the-module)
   * [Example using the module](#example-using-the-module)

@@ -3,7 +3,7 @@ title: "AsyncAPI document"
 weight: 40
 ---
 
-## What is the AsyncAPI document?
+## AsyncAPI document
 The **AsyncAPI document** defines a standard, protocol-agnostic interface that describes message-based or event-driven APIs. The AsyncAPI document allows people or machines communicating with one another, to understand the capabilities of an event-driven API without requiring access to the source code, documentation, or inspecting the network traffic.
 
 This document allows you to define your API structures and formats, including channels the end user can subscribe to and the message formats they receive. 

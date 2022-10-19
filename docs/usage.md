@@ -23,7 +23,7 @@ Usage: asyncapi generate fromTemplate <asyncapi> <template> [<options>]
   -o, --output <outputDir>       directory to put the generated files (defaults to current directory)
   -p, --param <name=value>       additional parameters to pass to templates
   --force-write                  force writing of the generated files to a given directory even if it is a Git repository with unstaged files or not empty dir (defaults to false)
-  --watch-template               watches the template directory and the AsyncAPI document, and re-generate the files when changes occur. Ignores the output directory. This flag should be used only for template development.
+  --watch-template               watches the template directory and the AsyncAPI document, and re-generates the files when changes occur. Ignores the output directory. This flag should be used only for template development.
   --map-base-url <url:folder>    maps all schema references from base URL to local folder
   -h, --help                     display help for command
 ```
@@ -118,7 +118,7 @@ docker run --rm -it \
 -v [GENERATED FILES LOCATION]:/app/output \
 asyncapi/generator [COMMAND HERE]
 
-# Example that you can run inside generator directory after cloning this repository. First, you specify the mount in the location of your AsyncAPI specification file and then you mount it in the directory where the generation result should be saved.
+# Example that you can run inside the generator directory after cloning this repository. First, you specify the mount in the location of your AsyncAPI specification file and then you mount it in the directory where the generation result should be saved.
 docker run --rm -it \
 -v ${PWD}/test/docs/dummy.yml:/app/asyncapi.yml \
 -v ${PWD}/output:/app/output \
@@ -127,7 +127,7 @@ asyncapi/generator -o /app/output /app/asyncapi.yml @asyncapi/html-template --fo
 
 ### CLI usage with `npx` instead of `npm`
 
-[npx](https://www.npmjs.com/package/npx) is very useful when you want to run generator in a CI/CD environment. In such a scenario, do not install the generator globally because most environments that provide Node.js and Npm, also provide npx out of the box. 
+[npx](https://www.npmjs.com/package/npx) is very useful when you want to run the generator in a CI/CD environment. In such a scenario, do not install the generator globally because most environments that provide Node.js and Npm, also provide npx out of the box. 
 
 Use the following npx command on your terminal:
 

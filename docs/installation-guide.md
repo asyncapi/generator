@@ -25,7 +25,7 @@ If you don't have either Node or Npm installed, use the [official node.js instal
 If you have the correct versions installed, proceed to the CLI installation guide below. Otherwise, upgrading the Npm or Node version is lower than the recommended versions specified above.
 
 ## AsyncAPI CLI
-The AsyncAPI CLI tool allows you to do many different things with the [AsyncAPI document](asyncapi-file.md). You can generate message-based API boilerplate code, documentation, or anything else you need as long as you specify it in your own [template](template.md) or existing template already supports it. To use the generator via the AsyncAPI CLI, you need to install the AsyncAPI CLI tool.
+The AsyncAPI CLI tool allows you to do many different things with the [AsyncAPI document](asyncapi-file.md). You can generate message-based API boilerplate code, documentation, or anything else you need as long as you specify it in your [template](template.md) or the existing template already supports it. To use the generator via the AsyncAPI CLI, you need to install the AsyncAPI CLI tool.
 
 ### Installation
 
@@ -41,7 +41,7 @@ To install a specific version of the generator tool, pass the version during ins
 npm install -g @asyncapi/cli@{version}
 ```
 > :bulb: **Remember:** 
-> Each [community developed template](https://github.com/search?q=topic%3Aasyncapi+topic%3Agenerator+topic%3Atemplate) is dependent on a certain version of the generator for it to work correctly. Before you install the generator CLI, check the template's `package.json` for the version of the generator CLI your template is compatible with. Read the [versioning docs](versioning.md) to learn why it's important to use certain generator versions with your templates.
+> Each [community-developed template](https://github.com/search?q=topic%3Aasyncapi+topic%3Agenerator+topic%3Atemplate) is dependent on a certain version of the generator for it to work correctly. Before you install the generator CLI, check the template's `package.json` for the version of the generator CLI your template is compatible with. Read the [versioning docs](versioning.md) to learn why it's important to use certain generator versions with your templates.
 
 ### Update AsyncAPI CLI
 There are several reasons why you might want to update your generator version:
@@ -66,4 +66,4 @@ npm uninstall @asyncapi/cli -g
 ## Generator Library in Node.js Apps
 Use the generator library in your Node.js projects by installing it via the following command: `npm install @asyncapi/generator`.
 
-> Don't include the `-g` flag in the installation command above since you're not installing the generator library globally but in your individual Node.js project.
+> Don't include the `-g` flag in the installation command above since you're not installing the generator library globally but in your Node.js project.

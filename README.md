@@ -71,28 +71,8 @@ Install both packages using [official installer](https://nodejs.org/en/download/
 
 ## Using from the command-line interface (CLI)
 
-### Install the CLI
-
-To use it as CLI, install generator globally:
-
-```bash
-npm install -g @asyncapi/generator
-```
-
-### Update the CLI
-
-You might want to update your local installation of generator for different reasons:
-
-* You want the latest generator to have its latest features. Perform usual installation and in case you had generator installed already, it will upgrade to latest available:
-    ```bash
-    npm install -g @asyncapi/generator
-    ```
-* You want a specific version of the generator because your template might not be compatible with the latest generator. Check [what version you need](https://github.com/asyncapi/generator/releases) and perform installation, specifying the exact version with the `@` character:
-    ```bash
-    npm install -g @asyncapi/generator@0.50.0
-    ```
-
-> Sometimes you have to force additional npm installation like this: `npm install -g --force @asyncapi/generator`
+### CLI installation
+To install the CLI reference the [installation guide](installation-guide.md).
 
 ### CLI usage
 

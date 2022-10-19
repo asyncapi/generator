@@ -93,32 +93,6 @@ You might want to update your local installation of generator for different reas
 
 Learn more about different ways of using the CLI from the [usage document](usage.md).
 
-## Using as a module/package
-
-### Install the module
-
-```bash
-npm install @asyncapi/generator --save
-```
-
-### Example using the module 
-
-Below you can find an example of HTML generation using official `@asyncapi/html-template` template and fetching the spec document from server like `https://raw.githubusercontent.com/asyncapi/asyncapi/2.0.0/examples/2.0.0/streetlights.yml` :
-
-```js
-const path = require('path');
-const generator = new Generator('@asyncapi/html-template', path.resolve(__dirname, 'example'));
-
-try {
-  await generator.generateFromURL('https://raw.githubusercontent.com/asyncapi/asyncapi/2.0.0/examples/2.0.0/streetlights.yml');
-  console.log('Done!');
-} catch (e) {
-  console.error(e);
-}
-```
-
-See [API documentation](docs/api.md) for more example and full API reference information.
-
 ## Generator version vs Template version
 
 The Generator is a tool that you can use to generate whatever you want, taking an AsyncAPI specification file as the input. A template is a tool that uses Generator features and helpers to specify what should be generated.

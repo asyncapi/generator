@@ -17,7 +17,7 @@ In the following sections, you'll learn about the inner working of the generator
 
 ## AsyncAPI document generation process
 1. The **Generator** receives the **AsyncAPI Document** as an input. 
-2. The Generator sends to the **[Parser](parser.md)** the **asyncapiString** which is a stringified version of the original **AsyncAPI Document** to validate and parse it.
+2. The **Generator** sends to the **[Parser](parser.md)** the **asyncapiString** which is a stringified version of the original **AsyncAPI Document** to validate and parse it.
 3. The **Parser** validates the **AsyncAPI Document** using additional schema-related plugins, either the OpenAPI schema, RAML data types, or Avro schema. 
 4. If the **Parser** determines that the **AsyncAPI Document** is valid, it manipulates the original JSON/YAML document and provides a set of helper functions in return, bundling them together into an **asyncapi** variable that is an instance of [**AsyncAPIDocument**](https://github.com/asyncapi/parser-js/blob/master/API.md#module_@asyncapi/parser+AsyncAPIDocument). 
 5. At this point, the **Generator** passes the **originalAsyncAPI** and the **asyncapi** which make up part of the **[Template Context](asyncapi-context.md)** to the **Render Engine**. 
@@ -44,7 +44,7 @@ The AsyncAPI document's content is accessible to you while writing your template
 In the following sections, you will learn how to use either the **originalAsyncAPI** or the **asyncapi** in your template.
 
 ### Method 1: `originalAsyncAPI` and template 
-One way of using the contents of AsyncAPI document inside your template files is by using its stringified version that reflects exactly the same contents as the AsyncAPI document provided as an input to the Generator. You can access it directly in your templates using the `originalAsyncAPI` variable. You also access it via the [hooks](hooks.md) `generator.originalAsyncAPI` because `originalAsyncAPI` is also a part of the Generator instance that is passed to hooks.
+One way of using the contents of AsyncAPI document inside your template files is by using its stringified version that reflects exactly the same contents as the AsyncAPI document provided as an input to the generator. You can access it directly in your templates using the `originalAsyncAPI` variable. You also access it via the [hooks](hooks.md) `generator.originalAsyncAPI` because `originalAsyncAPI` is also a part of the generator instance that is passed to hooks.
 
 ```js
 //example use case for using a stringified AsyncAPI document inside template hooks
@@ -74,7 +74,7 @@ function createAsyncapiFile(generator) {
 ### Method 2: `asyncapi` and template
 A major advantage of using `asyncapi` (which is an instance of `AsyncAPIDocument`) is that it enables the developer to easily access the AsyncAPI documents' content by simply invoking a function. 
 
-Once the specification YAML or JSON document is passed as an input to the Generator, it is passed on to the [Parser](parser.md) library, which then manipulates the asyncAPI document to a more structured document called the `AsyncAPIDocument`. Once the parser returns the document to the generator, the generator passes it to the render engine. The render engine makes the `AsyncAPIDocument` object accessible to your template through the `asyncapi` variable.
+Once the specification YAML or JSON document is passed as an input to the generator, it is passed on to the [Parser](parser.md) library, which then manipulates the asyncAPI document to a more structured document called the `AsyncAPIDocument`. Once the parser returns the document to the generator, the generator passes it to the render engine. The render engine makes the `AsyncAPIDocument` object accessible to your template through the `asyncapi` variable.
 
 For example, if you want to extract the version of your API from AsyncAPI document, you can do that by calling `asyncapi.version()`. You can say that this one is easy to access from JSON objects, but there are more complex scenarios. For example, to get access to all messages from all channels, you can call `asyncapi.allMessages()` instead of iterating through a complex JSON object on your own.
 

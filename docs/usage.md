@@ -48,7 +48,7 @@ Usage: asyncapi generate fromTemplate <asyncapi> <template> [<options>]
 
 ### Global templates installed with `yarn` or `npm`
 
-You can preinstall templates globally before installing the Generator CLI. The generator first tries to locate the template in local dependencies; if absent it checks where the global generator packages are installed.
+You can preinstall templates globally before installing the generator CLI. The generator first tries to locate the template in local dependencies; if absent it checks where the global generator packages are installed.
 
 ```bash
 npm install -g @asyncapi/html-template@0.16.0
@@ -108,7 +108,7 @@ The parameter `--map-base-url` maps external schema references to local folders.
 
 ### CLI usage with Docker
 
-When using our docker image that we regularly update, you don't need to install Node.js or Npm, even though the Generator is written with it since the Docker image has the Generator installed.
+When using our docker image that we regularly update, you don't need to install Node.js or Npm, even though the generator is written with it since the Docker image has the generator installed.
 
 Install [Docker](https://docs.docker.com/get-docker/) first, then use docker to pull and run the image using the following command:
 
@@ -127,7 +127,7 @@ asyncapi/generator -o /app/output /app/asyncapi.yml @asyncapi/html-template --fo
 
 ### CLI usage with `npx` instead of `npm`
 
-[npx](https://www.npmjs.com/package/npx) is very useful when you want to run Generator in a CI/CD environment. In such a scenario, do not install the generator globally because most environments that provide Node.js and Npm, also provide npx out of the box. 
+[npx](https://www.npmjs.com/package/npx) is very useful when you want to run generator in a CI/CD environment. In such a scenario, do not install the generator globally because most environments that provide Node.js and Npm, also provide npx out of the box. 
 
 Use the following npx command on your terminal:
 
@@ -136,7 +136,7 @@ npx -p @asyncapi/cli asyncapi generate fromTemplate ./asyncapi.yaml @asyncapi/ht
 ```
 
 ## Generator library
-Once you install the Generator in your project, you can use it to generate whatever you want. The following code snippet is an example of HTML generation using the official `@asyncapi/html-template` template and fetching the spec document from the server using `https://raw.githubusercontent.com/asyncapi/asyncapi/2.0.0/examples/2.0.0/streetlights.yml`:
+Once you install the generator in your project, you can use it to generate whatever you want. The following code snippet is an example of HTML generation using the official `@asyncapi/html-template` template and fetching the spec document from the server using `https://raw.githubusercontent.com/asyncapi/asyncapi/2.0.0/examples/2.0.0/streetlights.yml`:
 
 ```js
 const path = require('path');

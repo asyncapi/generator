@@ -31,7 +31,7 @@ Usage: asyncapi generate fromTemplate <asyncapi> <template> [<options>]
 <details>
   <summary>Click here to read more about supported values for the <code>&lt;template&gt;</code> parameter.</summary>
   <br>
-  All [templates](template.md) are installable npm packages. Therefore, the value of <code>&lt;template&gt;</code> can be anything supported by <code>npm install</code>. Here's a summary of the possibilities:
+  All templates are installable npm packages. Therefore, the value of <code>&lt;template&gt;</code> can be anything supported by <code>npm install</code>. Here's a summary of the possibilities:
   <br><br>
   <pre><code>
   npm install [&lt;@scope&gt;/]&lt;name&gt;

@@ -50,4 +50,4 @@ graph LR
   D --> J[Java Spring Boot]
   D --> K[Anything else]
   ```
-**`params`** are template-specific options that you can pass during generation to customize generation result.
+**`params`** are template-specific options passed to the `asyncapi generate fromTemplate` CLI command to customize generation result.

@@ -5,11 +5,11 @@ weight: 50
 
 # Minimum template requirements
 
-The following section talks about the bare minimum components your template should have in any given situation:
+Let's discuss the minimum components your template requires: `template` directory and `package.json` file.
 
-### 1. `template` directory
+## 1. `template` directory
 
-This is where you keep the files that determine the output that will be generated. In other words, the Generator processes all the files stored in this directory.
+The `template` directory stores files with the generated outputs. In other words, the Generator processes all the files stored in this directory.
 
 ```js
 import { File, Text } from "@asyncapi/generator-react-sdk";
@@ -24,15 +24,15 @@ return (
 }
 ```
 
-The above example of `template/index.js` file shows as a result of the generation process. A user of such a minimal template will receive `asyncapi.md` file with some hardcoded information and some dynamic information extracted for the AsyncAPI file.
+TThe above example of a`template/index.js` file shows the generation process result. The user also receives an `asyncapi.md` file with hardcoded and dynamic information extracted into the AsyncAPI file.
 
-Important to notice is that every template must depend on [`@asyncapi/generator-react-sdk`](https://github.com/asyncapi/generator-react-sdk) package containing a set of basic components to use in template files.
+Every template must depend on the [`@asyncapi/generator-react-sdk` package](https://github.com/asyncapi/generator-react-sdk), which contains a template file's basic components.
 
-### 2. `package.json` file
+## 2. `package.json` file
 
-Before the generation process runs, the Generator must install the template into its dependencies, and `package.json` is necessary to identify the template name.
+Before the generation process runs, the Generator installs the template into its dependencies. A `package.json` is necessary to identify the template name.
 
-Following block shows an example `package.json` file with configuration pointing to [React Render Engine](react-render-engine.md) and necessary dependancies:
+The following block shows an example `package.json` file that points to the [React Render Engine](react-render-engine.md) and necessary dependencies:
 
 ```json
 {
@@ -46,22 +46,21 @@ Following block shows an example `package.json` file with configuration pointing
 }
 ```
 
-> Whenever you make a change to package.json make sure you perform an update with `npm install` to synchronize with package-lock.json and validate if the file is not broken after your changes.
+> Whenever you make a change to the package.json, make sure you perform an update by running `npm install`;  this command synchronizes with the package-lock.json and validates the file.
 
 ## Render Engines
 
 Render engines are actually responsible for generating–code, documentation, markdown, diagrams, or anything else you may have specified to be generated as output. AsyncAPI templates support multiple render engines including both [Nunjucks](nunjucks-render-engine.md) and [React](react-render-engine.md). 
 
-Each rendering engine has its own process and unique set of features. Hence, your choice of render engine greatly affects how you write a Template. Even though you are free to use the render engine of your choice, AsyncAPI recommends you to use React render engine for your projects.
+Each rendering engine has its own process and unique set of features, uniquely affecting how you write templates. While you're free to use the render engine of your choice, we recommend using the React render engine for your projects.
 
-> AsyncAPI [React SDK](https://github.com/asyncapi/generator-react-sdk) is a set of components/functions to use React as render engine in the Generator.
+> The [AsyncAPI React SDK](https://github.com/asyncapi/generator-react-sdk) is a set of components/functions that use React as a render engine in the Generator.
 
 ## Hooks
 
-[Hooks](hooks.md) enable templates to perform multiple tasks. Hooks are fractions of code that can be added to your Template. They can be plugged-in onto the generation process to perform multiple actions. For example, we can configure a hook that generates a pdf after the generation process is completed.
+[Hooks](hooks.md) enable templates to perform multiple tasks. Hooks are fractions of code that can be added to your template. They can be plugged into the generation process to perform multiple actions. _(Example: a hook that generates a pdf after the generation process is completed)_
 
-Similarly, you can have your Template perform multiple actions before or after the generation process with the help of Hooks.
-
+**Templates** can perform multiple actions _before_ or _after_ the generation process with the help of **hooks**.
 
 
 

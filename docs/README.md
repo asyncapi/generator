@@ -1,6 +1,7 @@
 Table of Contents
 
 - [Introduction](index.md)
+- [Usage](usage.md)
 - [AsyncAPI Specification File](asyncapi-file.md)
 - [Configuration File](configuration-file.md)
 - [Templates](template.md)

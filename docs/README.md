@@ -4,6 +4,7 @@ Table of Contents
 - [AsyncAPI Specification File](asyncapi-file.md)
 - [Configuration File](configuration-file.md)
 - [Templates](template.md)
+- [Template Development](template-development.md)
 - [Authoring Templates](authoring-templates.md)
 - [React Render Engine](react-render-engine.md)
 - [Nunjucks Render Engine](nunjucks-render-engine.md)

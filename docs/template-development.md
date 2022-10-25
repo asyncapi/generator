@@ -46,6 +46,21 @@ The following block shows an example `package.json` file that points to the [Rea
 }
 ```
 
+## Template Configuration
+
+The ‘package.json’ file from the Generator must be configured so that it contains JSON objects that may have the following information. Some of the parameters used for template configuration are:
+
+|Name|Type|Description|
+|---|---|---|
+|`renderer`| String | Its value can be either `react` or `nunjucks` (default).
+|`supportedProtocols`| [String] | A list with all the protocols this template supports.
+|`parameters`| Object[String, Object] | An object with all the parameters that can be passed when generating the template. When using the command line, it's done by indicating `--param name=value` or `-p name=value`.
+|`parameters[param].description`| String | A user-friendly description about the parameter.
+|`parameters[param].default`| Any | Default value of the parameter if not specified. Shouldn't be used for mandatory `required=true` parameters.
+|`parameters[param].required`| Boolean | Whether the parameter is required or not.
+
+These are predefined configurations which help generator achieve specific set of tasks throughout the generation process. The 'generator' property from 'package.json' contains all the configuration information. To learn more about template configuration and various supported parameters, you can check [configuration file](configuration-file.md)
+
 > Whenever you make a change to the package.json, make sure you perform an update by running `npm install`;  this command synchronizes with the package-lock.json and validates the file.
 
 ## Render Engines

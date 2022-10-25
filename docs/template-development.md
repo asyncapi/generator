@@ -48,7 +48,7 @@ The following block shows an example `package.json` file that points to the [Rea
 
 ## Template Configuration
 
-The ‘package.json’ file from the Generator must be configured so that it contains JSON objects that may have the following information. Some of the parameters used for template configuration are:
+The `package.json` file from the Generator must be configured so that it contains JSON objects that may have the following information. Some of the parameters used for template configuration are:
 
 |Name|Type|Description|
 |---|---|---|
@@ -59,7 +59,7 @@ The ‘package.json’ file from the Generator must be configured so that it con
 |`parameters[param].default`| Any | Default value of the parameter if not specified. Shouldn't be used for mandatory `required=true` parameters.
 |`parameters[param].required`| Boolean | Whether the parameter is required or not.
 
-These are predefined configurations which help generator achieve specific set of tasks throughout the generation process. The 'generator' property from 'package.json' contains all the configuration information. To learn more about template configuration and various supported parameters, you can check [configuration file](configuration-file.md)
+These are predefined configurations which help generator achieve specific set of tasks throughout the generation process. The `generator` property from 'package.json' contains all the configuration information. To learn more about template configuration and various supported parameters, you can check [configuration file](configuration-file.md)
 
 > Whenever you make a change to the package.json, make sure you perform an update by running `npm install`;  this command synchronizes with the package-lock.json and validates the file.
 

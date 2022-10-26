@@ -1,5 +1,5 @@
 ---
-title: "Template"
+title: "Template Development"
 weight: 50
 ---
 
@@ -59,7 +59,7 @@ The `package.json` file from the Generator must be configured so that it contain
 |`parameters[param].default`| Any | Default value of the parameter if not specified. Shouldn't be used for mandatory `required=true` parameters.
 |`parameters[param].required`| Boolean | Whether the parameter is required or not.
 
-These are predefined configurations which help generator achieve specific set of tasks throughout the generation process. The `generator` property from 'package.json' contains all the configuration information. To learn more about template configuration and various supported parameters, you can check the [configuration file](configuration-file.md)
+These are predefined configurations which help generator achieve specific set of tasks throughout the generation process. The `generator` property from 'package.json' contains all the configuration information. To learn more about template configuration and various supported parameters. Read more about the [configuration file](configuration-file.md)
 
 > Whenever you make a change to the package.json, make sure you perform an update by running `npm install`;  this command synchronizes with the package-lock.json and validates the file.
 
@@ -67,13 +67,13 @@ These are predefined configurations which help generator achieve specific set of
 
 Render engines are actually responsible for generating–code, documentation, markdown, diagrams, or anything else you may have specified to be generated as output. AsyncAPI templates support multiple render engines including both [Nunjucks](nunjucks-render-engine.md) and [React](react-render-engine.md). 
 
-Each rendering engine has its own process and unique set of features, uniquely affecting how you write templates. While you're free to use the render engine of your choice, we recommend using the React render engine for your projects.
+Each rendering engine has its own process and unique set of features, uniquely affecting how you write templates. While you are free to use the render engine of your choice, we recommend using the React render engine for your projects.
 
 > The [AsyncAPI React SDK](https://github.com/asyncapi/generator-react-sdk) is a set of components/functions that use React as a render engine in the Generator.
 
 ## Hooks
 
-[Hooks](hooks.md) enable templates to perform multiple tasks. Hooks are fractions of code that can be added to your template. They can be plugged into the generation process to perform multiple actions. _(Example: a hook that generates a pdf after the generation process is completed)_
+[Hooks](hooks.md) enable templates to perform multiple tasks. Hooks are fractions of code that can be added to your template. In the template, they must be stored in the `hooks` directory under the template directory. They can also be stored in other modules and external libraries and configured inside the template. They can be plugged into the generation process to perform multiple actions. _(Example: a hook that generates a pdf after the generation process is completed)_
 
 **Templates** can perform multiple actions _before_ or _after_ the generation process with the help of **hooks**.
 

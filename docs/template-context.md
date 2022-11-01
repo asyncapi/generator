@@ -26,8 +26,9 @@ graph LR
   subgraph Generator
     B -->| params | A
     B--> | asyncapiString| C
+    B -->| originalAsyncAPI | A
     C --> | asyncapi -> AsyncAPIDocument type | A
-    B--> | Template Files | A
+    B--> | Template Files | D
     A --> D
   end
 ```

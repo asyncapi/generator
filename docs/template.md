@@ -14,15 +14,15 @@ Some examples outputs are:
 - Markdown diagrams
 - Python/Java applications
 
-A template is an independent NodeJS project that’s not related to the `Generator` repository. AsyncAPI templates are managed, released, and published separately. You can also create your own templates and manage them on your own.
+A template is an independent NodeJS project unrelated to the `generator` repository. AsyncAPI templates are managed, released, and published separately. You can also create templates and manage them on your own.
 
-The generator uses the official NPM library for installing NodeJS dependencies called [Arborist](https://www.npmjs.com/package/@npmcli/arborist). (This means templates do not have to be published to package managers to use them.) Arborist helps the Generator fetch the template's source code and use it for the generation process. 
+The generator uses the official NPM library for installing NodeJS dependencies called [Arborist](https://www.npmjs.com/package/@npmcli/arborist). (This means templates do not have to be published to package managers to use them.) Arborist helps the generator fetch the template's source code and use it for the generation process. 
 
-You can store template projects on a local drive during the development process or as a git repository. 
+You can store template projects on a local drive or as a `git` repository during the development process. 
 
-## Official generator `templates` list
+## Generator `templates` list
 
-AsyncAPI has a list of available templates you can use to enhance your generation process. These templates are stored as GitHub repositories on the AsyncAPI organization’s official GitHub profile.
+AsyncAPI has a list of available templates to enhance your generation process. Templates are stored as repositories on AsyncAPI's official GitHub profile.
 
 <!-- templates list is validated with GitHub Actions do not remove list markers -->
 <!-- TEMPLATES-LIST:START -->
@@ -43,8 +43,7 @@ Template Name | Description | Source code
 
 <!-- TEMPLATES-LIST:END -->
 
-> Some of these templates are maintained by various third party organizations. The readme file usually contains this information along with additional stuff such as–configuration options that user can pass to template, usage, technical requirements, and usage etc.
+> Some of these templates are maintained by various third-party organizations. The readME file usually contains this information and more, such as configuration options that the user can pass to the template, usage, technical requirements, etc.
 
-You can find above templates and the ones provided by the community in **[this list](https://github.com/search?q=topic%3Aasyncapi+topic%3Agenerator+topic%3Atemplate)**
-
+Check out [all our templates and those provided by the community](https://github.com/search?q=topic%3Aasyncapi+topic%3Agenerator+topic%3Atemplate)**
 

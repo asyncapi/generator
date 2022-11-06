@@ -12,5 +12,5 @@ Table of Contents
 - [Parser](parser.md)
 - [Hooks](hooks.md)
 - [File templates](file-templates.md)
-- [TypeScript Support](typescript-support.md)
+- [TypeScript support](typescript-support.md)
 - [Special file names](special-file-names.md)

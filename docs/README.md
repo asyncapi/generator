@@ -7,7 +7,7 @@ Table of Contents
 - [Template development](template-development.md)
 - [Authoring templates](authoring-templates.md)
 - [React render engine](react-render-engine.md)
-- [Nunjucks eender engine](nunjucks-render-engine.md)
+- [Nunjucks render engine](nunjucks-render-engine.md)
 - [AsyncAPI Context](asyncapi-context.md)
 - [Parser](parser.md)
 - [Hooks](hooks.md)

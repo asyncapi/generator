@@ -3,7 +3,7 @@ title: "Template development"
 weight: 50
 ---
 
-# Minimum template requirements
+## Minimum template requirements
 
 Let's discuss the minimum components your template requires: `template` directory and `package.json` file.
 

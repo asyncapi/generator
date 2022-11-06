@@ -3,7 +3,7 @@ title: "Template"
 weight: 40
 ---
 
-# Introduction
+## Template
 
 A template is a project that specifies the generation process output by using the AsyncAPI generator and an [AsyncAPI file](asyncapi-file.md). These files describe the generation results depending on the AsyncAPI file's content.
 

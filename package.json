@@ -1,6 +1,6 @@
 {
   "name": "@asyncapi/generator",
-  "version": "1.9.10",
+  "version": "1.9.13",
   "description": "The AsyncAPI generator. It can generate documentation, code, anything!",
   "main": "./lib/generator.js",
   "bin": {
@@ -50,7 +50,7 @@
     "@asyncapi/avro-schema-parser": "^1.1.0",
     "@asyncapi/generator-react-sdk": "^0.2.23",
     "@asyncapi/openapi-schema-parser": "^2.0.1",
-    "@asyncapi/parser": "^1.16.0",
+    "@asyncapi/parser": "^1.17.1",
     "@asyncapi/raml-dt-schema-parser": "^2.0.1",
     "@npmcli/arborist": "^2.2.4",
     "ajv": "^6.10.2",
@@ -80,7 +80,7 @@
     "eslint-plugin-jest": "^23.8.2",
     "eslint-plugin-sonarjs": "^0.5.0",
     "jest": "^25.5.0",
-    "jsdoc-to-markdown": "^5.0.0",
+    "jsdoc-to-markdown": "^7.1.1",
     "markdown-toc": "^1.2.0",
     "rimraf": "^3.0.2",
     "unixify": "^1.0.0"

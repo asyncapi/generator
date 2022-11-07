@@ -17,6 +17,8 @@ Parser validates these documents using dedicated schema-supported plugins. These
 
 > Note: If you use the parser as a package, you can also register external schemas. For example, you can also write your own schema.
 
-If the document is valid, the parser provides dereferenced output. During the dereference process the AsyncAPI parser substitutes a reference with a full definition. The dereferenced output is always in the .json format. Parser returns `AsyncAPIDocument` instance with a set of helper functions that enable easier access to contents of AsyncAPI document. If a document is invalid, the parser provides a message listing all errors. 
+If the document is valid, Parser returns `AsyncAPIDocument` instance with a set of helper functions that enable easier access to contents of AsyncAPI document. The parser provides dereferenced output. During the dereference process the AsyncAPI parser substitutes a reference with a full definition. The dereferenced output is always in the .json format. If a document is invalid, the parser provides a message listing all errors. 
+
+> document under construction
 
 

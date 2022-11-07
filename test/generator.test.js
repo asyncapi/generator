@@ -249,10 +249,8 @@ describe('Generator', () => {
 
   describe('#generateFromString', () => {
     let generateMock;
-    let parserMock;
 
     beforeAll(() => {
-      parserMock = require('@asyncapi/parser');
       generateMock = jest.fn().mockResolvedValue();
     });
 

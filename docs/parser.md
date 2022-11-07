@@ -19,6 +19,28 @@ Parser validates these documents using dedicated schema-supported plugins. These
 
 If the document is valid, Parser returns `AsyncAPIDocument` instance with a set of helper functions that enable easier access to contents of AsyncAPI document. The parser provides dereferenced output. During the dereference process the AsyncAPI parser substitutes a reference with a full definition. The dereferenced output is always in the .json format. If a document is invalid, the parser provides a message listing all errors. 
 
+## Installation
+
+You can install parser with:
+
+```
+npm install @asyncapi/parser
+```
+The parser by default supports AsyncAPI Schema Format and JSON Schema Format. For additional formats, you need to install additional plugins. For example:
+
+- OpenAPI Schema Object
+  ```
+  npm install @asyncapi/openapi-schema-parser
+  ```
+- Avro schema
+  ```
+  npm install @asyncapi/avro-schema-parser
+  ```
+- RAML data type
+  ```
+  npm install @asyncapi/raml-dt-schema-parser
+  ```
+
 > document under construction
 
 

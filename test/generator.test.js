@@ -254,6 +254,14 @@ describe('Generator', () => {
       generateMock = jest.fn().mockResolvedValue();
     });
 
+    it('calls parser.parse and this.generate', async () => {
+      const gen = new Generator('testTemplate', __dirname);
+      gen.generate = generateMock;
+      await gen.generateFromString(dummyYAML);
+
+      expect(generateMock).toHaveBeenCalled();
+    });
+
     it('fails if asyncapiString is not provided', async () => {
       const gen = new Generator('testTemplate', __dirname);
       gen.generate = generateMock;
@@ -289,7 +297,7 @@ describe('Generator', () => {
       expect(utils.readFile.mock.calls[0][0]).toBe(filePath);
       expect(utils.readFile.mock.calls[0][1]).toStrictEqual({ encoding: 'utf8' });
       expect(generateFromStringMock.mock.calls[0][0]).toBe('test content');
-      expect(generateFromStringMock.mock.calls[0][1]).toStrictEqual({ source: filePath });
+      expect(generateFromStringMock.mock.calls[0][1]).toStrictEqual({ path: filePath });
     });
   });
 

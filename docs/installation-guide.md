@@ -40,7 +40,19 @@ To install a specific version of the generator tool, pass the version during ins
 ```
 npm install -g @asyncapi/cli@{version}
 ```
-> :bulb: **Remember:** 
+
+#### MacOS 
+You can install in MacOS by using brew: `brew install asyncapi`. 
+
+#### Linux 
+You can install in Linux by using `dpkg`, a package manager for debian:
+1. 'curl -OL https://github.com/asyncapi/cli/releases/latest/download/asyncapi.deb`
+2. `sudo dpkg -i asyncapi.deb`
+
+#### Other Operating Systems
+For further installation instructions for different operating systems, read the [`AsyncAPI CLI` readME file](https://github.com/asyncapi/cli#installation).
+
+> **Remember:** 
 > Each [community-developed template](https://github.com/search?q=topic%3Aasyncapi+topic%3Agenerator+topic%3Atemplate) is dependent on a certain version of the generator for it to work correctly. Before you install the generator CLI, check the template's `package.json` for the version of the generator CLI your template is compatible with. Read the [versioning docs](versioning.md) to learn why it's important to use certain generator versions with your templates.
 
 ### Update AsyncAPI CLI

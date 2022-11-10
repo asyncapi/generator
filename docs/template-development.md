@@ -75,11 +75,3 @@ Each rendering engine has its process and unique features, affecting how you wri
 [Hooks](hooks.md) enable templates to perform multiple tasks. You can add Hooks to your template as fractions of code. In the template, you must store it in the `hooks` directory under the template directory. You can also store it in other modules and external libraries, or even configure it inside the template. The generation process can perform multiple actions. _(Example: A hook that generates a pdf after the generation process is complete.)_
 
 **Templates** can perform multiple actions _before_ or _after_ the generation process with the help of **hooks**.
-
-
-
-
-
-
-
-

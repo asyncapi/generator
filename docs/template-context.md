@@ -34,7 +34,7 @@ graph LR
 ```
 
 ## Template context
-The Generator passes to the render engine extra context, which you can access in templates:
+The generator passes extra context to the render engine, which you can access in templates:
 
 - **`originalAsyncAPI`** is a String of original AsyncAPI document that the user passed to the Generator.
 - **`asyncapi`** is a parsed AsyncAPI document with all additional functions and properties. You should use it to access document contents.

@@ -1,5 +1,5 @@
 ---
-title: "Template Context"
+title: "Template context"
 weight: 80
 ---
 

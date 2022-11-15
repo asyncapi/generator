@@ -2,6 +2,8 @@ Table of Contents
 
 - [Introduction](index.md)
 - [AsyncAPI document](asyncapi-document.md)
+- [Installation Guide](installation-guide.md)
+- [Usage](usage.md)
 - [Configuration File](configuration-file.md)
 - [Templates](template.md)
 - [Authoring Templates](authoring-templates.md)

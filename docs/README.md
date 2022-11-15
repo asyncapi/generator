@@ -1,10 +1,11 @@
 Table of Contents
 
 - [Introduction](index.md)
-- [AsyncAPI Specification File](asyncapi-file.md)
+- [AsyncAPI document](asyncapi-document.md)
 - [Configuration File](configuration-file.md)
 - [Templates](template.md)
 - [Authoring Templates](authoring-templates.md)
+- [Generator Version vs Template Version](versioning.md)
 - [React Render Engine](react-render-engine.md)
 - [Nunjucks Render Engine](nunjucks-render-engine.md)
 - [AsyncAPI Context](asyncapi-context.md)

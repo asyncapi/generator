@@ -1,5 +1,5 @@
 ---
-title: "AsyncAPI Context"
+title: "AsyncAPI context"
 weight: 80
 ---
 

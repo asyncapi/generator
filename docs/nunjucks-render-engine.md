@@ -1,6 +1,6 @@
 ---
 title: "Nunjucks Render Engine"
-weight: 70
+weight: 80
 ---
 
 [Nunjucks](https://mozilla.github.io/nunjucks) is the default render engine, however, we strongly recommend adopting the [React](#react) engine.

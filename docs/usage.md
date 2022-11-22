@@ -5,7 +5,7 @@ weight: 30
 
 There are two ways to use the generator:
 - [Generator CLI](#generator-cli)
-- [Generator library](#generator-library)
+- [Generator library](#using-as-a-modulepackage)
 
 ## Generator CLI
 ```bash
@@ -30,15 +30,15 @@ Usage: asyncapi generate fromTemplate <asyncapi> <template> [<options>]
 
 All templates are installable npm packages. Therefore, the value of `template` can be anything supported by `npm install`. Here's a summary of the possibilities:
 ```
-npm install [&lt;@scope&gt;/]&lt;name&gt;
-npm install [&lt;@scope&gt;/]&lt;name&gt;@&lt;tag&gt;
-npm install [&lt;@scope&gt;/]&lt;name&gt;@&lt;version&gt;
-npm install [&lt;@scope&gt;/]&lt;name&gt;@&lt;version range&gt;
-npm install &lt;git-host&gt;:&lt;git-user&gt;/&lt;repo-name&gt;
-npm install &lt;git repo url&gt;
-npm install &lt;tarball file&gt;
-npm install &lt;tarball url&gt;
-npm install &lt;folder&gt;</code></pre>
+npm install [<@scope>/]<name>
+npm install [<@scope>/]<name>@<tag>
+npm install [<@scope>/]<name>@<version>
+npm install [<@scope>/]<name>@<version range>
+npm install <git-host>:<git-user>/<repo-name>
+npm install <git repo url>
+npm install <tarball file>
+npm install <tarball url>
+npm install <folder>
 ```
 
 ### Global templates installed with `yarn` or `npm`
@@ -131,7 +131,8 @@ npx -p @asyncapi/cli asyncapi generate fromTemplate ./asyncapi.yaml @asyncapi/ht
 ```
 
 ## Using as a module/package
-Once you install the generator in your project, you can use it to generate whatever you want. The following code snippet is an example of HTML generation using the official `@asyncapi/html-template` template and fetching the spec document from the server using `https://raw.githubusercontent.com/asyncapi/asyncapi/2.0.0/examples/2.0.0/streetlights.yml`:
+Once you install the generator in your project, you can use it to generate whatever you want. The following code snippet is an example of HTML generation using the official `@asyncapi/html-template` template and fetching the spec document from the server using:
+```https://raw.githubusercontent.com/asyncapi/asyncapi/2.0.0/examples/2.0.0/streetlights.yml```
 
 ```js
 const path = require('path');

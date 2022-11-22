@@ -49,7 +49,7 @@ You can install in Linux by using `dpkg`, a package manager for debian:
 1. 'curl -OL https://github.com/asyncapi/cli/releases/latest/download/asyncapi.deb`
 2. `sudo dpkg -i asyncapi.deb`
 
-#### Other Operating Systems
+#### Other operating systems
 For further installation instructions for different operating systems, read the [AsyncAPI CLI documentation](https://github.com/asyncapi/cli#installation).
 
 > **Remember:** 
@@ -75,7 +75,7 @@ npm uninstall @asyncapi/cli -g
 
 > :memo: **Note:**  To use the generator in your CI/CD pipeline to automate whatever you generate for your event-driven architecture apps, install the AsyncAPI CLI in your pipeline. If you are using GitHub Actions, use [Github Actions for Generator](https://github.com/marketplace/actions/generator-for-asyncapi-documents).
 
-## Generator Library in Node.js Apps
+## Generator library in Node.js apps
 Use the generator library in your Node.js projects by installing it via the following command: `npm install @asyncapi/generator`.
 
 > Don't include the `-g` flag in the installation command above since you're not installing the generator library globally but in your Node.js project.

@@ -2,7 +2,9 @@ Table of Contents
 
 - [Introduction](index.md)
 - [AsyncAPI document](asyncapi-document.md)
-- [Configuration file](configuration-file.md)
+- [Installation Guide](installation-guide.md)
+- [Usage](usage.md)
+- [Configuration File](configuration-file.md)
 - [Templates](template.md)
 - [Authoring templates](authoring-templates.md)
 - [Generator version vs template version](versioning.md)

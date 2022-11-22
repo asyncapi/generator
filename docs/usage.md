@@ -132,7 +132,9 @@ npx -p @asyncapi/cli asyncapi generate fromTemplate ./asyncapi.yaml @asyncapi/ht
 
 ## Using as a module/package
 Once you install the generator in your project, you can use it to generate whatever you want. The following code snippet is an example of HTML generation using the official `@asyncapi/html-template` template and fetching the spec document from the server using:
-```https://raw.githubusercontent.com/asyncapi/asyncapi/2.0.0/examples/2.0.0/streetlights.yml```
+```
+https://raw.githubusercontent.com/asyncapi/asyncapi/2.0.0/examples/2.0.0/streetlights.yml
+```
 
 ```js
 const path = require('path');

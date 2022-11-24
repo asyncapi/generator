@@ -6,6 +6,7 @@ Table of Contents
 - [Usage](usage.md)
 - [Configuration File](configuration-file.md)
 - [Templates](template.md)
+- [Template context](template-context.md)
 - [Authoring Templates](authoring-templates.md)
 - [Generator Version vs Template Version](versioning.md)
 - [React Render Engine](react-render-engine.md)

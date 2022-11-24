@@ -1,5 +1,5 @@
 ---
-title: "Installation Guide"
+title: "Installation guide"
 weight: 20
 ---
 

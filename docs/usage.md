@@ -28,23 +28,18 @@ Usage: asyncapi generate fromTemplate <asyncapi> <template> [<options>]
   -h, --help                     display help for command
 ```
 
-<details>
-  <summary>Click here to read more about supported values for the <code>&lt;template&gt;</code> parameter.</summary>
-  <br>
-  All templates are installable npm packages. Therefore, the value of <code>&lt;template&gt;</code> can be anything supported by <code>npm install</code>. Here's a summary of the possibilities:
-  <br><br>
-  <pre><code>
-  npm install [&lt;@scope&gt;/]&lt;name&gt;
-  npm install [&lt;@scope&gt;/]&lt;name&gt;@&lt;tag&gt;
-  npm install [&lt;@scope&gt;/]&lt;name&gt;@&lt;version&gt;
-  npm install [&lt;@scope&gt;/]&lt;name&gt;@&lt;version range&gt;
-  npm install &lt;git-host&gt;:&lt;git-user&gt;/&lt;repo-name&gt;
-  npm install &lt;git repo url&gt;
-  npm install &lt;tarball file&gt;
-  npm install &lt;tarball url&gt;
-  npm install &lt;folder&gt;</code></pre>
-</details>
-<br>
+All templates are installable npm packages. Therefore, the value of `template` can be anything supported by `npm install`. Here's a summary of the possibilities:
+```
+npm install [&lt;@scope&gt;/]&lt;name&gt;
+npm install [&lt;@scope&gt;/]&lt;name&gt;@&lt;tag&gt;
+npm install [&lt;@scope&gt;/]&lt;name&gt;@&lt;version&gt;
+npm install [&lt;@scope&gt;/]&lt;name&gt;@&lt;version range&gt;
+npm install &lt;git-host&gt;:&lt;git-user&gt;/&lt;repo-name&gt;
+npm install &lt;git repo url&gt;
+npm install &lt;tarball file&gt;
+npm install &lt;tarball url&gt;
+npm install &lt;folder&gt;</code></pre>
+```
 
 ### Global templates installed with `yarn` or `npm`
 

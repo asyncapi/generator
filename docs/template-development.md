@@ -80,7 +80,7 @@ Based on these custom configurations we can use this template to generate output
 
 For example, if you want to generate an output using above template, you need to have asyncapi document that has servers with `mqtt` in order to generate your desired output. If your asyncapi document has server connections with `kafka`, the generation process will be halted since the only supported protocol mentioned is `mqtt`. 
 
-Additionally, we can also have configuration called as `parameters` which is an object with all the parameters that can be passed when generating the template. When using the command line, it's done by indicating `--param name=value` or `-p name=value`.
+Additionally, we can also have configuration called as `parameters` which is an object with all the parameters that can be passed when generating the template. When using the command line, it's done by indicating `--param name=value` or `-p name=value`:
 
 ```json
 {
@@ -123,3 +123,37 @@ Newer:
 [Hooks](hooks.md) enable templates to perform multiple tasks. You can add Hooks to your template as fractions of code. In the template, you must store it in the `hooks` directory under the template directory. You can also store it in other modules and external libraries, or even configure it inside the template. The generation process can perform multiple actions. _(Example: A hook that generates a pdf after the generation process is complete.)_
 
 **Templates** can perform multiple actions _before_ or _after_ the generation process with the help of **hooks**.
+
+For example, In AsyncAPI html-template, hooks can help you change the specification version with the new `version` that you can pass before the generation process even begins:
+
+```js
+module.exports = {
+  'generate:before': ({ asyncapi, templateParams = {} }) => {
+    const version = templateParams.version || asyncapi.info().version();
+    asyncapi._json.info.version = version;
+  }
+};
+```
+This can be an even better alternative way of overriding the `version` parameter that we discussed in the previous section. If the user executes the command ‘-p version=2.0.0 asyncapiFileDir="./"` on the command line, the asyncapi file along with the overwritten version will be returned in the form of a pdf or markdown document. 
+
+The updated template looks like the following:
+
+```js
+<Text>App name is: **{ asyncapi.info().title() }**</Text>
+<Text>Version is: **{asyncapi.info.version()}**</Text>
+```
+
+Since hooks are reusable, it is very important that you override the version in the template context as well. For example, In nodejs-template, the following hooks are overridden in the template context so that they can still be reused for other purposes:
+
+```json
+{
+"@asyncapi/generator-hooks": "^0.1.0",
+"hooks": {
+      "@asyncapi/generator-hooks": "createAsyncapiFile"
+    }
+  }
+```
+
+
+
+

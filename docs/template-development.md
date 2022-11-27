@@ -25,7 +25,7 @@ return (
 ```
 ## 2. `package.json` file
 
-Before the generation process runs, the generator installs the template into its dependencies. A `package.json` is necessary to identify the template name.
+Before the generation process begins, the generator installs the template into its dependencies. A `package.json` is necessary to identify the template name.
 
 The following block shows an example `package.json` file that points to the [React Render Engine](react-render-engine.md) and necessary dependencies:
 
@@ -62,7 +62,7 @@ These are predefined configurations which help generator achieve specific set of
 
 > Whenever you make a change to the package.json, make sure you perform an update by running `npm install`;  this command synchronizes with the package-lock.json and validates the file.
 
-The following examples show some advanced configurations we can use in our `package.json` file:
+The following examples show some advanced configurations that we can use in our `package.json` file:
 
 ```json
 {
@@ -76,11 +76,11 @@ The following examples show some advanced configurations we can use in our `pack
   }
 }
 ```
-Based on these custom configurations we can use this template to generate output. The above `package.json` file has a newly added configuration called `supportedProtocols` which is set to `mqtt`. This configuration displays all the protocols that this template supports. We can have multiple supported protocols in our template. 
+Based on these custom configurations we can use this template to generate an output. The above `package.json` file has a newly added configuration called `supportedProtocols` which is set to `mqtt`. This configuration displays all the protocols that this template supports. We can have multiple supported protocols in our template. 
 
 For example, if you want to generate an output using above template, you need to have asyncapi document that has servers with `mqtt` in order to generate your desired output. If your asyncapi document has server connections with `kafka`, the generation process will be halted since the only supported protocol mentioned is `mqtt`. 
 
-Additionally, we can also have configuration called as `parameters` which is an object with all the parameters that can be passed when generating the template. When using the command line, it's done by indicating `--param name=value` or `-p name=value`:
+Additionally, we can also have a configuration called `parameters` which is an object with all the parameters that can be passed when generating the template. When using the command line, it's done by indicating `--param name=value` or `-p name=value`:
 
 ```json
 {
@@ -101,7 +101,7 @@ Additionally, we can also have configuration called as `parameters` which is an 
 }
 ```
 
-The default version of your application is always fetched from your asyncapi document. The above configuration will help template user to override the existing version with a new version on the command line. For example, `-p version=2.0.0`.
+The default version of your application is always fetched from your asyncapi document. The above configuration will help the template user to override the existing version with a new version on the command line. For example, `-p version=2.0.0`.
 
 The changes done in the template will be as follows:
 
@@ -134,7 +134,7 @@ module.exports = {
   }
 };
 ```
-This can be an even better alternative way of overriding the `version` parameter that we discussed in the previous section. If the user executes the command ‘-p version=2.0.0 asyncapiFileDir="./"` on the command line, the asyncapi file along with the overwritten version will be returned in the form of a pdf or markdown document. 
+This can be an even better alternative way of overriding the `version` parameter that we discussed in the previous section. If the user executes the command `-p version=2.0.0 asyncapiFileDir="./"` on the command line, the asyncapi file along with the overwritten version will be returned in the form of a pdf or markdown document. 
 
 The updated template looks like the following:
 

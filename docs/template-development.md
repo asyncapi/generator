@@ -45,7 +45,7 @@ The above example of a`template/index.js` file shows the generation process resu
 
 Every template must depend on the [`@asyncapi/generator-react-sdk` package](https://github.com/asyncapi/generator-react-sdk), which contains a template file's basic components.
 
-## Template configuration
+## Additional configuration options
 
 You must configure the generator's `package.json` file to contain JSON objects with the required parameters for template configuration, such as:
 
@@ -58,9 +58,65 @@ You must configure the generator's `package.json` file to contain JSON objects w
 |`parameters[param].default`| Any | Default value of the parameter if not specified. Shouldn't be used for mandatory `required=true` parameters.
 |`parameters[param].required`| Boolean | Whether the parameter is required or not.
 
-These are predefined configurations which help generator achieve specific set of tasks throughout the generation process. The `generator` property from 'package.json' contains all the configuration information. To learn more about template configuration and various supported parameters. Read more about the [configuration file](configuration-file.md)
+These are predefined configurations which help generator achieve specific set of tasks throughout the generation process. The `generator` property from 'package.json' contains all the configuration information. To learn more about template configuration and various supported parameters. Read more about the [configuration file](configuration-file.md).
 
 > Whenever you make a change to the package.json, make sure you perform an update by running `npm install`;  this command synchronizes with the package-lock.json and validates the file.
+
+The following examples show some advanced configurations we can use in our `package.json` file:
+
+```json
+{
+  "name": "myTemplate",
+  "generator": {
+    "renderer": "react",
+    "supportedProtocols": "mqtt"
+  },
+  "dependencies": {
+    "@asyncapi/generator-react-sdk": "^0.2.25"
+  }
+}
+```
+Based on these custom configurations we can use this template to generate output. The above `package.json` file has a newly added configuration called `supportedProtocols` which is set to `mqtt`. This configuration displays all the protocols that this template supports. We can have multiple supported protocols in our template. 
+
+For example, if you want to generate an output using above template, you need to have asyncapi document that has servers with `mqtt` in order to generate your desired output. If your asyncapi document has server connections with `kafka`, the generation process will be halted since the only supported protocol mentioned is `mqtt`. 
+
+Additionally, we can also have configuration called as `parameters` which is an object with all the parameters that can be passed when generating the template. When using the command line, it's done by indicating `--param name=value` or `-p name=value`.
+
+```json
+{
+  "name": "myTemplate",
+  "generator": {
+    "renderer": "react",
+    "supportedProtocols": "mqtt",
+    "parameters": {
+        "version": {
+          "description": "Override the version of your application provided under `info.version` location in the specification file.",
+          "required": false
+        }
+    }
+  },
+  "dependencies": {
+    "@asyncapi/generator-react-sdk": "^0.2.25"
+  }
+}
+```
+
+The default version of your application is always fetched from your asyncapi document. The above configuration will help template user to override the existing version with a new version on the command line. For example, `-p version=2.0.0`.
+
+The changes done in the template will be as follows:
+
+Original:
+
+```js
+<Text>App name is: **{ asyncapi.info().title() }**</Text>
+```
+
+Newer:
+
+```js
+<Text>App name is: **{ asyncapi.info().title() }**</Text>
+<Text>Version is: **{params.version || asyncapi.info.version()}**</Text>
+```
 
 ## Hooks
 

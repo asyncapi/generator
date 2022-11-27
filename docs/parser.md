@@ -9,7 +9,7 @@ AsyncAPI Parser is a package used to parse and validate the AsyncAPI documents i
 
 Parser validates these documents using dedicated schema-supported plugins. These supported schemas are:
 
-- AsyncAPI schema
+- AsyncAPI schema (no plugin needed)
 - OpenAPI schema
 - JSON schema
 - Avro schema

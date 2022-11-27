@@ -5,7 +5,7 @@ weight: 90
 
 ## Parser
 
-AsyncAPI Parser is a package used to parse and validate the AsyncAPI documents in your Node.js or browser application. These documents can be either in–YAML or JSON format.
+AsyncAPI Parser is a package used to parse and validate the AsyncAPI documents in your Node.js or browser application. These documents can be either in YAML or JSON format.
 
 Parser validates these documents using dedicated schema-supported plugins. These supported schemas are:
 

@@ -13,7 +13,7 @@ Parser validates these documents using dedicated schema-supported plugins. These
 - OpenAPI schema
 - JSON schema
 - Avro schema
-- RAML data-type schema(schema parser for RAML data types)
+- RAML data-type schema
 
 > Note: If you use the parser as a package, you can also register external schemas. For example, you can also write your own schema.
 

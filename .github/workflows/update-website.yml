@@ -1,4 +1,4 @@
-name: Update latest generator documents in the website
+name: Update latest generator documentation in the website
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
 
 jobs:
   Make-PR:
-    name: Make PR on website repository with updated latest generator docs
+    name: Make PR on website repository with updated latest generator documentation
     runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
@@ -47,4 +47,4 @@ jobs:
       - name: Create PR
         working-directory: ./website
         run: |
-          gh pr create --title "docs(generator): update latest generator documentaion" --body "Updated generator docs are available and this PR introduces update to generator folder on the website" --head "update-generator-docs-${{ github.sha }}"
+          gh pr create --title "docs(generator): update latest generator documentation" --body "Updated generator documentation is available and this PR introduces update to generator folder on the website" --head "update-generator-docs-${{ github.sha }}"

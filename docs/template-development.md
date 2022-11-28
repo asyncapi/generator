@@ -78,7 +78,7 @@ The following examples show some advanced configurations that we can use in our 
 ```
 The above `package.json` file has a newly added configuration called `supportedProtocols` which is set to `mqtt`. This configuration displays all the protocols that this template supports. You can have multiple supported protocols in our template. 
 
-For example, if you want to generate an output using above template, you need to have asyncapi document that has servers with `mqtt` in order to generate your desired output. If your asyncapi document has server connections with `kafka`, the generation process will be halted since the only supported protocol mentioned is `mqtt`. 
+For example, if you want to generate an output using the above template, you need to have an AsyncAPI document that has servers that use `mqtt` in order to generate your desired output. If your AsyncAPI document has server connections with `kafka`, the generation process will be terminated since the only supported protocol mentioned is `mqtt`. 
 
 Additionally, we can also have a configuration called `parameters` which is an object with all the parameters that can be passed when generating the template. When using the command line, it's done by indicating `--param name=value` or `-p name=value`:
 

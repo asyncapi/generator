@@ -20,6 +20,16 @@ The generator uses the official NPM library for installing NodeJS dependencies c
 
 You can store template projects on a local drive or as a `git` repository during the development process. 
 
+## Template generation process
+
+1. Template is provided as a input to the **Generator**.
+2. **asyncapi** is the original AsyncAPI file that is by default injected in your template file.
+3. **params** are the parameters that you pass to the generator CLI. Later on, you can pass these **params** context to other components as well.
+4. The generator passes both the original **asyncapi**, the original AsyncAPI file and the **params** to the **Template Context**.
+5. Concurrently, the generator passes **Template files** to the **Render engine** as well. AsyncAPI uses two render engines—react and nunjucks.
+6. Once the Render Engine receives both the Template Files and the Template Context, it injects all the dynamic values in your react or nunjucks based on the Template Files using the Template Context.
+7. Finally, the render engine generates whatever output you may have specified in your template such as–code, documentation, diagrams, applications etc.
+
 ```mermaid
 graph LR
     A[Template Context]

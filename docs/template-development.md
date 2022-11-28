@@ -58,7 +58,7 @@ You must configure the generator's `package.json` file to contain JSON objects w
 |`parameters[param].default`| Any | Default value of the parameter if not specified. Shouldn't be used for mandatory `required=true` parameters.
 |`parameters[param].required`| Boolean | Whether the parameter is required or not.
 
-Above table mentions some of the configurations options which help generator achieve specific set of tasks throughout the generation process. The `generator` property from 'package.json' contains all the configuration information. To learn more about template configuration and various supported parameters. Read more about the [configuration file](configuration-file.md).
+Above table lists some of the configurations options which help generator achieve specific set of tasks throughout the generation process. The `generator` property from 'package.json' contains all the configuration information. To learn more about template configuration and various supported parameters. Read more about the [configuration file](configuration-file.md).
 
 > Whenever you make a change to the package.json, make sure you perform an update by running `npm install`;  this command synchronizes with the package-lock.json and validates the file.
 
@@ -122,7 +122,7 @@ Newer:
 <Text>Version is: **{params.version || asyncapi.info.version()}**</Text>
 ```
 
-Now that you have added all the configuration options, you can start the generation process by using generator CLI. Now you can pass the parameters via the CLI. When using CLI, it's done by indicating --param name=value or -p name=value.
+Now that you have added all the configuration options, you can start the generation process by using generator CLI. You can pass these parameters via the CLI. When using CLI, it's done by indicating --param name=value or -p name=value.
 As you can see, the above configuration will help the template user to override the existing version with a new version on the command line. For example, `-p version=2.0.0`.
 
 ## Hooks

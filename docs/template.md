@@ -28,7 +28,7 @@ You can store template projects on a local drive or as a `git` repository during
 4. The generator passes both the original **asyncapi**, the original AsyncAPI file and the **params** to the **Template Context**.
 5. Concurrently, the generator passes **Template files** to the **Render engine** as well. AsyncAPI uses two render engines—react and nunjucks.
 6. Once the Render Engine receives both the Template Files and the Template Context, it injects all the dynamic values in your react or nunjucks based on the Template Files using the Template Context.
-7. Finally, the render engine generates whatever output you may have specified in your template such as—code, documentation, diagrams, applications etc.
+7. Finally, the render engine generates whatever output you may have specified in your template such as—code, documentation, diagrams, pdf, applications etc.
 
 ```mermaid
 graph LR

@@ -76,7 +76,7 @@ The following examples show some advanced configurations that we can use in our 
   }
 }
 ```
-Based on these custom configurations we can use this template to generate an output. The above `package.json` file has a newly added configuration called `supportedProtocols` which is set to `mqtt`. This configuration displays all the protocols that this template supports. We can have multiple supported protocols in our template. 
+The above `package.json` file has a newly added configuration called `supportedProtocols` which is set to `mqtt`. This configuration displays all the protocols that this template supports. You can have multiple supported protocols in our template. 
 
 For example, if you want to generate an output using above template, you need to have asyncapi document that has servers with `mqtt` in order to generate your desired output. If your asyncapi document has server connections with `kafka`, the generation process will be halted since the only supported protocol mentioned is `mqtt`. 
 

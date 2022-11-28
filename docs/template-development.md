@@ -122,6 +122,9 @@ Newer:
 <Text>Version is: **{params.version || asyncapi.info.version()}**</Text>
 ```
 
+Now that you have added all the configuration options, you can start the generation process by using generator CLI. Now you can pass the parameters via the CLI. When using CLI, it's done by indicating --param name=value or -p name=value.
+As you can see, the above configuration will help the template user to override the existing version with a new version on the command line. For example, `-p version=2.0.0`.
+
 ## Hooks
 
 [Hooks](hooks.md) enable templates to perform multiple tasks. You can add Hooks to your template as fractions of code. In the template, you must store it in the `hooks` directory under the template directory. You can also store it in other modules and external libraries, or even configure it inside the template. The generation process can perform multiple actions.

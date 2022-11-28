@@ -3,7 +3,7 @@ Table of Contents
 - [Introduction](index.md)
 - [AsyncAPI Specification file](asyncapi-file.md)
 - [Configuration file](configuration-file.md)
-- [Templates](template.md)
+- [Template](template.md)
 - [Template development](template-development.md)
 - [Authoring templates](authoring-templates.md)
 - [React render engine](react-render-engine.md)

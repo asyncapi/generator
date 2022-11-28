@@ -20,6 +20,20 @@ The generator uses the official NPM library for installing NodeJS dependencies c
 
 You can store template projects on a local drive or as a `git` repository during the development process. 
 
+```mermaid
+graph LR
+    A[Template Context]
+    B{Generator}
+    D[Render Engine]
+    F[Template] --> B
+  subgraph Generator Library
+    B --> | asyncapi | A
+    B--> | params | A
+    A --> D
+    B --> | Template Files | D
+  end
+```
+
 ## Generator `templates` list
 
 AsyncAPI has a list of available templates to enhance your generation process. Templates are stored as repositories on AsyncAPI's official GitHub profile.

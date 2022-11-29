@@ -6,6 +6,7 @@ on:
       - 'master'
     paths:
       - 'docs/*.md'
+      - '!docs/README.md'
 
 jobs:
   Make-PR:

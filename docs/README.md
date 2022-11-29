@@ -10,7 +10,7 @@ Table of Contents
 - [Generator version vs template version](versioning.md)
 - [React render engine](react-render-engine.md)
 - [Nunjucks render engine](nunjucks-render-engine.md)
-- [AsyncAPI context](asyncapi-context.md)
+- [Template context](template-context.md)
 - [Parser](parser.md)
 - [Hooks](hooks.md)
 - [File templates](file-templates.md)

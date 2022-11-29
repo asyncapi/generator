@@ -36,6 +36,7 @@ jobs:
         working-directory: ./website
         run: |
           mkdir -p ./pages/docs/tools/generator
+          rm ../generator/docs/README.md
           cp -R ../generator/docs ./pages/docs/tools/generator
           printf "\`\`\`\ntitle: Generator\nweight: 3\n\`\`\`" > _section.md
       - name: Commit and push

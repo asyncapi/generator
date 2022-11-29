@@ -2,8 +2,11 @@ Table of Contents
 
 - [Introduction](index.md)
 - [AsyncAPI document](asyncapi-document.md)
+- [Installation Guide](installation-guide.md)
+- [Usage](usage.md)
 - [Configuration File](configuration-file.md)
 - [Templates](template.md)
+- [Template context](template-context.md)
 - [Authoring Templates](authoring-templates.md)
 - [Generator Version vs Template Version](versioning.md)
 - [React Render Engine](react-render-engine.md)

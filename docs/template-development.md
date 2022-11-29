@@ -150,17 +150,3 @@ The updated template looks like the following:
 <Text>Version is: **{asyncapi.info.version()}**</Text>
 ```
 
-For example, In nodejs-template, the following hooks are overridden in the template context so that they can still be reused for other purposes:
-
-```json
-{
-"@asyncapi/generator-hooks": "^0.1.0",
-"hooks": {
-      "@asyncapi/generator-hooks": "createAsyncapiFile"
-    }
-  }
-```
-
-
-
-

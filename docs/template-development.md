@@ -141,7 +141,7 @@ module.exports = {
   }
 };
 ```
-This can be an even better alternative way of overriding the `version` parameter that we discussed in the previous section. Not only a markdown document will be generated but also the AsyncAPI file that was passed to the generator will be returned with the overwritten version.
+This can be an even better alternative way of overriding the `version` parameter that we discussed in the previous section. Not only a markdown document will be generated but also the AsyncAPI document that was passed to the generator will be returned with the overwritten version.
 
 The updated template looks like the following:
 

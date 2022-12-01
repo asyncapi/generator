@@ -12,7 +12,7 @@ Some examples outputs are:
 - Code
 - Documentation
 - Markdown diagrams
-- Python/Java applications
+- Python and Java applications
 
 A template is an independent NodeJS project unrelated to the `generator` repository. AsyncAPI templates are managed, released, and published separately. You can also create templates and manage them on your own.
 

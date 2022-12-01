@@ -1,5 +1,5 @@
 ---
-title: "Authoring Templates"
+title: "Authoring templates"
 weight: 50
 ---
 

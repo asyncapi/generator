@@ -1,5 +1,5 @@
 ---
-title: "TypeScript Support"
+title: "TypeScript support"
 weight: 120
 ---
 

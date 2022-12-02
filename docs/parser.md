@@ -66,6 +66,10 @@ channels:
 We can use helper functions provided by parser to operate on the above JSON file. For example, we can use the helper method `asyncAPIDocument.channelNames()` which returns an array of all channel names currently present in the asyncAPI document.
 
 ```js
+asyncapi: '2.5.0'
+info:
+  title: Demo API
+  version: '1.0.0'
 channels:
   first/channelOne:
     description: Dummy channel description.

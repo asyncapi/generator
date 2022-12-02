@@ -40,7 +40,6 @@ channels:
               format: date-time
               description: Date and time when the message was sent.
 
-channels:
   second/channelTwo:
     publish:
       summary: This is the second sample channel

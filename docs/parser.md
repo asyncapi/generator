@@ -26,6 +26,7 @@ info:
   title: Demo API
   version: '1.0.0'
 channels:
+
 first/channelOne:
     publish:
       summary: This is the first sample channel

@@ -15,6 +15,8 @@ Parser validates these documents using dedicated schema-supported plugins. These
 - Avro schema
 - RAML data-type schema
 
+Parser allows the template developer to also easily access schemas provided in AVRO or other formats. This is because the JavaScript parser converts all of them into JSON schema.
+
 If the document is valid, Parser returns `AsyncAPIDocument` instance with a set of helper functions that enable easier access to contents of AsyncAPI document. The parser provides dereferenced output. During the dereference process the AsyncAPI parser substitutes a reference with a full definition. The dereferenced output is always in the .json format. If a document is invalid, the parser provides a message listing all errors. 
 
 For example, the following asyncapi document has two channels–`channelOne` and `channelTwo`. Each channel has one operation and a single message:

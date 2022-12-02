@@ -26,7 +26,7 @@ info:
   title: Demo API
   version: '1.0.0'
 channels:
-  first/channelOne:
+  name/channelOne:
     publish:
       summary: This is the first sample channel
       operationId: onMessage
@@ -44,7 +44,7 @@ channels:
               format: date-time
               description: Date and time when the message was sent.
 
-   second/channelTwo:
+   name/channelTwo:
     publish:
       summary: This is the second sample channel
       operationId: messageRead

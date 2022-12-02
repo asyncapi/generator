@@ -72,36 +72,23 @@ info:
   version: '1.0.0'
 channels:
   first/channelOne:
-    description: Dummy channel description.
-    parameters:
-      dummy:
-        $ref: '#/components/parameters/dummy'
     publish:
       summary: Inform whenever something dummy is created.
-      description: |
-        Longer description.
-
-        Still dummy though.
       operationId: receiveNewDummyInfo
-      tags:
-        - name: oparation-tag1
-          externalDocs:
-            description: External docs description 1
-            url: https://www.asyncapi.com/
-        - name: oparation-tag2
-          description: Description 2
-          externalDocs:
-            url: "https://www.asyncapi.com/"
-        - name: oparation-tag3
-        - name: oparation-tag4
-          description: Description 4
-        - name: oparation-tag5
-          externalDocs:
-            url: "https://www.asyncapi.com/"
-      traits:
-        - $ref: '#/components/operationTraits/kafka'
       message:
-        $ref: '#/components/messages/dummyCreated'
+        name: FirstMessage
+        payload:
+          type: object
+          properties:
+            id:
+              type: integer
+              minimum: 0
+              description: Id of the channel
+            sentAt:
+              type: string
+              format: date-time
+              description: Date and time when the message was sent.
+
 
   second/channelTwo:
     bindings:

@@ -19,7 +19,8 @@ If the document is valid, Parser returns `AsyncAPIDocument` instance with a set 
 
 For example, the following asyncapi document has two channels–`channelOne` and `channelTwo`. Each channel has one operation and a single message:
 
-```json
+```js
+
 channels:
   first/channelOne:
     publish:
@@ -57,6 +58,7 @@ channels:
               type: string
               format: date-time
               description: Date and time when the message was sent.
+
 ```
 We can use helper functions provided by parser to operate on the above JSON file. For example, we can use the helper method `asyncAPIDocument.channelNames()` which returns an array of all channel names currently present in the asyncAPI document.
 

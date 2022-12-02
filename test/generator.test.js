@@ -322,7 +322,7 @@ describe('Generator', () => {
       const utils = require('../lib/utils');
       const asyncapiURL = 'http://example.com/fake-asyncapi.yml';
       utils.__contentOfFetchedFile = 'fake text';
-      
+
       const generateFromStringMock = jest.fn().mockResolvedValue();
       const gen = new Generator('testTemplate', __dirname);
       gen.generateFromString = generateFromStringMock;
@@ -404,6 +404,16 @@ describe('Generator', () => {
       utils.__isFileSystemPathValue = false;
       utils.__getTemplateDetails = undefined;
       const gen = new Generator('https://my-test-template.com', __dirname);
+      await gen.installTemplate();
+      setTimeout(() => { // This puts the call at the end of the Node.js event loop queue.
+        expect(arboristMock.reify).toHaveBeenCalledTimes(1);
+      }, 0);
+    });
+
+    it('works with a path to registry', async () => {
+      log.debug = jest.fn();
+      utils.__getTemplateDetails = undefined;
+      const gen = new Generator('nameOfTestTemplate', __dirname, {debug: true, registry: 'some.registry.com', registryUsername: 'user', registryPassword: 'password', registryToken: 'token'});
       await gen.installTemplate();
       setTimeout(() => { // This puts the call at the end of the Node.js event loop queue.
         expect(arboristMock.reify).toHaveBeenCalledTimes(1);

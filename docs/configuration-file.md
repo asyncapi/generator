@@ -1,5 +1,5 @@
 ---
-title: "Configuration File"
+title: "Configuration file"
 weight: 30
 ---
 

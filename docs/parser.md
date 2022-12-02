@@ -26,7 +26,7 @@ info:
   title: Demo API
   version: '1.0.0'
 channels:
-   first/channelOne:
+  first/channelOne:
     publish:
       summary: This is the first sample channel
       operationId: onMessage
@@ -44,7 +44,7 @@ channels:
               format: date-time
               description: Date and time when the message was sent.
 
-   second/channelTwo:
+second/channelTwo:
     publish:
       summary: This is the second sample channel
       operationId: messageRead
@@ -64,3 +64,50 @@ channels:
 
 ```
 We can use helper functions provided by parser to operate on the above JSON file. For example, we can use the helper method `asyncAPIDocument.channelNames()` which returns an array of all channel names currently present in the asyncAPI document.
+
+```js
+channels:
+  first/channelOne:
+    description: Dummy channel description.
+    parameters:
+      dummy:
+        $ref: '#/components/parameters/dummy'
+    publish:
+      summary: Inform whenever something dummy is created.
+      description: |
+        Longer description.
+
+        Still dummy though.
+      operationId: receiveNewDummyInfo
+      tags:
+        - name: oparation-tag1
+          externalDocs:
+            description: External docs description 1
+            url: https://www.asyncapi.com/
+        - name: oparation-tag2
+          description: Description 2
+          externalDocs:
+            url: "https://www.asyncapi.com/"
+        - name: oparation-tag3
+        - name: oparation-tag4
+          description: Description 4
+        - name: oparation-tag5
+          externalDocs:
+            url: "https://www.asyncapi.com/"
+      traits:
+        - $ref: '#/components/operationTraits/kafka'
+      message:
+        $ref: '#/components/messages/dummyCreated'
+
+  second/channelTwo:
+    bindings:
+      amqp:
+        is: routingKey
+    subscribe:
+      operationId: receiveSystemInfo
+      message:
+        $ref: '#/components/messages/dummyInfo'
+
+```
+
+

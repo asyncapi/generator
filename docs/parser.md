@@ -43,8 +43,7 @@ channels:
               type: string
               format: date-time
               description: Date and time when the message was sent.
-
-   name/channelTwo:
+  name/channelTwo:
     publish:
       summary: This is the second sample channel
       operationId: messageRead

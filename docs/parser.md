@@ -44,7 +44,7 @@ channels:
               format: date-time
               description: Date and time when the message was sent.
 
-second/channelTwo:
+   second/channelTwo:
     publish:
       summary: This is the second sample channel
       operationId: messageRead

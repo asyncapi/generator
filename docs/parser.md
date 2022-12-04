@@ -72,7 +72,14 @@ We can use helper functions provided by parser to operate on the above JSON file
 1. Generator receives [asyncAPI document](https://github.com/asyncapi/generator/blob/master/docs/asyncapi-document.md) as an input.
 2. Generator sends asyncAPI document to the parser as **asyncapistring**. It is the stringified version of the original asyncAPI document.
 3. Parser uses additional plugins such as the OpenAPI, RAML, or Avro schemas to validate custom schemas of message payloads defined in the AsyncAPI Document.
-4. If the asyncAPI document is invalid, it throws an error based on the type of failure that was encountered. For example, `invalid-document-type` is returned if the AsyncAPI document is not a string nor a JS object. Similarly, other errors may include–`invalid-json`, `invalid-yaml`, `impossible-to-convert-to-json` etc.
+4. If the asyncAPI document is invalid, it throws an error based on the type of failure that was encountered. For example, if the AsyncAPI document is not a string nor a JS object, parser throws the `invalid-document-type` error. 
+
+Similarly, other types of error can be:
+
+- `invalid-json`
+- `invalid-yaml`
+- `impossible-to-convert-to-json`
+
 5. If the document is valid, it modifies the asyncAPI document and returns a set of helper functions and bundles them together into the asyncapi variable.
 6. The original asyncAPI document is part of the [Template Context](https://github.com/asyncapi/generator/blob/master/docs/template-context.md) as generator passes the original asyncAPI document to the template context as well.	
 

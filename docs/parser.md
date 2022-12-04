@@ -81,4 +81,18 @@ We can use helper functions provided by parser to operate on the above JSON file
 6. The original asyncAPI document is part of the [Template Context](https://github.com/asyncapi/generator/blob/master/docs/template-context.md) as generator passes the original asyncAPI document to the template context as well.	
 7. Template context passes all of these values to the **Render engine** of your choice. Finally, the render engine generates whatever output you may have specified in your template such as—code, documentation, diagrams, pdf, applications etc.
 
+```mermaid
+graph LR
+    A[Template Context]
+    B{Generator}
+    C[Parser]
+    D[Render Engine]
+    E[AsyncAPI Document] --> B
+  subgraph Generator
+    B -->| asyncapiString | C
+    C --> | asyncapi | A
+    A --> D
+  end
+```
 
+>

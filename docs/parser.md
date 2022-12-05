@@ -85,7 +85,7 @@ graph TD
     A[AsyncAPI document] --> B
     B[Generator] -->|asyncapiString| C(Parser)
     C --> D{Validation}
-    D -->|fail| B
+    D -->|failure| B
     D -->|asyncapi -> AsyncAPIDocument| E[Template Context]
     E --> F[Render Engine]
 ```

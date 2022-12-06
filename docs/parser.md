@@ -69,24 +69,24 @@ We can use helper functions provided by parser to operate on the above JSON file
 
 ## AsyncAPI document validation process
 
-1. Generator receives **asyncAPI** document as an input.
-2. Generator sends asyncAPI document to the parser as **asyncapiString**. It is the stringified version of the original asyncAPI document.
-3. Parser uses additional plugins such as the OpenAPI, RAML, or Avro schemas to validate custom schemas of message payloads defined in the AsyncAPI Document.
-4. If the asyncAPI document is invalid, it throws an error based on the type of failure that was encountered. For example, if the AsyncAPI document is not a string nor a JS object, parser throws the `invalid-document-type` error. 
+1. **asyncAPI document** is fed as an input to the Generator.
+1. Generator sends asyncAPI document to the parser as **asyncapiString**. It is the stringified version of the original asyncAPI document.
+1. Parser uses additional plugins such as the OpenAPI, RAML, or Avro schemas to validate custom schemas of message payloads defined in the AsyncAPI Document.
+1. If the asyncAPI document is invalid, it throws an error based on the type of failure that was encountered. For example, if the AsyncAPI document is not a string nor a JS object, parser throws the `invalid-document-type` error. 
    Similarly, you may encounter errors such as:
       - `invalid-json`
       - `invalid-yaml`
       - `impossible-to-convert-to-json`
-5. If the document is valid, it modifies the asyncAPI document and returns a set of helper functions and bundles them together into the **asyncapi** variable.
-7. Template context passes all of these values to the [**Render engine**](react-render-engine.md) of your choice. Finally, the render engine generates whatever output you may have specified in your template such as—code, documentation, diagrams, pdf, applications etc.
+1. If the document is valid, it modifies the asyncAPI document and returns a set of helper functions and bundles them together into the **asyncapi** variable.
+1. Template context passes all of these values to the [**Render engine**](react-render-engine.md) of your choice. Finally, the render engine generates whatever output you may have specified in your template such as—code, documentation, diagrams, pdf, applications etc.
 
 ```mermaid
 graph TD
-    A[AsyncAPI document] --> B
+    A[asyncAPI document] --> B
     B[Generator] -->|asyncapiString| C(Parser)
     C --> D{Validation}
-    D -->|failure| B
-    D -->|asyncapi -> AsyncAPIDocument| E[Template Context]
+    D -->|invalid| B
+    D -->|asyncapi -> helper functions| E[Template Context]
     E --> F[Render Engine]
 ```
 

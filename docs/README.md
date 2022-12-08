@@ -7,7 +7,7 @@ Table of Contents
 - [Template](template.md)
 - [Parser](parser.md)
 - [Generator version vs template version](versioning.md)
-- [Template Development](template-development)
+- [Template Development](template-development.md)
 - [Configuration File](configuration-file.md)
 - [Template context](template-context.md)
 - [React render engine](react-render-engine.md)

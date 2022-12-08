@@ -1,6 +1,6 @@
 ---
 title: "Generator version vs template version"
-weight: 60
+weight: 70
 ---
 
 The generator tool generates whatever you want, as long as it can be defined in a template based on the [AsyncAPI document](asyncapi-document). On the other hand, a **template** is a file or group of files that specify the kind of output you expect from using the generator's features. For example, you may want to use the [NodeJS template](https://github.com/asyncapi/nodejs-template) to generate boilerplate code for your message-based APIs.

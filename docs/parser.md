@@ -17,7 +17,7 @@ Supported schemas:
 - Avro schema
 - RAML data-type schema
 
-Parser allows the template developer to also easily access schemas provided in all of the above supported formats. This is because the JavaScript parser converts all of them into JSON schema.
+The Parser allows the template developer to easily access schemas provided in the above supported formats. This is because the JavaScript parser converts all of them into JSON schema.
 
 If the document is valid, Parser returns `AsyncAPIDocument` instance with a set of helper functions that enable easier access to contents of AsyncAPI document. The parser provides dereferenced output. During the dereference process the AsyncAPI parser substitutes a reference with a full definition. The dereferenced output is always in the JSON format. If a document is invalid, the parser provides a message listing all errors. The original asyncAPI document is part of the [Template Context](template-context.md) as generator passes the original asyncAPI document to the template context as well.	
 

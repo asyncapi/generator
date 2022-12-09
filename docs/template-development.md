@@ -5,9 +5,9 @@ weight: 50
 
 ## Minimum template requirements
 
-Let's discuss the minimum components your template requires: `template` directory and `package.json` file.
+Let's break down the minimum template requirements: the `template` directory and a `package.json` file.
 
-## 1. `template` directory
+### `template` directory
 
 The `template` directory stores generated outputs in files. In other words, the generator processes all the files stored in this directory.
 
@@ -17,15 +17,15 @@ import { File, Text } from "@asyncapi/generator-react-sdk";
 export default function({ asyncapi, params, originalAsyncAPI }) {
 return (
     <File name="asyncapi.md">
-    <Text>This is a markdown file for my application.</Text>
-    <Text>App name is: **{ asyncapi.info().title() }**</Text>
+    <Text>My application's markdown file.</Text>
+    <Text>App name: **{ asyncapi.info().title() }**</Text>
     </File>
 );
 }
 ```
-## 2. `package.json` file
+### `package.json` file
 
-Before the generation process begins, the generator installs the template into its dependencies. A `package.json` is necessary to identify the template name.
+Before the generation process begins, the generator installs the template into its dependencies. A `package.json` file is necessary to identify the template name.
 
 The following block shows an example `package.json` file that points to the [React Render Engine](react-render-engine.md) and necessary dependencies:
 
@@ -41,7 +41,7 @@ The following block shows an example `package.json` file that points to the [Rea
 }
 ```
 
-The above example of a`template/index.js` file shows the generation process result. The user also receives an `asyncapi.md` file with hardcoded and dynamic (title of the application taken from AsyncAPI document) information.
+The above example of a `template/index.js` file shows the generation process result. The user also receives an `asyncapi.md` file with hardcoded and dynamic (application title from the AsyncAPI document) information.
 
 Every template must depend on the [`@asyncapi/generator-react-sdk` package](https://github.com/asyncapi/generator-react-sdk), which contains a template file's basic components.
 
@@ -58,11 +58,11 @@ You must configure the generator's `package.json` file to contain JSON objects w
 |`parameters[param].default`| Any | Default value of the parameter if not specified. Shouldn't be used for mandatory `required=true` parameters.
 |`parameters[param].required`| Boolean | Whether the parameter is required or not.
 
-Above table lists some of the configurations options which help generator achieve specific set of tasks throughout the generation process. The `generator` property from 'package.json' contains all the configuration information. To learn more about template configuration and various supported parameters. Read more about the [configuration file](configuration-file.md).
+The above table lists some configuration options that help the generator achieve a specific set of tasks throughout the generation process. The `generator` property from 'package.json' contains all the configuration information. To learn more about template configuration and various supported parameters, read the [generator configuration file](configuration-file.md).
 
 > Whenever you make a change to the package.json, make sure you perform an update by running `npm install`;  this command synchronizes with the `package-lock.json` and validates the file.
 
-### Adding configuration options in `package.json` 
+### `package.json` configuration options 
 
 The following examples show some advanced configurations that we can use in our `package.json` file:
 
@@ -82,7 +82,7 @@ The above `package.json` file has a newly added configuration called `supportedP
 
 For example, if you want to generate an output using the above template, you need to have an AsyncAPI document with servers that use `mqtt` to generate your desired output. If your AsyncAPI document has server connections with `kafka`, the generation process will be terminated since the only supported protocol mentioned is `mqtt`. 
 
-### Accessing parameters inside the template
+### Accessing template parameters
 
 Additionally, we can also have a configuration called `parameters`, which is an object with all the parameters that can be passed when generating the template:
 

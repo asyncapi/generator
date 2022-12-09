@@ -73,7 +73,7 @@ We can use helper functions provided by the Parser to operate on the above JSON 
 
 1. **AsyncAPI document** is fed as an input to the Generator.
 1. Generator sends the AsyncAPI document to the Parser as **asyncapiString**; the stringified version of the original AsyncAPI document.
-1. Parser uses additional plugins such as the OpenAPI, RAML, or Avro schemas to validate custom schemas of message payloads defined in the AsyncAPI Document.
+1. The Parser uses additional plugins such as the OpenAPI, RAML, or Avro schemas to validate custom schemas of message payloads defined in the AsyncAPI document.
 1. If the asyncAPI document is invalid, it throws an error based on the type of failure that was encountered. For example, if the AsyncAPI document is not a string nor a JS object, parser throws the `invalid-document-type` error. 
    Similarly, you may encounter errors such as:
       - `invalid-json`

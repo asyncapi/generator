@@ -92,4 +92,4 @@ graph TD
     E --> F[Render Engine]
 ```
 
-> To learn more about parser and access all of its features, you can check out the AsyncAPI [Parser’s github repository](https://github.com/asyncapi/parser-js).
+> To learn more about the Parser and access all of its features, check out the AsyncAPI [Parser’s GitHub repository](https://github.com/asyncapi/parser-js).

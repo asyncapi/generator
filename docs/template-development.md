@@ -60,7 +60,7 @@ You must configure the generator's `package.json` file to contain JSON objects w
 
 Above table lists some of the configurations options which help generator achieve specific set of tasks throughout the generation process. The `generator` property from 'package.json' contains all the configuration information. To learn more about template configuration and various supported parameters. Read more about the [configuration file](configuration-file.md).
 
-> Whenever you make a change to the package.json, make sure you perform an update by running `npm install`;  this command synchronizes with the package-lock.json and validates the file.
+> Whenever you make a change to the package.json, make sure you perform an update by running `npm install`;  this command synchronizes with the `package-lock.json` and validates the file.
 
 ### Adding configuration options in `package.json` 
 
@@ -80,11 +80,11 @@ The following examples show some advanced configurations that we can use in our 
 ```
 The above `package.json` file has a newly added configuration called `supportedProtocols` which is set to `mqtt`. This configuration displays all the protocols that this template supports. You can have multiple supported protocols in our template. 
 
-For example, if you want to generate an output using the above template, you need to have an AsyncAPI document that has servers that use `mqtt` in order to generate your desired output. If your AsyncAPI document has server connections with `kafka`, the generation process will be terminated since the only supported protocol mentioned is `mqtt`. 
+For example, if you want to generate an output using the above template, you need to have an AsyncAPI document with servers that use `mqtt` to generate your desired output. If your AsyncAPI document has server connections with `kafka`, the generation process will be terminated since the only supported protocol mentioned is `mqtt`. 
 
 ### Accessing parameters inside the template
 
-Additionally, we can also have a configuration called `parameters` which is an object with all the parameters that can be passed when generating the template:
+Additionally, we can also have a configuration called `parameters`, which is an object with all the parameters that can be passed when generating the template:
 
 ```json
 {
@@ -94,7 +94,7 @@ Additionally, we can also have a configuration called `parameters` which is an o
     "supportedProtocols": "mqtt",
     "parameters": {
         "version": {
-          "description": "Override the version of your application provided under `info.version` location in the AsyncAPI document.",
+          "description": "Overrides application version under `info.version` in the AsyncAPI document.",
           "required": false
         }
     }
@@ -105,33 +105,33 @@ Additionally, we can also have a configuration called `parameters` which is an o
 }
 ```
 
-The default version of your application is always fetched from your AsyncAPI document. The above configuration will help the template user to override the existing version with a new version on the command line.
+The default version of your application is always fetched from your AsyncAPI document. The above configuration helps the template user override the existing version with a new one on the command line.
 
 The changes done in the template will be as follows:
 
 Original:
 
 ```js
-<Text>App name is: **{ asyncapi.info().title() }**</Text>
+<Text>App name: **{ asyncapi.info().title() }**</Text>
 ```
 
 Newer:
 
 ```js
-<Text>App name is: **{ asyncapi.info().title() }**</Text>
+<Text>App name: **{ asyncapi.info().title() }**</Text>
 <Text>Version is: **{params.version || asyncapi.info.version()}**</Text>
 ```
 
-Now that you have added all the configuration options, you can start the generation process by using generator CLI. You can pass these parameters via the CLI. When using CLI, it's done by indicating --param name=value or -p name=value.
-As you can see, the above configuration will help the template user to override the existing version with a new version on the command line. For example, `-p version=2.0.0`.
+Now that you have added all the configuration options, you can start the generation process using the generator CLI. You can pass these parameters via the CLI: `--param name=value or -p name=value`.
+The above configuration helps template users override the existing version with a new version on the command line. (Example: `-p version=2.0.0`)
 
 ## Hooks
 
-[Hooks](hooks.md) enable templates to perform multiple tasks. You can add Hooks to your template as fractions of code. In the template, you must store it in the `hooks` directory under the template directory. You can also store it in other modules and external libraries, or even configure it inside the template. The generation process can perform multiple actions.
+[Hooks](hooks.md) enable templates to perform multiple tasks. You can add Hooks to your template as fractions of code. In the template, you must store it in the `hooks` directory under the template directory. You can also store it in other modules and external libraries or configure it inside the template. The generation process can perform multiple actions.
 
 **Templates** can perform multiple actions _before_ or _after_ the generation process with the help of **hooks**.
 
-For example, hooks can help you change the specification version with the new `version` that you can pass before the generation process even begins:
+Hooks help you change the specification version with the new `version` that you can pass before the generation process even begins:
 
 ```js
 module.exports = {
@@ -141,12 +141,12 @@ module.exports = {
   }
 };
 ```
-This can be an even better alternative way of overriding the `version` parameter that we discussed in the previous section. Not only a markdown document will be generated but also the AsyncAPI document that was passed to the generator will be returned with the overwritten version.
+This can be an even better alternative to overriding the `version` parameter we discussed in the previous section. A markdown document will be generated, and the AsyncAPI document passed to the generator will be returned with the overwritten version.
 
 The updated template looks like the following:
 
 ```js
-<Text>App name is: **{ asyncapi.info().title() }**</Text>
-<Text>Version is: **{asyncapi.info.version()}**</Text>
+<Text>App name: **{ asyncapi.info().title() }**</Text>
+<Text>Version: **{asyncapi.info.version()}**</Text>
 ```
 

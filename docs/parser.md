@@ -21,7 +21,7 @@ The Parser allows the template developer to easily access schemas provided in th
 
 If the document is valid, the Parser returns an `AsyncAPIDocument` instance with a set of helper functions that enable easier access to the contents of the AsyncAPI document. The parser provides dereferenced output. During the dereference process, the AsyncAPI parser substitutes a reference with a full definition. The dereferenced output is always in JSON format. The parser provides a message listing all errors if a document is invalid. The original asyncAPI document is part of the [Template Context](template-context.md) as the generator also passes the original asyncAPI document to the template context.	
 
-For example, the following asyncapi document has two channels–`channelOne` and `channelTwo`. Each channel has one operation and a single message:
+The following AsyncAPI document example has two channels: `channelOne` and `channelTwo`. Each channel has one operation and a single message:
 
 ```yaml
 asyncapi: '2.5.0'

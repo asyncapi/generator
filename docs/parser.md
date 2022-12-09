@@ -79,7 +79,7 @@ We can use helper functions provided by the Parser to operate on the above JSON 
       - `invalid-json`
       - `invalid-yaml`
       - `impossible-to-convert-to-json`
-1. If the document is valid, it modifies the asyncAPI document and returns a set of helper functions and bundles them together into the **asyncapi** variable. These helper functions in the form asyncapi variable are passed to the **Template Context**.
+1. If the document is valid, the Parser modifies the AsyncAPI document, returns a set of helper functions, and bundles them together into the **asyncapi** variable. These helper functions in the form of an **asyncapi** variable are passed to the **Template Context**.
 1. Template context passes all of these values to the [**Render engine**](react-render-engine.md) of your choice. Finally, the render engine generates whatever output you may have specified in your template such as—code, documentation, diagrams, pdf, applications etc.
 
 ```mermaid

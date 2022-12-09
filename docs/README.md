@@ -5,7 +5,7 @@ Table of Contents
 - [Installation Guide](installation-guide.md)
 - [Usage](usage.md)
 - [Configuration File](configuration-file.md)
-- [Templates](template.md)
+- [Template](template.md)
 - [Generator version vs template version](versioning.md)
 - [React render engine](react-render-engine.md)
 - [Nunjucks render engine](nunjucks-render-engine.md)

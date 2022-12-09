@@ -67,7 +67,7 @@ We can use helper functions provided by the Parser to operate on the above JSON 
   const messages = asyncAPIDocument.allMessages();
 ```
 
-> Parser gives you access to a number of these [helper functions](https://github.com/asyncapi/parser-js/blob/master/API.md) that you can implement to access contents of your asyncAPI document. 
+> The Parser gives you access to a number of these [helper functions](https://github.com/asyncapi/parser-js/blob/master/API.md) that you can implement to access the contents of your AsyncAPI document. 
 
 ## AsyncAPI document validation process
 

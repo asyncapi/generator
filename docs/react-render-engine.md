@@ -31,7 +31,7 @@ export default function({ asyncapi, params, originalAsyncAPI }) {
 }
 ```
 
-The exported default function returns a `File` component as a root component which the [Generator](https://github.com/asyncapi/generator) uses to figure out what file should be generated. In our case we overwrite the default functionality of saving the file as `MyTemplate.js` but instead use the filename `asyncapi.md`. It is then specified that we should render `Some text that should render as is\n` within that file. Notice the `\n` character at the end, this is something that is automatically added after the `Text` component. 
+The exported default function returns a `File` component as a root component which the generator uses to determine what file should be generated. In our case, we overwrite the default functionality of saving the file as `MyTemplate.js` but instead use the filename `asyncapi.md`. It is then specified that we should render `Some text that should render as is\n` within that file. Notice the `\n` character at the end, which is automatically added after the `Text` component. 
 
 For further information about components, props etc. see the [Generator React SDK](https://github.com/asyncapi/generator-react-sdk)
 

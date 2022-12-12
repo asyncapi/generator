@@ -1,6 +1,6 @@
 ---
 title: "Template context"
-weight: 60
+weight: 100
 ---
 
 While using the generator tool, you may want dynamic values populated to your templates and rendered in the output. The generator can achieve that using the **template context**.

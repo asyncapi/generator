@@ -1,6 +1,6 @@
 ---
 title: "Template development"
-weight: 50
+weight: 80
 ---
 
 ## Minimum template requirements

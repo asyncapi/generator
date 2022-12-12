@@ -1,0 +1,12 @@
+
+<a name="{{{anchorName}}}"></a>
+
+{{#if (equal kind "class")}}
+{{>heading-indent}}{{>custom-sig-name}}
+{{~else~}}
+{{#if params}}
+{{>heading-indent}}{{>custom-sig-name}}
+{{~else~}}
+* {{>sig-name}}** :
+{{/if}}
+{{/if}}

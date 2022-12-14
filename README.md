@@ -64,15 +64,15 @@ Install both packages using [official installer](https://nodejs.org/en/download/
 ## Using from the command-line interface (CLI)
 
 ### CLI installation
-Learn to install the AsyncAPI CLI from the [installation guide](https://github.com/asyncapi/generator/blob/master/docs/installation-guide.md).
+Learn to install the AsyncAPI CLI from the [installation guide](docs/installation-guide.md).
 
 ### CLI usage 
 
-Learn more about different ways of using the CLI from the [usage document](https://github.com/asyncapi/generator/blob/master/docs/usage.md).
+Learn more about different ways of using the CLI from the [usage document](docs/usage.md).
 
 ## Generator version vs Template version
 
-Learn more about versioning from the [versioning document](https://github.com/asyncapi/generator/blob/master/docs/versioning.md).
+Learn more about versioning from the [versioning document](docs/versioning.md).
 
 ## How to create a template
 

@@ -1,6 +1,6 @@
 ---
 title: "Template development"
-weight: 50
+weight: 80
 ---
 
 ## Minimum template requirements
@@ -149,4 +149,3 @@ The updated template looks like the following:
 <Text>App name: **{ asyncapi.info().title() }**</Text>
 <Text>Version: **{asyncapi.info.version()}**</Text>
 ```
-

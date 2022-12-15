@@ -420,6 +420,16 @@ describe('Generator', () => {
       }, 0);
     });
 
+    it('throws an error indicating an unexpected param was given for registry configuration', () => {
+      const t = () => new Generator('testTemplate', __dirname, {
+        registry: {
+          url: 'some.url.com',
+          privateKey: 'some.key'
+        }
+      });
+      expect(t).toThrow('There invalid parameters were specified to configure private registry: privateKey');
+    });
+
     it('works with a url and force = true', async () => {
       const gen = new Generator('https://my-test-template.com', __dirname);
       await gen.installTemplate(true);

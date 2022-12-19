@@ -38,7 +38,7 @@ jobs:
           mkdir -p ./pages/docs/tools/generator
           cp -R ../generator/docs ./pages/docs/tools/generator
           rm ../generator/docs/README.md
-          rmdir ../generator/docs/jsdoc2md-handlebars
+          rm -r ../generator/docs/jsdoc2md-handlebars
           printf "\`\`\`\ntitle: Generator\nweight: 3\n\`\`\`" > _section.md
       - name: Commit and push
         working-directory: ./website

@@ -87,7 +87,7 @@ The generator skips all hooks of the `generate:before` type and `foo`, `bar` hoo
 asyncapi generate fromTemplate asyncapi.yaml ~/my-template
 ```
 
-It creates a symbolic link to the target directory (`~/my-template` in this case).
+It creates a symbolic link to the target directory (`~/my-template` in this case). 
 
 **Installing the template from a git URL:**
 ```bash

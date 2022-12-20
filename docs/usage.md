@@ -43,7 +43,7 @@ npm install <folder>
 
 ### Global templates installed with `yarn` or `npm`
 
-You can preinstall templates globally before installing the generator CLI. The generator first tries to locate the template in local dependencies; if absent it checks where the global generator packages are installed. 
+You can preinstall templates globally before installing the generator CLI. The generator first tries to locate the template in local dependencies; if absent it checks where the global generator packages are installed.
 
 ```bash
 npm install -g @asyncapi/html-template@0.16.0

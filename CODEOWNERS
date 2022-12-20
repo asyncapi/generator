@@ -6,4 +6,7 @@
 
 # The default owners are automatically added as reviewers when you open a pull request unless different owners are specified in the file.
 
+# All .md files
+*.md @Florence-Njeri @pratik2315
+
 * @fmvilas @derberg @magicmatatjahu @jonaslagoni @asyncapi-bot-eve

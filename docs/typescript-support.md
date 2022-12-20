@@ -1,6 +1,6 @@
 ---
-title: "TypeScript Support"
-weight: 120
+title: "TypeScript support"
+weight: 150
 ---
 
 The AsyncAPI generator has TypeScript support for [hooks](#hooks) and Nunjucks's [filters](#filters). Assumptions:

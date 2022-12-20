@@ -7,6 +7,8 @@ weight: 80
 
 Let's break down the minimum template requirements: the `template` directory and a `package.json` file.
 
+> You can also check [Template for Generator Templates](https://github.com/asyncapi/template-for-generator-templates) project to see show-case template based on the AsyncAPI Generator.
+
 ### `template` directory
 
 The `template` directory stores generated outputs in files. In other words, the generator processes all the files stored in this directory.

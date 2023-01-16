@@ -56,7 +56,7 @@ jobs:
         run: npm install
       - if: steps.packagejson.outputs.exists == 'true'
         name: Run test
-        run: npm test
+        run: npm test --if-present
       - if: failure() # Only, on failure, send a message on the 94_bot-failing-ci slack channel
         name: Report workflow run status to Slack
         uses: 8398a7/action-slack@v3
@@ -69,7 +69,7 @@ jobs:
 
   release:
     needs: [test-nodejs]
-    name: Publish to any of NPM, Github, and Docker Hub
+    name: Publish to any of NPM, Github, or Docker Hub
     runs-on: ubuntu-latest
     steps:
       - name: Set git to use LF #to once and for all finish neverending fight between Unix and Windows
@@ -90,10 +90,10 @@ jobs:
         name: Install dependencies
         run: npm install
       - if: steps.packagejson.outputs.exists == 'true'
-        name: Add plugin for conventional commits
+        name: Add plugin for conventional commits for semantic-release
         run: npm install conventional-changelog-conventionalcommits@5.0.0
       - if: steps.packagejson.outputs.exists == 'true'
-        name: Publish to any of NPM, and Github
+        name: Publish to any of NPM, Github, and Docker Hub
         id: release
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}

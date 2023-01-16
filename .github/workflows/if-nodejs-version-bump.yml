@@ -36,7 +36,7 @@ jobs:
         run: npm install
       - if: steps.packagejson.outputs.exists == 'true'
         name: Assets generation
-        run: npm run generate:assets
+        run: npm run generate:assets --if-present
       - if: steps.packagejson.outputs.exists == 'true'  
         name: Bump version in package.json
         # There is no need to substract "v" from the tag as version script handles it

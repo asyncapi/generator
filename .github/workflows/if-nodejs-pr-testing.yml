@@ -52,10 +52,10 @@ jobs:
           npm install --loglevel verbose
       - if: steps.packagejson.outputs.exists == 'true'
         name: Test
-        run: npm test
+        run: npm test --if-present
       - if: steps.packagejson.outputs.exists == 'true'
         name: Run linter
-        run: npm run lint
+        run: npm run lint --if-present
       - if: steps.packagejson.outputs.exists == 'true'
         name: Run release assets generation to make sure PR does not break it
-        run: npm run generate:assets
+        run: npm run generate:assets --if-present

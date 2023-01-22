@@ -134,8 +134,32 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "Florence-Njeri",
+      "name": "Florence Njeri",
+      "avatar_url": "https://avatars.githubusercontent.com/u/40742916?v=4",
+      "profile": "https://github.com/Florence-Njeri",
+      "contributions": [
+        "doc",
+        "review",
+        "infra",
+        "maintenance"
+      ]
+    },
+    {
+      "login": "pratik2315",
+      "name": "Pratik Haldankar",
+      "avatar_url": "https://avatars.githubusercontent.com/u/77961530?v=4",
+      "profile": "https://unruffled-goodall-dd424e.netlify.app/",
+      "contributions": [
+        "doc",
+        "review",
+        "maintenance",
+        "talk"
+      ]
     }
   ],
   "contributorsPerLine": 3,
-  "skipCi": true
+  "skipCi": false
 }

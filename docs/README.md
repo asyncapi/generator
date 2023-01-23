@@ -1,18 +1,1 @@
-Table of Contents
-
-- [Introduction](index.md)
-- [Installation Guide](installation-guide.md)
-- [Usage](usage.md)
-- [AsyncAPI document](asyncapi-document.md)
-- [Template](template.md)
-- [Parser](parser.md)
-- [Generator version vs template version](versioning.md)
-- [Template Development](template-development.md)
-- [Configuration File](configuration-file.md)
-- [Template context](template-context.md)
-- [React render engine](react-render-engine.md)
-- [Nunjucks render engine](nunjucks-render-engine.md)
-- [Hooks](hooks.md)
-- [File templates](file-templates.md)
-- [TypeScript support](typescript-support.md)
-- [Special file names](special-file-names.md)
+To learn more about the Generator library, read its documentation in the AsyncAPI website under the [tools bucket](https://www.asyncapi.com/docs/tools/generator) to get acquited with the tool.

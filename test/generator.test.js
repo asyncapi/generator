@@ -132,7 +132,7 @@ describe('Generator', () => {
       templateConfigValidator = require('../lib/templateConfigValidator');
       xfsMock = require('fs.extra');
       const { AsyncAPIDocument } = require('@asyncapi/parser/cjs/models/v2/asyncapi');
-      asyncApiDocumentMock = new AsyncAPIDocument({});
+      asyncApiDocumentMock = new AsyncAPIDocument({ 'x-parser-api-version': 0 });
     });
 
     it('works with output=fs, forceWrite=false, install=false', async () => {

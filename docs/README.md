@@ -1,1 +1,1 @@
-To learn more about the Generator library, read its documentation in the AsyncAPI website under the [tools bucket](https://www.asyncapi.com/docs/tools/generator) to get acquited with the tool.
+To learn more about the generator library, read its documentation on the AsyncAPI website under the [tools bucket](https://www.asyncapi.com/docs/tools/generator) to get acquainted with the tool.

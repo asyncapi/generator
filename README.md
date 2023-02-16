@@ -77,7 +77,7 @@ Learn more about versioning from the [versioning document](https://www.asyncapi.
 ## How to create a template
 
 To create your own template, for example code generator for some specific language and technology, learn from the following resources:
-- Read the [documentation](docs/README.md)
+- Read the [documentation](https://www.asyncapi.com/docs/tools/generator)
 - Use [Template for Generator Templates](https://github.com/asyncapi/template-for-generator-templates) that showcases Generator features
 
 ## Contributing

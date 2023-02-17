@@ -4,13 +4,12 @@
 
 > :warning: This package doesn't support AsyncAPI 1.x anymore. We recommend to upgrade to the latest AsyncAPI version using the [AsyncAPI converter](https://github.com/asyncapi/converter-js). If you need to convert documents on the fly, you may use the [Node.js](https://github.com/asyncapi/converter-js) or [Go](https://github.com/asyncapi/converter-go) converters.
 
-
 ## Getting started
-The full Generator documentation can be read in the [AsyncAPI website](https://www.asyncapi.com/docs/tools/generator).
+You can read the complete generator documentation on the [AsyncAPI website](https://www.asyncapi.com/docs/tools/generator).
 
 ## Contributing
 
-To learn more about contributing to the Generator repository, check out our [CONTRIBUTION](CONTRIBUTING.md) guide.
+Check out our [CONTRIBUTION](CONTRIBUTIONG.md) guide to learn more about contributing to the generator repository.
 
 ## Contributors ✨
 

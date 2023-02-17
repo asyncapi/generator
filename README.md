@@ -4,22 +4,6 @@
 
 > :warning: This package doesn't support AsyncAPI 1.x anymore. We recommend to upgrade to the latest AsyncAPI version using the [AsyncAPI converter](https://github.com/asyncapi/converter-js). If you need to convert documents on the fly, you may use the [Node.js](https://github.com/asyncapi/converter-js) or [Go](https://github.com/asyncapi/converter-go) converters.
 
-<!-- toc is generated with GitHub Actions do not remove toc markers -->
-
-<!-- toc -->
-
-- [Overview](#overview)
-- [List of official generator templates](#list-of-official-generator-templates)
-- [Requirements](#requirements)
-- [Using from the command-line interface (CLI)](#using-from-the-command-line-interface-cli)
-  * [CLI installation](#cli-installation)
-  * [CLI usage](#cli-usage)
-- [Generator version vs Template version](#generator-version-vs-template-version)
-- [How to create a template](#how-to-create-a-template)
-- [Contributing](#contributing)
-- [Contributors ✨](#contributors-%E2%9C%A8)
-
-<!-- tocstop -->
 
 ## Getting started
 The full Generator documentation can be read in the [AsyncAPI website](https://www.asyncapi.com/docs/tools/generator).

@@ -9,7 +9,7 @@ You can read the complete generator documentation on the [AsyncAPI website](http
 
 ## Contributing
 
-Check out our [CONTRIBUTION](CONTRIBUTIONG.md) guide to learn more about contributing to the generator repository.
+Check out our [CONTRIBUTION](CONTRIBUTING.md) guide to learn more about contributing to the generator repository.
 
 ## Contributors ✨
 

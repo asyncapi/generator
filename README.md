@@ -26,7 +26,7 @@ The full Generator documentation can be read in the [AsyncAPI website](https://w
 
 ## Contributing
 
-Read our [CONTRIBUTING](CONTRIBUTING.md) guidelines.
+To learn more about contributing to the Generator repository, check out our [CONTRIBUTION](CONTRIBUTING.md) guide.
 
 ## Contributors ✨
 

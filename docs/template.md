@@ -53,7 +53,7 @@ AsyncAPI has a list of available templates to enhance your generation process. T
 
 Template Name | Description | Source code
 ---|---|---
-`@asyncapi/nodejs-template` | Generates Node.js service that uses Hermes package | [Nodej.s template](https://github.com/asyncapi/nodejs-template)
+`@asyncapi/nodejs-template` | Generates Node.js service that uses Hermes package | [Node.js template](https://github.com/asyncapi/nodejs-template)
 `@asyncapi/nodejs-ws-template` | Generates Node.js service that supports WebSocket protocol only | [Node.js WebSocket template](https://github.com/asyncapi/nodejs-ws-template)
 `@asyncapi/java-template` | Generates Java JMS application | [Java template](https://github.com/asyncapi/java-template)
 `@asyncapi/java-spring-template` | Generates Java Spring service | [Java spring template](https://github.com/asyncapi/java-spring-template)

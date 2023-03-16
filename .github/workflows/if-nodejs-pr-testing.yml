@@ -16,7 +16,24 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
     steps:
-      - if: "github.event.pull_request.draft == false &&!((github.actor == 'asyncapi-bot' && startsWith(github.event.pull_request.title, 'ci: update global workflows')) || (github.actor == 'asyncapi-bot' && startsWith(github.event.pull_request.title, 'chore(release):')) || (github.actor == 'allcontributors' && startsWith(github.event.pull_request.title, 'docs: add')))"
+      - if: >
+          !github.event.pull_request.draft && !(
+            (github.actor == 'asyncapi-bot' && (
+              startsWith(github.event.pull_request.title, 'ci: update global workflows') || 
+              startsWith(github.event.pull_request.title, 'chore: update code of conduct') || 
+              startsWith(github.event.pull_request.title, 'ci: update global contribution guide') || 
+              startsWith(github.event.pull_request.title, 'ci: update workflows for go projects') || 
+              startsWith(github.event.pull_request.title, 'ci: update workflows for nodejs projects') || 
+              startsWith(github.event.pull_request.title, 'ci: update release-related workflows for nodejs projects') || 
+              startsWith(github.event.pull_request.title, 'ci: update semantic release config file') || 
+              startsWith(github.event.pull_request.title, 'ci: update generic workflows') || 
+              startsWith(github.event.pull_request.title, 'ci: update workflows for docker-based projects') ||
+              startsWith(github.event.pull_request.title, 'chore(release):')
+            )) ||
+            (github.actor == 'allcontributors' && 
+              startsWith(github.event.pull_request.title, 'docs: add')
+            )
+          )
         id: should_run
         name: Should Run
         run: echo "::set-output name=shouldrun::true"

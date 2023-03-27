@@ -23,7 +23,7 @@
 
 ## Overview
 
-Generator is a tool that you can use to generate whatever you want basing on the AsyncAPI specification file as an input.
+Generator is a tool that you can use to generate whatever you want basing on the AsyncAPI specification file as an input. For more information [read the docs](https://www.asyncapi.com/docs/tools/generator).
 
 There is a large number of templates that are ready to use and are officially supported by the AsyncAPI Initiative.
 

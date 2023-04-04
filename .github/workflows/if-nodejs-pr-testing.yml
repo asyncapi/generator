@@ -30,7 +30,7 @@ jobs:
               startsWith(github.event.pull_request.title, 'ci: update workflows for docker-based projects') ||
               startsWith(github.event.pull_request.title, 'chore(release):')
             )) ||
-            (github.actor == 'allcontributors' && 
+            (github.actor == 'allcontributors[bot]' && 
               startsWith(github.event.pull_request.title, 'docs: add')
             )
           )

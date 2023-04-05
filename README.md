@@ -23,9 +23,7 @@
 
 ## Overview
 
-Generator is a tool that you can use to generate whatever you want basing on the AsyncAPI specification file as an input.
-
-To specify what exactly must be generated you create so called **template**. To create your own template, go to section that explains [How to create a template](#how-to-create-a-template).
+Generator is a tool that you can use to generate whatever you want basing on the AsyncAPI specification file as an input. For more information [read the docs](https://www.asyncapi.com/docs/tools/generator).
 
 There is a large number of templates that are ready to use and are officially supported by the AsyncAPI Initiative.
 
@@ -47,38 +45,12 @@ Template Name | Description | Source code
 `@asyncapi/ts-nats-template` | Generates TypeScript NATS client | [click here](https://github.com/asyncapi/ts-nats-template/)
 `@asyncapi/go-watermill-template` | Generates Go client using Watermill | [click here](https://github.com/asyncapi/go-watermill-template)
 `@asyncapi/dotnet-nats-template` | Generates .NET C# client using NATS | [click here](https://github.com/asyncapi/dotnet-nats-template)
+`@asyncapi/php-template` | Generates PHP client using RabbitMQ | [click here](https://github.com/asyncapi/php-template)
+`@asyncapi/dotnet-rabbitmq-template` | Generates .NET C# client using RabbitMQ | [click here](https://github.com/asyncapi/dotnet-rabbitmq-template)
 
 <!-- TEMPLATES-LIST:END -->
 
 You can find above templates and the ones provided by the community in **[this list](https://github.com/search?q=topic%3Aasyncapi+topic%3Agenerator+topic%3Atemplate)**
-
-## Requirements
-
-* Node.js v12.16 and higher
-* npm v6.13.7 and higher
-
-Install both packages using [official installer](https://nodejs.org/en/download/). After installation make sure both packages have proper version by running `node -v` and `npm -v`. To upgrade invalid npm version run `npm install npm@latest -g`
-
-> The generator is tested at the moment against Node 14 and NPM 6. Using newer versions is enabled but we don't guarantee they work well. Please provide feedback via issues.
-
-## Using from the command-line interface (CLI)
-
-### CLI installation
-Learn to install the AsyncAPI CLI from the [installation guide](docs/installation-guide.md).
-
-### CLI usage 
-
-Learn more about different ways of using the CLI from the [usage document](docs/usage.md).
-
-## Generator version vs Template version
-
-Learn more about versioning from the [versioning document](docs/versioning.md).
-
-## How to create a template
-
-To create your own template, for example code generator for some specific language and technology, learn from the following resources:
-- Read the [documentation](docs/README.md)
-- Use [Template for Generator Templates](https://github.com/asyncapi/template-for-generator-templates) that showcases Generator features
 
 ## Contributing
 

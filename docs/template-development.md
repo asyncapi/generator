@@ -11,20 +11,24 @@ Let's break down the minimum template requirements: the `template` directory and
 
 ### `template` directory
 
-The `template` directory stores generated outputs in files. In other words, the generator processes all the files stored in this directory.
+The `template` directory holds all the files that will be used for generating the output. The generator will process all the files stored in this directory.
 
+The following code is an example of an `index.js` file inside the `template` folder.
 ```js
 import { File, Text } from "@asyncapi/generator-react-sdk";
 
-export default function({ asyncapi, params, originalAsyncAPI }) {
-return (
+export default function ({ asyncapi, params, originalAsyncAPI }) {
+  return (
     <File name="asyncapi.md">
-    <Text>My application's markdown file.</Text>
-    <Text>App name: **{ asyncapi.info().title() }**</Text>
+      <Text>My application's markdown file.</Text>
+      <Text>App name: **{asyncapi.info().title()}**</Text>
     </File>
-);
+  );
 }
 ```
+
+The above example will produce an `asyncapi.md` file where usage of the AsyncAPI document information (i.e. the `title`) is demonstrated.
+
 ### `package.json` file
 
 Before the generation process begins, the generator installs the template into its dependencies. A `package.json` file is necessary to identify the template name.
@@ -42,8 +46,6 @@ The following block shows an example `package.json` file that points to the [Rea
   }
 }
 ```
-
-The above example of a `template/index.js` file shows the generation process result. The user also receives an `asyncapi.md` file with hardcoded and dynamic (application title from the AsyncAPI document) information.
 
 Every template must depend on the [`@asyncapi/generator-react-sdk` package](https://github.com/asyncapi/generator-react-sdk), which contains a template file's basic components.
 
@@ -73,14 +75,16 @@ The following examples show some advanced configurations that we can use in our 
   "name": "myTemplate",
   "generator": {
     "renderer": "react",
-    "supportedProtocols": "mqtt"
+    "supportedProtocols": [
+      "mqtt"
+    ]
   },
   "dependencies": {
     "@asyncapi/generator-react-sdk": "^0.2.25"
   }
 }
 ```
-The above `package.json` file has a newly added configuration called `supportedProtocols` which is set to `mqtt`. This configuration displays all the protocols that this template supports. You can have multiple supported protocols in our template. 
+The above `package.json` file has a newly added configuration called `supportedProtocols` which is set to a list containing only `mqtt`. This configuration displays all the protocols that this template supports. You can have multiple supported protocols in our template. 
 
 For example, if you want to generate an output using the above template, you need to have an AsyncAPI document with servers that use `mqtt` to generate your desired output. If your AsyncAPI document has server connections with `kafka`, the generation process will be terminated since the only supported protocol mentioned is `mqtt`. 
 
@@ -93,7 +97,9 @@ Additionally, we can also have a configuration called `parameters`, which is an 
   "name": "myTemplate",
   "generator": {
     "renderer": "react",
-    "supportedProtocols": "mqtt",
+    "supportedProtocols": [
+      "mqtt"
+    ],
     "parameters": {
         "version": {
           "description": "Overrides application version under `info.version` in the AsyncAPI document.",

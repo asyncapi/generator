@@ -30,13 +30,13 @@ jobs:
               startsWith(github.event.pull_request.title, 'ci: update workflows for docker-based projects') ||
               startsWith(github.event.pull_request.title, 'chore(release):')
             )) ||
-            (github.actor == 'allcontributors' && 
+            (github.actor == 'allcontributors[bot]' && 
               startsWith(github.event.pull_request.title, 'docs: add')
             )
           )
         id: should_run
         name: Should Run
-        run: echo "::set-output name=shouldrun::true"
+        run: echo "shouldrun=true" >> $GITHUB_OUTPUT
       - if: steps.should_run.outputs.shouldrun == 'true' 
         name: Set git to use LF #to once and for all finish neverending fight between Unix and Windows
         run: |
@@ -44,15 +44,15 @@ jobs:
           git config --global core.eol lf
       - if: steps.should_run.outputs.shouldrun == 'true' 
         name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - if: steps.should_run.outputs.shouldrun == 'true' 
         name: Check if Node.js project and has package.json
         id: packagejson
-        run: test -e ./package.json && echo "::set-output name=exists::true" || echo "::set-output name=exists::false"
+        run: test -e ./package.json && echo "exists=true" >> $GITHUB_OUTPUT || echo "exists=false" >> $GITHUB_OUTPUT
         shell: bash
       - if: steps.packagejson.outputs.exists == 'true'
         name: Setup Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: 14
           cache: 'npm'

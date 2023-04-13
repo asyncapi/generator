@@ -39,14 +39,14 @@ jobs:
           git config --global core.autocrlf false
           git config --global core.eol lf
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Check if Node.js project and has package.json
         id: packagejson
-        run: test -e ./package.json && echo "::set-output name=exists::true" || echo "::set-output name=exists::false"
+        run: test -e ./package.json && echo "exists=true" >> $GITHUB_OUTPUT || echo "exists=false" >> $GITHUB_OUTPUT
         shell: bash
       - if: steps.packagejson.outputs.exists == 'true'
         name: Setup Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: 14
           cache: 'npm'
@@ -77,13 +77,13 @@ jobs:
           git config --global core.autocrlf false
           git config --global core.eol lf
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Check if Node.js project and has package.json
         id: packagejson
-        run: test -e ./package.json && echo "::set-output name=exists::true" || echo "::set-output name=exists::false"
+        run: test -e ./package.json && echo "exists=true" >> $GITHUB_OUTPUT || echo "exists=false" >> $GITHUB_OUTPUT
       - if: steps.packagejson.outputs.exists == 'true'
         name: Setup Node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: 14
       - if: steps.packagejson.outputs.exists == 'true'

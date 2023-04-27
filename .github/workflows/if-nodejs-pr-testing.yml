@@ -19,15 +19,11 @@ jobs:
       - if: >
           !github.event.pull_request.draft && !(
             (github.actor == 'asyncapi-bot' && (
-              startsWith(github.event.pull_request.title, 'ci: update global workflows') || 
-              startsWith(github.event.pull_request.title, 'chore: update code of conduct') || 
-              startsWith(github.event.pull_request.title, 'ci: update global contribution guide') || 
-              startsWith(github.event.pull_request.title, 'ci: update workflows for go projects') || 
-              startsWith(github.event.pull_request.title, 'ci: update workflows for nodejs projects') || 
-              startsWith(github.event.pull_request.title, 'ci: update release-related workflows for nodejs projects') || 
-              startsWith(github.event.pull_request.title, 'ci: update semantic release config file') || 
-              startsWith(github.event.pull_request.title, 'ci: update generic workflows') || 
-              startsWith(github.event.pull_request.title, 'ci: update workflows for docker-based projects') ||
+              startsWith(github.event.pull_request.title, 'ci: update of files from global .github repo') || 
+              startsWith(github.event.pull_request.title, 'chore(release):')
+            )) ||
+            (github.actor == 'asyncapi-bot-eve' && (
+              startsWith(github.event.pull_request.title, 'ci: update of files from global .github repo') || 
               startsWith(github.event.pull_request.title, 'chore(release):')
             )) ||
             (github.actor == 'allcontributors[bot]' && 

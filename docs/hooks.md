@@ -14,11 +14,11 @@ The following types of hooks are currently supported:
 
 The generator parses:
 - All the files in the `.hooks` directory inside the template.
-- All modules listed in the template configuration and triggers only hooks that names were added to the config. You can use the official AsyncAPI [hooks library](https://github.com/asyncapi/generator-hooks). To learn how to add hooks to configuration [read more about the configuration file](#configuration-file).
+- All modules listed in the template configuration and triggers only hooks that names were added to the config. You can use the official AsyncAPI [hooks library](https://github.com/asyncapi/generator-hooks). To learn how to add hooks to configuration [read more about the configuration file](https://www.asyncapi.com/docs/tools/generator/configuration-file).
 
 ### Examples
 
-> Some of the examples have names of hook functions provided and some not. Keep in mind that hook functions kept in template in default location do not require a name. Name is required only if you keep hooks in non default location or in a separate library, because such hooks need to be explicitly configured in the configuration file. For more details on hooks configuration [read more about the configuration file](#configuration-file).
+> Some of the examples have names of hook functions provided and some not. Keep in mind that hook functions kept in template in default location do not require a name. Name is required only if you keep hooks in non default location or in a separate library, because such hooks need to be explicitly configured in the configuration file. For more details on hooks configuration [read more about the configuration file](https://www.asyncapi.com/docs/tools/generator/configuration-file).
 
 Most basic modules with hooks look like this:
 ```js

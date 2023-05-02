@@ -51,7 +51,7 @@
     "@asyncapi/generator-react-sdk": "^0.2.23",
     "@asyncapi/openapi-schema-parser": "^2.0.3",
     "@asyncapi/parser": "^1.18.0",
-    "@asyncapi/raml-dt-schema-parser": "^2.0.1",
+    "@asyncapi/raml-dt-schema-parser": "^4.0.0",
     "@npmcli/arborist": "^2.2.4",
     "ajv": "^6.10.2",
     "chokidar": "^3.4.0",

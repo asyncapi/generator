@@ -130,7 +130,7 @@ xfs.mkdirp(program.output, async err => {
       console.warn(`WARNING: ${template} is a remote template. Changes may be lost on subsequent installations.`);
     }
 
-    watcher.watch(watcherHandler, (paths) => {
+    await watcher.watch(watcherHandler, (paths) => {
       showErrorAndExit({ message: `[WATCHER] Could not find the file path ${paths}, are you sure it still exists? If it has been deleted or moved please rerun the generator.` });
     });
   }

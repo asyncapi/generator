@@ -14,7 +14,7 @@ describe('Template Configuration Validator', () => {
     const { document } = await parser.parse(dummyYAML);
     asyncapiDocument = document;
   });
-      
+
   it('Validation doesn\'t throw errors if params are not passed and template has no config', () => {
     const templateParams = {};
     const templateConfig  = {};
@@ -48,7 +48,7 @@ describe('Template Configuration Validator', () => {
     expect(() => validateTemplateConfig(templateConfig, templateParams)).toThrow('We do not support \'non_existing\' as a renderer for a template. Only \'react\' or \'nunjucks\' are supported.');
   });
 
-  it('Validation throw error if template is not compatible', () => {
+  it('Validation throw error if template is not compatible because of generator version', () => {
     const utils = require('../lib/utils');
     utils.__generatorVersion = '1.0.0';
 
@@ -58,6 +58,18 @@ describe('Template Configuration Validator', () => {
     };
 
     expect(() => validateTemplateConfig(templateConfig, templateParams)).toThrow('This template is not compatible with the current version of the generator (1.0.0). This template is compatible with the following version range: >1.0.1.');
+  });
+
+  it('Validation throw error if template is not compatible because of non-supported apiVersion value', () => {
+    const utils = require('../lib/utils');
+    utils.__generatorVersion = '1.0.0';
+
+    const templateParams = {};
+    const templateConfig  = {
+      apiVersion: '999999'
+    };
+
+    expect(() => validateTemplateConfig(templateConfig, templateParams)).toThrow('The version specified in apiVersion is not supported by this Generator version. Supported versions are: v1');
   });
 
   it('Validation throw error if required params not provided', () => {

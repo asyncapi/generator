@@ -101,7 +101,7 @@ jobs:
         run: npm install
       - if: steps.packagejson.outputs.exists == 'true'
         name: Add plugin for conventional commits for semantic-release
-        run: npm install conventional-changelog-conventionalcommits@5.0.0
+        run: npm install --save-dev conventional-changelog-conventionalcommits@5.0.0
       - if: steps.packagejson.outputs.exists == 'true'
         name: Publish to any of NPM, Github, and Docker Hub
         id: release

@@ -38,7 +38,8 @@
     "asyncapi",
     "documentation",
     "generator",
-    "markdown"
+    "markdown",
+    "codegen"
   ],
   "author": "Fran Mendez <fmvilas@gmail.com>",
   "publishConfig": {

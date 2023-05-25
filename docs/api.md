@@ -4,6 +4,22 @@ weight: 75
 ---
 
 Reference API documentation for AsyncAPI Generator library.
+## Classes
+
+<dl>
+<dt><a href="#Generator">Generator</a></dt>
+<dd></dd>
+</dl>
+
+## Typedefs
+
+<dl>
+<dt><a href="#TemplateRenderMetadata">TemplateRenderMetadata</a> : <code>Object</code></dt>
+<dd></dd>
+<dt><a href="#TemplateRenderResult">TemplateRenderResult</a> : <code>Object</code></dt>
+<dd></dd>
+</dl>
+
 
 <a name="Generator"></a>
 
@@ -29,9 +45,9 @@ Reference API documentation for AsyncAPI Generator library.
         * [.originalAsyncAPI](#Generator+originalAsyncAPI) : `String`
         * [.generate(asyncapiDocument)](#Generator+generate) ⇒ `Promise`
         * [.configureTemplate()](#Generator+configureTemplate)
-        * [.generateFromString(asyncapiString, [parseOptions])](#Generator+generateFromString) ⇒ `Promise`
-        * [.generateFromURL(asyncapiURL)](#Generator+generateFromURL) ⇒ `Promise`
-        * [.generateFromFile(asyncapiFile)](#Generator+generateFromFile) ⇒ `Promise`
+        * [.generateFromString(asyncapiString, [parseOptions])](#Generator+generateFromString) ⇒ `Promise.<(TemplateRenderResult|undefined)>`
+        * [.generateFromURL(asyncapiURL)](#Generator+generateFromURL) ⇒ `Promise.<(TemplateRenderResult|undefined)>`
+        * [.generateFromFile(asyncapiFile)](#Generator+generateFromFile) ⇒ `Promise.<(TemplateRenderResult|undefined)>`
         * [.installTemplate([force])](#Generator+installTemplate)
     * _static_
         * [.getTemplateFile(templateName, filePath, [templatesDir])](#Generator.getTemplateFile) ⇒ `Promise`
@@ -342,3 +358,27 @@ const content = await Generator.getTemplateFile('@asyncapi/html-template', 'part
 const Generator = require('@asyncapi/generator');
 const content = await Generator.getTemplateFile('@asyncapi/html-template', 'partials/content.html', '~/my-templates');
 ```
+
+<a name="TemplateRenderMetadata"></a>
+
+* TemplateRenderMetadata : `Object`** :
+**Kind**: global typedef  
+**Properties**
+
+| Name | Type |
+| --- | --- |
+| fileName | `string` | 
+| permissions | `string` | 
+
+
+<a name="TemplateRenderResult"></a>
+
+* TemplateRenderResult : `Object`** :
+**Kind**: global typedef  
+**Properties**
+
+| Name | Type |
+| --- | --- |
+| content | `string` | 
+| metadata | [`TemplateRenderMetadata`](#TemplateRenderMetadata) | 
+

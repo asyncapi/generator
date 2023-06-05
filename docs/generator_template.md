@@ -240,7 +240,7 @@ New temperature detected 36947728 sent to temperature/changed
 New temperature detected 72955029 sent to temperature/changed
 ```
 
-To make sure your client works, also test it using an [MQTT CLI](https://hivemq.github.io/mqtt-cli/) using docker. Run the command `docker run hivemq/mqtt-cli sub -t comment/liked -h test.mosquitto.org` on your teminal. It will download the image if you don't have it locally then the CLI will conncet to the broker, subscribe to the `temperature/changed` topic and then output the temperature ids on the terminal.
+To make sure your client works, also test it using an [MQTT CLI](https://hivemq.github.io/mqtt-cli/) using docker. Run the command `docker run hivemq/mqtt-cli sub -t temperature/changed -h test.mosquitto.org` on your teminal. It will download the image if you don't have it locally then the CLI will conncet to the broker, subscribe to the `temperature/changed` topic and then output the temperature ids on the terminal.
 
 ### 3.Update the template with client code
 
@@ -476,7 +476,7 @@ function getTopics(channels) {
 }
 ```
 
-`{ channels }`:the TopicFunction component accepts a custom prop called channels and in your template code, you can call the comment as shown in the snippet below:
+`{ channels }`:the TopicFunction component accepts a custom prop called channels and in your template code.
 `getTopics(channels)`: Returns a list of objects, one for each channel with two properties; name and topic. The **name** holds information about the operationId provided in the AsyncAPI document while the **topic** holds information about the address of the topic.
 
 Import the `TopicFunction` component in your template code in **index.js** and add the template code to generate the functions to topics that the Temperature Service application is subscribed to. In your case, .The final version of your template code should look like this:
@@ -565,4 +565,4 @@ Temperature rise detected 66943992 sent to temperature/risen
 
 ## Conclusion
 
-In this tutorial, we have created a simple AsyncAPI generator template that uses a Python MQTT client. We have explained how to use an AsyncAPI file, create an python MQTT template and use them to generate code from it and use the Paho-MQTT library in Python to connect to an MQTT broker and publish messages. We hope this tutorial has helped you understand how to create the template.
+In this tutorial, we have created a simple AsyncAPI generator template that uses a Python MQTT client. We have explained how to use an AsyncAPI file, create an python MQTT template and use them to generate code from it and use the Paho-MQTT library in Python to connect to an MQTT broker and publish messages. We hope this tutorial has helped you understand how to create a user-defined template.

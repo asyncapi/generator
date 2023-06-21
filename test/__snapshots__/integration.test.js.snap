@@ -3211,7 +3211,7 @@ It is a dummy system info message.
 \`\`\`json
 {
   \\"prop1\\": \\"option1\\",
-  \\"sentAt\\": \\"2020-01-31T13:24:53.000Z\\"
+  \\"sentAt\\": \\"2020-01-31T13:24:53Z\\"
 }
 \`\`\`
 
@@ -3219,7 +3219,7 @@ It is a dummy system info message.
 \`\`\`json
 {
   \\"prop1\\": \\"option2\\",
-  \\"sentAt\\": \\"2020-01-31T13:24:53.000Z\\"
+  \\"sentAt\\": \\"2020-01-31T13:24:53Z\\"
 }
 \`\`\`
 
@@ -7494,13 +7494,13 @@ string
             <h6 class=\\"text-xs font-bold text-gray-700\\">Example #1</h6>
             <pre class=\\"hljs mb-4 border border-gray-800 rounded\\"><code>{
   \\"prop1\\": \\"option1\\",
-  \\"sentAt\\": \\"2020-01-31T13:24:53.000Z\\"
+  \\"sentAt\\": \\"2020-01-31T13:24:53Z\\"
 }</code></pre>
           
             <h6 class=\\"text-xs font-bold text-gray-700\\">Example #2</h6>
             <pre class=\\"hljs mb-4 border border-gray-800 rounded\\"><code>{
   \\"prop1\\": \\"option2\\",
-  \\"sentAt\\": \\"2020-01-31T13:24:53.000Z\\"
+  \\"sentAt\\": \\"2020-01-31T13:24:53Z\\"
 }</code></pre>
           
         

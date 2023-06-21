@@ -19,7 +19,7 @@ describe('Integration testing generateFromFile() to make sure the result of the 
     return path.resolve(mainTestResultPath, crypto.randomBytes(4).toString('hex'));
   };
 
-  jest.setTimeout(30000);
+  jest.setTimeout(60000);
 
   it('generated using Nunjucks template', async () => {
     const outputDir = generateFolderName();

@@ -13,5 +13,11 @@
         "fs-extra": "9.1.0",
         "jest": "25.5.0",
         "rimraf": "3.0.2"
+    },
+    "jest": {
+        "moduleNameMapper": {
+            "^nimma/legacy$": "<rootDir>/../../node_modules/nimma/dist/legacy/cjs/index.js",
+            "^nimma/(.*)": "<rootDir>/../../node_modules/nimma/dist/cjs/$1"
+        }
     }
 }

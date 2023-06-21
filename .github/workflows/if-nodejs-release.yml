@@ -39,16 +39,20 @@ jobs:
           git config --global core.autocrlf false
           git config --global core.eol lf
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Check if Node.js project and has package.json
         id: packagejson
-        run: test -e ./package.json && echo "::set-output name=exists::true" || echo "::set-output name=exists::false"
+        run: test -e ./package.json && echo "exists=true" >> $GITHUB_OUTPUT || echo "exists=false" >> $GITHUB_OUTPUT
         shell: bash
       - if: steps.packagejson.outputs.exists == 'true'
+        name: Check package-lock version
+        uses: asyncapi/.github/.github/actions/get-node-version-from-package-lock@master
+        id: lockversion
+      - if: steps.packagejson.outputs.exists == 'true'
         name: Setup Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: "${{ steps.lockversion.outputs.version }}"
           cache: 'npm'
           cache-dependency-path: '**/package-lock.json'
       - if: steps.packagejson.outputs.exists == 'true'
@@ -77,21 +81,27 @@ jobs:
           git config --global core.autocrlf false
           git config --global core.eol lf
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Check if Node.js project and has package.json
         id: packagejson
-        run: test -e ./package.json && echo "::set-output name=exists::true" || echo "::set-output name=exists::false"
+        run: test -e ./package.json && echo "exists=true" >> $GITHUB_OUTPUT || echo "exists=false" >> $GITHUB_OUTPUT
+      - if: steps.packagejson.outputs.exists == 'true'
+        name: Check package-lock version
+        uses: asyncapi/.github/.github/actions/get-node-version-from-package-lock@master
+        id: lockversion
       - if: steps.packagejson.outputs.exists == 'true'
         name: Setup Node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: "${{ steps.lockversion.outputs.version }}"
+          cache: 'npm'
+          cache-dependency-path: '**/package-lock.json'
       - if: steps.packagejson.outputs.exists == 'true'
         name: Install dependencies
         run: npm install
       - if: steps.packagejson.outputs.exists == 'true'
         name: Add plugin for conventional commits for semantic-release
-        run: npm install conventional-changelog-conventionalcommits@5.0.0
+        run: npm install --save-dev conventional-changelog-conventionalcommits@5.0.0
       - if: steps.packagejson.outputs.exists == 'true'
         name: Publish to any of NPM, Github, and Docker Hub
         id: release

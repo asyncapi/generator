@@ -10,12 +10,6 @@
 
 - [Overview](#overview)
 - [List of official generator templates](#list-of-official-generator-templates)
-- [Requirements](#requirements)
-- [Using from the command-line interface (CLI)](#using-from-the-command-line-interface-cli)
-  * [CLI installation](#cli-installation)
-  * [CLI usage](#cli-usage)
-- [Generator version vs Template version](#generator-version-vs-template-version)
-- [How to create a template](#how-to-create-a-template)
 - [Contributing](#contributing)
 - [Contributors ✨](#contributors-%E2%9C%A8)
 

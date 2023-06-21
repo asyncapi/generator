@@ -29,7 +29,7 @@ Reference API documentation for AsyncAPI Generator library.
         * [.originalAsyncAPI](#Generator+originalAsyncAPI) : `String`
         * [.generate(asyncapiDocument)](#Generator+generate) ⇒ `Promise`
         * [.configureTemplate()](#Generator+configureTemplate)
-        * [.generateFromString(asyncapiString, [parserOptions])](#Generator+generateFromString) ⇒ `Promise`
+        * [.generateFromString(asyncapiString, [parseOptions])](#Generator+generateFromString) ⇒ `Promise`
         * [.generateFromURL(asyncapiURL)](#Generator+generateFromURL) ⇒ `Promise`
         * [.generateFromFile(asyncapiFile)](#Generator+generateFromFile) ⇒ `Promise`
         * [.installTemplate([force])](#Generator+installTemplate)
@@ -215,7 +215,7 @@ Generates files from a given template and AsyncAPI string.
 **Params**
 
 - asyncapiString `String` - AsyncAPI string to use as source.
-- [parserOptions] `Object` ` = {}` - AsyncAPI parser options. Check out [@asyncapi/parser](https://www.github.com/asyncapi/parser-js) for more information.
+- [parseOptions] `Object` ` = {}` - AsyncAPI Parser parse options. Check out [@asyncapi/parser](https://www.github.com/asyncapi/parser-js) for more information.
 
 **Example**  
 ```js

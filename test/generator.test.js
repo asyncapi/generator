@@ -131,8 +131,8 @@ describe('Generator', () => {
       hooksRegistry = require('../lib/hooksRegistry');
       templateConfigValidator = require('../lib/templateConfigValidator');
       xfsMock = require('fs.extra');
-      const parserMock = require('@asyncapi/parser');
-      asyncApiDocumentMock = new parserMock.AsyncAPIDocument();
+      const { AsyncAPIDocument } = require('@asyncapi/parser/cjs/models/v2/asyncapi');
+      asyncApiDocumentMock = new AsyncAPIDocument({ 'x-parser-api-version': 0 });
     });
 
     it('works with output=fs, forceWrite=false, install=false', async () => {
@@ -249,10 +249,8 @@ describe('Generator', () => {
 
   describe('#generateFromString', () => {
     let generateMock;
-    let parserMock;
 
     beforeAll(() => {
-      parserMock = require('@asyncapi/parser');
       generateMock = jest.fn().mockResolvedValue();
     });
 
@@ -262,20 +260,6 @@ describe('Generator', () => {
       await gen.generateFromString(dummyYAML);
 
       expect(generateMock).toHaveBeenCalled();
-      expect(parserMock.parse).toHaveBeenCalled();
-      expect(parserMock.parse.mock.calls[0][0]).toBe(dummyYAML);
-      expect(parserMock.parse.mock.calls[0][1]).toStrictEqual({});
-    });
-
-    it('calls parser.parse with the right options', async () => {
-      const gen = new Generator('testTemplate', __dirname);
-      const fakeOptions = { test: true };
-      gen.generate = generateMock;
-      await gen.generateFromString(dummyYAML, fakeOptions);
-
-      expect(parserMock.parse).toHaveBeenCalled();
-      expect(parserMock.parse.mock.calls[0][0]).toBe(dummyYAML);
-      expect(parserMock.parse.mock.calls[0][1]).toStrictEqual(fakeOptions);
     });
 
     it('fails if asyncapiString is not provided', async () => {

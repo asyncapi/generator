@@ -1,6 +1,6 @@
 {
   "name": "@asyncapi/generator",
-  "version": "1.10.8",
+  "version": "1.10.9",
   "description": "The AsyncAPI generator. It can generate documentation, code, anything!",
   "main": "./lib/generator.js",
   "bin": {

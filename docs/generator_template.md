@@ -5,19 +5,19 @@ weight: 170
 
 In this tutorial, you'll learn to create a simple generator template using a Python MQTT client. You'll use the AsyncAPI document and the template you develop to generate Python code. Additionally, you'll create template code with a reusable component to reuse the custom functionality you create and test your code using an MQTT client.
 
-Let's suppose that you can only sleep when the AC in your bedroon is set to 22 °C and any you can't when the temperature drops or rises above that. You can install a smart monitor in your bedroom that keeps track of the temperature and notifies you to adjust your bedroom to your optimum temperature if it flactuates. You will create a template that sends alerts to notify you when the temperature fluctates from 22 °C.
+Suppose you can only sleep when the AC in your bedroom is set to 22 °C, and you can't see when the temperature drops or rises above that. You can install a smart monitor in your bedroom that keeps track of the temperature and notifies you to adjust it to your optimum temperature if it fluctuates. You will create a template that alerts you when the temperature fluctuates from 22 °C.
 
 In this tutorial:
 
-- You'll use the [Eclipse Mosquito](https://test.mosquitto.org) **MQTT broker** which you'll connect to to subscribe and publish messages using an MQTT client.
+- You'll use the [Eclipse Mosquito](https://test.mosquitto.org) **MQTT broker**, which you'll connect to subscribe and publish messages using an MQTT client.
 - You'll use [Python Paho-MQTT](https://pypi.org/project/paho-mqtt/) as the **MQTT client** in this project.
 - Lastly, you will create a React template that will use the MQTT broker to allow you to monitor your bedroom's temperature and notify you when the temperature drops or rises above 22 °C.
-- Create a reusable component to create the rise/dropped temperature functions in the output code.
+- Create a reusable component for the output code's rise/dropped temperature functions.
 
 ## Background context
 
-There is a list of [community maintained templates](https://www.asyncapi.com/docs/tools/generator/template#generator-templates-list) but what if you require customized output from the generator? In that case, you'll create a user-defined template that generates custom output from the generator.
-Before you create the template, you'll need to have an [asyncapi document](https://www.asyncapi.com/docs/tools/generator/asyncapi-document),that defines the properties you want to use in your template, to test the template against. In this tutorial, you'll use the following template saved in `test/fixtures/asyncapi.yml` file in your template project directory.
+There is a list of [community maintained templates](https://www.asyncapi.com/docs/tools/generator/template#generator-templates-list), but what if you require customized output from the generator? In that case, you'll create a user-defined template that generates custom output from the generator.
+Before you create the template, you'll need to have an [AsyncAPI document](https://www.asyncapi.com/docs/tools/generator/asyncapi-document) that defines the properties you want to use in your template to test against. In this tutorial, you'll use the following template saved in the `test/fixtures/asyncapi.yml` file in your template project directory.
 
 ``` yml
 

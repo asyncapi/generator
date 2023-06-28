@@ -61,7 +61,7 @@ components:
 
 Note:
 
-- To generate code, you will use the [asyncapi cli](https://www.asyncapi.com/tools/cli). If you don't have the CLI installed follow [this guide](https://www.asyncapi.com/docs/tools/generator/installation-guide#asyncapi-cli).
+- To generate code, use the [AsyncAPI CLI](https://www.asyncapi.com/tools/cli). If you don't have the CLI installed, follow [this guide](https://www.asyncapi.com/docs/tools/generator/installation-guide#asyncapi-cli).
 - If you are new to AsyncAPI, check out the following docs: [template development](https://www.asyncapi.com/docs/tools/generator/template-development), which explains the minimum requirements for a template and possible features.
 - You can [learn more about asynchronous messaging using MQTT](https://medium.com/python-point/mqtt-basics-with-python-examples-7c758e605d4).
 

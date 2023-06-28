@@ -62,8 +62,8 @@ components:
 Note:
 
 - To generate code, you will use the [asyncapi cli](https://www.asyncapi.com/tools/cli). If you don't have the CLI installed follow [this guide](https://www.asyncapi.com/docs/tools/generator/installation-guide#asyncapi-cli).
-- If you are new to asyncapi, checkout the following docs: [template development](https://www.asyncapi.com/docs/tools/generator/template-development) which explains the minimum requirements for a template and possible features.
-- Learn more about asyncronous messaging using MQTT [here](https://medium.com/python-point/mqtt-basics-with-python-examples-7c758e605d4).
+- If you are new to AsyncAPI, check out the following docs: [template development](https://www.asyncapi.com/docs/tools/generator/template-development), which explains the minimum requirements for a template and possible features.
+- You can [learn more about asynchronous messaging using MQTT](https://medium.com/python-point/mqtt-basics-with-python-examples-7c758e605d4).
 
 ## Steps followed to create a template
 
@@ -150,7 +150,7 @@ Generation in progress. Keep calm and wait a bit... done
 Check out your shiny new generated files at output.
 ```
 
-And navigating to the **project** directory, you should see a **client.py** file and the only content is Temperature Service.
+And navigating to the **project** directory, you should see a **client.py** file; the only content is Temperature Service.
 
 Let's break down the previous command:
 
@@ -161,7 +161,7 @@ Let's break down the previous command:
 
 ## Creating a template
 
-We will create an MQTT supported template that will generate a python client from the template and the asyncAPI document above.
+We will create an MQTT-supported template that will generate a Python client from the template and the AsyncAPI document above.
 
 In this section, you'll:
 
@@ -199,14 +199,14 @@ class TemperatureServiceClient:
 Make sure you have the paho-mqtt library installed. You can install it using pip with the `pip install paho-mqtt` command.
 Let's break down the previous code snippet:
 
-1. Imports the mqtt module from the paho package, which provides the MQTT client functionality.
-2. Assigns the MQTT broker address `test.mosquitto.org` to the variable mqttBroker. This specifies the location where the MQTT client will connect to.
+1. Imports the MQTT module from the paho package, which provides the MQTT client functionality.
+2. Assigns the MQTT broker address `test.mosquitto.org` to the variable MQTT broker. This specifies the location where the MQTT client will connect to.
 3. Creates an instance of the MQTT client object. This object will be used to establish a connection with the MQTT broker and perform MQTT operations.
 4. Establishes a connection to the MQTT broker. This command connects the MQTT client to the broker.
 5. The MQTT topic to which the client will publish messages.
 6. This command publishes the temperature change information to the MQTT broker.
 
-In summary, this code sets up an MQTT client using the paho-MQTT library. It connects to the `test.mosquitto.or`g MQTT broker, and the `sendTemperatureChange()` method publishes temperature change information to the `temperature/changed` topic whenever called.
+In summary, this code sets up an MQTT client using the paho-MQTT library. It connects to the `test.mosquitto.org` MQTT broker, and the `sendTemperatureChange()` method publishes temperature change information to the `temperature/changed` topic whenever called.
 
 ### 2.Test the client
 
@@ -296,7 +296,7 @@ Run `npm test` on your terminal to ensure everything works as expected.
 
 ### Add parameters to the configuration file
 
-In programming we often have different runtime environments e.g development and production. You will use different servers to spin both of these instances. In your case, you'll probably have two broker versions one for use in production and the other in development. You have defined a dev server in the AsyncAPI document:
+We often have different runtime environments in programming, e.g., development and production. You will use different servers to spin both of these instances. You'll probably have two broker versions, one for production and the other for development. You have defined a dev server in the AsyncAPI document:
 
 ```yml
 servers:
@@ -311,7 +311,7 @@ servers:
 This will allow you to also define the broker you will use in production in the servers section above.
 Therefore, we can template the code `mqttBroker = 'test.mosquitto.org'` in **index.js** so the value is populated dynamically at runtime depending on the specified server environment.
 
-Generator has a **parameters** object used to define parameters you use to dynamically to modify your template code at runtime. It also supports the **server** parameter that defines the server configuration value. Navigate to **package.json** and add the snippet below:
+The generator has a **parameters** object used to define parameters you use to dynamically modify your template code at runtime. It also supports the **server** parameter that defines the server configuration value. Navigate to **package.json** and add the snippet below:
 
 ```json
     "generator": {
@@ -332,17 +332,17 @@ You'll pass the server to be used to generate your code using `--param server=de
 Generator Error: This template requires the following missing params: server.
 ```
 
-Update your `test:generate` script in `package.json` to inlcude the server param `test:generate": "asyncapi generate fromTemplate test/fixtures/asyncapi.yml ./ --output test/project --force-write --param server=dev "`
+Update your `test:generate` script in `package.json` to include the server param `test:generate": "asyncapi generate fromTemplate test/fixtures/asyncapi.yml ./ --output test/project --force-write --param server=dev "`
 You can now replace the static broker from `mqttBroker = 'test.mosquitto.org'` to `mqttBroker = "${asyncapi.servers().get(params.server).url()}"` in **index.js**.
 
-Now the template code looks like:
+Now the template code looks like this:
 
 ``` js
 import { File } from '@asyncapi/generator-react-sdk';
 
 // notice that now the template not only gets the instance of parsed AsyncAPI document but also the parameters
-export default function ({ asyncapi }) {
-  console.log(asyncapi, params)
+export default function ({ asyncapi, params }) {
+ 
   return (
     <File name="client.py">
       {`import paho.mqtt.client as mqtt
@@ -367,7 +367,7 @@ Run `npm test` to validate that your code still works as expected.
 
 ### Templating index.js with React
 
-Python takes indentation very seriously and out generated output will be python code. We therefpre need to make sure the indentation in index.js looks right so the generated code is indented properly. After templating the code in index.js, it will look like the following code snippet:
+Python takes indentation very seriously, and our generated output will be Python code. We, therefore, need to make sure the indentation in index.js looks right so the generated code is indented correctly. After templating the code in index.js, it will look like the following code snippet:
 
 ```js
 // 1
@@ -387,6 +387,7 @@ export default function ({ asyncapi, params }) {
             self.client = mqtt.Client()
             self.client.connect(mqttBroker)`}
       </Text>
+      </File>
   )
 }
 ```
@@ -397,7 +398,7 @@ export default function ({ asyncapi, params }) {
 4. Dynamically get the class name **TemperatureServiceClient** from the AsyncAPI document from the **info** object using the Parser API using the code: `asyncapi.info().title()` . It will return `Temperature Service`, then remove the spaces and add Client as a suffix.
 5. There is no templating needed in the `__init__` function, there is only hardcoded information.
 
-> If you're on the fence about which templating engine you should use in your template, check out the [react render engine](https://www.asyncapi.com/docs/tools/generator/react-render-engine) and [nunjucks render engine](https://www.asyncapi.com/docs/tools/generator/nunjucks-render-engine) documentation.
+> If you're on the fence about which templating engine you should use in your template, check out the [React render engine](https://www.asyncapi.com/docs/tools/generator/react-render-engine) and [nunjucks render engine](https://www.asyncapi.com/docs/tools/generator/nunjucks-render-engine) documentation.
 In the next section, you'll refactor your template to use React.
 
 ### Creating a reusable component
@@ -565,4 +566,4 @@ Temperature rise detected 66943992 sent to temperature/risen
 
 ## Conclusion
 
-In this tutorial, we have created a simple AsyncAPI generator template that uses a Python MQTT client. We have explained how to use an AsyncAPI file, create an python MQTT template and use them to generate code from it and use the Paho-MQTT library in Python to connect to an MQTT broker and publish messages. We hope this tutorial has helped you understand how to create a user-defined template.
+In this tutorial, we have created a simple AsyncAPI generator template that uses a Python MQTT client. We have explained how to use an AsyncAPI file, create a Python MQTT template and use them to generate code from it, and use the Paho-MQTT library in Python to connect to an MQTT broker and publish messages. We hope this tutorial has helped you understand how to create a user-defined template.

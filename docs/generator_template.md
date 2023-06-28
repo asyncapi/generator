@@ -3,7 +3,7 @@ title: "How to create a simple generator template"
 weight: 170
 ---
 
-In this tutorial, you'll learn to create a simple generator template using a python MQTT client. You'll use the AsyncAPI document and the template you develop to generate python code. Additionally, you'll create template code with a reusable component to reuse the custom functionality you create and test your code using an MQTT client.
+In this tutorial, you'll learn to create a simple generator template using a Python MQTT client. You'll use the AsyncAPI document and the template you develop to generate Python code. Additionally, you'll create template code with a reusable component to reuse the custom functionality you create and test your code using an MQTT client.
 
 Let's suppose that you can only sleep when the AC in your bedroon is set to 22 °C and any you can't when the temperature drops or rises above that. You can install a smart monitor in your bedroom that keeps track of the temperature and notifies you to adjust your bedroom to your optimum temperature if it flactuates. You will create a template that sends alerts to notify you when the temperature fluctates from 22 °C.
 

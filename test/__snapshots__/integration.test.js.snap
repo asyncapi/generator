@@ -1515,6 +1515,14 @@ a:hover {
             </div>
           </a>
         
+          <a class=\\"js-menu-item flex break-words no-underline text-gray-700 mt-8 sm:mt-8 md:mt-3\\" href=\\"#message-crm:Customer.Deleted\\">
+            <div style=\\"display:inline-block;\\">
+              
+<span class=\\"string-chunk\\" style=\\"padding-top: 2px;\\">crm:Customer.Deleted</span>
+
+            </div>
+          </a>
+        
       </ul>
     
   </div>
@@ -2187,6 +2195,306 @@ string
     
     
 
+<div class=\\"bg-gray-200 rounded p-4 mt-2\\">
+  <div class=\\"text-sm text-gray-700 mb-2\\">
+    
+    <span class=\\"text-gray-700 font-bold mr-2\\">#3</span>
+    
+    
+      <span class=\\"border text-orange-600 rounded text-s py-0 px-2\\">crm:Customer.Deleted</span>
+    
+  </div>
+  <p class=\\"text-gray-600 text-sm\\">A customer was deleted</p>
+  
+  
+
+<div class=\\"mt-4\\">
+  
+</div>
+
+
+
+
+  
+  
+
+  <div class=\\"mt-4 mb-4 markdown\\"></div>
+  
+    
+<div>
+  
+
+<div
+  class=\\"bg-gray-200  rounded\\"
+>
+  <div class=\\"\\">
+    <div
+      class=\\"js-prop cursor-pointer py-2 flex property\\"
+    >
+      <div class=\\"pr-4\\" style=\\"margin-top: -2px; min-width: 25%\\">
+        <span
+          class=\\"text-sm\\"
+          style=\\"word-break: break-word\\"
+          >Payload</span
+        >
+         
+        <span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\"
+          >https://schema.example.com/crm/shared.json</span
+        >
+         
+        <svg
+          class=\\"expand inline align-baseline\\"
+          version=\\"1.1\\"
+          viewBox=\\"0 0 24 24\\"
+          x=\\"0\\"
+          xmlns=\\"http://www.w3.org/2000/svg\\"
+          y=\\"0\\"
+        >
+          <polygon
+            points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"
+          ></polygon>
+        </svg>
+          
+      </div>
+
+      <div>
+        <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
+          
+object   
+          <div class=\\"inline-block\\">
+                      
+          </div>
+        </div>
+
+        
+
+<div class=\\"text-sm markdown\\"><p>Shared Customer Relationship Management models</p>
+</div>
+
+    
+      </div>
+    </div>
+
+    
+    <div
+      class=\\"children bg-gray-100 py-4 rounded\\"
+    >
+           
+
+<div
+  class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
+>
+  <div class=\\"\\">
+    <div
+      class=\\" flex property\\"
+    >
+      <div class=\\"pr-4\\" style=\\"margin-top: -2px; min-width: 25%\\">
+        <span
+          class=\\"text-sm\\"
+          style=\\"word-break: break-word\\"
+          >type</span
+        >
+            
+      </div>
+
+      <div>
+        <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
+          
+   
+          <div class=\\"inline-block\\">
+                      
+          </div>
+        </div>
+
+        
+
+<div class=\\"text-sm markdown\\"></div>
+
+   
+        <div class=\\"text-xs\\">
+          Enum: 
+          <span class=\\"border text-orange-600 rounded ml-1 py-0 px-2\\"
+            >\\"CustomerProfile\\"</span
+          >
+          
+        </div>
+         
+      </div>
+    </div>
+
+    
+  </div>
+</div>
+
+      
+
+<div
+  class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
+>
+  <div class=\\"\\">
+    <div
+      class=\\" flex property\\"
+    >
+      <div class=\\"pr-4\\" style=\\"margin-top: -2px; min-width: 25%\\">
+        <span
+          class=\\"text-sm\\"
+          style=\\"word-break: break-word\\"
+          >id</span
+        >
+            
+      </div>
+
+      <div>
+        <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
+          
+string   
+          <div class=\\"inline-block\\">
+            
+            <span
+              class=\\"bg-yellow-600 font-bold no-underline text-black rounded lowercase ml-2\\"
+              style=\\"height: 20px; font-size: 11px; padding: 3px\\"
+              >uuid</span
+            >
+                      
+          </div>
+        </div>
+
+        
+
+<div class=\\"text-sm markdown\\"></div>
+
+    
+      </div>
+    </div>
+
+    
+  </div>
+</div>
+
+      
+
+<div
+  class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
+>
+  <div class=\\"\\">
+    <div
+      class=\\"js-prop cursor-pointer py-2 flex property\\"
+    >
+      <div class=\\"pr-4\\" style=\\"margin-top: -2px; min-width: 25%\\">
+        <span
+          class=\\"text-sm\\"
+          style=\\"word-break: break-word\\"
+          >attributes</span
+        >
+          
+        <svg
+          class=\\"expand inline align-baseline\\"
+          version=\\"1.1\\"
+          viewBox=\\"0 0 24 24\\"
+          x=\\"0\\"
+          xmlns=\\"http://www.w3.org/2000/svg\\"
+          y=\\"0\\"
+        >
+          <polygon
+            points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"
+          ></polygon>
+        </svg>
+          
+      </div>
+
+      <div>
+        <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
+          
+object   
+          <div class=\\"inline-block\\">
+                      
+          </div>
+        </div>
+
+        
+
+<div class=\\"text-sm markdown\\"></div>
+
+    
+      </div>
+    </div>
+
+    
+    <div
+      class=\\"children bg-gray-200 py-4 rounded\\"
+    >
+           
+
+<div
+  class=\\"bg-gray-200 pl-8 pr-8 rounded\\"
+>
+  <div class=\\"\\">
+    <div
+      class=\\" flex property\\"
+    >
+      <div class=\\"pr-4\\" style=\\"margin-top: -2px; min-width: 25%\\">
+        <span
+          class=\\"text-sm\\"
+          style=\\"word-break: break-word\\"
+          >name</span
+        >
+            
+      </div>
+
+      <div>
+        <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
+          
+string   
+          <div class=\\"inline-block\\">
+                      
+          </div>
+        </div>
+
+        
+
+<div class=\\"text-sm markdown\\"></div>
+
+    
+      </div>
+    </div>
+
+    
+  </div>
+</div>
+
+        
+      <p class=\\"pl-6 mb-2 mt-4 text-xs text-gray-700\\">
+        Additional properties are allowed.
+      </p>
+        
+       
+    </div>
+    
+  </div>
+</div>
+
+        
+      <p class=\\"pl-6 mb-2 mt-4 text-xs text-gray-700\\">
+        Additional properties are allowed.
+      </p>
+        
+       
+    </div>
+    
+  </div>
+</div>
+
+
+</div>
+
+  
+  
+</div>
+
+
+    
+    
+
     
 
 <div class=\\"mt-4\\">
@@ -2242,6 +2550,41 @@ string
 
 <form>
   <h5 class=\\"examples-uid text-orange-600 mt-4\\">crm:Customer.Updated</h5>
+  
+    <div class=\\"payload-examples mb-4 \\">
+      <div class=\\"js-prop cursor-pointer  flex property\\">
+        <span class=\\"px-2 mr-2 text-gray-200 text-sm border rounded focus:outline-none cursor-pointer\\">Payload</span>
+        
+          <svg class=\\"expand inline align-baseline\\" version=\\"1.1\\" viewBox=\\"0 0 24 24\\" x=\\"0\\"
+            xmlns=\\"http://www.w3.org/2000/svg\\" y=\\"0\\">
+            <polygon points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"></polygon>
+          </svg>
+        
+      </div>
+      <div class=\\"children payload-examples mt-4\\">
+        
+        <pre class=\\"hljs mb-4 border border-gray-800 rounded\\"><code>{
+  \\"type\\": \\"CustomerProfile\\",
+  \\"id\\": \\"c0e5e95a-e26a-4d16-a185-32cb8f9725fc\\",
+  \\"attributes\\": {
+    \\"name\\": \\"Mustermann\\"
+  }
+}</code></pre>
+        <h6 class=\\"text-xs font-bold text-gray-700 italic\\">This example has been generated automatically.</h6>
+        
+      </div>
+    </div>
+  
+
+  
+</form>
+
+
+  
+  
+
+<form>
+  <h5 class=\\"examples-uid text-orange-600 mt-4\\">crm:Customer.Deleted</h5>
   
     <div class=\\"payload-examples mb-4 \\">
       <div class=\\"js-prop cursor-pointer  flex property\\">
@@ -2609,6 +2952,307 @@ string
     
   </div>
   <p class=\\"text-gray-600 text-sm\\">A customer was created</p>
+  
+  
+
+<div class=\\"mt-4\\">
+  
+</div>
+
+
+
+
+  
+  
+
+  <div class=\\"mt-4 mb-4 markdown\\"></div>
+  
+    
+<div>
+  
+
+<div
+  class=\\"bg-gray-200  rounded\\"
+>
+  <div class=\\"\\">
+    <div
+      class=\\"js-prop cursor-pointer py-2 flex property\\"
+    >
+      <div class=\\"pr-4\\" style=\\"margin-top: -2px; min-width: 25%\\">
+        <span
+          class=\\"text-sm\\"
+          style=\\"word-break: break-word\\"
+          >Payload</span
+        >
+         
+        <span class=\\"border text-orange-600 rounded text-xs ml-3 py-0 px-2\\"
+          >https://schema.example.com/crm/shared.json</span
+        >
+         
+        <svg
+          class=\\"expand inline align-baseline\\"
+          version=\\"1.1\\"
+          viewBox=\\"0 0 24 24\\"
+          x=\\"0\\"
+          xmlns=\\"http://www.w3.org/2000/svg\\"
+          y=\\"0\\"
+        >
+          <polygon
+            points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"
+          ></polygon>
+        </svg>
+          
+      </div>
+
+      <div>
+        <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
+          
+object   
+          <div class=\\"inline-block\\">
+                      
+          </div>
+        </div>
+
+        
+
+<div class=\\"text-sm markdown\\"><p>Shared Customer Relationship Management models</p>
+</div>
+
+    
+      </div>
+    </div>
+
+    
+    <div
+      class=\\"children bg-gray-100 py-4 rounded\\"
+    >
+           
+
+<div
+  class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
+>
+  <div class=\\"\\">
+    <div
+      class=\\" flex property\\"
+    >
+      <div class=\\"pr-4\\" style=\\"margin-top: -2px; min-width: 25%\\">
+        <span
+          class=\\"text-sm\\"
+          style=\\"word-break: break-word\\"
+          >type</span
+        >
+            
+      </div>
+
+      <div>
+        <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
+          
+   
+          <div class=\\"inline-block\\">
+                      
+          </div>
+        </div>
+
+        
+
+<div class=\\"text-sm markdown\\"></div>
+
+   
+        <div class=\\"text-xs\\">
+          Enum: 
+          <span class=\\"border text-orange-600 rounded ml-1 py-0 px-2\\"
+            >\\"CustomerProfile\\"</span
+          >
+          
+        </div>
+         
+      </div>
+    </div>
+
+    
+  </div>
+</div>
+
+      
+
+<div
+  class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
+>
+  <div class=\\"\\">
+    <div
+      class=\\" flex property\\"
+    >
+      <div class=\\"pr-4\\" style=\\"margin-top: -2px; min-width: 25%\\">
+        <span
+          class=\\"text-sm\\"
+          style=\\"word-break: break-word\\"
+          >id</span
+        >
+            
+      </div>
+
+      <div>
+        <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
+          
+string   
+          <div class=\\"inline-block\\">
+            
+            <span
+              class=\\"bg-yellow-600 font-bold no-underline text-black rounded lowercase ml-2\\"
+              style=\\"height: 20px; font-size: 11px; padding: 3px\\"
+              >uuid</span
+            >
+                      
+          </div>
+        </div>
+
+        
+
+<div class=\\"text-sm markdown\\"></div>
+
+    
+      </div>
+    </div>
+
+    
+  </div>
+</div>
+
+      
+
+<div
+  class=\\"bg-gray-100 pl-8 pr-8 rounded\\"
+>
+  <div class=\\"\\">
+    <div
+      class=\\"js-prop cursor-pointer py-2 flex property\\"
+    >
+      <div class=\\"pr-4\\" style=\\"margin-top: -2px; min-width: 25%\\">
+        <span
+          class=\\"text-sm\\"
+          style=\\"word-break: break-word\\"
+          >attributes</span
+        >
+          
+        <svg
+          class=\\"expand inline align-baseline\\"
+          version=\\"1.1\\"
+          viewBox=\\"0 0 24 24\\"
+          x=\\"0\\"
+          xmlns=\\"http://www.w3.org/2000/svg\\"
+          y=\\"0\\"
+        >
+          <polygon
+            points=\\"17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 \\"
+          ></polygon>
+        </svg>
+          
+      </div>
+
+      <div>
+        <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
+          
+object   
+          <div class=\\"inline-block\\">
+                      
+          </div>
+        </div>
+
+        
+
+<div class=\\"text-sm markdown\\"></div>
+
+    
+      </div>
+    </div>
+
+    
+    <div
+      class=\\"children bg-gray-200 py-4 rounded\\"
+    >
+           
+
+<div
+  class=\\"bg-gray-200 pl-8 pr-8 rounded\\"
+>
+  <div class=\\"\\">
+    <div
+      class=\\" flex property\\"
+    >
+      <div class=\\"pr-4\\" style=\\"margin-top: -2px; min-width: 25%\\">
+        <span
+          class=\\"text-sm\\"
+          style=\\"word-break: break-word\\"
+          >name</span
+        >
+            
+      </div>
+
+      <div>
+        <div class=\\"capitalize text-sm text-teal-500 font-bold\\">
+          
+string   
+          <div class=\\"inline-block\\">
+                      
+          </div>
+        </div>
+
+        
+
+<div class=\\"text-sm markdown\\"></div>
+
+    
+      </div>
+    </div>
+
+    
+  </div>
+</div>
+
+        
+      <p class=\\"pl-6 mb-2 mt-4 text-xs text-gray-700\\">
+        Additional properties are allowed.
+      </p>
+        
+       
+    </div>
+    
+  </div>
+</div>
+
+        
+      <p class=\\"pl-6 mb-2 mt-4 text-xs text-gray-700\\">
+        Additional properties are allowed.
+      </p>
+        
+       
+    </div>
+    
+  </div>
+</div>
+
+
+</div>
+
+  
+  
+</div>
+
+
+      
+      <a name=\\"message-crm:Customer.Deleted\\"></a>
+      
+
+<div class=\\"bg-gray-200 rounded p-4 mt-2\\">
+  <div class=\\"text-sm text-gray-700 mb-2\\">
+    
+    <span class=\\"text-gray-700 font-bold mr-2\\">#3</span>
+    
+    
+      <span class=\\"border text-orange-600 rounded text-s py-0 px-2\\">crm:Customer.Deleted</span>
+    
+  </div>
+  <p class=\\"text-gray-600 text-sm\\">A customer was deleted</p>
   
   
 

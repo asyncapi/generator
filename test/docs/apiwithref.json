@@ -1,5 +1,5 @@
 {
-  "asyncapi": "2.0.0",
+  "asyncapi": "2.6.0",
   "info": {
     "title": "This is Async API with a schema reference",
     "version": "0.0.1"
@@ -14,6 +14,9 @@
             },
             {
               "$ref": "#/components/messages/crm:Customer.Updated"
+            },
+            {
+              "$ref": "#/components/messages/crm:Customer.Deleted"
             }
           ]
         }
@@ -33,7 +36,14 @@
         "summary": "A customer was created",
         "schemaFormat": "application/schema+json;version=draft-07",
         "payload": {
-          "$ref": "https://schema.example.com/crm/shared.json"
+          "$ref": "shared.json"
+        }
+      },
+      "crm:Customer.Deleted": {
+        "summary": "A customer was deleted",
+        "schemaFormat": "application/schema+json;version=draft-07",
+        "payload": {
+          "$ref": "shared/shared_subfolder.json"
         }
       }
     }

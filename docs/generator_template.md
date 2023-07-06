@@ -59,11 +59,13 @@ components:
           type: string
 ```
 
-Note:
+<Remember>
 
 - To generate code, you will use the [asyncapi cli](https://www.asyncapi.com/tools/cli). If you don't have the CLI installed follow [this guide](https://www.asyncapi.com/docs/tools/generator/installation-guide#asyncapi-cli).
 - If you are new to asyncapi, checkout the following docs: [template development](https://www.asyncapi.com/docs/tools/generator/template-development) which explains the minimum requirements for a template and possible features.
 - Learn more about asyncronous messaging using MQTT [here](https://medium.com/python-point/mqtt-basics-with-python-examples-7c758e605d4).
+
+</Remember>
 
 ## Steps followed to create a template
 

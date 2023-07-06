@@ -64,15 +64,14 @@ components:
 
 </Remember>
 
-## Steps followed to create a template
+## Overview of steps you follow to create a template
 
 1. Create a new directory for your template named **python-mqtt-client-template**.
 2. Install the AsyncAPI CLI using the command `npm install -g @asyncapi/cli`.
 3. Create a new folder **test/fixtures** with a file named `asyncapi.yml` in your fixtures directory. This file is used to define the **structure** of your template. 
 4. Create a new file named `package.json` in your template directory. This file is used to define the **dependencies** for your template.
 5. Create a new file named `index.js` in your **template** directory. This file is used to define the **logic** for your template.
-6. Create a new directory named `partials` in your template directory. This directory is used to store the **partial HTML** files that are used to create the final documentation.
-7. Create a new directory named `assets` in your template directory. This directory is used to **store the CSS and JavaScript files that are used to style the final documentation or website**.
+6. Create a `test.py` file to validate the logic of your application.
 
 Lets break it down:
 
@@ -93,6 +92,9 @@ The `package.json` file is used to define the dependencies for your template. He
   },
   "dependencies": {
     "@asyncapi/generator-react-sdk": "^0.2.25"
+  },
+  "devDependencies": {
+    "rimraf": "^5.0.0"
   }
 }
 ```

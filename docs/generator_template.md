@@ -426,11 +426,11 @@ You'll then need to template to dynamically generate `sendTemperatureDrop` and `
 
 ```js
 <Text newLines={2}>
-  <TopicVariable channels={asyncapi.channels().filterByReceive()} />
+  <TopicFunction channels={asyncapi.channels().filterByReceive()} />
 </Text>
 ```
 
-It's recommended to put reusable components outside template directory in a new directory called **components**. You'll create a component that will dynamically generate functions in the output for as many channels as there are in your AsyncAPI document that contain a `publish` operation. Add the following code in **components/TopicFunctions.js** file:
+It's recommended to put reusable components outside template directory in a new directory called **components**. You'll create a component that will dynamically generate functions in the output for as many channels as there are in your AsyncAPI document that contain a `publish` operation. Add the following code in **components/TopicFunction.js** file:
 
 ```js
 /*

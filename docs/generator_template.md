@@ -561,6 +561,8 @@ Temperature drop detected 66943992 sent to temperature/dropped
 Temperature rise detected 66943992 sent to temperature/risen
 ```
 
-## Conclusion
+## Where to go from here?
 
-In this tutorial, we have created a simple AsyncAPI generator template that uses a Python MQTT client. We have explained how to use an AsyncAPI file, create a Python MQTT template and use them to generate code from it, and use the Paho-MQTT library in Python to connect to an MQTT broker and publish messages. We hope this tutorial has helped you understand how to create a user-defined template.
+Great job completing this tutorial! You have learnt how to use an AsyncAPI file, create a Python MQTT template and use them to generate code from it, and use the Paho-MQTT library in Python to connect to an MQTT broker and publish messages.:]
+
+If you want to tinker with a completed template and see how it would look like in production, check out the [Paho-MQTT template](https://github.com/derberg/python-mqtt-client-template) developed by [Lukasz](https://github.com/derberg). You can also check out the accompanying [tutorial to create MQTT client code](https://derberg-github-io-git-articlecodegenpython-derberg.vercel.app/blog/asyncapi-codegen-python).

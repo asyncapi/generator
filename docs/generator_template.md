@@ -422,7 +422,7 @@ class TemperatureServiceClient:
 
 ```
 
-You'll then need to template to dynamically generate `sendTemperatureDropped` and `sendTemperatureRisen` functions in the generated code based off the AsyncAPI document content. The goal is to write template code that returns functions for channels that the Temperature Service application is subscribed to. The template code to generate these functions will look like this:
+You'll then need to template to dynamically generate `sendTemperatureDrop` and `sendTemperatureRise` functions in the generated code based off the AsyncAPI document content. The goal is to write template code that returns functions for channels that the Temperature Service application is subscribed to. The template code to generate these functions will look like this:
 
 ```js
 <Text newLines={2}>

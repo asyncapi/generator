@@ -174,7 +174,7 @@ In this section, you'll:
 
 ## 1. Create the client
 
-The following code is an example of a Python client using the paho-MQTT library:
+The following code is an example of a Python client using the Paho-MQTT library:
 
 ``` python
 # 1
@@ -197,16 +197,16 @@ class TemperatureServiceClient:
         self.client.publish(topic, id)
 ```
 
-Make sure you have the paho-mqtt library installed. You can install it using pip with the `pip install paho-mqtt` command.
+Make sure you have the Paho-mqtt library installed. You can install it using pip with the `pip install paho-mqtt` command.
 Let's break down the previous code snippet:
 
-1. Imports the MQTT module from the paho package, which provides the MQTT client functionality.
+1. Imports the MQTT module from the Paho package, which provides the MQTT client functionality.
 2. Assigns the MQTT broker address `test.mosquitto.org` to the variable MQTT broker. This specifies the location where the MQTT client will connect to.
 3. Defines an instance of the MQTT client object. This object will be used to establish a connection with the MQTT broker and perform MQTT operations.
 4. Defines that on client instance creation, it connects to the broker.
 5. The `sendTemperatureChange` is a function that client user invokes to publish a message to the broker, and its specific topic.
 
-In summary, this code sets up an MQTT client using the paho-MQTT library. It connects to the `test.mosquitto.org` MQTT broker, and the `sendTemperatureChange()` method publishes temperature change information to the `temperature/changed` topic whenever called.
+In summary, this code sets up an MQTT client using the Paho-MQTT library. It connects to the `test.mosquitto.org` MQTT broker, and the `sendTemperatureChange()` method publishes temperature change information to the `temperature/changed` topic whenever called.
 
 ### 2. Test the client
 
@@ -390,7 +390,7 @@ export default function ({ asyncapi, params }) {
 ```
 
 1. Import the **Text** component that will wrap strings so they are indented properly in the output. Your import statement should now look like this: `import { File, Text } from '@asyncapi/generator-react-sdk'`.
-2. When the paho module import is rendered in **client.py** file, it will add two extra new lines.
+2. When the Paho module import is rendered in **client.py** file, it will add two extra new lines.
 3. The broker url is templated in a `Text` component removing the `$` from the string template.
 4. Dynamically get the class name **TemperatureServiceClient** from the AsyncAPI document from the **info** object using the Parser API using the code: `asyncapi.info().title()` . It will return `Temperature Service`, then remove the spaces and add `Client` as a suffix.
 5. There is no templating needed in the `__init__` function, there is only hardcoded information.

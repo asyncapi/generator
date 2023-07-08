@@ -174,7 +174,7 @@ In this section, you'll:
 
 ## 1. Create the client
 
-The following code is an example of a Python client using the Paho-MQTT library:
+The following is the sample code of the Python client you generated [above](#test-using-asyncapi-cli) using the Paho-MQTT library after running the `asyncapi generate fromTemplate test/fixtures/asyncapi.yml ./ -o test/project` command.
 
 ``` python
 # 1

@@ -76,7 +76,7 @@ Lets break it down:
 
 ### package.json file
 
-The **package.json** file is used to define the dependencies for your template. Here's an example **package.json** file:
+The **package.json** file is used to define the dependencies for your template. Add the following code snippet to your **package.json** file:
 
 ``` json
 {
@@ -104,7 +104,7 @@ Here's what is contained in the code snippet above:
 - **version** - the current version of your template.
 - **description** - a description of what your template does.
 - **generator** - specify generator [specific configuration](https://www.asyncapi.com/docs/tools/generator/configuration-file).
-  - **renderer** - can either be `react` or `nunjucks`. In this case the generator will pass your template to the react render engine to generate the output.
+  - **renderer** - can either be [`react`](https://www.asyncapi.com/docs/tools/generator/react-render-engine) or [`nunjucks`](https://www.asyncapi.com/docs/tools/generator/nunjucks-render-engine). In this case the generator will pass your template to the react render engine to generate the output.
   - **apiVersion** - specifies which major version of the [Parser-API](https://github.com/asyncapi/parser-api) your template will use.
   - **generator** - a string representing the generator version-range your template is compatible with.
   - **supportedProtocols** - A list that specifies which protocols are supported by your template.
@@ -121,7 +121,7 @@ The **index.js** file is used to define the logic for your template. Inside the 
 import { File } from '@asyncapi/generator-react-sdk'
 //2
 export default function ({ asyncapi }) {
-  //3
+//3
   return <File name="client.py">{asyncapi.info().title()}</File>
 }
 ```
@@ -139,7 +139,7 @@ info:
   description: This service is in charge of processing all the events related to temperature.
 ```
 
-`asyncapi.info().title()` returns `Temperature Service`.
+The `asyncapi.info().title()` returns `Temperature Service`.
 
 ### Test using AsyncAPI CLI
 
@@ -150,14 +150,14 @@ Generation in progress. Keep calm and wait a bit... done
 Check out your shiny new generated files at output.
 ```
 
-And navigating to the **test/project** directory, you should see a **client.py** file; the only content is `Temperature Service`.
+Navigating to the **test/project** directory. You should see a **client.py** file; the only content is `Temperature Service`.
 
 Let's break down the previous command:
 
 - `asyncapi generate fromTemplate` is how you use AsyncAPI generator via the AsyncAPI CLI.
 - `test/fixtures/asyncapi.yml` points to your AsyncAPI document.
 - `./` specifies the location of your template.
-- `-o` determines where to output the result.
+- `-o` specifies where to output the result.
 
 ## Creating a template
 
@@ -192,7 +192,7 @@ class TemperatureServiceClient:
     def sendTemperatureChange(self, id):
       # 5
         topic = "temperature/changed"
-        # 6 
+      # 6 
         self.client.publish(topic, id)
 ```
 
@@ -203,7 +203,7 @@ Let's break down the previous code snippet:
 2. Assigns the MQTT broker address `test.mosquitto.org` to the variable MQTT broker. This specifies the location where the MQTT client will connect to.
 3. Defines an instance of the MQTT client object. This object will be used to establish a connection with the MQTT broker and perform MQTT operations.
 4. Defines that on client instance creation, it connects to the broker.
-5. The `sendTemperatureChange` is a function that client user invokes to publish a message to the broker, and its specific topic.
+5. The `sendTemperatureChange` is a function the client user invokes to publish a message to the broker, and its specific topic.
 
 In summary, this code sets up an MQTT client using the Paho-MQTT library. It connects to the `test.mosquitto.org` MQTT broker, and the `sendTemperatureChange()` method publishes temperature change information to the `temperature/changed` topic whenever called.
 
@@ -243,7 +243,7 @@ To make sure your **test.py** and client code works check if the broker really r
 
 ### 3. Update the template with client code
 
-Open **index.js** and copy the content of **client.py** and replace `{asyncapi.info().title()}` with it. It should look like the code snippet below now:
+Open [**index.js**](#indexjs-file) and copy the content of [**client.py**](#1-create-the-client) and replace `{asyncapi.info().title()}` with it. It should look like the code snippet below now:
 
 ``` js
 import { File } from '@asyncapi/generator-react-sdk';
@@ -271,7 +271,7 @@ class TemperatureServiceClient:
 
 ### 4. Write script to run the test code
 
-In **package.json** you can have the scripts property that you invoke by calling `npm run <yout_script>`. Add these scripts to **package.json**:
+In **package.json** you can have the scripts property that you invoke by calling `npm run <your_script>`. Add these scripts to **package.json**:
 
 ``` json
     "scripts": {
@@ -295,7 +295,7 @@ Run `npm test` on your terminal to ensure everything works as expected.
 
 #### Add parameters to the configuration file
 
-You often have different runtime environments in programming, e.g., development and production. You will use different servers to spin both of these instances. You'll probably have two broker versions, one for production and the other for development. You have defined a dev server in the AsyncAPI document:
+You often have different runtime environments in programming, e.g., development and production. You will use different servers to spin both of these instances. You'll have two broker versions, one for production and the other for development. You have defined a dev server in the AsyncAPI document:
 
 ```yml
 servers:
@@ -328,7 +328,12 @@ You'll pass the server to be used to generate your code using `--param server=de
 Generator Error: This template requires the following missing params: server.
 ```
 
-Update your `test:generate` script in **package.json** to include the server param `test:generate": "asyncapi generate fromTemplate test/fixtures/asyncapi.yml ./ --output test/project --force-write --param server=dev"`
+Update your `test:generate` script in **package.json** to include the server param
+
+```json
+test:generate": "asyncapi generate fromTemplate test/fixtures/asyncapi.yml ./ --output test/project --force-write --param server=dev"
+```
+
 You can now replace the static broker from `mqttBroker = 'test.mosquitto.org'` to `mqttBroker = "${asyncapi.servers().get(params.server).url()}"` in **index.js**.
 
 Now the template code looks like this:
@@ -363,7 +368,7 @@ Run `npm test` to validate that your code still works as expected.
 
 #### Templating index.js with React
 
-Python takes indentation very seriously, and our generated output will be Python code. We, therefore, need to make sure the indentation in index.js looks right so the generated code is indented correctly. After templating the code in index.js, it will look like the following code snippet:
+Python takes indentation very seriously, and our generated output will be Python code. We, therefore, need to make sure the indentation in **index.js** looks right so the generated code is indented correctly. After templating the code in **index.js**, it will look like the following code snippet:
 
 ```js
 // 1
@@ -399,7 +404,7 @@ In the next section, you'll refactor your template to use React.
 
 #### Creating a reusable component
 
-If you had two [channels](https://www.asyncapi.com/docs/concepts/channel), one to watch if the temperature drop below 22 °C and one to check if the temperature is above 22 °C, the generated output code would look like this:
+Suppose you have two [channels](https://www.asyncapi.com/docs/concepts/channel), one to watch if the temperature drop below 22 °C and one to check if the temperature is above 22 °C, the generated output code would look like this:
 
 ```python
 import paho.mqtt.client as mqtt
@@ -507,7 +512,8 @@ export default function ({ asyncapi, params }) {
 ```
 
 Run `npm test` on your terminal to ensure everything works as expected.
-Add another channel to asyncapi.yml file called `temperatureDropped` and `temperatureRisen` then run the template again to make sure it still works as expected.
+
+In the next section, you'll add another channel to **asyncapi.yml** file called `temperature/dropped` and `temperature/risen` then run the template again to make sure it still works as expected.
 
 #### Update AsyncAPI document
 
@@ -562,8 +568,8 @@ Temperature rise detected 66943992 sent to temperature/risen
 
 ## Where to go from here?
 
-Great job completing this tutorial! You have learnt how to use an AsyncAPI file, create a Python MQTT template and use them to generate code from it, and use the Paho-MQTT library in Python to connect to an MQTT broker and publish messages.:]
+Great job completing this tutorial! You have learnt how to use an AsyncAPI file to create a Python MQTT template and used it with the Paho-MQTT library in Python to connect to an MQTT broker and publish messages.:]
 
-If you want to tinker with a completed template and see how it would look like in production, check out the [Paho-MQTT template](https://github.com/derberg/python-mqtt-client-template) developed by [Lukasz](https://github.com/derberg). You can also check out the accompanying [tutorial to create MQTT client code](https://derberg-github-io-git-articlecodegenpython-derberg.vercel.app/blog/asyncapi-codegen-python).
+If you want to tinker with a completed template and see what it would look like in production, check out the [Paho-MQTT template](https://github.com/derberg/python-mqtt-client-template) developed by [Lukasz](https://github.com/derberg). You can also check out the accompanying [tutorial to create MQTT client code](https://derberg-github-io-git-articlecodegenpython-derberg.vercel.app/blog/asyncapi-codegen-python).
 
-Check out the [MQTT beginners guide]((https://medium.com/python-point/mqtt-basics-with-python-examples-7c758e605d4)) tutorial to learn more about asynchronous messaging using MQTT.
+You can also check out the [MQTT beginners guide]((https://medium.com/python-point/mqtt-basics-with-python-examples-7c758e605d4)) tutorial to learn more about asynchronous messaging using MQTT.

@@ -105,20 +105,27 @@ The parameter `--map-base-url` maps external schema references to local folders.
 
 When using our docker image that we regularly update, you don't need to install Node.js or Npm, even though the generator is written with it since the Docker image has the generator installed.
 
-Install [Docker](https://docs.docker.com/get-docker/) first, then use docker to pull and run the image using the following command:
+Install [Docker](https://docs.docker.com/get-docker/) first, then use docker to build the image using the following command :
+``` 
+docker build -t asyncapi/cli:latest . 
+``` 
+and run the image using the following command :
 
 ```bash
 docker run --rm -it \
+--user=root \
 -v [ASYNCAPI SPEC FILE LOCATION]:/app/asyncapi.yml \
 -v [GENERATED FILES LOCATION]:/app/output \
-asyncapi/generator [COMMAND HERE]
+asyncapi/cli [COMMAND HERE]
 
-# Example that you can run inside the generator directory after cloning this repository. First, you specify the mount in the location of your AsyncAPI specification file and then you mount it in the directory where the generation result should be saved.
+# Example that you can run inside the cli directory after cloning this repository. First, you specify the mount in the location of your AsyncAPI specification file and then you mount it in the directory where the generation result should be saved.
 docker run --rm -it \
--v ${PWD}/test/docs/dummy.yml:/app/asyncapi.yml \
--v ${PWD}/output:/app/output \
-asyncapi/generator -o /app/output /app/asyncapi.yml @asyncapi/html-template --force-write
+   --user=root \
+   -v ${PWD}/test/fixtures/asyncapi_v1.yml:/app/asyncapi.yml \
+   -v ${PWD}/output:/app/output \
+   asyncapi/cli generate fromTemplate -o /app/output /app/asyncapi.yml @asyncapi/html-template --force-write
 ```
+Note: Use ``` ` ``` instead of `\` for Windows.
 
 ### CLI usage with `npx` instead of `npm`
 

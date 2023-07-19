@@ -1,11 +1,11 @@
 ---
-title: "How to create a simple generator template"
+title: "Creating a Generator template"
 weight: 170
 ---
 
-In this tutorial, you'll learn to create a simple generator template using a Python MQTT client. You'll use the AsyncAPI document and the template you develop to generate Python code. Additionally, you'll create template code with a reusable component to reuse the custom functionality you create and test your code using an MQTT client.
+This tutorial teaches you how to create a simple generator template using a Python MQTT client. You'll use the AsyncAPI document and the template you develop to generate Python code. Additionally, you'll create template code with a reusable component to reuse the custom functionality you create and test your code using an MQTT client.
 
-Suppose you can only sleep when the AC in your bedroom is set to 22 °C, and you can't sleep when the temperature drops or rises above that. You can install a smart monitor in your bedroom that keeps track of the temperature and notifies you to adjust it to your optimum temperature when it fluctuates. You will create a template to alerts you when the bedroom's temperature fluctuates from 22 °C.
+Suppose you can only sleep when the AC in your bedroom is set to 22 °C, and you can't sleep when the temperature drops or rises above that. You can install a smart monitor in your bedroom that keeps track of the temperature and notifies you to adjust it to your optimum temperature when it fluctuates. You will create a template to alert you when the bedroom's temperature fluctuates from 22 °C.
 
 In this tutorial:
 
@@ -63,7 +63,7 @@ components:
 
 </Remember>
 
-## Overview of steps to follow to create a template
+## Overview of steps
 
 1. Create a new directory for your template named **python-mqtt-client-template**.
 2. Install the AsyncAPI CLI using the command `npm install -g @asyncapi/cli`.
@@ -196,7 +196,7 @@ class TemperatureServiceClient:
         self.client.publish(topic, id)
 ```
 
-Make sure you have the Paho-mqtt library installed. You can install it using pip with the `pip install paho-mqtt` command.
+Make sure you have the Paho-MQTT library installed. You can install it using pip with the `pip install paho-mqtt` command.
 Let's break down the previous code snippet:
 
 1. Imports the MQTT module from the Paho package, which provides the MQTT client functionality.
@@ -570,6 +570,6 @@ Temperature rise detected 66943992 sent to temperature/risen
 
 Great job completing this tutorial! You have learnt how to use an AsyncAPI file to create a Python MQTT template and used it with the Paho-MQTT library in Python to connect to an MQTT broker and publish messages.😃
 
-If you want to tinker with a completed template and see what it would look like in production, check out the [Paho-MQTT template](https://github.com/derberg/python-mqtt-client-template) developed by [Lukasz](https://github.com/derberg). You can also check out the accompanying [tutorial to create MQTT client code](https://derberg-github-io-git-articlecodegenpython-derberg.vercel.app/blog/asyncapi-codegen-python).
+If you want to tinker with a completed template and see what it would look like in production, check out the [Paho-MQTT template](https://github.com/derberg/python-mqtt-client-template/tree/v1.0.0). You can also check out the accompanying [article about creating MQTT client code](https://www.brainfart.dev/blog/asyncapi-codegen-python).
 
 You can also check out the [MQTT beginners guide]((https://medium.com/python-point/mqtt-basics-with-python-examples-7c758e605d4)) tutorial to learn more about asynchronous messaging using MQTT.

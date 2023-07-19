@@ -293,7 +293,7 @@ Run `npm test` on your terminal to ensure everything works as expected.
 
 ### 5. Template your code
 
-#### Add parameters to the configuration file
+#### 5a. Add parameters to the configuration file
 
 You often have different runtime environments in programming, e.g., development and production. You will use different servers to spin both of these instances. You'll have two broker versions, one for production and the other for development. You have defined a dev server in the AsyncAPI document:
 
@@ -366,7 +366,7 @@ class TemperatureServiceClient:
 
 Run `npm test` to validate that your code still works as expected.
 
-#### Templating index.js with React
+#### 5b. Templating index.js with React
 
 Python takes indentation very seriously, and our generated output will be Python code. We, therefore, need to make sure the indentation in **index.js** looks right so the generated code is indented correctly. After templating the code in **index.js**, it will look like the following code snippet:
 
@@ -402,7 +402,7 @@ export default function ({ asyncapi, params }) {
 > If you're on the fence about which templating engine you should use in your template, check out the [React render engine](https://www.asyncapi.com/docs/tools/generator/react-render-engine) and [nunjucks render engine](https://www.asyncapi.com/docs/tools/generator/nunjucks-render-engine) documentation.
 In the next section, you'll refactor your template to use React.
 
-#### Creating a reusable component
+#### 5c. Creating a reusable component
 
 Suppose you have two [channels](https://www.asyncapi.com/docs/concepts/channel), one to watch if the temperature drop below 22 °C and one to check if the temperature is above 22 °C, the generated output code would look like this:
 
@@ -515,7 +515,7 @@ Run `npm test` on your terminal to ensure everything works as expected.
 
 In the next section, you'll add another channel to **asyncapi.yml** file called `temperature/dropped` and `temperature/risen` then run the template again to make sure it still works as expected.
 
-#### Update AsyncAPI document
+#### 5d. Update AsyncAPI document
 
 Update the AsyncAPI document to use two channels:
 
@@ -568,7 +568,7 @@ Temperature rise detected 66943992 sent to temperature/risen
 
 ## Where to go from here?
 
-Great job completing this tutorial! You have learnt how to use an AsyncAPI file to create a Python MQTT template and used it with the Paho-MQTT library in Python to connect to an MQTT broker and publish messages.:]
+Great job completing this tutorial! You have learnt how to use an AsyncAPI file to create a Python MQTT template and used it with the Paho-MQTT library in Python to connect to an MQTT broker and publish messages.😃
 
 If you want to tinker with a completed template and see what it would look like in production, check out the [Paho-MQTT template](https://github.com/derberg/python-mqtt-client-template) developed by [Lukasz](https://github.com/derberg). You can also check out the accompanying [tutorial to create MQTT client code](https://derberg-github-io-git-articlecodegenpython-derberg.vercel.app/blog/asyncapi-codegen-python).
 

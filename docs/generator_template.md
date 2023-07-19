@@ -1,5 +1,5 @@
 ---
-title: "Creating a generator template"
+title: "Creating a Generator template"
 weight: 170
 ---
 

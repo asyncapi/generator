@@ -25,7 +25,7 @@ jobs:
         run: npm run generate:assets --if-present
       - name: Create Pull Request with updated docs
         if: startsWith(github.event.commits[0].message, 'docs:')
-        uses: peter-evans/create-pull-request@v3
+        uses: peter-evans/create-pull-request@38e0b6e68b4c852a5500a94740f0e535e0d7ba54 # use 4.2.4 https://github.com/peter-evans/create-pull-request/releases/tag/v4.2.4
         with:
           token: ${{ secrets.GH_TOKEN }}
           commit-message: 'chore: update generated docs'

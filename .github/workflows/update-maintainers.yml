@@ -95,7 +95,7 @@ jobs:
                 continue; // Skip the iteration for bot accounts
               }
 
-              const maintainer = maintainers.find(maintainer => maintainer.github === username);
+              const maintainer = maintainers.find(maintainer => maintainer.github === username.toLowerCase());
               if (!maintainer) {
                 const { data } = await github.rest.users.getByUsername({ username });
                 const twitterUsername = data.twitter_username;

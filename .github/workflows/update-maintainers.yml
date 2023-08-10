@@ -1,14 +1,15 @@
 name: Update MAINTAINERS.yaml in community repo
 
 on:
-  pull_request:
-    types: [closed]
+  push:
+    branches:
+      - master
     paths:
       - 'CODEOWNERS'
 
 jobs:
   update-maintainers:
-    if: github.event.pull_request.merged
+
     runs-on: ubuntu-latest
 
     steps:

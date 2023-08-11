@@ -1,5 +1,5 @@
 import React from "react";
-import { AsyncAPIDocument } from "@asyncapi/parser";
+import { AsyncAPIDocumentInterface, OldAsyncAPIDocument as AsyncAPIDocument } from "@asyncapi/parser";
 
 export type PropsWithChildrenContent<P> = P & {
   childrenContent?: string;
@@ -13,7 +13,7 @@ export class Component<P = {}> extends React.Component<PropsWithChildrenContent<
  * Shape of the context passed to template
  */
 export interface TemplateContext<P = Record<string, any>>{
-  asyncapi: AsyncAPIDocument,
+  asyncapi: AsyncAPIDocumentInterface | AsyncAPIDocument,
   params: P,
   originalAsyncAPI: string,
   [key: string]: any,

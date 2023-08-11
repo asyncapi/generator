@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { promisify } from 'util';
-import { AsyncAPIDocument } from "@asyncapi/parser";
+import { OldAsyncAPIDocument as AsyncAPIDocument } from "@asyncapi/parser";
 
 import { transpileFiles } from "../transpiler";
 import { renderTemplate } from "../../renderer";

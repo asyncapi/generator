@@ -49,7 +49,7 @@ Restrictions:
 
 To render the transpiled template SDK requires:
 
-* Node.js v12.16 and higher
+* Node.js v18 and higher
 
 ## The debug flag
 

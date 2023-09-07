@@ -28,7 +28,7 @@ The `generator` property from `package.json` file must contain a JSON object tha
 "generator":
 {
   "renderer": "react",
-  "apiVersion": "v1",
+  "apiVersion": "v2",
   "supportedProtocols": ["amqp", "mqtt"],
   "parameters": {
     "server": {

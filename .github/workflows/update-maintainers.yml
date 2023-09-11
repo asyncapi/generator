@@ -1,16 +1,17 @@
 name: Update MAINTAINERS.yaml in community repo
 
 on:
-  pull_request:
-    types: [closed]
+  push:
+    branches:
+      - master
     paths:
       - 'CODEOWNERS'
 
 jobs:
   update-maintainers:
-    if: github.event.pull_request.merged
     runs-on: ubuntu-latest
-
+    env:
+      GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
     steps:
       - name: Checkout main branch
         uses: actions/checkout@v3
@@ -31,7 +32,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: asyncapi/community
-          token: ${{ secrets.GH_TOKEN}}
+          token: ${{ env.GITHUB_TOKEN }}
           path: community
 
       - name: Setup Node.js
@@ -45,7 +46,7 @@ jobs:
       - name: Compare CODEOWNERS
         id: compare-codeowners
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_TOKEN: ${{ env.GITHUB_TOKEN }}
         uses: actions/github-script@v6
         with:
           script: |
@@ -94,16 +95,19 @@ jobs:
                 continue; // Skip the iteration for bot accounts
               }
 
-              const maintainer = maintainers.find(maintainer => maintainer.github === username);
+              const maintainer = maintainers.find(maintainer => maintainer.github === username.toLowerCase());
               if (!maintainer) {
                 const { data } = await github.rest.users.getByUsername({ username });
                 const twitterUsername = data.twitter_username;
-                maintainers.push({
+                const newMaintainer = {
                   github: username,
-                  twitter: twitterUsername,
                   isTscMember: false,
                   repos: [repoName]
-                });
+                };
+                if (twitterUsername) {
+                  newMaintainer.twitter = twitterUsername;
+                }
+                maintainers.push(newMaintainer);
                 core.info('Added maintainer:', username);
               } else {
                 // If the maintainer already exists, check if the current repo is in their list
@@ -151,9 +155,11 @@ jobs:
       - name: Commit and push
         working-directory: ./community
         run: |
+          git config --global user.email "info@asyncapi.io"
+          git config --global user.name "asyncapi-bot"
           git add .
           git commit -m "Update MAINTAINERS.yaml"
-          git push https://${{ secrets.GH_TOKEN}}@github.com/asyncapi/community update-maintainers-${{ github.run_id }}
+          git push https://${{ env.GITHUB_TOKEN }}@github.com/asyncapi/community
 
       - name: Create PR
         working-directory: ./community

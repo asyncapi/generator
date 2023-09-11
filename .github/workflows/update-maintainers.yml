@@ -1,0 +1,177 @@
+name: Update MAINTAINERS.yaml in community repo
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'CODEOWNERS'
+
+jobs:
+  update-maintainers:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+    steps:
+      - name: Checkout main branch
+        uses: actions/checkout@v3
+        with:
+          ref: master
+          path: current_state
+
+      - name: Checkout one commit before last one
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+          ref: master
+          path: previous_state
+
+      - run: cd previous_state && git checkout HEAD^
+
+      - name: Checkout community repo
+        uses: actions/checkout@v3
+        with:
+          repository: asyncapi/community
+          token: ${{ env.GITHUB_TOKEN }}
+          path: community
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install js-yaml
+        run: npm install js-yaml@3.14.1
+
+      - name: Compare CODEOWNERS
+        id: compare-codeowners
+        env:
+          GH_TOKEN: ${{ env.GITHUB_TOKEN }}
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs');
+            const yaml = require('js-yaml');
+
+            // Get repository name
+            const repoName = context.repo.repo;
+
+            function extractGitHubUsernames(content) {
+                // Remove lines starting with #
+                content = content.replace(/^#.*$/mg, "");
+            
+                const regex = /@([a-zA-Z0-9_-]+)/g;
+                const matches = content.match(regex);
+                if (!matches) {
+                    return [];
+                }
+                return matches.map(match => match.substr(1));
+            }
+      
+            const currentCodeowners = fs.readFileSync('./current_state/CODEOWNERS', 'utf8');
+            const previousCodeowners = fs.readFileSync('./previous_state/CODEOWNERS', 'utf8');
+      
+            const currentUsernames = extractGitHubUsernames(currentCodeowners);
+            const previousUsernames = extractGitHubUsernames(previousCodeowners);
+
+            const addedUsernames = currentUsernames.filter(username => !previousUsernames.includes(username));
+            const removedUsernames = previousUsernames.filter(username => !currentUsernames.includes(username));
+
+            core.info('Added Usernames:', addedUsernames);
+            core.info('Removed Usernames:', removedUsernames);
+            core.info(`ADDED_USERNAMES=${addedUsernames.join(', ')}`);
+            core.info(`REMOVED_USERNAMES=${removedUsernames.join(', ')}`);
+
+            // Update MAINTAINERS.yaml
+            const maintainersFile = './community/MAINTAINERS.yaml';
+            const maintainers = yaml.safeLoad(fs.readFileSync(maintainersFile, 'utf8'));
+
+
+            // Update for added usernames
+            for (const username of addedUsernames) {
+              // Exclude bot accounts
+              if (username === 'asyncapi-bot' || username === 'asyncapi-bot-eve') {
+                core.info('Skipping bot account:', username);
+                continue; // Skip the iteration for bot accounts
+              }
+
+              const maintainer = maintainers.find(maintainer => maintainer.github === username.toLowerCase());
+              if (!maintainer) {
+                const { data } = await github.rest.users.getByUsername({ username });
+                const twitterUsername = data.twitter_username;
+                const newMaintainer = {
+                  github: username,
+                  isTscMember: false,
+                  repos: [repoName]
+                };
+                if (twitterUsername) {
+                  newMaintainer.twitter = twitterUsername;
+                }
+                maintainers.push(newMaintainer);
+                core.info('Added maintainer:', username);
+              } else {
+                // If the maintainer already exists, check if the current repo is in their list
+                if (!maintainer.repos.includes(repoName)) {
+                  maintainer.repos.push(repoName);
+                  core.info('Added repository to existing maintainer:', username);
+                } else {
+                  core.info(`Maintainer ${username} already exists and already has the repo. Skipping addition.`);
+                }
+              }
+            }
+
+            // Update for removed usernames
+            for (const username of removedUsernames) {
+              const index = maintainers.findIndex(maintainer => maintainer.github === username);
+              if (index !== -1) {
+                const maintainer = maintainers[index];
+                const repoIndex = maintainer.repos.findIndex(repo => repo === repoName);
+
+                if (repoIndex !== -1) {
+                  maintainer.repos.splice(repoIndex, 1);
+                  core.info(`Removed repository ${repoName} from maintainer ${username}`);
+                  if (maintainer.repos.length === 0) {
+                    maintainers.splice(index, 1);
+                    core.info(`Removed maintainer ${username} as they have no other repositories`);
+                  }
+                } else {
+                  core.info(`Repository ${repoName} not found for maintainer ${username}`);
+                }
+              } else {
+                core.info(`Maintainer ${username} does not exist. Skipping removal.`);
+              }
+            }
+
+            // Write updated MAINTAINERS.yaml file
+            const updatedMaintainers = yaml.safeDump(maintainers);
+            fs.writeFileSync(maintainersFile, updatedMaintainers);
+            core.info('Updated MAINTAINERS.yaml:', updatedMaintainers);
+
+      - name: Create new branch
+        working-directory: ./community
+        run: |
+          git checkout -b update-maintainers-${{ github.run_id }}
+
+      - name: Commit and push
+        working-directory: ./community
+        run: |
+          git config --global user.email "info@asyncapi.io"
+          git config --global user.name "asyncapi-bot"
+          git add .
+          git commit -m "Update MAINTAINERS.yaml"
+          git push https://${{ env.GITHUB_TOKEN }}@github.com/asyncapi/community
+
+      - name: Create PR
+        working-directory: ./community
+        run: |
+          gh pr create --title "docs(community): update latest maintainers list" --body "Updated Maintainers list is available and this PR introduces changes with latest information about Maintainers" --head update-maintainers-${{ github.run_id }}
+
+
+      - name: Report workflow run status to Slack
+        if: failure() # Only, on failure, send a message on the slack channel
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_CI_FAIL_NOTIFY }}
+          SLACK_TITLE: 🚨 Update maintainers list action failed 🚨
+          SLACK_MESSAGE: Failed to update the maintainers list.
+          MSG_MINIMAL: true

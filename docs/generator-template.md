@@ -85,7 +85,7 @@ The **package.json** file is used to define the dependencies for your template. 
   "description": "A template that generates a Python MQTT client using MQTT.",
   "generator": {
     "renderer": "react",
-    "apiVersion": "v2",
+    "apiVersion": "v1",
     "generator": ">=1.10.0 <2.0.0",
     "supportedProtocols": ["mqtt"]
   },

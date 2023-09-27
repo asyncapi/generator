@@ -272,6 +272,7 @@ describe('Generator', () => {
     it('calls this.generate', async () => {
       const gen = new Generator('testTemplate', __dirname);
       gen.generate = generateMock;
+      //NOSONAR
       await gen.generateFromString(dummyYAML);
 
       expect(generateMock).toHaveBeenCalled();
@@ -280,12 +281,14 @@ describe('Generator', () => {
     it('fails if asyncapiString is not provided', async () => {
       const gen = new Generator('testTemplate', __dirname);
       gen.generate = generateMock;
+      //NOSONAR
       expect(() => gen.generateFromString()).rejects.toThrow('Parameter "asyncapiString" must be a non-empty string.');
     });
 
     it('fails if asyncapiString is not a string', async () => {
       const gen = new Generator('testTemplate', __dirname);
       gen.generate = generateMock;
+      //NOSONAR
       expect(() => gen.generateFromString(1)).rejects.toThrow('Parameter "asyncapiString" must be a non-empty string.');
     });
   });

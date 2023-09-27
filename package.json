@@ -1,6 +1,6 @@
 {
   "name": "@asyncapi/generator",
-  "version": "1.11.0",
+  "version": "1.12.0",
   "description": "The AsyncAPI generator. It can generate documentation, code, anything!",
   "main": "./lib/generator.js",
   "bin": {
@@ -48,12 +48,9 @@
   "license": "Apache-2.0",
   "homepage": "https://github.com/asyncapi/generator",
   "dependencies": {
-    "@asyncapi/avro-schema-parser": "^3.0.3",
-    "@asyncapi/generator-react-sdk": "^1.0.0",
-    "@asyncapi/openapi-schema-parser": "^3.0.4",
-    "@asyncapi/parser": "^2.1.0",
-    "@asyncapi/raml-dt-schema-parser": "^4.0.4",
-    "@asyncapi/protobuf-schema-parser": "3.0.0",
+    "@asyncapi/generator-react-sdk": "^0.2.23",
+    "@asyncapi/parser": "2.1.0",
+    "@smoya/multi-parser": "3.0.0",
     "@npmcli/arborist": "^2.2.4",
     "ajv": "^8.12.0",
     "chokidar": "^3.4.0",

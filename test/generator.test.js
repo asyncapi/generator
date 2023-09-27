@@ -260,6 +260,11 @@ describe('Generator', () => {
       expect(templateConfigValidator.validateTemplateConfig).toHaveBeenCalled();
       expect(gen.launchHook).toHaveBeenCalledWith('generate:after');
     });
+
+    it('fails if input is not a string nor a parsed AsyncAPI document', async () => {
+      const gen = new Generator('testTemplate', __dirname);
+      expect(() => gen.generate(1)).rejects.toThrow('Parameter "asyncapiDocument" must be a non-empty string or an already parsed AsyncAPI document');
+    });
   });
 
   describe('#generateFromString', () => {

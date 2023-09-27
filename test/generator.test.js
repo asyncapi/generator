@@ -245,6 +245,21 @@ describe('Generator', () => {
       expect(gen.renderString).toHaveBeenCalledTimes(0);
       expect(gen.generateDirectoryStructure).toHaveBeenCalledTimes(0);
     });
+
+    it('should be able to generate with string inputs', async () => {
+      const gen = new Generator('testTemplate', __dirname);
+
+      mockMethods(gen);
+      await gen.generate(dummyYAML);
+
+      expect(xfsMock.mkdirpSync).toHaveBeenCalledWith(__dirname);
+      expect(gen.installTemplate).toHaveBeenCalledWith(false);
+      expect(gen.configureTemplate).toHaveBeenCalled();
+      expect(hooksRegistry.registerHooks).toHaveBeenCalled();
+      expect(filtersRegistry.registerFilters).toHaveBeenCalled();
+      expect(templateConfigValidator.validateTemplateConfig).toHaveBeenCalled();
+      expect(gen.launchHook).toHaveBeenCalledWith('generate:after');
+    });
   });
 
   describe('#generateFromString', () => {
@@ -254,7 +269,7 @@ describe('Generator', () => {
       generateMock = jest.fn().mockResolvedValue();
     });
 
-    it('calls parser.parse and this.generate', async () => {
+    it('calls this.generate', async () => {
       const gen = new Generator('testTemplate', __dirname);
       gen.generate = generateMock;
       await gen.generateFromString(dummyYAML);
@@ -272,13 +287,6 @@ describe('Generator', () => {
       const gen = new Generator('testTemplate', __dirname);
       gen.generate = generateMock;
       expect(() => gen.generateFromString(1)).rejects.toThrow('Parameter "asyncapiString" must be a non-empty string.');
-    });
-
-    it('stores the original asyncapi document', async () => {
-      const gen = new Generator('testTemplate', __dirname);
-      gen.generate = generateMock;
-      await gen.generateFromString(dummyYAML);
-      expect(gen.originalAsyncAPI).toBe(dummyYAML);
     });
   });
 
@@ -306,7 +314,7 @@ describe('Generator', () => {
       const utils = require('../lib/utils');
       const asyncapiURL = 'http://example.com/fake-asyncapi.yml';
       utils.__contentOfFetchedFile = 'fake text';
-      
+
       const generateFromStringMock = jest.fn().mockResolvedValue();
       const gen = new Generator('testTemplate', __dirname);
       gen.generateFromString = generateFromStringMock;

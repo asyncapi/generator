@@ -99,7 +99,7 @@ describe('Template Configuration Validator', () => {
         }
       }
     };
-    expect(() => validateTemplateConfig(templateConfig, templateParams, asyncapiDocument)).toThrow('This template doesn\'t have the following params: tsets.\nDid you mean \"test\" instead of \"tsets\"?');
+    expect(() => validateTemplateConfig(templateConfig, templateParams, asyncapiDocument)).toThrow('This template doesn\'t have the following params: tsets.\nDid you mean "test" instead of "tsets"?');
   });
 
   it('Validation throw error if provided param is not supported by the template as template has no params specified', () => {
@@ -186,7 +186,7 @@ describe('Template Configuration Validator', () => {
       }
     };
 
-    expect(() => validateTemplateConfig(templateConfig, templateParams, asyncapiDocument)).toThrow('Server \"dummy-mqtt\" uses the mqtt protocol but this template only supports the following ones: myprotocol.');
+    expect(() => validateTemplateConfig(templateConfig, templateParams, asyncapiDocument)).toThrow('Server "dummy-mqtt" uses the mqtt protocol but this template only supports the following ones: myprotocol.');
   });
 
   describe('should work with v2 apiVersion', () => {
@@ -196,6 +196,8 @@ describe('Template Configuration Validator', () => {
       const { document } = await parse(dummyYAML, {}, {templateConfig: {apiVersion: 'v2'}});
       asyncapiDocument = document;
     });
+
+    // eslint-disable-next-line sonarjs/no-identical-functions
     it('Validation throw error if specified server is not in asyncapi document', () => {
       const templateParams = {
         server: 'myserver'
@@ -211,6 +213,7 @@ describe('Template Configuration Validator', () => {
       expect(() => validateTemplateConfig(templateConfig, templateParams, asyncapiDocument)).toThrow('Couldn\'t find server with name myserver.');
     });
 
+    // eslint-disable-next-line sonarjs/no-identical-functions
     it('Validation throw error if given protocol is not supported by template', () => {
       const templateParams = {
         server: 'dummy-mqtt'
@@ -224,7 +227,7 @@ describe('Template Configuration Validator', () => {
         }
       };
 
-      expect(() => validateTemplateConfig(templateConfig, templateParams, asyncapiDocument)).toThrow('Server \"dummy-mqtt\" uses the mqtt protocol but this template only supports the following ones: myprotocol.');
+      expect(() => validateTemplateConfig(templateConfig, templateParams, asyncapiDocument)).toThrow('Server "dummy-mqtt" uses the mqtt protocol but this template only supports the following ones: myprotocol.');
     });
   });
 });

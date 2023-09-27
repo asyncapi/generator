@@ -297,15 +297,15 @@ describe('Generator', () => {
       utils.__files = {
         [filePath]: 'test content',
       };
-      const generateFromStringMock = jest.fn().mockResolvedValue();
+      const generateMock = jest.fn().mockResolvedValue();
       const gen = new Generator('testTemplate', __dirname);
-      gen.generateFromString = generateFromStringMock;
+      gen.generate = generateMock;
       await gen.generateFromFile(filePath);
       expect(utils.readFile).toHaveBeenCalled();
       expect(utils.readFile.mock.calls[0][0]).toBe(filePath);
       expect(utils.readFile.mock.calls[0][1]).toStrictEqual({ encoding: 'utf8' });
-      expect(generateFromStringMock.mock.calls[0][0]).toBe('test content');
-      expect(generateFromStringMock.mock.calls[0][1]).toStrictEqual({ path: filePath });
+      expect(generateMock.mock.calls[0][0]).toBe('test content');
+      expect(generateMock.mock.calls[0][1]).toStrictEqual({ path: filePath });
     });
   });
 
@@ -315,13 +315,13 @@ describe('Generator', () => {
       const asyncapiURL = 'http://example.com/fake-asyncapi.yml';
       utils.__contentOfFetchedFile = 'fake text';
 
-      const generateFromStringMock = jest.fn().mockResolvedValue();
+      const generateMock = jest.fn().mockResolvedValue();
       const gen = new Generator('testTemplate', __dirname);
-      gen.generateFromString = generateFromStringMock;
+      gen.generate = generateMock;
       await gen.generateFromURL(asyncapiURL);
       expect(utils.fetchSpec).toHaveBeenCalled();
       expect(utils.fetchSpec.mock.calls[0][0]).toBe(asyncapiURL);
-      expect(generateFromStringMock.mock.calls[0][0]).toBe('fake text');
+      expect(generateMock.mock.calls[0][0]).toBe('fake text');
     });
   });
 

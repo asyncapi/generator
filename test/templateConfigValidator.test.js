@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-duplicate-string */
 const { validateTemplateConfig } = require('../lib/templateConfigValidator');
 const fs = require('fs');
 const path = require('path');
@@ -10,7 +11,7 @@ describe('Template Configuration Validator', () => {
   let asyncapiDocument;
 
   beforeAll(async () => {
-    const { document } = await parse(dummyYAML, {}, {templateConfig: {apiVersion: 'v2'}});
+    const { document } = await parse(dummyYAML, {}, {templateConfig: {}});
     asyncapiDocument = document;
   });
 
@@ -189,20 +190,20 @@ describe('Template Configuration Validator', () => {
     expect(() => validateTemplateConfig(templateConfig, templateParams, asyncapiDocument)).toThrow('Server "dummy-mqtt" uses the mqtt protocol but this template only supports the following ones: myprotocol.');
   });
 
-  describe('should work with v2 apiVersion', () => {
+  describe('should work with v1 apiVersion', () => {
     let asyncapiDocument;
-
+    const v2TemplateConfig = {apiVersion: 'v1'};
     beforeAll(async () => {
-      const { document } = await parse(dummyYAML, {}, {templateConfig: {apiVersion: 'v2'}});
+      const { document } = await parse(dummyYAML, {}, {templateConfig: v2TemplateConfig});
       asyncapiDocument = document;
     });
 
-    // eslint-disable-next-line sonarjs/no-identical-functions
     it('Validation throw error if specified server is not in asyncapi document', () => {
       const templateParams = {
         server: 'myserver'
       };
       const templateConfig  = {
+        ...v2TemplateConfig,
         parameters: {
           server: {
             description: ''
@@ -213,12 +214,54 @@ describe('Template Configuration Validator', () => {
       expect(() => validateTemplateConfig(templateConfig, templateParams, asyncapiDocument)).toThrow('Couldn\'t find server with name myserver.');
     });
 
-    // eslint-disable-next-line sonarjs/no-identical-functions
     it('Validation throw error if given protocol is not supported by template', () => {
       const templateParams = {
         server: 'dummy-mqtt'
       };
       const templateConfig  = {
+        ...v2TemplateConfig,
+        supportedProtocols: ['myprotocol'],
+        parameters: {
+          server: {
+            description: ''
+          }
+        }
+      };
+
+      expect(() => validateTemplateConfig(templateConfig, templateParams, asyncapiDocument)).toThrow('Server "dummy-mqtt" uses the mqtt protocol but this template only supports the following ones: myprotocol.');
+    });
+  });
+
+  describe('should work with v2 apiVersion', () => {
+    let asyncapiDocument;
+    const v2TemplateConfig = {apiVersion: 'v2'};
+    beforeAll(async () => {
+      const { document } = await parse(dummyYAML, {}, {templateConfig: v2TemplateConfig});
+      asyncapiDocument = document;
+    });
+
+    it('Validation throw error if specified server is not in asyncapi document', () => {
+      const templateParams = {
+        server: 'myserver'
+      };
+      const templateConfig  = {
+        ...v2TemplateConfig,
+        parameters: {
+          server: {
+            description: ''
+          }
+        }
+      };
+
+      expect(() => validateTemplateConfig(templateConfig, templateParams, asyncapiDocument)).toThrow('Couldn\'t find server with name myserver.');
+    });
+
+    it('Validation throw error if given protocol is not supported by template', () => {
+      const templateParams = {
+        server: 'dummy-mqtt'
+      };
+      const templateConfig  = {
+        ...v2TemplateConfig,
         supportedProtocols: ['myprotocol'],
         parameters: {
           server: {

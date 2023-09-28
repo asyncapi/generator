@@ -259,6 +259,7 @@ describe('Generator', () => {
       expect(filtersRegistry.registerFilters).toHaveBeenCalled();
       expect(templateConfigValidator.validateTemplateConfig).toHaveBeenCalled();
       expect(gen.launchHook).toHaveBeenCalledWith('generate:after');
+      expect(gen.originalAsyncAPI).toBe(dummyYAML);
     });
 
     it('fails if input is not a string nor a parsed AsyncAPI document', async () => {

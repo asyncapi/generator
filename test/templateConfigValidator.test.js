@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-identical-functions */
 /* eslint-disable sonarjs/no-duplicate-string */
 const { validateTemplateConfig } = require('../lib/templateConfigValidator');
 const fs = require('fs');

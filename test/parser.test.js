@@ -8,21 +8,21 @@ describe('Parser', () => {
   describe('sanitizeTemplateApiVersion', () => {
     it('should return version number when given `v2` syntax', () => {
       const rawVersion = 'v2';
-      const expectedVersion = '2';
+      const expectedVersion = 2;
       const sanitizedVersion = sanitizeTemplateApiVersion(rawVersion);
 
       expect(sanitizedVersion).toStrictEqual(expectedVersion);
     });
     it('should return version number when given `v1` syntax', () => {
       const rawVersion = 'v1';
-      const expectedVersion = '1';
+      const expectedVersion = 1;
       const sanitizedVersion = sanitizeTemplateApiVersion(rawVersion);
 
       expect(sanitizedVersion).toStrictEqual(expectedVersion);
     });
     it('should return version number when given `1` syntax', () => {
       const rawVersion = '1';
-      const expectedVersion = '1';
+      const expectedVersion = 1;
       const sanitizedVersion = sanitizeTemplateApiVersion(rawVersion);
 
       expect(sanitizedVersion).toStrictEqual(expectedVersion);

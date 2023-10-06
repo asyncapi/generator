@@ -29,6 +29,10 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
+      # This workflow triggers on GitHub Release, but it may start before the npm package is published.
+      - name: Sleep for 1s seconds
+        run: sleep 1s
+
       - name: Build Image
         uses: docker/build-push-action@v4
         with:

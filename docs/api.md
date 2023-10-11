@@ -26,7 +26,15 @@ Reference API documentation for AsyncAPI Generator library.
         * [.hooks](#Generator+hooks) : `Object`
         * [.mapBaseUrlToFolder](#Generator+mapBaseUrlToFolder) : `Object`
         * [.templateParams](#Generator+templateParams) : `Object`
-        * [.generate(asyncapiDocument, [parseOptions])](#Generator+generate) ⇒ `Promise`
+        * [.generate(asyncapiDocument, [parseOptions])](#Generator+generate) ⇒ `Promise.<void>`
+        * [.validateAsyncAPIDocument(asyncapiDocument)](#Generator+validateAsyncAPIDocument)
+        * [.setupOutput()](#Generator+setupOutput)
+        * [.setupFSOutput()](#Generator+setupFSOutput) ⇒ `Promise.<void>`
+        * [.setLogLevel()](#Generator+setLogLevel) ⇒ `void`
+        * [.installAndSetupTemplate()](#Generator+installAndSetupTemplate) ⇒ `Promise.<{templatePkgName: string, templatePkgPath: string}>`
+        * [.configureTemplateWorkflow(parseOptions)](#Generator+configureTemplateWorkflow) ⇒ `Promise.<void>`
+        * [.handleEntrypoint()](#Generator+handleEntrypoint) ⇒ `Promise.<void>`
+        * [.executeAfterHook()](#Generator+executeAfterHook) ⇒ `Promise.<void>`
         * [.parseInput()](#Generator+parseInput)
         * [.configureTemplate()](#Generator+configureTemplate)
         * ~~[.generateFromString(asyncapiString, [parseOptions])](#Generator+generateFromString) ⇒ `Promise`~~
@@ -169,11 +177,19 @@ The template parameters. The structure for this object is based on each individu
 Generates files from a given template and an AsyncAPIDocument object.
 
 **Kind**: instance method of [`Generator`](#Generator)  
+**Returns**: `Promise.<void>` - A Promise that resolves when the generation is completed.  
 **Params**
 
 - asyncapiDocument `AsyncAPIDocument` | `string` - AsyncAPIDocument object to use as source.
-- [parseOptions] `Object` ` = {}` - AsyncAPI Parser parse options. Check out [@asyncapi/parser](https://www.github.com/asyncapi/parser-js) for more information. Remember to use the right options to the right parser depending on the template you are using.
+- [parseOptions] `Object` ` = {}` - AsyncAPI Parser parse options.
+  Check out [@asyncapi/parser](https://www.github.com/asyncapi/parser-js) for more information.
+  Remember to use the right options for the right parser depending on the template you are using.
 
+**Example**  
+```js
+await generator.generate(myAsyncAPIdocument);
+console.log('Done!');
+```
 **Example**  
 ```js
 generator
@@ -192,6 +208,118 @@ try {
   console.error(e);
 }
 ```
+
+<a name="Generator+validateAsyncAPIDocument"></a>
+
+### generator.validateAsyncAPIDocument
+Validates the provided AsyncAPI document.
+
+**Kind**: instance method of [`Generator`](#Generator)  
+**Throws**:
+
+- `Error` Throws an error if the document is not valid.
+
+**Since**: 10/9/2023 - 4:26:33 PM  
+**Params**
+
+- asyncapiDocument `*` - The AsyncAPI document to be validated.
+
+
+<a name="Generator+setupOutput"></a>
+
+* generator.setupOutput()** :
+Sets up the output configuration based on the specified output type.
+
+**Kind**: instance method of [`Generator`](#Generator)  
+**Throws**:
+
+- `Error` If 'output' is set to 'string' without providing 'entrypoint'.
+
+**Example**  
+```js
+const generator = new Generator();
+generator.setupOutput();
+```
+
+<a name="Generator+setupFSOutput"></a>
+
+* generator.setupFSOutput() ⇒ `Promise.<void>`** :
+Sets up the file system (FS) output configuration.
+
+This function creates the target directory if it does not exist and verifies
+the target directory if forceWrite is not enabled.
+
+**Kind**: instance method of [`Generator`](#Generator)  
+**Returns**: `Promise.<void>` - A promise that fulfills when the setup is complete.  
+**Throws**:
+
+- `Error` If verification of the target directory fails and forceWrite is not enabled.
+
+
+<a name="Generator+setLogLevel"></a>
+
+* generator.setLogLevel() ⇒ `void`** :
+Sets the log level based on the debug option.
+
+If the debug option is enabled, the log level is set to 'debug'.
+
+**Kind**: instance method of [`Generator`](#Generator)  
+
+<a name="Generator+installAndSetupTemplate"></a>
+
+* generator.installAndSetupTemplate() ⇒ `Promise.<{templatePkgName: string, templatePkgPath: string}>`** :
+Installs and sets up the template for code generation.
+
+This function installs the specified template using the provided installation option,
+sets up the necessary directory paths, loads the template configuration, and returns
+information about the installed template.
+
+**Kind**: instance method of [`Generator`](#Generator)  
+**Returns**: `Promise.<{templatePkgName: string, templatePkgPath: string}>` - A promise that resolves to an object containing the name and path of the installed template.  
+
+<a name="Generator+configureTemplateWorkflow"></a>
+
+### generator.configureTemplateWorkflow
+Configures the template workflow based on provided parsing options.
+
+This function performs the following steps:
+1. Parses the input AsyncAPI document using the specified parse options.
+2. Validates the template configuration and parameters.
+3. Configures the template based on the parsed AsyncAPI document.
+4. Registers filters, hooks, and launches the 'generate:before' hook if applicable.
+
+**Kind**: instance method of [`Generator`](#Generator)  
+**Returns**: `Promise.<void>` - A promise that resolves when the configuration is completed.  
+**Params**
+
+- parseOptions `*` - Options for parsing the AsyncAPI document.
+
+
+<a name="Generator+handleEntrypoint"></a>
+
+* generator.handleEntrypoint() ⇒ `Promise.<void>`** :
+Handles the logic for the template entrypoint.
+
+If an entrypoint is specified:
+- Resolves the absolute path of the entrypoint file.
+- Throws an error if the entrypoint file doesn't exist.
+- Generates a file or renders content based on the output type.
+- Launches the 'generate:after' hook if the output is 'fs'.
+
+If no entrypoint is specified, generates the directory structure.
+
+**Kind**: instance method of [`Generator`](#Generator)  
+**Returns**: `Promise.<void>` - A promise that resolves when the entrypoint logic is completed.  
+
+<a name="Generator+executeAfterHook"></a>
+
+* generator.executeAfterHook() ⇒ `Promise.<void>`** :
+Executes the 'generate:after' hook.
+
+Launches the after-hook to perform additional actions after code generation.
+
+**Kind**: instance method of [`Generator`](#Generator)  
+**Returns**: `Promise.<void>` - A promise that resolves when the after-hook execution is completed.  
 
 <a name="Generator+parseInput"></a>
 

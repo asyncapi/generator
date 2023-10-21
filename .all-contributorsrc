@@ -158,8 +158,18 @@
         "maintenance",
         "talk"
       ]
+    },
+    {
+      "login": "swastiksuvam55",
+      "name": "swastik suvam singh",
+      "avatar_url": "https://avatars.githubusercontent.com/u/90003260?v=4",
+      "profile": "https://github.com/swastiksuvam55",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 3,
-  "skipCi": false
+  "skipCi": false,
+  "commitType": "docs"
 }

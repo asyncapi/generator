@@ -6,9 +6,9 @@ const dummyV3Document = fs.readFileSync(path.resolve(__dirname, './docs/dummyV3.
 
 describe('Parser', () => {
   describe('sanitizeTemplateApiVersion', () => {
-    it('should return version number when given `v2` syntax', () => {
-      const rawVersion = 'v2';
-      const expectedVersion = 2;
+    it('should return version number when given `v99` syntax', () => {
+      const rawVersion = 'v99';
+      const expectedVersion = 99;
       const sanitizedVersion = sanitizeTemplateApiVersion(rawVersion);
 
       expect(sanitizedVersion).toStrictEqual(expectedVersion);
@@ -45,6 +45,14 @@ describe('Parser', () => {
 
       expect(isUsingNewAPI).toStrictEqual(true);
     });
+    it('should use new parser api if v3', () => {
+      const templateConfig = {
+        apiVersion: 'v3'
+      };
+      const isUsingNewAPI = usesNewAPI(templateConfig);
+
+      expect(isUsingNewAPI).toStrictEqual(true);
+    });
     it('should not use new API if no apiVersion', () => {
       const templateConfig = { };
       const isUsingNewAPI = usesNewAPI(templateConfig);
@@ -65,6 +73,12 @@ describe('Parser', () => {
       expect(parsedDocument).toBeDefined();
       expect(parsedDocument.document.version()).toEqual('2.3.0');
     });
+    it('should be able to parse AsyncAPI v2 document for parser API v3', async () => {
+      const parsedDocument = await parse(dummyV2Document, {}, {templateConfig: {apiVersion: 'v3'}});
+
+      expect(parsedDocument).toBeDefined();
+      expect(parsedDocument.document.version()).toEqual('2.3.0');
+    });
     it('should not be able to parse AsyncAPI v3 document for parser API v1', async () => {
       const parsedDocument = await parse(dummyV3Document, {}, {templateConfig: {apiVersion: 'v1'}});
 
@@ -79,6 +93,12 @@ describe('Parser', () => {
     });
     it('should be able to parse AsyncAPI v3 document for parser API v2', async () => {
       const parsedDocument = await parse(dummyV3Document, {}, {templateConfig: {apiVersion: 'v2'}});
+
+      expect(parsedDocument).toBeDefined();
+      expect(parsedDocument.document.version()).toEqual('3.0.0');
+    });
+    it('should be able to parse AsyncAPI v3 document for parser API v3', async () => {
+      const parsedDocument = await parse(dummyV3Document, {}, {templateConfig: {apiVersion: 'v3'}});
 
       expect(parsedDocument).toBeDefined();
       expect(parsedDocument.document.version()).toEqual('3.0.0');

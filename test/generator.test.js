@@ -245,6 +245,27 @@ describe('Generator', () => {
       expect(gen.renderString).toHaveBeenCalledTimes(0);
       expect(gen.generateDirectoryStructure).toHaveBeenCalledTimes(0);
     });
+
+    it('should be able to generate with string inputs', async () => {
+      const gen = new Generator('testTemplate', __dirname);
+
+      mockMethods(gen);
+      await gen.generate(dummyYAML);
+
+      expect(xfsMock.mkdirpSync).toHaveBeenCalledWith(__dirname);
+      expect(gen.installTemplate).toHaveBeenCalledWith(false);
+      expect(gen.configureTemplate).toHaveBeenCalled();
+      expect(hooksRegistry.registerHooks).toHaveBeenCalled();
+      expect(filtersRegistry.registerFilters).toHaveBeenCalled();
+      expect(templateConfigValidator.validateTemplateConfig).toHaveBeenCalled();
+      expect(gen.launchHook).toHaveBeenCalledWith('generate:after');
+      expect(gen.originalAsyncAPI).toBe(dummyYAML);
+    });
+
+    it('fails if input is not a string nor a parsed AsyncAPI document', async () => {
+      const gen = new Generator('testTemplate', __dirname);
+      expect(() => gen.generate(1)).rejects.toThrow('Parameter "asyncapiDocument" must be a non-empty string or an already parsed AsyncAPI document');
+    });
   });
 
   describe('#generateFromString', () => {
@@ -254,7 +275,7 @@ describe('Generator', () => {
       generateMock = jest.fn().mockResolvedValue();
     });
 
-    it('calls parser.parse and this.generate', async () => {
+    it('calls this.generate', async () => {
       const gen = new Generator('testTemplate', __dirname);
       gen.generate = generateMock;
       await gen.generateFromString(dummyYAML);
@@ -273,13 +294,6 @@ describe('Generator', () => {
       gen.generate = generateMock;
       expect(() => gen.generateFromString(1)).rejects.toThrow('Parameter "asyncapiString" must be a non-empty string.');
     });
-
-    it('stores the original asyncapi document', async () => {
-      const gen = new Generator('testTemplate', __dirname);
-      gen.generate = generateMock;
-      await gen.generateFromString(dummyYAML);
-      expect(gen.originalAsyncAPI).toBe(dummyYAML);
-    });
   });
 
   describe('#generateFromFile', () => {
@@ -289,15 +303,15 @@ describe('Generator', () => {
       utils.__files = {
         [filePath]: 'test content',
       };
-      const generateFromStringMock = jest.fn().mockResolvedValue();
+      const generateMock = jest.fn().mockResolvedValue();
       const gen = new Generator('testTemplate', __dirname);
-      gen.generateFromString = generateFromStringMock;
+      gen.generate = generateMock;
       await gen.generateFromFile(filePath);
       expect(utils.readFile).toHaveBeenCalled();
       expect(utils.readFile.mock.calls[0][0]).toBe(filePath);
       expect(utils.readFile.mock.calls[0][1]).toStrictEqual({ encoding: 'utf8' });
-      expect(generateFromStringMock.mock.calls[0][0]).toBe('test content');
-      expect(generateFromStringMock.mock.calls[0][1]).toStrictEqual({ path: filePath });
+      expect(generateMock.mock.calls[0][0]).toBe('test content');
+      expect(generateMock.mock.calls[0][1]).toStrictEqual({ path: filePath });
     });
   });
 
@@ -306,14 +320,14 @@ describe('Generator', () => {
       const utils = require('../lib/utils');
       const asyncapiURL = 'http://example.com/fake-asyncapi.yml';
       utils.__contentOfFetchedFile = 'fake text';
-      
-      const generateFromStringMock = jest.fn().mockResolvedValue();
+
+      const generateMock = jest.fn().mockResolvedValue();
       const gen = new Generator('testTemplate', __dirname);
-      gen.generateFromString = generateFromStringMock;
+      gen.generate = generateMock;
       await gen.generateFromURL(asyncapiURL);
       expect(utils.fetchSpec).toHaveBeenCalled();
       expect(utils.fetchSpec.mock.calls[0][0]).toBe(asyncapiURL);
-      expect(generateFromStringMock.mock.calls[0][0]).toBe('fake text');
+      expect(generateMock.mock.calls[0][0]).toBe('fake text');
     });
   });
 

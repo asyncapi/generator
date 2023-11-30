@@ -1,3 +1,5 @@
+ARG ASYNCAPI_GENERATOR_VERSION=1.10.9
+
 FROM node:14-alpine
 
 WORKDIR /app
@@ -14,6 +16,6 @@ RUN apk --update add git chromium && \
     rm /var/cache/apk/*
 
 # Installing latest released npm package
-RUN npm install -g @asyncapi/generator
+RUN npm install -g @asyncapi/generator@$ASYNCAPI_GENERATOR_VERSION
 
 ENTRYPOINT [ "ag" ]

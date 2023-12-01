@@ -68,7 +68,7 @@ const channelNames = asyncAPIDocument.channelNames();
 const messages = asyncAPIDocument.allMessages();
 ```
 
-> The Parser gives you access to a number of these [helper functions](https://github.com/asyncapi/parser-js/blob/master/API.md) that you can implement to access the contents of your AsyncAPI document.
+> The Parser gives you access to a number of these [helper functions](https://github.com/asyncapi/parser-api/blob/master/docs/api.md) that you can implement to access the contents of your AsyncAPI document.
 
 ## AsyncAPI document validation process
 

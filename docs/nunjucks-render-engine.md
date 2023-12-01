@@ -11,7 +11,7 @@ weight: 120
 1. Templates may contain `partials` (reusable chunks). They must be stored in the `.partials` directory under the template directory. [Read more about partials](#partials).
 1. Templates may contain multiple files. Unless stated otherwise, all files will be rendered.
 1. The default variables you have access to in any the template file are the following:
-   - `asyncapi` that is a parsed spec file object. Read the [API](https://github.com/asyncapi/parser-js/blob/master/API.md#AsyncAPIDocument) of the Parser to understand what structure you have access to in this parameter.
+   - `asyncapi` that is a parsed spec file object. Read the [API](https://github.com/asyncapi/parser-api/blob/master/docs/api.md#asyncapidocument) of the Parser to understand what structure you have access to in this parameter.
    - `originalAsyncAPI` that is an original spec file before it is parsed. 
    - `params` that contain the parameters provided when generating.
 

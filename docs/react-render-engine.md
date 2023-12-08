@@ -42,7 +42,7 @@ For further information about components, props, etc, see the [Generator React S
     - The file is not in the list of `nonRenderableFiles` in the template configuration
 1. New lines are automatically added after each `Text` component.
 1. The props you have access to in the rendering function are:
-   - `asyncapi` which is a parsed spec file object. Read the [API](https://github.com/asyncapi/parser-js/blob/master/API.md#AsyncAPIDocument) of the Parser to understand what structure you have access to in this parameter.
+   - `asyncapi` which is a parsed spec file object. Read the [API](https://github.com/asyncapi/parser-api/blob/master/docs/api.md#asyncapidocument) of the Parser to understand what structure you have access to in this parameter.
    - `originalAsyncAPI` which is an original spec file before it is parsed. 
    - `params` that contain the parameters provided when generating.
 1. All the file templates are supported where the variables are provided after the default props as listed above. 

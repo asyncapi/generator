@@ -1,0 +1,17 @@
+How to Fetch template from the private repository 
+
+* Starting creating local npm repositry in local using docker:
+
+`npm config set registry http://localhost:8081/repository/<repo-name>/`
+
+Refer to this article to understand how to configure properly registry: https://developer.entando.com/v6.1/tutorials/ecr/how-to-create-local-npm-registry.html 
+
+* Publishing the Template to the Repositry that is running in the docker. We can publish the [this](https://github.com/asyncapi/cli/tree/master/test/fixtures/minimaltemplate) template to the local npm using below command.
+
+`npm publish --registry=http://localhost:8081/repository/<repo-name>/`
+
+* Fetching the template from the private repositry that is running on docker.
+
+ ` const gen = new Generator('nameOfTestTemplate', __dirname, {debug: true, registry: {url: 'registryUrl', username: 'user', password: 'password', token: 'token'}});`
+      
+ ` await gen.installTemplate();`

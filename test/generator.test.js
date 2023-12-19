@@ -4,7 +4,6 @@ const path = require('path');
 const Generator = require('../lib/generator');
 const log = require('loglevel');
 const unixify = require('unixify');
-
 const dummyYAML = fs.readFileSync(path.resolve(__dirname, './docs/dummy.yml'), 'utf8');
 
 const logMessage = require('./../lib/logMessages.js');
@@ -316,8 +315,6 @@ describe('Generator', () => {
   });
 
   describe('#generateFromURL', () => {
-    let utils;
-
     it('calls fetch and generateFromString with the right params', async () => {
       const utils = require('../lib/utils');
       const asyncapiURL = 'http://example.com/fake-asyncapi.yml';
@@ -330,26 +327,6 @@ describe('Generator', () => {
       expect(utils.fetchSpec).toHaveBeenCalled();
       expect(utils.fetchSpec.mock.calls[0][0]).toBe(asyncapiURL);
       expect(generateMock.mock.calls[0][0]).toBe('fake text');
-    });
-
-    it('works with a path to registry', async () => {
-      log.debug = jest.fn();
-      const gen = new Generator('nameOfTestTemplate', __dirname, {debug: true, registry: {url: 'some.registry.com', username: 'user', password: 'password', token: 'token'}});
-      await gen.installTemplate();
-      setTimeout(() => { // This puts the call at the end of the Node.js event loop queue.
-        expect(arboristMock.reify).toHaveBeenCalledTimes(1);
-      }, 0);
-    
-    });
-
-    it('throws an error indicating an unexpected param was given for registry configuration', () => {
-      const t = () => new Generator('testTemplate', __dirname, {
-        registry: {
-          url: 'some.url.com',
-          privateKey: 'some.key'
-        }
-      });
-      expect(t).toThrow('These options are not supported by the generator to configure private registry: privateKey');
     });
   });
 
@@ -436,6 +413,25 @@ describe('Generator', () => {
       setTimeout(() => { // This puts the call at the end of the Node.js event loop queue.
         expect(arboristMock.reify).toHaveBeenCalledTimes(1);
       }, 0);
+    });
+
+    it('works with a path to registry', async () => {
+      log.debug = jest.fn();
+      const gen = new Generator('nameOfTestTemplate', __dirname, {debug: true, registry: {url: 'some.registry.com', username: 'user', password: 'password', token: 'token'}});
+      await gen.installTemplate();
+      setTimeout(() => { // This puts the call at the end of the Node.js event loop queue.
+        expect(arboristMock.reify).toHaveBeenCalledTimes(1);
+      });
+    });
+
+    it('throws an error indicating an unexpected param was given for registry configuration', () => {
+      const t = () => new Generator('testTemplate', __dirname, {
+        registry: {
+          url: 'some.url.com',
+          privateKey: 'some.key'
+        }
+      });
+      expect(t).toThrow('These options are not supported by the generator to configure private registry: privateKey');
     });
   });
 

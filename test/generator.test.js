@@ -316,6 +316,8 @@ describe('Generator', () => {
   });
 
   describe('#generateFromURL', () => {
+    let utils;
+
     it('calls fetch and generateFromString with the right params', async () => {
       const utils = require('../lib/utils');
       const asyncapiURL = 'http://example.com/fake-asyncapi.yml';
@@ -332,12 +334,12 @@ describe('Generator', () => {
 
     it('works with a path to registry', async () => {
       log.debug = jest.fn();
-      utils.__getTemplateDetails = undefined;
       const gen = new Generator('nameOfTestTemplate', __dirname, {debug: true, registry: {url: 'some.registry.com', username: 'user', password: 'password', token: 'token'}});
       await gen.installTemplate();
       setTimeout(() => { // This puts the call at the end of the Node.js event loop queue.
         expect(arboristMock.reify).toHaveBeenCalledTimes(1);
       }, 0);
+    
     });
 
     it('throws an error indicating an unexpected param was given for registry configuration', () => {
@@ -347,7 +349,7 @@ describe('Generator', () => {
           privateKey: 'some.key'
         }
       });
-      expect(t).toThrow('There invalid parameters were specified to configure private registry: privateKey');
+      expect(t).toThrow('These options are not supported by the generator to configure private registry: privateKey');
     });
   });
 

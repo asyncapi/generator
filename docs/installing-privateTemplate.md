@@ -16,8 +16,6 @@ Installing [verdaccio](https://verdaccio.org/) using below command:
 ![Screenshot 2023-12-20 at 3.23.17 PM](https://hackmd.io/_uploads/r1votVlDp.png)
 
 
-
-
 **Step 4:** Publishing a template to the private repository using below command:
 
 ```

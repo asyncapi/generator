@@ -16,11 +16,15 @@ Installing [verdaccio](https://verdaccio.org/) using below command:
 ![Screenshot 2023-12-20 at 3.23.17 PM](https://hackmd.io/_uploads/r1votVlDp.png)
 
 
+
+
 **Step 4:** Publishing a template to the private repository using below command:
 
 ```
 npm publish --registry </templateName>
 ```
+![image](https://hackmd.io/_uploads/SyD_OLeD6.png)
+
 
 **Step 5:** Fetching the template from the generator using an example.
 
@@ -29,4 +33,6 @@ const Generator = require('../lib/generator');
 const gen = new Generator('@asyncapi/nodejs-template','asycnapi.yml', __dirname, {debug: true, registry: {url: 'http://localhost:4873/', username: 'aayush', password: '123'}});
 gen.installTemplate()
 ```
-You will get complete template information
+You will get complete template information.
+
+![image](https://hackmd.io/_uploads/BkVNOLxvT.png)

@@ -5,7 +5,6 @@ weight: 80
 > **Note**
 > It is advised against attempting to manually template types and models from scratch using the AsyncAPI templating engines such as Nunjucks and React render engines. Instead, it is recommended to use [Modelina](generator/model-generation) a dedicated library for model generation.
 
-
 ## Minimum template requirements
 
 Let's break down the minimum template requirements: the `template` directory and a `package.json` file.

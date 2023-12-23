@@ -19,13 +19,16 @@ This tutorial builds upon an existing project, the [MQTT Python project](https:/
 
 You should also have [Node.js and npm](https://nodejs.org/en/download/) and the [AsyncAPI CLI](https://www.asyncapi.com/docs/tools/generator/installation-guide#asyncapi-cli) installed in your machine.
 
-> :memo: **Note:** When building the model from scratch, you'll need to have a predefined [AsyncAPI document](https://www.asyncapi.com/docs/tools/generator/asyncapi-document) and you can also use the existing [community-maintained templates](https://www.asyncapi.com/docs/tools/generator/template#generator-templates-list) instead of creating a template from scratch.
+> :memo: **Note:**
+> When building the model from scratch, you'll need to have a predefined [AsyncAPI document](https://www.asyncapi.com/docs/tools/generator/asyncapi-document) and you can also use the existing [community-maintained templates](https://www.asyncapi.com/docs/tools/generator/template#generator-templates-list) instead of creating a template from scratch.
 
 ## Getting started
 
 First, clone the MQTT Python project from Github using the following command:
 `git clone https://github.com/derberg/python-mqtt-client-template`
+
 Open the Python MQTT project in your code editor
+
 Then, add the Modelina dependency to the `package.json` file in your project:
 
  ```json
@@ -106,16 +109,19 @@ Using the AsyncAPI CLI, generate your model by running the following command:
 `asyncapi generate fromTemplate test/fixtures/asyncapi.yml ./ -o test/project --force-write --param server=dev`
 
 If successful, you should see the following output on your terminal:
-![](https://imgur.com/W2FGK1c.png)
+```
+Generation in progress. Keep calm and wait a bit... done
+Check out your shiny new generated files at test/project.
+```
 
 Since you defined your model in **src/models** the generated model schema will be in the **test/project -> src/models** directory.
 Navigate to **test/project** folder and you should see that your model template generated two models in the **src/models** folder.
 Let's break down the previous command:
 
-`asyncapi generate fromTemplate` is how you use AsyncAPI generator via the AsyncAPI CLI.
-`test/fixtures/asyncapi.yml`` points to your AsyncAPI document.
-`./` specifies the location of your model template.
-`-o` specifies where to output the generated data models.
+- `asyncapi generate fromTemplate` is how you use AsyncAPI generator via the AsyncAPI CLI.
+- `test/fixtures/asyncapi.yml` points to your AsyncAPI document.
+- `./` specifies the location of your model template.
+- `-o` specifies where to output the generated data models.
 
 ## Conclusion
 

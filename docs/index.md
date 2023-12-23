@@ -5,6 +5,8 @@ weight: 10
 
 The AsyncAPI generator is a tool that generates anything you want using the **[AsyncAPI Document](generator/asyncapi-document)** and **[Template](generator/template)** that are supplied as inputs to the AsyncAPI CLI. The generator was built with extensibility in mind; you can use the generator to generate anything you want, provided that it can be defined in a template, such as code, diagrams, markdown files, microservices, and applications. A number of [community-maintained templates](https://github.com/search?q=topic%3Aasyncapi+topic%3Agenerator+topic%3Atemplate) are now available for immediate usage.
 
+> :memo: **Note:**  To generate models/classes for your event-driven architecture apps, use [modelinna](generator/model-generation), which is supported in the AsyncAPI CLI, instead of using the AsyncAPI generator.
+
 ### Generator use cases 
 - Generation of interactive and understandable API documentation
 - Generation of APIs' client libraries
@@ -51,3 +53,8 @@ graph LR
   D --> K[Anything else]
   ```
 **`params`** are template-specific options passed to the `asyncapi generate fromTemplate` CLI command to customize the generated output.
+
+> **Remember:**
+If your primary goal is to generate models from an AsyncAPI document, it is recommended to use the [Modelina library](generator/model-generation). Modelina is specifically designed for model generation and provides utilities for working with the AsyncAPI document.
+However, if your requirements involve generating comprehensive documentation, code, and anything beyond models, it is advisable to use the AsyncAPI Generator.
+Choose the tool that best fits your specific use case: Modelina for model generation, and the AsyncAPI Generator for more extensive code and documentation generation.

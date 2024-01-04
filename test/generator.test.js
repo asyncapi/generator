@@ -426,10 +426,9 @@ describe('Generator', () => {
 
     it('throws an error indicating an unexpected param was given for registry configuration', () => {
       const t = () => new Generator('testTemplate', __dirname, {
-        registry: {
-          url: 'some.url.com',
-          privateKey: 'some.key'
-        }
+        url: 'some.url.com',
+        privateKey: 'some.key'
+        
       });
       expect(t).toThrow('These options are not supported by the generator: privateKey');
     });

@@ -1,8 +1,26 @@
 version: '3'
+
 services:
+  verdaccio:
+    image: verdaccio/verdaccio
+    container_name: 'verdaccio'
+    networks:
+      - node-network
+    environment:
+      - VERDACCIO_PORT=4873
+    ports:
+      - '4873:4873'
+    volumes:
+      - './storage:/verdaccio/storage'
+      - './config:/verdaccio/conf'
+      - './plugins:/verdaccio/plugins'
+
   test:
     privileged: true
-    image: "node:${NODE_IMAGE_TAG}"
+    image: "node:18"
     volumes:
       - ../../:/app
     command: bash /app/test/test-project/test.sh
+networks:
+  node-network:
+    driver: bridge

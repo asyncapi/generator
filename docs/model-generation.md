@@ -3,7 +3,9 @@ title: "Generating models and classes using Modelina"
 weight: 200
 ---
 
-Suppose you want to generate models for your application from the data types you have using the asyncapi generator. Then you should use Modelina instead of the asyncapi generator with a template.
+Use [AsyncAPI Modelina](/tools/modelina) to generate models for an application. Since models generation is something that you usually perform as an automated step through CI/CD, best way to use Modelina is through [AsyncAPI CLI](/tools/cli).
+
+In case you work on a template for generating an application and part of template responsibilities is to provide models, you should integrate Modelina library instead of templating model structures using features from AsyncAPI Generator.
 
 [Modelina](https://www.asyncapi.com/tools/modelina) is an AsyncAPI library that is used to generate data models using inputs such as AsyncAPI, OpenAPI or JSON schema inputs. This library helps generate data models based on your AsyncAPI document, the model template (which defines the message payloads) via the asyncapi CLI. You can then use the generated models in your code, and you can store the generated models in a single file. This tutorial will guide you through generating a model class for a Python MQTT client using Modelina and the AsyncAPI CLI.
 

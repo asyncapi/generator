@@ -19,7 +19,7 @@ In the following sections, you'll learn about the inner working of the generator
 1. The **Generator** receives the **AsyncAPI Document** as input.
 2. The **Generator** sends to the **[Parser](parser)** the **asyncapiString** is a stringified version of the original **AsyncAPI Document** to validate and parse it.
 3. The **Parser** validates the **AsyncAPI Document** using additional schema-related plugins, either the OpenAPI schema, RAML data types, or Avro schema.
-4. If the **Parser** determines that the **AsyncAPI Document** is valid, it manipulates the original JSON/YAML document and provides a set of helper functions in return, bundling them together into an **asyncapi** variable that is an instance of [**AsyncAPIDocument**](https://github.com/asyncapi/parser-js/blob/master/API.md#module_@asyncapi/parser+AsyncAPIDocument).
+4. If the **Parser** determines that the **AsyncAPI Document** is valid, it manipulates the original JSON/YAML document and provides a set of helper functions in return, bundling them together into an **asyncapi** variable that is an instance of [**AsyncAPIDocument**](https://github.com/asyncapi/parser-api/blob/master/docs/api.md#asyncapidocument).
 5. At this point, the **Generator** passes the **originalAsyncAPI** and the **asyncapi** which make up part of the **[Template Context](template-context)** to the **Render Engine**.
 6. The **Template Context** is accessible to the template files that are passed to either the [react](react-render-engine) or [nunjucks](nunjucks-render-engine) **Render Engines**.
 
@@ -88,4 +88,4 @@ const apiName = asyncapi.info().title();
 const channels = asyncapi.channels();
 ```
 
-> To learn about the various instances you can use to access the documents' content, look at the API of the AsyncAPI JavaScript Parser and the structure of [AsyncAPIDocument](https://github.com/asyncapi/parser-js/blob/master/API.md#module_@asyncapi/parser+AsyncAPIDocument)
+> To learn about the various instances you can use to access the documents' content, look at the API of the AsyncAPI JavaScript Parser and the structure of [AsyncAPIDocument](https://github.com/asyncapi/parser-api/blob/master/docs/api.md#asyncapidocument)

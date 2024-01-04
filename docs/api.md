@@ -238,7 +238,7 @@ Sets up the output configuration based on the specified output type.
 **Example**  
 ```js
 const generator = new Generator();
-generator.setupOutput();
+await generator.setupOutput();
 ```
 
 <a name="Generator+setupFSOutput"></a>

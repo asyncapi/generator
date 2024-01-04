@@ -8,7 +8,7 @@ The `generator` property from `package.json` file must contain a JSON object tha
 |Name|Type|Description|
 |---|---|---|
 |`renderer`| String | Its value can be either `react` or `nunjucks` (default).
-|`apiVersion`| String | Determines which **major** version of the [Parser-API](https://github.com/asyncapi/parser-api) the template uses. For example, `v2` for `v2.x.x`. If not specified, the Generator assumes the template is not compatible with the Parser-API so it will use the [Parser-JS v1 API](https://github.com/asyncapi/parser-js/tree/v1.18.1#api-documentation). For templates that need to support AsyncAPI specification v3 make sure to use `v2` [Parser-API](https://github.com/asyncapi/parser-api). If the template uses a version of the Parser-API that is not supported by the Generator, the Generator will throw an error.
+|`apiVersion`| String | Determines which **major** version of the [Parser-API](https://github.com/asyncapi/parser-api) the template uses. For example, `v2` for `v2.x.x`. If not specified, the Generator assumes the template is not compatible with the Parser-API so it will use the [Parser-JS v1 API](https://github.com/asyncapi/parser-js/tree/v1.18.1#api-documentation). For templates that need to support AsyncAPI specification v3 make sure to use `v3` [Parser-API](https://github.com/asyncapi/parser-api). If the template uses a version of the Parser-API that is not supported by the Generator, the Generator will throw an error.
 |`supportedProtocols`| [String] | A list with all the protocols this template supports.
 |`parameters`| Object[String, Object] | An object with all the parameters that can be passed when generating the template. When using the command line, it's done by indicating `--param name=value` or `-p name=value`.
 |`parameters[param].description`| String | A user-friendly description about the parameter.
@@ -28,7 +28,7 @@ The `generator` property from `package.json` file must contain a JSON object tha
 "generator":
 {
   "renderer": "react",
-  "apiVersion": "v2",
+  "apiVersion": "v3",
   "supportedProtocols": ["amqp", "mqtt"],
   "parameters": {
     "server": {

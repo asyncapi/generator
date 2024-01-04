@@ -1,0 +1,13 @@
+storage: ./storage
+auth:
+  htpasswd:
+    file: ./htpasswd
+    algorithm: bcrypt
+uplinks:
+  npmjs:
+    url: https://registry.npmjs.org/
+packages:
+  "@*/*":
+    access: $authenticated
+    proxy: npmjs
+log: { type: stdout, format: pretty, level: debug }

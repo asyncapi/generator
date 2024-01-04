@@ -431,7 +431,7 @@ describe('Generator', () => {
           privateKey: 'some.key'
         }
       });
-      expect(t).toThrow('These options are not supported by the generator to configure private registry: privateKey');
+      expect(t).toThrow('These options are not supported by the generator: privateKey');
     });
   });
 

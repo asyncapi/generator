@@ -1,0 +1,237 @@
+{
+	"name": "@types/jmespath",
+	"versions": {
+		"0.15.0": {
+			"name": "@types/jmespath",
+			"version": "0.15.0",
+			"description": "TypeScript definitions for jmespath",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Jeffery Grajkowski",
+					"url": "https://github.com/pushplay"
+				}
+			],
+			"main": "",
+			"repository": {
+				"type": "git",
+				"url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+			},
+			"scripts": {},
+			"dependencies": {},
+			"peerDependencies": {},
+			"typesPublisherContentHash": "ff8f47f057e97d1bc9d3345a92bc1011bc8dc95d73c95e1fafa990698deb301a",
+			"typeScriptVersion": "2.0",
+			"_id": "@types/jmespath@0.15.0",
+			"dist": {
+				"shasum": "4a01629096a86231c891a0e2deccc15f53c9291d",
+				"tarball": "https://registry.npmjs.org/@types/jmespath/-/jmespath-0.15.0.tgz",
+				"integrity": "sha512-uaht4XcYSq5ZrPriQW8C+g5DhptewRd1E84ph7L167sCyzLObz+U3JTpmYq/CNkvjNsz2mtyQoHPNEYQYTzWmg==",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEYCIQCmzET2iiPZqr2h5Ceu0aS8kQtrUgSBVrc4VQ9XAX5ZHgIhAOXgQWuPP3P7fY71D2lOZ41QxRAJFXU206Nf9eK28nHz"
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"_npmOperationalInternal": {
+				"host": "packages-18-east.internal.npmjs.com",
+				"tmp": "tmp/jmespath-0.15.0.tgz_1489191764068_0.9434053346049041"
+			},
+			"directories": {}
+		},
+		"0.15.1": {
+			"name": "@types/jmespath",
+			"version": "0.15.1",
+			"description": "TypeScript definitions for jmespath",
+			"homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/jmespath",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Jeffery Grajkowski",
+					"githubUsername": "pushplay",
+					"url": "https://github.com/pushplay"
+				}
+			],
+			"main": "",
+			"types": "index.d.ts",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+				"directory": "types/jmespath"
+			},
+			"scripts": {},
+			"dependencies": {},
+			"typesPublisherContentHash": "bb418ce05336bb2f72dc622922bdbc95c9ad214002de87dd4ae78387e44f63c1",
+			"typeScriptVersion": "4.5",
+			"_id": "@types/jmespath@0.15.1",
+			"dist": {
+				"integrity": "sha512-RWN1HQ71Hjl2ixw4a8s7/Bcz6S9uaBTaoCQ5cJB7OsjgHBFi3GaWMy0vRgZBPSYXdsMKFNxGLUUEh9uRf00Spw==",
+				"shasum": "f91a60228a82ff440defcb9dc3471ceaf3a74161",
+				"tarball": "https://registry.npmjs.org/@types/jmespath/-/jmespath-0.15.1.tgz",
+				"fileCount": 5,
+				"unpackedSize": 3166,
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEYCIQD8jb7FfnD0X26pgDzi9Ah9t9d1ewm82aR2fa37CrZMUQIhANFM//jZdgZnohxCqoEMDsEeMh2+nWffQjppXUu0K6nL"
+					}
+				]
+			},
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/jmespath_0.15.1_1697607534763_0.18952122339900423"
+			},
+			"_hasShrinkwrap": false
+		},
+		"0.15.2": {
+			"name": "@types/jmespath",
+			"version": "0.15.2",
+			"description": "TypeScript definitions for jmespath",
+			"homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/jmespath",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Jeffery Grajkowski",
+					"githubUsername": "pushplay",
+					"url": "https://github.com/pushplay"
+				}
+			],
+			"main": "",
+			"types": "index.d.ts",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+				"directory": "types/jmespath"
+			},
+			"scripts": {},
+			"dependencies": {},
+			"typesPublisherContentHash": "d419e1bf99905542092436f88fcaadb58cd5b7c0e49d1d234b5550439683c101",
+			"typeScriptVersion": "4.5",
+			"_id": "@types/jmespath@0.15.2",
+			"dist": {
+				"integrity": "sha512-pegh49FtNsC389Flyo9y8AfkVIZn9MMPE9yJrO9svhq6Fks2MwymULWjZqySuxmctd3ZH4/n7Mr98D+1Qo5vGA==",
+				"shasum": "00d2b23253079a7f40511d4257a44411cd89b4de",
+				"tarball": "https://registry.npmjs.org/@types/jmespath/-/jmespath-0.15.2.tgz",
+				"fileCount": 5,
+				"unpackedSize": 3166,
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEQCIDTkXhxlPizep9xMrycgygkIC/e4d7E5a+/ap0+yIGA4AiAWlLGVP40nrb6fI5XxBBhCY0ZAa8YLktz1/WIIiXrojg=="
+					}
+				]
+			},
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/jmespath_0.15.2_1699345262697_0.6961053439524394"
+			},
+			"_hasShrinkwrap": false
+		}
+	},
+	"time": {
+		"modified": "2023-11-07T08:21:17.916Z",
+		"created": "2017-03-11T00:22:45.914Z",
+		"0.15.0": "2017-03-11T00:22:45.914Z",
+		"0.15.1": "2023-10-18T05:38:54.982Z",
+		"0.15.2": "2023-11-07T08:21:02.884Z"
+	},
+	"users": {},
+	"dist-tags": {
+		"latest": "0.15.2",
+		"ts2.0": "0.15.0",
+		"ts2.1": "0.15.0",
+		"ts2.2": "0.15.0",
+		"ts2.3": "0.15.0",
+		"ts2.4": "0.15.0",
+		"ts2.5": "0.15.0",
+		"ts2.6": "0.15.0",
+		"ts2.7": "0.15.0",
+		"ts2.8": "0.15.0",
+		"ts2.9": "0.15.0",
+		"ts3.0": "0.15.0",
+		"ts3.1": "0.15.0",
+		"ts3.2": "0.15.0",
+		"ts3.3": "0.15.0",
+		"ts3.4": "0.15.0",
+		"ts3.5": "0.15.0",
+		"ts3.6": "0.15.0",
+		"ts3.7": "0.15.0",
+		"ts3.8": "0.15.0",
+		"ts3.9": "0.15.0",
+		"ts4.0": "0.15.0",
+		"ts4.1": "0.15.0",
+		"ts4.2": "0.15.0",
+		"ts4.3": "0.15.0",
+		"ts4.4": "0.15.0",
+		"ts4.5": "0.15.2",
+		"ts4.6": "0.15.2",
+		"ts4.7": "0.15.2",
+		"ts4.8": "0.15.2",
+		"ts4.9": "0.15.2",
+		"ts5.0": "0.15.2",
+		"ts5.1": "0.15.2",
+		"ts5.2": "0.15.2",
+		"ts5.3": "0.15.2",
+		"ts5.4": "0.15.2"
+	},
+	"_uplinks": {
+		"npmjs": {
+			"etag": "W/\"69999bdca98ffacc6c67de98486bc5cc\"",
+			"fetched": 1704380628252
+		}
+	},
+	"_distfiles": {
+		"jmespath-0.15.0.tgz": {
+			"url": "https://registry.npmjs.org/@types/jmespath/-/jmespath-0.15.0.tgz",
+			"sha": "4a01629096a86231c891a0e2deccc15f53c9291d",
+			"registry": "npmjs"
+		},
+		"jmespath-0.15.1.tgz": {
+			"url": "https://registry.npmjs.org/@types/jmespath/-/jmespath-0.15.1.tgz",
+			"sha": "f91a60228a82ff440defcb9dc3471ceaf3a74161",
+			"registry": "npmjs"
+		},
+		"jmespath-0.15.2.tgz": {
+			"url": "https://registry.npmjs.org/@types/jmespath/-/jmespath-0.15.2.tgz",
+			"sha": "00d2b23253079a7f40511d4257a44411cd89b4de",
+			"registry": "npmjs"
+		}
+	},
+	"_attachments": {},
+	"_rev": "1-0fcc6770eedcba13",
+	"_id": "@types/jmespath",
+	"readme": "[object Object]"
+}

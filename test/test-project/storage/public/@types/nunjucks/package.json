@@ -1,0 +1,1791 @@
+{
+	"name": "@types/nunjucks",
+	"versions": {
+		"0.0.14-alpha": {
+			"name": "@types/nunjucks",
+			"version": "0.0.14-alpha",
+			"description": "Type definitions for nunjucks from https://www.github.com/DefinitelyTyped/DefinitelyTyped",
+			"main": "",
+			"scripts": {},
+			"author": {
+				"name": "Ruben Slabbert",
+				"email": "https://github.com/RubenSlabbert/"
+			},
+			"license": "MIT",
+			"typings": "index.d.ts",
+			"dependencies": {},
+			"_id": "@types/nunjucks@0.0.14-alpha",
+			"_shasum": "4f36255a80a0bcdf20777edff0a3019622a0be6e",
+			"_from": "output\\nunjucks",
+			"_resolved": "file:output\\nunjucks",
+			"_npmVersion": "3.8.2",
+			"_nodeVersion": "5.5.0",
+			"_npmUser": {
+				"name": "types",
+				"email": "ryan.cavanaugh@microsoft.com"
+			},
+			"dist": {
+				"shasum": "4f36255a80a0bcdf20777edff0a3019622a0be6e",
+				"tarball": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-0.0.14-alpha.tgz",
+				"integrity": "sha512-oadobnusP6Dz/KgmMbPUYglos9RULVmAWtOZJI7t9v7v9Hx47n6V3FZO1xc3wR0mdTIFlhqFzQOstdTMJ5jIJA==",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCIQCRgdCs9RcrSZZLpOmCW/yP7sCvi1BffwMKEe5hlQmiuQIgFMwX70MdQYWwVImdi9kl64dOjNHW0q/kD7F/QaT5kzs="
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ryan.cavanaugh@microsoft.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "packages-16-east.internal.npmjs.com",
+				"tmp": "tmp/nunjucks-0.0.14-alpha.tgz_1463509799439_0.9480107184499502"
+			},
+			"directories": {},
+			"contributors": []
+		},
+		"0.0.15-alpha": {
+			"name": "@types/nunjucks",
+			"version": "0.0.15-alpha",
+			"description": "Type definitions for nunjucks from https://www.github.com/DefinitelyTyped/DefinitelyTyped",
+			"main": "",
+			"scripts": {},
+			"author": {
+				"name": "Ruben Slabbert",
+				"email": "https://github.com/RubenSlabbert/"
+			},
+			"license": "MIT",
+			"typings": "index.d.ts",
+			"dependencies": {},
+			"_id": "@types/nunjucks@0.0.15-alpha",
+			"_shasum": "ee172013473a9941d8b5785fcc982b1c2c4eff26",
+			"_from": "output\\nunjucks",
+			"_resolved": "file:output\\nunjucks",
+			"_npmVersion": "3.8.2",
+			"_nodeVersion": "5.5.0",
+			"_npmUser": {
+				"name": "types",
+				"email": "ryan.cavanaugh@microsoft.com"
+			},
+			"dist": {
+				"shasum": "ee172013473a9941d8b5785fcc982b1c2c4eff26",
+				"tarball": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-0.0.15-alpha.tgz",
+				"integrity": "sha512-C3IsDCddnzZMQSFsrl8YTRO7QAQomfC3fXCCxzyQJCKZGgGBLauUuxkhHhViR8wl2Qi/rdKPXPrWIryboGOC8Q==",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCIDpsmhRjwi3PGtXoVarxgNfJL7QAso17B3rcYKM+HhE3AiEAqRc5qYyvD0m9/wYHYkG58Q1DFd5jwxPPZb4ZOGK9jyU="
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ryan.cavanaugh@microsoft.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "packages-12-west.internal.npmjs.com",
+				"tmp": "tmp/nunjucks-0.0.15-alpha.tgz_1463694812568_0.12561912694945931"
+			},
+			"directories": {},
+			"contributors": []
+		},
+		"0.0.20-alpha": {
+			"name": "@types/nunjucks",
+			"version": "0.0.20-alpha",
+			"description": "TypeScript definitions for nunjucks",
+			"main": "",
+			"scripts": {},
+			"author": {
+				"name": "Ruben Slabbert",
+				"email": "https://github.com/RubenSlabbert/"
+			},
+			"license": "MIT",
+			"typings": "index.d.ts",
+			"dependencies": {},
+			"_id": "@types/nunjucks@0.0.20-alpha",
+			"_shasum": "184ee66d1214ec796b3a8859ad6d6d07eb3daaa4",
+			"_from": "output\\nunjucks",
+			"_resolved": "file:output\\nunjucks",
+			"_npmVersion": "3.8.2",
+			"_nodeVersion": "5.5.0",
+			"_npmUser": {
+				"name": "types",
+				"email": "ryan.cavanaugh@microsoft.com"
+			},
+			"dist": {
+				"shasum": "184ee66d1214ec796b3a8859ad6d6d07eb3daaa4",
+				"tarball": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-0.0.20-alpha.tgz",
+				"integrity": "sha512-hHVrxrJ3adji0lUdwZ5KVzN4Ezp4Pt8T9wCoYL0Oo8vSpjWfYcf/hf/iYhZG5dijmHzZDLEdSPKfRMut5jo9Cw==",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCIDe5hOcNOkip45m7WNB9Xzs7p4XbvvZtv5M0ivFYUEtMAiEAs+NpQfCvRtoCx3gtRstc3pRL5JkS8q3IGIuDwQi3r9A="
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ryan.cavanaugh@microsoft.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "packages-16-east.internal.npmjs.com",
+				"tmp": "tmp/nunjucks-0.0.20-alpha.tgz_1463775571367_0.4711187486536801"
+			},
+			"directories": {},
+			"contributors": []
+		},
+		"0.0.21-alpha": {
+			"name": "@types/nunjucks",
+			"version": "0.0.21-alpha",
+			"description": "TypeScript definitions for nunjucks",
+			"main": "",
+			"scripts": {},
+			"author": {
+				"name": "Ruben Slabbert",
+				"email": "https://github.com/RubenSlabbert/"
+			},
+			"license": "MIT",
+			"typings": "index.d.ts",
+			"dependencies": {},
+			"_id": "@types/nunjucks@0.0.21-alpha",
+			"_shasum": "6deb55421093567b4c89f2e4943535fc90c9d258",
+			"_from": "output\\nunjucks",
+			"_resolved": "file:output\\nunjucks",
+			"_npmVersion": "3.8.2",
+			"_nodeVersion": "5.5.0",
+			"_npmUser": {
+				"name": "types",
+				"email": "ryan.cavanaugh@microsoft.com"
+			},
+			"dist": {
+				"shasum": "6deb55421093567b4c89f2e4943535fc90c9d258",
+				"tarball": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-0.0.21-alpha.tgz",
+				"integrity": "sha512-rAnqWL267X1vmPYXRWT+7EBUhB6IvjM4kNm5rcsiSXuQEqZfeLpvHNtaclfYL1FsuchTN2zH5CQQKnKhlnsAHg==",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCIEQXEotLK1cjK08O+EH4LpN/YpNW6c3/O+79OlKJLfsnAiEA/dxdxnoWLeB+umzvQJMATuw0RgaKrk3yMUHISByxP7M="
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ryan.cavanaugh@microsoft.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "packages-16-east.internal.npmjs.com",
+				"tmp": "tmp/nunjucks-0.0.21-alpha.tgz_1464154561191_0.30262550921179354"
+			},
+			"directories": {},
+			"contributors": []
+		},
+		"0.0.22-alpha": {
+			"name": "@types/nunjucks",
+			"version": "0.0.22-alpha",
+			"description": "TypeScript definitions for nunjucks",
+			"main": "",
+			"scripts": {},
+			"author": {
+				"name": "Ruben Slabbert",
+				"email": "https://github.com/RubenSlabbert/"
+			},
+			"repository": {
+				"type": "git",
+				"url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+			},
+			"license": "MIT",
+			"typings": "index.d.ts",
+			"dependencies": {},
+			"_id": "@types/nunjucks@0.0.22-alpha",
+			"_shasum": "cba7143f6d199314020d233ed33039504c891c1c",
+			"_from": "output\\nunjucks",
+			"_resolved": "file:output\\nunjucks",
+			"_npmVersion": "3.9.5",
+			"_nodeVersion": "6.2.2",
+			"_npmUser": {
+				"name": "types",
+				"email": "ryan.cavanaugh@microsoft.com"
+			},
+			"dist": {
+				"shasum": "cba7143f6d199314020d233ed33039504c891c1c",
+				"tarball": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-0.0.22-alpha.tgz",
+				"integrity": "sha512-I+cd6guwl7NaOLGRz0Uac6WCz/5UthU0s0fIxca7HDipsoRFCmHTfYYCEhFUxPQujmozFPwHcApqKjsuCTL7Zw==",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCIQCxWWOUP6tUnzheLuvTmwNiur6sJtiWhw7AyHpjk596owIgJg2X7UGKazgQvCAkBA3CUNmBDPk+j9E9wUFjczDQ40A="
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ryan.cavanaugh@microsoft.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "packages-12-west.internal.npmjs.com",
+				"tmp": "tmp/nunjucks-0.0.22-alpha.tgz_1467403923283_0.16180215892381966"
+			},
+			"directories": {},
+			"contributors": []
+		},
+		"0.0.23-alpha": {
+			"name": "@types/nunjucks",
+			"version": "0.0.23-alpha",
+			"description": "TypeScript definitions for nunjucks",
+			"main": "",
+			"scripts": {},
+			"author": {
+				"name": "Ruben Slabbert",
+				"email": "https://github.com/RubenSlabbert/"
+			},
+			"repository": {
+				"type": "git",
+				"url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+			},
+			"license": "MIT",
+			"typings": "index.d.ts",
+			"dependencies": {},
+			"_id": "@types/nunjucks@0.0.23-alpha",
+			"_shasum": "14c469cf62fd69096c4b9aedf65d9c064ff33da4",
+			"_from": "output\\nunjucks",
+			"_resolved": "file:output\\nunjucks",
+			"_npmVersion": "3.7.2",
+			"_nodeVersion": "6.2.1",
+			"_npmUser": {
+				"name": "types",
+				"email": "ryan.cavanaugh@microsoft.com"
+			},
+			"dist": {
+				"shasum": "14c469cf62fd69096c4b9aedf65d9c064ff33da4",
+				"tarball": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-0.0.23-alpha.tgz",
+				"integrity": "sha512-qfmMT51VEYN+ed8wOv95EtGJ3ddEoe0tv/JLN5pskoilbqSmXdtZ4fcbSK6ALwrXIjOxmXJ/V/lGoE/yrmah1g==",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCIQCv53AzY1XNfGY1FWM6xJo4/vsc40Kmb3ZQvfvAJbAgQwIgOUlm/w2ymkxNoP5AiHLdx+d0baZNhMgypD9kGdbEsgk="
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ryan.cavanaugh@microsoft.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "packages-12-west.internal.npmjs.com",
+				"tmp": "tmp/nunjucks-0.0.23-alpha.tgz_1467416058664_0.5159227773547173"
+			},
+			"directories": {},
+			"contributors": []
+		},
+		"0.0.24-alpha": {
+			"name": "@types/nunjucks",
+			"version": "0.0.24-alpha",
+			"description": "TypeScript definitions for nunjucks",
+			"main": "",
+			"scripts": {},
+			"author": {
+				"name": "Ruben Slabbert",
+				"email": "https://github.com/RubenSlabbert/"
+			},
+			"repository": {
+				"type": "git",
+				"url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+			},
+			"license": "MIT",
+			"typings": "index.d.ts",
+			"dependencies": {},
+			"_id": "@types/nunjucks@0.0.24-alpha",
+			"_shasum": "e13e2a0af944155950dd8f464303aba5c5046f92",
+			"_from": "output\\nunjucks",
+			"_resolved": "file:output\\nunjucks",
+			"_npmVersion": "3.7.2",
+			"_nodeVersion": "6.2.1",
+			"_npmUser": {
+				"name": "types",
+				"email": "ryan.cavanaugh@microsoft.com"
+			},
+			"dist": {
+				"shasum": "e13e2a0af944155950dd8f464303aba5c5046f92",
+				"tarball": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-0.0.24-alpha.tgz",
+				"integrity": "sha512-FQ089zEPmdwm4FEckhnHHyLP7ejhZVHJ92hTSXdoFcxezU4U/tTUKXocz52wTwa9vbfOJsKaR/dzQA5FzpNjLA==",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCIQDBVrD+AlyN36sBaWtOPTkwhpRg1ECQzrRqLiMegeSRWQIgSAvgm5Z1LCM9ToyMIq2IyT2l10eDPhvmsV16OeFG9t0="
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ryan.cavanaugh@microsoft.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "packages-16-east.internal.npmjs.com",
+				"tmp": "tmp/nunjucks-0.0.24-alpha.tgz_1467428817956_0.7195247886702418"
+			},
+			"directories": {},
+			"contributors": []
+		},
+		"0.0.25-alpha": {
+			"name": "@types/nunjucks",
+			"version": "0.0.25-alpha",
+			"description": "TypeScript definitions for nunjucks",
+			"main": "",
+			"scripts": {},
+			"author": {
+				"name": "Ruben Slabbert",
+				"email": "https://github.com/RubenSlabbert/"
+			},
+			"repository": {
+				"type": "git",
+				"url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+			},
+			"license": "MIT",
+			"typings": "index.d.ts",
+			"dependencies": {},
+			"_id": "@types/nunjucks@0.0.25-alpha",
+			"_shasum": "751c24d7d6ab421c8c346f76cb9130b32848365b",
+			"_from": "output\\nunjucks",
+			"_resolved": "file:output\\nunjucks",
+			"_npmVersion": "3.7.2",
+			"_nodeVersion": "6.2.1",
+			"_npmUser": {
+				"name": "types",
+				"email": "ryan.cavanaugh@microsoft.com"
+			},
+			"dist": {
+				"shasum": "751c24d7d6ab421c8c346f76cb9130b32848365b",
+				"tarball": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-0.0.25-alpha.tgz",
+				"integrity": "sha512-jihDCDiCJcpNp1J7LwmOf4vPAnOclB0ZXwoc8kXj+uhUdC4GGzWYfcdbnG2TgyXeKmzq4jinjsfS+eM14fvPKA==",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCIAiytpVDITza0aclkwZdMfmy/+GLcEavGFK4DsHMNJNjAiEAn+vFHTrXB8HHZSokt2bcbTMdeELVeWpU1hR+pFwOyVQ="
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ryan.cavanaugh@microsoft.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "packages-16-east.internal.npmjs.com",
+				"tmp": "tmp/nunjucks-0.0.25-alpha.tgz_1467593790968_0.4692380093038082"
+			},
+			"directories": {},
+			"contributors": []
+		},
+		"0.0.26-alpha": {
+			"name": "@types/nunjucks",
+			"version": "0.0.26-alpha",
+			"description": "TypeScript definitions for nunjucks",
+			"main": "",
+			"scripts": {},
+			"author": {
+				"name": "Ruben Slabbert",
+				"email": "https://github.com/RubenSlabbert/"
+			},
+			"repository": {
+				"type": "git",
+				"url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+			},
+			"license": "MIT",
+			"typings": "index.d.ts",
+			"dependencies": {},
+			"_id": "@types/nunjucks@0.0.26-alpha",
+			"_shasum": "8709be2ee5ecbfc0f5ded48194cd8145c69969dc",
+			"_from": "output\\nunjucks",
+			"_resolved": "file:output\\nunjucks",
+			"_npmVersion": "3.7.2",
+			"_nodeVersion": "6.2.1",
+			"_npmUser": {
+				"name": "types",
+				"email": "ryan.cavanaugh@microsoft.com"
+			},
+			"dist": {
+				"shasum": "8709be2ee5ecbfc0f5ded48194cd8145c69969dc",
+				"tarball": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-0.0.26-alpha.tgz",
+				"integrity": "sha512-Chr7kvtzUsVOthcNFWKzR/2yqTotrXS2wgvRcLmfCobVLYhaDePHNR2yjPc7Vb43/JhdsHeW/nfKT2TZ6l89ag==",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCIQDOBFW5khSQbYYeOld/k5+4vMpdYYvDFKkuuQhquTuTyQIgBoRJGzAm3MCNLlBhQHywYQgezYYjpdaAKE0AwBYDFK0="
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ryan.cavanaugh@microsoft.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "packages-16-east.internal.npmjs.com",
+				"tmp": "tmp/nunjucks-0.0.26-alpha.tgz_1467841504859_0.4548650642391294"
+			},
+			"directories": {},
+			"contributors": []
+		},
+		"0.0.27-alpha": {
+			"name": "@types/nunjucks",
+			"version": "0.0.27-alpha",
+			"description": "TypeScript definitions for nunjucks",
+			"main": "",
+			"scripts": {},
+			"author": {
+				"name": "Ruben Slabbert",
+				"email": "https://github.com/RubenSlabbert/"
+			},
+			"repository": {
+				"type": "git",
+				"url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+			},
+			"license": "MIT",
+			"typings": "index.d.ts",
+			"dependencies": {},
+			"_id": "@types/nunjucks@0.0.27-alpha",
+			"_shasum": "5f5b6886e63aef12bcc4a705406bff4e237b17b2",
+			"_from": "output\\nunjucks",
+			"_resolved": "file:output\\nunjucks",
+			"_npmVersion": "3.10.3",
+			"_nodeVersion": "6.3.0",
+			"_npmUser": {
+				"name": "types",
+				"email": "ryan.cavanaugh@microsoft.com"
+			},
+			"dist": {
+				"shasum": "5f5b6886e63aef12bcc4a705406bff4e237b17b2",
+				"tarball": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-0.0.27-alpha.tgz",
+				"integrity": "sha512-YwxbiPsjexISRbzjeckjCt3I90loYQNfoj3RwzI3neWd0fls7BSWeZMDKCT5DPq3k2syEMpNNMqwZXju9EtBqw==",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCIQCHx5AU5Drf5lCAvvD7Ps7wKw0ZNwxAIFYIrZiawcGoNwIgaXRhfzsXlqFyKikCzYc/9VG74J6oHN6Ofm2B1U9lM0A="
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ryan.cavanaugh@microsoft.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "packages-16-east.internal.npmjs.com",
+				"tmp": "tmp/nunjucks-0.0.27-alpha.tgz_1468011542852_0.5234848754480481"
+			},
+			"directories": {},
+			"contributors": []
+		},
+		"0.0.28": {
+			"name": "@types/nunjucks",
+			"version": "0.0.28",
+			"description": "TypeScript definitions for nunjucks",
+			"main": "",
+			"scripts": {},
+			"author": {
+				"name": "Ruben Slabbert",
+				"email": "https://github.com/RubenSlabbert/"
+			},
+			"repository": {
+				"type": "git",
+				"url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+			},
+			"license": "MIT",
+			"typings": "index.d.ts",
+			"dependencies": {},
+			"_id": "@types/nunjucks@0.0.28",
+			"_shasum": "bbb6fb943dd758281fa5c188f5e2b86fe8c9629b",
+			"_from": "output\\nunjucks",
+			"_resolved": "file:output\\nunjucks",
+			"_npmVersion": "3.10.3",
+			"_nodeVersion": "6.3.0",
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"dist": {
+				"shasum": "bbb6fb943dd758281fa5c188f5e2b86fe8c9629b",
+				"tarball": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-0.0.28.tgz",
+				"integrity": "sha512-IOdLqFoctmeIQIxaV3Ic9HXQQ3l1T+FmUT1Jf7/BbbFmQdxNvWYU0EYhUjVSd2rQahyAOqgp+rzdv/Uv+sd7bg==",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCIQC6XfiT7HcYDeHckmJXEPV/0KdxsDNapiyhAy9q4ijxUgIgJsET55jFkca+gja8fvej2o9+FblgNVmEQyzfrRmp+M4="
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ryan.cavanaugh@microsoft.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "packages-12-west.internal.npmjs.com",
+				"tmp": "tmp/nunjucks-0.0.28.tgz_1468510555994_0.9035628223791718"
+			},
+			"directories": {},
+			"contributors": []
+		},
+		"0.0.29": {
+			"name": "@types/nunjucks",
+			"version": "0.0.29",
+			"description": "TypeScript definitions for nunjucks",
+			"license": "MIT",
+			"author": "Ruben Slabbert <https://github.com/RubenSlabbert/>",
+			"main": "",
+			"repository": {
+				"type": "git",
+				"url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+			},
+			"scripts": {},
+			"dependencies": {},
+			"typings": "index.d.ts",
+			"_id": "@types/nunjucks@0.0.29",
+			"dist": {
+				"shasum": "1101b9d71c6d574f92aa874e15745a44099db2c6",
+				"tarball": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-0.0.29.tgz",
+				"integrity": "sha512-jQ5i/YG/f0mZ57EQRyR4sK82KQkDJKGAFBnTBV/Jj+F/bj+Kf5gJj1ctCkJ8s5Y3lg6v8cSzcHMMGtF8oLVQkQ==",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEQCID8957EeLiLB20ZwIDqBtF+uboFt5RltJqwp9cWMt/JBAiBpcz/vScTdFQ0UxhRLoSBH4A+8smrcHbrganuMcMmWVw=="
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ryan.cavanaugh@microsoft.com"
+				}
+			],
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"_npmOperationalInternal": {
+				"host": "packages-16-east.internal.npmjs.com",
+				"tmp": "tmp/nunjucks-0.0.29.tgz_1470153732187_0.2367514877114445"
+			},
+			"directories": {},
+			"contributors": []
+		},
+		"0.0.30": {
+			"name": "@types/nunjucks",
+			"version": "0.0.30",
+			"description": "TypeScript definitions for nunjucks",
+			"license": "MIT",
+			"author": "Ruben Slabbert <https://github.com/RubenSlabbert/>",
+			"main": "",
+			"repository": {
+				"type": "git",
+				"url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+			},
+			"scripts": {},
+			"dependencies": {},
+			"typings": "index.d.ts",
+			"_id": "@types/nunjucks@0.0.30",
+			"dist": {
+				"shasum": "632fce6a1ecfcbc8f70aba187c1a2b2e74bee803",
+				"tarball": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-0.0.30.tgz",
+				"integrity": "sha512-3qxFk4++jSb9jHDBoNAehevlFQ1bqvMJDnETbNUO8yWRCizocCm84PVGuKEL5kSXy+Vlrv2GYx/M6MEo7fyuGQ==",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCIBtB1SSSTUGUlkiBXpWQUNeR/RPWgSKwJBKH5adQxY/mAiEA0Ix2NwOBEL2TsyuAMoruN44osoKXfopb2zvFdrp6F8Y="
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ryan.cavanaugh@microsoft.com"
+				}
+			],
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"_npmOperationalInternal": {
+				"host": "packages-12-west.internal.npmjs.com",
+				"tmp": "tmp/nunjucks-0.0.30.tgz_1470688637011_0.052877692272886634"
+			},
+			"directories": {},
+			"contributors": []
+		},
+		"0.0.31": {
+			"name": "@types/nunjucks",
+			"version": "0.0.31",
+			"description": "TypeScript definitions for nunjucks",
+			"license": "MIT",
+			"author": "Ruben Slabbert <https://github.com/RubenSlabbert/>",
+			"main": "",
+			"repository": {
+				"type": "git",
+				"url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+			},
+			"scripts": {},
+			"dependencies": {},
+			"typings": "index.d.ts",
+			"_id": "@types/nunjucks@0.0.31",
+			"dist": {
+				"shasum": "65d3a4d05929c71202e4f99178541a57675254cd",
+				"tarball": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-0.0.31.tgz",
+				"integrity": "sha512-8vFqn6aRR8gWqvF19E10bAsbvJvT1GOm2JIi4V34tc3+frLROkz+EcOx0skO0ze3Crpc8Jlw8/RUe0js3UuvxA==",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCIQDQlhwLdd+zuvs24UVxzo+AwtTH+TrxMyfrPIQhKf1vqAIgCrLZLc2yuTe+NF25trSUC6LKIzEL92lgz1f5zPeCaCM="
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ryan.cavanaugh@microsoft.com"
+				}
+			],
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"_npmOperationalInternal": {
+				"host": "packages-16-east.internal.npmjs.com",
+				"tmp": "tmp/nunjucks-0.0.31.tgz_1472151109033_0.4561556223779917"
+			},
+			"directories": {},
+			"contributors": []
+		},
+		"0.0.32": {
+			"name": "@types/nunjucks",
+			"version": "0.0.32",
+			"description": "TypeScript definitions for nunjucks",
+			"license": "MIT",
+			"author": "Ruben Slabbert <https://github.com/RubenSlabbert/>",
+			"main": "",
+			"repository": {
+				"type": "git",
+				"url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+			},
+			"scripts": {},
+			"dependencies": {},
+			"typings": "index.d.ts",
+			"typesPublisherContentHash": "334470b3f018050a430bb69bebc3b1a34ba3d013d3007edfcb6c837927fb6704",
+			"_id": "@types/nunjucks@0.0.32",
+			"dist": {
+				"shasum": "654a6c56153b5bdd5cb5146424cfae5c8b757afa",
+				"tarball": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-0.0.32.tgz",
+				"integrity": "sha512-nh37w3mDuJr3v1WPF84/9bM/dfQoXzj5FYabP4Cx93rONq+Vcv5pz3N1WYT7YnLTbklbs89eTuIa+Mh9Af38+A==",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCIQCvg9KIBtYvVZ7laCJSk/dsneQjMSsuuD6a8sr2l08KuwIgJnVgrlNewQ6FDBIJWdRzbtLds6pwbD8HLY6E1XhnSMM="
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ryan.cavanaugh@microsoft.com"
+				}
+			],
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"_npmOperationalInternal": {
+				"host": "packages-16-east.internal.npmjs.com",
+				"tmp": "tmp/nunjucks-0.0.32.tgz_1474307826239_0.7437938100192696"
+			},
+			"directories": {},
+			"contributors": []
+		},
+		"0.0.33": {
+			"name": "@types/nunjucks",
+			"version": "0.0.33",
+			"description": "TypeScript definitions for nunjucks",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Ruben Slabbert",
+					"url": "https://github.com/RubenSlabbert"
+				}
+			],
+			"main": "",
+			"repository": {
+				"type": "git",
+				"url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+			},
+			"scripts": {},
+			"dependencies": {},
+			"typesPublisherContentHash": "1e90380e3fce6d869fdcc50d3547855a223e23bf031b649ee6502c1f133a951e",
+			"typeScriptVersion": "2.0",
+			"_id": "@types/nunjucks@0.0.33",
+			"dist": {
+				"integrity": "sha512-jhtlApV/t1heyTtEzX4op+ZD+4nHEcgxVRnSsDitiWkE0RcdxWIRrUVAhJvvm/PVXmqf/dTLaF/b4ta1oLeOeQ==",
+				"shasum": "1fbe19a294e0452e204d5aace9dc160da44b2acc",
+				"tarball": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-0.0.33.tgz",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEYCIQCzrcHuT4X0K4m+rEDOoTI7hyS7oq2qVmQCEp2+CoQNwQIhAIkTY5QqjwqSE7ioMO4rL6CprFXm5afNc2+z2sohcqbU"
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ryan.cavanaugh@microsoft.com"
+				}
+			],
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/nunjucks-0.0.33.tgz_1503352814725_0.6246696803718805"
+			},
+			"directories": {}
+		},
+		"3.0.0": {
+			"name": "@types/nunjucks",
+			"version": "3.0.0",
+			"description": "TypeScript definitions for nunjucks",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Ruben Slabbert",
+					"url": "https://github.com/RubenSlabbert",
+					"githubUsername": "RubenSlabbert"
+				}
+			],
+			"main": "",
+			"repository": {
+				"type": "git",
+				"url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+			},
+			"scripts": {},
+			"dependencies": {},
+			"typesPublisherContentHash": "0ccc7ee5e02090044d73de410cd7f64e401e318b6244ccccf97b822fb2833205",
+			"typeScriptVersion": "2.2",
+			"_id": "@types/nunjucks@3.0.0",
+			"dist": {
+				"integrity": "sha512-Msxi0MEZbsQlqx9oscKWwe6N2d4QerzXgGEzgMop4+RNFlO0PvhGpwJHXdTLUWz6GaZEOrNUsBBDNNYwKTgMJw==",
+				"shasum": "9393e33128d12c834b4bc8db6bbfd18ebce474f0",
+				"tarball": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-3.0.0.tgz",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCIBEg2sCYSjMW4ZFGOEIuG3dPAG/PgnAM4uAEzwMgnyb8AiEAl5pV7nRMkquo4HpcN2+E05Yxa4FyW5yUn/yft2THxwU="
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"email": "ts-npm-types@microsoft.com",
+					"name": "types"
+				}
+			],
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/nunjucks-3.0.0.tgz_1510042748683_0.9716480285860598"
+			},
+			"directories": {}
+		},
+		"3.1.0": {
+			"name": "@types/nunjucks",
+			"version": "3.1.0",
+			"description": "TypeScript definitions for nunjucks",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Ruben Slabbert",
+					"url": "https://github.com/RubenSlabbert",
+					"githubUsername": "RubenSlabbert"
+				}
+			],
+			"main": "",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git"
+			},
+			"scripts": {},
+			"dependencies": {},
+			"typesPublisherContentHash": "bfc82344959f5832c26975f59c89be47252efac55339a144a03b88e81f5da375",
+			"typeScriptVersion": "2.2",
+			"_id": "@types/nunjucks@3.1.0",
+			"dist": {
+				"integrity": "sha512-xluGXbkIBW0B5uxNy/k7jVgqUTbqTnCLBUX+Dby//PYNDqCvqCPo6GuaNWdCLAM/v/6PNCYIZOXCHi8kr0KCcg==",
+				"shasum": "fdc2fce6f4d8046f7df88f06f32c9842aabdfa46",
+				"tarball": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-3.1.0.tgz",
+				"fileCount": 4,
+				"unpackedSize": 7364,
+				"npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJbd3HZCRA9TVsSAnZWagAAF8YP/RYRaXbpT0KN2wcWX+nQ\nPYhPBq62Uy6cb9W6f4iQq3ew95AYah4nb4/VZT//S/D6hsZ8wFvxwEjebSOt\nwpBQp4/UmCdQJnMCU5FnGhtxZfmo2GoMVOy8JiHdCIXN0Gd58956TyxvJwxm\n50uXy/B29TxSUma72fm3HaQmKp6oY2FwuoHqOq9nRzGXcUaD9wlLZDA/JdB9\ng0bEaonwO3hKjNi3yazdIhkjAyljnpPuIZDCRxhEdd4Nn8GQ16MC2ijfECe7\n0W2txgnkKiNip8fzIgF1cnOu2CcZbggYMXX6g694PoehyIJ9U4HbO1GvI5sP\no7UdRg+NdlJcfkJwkDowHzFwzaf4MIQtjmlingjl5bJFzFlf8NCCHrKEjRee\nCMQP7OHr5+e5AgYGCJZ2JoA7TubGhAI5XhVyu0+sJLj3aOLACnAhU24wvU7M\nSBzUDWid3+zTp/QdbNXuYNYAH7Qn+VZ3JuMtshZIogleHijEzK0NJK68nvXb\n9gHyy5B/3BlS1iSmt6zXOFKwg2wr8XQ9M75HMRfaEMtBavA2Zh9XSILEqZqF\nL/RJ8YWknucrSOjN4Ov0xy/cltlzbO9FTRgh08iysxt8WcmO6T/hEfXaEpok\nhK4gL8wsGyZXoyouiH3s8XAFHgOYrWgwxK28Zxoco0i1j8XZjvLzpZGhIIiO\nopgD\r\n=M8Md\r\n-----END PGP SIGNATURE-----\r\n",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCIQC/s7lbqkWYSmqKvJKfmNFc3tIcALxuJGNn2UW87HGP2QIgHsemssEeBSIZuCrFmc/O11VF9lgGej5HYFLCa6SQjm0="
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"email": "ts-npm-types@microsoft.com",
+					"name": "types"
+				}
+			],
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/nunjucks_3.1.0_1534554585401_0.30369200418690867"
+			},
+			"_hasShrinkwrap": false
+		},
+		"3.1.1": {
+			"name": "@types/nunjucks",
+			"version": "3.1.1",
+			"description": "TypeScript definitions for nunjucks",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Ruben Slabbert",
+					"url": "https://github.com/RubenSlabbert",
+					"githubUsername": "RubenSlabbert"
+				}
+			],
+			"main": "",
+			"types": "index",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git"
+			},
+			"scripts": {},
+			"dependencies": {},
+			"typesPublisherContentHash": "0d8452080a742e3f80d2ab1e12f77bcc4ced160238363b4ea5a4de83bac01b2a",
+			"typeScriptVersion": "2.2",
+			"_id": "@types/nunjucks@3.1.1",
+			"dist": {
+				"integrity": "sha512-8Isd49iSR8TfqrfmcaimQZG9/uwqkZw7uJGSn4Do3JD6QMlNwzDUtXoW1bM9INUaR7Eld2LYcJrKVECF7YOd1w==",
+				"shasum": "1f910f43c1aa41d99328cf28b6f1b82630ec6763",
+				"tarball": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-3.1.1.tgz",
+				"fileCount": 4,
+				"unpackedSize": 7446,
+				"npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJcZI+OCRA9TVsSAnZWagAAOOQQAJG+q3Ps6ZOGoqNj7oi4\n0iOh3+3wEltUojeSzJFOhoKpsho2dJtCbXrYIXeYDdDDX6ess5G0AqDoDxc8\ng0MNzbQfoz9RbLrB1ZGvpAKV2pUba+7pQbq3e7C120wpXnmM55G+hlO98NJv\naPwysi6bykdF4PmieJq1/qv/GEx0NHe31Tpif0h66Ql05Vx6LoMO0bzybZqe\nNAdOL4jyZ0DNqFD+m+lIt3eNlkIh6Yec2MzvAFUuvrTR2WgrVz2xt8loaaGJ\nTpqUIroAGokfMjeD59cm1o0oQMfmGwJ1eqMzoqv/VGSbI1Sb4vUXOI/bCSxK\njXPti4pplKgBpRDNqKLmvjHjBtKevDqS4T/TBOhfmyyhEgKkb434iB/IvhGb\nauoyh508MBotE1sgqrVAhJqaQ4/hOydSMk+TFtBrigL5rlspCE0+6EnG01n8\noeAaRr2JXinnMLhFUOahtr4+4HJ/bzbbWp9VHTW05ThPov4+/4AAeiwGCCEQ\n9NGei28D/ijsEPGygxaXT1KH605eu4CQvzTKgZs/d2iMa/u0IMtrLuOx+TvF\nkleP2MAx63juzHqtVDNjXRqrNa5/2Lns/5mmkBS2uQIWTzS5btDgo3SEQf6A\nIbBx1/MGkMN9vIVcSrzKJXhphHlo/iBOCQdJxDYy1XSoVJ4c1hJaKEADRhlT\nqBcr\r\n=diqP\r\n-----END PGP SIGNATURE-----\r\n",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEQCIFDT3X8rknDwXfpfM/E/qS6os0QhrSSEhy0UvOca1Zm4AiBgBlGgYPsNne0tEVU2rRUY8l3KIvaYfmOWlv2ISO1rUw=="
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"email": "ts-npm-types@microsoft.com",
+					"name": "types"
+				}
+			],
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/nunjucks_3.1.1_1550094221879_0.7483140782686215"
+			},
+			"_hasShrinkwrap": false
+		},
+		"3.1.2": {
+			"name": "@types/nunjucks",
+			"version": "3.1.2",
+			"description": "TypeScript definitions for nunjucks",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Ruben Slabbert",
+					"url": "https://github.com/RubenSlabbert",
+					"githubUsername": "RubenSlabbert"
+				}
+			],
+			"main": "",
+			"types": "index",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+				"directory": "types/nunjucks"
+			},
+			"scripts": {},
+			"dependencies": {},
+			"typesPublisherContentHash": "213d7308503577136b01587a598d82c66960be80216371a8e9ffe22ab6af1168",
+			"typeScriptVersion": "2.2",
+			"_id": "@types/nunjucks@3.1.2",
+			"dist": {
+				"integrity": "sha512-XTNp6i9W0SZZb+mamEB2lYLxi+/V+FHFC35vxUYNnng71sbi72ndGLpUfa5O9Si/uE38X08n6GCbUYsxVUDmrw==",
+				"shasum": "2cf954c46d99d1284fffe1719434d8c2fe20760c",
+				"tarball": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-3.1.2.tgz",
+				"fileCount": 4,
+				"unpackedSize": 7904,
+				"npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJdYBC/CRA9TVsSAnZWagAASUIQAJCzIGnhbNym24691uwO\nRqMLC5b5DNHZYRoJM8tIsxDclWRAaXsiE2CJKSN4rdIGQAqHNH3S/2AM0g3n\nSQr8UV8S7TzLAMO1o2hBA5dKxmWtxppl8VZXmbOQH7bj8lAXupxOqx5MlilB\nqMUv7Nxtb5fRWq9ppRT0ZTG3z9PFWCLuHwqOyX8cfPt6wdFdfB/jmEQNe+PK\nYg34n76ZQs0o+JQTzbc7+liqcMq3oJ+9SczzMAAgOass0OVLGmS8DbFaxzYe\nBEdOsJk0/N3GqCTAFX2BenBjJ1uwfymI1vB90viYssMq1AgqLfMsYYxQ0mS2\n0+fZzWw4mt0EkkFitdOGlYap7TS44dHUpfDyG8qimCJW5awBVEEQrJzXXSCP\n1BuXKPNp6kvKkh2VQWSnfC/h+cR2PocvNtqYeZF3QjKJsmk/DZNvZAAW9NBV\nCWxpWzeZOKwGNooEc7VAEskSh2ZumgVSZ9kFjm326upmkKUzB/l+gfeHsaIt\nSHdWpqQyqbHFjs1dHCvwrvR92v5B/1vNcjO3EAa7wyLKiLHdgaQh5V8xkAOE\nARXGvqK8Jv8VaQhjQS+KmBNZi+QY8ZvVr7qqDi5vnWLqN8/nsclVvPRrAeSI\nc7EMP/stmti0TvmCA0jw6y136ampUO9j053oT5wIs4lQYIeaFOWPPpRrTxBs\n3/0i\r\n=UtoV\r\n-----END PGP SIGNATURE-----\r\n",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEYCIQCyrUfVTqbufZhoob3oKt5J1W/UFEt6fKRskxf+IHXfQgIhAKemTa6IQ+RwVr/5Aezid2dKIYEy2PLWXD1NxeBpo08W"
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"email": "ts-npm-types@microsoft.com",
+					"name": "types"
+				}
+			],
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/nunjucks_3.1.2_1566576831045_0.9526226375791724"
+			},
+			"_hasShrinkwrap": false
+		},
+		"3.1.3": {
+			"name": "@types/nunjucks",
+			"version": "3.1.3",
+			"description": "TypeScript definitions for nunjucks",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Ruben Slabbert",
+					"url": "https://github.com/RubenSlabbert",
+					"githubUsername": "RubenSlabbert"
+				},
+				{
+					"name": "Matthew Burstein",
+					"url": "https://github.com/MatthewBurstein",
+					"githubUsername": "MatthewBurstein"
+				}
+			],
+			"main": "",
+			"types": "index",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+				"directory": "types/nunjucks"
+			},
+			"scripts": {},
+			"dependencies": {},
+			"typesPublisherContentHash": "04b99ca2f30a90d56e8f41133c2b420b111f1ed76fef24fc267f52d1e57ab73a",
+			"typeScriptVersion": "2.2",
+			"_id": "@types/nunjucks@3.1.3",
+			"dist": {
+				"integrity": "sha512-42IiIIBdoB7ZDwCVhCWYT4fMCj+4TeacuVgh7xyT2du5EhkpA+OFeeDdYTFCUt1MrHb8Aw7ZqFvr8s1bwP9l8w==",
+				"shasum": "55fa2bf6fd34641545a6686217324fde66d31164",
+				"tarball": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-3.1.3.tgz",
+				"fileCount": 4,
+				"unpackedSize": 8279,
+				"npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJdwelrCRA9TVsSAnZWagAAcb4P/0cuM5D+LBBYYO30zfu2\nWfAUuA32AbcetBHYbxxPTcrtNuCylcRr3RM/JM0qVCHiLwEwA3UGHFm9fSRX\n06Xa+ZaFZru1O47ygRlxIo/M6NIn/PlHqfdK07L/gtX1mfKhFqWkyyPZTt8w\nynmkhwaC9hQeeSIeB4Wy5kVjYlPxUfQwvX98d0wGTK1PwU+sdmsUH7NnH1+T\nRzqs9WGf2KUrcGO6Qz+30uDzlzE4mtpzexCGdvSeK3oe9VuFUUf+1WOnE+t2\nIhLibFHowOppVht2xaFusRxK+k613Pf+KX4NPUUsssI4q4o3P9tHcwP35OHo\ncxP2aDd9z8cbC1v3GiXy0gSQdwgw8Vdce5Zr9jHZmjI311byxosZ0KqwXzaz\n17/yhvFThRhlsIdWOAWLHb3d1udwYumrhxOmFAYQ7RQyEaBSjILakHAo6Kv/\nBvdpgP+zbXmpPQiXcSvU0WFjhAh38V3y7GrGS0R3wTD9xZ8WPnk4XBTdtZGz\nUvO4hbjlGL5g4BeYcqVoRq+cR4xbZTVHweDz7wA3HGK+MdNaxhK52xRAoUer\nkqjMwNdX7Cfiq9nnyZlceGuEZ09cvMV01rUiekIM7mNJ5413M/ZiFtdjpQID\nIg3u+bsGZ6/n9cVzbnZ8DBkBjw0SFWmMxrta3fUKScn4ruB9pXV7E7LtPB4s\nS+H1\r\n=wUcv\r\n-----END PGP SIGNATURE-----\r\n",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCIDBf5tqveuVDBaj+nKFPHEwz3zJ8JnawXXHTk4ee/D8/AiEAnG+AGHVchBQTGbnqY/Bkvo9WCbkhbcMnKiteVgOub7o="
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"email": "ts-npm-types@microsoft.com",
+					"name": "types"
+				}
+			],
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/nunjucks_3.1.3_1572989290838_0.7097771886488349"
+			},
+			"_hasShrinkwrap": false
+		},
+		"3.1.4": {
+			"name": "@types/nunjucks",
+			"version": "3.1.4",
+			"description": "TypeScript definitions for nunjucks",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Ruben Slabbert",
+					"url": "https://github.com/RubenSlabbert",
+					"githubUsername": "RubenSlabbert"
+				},
+				{
+					"name": "Matthew Burstein",
+					"url": "https://github.com/MatthewBurstein",
+					"githubUsername": "MatthewBurstein"
+				}
+			],
+			"main": "",
+			"types": "index.d.ts",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+				"directory": "types/nunjucks"
+			},
+			"scripts": {},
+			"dependencies": {},
+			"typesPublisherContentHash": "1b0a9a2d2fcd2914fbd165f1a3ef1c14b4034f2190822557e40e6271491b731e",
+			"typeScriptVersion": "3.4",
+			"_id": "@types/nunjucks@3.1.4",
+			"dist": {
+				"integrity": "sha512-cR65PLlHKW/qxxj840dbNb3ICO+iAVQzaNKJ8TcKOVKFi+QcAkhw9SCY8VFAyU41SmJMs+2nrIN2JGhX+jYb7A==",
+				"shasum": "2f80e2fa5e7982b2131201d0b4474ab4d03d9de1",
+				"tarball": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-3.1.4.tgz",
+				"fileCount": 4,
+				"unpackedSize": 8273,
+				"npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.13\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJgG2pkCRA9TVsSAnZWagAASY4P+wVqCyChq3bPmnC1ygq2\nEXNHMDpDtE5QxF8dQu3+T2YslrQzWidtFqaEl3eg5EDkqp5VXJxfM1yFjDq0\nkuq3yIuzKSHno2JYqnpCBkaD8nUK3KOq48fU0rgfpK09/bfJiPCKeud47ynr\nprVbadVmXKPQQixdG14CUt88eDl/uqtjzCQsgHxMYNFedlH873Q/sUYrcANX\nKHC6Wco6IXmF6LHJTlP+h1Z5lH62m1Fy83N1io6FkBRtEK5QEefUJYwa12yd\nbU1+IrjzaQMMZg/r/ql9exPNQJsmoTXo+ULwBjZx3KlTrQR7/QpmPaLkRclW\nthQmFTlwGUkncqgAUFAhpJVMyOk8Uxp+30Aj2gEZ84fI1XuMf3BqIkIf9qg1\nzkcBQcQEzInREe/4hvTE2nC0sKsOnj83HLJ1awW7UmoLl7+0ZpLiTXSrOJ4V\n+oOje/osMkkjiHEk7A0l2vGi+WmxbpLoYu8R5rurScfjTEctEyJKokCggF98\n8ech00DkjLKK+ulkYTp38l0OHm7VAaZD5NatZJ8P6WaQh8c4TjQRZ9N7a0EJ\nySh4NBXf2t/t2MX0Xho9Jb9QDG7MKRT5pTvqLNJUV3b13GXhSy0gIoPLYcmU\noIiM9dsTMHWpa434VUY91yqLRiFga+rHcr41KwNH9Py9jBez6d87W+Whk0f8\nooOJ\r\n=zYgx\r\n-----END PGP SIGNATURE-----\r\n",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEQCICtISIaQp1TTZR3klln+YOGLBGsVpznGsdw4SRP5nh/zAiBXpH24Rk1jcj5T7rSRALoL5WUaRlRppX+SBvTbIDY9HA=="
+					}
+				]
+			},
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/nunjucks_3.1.4_1612409443559_0.7069909265506407"
+			},
+			"_hasShrinkwrap": false
+		},
+		"3.1.5": {
+			"name": "@types/nunjucks",
+			"version": "3.1.5",
+			"description": "TypeScript definitions for nunjucks",
+			"homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/nunjucks",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Ruben Slabbert",
+					"url": "https://github.com/RubenSlabbert",
+					"githubUsername": "RubenSlabbert"
+				},
+				{
+					"name": "Matthew Burstein",
+					"url": "https://github.com/MatthewBurstein",
+					"githubUsername": "MatthewBurstein"
+				}
+			],
+			"main": "",
+			"types": "index.d.ts",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+				"directory": "types/nunjucks"
+			},
+			"scripts": {},
+			"dependencies": {},
+			"typesPublisherContentHash": "8dcdd81bd30383d8a85c8a7fc288d44251c6b9e5ca70ffb2cd048ab9a1437447",
+			"typeScriptVersion": "3.6",
+			"_id": "@types/nunjucks@3.1.5",
+			"dist": {
+				"integrity": "sha512-0zEdmQNNvQ+xyV9kqQvAV93UVroTwhE78toVUDT0GBnGcW2jQBZnB4al9qq2LqI5qHOqROy/DvvAY/UwrbvV1A==",
+				"shasum": "e0782333b75b4ff9ac9213aa160ca8c5132eaf57",
+				"tarball": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-3.1.5.tgz",
+				"fileCount": 4,
+				"unpackedSize": 8694,
+				"npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.13\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJg5dgHCRA9TVsSAnZWagAAUP8P/io4KB5eUcPVaWbtMLmv\nU6ykeOfzIbt7Gqf2TMZIIotD+tEPiX9tk0T8frSdJU7R/2hU/Bzx5v5eW/Fs\ndFAY4O3F/5tAYBo2OazEaT5OxYnsu/2xniriMISczFtiLK/JMVGEXo0ACnI2\nC0bA+0tJghWYRhVnQXA2fzkT1hxNNHQJx/r8351kOjKLL35b4K3WhkcNib0e\nAY7udg7E9T56I1xTa1nBTKI3zDai2HEwfzylEL+csqJ9NIWGX9RdNgiMSX2X\nIgq6WDMyvn+BseqfBeXEhRpYL7+RigRU8i2bWG9TIibnvvvRgXE8Md5/m8c7\nqe+pQzL2K3kbZs/G43Sb+aqZtGbmcAK7ODUSGP9xPfse4Gya8jgAI3r2LYTv\nFZPGh5ep17T1WvGwFqNdJUGfNL93ctlpFEp9U5bmP96lCMoH6Y8ZFQGo4E56\nKHaPE1m4TMOmjTNsrrL7DBVUJbOzwQ1F80rmYLDhmgoy/rzXCD3DryDoR3QF\ndxq45InT+CqvsX/Q+TNLpCHkn/JZ93WHo0AP5YZF5H6A1Jr4KsAvluOyEAoW\n2rzsLksZKBCSNSzhxSPjALfcEv62PKgDVuWecYj9KiEs7R8WeNTYWw67en/U\nCuqvAsyljOBdEAR69aYg3PgEEDyXrjG9P8PZkka2PWZp/rxq+54EUhjjQktl\nSxSb\r\n=gaIK\r\n-----END PGP SIGNATURE-----\r\n",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEQCIAuizQKmlgN2Z3lHPrjOzOcCemA1NImsYjQV/zvaMu56AiBY+G+Mi3n9IedPM2WmbDN7wWzI5J/eChVSQpPf3VOQlw=="
+					}
+				]
+			},
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/nunjucks_3.1.5_1625675783502_0.7009047261288437"
+			},
+			"_hasShrinkwrap": false
+		},
+		"3.2.0": {
+			"name": "@types/nunjucks",
+			"version": "3.2.0",
+			"description": "TypeScript definitions for nunjucks",
+			"homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/nunjucks",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Ruben Slabbert",
+					"url": "https://github.com/RubenSlabbert",
+					"githubUsername": "RubenSlabbert"
+				},
+				{
+					"name": "Matthew Burstein",
+					"url": "https://github.com/MatthewBurstein",
+					"githubUsername": "MatthewBurstein"
+				}
+			],
+			"main": "",
+			"types": "index.d.ts",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+				"directory": "types/nunjucks"
+			},
+			"scripts": {},
+			"dependencies": {},
+			"typesPublisherContentHash": "4ee8cae1d80096bafcfb0ae55630bb88b7ab5b7d5ef06d6cd8543778525882cb",
+			"typeScriptVersion": "3.7",
+			"_id": "@types/nunjucks@3.2.0",
+			"dist": {
+				"integrity": "sha512-1FM36Hm3EdidJmWlZZafkg/kZME0UZ/0vQ46JE8R7R0JqQafah0r+d4i6d/MJg5DnKxEeAOAeifEVkzo7fEvGg==",
+				"shasum": "2303629c91cdd39de103af979046d4a8590351e4",
+				"tarball": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-3.2.0.tgz",
+				"fileCount": 4,
+				"unpackedSize": 9266,
+				"npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.13\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJhQOOXCRA9TVsSAnZWagAA7zIQAKCx/czUpv0Nywu+o9CK\nX61ME+AEKqzb3g3vqUaO7tFxH/VhBiUloo+Mg6Gq1PNKXzCQNN2wo6kwAiqY\nrFrlFF5wyxI74synd7AVSqIAoDSQ/4XUIu8f9c1+6TCM9wRRatcY1gOLcetY\nRpZLJ2k+ZFlxc828fhHgvM75AYYpfXRcygEajg3V69NczNjfDg2ay9czedjl\nKCz8l08kVNEZ0XdfPVOPUBQaulYJQh8ovqd/75p05AdP9Ar1dAivRhV09naZ\n4ix+l9BKcm8VfDv2ESzw6XVpdjEFUYPx6W9m/CssD81709HHew8qudAhzbUd\nWwdL01eFaocB5kcenVajQ6Qz7/NRQ5Whnd6N/LT6bdhGjIQhARQPs0i5wRP8\nAPYgK6ll8W8YjlfDgx1AjTSxpmBa1bM7Q9mwwLlFyr4objKnqP05CyseEph5\np8PNnXNvX9RvCBD/WEqOccA1huZVj+4Akm3z0HFWQb7jXqPVYZo2Vu0ZKYM1\nfgocM91xZIyu01gcJYvM6exvRdGFnJLqPhGuIdFfd5xC+g0mmm29V+zfbJyZ\n7A4shCgFUruBPNF9qR8oUXf1d5H3gQeveTe/JKxVccMBm68AhNW62g0U2ltk\nVlUBcz4znVD1hUSD2+vBseS5MWgrYNEUjlHvAUG2jMsQ/cOm/4ocMmpGgBeL\nNH8F\r\n=2w53\r\n-----END PGP SIGNATURE-----\r\n",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEYCIQDFkmWwBVVhdYzjfncMBnT8OIj//spZ6CgRUGukknaYgQIhAMPeu9QHqnAc5iTGwf+jzXUhnSnIh+v5mueX6vWUPEv7"
+					}
+				]
+			},
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/nunjucks_3.2.0_1631642519478_0.42201464738768557"
+			},
+			"_hasShrinkwrap": false
+		},
+		"3.2.1": {
+			"name": "@types/nunjucks",
+			"version": "3.2.1",
+			"description": "TypeScript definitions for nunjucks",
+			"homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/nunjucks",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Matthew Burstein",
+					"url": "https://github.com/MatthewBurstein",
+					"githubUsername": "MatthewBurstein"
+				}
+			],
+			"main": "",
+			"types": "index.d.ts",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+				"directory": "types/nunjucks"
+			},
+			"scripts": {},
+			"dependencies": {},
+			"typesPublisherContentHash": "f81d33b7e1dd4c147a7521a8904c05ec0d69f864fac1bcaaed6c0571493cf230",
+			"typeScriptVersion": "3.8",
+			"_id": "@types/nunjucks@3.2.1",
+			"dist": {
+				"integrity": "sha512-hUh5HIC7peH+0MvlYU5KM2RydWxG1mBceivHsQGwlelU9zlczLICyJmjMwgjkI3m0+N50n46GVHkw35lIim6LQ==",
+				"shasum": "02a3ade3dc4d3950029c6466a4034565dba7cf8c",
+				"tarball": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-3.2.1.tgz",
+				"fileCount": 4,
+				"unpackedSize": 8981,
+				"npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.13\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJhxRDACRA9TVsSAnZWagAAYp0P/2QidZ40eHaPyUIqICvz\n6EUBtvvBiP0geABLyLU1P0ituwjH5uoPJa7KDaXWj0CVkiG3EHNif2u/1Gup\nCUrzcqhnuU68vje8NFeR+JhcYtZN3FnXU8CR9v4PvQdg/oLZqIgLoF0IC+E/\n+VBrE+K9aKm9/TieAzqjHoA8G0YMNSoeCXIwbmnGCp00ONPxXyqxVqKaKz8H\noUutTukN+vo2efNrSpMbxF4Tk8XR6u+62IV4lbOb+fAFNZbhXk7EH2oQ0zIQ\nOiXfYOh6DuZV+i0xMH+FDED/nMZDnvMobvTxK51846Ue2OBoqeL9x1T7OBD3\nAY0o7ilCUJYFWTkZp9asXZtyh6b4pniIGO0AEhHkbghc6w4Z61mYNMYfVDYT\n8k5BgAb1zgyDV/ANvgo27ecRenQIcj3dcrfbS4zpP5vr0Hr9Ub8Q1gzN5cOX\naBX+2gSaE7sODurt7UFixdkQyQWi+Yz2SIU8lpD1/bnh6GB1r+ZZXgFyiaJU\nMS1LoQaCFKoDmOOpzK0Raqch+h4cIPdxUmFFM7ibEe0h0lFfRh2VE0XNpAEZ\nqQHU4IE4DRcffyVsb0pufIghBb2++qq0pyFXux5PCfyxXB0OKC44wMzaD9GZ\nHHOMYdSCvUTkCKUs5+Mlov16OXkg/1zmjAflYBAQC8kb2MOrdj/VGRvVqk9f\n9spB\r\n=ZVIi\r\n-----END PGP SIGNATURE-----\r\n",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCIGQkZxWMQlqF1PfBSauf0L6tMn3Po8+CCXM04zVpLR4ZAiEAk+ziqKshoU8f/wIPd/pZ6bQdqN1OXdZGMrYZ5WD9LQw="
+					}
+				]
+			},
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/nunjucks_3.2.1_1640304832143_0.305992582843688"
+			},
+			"_hasShrinkwrap": false
+		},
+		"3.2.2": {
+			"name": "@types/nunjucks",
+			"version": "3.2.2",
+			"description": "TypeScript definitions for nunjucks",
+			"homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/nunjucks",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Matthew Burstein",
+					"url": "https://github.com/MatthewBurstein",
+					"githubUsername": "MatthewBurstein"
+				}
+			],
+			"main": "",
+			"types": "index.d.ts",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+				"directory": "types/nunjucks"
+			},
+			"scripts": {},
+			"dependencies": {},
+			"typesPublisherContentHash": "c224fdc662bf5566367648603abe1b58d00a1286c7d3a6d72543678080d788d3",
+			"typeScriptVersion": "4.2",
+			"_id": "@types/nunjucks@3.2.2",
+			"dist": {
+				"integrity": "sha512-qarGBZOVxv1pF6BxQHwYHYYxim/TCm3aXF8BUt/kyF/+xi/DXMoj1Bhw3hXVBl2Yov+w47reDldm0iXXFZTotA==",
+				"shasum": "657b1f0f9eb32c5bb3efa8afe62a2e4232c09d1c",
+				"tarball": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-3.2.2.tgz",
+				"fileCount": 5,
+				"unpackedSize": 9012,
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEQCIGDzZTlLj1ozlmjm/Jy0OH64ALwcqWPtSDxjTmXIi9+bAiBAmOwr6wSipLZgAjOxaEGSAZnCO8ozejIWt/cqlotSdw=="
+					}
+				],
+				"npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v4.10.10\r\nComment: https://openpgpjs.org\r\n\r\nwsFzBAEBCAAGBQJj7HyEACEJED1NWxICdlZqFiEECWMYAoorWMhJKdjhPU1b\r\nEgJ2VmrfSBAAlRoxyeG3ae05R6OV582jjPchZk01PyD2SCqAaOhtk0dVskaD\r\ngKPt9kzwDmP9zi533E3RXYUJrN+xeNnYA828+fcYfYbC6P9Q++jJYwqcVWkX\r\nj4jgJJU/V0GjRZCFrzpHXyVi2iIPmvofhlU8zUs246ZEqmcAAZcFkeg3GPyO\r\nrcCQspDrIpgLOG+EPcR/asM9s5JlZEwawITralC29P4hmj40IJP4hqzwdecm\r\nz3tmQSh/Nf6NKAxcbDNoJ8k4E+Q4Ej8VHn1otP95WsKhHrpkOtZ1AlqjMQLJ\r\nngxB5KVYAqhtvQk2sCNjqGTSeOyTYmZ+AdDfeRjKLje5SycTlEAcCHmuANmz\r\nOzdKsk70/DLaufhEu32tJWZG+s4hLdRGOkuScEx5i9WZ7Uo90QPmovxaFpBV\r\nIoGR54j3UVpIN6xQuxj5qdjad7G/uKYvqTiYFQfz8H12eLxOwlTi4otijdur\r\n+X5zRkQPDZpTBHQ7XpVly6x2Hn919KAecy3E1kDofPfY04igDbFMGjLNYms4\r\nigifDQx5+VeePRjKppZYstKOQ1QwAPw90s4sjpFZLFeJ8bt7ErkARgKnVbp8\r\nHsLz9YMO9fDCTsg5LPw7wu5w4DR8PoJlxZF4HRfMsMU1lt+jr2iP0Vp44XpB\r\nI9eKfEQonyfmeB4O9XKSZpWY+k3piiYPEYg=\r\n=6AAo\r\n-----END PGP SIGNATURE-----\r\n"
+			},
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/nunjucks_3.2.2_1676442756404_0.9963846185303269"
+			},
+			"_hasShrinkwrap": false
+		},
+		"3.2.3": {
+			"name": "@types/nunjucks",
+			"version": "3.2.3",
+			"description": "TypeScript definitions for nunjucks",
+			"homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/nunjucks",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Matthew Burstein",
+					"url": "https://github.com/MatthewBurstein",
+					"githubUsername": "MatthewBurstein"
+				}
+			],
+			"main": "",
+			"types": "index.d.ts",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+				"directory": "types/nunjucks"
+			},
+			"scripts": {},
+			"dependencies": {},
+			"typesPublisherContentHash": "5315fcdc5b6765e17d2cb24f97e86605b61bfcbf5daf013fe11a226314375e6c",
+			"typeScriptVersion": "4.3",
+			"_id": "@types/nunjucks@3.2.3",
+			"dist": {
+				"integrity": "sha512-+lFIql0nbWSftazQ27cOYvSLC92SsfjxrU0I/Iys7hoxrBkN8OF+wmxxzx3bLFyFrLgDZ9lUckGcwldE4SfDQA==",
+				"shasum": "994e68cb575c3ac1be27e6f99543183b3c3605aa",
+				"tarball": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-3.2.3.tgz",
+				"fileCount": 5,
+				"unpackedSize": 9459,
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEQCIBIwdn9UkQbxU8VIZ+xtloYdVLOt2QBH08HojHbWsrTXAiBQO8TmmX8QOntdOT68qMdaZHxbqQw+5WXVh5why3QlJA=="
+					}
+				]
+			},
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/nunjucks_3.2.3_1688077964506_0.0941521786656172"
+			},
+			"_hasShrinkwrap": false
+		},
+		"3.2.4": {
+			"name": "@types/nunjucks",
+			"version": "3.2.4",
+			"description": "TypeScript definitions for nunjucks",
+			"homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/nunjucks",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Matthew Burstein",
+					"url": "https://github.com/MatthewBurstein",
+					"githubUsername": "MatthewBurstein"
+				}
+			],
+			"main": "",
+			"types": "index.d.ts",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+				"directory": "types/nunjucks"
+			},
+			"scripts": {},
+			"dependencies": {},
+			"typesPublisherContentHash": "cbe793d97925ceb01e6d247c63ce56eddb47d786f7b3aaa78d8aa3b095ff65f8",
+			"typeScriptVersion": "4.5",
+			"_id": "@types/nunjucks@3.2.4",
+			"dist": {
+				"integrity": "sha512-Ro2d3CROK+QNreS9MgFloCuRyHaLHyxkoiDax97uUWHQQwtKckH11ZvJfRVEuYGcTgJPY7JFwrjK3jRCTRLXwQ==",
+				"shasum": "3ee12a8fcd2633898f6a40e6f891b845d45f0019",
+				"tarball": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-3.2.4.tgz",
+				"fileCount": 5,
+				"unpackedSize": 9439,
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEYCIQCrumZVKS7m5zfe8d575j/ciAvqGzz9eKWOxJ7hNenFRwIhALdwwu6Yw2caeXx/5uAc8ieTlblLs5SsIcZSZkpi9EBB"
+					}
+				]
+			},
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/nunjucks_3.2.4_1695503421947_0.1645510468768434"
+			},
+			"_hasShrinkwrap": false
+		},
+		"3.2.5": {
+			"name": "@types/nunjucks",
+			"version": "3.2.5",
+			"description": "TypeScript definitions for nunjucks",
+			"homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/nunjucks",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Matthew Burstein",
+					"githubUsername": "MatthewBurstein",
+					"url": "https://github.com/MatthewBurstein"
+				}
+			],
+			"main": "",
+			"types": "index.d.ts",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+				"directory": "types/nunjucks"
+			},
+			"scripts": {},
+			"dependencies": {},
+			"typesPublisherContentHash": "1ecd138d5f939f1ad6083eeb2fe5234eed9d0edad592302ef23c34e2a5ac39ec",
+			"typeScriptVersion": "4.5",
+			"_id": "@types/nunjucks@3.2.5",
+			"dist": {
+				"integrity": "sha512-P9EakWGTqHpziLO9FMRm98LrVnPoipXGR/iAVF55xYa9SKQq7Brob/JTxGESwkhoNkL7fFvROdUOWNwTceELfw==",
+				"shasum": "88c820c9052bc19fefc11dfe5be76b5eaeada53d",
+				"tarball": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-3.2.5.tgz",
+				"fileCount": 5,
+				"unpackedSize": 9126,
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCIC8BEwtrRpayITS2HWCe7lya1ZXLPD5o+ovHZFPMo4StAiEA1u/GruAOnIFrfeqxjAm8PxfmDwBRwj08pufbAdcDbO0="
+					}
+				]
+			},
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/nunjucks_3.2.5_1697623558598_0.15823167171669716"
+			},
+			"_hasShrinkwrap": false
+		},
+		"3.2.6": {
+			"name": "@types/nunjucks",
+			"version": "3.2.6",
+			"description": "TypeScript definitions for nunjucks",
+			"homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/nunjucks",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Matthew Burstein",
+					"githubUsername": "MatthewBurstein",
+					"url": "https://github.com/MatthewBurstein"
+				}
+			],
+			"main": "",
+			"types": "index.d.ts",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+				"directory": "types/nunjucks"
+			},
+			"scripts": {},
+			"dependencies": {},
+			"typesPublisherContentHash": "1c8292c027d1b522c737fb5f4ea97e98f8b5123da446256fc8c919d845dced00",
+			"typeScriptVersion": "4.5",
+			"_id": "@types/nunjucks@3.2.6",
+			"dist": {
+				"integrity": "sha512-pHiGtf83na1nCzliuAdq8GowYiXvH5l931xZ0YEHaLMNFgynpEqx+IPStlu7UaDkehfvl01e4x/9Tpwhy7Ue3w==",
+				"shasum": "6d6e0363719545df8b9a024279902edf68b2caa9",
+				"tarball": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-3.2.6.tgz",
+				"fileCount": 5,
+				"unpackedSize": 9126,
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEQCIGlFRLowgua57xtXjuYbzbojZ1kTnr1pCvqMFF+3lPKtAiBnGyjCFrQVn6svwDSECmCynNEQw3YnEGaH4//71ljRVA=="
+					}
+				]
+			},
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/nunjucks_3.2.6_1699359106918_0.8980111626625311"
+			},
+			"_hasShrinkwrap": false
+		}
+	},
+	"time": {
+		"modified": "2023-11-07T12:11:51.772Z",
+		"created": "2016-05-17T18:30:03.490Z",
+		"0.0.14-alpha": "2016-05-17T18:30:03.490Z",
+		"0.0.15-alpha": "2016-05-19T21:53:34.927Z",
+		"0.0.20-alpha": "2016-05-20T20:19:33.598Z",
+		"0.0.21-alpha": "2016-05-25T05:36:03.715Z",
+		"0.0.22-alpha": "2016-07-01T20:12:05.791Z",
+		"0.0.23-alpha": "2016-07-01T23:34:19.254Z",
+		"0.0.24-alpha": "2016-07-02T03:07:01.307Z",
+		"0.0.25-alpha": "2016-07-04T00:56:34.375Z",
+		"0.0.26-alpha": "2016-07-06T21:45:07.015Z",
+		"0.0.27-alpha": "2016-07-08T20:59:04.170Z",
+		"0.0.28": "2016-07-14T15:35:58.637Z",
+		"0.0.29": "2016-08-02T16:02:13.187Z",
+		"0.0.30": "2016-08-08T20:37:17.246Z",
+		"0.0.31": "2016-08-25T18:51:49.598Z",
+		"0.0.32": "2016-09-19T17:57:09.031Z",
+		"0.0.33": "2017-08-21T22:00:14.800Z",
+		"3.0.0": "2017-11-07T08:19:08.752Z",
+		"3.1.0": "2018-08-18T01:09:45.493Z",
+		"3.1.1": "2019-02-13T21:43:41.988Z",
+		"3.1.2": "2019-08-23T16:13:51.165Z",
+		"3.1.3": "2019-11-05T21:28:10.963Z",
+		"3.1.4": "2021-02-04T03:30:43.675Z",
+		"3.1.5": "2021-07-07T16:36:23.623Z",
+		"3.2.0": "2021-09-14T18:01:59.627Z",
+		"3.2.1": "2021-12-24T00:13:52.300Z",
+		"3.2.2": "2023-02-15T06:32:36.569Z",
+		"3.2.3": "2023-06-29T22:32:44.687Z",
+		"3.2.4": "2023-09-23T21:10:22.103Z",
+		"3.2.5": "2023-10-18T10:05:58.789Z",
+		"3.2.6": "2023-11-07T12:11:47.153Z"
+	},
+	"users": {},
+	"dist-tags": {
+		"latest": "3.2.6",
+		"ts2.0": "0.0.33",
+		"ts2.1": "0.0.33",
+		"ts2.2": "3.1.3",
+		"ts2.3": "3.1.3",
+		"ts2.4": "3.1.3",
+		"ts2.5": "3.1.3",
+		"ts2.6": "3.1.3",
+		"ts2.7": "3.1.3",
+		"ts2.8": "3.1.3",
+		"ts2.9": "3.1.3",
+		"ts3.0": "3.1.3",
+		"ts3.1": "3.1.3",
+		"ts3.2": "3.1.3",
+		"ts3.3": "3.1.3",
+		"ts3.4": "3.1.4",
+		"ts3.5": "3.1.4",
+		"ts3.6": "3.1.5",
+		"ts3.7": "3.2.0",
+		"ts3.8": "3.2.1",
+		"ts3.9": "3.2.1",
+		"ts4.0": "3.2.1",
+		"ts4.1": "3.2.1",
+		"ts4.2": "3.2.2",
+		"ts4.3": "3.2.3",
+		"ts4.4": "3.2.3",
+		"ts4.5": "3.2.6",
+		"ts4.6": "3.2.6",
+		"ts4.7": "3.2.6",
+		"ts4.8": "3.2.6",
+		"ts4.9": "3.2.6",
+		"ts5.0": "3.2.6",
+		"ts5.1": "3.2.6",
+		"ts5.2": "3.2.6",
+		"ts5.3": "3.2.6",
+		"ts5.4": "3.2.6"
+	},
+	"_uplinks": {
+		"npmjs": {
+			"etag": "W/\"cb07b78751e96a9d64d9e56a028a537d\"",
+			"fetched": 1704380627416
+		}
+	},
+	"_distfiles": {
+		"nunjucks-0.0.14-alpha.tgz": {
+			"url": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-0.0.14-alpha.tgz",
+			"sha": "4f36255a80a0bcdf20777edff0a3019622a0be6e",
+			"registry": "npmjs"
+		},
+		"nunjucks-0.0.15-alpha.tgz": {
+			"url": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-0.0.15-alpha.tgz",
+			"sha": "ee172013473a9941d8b5785fcc982b1c2c4eff26",
+			"registry": "npmjs"
+		},
+		"nunjucks-0.0.20-alpha.tgz": {
+			"url": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-0.0.20-alpha.tgz",
+			"sha": "184ee66d1214ec796b3a8859ad6d6d07eb3daaa4",
+			"registry": "npmjs"
+		},
+		"nunjucks-0.0.21-alpha.tgz": {
+			"url": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-0.0.21-alpha.tgz",
+			"sha": "6deb55421093567b4c89f2e4943535fc90c9d258",
+			"registry": "npmjs"
+		},
+		"nunjucks-0.0.22-alpha.tgz": {
+			"url": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-0.0.22-alpha.tgz",
+			"sha": "cba7143f6d199314020d233ed33039504c891c1c",
+			"registry": "npmjs"
+		},
+		"nunjucks-0.0.23-alpha.tgz": {
+			"url": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-0.0.23-alpha.tgz",
+			"sha": "14c469cf62fd69096c4b9aedf65d9c064ff33da4",
+			"registry": "npmjs"
+		},
+		"nunjucks-0.0.24-alpha.tgz": {
+			"url": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-0.0.24-alpha.tgz",
+			"sha": "e13e2a0af944155950dd8f464303aba5c5046f92",
+			"registry": "npmjs"
+		},
+		"nunjucks-0.0.25-alpha.tgz": {
+			"url": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-0.0.25-alpha.tgz",
+			"sha": "751c24d7d6ab421c8c346f76cb9130b32848365b",
+			"registry": "npmjs"
+		},
+		"nunjucks-0.0.26-alpha.tgz": {
+			"url": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-0.0.26-alpha.tgz",
+			"sha": "8709be2ee5ecbfc0f5ded48194cd8145c69969dc",
+			"registry": "npmjs"
+		},
+		"nunjucks-0.0.27-alpha.tgz": {
+			"url": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-0.0.27-alpha.tgz",
+			"sha": "5f5b6886e63aef12bcc4a705406bff4e237b17b2",
+			"registry": "npmjs"
+		},
+		"nunjucks-0.0.28.tgz": {
+			"url": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-0.0.28.tgz",
+			"sha": "bbb6fb943dd758281fa5c188f5e2b86fe8c9629b",
+			"registry": "npmjs"
+		},
+		"nunjucks-0.0.29.tgz": {
+			"url": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-0.0.29.tgz",
+			"sha": "1101b9d71c6d574f92aa874e15745a44099db2c6",
+			"registry": "npmjs"
+		},
+		"nunjucks-0.0.30.tgz": {
+			"url": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-0.0.30.tgz",
+			"sha": "632fce6a1ecfcbc8f70aba187c1a2b2e74bee803",
+			"registry": "npmjs"
+		},
+		"nunjucks-0.0.31.tgz": {
+			"url": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-0.0.31.tgz",
+			"sha": "65d3a4d05929c71202e4f99178541a57675254cd",
+			"registry": "npmjs"
+		},
+		"nunjucks-0.0.32.tgz": {
+			"url": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-0.0.32.tgz",
+			"sha": "654a6c56153b5bdd5cb5146424cfae5c8b757afa",
+			"registry": "npmjs"
+		},
+		"nunjucks-0.0.33.tgz": {
+			"url": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-0.0.33.tgz",
+			"sha": "1fbe19a294e0452e204d5aace9dc160da44b2acc",
+			"registry": "npmjs"
+		},
+		"nunjucks-3.0.0.tgz": {
+			"url": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-3.0.0.tgz",
+			"sha": "9393e33128d12c834b4bc8db6bbfd18ebce474f0",
+			"registry": "npmjs"
+		},
+		"nunjucks-3.1.0.tgz": {
+			"url": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-3.1.0.tgz",
+			"sha": "fdc2fce6f4d8046f7df88f06f32c9842aabdfa46",
+			"registry": "npmjs"
+		},
+		"nunjucks-3.1.1.tgz": {
+			"url": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-3.1.1.tgz",
+			"sha": "1f910f43c1aa41d99328cf28b6f1b82630ec6763",
+			"registry": "npmjs"
+		},
+		"nunjucks-3.1.2.tgz": {
+			"url": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-3.1.2.tgz",
+			"sha": "2cf954c46d99d1284fffe1719434d8c2fe20760c",
+			"registry": "npmjs"
+		},
+		"nunjucks-3.1.3.tgz": {
+			"url": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-3.1.3.tgz",
+			"sha": "55fa2bf6fd34641545a6686217324fde66d31164",
+			"registry": "npmjs"
+		},
+		"nunjucks-3.1.4.tgz": {
+			"url": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-3.1.4.tgz",
+			"sha": "2f80e2fa5e7982b2131201d0b4474ab4d03d9de1",
+			"registry": "npmjs"
+		},
+		"nunjucks-3.1.5.tgz": {
+			"url": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-3.1.5.tgz",
+			"sha": "e0782333b75b4ff9ac9213aa160ca8c5132eaf57",
+			"registry": "npmjs"
+		},
+		"nunjucks-3.2.0.tgz": {
+			"url": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-3.2.0.tgz",
+			"sha": "2303629c91cdd39de103af979046d4a8590351e4",
+			"registry": "npmjs"
+		},
+		"nunjucks-3.2.1.tgz": {
+			"url": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-3.2.1.tgz",
+			"sha": "02a3ade3dc4d3950029c6466a4034565dba7cf8c",
+			"registry": "npmjs"
+		},
+		"nunjucks-3.2.2.tgz": {
+			"url": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-3.2.2.tgz",
+			"sha": "657b1f0f9eb32c5bb3efa8afe62a2e4232c09d1c",
+			"registry": "npmjs"
+		},
+		"nunjucks-3.2.3.tgz": {
+			"url": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-3.2.3.tgz",
+			"sha": "994e68cb575c3ac1be27e6f99543183b3c3605aa",
+			"registry": "npmjs"
+		},
+		"nunjucks-3.2.4.tgz": {
+			"url": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-3.2.4.tgz",
+			"sha": "3ee12a8fcd2633898f6a40e6f891b845d45f0019",
+			"registry": "npmjs"
+		},
+		"nunjucks-3.2.5.tgz": {
+			"url": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-3.2.5.tgz",
+			"sha": "88c820c9052bc19fefc11dfe5be76b5eaeada53d",
+			"registry": "npmjs"
+		},
+		"nunjucks-3.2.6.tgz": {
+			"url": "https://registry.npmjs.org/@types/nunjucks/-/nunjucks-3.2.6.tgz",
+			"sha": "6d6e0363719545df8b9a024279902edf68b2caa9",
+			"registry": "npmjs"
+		}
+	},
+	"_attachments": {},
+	"_rev": "1-0ec29bbf634b7dfe",
+	"_id": "@types/nunjucks",
+	"readme": "[object Object]"
+}

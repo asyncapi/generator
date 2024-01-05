@@ -1,0 +1,937 @@
+{
+	"name": "@types/inherits",
+	"versions": {
+		"0.0.15-alpha": {
+			"name": "@types/inherits",
+			"version": "0.0.15-alpha",
+			"description": "Type definitions for inherits from https://www.github.com/DefinitelyTyped/DefinitelyTyped",
+			"main": "",
+			"scripts": {},
+			"author": {
+				"name": "Ilya Mochalov",
+				"email": "https://github.com/chrootsu"
+			},
+			"license": "MIT",
+			"typings": "index.d.ts",
+			"dependencies": {
+				"util": "*"
+			},
+			"_id": "@types/inherits@0.0.15-alpha",
+			"_shasum": "7bc2ea80f918484f883ae12bba2163796ddb2360",
+			"_from": "output\\inherits",
+			"_resolved": "file:output\\inherits",
+			"_npmVersion": "3.8.2",
+			"_nodeVersion": "5.5.0",
+			"_npmUser": {
+				"name": "types",
+				"email": "ryan.cavanaugh@microsoft.com"
+			},
+			"dist": {
+				"shasum": "7bc2ea80f918484f883ae12bba2163796ddb2360",
+				"tarball": "https://registry.npmjs.org/@types/inherits/-/inherits-0.0.15-alpha.tgz",
+				"integrity": "sha512-89ZcyBHuG8Ly8+7zKC/KI9d9FjwDIGfnC8P0OmG3yPovYGMFwJcODB8RAZrBbX6QjSP7a/hBUPCYp7FgCcxVUQ==",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEYCIQDvWhkkLqG5nax1VgYwMZ3WsvXrnNT7/6QZz5byyfp4KwIhALYstktMf+MeAS0N1D6ovmeLO+TaodZdfXadQPjde7Ge"
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ryan.cavanaugh@microsoft.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "packages-16-east.internal.npmjs.com",
+				"tmp": "tmp/inherits-0.0.15-alpha.tgz_1463461966877_0.8903068788349628"
+			},
+			"directories": {},
+			"contributors": []
+		},
+		"0.0.16-alpha": {
+			"name": "@types/inherits",
+			"version": "0.0.16-alpha",
+			"description": "Type definitions for inherits from https://www.github.com/DefinitelyTyped/DefinitelyTyped",
+			"main": "",
+			"scripts": {},
+			"author": {
+				"name": "Ilya Mochalov",
+				"email": "https://github.com/chrootsu"
+			},
+			"license": "MIT",
+			"typings": "index.d.ts",
+			"dependencies": {
+				"util": "*",
+				"@types/node": "*"
+			},
+			"_id": "@types/inherits@0.0.16-alpha",
+			"_shasum": "0996357e7584001bba89994eb36e700e822d3a3c",
+			"_from": "output\\inherits",
+			"_resolved": "file:output\\inherits",
+			"_npmVersion": "3.8.2",
+			"_nodeVersion": "5.5.0",
+			"_npmUser": {
+				"name": "types",
+				"email": "ryan.cavanaugh@microsoft.com"
+			},
+			"dist": {
+				"shasum": "0996357e7584001bba89994eb36e700e822d3a3c",
+				"tarball": "https://registry.npmjs.org/@types/inherits/-/inherits-0.0.16-alpha.tgz",
+				"integrity": "sha512-WE+r8GfL1Vd2fRnfhaUwDaEiA9d0LBWyiWWdkzsqX4CEBNeTDgY4t3G+KQuEPqQyZASQkEjBFaR9JbxzZV1LKA==",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCIQD7/Ww+EkuG4ZeNXAUCrCrocXm6Pxau3hSOM6887wINjgIgepllFwFhYnWqKc+mRrfIPHRXynvH2VtJ3zpG74JFfsg="
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ryan.cavanaugh@microsoft.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "packages-16-east.internal.npmjs.com",
+				"tmp": "tmp/inherits-0.0.16-alpha.tgz_1463692370014_0.5349314697086811"
+			},
+			"directories": {},
+			"contributors": []
+		},
+		"0.0.21-alpha": {
+			"name": "@types/inherits",
+			"version": "0.0.21-alpha",
+			"description": "TypeScript definitions for inherits",
+			"main": "",
+			"scripts": {},
+			"author": {
+				"name": "Ilya Mochalov",
+				"email": "https://github.com/chrootsu"
+			},
+			"license": "MIT",
+			"typings": "index.d.ts",
+			"dependencies": {
+				"@types/node": "*"
+			},
+			"_id": "@types/inherits@0.0.21-alpha",
+			"_shasum": "999906c8d8ac6b7ba7dcd2a2f0f2db01e202e246",
+			"_from": "output\\inherits",
+			"_resolved": "file:output\\inherits",
+			"_npmVersion": "3.8.2",
+			"_nodeVersion": "5.5.0",
+			"_npmUser": {
+				"name": "types",
+				"email": "ryan.cavanaugh@microsoft.com"
+			},
+			"dist": {
+				"shasum": "999906c8d8ac6b7ba7dcd2a2f0f2db01e202e246",
+				"tarball": "https://registry.npmjs.org/@types/inherits/-/inherits-0.0.21-alpha.tgz",
+				"integrity": "sha512-blK6Y47MvjhJ9VZ37AxQRps76ERTgWIQ7GAYKAevDrBDIVxx8GEqdeFv4ZR4OFEGv2VxfcntxVA9nrhxyu27hQ==",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCIE/c0GWBtondoeAGlEd2CWnUj5UdSlBgVHbaBZf3yp+dAiEAjvXFdg/Ft9B0eKpsf5ZEowx82bSGanyYWePqsOa97us="
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ryan.cavanaugh@microsoft.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "packages-16-east.internal.npmjs.com",
+				"tmp": "tmp/inherits-0.0.21-alpha.tgz_1463773746927_0.07597535732202232"
+			},
+			"directories": {},
+			"contributors": []
+		},
+		"0.0.22-alpha": {
+			"name": "@types/inherits",
+			"version": "0.0.22-alpha",
+			"description": "TypeScript definitions for inherits",
+			"main": "",
+			"scripts": {},
+			"author": {
+				"name": "Ilya Mochalov",
+				"email": "https://github.com/chrootsu"
+			},
+			"license": "MIT",
+			"typings": "index.d.ts",
+			"dependencies": {
+				"@types/node": "*"
+			},
+			"_id": "@types/inherits@0.0.22-alpha",
+			"_shasum": "53a046e4890cee26e487077c2f60f17e36e3fba6",
+			"_from": "output\\inherits",
+			"_resolved": "file:output\\inherits",
+			"_npmVersion": "3.8.2",
+			"_nodeVersion": "5.5.0",
+			"_npmUser": {
+				"name": "types",
+				"email": "ryan.cavanaugh@microsoft.com"
+			},
+			"dist": {
+				"shasum": "53a046e4890cee26e487077c2f60f17e36e3fba6",
+				"tarball": "https://registry.npmjs.org/@types/inherits/-/inherits-0.0.22-alpha.tgz",
+				"integrity": "sha512-a2XAi+e4umqiNI0n2UKGxvZu/FTF2aj8eNLSnn5IBIwqHzf21nTxMnsSLgw5mT1IclSCLeyEDmDKq4Cx9RyAHA==",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCIDxCzcRgQ4c8/uofCcc96xOG6CjvmrHVoxVO9Vj6dlfXAiEAkEBgN72NP1Qh20I9jOV+9bhuE2R1pW9hphe/BEvkH2A="
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ryan.cavanaugh@microsoft.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "packages-16-east.internal.npmjs.com",
+				"tmp": "tmp/inherits-0.0.22-alpha.tgz_1464152854988_0.548372978111729"
+			},
+			"directories": {},
+			"contributors": []
+		},
+		"0.0.23-alpha": {
+			"name": "@types/inherits",
+			"version": "0.0.23-alpha",
+			"description": "TypeScript definitions for inherits",
+			"main": "",
+			"scripts": {},
+			"author": {
+				"name": "Ilya Mochalov",
+				"email": "https://github.com/chrootsu"
+			},
+			"repository": {
+				"type": "git",
+				"url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+			},
+			"license": "MIT",
+			"typings": "index.d.ts",
+			"dependencies": {
+				"@types/node": "4.0.*"
+			},
+			"_id": "@types/inherits@0.0.23-alpha",
+			"_shasum": "bc2fe6a40ca39f53cae6a6bf096d95c2971ccaab",
+			"_from": "output\\inherits",
+			"_resolved": "file:output\\inherits",
+			"_npmVersion": "3.9.5",
+			"_nodeVersion": "6.2.2",
+			"_npmUser": {
+				"name": "types",
+				"email": "ryan.cavanaugh@microsoft.com"
+			},
+			"dist": {
+				"shasum": "bc2fe6a40ca39f53cae6a6bf096d95c2971ccaab",
+				"tarball": "https://registry.npmjs.org/@types/inherits/-/inherits-0.0.23-alpha.tgz",
+				"integrity": "sha512-EgJuUTuuVEglax7tm0yMzAHjSzswwtVSPNwewPo/IQMrf/DubGzrbFaRNAMvjGYUHP4MHe4vVK5BbkpwKrBJ0Q==",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCIQDRwnr69nMR3HJfkTP16zA8FaF3+gUdfcFK7WtjDOKJtwIgAu3egMeCuSvcEzzWzeZk9PUUKZEFZLP1rJtJV3HY608="
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ryan.cavanaugh@microsoft.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "packages-12-west.internal.npmjs.com",
+				"tmp": "tmp/inherits-0.0.23-alpha.tgz_1467402130855_0.62805843539536"
+			},
+			"directories": {},
+			"contributors": []
+		},
+		"0.0.24-alpha": {
+			"name": "@types/inherits",
+			"version": "0.0.24-alpha",
+			"description": "TypeScript definitions for inherits",
+			"main": "",
+			"scripts": {},
+			"author": {
+				"name": "Ilya Mochalov",
+				"email": "https://github.com/chrootsu"
+			},
+			"repository": {
+				"type": "git",
+				"url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+			},
+			"license": "MIT",
+			"typings": "index.d.ts",
+			"dependencies": {
+				"@types/node": "4.0.23-alpha"
+			},
+			"_id": "@types/inherits@0.0.24-alpha",
+			"_shasum": "d4bd890fe6356d659adc837119635488f48a4e07",
+			"_from": "output\\inherits",
+			"_resolved": "file:output\\inherits",
+			"_npmVersion": "3.7.2",
+			"_nodeVersion": "6.2.1",
+			"_npmUser": {
+				"name": "types",
+				"email": "ryan.cavanaugh@microsoft.com"
+			},
+			"dist": {
+				"shasum": "d4bd890fe6356d659adc837119635488f48a4e07",
+				"tarball": "https://registry.npmjs.org/@types/inherits/-/inherits-0.0.24-alpha.tgz",
+				"integrity": "sha512-uFyR8J4xmxkYKmnsQL/jqFa+Z3BjJeNe1XvuHMShHHYyUAiR3/KWJT7Up9e3DNuhYv5nkoFcKL4AxhXd7P97Pg==",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCIQDds/kggRpZmnpWXdzNrTySxjkbH0wjhpnS432FwIn0TgIgYopJpXZpiBq+17e7NLlNR2EziEb5zUnizC35qnKG2fk="
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ryan.cavanaugh@microsoft.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "packages-12-west.internal.npmjs.com",
+				"tmp": "tmp/inherits-0.0.24-alpha.tgz_1467414296264_0.04653072636574507"
+			},
+			"directories": {},
+			"contributors": []
+		},
+		"0.0.25-alpha": {
+			"name": "@types/inherits",
+			"version": "0.0.25-alpha",
+			"description": "TypeScript definitions for inherits",
+			"main": "",
+			"scripts": {},
+			"author": {
+				"name": "Ilya Mochalov",
+				"email": "https://github.com/chrootsu"
+			},
+			"repository": {
+				"type": "git",
+				"url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+			},
+			"license": "MIT",
+			"typings": "index.d.ts",
+			"dependencies": {
+				"@types/node": "4.0.24-alpha"
+			},
+			"_id": "@types/inherits@0.0.25-alpha",
+			"_shasum": "fe03d249ceff71ac858c620ca2812c1dd3814f76",
+			"_from": "output\\inherits",
+			"_resolved": "file:output\\inherits",
+			"_npmVersion": "3.7.2",
+			"_nodeVersion": "6.2.1",
+			"_npmUser": {
+				"name": "types",
+				"email": "ryan.cavanaugh@microsoft.com"
+			},
+			"dist": {
+				"shasum": "fe03d249ceff71ac858c620ca2812c1dd3814f76",
+				"tarball": "https://registry.npmjs.org/@types/inherits/-/inherits-0.0.25-alpha.tgz",
+				"integrity": "sha512-waCOyVeikbwFkM5bl1sSPDsHvKgCWvXqKZweuuNSF2mtMf8TfP83gGOY6tpueIUABNhNncu2gGOugjl9esAgcA==",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEQCIFfASOsAcCDIudPIvCkVueSFNCa33eXVtyIOIgWpv57kAiA591Cr2RH+0ia5rtrJmqZivhMlV7ZU3F9wjSt8WXlSdg=="
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ryan.cavanaugh@microsoft.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "packages-16-east.internal.npmjs.com",
+				"tmp": "tmp/inherits-0.0.25-alpha.tgz_1467427389794_0.047875134041532874"
+			},
+			"directories": {},
+			"contributors": []
+		},
+		"0.0.26-alpha": {
+			"name": "@types/inherits",
+			"version": "0.0.26-alpha",
+			"description": "TypeScript definitions for inherits",
+			"main": "",
+			"scripts": {},
+			"author": {
+				"name": "Ilya Mochalov",
+				"email": "https://github.com/chrootsu"
+			},
+			"repository": {
+				"type": "git",
+				"url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+			},
+			"license": "MIT",
+			"typings": "index.d.ts",
+			"dependencies": {
+				"@types/node": "4.0.26-alpha"
+			},
+			"_id": "@types/inherits@0.0.26-alpha",
+			"_shasum": "3399f3b84e1f3dc8cb71cab14b674f38f9bdf024",
+			"_from": "output\\inherits",
+			"_resolved": "file:output\\inherits",
+			"_npmVersion": "3.7.2",
+			"_nodeVersion": "6.2.1",
+			"_npmUser": {
+				"name": "types",
+				"email": "ryan.cavanaugh@microsoft.com"
+			},
+			"dist": {
+				"shasum": "3399f3b84e1f3dc8cb71cab14b674f38f9bdf024",
+				"tarball": "https://registry.npmjs.org/@types/inherits/-/inherits-0.0.26-alpha.tgz",
+				"integrity": "sha512-6l+0FREJ1kKqtp8tNOJBi/RSXYr9PNbeoB2pRoUzUHBvuFhFPaPFiWTYT9y2mv0N1BygFJyZNmGgM/7pz/wQSg==",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCIQCmGCkzrWSFdA2BhQ0ascXZtuSFKniBP3+5NqxslE8KdwIgMT/Q9AhBlgqFzYx3J1wO+Ucy3TNX+cjFgYcfXFoqmvM="
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ryan.cavanaugh@microsoft.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "packages-12-west.internal.npmjs.com",
+				"tmp": "tmp/inherits-0.0.26-alpha.tgz_1467592304353_0.12715766578912735"
+			},
+			"directories": {},
+			"contributors": []
+		},
+		"0.0.27-alpha": {
+			"name": "@types/inherits",
+			"version": "0.0.27-alpha",
+			"description": "TypeScript definitions for inherits",
+			"main": "",
+			"scripts": {},
+			"author": {
+				"name": "Ilya Mochalov",
+				"email": "https://github.com/chrootsu"
+			},
+			"repository": {
+				"type": "git",
+				"url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+			},
+			"license": "MIT",
+			"typings": "index.d.ts",
+			"dependencies": {
+				"@types/node": "4.0.27-alpha"
+			},
+			"_id": "@types/inherits@0.0.27-alpha",
+			"_shasum": "6c8534e68cd2851ad35e08cd18b1fbaead580ef8",
+			"_from": "output\\inherits",
+			"_resolved": "file:output\\inherits",
+			"_npmVersion": "3.10.3",
+			"_nodeVersion": "6.3.0",
+			"_npmUser": {
+				"name": "types",
+				"email": "ryan.cavanaugh@microsoft.com"
+			},
+			"dist": {
+				"shasum": "6c8534e68cd2851ad35e08cd18b1fbaead580ef8",
+				"tarball": "https://registry.npmjs.org/@types/inherits/-/inherits-0.0.27-alpha.tgz",
+				"integrity": "sha512-OoNiHjE7KCmF/MR4AZ/LjbFAI4JC03whBXeA2n/rXJs1p7Bc8GSNcSZKZBQz1zE+2MSljmqQbxHctqJnBzoY1w==",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCIQCmAyUihHzVItT1x7OViuphjBgpny20AE5pXTAd+/4UBAIgAK7mnCln2DeuRqaTSQ0Z3kTouD/BOnOzzzktV9Wq9tw="
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ryan.cavanaugh@microsoft.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "packages-12-west.internal.npmjs.com",
+				"tmp": "tmp/inherits-0.0.27-alpha.tgz_1468009859636_0.9307787548750639"
+			},
+			"directories": {},
+			"contributors": []
+		},
+		"0.0.28": {
+			"name": "@types/inherits",
+			"version": "0.0.28",
+			"description": "TypeScript definitions for inherits",
+			"main": "",
+			"scripts": {},
+			"author": {
+				"name": "Ilya Mochalov",
+				"email": "https://github.com/chrootsu"
+			},
+			"repository": {
+				"type": "git",
+				"url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+			},
+			"license": "MIT",
+			"typings": "index.d.ts",
+			"dependencies": {
+				"@types/node": "4.0.*"
+			},
+			"_id": "@types/inherits@0.0.28",
+			"_shasum": "dd611a146b1711cdd983590afba98c8a8260d2b9",
+			"_from": "output\\inherits",
+			"_resolved": "file:output\\inherits",
+			"_npmVersion": "3.10.3",
+			"_nodeVersion": "6.3.0",
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"dist": {
+				"shasum": "dd611a146b1711cdd983590afba98c8a8260d2b9",
+				"tarball": "https://registry.npmjs.org/@types/inherits/-/inherits-0.0.28.tgz",
+				"integrity": "sha512-ms0ioX2XvVMpmTWCw4eCqO3T4Uj2PcvhTuJLs2QQjuCmtZ+GctBNCpt0J7bTWgaUu8Sc8CoI+YWd6qH/MeeBVQ==",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEQCIGqI9r79Itt7jAw+4vWxpLNQHuNsWrBdTD7vIykPhjCgAiBmLgMUI1kcBqoUnMXNdu+e2+lGJ0PCvq+cLx1R8RSlCQ=="
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ryan.cavanaugh@microsoft.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "packages-16-east.internal.npmjs.com",
+				"tmp": "tmp/inherits-0.0.28.tgz_1468508111301_0.1918406211771071"
+			},
+			"directories": {},
+			"contributors": []
+		},
+		"0.0.29": {
+			"name": "@types/inherits",
+			"version": "0.0.29",
+			"description": "TypeScript definitions for inherits",
+			"license": "MIT",
+			"author": "Ilya Mochalov <https://github.com/chrootsu>",
+			"main": "",
+			"repository": {
+				"type": "git",
+				"url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+			},
+			"scripts": {},
+			"dependencies": {
+				"@types/node": "*"
+			},
+			"typings": "index.d.ts",
+			"typesPublisherContentHash": "6b6332d34dafaf188ecfa51579073b7a695ed1cd0540215d19ce21f9a5082554",
+			"_id": "@types/inherits@0.0.29",
+			"dist": {
+				"shasum": "2677118dc9b5eead16252f0b763efb02678d0697",
+				"tarball": "https://registry.npmjs.org/@types/inherits/-/inherits-0.0.29.tgz",
+				"integrity": "sha512-r32gTFTJHIVXio8lp0OsSDn8ZDJffVOJJ1usv/DorcVAV5TqPu9NYTOmfbbjHX2WNFG2HnDIz447RU8NPopiAw==",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCIQCOF/iSfdwG7P1jPflXCuD/UlqyHS0Vy+KmCkFIE2GvNwIgYATP/MaqSBA1btUfHkXA1C3DU3GGRPBpExBMEYxnf00="
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ryan.cavanaugh@microsoft.com"
+				}
+			],
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"_npmOperationalInternal": {
+				"host": "packages-16-east.internal.npmjs.com",
+				"tmp": "tmp/inherits-0.0.29.tgz_1474306848321_0.4739078958518803"
+			},
+			"directories": {},
+			"contributors": []
+		},
+		"0.0.30": {
+			"name": "@types/inherits",
+			"version": "0.0.30",
+			"description": "TypeScript definitions for inherits",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Ilya Mochalov",
+					"url": "https://github.com/chrootsu"
+				}
+			],
+			"main": "",
+			"repository": {
+				"type": "git",
+				"url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+			},
+			"scripts": {},
+			"dependencies": {
+				"@types/node": "*"
+			},
+			"peerDependencies": {},
+			"typesPublisherContentHash": "237f67cdeef180f42aedd305a7ed6ac7f6dc486d8a443599509f8b54b9afc876",
+			"typeScriptVersion": "2.0",
+			"_id": "@types/inherits@0.0.30",
+			"dist": {
+				"integrity": "sha512-u3bSJhhwCMWsMdZhrX+PD2CsyxW0ahdrUWuC2EJCa6zQywA+nnj4+PkaGAf5nw2E7+05ww0epgY+kcxa7ojJUA==",
+				"shasum": "5f2747c08aa644a0dd754add64dfeec3a120f902",
+				"tarball": "https://registry.npmjs.org/@types/inherits/-/inherits-0.0.30.tgz",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEYCIQC6Jqd6HOFU0BvIJptNBCyS74I2tX9sli8KUnmS0B7KzwIhAKJRx51Uz1XJAj8TreXy2QE7tq3TX0GWck8OlWuzgQ2M"
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ryan.cavanaugh@microsoft.com"
+				}
+			],
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/inherits-0.0.30.tgz_1501006328127_0.03678009379655123"
+			},
+			"directories": {}
+		},
+		"0.0.31": {
+			"name": "@types/inherits",
+			"version": "0.0.31",
+			"description": "TypeScript definitions for inherits",
+			"homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/inherits",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Ilya Mochalov",
+					"url": "https://github.com/chrootsu",
+					"githubUsername": "chrootsu"
+				}
+			],
+			"main": "",
+			"types": "index.d.ts",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+				"directory": "types/inherits"
+			},
+			"scripts": {},
+			"dependencies": {
+				"@types/node": "*"
+			},
+			"typesPublisherContentHash": "2eb1895d372b2b721bc9bc7ba30b8affd89cb332ecf3b739ab3ad1bcc951214a",
+			"typeScriptVersion": "4.5",
+			"_id": "@types/inherits@0.0.31",
+			"dist": {
+				"integrity": "sha512-i9Dv1gnAacGvk6TpCv8ZSGbsBr55dlg75iubHIctbRMl1gPz7T0xK60b/edWOkCDptf1+1aeysyYk0SG0KEEwA==",
+				"shasum": "4dc9c541fabe37e9858d352b490cb4e842a090cc",
+				"tarball": "https://registry.npmjs.org/@types/inherits/-/inherits-0.0.31.tgz",
+				"fileCount": 5,
+				"unpackedSize": 3219,
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCIBY4CdvjZrQ5IymG8D8qYCxhbi6ZvFm74/ehJBSSpj4XAiEAhE0ffqC255Fm2E6QpvKIoLfr7AFA2k+xpLfEi/cDPkA="
+					}
+				]
+			},
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/inherits_0.0.31_1695740259354_0.1893804397703578"
+			},
+			"_hasShrinkwrap": false
+		},
+		"0.0.32": {
+			"name": "@types/inherits",
+			"version": "0.0.32",
+			"description": "TypeScript definitions for inherits",
+			"homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/inherits",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Ilya Mochalov",
+					"githubUsername": "chrootsu",
+					"url": "https://github.com/chrootsu"
+				}
+			],
+			"main": "",
+			"types": "index.d.ts",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+				"directory": "types/inherits"
+			},
+			"scripts": {},
+			"dependencies": {
+				"@types/node": "*"
+			},
+			"typesPublisherContentHash": "d851db2f8110ddb003b6f9637f887dc695cc3a5cda3d7c7c6db96cf07f19117d",
+			"typeScriptVersion": "4.5",
+			"_id": "@types/inherits@0.0.32",
+			"dist": {
+				"integrity": "sha512-UYu/3oMv4J15FR5FIP7mANkSs/XX5WZ8EDT6DwIw9Z0xGN44HEAOJQdcDQiQcuvPdD3pI98VuypH40H0bJMXqQ==",
+				"shasum": "2eae948812070bfbad2b83d26dcbd907724fcf21",
+				"tarball": "https://registry.npmjs.org/@types/inherits/-/inherits-0.0.32.tgz",
+				"fileCount": 5,
+				"unpackedSize": 2773,
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEYCIQCiXhs/nG4goJ8lSVs/1e27GqBkKnMZXTH1sKsWqLKergIhAIy8NsxAm1m/clP1q2a6vXyEXd418Wni0Vf7Z/IOMHwD"
+					}
+				]
+			},
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/inherits_0.0.32_1697605828837_0.0946449102552469"
+			},
+			"_hasShrinkwrap": false
+		},
+		"0.0.33": {
+			"name": "@types/inherits",
+			"version": "0.0.33",
+			"description": "TypeScript definitions for inherits",
+			"homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/inherits",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Ilya Mochalov",
+					"githubUsername": "chrootsu",
+					"url": "https://github.com/chrootsu"
+				}
+			],
+			"main": "",
+			"types": "index.d.ts",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+				"directory": "types/inherits"
+			},
+			"scripts": {},
+			"dependencies": {
+				"@types/node": "*"
+			},
+			"typesPublisherContentHash": "004a6ed6076a955e6a5c81375236a33df794e16736733a29c6fc340667a89735",
+			"typeScriptVersion": "4.5",
+			"_id": "@types/inherits@0.0.33",
+			"dist": {
+				"integrity": "sha512-ICS/+dYTkt3D7GPBAKqAAFXpeoWOZ6CVhiOlcweN4t3gZd8joVIy43KWsKGPL+d2Rvxunhz80Z7zlZhmR/q+GQ==",
+				"shasum": "b4fcb8c7e9508f92dbb934a819a96d80492e4a15",
+				"tarball": "https://registry.npmjs.org/@types/inherits/-/inherits-0.0.33.tgz",
+				"fileCount": 5,
+				"unpackedSize": 2773,
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEQCIHdyU1SSb3Adxj8sUX+d+SppgmFZP2O6smb9GbsPph4rAiBWTY1e2BiNc02hlnjbhETU+DO6/fdrXItEfcOyHOfCtg=="
+					}
+				]
+			},
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/inherits_0.0.33_1699343438143_0.12178095959330104"
+			},
+			"_hasShrinkwrap": false
+		}
+	},
+	"time": {
+		"modified": "2023-11-07T07:50:43.452Z",
+		"created": "2016-05-17T05:12:50.626Z",
+		"0.0.15-alpha": "2016-05-17T05:12:50.626Z",
+		"0.0.16-alpha": "2016-05-19T21:12:54.938Z",
+		"0.0.21-alpha": "2016-05-20T19:49:09.066Z",
+		"0.0.22-alpha": "2016-05-25T05:07:37.595Z",
+		"0.0.23-alpha": "2016-07-01T19:42:13.387Z",
+		"0.0.24-alpha": "2016-07-01T23:04:56.798Z",
+		"0.0.25-alpha": "2016-07-02T02:43:13.042Z",
+		"0.0.26-alpha": "2016-07-04T00:31:44.879Z",
+		"0.0.27-alpha": "2016-07-08T20:31:02.055Z",
+		"0.0.28": "2016-07-14T14:55:14.895Z",
+		"0.0.29": "2016-09-19T17:40:51.601Z",
+		"0.0.30": "2017-07-25T18:12:08.474Z",
+		"0.0.31": "2023-09-26T14:57:39.501Z",
+		"0.0.32": "2023-10-18T05:10:29.002Z",
+		"0.0.33": "2023-11-07T07:50:38.297Z"
+	},
+	"users": {},
+	"dist-tags": {
+		"latest": "0.0.33",
+		"ts2.0": "0.0.30",
+		"ts2.1": "0.0.30",
+		"ts2.2": "0.0.30",
+		"ts2.3": "0.0.30",
+		"ts2.4": "0.0.30",
+		"ts2.5": "0.0.30",
+		"ts2.6": "0.0.30",
+		"ts2.7": "0.0.30",
+		"ts2.8": "0.0.30",
+		"ts2.9": "0.0.30",
+		"ts3.0": "0.0.30",
+		"ts3.1": "0.0.30",
+		"ts3.2": "0.0.30",
+		"ts3.3": "0.0.30",
+		"ts3.4": "0.0.30",
+		"ts3.5": "0.0.30",
+		"ts3.6": "0.0.30",
+		"ts3.7": "0.0.30",
+		"ts3.8": "0.0.30",
+		"ts3.9": "0.0.30",
+		"ts4.0": "0.0.30",
+		"ts4.1": "0.0.30",
+		"ts4.2": "0.0.30",
+		"ts4.3": "0.0.30",
+		"ts4.4": "0.0.30",
+		"ts4.5": "0.0.33",
+		"ts4.6": "0.0.33",
+		"ts4.7": "0.0.33",
+		"ts4.8": "0.0.33",
+		"ts4.9": "0.0.33",
+		"ts5.0": "0.0.33",
+		"ts5.1": "0.0.33",
+		"ts5.2": "0.0.33",
+		"ts5.3": "0.0.33",
+		"ts5.4": "0.0.33"
+	},
+	"_uplinks": {
+		"npmjs": {
+			"etag": "W/\"789a3c544fabe9b79cde09262612379d\"",
+			"fetched": 1704381669226
+		}
+	},
+	"_distfiles": {
+		"inherits-0.0.15-alpha.tgz": {
+			"url": "https://registry.npmjs.org/@types/inherits/-/inherits-0.0.15-alpha.tgz",
+			"sha": "7bc2ea80f918484f883ae12bba2163796ddb2360",
+			"registry": "npmjs"
+		},
+		"inherits-0.0.16-alpha.tgz": {
+			"url": "https://registry.npmjs.org/@types/inherits/-/inherits-0.0.16-alpha.tgz",
+			"sha": "0996357e7584001bba89994eb36e700e822d3a3c",
+			"registry": "npmjs"
+		},
+		"inherits-0.0.21-alpha.tgz": {
+			"url": "https://registry.npmjs.org/@types/inherits/-/inherits-0.0.21-alpha.tgz",
+			"sha": "999906c8d8ac6b7ba7dcd2a2f0f2db01e202e246",
+			"registry": "npmjs"
+		},
+		"inherits-0.0.22-alpha.tgz": {
+			"url": "https://registry.npmjs.org/@types/inherits/-/inherits-0.0.22-alpha.tgz",
+			"sha": "53a046e4890cee26e487077c2f60f17e36e3fba6",
+			"registry": "npmjs"
+		},
+		"inherits-0.0.23-alpha.tgz": {
+			"url": "https://registry.npmjs.org/@types/inherits/-/inherits-0.0.23-alpha.tgz",
+			"sha": "bc2fe6a40ca39f53cae6a6bf096d95c2971ccaab",
+			"registry": "npmjs"
+		},
+		"inherits-0.0.24-alpha.tgz": {
+			"url": "https://registry.npmjs.org/@types/inherits/-/inherits-0.0.24-alpha.tgz",
+			"sha": "d4bd890fe6356d659adc837119635488f48a4e07",
+			"registry": "npmjs"
+		},
+		"inherits-0.0.25-alpha.tgz": {
+			"url": "https://registry.npmjs.org/@types/inherits/-/inherits-0.0.25-alpha.tgz",
+			"sha": "fe03d249ceff71ac858c620ca2812c1dd3814f76",
+			"registry": "npmjs"
+		},
+		"inherits-0.0.26-alpha.tgz": {
+			"url": "https://registry.npmjs.org/@types/inherits/-/inherits-0.0.26-alpha.tgz",
+			"sha": "3399f3b84e1f3dc8cb71cab14b674f38f9bdf024",
+			"registry": "npmjs"
+		},
+		"inherits-0.0.27-alpha.tgz": {
+			"url": "https://registry.npmjs.org/@types/inherits/-/inherits-0.0.27-alpha.tgz",
+			"sha": "6c8534e68cd2851ad35e08cd18b1fbaead580ef8",
+			"registry": "npmjs"
+		},
+		"inherits-0.0.28.tgz": {
+			"url": "https://registry.npmjs.org/@types/inherits/-/inherits-0.0.28.tgz",
+			"sha": "dd611a146b1711cdd983590afba98c8a8260d2b9",
+			"registry": "npmjs"
+		},
+		"inherits-0.0.29.tgz": {
+			"url": "https://registry.npmjs.org/@types/inherits/-/inherits-0.0.29.tgz",
+			"sha": "2677118dc9b5eead16252f0b763efb02678d0697",
+			"registry": "npmjs"
+		},
+		"inherits-0.0.30.tgz": {
+			"url": "https://registry.npmjs.org/@types/inherits/-/inherits-0.0.30.tgz",
+			"sha": "5f2747c08aa644a0dd754add64dfeec3a120f902",
+			"registry": "npmjs"
+		},
+		"inherits-0.0.31.tgz": {
+			"url": "https://registry.npmjs.org/@types/inherits/-/inherits-0.0.31.tgz",
+			"sha": "4dc9c541fabe37e9858d352b490cb4e842a090cc",
+			"registry": "npmjs"
+		},
+		"inherits-0.0.32.tgz": {
+			"url": "https://registry.npmjs.org/@types/inherits/-/inherits-0.0.32.tgz",
+			"sha": "2eae948812070bfbad2b83d26dcbd907724fcf21",
+			"registry": "npmjs"
+		},
+		"inherits-0.0.33.tgz": {
+			"url": "https://registry.npmjs.org/@types/inherits/-/inherits-0.0.33.tgz",
+			"sha": "b4fcb8c7e9508f92dbb934a819a96d80492e4a15",
+			"registry": "npmjs"
+		}
+	},
+	"_attachments": {
+		"inherits-0.0.33.tgz": {
+			"shasum": "b4fcb8c7e9508f92dbb934a819a96d80492e4a15"
+		}
+	},
+	"_rev": "2-9d011d4363023a47",
+	"_id": "@types/inherits",
+	"readme": "[object Object]"
+}

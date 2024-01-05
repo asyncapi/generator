@@ -1,0 +1,4784 @@
+{
+	"name": "@types/node-fetch",
+	"versions": {
+		"0.0.1": {
+			"name": "@types/node-fetch",
+			"version": "0.0.1",
+			"description": "TypeScript definitions for node-fetch based on whatwg-fetch",
+			"license": "MIT",
+			"author": "Torsten Werner <https://github.com/torstenwerner>",
+			"main": "",
+			"repository": {
+				"type": "git",
+				"url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+			},
+			"scripts": {},
+			"dependencies": {},
+			"typings": "index.d.ts",
+			"_id": "@types/node-fetch@0.0.1",
+			"dist": {
+				"shasum": "bc23e5f0b20e3cb1c42115a3b476ac308c49b52f",
+				"tarball": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-0.0.1.tgz",
+				"integrity": "sha512-8nLhinVQ4F7h+Unn0WQtDnKwcOQxcSnuLT5PnofaBg4eyj6bHXc2huSg5Ad/ASlSE7bCMHcBuXw2j4/uJ1951Q==",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCIEVmT0ByA5jTnJTzhmQBQ7UVWQRWOxQfdBzc6AemXIxTAiEA1bHVMCKa6UdCl9tLsQfPddGxDYXRlQPz029YpAeTUnk="
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"_npmOperationalInternal": {
+				"host": "packages-12-west.internal.npmjs.com",
+				"tmp": "tmp/node-fetch-0.0.1.tgz_1470153700487_0.7228910801932216"
+			},
+			"directories": {},
+			"contributors": []
+		},
+		"0.0.2": {
+			"name": "@types/node-fetch",
+			"version": "0.0.2",
+			"description": "TypeScript definitions for node-fetch based on whatwg-fetch",
+			"license": "MIT",
+			"author": "Torsten Werner <https://github.com/torstenwerner>",
+			"main": "",
+			"repository": {
+				"type": "git",
+				"url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+			},
+			"scripts": {},
+			"dependencies": {},
+			"typings": "index.d.ts",
+			"_id": "@types/node-fetch@0.0.2",
+			"dist": {
+				"shasum": "aa84f2b9ccfb8b86730ed1c37c1f50561948d839",
+				"tarball": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-0.0.2.tgz",
+				"integrity": "sha512-7bnZ6eGBXFWhOf2KsZYSXBA0UQAHetAHktc6pwvmuR/nyFP5/RqDFUkHorFupFMpmgWOmkAp3iUzLzxLMwHohg==",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEYCIQC18MzgWHRafclDvahsRIFltSm2elCdZJI1fAeeaAqaSQIhAJB2yfKeXUmzIwisT0w4CcT7yaGkhwP/AdN4p3gbfIgW"
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"_npmOperationalInternal": {
+				"host": "packages-16-east.internal.npmjs.com",
+				"tmp": "tmp/node-fetch-0.0.2.tgz_1471620912075_0.8095302919391543"
+			},
+			"directories": {},
+			"contributors": []
+		},
+		"0.0.3": {
+			"name": "@types/node-fetch",
+			"version": "0.0.3",
+			"description": "TypeScript definitions for node-fetch based on whatwg-fetch",
+			"license": "MIT",
+			"author": "Torsten Werner <https://github.com/torstenwerner>",
+			"main": "",
+			"repository": {
+				"type": "git",
+				"url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+			},
+			"scripts": {},
+			"dependencies": {},
+			"typings": "index.d.ts",
+			"_id": "@types/node-fetch@0.0.3",
+			"dist": {
+				"shasum": "3920acdd51934920c476575ce685d6a3a0ebe473",
+				"tarball": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-0.0.3.tgz",
+				"integrity": "sha512-2Ksa6i/OC4SqazzHHSH3zc74oBa/8aWnxZX1Sm5NYqB5C6lPZtonaaJU9N65zKWWoovBCOR97P3UcvYp+gCylQ==",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEQCIFPKUqUSX2f2SvkwBm6dKubvhynJ6immgl8FZTD5CLoQAiAlu3eIW2hXI5bLhV2q5peEbdn+HVa3IrQelGrnKD+0Cw=="
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"_npmOperationalInternal": {
+				"host": "packages-12-west.internal.npmjs.com",
+				"tmp": "tmp/node-fetch-0.0.3.tgz_1472151079646_0.5094464358408004"
+			},
+			"directories": {},
+			"contributors": []
+		},
+		"0.0.4": {
+			"name": "@types/node-fetch",
+			"version": "0.0.4",
+			"description": "TypeScript definitions for node-fetch based on whatwg-fetch",
+			"license": "MIT",
+			"author": "Torsten Werner <https://github.com/torstenwerner>",
+			"main": "",
+			"repository": {
+				"type": "git",
+				"url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+			},
+			"scripts": {},
+			"dependencies": {},
+			"typings": "index.d.ts",
+			"typesPublisherContentHash": "8fbd3fe258e7941a238c28f1be33f0fded739905e05471445e08f49bdd0554a7",
+			"_id": "@types/node-fetch@0.0.4",
+			"dist": {
+				"shasum": "d36cd3f4ed26d44579f3937370477bead6bd4fc0",
+				"tarball": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-0.0.4.tgz",
+				"integrity": "sha512-kPVbQTsbdy0IfXa2ooZ/skOwkIjHA8glvJDkPVK8FqB7K6GR3owpKGd5ZmM+mHPOIFvMGHZOIJGQfVvF7jc34Q==",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEQCIHuPK+fZggm92+9RmW3UMWq3y0r/3NeCLcyKmw0wlC+lAiBHc8iPLpy0PUnC/W1uVlffg3U66h58njlGH1/J3w5O/A=="
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"_npmOperationalInternal": {
+				"host": "packages-12-west.internal.npmjs.com",
+				"tmp": "tmp/node-fetch-0.0.4.tgz_1474307716670_0.600566346431151"
+			},
+			"directories": {},
+			"contributors": []
+		},
+		"1.6.5": {
+			"name": "@types/node-fetch",
+			"version": "1.6.5",
+			"description": "TypeScript definitions for node-fetch v1.6",
+			"license": "MIT",
+			"author": "Torsten Werner <https://github.com/torstenwerner>",
+			"main": "",
+			"repository": {
+				"type": "git",
+				"url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+			},
+			"scripts": {},
+			"dependencies": {},
+			"peerDependencies": {},
+			"typings": "index.d.ts",
+			"typesPublisherContentHash": "995d24cc7c5f6dd0f3f0ff945fa0adcc376f6150049a900c799b32be61382084",
+			"_id": "@types/node-fetch@1.6.5",
+			"dist": {
+				"shasum": "baf417fd32f68ae8fec670532eb4a5b71bb09ab6",
+				"tarball": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-1.6.5.tgz",
+				"integrity": "sha512-NEZGyrcOi8ewXTK3J/mhee1weJtpr2xLfNJl6gxqlWBTFS0aNULMDuczELasC0b78gDYSAdckIOhmkfGzdJ4WQ==",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEYCIQD0ANp+WKCooDUGuFXy4nZDgITRMD3kSIyHlxc02pYsSgIhAKgi2kLWGXIhlZIxOA0ne0sSTAPTjcSDPDByoYxAVm/A"
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"_npmOperationalInternal": {
+				"host": "packages-18-east.internal.npmjs.com",
+				"tmp": "tmp/node-fetch-1.6.5.tgz_1476978812276_0.644165703561157"
+			},
+			"directories": {},
+			"contributors": []
+		},
+		"1.6.6": {
+			"name": "@types/node-fetch",
+			"version": "1.6.6",
+			"description": "TypeScript definitions for node-fetch",
+			"license": "MIT",
+			"author": "Torsten Werner <https://github.com/torstenwerner>",
+			"main": "",
+			"repository": {
+				"type": "git",
+				"url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+			},
+			"scripts": {},
+			"dependencies": {
+				"@types/node": "*"
+			},
+			"peerDependencies": {},
+			"typesPublisherContentHash": "f1f9e1af284fcb1b7c30b8c4a5e9e5b7f4139f09333bf34738c2c1888af626d4",
+			"_id": "@types/node-fetch@1.6.6",
+			"dist": {
+				"shasum": "192efb20c92258d5a8872d4063b63b200b62280d",
+				"tarball": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-1.6.6.tgz",
+				"integrity": "sha512-BeTF6qJEYjICzBut4s5x6cNnpfP6395ZLQbmYmBuJuQC0x1y+lx2CHg7rbWnyN9/ZsbqPMPfutRyJHO0DcifYw==",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCIHcc/4nFVmV4+VjkHGyCKihT0Hu91d7tnUh3AVDfxTEZAiEA7XoXodWO1XyxcUJKLcnGwBS0F2no304EkvrlTip80Uw="
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"_npmOperationalInternal": {
+				"host": "packages-18-east.internal.npmjs.com",
+				"tmp": "tmp/node-fetch-1.6.6.tgz_1480463961230_0.028357431292533875"
+			},
+			"directories": {},
+			"contributors": []
+		},
+		"1.6.7": {
+			"name": "@types/node-fetch",
+			"version": "1.6.7",
+			"description": "TypeScript definitions for node-fetch",
+			"license": "MIT",
+			"author": "Torsten Werner <https://github.com/torstenwerner>",
+			"main": "",
+			"repository": {
+				"type": "git",
+				"url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+			},
+			"scripts": {},
+			"dependencies": {
+				"@types/node": "*"
+			},
+			"peerDependencies": {},
+			"typesPublisherContentHash": "2a38b2de8f024c5c2551b7b600d483c87a19ffaa795d3179fff11775d0198a34",
+			"typeScriptVersion": "2.0",
+			"_id": "@types/node-fetch@1.6.7",
+			"dist": {
+				"shasum": "521078e8f0c69a158e5022005aca92d2620f6d57",
+				"tarball": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-1.6.7.tgz",
+				"integrity": "sha512-fIS5ki2EgUs5YSPh7jRxrjUIJ+uhb4i7F5ggnjHR8xjxQTF8XhxvflbnKI7Zv6zJCaZQjChEV0pjHkPjEvwhlg==",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEYCIQDrMV+Aej9EinxpAJR3Y7TBg0ewUOGDSFL2xet/75H5dgIhAIWcY5Vgj3asBKwfT5sSzEDbpkt9AGyDPas0D+S+j7fs"
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"_npmOperationalInternal": {
+				"host": "packages-12-west.internal.npmjs.com",
+				"tmp": "tmp/node-fetch-1.6.7.tgz_1483053125045_0.14730957197025418"
+			},
+			"directories": {},
+			"contributors": []
+		},
+		"1.6.8": {
+			"name": "@types/node-fetch",
+			"version": "1.6.8",
+			"description": "TypeScript definitions for node-fetch",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Torsten Werner",
+					"url": "https://github.com/torstenwerner",
+					"githubUsername": "torstenwerner"
+				}
+			],
+			"main": "",
+			"repository": {
+				"type": "git",
+				"url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+			},
+			"scripts": {},
+			"dependencies": {
+				"@types/node": "*"
+			},
+			"typesPublisherContentHash": "1ee33ab9a249497d7ee5c6c6b3e52bb71ac8551ab91be4465296e21c6b2795b7",
+			"typeScriptVersion": "2.0",
+			"_id": "@types/node-fetch@1.6.8",
+			"dist": {
+				"integrity": "sha512-O8DUwXf7KUBu036HAbF5RKRaA1vvE0BsaPfAnC9YD7Xy4eNoJmNIdEjBIEEHAVszozRgH4m9JnVCsueSKiKXMA==",
+				"shasum": "a59d8c75b300ddc3ca3eef23d449d677f9486c3d",
+				"tarball": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-1.6.8.tgz",
+				"fileCount": 4,
+				"unpackedSize": 5870,
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEYCIQCS0p346K+rADA+Gv4T5Ev6IXNovSvxGWTPfmtaRsE+EQIhALNGeIMtZWjCGP/+u5Sb/UC5HNeJ+uEUNW3yTOHErTaP"
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/node-fetch_1.6.8_1522780704476_0.27308122443550764"
+			},
+			"_hasShrinkwrap": false
+		},
+		"1.6.9": {
+			"name": "@types/node-fetch",
+			"version": "1.6.9",
+			"description": "TypeScript definitions for node-fetch",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Torsten Werner",
+					"url": "https://github.com/torstenwerner",
+					"githubUsername": "torstenwerner"
+				}
+			],
+			"main": "",
+			"repository": {
+				"type": "git",
+				"url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+			},
+			"scripts": {},
+			"dependencies": {
+				"@types/node": "*"
+			},
+			"typesPublisherContentHash": "e87f089653ed3e08ea0327556d465b7ff905e31a463b1b3c688a0515164a0fb3",
+			"typeScriptVersion": "2.0",
+			"_id": "@types/node-fetch@1.6.9",
+			"dist": {
+				"integrity": "sha512-n2r6WLoY7+uuPT7pnEtKJCmPUGyJ+cbyBR8Avnu4+m1nzz7DwBVuyIvvlBzCZ/nrpC7rIgb3D6pNavL7rFEa9g==",
+				"shasum": "a750fb0f4cf2960bf72b462e4c86908022dd69c5",
+				"tarball": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-1.6.9.tgz",
+				"fileCount": 4,
+				"unpackedSize": 5877,
+				"npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJa379UCRA9TVsSAnZWagAA050P/R9nqRHvZX50bQugUSVx\npHSDJ5xrOQH/6qaEuoO4bIDYPZMKcJzupNO3IoShU9c+JYG8Afun7QbkfMuh\n4ELbCuyxvG8IRdfMXTxO3dQHgJokTMo8VZ38GKrCq1BgImwKpCiamzcawHJJ\nhK70wz5A4l7r/S0grXZWAwK2M59NNSZUZ8ES7MOQx8X9tgtd5i3IjB7ztMjq\nBkEFP7bGoXshXdF4T6a1fRbYG547sMEHRaz81AvcMgcHJy3qxVFXXZ2L1P7X\nnzTcMmUrINwii6C+fBjGgpz7VAYWsBj9YXpV114t9zjG3++HpOw+DsX956TO\nnNLSeqipZQGH+4smB6Ic6IeJ2ls45QAB3FSVbmgcy7S3udsvTWaKhJeKJA88\nPTGu1xk11/YpPnT2LvAbtQxE+OEwFkIP9tqJyat6mv6euJoBoopMn7fcyTqE\n2gQnxbSW49ZhzOylTBmDBx0oceGt8ZNDHZYBxeoU/q6RIT6IlvqT/x4eC8fc\njt+IhQUGIOqBVRKgi7F+qBoUDrhpKy8MgcbVPzRdenoDPZdRuUDfQQfpORbC\n5os/nQlQEcHG5DN5D4ugswzoQmpD1eYE5UtbnL+CHGzGnwfOcbcaWsPTAUFt\n3Rl61sgocSkqRhsPGzNWK4HOpDxBz/plkSe2ok4F7Ozy12KEFkuw6sc79UOD\nJ4g5\r\n=RS+b\r\n-----END PGP SIGNATURE-----\r\n",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEMCHwccyK3426FydBLrod/tzeHirkAoM2QQRBuZXkOj/4YCIFaJ99faYQemyS4BLoYbJPT0PAz0zr5N7vhnA/SSsufR"
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/node-fetch_1.6.9_1524612947804_0.48363594378821806"
+			},
+			"_hasShrinkwrap": false
+		},
+		"2.1.0": {
+			"name": "@types/node-fetch",
+			"version": "2.1.0",
+			"description": "TypeScript definitions for node-fetch",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Torsten Werner",
+					"url": "https://github.com/torstenwerner",
+					"githubUsername": "torstenwerner"
+				},
+				{
+					"name": "Niklas Lindgren",
+					"url": "https://github.com/nikcorg",
+					"githubUsername": "nikcorg"
+				}
+			],
+			"main": "",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git"
+			},
+			"scripts": {},
+			"dependencies": {
+				"@types/node": "*"
+			},
+			"typesPublisherContentHash": "955f2530a72f2948ffd8e3506e3c11fabc08dd52bf2fc20b4f8dad98ccfbf95c",
+			"typeScriptVersion": "2.0",
+			"_id": "@types/node-fetch@2.1.0",
+			"dist": {
+				"integrity": "sha512-7qhZIMCvHDJMZtdirrb/SkmTs2Dg8oVCLpUCOxNKm36xBdUZhh2JDWO/BeOdI5UyStyaCmeRv5UskaiH7kAgdg==",
+				"shasum": "315af54c1892245b83b867ac4e322b7a1d395e4c",
+				"tarball": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.1.0.tgz",
+				"fileCount": 4,
+				"unpackedSize": 7143,
+				"npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJbDgETCRA9TVsSAnZWagAAKusP/14jePBMWpx3ZMSrobk0\ns7XxNEpUdCmS+Xv2+ia3fQeviFUAT0KRNWqj2VZmsxL2EHnepyZ/Pl+ofQc7\nSkonLYh8TfQv8q3ARdodeJ/5+yi5IB/NI7HjeB3VBUwsVcyVvaaRrV17cQJE\n1HlKV0P/YrEbWFen85+0Kn7FqRNj+eOUPx3N+RemUWJqPsm6hE5ChPW9+fPh\nx4SR9V700e+K4D7N7LstpsbqNFcP+2tSq/LW+F8iRRGSQ0dS5OlGPbKypsYk\nBhMR2dz/5spHxE7I7H4KaMLPXYpBv5FQDeBUyqP6MpCWT7ypiGyoWnMfCAEd\nSZDf2ESyfyCEgDN+U25XoIR193ww8M7WI5CCeYOYQnhLd0liDM/sc8U5nhXA\nZ9aO24eBHnkZffcQ+Eynr1acfon9SAC1scHOU8Kk8UhP2Tmw+5M9uiGoGkN+\nSMYeQYboistihFXKzh0/A+8t5eMl+7iQ8R3wIWmpSvvXQ41/TH2dBE9oCwlm\nYFD9eAG+r7LDBVUtHEnCiPeHT3ufPi+K1zr/3jA74DoG7J8uLtvlO4AR/CKi\nUvKjQfDSTswWcA4d9i97+x/8zABsj0cquMSy+ifz3IpRbm/UFyqDjBdw2Hgu\nUEOkckrJAc0CojslirDTF2A8jU02CCGvUSGYuHya7/wqXxP3JtmjST2E+3tH\nZQqp\r\n=yALI\r\n-----END PGP SIGNATURE-----\r\n",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCIQDNR+ARm1SOXSPWXAfX8NitIJ5MDqJrOHDC0U/R4QbUJgIgBisCsOxb+q06mF0S6cGDOSEOCY/vGsHDQlzibUBAB8g="
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/node-fetch_2.1.0_1527644435480_0.9402321320240465"
+			},
+			"_hasShrinkwrap": false
+		},
+		"2.1.1": {
+			"name": "@types/node-fetch",
+			"version": "2.1.1",
+			"description": "TypeScript definitions for node-fetch",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Torsten Werner",
+					"url": "https://github.com/torstenwerner",
+					"githubUsername": "torstenwerner"
+				},
+				{
+					"name": "Niklas Lindgren",
+					"url": "https://github.com/nikcorg",
+					"githubUsername": "nikcorg"
+				}
+			],
+			"main": "",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git"
+			},
+			"scripts": {},
+			"dependencies": {
+				"@types/node": "*"
+			},
+			"typesPublisherContentHash": "254ad0a3b78b91188202b49ee40f3cb244e1ec1d9642309f33b6efafccb16513",
+			"typeScriptVersion": "2.0",
+			"_id": "@types/node-fetch@2.1.1",
+			"dist": {
+				"integrity": "sha512-IfDil0fSMq59n4UsIzgRd5gsgmgn9dl9PzZbguKPsGBpLEIFC7Fr4AroQjIeCYOcDsP1Lszm10wirpaEP26Lhg==",
+				"shasum": "1e8d0abf4c438828ce9c74b45d564a8a93e48cec",
+				"tarball": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.1.1.tgz",
+				"fileCount": 4,
+				"unpackedSize": 7205,
+				"npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJbEFd8CRA9TVsSAnZWagAAbqwQAINtXPsXGyGjr+Jujen1\n6FEgMRYTe8Y8qfrq7DH/dGTemBCFcGiajkS3dxHZg9T/mOkroAegsWFxRPdO\nMNXMfCpJFvFx3O86npYswv/ctJEL2en7NB6L26NbTIDA8Qk+F62CUxtBeelS\niDIb11bw6pSze4TB7h1rctS4HXJ1m7jaUYfraiBGlhOBaAG9U1wcJLmluMuO\nCzk+Jh4JhK0NGSTA0RPugYhhb6dZ7EfQhLSXdygzkOOEXjALmwIQN4/fe9NH\nxuKw6/2K9VcfVpWILYSt4v8UoxwK2DnMjtN5u0gDGY0NSUJmGhnBILjkWsSe\nGl/Q3wCbKk1AkvhoTMWq6AiVNykrkZhqD03mNgOjo556XtGsXjVzau1QO3lv\nC8OmpkuqMyRvKDaFBt2hgURWPiAfgvHAmVLpEVafaFjatFsqWp8VmIamtU7Q\nfKMga0RUGO/CUpgqGclDlAJoPG3KbuGJH6ARKTZd/7SBsd9CtCD2s8ScIWeL\n6Hz8Tx15CMKYczb3XaFtsr4NSVfGWyiBzFL4CLUfgt8QIS1akrj1d4hb3XXV\nHCNuqarPj6/dfGqnuOFquCFJM6jKkEFZmewU3VhKqmcH93JNYbuIqpVFhKEF\nBh3YcB7JnuumtA75m/293RuQsp2S55RJtp77s6P0wKY8HmRowRSg4xV59TsO\noKLu\r\n=lBxY\r\n-----END PGP SIGNATURE-----\r\n",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCIQC+S9bp8OvLKT9Zu6xWWfOA2l/47M8u5KQgH2yMFrhh9AIgE6H8SWy4y/Kmu5CLSiy5Ggvl8s0cxZYZux6oAG6h6uA="
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/node-fetch_2.1.1_1527797628087_0.9540542506745826"
+			},
+			"_hasShrinkwrap": false
+		},
+		"2.1.2": {
+			"name": "@types/node-fetch",
+			"version": "2.1.2",
+			"description": "TypeScript definitions for node-fetch",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Torsten Werner",
+					"url": "https://github.com/torstenwerner",
+					"githubUsername": "torstenwerner"
+				},
+				{
+					"name": "Niklas Lindgren",
+					"url": "https://github.com/nikcorg",
+					"githubUsername": "nikcorg"
+				}
+			],
+			"main": "",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git"
+			},
+			"scripts": {},
+			"dependencies": {
+				"@types/node": "*"
+			},
+			"typesPublisherContentHash": "55c865f3adfba520a78251e3d74955b8e9b2fb47a27d152f58aedea1b09806fe",
+			"typeScriptVersion": "2.0",
+			"_id": "@types/node-fetch@2.1.2",
+			"dist": {
+				"integrity": "sha512-XroxUzLpKuL+CVkQqXlffRkEPi4Gh3Oui/mWyS7ztKiyqVxiU+h3imCW5I2NQmde5jK+3q++36/Q96cyRWsweg==",
+				"shasum": "8c5da14d70321e4c4ecd5db668e3f93cf6c7399f",
+				"tarball": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.1.2.tgz",
+				"fileCount": 4,
+				"unpackedSize": 7207,
+				"npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJbUpW8CRA9TVsSAnZWagAAyMQQAIdP4aFG72UeED+ScjJZ\nHd1Be3qkTyb8O3O05p0scRovbejPVjUhGSTvJDLIqcKB7muLK7uqlDqEHa4c\nB8f2xJsZ2UY1/N2aBPmpQsiGRjNDAhoD73ZzPbC+LMAd2MliPwewqw9zQ76i\net1vkK997krNveA6egbGQMhmgNbuvOs7Jp8lqa+io8Yhg9Bi2Et24WpH69A5\nCT1Nz8RYoCQtnHoY55yDeIaFWhT8Whp0LAIcim121oduoBO2GTx6SEaznjw3\nt2etwt3BbrjW0lVigCpWD4QA1qagof9TyWsMCynNGBm781ws2kStzfwEDFGe\nDBmWn7jxsPz5rtYZQyL5xKu0ybnAl3sHcGcRtLjHcJT45YPQBD2D6zkPUpMZ\nFQtXaH1dj0g8PnTvWGfy6nkAqx+lCDzaqR/BUA9vC/bua3zTE/CqLbChpZxH\ngWmHA+JiG+8E4qN7Z7GQV6al1RF+P//qvRnLabGkAmxKrxwjM3V6DimTsHeQ\n3GKHVboZ12JqbvzOyYV3D5eYCv3CC3FP8v2UiMNvSce2z38GyCGdfqOhCfSt\nSlgaJR/kgrziz+mZTHIVAeM2MP5Uyg2WKExUndcgZkuYw95lOg7pyqS4jTLg\nw6su3jZ99xAP/yLtSmA8bdhZLn7ERml17lKUX+h8DfkP+MNWe/vRjx4AjmZb\ncLNR\r\n=LVJD\r\n-----END PGP SIGNATURE-----\r\n",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCIFHD8AZvW9V58tWiJRbJkuVj0JEhkTrAqjuiIrlgknItAiEAhIF2Sw61su0vyKur15UBWkFsXO9OAqT7FibN+xNP8co="
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/node-fetch_2.1.2_1532138940321_0.13583460815405912"
+			},
+			"_hasShrinkwrap": false
+		},
+		"2.1.3": {
+			"name": "@types/node-fetch",
+			"version": "2.1.3",
+			"description": "TypeScript definitions for node-fetch",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Torsten Werner",
+					"url": "https://github.com/torstenwerner",
+					"githubUsername": "torstenwerner"
+				},
+				{
+					"name": "Niklas Lindgren",
+					"url": "https://github.com/nikcorg",
+					"githubUsername": "nikcorg"
+				}
+			],
+			"main": "",
+			"types": "index",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git"
+			},
+			"scripts": {},
+			"dependencies": {
+				"@types/node": "*"
+			},
+			"typesPublisherContentHash": "2b45dbad1fbc68fc6dc2b468fc1711320e199d6ef208bb0b8a84a6e3221beeb4",
+			"typeScriptVersion": "2.0",
+			"_id": "@types/node-fetch@2.1.3",
+			"dist": {
+				"integrity": "sha512-3P5f1st1wfjtA97KxQNK8ul1y+bM0b/+bMVPl3anPsdmOm794CQh3lRzphlFqTcJP01NtYDda/F/pbSbYUChmQ==",
+				"shasum": "80538fbaee61bdc01449f4e00a11e11291e52dec",
+				"tarball": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.1.3.tgz",
+				"fileCount": 4,
+				"unpackedSize": 7747,
+				"npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJb7OjuCRA9TVsSAnZWagAAJjIQAKGL9s/aRE3OYxnl0OtO\nm3xIqbg995wTFF/Zf8yRFfokxotpW8wC4Lu1iuZ+kvMeD0udjQt+IR5psQ+7\nbvVExPwNvlz6n+LWqc1A2yuhXm4CVZ+wJKUBgiXK/plh0nNdhBF76B4bi0cW\nF0t9NV9EVrBNXpNzE6fdNTXoBVgjjzUcoOZwIsAKzrPt4ExLUaQFITNUi7bT\n3/3DzUrGVubKeo038UOTXPkH/QAq46UwyGpFvXsiI45A0G2AnBgkWcWbFedQ\nde3Ya+JenBz1w0vwBuUsAG/wv/6BmQHdQ3JHrAWtOOZ0YjUrfqkWhTfKoi2q\n/m06mOxmIap+HFBI1D61pJJ6AqQW1Kvhi0jNnZyjFouLdDyuoPSdES8d9O8Z\n6NlJstrYGFP390wh8W+/XD3UitSwryu90qoEuVjOHaqb/zp8PYrWvd/cFznI\n3phsORW5/1YfSkNS0Xm7W8pAkAC35W+jYjeNNwpjee9kxgM7ElJBMDsSipYM\nZNbZX8JeS70aqQBXFza0jZJkQS3ogNs9YiR12lHvCweDN1zDGCw06Tg1ScYi\nxWjUJN2r3dfGdftGRNpRHAwjR6nPDPRBdzluEj8uste+5ke2vhpEJ0WORvsD\njYC9tSpbkqjfZ4RfC/sWgGaYYmQeCYVWs398q5mzYOCDlzq4pIekO9z/9bVk\nwmCS\r\n=xpuU\r\n-----END PGP SIGNATURE-----\r\n",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEYCIQD0itcv9FJHHZZPPO4wXbDhwSB0urUZ+xN8zd9nB0BMUQIhAPmww7FCFq2zJ8tt4A0Kr9PDPwjGdWsaRFo3cInK17+H"
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/node-fetch_2.1.3_1542252781510_0.4028547291742295"
+			},
+			"_hasShrinkwrap": false
+		},
+		"2.1.4": {
+			"name": "@types/node-fetch",
+			"version": "2.1.4",
+			"description": "TypeScript definitions for node-fetch",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Torsten Werner",
+					"url": "https://github.com/torstenwerner",
+					"githubUsername": "torstenwerner"
+				},
+				{
+					"name": "Niklas Lindgren",
+					"url": "https://github.com/nikcorg",
+					"githubUsername": "nikcorg"
+				}
+			],
+			"main": "",
+			"types": "index",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git"
+			},
+			"scripts": {},
+			"dependencies": {
+				"@types/node": "*"
+			},
+			"typesPublisherContentHash": "55c865f3adfba520a78251e3d74955b8e9b2fb47a27d152f58aedea1b09806fe",
+			"typeScriptVersion": "2.0",
+			"_id": "@types/node-fetch@2.1.4",
+			"dist": {
+				"integrity": "sha512-tR1ekaXUGpmzOcDXWU9BW73YfA2/VW1DF1FH+wlJ82BbCSnWTbdX+JkqWQXWKIGsFPnPsYadbXfNgz28g+ccWg==",
+				"shasum": "093d1beae11541aef25999d70aa09286fd025b1a",
+				"tarball": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.1.4.tgz",
+				"fileCount": 4,
+				"unpackedSize": 7239,
+				"npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJb8gqSCRA9TVsSAnZWagAAq38P/Rb4eog0EC9qOia0Yo/X\nXg/dRSHdvaEj4i3TQ/tMfjOj+hZy+YKoBbtIMWSXwWEuOU5jt8pPxAUodJqJ\nQZblVWc7flXeyO84rUmt1l29H9frm0JHmZwnDMjphYLzBZ2MZRtSm17ZIH82\nFepEITOG9Y92Qe3WAVcWa94eTd/g39m2vOokJolpz0450phszoLmgHCpCtRJ\nu85Xl5cT48M6GsgWCyei+qHa81LXdjBRXHwSSld01WqXGDoUCtJHuf1hSYjI\n5Gg1UhvYd1yt3uT/MEAYohbOPUL1ECk0tsOM5uhn2VNN44IKzyTLbtwHu/EZ\nV1Nc70F7jm8kFSQs8rjD2jBXG5PB5i13F7mTZo77lA7mQQO8Y7+6Y+k3etVG\nsZObekwlFFiLQaCppKxHMxSkbQahhCQnifelv3/nNb7UA9LmRAg2EqAXixjl\nkcOOs4ix9tl8ETdDYlge+F3+WkAN4+a8jy/SYBQfsmegwFWKC0dypgjj3lz3\nKeHbi3SDeMW4meYtcnoH1P+Wcfli2/4D79QgvSreea5m8Nc+8W2yPbQHNBdZ\nktX+2m9474NHEgHtxF4gnbEO/05e+Bxs4R6vLdQVsP/5ojjpELRM35C91uuA\nY/ys72ng29lJMAqjVUCeSuAx2u6HlneZAQAys0YYwUwfYjeULqJeILNQn8AJ\nEkQz\r\n=BuLG\r\n-----END PGP SIGNATURE-----\r\n",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCIQCIaYshcLuV0by5jIqfnrEs2lqMW+h6fNkQzn6oYIWTSwIgcMKe/shy1hvVNd+VulhtW81pfoKne/DirD/MNTeJBDM="
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/node-fetch_2.1.4_1542589073528_0.38802722445254223"
+			},
+			"_hasShrinkwrap": false
+		},
+		"2.1.5": {
+			"name": "@types/node-fetch",
+			"version": "2.1.5",
+			"description": "TypeScript definitions for node-fetch",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Torsten Werner",
+					"url": "https://github.com/torstenwerner",
+					"githubUsername": "torstenwerner"
+				},
+				{
+					"name": "Niklas Lindgren",
+					"url": "https://github.com/nikcorg",
+					"githubUsername": "nikcorg"
+				},
+				{
+					"name": "Vinay Bedre",
+					"url": "https://github.com/vinaybedre",
+					"githubUsername": "vinaybedre"
+				}
+			],
+			"main": "",
+			"types": "index",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git"
+			},
+			"scripts": {},
+			"dependencies": {
+				"@types/node": "*"
+			},
+			"typesPublisherContentHash": "ea851fa7411f9a258f077f40cc94861adebb538480c2ee76583a756f73aa8f18",
+			"typeScriptVersion": "2.0",
+			"_id": "@types/node-fetch@2.1.5",
+			"dist": {
+				"integrity": "sha512-GuJUcxJt5VjAmkf23v5P2eBX6bVFp3ZVRFhuZhTLxAytlc8puxGDwdZAmQaV8l7A3mpm/xv14UjhSZIWt1UQAQ==",
+				"shasum": "94f81fbb0cab2709a5275bbfab7ff93fd7d4bdc0",
+				"tarball": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.1.5.tgz",
+				"fileCount": 4,
+				"unpackedSize": 7600,
+				"npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJcUhTICRA9TVsSAnZWagAAFIMQAKFkcqnxMp/YCs0U4YHD\nR5TIhAqSuTat945aex1DeuasWfTyabk62trxKg6jca0/mM9U5+6uBqxeI1Mj\n0uKKIofXsWCl+PHdgpcbsYNmGT2N80qcNR/rT0WlcETDlHtgiTYCZIjuRtj8\nFaUeqZ8+iZh9q/mHX2zeol5XchPTLa+v76QT1f3Q9GZ4Ub762I6kRQe85gt9\nPhr8RXYgbXuris3tlG3wC93id5b4pLOz8G9fuSAA+6WBjU5UC396UlL7ghiA\npZhjXD7NMXPwo1X2SpViV+C3rtsvPCeixC7cDSw/ut9K+/8HNmjSGBvu/H1J\nrizLnNfrDHT59CRPtqx3wYj4ai3bkurLyRt1pxPW1TXfHSyV7I8zv3M8MMoL\nbXCMw8yJHM8ENP4CEX2HPsW9/srWzbjV8szJhWNU8BOr1X4USVtzj6ARAbuv\nGTdmE+rvqT6nk3U8Vntfqty9PjOz2DoI6aehTudnkZZRe3b/eD6SkzTdcj35\n80U59cnUecz7xjXMtU+5de85QwzC3+8dHOmg71yxM+lI7eHBJOMhh15SLU5I\nBmVbmUgvZGI8lys9IutHRh0IDtt4cFCKyBHP+NPXrBWnX1Pc81gwyTkxhfDA\nO96W/f9JCnvt+sbhJR8AFBOZ8szqZBIt6H+aebGGjiVj1r8vWFHdqPcroI5i\nTSuX\r\n=JUFu\r\n-----END PGP SIGNATURE-----\r\n",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCIAWPeZ2tKdJmyO/eWNmqXuyhfKOZS1UVRmf9Xs1cHrbNAiEAnUhlkYrUEHneOWRecme2VbzmFP1oOAgpO5yMPRbQOy0="
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/node-fetch_2.1.5_1548883143620_0.5454271197154508"
+			},
+			"_hasShrinkwrap": false
+		},
+		"2.1.6": {
+			"name": "@types/node-fetch",
+			"version": "2.1.6",
+			"description": "TypeScript definitions for node-fetch",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Torsten Werner",
+					"url": "https://github.com/torstenwerner",
+					"githubUsername": "torstenwerner"
+				},
+				{
+					"name": "Niklas Lindgren",
+					"url": "https://github.com/nikcorg",
+					"githubUsername": "nikcorg"
+				},
+				{
+					"name": "Vinay Bedre",
+					"url": "https://github.com/vinaybedre",
+					"githubUsername": "vinaybedre"
+				},
+				{
+					"name": "Antonio Román",
+					"url": "https://github.com/kyranet",
+					"githubUsername": "kyranet"
+				}
+			],
+			"main": "",
+			"types": "index",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git"
+			},
+			"scripts": {},
+			"dependencies": {
+				"@types/node": "*"
+			},
+			"typesPublisherContentHash": "b0d8f69ac1052786b86c9bf677a234cc4c07e9ec4d56667ac7a3d880490ac3e7",
+			"typeScriptVersion": "2.0",
+			"_id": "@types/node-fetch@2.1.6",
+			"dist": {
+				"integrity": "sha512-Hv1jgh3pfpUEl2F2mqUd1AfLSk1YbUCeBJFaP36t7esAO617dErqdxWb5cdG2NfJGOofkmBW36fdx0dVewxDRg==",
+				"shasum": "4326288b49f352a142f03c63526ebce0f4c50877",
+				"tarball": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.1.6.tgz",
+				"fileCount": 4,
+				"unpackedSize": 7913,
+				"npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJcXfPfCRA9TVsSAnZWagAACKYP/0Ir9b93oT7Gqf9vKgSR\nfFfOVNe/PC71qonRV0c24oOrGRWcWnGp3nnI7dFuqGHueSqZNsdpDtKNqp9V\nPnJzLqEoJ+vIa00XA4ikG7G/MfIwdIOgL4/VGF7XDbn/hC9BcKDnlczOiYGt\nLfFYExs9MZ6wSvT3c4BkMpmcYD70hZQNSIPqvTKxAuj0pdP93n2Ef0nar9pU\nxVAkBbBVAjx+FnqvTSLQVvCW9l9fKSsoaPw8I8c+EbWaYaSDi0bHIRPmALzF\nsy+7a8DjduzKMhZY0oa47bB6e8t6Alv/gLcZG3sM/V7hH61RwOow6Fj7Sth3\nxPIWhDOvgF3EWuIFGenM2ujKq0L0c7lq5dBDtA0UJcghHofJlew6E1QFg/XK\nmqbtE63Sk6+gB60cQtPUZb/a2UFWHkUPNmYp806/lykTKCBaYMPR6cVDIJ+i\nPvWsmDZ2mq1G2+abAgxxG6EMmp/17gz16xpL2IvZXWW8w2+ZdvgXAI+kUNAh\nDA91TnQpeHOVv+NJZWG6tj/psPeCwpI0Qt+ntmS8Uq73ocpZR9vDShXER6ke\nx171nL4vAFUwpo4Z6Nhi3dtO7aXxlkjrh/XSiWa1AZihpcgfFuoxUNbT3BUN\nYZOHlf32Cm8T1g6+/OVypkpThhW7e1jRT/OfoTdGAhAWMxPnsDg0h0JeOkvb\nXAqw\r\n=j6R+\r\n-----END PGP SIGNATURE-----\r\n",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCIQDjWZVYJpYv1t4myfzasuIu9mKnXNyYSodgSvBOG4/7LQIgGhtvynO95t8jPA0BIPuvSlpytrU/UuklS2UJONqhC1U="
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/node-fetch_2.1.6_1549661150818_0.1366997588188299"
+			},
+			"_hasShrinkwrap": false
+		},
+		"2.1.7": {
+			"name": "@types/node-fetch",
+			"version": "2.1.7",
+			"description": "TypeScript definitions for node-fetch",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Torsten Werner",
+					"url": "https://github.com/torstenwerner",
+					"githubUsername": "torstenwerner"
+				},
+				{
+					"name": "Niklas Lindgren",
+					"url": "https://github.com/nikcorg",
+					"githubUsername": "nikcorg"
+				},
+				{
+					"name": "Vinay Bedre",
+					"url": "https://github.com/vinaybedre",
+					"githubUsername": "vinaybedre"
+				},
+				{
+					"name": "Antonio Román",
+					"url": "https://github.com/kyranet",
+					"githubUsername": "kyranet"
+				},
+				{
+					"name": "Andrew Leedham",
+					"url": "https://github.com/AndrewLeedham",
+					"githubUsername": "AndrewLeedham"
+				}
+			],
+			"main": "",
+			"types": "index",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+				"directory": "types/node-fetch"
+			},
+			"scripts": {},
+			"dependencies": {
+				"@types/node": "*"
+			},
+			"typesPublisherContentHash": "a7f4a32fe6f4eac0ec2855aeaf08984c63b51d72f30cd526e7d4e6284c40a00f",
+			"typeScriptVersion": "2.0",
+			"_id": "@types/node-fetch@2.1.7",
+			"dist": {
+				"integrity": "sha512-TZozHCDVrs0Aj1B9ZR5F4Q9MknDNcVd+hO5lxXOCzz07ELBey6s1gMUSZHUYHlPfRFKJFXiTnNuD7ePiI6S4/g==",
+				"shasum": "0231559340f6e3f3a0608692077d744c87b5b367",
+				"tarball": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.1.7.tgz",
+				"fileCount": 4,
+				"unpackedSize": 8235,
+				"npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJckn6TCRA9TVsSAnZWagAAotcQAI5ulbJR3nira/J5ylwx\nNou76D43t80UW1SKXYO4G5zi10eNFudqSkFpchIQx4kmjOjCyUpHXj/RQWva\nyM6ZkefeMwvE35WbTPBUerjvUPB+wRtiLrUDEkJ+On2oJMyouSeTKWsjTJJk\nFWWsXxoLbDGiD26RpSmnoEOi2JeDnrVZf3syeRJ98yoiU+nwazyKMvl2j4Cx\nnK8o+Xv+vva9Qk0WNQUyRxR13gTjLgvPITsibFWqYz5k+hz0erbeFHOjh8sv\nKUNjq7liEBOS+yUT3w8tVPBc67sEYCDGcm0IaNJORhzc1sxVaMZcoLUzDJ6+\nTyejk+VgH2j9jaavbE3BsbJbKZo7e+0gmpwEB3xXlrj3B/3YzR5c2NnrCw+R\nMR5MfoQbwIQ4wh1NhbVQE+6KzOzkErAV/wYx+K21Z9PQLRRXmS0fIa3TWhNj\nUtVGzGZRahSqK4NM5n0eFjYysJoe+lD8C77KL5yR+Sh+LoVeUZ3sx+Nm4LiN\nulbhsnzxzK/qCzH5FyoD/615N/n77EaKQAdH3THvzZBE1cYsdXO/7DbKoNfY\n9rYECHTSUURfplW/3VNcTsCGSJpvrMFR5nS7K4amUWHWtAIK0/pLC0HXQSQc\nsALj70Jq74AlXQZh3YYVn6h5yAHPLAZc9bZLp1jMVTasUv5zHzv40Q+KCyro\n3Zfx\r\n=bKvS\r\n-----END PGP SIGNATURE-----\r\n",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEYCIQDlsJZKHNanljNGkim+pnUhsRopHT5UEWUYc14G7TtkEAIhAJV3m22TffFjWY1MJ5KrhAS8DSp2x8LT/K75eWNEvTka"
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/node-fetch_2.1.7_1553104530882_0.7226650830890415"
+			},
+			"_hasShrinkwrap": false
+		},
+		"2.3.0": {
+			"name": "@types/node-fetch",
+			"version": "2.3.0",
+			"description": "TypeScript definitions for node-fetch",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Torsten Werner",
+					"url": "https://github.com/torstenwerner",
+					"githubUsername": "torstenwerner"
+				},
+				{
+					"name": "Niklas Lindgren",
+					"url": "https://github.com/nikcorg",
+					"githubUsername": "nikcorg"
+				},
+				{
+					"name": "Vinay Bedre",
+					"url": "https://github.com/vinaybedre",
+					"githubUsername": "vinaybedre"
+				},
+				{
+					"name": "Antonio Román",
+					"url": "https://github.com/kyranet",
+					"githubUsername": "kyranet"
+				},
+				{
+					"name": "Andrew Leedham",
+					"url": "https://github.com/AndrewLeedham",
+					"githubUsername": "AndrewLeedham"
+				},
+				{
+					"name": "Jason Li",
+					"url": "https://github.com/JasonLi914",
+					"githubUsername": "JasonLi914"
+				}
+			],
+			"main": "",
+			"types": "index",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+				"directory": "types/node-fetch"
+			},
+			"scripts": {},
+			"dependencies": {
+				"@types/node": "*"
+			},
+			"typesPublisherContentHash": "30f4eaae1b307266024a83fada49482090f7d02d757cd9d8a91e4024812d6bb2",
+			"typeScriptVersion": "2.0",
+			"_id": "@types/node-fetch@2.3.0",
+			"dist": {
+				"integrity": "sha512-8hiAWrp7m9c0+LWLSMrUdPAoTJogvarqUdpQsyV9BlWnxVHTpdopNW0ldB4H8s/G4dg/KJLpqJIMb0GaZDf8/Q==",
+				"shasum": "d1da24d56e9f1774a0e50a93cc8ee2a7922f4f0e",
+				"tarball": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.3.0.tgz",
+				"fileCount": 4,
+				"unpackedSize": 8466,
+				"npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJcpmZ5CRA9TVsSAnZWagAAJ9YP/0by1VZMdVPPKHgbv6gf\ny3bmo7qJc5me6Hg3btH3ad79wJQvY+ZlL2YUppHs+B3LdRUCTo2TAp73HcwN\nqN2mFuhi+mW3GC/RGSXHLlDr0I7pY3eM/gq9Hp6FGqi34GTqOzeXApipTJkv\n8KG0o4devsA1EE2LWl40pUdXLuaSpgX2J5NL7XsqrmbdamUI58kbogeDGHfM\nyiVi05HhRZtlWGxbzx+q/ohkjW3QVDfI6hgITu9gUV/FTAUSNkT6revOnd8j\ny/K8yb4GwHXv8KapGpMEW/rBYrfIxuVDwDaLCLeyltRoBMfMUUQ51y/uM4oF\njhTsSCFYoIn/wKruCEnCf/sIog88xvTSQWNxwD0mqBpuPo+reKIv3EmvFWoc\nFZoCFGw8AL2GSWgD9h+LtdLfd1Ega+v7V52tuM1ocz96lCbbcpApdzjiIiXV\nnPR8kDSh3L3AulxNWidYX1CSUkdfKwc2GeroxRGDRX41m94FLcZ/8+4/Nzf0\ndyosSCuv+fmmxlnuWv2BkPL3VZN3pss3bCl5Wd3AOhwysM0ttigBFnHYld15\nUZlZ+RvdzdfDbO2SJ7AT+FKNzz/IAnn257dC0aiTWm4ZckGgAqQiH5td3Pb6\nt0knDi/PpF9trAWfQM7KzaH263pxE0uJ/AdJdzBDKmqNWkbFCzSS1fl10frK\nDbZH\r\n=CPKu\r\n-----END PGP SIGNATURE-----\r\n",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEYCIQD2n+eDzmhyyhxoEzULtew9J26r+a81mK/CIVSl6AuSFwIhAJzVuwZN9UQm8m75Z3QbRnoKhz7UZbrkiZJtOFXgLKSY"
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/node-fetch_2.3.0_1554409081035_0.34004924452810115"
+			},
+			"_hasShrinkwrap": false
+		},
+		"2.3.1": {
+			"name": "@types/node-fetch",
+			"version": "2.3.1",
+			"description": "TypeScript definitions for node-fetch",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Torsten Werner",
+					"url": "https://github.com/torstenwerner",
+					"githubUsername": "torstenwerner"
+				},
+				{
+					"name": "Niklas Lindgren",
+					"url": "https://github.com/nikcorg",
+					"githubUsername": "nikcorg"
+				},
+				{
+					"name": "Vinay Bedre",
+					"url": "https://github.com/vinaybedre",
+					"githubUsername": "vinaybedre"
+				},
+				{
+					"name": "Antonio Román",
+					"url": "https://github.com/kyranet",
+					"githubUsername": "kyranet"
+				},
+				{
+					"name": "Andrew Leedham",
+					"url": "https://github.com/AndrewLeedham",
+					"githubUsername": "AndrewLeedham"
+				},
+				{
+					"name": "Jason Li",
+					"url": "https://github.com/JasonLi914",
+					"githubUsername": "JasonLi914"
+				}
+			],
+			"main": "",
+			"types": "index",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+				"directory": "types/node-fetch"
+			},
+			"scripts": {},
+			"dependencies": {
+				"@types/node": "*"
+			},
+			"typesPublisherContentHash": "947136094af1eebc96c866e23b9f979e1598bee068f0032e80022eb889ad711e",
+			"typeScriptVersion": "2.0",
+			"_id": "@types/node-fetch@2.3.1",
+			"dist": {
+				"integrity": "sha512-ZEiga4pDXtViK6SZKEXZ/86tiyI3tV8BJWvI9aj2WiRvs0TbX38aLFe9WecMhBmMF3BQpOJJGJM1Cvd7W2y2yg==",
+				"shasum": "a453be56b53ff74e5e3603fe5f9a7e3d7b673efc",
+				"tarball": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.3.1.tgz",
+				"fileCount": 4,
+				"unpackedSize": 8580,
+				"npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJcrienCRA9TVsSAnZWagAAcvYP+gI8XeZFv/BzX7pgCqHw\nNFqNLMH8QssFq4p4VeBJdSK8znh45OCk5YKXLYA+hi3Q2zgyJf69gvoTVN4r\nWG4JkYyZv/YrNURtF5lrnDUqioyz0IEsy7CDGN2buECqjK/03PZrcqykunIR\nd19acHs77NZU+y9d0I0uyZvKnomEGto2njePDiSZHle3gsAyRXpbbFjxsWxO\nVae5p+15+ho9nxBkIogai6ZDbB6oU3VPECQBOg4A57sYPS8tVxBRYRMdEoQf\nsvDjSJB+5CSdbl68mVCFCV3m+vN9sLNvQOATJa/sen+OBSK92o0UCZTO7vjr\nuO3xGMI/TYxi/mmN61sMCW7u1iPPh2Rj4C9gRq0/48fFa8aWPPDWIHmcRzgF\nTPi7nkKd/RK21h8bQnzB4vtzkCMcD0RWUCLSzeLBMKhlFI9vIRiCOaCq4Ei8\nJG37fA5jGCJmnYMonoIW0EkadsnFiL0jrtH7IPZk7nKE/AaX9r7y5bngyzJw\n9mPwwgSLjGhmV7jrBXkyV2zagJse/8kvzE6RXmH/trQXDOFNsXqZRArU9J8G\nMNPlJfLet03O6mi6XZbbvhl+k7lpqwSY2p27ac3jnVKOW5B2BrM/YH7ZHsYA\nFQlq8ggJdCWH/JzI018wxxYC8BVYeCKBTVPswXEXKRG5mVajpz1YE5Ho6edn\nQiz5\r\n=yaXs\r\n-----END PGP SIGNATURE-----\r\n",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEYCIQC/PTF4fos1fCzqpO5xAB0IEgQkCfQGFHAEdbIRWs6XmwIhAK9bwQ74DPVf0pa4w7VM/EwZBQ3QGQ3Vo1d23ISH6rFE"
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/node-fetch_2.3.1_1554917286354_0.5305114115431524"
+			},
+			"_hasShrinkwrap": false
+		},
+		"2.3.2": {
+			"name": "@types/node-fetch",
+			"version": "2.3.2",
+			"description": "TypeScript definitions for node-fetch",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Torsten Werner",
+					"url": "https://github.com/torstenwerner",
+					"githubUsername": "torstenwerner"
+				},
+				{
+					"name": "Niklas Lindgren",
+					"url": "https://github.com/nikcorg",
+					"githubUsername": "nikcorg"
+				},
+				{
+					"name": "Vinay Bedre",
+					"url": "https://github.com/vinaybedre",
+					"githubUsername": "vinaybedre"
+				},
+				{
+					"name": "Antonio Román",
+					"url": "https://github.com/kyranet",
+					"githubUsername": "kyranet"
+				},
+				{
+					"name": "Andrew Leedham",
+					"url": "https://github.com/AndrewLeedham",
+					"githubUsername": "AndrewLeedham"
+				},
+				{
+					"name": "Jason Li",
+					"url": "https://github.com/JasonLi914",
+					"githubUsername": "JasonLi914"
+				}
+			],
+			"main": "",
+			"types": "index",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+				"directory": "types/node-fetch"
+			},
+			"scripts": {},
+			"dependencies": {
+				"@types/node": "*"
+			},
+			"typesPublisherContentHash": "cdb4b7db52797e12ff11a36008591eb38d1e28195cbd526ed25c045d51dcaaae",
+			"typeScriptVersion": "2.0",
+			"_id": "@types/node-fetch@2.3.2",
+			"dist": {
+				"integrity": "sha512-yW0EOebSsQme9yKu09XbdDfle4/SmWZMK4dfteWcSLCYNQQcF+YOv0kIrvm+9pO11/ghA4E6A+RNQqvYj4Nr3A==",
+				"shasum": "e01893b176c6fa1367743726380d65bce5d6576b",
+				"tarball": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.3.2.tgz",
+				"fileCount": 4,
+				"unpackedSize": 8832,
+				"npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJcr4J0CRA9TVsSAnZWagAABR8P/iQYHQRMZ2vAvVeJP9WO\nSRfO39aQyp6g2lDvNoPsJzfoEpchQQHIGGzdFfWI/NgeupvmKJED5PidBciu\nnUwnCG6YfPfZbKWOSA9OWoJeo+qFSNiYnFmRZWD3LKmap/jlEMra3mf6ujmG\n8vXyPomGYH6IWi1dnshUmaDq7KXmCaWfoTe6ZL/S1Km+vrnknZcgs+HSirJX\nbmJ1iJyU2DA8fiVesFHJyA9Z7oCtw8Dw61GhqAWTGRxKHW8WlxKwpCGKu+s6\n85SPgMFnvqzGnDI1dXtv8hDyHDDZJTa4uKWE7+ngXccIWML9/5WzRmnGctbm\nzt8Ip4U5Gir/fA0jnXvwkYRGhnEDb2Jgq+HM+cFP8b21HyV6lyiNw5H8jCxo\nZHbiu/u7vXJW01ygyFPuVDklHnm/9fTKpaG/mlKr2nC+V2/mKu28wW2UOUqm\ntIBcHsfwLS4AduNfYoli9ZnZnEgHq9LkpgFiVdGqXhZ3stwSyRfflQVvl4ow\nGwaVyCnVSTcEnA3zw/v+7256a0x83PXK62qwJx9SBgpcMZyfupeB2CN9EuZI\nTDJ+lzv/aP7cfXY3Ra8hiGBHoLp02qFU/ySoIFRbt5NYkWkZu/uDBZaENAnj\nCi5dbCXRWF78jewDJZGu8qBsbYesXYd7MMaZwH0RNb69t1Y4UfDm8eUutg2S\njFAd\r\n=JO5y\r\n-----END PGP SIGNATURE-----\r\n",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCIBg7FQihPqHoukRg9tWcQYMOw20sXXAIV/64WbFA6mg9AiEAzTH8pGRiADIiEWXIORjRwHHp8ZQQW/d2ZRxiNSIghLY="
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/node-fetch_2.3.2_1555006067589_0.8746889332107224"
+			},
+			"_hasShrinkwrap": false
+		},
+		"2.3.3": {
+			"name": "@types/node-fetch",
+			"version": "2.3.3",
+			"description": "TypeScript definitions for node-fetch",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Torsten Werner",
+					"url": "https://github.com/torstenwerner",
+					"githubUsername": "torstenwerner"
+				},
+				{
+					"name": "Niklas Lindgren",
+					"url": "https://github.com/nikcorg",
+					"githubUsername": "nikcorg"
+				},
+				{
+					"name": "Vinay Bedre",
+					"url": "https://github.com/vinaybedre",
+					"githubUsername": "vinaybedre"
+				},
+				{
+					"name": "Antonio Román",
+					"url": "https://github.com/kyranet",
+					"githubUsername": "kyranet"
+				},
+				{
+					"name": "Andrew Leedham",
+					"url": "https://github.com/AndrewLeedham",
+					"githubUsername": "AndrewLeedham"
+				},
+				{
+					"name": "Jason Li",
+					"url": "https://github.com/JasonLi914",
+					"githubUsername": "JasonLi914"
+				}
+			],
+			"main": "",
+			"types": "index",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+				"directory": "types/node-fetch"
+			},
+			"scripts": {},
+			"dependencies": {
+				"@types/node": "*"
+			},
+			"typesPublisherContentHash": "810faa6a7690873c0fae5d6c72e356963ce6a13274c0b023a32ee09a091cffcd",
+			"typeScriptVersion": "2.0",
+			"_id": "@types/node-fetch@2.3.3",
+			"dist": {
+				"integrity": "sha512-MIplfRxrDTsIbOLGyFqNWTmxho5Fs710Kul35tEcaqkx9He86mGbSCDvILL0LCMfmm+oJ8tDg51crE9+pJGgiQ==",
+				"shasum": "eb9c2a0ce8e9424ebe0c0cbe6f1e8ea7576c1310",
+				"tarball": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.3.3.tgz",
+				"fileCount": 4,
+				"unpackedSize": 8891,
+				"npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJcwjzpCRA9TVsSAnZWagAAV6gP/29bxSdoYVrrPhAZc3PL\n9Vq9fQLM4jgeaEO+5ZaMnW7KtK8IkDyUN5RPl/BqzfYPpoF/J8MpXayGOLF2\nDWYAsy65uxyVHvsCS+PM7jLkniBw1gqGM39VCriVPNUehDmctAVuUuTvNGLc\nnSZ2UUl+yIkihlb0dR2bev6qbCwQt7+IbySPQAhygChRi5Pb6ylhLN8bWgrN\ncf0Iwqq1hBH4GMx2dPsEpQgTALp/yzgemAbJeogtL3vAKkSdsCmT2lHFBxhQ\nkOudY6v4z4U37OIPFBGD+4tmA/OcIjak8fdtkRZHCu2Q9GvhZjBvkGOEEXp7\n2+7gj0C6GeNUgjClNfX1K1uu3jsqQkXB31JgzWl/2Qx6aHB/iJgCYpLnCX3t\ncn1oab96QbpbTfyztTUL0QyvnGuG/dUSRafg36lWvF4n1SUdx9G5w/o+/JNH\nOKtssnIEH8OlcWfNi22wCtAJ+il1FQxvJiv2c64sQT03effDKVp/AAI43xVS\nveqB+WHQQgxdcygC4mMz4MXzkl9jw3lchzCJ4L9IA2crhWmL2Hc1f/JGo9Xm\n+QBT38U6q82Njgr5WgBsUwC/cxYnudy5AYdW3VWXFWO8oZosMPj/ytgHQPif\nhWf0qzL7XZJkbY7+BFH3ZHfLNeX0XuMZA5LY1bJd5We6+Vfs8fPdGBhzI0XQ\npcdU\r\n=pzkK\r\n-----END PGP SIGNATURE-----\r\n",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCIQC2zDWWFRvtl3Z+zokKpdZnpCaii8c+9NjdcywWxwglQgIgQpFHr+cPQx6f5aUAduM7bUiDek3JUFm1JyptGcEWtiw="
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/node-fetch_2.3.3_1556233448573_0.7220639018547053"
+			},
+			"_hasShrinkwrap": false
+		},
+		"2.3.4": {
+			"name": "@types/node-fetch",
+			"version": "2.3.4",
+			"description": "TypeScript definitions for node-fetch",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Torsten Werner",
+					"url": "https://github.com/torstenwerner",
+					"githubUsername": "torstenwerner"
+				},
+				{
+					"name": "Niklas Lindgren",
+					"url": "https://github.com/nikcorg",
+					"githubUsername": "nikcorg"
+				},
+				{
+					"name": "Vinay Bedre",
+					"url": "https://github.com/vinaybedre",
+					"githubUsername": "vinaybedre"
+				},
+				{
+					"name": "Antonio Román",
+					"url": "https://github.com/kyranet",
+					"githubUsername": "kyranet"
+				},
+				{
+					"name": "Andrew Leedham",
+					"url": "https://github.com/AndrewLeedham",
+					"githubUsername": "AndrewLeedham"
+				},
+				{
+					"name": "Jason Li",
+					"url": "https://github.com/JasonLi914",
+					"githubUsername": "JasonLi914"
+				},
+				{
+					"name": "Brandon Wilson",
+					"url": "https://github.com/wilsonianb",
+					"githubUsername": "wilsonianb"
+				}
+			],
+			"main": "",
+			"types": "index",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+				"directory": "types/node-fetch"
+			},
+			"scripts": {},
+			"dependencies": {
+				"@types/node": "*"
+			},
+			"typesPublisherContentHash": "f6d674e462122ea0e69db5e473b48818c8db03fb5208cf940a8ee6286a5bdf28",
+			"typeScriptVersion": "2.0",
+			"_id": "@types/node-fetch@2.3.4",
+			"dist": {
+				"integrity": "sha512-ZwGXz5osL88SF+jlbbz0WJlINlOZHoSWPrLytQRWRdB6j/KVLup1OoqIxnjO6q9ToqEEP3MZFzJCotgge+IiRw==",
+				"shasum": "a46fc4fe9f94b491bf551b6bb7f0f493b9bacd1a",
+				"tarball": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.3.4.tgz",
+				"fileCount": 4,
+				"unpackedSize": 9155,
+				"npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJc3YDhCRA9TVsSAnZWagAA+yQP/2SycCznzWCeNi53waQb\nP5RRoASlJ0eAx5vcND/xwdsKH8I/8FJj7NUNMjmZTLeyF9qACR2NrUJ0cWoS\nBaim2m4ldHJgn+5OOmDKc/SQ2n8E/NYu1T89U4803zrcTN1dW3n4lqO43RRt\niDDI8NzMz2DF02V4HA5mRIsVGtpDGlKsXChiE/IscZFD9olnWW/y2eleAEri\nVZ2dedmHddLXNu6y2FDk2jWcnskNgg0e16u1vXmCGoCnxzUT8/ZSv8cnfcp5\nKM4YeWNTHtWhi4Xbyeph8aZJ1luGoEZDBDe22GwbO1KAwsyPv6jQ2kuxaynt\ncdNe6Y6EI79R4jIk9A2mGpZ5vbH+1++hSsbDLWqBRtCF4//568j5xWEbQPJL\naAq4Wc3lzOJBl5rjkWZAASDayqgfYW8byNa3FQW0BZ4afyISvJNRLUDUoq2p\n0TtANneKBB+bjNXKYmNYnNx0CfCNosx6QwilEMWzp6eBRlxj3Wgu+WCovHqN\nRY/H5JTWfQzMtmFMGV6Wm4HNsksDt3cm/qCH2CxjNPbfHbutyrM/BjnFLdnN\nEVbuLIzcx18hYSK/E3CCNqpRnq7W5FPbpyERDdJ8FZ9OzRfJJsrkXHTreHPd\nR9f40lxFid1QvLiFrjVRIjRAzP0Y/3ZIJJY9KfBAW2lNws64+tBIkGobt13V\nTwSz\r\n=XAD1\r\n-----END PGP SIGNATURE-----\r\n",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCIB/q9VD3s/GHJWk/LIJ+7pFD8XzQPNhfusy1XA7vzkV9AiEA3qyKadnd0dif76QQFggh7XygqNAuOi9oA7hXHCn5e6U="
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/node-fetch_2.3.4_1558020320537_0.8238862898911965"
+			},
+			"_hasShrinkwrap": false
+		},
+		"2.3.5": {
+			"name": "@types/node-fetch",
+			"version": "2.3.5",
+			"description": "TypeScript definitions for node-fetch",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Torsten Werner",
+					"url": "https://github.com/torstenwerner",
+					"githubUsername": "torstenwerner"
+				},
+				{
+					"name": "Niklas Lindgren",
+					"url": "https://github.com/nikcorg",
+					"githubUsername": "nikcorg"
+				},
+				{
+					"name": "Vinay Bedre",
+					"url": "https://github.com/vinaybedre",
+					"githubUsername": "vinaybedre"
+				},
+				{
+					"name": "Antonio Román",
+					"url": "https://github.com/kyranet",
+					"githubUsername": "kyranet"
+				},
+				{
+					"name": "Andrew Leedham",
+					"url": "https://github.com/AndrewLeedham",
+					"githubUsername": "AndrewLeedham"
+				},
+				{
+					"name": "Jason Li",
+					"url": "https://github.com/JasonLi914",
+					"githubUsername": "JasonLi914"
+				},
+				{
+					"name": "Brandon Wilson",
+					"url": "https://github.com/wilsonianb",
+					"githubUsername": "wilsonianb"
+				}
+			],
+			"main": "",
+			"types": "index",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+				"directory": "types/node-fetch"
+			},
+			"scripts": {},
+			"dependencies": {
+				"@types/node": "*"
+			},
+			"typesPublisherContentHash": "9f49c30fad6bc847a48f2b8eb5fa8fc1775c04e9e7bb4172eed5cf0d4b953154",
+			"typeScriptVersion": "2.0",
+			"_id": "@types/node-fetch@2.3.5",
+			"dist": {
+				"integrity": "sha512-Sh6FFmu7t4ccxKTplwKgEeg4fYWi9Ib1uVq3eSEndj6ckM6GaJnHp5mxHmMOq3JsU+lIq5I5GYCLVEpWXoAucA==",
+				"shasum": "e25e5b6715f377f46a82783817acceef29121d6e",
+				"tarball": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.3.5.tgz",
+				"fileCount": 5,
+				"unpackedSize": 9953,
+				"npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJc+D0KCRA9TVsSAnZWagAA+rkP/RvYieydLXWjo/zM1Uj5\nQH7N5XCBRpp3Zq7zp3O2xGKi9cnmQPxVjodPSOwKSjfTnA1HqSOPWPpHSyhK\nY6qq95kupNZROzQUHEG/sUCAoZj4XnrLaXjiHvOMvdEfr9FBoxezlU9PyPXy\nUelnGZKE6sAp2j8nGNfu0ZW2Yj4pOczBNaEIFNvW5MHyDWrYEOjaJzY6bcfj\naPr+7IxVXBeqjl86w0unDROp9ePoSkPNuA1YyKQwi4HS4ytop5q68NCYNzg3\n8q62kK8P02iV5NRMFS10O01gG8lYfGGeVND8JlSmwc/d0hKI/KnLo4qLCkN1\nrmYajMp/bM1g12gI/Zt777CYMO7JP8dbIqgk7LYyQSK7Kq3M7LpwdmXJRRYt\neGDFSguA5sjyar2k66UtFp6FEsUu+AIVOuU57jLOaIC0oE6PTDBxUghInTTM\nPccAhe/2oRTvAaoJmdYeBs+GGjm4KDN4AeSUhE56NHmFCY5uIMHcZ3iHvuyy\nCv7PG32Dkn/moCqxegrDxIChuaDeUXh7aBw6PDi+d2t6TtuTbjD0ZMVacAcJ\nUZkpJFxOCKlMnI39WckJyb9wbopt/FSMF+BT9Hq2Ua1kPBWvxKSbRTQddDfL\nrVGwzLnRJqvnK5cWruu4JhRKLO9CNH7FQ6ucwnPl8AFNqXW9KHlapsZjwBsJ\ntEj5\r\n=Qu/z\r\n-----END PGP SIGNATURE-----\r\n",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCIQCJ50OgicWn7uglr7FjcAWWW4BuJUXmMFjUWgZKSpRUcQIgAvVzw6YbqpHnjiVid9wDhEtpjl4C/D8+GRHefiV66BE="
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/node-fetch_2.3.5_1559772426179_0.7610713231095259"
+			},
+			"_hasShrinkwrap": false
+		},
+		"2.3.6": {
+			"name": "@types/node-fetch",
+			"version": "2.3.6",
+			"description": "TypeScript definitions for node-fetch",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Torsten Werner",
+					"url": "https://github.com/torstenwerner",
+					"githubUsername": "torstenwerner"
+				},
+				{
+					"name": "Niklas Lindgren",
+					"url": "https://github.com/nikcorg",
+					"githubUsername": "nikcorg"
+				},
+				{
+					"name": "Vinay Bedre",
+					"url": "https://github.com/vinaybedre",
+					"githubUsername": "vinaybedre"
+				},
+				{
+					"name": "Antonio Román",
+					"url": "https://github.com/kyranet",
+					"githubUsername": "kyranet"
+				},
+				{
+					"name": "Andrew Leedham",
+					"url": "https://github.com/AndrewLeedham",
+					"githubUsername": "AndrewLeedham"
+				},
+				{
+					"name": "Jason Li",
+					"url": "https://github.com/JasonLi914",
+					"githubUsername": "JasonLi914"
+				},
+				{
+					"name": "Brandon Wilson",
+					"url": "https://github.com/wilsonianb",
+					"githubUsername": "wilsonianb"
+				},
+				{
+					"name": "Steve Faulkner",
+					"url": "https://github.com/southpolesteve",
+					"githubUsername": "southpolesteve"
+				}
+			],
+			"main": "",
+			"types": "index",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+				"directory": "types/node-fetch"
+			},
+			"scripts": {},
+			"dependencies": {
+				"@types/node": "*"
+			},
+			"typesPublisherContentHash": "13dcbf4b3fd117f71e2ccc7ce65c826b64b73d2be7a20e2a71fed182ac57d992",
+			"typeScriptVersion": "2.0",
+			"_id": "@types/node-fetch@2.3.6",
+			"dist": {
+				"integrity": "sha512-KuQEir6FTxAdrdPsTVPDukPRRJmZyVldu/1+ua6kF26lyvhK9Elq1mQJgDl7773H9XxCu8H8oEC0yQM06Cy3kg==",
+				"shasum": "761f30134f62c9fd30174603a97348a0477e5dc2",
+				"tarball": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.3.6.tgz",
+				"fileCount": 5,
+				"unpackedSize": 10272,
+				"npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJdAVgECRA9TVsSAnZWagAAxxQP/Rbw/GC+RiVsSrn8DfJ4\ni0gkCiP8AEB4JczN/KGbVmtjyz53K3/ktM3p82XxX7y5hvBTNkPqo++yTcKw\nChSnWOQ+2MibD/+4CnOE/Xm/OH4YhIuDB2H/6ZnUK9jJ2FM0OJ2/taiC9wc2\n8o/klCEWUhiXkhmYAJ/2DdIoAp0YVdfk6k27sbT56F5vtH4O1/LB8IijMyQj\nCgg/u3Z8Bp63j/fFfacog86ni9eV9R1ACuGdPITzHk+WzL3yPrkzCLSCO62O\nIM3UMLxLHr5d2r/+pjcfoH2UcpoHJ2EV0PH1otG2TAE6022upJRWs0YLzvHG\nfnmq1OTFfSi8xYZHg2ZQ1OvDgXUfD4mN0tEQOdq/Z5MUmG34soaXmnI4CwdJ\nbcGh0+Ufm3wNwUstsSKLE9mJXxSiBAHI0kO2ELHzi2MkbokZWdBxfFlESV7W\n9SQEMONBkj0VG7UvYUrbbdLI4IyWZxXnItdRi+FgVYVxQSylxuoD921pqcGC\njrfhC6Z/3I9Q0F6+GWm5QOHZwS01zgoS0psaViDTn1xA9Wp3XcQnnIDF/eB0\nmmTsZpiZeA5omhdPQOpw4pXHVJv5w1oHxQb5s8GQw7pMMSq3vjG6SINZ/SV5\n6w5/D7L134L7tzFpgFnkh/vWdqwyxYCxSHSU5nSAuu7HL2ynI1VFwXxcdHr7\n0Pwj\r\n=USiD\r\n-----END PGP SIGNATURE-----\r\n",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEYCIQCRSZSNsHWLvs9dLqPU02ttmxdMG+PIV9T5Fu7QtevQ0AIhAKNqOc520yNIlSnOV91L+aHLc1Iv8C8orYOC0PZuShrm"
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/node-fetch_2.3.6_1560369155765_0.23288105495430944"
+			},
+			"_hasShrinkwrap": false
+		},
+		"2.3.7": {
+			"name": "@types/node-fetch",
+			"version": "2.3.7",
+			"description": "TypeScript definitions for node-fetch",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Torsten Werner",
+					"url": "https://github.com/torstenwerner",
+					"githubUsername": "torstenwerner"
+				},
+				{
+					"name": "Niklas Lindgren",
+					"url": "https://github.com/nikcorg",
+					"githubUsername": "nikcorg"
+				},
+				{
+					"name": "Vinay Bedre",
+					"url": "https://github.com/vinaybedre",
+					"githubUsername": "vinaybedre"
+				},
+				{
+					"name": "Antonio Román",
+					"url": "https://github.com/kyranet",
+					"githubUsername": "kyranet"
+				},
+				{
+					"name": "Andrew Leedham",
+					"url": "https://github.com/AndrewLeedham",
+					"githubUsername": "AndrewLeedham"
+				},
+				{
+					"name": "Jason Li",
+					"url": "https://github.com/JasonLi914",
+					"githubUsername": "JasonLi914"
+				},
+				{
+					"name": "Brandon Wilson",
+					"url": "https://github.com/wilsonianb",
+					"githubUsername": "wilsonianb"
+				},
+				{
+					"name": "Steve Faulkner",
+					"url": "https://github.com/southpolesteve",
+					"githubUsername": "southpolesteve"
+				}
+			],
+			"main": "",
+			"types": "index",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+				"directory": "types/node-fetch"
+			},
+			"scripts": {},
+			"dependencies": {
+				"@types/node": "*"
+			},
+			"typesPublisherContentHash": "bd7d6e2178d770d7d0843a87495dd5f1c7d28943d0a361eba981db0625f07754",
+			"typeScriptVersion": "2.0",
+			"_id": "@types/node-fetch@2.3.7",
+			"dist": {
+				"integrity": "sha512-+bKtuxhj/TYSSP1r4CZhfmyA0vm/aDRQNo7vbAgf6/cZajn0SAniGGST07yvI4Q+q169WTa2/x9gEHfJrkcALw==",
+				"shasum": "b7212e895100f8642dbdab698472bab5f3c1d2f1",
+				"tarball": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.3.7.tgz",
+				"fileCount": 5,
+				"unpackedSize": 10302,
+				"npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJdBeGMCRA9TVsSAnZWagAA8N4P/27WB9ZoSrGucw9+ORP3\n4MEdo3nBQtZ6ew2hG2tmyJwA2y8Tu11iNDfp0Z9a6s0lZXKS5JEXvt+Afz31\niTqBLag9RTT3Lu9BWNPEGkW3k/lJ78hVRSLNT3OqF+as8FBVHjr2ev4yScdz\nZAExl+grjH6W6niZ3KXmkPOL9ybAxYjE8i1I7VYoodN06AOWAGLhC3RKinn8\nR1pdvjcM5hqysTdvjYeN9CgkNh5LQpq9dkhTDzqhoPwunL5jm4Mnze7DeRxP\nyYREnz9BM21XiD9dNQtgVl+YYO/y6phzTn0OV8UbnJ9pXge7vBOT3Hkr8cEB\ntecvXI0wQw9dL8qg366VBgDOOch3cY3uaWLc6XhJ8fdHtwCu0kp5PEvbU2+L\nAMjbqWwLWkcyCi1XHbYG/OT4feVUgVphstpg24Po+eZwNvKRBvtvqC1GgJRO\nGDU/6F6hBRMUiZ/JuICJj+YTOlaUbyjN+p3YTseocYACMXFZnN1YbcWdzODX\nyYlnaClvhi5Lo4wYaPmt4jkYvYL6dkF9QM8CIQ1jiDvw3GXdp+QyTEJ1lmUh\nrXFPUNHSYVBwmRxVGwtZRaOkiXiSqdkGnXx8WnlnG9g2f/GIuayLoSwwbEjA\nRNv+fG69iNuaDGlwnEES8jtgb5jxX+j+6W49x97wjAoK6TBYhLwuRqkoGtgM\nu5M0\r\n=DIvQ\r\n-----END PGP SIGNATURE-----\r\n",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCIQD4odtQcbroUmJxNyX0yidgNJElZmmNbB9jfx+/NzYE6wIgQ/RMcrOwr9eFZf8Fbr140oDazWhMTK/vIwho8W5QCx4="
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/node-fetch_2.3.7_1560666507821_0.03516484321336644"
+			},
+			"_hasShrinkwrap": false
+		},
+		"2.5.0": {
+			"name": "@types/node-fetch",
+			"version": "2.5.0",
+			"description": "TypeScript definitions for node-fetch",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Torsten Werner",
+					"url": "https://github.com/torstenwerner",
+					"githubUsername": "torstenwerner"
+				},
+				{
+					"name": "Niklas Lindgren",
+					"url": "https://github.com/nikcorg",
+					"githubUsername": "nikcorg"
+				},
+				{
+					"name": "Vinay Bedre",
+					"url": "https://github.com/vinaybedre",
+					"githubUsername": "vinaybedre"
+				},
+				{
+					"name": "Antonio Román",
+					"url": "https://github.com/kyranet",
+					"githubUsername": "kyranet"
+				},
+				{
+					"name": "Andrew Leedham",
+					"url": "https://github.com/AndrewLeedham",
+					"githubUsername": "AndrewLeedham"
+				},
+				{
+					"name": "Jason Li",
+					"url": "https://github.com/JasonLi914",
+					"githubUsername": "JasonLi914"
+				},
+				{
+					"name": "Brandon Wilson",
+					"url": "https://github.com/wilsonianb",
+					"githubUsername": "wilsonianb"
+				},
+				{
+					"name": "Steve Faulkner",
+					"url": "https://github.com/southpolesteve",
+					"githubUsername": "southpolesteve"
+				}
+			],
+			"main": "",
+			"types": "index",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+				"directory": "types/node-fetch"
+			},
+			"scripts": {},
+			"dependencies": {
+				"@types/node": "*"
+			},
+			"typesPublisherContentHash": "d1705e0ad7a8080529f2170c6a4a765032d5ea453e6626d02b6bef28c45f0314",
+			"typeScriptVersion": "2.0",
+			"_id": "@types/node-fetch@2.5.0",
+			"dist": {
+				"integrity": "sha512-TLFRywthBgL68auWj+ziWu+vnmmcHCDFC/sqCOQf1xTz4hRq8cu79z8CtHU9lncExGBsB8fXA4TiLDLt6xvMzw==",
+				"shasum": "1c55616a4591bdd15a389fbd0da4a55b9502add5",
+				"tarball": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.5.0.tgz",
+				"fileCount": 5,
+				"unpackedSize": 10329,
+				"npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJdN2ZICRA9TVsSAnZWagAA0d0P/1HOp4kaKCMab1X4/rYS\n6bFVIqJNxaSpmJxVSKXHwv7vj1sJhtExEDWT/+en1hDa/tXTSXuZP4tU32MJ\n+dA9p9lWBPNIMH/FRYo1c7dStpGE6MKbuW+bcQjnFkBcazWz5CgaXSz0JaAs\nOkJmBZUbopzj10leTZleWEoDUJRYmK2s4F8UgfuQ5L/1dTXa5VLW/YuQ6ZFF\nLj86M2pG2FzVk6sT8eB7qh01sPP5ljNRBITg+kL5XPW76wYgg6O3TFsvKjgQ\nJSpGLfna17pISdgDPyV+UFd/Ocy0iSZmEtuCvR1LISkQXXL8RQxZ8zql6gNw\npqHsoLhcBbnNOKtofuTBtkzlDfZbFIYu4zsDbvxwj3WP0R6VEX9S2j835a0R\nUt3qUMhC3zSgsUmwkomJ8bmFGn2eBG0vYURAsQ693SoPAm3u898dCh4eqXXG\nndtk/6eqaICfxNjBBQJFU8KRpEeLm9ddcJu0cs7LzanZh6P5okiFmuA5sYMI\nTdQIhDjq3w8157Es9pa3Eu8MI18BvXb9cpz0JgrQlju48QQnnoKx6HfApRXF\nii8JynJ+OBnvPIXLQUP6nnAOxLN2cwCw7mDbh6+KBC4xJqOF0edyBtB4q2aH\nbhvlEpFAV72mm0mhmlrrRQE3CovJlRr/dLaBNGUE4AphTWhydeisnmsmBXiC\nRSED\r\n=IkGM\r\n-----END PGP SIGNATURE-----\r\n",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEQCIAbwbAEcLCg0yieU5quJOWlhKT663nmCCyrHI7666JotAiBDOdNym+Ui/e91tLUJc0XP2LvhIpSsIndvSAo7ZnMDwA=="
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/node-fetch_2.5.0_1563911751982_0.9000799284961329"
+			},
+			"_hasShrinkwrap": false
+		},
+		"2.5.1": {
+			"name": "@types/node-fetch",
+			"version": "2.5.1",
+			"description": "TypeScript definitions for node-fetch",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Torsten Werner",
+					"url": "https://github.com/torstenwerner",
+					"githubUsername": "torstenwerner"
+				},
+				{
+					"name": "Niklas Lindgren",
+					"url": "https://github.com/nikcorg",
+					"githubUsername": "nikcorg"
+				},
+				{
+					"name": "Vinay Bedre",
+					"url": "https://github.com/vinaybedre",
+					"githubUsername": "vinaybedre"
+				},
+				{
+					"name": "Antonio Román",
+					"url": "https://github.com/kyranet",
+					"githubUsername": "kyranet"
+				},
+				{
+					"name": "Andrew Leedham",
+					"url": "https://github.com/AndrewLeedham",
+					"githubUsername": "AndrewLeedham"
+				},
+				{
+					"name": "Jason Li",
+					"url": "https://github.com/JasonLi914",
+					"githubUsername": "JasonLi914"
+				},
+				{
+					"name": "Brandon Wilson",
+					"url": "https://github.com/wilsonianb",
+					"githubUsername": "wilsonianb"
+				},
+				{
+					"name": "Steve Faulkner",
+					"url": "https://github.com/southpolesteve",
+					"githubUsername": "southpolesteve"
+				}
+			],
+			"main": "",
+			"types": "index",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+				"directory": "types/node-fetch"
+			},
+			"scripts": {},
+			"dependencies": {
+				"@types/node": "*"
+			},
+			"typesPublisherContentHash": "c67c295c6399eb9ba24f8cf72e4d108ba917eaed0fa844d7c0b78419a31d40ad",
+			"typeScriptVersion": "2.0",
+			"_id": "@types/node-fetch@2.5.1",
+			"dist": {
+				"integrity": "sha512-nYsC20tHanaNa4coFvCDcuIvtdvu8YkQz0XQOoBHL1X1y1QxeNe73dg1PaLGqsJNWiVwK0bjn5Jf+ZQpE6acJg==",
+				"shasum": "9e4daffa983eb098d25c2cb410c949678f3aee78",
+				"tarball": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.5.1.tgz",
+				"fileCount": 5,
+				"unpackedSize": 10356,
+				"npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJdgmZWCRA9TVsSAnZWagAAx/oP/0k9J6mF95b85Upp0ooX\nKlHBTXrVfgXBts0+apMlR52yMghzxEhZUTlgcwM7/g9a59LpOiztlcytXYoG\nAngm1cMk32ZWXxxKRbah5p1pD3IFbNCROj4hIptFyVQRtCOl3XCalZoL60LV\nZShrX+/7e5p5ZSKxlFqY840czbKzscs2XRkwGLWisrjlfAYoOgfxOxbFfu7b\nwXmIEg68tcSKA8Zxu05CBYB9gly6Vzdj2l0i0mrEgQ5bvyRI2Lhsk9a58srJ\nodm4UKkApoQYL1D/vZ73S06CAj2PoFncaEwT3mgrQ4R6lqHiRT+3QT5f1pge\nh51rUMwY0cjVibym4NWvelO7lwIMigaD7MTHTTjdte8GRSZd+6Nlrl9dxp6X\nUeocj5zHvdgP5fE+B1Snnrfw9+Hd/Zqw+Y+XOa4Vi7rLLGTE/CIlwL98HrK6\nlqDGY2LvIoPut0FosCA0WXzf1tVPGMCioSMC+6eQDHIEV1OzNakJgBzLiinv\nu3xnsDsVG2t4n1U3rB4v+TW9FXOwd19QaLTpaw2T6I7Y8rgkp7U3UN+ekkY9\nPouzyT+DhJWQ//n6kKCvNlAfX4Qjs9qhBwS6e16yXgS4rWKktI4rM99pf1/6\n+htf2MMCDtpMFJucwM6uDFAi8X8FzR5CJE981wyWB0p/EyjyTlzfOKCs5a1F\nlbdK\r\n=Sr/W\r\n-----END PGP SIGNATURE-----\r\n",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCIQDuzqz/KY+edeGHKqbreSxSn3rOkwO0C3BZTA8JesaVNQIgcvQG4NZC0LUa9SkRXFmVpUo7G3GNoERShLyZEr3yLP4="
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/node-fetch_2.5.1_1568826965932_0.6369411860033694"
+			},
+			"_hasShrinkwrap": false
+		},
+		"2.5.2": {
+			"name": "@types/node-fetch",
+			"version": "2.5.2",
+			"description": "TypeScript definitions for node-fetch",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Torsten Werner",
+					"url": "https://github.com/torstenwerner",
+					"githubUsername": "torstenwerner"
+				},
+				{
+					"name": "Niklas Lindgren",
+					"url": "https://github.com/nikcorg",
+					"githubUsername": "nikcorg"
+				},
+				{
+					"name": "Vinay Bedre",
+					"url": "https://github.com/vinaybedre",
+					"githubUsername": "vinaybedre"
+				},
+				{
+					"name": "Antonio Román",
+					"url": "https://github.com/kyranet",
+					"githubUsername": "kyranet"
+				},
+				{
+					"name": "Andrew Leedham",
+					"url": "https://github.com/AndrewLeedham",
+					"githubUsername": "AndrewLeedham"
+				},
+				{
+					"name": "Jason Li",
+					"url": "https://github.com/JasonLi914",
+					"githubUsername": "JasonLi914"
+				},
+				{
+					"name": "Brandon Wilson",
+					"url": "https://github.com/wilsonianb",
+					"githubUsername": "wilsonianb"
+				},
+				{
+					"name": "Steve Faulkner",
+					"url": "https://github.com/southpolesteve",
+					"githubUsername": "southpolesteve"
+				},
+				{
+					"name": "ExE Boss",
+					"url": "https://github.com/ExE-Boss",
+					"githubUsername": "ExE-Boss"
+				}
+			],
+			"main": "",
+			"types": "index",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+				"directory": "types/node-fetch"
+			},
+			"scripts": {},
+			"dependencies": {
+				"@types/node": "*"
+			},
+			"typesPublisherContentHash": "1b8fd8e6faa3290fd5e7e502e81d39b6c9e1a08ed5ef49d9437e846fe63c8911",
+			"typeScriptVersion": "2.0",
+			"_id": "@types/node-fetch@2.5.2",
+			"dist": {
+				"integrity": "sha512-djYYKmdNRSBtL1x4CiE9UJb9yZhwtI1VC+UxZD0psNznrUj80ywsxKlEGAE+QL1qvLjPbfb24VosjkYM6W4RSQ==",
+				"shasum": "76906dea5b3d6901e50e63e15249c9bcd6e9676e",
+				"tarball": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.5.2.tgz",
+				"fileCount": 5,
+				"unpackedSize": 10598,
+				"npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJdiQahCRA9TVsSAnZWagAA0kEP/19nBB6SZTDxYou8Fr9d\nUtqf8gcbDHkhAHQgNJTybIlsaKG4NINLruDeqwED+ePxcgMyySmIhiImspxs\n6pzvaqt3aWPyGy93NRrKDj2DL3IcJGMe4IcXwNjBTPr4fdy47C1FbzYFttBe\nEa+mMqkVpNjUZ4+wpURZJDUv+A6f+fUoF4uG1joKF6QvfBRJROd7l8eGy5V9\nnTqY+ks2trWOJMjE8juYpVZkqq/aWJnbAgROjrsZKi7KFKg4R+misgLOjacR\npoOUvMP8JdL6VDIYfHKv64u1TanRepk7Sx18HuDsV8j9QkH1EjGDTxlLks3d\nNeGu1DquzQ4p9IdhrfiTI/BBab8NmzWjkmgXwoi90G7rQpM/qbYvwt9hUIhI\nmBbHonIvJsUMa0jcKlWED4u1S70r4GYSJLkawItaVHKJ81H/sO4HTwXmkMSk\nEAvF1IRdkzlocwh3AV++IQUATgqUBsc/PC1XZQ8ZXGprY8kO1FRDz9DfCapB\nVEOn1z4UwyCVmMGD9/WSicGzlWTuho1kSjokdULbc0HZTNO1JPIPJVBLXmNx\nab7I8qmQvbW09Kbye4LL7sO9SC1ysOLDW7Upyk2YlrQOtJraoHI/8u4sFO4K\n01futzra9939Dj2FXn78KljF71z0uQbpP5Emum60W7h87qwnjZe7pg73bHsb\nOUjQ\r\n=jlCL\r\n-----END PGP SIGNATURE-----\r\n",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCIQC9vqtVhhJy9X/0g769Ratiu1byA9X9c1qolvy5KP3NVgIgcWYKohe3FSbHGKBfpAUmxOUxhCltQ07m/z6SEHJuqJ0="
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/node-fetch_2.5.2_1569261217153_0.5100103504819875"
+			},
+			"_hasShrinkwrap": false
+		},
+		"2.5.3": {
+			"name": "@types/node-fetch",
+			"version": "2.5.3",
+			"description": "TypeScript definitions for node-fetch",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Torsten Werner",
+					"url": "https://github.com/torstenwerner",
+					"githubUsername": "torstenwerner"
+				},
+				{
+					"name": "Niklas Lindgren",
+					"url": "https://github.com/nikcorg",
+					"githubUsername": "nikcorg"
+				},
+				{
+					"name": "Vinay Bedre",
+					"url": "https://github.com/vinaybedre",
+					"githubUsername": "vinaybedre"
+				},
+				{
+					"name": "Antonio Román",
+					"url": "https://github.com/kyranet",
+					"githubUsername": "kyranet"
+				},
+				{
+					"name": "Andrew Leedham",
+					"url": "https://github.com/AndrewLeedham",
+					"githubUsername": "AndrewLeedham"
+				},
+				{
+					"name": "Jason Li",
+					"url": "https://github.com/JasonLi914",
+					"githubUsername": "JasonLi914"
+				},
+				{
+					"name": "Brandon Wilson",
+					"url": "https://github.com/wilsonianb",
+					"githubUsername": "wilsonianb"
+				},
+				{
+					"name": "Steve Faulkner",
+					"url": "https://github.com/southpolesteve",
+					"githubUsername": "southpolesteve"
+				},
+				{
+					"name": "ExE Boss",
+					"url": "https://github.com/ExE-Boss",
+					"githubUsername": "ExE-Boss"
+				}
+			],
+			"main": "",
+			"types": "index",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+				"directory": "types/node-fetch"
+			},
+			"scripts": {},
+			"dependencies": {
+				"@types/node": "*"
+			},
+			"typesPublisherContentHash": "b63376e61a285a3294d0c7257a081292cd89e354be7a2fb9d3b57d3ee2e1d235",
+			"typeScriptVersion": "2.0",
+			"_id": "@types/node-fetch@2.5.3",
+			"dist": {
+				"integrity": "sha512-X3TNlzZ7SuSwZsMkb5fV7GrPbVKvHc2iwHmslb8bIxRKWg2iqkfm3F/Wd79RhDpOXR7wCtKAwc5Y2JE6n/ibyw==",
+				"shasum": "b84127facd93642b1fb6439bc630ba0612e3ec50",
+				"tarball": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.5.3.tgz",
+				"fileCount": 5,
+				"unpackedSize": 10562,
+				"npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJdvFpKCRA9TVsSAnZWagAAPvEQAKBYYRfDBvSZuUiR4gos\nNLvdGX0DWToNotGbTwog0lAyqTUpC9v31JF9Nk/1YWcRn8INj/kxPtNRCB7S\nnGGmf7rDI1OqPmXox4KDiuGl1/0V7kweEG8xiW42cLv62ANLqUTbJbBPzi50\netDKb9LZX+2L0I75yCN78qgpnG/JMtUOx81YPQtNC2cZ6hXNtpfuT9P3Dvf1\n/bOJNWDjBkuXcdsXtBo7/tBOJ7gyPj8wFhpsAFkD+y7CWwk+7im05ftwtcP7\nezDzQxvZ0eKssSjqpaxgPt+UiTRPEeFkDL86CjsKvwVEmg5APcoKxciu2yif\n8KIi7o+i5+ze48bMTJMH9PDlfMYjZlumBCk48L6ESD2Vb9exujLlgjolQXpu\nAetaFHLu5dzC7foH+dUgee9lWAF0/jaE6uyGvUcYwuqs5ZnQ8mnNokjx0Kxn\nf4FGuxAn/FnxS1G2IbxJi+She9uMFD/TBnOTG5SeE+o9yGXxE4cED7eB15lt\nsNme0VrntyUSeJFrA5zvmc4a4ZxjZPWmOKhQgK26ugq7xPUWYwBj1vnmFz/p\njsuMvr7Jjm6X5xP6SpWTudy5sVaLiqMwRAh81JwRv6qMVLHsx22RyHYtvPI3\nrGSNN5QHKbaqbwQ82coaBpL6tKd6j6+uS4ppqdy/Ug5kdUydHZQCdprFRRPa\nq7oy\r\n=/Y53\r\n-----END PGP SIGNATURE-----\r\n",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCIQDZvkG9x4H3voOFkPb2dYvJqxpsssY5optzx/mb006CgAIgcjHSxhIiDOJnY+7N5jnuu/k/WwHw/5+k4FNsctRT+Ko="
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/node-fetch_2.5.3_1572624969683_0.48938581372518497"
+			},
+			"_hasShrinkwrap": false
+		},
+		"2.5.4": {
+			"name": "@types/node-fetch",
+			"version": "2.5.4",
+			"description": "TypeScript definitions for node-fetch",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Torsten Werner",
+					"url": "https://github.com/torstenwerner",
+					"githubUsername": "torstenwerner"
+				},
+				{
+					"name": "Niklas Lindgren",
+					"url": "https://github.com/nikcorg",
+					"githubUsername": "nikcorg"
+				},
+				{
+					"name": "Vinay Bedre",
+					"url": "https://github.com/vinaybedre",
+					"githubUsername": "vinaybedre"
+				},
+				{
+					"name": "Antonio Román",
+					"url": "https://github.com/kyranet",
+					"githubUsername": "kyranet"
+				},
+				{
+					"name": "Andrew Leedham",
+					"url": "https://github.com/AndrewLeedham",
+					"githubUsername": "AndrewLeedham"
+				},
+				{
+					"name": "Jason Li",
+					"url": "https://github.com/JasonLi914",
+					"githubUsername": "JasonLi914"
+				},
+				{
+					"name": "Brandon Wilson",
+					"url": "https://github.com/wilsonianb",
+					"githubUsername": "wilsonianb"
+				},
+				{
+					"name": "Steve Faulkner",
+					"url": "https://github.com/southpolesteve",
+					"githubUsername": "southpolesteve"
+				},
+				{
+					"name": "ExE Boss",
+					"url": "https://github.com/ExE-Boss",
+					"githubUsername": "ExE-Boss"
+				},
+				{
+					"name": "Alex Savin",
+					"url": "https://github.com/alexandrusavin",
+					"githubUsername": "alexandrusavin"
+				}
+			],
+			"main": "",
+			"types": "index.d.ts",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+				"directory": "types/node-fetch"
+			},
+			"scripts": {},
+			"dependencies": {
+				"@types/node": "*"
+			},
+			"typesPublisherContentHash": "11e1050a3d1acd8b900ba4cd3d00a08beebbd2530c610d5307b0509ff95be186",
+			"typeScriptVersion": "2.8",
+			"_id": "@types/node-fetch@2.5.4",
+			"dist": {
+				"integrity": "sha512-Oz6id++2qAOFuOlE1j0ouk1dzl3mmI1+qINPNBhi9nt/gVOz0G+13Ao6qjhdF0Ys+eOkhu6JnFmt38bR3H0POQ==",
+				"shasum": "5245b6d8841fc3a6208b82291119bc11c4e0ce44",
+				"tarball": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.5.4.tgz",
+				"fileCount": 5,
+				"unpackedSize": 10950,
+				"npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJd2AQYCRA9TVsSAnZWagAASM8P/ihjsMJ6XxwP/q/+Iwri\nI7by5qWq9kDuIjkKJdjSQyRHjTcCVc2MeyyxnxJUZXC02QuqWg9iEWvCLn8b\n//2KQd+RdRjb/mx7+QfmA4VazdP6ppkiBUkqQfMkOpONmsH01jOoky/2k6U5\nVqR02KzWVqSBBuprHrINv5qgRkf/OlTo6GNni114IDvyn3JRlrcUxuWlFeCz\n60lLoNQDN2MfWYq5IWI1eNtTTcmDS90Sif3lXqFSMjtit5wRMWLlVMVjwR99\nJzx2gKM0tLKndIRxRI4AbJejWt9IHoQ+norjaMMQlTsanPEXbmwztNqw8ZDV\nzPyHXlUzjxyT1/RgwLMawt58JDF2T28apTVlA1QBgUaam8OlD427nSk51gkj\n+1Zoxkv5Bi1vkc4hJ9Zg+OcJPPQChu71Nhj3j34SoUKQTC3bsNFjG6W9RbTZ\n76Rko7kmhBXhdAgZuIdlGpbGrRfXADP+YwOTuI/FqyhKZcgSE4/3T+WYxpJ3\nT75GxMFd7HvwIJeKZp2aNY7SCWhKeMKotqBXKhiFx9DQ6uV53aabUrrcZLsz\nKNNiN29+wQ2LfqIP+H5CwAnWAxickm+WNsfDxUDmyvvkRpXRDjOkg0PauY7A\nQbelvOT6tuv4NBaGmXGEJ9oy+Vxpwz7QGMl2hqSXeA6cPc4T2rCWaDhZ169i\n5YJp\r\n=2u4n\r\n-----END PGP SIGNATURE-----\r\n",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEQCIEYTWQchi2Djy55jrq72j8p8sg/deG11IxSo3B9mbcTRAiAVONO2uDZL2YSjF5o1zgHIm4QfB1HcT0rohLOtEBvTig=="
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/node-fetch_2.5.4_1574437912343_0.6074371216213339"
+			},
+			"_hasShrinkwrap": false
+		},
+		"2.5.5": {
+			"name": "@types/node-fetch",
+			"version": "2.5.5",
+			"description": "TypeScript definitions for node-fetch",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Torsten Werner",
+					"url": "https://github.com/torstenwerner",
+					"githubUsername": "torstenwerner"
+				},
+				{
+					"name": "Niklas Lindgren",
+					"url": "https://github.com/nikcorg",
+					"githubUsername": "nikcorg"
+				},
+				{
+					"name": "Vinay Bedre",
+					"url": "https://github.com/vinaybedre",
+					"githubUsername": "vinaybedre"
+				},
+				{
+					"name": "Antonio Román",
+					"url": "https://github.com/kyranet",
+					"githubUsername": "kyranet"
+				},
+				{
+					"name": "Andrew Leedham",
+					"url": "https://github.com/AndrewLeedham",
+					"githubUsername": "AndrewLeedham"
+				},
+				{
+					"name": "Jason Li",
+					"url": "https://github.com/JasonLi914",
+					"githubUsername": "JasonLi914"
+				},
+				{
+					"name": "Brandon Wilson",
+					"url": "https://github.com/wilsonianb",
+					"githubUsername": "wilsonianb"
+				},
+				{
+					"name": "Steve Faulkner",
+					"url": "https://github.com/southpolesteve",
+					"githubUsername": "southpolesteve"
+				},
+				{
+					"name": "ExE Boss",
+					"url": "https://github.com/ExE-Boss",
+					"githubUsername": "ExE-Boss"
+				},
+				{
+					"name": "Alex Savin",
+					"url": "https://github.com/alexandrusavin",
+					"githubUsername": "alexandrusavin"
+				},
+				{
+					"name": "Alexis Tyler",
+					"url": "https://github.com/OmgImAlexis",
+					"githubUsername": "OmgImAlexis"
+				}
+			],
+			"main": "",
+			"types": "index.d.ts",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+				"directory": "types/node-fetch"
+			},
+			"scripts": {},
+			"dependencies": {
+				"@types/node": "*",
+				"form-data": "^3.0.0"
+			},
+			"typesPublisherContentHash": "c438da001acaaae04b1a33df4b2ea9a62bd3da7967c9741b61684d5500f7c75a",
+			"typeScriptVersion": "2.8",
+			"_id": "@types/node-fetch@2.5.5",
+			"dist": {
+				"integrity": "sha512-IWwjsyYjGw+em3xTvWVQi5MgYKbRs0du57klfTaZkv/B24AEQ/p/IopNeqIYNy3EsfHOpg8ieQSDomPcsYMHpA==",
+				"shasum": "cd264e20a81f4600a6c52864d38e7fef72485e92",
+				"tarball": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.5.5.tgz",
+				"fileCount": 5,
+				"unpackedSize": 11377,
+				"npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJeVGeMCRA9TVsSAnZWagAAolMP/AuAncVSe38+gS/SFGyi\nY1DcH4jQRmRkLa77Gkrq/W+rzvGmoZVXoW/ysh5Dq6FhsmqyCC8M+dTRuv6L\ndQEnMK8Rd312k1NVtPkLUBPVa7ep92dW02x2lkodn/7/kJKPsbmdNRNEw+Kw\nPfx0kYr80OMjRP/9tK76WpyRE1/Y2Otvc1ToG0cxU40D2KsNnpNPpxfX/gUO\nTVjSZcQsLKBiNYgvC3Ab5JscgWK4Cvg1lU0rJWT4za/Yun0pljbxM8A+CUb2\nKIhikh+fq/2MJXw5o9KZWB8qzSvEuRRG9yPI31Q3FFaiWZCNDNPJQ3QmnM9B\nw3stbui52pkf5RLN8qSeIqqiRxOYVKuXvMF0YZiQsjpEv+6PhUML56jzyOGD\nbFbuzgp6Fnj6hzmVraBaD1fVqQXUZi1g3KEvcHPzMEh1h/JisF+5nbXFfaaX\nj5b7xCSNHa4ZoRYkhW29lSxh7yuzah50zypkaoAfhj2dNttVxFUrvY8vzvHj\nrsft2NRELS42+daOdHorkkAYHUUInAbKxOSdK1mAtKOUowSqk/h1sRpwvBUl\nMKlJdS24MZiU/b9FD3kd37OJnss4vU8AgPBOXgsHHrf7Z47waKsS8yeIQm8T\nAU/aMqZQ7YXLziF6B6xU2ttiEJXhXKTsYx51KSpJNyb4JzkcgHqYJHVDBb5b\nHOZh\r\n=j15A\r\n-----END PGP SIGNATURE-----\r\n",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEYCIQCGWkBPA4FNT3NONcxSs8ZL0m98y8BB9D1vcqL46Up9MwIhAIHqQ76jR0njC5A7XltAD+25bAPyJFvGIXMcDUj1s3fz"
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/node-fetch_2.5.5_1582589835756_0.0011479574371440204"
+			},
+			"_hasShrinkwrap": false
+		},
+		"2.5.6": {
+			"name": "@types/node-fetch",
+			"version": "2.5.6",
+			"description": "TypeScript definitions for node-fetch",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Torsten Werner",
+					"url": "https://github.com/torstenwerner",
+					"githubUsername": "torstenwerner"
+				},
+				{
+					"name": "Niklas Lindgren",
+					"url": "https://github.com/nikcorg",
+					"githubUsername": "nikcorg"
+				},
+				{
+					"name": "Vinay Bedre",
+					"url": "https://github.com/vinaybedre",
+					"githubUsername": "vinaybedre"
+				},
+				{
+					"name": "Antonio Román",
+					"url": "https://github.com/kyranet",
+					"githubUsername": "kyranet"
+				},
+				{
+					"name": "Andrew Leedham",
+					"url": "https://github.com/AndrewLeedham",
+					"githubUsername": "AndrewLeedham"
+				},
+				{
+					"name": "Jason Li",
+					"url": "https://github.com/JasonLi914",
+					"githubUsername": "JasonLi914"
+				},
+				{
+					"name": "Brandon Wilson",
+					"url": "https://github.com/wilsonianb",
+					"githubUsername": "wilsonianb"
+				},
+				{
+					"name": "Steve Faulkner",
+					"url": "https://github.com/southpolesteve",
+					"githubUsername": "southpolesteve"
+				},
+				{
+					"name": "ExE Boss",
+					"url": "https://github.com/ExE-Boss",
+					"githubUsername": "ExE-Boss"
+				},
+				{
+					"name": "Alex Savin",
+					"url": "https://github.com/alexandrusavin",
+					"githubUsername": "alexandrusavin"
+				},
+				{
+					"name": "Alexis Tyler",
+					"url": "https://github.com/OmgImAlexis",
+					"githubUsername": "OmgImAlexis"
+				},
+				{
+					"name": "Jakub Kisielewski",
+					"url": "https://github.com/kbkk",
+					"githubUsername": "kbkk"
+				}
+			],
+			"main": "",
+			"types": "index.d.ts",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+				"directory": "types/node-fetch"
+			},
+			"scripts": {},
+			"dependencies": {
+				"@types/node": "*",
+				"form-data": "^3.0.0"
+			},
+			"typesPublisherContentHash": "f7aef7390094c48a3486fc6d18573e7da2e1e67f1efffb3ead166bf667756fd0",
+			"typeScriptVersion": "2.8",
+			"_id": "@types/node-fetch@2.5.6",
+			"dist": {
+				"integrity": "sha512-2w0NTwMWF1d3NJMK0Uiq2UNN8htVCyOWOD0jIPjPgC5Ph/YP4dVhs9YxxcMcuLuwAslz0dVEcZQUaqkLs3IzOQ==",
+				"shasum": "df8377a66e64ddf75b65b072e37b3c5c5425a96f",
+				"tarball": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.5.6.tgz",
+				"fileCount": 5,
+				"unpackedSize": 11587,
+				"npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJekToxCRA9TVsSAnZWagAAqT0P/0VBm7fahnFle5q0/b/l\nHHRK8ffAVVeabg5KvxGilXbzT+9BkeWYONue8aGHqYolJMxREsneR5hWLs6l\n15fYudIRgyK0j0xt0uh3kYowPZWBKQreyDtS5HLnEMGnLTrySaBphCtM9UiW\n2FtB1MWkV+DkSWPESSbASmkeTLZbH0wDeLNdHftB/rkKykveLDcJJpIS/Hx1\nnHYtroEuIac9cw16tGat4i0qHWGcNIkbwblJ/pa3Jbtz/Zv6EOac3UTUjDcB\nhX1zSI0UquUE2KZbtYxwEGTVT1hEWDHPQwJIRSE/VpByKDq63ALHJMndapH7\nn8QZp9xGSblO7oGyoDZ0xvI+/i2gLEF2uXY5fCQqWMG3XKUo3MEYeWzMgsn9\n+4ocHEyGrDIpYafEgZ3X1PE6udxhbe3qFpv+rqcMigt4JZvR9P1EYSVNdHdt\nqEHwgNVKvBN2tCAhM7PfGk2OdK++Vfw0VbOF14yz+uyQ1G25H6B3gPIY0mWQ\nD1w5vsQ+G2nmu18SJWmUNmsz1/YxHM3QLzfeoT5jhBsGJKCEML0c+MiweaoN\n6r3LPGFk6VDSKJ1GiW40TqiLDnR6VW46VRL3HE4uqXszqmbuiBKa8xu9eixz\noqObDaf0pWcqulC/1giXLq5t8Bi6yxMiscO0RYh7ZljnXD3HYEaJPU+onk/n\nB/rH\r\n=rgAb\r\n-----END PGP SIGNATURE-----\r\n",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEYCIQCKPnjGLe9EK+ijGgKqzpG56rmnPPE+2QC9/F6W24alBgIhAOVNFmt9RLtygwTZMi81+HQMpaxIlR1BtyPI+gDlut0s"
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/node-fetch_2.5.6_1586575921231_0.614933033972386"
+			},
+			"_hasShrinkwrap": false
+		},
+		"2.5.7": {
+			"name": "@types/node-fetch",
+			"version": "2.5.7",
+			"description": "TypeScript definitions for node-fetch",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Torsten Werner",
+					"url": "https://github.com/torstenwerner",
+					"githubUsername": "torstenwerner"
+				},
+				{
+					"name": "Niklas Lindgren",
+					"url": "https://github.com/nikcorg",
+					"githubUsername": "nikcorg"
+				},
+				{
+					"name": "Vinay Bedre",
+					"url": "https://github.com/vinaybedre",
+					"githubUsername": "vinaybedre"
+				},
+				{
+					"name": "Antonio Román",
+					"url": "https://github.com/kyranet",
+					"githubUsername": "kyranet"
+				},
+				{
+					"name": "Andrew Leedham",
+					"url": "https://github.com/AndrewLeedham",
+					"githubUsername": "AndrewLeedham"
+				},
+				{
+					"name": "Jason Li",
+					"url": "https://github.com/JasonLi914",
+					"githubUsername": "JasonLi914"
+				},
+				{
+					"name": "Brandon Wilson",
+					"url": "https://github.com/wilsonianb",
+					"githubUsername": "wilsonianb"
+				},
+				{
+					"name": "Steve Faulkner",
+					"url": "https://github.com/southpolesteve",
+					"githubUsername": "southpolesteve"
+				},
+				{
+					"name": "ExE Boss",
+					"url": "https://github.com/ExE-Boss",
+					"githubUsername": "ExE-Boss"
+				},
+				{
+					"name": "Alex Savin",
+					"url": "https://github.com/alexandrusavin",
+					"githubUsername": "alexandrusavin"
+				},
+				{
+					"name": "Alexis Tyler",
+					"url": "https://github.com/OmgImAlexis",
+					"githubUsername": "OmgImAlexis"
+				},
+				{
+					"name": "Jakub Kisielewski",
+					"url": "https://github.com/kbkk",
+					"githubUsername": "kbkk"
+				}
+			],
+			"main": "",
+			"types": "index.d.ts",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+				"directory": "types/node-fetch"
+			},
+			"scripts": {},
+			"dependencies": {
+				"@types/node": "*",
+				"form-data": "^3.0.0"
+			},
+			"typesPublisherContentHash": "108c44e190ea37e4618fa6c4d6835aedecb20ddd8433a81984ee5cdfdd915b01",
+			"typeScriptVersion": "2.8",
+			"_id": "@types/node-fetch@2.5.7",
+			"dist": {
+				"integrity": "sha512-o2WVNf5UhWRkxlf6eq+jMZDu7kjgpgJfl4xVNlvryc95O/6F2ld8ztKX+qu+Rjyet93WAWm5LjeX9H5FGkODvw==",
+				"shasum": "20a2afffa882ab04d44ca786449a276f9f6bbf3c",
+				"tarball": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.5.7.tgz",
+				"fileCount": 5,
+				"unpackedSize": 11611,
+				"npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJeoe0DCRA9TVsSAnZWagAAsswP/1sixWTtY/JvEutYyXV6\nvBhInw1qU8QQHMX+ZwAGQo/itlQJ0o4LWRaP502SN/qWAfZnTqm74whzdJdA\ndILwS3pgioB0TlFgFbsMvlHnhft6GH2oL7+Lun1XASsoN6GpCkO7o67T6tT4\nRw+rQ8YhP1qqoJlTp4ohSklqDGOLQ4yRc5qhLRdB7S7YDsCBLpwiiS6JlGsW\nrCG76eoO/pLMwxPlTaBQ/C/BDooYhS0ILVvanIK/iexDz8zTxq3zPoqfkYPG\n1OCGGmac+4IwZXpvze8QGjfpJGvBvdlXFhY7yrJP3Yk+6CtPTnxQOuiJYG65\np9fwjMHhsyqMnvp74+AsK+7yWYuODFmzM8R0kKk2EQYKAyllMZnxOCU4msvI\nJAaFXONrp17+xZlcr0wdv0uvv5MC5VCKcZ8sjByc2FdD+j6d/RhXdf+bVSHi\nC9pfiEInajOl4kbDV1+OpreTeVvtRbi7HlZR1bLBEciHePLMoXWmlC638GFv\n+/lNg+4UWu+5litpI7bjyhztSziMKU7MqTxsAwoP4f8/OaslOm8FqK1p9qDs\nAEGzRDWUL23chnadFC6D/QN0S3jfh0NZE+3G3/vLzfBFDCQOrtclUieFPXr4\noDQTTNCiOqcmbKwAWiGnfkiq75XF6RgkRt82peRir+fTSFQdfiirK7sBoxCD\nSWEh\r\n=vUAl\r\n-----END PGP SIGNATURE-----\r\n",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEQCIAeFxS3vS1o8hA0VPk89ZVe+Uwyeqg+cvBgzMgl8xXhNAiB0wwuExtDsVZzrBea20+wrkm4GY+fTyAdEgKxaU4bS+Q=="
+					}
+				]
+			},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/node-fetch_2.5.7_1587670274570_0.7382895030754912"
+			},
+			"_hasShrinkwrap": false
+		},
+		"2.5.8": {
+			"name": "@types/node-fetch",
+			"version": "2.5.8",
+			"description": "TypeScript definitions for node-fetch",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Torsten Werner",
+					"url": "https://github.com/torstenwerner",
+					"githubUsername": "torstenwerner"
+				},
+				{
+					"name": "Niklas Lindgren",
+					"url": "https://github.com/nikcorg",
+					"githubUsername": "nikcorg"
+				},
+				{
+					"name": "Vinay Bedre",
+					"url": "https://github.com/vinaybedre",
+					"githubUsername": "vinaybedre"
+				},
+				{
+					"name": "Antonio Román",
+					"url": "https://github.com/kyranet",
+					"githubUsername": "kyranet"
+				},
+				{
+					"name": "Andrew Leedham",
+					"url": "https://github.com/AndrewLeedham",
+					"githubUsername": "AndrewLeedham"
+				},
+				{
+					"name": "Jason Li",
+					"url": "https://github.com/JasonLi914",
+					"githubUsername": "JasonLi914"
+				},
+				{
+					"name": "Steve Faulkner",
+					"url": "https://github.com/southpolesteve",
+					"githubUsername": "southpolesteve"
+				},
+				{
+					"name": "ExE Boss",
+					"url": "https://github.com/ExE-Boss",
+					"githubUsername": "ExE-Boss"
+				},
+				{
+					"name": "Alex Savin",
+					"url": "https://github.com/alexandrusavin",
+					"githubUsername": "alexandrusavin"
+				},
+				{
+					"name": "Alexis Tyler",
+					"url": "https://github.com/OmgImAlexis",
+					"githubUsername": "OmgImAlexis"
+				},
+				{
+					"name": "Jakub Kisielewski",
+					"url": "https://github.com/kbkk",
+					"githubUsername": "kbkk"
+				}
+			],
+			"main": "",
+			"types": "index.d.ts",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+				"directory": "types/node-fetch"
+			},
+			"scripts": {},
+			"dependencies": {
+				"@types/node": "*",
+				"form-data": "^3.0.0"
+			},
+			"typesPublisherContentHash": "29e5f7323867904e4af952db041e5086b05e2b0caad01bf5840dff7859453b83",
+			"typeScriptVersion": "3.4",
+			"_id": "@types/node-fetch@2.5.8",
+			"dist": {
+				"integrity": "sha512-fbjI6ja0N5ZA8TV53RUqzsKNkl9fv8Oj3T7zxW7FGv1GSH7gwJaNF8dzCjrqKaxKeUpTz4yT1DaJFq/omNpGfw==",
+				"shasum": "e199c835d234c7eb0846f6618012e558544ee2fb",
+				"tarball": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.5.8.tgz",
+				"fileCount": 5,
+				"unpackedSize": 11342,
+				"npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.13\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJgALjnCRA9TVsSAnZWagAAk4oQAI2vxLx6dqK0xQc7Amzt\no88d0XEzSwkpTCEGorTWoF1Lb68SygaiwrgbmhGljndYneiQUAAZC7PEK0yR\n9p34ls5onDWP/bS2jRUpPvOWKWxE6IuoJ8/BSnxAlzwVg90TSMeQM4RfKgXB\nN+3UTYqrVH3R6QjvPvUj8A+sKriwPEgrtaYHVdgfohxfUaNycYQD6zROA8SQ\nw1sfCVHUCQT2/G2ix+v21iKqeF8ZUPx7qs8LeNdBr5OXv6sl4bRMhOORuMWW\nBpzTN4w6qj7KBl8RJDfaX62xSV65e99S8knelZ+EcydZ7w6/j3L4XDdKe2uL\n0gon1mMit7d/T72GHiXshIUkok3objeVUznB+g+f7DeYD1b2SRhFr3LWU0dO\n6C4XfYK//orkPLYcEG0PeNOfqjnyqmtvoNyDLttZUBBmMMMhxDC1RJNVO5qd\nPQygoK88A+se5pueN4q9IQSvr4Gjg0rtWrOzuSzmStTF4Ybw3ociwa9okEu+\n3Pgqx0X7HULaaXg6uZvC1nj99PvOgr/Ga1n5L6GXOq8jXEC7Fz2A8vJtP00V\nHYDsVbcb0uKpKUver2+Q0eOA9fmt3A3+7cdgfft4xVrJiMVX2NkufA5TFpry\nyw/WEwYDrZyh3U0m8d34NM55XokkFnsdlFAi+qj2Hsyb2c90fWgTPx5cp5MC\nX9+g\r\n=6s7o\r\n-----END PGP SIGNATURE-----\r\n",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCIGpd36JexiBHap3rAOnsizByTSwXvxILS6ushU/dnWf1AiEAoI38bz91n9LJFx+TWwr3+NuSPYxl/ViButIt1U7UeEc="
+					}
+				]
+			},
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/node-fetch_2.5.8_1610660070756_0.03162925666009486"
+			},
+			"_hasShrinkwrap": false
+		},
+		"2.5.9": {
+			"name": "@types/node-fetch",
+			"version": "2.5.9",
+			"description": "TypeScript definitions for node-fetch",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Torsten Werner",
+					"url": "https://github.com/torstenwerner",
+					"githubUsername": "torstenwerner"
+				},
+				{
+					"name": "Niklas Lindgren",
+					"url": "https://github.com/nikcorg",
+					"githubUsername": "nikcorg"
+				},
+				{
+					"name": "Vinay Bedre",
+					"url": "https://github.com/vinaybedre",
+					"githubUsername": "vinaybedre"
+				},
+				{
+					"name": "Antonio Román",
+					"url": "https://github.com/kyranet",
+					"githubUsername": "kyranet"
+				},
+				{
+					"name": "Andrew Leedham",
+					"url": "https://github.com/AndrewLeedham",
+					"githubUsername": "AndrewLeedham"
+				},
+				{
+					"name": "Jason Li",
+					"url": "https://github.com/JasonLi914",
+					"githubUsername": "JasonLi914"
+				},
+				{
+					"name": "Steve Faulkner",
+					"url": "https://github.com/southpolesteve",
+					"githubUsername": "southpolesteve"
+				},
+				{
+					"name": "ExE Boss",
+					"url": "https://github.com/ExE-Boss",
+					"githubUsername": "ExE-Boss"
+				},
+				{
+					"name": "Alex Savin",
+					"url": "https://github.com/alexandrusavin",
+					"githubUsername": "alexandrusavin"
+				},
+				{
+					"name": "Alexis Tyler",
+					"url": "https://github.com/OmgImAlexis",
+					"githubUsername": "OmgImAlexis"
+				},
+				{
+					"name": "Jakub Kisielewski",
+					"url": "https://github.com/kbkk",
+					"githubUsername": "kbkk"
+				}
+			],
+			"main": "",
+			"types": "index.d.ts",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+				"directory": "types/node-fetch"
+			},
+			"scripts": {},
+			"dependencies": {
+				"@types/node": "*",
+				"form-data": "^3.0.0"
+			},
+			"typesPublisherContentHash": "2daed191bb0766a3b73b2d5f967975059eba49d887bb2fb7089a32ab512db42c",
+			"typeScriptVersion": "3.5",
+			"_id": "@types/node-fetch@2.5.9",
+			"dist": {
+				"integrity": "sha512-6cUyqLK+JBsATAqNQqk10jURoBFrzfRCDh4kaYxg8ivKhRPIpyBgAvuY7zM/3E4AwsYJSh5HCHBCJRM4DsCTaQ==",
+				"shasum": "c04a12115aa436f189e39579272b305e477621b4",
+				"tarball": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.5.9.tgz",
+				"fileCount": 5,
+				"unpackedSize": 11371,
+				"npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.13\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJgZ1v3CRA9TVsSAnZWagAAcE8P/jQVTN3/pOvVIPdAWrtm\nEFAUg6sY1lkf6uTuiZd4FvfXbsXyfeEWPTEt2ebPcU7si8qfX5DOrJ7c4jDe\noKTiIS+c6w3c5OL/OxfRsQxEKW1w4+mpxkqgeZfmCZ1Qwb/fjMgjFfmzPXk0\n0tFD7u7/mpn1ldZmSaOCqKQNVRPzl+XrOxz0TDTvn95vFdxfNBvb+0TOzpUy\nZr2kWf03kU3fPyncN6Lhb+/HGwcVImvhEA/ILzC8E6Tvn7Y4mU/AZbNOPLUt\n9GttZhuOX3KDITwnBFqQ2S2UL7578AoqYrW6qT8mKOKtrBw/4ooHApKLUznN\nmTaAISDwVmIrzfx0Cl7wEetkty4+DVewBWJ12vejTNvc4YUa8N/q6Uw5VtNF\nwkDRAoSzt626epdPwqbmX/a3Ld9lxcHmL8qVY4QVw5eJ3jzxsoeJAuXZmK3O\nMMLDaACdDOk0UJnDxTuv4tfo4EfwjWh0w8VuAAsp+1c/h9kFSENpmTIc/1E5\nNnmlFz6Vsyeotf2iIkqP9hQ8gvSVSBuBDdNw75sdxtn9VbiRLBhfTbpKXnkG\nSQbg5Raw54RLGTQNQ8IasE0EUi/NGr/UkndBbstip19S/rxXRIP7wWdM5gOs\ndJ4on5d1sC0KKvWleySVeawVPqAq+hvQ+SdS+eiNn+lbS8N76g5ntZpoDkrv\n2YyQ\r\n=eAME\r\n-----END PGP SIGNATURE-----\r\n",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCIQDh1GeEhQkklE/cmuUTLsJuCG6I414OhVYuFfu2khM5gwIgfEvPknIRDYgr9nQNSRnjPz//rgIdyAiZBBTuvUbmPsg="
+					}
+				]
+			},
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/node-fetch_2.5.9_1617386486431_0.8705443422686583"
+			},
+			"_hasShrinkwrap": false
+		},
+		"2.5.10": {
+			"name": "@types/node-fetch",
+			"version": "2.5.10",
+			"description": "TypeScript definitions for node-fetch",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Torsten Werner",
+					"url": "https://github.com/torstenwerner",
+					"githubUsername": "torstenwerner"
+				},
+				{
+					"name": "Niklas Lindgren",
+					"url": "https://github.com/nikcorg",
+					"githubUsername": "nikcorg"
+				},
+				{
+					"name": "Vinay Bedre",
+					"url": "https://github.com/vinaybedre",
+					"githubUsername": "vinaybedre"
+				},
+				{
+					"name": "Antonio Román",
+					"url": "https://github.com/kyranet",
+					"githubUsername": "kyranet"
+				},
+				{
+					"name": "Andrew Leedham",
+					"url": "https://github.com/AndrewLeedham",
+					"githubUsername": "AndrewLeedham"
+				},
+				{
+					"name": "Jason Li",
+					"url": "https://github.com/JasonLi914",
+					"githubUsername": "JasonLi914"
+				},
+				{
+					"name": "Steve Faulkner",
+					"url": "https://github.com/southpolesteve",
+					"githubUsername": "southpolesteve"
+				},
+				{
+					"name": "ExE Boss",
+					"url": "https://github.com/ExE-Boss",
+					"githubUsername": "ExE-Boss"
+				},
+				{
+					"name": "Alex Savin",
+					"url": "https://github.com/alexandrusavin",
+					"githubUsername": "alexandrusavin"
+				},
+				{
+					"name": "Alexis Tyler",
+					"url": "https://github.com/OmgImAlexis",
+					"githubUsername": "OmgImAlexis"
+				},
+				{
+					"name": "Jakub Kisielewski",
+					"url": "https://github.com/kbkk",
+					"githubUsername": "kbkk"
+				}
+			],
+			"main": "",
+			"types": "index.d.ts",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+				"directory": "types/node-fetch"
+			},
+			"scripts": {},
+			"dependencies": {
+				"@types/node": "*",
+				"form-data": "^3.0.0"
+			},
+			"typesPublisherContentHash": "ba41bf0033e6f7864b7650dfea3f54b42695e03d6c533f710dc4d12604a8f249",
+			"typeScriptVersion": "3.5",
+			"_id": "@types/node-fetch@2.5.10",
+			"dist": {
+				"integrity": "sha512-IpkX0AasN44hgEad0gEF/V6EgR5n69VEqPEgnmoM8GsIGro3PowbWs4tR6IhxUTyPLpOn+fiGG6nrQhcmoCuIQ==",
+				"shasum": "9b4d4a0425562f9fcea70b12cb3fcdd946ca8132",
+				"tarball": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.5.10.tgz",
+				"fileCount": 5,
+				"unpackedSize": 11371,
+				"npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.13\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJgbkDbCRA9TVsSAnZWagAAYQ4P/iMlD2i0kjXZlK9AgLwD\n3hxPP0RhkHsMmA+1y5YfVea0lnE1cOg4TbaXxj+cvh6IdsNI9J9ALF270YuV\nbBBfmzkJHPoixRieowUeMbPWQQxJupkr/+VFhhfM9Q43/i5ts5SAh05voDvI\ndBCcNHGgDB+SYrGVAy6g6cGEyGsFBPIkrMemFK+Siq9dfzuc3oZIdkLeSB4C\nqvESBhKNheMcNxMzCfepPwPDZQdx3V8URVyWj8QLGNQp4ApUvuibN0BhikeA\nSP6JZ3dJa4PZ0RiYm7linETVNX9ufv80u/+PM+95DaetzUt3ev3fB8F8OYEt\napmT8ObpuyTl8AYDLUm26KyupOxvvXvnSCr3g3AkWwmIVmw2HRMNInRg/raA\nICgiehnw8BY5LCBJZbRezjC1HaiQL1v2OP1UgIxCbIwXcTs97e3nd9TjlkVb\nLQhWiseLv8L5VRUhWMDATNJ1dLQ7hFEWyV/xfZKx4a5vG/ODMtFa5St4AyMB\nc4LUoA+3Kk/1UYDTsagigVRcHkKBnqGIghzMO/PwGZD0a2ASQMmw9lIx2Fju\nv02hLN9sxv2GpPVbi+Bat6e/IaIQfcy+WIlqpCdNkdXGYFmnMQQEFjXauvTX\ngksvIdH9/fJiplD3uRbnfA9metmgERmwZLKQ84OCEWtB/CJzYk/l9BiPchNp\nHqLK\r\n=U2rA\r\n-----END PGP SIGNATURE-----\r\n",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEQCIGfu1KCtU4xiMbk0zHT4rsOl5yOW6YgPHov5EZjLMHiDAiAfd+9aFnEGl1/CD8ZFKWxl61PGb57Btgb+E95KvIu9Lw=="
+					}
+				]
+			},
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/node-fetch_2.5.10_1617838299063_0.8477961192243588"
+			},
+			"_hasShrinkwrap": false
+		},
+		"2.5.11": {
+			"name": "@types/node-fetch",
+			"version": "2.5.11",
+			"description": "TypeScript definitions for node-fetch",
+			"homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/node-fetch",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Torsten Werner",
+					"url": "https://github.com/torstenwerner",
+					"githubUsername": "torstenwerner"
+				},
+				{
+					"name": "Niklas Lindgren",
+					"url": "https://github.com/nikcorg",
+					"githubUsername": "nikcorg"
+				},
+				{
+					"name": "Vinay Bedre",
+					"url": "https://github.com/vinaybedre",
+					"githubUsername": "vinaybedre"
+				},
+				{
+					"name": "Antonio Román",
+					"url": "https://github.com/kyranet",
+					"githubUsername": "kyranet"
+				},
+				{
+					"name": "Andrew Leedham",
+					"url": "https://github.com/AndrewLeedham",
+					"githubUsername": "AndrewLeedham"
+				},
+				{
+					"name": "Jason Li",
+					"url": "https://github.com/JasonLi914",
+					"githubUsername": "JasonLi914"
+				},
+				{
+					"name": "Steve Faulkner",
+					"url": "https://github.com/southpolesteve",
+					"githubUsername": "southpolesteve"
+				},
+				{
+					"name": "ExE Boss",
+					"url": "https://github.com/ExE-Boss",
+					"githubUsername": "ExE-Boss"
+				},
+				{
+					"name": "Alex Savin",
+					"url": "https://github.com/alexandrusavin",
+					"githubUsername": "alexandrusavin"
+				},
+				{
+					"name": "Alexis Tyler",
+					"url": "https://github.com/OmgImAlexis",
+					"githubUsername": "OmgImAlexis"
+				},
+				{
+					"name": "Jakub Kisielewski",
+					"url": "https://github.com/kbkk",
+					"githubUsername": "kbkk"
+				}
+			],
+			"main": "",
+			"types": "index.d.ts",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+				"directory": "types/node-fetch"
+			},
+			"scripts": {},
+			"dependencies": {
+				"@types/node": "*",
+				"form-data": "^3.0.0"
+			},
+			"typesPublisherContentHash": "c65f176d6c265b11cff0e609c9da56422211894b29cf8984a243bfd3a038602e",
+			"typeScriptVersion": "3.6",
+			"_id": "@types/node-fetch@2.5.11",
+			"dist": {
+				"integrity": "sha512-2upCKaqVZETDRb8A2VTaRymqFBEgH8u6yr96b/u3+1uQEPDRo3mJLEiPk7vdXBHRtjwkjqzFYMJXrt0Z9QsYjQ==",
+				"shasum": "ce22a2e65fc8999f4dbdb7ddbbcf187d755169e4",
+				"tarball": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.5.11.tgz",
+				"fileCount": 5,
+				"unpackedSize": 11818,
+				"npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.13\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJg5PDlCRA9TVsSAnZWagAAGiYQAIaoZFyuU1sutUhqt7rI\nCCeSTOrhoZ8m4lcvW1QFxU8SL07h+GtnqTfSZTqH53M7bxdECzUrZIrC/918\nZa4KpV4O8hXjjBosBsDKDgL8+QSqhZHwfWV6ntQb4AljuBf4W/i1aBA9sZBT\n75wHCdD62GddycS9TlUt+4YzI8/p9SppU0dvLQ9KmcE0lsUvs3P3MRCH31CR\n2+pkOzhw8ng4osiuz1N8Bkh8MG143q9sZiuwFsZWly5DK1x0bRGSnlNQ9tDD\nizpDHcg8MjT0UsvDihBYHPhpEEuPhoZftgUEzLeRI/QBhrCsJQDU3nOByP4+\n9IFzdslHHuX9QAnWi1bo0gky/QljWkd9UiIoT65PeE3wlI2yLAtAcXpHl+6I\nWzg3Nd5eUIEURdWtOVo9llwoaSrrzhjZjrh3Q9EL4zp4yJYdi+mKLYwP2vWV\nWfWuAVCSgjK4bDXrEYNoZmLXEfRx1s8XPgpPy4uFPUNu9TQ2iYwqazsHkpJe\nv7n1BkA2i10CP68UgIzsS9bXVTKn5CrIAmOtmtSc0qUxVLCB9LBvnKvLhLbP\nV3Lq0B80uVVj+qDV3utTgNKQTr974UTSwosf9+QgrWlAP+1nyy4vJFNCRQ/o\nYLxyguonR1de8ZJPX2CLVC6nyNW9cNzzJi61J49e1hMQaZNpOg28htegcxZY\na04h\r\n=83sV\r\n-----END PGP SIGNATURE-----\r\n",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEYCIQD0wLZbCer9O3rJ4ZQtpuF1LEuogTuTahbqsuzEuhRnoAIhAKxJxYzN6UQHKtxGgHG+QADiURdqPQVxga7kCbsifylM"
+					}
+				]
+			},
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/node-fetch_2.5.11_1625616613035_0.2639535968402369"
+			},
+			"_hasShrinkwrap": false
+		},
+		"2.5.12": {
+			"name": "@types/node-fetch",
+			"version": "2.5.12",
+			"description": "TypeScript definitions for node-fetch",
+			"homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/node-fetch",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Torsten Werner",
+					"url": "https://github.com/torstenwerner",
+					"githubUsername": "torstenwerner"
+				},
+				{
+					"name": "Niklas Lindgren",
+					"url": "https://github.com/nikcorg",
+					"githubUsername": "nikcorg"
+				},
+				{
+					"name": "Vinay Bedre",
+					"url": "https://github.com/vinaybedre",
+					"githubUsername": "vinaybedre"
+				},
+				{
+					"name": "Antonio Román",
+					"url": "https://github.com/kyranet",
+					"githubUsername": "kyranet"
+				},
+				{
+					"name": "Andrew Leedham",
+					"url": "https://github.com/AndrewLeedham",
+					"githubUsername": "AndrewLeedham"
+				},
+				{
+					"name": "Jason Li",
+					"url": "https://github.com/JasonLi914",
+					"githubUsername": "JasonLi914"
+				},
+				{
+					"name": "Steve Faulkner",
+					"url": "https://github.com/southpolesteve",
+					"githubUsername": "southpolesteve"
+				},
+				{
+					"name": "ExE Boss",
+					"url": "https://github.com/ExE-Boss",
+					"githubUsername": "ExE-Boss"
+				},
+				{
+					"name": "Alex Savin",
+					"url": "https://github.com/alexandrusavin",
+					"githubUsername": "alexandrusavin"
+				},
+				{
+					"name": "Alexis Tyler",
+					"url": "https://github.com/OmgImAlexis",
+					"githubUsername": "OmgImAlexis"
+				},
+				{
+					"name": "Jakub Kisielewski",
+					"url": "https://github.com/kbkk",
+					"githubUsername": "kbkk"
+				}
+			],
+			"main": "",
+			"types": "index.d.ts",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+				"directory": "types/node-fetch"
+			},
+			"scripts": {},
+			"dependencies": {
+				"@types/node": "*",
+				"form-data": "^3.0.0"
+			},
+			"typesPublisherContentHash": "cb95d0ddf740cecae06afa5d31c7c25945a352c24620ceb89c3b0da970a3d5e0",
+			"typeScriptVersion": "3.6",
+			"_id": "@types/node-fetch@2.5.12",
+			"dist": {
+				"integrity": "sha512-MKgC4dlq4kKNa/mYrwpKfzQMB5X3ee5U6fSprkKpToBqBmX4nFZL9cW5jl6sWn+xpRJ7ypWh2yyqqr8UUCstSw==",
+				"shasum": "8a6f779b1d4e60b7a57fb6fd48d84fb545b9cc66",
+				"tarball": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.5.12.tgz",
+				"fileCount": 5,
+				"unpackedSize": 11816,
+				"npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.13\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJg+d1KCRA9TVsSAnZWagAAnGcP/0U5w9HsbObCkleaROyH\nvSKEamraj2JFcZfuaUHcwo3rK7U3Oi7VmuNuJSjYTgSK7+RovhZbVDYxtcyV\n9KePz6ZA51+F9OA6qDuT1CAXa/AiRT9iAomiJ+U1JYzk8q/TXft7TMLYxG0B\nKjJh9CjuPU+sSrqhsyYemzWRkZvJy9TiEgyfThlLs9uunljkQfrp/KDyg10M\nXIKuL7DHptdgraUdxkVUEdRDU+ow2yFQNs0kckZrN3nG1qjkdAhl2bIfo4TA\nBoleYv2z+M0OlGAjhTuYkDQ0skTzmh9WTNjdklwMkYIZHAcnqlErHY/VUQ+w\n61w82PcKcthinOBsxTVKXQfKqrLKCEsKPqkzwrB2EXYeIxXELagWpKqhj/Jc\nQ7src2slU6vkdkc9cEDiZEHhc/mCIuuYpbMw5Hnlqj7p24nurpu/DCNmFQkJ\nCSX0V0XX3Hd7vRvKKuc4rdD1hqQDgPdxg8cv72OJXIKe6BdRn7SlC3SGv1w3\n/iBDNmX18eCE3nToys828tOHkxQZ7qknsVoFBwz+jfmaT/CCn1nBugxnj8yQ\ncDcsZieAYkyZ7IEe1YZP27NN9fS5S+9InK1tG9YiDLIkrIuSr66JC0h+aoX9\njW9OzTDd+S/D5/mRLhCF41vALMOoENYnFMmacZvmnEsdxjWz5y30dCY4aLYH\ng4Hw\r\n=s6t+\r\n-----END PGP SIGNATURE-----\r\n",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCIQCtwkJUZ2bGZ7WURBt9Dj4JCQUYX5j+2ellSbpvwc5zxgIgI3FknKbsbJ0h19QaxXfzt2a62m6elzdqAcRLb94DVr4="
+					}
+				]
+			},
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/node-fetch_2.5.12_1626987850688_0.9752204339595683"
+			},
+			"_hasShrinkwrap": false
+		},
+		"3.0.0": {
+			"name": "@types/node-fetch",
+			"version": "3.0.0",
+			"typings": null,
+			"description": "Stub TypeScript definitions entry for node-fetch, which provides its own types definitions",
+			"main": "",
+			"scripts": {},
+			"author": "",
+			"license": "MIT",
+			"dependencies": {
+				"node-fetch": "*"
+			},
+			"_id": "@types/node-fetch@3.0.0",
+			"dist": {
+				"integrity": "sha512-OzqWlO6KjCKNeEg8ukYGczIMsgCUroDsCijdpDSIcTSycvyX/ExH2rj8bSBUVW1NQj3tKn+KdQqRUQgGbiZyTg==",
+				"shasum": "e2eac7c380a5723b8446a1f02fffe928361f378d",
+				"tarball": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-3.0.0.tgz",
+				"fileCount": 3,
+				"unpackedSize": 1655,
+				"npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.13\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJhMkBfCRA9TVsSAnZWagAAR5gQAIOcPOwTnzk2wFW+/TF5\nXFep/gPz22h9AzEZQvvs+pdP9XlFw9umo3mk81iWoNwkvF6ZKWtA6n32A5yt\nLAM92WbKIYPmC2ZDhoXrkkHQ/Pwy42NmyFbJ4PjWn++gbI8rFIZLx+BDtFdc\nqO4SdIB6G1B5xTpyeF79oQmUvW91QqhhX6UiLeLjBeMEc6ADQQzDBBkuzqb2\nZl6R/GX02R+5dtkGquDHiqsb8jDZY2cZDVSNKQqDm8J29Yru4Y05LhtHBWE3\nDWtf9MEN/gNRX1jZYzS/dQQuqYLPRk3V9MzlP96JJbzaF+SguPlugN24fOq7\nzhYRZO3F2yurEqpSznpFm7RDOJRQOxjLQfWHDf7z1vAdJ0Hfci5e8ECzo5bU\nlSnXGSySQz+9Y3BO5yKEIdVeon5LfvqEh7kQi4XAD1UoFG+Prt9O3VURcjCo\n9FqHo057pfQYTT6FvbANCgQ2FqXFSAa4wzw80GhSMxFKOmVKBunXrh4+SjEQ\niKb7+/kCfqQLCWmrSmKD5yKMGosos00Ma0JkZCqkS6jBYmPxppKyWV2iMtFA\nYzP8FvnQ5vqk7H7k5BKmt+OEQM1e79Wj2HiAxmlmjVR+izfCEJ72r46269Ia\nKMoRvO50b7gmgpisO5kpnMDoweGI9ynZxUcjrCwy8f0r20Tkxfu2eozMu0m6\nESsB\r\n=2S8H\r\n-----END PGP SIGNATURE-----\r\n",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCIFBtqkYZpvraD4oSdlpA99GjGYR8rq/C1XJsC9SYcKObAiEApbOuLQTpXcifdJtIeGK0eB9wqZWOvKC1hiyT4z/0eR8="
+					}
+				]
+			},
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/node-fetch_3.0.0_1630683231675_0.5404652218768133"
+			},
+			"_hasShrinkwrap": false,
+			"contributors": []
+		},
+		"3.0.1": {
+			"name": "@types/node-fetch",
+			"version": "3.0.1",
+			"typings": null,
+			"description": "Stub TypeScript definitions entry for node-fetch, which provides its own types definitions",
+			"main": "",
+			"scripts": {},
+			"author": "",
+			"license": "MIT",
+			"dependencies": {
+				"node-fetch": "*"
+			},
+			"_id": "@types/node-fetch@3.0.1",
+			"dist": {
+				"integrity": "sha512-ffYwq96jkq0e1HJiMJi9zYexuSUPUJdsg7SH6QIbNgJNYnBjzhygfvr1urSVviGmuqVMfSQAwuLXZpi3FTc8vA==",
+				"shasum": "e5195b5b6734bef9e95c19608b63d89bc6c02932",
+				"tarball": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-3.0.1.tgz",
+				"fileCount": 3,
+				"unpackedSize": 1655,
+				"npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.13\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJhMkbnCRA9TVsSAnZWagAA+ugP/jAi3e9vECycY4AqOGEn\nLKFt1y1A7ozlpMAvjc1uhLAKnk7JHjLsQ1kkzllKB0EKtEcsfXial9e7IrwL\nYCnj0UHrOluzfF94u0LJvi8Wt7mJVoPft+22E+55NSFrc1Cp9b4hqX1+ANlJ\nZdp1pqBnFYibTolJwWZ6kvivYD38HALQMVQ/9NaeYzKfcUZ0ItPcpIdbf7Wl\naii5H/g5/I1VQDzERc2OGrPEMlivbEXnhHxdIxYboMCA0htO1N0YBoVU4SJy\nGVBd9hJ3v4OwshBxb7Pz9sWDv6YmHfF8csyAttn3NOMhGN7PvoH1Azb96d/t\nzGrVNaoxxqwakHH9EzLHKKaYPK6cw1INYo9XX5hLid51hUNZuPsOZzra+aIP\nvBfwovh6Jk/kVmj6E8ApYkZ33vZY0kb8UeFe5mqa1MqjijpZoQzGs2qsJ9FC\n1C3Pf3UiSUF607Rlp7zpSB5oNX++CUbtIWCbywad1akPw4WYjnvByePXHtJy\nW2yDyt12/TmzQZ5smpF0rxfwROSQUqtNbm0QdVseO13iHZS9MSxUJnS6aZEH\n7c4nbhsQCEhVeVrLad8vQ4BteJ/H3TbhSjIEmgm9eDmbVM945T5EiOlGFK4F\nwfKcXPibYj/m1HIf54OPWvRodwMZOnOR4BSy357Q4o3aNPrWajHK2oqwoONf\nRtZt\r\n=4YZd\r\n-----END PGP SIGNATURE-----\r\n",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCIQDLilYs4UYNIQgiRQ2HSZf/MykbcYO/wG6Gj7hS+gcXNgIgDUlZESGzLDXzy3mWcH9++kV5DKMmDHjPXKuf1afHzlI="
+					}
+				]
+			},
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/node-fetch_3.0.1_1630684903187_0.1179675524538859"
+			},
+			"_hasShrinkwrap": false,
+			"contributors": []
+		},
+		"3.0.2": {
+			"name": "@types/node-fetch",
+			"version": "3.0.2",
+			"typings": null,
+			"description": "Stub TypeScript definitions entry for node-fetch, which provides its own types definitions",
+			"main": "",
+			"scripts": {},
+			"author": "",
+			"license": "MIT",
+			"dependencies": {
+				"node-fetch": "*"
+			},
+			"_id": "@types/node-fetch@3.0.2",
+			"dist": {
+				"integrity": "sha512-3q5FyT6iuekUxXeL2qjcyIhtMJdfMF7RGhYXWKkYpdcW9k36A/+txXrjG0l+NMVkiC30jKNrcOqVlqBl7BcCHA==",
+				"shasum": "899fb992d1349d2e34c287b70007a22c51acae79",
+				"tarball": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-3.0.2.tgz",
+				"fileCount": 3,
+				"unpackedSize": 1655,
+				"npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.13\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJhMk38CRA9TVsSAnZWagAAjTgP/2BIxiWrqpFTNUk7OJgk\nSSB2d6PHHkIFplHj/xrTG/MJcEudHqEPot0Aa3r3ykY8RWL4fjp2IehtEZ2v\nczaKg6bFkkpZ60ROkVYIMHxpihx679tuIsffHwmutuiWvuEYVRtx5AK0mjPD\n2EBlbnb+NEOeDQdTRdzFyRIqDjfOWtsqIhFMyuedQpaheJ5AOKOlXMDBo1Go\nlZwygcXDf4fqBycFM/GHg+oO5WJWPm6Vp97a68sNBFUTXr2rMjPB7zAoeVci\nPlhP+jDr7kJWDdywTBC9BKLADRn1K0ASA5A0v/qkLOFV12zpxjJsfs+XuwwV\npveCfwIMIBBbD4TbiMYQvou0GNUBhp+f0AUxzjWmmR2MI8mBACRlDU9cEhkk\n5KTuwDpxxURRW4qzd9pBNitdyYBFnHAWJd8hCBBNF4d70ewNI0VwDOGA90Up\nKlLE8EiGy9CXVcTdPW4DRvYaecbaClUBoQFdF91wa9sAYGKurweCl3mNZFBt\nE8hF7h29D58IT6fFSGCwB6M4DMKjvHomkkrpskDFVukvpT8+FHOhhKWY9mk5\n7eH9h7QHPTHy0rPV9Om3djx81MJCKNt0q0tK2Ki23e2Cdx0N1BJjYfSueVDW\nz/nMnJ16VfHCmAH2ctR5zN5iEAQf2pnrZHM7UHtI79kh21REOXzY7inSeRcD\naBzi\r\n=V2cD\r\n-----END PGP SIGNATURE-----\r\n",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCIDa2IXKpwGj667/4oSBf3Lr9gRHv8PrhBCWsuLqLWXlWAiEAuSGubUpts/5nmRCe8gQp0R9TYZjARuHQs0FhTlkI/Xw="
+					}
+				]
+			},
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/node-fetch_3.0.2_1630686716629_0.15050274360210403"
+			},
+			"_hasShrinkwrap": false,
+			"contributors": []
+		},
+		"3.0.3": {
+			"name": "@types/node-fetch",
+			"version": "3.0.3",
+			"typings": null,
+			"description": "Stub TypeScript definitions entry for node-fetch, which provides its own types definitions",
+			"main": "",
+			"scripts": {},
+			"author": "",
+			"license": "MIT",
+			"dependencies": {
+				"node-fetch": "*"
+			},
+			"_id": "@types/node-fetch@3.0.3",
+			"dist": {
+				"integrity": "sha512-HhggYPH5N+AQe/OmN6fmhKmRRt2XuNJow+R3pQwJxOOF9GuwM7O2mheyGeIrs5MOIeNjDEdgdoyHBOrFeJBR3g==",
+				"shasum": "9d969c9a748e841554a40ee435d26e53fa3ee899",
+				"tarball": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-3.0.3.tgz",
+				"fileCount": 3,
+				"unpackedSize": 1655,
+				"npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.13\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJhMlT0CRA9TVsSAnZWagAA2WIP/1X0YCLAHEFNMKspUVp0\neI+DM3CRXdTKSdbZNrbsxWMOwi2IjEx3J4ydjWxzv8Mf3s23OGb+7h1EUoqV\nbILGVu1I895y2s9p4HHi+nOB2aSd/28uO29iSm2AOw9OftEyBj98sOpRHGrY\ngLQpXvnl9D/uuhf0H/jkV6vtW1ZOhuTzjYVTrVyRQ0LdfOns7FTdZfD4ZAPp\nkWFmR3yjvJvZb5F5eLHU8hnWZ5Wp3zAPNmj1W6a7NxsSpJJNELLBNyDFTBa1\n4jl1E9QIRQpY7uJgsemViJ3QAxTec+vuaI1wkLogLiAca5o4g37zfQIF0X4N\n9+M2++cuNTOTPHUbf0BtaTPbzddUfFTbMlHcFaVMTP0YrCuSUVa8SlwvBVcT\ncNxz95KWLnLzEqrpiDF9yBadhmdPWaAbLTWihgJqB8e74zGTugENAgup3xTu\nn8EGDJJ0pa9eUEcrUFbFW7Cj49p0zRE739VHpy4t7s4gCTu379LqK4iynW+K\nqMuhD0ivNbh7nFLdMLarhWGr/6aLsg4CWTGSBK4szldWk/KTWgOdxi4Mazx6\n6iDxO3R7C9BkThuLDB/CzZRmajMv/v7HuTJPRJlFKZsh0pHpLtcLGxUqsRUS\nODtbm46qhWA2xwDndNU1/Xn7jjCXkg3OqKEXOf62qYrF/vr7s/j8V3Gbdka0\nUAMM\r\n=xrcr\r\n-----END PGP SIGNATURE-----\r\n",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCICIDTwGibf8QaB0NykQHYiNLvwqJwAOO7nbYDjl6Cl23AiEA2oPC6PPXywLq6ITGKj+mlzIICqrMiKK3UZR5aUpF0I0="
+					}
+				]
+			},
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/node-fetch_3.0.3_1630688500212_0.6386387631070698"
+			},
+			"_hasShrinkwrap": false,
+			"deprecated": "This is a stub types definition. node-fetch provides its own type definitions, so you do not need this installed.",
+			"contributors": []
+		},
+		"2.6.0": {
+			"name": "@types/node-fetch",
+			"version": "2.6.0",
+			"description": "TypeScript definitions for node-fetch",
+			"homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/node-fetch",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Torsten Werner",
+					"url": "https://github.com/torstenwerner",
+					"githubUsername": "torstenwerner"
+				},
+				{
+					"name": "Niklas Lindgren",
+					"url": "https://github.com/nikcorg",
+					"githubUsername": "nikcorg"
+				},
+				{
+					"name": "Vinay Bedre",
+					"url": "https://github.com/vinaybedre",
+					"githubUsername": "vinaybedre"
+				},
+				{
+					"name": "Antonio Román",
+					"url": "https://github.com/kyranet",
+					"githubUsername": "kyranet"
+				},
+				{
+					"name": "Andrew Leedham",
+					"url": "https://github.com/AndrewLeedham",
+					"githubUsername": "AndrewLeedham"
+				},
+				{
+					"name": "Jason Li",
+					"url": "https://github.com/JasonLi914",
+					"githubUsername": "JasonLi914"
+				},
+				{
+					"name": "Steve Faulkner",
+					"url": "https://github.com/southpolesteve",
+					"githubUsername": "southpolesteve"
+				},
+				{
+					"name": "ExE Boss",
+					"url": "https://github.com/ExE-Boss",
+					"githubUsername": "ExE-Boss"
+				},
+				{
+					"name": "Alex Savin",
+					"url": "https://github.com/alexandrusavin",
+					"githubUsername": "alexandrusavin"
+				},
+				{
+					"name": "Alexis Tyler",
+					"url": "https://github.com/OmgImAlexis",
+					"githubUsername": "OmgImAlexis"
+				},
+				{
+					"name": "Jakub Kisielewski",
+					"url": "https://github.com/kbkk",
+					"githubUsername": "kbkk"
+				},
+				{
+					"name": "David Glasser",
+					"url": "https://github.com/glasser",
+					"githubUsername": "glasser"
+				}
+			],
+			"main": "",
+			"types": "index.d.ts",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+				"directory": "types/node-fetch"
+			},
+			"scripts": {},
+			"dependencies": {
+				"@types/node": "*",
+				"form-data": "^2.3.3"
+			},
+			"typesPublisherContentHash": "3647c9acc02f787baaa6554062431a69af72666390675e21f3d0088df6148115",
+			"typeScriptVersion": "3.8",
+			"_id": "@types/node-fetch@2.6.0",
+			"dist": {
+				"integrity": "sha512-HT+uU6V27wJFXgEqTk/+rVE1MWcp5bg7Yuz//43TZ2PjpQbQ8vDLwVmB+fSpgs83j/+p+rMIlDRo9TL3IexWMA==",
+				"shasum": "bf854a36a0d0d99436fd199e06612ef4e73591b6",
+				"tarball": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.6.0.tgz",
+				"fileCount": 5,
+				"unpackedSize": 12126,
+				"npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.13\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJiCu2tCRA9TVsSAnZWagAA1X4QAIfMxXybB/p9wx1R4/Au\nUvepk6QxSHMdCLJVAxGahV3tBiGydsSFYPW+S8f2bPd1aPOwQHhmzY+IM695\nfxaYY/1x0Z+SxLDyIMg5DqHu7yaK4SOLz/QMslMSk13+9RWHrvz/N2oiiVtk\namq8m10q/WZbYchOFFZkPz62Bxv0tLMluCm43ilmfFWFHdaPUHhUEtJtyRMX\n1T2MaDuChZkh2h7kCIb98ZkrXcm5R234VzAmAEH3P3nhtqrZ3Ed/JvgcYOjL\ne7T4FpJrzCeKEQPZW7MomFxMHsoj+PRoATB8qzrGzjU/WVMs6jd3sNqI3De3\nd5GLM0mHW5c5q9cqeO8Z0J2a+FNWMs9vGDdnxCxQ1f7mkqK3xg5pHll8caNe\njc/dXdbMIqUYACnhQeUBkydaVbJ6AI8z/A/itNB2JIAfJuxsF5N6sCmKsuO+\n+CNvFrQNGnIcRbloTlE+lGfF9rVTtq+rm1kksDVra05j2tzABZ2eazS/jXfy\n1GVfCAQLAh1zUt4QlsnAWRgacjc3B8y+wQMsjb2bpASa6++sEiIHOTpKnkOC\neEN2GMt/mzSPxCcrIUQxY4JXv5BoIgNhQ2p6unn8iayuSYRg5ifUOu49kK9s\nikT3YqJOm+2rn/B+Xyi7h0Kvdu2L/BLlf8l9VmtiqcnNw4lzwQO/Qh2aAP4M\nIVm3\r\n=tYyA\r\n-----END PGP SIGNATURE-----\r\n",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEQCICEVoBkC4ZAudSey8f5cLo6DC1z5KGIsPau4CRgrkLyKAiAF52S+tqaXqu+GL+ofmgll8vYvJWnrAuApSeln2Yxczw=="
+					}
+				]
+			},
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/node-fetch_2.6.0_1644883373292_0.5035965345540607"
+			},
+			"_hasShrinkwrap": false
+		},
+		"2.6.1": {
+			"name": "@types/node-fetch",
+			"version": "2.6.1",
+			"description": "TypeScript definitions for node-fetch",
+			"homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/node-fetch",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Torsten Werner",
+					"url": "https://github.com/torstenwerner",
+					"githubUsername": "torstenwerner"
+				},
+				{
+					"name": "Niklas Lindgren",
+					"url": "https://github.com/nikcorg",
+					"githubUsername": "nikcorg"
+				},
+				{
+					"name": "Vinay Bedre",
+					"url": "https://github.com/vinaybedre",
+					"githubUsername": "vinaybedre"
+				},
+				{
+					"name": "Antonio Román",
+					"url": "https://github.com/kyranet",
+					"githubUsername": "kyranet"
+				},
+				{
+					"name": "Andrew Leedham",
+					"url": "https://github.com/AndrewLeedham",
+					"githubUsername": "AndrewLeedham"
+				},
+				{
+					"name": "Jason Li",
+					"url": "https://github.com/JasonLi914",
+					"githubUsername": "JasonLi914"
+				},
+				{
+					"name": "Steve Faulkner",
+					"url": "https://github.com/southpolesteve",
+					"githubUsername": "southpolesteve"
+				},
+				{
+					"name": "ExE Boss",
+					"url": "https://github.com/ExE-Boss",
+					"githubUsername": "ExE-Boss"
+				},
+				{
+					"name": "Alex Savin",
+					"url": "https://github.com/alexandrusavin",
+					"githubUsername": "alexandrusavin"
+				},
+				{
+					"name": "Alexis Tyler",
+					"url": "https://github.com/OmgImAlexis",
+					"githubUsername": "OmgImAlexis"
+				},
+				{
+					"name": "Jakub Kisielewski",
+					"url": "https://github.com/kbkk",
+					"githubUsername": "kbkk"
+				},
+				{
+					"name": "David Glasser",
+					"url": "https://github.com/glasser",
+					"githubUsername": "glasser"
+				}
+			],
+			"main": "",
+			"types": "index.d.ts",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+				"directory": "types/node-fetch"
+			},
+			"scripts": {},
+			"dependencies": {
+				"@types/node": "*",
+				"form-data": "^3.0.0"
+			},
+			"typesPublisherContentHash": "c675d715eadc649103d0ecd377b5669dde03aa70390f1febf28750f5505e7b92",
+			"typeScriptVersion": "3.8",
+			"_id": "@types/node-fetch@2.6.1",
+			"dist": {
+				"integrity": "sha512-oMqjURCaxoSIsHSr1E47QHzbmzNR5rK8McHuNb11BOM9cHcIK3Avy0s/b2JlXHoQGTYS3NsvWzV1M0iK7l0wbA==",
+				"shasum": "8f127c50481db65886800ef496f20bbf15518975",
+				"tarball": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.6.1.tgz",
+				"fileCount": 5,
+				"unpackedSize": 12126,
+				"npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.13\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJiDAalCRA9TVsSAnZWagAAloQP/3g/ZzDgr+gSJF7Lllm+\n3EvlXX8bviYX4yQrwaK+o5nxUuGnpaFhxdTDOZfB3vhOLnkyfdzvbG5GNr5e\npTKIcfv3w8WA5VNfDLtQgK2kqzFci9g6RzRxc4lJmj7h7Ou0jbo3Wsz4+Fk7\ni/AwRrkG+pWN+T/+tZaQvdVqTf72XA2DWVWcRNzYvYxbSkYHXAmYbikEg67m\nVruPtBmqQscZvFD8wHUpAULzGBylY772xuAti5JTI7YFSEZgcTnJbRW4G9wl\nDS4hYjbtN4lxdu+ibb6ZBul8n3SsUASRqyCCTv85MDgtAOdfGBmTwx7f8k0U\nXD9Euncgc2o6hcQYwh63VqBeRBzbphRz8qod3+x6VHhg5uxAiGVO/pFLWSLK\ncHChbMUopBq9OfSvcCVBCd3XtKbVz4wwSTxglqACO9dnykHvr1S6/w1tRRMP\nSscotKOc+YpKXk1APcLLji3hDE/SOJExxhJgq73AHs88XyRCWpz7E9H0RDSv\nmsnoPIfDSrNq/7ViT/5cr8I85+Hbn39dX6kouI1YDul5A8muEy1FVCy54jci\nw2eCVD2oWfHCpo0KlURy672nalup70gpDvJ+grlS4OE03ORg3gwt1JzI8qdZ\na4B0wJbgiblVG/bxwoyAlOk5Dy2a8miXFo24N5EUD3rg8ohSi65QBwJ4rYFX\nj7v7\r\n=GZuX\r\n-----END PGP SIGNATURE-----\r\n",
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEQCIDoJcQ7kgzJhDQbmE2jY/2gffPYsiUVM+lRd+SJ72FWfAiBtHJ42BXgF7+qWcpj5IQE4CCDlZi3IhBMU37tmqI6uuA=="
+					}
+				]
+			},
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/node-fetch_2.6.1_1644955301653_0.33250550760593"
+			},
+			"_hasShrinkwrap": false
+		},
+		"2.6.2": {
+			"name": "@types/node-fetch",
+			"version": "2.6.2",
+			"description": "TypeScript definitions for node-fetch",
+			"homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/node-fetch",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Torsten Werner",
+					"url": "https://github.com/torstenwerner",
+					"githubUsername": "torstenwerner"
+				},
+				{
+					"name": "Niklas Lindgren",
+					"url": "https://github.com/nikcorg",
+					"githubUsername": "nikcorg"
+				},
+				{
+					"name": "Vinay Bedre",
+					"url": "https://github.com/vinaybedre",
+					"githubUsername": "vinaybedre"
+				},
+				{
+					"name": "Antonio Román",
+					"url": "https://github.com/kyranet",
+					"githubUsername": "kyranet"
+				},
+				{
+					"name": "Andrew Leedham",
+					"url": "https://github.com/AndrewLeedham",
+					"githubUsername": "AndrewLeedham"
+				},
+				{
+					"name": "Jason Li",
+					"url": "https://github.com/JasonLi914",
+					"githubUsername": "JasonLi914"
+				},
+				{
+					"name": "Steve Faulkner",
+					"url": "https://github.com/southpolesteve",
+					"githubUsername": "southpolesteve"
+				},
+				{
+					"name": "ExE Boss",
+					"url": "https://github.com/ExE-Boss",
+					"githubUsername": "ExE-Boss"
+				},
+				{
+					"name": "Alex Savin",
+					"url": "https://github.com/alexandrusavin",
+					"githubUsername": "alexandrusavin"
+				},
+				{
+					"name": "Alexis Tyler",
+					"url": "https://github.com/OmgImAlexis",
+					"githubUsername": "OmgImAlexis"
+				},
+				{
+					"name": "Jakub Kisielewski",
+					"url": "https://github.com/kbkk",
+					"githubUsername": "kbkk"
+				},
+				{
+					"name": "David Glasser",
+					"url": "https://github.com/glasser",
+					"githubUsername": "glasser"
+				}
+			],
+			"main": "",
+			"types": "index.d.ts",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+				"directory": "types/node-fetch"
+			},
+			"scripts": {},
+			"dependencies": {
+				"@types/node": "*",
+				"form-data": "^3.0.0"
+			},
+			"typesPublisherContentHash": "f539217db3abcaeb4bea994aff274ddc22cfba7cf3758c120545a305f7437942",
+			"typeScriptVersion": "4.0",
+			"_id": "@types/node-fetch@2.6.2",
+			"dist": {
+				"integrity": "sha512-DHqhlq5jeESLy19TYhLakJ07kNumXWjcDdxXsLUMJZ6ue8VZJj4kLPQVE/2mdHh3xZziNF1xppu5lwmS53HR+A==",
+				"shasum": "d1a9c5fd049d9415dce61571557104dec3ec81da",
+				"tarball": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.6.2.tgz",
+				"fileCount": 6,
+				"unpackedSize": 12125,
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEYCIQDuIWtUzfnPuzNK6FfJyGv9wAEbls8z9ORQnvzU1mrzrwIhAPuCgUltCJbJKIWfq/8gsy7zVmh2vwyC+ILjcm+diYIG"
+					}
+				],
+				"npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v4.10.10\r\nComment: https://openpgpjs.org\r\n\r\nwsFzBAEBCAAGBQJiqkGzACEJED1NWxICdlZqFiEECWMYAoorWMhJKdjhPU1b\r\nEgJ2Vmo7CRAAkxauWsNSEG0Jy7ePVvhuraaZ8067CsnJyXzzUmxun0QNpcz/\r\nFx2SnDBCVzYUlt/L/BpcuB3xxwqzjpn3gaa6kfk+UkwESIeagUmmUeykJ8BD\r\n0JdsW//mnH7rp/sB4Z5wUSsVtpAObmBMI3w+yVQ0QEj+H05BSDB2REstmdEa\r\nIx53FtOfszcSzMCPgNS0M2XL9XmmaYGl9uMY+HMrzTAQfCDtyyLBxFk/M0wF\r\nzzqONLE9JnrsOHHjcRNLsd6Eftnrx691Ag/UwKTu3WXla1lS76ZB2qPDxW/K\r\nRFq2YCwtMrJ9M8/+YUdwAbK4ae6RZ41muJk8+cWgtk5JCZGI47kzoC3J2kRO\r\ner48uDCtnhCQPfL8LN0i2WojKgLsvh1VK1eUS0nXQZLbX0O224uZ10LsBid2\r\nZKAzVce0goXe4b2c9oJt6mLTo+dWfIcMdsnVEVj226sezHhTpD6tGsg/TsCi\r\nQYQCIOS/5fMidJjMmuMDnsXiEqLT6cHnF6pW1Xptg5YKm6gHV0me6bZL20q+\r\nhXn4JIt3QnPdEVCePEuB1KIZNZhXj/r+ItFf8YHkdOiJLpEOobSSIZ74761a\r\nPYQO4HScs7vovqsQ/zLk+M9s/IvxfgIirms+SFfQuNF3hvZaAgL+D3jSXdyH\r\nncy8Dkpv8tLNKkqdR9GkEVPTkoZoe+9JDl4=\r\n=O5Ev\r\n-----END PGP SIGNATURE-----\r\n"
+			},
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/node-fetch_2.6.2_1655325107291_0.5663121447824133"
+			},
+			"_hasShrinkwrap": false
+		},
+		"2.6.3": {
+			"name": "@types/node-fetch",
+			"version": "2.6.3",
+			"description": "TypeScript definitions for node-fetch",
+			"homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/node-fetch",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Torsten Werner",
+					"url": "https://github.com/torstenwerner",
+					"githubUsername": "torstenwerner"
+				},
+				{
+					"name": "Niklas Lindgren",
+					"url": "https://github.com/nikcorg",
+					"githubUsername": "nikcorg"
+				},
+				{
+					"name": "Vinay Bedre",
+					"url": "https://github.com/vinaybedre",
+					"githubUsername": "vinaybedre"
+				},
+				{
+					"name": "Antonio Román",
+					"url": "https://github.com/kyranet",
+					"githubUsername": "kyranet"
+				},
+				{
+					"name": "Andrew Leedham",
+					"url": "https://github.com/AndrewLeedham",
+					"githubUsername": "AndrewLeedham"
+				},
+				{
+					"name": "Jason Li",
+					"url": "https://github.com/JasonLi914",
+					"githubUsername": "JasonLi914"
+				},
+				{
+					"name": "Steve Faulkner",
+					"url": "https://github.com/southpolesteve",
+					"githubUsername": "southpolesteve"
+				},
+				{
+					"name": "ExE Boss",
+					"url": "https://github.com/ExE-Boss",
+					"githubUsername": "ExE-Boss"
+				},
+				{
+					"name": "Alex Savin",
+					"url": "https://github.com/alexandrusavin",
+					"githubUsername": "alexandrusavin"
+				},
+				{
+					"name": "Alexis Tyler",
+					"url": "https://github.com/OmgImAlexis",
+					"githubUsername": "OmgImAlexis"
+				},
+				{
+					"name": "Jakub Kisielewski",
+					"url": "https://github.com/kbkk",
+					"githubUsername": "kbkk"
+				},
+				{
+					"name": "David Glasser",
+					"url": "https://github.com/glasser",
+					"githubUsername": "glasser"
+				}
+			],
+			"main": "",
+			"types": "index.d.ts",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+				"directory": "types/node-fetch"
+			},
+			"scripts": {},
+			"dependencies": {
+				"@types/node": "*",
+				"form-data": "^3.0.0"
+			},
+			"typesPublisherContentHash": "0fdba55404f5275b21690a19cd83efa689d50a006674b5a5b2e6c41e21623829",
+			"typeScriptVersion": "4.3",
+			"_id": "@types/node-fetch@2.6.3",
+			"dist": {
+				"integrity": "sha512-ETTL1mOEdq/sxUtgtOhKjyB2Irra4cjxksvcMUR5Zr4n+PxVhsCD9WS46oPbHL3et9Zde7CNRr+WUNlcHvsX+w==",
+				"shasum": "175d977f5e24d93ad0f57602693c435c57ad7e80",
+				"tarball": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.6.3.tgz",
+				"fileCount": 6,
+				"unpackedSize": 12142,
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEYCIQCevy96ht97iXnSlXBzQjsQTXCV1TqbwMw5P9HR7vfqhQIhAJ19rqA8FyWkIzwWP+q9TAuAwqj0yvB0aejbE+i081a1"
+					}
+				],
+				"npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v4.10.10\r\nComment: https://openpgpjs.org\r\n\r\nwsFzBAEBCAAGBQJkI11wACEJED1NWxICdlZqFiEECWMYAoorWMhJKdjhPU1b\r\nEgJ2Vmp69Q/9HECbzRDukQHxJguNFrN8XqgaKSdgRqzBungRfGodBbH4GtOq\r\nl6q+N2g+BhyddfKOtkPiXH/oh72uzalYwy3PBj3UAuj1hrZjiM61vmupDf94\r\nOLkLD6rs+vtEzrO4jKfQXvRcgqFcGO8ZVB9YjGehkyH//ZEE5omjfKGmX0zX\r\nI/GfxDBAz+/9qabVhV2Q4g/T7VZ/LSApHfBoFxlDMg3P3qAsTnvA0966rOiY\r\nTwuD9Y7A5sLVDyPR7yF0ao3L3OD2yFjCNRVsV2pULyl4TudJLKSHvBGOrKUn\r\n6g/1DrmzRW+HojEywTKw4at1XaFxYp86FQgWtGqO5KvnU7WR/aVCb/wiiub2\r\nQD9sGDG6r05isWMu8Z1TG3OS1xUSmIYKfuIG/qozfSZVEvbIgl1vzat8VUz9\r\njxkvDYcRhpgbUdZtVtMUbQnPc5yjwKahLZKoKY80Idig+4ripN0+P0GFlFI8\r\n02lREOzVb4It6orFyzin7AQPvD8vgQS8APd3V6Ap/awObVokLKfTjTihqHqM\r\nMlnDj0lN4hheXbxpU62Wknd7sqF5eKQABGDIm8uU5+ojMV+98n3UI2KqkWgG\r\niQL4fSDCVgtHV69pvse59NwfCZ8ZdYAXJR6vN3B1LM7s65ThJZAPo+3XLCtL\r\nMw+YWwNPIJVngF3eNouwkkea7bxwxoVZGgw=\r\n=an4l\r\n-----END PGP SIGNATURE-----\r\n"
+			},
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/node-fetch_2.6.3_1680039280182_0.4117533659322927"
+			},
+			"_hasShrinkwrap": false
+		},
+		"2.6.4": {
+			"name": "@types/node-fetch",
+			"version": "2.6.4",
+			"description": "TypeScript definitions for node-fetch",
+			"homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/node-fetch",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Torsten Werner",
+					"url": "https://github.com/torstenwerner",
+					"githubUsername": "torstenwerner"
+				},
+				{
+					"name": "Niklas Lindgren",
+					"url": "https://github.com/nikcorg",
+					"githubUsername": "nikcorg"
+				},
+				{
+					"name": "Vinay Bedre",
+					"url": "https://github.com/vinaybedre",
+					"githubUsername": "vinaybedre"
+				},
+				{
+					"name": "Antonio Román",
+					"url": "https://github.com/kyranet",
+					"githubUsername": "kyranet"
+				},
+				{
+					"name": "Andrew Leedham",
+					"url": "https://github.com/AndrewLeedham",
+					"githubUsername": "AndrewLeedham"
+				},
+				{
+					"name": "Jason Li",
+					"url": "https://github.com/JasonLi914",
+					"githubUsername": "JasonLi914"
+				},
+				{
+					"name": "Steve Faulkner",
+					"url": "https://github.com/southpolesteve",
+					"githubUsername": "southpolesteve"
+				},
+				{
+					"name": "ExE Boss",
+					"url": "https://github.com/ExE-Boss",
+					"githubUsername": "ExE-Boss"
+				},
+				{
+					"name": "Alex Savin",
+					"url": "https://github.com/alexandrusavin",
+					"githubUsername": "alexandrusavin"
+				},
+				{
+					"name": "Alexis Tyler",
+					"url": "https://github.com/OmgImAlexis",
+					"githubUsername": "OmgImAlexis"
+				},
+				{
+					"name": "Jakub Kisielewski",
+					"url": "https://github.com/kbkk",
+					"githubUsername": "kbkk"
+				},
+				{
+					"name": "David Glasser",
+					"url": "https://github.com/glasser",
+					"githubUsername": "glasser"
+				}
+			],
+			"main": "",
+			"types": "index.d.ts",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+				"directory": "types/node-fetch"
+			},
+			"scripts": {},
+			"dependencies": {
+				"@types/node": "*",
+				"form-data": "^3.0.0"
+			},
+			"typesPublisherContentHash": "e1a69a7824613c58f845f6ae006edeb89add0e29c8ab4f75627b67dcd35f045d",
+			"typeScriptVersion": "4.3",
+			"_id": "@types/node-fetch@2.6.4",
+			"dist": {
+				"integrity": "sha512-1ZX9fcN4Rvkvgv4E6PAY5WXUFWFcRWxZa3EW83UjycOB9ljJCedb2CupIP4RZMEwF/M3eTcCihbBRgwtGbg5Rg==",
+				"shasum": "1bc3a26de814f6bf466b25aeb1473fa1afe6a660",
+				"tarball": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.6.4.tgz",
+				"fileCount": 6,
+				"unpackedSize": 12171,
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCIGJ5ZwjusCSZxvpoirXTnQMsri4Cn9xc9SDkclLqFHTRAiEAgpZ6FpxcbU7gKJcj4aQ01i0F8Edy/bqJOt25Xr+PDXM="
+					}
+				]
+			},
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/node-fetch_2.6.4_1684199049402_0.6717814095747352"
+			},
+			"_hasShrinkwrap": false
+		},
+		"2.6.5": {
+			"name": "@types/node-fetch",
+			"version": "2.6.5",
+			"description": "TypeScript definitions for node-fetch",
+			"homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/node-fetch",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Torsten Werner",
+					"url": "https://github.com/torstenwerner",
+					"githubUsername": "torstenwerner"
+				},
+				{
+					"name": "Niklas Lindgren",
+					"url": "https://github.com/nikcorg",
+					"githubUsername": "nikcorg"
+				},
+				{
+					"name": "Vinay Bedre",
+					"url": "https://github.com/vinaybedre",
+					"githubUsername": "vinaybedre"
+				},
+				{
+					"name": "Antonio Román",
+					"url": "https://github.com/kyranet",
+					"githubUsername": "kyranet"
+				},
+				{
+					"name": "Andrew Leedham",
+					"url": "https://github.com/AndrewLeedham",
+					"githubUsername": "AndrewLeedham"
+				},
+				{
+					"name": "Jason Li",
+					"url": "https://github.com/JasonLi914",
+					"githubUsername": "JasonLi914"
+				},
+				{
+					"name": "Steve Faulkner",
+					"url": "https://github.com/southpolesteve",
+					"githubUsername": "southpolesteve"
+				},
+				{
+					"name": "ExE Boss",
+					"url": "https://github.com/ExE-Boss",
+					"githubUsername": "ExE-Boss"
+				},
+				{
+					"name": "Alex Savin",
+					"url": "https://github.com/alexandrusavin",
+					"githubUsername": "alexandrusavin"
+				},
+				{
+					"name": "Alexis Tyler",
+					"url": "https://github.com/OmgImAlexis",
+					"githubUsername": "OmgImAlexis"
+				},
+				{
+					"name": "Jakub Kisielewski",
+					"url": "https://github.com/kbkk",
+					"githubUsername": "kbkk"
+				},
+				{
+					"name": "David Glasser",
+					"url": "https://github.com/glasser",
+					"githubUsername": "glasser"
+				}
+			],
+			"main": "",
+			"types": "index.d.ts",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+				"directory": "types/node-fetch"
+			},
+			"scripts": {},
+			"dependencies": {
+				"@types/node": "*",
+				"form-data": "^4.0.0"
+			},
+			"typesPublisherContentHash": "0b18768a77e85a3249a602482a75cb8dcc8de8b96e79f877c0290f6c206739ce",
+			"typeScriptVersion": "4.5",
+			"_id": "@types/node-fetch@2.6.5",
+			"dist": {
+				"integrity": "sha512-OZsUlr2nxvkqUFLSaY2ZbA+P1q22q+KrlxWOn/38RX+u5kTkYL2mTujEpzUhGkS+K/QCYp9oagfXG39XOzyySg==",
+				"shasum": "972756a9a0fe354b2886bf3defe667ddb4f0d30a",
+				"tarball": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.6.5.tgz",
+				"fileCount": 6,
+				"unpackedSize": 12171,
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCIHtNsDWTrLAbhwc2dJqsU9DP/Vr3Hz2xRmcdsL+N3/NzAiEA6TFcwkA4K0INaY8A5HHVByTayyuPQfmocdip8OGKGp4="
+					}
+				]
+			},
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/node-fetch_2.6.5_1694657365995_0.7718038239539216"
+			},
+			"_hasShrinkwrap": false
+		},
+		"2.6.6": {
+			"name": "@types/node-fetch",
+			"version": "2.6.6",
+			"description": "TypeScript definitions for node-fetch",
+			"homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/node-fetch",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Torsten Werner",
+					"url": "https://github.com/torstenwerner",
+					"githubUsername": "torstenwerner"
+				},
+				{
+					"name": "Niklas Lindgren",
+					"url": "https://github.com/nikcorg",
+					"githubUsername": "nikcorg"
+				},
+				{
+					"name": "Vinay Bedre",
+					"url": "https://github.com/vinaybedre",
+					"githubUsername": "vinaybedre"
+				},
+				{
+					"name": "Antonio Román",
+					"url": "https://github.com/kyranet",
+					"githubUsername": "kyranet"
+				},
+				{
+					"name": "Andrew Leedham",
+					"url": "https://github.com/AndrewLeedham",
+					"githubUsername": "AndrewLeedham"
+				},
+				{
+					"name": "Jason Li",
+					"url": "https://github.com/JasonLi914",
+					"githubUsername": "JasonLi914"
+				},
+				{
+					"name": "Steve Faulkner",
+					"url": "https://github.com/southpolesteve",
+					"githubUsername": "southpolesteve"
+				},
+				{
+					"name": "ExE Boss",
+					"url": "https://github.com/ExE-Boss",
+					"githubUsername": "ExE-Boss"
+				},
+				{
+					"name": "Alex Savin",
+					"url": "https://github.com/alexandrusavin",
+					"githubUsername": "alexandrusavin"
+				},
+				{
+					"name": "Alexis Tyler",
+					"url": "https://github.com/OmgImAlexis",
+					"githubUsername": "OmgImAlexis"
+				},
+				{
+					"name": "Jakub Kisielewski",
+					"url": "https://github.com/kbkk",
+					"githubUsername": "kbkk"
+				},
+				{
+					"name": "David Glasser",
+					"url": "https://github.com/glasser",
+					"githubUsername": "glasser"
+				}
+			],
+			"main": "",
+			"types": "index.d.ts",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+				"directory": "types/node-fetch"
+			},
+			"scripts": {},
+			"dependencies": {
+				"@types/node": "*",
+				"form-data": "^4.0.0"
+			},
+			"typesPublisherContentHash": "1c45642541a528c3630627015d790a28fc645158dfb2fb2c195d6e33dfaf9a0f",
+			"typeScriptVersion": "4.5",
+			"_id": "@types/node-fetch@2.6.6",
+			"dist": {
+				"integrity": "sha512-95X8guJYhfqiuVVhRFxVQcf4hW/2bCuoPwDasMf/531STFoNoWTT7YDnWdXHEZKqAGUigmpG31r2FE70LwnzJw==",
+				"shasum": "b72f3f4bc0c0afee1c0bc9cff68e041d01e3e779",
+				"tarball": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.6.6.tgz",
+				"fileCount": 6,
+				"unpackedSize": 12264,
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCIFbWDBR4d+F3U72oYMv1jK2TKKI/Sq7oASjE437ZtEvTAiEAuJhaLY6TUZue1eE61qbWFVeB8b0t3b0ankzKQp11uxw="
+					}
+				]
+			},
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/node-fetch_2.6.6_1695502423449_0.3105041271021509"
+			},
+			"_hasShrinkwrap": false
+		},
+		"2.6.7": {
+			"name": "@types/node-fetch",
+			"version": "2.6.7",
+			"description": "TypeScript definitions for node-fetch",
+			"homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/node-fetch",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Torsten Werner",
+					"githubUsername": "torstenwerner",
+					"url": "https://github.com/torstenwerner"
+				},
+				{
+					"name": "Niklas Lindgren",
+					"githubUsername": "nikcorg",
+					"url": "https://github.com/nikcorg"
+				},
+				{
+					"name": "Vinay Bedre",
+					"githubUsername": "vinaybedre",
+					"url": "https://github.com/vinaybedre"
+				},
+				{
+					"name": "Antonio Román",
+					"githubUsername": "kyranet",
+					"url": "https://github.com/kyranet"
+				},
+				{
+					"name": "Andrew Leedham",
+					"githubUsername": "AndrewLeedham",
+					"url": "https://github.com/AndrewLeedham"
+				},
+				{
+					"name": "Jason Li",
+					"githubUsername": "JasonLi914",
+					"url": "https://github.com/JasonLi914"
+				},
+				{
+					"name": "Steve Faulkner",
+					"githubUsername": "southpolesteve",
+					"url": "https://github.com/southpolesteve"
+				},
+				{
+					"name": "ExE Boss",
+					"githubUsername": "ExE-Boss",
+					"url": "https://github.com/ExE-Boss"
+				},
+				{
+					"name": "Alex Savin",
+					"githubUsername": "alexandrusavin",
+					"url": "https://github.com/alexandrusavin"
+				},
+				{
+					"name": "Alexis Tyler",
+					"githubUsername": "OmgImAlexis",
+					"url": "https://github.com/OmgImAlexis"
+				},
+				{
+					"name": "Jakub Kisielewski",
+					"githubUsername": "kbkk",
+					"url": "https://github.com/kbkk"
+				},
+				{
+					"name": "David Glasser",
+					"githubUsername": "glasser",
+					"url": "https://github.com/glasser"
+				}
+			],
+			"main": "",
+			"types": "index.d.ts",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+				"directory": "types/node-fetch"
+			},
+			"scripts": {},
+			"dependencies": {
+				"@types/node": "*",
+				"form-data": "^4.0.0"
+			},
+			"typesPublisherContentHash": "6b60b9b59167b062139d8c6b3b941a4aae434b5ffd4f8e2468b2e44d8ce813bb",
+			"typeScriptVersion": "4.5",
+			"_id": "@types/node-fetch@2.6.7",
+			"dist": {
+				"integrity": "sha512-lX17GZVpJ/fuCjguZ5b3TjEbSENxmEk1B2z02yoXSK9WMEWRivhdSY73wWMn6bpcCDAOh6qAdktpKHIlkDk2lg==",
+				"shasum": "a1abe2ce24228b58ad97f99480fdcf9bbc6ab16d",
+				"tarball": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.6.7.tgz",
+				"fileCount": 6,
+				"unpackedSize": 11298,
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCIQCM9BFTguFG9j46n0KnuYTInI208n4iP53sn9ENQqFyugIgV3G3qTPss4gls8UsCHp2nEMt8Aszfn6rfWFr4DbY0u4="
+					}
+				]
+			},
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/node-fetch_2.6.7_1697621702647_0.4016725880579206"
+			},
+			"_hasShrinkwrap": false
+		},
+		"2.6.8": {
+			"name": "@types/node-fetch",
+			"version": "2.6.8",
+			"description": "TypeScript definitions for node-fetch",
+			"homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/node-fetch",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Torsten Werner",
+					"githubUsername": "torstenwerner",
+					"url": "https://github.com/torstenwerner"
+				},
+				{
+					"name": "Niklas Lindgren",
+					"githubUsername": "nikcorg",
+					"url": "https://github.com/nikcorg"
+				},
+				{
+					"name": "Vinay Bedre",
+					"githubUsername": "vinaybedre",
+					"url": "https://github.com/vinaybedre"
+				},
+				{
+					"name": "Antonio Román",
+					"githubUsername": "kyranet",
+					"url": "https://github.com/kyranet"
+				},
+				{
+					"name": "Andrew Leedham",
+					"githubUsername": "AndrewLeedham",
+					"url": "https://github.com/AndrewLeedham"
+				},
+				{
+					"name": "Jason Li",
+					"githubUsername": "JasonLi914",
+					"url": "https://github.com/JasonLi914"
+				},
+				{
+					"name": "Steve Faulkner",
+					"githubUsername": "southpolesteve",
+					"url": "https://github.com/southpolesteve"
+				},
+				{
+					"name": "ExE Boss",
+					"githubUsername": "ExE-Boss",
+					"url": "https://github.com/ExE-Boss"
+				},
+				{
+					"name": "Alex Savin",
+					"githubUsername": "alexandrusavin",
+					"url": "https://github.com/alexandrusavin"
+				},
+				{
+					"name": "Alexis Tyler",
+					"githubUsername": "OmgImAlexis",
+					"url": "https://github.com/OmgImAlexis"
+				},
+				{
+					"name": "Jakub Kisielewski",
+					"githubUsername": "kbkk",
+					"url": "https://github.com/kbkk"
+				},
+				{
+					"name": "David Glasser",
+					"githubUsername": "glasser",
+					"url": "https://github.com/glasser"
+				}
+			],
+			"main": "",
+			"types": "index.d.ts",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+				"directory": "types/node-fetch"
+			},
+			"scripts": {},
+			"dependencies": {
+				"@types/node": "*",
+				"form-data": "^4.0.0"
+			},
+			"typesPublisherContentHash": "9d353044432db10f43edfd602b69c840d3617deb1c3558e31da5c01a0c7244d1",
+			"typeScriptVersion": "4.5",
+			"_id": "@types/node-fetch@2.6.8",
+			"dist": {
+				"integrity": "sha512-nnH5lV9QCMPsbEVdTb5Y+F3GQxLSw1xQgIydrb2gSfEavRPs50FnMr+KUaa+LoPSqibm2N+ZZxH7lavZlAT4GA==",
+				"shasum": "9a2993583975849c2e1f360b6ca2f11755b2c504",
+				"tarball": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.6.8.tgz",
+				"fileCount": 6,
+				"unpackedSize": 11438,
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCIQD8UiVvgoeTAAXTmVRY4QarxpCFuplw9Kfpfiz5U9iQZgIgLLD5YeARDWwOk2ZfpYP+hj11NBInCNbOYH0U5i2qmjM="
+					}
+				]
+			},
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/node-fetch_2.6.8_1698700602904_0.8543022147837758"
+			},
+			"_hasShrinkwrap": false
+		},
+		"2.6.9": {
+			"name": "@types/node-fetch",
+			"version": "2.6.9",
+			"description": "TypeScript definitions for node-fetch",
+			"homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/node-fetch",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Torsten Werner",
+					"githubUsername": "torstenwerner",
+					"url": "https://github.com/torstenwerner"
+				},
+				{
+					"name": "Niklas Lindgren",
+					"githubUsername": "nikcorg",
+					"url": "https://github.com/nikcorg"
+				},
+				{
+					"name": "Vinay Bedre",
+					"githubUsername": "vinaybedre",
+					"url": "https://github.com/vinaybedre"
+				},
+				{
+					"name": "Antonio Román",
+					"githubUsername": "kyranet",
+					"url": "https://github.com/kyranet"
+				},
+				{
+					"name": "Andrew Leedham",
+					"githubUsername": "AndrewLeedham",
+					"url": "https://github.com/AndrewLeedham"
+				},
+				{
+					"name": "Jason Li",
+					"githubUsername": "JasonLi914",
+					"url": "https://github.com/JasonLi914"
+				},
+				{
+					"name": "Steve Faulkner",
+					"githubUsername": "southpolesteve",
+					"url": "https://github.com/southpolesteve"
+				},
+				{
+					"name": "ExE Boss",
+					"githubUsername": "ExE-Boss",
+					"url": "https://github.com/ExE-Boss"
+				},
+				{
+					"name": "Alex Savin",
+					"githubUsername": "alexandrusavin",
+					"url": "https://github.com/alexandrusavin"
+				},
+				{
+					"name": "Alexis Tyler",
+					"githubUsername": "OmgImAlexis",
+					"url": "https://github.com/OmgImAlexis"
+				},
+				{
+					"name": "Jakub Kisielewski",
+					"githubUsername": "kbkk",
+					"url": "https://github.com/kbkk"
+				},
+				{
+					"name": "David Glasser",
+					"githubUsername": "glasser",
+					"url": "https://github.com/glasser"
+				}
+			],
+			"main": "",
+			"types": "index.d.ts",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+				"directory": "types/node-fetch"
+			},
+			"scripts": {},
+			"dependencies": {
+				"@types/node": "*",
+				"form-data": "^4.0.0"
+			},
+			"typesPublisherContentHash": "feb13109743eacdf2b30633d1686586f86ed4c44951f4d2cb82ae267cdbcb5c1",
+			"typeScriptVersion": "4.5",
+			"_id": "@types/node-fetch@2.6.9",
+			"dist": {
+				"integrity": "sha512-bQVlnMLFJ2d35DkPNjEPmd9ueO/rh5EiaZt2bhqiSarPjZIuIV6bPQVqcrEyvNo+AfTrRGVazle1tl597w3gfA==",
+				"shasum": "15f529d247f1ede1824f7e7acdaa192d5f28071e",
+				"tarball": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.6.9.tgz",
+				"fileCount": 6,
+				"unpackedSize": 11438,
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCIAS7QX7vEK//Llyp970FhtThUItoMLmERjykUJ6z0VFSAiEAhgs0U/tIw+0vqkhIWIK0lLPZ3Q4of1xxBL10q5v3hao="
+					}
+				]
+			},
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/node-fetch_2.6.9_1699357690446_0.6242559338690694"
+			},
+			"_hasShrinkwrap": false
+		},
+		"2.6.10": {
+			"name": "@types/node-fetch",
+			"version": "2.6.10",
+			"description": "TypeScript definitions for node-fetch",
+			"homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/node-fetch",
+			"license": "MIT",
+			"contributors": [
+				{
+					"name": "Torsten Werner",
+					"githubUsername": "torstenwerner",
+					"url": "https://github.com/torstenwerner"
+				},
+				{
+					"name": "Niklas Lindgren",
+					"githubUsername": "nikcorg",
+					"url": "https://github.com/nikcorg"
+				},
+				{
+					"name": "Vinay Bedre",
+					"githubUsername": "vinaybedre",
+					"url": "https://github.com/vinaybedre"
+				},
+				{
+					"name": "Antonio Román",
+					"githubUsername": "kyranet",
+					"url": "https://github.com/kyranet"
+				},
+				{
+					"name": "Andrew Leedham",
+					"githubUsername": "AndrewLeedham",
+					"url": "https://github.com/AndrewLeedham"
+				},
+				{
+					"name": "Jason Li",
+					"githubUsername": "JasonLi914",
+					"url": "https://github.com/JasonLi914"
+				},
+				{
+					"name": "Steve Faulkner",
+					"githubUsername": "southpolesteve",
+					"url": "https://github.com/southpolesteve"
+				},
+				{
+					"name": "ExE Boss",
+					"githubUsername": "ExE-Boss",
+					"url": "https://github.com/ExE-Boss"
+				},
+				{
+					"name": "Alex Savin",
+					"githubUsername": "alexandrusavin",
+					"url": "https://github.com/alexandrusavin"
+				},
+				{
+					"name": "Alexis Tyler",
+					"githubUsername": "OmgImAlexis",
+					"url": "https://github.com/OmgImAlexis"
+				},
+				{
+					"name": "Jakub Kisielewski",
+					"githubUsername": "kbkk",
+					"url": "https://github.com/kbkk"
+				},
+				{
+					"name": "David Glasser",
+					"githubUsername": "glasser",
+					"url": "https://github.com/glasser"
+				}
+			],
+			"main": "",
+			"types": "index.d.ts",
+			"repository": {
+				"type": "git",
+				"url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+				"directory": "types/node-fetch"
+			},
+			"scripts": {},
+			"dependencies": {
+				"@types/node": "*",
+				"form-data": "^4.0.0"
+			},
+			"typesPublisherContentHash": "8e35ac0fe2beabdc31c18cc67d05ce2d6de0cb38e5d65ea6bf15ad18a13fc6ca",
+			"typeScriptVersion": "4.6",
+			"_id": "@types/node-fetch@2.6.10",
+			"dist": {
+				"integrity": "sha512-PPpPK6F9ALFTn59Ka3BaL+qGuipRfxNE8qVgkp0bVixeiR2c2/L+IVOiBdu9JhhT22sWnQEp6YyHGI2b2+CMcA==",
+				"shasum": "ff5c1ceacab782f2b7ce69957d38c1c27b0dc469",
+				"tarball": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.6.10.tgz",
+				"fileCount": 6,
+				"unpackedSize": 11484,
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEYCIQCN6ZbV7OXAF2ftdwyeX3rYlb9hRhfOvdOcgn336VXRKAIhAJWZpsvY/05vAUzDV3AJnfG/tkOiqB4eS+ZO02bYbq4Y"
+					}
+				]
+			},
+			"_npmUser": {
+				"name": "types",
+				"email": "ts-npm-types@microsoft.com"
+			},
+			"directories": {},
+			"maintainers": [
+				{
+					"name": "types",
+					"email": "ts-npm-types@microsoft.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/node-fetch_2.6.10_1703707633894_0.29158552795181647"
+			},
+			"_hasShrinkwrap": false
+		}
+	},
+	"time": {
+		"modified": "2023-12-27T20:07:19.046Z",
+		"created": "2016-08-02T16:01:42.230Z",
+		"0.0.1": "2016-08-02T16:01:42.230Z",
+		"0.0.2": "2016-08-19T15:35:13.251Z",
+		"0.0.3": "2016-08-25T18:51:21.131Z",
+		"0.0.4": "2016-09-19T17:55:16.910Z",
+		"1.6.5": "2016-10-20T15:53:34.160Z",
+		"1.6.6": "2016-11-29T23:59:23.230Z",
+		"1.6.7": "2016-12-29T23:12:05.266Z",
+		"1.6.8": "2018-04-03T18:38:24.557Z",
+		"1.6.9": "2018-04-24T23:35:47.879Z",
+		"2.1.0": "2018-05-30T01:40:35.614Z",
+		"2.1.1": "2018-05-31T20:13:48.177Z",
+		"2.1.2": "2018-07-21T02:09:00.405Z",
+		"2.1.3": "2018-11-15T03:33:01.811Z",
+		"2.1.4": "2018-11-19T00:57:53.950Z",
+		"2.1.5": "2019-01-30T21:19:03.744Z",
+		"2.1.6": "2019-02-08T21:25:50.935Z",
+		"2.1.7": "2019-03-20T17:55:31.017Z",
+		"2.3.0": "2019-04-04T20:18:01.173Z",
+		"2.3.1": "2019-04-10T17:28:06.462Z",
+		"2.3.2": "2019-04-11T18:07:47.747Z",
+		"2.3.3": "2019-04-25T23:04:08.728Z",
+		"2.3.4": "2019-05-16T15:25:20.688Z",
+		"2.3.5": "2019-06-05T22:07:06.266Z",
+		"2.3.6": "2019-06-12T19:52:35.883Z",
+		"2.3.7": "2019-06-16T06:28:28.029Z",
+		"2.5.0": "2019-07-23T19:55:52.153Z",
+		"2.5.1": "2019-09-18T17:16:06.080Z",
+		"2.5.2": "2019-09-23T17:53:37.259Z",
+		"2.5.3": "2019-11-01T16:16:09.837Z",
+		"2.5.4": "2019-11-22T15:51:52.428Z",
+		"2.5.5": "2020-02-25T00:17:15.932Z",
+		"2.5.6": "2020-04-11T03:32:01.351Z",
+		"2.5.7": "2020-04-23T19:31:14.720Z",
+		"2.5.8": "2021-01-14T21:34:30.912Z",
+		"2.5.9": "2021-04-02T18:01:26.605Z",
+		"2.5.10": "2021-04-07T23:31:39.201Z",
+		"2.5.11": "2021-07-07T00:10:13.182Z",
+		"2.5.12": "2021-07-22T21:04:10.822Z",
+		"3.0.0": "2021-09-03T15:33:51.807Z",
+		"3.0.1": "2021-09-03T16:01:43.319Z",
+		"3.0.2": "2021-09-03T16:31:56.765Z",
+		"3.0.3": "2021-09-03T17:01:40.358Z",
+		"2.6.0": "2022-02-15T00:02:53.463Z",
+		"2.6.1": "2022-02-15T20:01:41.850Z",
+		"2.6.2": "2022-06-15T20:31:47.511Z",
+		"2.6.3": "2023-03-28T21:34:40.354Z",
+		"2.6.4": "2023-05-16T01:04:09.567Z",
+		"2.6.5": "2023-09-14T02:09:26.189Z",
+		"2.6.6": "2023-09-23T20:53:43.664Z",
+		"2.6.7": "2023-10-18T09:35:02.849Z",
+		"2.6.8": "2023-10-30T21:16:43.091Z",
+		"2.6.9": "2023-11-07T11:48:10.579Z",
+		"2.6.10": "2023-12-27T20:07:14.056Z"
+	},
+	"users": {},
+	"dist-tags": {
+		"latest": "2.6.10",
+		"ts2.0": "2.5.3",
+		"ts2.1": "2.5.3",
+		"ts2.2": "2.5.3",
+		"ts2.3": "2.5.3",
+		"ts2.4": "2.5.3",
+		"ts2.5": "2.5.3",
+		"ts2.6": "2.5.3",
+		"ts2.7": "2.5.3",
+		"ts2.8": "2.5.7",
+		"ts2.9": "2.5.7",
+		"ts3.0": "2.5.7",
+		"ts3.1": "2.5.7",
+		"ts3.2": "2.5.7",
+		"ts3.3": "2.5.7",
+		"ts3.4": "2.5.8",
+		"ts3.5": "2.5.10",
+		"ts3.6": "2.5.12",
+		"ts3.7": "2.5.12",
+		"ts3.8": "2.6.1",
+		"ts3.9": "2.6.1",
+		"ts4.0": "2.6.2",
+		"ts4.1": "2.6.2",
+		"ts4.2": "2.6.2",
+		"ts4.3": "2.6.4",
+		"ts4.4": "2.6.4",
+		"ts4.5": "2.6.9",
+		"ts4.6": "2.6.10",
+		"ts4.7": "2.6.10",
+		"ts4.8": "2.6.10",
+		"ts4.9": "2.6.10",
+		"ts5.0": "2.6.10",
+		"ts5.1": "2.6.10",
+		"ts5.2": "2.6.10",
+		"ts5.3": "2.6.10",
+		"ts5.4": "2.6.10"
+	},
+	"_uplinks": {
+		"npmjs": {
+			"etag": "W/\"6595cb4a6cc3e9b8bb68829f4586d878\"",
+			"fetched": 1704380625979
+		}
+	},
+	"_distfiles": {
+		"node-fetch-0.0.1.tgz": {
+			"url": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-0.0.1.tgz",
+			"sha": "bc23e5f0b20e3cb1c42115a3b476ac308c49b52f",
+			"registry": "npmjs"
+		},
+		"node-fetch-0.0.2.tgz": {
+			"url": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-0.0.2.tgz",
+			"sha": "aa84f2b9ccfb8b86730ed1c37c1f50561948d839",
+			"registry": "npmjs"
+		},
+		"node-fetch-0.0.3.tgz": {
+			"url": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-0.0.3.tgz",
+			"sha": "3920acdd51934920c476575ce685d6a3a0ebe473",
+			"registry": "npmjs"
+		},
+		"node-fetch-0.0.4.tgz": {
+			"url": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-0.0.4.tgz",
+			"sha": "d36cd3f4ed26d44579f3937370477bead6bd4fc0",
+			"registry": "npmjs"
+		},
+		"node-fetch-1.6.5.tgz": {
+			"url": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-1.6.5.tgz",
+			"sha": "baf417fd32f68ae8fec670532eb4a5b71bb09ab6",
+			"registry": "npmjs"
+		},
+		"node-fetch-1.6.6.tgz": {
+			"url": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-1.6.6.tgz",
+			"sha": "192efb20c92258d5a8872d4063b63b200b62280d",
+			"registry": "npmjs"
+		},
+		"node-fetch-1.6.7.tgz": {
+			"url": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-1.6.7.tgz",
+			"sha": "521078e8f0c69a158e5022005aca92d2620f6d57",
+			"registry": "npmjs"
+		},
+		"node-fetch-1.6.8.tgz": {
+			"url": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-1.6.8.tgz",
+			"sha": "a59d8c75b300ddc3ca3eef23d449d677f9486c3d",
+			"registry": "npmjs"
+		},
+		"node-fetch-1.6.9.tgz": {
+			"url": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-1.6.9.tgz",
+			"sha": "a750fb0f4cf2960bf72b462e4c86908022dd69c5",
+			"registry": "npmjs"
+		},
+		"node-fetch-2.1.0.tgz": {
+			"url": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.1.0.tgz",
+			"sha": "315af54c1892245b83b867ac4e322b7a1d395e4c",
+			"registry": "npmjs"
+		},
+		"node-fetch-2.1.1.tgz": {
+			"url": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.1.1.tgz",
+			"sha": "1e8d0abf4c438828ce9c74b45d564a8a93e48cec",
+			"registry": "npmjs"
+		},
+		"node-fetch-2.1.2.tgz": {
+			"url": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.1.2.tgz",
+			"sha": "8c5da14d70321e4c4ecd5db668e3f93cf6c7399f",
+			"registry": "npmjs"
+		},
+		"node-fetch-2.1.3.tgz": {
+			"url": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.1.3.tgz",
+			"sha": "80538fbaee61bdc01449f4e00a11e11291e52dec",
+			"registry": "npmjs"
+		},
+		"node-fetch-2.1.4.tgz": {
+			"url": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.1.4.tgz",
+			"sha": "093d1beae11541aef25999d70aa09286fd025b1a",
+			"registry": "npmjs"
+		},
+		"node-fetch-2.1.5.tgz": {
+			"url": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.1.5.tgz",
+			"sha": "94f81fbb0cab2709a5275bbfab7ff93fd7d4bdc0",
+			"registry": "npmjs"
+		},
+		"node-fetch-2.1.6.tgz": {
+			"url": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.1.6.tgz",
+			"sha": "4326288b49f352a142f03c63526ebce0f4c50877",
+			"registry": "npmjs"
+		},
+		"node-fetch-2.1.7.tgz": {
+			"url": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.1.7.tgz",
+			"sha": "0231559340f6e3f3a0608692077d744c87b5b367",
+			"registry": "npmjs"
+		},
+		"node-fetch-2.3.0.tgz": {
+			"url": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.3.0.tgz",
+			"sha": "d1da24d56e9f1774a0e50a93cc8ee2a7922f4f0e",
+			"registry": "npmjs"
+		},
+		"node-fetch-2.3.1.tgz": {
+			"url": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.3.1.tgz",
+			"sha": "a453be56b53ff74e5e3603fe5f9a7e3d7b673efc",
+			"registry": "npmjs"
+		},
+		"node-fetch-2.3.2.tgz": {
+			"url": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.3.2.tgz",
+			"sha": "e01893b176c6fa1367743726380d65bce5d6576b",
+			"registry": "npmjs"
+		},
+		"node-fetch-2.3.3.tgz": {
+			"url": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.3.3.tgz",
+			"sha": "eb9c2a0ce8e9424ebe0c0cbe6f1e8ea7576c1310",
+			"registry": "npmjs"
+		},
+		"node-fetch-2.3.4.tgz": {
+			"url": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.3.4.tgz",
+			"sha": "a46fc4fe9f94b491bf551b6bb7f0f493b9bacd1a",
+			"registry": "npmjs"
+		},
+		"node-fetch-2.3.5.tgz": {
+			"url": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.3.5.tgz",
+			"sha": "e25e5b6715f377f46a82783817acceef29121d6e",
+			"registry": "npmjs"
+		},
+		"node-fetch-2.3.6.tgz": {
+			"url": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.3.6.tgz",
+			"sha": "761f30134f62c9fd30174603a97348a0477e5dc2",
+			"registry": "npmjs"
+		},
+		"node-fetch-2.3.7.tgz": {
+			"url": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.3.7.tgz",
+			"sha": "b7212e895100f8642dbdab698472bab5f3c1d2f1",
+			"registry": "npmjs"
+		},
+		"node-fetch-2.5.0.tgz": {
+			"url": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.5.0.tgz",
+			"sha": "1c55616a4591bdd15a389fbd0da4a55b9502add5",
+			"registry": "npmjs"
+		},
+		"node-fetch-2.5.1.tgz": {
+			"url": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.5.1.tgz",
+			"sha": "9e4daffa983eb098d25c2cb410c949678f3aee78",
+			"registry": "npmjs"
+		},
+		"node-fetch-2.5.2.tgz": {
+			"url": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.5.2.tgz",
+			"sha": "76906dea5b3d6901e50e63e15249c9bcd6e9676e",
+			"registry": "npmjs"
+		},
+		"node-fetch-2.5.3.tgz": {
+			"url": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.5.3.tgz",
+			"sha": "b84127facd93642b1fb6439bc630ba0612e3ec50",
+			"registry": "npmjs"
+		},
+		"node-fetch-2.5.4.tgz": {
+			"url": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.5.4.tgz",
+			"sha": "5245b6d8841fc3a6208b82291119bc11c4e0ce44",
+			"registry": "npmjs"
+		},
+		"node-fetch-2.5.5.tgz": {
+			"url": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.5.5.tgz",
+			"sha": "cd264e20a81f4600a6c52864d38e7fef72485e92",
+			"registry": "npmjs"
+		},
+		"node-fetch-2.5.6.tgz": {
+			"url": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.5.6.tgz",
+			"sha": "df8377a66e64ddf75b65b072e37b3c5c5425a96f",
+			"registry": "npmjs"
+		},
+		"node-fetch-2.5.7.tgz": {
+			"url": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.5.7.tgz",
+			"sha": "20a2afffa882ab04d44ca786449a276f9f6bbf3c",
+			"registry": "npmjs"
+		},
+		"node-fetch-2.5.8.tgz": {
+			"url": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.5.8.tgz",
+			"sha": "e199c835d234c7eb0846f6618012e558544ee2fb",
+			"registry": "npmjs"
+		},
+		"node-fetch-2.5.9.tgz": {
+			"url": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.5.9.tgz",
+			"sha": "c04a12115aa436f189e39579272b305e477621b4",
+			"registry": "npmjs"
+		},
+		"node-fetch-2.5.10.tgz": {
+			"url": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.5.10.tgz",
+			"sha": "9b4d4a0425562f9fcea70b12cb3fcdd946ca8132",
+			"registry": "npmjs"
+		},
+		"node-fetch-2.5.11.tgz": {
+			"url": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.5.11.tgz",
+			"sha": "ce22a2e65fc8999f4dbdb7ddbbcf187d755169e4",
+			"registry": "npmjs"
+		},
+		"node-fetch-2.5.12.tgz": {
+			"url": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.5.12.tgz",
+			"sha": "8a6f779b1d4e60b7a57fb6fd48d84fb545b9cc66",
+			"registry": "npmjs"
+		},
+		"node-fetch-3.0.0.tgz": {
+			"url": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-3.0.0.tgz",
+			"sha": "e2eac7c380a5723b8446a1f02fffe928361f378d",
+			"registry": "npmjs"
+		},
+		"node-fetch-3.0.1.tgz": {
+			"url": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-3.0.1.tgz",
+			"sha": "e5195b5b6734bef9e95c19608b63d89bc6c02932",
+			"registry": "npmjs"
+		},
+		"node-fetch-3.0.2.tgz": {
+			"url": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-3.0.2.tgz",
+			"sha": "899fb992d1349d2e34c287b70007a22c51acae79",
+			"registry": "npmjs"
+		},
+		"node-fetch-3.0.3.tgz": {
+			"url": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-3.0.3.tgz",
+			"sha": "9d969c9a748e841554a40ee435d26e53fa3ee899",
+			"registry": "npmjs"
+		},
+		"node-fetch-2.6.0.tgz": {
+			"url": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.6.0.tgz",
+			"sha": "bf854a36a0d0d99436fd199e06612ef4e73591b6",
+			"registry": "npmjs"
+		},
+		"node-fetch-2.6.1.tgz": {
+			"url": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.6.1.tgz",
+			"sha": "8f127c50481db65886800ef496f20bbf15518975",
+			"registry": "npmjs"
+		},
+		"node-fetch-2.6.2.tgz": {
+			"url": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.6.2.tgz",
+			"sha": "d1a9c5fd049d9415dce61571557104dec3ec81da",
+			"registry": "npmjs"
+		},
+		"node-fetch-2.6.3.tgz": {
+			"url": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.6.3.tgz",
+			"sha": "175d977f5e24d93ad0f57602693c435c57ad7e80",
+			"registry": "npmjs"
+		},
+		"node-fetch-2.6.4.tgz": {
+			"url": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.6.4.tgz",
+			"sha": "1bc3a26de814f6bf466b25aeb1473fa1afe6a660",
+			"registry": "npmjs"
+		},
+		"node-fetch-2.6.5.tgz": {
+			"url": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.6.5.tgz",
+			"sha": "972756a9a0fe354b2886bf3defe667ddb4f0d30a",
+			"registry": "npmjs"
+		},
+		"node-fetch-2.6.6.tgz": {
+			"url": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.6.6.tgz",
+			"sha": "b72f3f4bc0c0afee1c0bc9cff68e041d01e3e779",
+			"registry": "npmjs"
+		},
+		"node-fetch-2.6.7.tgz": {
+			"url": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.6.7.tgz",
+			"sha": "a1abe2ce24228b58ad97f99480fdcf9bbc6ab16d",
+			"registry": "npmjs"
+		},
+		"node-fetch-2.6.8.tgz": {
+			"url": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.6.8.tgz",
+			"sha": "9a2993583975849c2e1f360b6ca2f11755b2c504",
+			"registry": "npmjs"
+		},
+		"node-fetch-2.6.9.tgz": {
+			"url": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.6.9.tgz",
+			"sha": "15f529d247f1ede1824f7e7acdaa192d5f28071e",
+			"registry": "npmjs"
+		},
+		"node-fetch-2.6.10.tgz": {
+			"url": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.6.10.tgz",
+			"sha": "ff5c1ceacab782f2b7ce69957d38c1c27b0dc469",
+			"registry": "npmjs"
+		}
+	},
+	"_attachments": {},
+	"_rev": "1-df12bfafd365affd",
+	"_id": "@types/node-fetch",
+	"readme": "[object Object]"
+}

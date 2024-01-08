@@ -4,31 +4,29 @@
 
 const { readFile } = require('fs').promises;
 const path = require('path');
-const Generator = require('@asyncapi/generator');
-const templateName = '@asyncapi/html-template';
-const tempOutputResults = '../temp/integrationTestResult';
+const Generator = require('../lib/generator');
+const dummySpecPath = path.resolve(__dirname, './docs/dummy.yml');
+const crypto = require('crypto');
+const mainTestResultPath = 'test/temp/integrationTestResult';
+//we do not want to download chromium for html-template if it is not needed
+process.env['PUPPETEER_SKIP_CHROMIUM_DOWNLOAD'] = true;
 
-console.log = jest.fn();
-
-describe('Testing if html template can fetch from private repository', () => {
-  jest.setTimeout(200000);
-
-  let ArboristMock;
-  let arboristMock;
-
-  beforeEach(() => {
-    ArboristMock = require('@npmcli/arborist');
-    arboristMock = new ArboristMock();
-  });
-
-  it('fetching the html template from the private repository', async () => {
+describe('Integration testing generateFromFile() to make sure the result of the generation is not changend comparing to snapshot', () => {
+  const generateFolderName = () => {
     //you always want to generate to new directory to make sure test runs in clear environment
-    const outputDir = path.resolve(tempOutputResults, Math.random().toString(36).substring(7));
-    //we setup the generator to pick the template file that is present in the private repository
-    const generator = new Generator(templateName, outputDir, { forceWrite: true, debug: true, templateParams: { singleFile: true }, registry: {url: 'http://localhost:4873/', username: 'admin', password: 'nimda'}});
-    
-    await generator.installTemplate();
+    return path.resolve(mainTestResultPath, crypto.randomBytes(4).toString('hex'));
+  };
 
-    expect(arboristMock.reify).toHaveBeenCalledTimes(1);
+  jest.setTimeout(60000);
+
+  it('generated using private registory', async () => {
+    const outputDir = generateFolderName();
+    const generator = new Generator('@asyncapi/html-template', outputDir, 
+         { forceWrite: true, templateParams: { singleFile: true }, 
+         registry: {url: 'http://localhost:4873/', username: 'admin', password: 'nimbda'}});
+    await generator.generateFromFile(dummySpecPath);
+    const file = await readFile(path.join(outputDir, 'index.html'), 'utf8');
+    expect(file).toMatchSnapshot();
   });
+
 });

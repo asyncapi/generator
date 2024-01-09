@@ -1,35 +1,32 @@
 ---
-title: "Generating models and classes using Modelina"
+title: "How to generating models and classes using Modelina"
 weight: 200
 ---
 
-Suppose you want to generate models for your application from the data types you have using the asyncapi generator. Then you should use Modelina instead of the asyncapi generator with a template.
+This guide will walk you through the process of generating models and classes using [Modelina](https://www.asyncapi.com/tools/modelina) and the asyncapi generator. If you want to generate models for your application from the data types, you should use Modelina instead of the asyncapi generator with a template else you should use 
 
 [Modelina](https://www.asyncapi.com/tools/modelina) is an AsyncAPI library that is used to generate data models using inputs such as AsyncAPI, OpenAPI or JSON schema inputs. This library helps generate data models based on your AsyncAPI document, the model template (which defines the message payloads) via the asyncapi CLI. You can then use the generated models in your code, and you can store the generated models in a single file. This tutorial will guide you through generating a model class for a Python MQTT client using Modelina and the AsyncAPI CLI.
 
-In this tutorial:
+In this guide, you'll learn to:
 
-1. You'll learn how to generate a model class using a Python MQTT client.
-2. You'll use the Modelina library and the asyncapi CLI to generate Python data models.
-3. You'll create a model schema to test your model code using an MQTT client.
+1. Generate a model class using a Python MQTT client.
+2. Use the Modelina library and the asyncapi CLI to generate Python data models.
+3. Create a model schema to test your model code using an MQTT client.
 
 ## Prerequisites
-
-This tutorial builds upon an existing project, the [MQTT Python project](https://github.com/derberg/python-mqtt-client-template). The project creates a custom generator template using a Python MQTT client. We'll use the same project to create a simple Modelina template and generate data models using the Python MQTT client. To get an in-depth understanding of what this project does, please go through the [generator template tutorial](https://www.asyncapi.com/docs/tools/generator/generator_template).
-
-You should also have [Node.js and npm](https://nodejs.org/en/download/) and the [AsyncAPI CLI](https://www.asyncapi.com/docs/tools/generator/installation-guide#asyncapi-cli) installed in your machine.
+Before you begin, ensure you have the following installed:
+- [Node.js and npm](https://nodejs.org/en/download/).
+- [AsyncAPI CLI](https://www.asyncapi.com/docs/tools/generator/installation-guide#asyncapi-cli) installed in your machine.
 
 > :memo: **Note:**
 > When building the model from scratch, you'll need to have a predefined [AsyncAPI document](https://www.asyncapi.com/docs/tools/generator/asyncapi-document) and you can also use the existing [community-maintained templates](https://www.asyncapi.com/docs/tools/generator/template#generator-templates-list) instead of creating a template from scratch.
 
 ## Getting started
 
-First, clone the MQTT Python project from Github using the following command:
-`git clone https://github.com/derberg/python-mqtt-client-template`
+First, install Modelina in your project using npm:
 
-Open the Python MQTT project in your code editor
-
-Then, add the Modelina dependency to the `package.json` file in your project:
+ `npm install --save @asyncapi/modelina`
+This command will then automatically add the modelina dependency to your `package.json` as shown below:
 
  ```json
  "dependencies": {
@@ -38,10 +35,6 @@ Then, add the Modelina dependency to the `package.json` file in your project:
     ...
   },
  ```
-
-Finally, install Modelina in your project using npm:
-
- `npm install @asyncapi/modelina`
 
 ## Generating models
 
@@ -92,9 +85,9 @@ export default async function schemaRender({ asyncapi }) {
 
 Let's break it down. The code snippet above does the following:
 
-1. Imports the **File** component from the [generator react SDK](https://github.com/asyncapi/generator-react-sdk). This tells the generator CLI to use the [react render engine](https://www.asyncapi.com/docs/tools/generator/react-render-engine) to generate a model file or files as output.
+1. Imports the **File** component from the [generator react SDK](https://github.com/asyncapi/generator-react-sdk). This tells the AsyncAPI CLI to use the [react render engine](https://www.asyncapi.com/docs/tools/generator/react-render-engine) to generate a model file or files as output.
 2. Import Modelina into your template. The Modelina library makes the **PythonGenerator** and the **FormatHelpers** used to format the generated Python code available to your model template.
-3. Define an asynchronous function **schemaRender** that get's invoked everytime the generator CLI runs the **models.js** template. This function is responsible for rendering the generated schema files. It also takes the `asyncapi` object as an input parameter.
+3. Define an asynchronous function **schemaRender** that get's invoked everytime the AsyncAPI CLI runs the **models.js** template. This function is responsible for rendering the generated schema files. It also takes the `asyncapi` object as an input parameter.
 4. Instantiates the **PythonGenerator** model generator from Modelina. It will be used to generate Python code from the AsyncAPI document.
 5. Generates an array of Python model classes from the `asyncapi` (AsyncAPI document) object received from the generator.
 6. Define an empty array **files** to store the generated model files.
@@ -102,27 +95,24 @@ Let's break it down. The code snippet above does the following:
 8. Add filenames and the model schemas to the **files** array.
 9. Return an array of files, each representing the generated model classes, to the generator engine.
 
-## Model generation using the AsyncAPI CLI
+## Generate models
+Use the AsyncAPI CLI to generate your models using the following command:
 
-Using the AsyncAPI CLI, generate your model by running the following command:
+```
+asyncapi generate fromTemplate test/fixtures/asyncapi.yml ./ -o test/project --force-write --param server=dev
+```
+If successful, you should see the following output:
 
-`asyncapi generate fromTemplate test/fixtures/asyncapi.yml ./ -o test/project --force-write --param server=dev`
-
-If successful, you should see the following output on your terminal:
 ```
 Generation in progress. Keep calm and wait a bit... done
 Check out your shiny new generated files at test/project.
 ```
 
-Since you defined your model in **src/models** the generated model schema will be in the **test/project -> src/models** directory.
-Navigate to **test/project** folder and you should see that your model template generated two models in the **src/models** folder.
-Let's break down the previous command:
-
-- `asyncapi generate fromTemplate` is how you use AsyncAPI generator via the AsyncAPI CLI.
-- `test/fixtures/asyncapi.yml` points to your AsyncAPI document.
-- `./` specifies the location of your model template.
-- `-o` specifies where to output the generated data models.
+Navigate to test/project/src/models to find your generated model files.
 
 ## Conclusion
 
 Modelina provides a flexible and powerful way to generate data models from AsyncAPI, OpenAPI, or JSON Schema documents. With the AsyncAPI CLI, you can easily generate models and integrate them into your development workflow. With the ability to customize the generated models, Modelina proves to be a valuable tool in the development of event-driven architectures.
+
+>Note:
+>You can integrate this example into your own template by following the [generator template tutorial](https://www.asyncapi.com/docs/tools/generator/generator-template). Ensure that you add `@asyncapi/modelina` to template dependencies using `npm install --save @asyncapi/modelina``.

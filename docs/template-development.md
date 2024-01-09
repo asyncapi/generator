@@ -132,7 +132,7 @@ Newer:
 <Text>Version is: **{params.version || asyncapi.info.version()}**</Text>
 ```
 
-Now that you have added all the configuration options, you can start the generation process using the generator CLI. You can pass these parameters via the CLI: `--param name=value or -p name=value`.
+Now that you have added all the configuration options, you can start the generation process using the AsyncAPI CLI. You can pass these parameters via the CLI: `--param name=value or -p name=value`.
 The above configuration helps template users override the existing version with a new version on the command line. (Example: `-p version=2.0.0`)
 
 ## Hooks

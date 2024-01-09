@@ -22,11 +22,10 @@ describe('Integration testing generateFromFile() to make sure the result of the 
   it('generated using private registory', async () => {
     const outputDir = generateFolderName();
     const generator = new Generator('@asyncapi/html-template', outputDir, 
-         { forceWrite: true, templateParams: { singleFile: true }, 
-         registry: {url: 'http://localhost:4873/', username: 'admin', password: 'nimbda'}});
+      { forceWrite: true, templateParams: { singleFile: true }, 
+        registry: {url: 'http://localhost:4873/', username: 'admin', password: 'nimbda'}});
     await generator.generateFromFile(dummySpecPath);
     const file = await readFile(path.join(outputDir, 'index.html'), 'utf8');
     expect(file).toMatchSnapshot();
   });
-
 });

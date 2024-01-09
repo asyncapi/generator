@@ -24,3 +24,4 @@ test/test-project/node_modules/@asyncapi/*
 !test/test-project/node_modules/@asyncapi/html-template/
 test/test-project/package-lock.json
 test/test-project/verdaccio/storage/
+test/test-project/storage/

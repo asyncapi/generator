@@ -25,6 +25,5 @@ describe('Integration testing generateFromFile() to make sure the template can b
     await generator.generateFromFile(dummySpecPath);
     const file = await readFile(path.join(outputDir, 'index.html'), 'utf8');
     expect(file).toContain('Dummy example with all spec features included')
-    expect(file.length).toBeGreaterThan(0);
   });
 });

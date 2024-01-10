@@ -11,7 +11,7 @@ services:
 
   test:
     privileged: true
-    image: "node:18"
+    image: "node:${NODE_IMAGE_TAG}"
     volumes:
       - ../../:/app
     command: bash /app/test/test-project/test.sh

@@ -3,6 +3,8 @@ version: '3'
 services:
   verdaccio:
     image: verdaccio/verdaccio:5
+    environment:
+      - PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
     container_name: 'verdaccio'
     ports:
       - '4873:4873'

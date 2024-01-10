@@ -24,6 +24,6 @@ describe('Integration testing generateFromFile() to make sure the template can b
         registry: {url: 'http://localhost:4873/', username: 'admin', password: 'nimbda'}});
     await generator.generateFromFile(dummySpecPath);
     const file = await readFile(path.join(outputDir, 'index.html'), 'utf8');
-    expect(file).toContain('Dummy example with all spec features included')
+    expect(file).toContain('Dummy example with all spec features included');
   });
 });

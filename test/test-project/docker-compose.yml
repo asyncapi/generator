@@ -8,12 +8,27 @@ services:
       - '4873:4873'
     volumes:
       - './verdaccio:/verdaccio/conf'
+    networks:
+      - mynetwork
 
-  test:
+  test-project:
     privileged: true
     image: "node:${NODE_IMAGE_TAG}"
-    environment:
-      - PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
     volumes:
       - ../../:/app
-    command: bash /app/test/test-project/test.sh
+    command: bash /app/test/test-project/test.sh test-project
+
+  test-registry:
+    privileged: true
+    image: "node:${NODE_IMAGE_TAG}"
+    volumes:
+      - ../../:/app
+    command: bash /app/test/test-project/test.sh test-registry
+    networks:
+      - mynetwork
+    depends_on:
+      - verdaccio
+
+networks:
+  mynetwork:
+    driver: bridge

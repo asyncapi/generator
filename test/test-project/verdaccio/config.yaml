@@ -7,7 +7,7 @@ uplinks:
   npmjs:
     url: https://registry.npmjs.org/
 packages:
-  "@*/*":
-    access: $authenticated
+  "**":
+    access: admin
     proxy: npmjs
 log: { type: stdout, format: pretty, level: debug }

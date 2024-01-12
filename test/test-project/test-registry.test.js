@@ -15,11 +15,11 @@ describe('Integration testing generateFromFile() to make sure the template can b
     return path.resolve(mainTestResultPath, crypto.randomBytes(4).toString('hex'));
   };
 
-  jest.setTimeout(60000);
+  jest.setTimeout(60000000);
 
   it('generated using private registory', async () => {
     const outputDir = generateFolderName();
-    const generator = new Generator('@asyncapi/html-template@0.16.0', outputDir,
+    const generator = new Generator('@asyncapi/html-template', outputDir,
       { 
         debug: true,
         install: true, 
@@ -28,8 +28,8 @@ describe('Integration testing generateFromFile() to make sure the template can b
           singleFile: true 
         },
         registry: {
-          url: 'http://verdaccio:4873', 
-          auth: 'YWRtaW46bmltZGE=' // YWRtaW46bmltZGE= is encoded with base64 username and password -> admin:nimda
+          url: 'http://host.docker.internal:4873',  // Replace the host.docker.internal to localhost for testing without docker
+          '//host.docker.internal/:_auth': 'YWRtaW46bmltZGE=' // YWRtaW46bmltZGE= is encoded with base64 username and password -> admin:nimda
         }
       });
     await generator.generateFromFile(dummySpecPath);

@@ -19,6 +19,9 @@ describe('Integration testing generateFromFile() to make sure the template can b
 
   it('generated using private registory', async () => {
     const outputDir = generateFolderName();
+    const extraAuth = {
+      '//host.docker.internal:4873/:_auth': 'YWRtaW46bmltZGE='  // Replace the host.docker.internal to localhost for testing without docker
+   };
     const generator = new Generator('@asyncapi/html-template', outputDir,
       { 
         debug: true,
@@ -29,7 +32,7 @@ describe('Integration testing generateFromFile() to make sure the template can b
         },
         registry: {
           url: 'http://host.docker.internal:4873',  // Replace the host.docker.internal to localhost for testing without docker
-          '//host.docker.internal/:_auth': 'YWRtaW46bmltZGE=' // YWRtaW46bmltZGE= is encoded with base64 username and password -> admin:nimda
+          extraAuth // YWRtaW46bmltZGE= is encoded with base64 username and password -> admin:nimda
         }
       });
     await generator.generateFromFile(dummySpecPath);

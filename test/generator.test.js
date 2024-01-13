@@ -417,7 +417,7 @@ describe('Generator', () => {
 
     it('works with a path to registry', async () => {
       log.debug = jest.fn();
-      const gen = new Generator('nameOfTestTemplate', __dirname, {debug: true, registry: {url: 'some.registry.com', username: 'user', password: 'password', token: 'token'}});
+      const gen = new Generator('nameOfTestTemplate', __dirname, {debug: true, registry: {url: 'some.registry.com', authorizationName:"sdfsf"}});
       await gen.installTemplate();
       setTimeout(() => { // This puts the call at the end of the Node.js event loop queue.
         expect(arboristMock.reify).toHaveBeenCalledTimes(1);

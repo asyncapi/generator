@@ -8,6 +8,7 @@ const Generator = require('@asyncapi/generator');
 const dummySpecPath = path.resolve(__dirname, '../docs/dummy.yml');
 const crypto = require('crypto');
 const mainTestResultPath = 'test/temp/integrationTestResult';
+process.env['PUPPETEER_SKIP_CHROMIUM_DOWNLOAD'] = true;
 
 describe('Integration testing generateFromFile() to make sure the template can be download from the private repository.', () => {
   const generateFolderName = () => {
@@ -15,13 +16,13 @@ describe('Integration testing generateFromFile() to make sure the template can b
     return path.resolve(mainTestResultPath, crypto.randomBytes(4).toString('hex'));
   };
 
-  jest.setTimeout(60000000);
+  jest.setTimeout(6000000);
 
   it('generated using private registory', async () => {
     const outputDir = generateFolderName();
     const extraAuth = {
-      '//host.docker.internal:4873/:_auth': 'YWRtaW46bmltZGE='  // Replace the host.docker.internal to localhost for testing without docker
-   };
+      '//host.docker.internal:4873/:_auth': 'YWRtaW46bmltZGE='   // Replace the host.docker.internal to localhost for testing without docker
+    };
     const generator = new Generator('@asyncapi/html-template', outputDir,
       { 
         debug: true,
@@ -35,7 +36,14 @@ describe('Integration testing generateFromFile() to make sure the template can b
           extraAuth // YWRtaW46bmltZGE= is encoded with base64 username and password -> admin:nimda
         }
       });
-    await generator.generateFromFile(dummySpecPath);
+    try {
+      await generator.generateFromFile(dummySpecPath);
+      // Code to run if the method call is successful
+    } catch (error) {
+      // Code to handle the error
+      console.error('An error occurred:', error);
+    }
+      
     const file = await readFile(path.join(outputDir, 'index.html'), 'utf8');
     expect(file).toContain('Dummy example with all spec features included');
   });

@@ -9,17 +9,12 @@
     },
     "dependencies": {
         "@asyncapi/generator": "file:../..",
-        "@asyncapi/html-template": "0.16.0"
-
+        "@asyncapi/html-template": "^0.16.0"
     },
     "devDependencies": {
         "fs-extra": "9.1.0",
         "jest": "25.5.0",
-        "rimraf": "3.0.2",
-        "autoprefixer": "^10.2.1",
-        "postcss-cli": "^8.3.1",
-        "puppeteer": "^5.3.1",
-        "tailwindcss": "^2.0.2"
+        "rimraf": "3.0.2"
     },
     "jest": {
         "moduleNameMapper": {

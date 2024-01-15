@@ -11,11 +11,16 @@ services:
     networks:
       - mynetwork
 
+  test-project:
+    privileged: true
+    image: "node:${NODE_IMAGE_TAG}"
+    volumes:
+      - ../../:/app
+    command: bash /app/test/test-project/test.sh test-project
+  
   test-registry:
     privileged: true
-    depends_on:
-      - verdaccio
-    image: "node:18"
+    image: "node:${NODE_IMAGE_TAG}"
     environment:
       - PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
     volumes:
@@ -23,8 +28,8 @@ services:
     command: bash /app/test/test-project/test.sh test-registry
     networks:
       - mynetwork
-   
-
+    depends_on:
+      - verdaccio
 
 networks:
   mynetwork:

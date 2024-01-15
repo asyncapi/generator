@@ -1,0 +1,3 @@
+{% macro slicedString(str, style='') %}
+{% for slice in str|split('(?=[\.\/\{\}])') %}<span class="string-chunk" {% if style %}style="{{style}}"{% endif %}>{{slice}}</span>{% endfor %}
+{% endmacro %}

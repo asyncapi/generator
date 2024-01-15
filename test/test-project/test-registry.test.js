@@ -16,7 +16,7 @@ describe('Integration testing generateFromFile() to make sure the template can b
     return path.resolve(mainTestResultPath, crypto.randomBytes(4).toString('hex'));
   };
 
-  jest.setTimeout(6000000);
+  jest.setTimeout(600000);
 
   it('generated using private registory', async () => {
     const outputDir = generateFolderName();
@@ -29,8 +29,8 @@ describe('Integration testing generateFromFile() to make sure the template can b
           singleFile: true 
         },
         registry: {
-          url: 'http://host.docker.internal:4873',  // Replace the host.docker.internal to localhost for testing without docker
-          auth: 'YWRtaW46bmltZGE='
+          url: 'http://127.0.0.1:4873',  
+          auth: 'YWRtaW46bmltZGE='  // base64 encoded username and password represented as admin:nimda
           
         }
       });

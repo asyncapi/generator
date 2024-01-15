@@ -34,7 +34,7 @@ case "$1" in
     test_registry
     ;;
   *)
-    echo "Invalid argument. Supported arguments: test-project, test-registry"
+    echo "Invalid argument. Supported arguments: test-project"
     exit 1
     ;;
 esac

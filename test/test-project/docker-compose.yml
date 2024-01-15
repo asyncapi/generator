@@ -13,16 +13,14 @@ services:
 
   test-project:
     privileged: true
-    image: "node:18"
+    image: "node:${NODE_IMAGE_TAG}"
     volumes:
       - ../../:/app
     command: bash /app/test/test-project/test.sh test-project
-    depends_on:
-    - test-registry
-
+  
   test-registry:
     privileged: true
-    image: "node:18"
+    image: "node:${NODE_IMAGE_TAG}"
     environment:
       - PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
     volumes:

@@ -14,23 +14,13 @@ services:
   test-project:
     privileged: true
     image: "node:${NODE_IMAGE_TAG}"
-    volumes:
-      - ../../:/app
-    command: bash /app/test/test-project/test.sh test-project
-  
-  test-registry:
-    privileged: true
-    image: "node:${NODE_IMAGE_TAG}"
     environment:
       - PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
     volumes:
       - ../../:/app
-    command: bash /app/test/test-project/test.sh test-registry
-    networks:
-      - mynetwork
-    depends_on:
-      - verdaccio
-
+    command: bash /app/test/test-project/test.sh test-project | bash /app/test/test-project/test.sh test-registry
+  
+  
 networks:
   mynetwork:
     driver: bridge

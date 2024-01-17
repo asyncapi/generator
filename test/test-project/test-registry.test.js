@@ -29,7 +29,7 @@ describe('Integration testing generateFromFile() to make sure the template can b
           singleFile: true 
         },
         registry: {
-          url: 'http://127.0.0.1:4873',  // Replace the host.docker.internal to localhost for testing without docker
+          url: 'http://127.0.0.1:4873',  
           auth: 'YWRtaW46bmltZGE='  // base64 encoded username and password represented as admin:nimda
           
         }

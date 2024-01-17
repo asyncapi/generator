@@ -12,6 +12,7 @@
     "npm": ">6.13.7"
   },
   "scripts": {
+    "login": "NPM_REGISTRY=http://localhost:4873 NPM_USER=admin NPM_PASS=nimda NPM_EMAIL=test@example.com npm-cli-login",
     "test": "npm run test:unit && npm run test:integration && npm run test:cli",
     "test:unit": "jest --coverage --testPathIgnorePatterns=integration --testPathIgnorePatterns=test-project",
     "test:dev": "npm run test:unit -- --watchAll",

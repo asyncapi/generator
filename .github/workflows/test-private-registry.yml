@@ -1,0 +1,32 @@
+name: Testing Private Registry
+
+on: ['pull_request']
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      super-cli: ${{ steps.set-crashers-count.outputs.super-cli }}
+    name: ci
+    services:
+      verdaccio:
+        image: verdaccio/verdaccio:5
+        ports:
+          - 4873:4873
+    steps:
+    - uses: AutoModality/action-clean@v1
+    - uses: actions/checkout@v2.4.0
+    - name: Use Node
+      uses: actions/setup-node@v2
+      with:
+        node-version: 16
+    - name: Install
+      run: npm install
+    - name: Installing login
+      run: npm install -g npm-cli-login
+    - name: Test
+      run: npm test
+    - name: credentials
+      run: npm run login
+    - name: Test Registry
+      run: npm run test:registry
+      working-directory: ./test/test-project

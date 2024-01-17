@@ -17,9 +17,10 @@ services:
     environment:
       - PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
     volumes:
-      - ../../:/app
-    command: bash /app/test/test-project/test.sh test-project | bash /app/test/test-project/test.sh test-registry
-  
+      - ../../:/apptemp
+    command: bash /apptemp/test/test-project/test-entrypoint.sh
+    networks:
+      - mynetwork
   
 networks:
   mynetwork:

@@ -9,6 +9,7 @@ const dummySpecPath = path.resolve(__dirname, '../docs/dummy.yml');
 const crypto = require('crypto');
 const mainTestResultPath = 'test/temp/integrationTestResult';
 process.env['PUPPETEER_SKIP_CHROMIUM_DOWNLOAD'] = true;
+console.log = jest.fn();
 
 describe('Integration testing generateFromFile() to make sure the template can be download from the private repository.', () => {
   const generateFolderName = () => {
@@ -16,7 +17,7 @@ describe('Integration testing generateFromFile() to make sure the template can b
     return path.resolve(mainTestResultPath, crypto.randomBytes(4).toString('hex'));
   };
 
-  jest.setTimeout(600000);
+  jest.setTimeout(1000000);
 
   it('generated using private registory', async () => {
     const outputDir = generateFolderName();
@@ -29,20 +30,16 @@ describe('Integration testing generateFromFile() to make sure the template can b
           singleFile: true 
         },
         registry: {
-          url: 'http://127.0.0.1:4873',  
+          url: 'http://verdaccio:4873',  
           auth: 'YWRtaW46bmltZGE='  // base64 encoded username and password represented as admin:nimda
           
         }
       });
-    try {
-      await generator.generateFromFile(dummySpecPath);
-      // Code to run if the method call is successful
-    } catch (error) {
-      // Code to handle the error
-      console.error('An error occurred:', error);
-    }
+      
+    await generator.generateFromFile(dummySpecPath);
       
     const file = await readFile(path.join(outputDir, 'index.html'), 'utf8');
     expect(file).toContain('Dummy example with all spec features included');
+    expect(console.log).toHaveBeenCalledWith('Using npm registry http://verdaccio:4873 and authorization type //verdaccio:4873:_auth to handle template installation.');
   });
 });

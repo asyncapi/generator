@@ -2,7 +2,9 @@
     "description": "Test project. More info in the readme.",
     "scripts": {
         "test": "npm run test:cleanup && npm run test:project && npm run test:global && npm run test:registry",
-        "test:project": "jest --detectOpenHandles --testPathPattern=test-project/test-project --modulePathIgnorePatterns='./__mocks__'",
+        "test:project:A": "jest --testNamePattern='Test A' --detectOpenHandles --testPathPattern=test-project/test-project --modulePathIgnorePatterns='./__mocks__'",
+        "test:project:B": "jest --testNamePattern='Test B' --detectOpenHandles --testPathPattern=test-project/test-project --modulePathIgnorePatterns='./__mocks__'",
+        "test:project:C": "jest --testNamePattern='Test C' --detectOpenHandles --testPathPattern=test-project/test-project --modulePathIgnorePatterns='./__mocks__'",
         "test:global": "jest --detectOpenHandles --testPathPattern=test-global --modulePathIgnorePatterns='./__mocks__'",
         "test:registry": "jest --detectOpenHandles --testPathPattern=test-registry --modulePathIgnorePatterns='./__mocks__'",
         "test:cleanup": "rimraf \"../temp\""
@@ -10,16 +12,11 @@
     "dependencies": {
         "@asyncapi/generator": "file:../..",
         "@asyncapi/html-template": "0.16.0"
-
     },
     "devDependencies": {
         "fs-extra": "9.1.0",
-        "jest": "25.5.0",
-        "rimraf": "3.0.2",
-        "autoprefixer": "^10.2.1",
-        "postcss-cli": "^8.3.1",
-        "puppeteer": "^5.3.1",
-        "tailwindcss": "^2.0.2"
+        "jest": "29.7.0",
+        "rimraf": "3.0.2"
     },
     "jest": {
         "moduleNameMapper": {

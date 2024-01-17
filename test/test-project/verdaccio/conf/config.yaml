@@ -1,4 +1,4 @@
-storage: ./storage
+storage: ../storage
 auth:
   htpasswd:
     file: ./htpasswd

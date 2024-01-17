@@ -8,4 +8,4 @@ There are two custom test scripts:
 - `npm test:global` always fail on local as it tests installation of template under global location. This would mean you have to install template globally before running the test. It means messing with your developer setup. Instead you have a docker compose configuration that you can use to run all tests from the test project in an isolated environment
 - `npm test:registry` is for testing arborist functionality to use custom private registry
 
-Instead of running tests with `npm test`, make sure you have Docker Compose and run `NODE_IMAGE_TAG=18 docker-compose up --abort-on-container-exit`.
+Instead of running tests with `npm test`, make sure you have Docker Compose and run `NODE_IMAGE_TAG=18 docker-compose up --abort-on-container-exit --remove-orphans --force-recreate`.

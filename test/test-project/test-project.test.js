@@ -20,9 +20,9 @@ process.env['PUPPETEER_SKIP_CHROMIUM_DOWNLOAD'] = true;
 console.log = jest.fn();
 
 describe('Testing if html was generated with proper version of the template', () => {
-  jest.setTimeout(2000000);
+  jest.setTimeout(1000000);
 
-  it('generated html should not contain information about correlationId because of older html-template version that is already installed', async () => {
+  it('Test A - generated html should not contain information about correlationId because of older html-template version that is already installed', async () => {
     //you always want to generate to new directory to make sure test runs in clear environment
     const outputDir = path.resolve(tempOutputResults, Math.random().toString(36).substring(7));
 
@@ -43,14 +43,14 @@ describe('Testing if html was generated with proper version of the template', ()
     expect(console.log).toHaveBeenCalledWith(logMessage.templateVersion(version));
   });
 
-  it('generated html should contain information about correlationId because of explicit fresh installation of different template version (install: true)', async () => {
+  it('Test B - generated html should contain information about correlationId because of explicit fresh installation of different template version (install: true)', async () => {
     //you always want to generate to new directory to make sure test runs in clear environment
     const outputDir = path.resolve(tempOutputResults, Math.random().toString(36).substring(7));
     const templateVersion = '0.17.0';
 
     const generator = new Generator(`${templateName}@${templateVersion}`, outputDir, { forceWrite: true, install: true, debug: true, templateParams: { singleFile: true } });
     await generator.generateFromFile(dummySpecPath);
-
+    
     const file = await readFile(path.join(outputDir, fileToCheck), 'utf8');
     const isCorelationIdInHtml = file.includes(strThatShouldBeMissing);
 
@@ -60,7 +60,7 @@ describe('Testing if html was generated with proper version of the template', ()
     expect(console.log).toHaveBeenCalledWith(logMessage.templateVersion(templateVersion));
   });
 
-  it('generated html should not contain information about correlationId because local version of the template is old and does not have this feature (with and without install:true)', async () => {
+  it('Test C - generated html should not contain information about correlationId because local version of the template is old and does not have this feature (with and without install:true)', async () => {
     let file;
     let isCorelationIdInHtml;
 

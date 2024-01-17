@@ -20,8 +20,7 @@ services:
       - PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
     volumes:
       - ../../:/app
-    command: bash /app/test/test-project/test.sh test-project | bash /app/test/test-project/test.sh test-registry
-  
+    command: bash /app/test/test-project/test.sh 
   
 networks:
   mynetwork:

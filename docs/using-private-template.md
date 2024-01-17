@@ -2,29 +2,21 @@
 title: "Using private templates"
 weight: 180
 ---
-[Generator](https://www.asyncapi.com/tools/generator) allows to fetch the template from the private repositories like verdaccio, nexus, npm etc. Let's understand how can use the Generator to fetch the templates from the private repositories.
+Generator allows to fetch the template from the private repositories like verdaccio, nexus, npm etc.
 
 
-## Parameters that needs to pass in Generator to pull private template:
+## Private registry options
 
-* **URL:** The URL of the registry where is private template is present. 
-* **Auth:** Optional parameter to pass npm registry username and password encoded with base64, formatted like username:password value should be encoded. 
+* **registry.url**: The URL of the registry where is private template is present. Defaults to `registry.npmjs.org`.
+* **registry.auth**: Optional parameter to pass npm registry username and password encoded with base64, formatted like `username:password`. For example if the username and password is `admin` and `nimda`, you need to encode with base64 value like `admin:nimda` which results in `YWRtaW46bmltZGE=`.
+* **registry.token** : Optional parameter to pass to npm registry auth token. To get the token you can first authenticate with registry using `npm login` and then grab generated token from `.npmrc` file.
 
-**For example**: if the username and password is admin and nimda, we need to base64 encoded of admin:nimda.
-
-* **token:**  Optional parameter to pass npm registry auth token that you can grab from .npmrc file
-
-## Example to pull Private template:
+## Pulling private template using library
 
 ```javascript
-const generator = new Generator('@asyncapi/html-template', outputDir,
+const generator = new Generator('@asyncapi/html-template', 'output',
       { 
         debug: true,
-        install: true, 
-        forceWrite: true, 
-        templateParams: { 
-          singleFile: true 
-        },
         registry: {
           url: 'http://verdaccio:4873',  
           auth: 'YWRtaW46bmltZGE=' 
@@ -34,4 +26,4 @@ const generator = new Generator('@asyncapi/html-template', outputDir,
         }
       });
 ```
-Let's suppose the template name as @asyncapi/html-template is present in the private repository, In order to pull the template from the private repository, we need to pass the url and auth as a parameters. 
+Let's assume you host `@asyncapi/html-template` in private package registry like Verdaccio. In order to pull this template you need to provide `registry.url` option that points to the registry URL and `registry.auth` as base64 encoded value that represents username and password. Instead of username and password you can also pass `registry.token`.

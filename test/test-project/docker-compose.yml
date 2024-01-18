@@ -1,8 +1,27 @@
 version: '3'
+
 services:
-  test:
+  verdaccio:
+    image: verdaccio/verdaccio:5
+    container_name: 'verdaccio'
+    ports:
+      - '4873:4873'
+    volumes:
+      - './verdaccio:/verdaccio/conf'
+    networks:
+      - mynetwork
+
+  test-project:
     privileged: true
     image: "node:${NODE_IMAGE_TAG}"
+    environment:
+      - PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
     volumes:
-      - ../../:/app
-    command: bash /app/test/test-project/test.sh
+      - ../../:/apptemp
+    command: bash /apptemp/test/test-project/test-entrypoint.sh
+    networks:
+      - mynetwork
+  
+networks:
+  mynetwork:
+    driver: bridge

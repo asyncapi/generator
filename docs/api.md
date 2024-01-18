@@ -13,6 +13,7 @@ Reference API documentation for AsyncAPI Generator library.
 * [Generator](#Generator)
     * [new Generator(templateName, targetDir, options)](#new_Generator_new)
     * _instance_
+        * [.registry](#Generator+registry) : `Object`
         * [.templateName](#Generator+templateName) : `String`
         * [.targetDir](#Generator+targetDir) : `String`
         * [.entrypoint](#Generator+entrypoint) : `String`
@@ -64,6 +65,10 @@ Instantiates a new Generator object.
     - [.install] `Boolean` ` = false` - Install the template and its dependencies, even when the template has already been installed.
     - [.debug] `Boolean` ` = false` - Enable more specific errors in the console. At the moment it only shows specific errors about filters. Keep in mind that as a result errors about template are less descriptive.
     - [.mapBaseUrlToFolder] `Object.<String, String>` - Optional parameter to map schema references from a base url to a local base folder e.g. url=https://schema.example.com/crm/  folder=./test/docs/ .
+    - [.registry] `Object` - Optional parameter with private registry configuration
+        - [.url] `String` - Parameter to pass npm registry url
+        - [.auth] `String` - Optional parameter to pass npm registry username and password encoded with base64, formatted like username:password value should be encoded
+        - [.token] `String` - Optional parameter to pass npm registry auth token that you can grab from .npmrc file
 
 **Example**  
 ```js
@@ -79,6 +84,13 @@ const generator = new Generator('@asyncapi/html-template', path.resolve(__dirnam
   }
 });
 ```
+
+<a name="Generator+registry"></a>
+
+* generator.registry : `Object`** :
+Npm registry information.
+
+**Kind**: instance property of [`Generator`](#Generator)  
 
 <a name="Generator+templateName"></a>
 

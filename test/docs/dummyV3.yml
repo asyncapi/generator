@@ -7,7 +7,7 @@ channels:
   user/signedup:
     address: user/signedup
     messages:
-      subscribe.message:
+      UserSignedUp:
         $ref: '#/components/messages/UserSignedUp'
 operations:
   user/signedup.subscribe:
@@ -15,7 +15,7 @@ operations:
     channel:
       $ref: '#/channels/user~1signedup'
     messages:
-      - $ref: '#/components/messages/UserSignedUp'
+      - $ref: '#/channels/user~1signedup/messages/UserSignedUp'
 components:
   messages:
     UserSignedUp:

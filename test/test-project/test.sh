@@ -35,9 +35,16 @@ function test_registry {
   echo "##########
 Starting registry test
 ##########"
+  echo "0.0.0.0 registry.npmjs.org" > /etc/hosts # no access to registry.npmjs.org directly
   cp -r /app /testprojectregistry
   cd /testprojectregistry/test/test-project
-  npm run test:registry
+
+  npm run test:registry:arg
+
+  npm config set registry http://verdaccio:4873
+  #base64 encoded username and password represented as admin:nimda
+  npm config set -- //verdaccio:4873/:_auth=YWRtaW46bmltZGE=
+  npm run test:registry:npm-config
 }
 
 # Required by GitHub Actions

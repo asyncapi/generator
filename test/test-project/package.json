@@ -6,7 +6,8 @@
         "test:project:B": "jest --testNamePattern='Test B' --detectOpenHandles --testPathPattern=test-project/test-project --modulePathIgnorePatterns='./__mocks__'",
         "test:project:C": "jest --testNamePattern='Test C' --detectOpenHandles --testPathPattern=test-project/test-project --modulePathIgnorePatterns='./__mocks__'",
         "test:global": "jest --detectOpenHandles --testPathPattern=test-global --modulePathIgnorePatterns='./__mocks__'",
-        "test:registry": "jest --detectOpenHandles --testPathPattern=test-registry --modulePathIgnorePatterns='./__mocks__'",
+        "test:registry:arg": "jest --testNamePattern='argument' --detectOpenHandles --testPathPattern=test-registry --modulePathIgnorePatterns='./__mocks__'",
+        "test:registry:npm-config": "jest --testNamePattern='npm config' --detectOpenHandles --testPathPattern=test-registry --modulePathIgnorePatterns='./__mocks__'",
         "test:cleanup": "rimraf \"../temp\""
     },
     "dependencies": {

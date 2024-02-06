@@ -333,11 +333,15 @@ describe('Generator', () => {
   describe('#installTemplate', () => {
     let ArboristMock;
     let arboristMock;
+    let ConfigMock;
+    let configMock;
     let utils;
 
     beforeEach(() => {
       ArboristMock = require('@npmcli/arborist');
       arboristMock = new ArboristMock();
+      ConfigMock = require('@npmcli/arborist');
+      configMock = new ConfigMock();
       utils = require('../lib/utils');
       jest.mock(path.resolve('./testTemplate', 'package.json'), () => ({ name: 'nameOfTestTemplate' }), { virtual: true });
       jest.mock(path.resolve(Generator.DEFAULT_TEMPLATES_DIR, 'nameOfTestTemplate', 'package.json'), () => ({ name: 'nameOfTestTemplate' }), { virtual: true });

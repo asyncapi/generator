@@ -35,6 +35,7 @@ jobs:
       - name: Copy generator folder from Current Repo to Another
         working-directory: ./website
         run: |
+          rm -r ./pages/docs/tools/generator
           mkdir -p ./pages/docs/tools/generator
           rm ../generator/docs/README.md
           rm -r ../generator/docs/jsdoc2md-handlebars

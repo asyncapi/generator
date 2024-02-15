@@ -4,10 +4,10 @@ weight: 30
 ---
 
 There are two ways to use the generator:
-- [Generator CLI](#generator-cli)
+- [AsyncAPI CLI](#generator-cli)
 - [Generator library](#using-as-a-modulepackage)
 
-## Generator CLI
+## AsyncAPI CLI
 ```bash
 Usage: asyncapi generate fromTemplate <asyncapi> <template> [<options>]
 
@@ -43,7 +43,7 @@ npm install <folder>
 
 ### Global templates installed with `yarn` or `npm`
 
-You can preinstall templates globally before installing the generator CLI. The generator first tries to locate the template in local dependencies; if absent it checks where the global generator packages are installed.
+You can preinstall templates globally before installing the [AsyncAPI CLI](https://www.asyncapi.com/docs/tools/cli). The generator first tries to locate the template in local dependencies; if absent it checks where the global generator packages are installed.
 
 ```bash
 npm install -g @asyncapi/html-template@0.16.0

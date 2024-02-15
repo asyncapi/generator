@@ -53,7 +53,7 @@ You can install in Linux by using `dpkg`, a package manager for debian:
 For further installation instructions for different operating systems, read the [AsyncAPI CLI documentation](https://github.com/asyncapi/cli#installation).
 
 > **Remember:** 
-> Each [community-developed template](https://github.com/search?q=topic%3Aasyncapi+topic%3Agenerator+topic%3Atemplate) is dependent on a certain version of the generator for it to work correctly. Before you install the generator CLI, check the template's `package.json` for the version of the generator CLI your template is compatible with. Read the [versioning docs](versioning) to learn why it's important to use certain generator versions with your templates.
+> Each [community-developed template](https://github.com/search?q=topic%3Aasyncapi+topic%3Agenerator+topic%3Atemplate) is dependent on a certain version of the generator for it to work correctly. Before you install the AsyncAPI CLI, check the template's `package.json` for the version of the AsyncAPI CLI your template is compatible with. Read the [versioning docs](versioning) to learn why it's important to use certain generator versions with your templates.
 
 ### Update AsyncAPI CLI
 There are several reasons why you might want to update your generator version:

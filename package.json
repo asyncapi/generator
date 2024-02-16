@@ -1,6 +1,6 @@
 {
   "name": "@asyncapi/generator",
-  "version": "1.17.5",
+  "version": "1.17.6",
   "description": "The AsyncAPI generator. It can generate documentation, code, anything!",
   "main": "./lib/generator.js",
   "bin": {
@@ -48,7 +48,7 @@
   "license": "Apache-2.0",
   "homepage": "https://github.com/asyncapi/generator",
   "dependencies": {
-    "@asyncapi/generator-react-sdk": "^1.0.8",
+    "@asyncapi/generator-react-sdk": "^1.0.10",
     "@asyncapi/parser": "^3.0.5",
     "@npmcli/arborist": "5.6.3",
     "@smoya/multi-parser": "^5.0.0",

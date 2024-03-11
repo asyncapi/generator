@@ -26,7 +26,7 @@ jobs:
         run: test -e ./package.json && echo "exists=true" >> $GITHUB_OUTPUT || echo "exists=false" >> $GITHUB_OUTPUT
       - if: steps.packagejson.outputs.exists == 'true'
         name: Bumping latest version of this package in other repositories
-        uses: derberg/npm-dependency-manager-for-your-github-org@26a4f13d740254719971325046822a169aaa7441 # using v5.-.- https://github.com/derberg/npm-dependency-manager-for-your-github-org/releases/tag/v5.0.0
+        uses: derberg/npm-dependency-manager-for-your-github-org@3df56be95bcaa5c76a9c9a4af863ab151545b649 # using v6.-.- https://github.com/derberg/npm-dependency-manager-for-your-github-org/releases/tag/v6
         with:
           github_token: ${{ secrets.GH_TOKEN }}
           committer_username: asyncapi-bot

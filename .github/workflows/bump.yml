@@ -31,4 +31,4 @@ jobs:
           github_token: ${{ secrets.GH_TOKEN }}
           committer_username: asyncapi-bot
           committer_email: info@asyncapi.io
-          repos_to_ignore: spec,bindings
+          repos_to_ignore: spec,bindings,saunter

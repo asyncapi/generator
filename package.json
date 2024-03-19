@@ -8,8 +8,8 @@
     "ag": "./cli.js"
   },
   "engines": {
-    "node": ">16.20.2",
-    "npm": ">8.19.4"
+    "node": ">=18.12.0",
+    "npm": ">=8.19.0"
   },
   "scripts": {
     "test": "npm run test:unit && npm run test:integration && npm run test:cli",

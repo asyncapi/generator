@@ -196,7 +196,7 @@ class TemperatureServiceClient:
         self.client.publish(topic, id)
 ```
 
-Make sure you have the Paho-MQTT library installed. You can install it using pip with the `pip install paho-mqtt==1.6.1` command. Please note that this tutorial is based on Paho-MQTT version 1.6.1. The Paho-MQTT library has since been updated to version 2.0.0, which include changes that are not covered in this tutorial. To ensure compatibility and to follow along without any issues, please install version 1.6.1 of the Paho-MQTT library.
+Make sure you have the Paho-MQTT library installed. You can install it using pip with the `pip install paho-mqtt==1.6.1` command. Please note that this tutorial is based on Paho-MQTT version 1.6.1. The Paho-MQTT library has since been updated to version 2.0.0, which includes changes that are not covered in this tutorial. To ensure compatibility and to follow along without any issues, please install version 1.6.1 of the Paho-MQTT library.
 
 Let's break down the previous code snippet:
 

@@ -149,4 +149,4 @@ try {
 }
 ```
 
-See the [API documentation](api.md) for more examples and full API reference information.
+See the [API documentation](api) for more examples and full API reference information.

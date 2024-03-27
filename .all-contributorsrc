@@ -8,7 +8,7 @@
   ],
   "imageSize": 100,
   "commit": false,
-  "commitConvention": "none",
+  "commitConvention": "angular",
   "contributors": [
     {
       "login": "fmvilas",

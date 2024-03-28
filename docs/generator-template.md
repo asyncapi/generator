@@ -196,7 +196,8 @@ class TemperatureServiceClient:
         self.client.publish(topic, id)
 ```
 
-Make sure you have the Paho-MQTT library installed. You can install it using pip with the `pip install paho-mqtt` command.
+Make sure you have the Paho-MQTT library installed. You can install it using pip with the `pip install paho-mqtt==1.6.1` command. Please note that this tutorial is based on Paho-MQTT version 1.6.1. The Paho-MQTT library has since been updated to version 2.0.0, which includes changes that are not covered in this tutorial. To ensure compatibility and to follow along without any issues, please install version 1.6.1 of the Paho-MQTT library.
+
 Let's break down the previous code snippet:
 
 1. Imports the MQTT module from the Paho package, which provides the MQTT client functionality.
@@ -331,7 +332,7 @@ Generator Error: This template requires the following missing params: server.
 Update your `test:generate` script in **package.json** to include the server param
 
 ```json
-test:generate": "asyncapi generate fromTemplate test/fixtures/asyncapi.yml ./ --output test/project --force-write --param server=dev"
+"test:generate": "asyncapi generate fromTemplate test/fixtures/asyncapi.yml ./ --output test/project --force-write --param server=dev"
 ```
 
 You can now replace the static broker from `mqttBroker = 'test.mosquitto.org'` to `mqttBroker = "${asyncapi.servers().get(params.server).url()}"` in **index.js**.

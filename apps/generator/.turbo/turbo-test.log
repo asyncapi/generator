@@ -1,0 +1,298 @@
+[37;40mnpm[0m [0m[30;43mWARN[0m [0m[35mignoring workspace config at /Users/betalectic/explorestuff/generator/apps/generator/.npmrc[0m 
+[0m
+> @asyncapi/generator@1.17.14 test
+> npm run test:unit && npm run test:integration && npm run test:cli
+
+[37;40mnpm[0m [0m[30;43mWARN[0m [0m[35mignoring workspace config at /Users/betalectic/explorestuff/generator/apps/generator/.npmrc[0m 
+[0m
+> @asyncapi/generator@1.17.14 test:unit
+> jest --coverage --testPathIgnorePatterns=integration --testPathIgnorePatterns=test-project
+
+[1m[2mDetermining test suites to run...[22m[22m[999D[K
+
+[1mTest Suites: [22m0 of 5 total
+[1mTests:       [22m0 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        0s, estimated 4s
+[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[999D[K
+
+[1mTest Suites: [22m0 of 5 total
+[1mTests:       [22m0 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        0s, estimated 4s
+[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mparser.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mutils.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mgenerator.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mtemplateConfigValidator.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mrenderer.test.js[22m
+
+[1mTest Suites: [22m0 of 5 total
+[1mTests:       [22m0 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        0s, estimated 4s
+[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mparser.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mutils.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mgenerator.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mtemplateConfigValidator.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mrenderer.test.js[22m
+
+[1mTest Suites: [22m0 of 5 total
+[1mTests:       [22m0 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        1s, estimated 4s
+[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[0m[7m[1m[32m PASS [39m[22m[27m[0m ]8;;file:///Users/betalectic/explorestuff/generator/apps/generator/test/renderer.test.js[2mtest/[22m[1mrenderer.test.js[22m]8;;
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mparser.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mutils.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mgenerator.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mtemplateConfigValidator.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mrenderer.test.js[22m
+
+[1mTest Suites: [22m0 of 5 total
+[1mTests:       [22m0 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        1s, estimated 4s
+[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mparser.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mutils.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mgenerator.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mtemplateConfigValidator.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mrenderer.test.js[22m
+
+[1mTest Suites: [22m0 of 5 total
+[1mTests:       [22m0 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        1s, estimated 4s
+[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mparser.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mutils.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mgenerator.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mtemplateConfigValidator.test.js[22m
+
+[1mTest Suites: [22m[1m[32m1 passed[39m[22m, 1 of 5 total
+[1mTests:       [22m[1m[32m4 passed[39m[22m, 4 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        1s, estimated 4s
+[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mparser.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mutils.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mgenerator.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mtemplateConfigValidator.test.js[22m
+
+[1mTest Suites: [22m[1m[32m1 passed[39m[22m, 1 of 5 total
+[1mTests:       [22m[1m[32m4 passed[39m[22m, 4 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        2s, estimated 4s
+[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mparser.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mutils.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mgenerator.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mtemplateConfigValidator.test.js[22m
+
+[1mTest Suites: [22m[1m[32m1 passed[39m[22m, 1 of 5 total
+[1mTests:       [22m[1m[32m4 passed[39m[22m, 4 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        3s, estimated 4s
+[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[0m[7m[1m[32m PASS [39m[22m[27m[0m ]8;;file:///Users/betalectic/explorestuff/generator/apps/generator/test/templateConfigValidator.test.js[2mtest/[22m[1mtemplateConfigValidator.test.js[22m]8;;
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mparser.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mutils.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mgenerator.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mtemplateConfigValidator.test.js[22m
+
+[1mTest Suites: [22m[1m[32m1 passed[39m[22m, 1 of 5 total
+[1mTests:       [22m[1m[32m4 passed[39m[22m, 4 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        3s, estimated 4s
+[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mparser.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mutils.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mgenerator.test.js[22m
+
+[1mTest Suites: [22m[1m[32m2 passed[39m[22m, 2 of 5 total
+[1mTests:       [22m[1m[32m22 passed[39m[22m, 22 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        3s, estimated 4s
+[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[0m[7m[1m[32m PASS [39m[22m[27m[0m ]8;;file:///Users/betalectic/explorestuff/generator/apps/generator/test/parser.test.js[2mtest/[22m[1mparser.test.js[22m]8;;
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mparser.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mutils.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mgenerator.test.js[22m
+
+[1mTest Suites: [22m[1m[32m2 passed[39m[22m, 2 of 5 total
+[1mTests:       [22m[1m[32m22 passed[39m[22m, 22 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        3s, estimated 4s
+[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[0m[7m[1m[32m PASS [39m[22m[27m[0m ]8;;file:///Users/betalectic/explorestuff/generator/apps/generator/test/utils.test.js[2mtest/[22m[1mutils.test.js[22m]8;;
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mparser.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mutils.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mgenerator.test.js[22m
+
+[1mTest Suites: [22m[1m[32m2 passed[39m[22m, 2 of 5 total
+[1mTests:       [22m[1m[32m22 passed[39m[22m, 22 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        3s, estimated 4s
+[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mgenerator.test.js[22m
+
+[1mTest Suites: [22m[1m[32m4 passed[39m[22m, 4 of 5 total
+[1mTests:       [22m[1m[32m42 passed[39m[22m, 42 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        3s, estimated 4s
+[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[0m[7m[1m[32m PASS [39m[22m[27m[0m ]8;;file:///Users/betalectic/explorestuff/generator/apps/generator/test/generator.test.js[2mtest/[22m[1mgenerator.test.js[22m]8;;
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mgenerator.test.js[22m
+
+[1mTest Suites: [22m[1m[32m4 passed[39m[22m, 4 of 5 total
+[1mTests:       [22m[1m[32m42 passed[39m[22m, 42 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        3s, estimated 4s
+[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+
+[1mTest Suites: [22m[1m[32m5 passed[39m[22m, 5 total
+[1mTests:       [22m[1m[32m84 passed[39m[22m, 84 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        4s[K[1A[K[1A[K[1A[K[1A[K[1A[999D[K-----------------------------|---------|----------|---------|---------|-----------------------------------------------------------------------------
+File                         | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s                                                           
+-----------------------------|---------|----------|---------|---------|-----------------------------------------------------------------------------
+[33;1mAll files                   [0m | [33;1m  53.16[0m | [31;1m   47.84[0m | [31;1m  44.13[0m | [33;1m  54.85[0m | [31;1m                                                                           [0m 
+[33;1m lib                        [0m | [33;1m  51.85[0m | [31;1m   47.74[0m | [31;1m  43.38[0m | [33;1m  53.43[0m | [31;1m                                                                           [0m 
+[31;1m  filtersRegistry.js        [0m | [31;1m  10.41[0m | [31;1m       0[0m | [31;1m      0[0m | [31;1m  11.11[0m | [31;1m14-118                                                                     [0m 
+[33;1m  generator.js              [0m | [33;1m  50.13[0m | [31;1m    43.8[0m | [31;1m  48.38[0m | [33;1m  52.07[0m | [31;1m50,53,234-235,336,341-342,373-382,393-396,539-540,542-543,613-974,1044-1070[0m 
+[31;1m  hooksRegistry.js          [0m | [31;1m   8.51[0m | [31;1m       0[0m | [31;1m      0[0m | [31;1m    9.3[0m | [31;1m13-120                                                                     [0m 
+[33;1m  logMessages.js            [0m | [33;1m  73.33[0m | [33;1m      50[0m | [33;1m   62.5[0m | [33;1m  73.33[0m | [31;1m10,23,38-42                                                                [0m 
+[33;1m  parser.js                 [0m | [33;1m  50.68[0m | [31;1m   45.65[0m | [31;1m  35.71[0m | [33;1m  54.54[0m | [31;1m59,62,67,70,74-75,92-144                                                   [0m 
+[32;1m  templateConfigValidator.js[0m | [32;1m    100[0m | [32;1m   95.55[0m | [32;1m    100[0m | [32;1m    100[0m | [33;1m100,148                                                                    [0m 
+[33;1m  utils.js                  [0m | [33;1m  70.51[0m | [31;1m   47.82[0m | [31;1m     25[0m | [33;1m  70.51[0m | [31;1m42,55-59,69-70,80,90-92,104,114-115,124,134,157,196,217-222                [0m 
+[33;1m lib/renderer               [0m | [33;1m  74.41[0m | [33;1m      50[0m | [33;1m  55.55[0m | [33;1m   77.5[0m | [31;1m                                                                           [0m 
+[31;1m  nunjucks.js               [0m | [31;1m  30.76[0m | [31;1m       0[0m | [31;1m      0[0m | [31;1m  36.36[0m | [31;1m12-15,31-39                                                                [0m 
+[32;1m  react.js                  [0m | [32;1m  93.33[0m | [33;1m   64.28[0m | [32;1m    100[0m | [32;1m   93.1[0m | [31;1m68,72                                                                      [0m 
+-----------------------------|---------|----------|---------|---------|-----------------------------------------------------------------------------
+
+[1mTest Suites: [22m[1m[32m5 passed[39m[22m, 5 total
+[1mTests:       [22m[1m[32m84 passed[39m[22m, 84 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        4.34s
+[2mRan all test suites[22m[2m.[22m
+[37;40mnpm[0m [0m[30;43mWARN[0m [0m[35mignoring workspace config at /Users/betalectic/explorestuff/generator/apps/generator/.npmrc[0m 
+[0m
+> @asyncapi/generator@1.17.14 test:integration
+> npm run test:cleanup && jest --testPathPattern=integration --modulePathIgnorePatterns='./__mocks__'
+
+[37;40mnpm[0m [0m[30;43mWARN[0m [0m[35mignoring workspace config at /Users/betalectic/explorestuff/generator/apps/generator/.npmrc[0m 
+[0m
+> @asyncapi/generator@1.17.14 test:cleanup
+> rimraf "test/temp"
+
+[1m[2mDetermining test suites to run...[22m[22m[999D[K
+[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mintegration.test.js[22m
+[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mintegration.test.js[22m
+[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mintegration.test.js[22m
+[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mintegration.test.js[22m
+[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mintegration.test.js[22m
+[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mintegration.test.js[22m
+[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mintegration.test.js[22m
+[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mintegration.test.js[22m
+[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mintegration.test.js[22m
+[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mintegration.test.js[22m
+[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mintegration.test.js[22m
+[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mintegration.test.js[22m
+[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mintegration.test.js[22m
+[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mintegration.test.js[22m
+[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mintegration.test.js[22m
+[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mintegration.test.js[22m
+[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mintegration.test.js[22m
+[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mintegration.test.js[22m
+[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mintegration.test.js[22m
+[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mintegration.test.js[22m
+[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mintegration.test.js[22m
+[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mintegration.test.js[22m
+[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mintegration.test.js[22m
+[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mintegration.test.js[22m
+[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mintegration.test.js[22m
+[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mintegration.test.js[22m
+[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mintegration.test.js[22m
+[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mintegration.test.js[22m
+[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mintegration.test.js[22m
+[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mintegration.test.js[22m
+[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mintegration.test.js[22m
+[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mintegration.test.js[22m
+[K[1A[K[1A[0m[7m[1m[32m PASS [39m[22m[27m[0m ]8;;file:///Users/betalectic/explorestuff/generator/apps/generator/test/integration.test.js[2mtest/[22m[1mintegration.test.js[22m]8;; ([0m[1m[41m31.741s[49m[22m[0m)
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mintegration.test.js[22m
+[K[1A[K[1A  Integration testing generateFromFile() to make sure the result of the generation is not changend comparing to snapshot
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mintegration.test.js[22m
+[K[1A[K[1A    [32m✓[39m [2mgenerated using Nunjucks template (17645ms)[22m
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mintegration.test.js[22m
+[K[1A[K[1A    [32m✓[39m [2mgenerate using React template (10432ms)[22m
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mintegration.test.js[22m
+[K[1A[K[1A    [32m✓[39m [2mgenerate json based api with referenced JSON Schema (2030ms)[22m
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mintegration.test.js[22m
+[K[1A[K[1A
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mintegration.test.js[22m
+[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mintegration.test.js[22m
+[K[1A[K[1A[999D[K[1mTest Suites: [22m[1m[32m1 passed[39m[22m, 1 total
+[1mTests:       [22m[1m[32m3 passed[39m[22m, 3 total
+[1mSnapshots:   [22m[1m[32m3 passed[39m[22m, 3 total
+[1mTime:[22m        31.76s
+[2mRan all test suites[22m[2m matching [22m/integration/i[2m.[22m
+[37;40mnpm[0m [0m[30;43mWARN[0m [0m[35mignoring workspace config at /Users/betalectic/explorestuff/generator/apps/generator/.npmrc[0m 
+[0m
+> @asyncapi/generator@1.17.14 test:cli
+> node cli.js ./test/docs/dummy.yml @asyncapi/html-template -o test/output --force-write --debug && test -e test/output/index.html
+
+Template sources taken from /Users/betalectic/explorestuff/generator/apps/generator/node_modules/@asyncapi/html-template.
+Version of used template is 0.18.0.
+File /Users/betalectic/explorestuff/generator/apps/generator/test/output/index.html couldn't be found. Error: ENOENT: no such file or directory, stat '/Users/betalectic/explorestuff/generator/apps/generator/test/output/index.html'
+File /Users/betalectic/explorestuff/generator/apps/generator/test/output/js/highlight.min.js couldn't be found. Error: ENOENT: no such file or directory, stat '/Users/betalectic/explorestuff/generator/apps/generator/test/output/js/highlight.min.js'
+File /Users/betalectic/explorestuff/generator/apps/generator/test/output/js/main.js couldn't be found. Error: ENOENT: no such file or directory, stat '/Users/betalectic/explorestuff/generator/apps/generator/test/output/js/main.js'
+File /Users/betalectic/explorestuff/generator/apps/generator/test/output/css/atom-one-dark.min.css couldn't be found. Error: ENOENT: no such file or directory, stat '/Users/betalectic/explorestuff/generator/apps/generator/test/output/css/atom-one-dark.min.css'
+File /Users/betalectic/explorestuff/generator/apps/generator/test/output/css/custom.css couldn't be found. Error: ENOENT: no such file or directory, stat '/Users/betalectic/explorestuff/generator/apps/generator/test/output/css/custom.css'
+File /Users/betalectic/explorestuff/generator/apps/generator/test/output/css/main.min.css couldn't be found. Error: ENOENT: no such file or directory, stat '/Users/betalectic/explorestuff/generator/apps/generator/test/output/css/main.min.css'
+File /Users/betalectic/explorestuff/generator/apps/generator/test/output/css/tailwind.min.css couldn't be found. Error: ENOENT: no such file or directory, stat '/Users/betalectic/explorestuff/generator/apps/generator/test/output/css/tailwind.min.css'
+[32m
+
+Done! ✨[0m
+[33mCheck out your shiny new generated files at [0m[35m/Users/betalectic/explorestuff/generator/apps/generator/test/output[0m[33m.[0m
+

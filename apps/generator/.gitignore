@@ -18,4 +18,3 @@ test/temp/integrationTestResult
 test/test-project/package-lock.json
 test/test-project/verdaccio/storage/
 test/test-project/storage/
-.turbo

@@ -1,0 +1,5 @@
+[37;40mnpm[0m [0m[30;43mWARN[0m [0m[35mignoring workspace config at /Users/betalectic/explorestuff/generator/apps/generator/.npmrc[0m 
+[0m
+> @asyncapi/generator@1.17.14 test:cleanup
+> rimraf "test/temp"
+

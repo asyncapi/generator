@@ -1,0 +1,21 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "pipeline": {
+    "build": {
+      "outputs": [".next/**", "!.next/cache/**"]
+    },
+    "test:dev": {
+      "interactive": true,
+      "cache": false
+    },
+    "test": {},
+    "test:unit": {},
+    "test:integration": {},
+    "test:cli": {},
+    "test:cleanup": {},
+    "docs": {},
+    "docker:build": {},
+    "lint": {}
+  },
+  "experimentalUI": true
+}

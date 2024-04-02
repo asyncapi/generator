@@ -26,21 +26,21 @@ There is a large number of templates that are ready to use and are officially su
 <!-- templates list is validated with GitHub Actions do not remove list markers -->
 <!-- TEMPLATES-LIST:START -->
 
-| Template Name                                 | Description                                                     | Source code                                                                 |
-| --------------------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------------------- |
-| `@asyncapi/nodejs-template`                   | Generates Nodejs service that uses Hermes package               | [click here](https://github.com/asyncapi/nodejs-template)                   |
-| `@asyncapi/nodejs-ws-template`                | Generates Nodejs service that supports WebSockets protocol only | [click here](https://github.com/asyncapi/nodejs-ws-template)                |
-| `@asyncapi/java-template`                     | Generates Java JMS application                                  | [click here](https://github.com/asyncapi/java-template)                     |
-| `@asyncapi/java-spring-template`              | Generates Java Spring service                                   | [click here](https://github.com/asyncapi/java-spring-template)              |
-| `@asyncapi/java-spring-cloud-stream-template` | Generates Java Spring Cloud Stream service                      | [click here](https://github.com/asyncapi/java-spring-cloud-stream-template) |
-| `@asyncapi/python-paho-template`              | Generates Python service that uses Paho library                 | [click here](https://github.com/asyncapi/python-paho-template)              |
-| `@asyncapi/html-template`                     | Generates HTML documentation site                               | [click here](https://github.com/asyncapi/html-template)                     |
-| `@asyncapi/markdown-template`                 | Generates documentation in Markdown file                        | [click here](https://github.com/asyncapi/markdown-template)                 |
-| `@asyncapi/ts-nats-template`                  | Generates TypeScript NATS client                                | [click here](https://github.com/asyncapi/ts-nats-template/)                 |
-| `@asyncapi/go-watermill-template`             | Generates Go client using Watermill                             | [click here](https://github.com/asyncapi/go-watermill-template)             |
-| `@asyncapi/dotnet-nats-template`              | Generates .NET C# client using NATS                             | [click here](https://github.com/asyncapi/dotnet-nats-template)              |
-| `@asyncapi/php-template`                      | Generates PHP client using RabbitMQ                             | [click here](https://github.com/asyncapi/php-template)                      |
-| `@asyncapi/dotnet-rabbitmq-template`          | Generates .NET C# client using RabbitMQ                         | [click here](https://github.com/asyncapi/dotnet-rabbitmq-template)          |
+Template Name | Description | Source code
+---|---|---
+`@asyncapi/nodejs-template` | Generates Nodejs service that uses Hermes package | [click here](https://github.com/asyncapi/nodejs-template)
+`@asyncapi/nodejs-ws-template` | Generates Nodejs service that supports WebSockets protocol only | [click here](https://github.com/asyncapi/nodejs-ws-template)
+`@asyncapi/java-template` | Generates Java JMS application | [click here](https://github.com/asyncapi/java-template)
+`@asyncapi/java-spring-template` | Generates Java Spring service | [click here](https://github.com/asyncapi/java-spring-template)
+`@asyncapi/java-spring-cloud-stream-template` | Generates Java Spring Cloud Stream service | [click here](https://github.com/asyncapi/java-spring-cloud-stream-template)
+`@asyncapi/python-paho-template` | Generates Python service that uses Paho library | [click here](https://github.com/asyncapi/python-paho-template)
+`@asyncapi/html-template` | Generates HTML documentation site | [click here](https://github.com/asyncapi/html-template)
+`@asyncapi/markdown-template` | Generates documentation in Markdown file | [click here](https://github.com/asyncapi/markdown-template)
+`@asyncapi/ts-nats-template` | Generates TypeScript NATS client | [click here](https://github.com/asyncapi/ts-nats-template/)
+`@asyncapi/go-watermill-template` | Generates Go client using Watermill | [click here](https://github.com/asyncapi/go-watermill-template)
+`@asyncapi/dotnet-nats-template` | Generates .NET C# client using NATS | [click here](https://github.com/asyncapi/dotnet-nats-template)
+`@asyncapi/php-template` | Generates PHP client using RabbitMQ | [click here](https://github.com/asyncapi/php-template)
+`@asyncapi/dotnet-rabbitmq-template` | Generates .NET C# client using RabbitMQ | [click here](https://github.com/asyncapi/dotnet-rabbitmq-template)
 
 <!-- TEMPLATES-LIST:END -->
 
@@ -81,7 +81,6 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     </tr>
     <tr>
       <td align="center" valign="top" width="33.33%"><a href="https://github.com/swastiksuvam55"><img src="https://avatars.githubusercontent.com/u/90003260?v=4?s=100" width="100px;" alt="swastik suvam singh"/><br /><sub><b>swastik suvam singh</b></sub></a><br /><a href="https://github.com/asyncapi/generator/commits?author=swastiksuvam55" title="Code">💻</a></td>
-      <td align="center" valign="top" width="33.33%"><a href="https://blog.orzzh.icu/"><img src="https://avatars.githubusercontent.com/u/33168669?v=4?s=100" width="100px;" alt="GavinZhengOI"/><br /><sub><b>GavinZhengOI</b></sub></a><br /><a href="https://github.com/asyncapi/generator/commits?author=GavinZhengOI" title="Documentation">📖</a></td>
     </tr>
   </tbody>
 </table>

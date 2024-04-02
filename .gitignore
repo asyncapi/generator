@@ -1,21 +1,8 @@
 .DS_Store
 node_modules
 npm-debug.log
-output
 .vscode
 ######################
 # Intellij
 ######################
-.idea/
-*.iml
-*.iws
-*.ipr
-*.ids
-*.orig
-out/
-coverage
-test/temp/integrationTestResult
-test/test-project/package-lock.json
-test/test-project/verdaccio/storage/
-test/test-project/storage/
 .turbo

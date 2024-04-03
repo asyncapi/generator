@@ -33,6 +33,7 @@ jobs:
         id: should_run
         name: Should Run
         run: echo "shouldrun=true" >> $GITHUB_OUTPUT
+        shell: bash
       - if: steps.should_run.outputs.shouldrun == 'true' 
         name: Set git to use LF #to once and for all finish neverending fight between Unix and Windows
         run: |
@@ -60,13 +61,13 @@ jobs:
       - if: steps.packagejson.outputs.exists == 'true'
         name: Install dependencies
         id: first-installation
-        run: npm install --loglevel verbose
+        run: npm ci
         continue-on-error: true
       - if: steps.first-installation.outputs.status == 'failure' && steps.packagejson.outputs.exists == 'true'
         name: Clear NPM cache and install deps again
         run: | 
           npm cache clean --force
-          npm install --loglevel verbose
+          npm ci
       - if: steps.packagejson.outputs.exists == 'true'
         name: Test
         run: npm test --if-present

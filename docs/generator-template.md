@@ -67,7 +67,7 @@ components:
 
 1. Create a new directory for your template named **python-mqtt-client-template**.
 2. Install the AsyncAPI CLI using the command `npm install -g @asyncapi/cli`.
-3. Create a new folder **test/fixtures** with a file named **asyncapi.yml** in your fixtures directory. This file is used to define the **structure** of your template. You can copy the above template and paste it in your **asyncapi.yml** file.
+3. Create a new folder **test/fixtures** with a file named **asyncapi.yml** in your fixtures directory. This file is used to define the **structure** of your template. You can copy the above example and paste it in your **asyncapi.yml** document.
 4. Create a new file named **package.json** in your **python-mqtt-client-template** directory. This file is used to define the **dependencies** for your template.
 5. Create a new folder **python-mqtt-client-template/template**. Create a new file named **index.js** in your **template** directory. This file is used to define the **logic** for your template.
 6. Create a **test.py** file to validate the logic of your application. Don't worry about this file for now. The tutorial will tell you how to create it later.
@@ -185,7 +185,7 @@ In this section, you'll:
 
 ### 1. Create the client
 
-Here is the sample code to be pasted in the client.py you generated above running the `asyncapi generate fromTemplate test/fixtures/asyncapi.yml ./ -o test/project` command. It uses the paho-mqtt package.
+Here is the sample code to be pasted in the client.py you generated above running the `asyncapi generate fromTemplate test/fixtures/asyncapi.yml ./ -o test/project` command. It uses the `paho-mqtt` package.
 
 ``` python
 # 1

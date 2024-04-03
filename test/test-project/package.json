@@ -11,7 +11,7 @@
     },
     "dependencies": {
         "@asyncapi/generator": "file:../..",
-        "@asyncapi/html-template": "^2.3.0"
+        "@asyncapi/html-template": "^2.3.2"
     },
     "devDependencies": {
         "fs-extra": "9.1.0",

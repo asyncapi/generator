@@ -85,6 +85,7 @@ jobs:
       - name: Check if Node.js project and has package.json
         id: packagejson
         run: test -e ./package.json && echo "exists=true" >> $GITHUB_OUTPUT || echo "exists=false" >> $GITHUB_OUTPUT
+        shell: bash
       - if: steps.packagejson.outputs.exists == 'true'
         name: Check package-lock version
         uses: asyncapi/.github/.github/actions/get-node-version-from-package-lock@master
@@ -98,7 +99,14 @@ jobs:
           cache-dependency-path: '**/package-lock.json'
       - if: steps.packagejson.outputs.exists == 'true'
         name: Install dependencies
-        run: npm install
+        id: first-installation
+        run: npm ci
+        continue-on-error: true
+      - if: steps.first-installation.outputs.status == 'failure' && steps.packagejson.outputs.exists == 'true'
+        name: Clear NPM cache and install deps again
+        run: | 
+          npm cache clean --force
+          npm ci
       - if: steps.packagejson.outputs.exists == 'true'
         name: Add plugin for conventional commits for semantic-release
         run: npm install --save-dev conventional-changelog-conventionalcommits@5.0.0

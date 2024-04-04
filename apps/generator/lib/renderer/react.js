@@ -14,11 +14,13 @@ const reactExport = module.exports;
  * @param {string} templateContentDir where the template content are located
  * @param {string} transpiledTemplateLocation folder for the transpiled code
  */
-reactExport.configureReact = async (templateLocation, templateContentDir, transpiledTemplateLocation) => {
+reactExport.configureReact = async (templateLocation, templateContentDir, transpiledTemplateLocation, compile) => {
   const outputDir = path.resolve(templateLocation, `./${transpiledTemplateLocation}`);
-  await AsyncReactSDK.transpileFiles(templateContentDir, outputDir, {
-    recursive: true
-  });
+  if (compile) {
+    await AsyncReactSDK.transpileFiles(templateContentDir, outputDir, {
+      recursive: true
+    });
+  }
 };
 
 /**

@@ -6,7 +6,8 @@
     },
     "test:dev": {
       "interactive": true,
-      "cache": false
+      "cache": false,
+      "persistent": true
     },
     "test": {},
     "test:unit": {},

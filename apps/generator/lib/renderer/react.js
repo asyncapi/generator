@@ -15,11 +15,13 @@ const reactExport = module.exports;
  * @param {string} transpiledTemplateLocation folder for the transpiled code
  * @param {Boolean} compile Whether to compile the template files or used the cached transpiled version provided by the template in the '__transpiled' folder
  */
-reactExport.configureReact = async (templateLocation, templateContentDir, transpiledTemplateLocation) => {
+reactExport.configureReact = async (templateLocation, templateContentDir, transpiledTemplateLocation, compile) => {
   const outputDir = path.resolve(templateLocation, `./${transpiledTemplateLocation}`);
-  await AsyncReactSDK.transpileFiles(templateContentDir, outputDir, {
-    recursive: true
-  });
+  if (compile) {
+    await AsyncReactSDK.transpileFiles(templateContentDir, outputDir, {
+      recursive: true
+    });
+  }
 };
 
 /**

@@ -1,5 +1,0 @@
-[37;40mnpm[0m [0m[30;43mWARN[0m [0m[35mignoring workspace config at /Users/betalectic/explorestuff/generator/apps/generator/.npmrc[0m 
-[0m
-> @asyncapi/generator@1.17.14 docs
-> jsdoc2md --partial docs/jsdoc2md-handlebars/custom-sig-name.hbs docs/jsdoc2md-handlebars/main.hbs docs/jsdoc2md-handlebars/docs.hbs docs/jsdoc2md-handlebars/header.hbs docs/jsdoc2md-handlebars/defaultvalue.hbs docs/jsdoc2md-handlebars/link.hbs docs/jsdoc2md-handlebars/params-table.hbs --files lib/generator.js > docs/api.md
-

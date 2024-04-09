@@ -102,7 +102,7 @@ class Generator {
     if (!entrypoint && !targetDir) throw new Error('No target directory has been specified.');
     if (!['fs', 'string'].includes(output)) throw new Error(`Invalid output type ${output}. Valid values are 'fs' and 'string'.`);
 
-    /** @type {Boolean} Whether to compile the template or use the cached transpiled version. */
+    /** @type {Boolean} Whether to compile the template or use the cached transpiled version provided by template in '__transpiled' folder. */
     this.compile = compile;
     /** @type {Object} Npm registry information. */
     this.registry = registry;
@@ -397,8 +397,13 @@ class Generator {
    * Configure the templates based the desired renderer.
    */
   async configureTemplate() {
-    if (isReactTemplate(this.templateConfig)) {
-      await configureReact(this.templateDir, this.templateContentDir, TRANSPILED_TEMPLATE_LOCATION, this.compile);
+    if(isReactTemplate(this.templateConfig)) {
+      if(this.compile) {
+        await configureReact(this.templateDir, this.templateContentDir, TRANSPILED_TEMPLATE_LOCATION);
+      } else {
+        // use the cached transpiled version provided by the template
+        this.templateContentDir = path.resolve(this.templateDir, TRANSPILED_TEMPLATE_LOCATION);
+      }
     } else {
       this.nunjucks = configureNunjucks(this.debug, this.templateDir);
     }

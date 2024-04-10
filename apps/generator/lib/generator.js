@@ -397,13 +397,8 @@ class Generator {
    * Configure the templates based the desired renderer.
    */
   async configureTemplate() {
-    if(isReactTemplate(this.templateConfig)) {
-      if(this.compile) {
-        await configureReact(this.templateDir, this.templateContentDir, TRANSPILED_TEMPLATE_LOCATION);
-      } else {
-        // use the cached transpiled version provided by the template
-        this.templateContentDir = path.resolve(this.templateDir, TRANSPILED_TEMPLATE_LOCATION);
-      }
+    if(isReactTemplate(this.templateConfig) && this.compile) {
+      await configureReact(this.templateDir, this.templateContentDir, TRANSPILED_TEMPLATE_LOCATION);
     } else {
       this.nunjucks = configureNunjucks(this.debug, this.templateDir);
     }

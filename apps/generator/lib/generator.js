@@ -101,7 +101,6 @@ class Generator {
     if (!templateName) throw new Error('No template name has been specified.');
     if (!entrypoint && !targetDir) throw new Error('No target directory has been specified.');
     if (!['fs', 'string'].includes(output)) throw new Error(`Invalid output type ${output}. Valid values are 'fs' and 'string'.`);
-
     /** @type {Boolean} Whether to compile the template or use the cached transpiled version provided by template in '__transpiled' folder. */
     this.compile = compile;
     /** @type {Object} Npm registry information. */
@@ -397,18 +396,8 @@ class Generator {
    * Configure the templates based the desired renderer.
    */
   async configureTemplate() {
-<<<<<<< HEAD:apps/generator/lib/generator.js
     if(isReactTemplate(this.templateConfig) && this.compile) {
       await configureReact(this.templateDir, this.templateContentDir, TRANSPILED_TEMPLATE_LOCATION);
-=======
-    if(isReactTemplate(this.templateConfig)) {
-      if(this.compile) {
-        await configureReact(this.templateDir, this.templateContentDir, TRANSPILED_TEMPLATE_LOCATION);
-      } else {
-        // use the cached transpiled version provided by the template
-        this.templateContentDir = path.resolve(this.templateDir, TRANSPILED_TEMPLATE_LOCATION);
-      }
->>>>>>> 037a1cf (updated jsdoc and implemented conditional transpilation in configureTemplate):lib/generator.js
     } else {
       this.nunjucks = configureNunjucks(this.debug, this.templateDir);
     }

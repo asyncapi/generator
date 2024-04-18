@@ -9,7 +9,7 @@ const dummySpecPath = path.resolve(__dirname, './docs/dummy.yml');
 const refSpecPath = path.resolve(__dirname, './docs/apiwithref.json');
 const refSpecFolder = path.resolve(__dirname, './docs/');
 const crypto = require('crypto');
-const {writeFileSync, readFileSync} = require('node:fs');
+const {writeFileSync, readFileSync} = require('fs');
 const mainTestResultPath = 'test/temp/integrationTestResult';
 //we do not want to download chromium for html-template if it is not needed
 process.env['PUPPETEER_SKIP_CHROMIUM_DOWNLOAD'] = true;

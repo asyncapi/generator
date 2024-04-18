@@ -71,7 +71,7 @@ describe('Integration testing generateFromFile() to make sure the result of the 
     await generator.generateFromFile(dummySpecPath);
 
     // Read the file to confirm it was not overwritten
-    const fileContent = readFile(testFilePath, 'utf8');
+    const fileContent = await readFile(testFilePath, 'utf8');
     expect(fileContent).toBe('<script>const initialContent = "This should not change";</script>');
   });
 });

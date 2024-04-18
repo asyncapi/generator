@@ -10,6 +10,7 @@ const refSpecPath = path.resolve(__dirname, './docs/apiwithref.json');
 const refSpecFolder = path.resolve(__dirname, './docs/');
 const crypto = require('crypto');
 const {writeFileSync, readFileSync} = require('fs');
+const {mkdirSync, existsSync} = require('node:fs');
 const mainTestResultPath = 'test/temp/integrationTestResult';
 //we do not want to download chromium for html-template if it is not needed
 process.env['PUPPETEER_SKIP_CHROMIUM_DOWNLOAD'] = true;
@@ -53,10 +54,17 @@ describe('Integration testing generateFromFile() to make sure the result of the 
   it('should ignore specified files with noOverwriteGlobs', async () => {
     const outputDir = generateFolderName();
     // Manually create a file to test if it's not overwritten
+    if (!existsSync(outputDir)) {
+      mkdirSync(outputDir, { recursive: true });
+    }
     const testFilePath = path.join(outputDir, 'index.html');
     // eslint-disable-next-line sonarjs/no-duplicate-string
-    writeFileSync(testFilePath, '<script>const initialContent = "This should not change";</script>');
-
+    try {
+      const testFilePath = path.join(outputDir, 'index.html');
+      writeFileSync(testFilePath, '<script>const initialContent = "This should not change";</script>');
+    } catch (error) {
+      console.error('Failed to write file:', error);
+    }
     // based on the html-template documentation, the default output is index.html
     const generator = new Generator('@asyncapi/html-template@0.28.0', outputDir, {
       forceWrite: true,

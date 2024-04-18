@@ -57,14 +57,10 @@ describe('Integration testing generateFromFile() to make sure the result of the 
     if (!existsSync(outputDir)) {
       mkdirSync(outputDir, { recursive: true });
     }
-    const testFilePath = path.join(outputDir, 'index.html');
     // eslint-disable-next-line sonarjs/no-duplicate-string
-    try {
-      const testFilePath = path.join(outputDir, 'index.html');
-      writeFileSync(testFilePath, '<script>const initialContent = "This should not change";</script>');
-    } catch (error) {
-      console.error('Failed to write file:', error);
-    }
+    const testFilePath = path.join(outputDir, 'index.html');
+    writeFileSync(testFilePath, '<script>const initialContent = "This should not change";</script>');
+
     // based on the html-template documentation, the default output is index.html
     const generator = new Generator('@asyncapi/html-template@0.28.0', outputDir, {
       forceWrite: true,

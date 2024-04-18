@@ -68,7 +68,6 @@ describe('Integration testing generateFromFile() to make sure the result of the 
     // based on the html-template documentation, the default output is index.html
     const generator = new Generator('@asyncapi/html-template@0.28.0', outputDir, {
       forceWrite: true,
-      outFilename: 'index.html',
       noOverwriteGlobs: ['**/index.html']
     });
 

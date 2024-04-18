@@ -27,6 +27,7 @@ describe('Integration testing generateFromFile() to make sure the result of the 
     const outputDir = generateFolderName();
     const generator = new Generator('@asyncapi/html-template@0.18.0', outputDir, { forceWrite: true, templateParams: { singleFile: true } });
     await generator.generateFromFile(dummySpecPath);
+    // eslint-disable-next-line sonarjs/no-duplicate-string
     const file = await readFile(path.join(outputDir, 'index.html'), 'utf8');
     expect(file).toMatchSnapshot();
   });

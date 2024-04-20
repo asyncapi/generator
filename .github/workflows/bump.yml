@@ -31,5 +31,5 @@ jobs:
           github_token: ${{ secrets.GH_TOKEN }}
           committer_username: asyncapi-bot
           committer_email: info@asyncapi.io
-          repos_to_ignore: spec,bindings,saunter
+          repos_to_ignore: spec,bindings,saunter,server-api
           custom_id: "dependency update from asyncapi bot"

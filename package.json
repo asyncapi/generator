@@ -65,7 +65,7 @@
     "minimatch": "^3.0.4",
     "node-fetch": "^2.6.0",
     "nunjucks": "^3.2.0",
-    "pacote": "^17.0.6",
+    "pacote": "^15.1.1",
     "resolve-from": "^5.0.0",
     "resolve-pkg": "^2.0.0",
     "semver": "^7.3.2",

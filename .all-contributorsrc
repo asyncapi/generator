@@ -185,6 +185,17 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "pierrick-boule",
+      "name": "pierrick-boule",
+      "avatar_url": "https://avatars.githubusercontent.com/u/3237116?v=4",
+      "profile": "https://github.com/pierrick-boule",
+      "contributions": [
+        "code",
+        "test",
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 3,

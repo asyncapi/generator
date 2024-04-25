@@ -3,7 +3,6 @@ version: '3'
 services:
   verdaccio:
     image: verdaccio/verdaccio:5
-    container_name: 'verdaccio'
     ports:
       - '4873:4873'
     volumes:
@@ -14,8 +13,6 @@ services:
   test-project:
     privileged: true
     image: "node:${NODE_IMAGE_TAG}"
-    environment:
-      - PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
     volumes:
       - ../../:/apptemp
     command: bash /apptemp/test/test-project/test-entrypoint.sh

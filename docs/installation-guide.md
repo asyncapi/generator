@@ -9,8 +9,8 @@ You can use the generator library to generate whatever you want in your event-dr
   
 ## Prerequisites
 Before you install and use the AsyncAPI CLI and the generator library, ensure you meet the prerequisites below, then [install the CLI](#installation).
-1. Node.js v12.16 and higher
-2. Npm v6.13.7 and higher
+1. Node.js v18.12.0 and higher
+2. Npm v8.19.0 and higher
    
 To verify the versions of Node and Npm you have, run the following command on your terminal:
 ```

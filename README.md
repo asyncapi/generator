@@ -81,6 +81,8 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     </tr>
     <tr>
       <td align="center" valign="top" width="33.33%"><a href="https://github.com/swastiksuvam55"><img src="https://avatars.githubusercontent.com/u/90003260?v=4?s=100" width="100px;" alt="swastik suvam singh"/><br /><sub><b>swastik suvam singh</b></sub></a><br /><a href="https://github.com/asyncapi/generator/commits?author=swastiksuvam55" title="Code">💻</a></td>
+      <td align="center" valign="top" width="33.33%"><a href="https://blog.orzzh.icu/"><img src="https://avatars.githubusercontent.com/u/33168669?v=4?s=100" width="100px;" alt="GavinZhengOI"/><br /><sub><b>GavinZhengOI</b></sub></a><br /><a href="https://github.com/asyncapi/generator/commits?author=GavinZhengOI" title="Documentation">📖</a></td>
+      <td align="center" valign="top" width="33.33%"><a href="https://github.com/lmgyuan"><img src="https://avatars.githubusercontent.com/u/16447041?v=4?s=100" width="100px;" alt="lmgyuan"/><br /><sub><b>lmgyuan</b></sub></a><br /><a href="https://github.com/asyncapi/generator/commits?author=lmgyuan" title="Documentation">📖</a></td>
     </tr>
   </tbody>
 </table>

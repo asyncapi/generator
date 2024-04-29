@@ -3,81 +3,66 @@
  */
 
 const { readFile } = require('fs').promises;
-const xfs = require('fs-extra');
 const path = require('path');
 const Generator = require('@asyncapi/generator');
 const dummySpecPath = path.resolve(__dirname, '../docs/dummy.yml');
-const strThatShouldBeMissing = '<div class="text-sm text-gray-700 mb-2">Correlation ID<span class="border text-orange-600 rounded text-xs ml-3 py-0 px-2">';
-const templateName = '@asyncapi/html-template';
-const tempOutputResults = '../temp/integrationTestResult';
-const fileToCheck = 'index.html';
-const version = '0.16.0';
+const templateLocation = path.resolve(__dirname,'../test-templates/react-template');
+const templateName = 'react-template';
+const tempOutputResults = path.resolve(__dirname, 'output');
+const fileToCheck = 'test-file.md';
 const source = path.join(__dirname, 'node_modules', templateName);
 const logMessage = require('../../lib/logMessages.js');
+const newContentNotExpectedInTest = 'new content';
+const version = '0.0.1';
 
-//we do not want to download chromium for html-template if it is not needed
-process.env['PUPPETEER_SKIP_CHROMIUM_DOWNLOAD'] = true;
 console.log = jest.fn();
 
-describe('Testing if html was generated with proper version of the template', () => {
+describe('Testing if markdown was generated with proper version of the template', () => {
   jest.setTimeout(1000000);
 
-  it('Test A - generated html should not contain information about correlationId because of older html-template version that is already installed', async () => {
-    //you always want to generate to new directory to make sure test runs in clear environment
-    const outputDir = path.resolve(tempOutputResults, Math.random().toString(36).substring(7));
-
+  it('Test A - generated markdown should not contain new content in modified template', async () => {
     //we setup generator using template name, not path, without explicitly running installation
     //generator picks up template that is already in node_modules as it was installed before as node dependency
-    //it was installed before as it is part of package.json file and should be fixed to 0.16.0 there
-    const generator = new Generator(templateName, outputDir, { forceWrite: true, debug: true, templateParams: { singleFile: true } });
+    //it was installed before triggering test in test.sh
+    const generator = new Generator(templateName, tempOutputResults, { forceWrite: true, debug: true, templateParams: { version: 'v1', mode: 'production' } });
     await generator.generateFromFile(dummySpecPath);
 
-    const file = await readFile(path.join(outputDir, fileToCheck), 'utf8');
-    const isCorelationIdInHtml = file.includes(strThatShouldBeMissing);
+    const file = await readFile(path.join(tempOutputResults, fileToCheck), 'utf8');
+    const isNewContentThere = file.includes(newContentNotExpectedInTest);
 
-    //we make sure that index.html file doesn't contain any infromation about correlationId because this feature was added in html-template 0.17.0 while this test uses template 0.16.0
-    expect(isCorelationIdInHtml).toStrictEqual(false);
+    //we make sure that markdown file doesn't contain new content as old version of template do not have it
+    expect(isNewContentThere).toStrictEqual(false);
     //we make sure that logs do not indicate that new installation is started
     expect(console.log).not.toHaveBeenCalledWith(logMessage.installationDebugMessage(logMessage.TEMPLATE_INSTALL_FLAG_MSG));
     expect(console.log).toHaveBeenCalledWith(logMessage.templateSource(source));
     expect(console.log).toHaveBeenCalledWith(logMessage.templateVersion(version));
   });
 
-  it('Test B - generated html should contain information about correlationId because of explicit fresh installation of different template version (install: true)', async () => {
-    //you always want to generate to new directory to make sure test runs in clear environment
-    const outputDir = path.resolve(tempOutputResults, Math.random().toString(36).substring(7));
-    const templateVersion = '0.17.0';
+  it('Test B - generated markdown should contain new content because of explicit fresh installation of different template version (install: true)', async () => {
+    const templateVersion = '0.0.2';
 
-    const generator = new Generator(`${templateName}@${templateVersion}`, outputDir, { forceWrite: true, install: true, debug: true, templateParams: { singleFile: true } });
+    const generator = new Generator(`${templateName}@${templateVersion}`, tempOutputResults, { forceWrite: true, install: true, debug: true, templateParams: { version: 'v1', mode: 'production' } });
     await generator.generateFromFile(dummySpecPath);
     
-    const file = await readFile(path.join(outputDir, fileToCheck), 'utf8');
-    const isCorelationIdInHtml = file.includes(strThatShouldBeMissing);
+    const file = await readFile(path.join(tempOutputResults, fileToCheck), 'utf8');
+    const isNewContentThere = file.includes(newContentNotExpectedInTest);
 
-    //we make sure that index.html file doesn't contain any infromation about correlationId because this feature was added in html-template 0.17.0 while this test uses template 0.16.0
-    expect(isCorelationIdInHtml).toStrictEqual(true);
+    //in 0.0.2 version of template there is a new content as in test.sh we made sure new template version has new content not present in 0.0.1
+    expect(isNewContentThere).toStrictEqual(true);
     expect(console.log).toHaveBeenCalledWith(logMessage.installationDebugMessage(logMessage.TEMPLATE_INSTALL_FLAG_MSG));
     expect(console.log).toHaveBeenCalledWith(logMessage.templateVersion(templateVersion));
   });
 
-  it('Test C - generated html should not contain information about correlationId because local version of the template is old and does not have this feature (with and without install:true)', async () => {
+  it('Test C - generated markdown should not contain new content of template because local version of the template is old and does not have new content (with and without install:true)', async () => {
     let file;
-    let isCorelationIdInHtml;
+    let isNewContentThere;
 
     //we need arborist to perform installation of local template 
     const Arborist = require('@npmcli/arborist');
 
-    //you always want to generate to new directory to make sure test runs in clear environment
-    const outputDir = path.resolve(tempOutputResults, Math.random().toString(36).substring(7));
-    const localHtmlTemplate = path.resolve(tempOutputResults, templateName);
-    const templateVersion = '0.16.0';
-
-    //we copy already installed html template out from the node_modules to simulate a local template that is stored in different location than the project
-    await xfs.copy(path.resolve('node_modules', templateName), localHtmlTemplate);
-
     //we need to install local template before we can use it
     const arb = new Arborist({
-      path: localHtmlTemplate
+      path: templateLocation
     });
 
     await arb.reify({
@@ -85,29 +70,29 @@ describe('Testing if html was generated with proper version of the template', ()
     });
 
     //run generation by passing path to local template without passing install flag, sources should be taken from local path
-    const generatorWithoutInstallFlag = new Generator(localHtmlTemplate, outputDir, { forceWrite: true, debug: true, templateParams: { singleFile: true } });
+    const generatorWithoutInstallFlag = new Generator(templateLocation, tempOutputResults, { forceWrite: true, debug: true, templateParams: { version: 'v1', mode: 'production' } });
     await generatorWithoutInstallFlag.generateFromFile(dummySpecPath);
 
-    file = await readFile(path.join(outputDir, fileToCheck), 'utf8');
-    isCorelationIdInHtml = file.includes(strThatShouldBeMissing);
+    file = await readFile(path.join(tempOutputResults, fileToCheck), 'utf8');
+    isNewContentThere = file.includes(newContentNotExpectedInTest);
 
-    //we make sure that index.html file doesn't contain any infromation about correlationId because this feature was added in html-template 0.17.0 while this test uses template 0.16.0
-    expect(isCorelationIdInHtml).toStrictEqual(false);
-    expect(console.log).toHaveBeenCalledWith(logMessage.templateSource(localHtmlTemplate));
-    expect(console.log).toHaveBeenCalledWith(logMessage.templateVersion(templateVersion));
+    //we make sure that markdown file doesn't contain new content as old version of template do not have it
+    expect(isNewContentThere).toStrictEqual(false);
+    expect(console.log).toHaveBeenCalledWith(logMessage.templateSource(templateLocation));
+    expect(console.log).toHaveBeenCalledWith(logMessage.templateVersion(version));
     expect(console.log).toHaveBeenCalledWith(logMessage.NODE_MODULES_INSTALL);
 
     //run generation by passing path to local template and passing install flag, sources should be taken from local path and simlink created
-    const generatorWithInstallFlag = new Generator(localHtmlTemplate, outputDir, { install: true, forceWrite: true, debug: true, templateParams: { singleFile: true } });
+    const generatorWithInstallFlag = new Generator(templateLocation, tempOutputResults, { install: true, forceWrite: true, debug: true, templateParams: { version: 'v1', mode: 'production' } });
     await generatorWithInstallFlag.generateFromFile(dummySpecPath);
 
-    file = await readFile(path.join(outputDir, fileToCheck), 'utf8');
-    isCorelationIdInHtml = file.includes(strThatShouldBeMissing);
+    file = await readFile(path.join(tempOutputResults, fileToCheck), 'utf8');
+    isNewContentThere = file.includes(newContentNotExpectedInTest);
 
-    //we make sure that index.html file doesn't contain any infromation about correlationId because this feature was added in html-template 0.17.0 while this test uses template 0.16.0
-    expect(isCorelationIdInHtml).toStrictEqual(false);
+    //we make sure that markdown file doesn't contain new content as old version of template do not have it
+    expect(isNewContentThere).toStrictEqual(false);
     expect(console.log).toHaveBeenCalledWith(logMessage.installationDebugMessage(logMessage.TEMPLATE_INSTALL_FLAG_MSG));
-    expect(console.log).toHaveBeenCalledWith(logMessage.templateVersion(templateVersion));
+    expect(console.log).toHaveBeenCalledWith(logMessage.templateVersion(version));
     expect(console.log).toHaveBeenCalledWith(logMessage.NPM_INSTALL_TRIGGER);
   });
 });

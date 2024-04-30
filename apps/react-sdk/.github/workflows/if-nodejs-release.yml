@@ -15,6 +15,7 @@ on:
       - next-major-spec
       - beta
       - alpha
+      - next
 
 jobs:
 

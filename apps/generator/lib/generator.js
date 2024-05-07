@@ -7,6 +7,10 @@ const filenamify = require('filenamify');
 const git = require('simple-git');
 const log = require('loglevel');
 const Arborist = require('@npmcli/arborist');
+const Config = require('@npmcli/config');
+const requireg = require('requireg');
+const npmPath = requireg.resolve('npm').replace('index.js','');
+
 const { isAsyncAPIDocument } = require('@asyncapi/parser/cjs/document');
 
 const { configureReact, renderReact, saveRenderedReactContent } = require('./renderer/react');
@@ -31,6 +35,7 @@ const {
 const { parse, usesNewAPI, getProperApiDocument } = require('./parser');
 const { registerFilters } = require('./filtersRegistry');
 const { registerHooks } = require('./hooksRegistry');
+const { definitions, flatten, shorthands } = require('@npmcli/config/lib/definitions');
 
 const FILTERS_DIRNAME = 'filters';
 const HOOKS_DIRNAME = 'hooks';
@@ -532,7 +537,7 @@ class Generator {
       arbOptions.registry = providedRegistry;
       registryUrl = providedRegistry;
     }
-    
+
     const domainName = registryUrl.replace(/^https?:\/\//, '');
     //doing basic if/else so basically only one auth type is used and token as more secure is primary
     if (this.registry.token) {
@@ -541,11 +546,12 @@ class Generator {
     } else if (this.registry.auth) {
       authorizationName = `//${domainName}:_auth`;
       arbOptions[authorizationName] = this.registry.auth;
-    } 
+    }
 
     //not sharing in logs neither token nor auth for security reasons
     log.debug(`Using npm registry ${registryUrl} and authorization type ${authorizationName} to handle template installation.`);
   }
+
   /**
    * Downloads and installs a template and its dependencies
    *
@@ -556,14 +562,14 @@ class Generator {
       let pkgPath;
       let installedPkg;
       let packageVersion;
-  
+
       try {
         installedPkg = getTemplateDetails(this.templateName, PACKAGE_JSON_FILENAME);
         pkgPath = installedPkg && installedPkg.pkgPath;
         packageVersion = installedPkg && installedPkg.version;
         log.debug(logMessage.templateSource(pkgPath));
         if (packageVersion) log.debug(logMessage.templateVersion(packageVersion));
-  
+
         return {
           name: installedPkg.name,
           path: pkgPath
@@ -573,38 +579,45 @@ class Generator {
         // We did our best. Proceed with installation...
       }
     }
-  
+
     const debugMessage = force ? logMessage.TEMPLATE_INSTALL_FLAG_MSG : logMessage.TEMPLATE_INSTALL_DISK_MSG;
     log.debug(logMessage.installationDebugMessage(debugMessage));
-  
+
     if (isFileSystemPath(this.templateName)) log.debug(logMessage.NPM_INSTALL_TRIGGER);
-  
-    const arbOptions = {
-      path: ROOT_DIR,
-    };
-    if (this.registry) {
+
+    const config = new Config({
+      definitions,
+      flatten,
+      shorthands,
+      npmPath
+    });
+
+    await config.load();
+
+    const arbOptions = {...{path: ROOT_DIR}, ...config.flat};
+
+    if (Object.keys(this.registry).length !== 0) {
       this.initialiseArbOptions(arbOptions);
     }
-  
     const arb = new Arborist(arbOptions);
-    
+
     try {
       const installResult = await arb.reify({
         add: [this.templateName],
         saveType: 'prod',
         save: false
       });
-  
+
       const addResult = arb[Symbol.for('resolvedAdd')];
       if (!addResult) throw new Error('Unable to resolve the name of the added package. It was most probably not added to node_modules successfully');
-  
+
       const packageName = addResult[0].name;
       const packageVersion = installResult.children.get(packageName).version;
       const packagePath = installResult.children.get(packageName).path;
-  
+
       if (!isFileSystemPath(this.templateName)) log.debug(logMessage.templateSuccessfullyInstalled(packageName, packagePath));
       if (packageVersion) log.debug(logMessage.templateVersion(packageVersion));
-  
+
       return {
         name: packageName,
         path: packagePath,
@@ -866,7 +879,7 @@ class Generator {
     if (!shouldOverwriteFile) return;
 
     if (this.templateConfig.conditionalFiles && this.templateConfig.conditionalFiles[relativeSourceFile]) {
-      const server = this.templateParams.server && asyncapiDocument.server(this.templateParams.server);
+      const server = this.templateParams.server && asyncapiDocument.servers().get(this.templateParams.server);
       const source = jmespath.search({
         ...asyncapiDocument.json(),
         ...{

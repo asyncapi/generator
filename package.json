@@ -6,7 +6,6 @@
     "dev": "turbo dev",
     "test": "turbo run test",
     "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "generator:test": "turbo run test --filter=@asyncapi/generator",
     "generator:test:dev": "turbo run test:dev",
     "generator:test:unit": "turbo run test:unit  --filter=@asyncapi/generator",
@@ -15,17 +14,10 @@
     "generator:test:cleanup": "turbo run test:cleanup --filter=@asyncapi/generator",
     "generator:docs": "turbo run docs --filter=@asyncapi/generator",
     "generator:docker:build": "turbo run docker:build --filter=@asyncapi/generator",
-    "generator:lint": "turbo run lint --filter=@asyncapi/generator",
-    "generator-filters:test": "turbo run test --filter=@asyncapi/generator-filters",
-    "generator-filters:docs": "turbo run docs --filter=@asyncapi/generator-filters",
-    "generator-filters:release": "turbo run release --filter=@asyncapi/generator-filters",
-    "generator-filters:generate:assets": "turbo run generate:assets --filter=@asyncapi/generator-filters",
-    "generator-filters:lint:fix": "turbo run lint:fix --filter=@asyncapi/generator-filters",
-    "generator-filters:bump:version": "turbo run bump:version --filter=@asyncapi/generator-filters"
+    "generator:lint": "turbo run lint --filter=@asyncapi/generator"
   },
   "devDependencies": {
-    "prettier": "^3.2.5",
-    "turbo": "latest"
+    "turbo": "1.13.3"
   },
   "engines": {
     "node": ">=18"

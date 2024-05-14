@@ -12,6 +12,8 @@ const crypto = require('crypto');
 const {mkdirSync} = require('fs');
 const {exists, writeFile} = require('../lib/utils');
 const mainTestResultPath = 'test/temp/integrationTestResult';
+const jest = require('jest');
+const { expect, it, describe } = require('@jest/globals');
 //we do not want to download chromium for html-template if it is not needed
 process.env['PUPPETEER_SKIP_CHROMIUM_DOWNLOAD'] = true;
 

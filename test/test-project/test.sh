@@ -8,6 +8,7 @@ Starting standard project test
   # Copy to isolated env
   cp -r /app /testprojectA
   cd /testprojectA/test/test-project
+  npm install react-template@0.0.1 # installing old version of template
   npm run test:project:A
   # Copy to isolated env
   cp -r /app /testprojectB
@@ -22,11 +23,8 @@ Starting test of global template installation
 ##########"
   cp -r /app /testprojectglobal
   cd /testprojectglobal/test/test-project
-  # Installing html template globally before global tests
-  PUPPETEER_SKIP_DOWNLOAD=true npm install -g @asyncapi/html-template@0.16.0
-  # Remove previously installed html template to make sure it is not picked up in the test
-  rm -rf node_modules/@asyncapi/html-template
-  rm -rf ../../node_modules/@asyncapi/html-template
+  # Installing test template globally before global tests
+  npm install -g react-template@0.0.1
   npm run test:global
 }
 
@@ -35,9 +33,18 @@ function test_registry {
   echo "##########
 Starting registry test
 ##########"
+  echo "0.0.0.0 registry.npmjs.org" > /etc/hosts # no access to registry.npmjs.org directly
   cp -r /app /testprojectregistry
   cd /testprojectregistry/test/test-project
-  npm run test:registry
+
+  npm config delete registry #making sure we do not have verdaccio details in config and test really use library arguments
+  npm run test:registry:arg
+
+  #Now running test for npm config support
+  npm config set registry http://verdaccio:4873
+  #base64 encoded username and password represented as admin:nimda
+  npm config set -- //verdaccio:4873/:_auth=YWRtaW46bmltZGE=
+  npm run test:registry:npm-config
 }
 
 # Required by GitHub Actions
@@ -49,13 +56,35 @@ cd app
 echo "##########
 Running installation in root
 ##########"
-PUPPETEER_SKIP_DOWNLOAD=true npm install
+npm install
 cd test/test-project
 
 echo "##########
 Running installation in test-project
 ##########"
-PUPPETEER_SKIP_DOWNLOAD=true npm install
+npm install
+npm install --install-links ../.. #installing generator without symlink
+
+echo "##########
+Publish test template to local npm-verdaccio
+##########"
+npm config set -- //verdaccio:4873/:_auth=YWRtaW46bmltZGE=
+npm config set registry http://verdaccio:4873
+
+echo "##########
+Publishing the correct template as 0.0.1
+##########"
+npm publish ../test-templates/react-template
+
+echo "##########
+Publishing new version as 0.0.2
+##########"
+cp -r ../test-templates/react-template ../test-templates/react-template-v2 #we need copy so later in project tests we still have access to old v1 template
+new_version="0.0.2"
+sed -i 's/"version": "[^"]*"/"version": "'"$new_version"'"/' ../test-templates/react-template-v2/package.json
+new_content="import { File, Text } from '@asyncapi/generator-react-sdk'; export default function({ asyncapi, params }) { return ( <File name='test-file.md'> <Text>new content</Text> </File> ); }"
+echo "$new_content" > ../test-templates/react-template-v2/template/test-file.md.js
+npm publish ../test-templates/react-template-v2
 
 # Run the functions based on the provided arguments
 case "$1" in

@@ -5,7 +5,7 @@ weight: 50
 
 ## Template
 
-A template is a project that specifies the generation process output by using the AsyncAPI generator and an [AsyncAPI document](asyncapi-file.md). These files describe the generation results depending on the AsyncAPI document's content.
+A template is a project that specifies the generation process output by using the AsyncAPI generator and an [AsyncAPI document](asyncapi-document). These files describe the generation results depending on the AsyncAPI document's content.
 
 Examples outputs:
 

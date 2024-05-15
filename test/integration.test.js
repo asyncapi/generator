@@ -12,10 +12,8 @@ const crypto = require('crypto');
 const {mkdirSync} = require('fs');
 const {exists, writeFile} = require('../lib/utils');
 const mainTestResultPath = 'test/temp/integrationTestResult';
-const jest = require('jest');
-const { expect, it, describe } = require('@jest/globals');
-//we do not want to download chromium for html-template if it is not needed
-process.env['PUPPETEER_SKIP_CHROMIUM_DOWNLOAD'] = true;
+const reactTemplate = 'test/test-templates/react-template';
+const nunjucksTemplate = 'test/test-templates/nunjucks-template';
 
 describe('Integration testing generateFromFile() to make sure the result of the generation is not changend comparing to snapshot', () => {
   const generateFolderName = () => {
@@ -24,33 +22,39 @@ describe('Integration testing generateFromFile() to make sure the result of the 
   };
 
   jest.setTimeout(60000);
+  const testOutputFile = 'test-file.md';
 
   it('generated using Nunjucks template', async () => {
     const outputDir = generateFolderName();
-    const generator = new Generator('@asyncapi/html-template@0.18.0', outputDir, { forceWrite: true, templateParams: { singleFile: true } });
+    const generator = new Generator(nunjucksTemplate, outputDir, { 
+      forceWrite: true,
+      templateParams: { version: 'v1', mode: 'production' }
+    });
     await generator.generateFromFile(dummySpecPath);
-    // eslint-disable-next-line sonarjs/no-duplicate-string
-    const file = await readFile(path.join(outputDir, 'index.html'), 'utf8');
+    const file = await readFile(path.join(outputDir, testOutputFile), 'utf8');
     expect(file).toMatchSnapshot();
   });
 
   it('generate using React template', async () => {
     const outputDir = generateFolderName();
-    const generator = new Generator('@asyncapi/markdown-template@0.13.0', outputDir, { forceWrite: true });
+    const generator = new Generator(reactTemplate, outputDir, { 
+      forceWrite: true ,
+      templateParams: { version: 'v1', mode: 'production' }
+    });
     await generator.generateFromFile(dummySpecPath);
-    const file = await readFile(path.join(outputDir, 'asyncapi.md'), 'utf8');
+    const file = await readFile(path.join(outputDir, testOutputFile), 'utf8');
     expect(file).toMatchSnapshot();
   });
 
   it('generate json based api with referenced JSON Schema', async () => {
     const outputDir = generateFolderName();
-    const generator = new Generator('@asyncapi/html-template@0.18.0', outputDir, {
+    const generator = new Generator(reactTemplate, outputDir, {
       mapBaseUrlToFolder: { url: 'https://schema.example.com/crm/', folder: `${refSpecFolder}/`},
       forceWrite: true,
-      templateParams: { singleFile: true }
+      templateParams: { version: 'v1', mode: 'production' }
     });
     await generator.generateFromFile(refSpecPath);
-    const file = await readFile(path.join(outputDir, 'index.html'), 'utf8');
+    const file = await readFile(path.join(outputDir, testOutputFile), 'utf8');
     expect(file).toMatchSnapshot();
   });
 

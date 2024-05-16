@@ -60,7 +60,7 @@ describe('Integration testing generateFromFile() to make sure the result of the 
 
   it('should ignore specified files with noOverwriteGlobs', async () => {
     const outputDir = generateFolderName();
-    // Manually create a file to test if it's not overwritten
+    // Manually create an output first, before generation, with additional custom file to validate if later it is still there, not overwritten
     if (!await exists(outputDir)) {
       mkdirSync(outputDir, { recursive: true });
     }

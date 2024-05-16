@@ -84,6 +84,6 @@ describe('Integration testing generateFromFile() to make sure the result of the 
     // Check if the files have been overwritten
     expect(fileContent).toBe(testContent);
     // Check if the log message was printed
-    expect(console.log).toHaveBeenCalledWith(`Skipping overwrite for ${testOutputFile}`);
+    expect(console.log).toHaveBeenCalledWith(`Skipping overwrite for ${testFilePath}`);
   });
 });

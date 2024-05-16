@@ -60,15 +60,17 @@ describe('Integration testing generateFromFile() to make sure the result of the 
 
   it('should ignore specified files with noOverwriteGlobs', async () => {
     const outputDir = generateFolderName();
-    // Manually create an output first, before generation, with additional custom file to validate if later it is still there, not overwritten
+    // Manually create a file to test if it's not overwritten
     if (!await exists(outputDir)) {
       mkdirSync(outputDir, { recursive: true });
     }
+    // Create a variable to store the file content
+    const testContent = '<script>const initialContent = "This should not change";</script>';
     // eslint-disable-next-line sonarjs/no-duplicate-string
     const testFilePath = path.join(outputDir, testOutputFile);
-    await writeFile(testFilePath, '<script>const initialContent = "This should not change";</script>');
+    await writeFile(testFilePath, testContent);
 
-    // based on the html-template documentation, the default output is index.html
+    // Manually create an output first, before generation, with additional custom file to validate if later it is still there, not overwritten
     const generator = new Generator(reactTemplate, outputDir, {
       forceWrite: true,
       noOverwriteGlobs: [`**/${testOutputFile}`],
@@ -79,6 +81,9 @@ describe('Integration testing generateFromFile() to make sure the result of the 
 
     // Read the file to confirm it was not overwritten
     const fileContent = await readFile(testFilePath, 'utf8');
-    expect(fileContent).toBe('<script>const initialContent = "This should not change";</script>');
+    // Check if the files have been overwritten
+    expect(fileContent).toBe(testContent);
+    // Check if the log message was printed
+    expect(console.log).toHaveBeenCalledWith(`Skipping overwrite for ${testFilePath}`);
   });
 });

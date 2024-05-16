@@ -65,13 +65,13 @@ describe('Integration testing generateFromFile() to make sure the result of the 
       mkdirSync(outputDir, { recursive: true });
     }
     // eslint-disable-next-line sonarjs/no-duplicate-string
-    const testFilePath = path.join(outputDir, 'index.html');
+    const testFilePath = path.join(outputDir, testOutputFile);
     await writeFile(testFilePath, '<script>const initialContent = "This should not change";</script>');
 
     // based on the html-template documentation, the default output is index.html
     const generator = new Generator('@asyncapi/html-template@0.28.0', outputDir, {
       forceWrite: true,
-      noOverwriteGlobs: ['**/index.html'],
+      noOverwriteGlobs: ['**/' + testOutputFile],
       debug: true
     });
 

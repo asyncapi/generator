@@ -4,7 +4,7 @@ weight: 100
 ---
 
 While using the generator tool, you may want dynamic values populated to your templates and rendered in the output. The generator can achieve that using the **template context**.
-The **template context** allows you to access the contents of the [AsyncAPI document](asyncapi-document.md) and inject dynamic values to the template files passed to the asyncAPI CLI during the generation process. The render engine then displays these dynamically assigned values in the output.
+The **template context** allows you to access the contents of the [AsyncAPI document](asyncapi-document) and inject dynamic values to the template files passed to the asyncAPI CLI during the generation process. The render engine then displays these dynamically assigned values in the output.
 
 ## Generation process
 1. The **Generator** receives **Template** and **params** as input.

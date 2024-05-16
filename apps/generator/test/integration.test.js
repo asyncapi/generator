@@ -24,7 +24,7 @@ describe('Integration testing generateFromFile() to make sure the result of the 
 
   it('generated using Nunjucks template', async () => {
     const outputDir = generateFolderName();
-    const generator = new Generator(nunjucksTemplate, outputDir, { 
+    const generator = new Generator(nunjucksTemplate, outputDir, {
       forceWrite: true,
       templateParams: { version: 'v1', mode: 'production' }
     });
@@ -35,7 +35,7 @@ describe('Integration testing generateFromFile() to make sure the result of the 
 
   it('generate using React template', async () => {
     const outputDir = generateFolderName();
-    const generator = new Generator(reactTemplate, outputDir, { 
+    const generator = new Generator(reactTemplate, outputDir, {
       forceWrite: true ,
       templateParams: { version: 'v1', mode: 'production' }
     });

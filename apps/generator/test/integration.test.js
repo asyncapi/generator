@@ -55,4 +55,38 @@ describe('Integration testing generateFromFile() to make sure the result of the 
     const file = await readFile(path.join(outputDir, testOutputFile), 'utf8');
     expect(file).toMatchSnapshot();
   });
+
+  it('generates without transpilation when compile flag is false', async () => {
+    const outputDir = generateFolderName();
+    const generator = new Generator('@asyncapi/html-template@2.3.0', outputDir, {
+      forceWrite: true,
+      compile: false,
+      debug: true,
+    });
+  
+    const logSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
+  
+    await generator.generateFromFile(dummySpecPath);
+  
+    expect(logSpy.mock.calls.some(call => call.some(arg => arg === 'Babel'))).toBe(true);
+  
+    logSpy.mockRestore();
+  });
+
+  it('generates with transpilation when compile flag is true', async () => {
+    const outputDir = generateFolderName();
+    const generator = new Generator('@asyncapi/html-template@2.3.0', outputDir, {
+      forceWrite: true,
+      compile: true,
+      debug: true,
+    });
+  
+    const logSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
+  
+    await generator.generateFromFile(dummySpecPath);
+  
+    expect(logSpy.mock.calls.some(call => call.some(arg => arg === 'Babel'))).toBe(false);
+  
+    logSpy.mockRestore();
+  });
 });

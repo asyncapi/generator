@@ -94,6 +94,7 @@ describe('Integration testing generateFromFile() to make sure the result of the 
     // Check if the files have been overwritten
     await expect(fileContent).toBe(testContent);
     await expect(log).toHaveBeenCalledWith(`Checking if file should be overwritten:`);
+    await expect(log).toHaveBeenCalledWith("file shouldn't be overwritten");
     // Check if the log message was printed
     await expect(log).toHaveBeenCalledWith(`${testFilePath} was not generated because it already exists and noOverwriteGlobs configuration in template configuration matched.`);
     console.log('All console.log calls:');

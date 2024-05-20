@@ -95,6 +95,13 @@ describe('Integration testing generateFromFile() to make sure the result of the 
     expect(fileContent).toBe(testContent);
     // Check if the log message was printed
     expect(log).toHaveBeenCalledWith(`${testFilePath} was not generated because it already exists and noOverwriteGlobs configuration in template configuration matched.`);
+    console.log('All console.log calls:');
+
+    // Print all console.log calls
+    log.mock.calls.forEach((call, index) => {
+      console.log(`${index + 1}:`, call);
+    });
+
     log.mockRestore();
   });
 });

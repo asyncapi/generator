@@ -15,6 +15,7 @@ on:
       - next-major-spec
       - beta
       - alpha
+      - next
 
 jobs:
 
@@ -38,8 +39,9 @@ jobs:
         run: |
           git config --global core.autocrlf false
           git config --global core.eol lf
+        shell: bash
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Check if Node.js project and has package.json
         id: packagejson
         run: test -e ./package.json && echo "exists=true" >> $GITHUB_OUTPUT || echo "exists=false" >> $GITHUB_OUTPUT
@@ -50,14 +52,18 @@ jobs:
         id: lockversion
       - if: steps.packagejson.outputs.exists == 'true'
         name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: "${{ steps.lockversion.outputs.version }}"
-          cache: 'npm'
-          cache-dependency-path: '**/package-lock.json'
+      - if: steps.lockversion.outputs.version == '18' && matrix.os == 'windows-latest'
+        name: Install npm cli 8
+        shell: bash
+        #npm cli 10 is buggy because of some cache issues
+        run: npm install -g npm@8.19.4
       - if: steps.packagejson.outputs.exists == 'true'
         name: Install dependencies
-        run: npm install
+        shell: bash
+        run: npm ci
       - if: steps.packagejson.outputs.exists == 'true'
         name: Run test
         run: npm test --if-present
@@ -81,24 +87,24 @@ jobs:
           git config --global core.autocrlf false
           git config --global core.eol lf
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Check if Node.js project and has package.json
         id: packagejson
         run: test -e ./package.json && echo "exists=true" >> $GITHUB_OUTPUT || echo "exists=false" >> $GITHUB_OUTPUT
+        shell: bash
       - if: steps.packagejson.outputs.exists == 'true'
         name: Check package-lock version
         uses: asyncapi/.github/.github/actions/get-node-version-from-package-lock@master
         id: lockversion
       - if: steps.packagejson.outputs.exists == 'true'
         name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: "${{ steps.lockversion.outputs.version }}"
-          cache: 'npm'
-          cache-dependency-path: '**/package-lock.json'
       - if: steps.packagejson.outputs.exists == 'true'
         name: Install dependencies
-        run: npm install
+        shell: bash
+        run: npm ci
       - if: steps.packagejson.outputs.exists == 'true'
         name: Add plugin for conventional commits for semantic-release
         run: npm install --save-dev conventional-changelog-conventionalcommits@5.0.0

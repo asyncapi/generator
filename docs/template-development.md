@@ -35,7 +35,7 @@ The above example will produce an `asyncapi.md` file where usage of the AsyncAPI
 
 Before the generation process begins, the generator installs the template into its dependencies. A `package.json` file is necessary to identify the template name.
 
-The following block shows an example `package.json` file that points to the [React Render Engine](react-render-engine.md) and necessary dependencies:
+The following block shows an example `package.json` file that points to the [React Render Engine](react-render-engine) and necessary dependencies:
 
 ```json
 {
@@ -64,7 +64,7 @@ You must configure the generator's `package.json` file to contain JSON objects w
 |`parameters[param].default`| Any | Default value of the parameter if not specified. Shouldn't be used for mandatory `required=true` parameters.
 |`parameters[param].required`| Boolean | Whether the parameter is required or not.
 
-The above table lists some configuration options that help the generator achieve a specific set of tasks throughout the generation process. The `generator` property from 'package.json' contains all the configuration information. To learn more about template configuration and various supported parameters, read the [generator configuration file](configuration-file.md).
+The above table lists some configuration options that help the generator achieve a specific set of tasks throughout the generation process. The `generator` property from 'package.json' contains all the configuration information. To learn more about template configuration and various supported parameters, read the [generator configuration file](configuration-file).
 
 > Whenever you make a change to the package.json, make sure you perform an update by running `npm install`;  this command synchronizes with the `package-lock.json` and validates the file.
 
@@ -137,7 +137,7 @@ The above configuration helps template users override the existing version with 
 
 ## Hooks
 
-[Hooks](hooks.md) enable templates to perform multiple tasks. You can add Hooks to your template as fractions of code. In the template, you must store it in the `hooks` directory under the template directory. You can also store it in other modules and external libraries or configure it inside the template. The generation process can perform multiple actions.
+[Hooks](hooks) enable templates to perform multiple tasks. You can add Hooks to your template as fractions of code. In the template, you must store it in the `hooks` directory under the template directory. You can also store it in other modules and external libraries or configure it inside the template. The generation process can perform multiple actions.
 
 **Templates** can perform multiple actions _before_ or _after_ the generation process with the help of **hooks**.
 

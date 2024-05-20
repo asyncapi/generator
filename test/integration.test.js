@@ -77,7 +77,7 @@ describe('Integration testing generateFromFile() to make sure the result of the 
     // Create a variable to store the file content
     const testContent = '<script>const initialContent = "This should not change";</script>';
     // eslint-disable-next-line sonarjs/no-duplicate-string
-    const testFilePath = path.join(outputDir, testOutputFile);
+    const testFilePath = path.resolve(outputDir, testOutputFile);
     await writeFile(testFilePath, testContent);
 
     // Manually create an output first, before generation, with additional custom file to validate if later it is still there, not overwritten
@@ -92,13 +92,13 @@ describe('Integration testing generateFromFile() to make sure the result of the 
     // Read the file to confirm it was not overwritten
     const fileContent = await readFile(testFilePath, 'utf8');
     // Check if the files have been overwritten
-    expect(fileContent).toBe(testContent);
+    await expect(fileContent).toBe(testContent);
     // Check if the log message was printed
-    expect(log).toHaveBeenCalledWith(`${testFilePath} was not generated because it already exists and noOverwriteGlobs configuration in template configuration matched.`);
+    await expect(log).toHaveBeenCalledWith(`${testFilePath} was not generated because it already exists and noOverwriteGlobs configuration in template configuration matched.`);
     console.log('All console.log calls:');
 
     // Print all console.log calls
-    log.mock.calls.forEach((call, index) => {
+    await log.mock.calls.forEach((call, index) => {
       console.log(`${index + 1}:`, call);
     });
 

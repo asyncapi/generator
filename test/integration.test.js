@@ -2,7 +2,7 @@
  * @jest-environment node
  */
 
-const { readFile } = require('fs').promises;
+const { readFile, existsSync } = require('fs').promises;
 const path = require('path');
 const Generator = require('../lib/generator');
 const dummySpecPath = path.resolve(__dirname, './docs/dummy.yml');

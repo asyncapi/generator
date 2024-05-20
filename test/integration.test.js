@@ -15,6 +15,7 @@ const {exists, writeFile} = require('../lib/utils');
 const mainTestResultPath = 'test/temp/integrationTestResult';
 const reactTemplate = 'test/test-templates/react-template';
 const nunjucksTemplate = 'test/test-templates/nunjucks-template';
+const log = require('loglevel');
 
 describe('Integration testing generateFromFile() to make sure the result of the generation is not changend comparing to snapshot', () => {
   const generateFolderName = () => {
@@ -66,8 +67,7 @@ describe('Integration testing generateFromFile() to make sure the result of the 
   });
 
   it('should ignore specified files with noOverwriteGlobs', async () => {
-    // mock the console.log for testing
-    const log = jest.spyOn(console, 'log').mockImplementation(() => {});
+    log.debug = jest.fn();
 
     const outputDir = generateFolderName();
     // Manually create a file to test if it's not overwritten
@@ -91,7 +91,7 @@ describe('Integration testing generateFromFile() to make sure the result of the 
 
     // Read the file to confirm it was not overwritten
     const fileContent = await readFile(testFilePath, 'utf8');
-    // Check if the files have been overwritten
+    // Check if the files have been overwritte
     await expect(fileContent).toBe(testContent);
     await expect(log).toHaveBeenCalledWith(`Checking if file should be overwritten:`);
     await expect(log).toHaveBeenCalledWith("file shouldn't be overwritten");
@@ -104,6 +104,5 @@ describe('Integration testing generateFromFile() to make sure the result of the 
       console.log(`${index + 1}:`, call);
     });
 
-    log.mockRestore();
   });
 });

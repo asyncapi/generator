@@ -24,6 +24,12 @@ describe('Integration testing generateFromFile() to make sure the result of the 
   jest.setTimeout(60000);
   const testOutputFile = 'test-file.md';
 
+  beforeAll(() => {
+    if (!existsSync(path.join(reactTemplate, 'package.json'))) {
+      throw new Error(`React template not found at ${reactTemplate}`);
+    }
+  });
+
   it('generated using Nunjucks template', async () => {
     const outputDir = generateFolderName();
     const generator = new Generator(nunjucksTemplate, outputDir, { 
@@ -60,8 +66,7 @@ describe('Integration testing generateFromFile() to make sure the result of the 
 
   it('should ignore specified files with noOverwriteGlobs', async () => {
     // mock the console.log for testing
-    const log = jest.fn();
-    console.log = log;
+    const log = jest.spyOn(console, 'log').mockImplementation(() => {});
 
     const outputDir = generateFolderName();
     // Manually create a file to test if it's not overwritten
@@ -88,6 +93,7 @@ describe('Integration testing generateFromFile() to make sure the result of the 
     // Check if the files have been overwritten
     expect(fileContent).toBe(testContent);
     // Check if the log message was printed
-    // expect(log).toHaveBeenCalledWith(`Skipping overwrite for ${testFilePath}`);
+    expect(log).toHaveBeenCalledWith(`Skipping overwrite for ${testFilePath}`);
+    log.mockRestore();
   });
 });

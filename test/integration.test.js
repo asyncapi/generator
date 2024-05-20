@@ -94,7 +94,7 @@ describe('Integration testing generateFromFile() to make sure the result of the 
     // Check if the files have been overwritten
     expect(fileContent).toBe(testContent);
     // Check if the log message was printed
-    expect(log).toHaveBeenCalledWith(`Skipping overwrite for ${testFilePath}`);
+    expect(log).toHaveBeenCalledWith(`${testFilePath} was not generated because it already exists and noOverwriteGlobs configuration in template configuration matched.`);
     log.mockRestore();
   });
 });

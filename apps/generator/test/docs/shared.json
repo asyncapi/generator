@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schema.example.com/crm/shared.json",
+  "description": "Shared Customer Relationship Management models",
+  "type": "object",
+  "properties": {
+    "type": {
+      "enum": [
+        "CustomerProfile"
+      ]
+    },
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "example": "c0e5e95a-e26a-4d16-a185-32cb8f9725fc"
+    },
+    "attributes": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Mustermann"
+        }
+      }
+    }
+  }
+}

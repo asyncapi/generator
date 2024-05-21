@@ -1,0 +1,52 @@
+# This action is centrally managed in https://github.com/asyncapi/.github/
+# Don't make changes to this file in this repo as they will be overwritten with changes made to the same file in above mentioned repo.
+
+name: Automerge PRs from bots
+
+on:
+  pull_request_target:
+    types:
+      - opened
+      - synchronize
+
+jobs:
+  autoapprove-for-bot:
+    name: Autoapprove PR comming from a bot
+    if: >
+      contains(fromJson('["asyncapi-bot", "dependabot[bot]", "dependabot-preview[bot]"]'), github.event.pull_request.user.login) &&
+      contains(fromJson('["asyncapi-bot", "dependabot[bot]", "dependabot-preview[bot]"]'), github.actor) &&
+      !contains(github.event.pull_request.labels.*.name, 'released')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Autoapproving
+        uses: hmarr/auto-approve-action@44888193675f29a83e04faf4002fa8c0b537b1e4   # v3.2.1 is used https://github.com/hmarr/auto-approve-action/releases/tag/v3.2.1
+        with:
+          github-token: "${{ secrets.GH_TOKEN_BOT_EVE }}"
+
+      - name: Label autoapproved
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GH_TOKEN }}
+          script: |
+            github.rest.issues.addLabels({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: ['autoapproved', 'autoupdate']
+            })
+
+  automerge-for-bot:
+    name: Automerge PR autoapproved by a bot
+    needs: [autoapprove-for-bot]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Automerging
+        uses: pascalgn/automerge-action@22948e0bc22f0aa673800da838595a3e7347e584 #v0.15.6 https://github.com/pascalgn/automerge-action/releases/tag/v0.15.6
+        env:
+          GITHUB_TOKEN: "${{ secrets.GH_TOKEN }}"
+          GITHUB_LOGIN: asyncapi-bot
+          MERGE_LABELS: "!do-not-merge"
+          MERGE_METHOD: "squash"
+          MERGE_COMMIT_MESSAGE: "{pullRequest.title} (#{pullRequest.number})"
+          MERGE_RETRIES: "20"
+          MERGE_RETRY_SLEEP: "30000"

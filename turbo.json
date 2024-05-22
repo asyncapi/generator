@@ -1,17 +1,22 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalDependencies": ["**/.env.*local"],
   "pipeline": {
     "build": {
-      "dependsOn": ["^build"],
-      "outputs": [".next/**", "!.next/cache/**"]
+      "outputs": []
     },
-    "lint": {
-      "dependsOn": ["^lint"]
-    },
-    "dev": {
+    "test:dev": {
+      "interactive": true,
       "cache": false,
       "persistent": true
-    }
-  }
+    },
+    "test": {},
+    "test:unit": {},
+    "test:integration": {},
+    "test:cli": {},
+    "test:cleanup": {},
+    "docs": {},
+    "docker:build": {},
+    "lint": {}
+  },
+  "experimentalUI": true
 }

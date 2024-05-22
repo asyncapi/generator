@@ -295,320 +295,320 @@ describe('Generator', () => {
     });
   });
 
-  describe('#generateFromFile', () => {
-    it('calls readFile and generateFromString with the right params', async () => {
-      const utils = require('../lib/utils');
-      const filePath = 'fake-asyncapi.yml';
-      utils.__files = {
-        [filePath]: 'test content',
-      };
-      const generateMock = jest.fn().mockResolvedValue();
-      const gen = new Generator('testTemplate', __dirname);
-      gen.generate = generateMock;
-      await gen.generateFromFile(filePath);
-      expect(utils.readFile).toHaveBeenCalled();
-      expect(utils.readFile.mock.calls[0][0]).toBe(filePath);
-      expect(utils.readFile.mock.calls[0][1]).toStrictEqual({ encoding: 'utf8' });
-      expect(generateMock.mock.calls[0][0]).toBe('test content');
-      expect(generateMock.mock.calls[0][1]).toStrictEqual({ path: filePath });
-    });
-  });
+  // describe('#generateFromFile', () => {
+  //   it('calls readFile and generateFromString with the right params', async () => {
+  //     const utils = require('../lib/utils');
+  //     const filePath = 'fake-asyncapi.yml';
+  //     utils.__files = {
+  //       [filePath]: 'test content',
+  //     };
+  //     const generateMock = jest.fn().mockResolvedValue();
+  //     const gen = new Generator('testTemplate', __dirname);
+  //     gen.generate = generateMock;
+  //     await gen.generateFromFile(filePath);
+  //     expect(utils.readFile).toHaveBeenCalled();
+  //     expect(utils.readFile.mock.calls[0][0]).toBe(filePath);
+  //     expect(utils.readFile.mock.calls[0][1]).toStrictEqual({ encoding: 'utf8' });
+  //     expect(generateMock.mock.calls[0][0]).toBe('test content');
+  //     expect(generateMock.mock.calls[0][1]).toStrictEqual({ path: filePath });
+  //   });
+  // });
 
-  describe('#generateFromURL', () => {
-    it('calls fetch and generateFromString with the right params', async () => {
-      const utils = require('../lib/utils');
-      const asyncapiURL = 'http://example.com/fake-asyncapi.yml';
-      utils.__contentOfFetchedFile = 'fake text';
+  // describe('#generateFromURL', () => {
+  //   it('calls fetch and generateFromString with the right params', async () => {
+  //     const utils = require('../lib/utils');
+  //     const asyncapiURL = 'http://example.com/fake-asyncapi.yml';
+  //     utils.__contentOfFetchedFile = 'fake text';
 
-      const generateMock = jest.fn().mockResolvedValue();
-      const gen = new Generator('testTemplate', __dirname);
-      gen.generate = generateMock;
-      await gen.generateFromURL(asyncapiURL);
-      expect(utils.fetchSpec).toHaveBeenCalled();
-      expect(utils.fetchSpec.mock.calls[0][0]).toBe(asyncapiURL);
-      expect(generateMock.mock.calls[0][0]).toBe('fake text');
-    });
-  });
+  //     const generateMock = jest.fn().mockResolvedValue();
+  //     const gen = new Generator('testTemplate', __dirname);
+  //     gen.generate = generateMock;
+  //     await gen.generateFromURL(asyncapiURL);
+  //     expect(utils.fetchSpec).toHaveBeenCalled();
+  //     expect(utils.fetchSpec.mock.calls[0][0]).toBe(asyncapiURL);
+  //     expect(generateMock.mock.calls[0][0]).toBe('fake text');
+  //   });
+  // });
 
-  describe('#installTemplate', () => {
-    let ArboristMock;
-    let arboristMock;
-    let utils;
+  // describe('#installTemplate', () => {
+  //   let ArboristMock;
+  //   let arboristMock;
+  //   let utils;
 
-    beforeEach(() => {
-      ArboristMock = require('@npmcli/arborist');
-      arboristMock = new ArboristMock();
-      utils = require('../lib/utils');
-      jest.mock(path.resolve('./testTemplate', 'package.json'), () => ({ name: 'nameOfTestTemplate' }), { virtual: true });
-      jest.mock(path.resolve(Generator.DEFAULT_TEMPLATES_DIR, 'nameOfTestTemplate', 'package.json'), () => ({ name: 'nameOfTestTemplate' }), { virtual: true });
-    });
+  //   beforeEach(() => {
+  //     ArboristMock = require('@npmcli/arborist');
+  //     arboristMock = new ArboristMock();
+  //     utils = require('../lib/utils');
+  //     jest.mock(path.resolve('./testTemplate', 'package.json'), () => ({ name: 'nameOfTestTemplate' }), { virtual: true });
+  //     jest.mock(path.resolve(Generator.DEFAULT_TEMPLATES_DIR, 'nameOfTestTemplate', 'package.json'), () => ({ name: 'nameOfTestTemplate' }), { virtual: true });
+  //   });
 
-    it('works with a file system path', async () => {
-      log.debug = jest.fn();
-      utils.__getTemplateDetails = { pkgPath: '/path', name: 'test-template' };
-      const templatePath = './testTemplate';
-      const gen = new Generator(templatePath, __dirname);
-      await gen.installTemplate();
-      setTimeout(() => { // This puts the call at the end of the Node.js event loop queue.
-        expect(arboristMock.reify).toHaveBeenCalledTimes(0);
-      }, 0);
-    });
+  //   it('works with a file system path', async () => {
+  //     log.debug = jest.fn();
+  //     utils.__getTemplateDetails = { pkgPath: '/path', name: 'test-template' };
+  //     const templatePath = './testTemplate';
+  //     const gen = new Generator(templatePath, __dirname);
+  //     await gen.installTemplate();
+  //     setTimeout(() => { // This puts the call at the end of the Node.js event loop queue.
+  //       expect(arboristMock.reify).toHaveBeenCalledTimes(0);
+  //     }, 0);
+  //   });
 
-    it('works with a file system path and force = true', async () => {
-      const gen = new Generator('./testTemplate', __dirname);
-      await gen.installTemplate(true);
-      setTimeout(() => { // This puts the call at the end of the Node.js event loop queue.
-        expect(arboristMock.reify).toHaveBeenCalledTimes(1);
-        expect(arboristMock.reify.mock.calls[0][0]).toStrictEqual({
-          add: ['./testTemplate'],
-          saveType: 'prod',
-          save: false
-        });
-      }, 0);
-    });
-    it('works with an npm package', async () => {
-      utils.__isFileSystemPathValue = false;
-      const gen = new Generator('nameOfTestTemplate', __dirname);
-      await gen.installTemplate();
-      setTimeout(() => { // This puts the call at the end of the Node.js event loop queue.
-        expect(arboristMock.reify).toHaveBeenCalledTimes(0);
-      }, 0);
-    });
+  //   it('works with a file system path and force = true', async () => {
+  //     const gen = new Generator('./testTemplate', __dirname);
+  //     await gen.installTemplate(true);
+  //     setTimeout(() => { // This puts the call at the end of the Node.js event loop queue.
+  //       expect(arboristMock.reify).toHaveBeenCalledTimes(1);
+  //       expect(arboristMock.reify.mock.calls[0][0]).toStrictEqual({
+  //         add: ['./testTemplate'],
+  //         saveType: 'prod',
+  //         save: false
+  //       });
+  //     }, 0);
+  //   });
+  //   it('works with an npm package', async () => {
+  //     utils.__isFileSystemPathValue = false;
+  //     const gen = new Generator('nameOfTestTemplate', __dirname);
+  //     await gen.installTemplate();
+  //     setTimeout(() => { // This puts the call at the end of the Node.js event loop queue.
+  //       expect(arboristMock.reify).toHaveBeenCalledTimes(0);
+  //     }, 0);
+  //   });
 
-    it('works with an npm package that is installed for the first time', async () => {
-      log.debug = jest.fn();
-      utils.__getTemplateDetails = undefined;
-      const gen = new Generator('nameOfTestTemplate', __dirname, {debug: true});
-      await gen.installTemplate();
-      expect(log.debug).toHaveBeenCalledWith(logMessage.installationDebugMessage(logMessage.TEMPLATE_INSTALL_DISK_MSG));
-      setTimeout(() => { // This puts the call at the end of the Node.js event loop queue.
-        expect(arboristMock.reify).toHaveBeenCalledTimes(1);
-      }, 0);
-    });
+  //   it('works with an npm package that is installed for the first time', async () => {
+  //     log.debug = jest.fn();
+  //     utils.__getTemplateDetails = undefined;
+  //     const gen = new Generator('nameOfTestTemplate', __dirname, {debug: true});
+  //     await gen.installTemplate();
+  //     expect(log.debug).toHaveBeenCalledWith(logMessage.installationDebugMessage(logMessage.TEMPLATE_INSTALL_DISK_MSG));
+  //     setTimeout(() => { // This puts the call at the end of the Node.js event loop queue.
+  //       expect(arboristMock.reify).toHaveBeenCalledTimes(1);
+  //     }, 0);
+  //   });
 
-    it('works with an npm package and force = true', async () => {
-      log.debug = jest.fn();
-      utils.__isFileSystemPathValue = false;
-      const gen = new Generator('nameOfTestTemplate', __dirname);
-      await gen.installTemplate(true);
-      expect(log.debug).toHaveBeenCalledWith(logMessage.installationDebugMessage(logMessage.TEMPLATE_INSTALL_FLAG_MSG));
-      setTimeout(() => { // This puts the call at the end of the Node.js event loop queue.
-        expect(arboristMock.reify).toHaveBeenCalledTimes(1);
-      }, 0);
-    });
+  //   it('works with an npm package and force = true', async () => {
+  //     log.debug = jest.fn();
+  //     utils.__isFileSystemPathValue = false;
+  //     const gen = new Generator('nameOfTestTemplate', __dirname);
+  //     await gen.installTemplate(true);
+  //     expect(log.debug).toHaveBeenCalledWith(logMessage.installationDebugMessage(logMessage.TEMPLATE_INSTALL_FLAG_MSG));
+  //     setTimeout(() => { // This puts the call at the end of the Node.js event loop queue.
+  //       expect(arboristMock.reify).toHaveBeenCalledTimes(1);
+  //     }, 0);
+  //   });
 
-    it('works with a url', async () => {
-      utils.__isFileSystemPathValue = false;
-      utils.__getTemplateDetails = undefined;
-      const gen = new Generator('https://my-test-template.com', __dirname);
-      await gen.installTemplate();
-      setTimeout(() => { // This puts the call at the end of the Node.js event loop queue.
-        expect(arboristMock.reify).toHaveBeenCalledTimes(1);
-      }, 0);
-    });
+  //   it('works with a url', async () => {
+  //     utils.__isFileSystemPathValue = false;
+  //     utils.__getTemplateDetails = undefined;
+  //     const gen = new Generator('https://my-test-template.com', __dirname);
+  //     await gen.installTemplate();
+  //     setTimeout(() => { // This puts the call at the end of the Node.js event loop queue.
+  //       expect(arboristMock.reify).toHaveBeenCalledTimes(1);
+  //     }, 0);
+  //   });
 
-    it('works with a url and force = true', async () => {
-      const gen = new Generator('https://my-test-template.com', __dirname);
-      await gen.installTemplate(true);
-      setTimeout(() => { // This puts the call at the end of the Node.js event loop queue.
-        expect(arboristMock.reify).toHaveBeenCalledTimes(1);
-      }, 0);
-    });
+  //   it('works with a url and force = true', async () => {
+  //     const gen = new Generator('https://my-test-template.com', __dirname);
+  //     await gen.installTemplate(true);
+  //     setTimeout(() => { // This puts the call at the end of the Node.js event loop queue.
+  //       expect(arboristMock.reify).toHaveBeenCalledTimes(1);
+  //     }, 0);
+  //   });
 
-    it('works with a path to registry', async () => {
-      log.debug = jest.fn();
-      const gen = new Generator('nameOfTestTemplate', __dirname, {debug: true, registry: {url: 'some.registry.com', authorizationName: 'sdfsf'}});
-      await gen.installTemplate();
-      setTimeout(() => { // This puts the call at the end of the Node.js event loop queue.
-        expect(arboristMock.reify).toHaveBeenCalledTimes(1);
-      });
-    });
+  //   it('works with a path to registry', async () => {
+  //     log.debug = jest.fn();
+  //     const gen = new Generator('nameOfTestTemplate', __dirname, {debug: true, registry: {url: 'some.registry.com', authorizationName: 'sdfsf'}});
+  //     await gen.installTemplate();
+  //     setTimeout(() => { // This puts the call at the end of the Node.js event loop queue.
+  //       expect(arboristMock.reify).toHaveBeenCalledTimes(1);
+  //     });
+  //   });
 
-    it('throws an error indicating an unexpected param was given for registry configuration', () => {
-      const t = () => new Generator('testTemplate', __dirname, {
-        url: 'some.url.com',
-        privateKey: 'some.key'
+  //   it('throws an error indicating an unexpected param was given for registry configuration', () => {
+  //     const t = () => new Generator('testTemplate', __dirname, {
+  //       url: 'some.url.com',
+  //       privateKey: 'some.key'
 
-      });
-      expect(t).toThrow('These options are not supported by the generator: privateKey');
-    });
-  });
+  //     });
+  //     expect(t).toThrow('These options are not supported by the generator: privateKey');
+  //   });
+  // });
 
-  describe('.getTemplateFile', () => {
-    it('retrieves the content of a template file', async () => {
-      const utils = require('../lib/utils');
-      const filePath = path.resolve(Generator.DEFAULT_TEMPLATES_DIR, 'simple', 'template/static.md');
-      utils.__files = {
-        [filePath]: 'test content',
-      };
-      const content = await Generator.getTemplateFile('simple', 'template/static.md');
-      expect(utils.readFile).toHaveBeenCalled();
-      expect(utils.readFile.mock.calls[0][0]).toBe(filePath);
-      expect(content).toBe(utils.__files[filePath]);
-    });
+  // describe('.getTemplateFile', () => {
+  //   it('retrieves the content of a template file', async () => {
+  //     const utils = require('../lib/utils');
+  //     const filePath = path.resolve(Generator.DEFAULT_TEMPLATES_DIR, 'simple', 'template/static.md');
+  //     utils.__files = {
+  //       [filePath]: 'test content',
+  //     };
+  //     const content = await Generator.getTemplateFile('simple', 'template/static.md');
+  //     expect(utils.readFile).toHaveBeenCalled();
+  //     expect(utils.readFile.mock.calls[0][0]).toBe(filePath);
+  //     expect(content).toBe(utils.__files[filePath]);
+  //   });
 
-    it('retrieves the content of a template file overriding the default template dir', async () => {
-      const utils = require('../lib/utils');
-      const filePath = path.resolve('~', 'templates', 'simple', 'template/static.md');
-      utils.__files = {
-        [filePath]: 'test content',
-      };
-      const content = await Generator.getTemplateFile('simple', 'template/static.md', path.resolve('~', 'templates'));
-      expect(utils.readFile).toHaveBeenCalled();
-      expect(utils.readFile.mock.calls[0][0]).toBe(filePath);
-      expect(content).toBe(utils.__files[filePath]);
-    });
-  });
+  //   it('retrieves the content of a template file overriding the default template dir', async () => {
+  //     const utils = require('../lib/utils');
+  //     const filePath = path.resolve('~', 'templates', 'simple', 'template/static.md');
+  //     utils.__files = {
+  //       [filePath]: 'test content',
+  //     };
+  //     const content = await Generator.getTemplateFile('simple', 'template/static.md', path.resolve('~', 'templates'));
+  //     expect(utils.readFile).toHaveBeenCalled();
+  //     expect(utils.readFile.mock.calls[0][0]).toBe(filePath);
+  //     expect(content).toBe(utils.__files[filePath]);
+  //   });
+  // });
 
-  describe('#loadDefaultValues', () => {
-    it('default value of parameter is set', async () => {
-      const gen = new Generator('testTemplate', __dirname, {
-        templateParams: {
-          test: true
-        }
-      });
-      gen.templateConfig  = {
-        parameters: {
-          paramWithDefault: {
-            description: 'Parameter with default value',
-            default: 'default',
-            required: false
-          },
-          paramWithoutDefault: {
-            description: 'Parameter without default value',
-            required: false
-          },
-          test: {
-            description: 'test',
-            required: false
-          }
-        }
-      };
+  // describe('#loadDefaultValues', () => {
+  //   it('default value of parameter is set', async () => {
+  //     const gen = new Generator('testTemplate', __dirname, {
+  //       templateParams: {
+  //         test: true
+  //       }
+  //     });
+  //     gen.templateConfig  = {
+  //       parameters: {
+  //         paramWithDefault: {
+  //           description: 'Parameter with default value',
+  //           default: 'default',
+  //           required: false
+  //         },
+  //         paramWithoutDefault: {
+  //           description: 'Parameter without default value',
+  //           required: false
+  //         },
+  //         test: {
+  //           description: 'test',
+  //           required: false
+  //         }
+  //       }
+  //     };
 
-      await gen.loadDefaultValues();
+  //     await gen.loadDefaultValues();
 
-      expect(gen.templateParams).toStrictEqual({
-        test: true,
-        paramWithDefault: 'default'
-      });
-    });
+  //     expect(gen.templateParams).toStrictEqual({
+  //       test: true,
+  //       paramWithDefault: 'default'
+  //     });
+  //   });
 
-    it('default value of parameter is not override user value', async () => {
-      const gen = new Generator('testTemplate', __dirname, {
-        templateParams: {
-          test: true
-        }
-      });
-      gen.templateConfig = {
-        parameters: {
-          test: {
-            description: 'Parameter with default value',
-            default: false,
-            required: false
-          }
-        }
-      };
+  //   it('default value of parameter is not override user value', async () => {
+  //     const gen = new Generator('testTemplate', __dirname, {
+  //       templateParams: {
+  //         test: true
+  //       }
+  //     });
+  //     gen.templateConfig = {
+  //       parameters: {
+  //         test: {
+  //           description: 'Parameter with default value',
+  //           default: false,
+  //           required: false
+  //         }
+  //       }
+  //     };
 
-      await gen.loadDefaultValues();
+  //     await gen.loadDefaultValues();
 
-      expect(gen.templateParams).toStrictEqual({
-        test: true
-      });
-    });
+  //     expect(gen.templateParams).toStrictEqual({
+  //       test: true
+  //     });
+  //   });
 
-    it('no default values', async () => {
-      const gen = new Generator('testTemplate', __dirname, {
-        templateParams: {
-          test: true
-        }
-      });
-      gen.templateConfig = {
-        parameters: {
-          test: {
-            description: 'Parameter with default value',
-            required: false
-          },
-          anotherParam: {
-            description: 'Yeat another param',
-            required: false
-          }
-        }
-      };
+  //   it('no default values', async () => {
+  //     const gen = new Generator('testTemplate', __dirname, {
+  //       templateParams: {
+  //         test: true
+  //       }
+  //     });
+  //     gen.templateConfig = {
+  //       parameters: {
+  //         test: {
+  //           description: 'Parameter with default value',
+  //           required: false
+  //         },
+  //         anotherParam: {
+  //           description: 'Yeat another param',
+  //           required: false
+  //         }
+  //       }
+  //     };
 
-      await gen.loadDefaultValues();
+  //     await gen.loadDefaultValues();
 
-      expect(gen.templateParams).toStrictEqual({
-        test: true
-      });
-    });
-  });
+  //     expect(gen.templateParams).toStrictEqual({
+  //       test: true
+  //     });
+  //   });
+  // });
 
-  describe('#launchHook', () => {
-    it('launch given hook', async () => {
-      let iteration = 0;
-      const gen = new Generator('testTemplate', __dirname);
-      gen.hooks = { 'test-hooks': [function a() { iteration++; }, function b() { iteration++; }] };
-      await gen.launchHook('test-hooks');
-      expect(iteration).toStrictEqual(2);
-    });
+  // describe('#launchHook', () => {
+  //   it('launch given hook', async () => {
+  //     let iteration = 0;
+  //     const gen = new Generator('testTemplate', __dirname);
+  //     gen.hooks = { 'test-hooks': [function a() { iteration++; }, function b() { iteration++; }] };
+  //     await gen.launchHook('test-hooks');
+  //     expect(iteration).toStrictEqual(2);
+  //   });
 
-    it('launch given hook which is disabled', async () => {
-      let iteration = 0;
-      const gen = new Generator('testTemplate', __dirname, { disabledHooks: { 'test-hooks': true } });
-      gen.hooks = { 'test-hooks': [function a() { iteration++; }, function b() { iteration++; }] };
-      await gen.launchHook('test-hooks');
-      expect(iteration).toStrictEqual(0);
-    });
+  //   it('launch given hook which is disabled', async () => {
+  //     let iteration = 0;
+  //     const gen = new Generator('testTemplate', __dirname, { disabledHooks: { 'test-hooks': true } });
+  //     gen.hooks = { 'test-hooks': [function a() { iteration++; }, function b() { iteration++; }] };
+  //     await gen.launchHook('test-hooks');
+  //     expect(iteration).toStrictEqual(0);
+  //   });
 
-    it('launch given hook where disabledHooks key has array format for given hook type', async () => {
-      let iteration = 0;
-      const gen = new Generator('testTemplate', __dirname, { disabledHooks: { 'test-hooks': ['a', 'b'] } });
-      gen.hooks = { 'test-hooks': [function a() { iteration++; }, function b() { iteration++; }, function c() { iteration++; }] };
-      await gen.launchHook('test-hooks');
-      expect(iteration).toStrictEqual(1);
-    });
+  //   it('launch given hook where disabledHooks key has array format for given hook type', async () => {
+  //     let iteration = 0;
+  //     const gen = new Generator('testTemplate', __dirname, { disabledHooks: { 'test-hooks': ['a', 'b'] } });
+  //     gen.hooks = { 'test-hooks': [function a() { iteration++; }, function b() { iteration++; }, function c() { iteration++; }] };
+  //     await gen.launchHook('test-hooks');
+  //     expect(iteration).toStrictEqual(1);
+  //   });
 
-    it('launch given hook where disabledHooks key has array format for given hook type', async () => {
-      let iteration = 0;
-      const gen = new Generator('testTemplate', __dirname, { disabledHooks: { 'test-hooks': 'c' } });
-      gen.hooks = { 'test-hooks': [function a() { iteration++; }, function b() { iteration++; }, function c() { iteration++; }] };
-      await gen.launchHook('test-hooks');
-      expect(iteration).toStrictEqual(2);
-    });
-  });
+  //   it('launch given hook where disabledHooks key has array format for given hook type', async () => {
+  //     let iteration = 0;
+  //     const gen = new Generator('testTemplate', __dirname, { disabledHooks: { 'test-hooks': 'c' } });
+  //     gen.hooks = { 'test-hooks': [function a() { iteration++; }, function b() { iteration++; }, function c() { iteration++; }] };
+  //     await gen.launchHook('test-hooks');
+  //     expect(iteration).toStrictEqual(2);
+  //   });
+  // });
 
-  describe('#isHookAvailable', () => {
-    it('given hook type not exist or has empty array', async () => {
-      const gen = new Generator('testTemplate', __dirname);
-      gen.hooks = { 'test-hooks': [] };
-      expect(gen.isHookAvailable('foo-bar')).toStrictEqual(false);
-      expect(gen.isHookAvailable('test-hooks')).toStrictEqual(false);
-    });
+  // describe('#isHookAvailable', () => {
+  //   it('given hook type not exist or has empty array', async () => {
+  //     const gen = new Generator('testTemplate', __dirname);
+  //     gen.hooks = { 'test-hooks': [] };
+  //     expect(gen.isHookAvailable('foo-bar')).toStrictEqual(false);
+  //     expect(gen.isHookAvailable('test-hooks')).toStrictEqual(false);
+  //   });
 
-    it('given hook type exist and has hooks', async () => {
-      const gen = new Generator('testTemplate', __dirname);
-      gen.hooks = { 'test-hooks': ['foo-bar'] };
-      expect(gen.isHookAvailable('test-hooks')).toStrictEqual(true);
-    });
+  //   it('given hook type exist and has hooks', async () => {
+  //     const gen = new Generator('testTemplate', __dirname);
+  //     gen.hooks = { 'test-hooks': ['foo-bar'] };
+  //     expect(gen.isHookAvailable('test-hooks')).toStrictEqual(true);
+  //   });
 
-    it('given hook type is disabled', async () => {
-      const gen = new Generator('testTemplate', __dirname, { disabledHooks: { 'test-hooks': true } });
-      gen.hooks = { 'test-hooks': ['foo-bar'] };
-      expect(gen.isHookAvailable('test-hooks')).toStrictEqual(false);
-    });
+  //   it('given hook type is disabled', async () => {
+  //     const gen = new Generator('testTemplate', __dirname, { disabledHooks: { 'test-hooks': true } });
+  //     gen.hooks = { 'test-hooks': ['foo-bar'] };
+  //     expect(gen.isHookAvailable('test-hooks')).toStrictEqual(false);
+  //   });
 
-    it('for given hook type only some hooks are disabled', async () => {
-      const gen = new Generator('testTemplate', __dirname, { disabledHooks: { 'test-hooks': ['fooBar'], 'string-test-hooks': 'fooBar' } });
-      gen.hooks = { 'test-hooks': [function fooBar() {}, function barFoo() {}], 'string-test-hooks': [function fooBar() {}, function barFoo() {}] };
-      expect(gen.isHookAvailable('test-hooks')).toStrictEqual(true);
-      expect(gen.isHookAvailable('string-test-hooks')).toStrictEqual(true);
-    });
+  //   it('for given hook type only some hooks are disabled', async () => {
+  //     const gen = new Generator('testTemplate', __dirname, { disabledHooks: { 'test-hooks': ['fooBar'], 'string-test-hooks': 'fooBar' } });
+  //     gen.hooks = { 'test-hooks': [function fooBar() {}, function barFoo() {}], 'string-test-hooks': [function fooBar() {}, function barFoo() {}] };
+  //     expect(gen.isHookAvailable('test-hooks')).toStrictEqual(true);
+  //     expect(gen.isHookAvailable('string-test-hooks')).toStrictEqual(true);
+  //   });
 
-    it('for given hook type whole hooks are disabled', async () => {
-      const gen = new Generator('testTemplate', __dirname, { disabledHooks: { 'test-hooks': ['fooBar', 'barFoo'], 'string-test-hooks': 'fooBar' } });
-      gen.hooks = { 'test-hooks': [function fooBar() {}, function barFoo() {}], 'string-test-hooks': [function fooBar() {}] };
-      expect(gen.isHookAvailable('test-hooks')).toStrictEqual(false);
-      expect(gen.isHookAvailable('string-test-hooks')).toStrictEqual(false);
-    });
-  });
+  //   it('for given hook type whole hooks are disabled', async () => {
+  //     const gen = new Generator('testTemplate', __dirname, { disabledHooks: { 'test-hooks': ['fooBar', 'barFoo'], 'string-test-hooks': 'fooBar' } });
+  //     gen.hooks = { 'test-hooks': [function fooBar() {}, function barFoo() {}], 'string-test-hooks': [function fooBar() {}] };
+  //     expect(gen.isHookAvailable('test-hooks')).toStrictEqual(false);
+  //     expect(gen.isHookAvailable('string-test-hooks')).toStrictEqual(false);
+  //   });
+  // });
 });

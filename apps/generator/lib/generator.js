@@ -1,14 +1,14 @@
 const path = require('path');
 const fs = require('fs');
 const xfs = require('fs.extra');
+const Arborist = require('@npmcli/arborist');
 const minimatch = require('minimatch');
 const jmespath = require('jmespath');
 const filenamify = require('filenamify');
-const git = require('simple-git');
-const log = require('loglevel');
-const Arborist = require('@npmcli/arborist');
 const Config = require('@npmcli/config');
 const requireg = require('requireg');
+const git = require('simple-git');
+const log = require('loglevel');
 const npmPath = requireg.resolve('npm').replace('index.js','');
 
 const { isAsyncAPIDocument } = require('@asyncapi/parser/cjs/document');

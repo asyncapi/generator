@@ -4,19 +4,25 @@
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
+    "test": "turbo run test",
     "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "generator:test": "turbo run test --filter=@asyncapi/generator",
+    "generator:test:dev": "turbo run test:dev",
+    "generator:test:unit": "turbo run test:unit  --filter=@asyncapi/generator",
+    "generator:test:integration": "turbo run test:integration --filter=@asyncapi/generator",
+    "generator:test:cli": "turbo run test:cli --filter=@asyncapi/generator",
+    "generator:test:cleanup": "turbo run test:cleanup --filter=@asyncapi/generator",
+    "generator:docs": "turbo run docs --filter=@asyncapi/generator",
+    "generator:docker:build": "turbo run docker:build --filter=@asyncapi/generator",
+    "generator:lint": "turbo run lint --filter=@asyncapi/generator"
   },
   "devDependencies": {
-    "@repo/eslint-config": "*",
-    "@repo/typescript-config": "*",
-    "prettier": "^3.2.5",
-    "turbo": "latest"
+    "turbo": "1.13.3"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=18.12.1"
   },
-  "packageManager": "npm@10.5.0",
+  "packageManager": "npm@9.5.0",
   "workspaces": [
     "apps/*",
     "packages/*"

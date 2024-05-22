@@ -1,5 +1,4 @@
 const arb = jest.genMockFromModule('@npmcli/arborist');
-console.log('working>>>');
 
 arb.prototype[Symbol.for('resolvedAdd')] = [{name: 'test'}];
 

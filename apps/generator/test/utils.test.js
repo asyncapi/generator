@@ -6,8 +6,6 @@ const utils = jest.requireActual('../lib/utils');
 
 const logMessage = require('./../lib/logMessages.js');
 
-console.log(`Node version: ${process.version}`);
-
 describe('Utils', () => {
   describe('#getTemplateDetails', () => {
     let resolvePkg, resolveFrom;

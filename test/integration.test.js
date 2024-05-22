@@ -97,12 +97,12 @@ describe('Integration testing generateFromFile() to make sure the result of the 
     // Check if the log debug message was printed
     await expect(log.debug).toHaveBeenCalledWith(`noOverwriteGlobs matched`);
     await expect(log.debug).toHaveBeenCalledWith(`Skipping overwrite for: ${testFilePath}`);
-    console.log('All console.log calls:');
+    // await console.log('All console.log calls:');
 
-    // Print all console.log calls
-    await log.mock.calls.forEach((call, index) => {
-      console.log(`${index + 1}:`, call);
-    });
+    // // Print all console.log calls
+    // await log.mock.calls.forEach((call, index) => {
+    //   console.log(`${index + 1}:`, call);
+    // });
 
     log.mockRestore();
   });

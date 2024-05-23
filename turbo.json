@@ -16,7 +16,8 @@
     "test:cleanup": {},
     "docs": {},
     "docker:build": {},
-    "lint": {}
+    "lint": {},
+    "lint:tpl:validator": {}
   },
   "experimentalUI": true
 }

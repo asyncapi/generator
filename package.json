@@ -14,7 +14,8 @@
     "generator:test:cleanup": "turbo run test:cleanup --filter=@asyncapi/generator",
     "generator:docs": "turbo run docs --filter=@asyncapi/generator",
     "generator:docker:build": "turbo run docker:build --filter=@asyncapi/generator",
-    "generator:lint": "turbo run lint --filter=@asyncapi/generator"
+    "generator:lint": "turbo run lint --filter=@asyncapi/generator",
+    "generator:lint:tpl:validator": "turbo run lint:tpl:validator --filter=@asyncapi/generator"
   },
   "devDependencies": {
     "turbo": "1.13.3"

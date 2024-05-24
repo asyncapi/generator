@@ -20,8 +20,10 @@ const log = require('loglevel');
 
 describe('Integration testing generateFromFile() to make sure the result of the generation is not changend comparing to snapshot', () => {
   const generateFolderName = () => {
-    //you always want to generate to new directory to make sure test runs in clear environment
-    return path.resolve(mainTestResultPath, crypto.randomBytes(4).toString('hex'));
+    // you always want to generate to new directory to make sure test runs in clear environment
+    // normalize the path for cross-platform compatibility
+    return path.normalize(path.resolve(mainTestResultPath, crypto.randomBytes(4).toString('hex')));
+    // return path.resolve(mainTestResultPath, crypto.randomBytes(4).toString('hex'));
   };
 
   jest.setTimeout(60000);

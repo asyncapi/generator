@@ -15,6 +15,7 @@ const {exists, writeFile} = require('../lib/utils');
 const mainTestResultPath = 'test/temp/integrationTestResult';
 const reactTemplate = 'test/test-templates/react-template';
 const nunjucksTemplate = 'test/test-templates/nunjucks-template';
+const logMessage = require('../lib/logMessages');
 const log = require('loglevel');
 
 describe('Integration testing generateFromFile() to make sure the result of the generation is not changend comparing to snapshot', () => {
@@ -67,12 +68,12 @@ describe('Integration testing generateFromFile() to make sure the result of the 
   });
 
   it('should ignore specified files with noOverwriteGlobs', async () => {
-    // const logSpyDebug = jest.spyOn(log, 'debug').mockImplementation(() => {});
-    log.debug = jest.fn(); 
+    const logSpyDebug = jest.spyOn(log, 'debug').mockImplementation(() => {});
+    // log.debug = jest.fn(); 
 
     const outputDir = generateFolderName();
     // Manually create a file to test if it's not overwritten
-    if (!await exists(outputDir)) {
+    if (!existsSync(outputDir)) {
       mkdirSync(outputDir, { recursive: true });
     }
     // Create a variable to store the file content
@@ -95,15 +96,9 @@ describe('Integration testing generateFromFile() to make sure the result of the 
     // Check if the files have been overwritten
     await expect(fileContent).toBe(testContent);
     // Check if the log debug message was printed
-    await expect(log.debug).toHaveBeenCalledWith(`noOverwriteGlobs matched`);
-    await expect(log.debug).toHaveBeenCalledWith(`Skipping overwrite for: ${testFilePath}`);
-    // await console.log('All console.log calls:');
+    // await expect(logSpyDebug).toHaveBeenCalledWith(`noOverwriteGlobs matched`);
+    await expect(logSpyDebug).toHaveBeenCalledWith(logMessage.skipOverwriting(testFilePath));
 
-    // // Print all console.log calls
-    // await log.mock.calls.forEach((call, index) => {
-    //   console.log(`${index + 1}:`, call);
-    // });
-
-    log.mockRestore();
+    logSpyDebug.mockRestore();
   });
 });

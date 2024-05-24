@@ -67,8 +67,8 @@ describe('Integration testing generateFromFile() to make sure the result of the 
   });
 
   it('should ignore specified files with noOverwriteGlobs', async () => {
-    // const logSpyDebug = jest.spyOn(log, 'debug').mockImplementation(() => {});
-    log.debug = jest.fn(); 
+    const logSpyDebug = jest.spyOn(log, 'debug').mockImplementation(() => {});
+    // log.debug = jest.fn(); 
 
     const outputDir = generateFolderName();
     // Manually create a file to test if it's not overwritten
@@ -95,8 +95,8 @@ describe('Integration testing generateFromFile() to make sure the result of the 
     // Check if the files have been overwritten
     await expect(fileContent).toBe(testContent);
     // Check if the log debug message was printed
-    await expect(log.debug).toHaveBeenCalledWith(`noOverwriteGlobs matched`);
-    await expect(log.debug).toHaveBeenCalledWith(`Skipping overwrite for: ${testFilePath}`);
+    await expect(logSpyDebug).toHaveBeenCalledWith(`noOverwriteGlobs matched`);
+    await expect(logSpyDebug).toHaveBeenCalledWith(`Skipping overwrite for: ${testFilePath}`);
     // await console.log('All console.log calls:');
 
     // // Print all console.log calls
@@ -104,6 +104,6 @@ describe('Integration testing generateFromFile() to make sure the result of the 
     //   console.log(`${index + 1}:`, call);
     // });
 
-    log.mockRestore();
+    logSpyDebug.mockRestore();
   });
 });

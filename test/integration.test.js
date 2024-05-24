@@ -22,8 +22,8 @@ describe('Integration testing generateFromFile() to make sure the result of the 
   const generateFolderName = () => {
     // you always want to generate to new directory to make sure test runs in clear environment
     // normalize the path for cross-platform compatibility
-    return path.normalize(path.resolve(mainTestResultPath, crypto.randomBytes(4).toString('hex')));
-    // return path.resolve(mainTestResultPath, crypto.randomBytes(4).toString('hex'));
+    // return path.normalize(path.resolve(mainTestResultPath, crypto.randomBytes(4).toString('hex')));
+    return path.resolve(mainTestResultPath, crypto.randomBytes(4).toString('hex'));
   };
 
   jest.setTimeout(60000);
@@ -81,7 +81,7 @@ describe('Integration testing generateFromFile() to make sure the result of the 
     // Create a variable to store the file content
     const testContent = '<script>const initialContent = "This should not change";</script>';
     // eslint-disable-next-line sonarjs/no-duplicate-string
-    const testFilePath = path.resolve(outputDir, testOutputFile);
+    const testFilePath = path.normalize(path.resolve(outputDir, testOutputFile));
     await writeFile(testFilePath, testContent);
 
     // Manually create an output first, before generation, with additional custom file to validate if later it is still there, not overwritten

@@ -9,7 +9,7 @@ const dummySpecPath = path.resolve(__dirname, './docs/dummy.yml');
 const refSpecPath = path.resolve(__dirname, './docs/apiwithref.json');
 const refSpecFolder = path.resolve(__dirname, './docs/');
 const crypto = require('crypto');
-const {mkdirSync} = require('fs');
+const {mkdirSync, readFileSync} = require('fs');
 const {exists, writeFile} = require('../lib/utils');
 const mainTestResultPath = 'test/temp/integrationTestResult';
 const reactTemplate = 'test/test-templates/react-template';
@@ -93,13 +93,7 @@ describe('Integration testing generateFromFile() to make sure the result of the 
     await generator.generateFromFile(dummySpecPath);
 
     // Read the file to confirm it was not overwritten
-    const fileContent = await readFile(testFilePath, 'utf8');
-
-    // check what it has been called with 
-    logSpyDebug.mock.calls.forEach((call, index) => {
-      console.log(`Call ${index + 1}:`, call);
-    });
-
+    const fileContent = readFileSync(testFilePath, 'utf8');
     // Check if the files have been overwritten
     expect(fileContent).toBe(testContent);
     // Check if the log debug message was printed

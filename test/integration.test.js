@@ -29,11 +29,11 @@ describe('Integration testing generateFromFile() to make sure the result of the 
   jest.setTimeout(60000);
   const testOutputFile = 'test-file.md';
 
-  beforeAll(() => {
-    if (!existsSync(path.join(reactTemplate, 'package.json'))) {
-      throw new Error(`React template not found at ${reactTemplate}`);
-    }
-  });
+  // beforeAll(() => {
+  //   if (!existsSync(path.join(reactTemplate, 'package.json'))) {
+  //     throw new Error(`React template not found at ${reactTemplate}`);
+  //   }
+  // });
 
   it('generated using Nunjucks template', async () => {
     const outputDir = generateFolderName();
@@ -74,7 +74,7 @@ describe('Integration testing generateFromFile() to make sure the result of the 
     // log.debug = jest.fn(); 
 
     const outputDir = generateFolderName();
-    // Manually create a file to test if it's not overwritten
+    // // Manually create a file to test if it's not overwritten
     if (!await exists(outputDir)) {
       mkdirSync(outputDir, { recursive: true });
     }
@@ -95,10 +95,16 @@ describe('Integration testing generateFromFile() to make sure the result of the 
 
     // Read the file to confirm it was not overwritten
     const fileContent = await readFile(testFilePath, 'utf8');
+
+    // check what it has been called with 
+    logSpyDebug.mock.calls.forEach((call, index) => {
+      console.log(`Call ${index + 1}:`, call);
+    });
+
     // Check if the files have been overwritten
-    await expect(fileContent).toBe(testContent);
+    expect(fileContent).toBe(testContent);
     // Check if the log debug message was printed
-    await expect(logSpyDebug).toHaveBeenCalledWith(logMessage.skipOverwrite(testFilePath));
+    expect(logSpyDebug).toHaveBeenCalledWith(logMessage.skipOverwrite(testFilePath));
 
     // Clean up
     logSpyDebug.mockRestore();

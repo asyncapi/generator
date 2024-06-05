@@ -50,7 +50,7 @@
   "homepage": "https://github.com/asyncapi/generator",
   "dependencies": {
     "@asyncapi/generator-react-sdk": "^1.0.18",
-    "@asyncapi/parser": "^3.0.14",
+    "@asyncapi/parser": "^3.0.15",
     "@npmcli/arborist": "5.6.3",
     "@npmcli/config": "^8.0.2",
     "@smoya/multi-parser": "^5.0.0",
@@ -79,8 +79,8 @@
   "devDependencies": {
     "eslint": "^6.8.0",
     "eslint-plugin-jest": "^23.8.2",
-    "eslint-plugin-sonarjs": "^0.5.0",
     "eslint-plugin-react": "^7.34.1",
+    "eslint-plugin-sonarjs": "^0.5.0",
     "jest": "^25.5.0",
     "jsdoc-to-markdown": "^7.1.1",
     "markdown-toc": "^1.2.0",

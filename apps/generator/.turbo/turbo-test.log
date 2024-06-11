@@ -1,0 +1,415 @@
+[37;40mnpm[0m [0m[36;40mverb[0m [0m[35mcli[0m /Users/yuanyuan/.nvm/versions/node/v18.18.0/bin/node /Users/yuanyuan/.nvm/versions/node/v18.18.0/bin/npm
+[0m[37;40mnpm[0m [0m[32minfo[0m [0m[35musing[0m npm@9.8.1
+[0m[37;40mnpm[0m [0m[32minfo[0m [0m[35musing[0m node@v18.18.0
+[0m[37;40mnpm[0m [0m[32minfo[0m [0m[35mfound workspace root at /Users/yuanyuan/workspace/generator[0m 
+[0m[37;40mnpm[0m [0m[36;40mverb[0m [0m[35mtitle[0m npm run test
+[0m[37;40mnpm[0m [0m[36;40mverb[0m [0m[35margv[0m "run" "test"
+[0m[37;40mnpm[0m [0m[36;40mverb[0m [0m[35mlogfile[0m logs-max:10 dir:/Users/yuanyuan/.npm/_logs/2024-06-11T20_49_56_306Z-
+[0m[37;40mnpm[0m [0m[36;40mverb[0m [0m[35mlogfile[0m /Users/yuanyuan/.npm/_logs/2024-06-11T20_49_56_306Z-debug-0.log
+[0m
+> @asyncapi/generator@2.0.1 test
+> npm run test:unit && npm run test:integration && npm run test:cli
+
+[37;40mnpm[0m [0m[36;40mverb[0m [0m[35mcli[0m /Users/yuanyuan/.nvm/versions/node/v18.18.0/bin/node /Users/yuanyuan/.nvm/versions/node/v18.18.0/bin/npm
+[0m[37;40mnpm[0m [0m[32minfo[0m [0m[35musing[0m npm@9.8.1
+[0m[37;40mnpm[0m [0m[32minfo[0m [0m[35musing[0m node@v18.18.0
+[0m[37;40mnpm[0m [0m[32minfo[0m [0m[35mfound workspace root at /Users/yuanyuan/workspace/generator[0m 
+[0m[37;40mnpm[0m [0m[36;40mverb[0m [0m[35mtitle[0m npm run test:unit
+[0m[37;40mnpm[0m [0m[36;40mverb[0m [0m[35margv[0m "run" "test:unit"
+[0m[37;40mnpm[0m [0m[36;40mverb[0m [0m[35mlogfile[0m logs-max:10 dir:/Users/yuanyuan/.npm/_logs/2024-06-11T20_49_56_470Z-
+[0m[37;40mnpm[0m [0m[36;40mverb[0m [0m[35mlogfile[0m /Users/yuanyuan/.npm/_logs/2024-06-11T20_49_56_470Z-debug-0.log
+[0m
+> @asyncapi/generator@2.0.1 test:unit
+> jest --coverage --testPathIgnorePatterns=integration --testPathIgnorePatterns=test-project
+
+[1m[2mDetermining test suites to run...[22m[22m[999D[K
+
+[1mTest Suites: [22m0 of 5 total
+[1mTests:       [22m0 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        0 s, estimated 4 s
+[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[999D[K
+
+[1mTest Suites: [22m0 of 5 total
+[1mTests:       [22m0 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        0 s, estimated 4 s
+[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mparser.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mutils.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mtemplateConfigValidator.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mrenderer.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mgenerator.test.js[22m
+
+[1mTest Suites: [22m0 of 5 total
+[1mTests:       [22m0 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        0 s, estimated 4 s
+[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[0m[7m[1m[32m PASS [39m[22m[27m[0m [2mtest/[22m[1mrenderer.test.js[22m
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mparser.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mutils.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mtemplateConfigValidator.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mrenderer.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mgenerator.test.js[22m
+
+[1mTest Suites: [22m0 of 5 total
+[1mTests:       [22m0 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        0 s, estimated 4 s
+[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mparser.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mutils.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mtemplateConfigValidator.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mrenderer.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mgenerator.test.js[22m
+
+[1mTest Suites: [22m0 of 5 total
+[1mTests:       [22m0 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        0 s, estimated 4 s
+[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mparser.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mutils.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mtemplateConfigValidator.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mgenerator.test.js[22m
+
+[1mTest Suites: [22m[1m[32m1 passed[39m[22m, 1 of 5 total
+[1mTests:       [22m[1m[32m4 passed[39m[22m, 4 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        0 s, estimated 4 s
+[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mparser.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mutils.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mtemplateConfigValidator.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mgenerator.test.js[22m
+
+[1mTest Suites: [22m[1m[32m1 passed[39m[22m, 1 of 5 total
+[1mTests:       [22m[1m[32m4 passed[39m[22m, 4 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        1 s, estimated 4 s
+[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mparser.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mutils.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mtemplateConfigValidator.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mgenerator.test.js[22m
+
+[1mTest Suites: [22m[1m[32m1 passed[39m[22m, 1 of 5 total
+[1mTests:       [22m[1m[32m11 passed[39m[22m, 11 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        1 s, estimated 4 s
+[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mparser.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mutils.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mtemplateConfigValidator.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mgenerator.test.js[22m
+
+[1mTest Suites: [22m[1m[32m1 passed[39m[22m, 1 of 5 total
+[1mTests:       [22m[1m[32m26 passed[39m[22m, 26 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        1 s, estimated 4 s
+[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mparser.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mutils.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mtemplateConfigValidator.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mgenerator.test.js[22m
+
+[1mTest Suites: [22m[1m[32m1 passed[39m[22m, 1 of 5 total
+[1mTests:       [22m[1m[32m29 passed[39m[22m, 29 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        1 s, estimated 4 s
+[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[0m[7m[1m[32m PASS [39m[22m[27m[0m [2mtest/[22m[1mtemplateConfigValidator.test.js[22m
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mparser.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mutils.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mtemplateConfigValidator.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mgenerator.test.js[22m
+
+[1mTest Suites: [22m[1m[32m1 passed[39m[22m, 1 of 5 total
+[1mTests:       [22m[1m[32m29 passed[39m[22m, 29 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        1 s, estimated 4 s
+[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mparser.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mutils.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mgenerator.test.js[22m
+
+[1mTest Suites: [22m[1m[32m2 passed[39m[22m, 2 of 5 total
+[1mTests:       [22m[1m[32m34 passed[39m[22m, 34 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        1 s, estimated 4 s
+[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[0m[7m[1m[32m PASS [39m[22m[27m[0m [2mtest/[22m[1mutils.test.js[22m
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mparser.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mutils.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mgenerator.test.js[22m
+
+[1mTest Suites: [22m[1m[32m2 passed[39m[22m, 2 of 5 total
+[1mTests:       [22m[1m[32m34 passed[39m[22m, 34 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        1 s, estimated 4 s
+[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mparser.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mgenerator.test.js[22m
+
+[1mTest Suites: [22m[1m[32m3 passed[39m[22m, 3 of 5 total
+[1mTests:       [22m[1m[32m40 passed[39m[22m, 40 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        1 s, estimated 4 s
+[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mparser.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mgenerator.test.js[22m
+
+[1mTest Suites: [22m[1m[32m3 passed[39m[22m, 3 of 5 total
+[1mTests:       [22m[1m[32m53 passed[39m[22m, 53 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        1 s, estimated 4 s
+[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[0m[7m[1m[32m PASS [39m[22m[27m[0m [2mtest/[22m[1mparser.test.js[22m
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mparser.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mgenerator.test.js[22m
+
+[1mTest Suites: [22m[1m[32m3 passed[39m[22m, 3 of 5 total
+[1mTests:       [22m[1m[32m53 passed[39m[22m, 53 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        1 s, estimated 4 s
+[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mgenerator.test.js[22m
+
+[1mTest Suites: [22m[1m[32m4 passed[39m[22m, 4 of 5 total
+[1mTests:       [22m[1m[32m54 passed[39m[22m, 54 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        2 s, estimated 4 s
+[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A/Users/yuanyuan/workspace/generator/node_modules/@jest/expect/node_modules/expect/build/index.js:314
+      throw error;
+      ^
+
+JestAssertionError: [2mexpect([22m[31mjest.fn()[39m[2m).[22mtoHaveBeenCalledTimes[2m([22m[32mexpected[39m[2m)[22m
+
+Expected number of calls: [32m1[39m
+Received number of calls: [31m0[39m
+    at Timeout.toHaveBeenCalledTimes [as _onTimeout] [90m(/Users/yuanyuan/workspace/generator/apps/generator/[39mtest/generator.test.js:361:36[90m)[39m
+[90m    at listOnTimeout (node:internal/timers:569:17)[39m
+[90m    at processTimers (node:internal/timers:512:7)[39m {
+  matcherResult: {
+    message: [32m'\x1B[2mexpect(\x1B[22m\x1B[31mjest.fn()\x1B[39m\x1B[2m).\x1B[22mtoHaveBeenCalledTimes\x1B[2m(\x1B[22m\x1B[32mexpected\x1B[39m\x1B[2m)\x1B[22m\n'[39m +
+      [32m'\n'[39m +
+      [32m'Expected number of calls: \x1B[32m1\x1B[39m\n'[39m +
+      [32m'Received number of calls: \x1B[31m0\x1B[39m'[39m,
+    pass: [33mfalse[39m
+  }
+}
+
+Node.js v18.18.0
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mgenerator.test.js[22m
+
+[1mTest Suites: [22m[1m[32m4 passed[39m[22m, 4 of 5 total
+[1mTests:       [22m[1m[32m54 passed[39m[22m, 54 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        2 s, estimated 4 s
+[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mgenerator.test.js[22m
+
+[1mTest Suites: [22m[1m[32m4 passed[39m[22m, 4 of 5 total
+[1mTests:       [22m[1m[32m84 passed[39m[22m, 84 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        2 s, estimated 4 s
+[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mgenerator.test.js[22m
+
+[1mTest Suites: [22m[1m[32m4 passed[39m[22m, 4 of 5 total
+[1mTests:       [22m[1m[32m84 passed[39m[22m, 84 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        3 s, estimated 4 s
+[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mgenerator.test.js[22m
+
+[1mTest Suites: [22m[1m[32m4 passed[39m[22m, 4 of 5 total
+[1mTests:       [22m[1m[32m96 passed[39m[22m, 96 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        3 s, estimated 4 s
+[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A/Users/yuanyuan/workspace/generator/node_modules/@jest/expect/node_modules/expect/build/index.js:314
+      throw error;
+      ^
+
+JestAssertionError: [2mexpect([22m[31mjest.fn()[39m[2m).[22mtoHaveBeenCalledTimes[2m([22m[32mexpected[39m[2m)[22m
+
+Expected number of calls: [32m1[39m
+Received number of calls: [31m0[39m
+    at Timeout.toHaveBeenCalledTimes [as _onTimeout] [90m(/Users/yuanyuan/workspace/generator/apps/generator/[39mtest/generator.test.js:361:36[90m)[39m
+[90m    at listOnTimeout (node:internal/timers:569:17)[39m
+[90m    at processTimers (node:internal/timers:512:7)[39m {
+  matcherResult: {
+    message: [32m'\x1B[2mexpect(\x1B[22m\x1B[31mjest.fn()\x1B[39m\x1B[2m).\x1B[22mtoHaveBeenCalledTimes\x1B[2m(\x1B[22m\x1B[32mexpected\x1B[39m\x1B[2m)\x1B[22m\n'[39m +
+      [32m'\n'[39m +
+      [32m'Expected number of calls: \x1B[32m1\x1B[39m\n'[39m +
+      [32m'Received number of calls: \x1B[31m0\x1B[39m'[39m,
+    pass: [33mfalse[39m
+  }
+}
+
+Node.js v18.18.0
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mgenerator.test.js[22m
+
+[1mTest Suites: [22m[1m[32m4 passed[39m[22m, 4 of 5 total
+[1mTests:       [22m[1m[32m96 passed[39m[22m, 96 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        3 s, estimated 4 s
+[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mgenerator.test.js[22m
+
+[1mTest Suites: [22m[1m[32m4 passed[39m[22m, 4 of 5 total
+[1mTests:       [22m[1m[32m126 passed[39m[22m, 126 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        3 s, estimated 4 s
+[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mgenerator.test.js[22m
+
+[1mTest Suites: [22m[1m[32m4 passed[39m[22m, 4 of 5 total
+[1mTests:       [22m[1m[32m126 passed[39m[22m, 126 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        4 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mgenerator.test.js[22m
+
+[1mTest Suites: [22m[1m[32m4 passed[39m[22m, 4 of 5 total
+[1mTests:       [22m[1m[32m126 passed[39m[22m, 126 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        [1m[33m5 s[39m[22m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mgenerator.test.js[22m
+
+[1mTest Suites: [22m[1m[32m4 passed[39m[22m, 4 of 5 total
+[1mTests:       [22m[1m[32m138 passed[39m[22m, 138 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        [1m[33m5 s[39m[22m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A/Users/yuanyuan/workspace/generator/node_modules/@jest/expect/node_modules/expect/build/index.js:314
+      throw error;
+      ^
+
+JestAssertionError: [2mexpect([22m[31mjest.fn()[39m[2m).[22mtoHaveBeenCalledTimes[2m([22m[32mexpected[39m[2m)[22m
+
+Expected number of calls: [32m1[39m
+Received number of calls: [31m0[39m
+    at Timeout.toHaveBeenCalledTimes [as _onTimeout] [90m(/Users/yuanyuan/workspace/generator/apps/generator/[39mtest/generator.test.js:361:36[90m)[39m
+[90m    at listOnTimeout (node:internal/timers:569:17)[39m
+[90m    at processTimers (node:internal/timers:512:7)[39m {
+  matcherResult: {
+    message: [32m'\x1B[2mexpect(\x1B[22m\x1B[31mjest.fn()\x1B[39m\x1B[2m).\x1B[22mtoHaveBeenCalledTimes\x1B[2m(\x1B[22m\x1B[32mexpected\x1B[39m\x1B[2m)\x1B[22m\n'[39m +
+      [32m'\n'[39m +
+      [32m'Expected number of calls: \x1B[32m1\x1B[39m\n'[39m +
+      [32m'Received number of calls: \x1B[31m0\x1B[39m'[39m,
+    pass: [33mfalse[39m
+  }
+}
+
+Node.js v18.18.0
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mgenerator.test.js[22m
+
+[1mTest Suites: [22m[1m[32m4 passed[39m[22m, 4 of 5 total
+[1mTests:       [22m[1m[32m138 passed[39m[22m, 138 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        [1m[33m5 s[39m[22m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mgenerator.test.js[22m
+
+[1mTest Suites: [22m[1m[32m4 passed[39m[22m, 4 of 5 total
+[1mTests:       [22m[1m[32m168 passed[39m[22m, 168 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        [1m[33m5 s[39m[22m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mgenerator.test.js[22m
+
+[1mTest Suites: [22m[1m[32m4 passed[39m[22m, 4 of 5 total
+[1mTests:       [22m[1m[32m168 passed[39m[22m, 168 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        [1m[33m6 s[39m[22m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mgenerator.test.js[22m
+
+[1mTest Suites: [22m[1m[32m4 passed[39m[22m, 4 of 5 total
+[1mTests:       [22m[1m[32m168 passed[39m[22m, 168 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        [1m[33m7 s[39m[22m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mgenerator.test.js[22m
+
+[1mTest Suites: [22m[1m[32m4 passed[39m[22m, 4 of 5 total
+[1mTests:       [22m[1m[32m180 passed[39m[22m, 180 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        [1m[33m7 s[39m[22m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A/Users/yuanyuan/workspace/generator/node_modules/@jest/expect/node_modules/expect/build/index.js:314
+      throw error;
+      ^
+
+JestAssertionError: [2mexpect([22m[31mjest.fn()[39m[2m).[22mtoHaveBeenCalledTimes[2m([22m[32mexpected[39m[2m)[22m
+
+Expected number of calls: [32m1[39m
+Received number of calls: [31m0[39m
+    at Timeout.toHaveBeenCalledTimes [as _onTimeout] [90m(/Users/yuanyuan/workspace/generator/apps/generator/[39mtest/generator.test.js:361:36[90m)[39m
+[90m    at listOnTimeout (node:internal/timers:569:17)[39m
+[90m    at processTimers (node:internal/timers:512:7)[39m {
+  matcherResult: {
+    message: [32m'\x1B[2mexpect(\x1B[22m\x1B[31mjest.fn()\x1B[39m\x1B[2m).\x1B[22mtoHaveBeenCalledTimes\x1B[2m(\x1B[22m\x1B[32mexpected\x1B[39m\x1B[2m)\x1B[22m\n'[39m +
+      [32m'\n'[39m +
+      [32m'Expected number of calls: \x1B[32m1\x1B[39m\n'[39m +
+      [32m'Received number of calls: \x1B[31m0\x1B[39m'[39m,
+    pass: [33mfalse[39m
+  }
+}
+
+Node.js v18.18.0
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mgenerator.test.js[22m
+
+[1mTest Suites: [22m[1m[32m4 passed[39m[22m, 4 of 5 total
+[1mTests:       [22m[1m[32m180 passed[39m[22m, 180 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        [1m[33m7 s[39m[22m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[0m[7m[1m[31m FAIL [39m[22m[27m[0m [2mtest/[22m[1mgenerator.test.js[22m
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mgenerator.test.js[22m
+
+[1mTest Suites: [22m[1m[32m4 passed[39m[22m, 4 of 5 total
+[1mTests:       [22m[1m[32m180 passed[39m[22m, 180 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        [1m[33m7 s[39m[22m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A  [1m● [22mTest suite failed to run
+
+    Jest worker encountered 4 child process exceptions, exceeding retry limit
+
+      [2mat ChildProcessWorker.initialize ([22mnode_modules/jest-worker/build/workers/ChildProcessWorker.js[2m:181:21)[22m
+
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtest/[22m[1mgenerator.test.js[22m
+
+[1mTest Suites: [22m[1m[32m4 passed[39m[22m, 4 of 5 total
+[1mTests:       [22m[1m[32m180 passed[39m[22m, 180 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        [1m[33m7 s[39m[22m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[999D[K-----------------------------|---------|----------|---------|---------|-------------------------------------------------------------
+File                         | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s                                           
+-----------------------------|---------|----------|---------|---------|-------------------------------------------------------------
+[31;1mAll files                   [0m | [31;1m  32.17[0m | [31;1m   22.31[0m | [31;1m  20.68[0m | [31;1m  33.81[0m | [31;1m                                                           [0m 
+[31;1m lib                        [0m | [31;1m   29.6[0m | [31;1m    20.9[0m | [31;1m  18.38[0m | [31;1m  31.11[0m | [31;1m                                                           [0m 
+[31;1m  filtersRegistry.js        [0m | [31;1m  10.41[0m | [31;1m       0[0m | [31;1m      0[0m | [31;1m  11.11[0m | [31;1m14-118                                                     [0m 
+[31;1m  generator.js              [0m | [31;1m  10.44[0m | [31;1m       0[0m | [31;1m      0[0m | [31;1m  11.62[0m | [31;1m55,58,99-1083                                              [0m 
+[31;1m  hooksRegistry.js          [0m | [31;1m   8.51[0m | [31;1m       0[0m | [31;1m      0[0m | [31;1m    9.3[0m | [31;1m13-120                                                     [0m 
+[31;1m  logMessages.js            [0m | [31;1m     40[0m | [31;1m       0[0m | [31;1m   12.5[0m | [31;1m     40[0m | [31;1m10-14,22-42                                                [0m 
+[33;1m  parser.js                 [0m | [33;1m  50.68[0m | [31;1m   43.47[0m | [31;1m  35.71[0m | [33;1m  54.54[0m | [31;1m59,62,67,70,74-75,92-144                                   [0m 
+[32;1m  templateConfigValidator.js[0m | [32;1m    100[0m | [32;1m   95.55[0m | [32;1m    100[0m | [32;1m    100[0m | [33;1m100,148                                                    [0m 
+[33;1m  utils.js                  [0m | [33;1m  70.51[0m | [31;1m   47.82[0m | [31;1m     25[0m | [33;1m  70.51[0m | [31;1m42,55-59,69-70,80,90-92,104,114-115,124,134,157,196,217-222[0m 
+[33;1m lib/renderer               [0m | [33;1m  74.41[0m | [33;1m      50[0m | [33;1m  55.55[0m | [33;1m   77.5[0m | [31;1m                                                           [0m 
+[31;1m  nunjucks.js               [0m | [31;1m  30.76[0m | [31;1m       0[0m | [31;1m      0[0m | [31;1m  36.36[0m | [31;1m12-15,31-39                                                [0m 
+[32;1m  react.js                  [0m | [32;1m  93.33[0m | [33;1m   64.28[0m | [32;1m    100[0m | [32;1m   93.1[0m | [31;1m68,72                                                      [0m 
+-----------------------------|---------|----------|---------|---------|-------------------------------------------------------------
+[1mTest Suites: [22m[1m[31m1 failed[39m[22m, [1m[32m4 passed[39m[22m, 5 total
+[1mTests:       [22m[1m[32m42 passed[39m[22m, 42 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        [1m[33m7.383 s[39m[22m
+[2mRan all test suites[22m[2m.[22m
+[37;40mnpm[0m [0m[31;40mERR![0m [0m[35mLifecycle script `test:unit` failed with error:[0m 
+[0m[37;40mnpm[0m [0m[31;40mERR![0m [0m[35mError: command failed[0m 
+[0m[37;40mnpm[0m [0m[31;40mERR![0m [0m[35m  in workspace: @asyncapi/generator@2.0.1[0m 
+[0m[37;40mnpm[0m [0m[31;40mERR![0m [0m[35m  at location: /Users/yuanyuan/workspace/generator/apps/generator[0m 
+[0m[37;40mnpm[0m [0m[36;40mverb[0m [0m[35mexit[0m 1
+[0m[37;40mnpm[0m [0m[36;40mverb[0m [0m[35mcode[0m 1
+[0m[37;40mnpm[0m [0m[31;40mERR![0m [0m[35mLifecycle script `test` failed with error:[0m 
+[0m[37;40mnpm[0m [0m[31;40mERR![0m [0m[35mError: command failed[0m 
+[0m[37;40mnpm[0m [0m[31;40mERR![0m [0m[35m  in workspace: @asyncapi/generator@2.0.1[0m 
+[0m[37;40mnpm[0m [0m[31;40mERR![0m [0m[35m  at location: /Users/yuanyuan/workspace/generator/apps/generator[0m 
+[0m[37;40mnpm[0m [0m[36;40mverb[0m [0m[35mexit[0m 1
+[0m[37;40mnpm[0m [0m[36;40mverb[0m [0m[35mcode[0m 1
+[0m

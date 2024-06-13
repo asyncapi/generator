@@ -1,5 +1,6 @@
 {
   "name": "generator",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "build": "turbo build",
@@ -15,7 +16,10 @@
     "generator:docs": "turbo run docs --filter=@asyncapi/generator",
     "generator:docker:build": "turbo run docker:build --filter=@asyncapi/generator",
     "generator:lint": "turbo run lint --filter=@asyncapi/generator",
-    "generator:lint:tpl:validator": "turbo run lint:tpl:validator --filter=@asyncapi/generator"
+    "generator:lint:tpl:validator": "turbo run lint:tpl:validator --filter=@asyncapi/generator",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "publish-packages": "turbo run build && changeset publish"
   },
   "devDependencies": {
     "turbo": "1.13.3"
@@ -24,6 +28,9 @@
     "node": ">=18.12.1"
   },
   "packageManager": "npm@9.5.0",
+  "dependencies": {
+    "@changesets/cli": "^2.26.2"
+  },
   "workspaces": [
     "apps/*",
     "packages/*"

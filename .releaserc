@@ -1,7 +1,7 @@
 ---
 branches:
 - master
-# by default release workflow reacts on push not only to master. 
+# by default release workflow reacts on push not only to master.
 #This is why out of the box sematic release is configured for all these branches
 - name: next-spec
   prerelease: true
@@ -21,4 +21,5 @@ plugins:
 - - "@semantic-release/release-notes-generator"
   - preset: conventionalcommits
 - "@semantic-release/npm"
+  pkgRoot: ./apps/generator
 - "@semantic-release/github"

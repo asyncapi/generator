@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Integration testing generateFromFile() to make sure the result of the generation is not changend comparing to snapshot generate json based api with referenced JSON Schema 1`] = `
+"This is a markdown file for my application.
+App name is: **This is Async API with a schema reference**
+Version v1 running on production mode 
+"
+`;
+
+exports[`Integration testing generateFromFile() to make sure the result of the generation is not changend comparing to snapshot generate using React template 1`] = `
+"This is a markdown file for my application.
+App name is: **Dummy example with all spec features included**
+Version v1 running on production mode 
+"
+`;
+
+exports[`Integration testing generateFromFile() to make sure the result of the generation is not changend comparing to snapshot generated using Nunjucks template 1`] = `
+"This is a markdown file for my application.
+App name is: **Dummy example with all spec features included**
+Version v1 running on production mode"
+`;

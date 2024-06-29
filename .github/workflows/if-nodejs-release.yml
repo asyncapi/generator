@@ -15,15 +15,15 @@ on:
       - next-major-spec
       - beta
       - alpha
+      - next
 
 jobs:
-
   test-nodejs:
     # We just check the message of first commit as there is always just one commit because we squash into one before merging
     # "commits" contains array of objects where one of the properties is commit "message"
     # Release workflow will be skipped if release conventional commits are not used
     if: |
-      startsWith( github.repository, 'asyncapi/' ) && 
+      startsWith( github.repository, 'asyncapi/' ) &&
       (startsWith( github.event.commits[0].message , 'fix:' ) ||
       startsWith( github.event.commits[0].message, 'fix!:' ) ||
       startsWith( github.event.commits[0].message, 'feat:' ) ||
@@ -32,14 +32,17 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        # Using macos-13 instead of latest (macos-14) due to an issue with Puppeteer and such runner.
+        # See: https://github.com/puppeteer/puppeteer/issues/12327 and https://github.com/asyncapi/parser-js/issues/1001
+        os: [ubuntu-latest, macos-13, windows-latest]
     steps:
       - name: Set git to use LF #to once and for all finish neverending fight between Unix and Windows
         run: |
           git config --global core.autocrlf false
           git config --global core.eol lf
+        shell: bash
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Check if Node.js project and has package.json
         id: packagejson
         run: test -e ./package.json && echo "exists=true" >> $GITHUB_OUTPUT || echo "exists=false" >> $GITHUB_OUTPUT
@@ -50,14 +53,18 @@ jobs:
         id: lockversion
       - if: steps.packagejson.outputs.exists == 'true'
         name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: "${{ steps.lockversion.outputs.version }}"
-          cache: 'npm'
-          cache-dependency-path: '**/package-lock.json'
+      - if: steps.lockversion.outputs.version == '18' && matrix.os == 'windows-latest'
+        name: Install npm cli 8
+        shell: bash
+        #npm cli 10 is buggy because of some cache issues
+        run: npm install -g npm@8.19.4
       - if: steps.packagejson.outputs.exists == 'true'
         name: Install dependencies
-        run: npm install
+        shell: bash
+        run: npm ci
       - if: steps.packagejson.outputs.exists == 'true'
         name: Run test
         run: npm test --if-present
@@ -67,7 +74,7 @@ jobs:
         with:
           status: ${{ job.status }}
           fields: repo,action,workflow
-          text: 'Release workflow failed in testing job'
+          text: "Release workflow failed in testing job"
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_CI_FAIL_NOTIFY }}
 
@@ -81,7 +88,7 @@ jobs:
           git config --global core.autocrlf false
           git config --global core.eol lf
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Check if Node.js project and has package.json
         id: packagejson
         run: test -e ./package.json && echo "exists=true" >> $GITHUB_OUTPUT || echo "exists=false" >> $GITHUB_OUTPUT
@@ -92,21 +99,13 @@ jobs:
         id: lockversion
       - if: steps.packagejson.outputs.exists == 'true'
         name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: "${{ steps.lockversion.outputs.version }}"
-          cache: 'npm'
-          cache-dependency-path: '**/package-lock.json'
       - if: steps.packagejson.outputs.exists == 'true'
         name: Install dependencies
-        id: first-installation
+        shell: bash
         run: npm ci
-        continue-on-error: true
-      - if: steps.first-installation.outcome != 'success' && steps.packagejson.outputs.exists == 'true'
-        name: Clear NPM cache and install deps again
-        run: | 
-          npm cache clean --force
-          npm ci
       - if: steps.packagejson.outputs.exists == 'true'
         name: Add plugin for conventional commits for semantic-release
         run: npm install --save-dev conventional-changelog-conventionalcommits@5.0.0
@@ -129,6 +128,6 @@ jobs:
         with:
           status: ${{ job.status }}
           fields: repo,action,workflow
-          text: 'Release workflow failed in release job'
+          text: "Release workflow failed in release job"
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_CI_FAIL_NOTIFY }}

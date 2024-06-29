@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  verdaccio:
+    image: verdaccio/verdaccio:5
+    ports:
+      - '4873:4873'
+    volumes:
+      - './verdaccio:/verdaccio/conf'
+    networks:
+      - mynetwork
+
+  test-project:
+    privileged: true
+    image: "node:${NODE_IMAGE_TAG}"
+    volumes:
+      - ../../:/apptemp
+    command: bash /apptemp/test/test-project/test-entrypoint.sh
+    networks:
+      - mynetwork
+  
+networks:
+  mynetwork:
+    driver: bridge

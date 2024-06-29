@@ -1,4 +1,6 @@
-output
-node_modules
-.github/templates-list-validator/dist
-test/temp
+apps/generator/output/*
+**/node_modules/
+.github/templates-list-validator/dist/*
+apps/generator/test/temp/*
+apps/generator/test/test-templates/react-template/__transpiled/*
+

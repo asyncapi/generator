@@ -1,5 +1,11 @@
 [![AsyncAPI Generator](./assets/readme-banner.png)](https://www.asyncapi.com/tools/generator)
 
+This is a Monorepo managed using [Turborepo](https://turbo.build/) and contains the following package:
+
+1. [Generator-filters](apps/generator-filters):This is a library with generator filters that are used in more than one template. Use these filters to not double your work.
+
+2. [Generator](apps/generator):This is a tool that you can use to generate whatever you want basing on the AsyncAPI specification file as an input.
+
 ![npm](https://img.shields.io/npm/v/@asyncapi/generator?style=for-the-badge) ![npm](https://img.shields.io/npm/dt/@asyncapi/generator?style=for-the-badge)
 
 > :warning: This package doesn't support AsyncAPI 1.x anymore. We recommend to upgrade to the latest AsyncAPI version using the [AsyncAPI converter](https://github.com/asyncapi/converter-js). If you need to convert documents on the fly, you may use the [Node.js](https://github.com/asyncapi/converter-js) or [Go](https://github.com/asyncapi/converter-go) converters.
@@ -26,25 +32,34 @@ There is a large number of templates that are ready to use and are officially su
 <!-- templates list is validated with GitHub Actions do not remove list markers -->
 <!-- TEMPLATES-LIST:START -->
 
-Template Name | Description | Source code
----|---|---
-`@asyncapi/nodejs-template` | Generates Nodejs service that uses Hermes package | [click here](https://github.com/asyncapi/nodejs-template)
-`@asyncapi/nodejs-ws-template` | Generates Nodejs service that supports WebSockets protocol only | [click here](https://github.com/asyncapi/nodejs-ws-template)
-`@asyncapi/java-template` | Generates Java JMS application | [click here](https://github.com/asyncapi/java-template)
-`@asyncapi/java-spring-template` | Generates Java Spring service | [click here](https://github.com/asyncapi/java-spring-template)
-`@asyncapi/java-spring-cloud-stream-template` | Generates Java Spring Cloud Stream service | [click here](https://github.com/asyncapi/java-spring-cloud-stream-template)
-`@asyncapi/python-paho-template` | Generates Python service that uses Paho library | [click here](https://github.com/asyncapi/python-paho-template)
-`@asyncapi/html-template` | Generates HTML documentation site | [click here](https://github.com/asyncapi/html-template)
-`@asyncapi/markdown-template` | Generates documentation in Markdown file | [click here](https://github.com/asyncapi/markdown-template)
-`@asyncapi/ts-nats-template` | Generates TypeScript NATS client | [click here](https://github.com/asyncapi/ts-nats-template/)
-`@asyncapi/go-watermill-template` | Generates Go client using Watermill | [click here](https://github.com/asyncapi/go-watermill-template)
-`@asyncapi/dotnet-nats-template` | Generates .NET C# client using NATS | [click here](https://github.com/asyncapi/dotnet-nats-template)
-`@asyncapi/php-template` | Generates PHP client using RabbitMQ | [click here](https://github.com/asyncapi/php-template)
-`@asyncapi/dotnet-rabbitmq-template` | Generates .NET C# client using RabbitMQ | [click here](https://github.com/asyncapi/dotnet-rabbitmq-template)
+| Template Name                                 | Description                                                     | Source code                                                                 |
+| --------------------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| `@asyncapi/nodejs-template`                   | Generates Nodejs service that uses Hermes package               | [click here](https://github.com/asyncapi/nodejs-template)                   |
+| `@asyncapi/nodejs-ws-template`                | Generates Nodejs service that supports WebSockets protocol only | [click here](https://github.com/asyncapi/nodejs-ws-template)                |
+| `@asyncapi/java-template`                     | Generates Java JMS application                                  | [click here](https://github.com/asyncapi/java-template)                     |
+| `@asyncapi/java-spring-template`              | Generates Java Spring service                                   | [click here](https://github.com/asyncapi/java-spring-template)              |
+| `@asyncapi/java-spring-cloud-stream-template` | Generates Java Spring Cloud Stream service                      | [click here](https://github.com/asyncapi/java-spring-cloud-stream-template) |
+| `@asyncapi/python-paho-template`              | Generates Python service that uses Paho library                 | [click here](https://github.com/asyncapi/python-paho-template)              |
+| `@asyncapi/html-template`                     | Generates HTML documentation site                               | [click here](https://github.com/asyncapi/html-template)                     |
+| `@asyncapi/markdown-template`                 | Generates documentation in Markdown file                        | [click here](https://github.com/asyncapi/markdown-template)                 |
+| `@asyncapi/ts-nats-template`                  | Generates TypeScript NATS client                                | [click here](https://github.com/asyncapi/ts-nats-template/)                 |
+| `@asyncapi/go-watermill-template`             | Generates Go client using Watermill                             | [click here](https://github.com/asyncapi/go-watermill-template)             |
+| `@asyncapi/dotnet-nats-template`              | Generates .NET C# client using NATS                             | [click here](https://github.com/asyncapi/dotnet-nats-template)              |
+| `@asyncapi/php-template`                      | Generates PHP client using RabbitMQ                             | [click here](https://github.com/asyncapi/php-template)                      |
+| `@asyncapi/dotnet-rabbitmq-template`          | Generates .NET C# client using RabbitMQ                         | [click here](https://github.com/asyncapi/dotnet-rabbitmq-template)          |
 
 <!-- TEMPLATES-LIST:END -->
 
 You can find above templates and the ones provided by the community in **[this list](https://github.com/search?q=topic%3Aasyncapi+topic%3Agenerator+topic%3Atemplate)**
+
+# Generator Filters
+
+This is a library with [generator](https://github.com/asyncapi/generator/) filters that are used in more than one template. Use these filters to not double your work.
+
+This library consists of:
+
+- Custom filters. Check out [API docs](docs/api.md) for complete list
+- Lodash-powered filters. For the list of all available filters check [official docs](https://lodash.com/docs/)
 
 ## Contributing
 

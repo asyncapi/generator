@@ -8,7 +8,7 @@
     "docs": "jsdoc2md src/customFilters.js > docs/api.md",
     "lint": "eslint --max-warnings 0 --config .eslintrc .",
     "release": "semantic-release",
-    "lint:fix": "eslint --fix --config .eslintrc .",
+    "lint:fix": "eslint --fix --config ../../.eslintrc  --ignore-path ../../.eslintignore .",
     "generate:assets": "npm run docs",
     "bump:version": "npm --no-git-tag-version --allow-same-version version $VERSION"
   },

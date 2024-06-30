@@ -1,0 +1,62 @@
+# This workflow is centrally managed in https://github.com/asyncapi/.github/
+# Don't make changes to this file in this repo as they will be overwritten with changes made to the same file in above mentioned repo
+
+name: Create help comment
+
+on: 
+    issue_comment:
+        types: 
+            - created
+
+jobs:
+  create_help_comment_pr:
+    if: ${{ github.event.issue.pull_request && contains(github.event.comment.body, '/help') && github.actor != 'asyncapi-bot' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Add comment to PR
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GH_TOKEN }}
+          script: |
+            //Yes to add comment to PR the same endpoint is use that we use to create a comment in issue
+            //For more details http://developer.github.com/v3/issues/comments/
+            //Also proved by this action https://github.com/actions-ecosystem/action-create-comment/blob/main/src/main.ts
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `Hello, @${{ github.actor }}! 👋🏼 
+
+                    I'm 🧞🧞🧞 Genie 🧞🧞🧞 from the magic lamp. Looks like somebody needs a hand!
+        
+                    At the moment the following comments are supported in pull requests:
+        
+                    - \`/please-take-a-look\` or \`/ptal\` - This comment will add a comment to the PR asking for attention from the reviewrs who have not reviewed the PR yet.
+                    - \`/ready-to-merge\` or \`/rtm\` - This comment will trigger automerge of PR in case all required checks are green, approvals in place and do-not-merge label is not added
+                    - \`/do-not-merge\` or \`/dnm\` - This comment will block automerging even if all conditions are met and ready-to-merge label is added
+                    - \`/autoupdate\` or \`/au\` - This comment will add \`autoupdate\` label to the PR and keeps your PR up-to-date to the target branch's future changes. Unless there is a merge conflict or it is a draft PR. (Currently only works for upstream branches.)
+                    - \`/update\` or \`/u\` - This comment will update the PR with the latest changes from the target branch. Unless there is a merge conflict or it is a draft PR. NOTE: this only updates the PR once, so if you need to update again, you need to call the command again.`
+            })
+
+  create_help_comment_issue:
+    if: ${{ !github.event.issue.pull_request && contains(github.event.comment.body, '/help') && github.actor != 'asyncapi-bot' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Add comment to Issue
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GH_TOKEN }}
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `Hello, @${{ github.actor }}! 👋🏼 
+
+              I'm 🧞🧞🧞 Genie 🧞🧞🧞 from the magic lamp. Looks like somebody needs a hand!
+  
+              At the moment the following comments are supported in issues:
+  
+              - \`/good-first-issue {js | ts | java | go | docs | design | ci-cd}\` or \`/gfi {js | ts | java | go | docs | design | ci-cd}\` - label an issue as a \`good first issue\`.
+              example: \`/gfi js\` or \`/good-first-issue ci-cd\``
+            })

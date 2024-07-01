@@ -5,6 +5,7 @@ const Generator = require('../lib/generator');
 const log = require('loglevel');
 const unixify = require('unixify');
 const dummyYAML = fs.readFileSync(path.resolve(__dirname, './docs/dummy.yml'), 'utf8');
+const { configureReact } = require('../lib/renderer/react.js');
 
 const logMessage = require('./../lib/logMessages.js');
 
@@ -12,6 +13,9 @@ jest.mock('../lib/utils');
 jest.mock('../lib/filtersRegistry');
 jest.mock('../lib/hooksRegistry');
 jest.mock('../lib/templateConfigValidator');
+jest.mock('../lib/renderer/react.js', () => ({
+  configureReact: jest.fn(),
+}));
 
 describe('Generator', () => {
   describe('constructor', () => {
@@ -267,6 +271,27 @@ describe('Generator', () => {
     it('fails if input is not a string nor a parsed AsyncAPI document', async () => {
       const gen = new Generator('testTemplate', __dirname);
       expect(() => gen.generate(1)).rejects.toThrow('Parameter "asyncapiDocument" must be a non-empty string or an already parsed AsyncAPI document');
+    });
+
+    it('should skip transpilation if compile is false', async () => {
+      const gen = new Generator('testTemplate', __dirname, { compile: false });
+      console.log("gen1", gen)
+      mockMethods(gen);
+      await gen.generate(asyncApiDocumentMock);
+
+      expect(gen.configureTemplate).toHaveBeenCalled();
+      expect(configureReact).not.toHaveBeenCalled();
+    });
+
+    it('should transpile if compile is true', async () => {
+      const gen = new Generator('testTemplate', __dirname, { compile: true });
+      console.log("gen", gen)
+      console.log("configureReact", configureReact)
+      mockMethods(gen);
+      await gen.generate(asyncApiDocumentMock);
+
+      expect(gen.configureTemplate).toHaveBeenCalled();
+      expect(configureReact).toHaveBeenCalled();
     });
   });
 

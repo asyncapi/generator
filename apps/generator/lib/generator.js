@@ -48,7 +48,7 @@ const DEFAULT_TEMPLATES_DIR = path.resolve(ROOT_DIR, 'node_modules');
 
 const TRANSPILED_TEMPLATE_LOCATION = '__transpiled';
 const TEMPLATE_CONTENT_DIRNAME = 'template';
-const GENERATOR_OPTIONS = ['debug', 'disabledHooks', 'entrypoint', 'forceWrite', 'install', 'noOverwriteGlobs', 'output', 'templateParams', 'mapBaseUrlToFolder', 'url', 'auth', 'token', 'registry'];
+const GENERATOR_OPTIONS = ['debug', 'disabledHooks', 'entrypoint', 'forceWrite', 'install', 'noOverwriteGlobs', 'output', 'templateParams', 'mapBaseUrlToFolder', 'url', 'auth', 'token', 'registry', 'compile'];
 const logMessage = require('./logMessages');
 
 const shouldIgnoreFile = filePath =>
@@ -95,13 +95,15 @@ class Generator {
    * @param {String} [options.registry.token]     Optional parameter to pass npm registry auth token that you can grab from .npmrc file
    */
 
-  constructor(templateName, targetDir, { templateParams = {}, entrypoint, noOverwriteGlobs, disabledHooks, output = 'fs', forceWrite = false, install = false, debug = false, mapBaseUrlToFolder = {}, registry = {}} = {}) {
+  constructor(templateName, targetDir, { templateParams = {}, entrypoint, noOverwriteGlobs, disabledHooks, output = 'fs', forceWrite = false, install = false, debug = false, mapBaseUrlToFolder = {}, registry = {}, compile = false } = {}) {
     const options = arguments[arguments.length - 1];
     this.verifyoptions(options);
     if (!templateName) throw new Error('No template name has been specified.');
     if (!entrypoint && !targetDir) throw new Error('No target directory has been specified.');
     if (!['fs', 'string'].includes(output)) throw new Error(`Invalid output type ${output}. Valid values are 'fs' and 'string'.`);
 
+    /** @type {Boolean} Whether to compile the template or use the cached transpiled version provided by template in '__transpiled' folder. */
+    this.compile = compile;
     /** @type {Object} Npm registry information. */
     this.registry = registry;
     /** @type {String} Name of the template to generate. */
@@ -395,7 +397,7 @@ class Generator {
    * Configure the templates based the desired renderer.
    */
   async configureTemplate() {
-    if (isReactTemplate(this.templateConfig)) {
+    if (isReactTemplate(this.templateConfig) && this.compile) {
       await configureReact(this.templateDir, this.templateContentDir, TRANSPILED_TEMPLATE_LOCATION);
     } else {
       this.nunjucks = configureNunjucks(this.debug, this.templateDir);

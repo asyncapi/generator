@@ -63,6 +63,23 @@ This library consists of:
 
 ## Contributing
 
+To Add a major/minor/patch Type Changes:
+
+1.  Create a new markdown file in the `.changeset` directory. The filename should be descriptive of the change.
+2.  Add the following content to the file in this particular format:
+
+### ---
+
+##### "[package-name-1]": [type] (minor/major/patch)
+
+##### "[package-name-2]": [type]
+
+### ---
+
+##### [Provide a brief description of the changes. For example: Added a new Release Github Flow to the Turborepo. No new features or bugfixes were introduced.]
+
+3. Simply push the changes with your PR.
+
 Read [CONTRIBUTING](CONTRIBUTING.md) guide.
 
 ## Contributors ✨

@@ -105,6 +105,7 @@ jobs:
       - if: steps.packagejson.outputs.exists == 'true'
         name: Install changelog
         shell: bash
+        # This step can be removed once the issue is fixed in the changeset package.
         run: npm install @changesets/changelog-git@0.2.0
       - if: steps.packagejson.outputs.exists == 'true'
         name: Publish to any of NPM, Github, and Docker Hub

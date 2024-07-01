@@ -81,7 +81,7 @@
     "eslint-plugin-jest": "^23.8.2",
     "eslint-plugin-sonarjs": "^0.5.0",
     "eslint-plugin-react": "^7.34.1",
-    "jest": "^25.5.0",
+    "jest": "^27.3.1",
     "jsdoc-to-markdown": "^7.1.1",
     "markdown-toc": "^1.2.0",
     "rimraf": "^3.0.2",

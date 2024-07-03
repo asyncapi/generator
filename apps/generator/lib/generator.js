@@ -194,9 +194,9 @@ class Generator {
    * @return {Promise<void>} A Promise that resolves when the generation is completed.
    */
   async generate(asyncapiDocument, parseOptions = {}) {
-    this.validateAsyncAPIDocument(asyncapiDocument);
+    await this.validateAsyncAPIDocument(asyncapiDocument);
     await this.setupOutput();
-    this.setLogLevel();
+    await this.setLogLevel();
 
     await this.installAndSetupTemplate();
     await this.configureTemplateWorkflow(parseOptions);
@@ -844,15 +844,16 @@ class Generator {
    * @private
    * @param {AsyncAPIDocument} asyncapiDocument AsyncAPI document to pass to the template.
    * @param {String} templateFilePath Path to the input file being rendered.
-   * @param {String} outputPath Path to the resulting rendered file.
+   * @param outputpath
    * @param {Object} [extraTemplateData] Extra data to pass to the template.
+   * @param noOverwriteGlobs
    */
   async renderAndWriteToFile(asyncapiDocument, templateFilePath, outputpath, extraTemplateData) {
     const renderContent = await this.renderFile(asyncapiDocument, templateFilePath, extraTemplateData);
     if (renderContent === undefined) {
       return;
     } else if (isReactTemplate(this.templateConfig)) {
-      await saveRenderedReactContent(renderContent, outputpath);
+      await saveRenderedReactContent(renderContent, outputpath, this.noOverwriteGlobs);
     } else {
       await writeFile(outputpath, renderContent);
     }

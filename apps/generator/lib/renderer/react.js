@@ -1,5 +1,8 @@
 const path = require('path');
 const AsyncReactSDK = require('@asyncapi/generator-react-sdk');
+const minimatch = require('minimatch');
+const logMessage = require('../logMessages.js');
+const log = require('loglevel');
 const {
   writeFile
 } = require('../utils');
@@ -8,7 +11,7 @@ const reactExport = module.exports;
 
 /**
  * Configures React templating system, this handles all the transpilation work.
- * 
+ *
  * @private
  * @param {string} templateLocation located for thetemplate
  * @param {string} templateContentDir where the template content are located
@@ -23,9 +26,9 @@ reactExport.configureReact = async (templateLocation, templateContentDir, transp
 
 /**
  * Renders the template with react and returns the content and meta data for the file.
- * 
+ *
  * @private
- * @param {AsyncAPIDocument} asyncapiDocument 
+ * @param {AsyncAPIDocument} asyncapiDocument
  * @param {string} filePath path to the template file
  * @param {Object} extraTemplateData Extra data to pass to the template.
  * @param {string} templateLocation located for thetemplate
@@ -33,34 +36,35 @@ reactExport.configureReact = async (templateLocation, templateContentDir, transp
  * @param {string} transpiledTemplateLocation folder for the transpiled code
  * @param {Object} templateParams provided template parameters
  * @param {boolean} debug flag
- * @param {string} originalAsyncAPI 
+ * @param {string} originalAsyncAPI
  * @return {Promise<TemplateRenderResult>}
  */
 reactExport.renderReact = async (asyncapiDocument, filePath, extraTemplateData, templateLocation, templateContentDir, transpiledTemplateLocation, templateParams, debug, originalAsyncAPI) => {
   extraTemplateData = extraTemplateData || {};
   filePath = filePath.replace(templateContentDir, path.resolve(templateLocation, transpiledTemplateLocation));
   return await AsyncReactSDK.renderTemplate(
-    filePath, 
+    filePath,
     {
       asyncapi: asyncapiDocument,
       params: templateParams,
       originalAsyncAPI,
       ...extraTemplateData
-    }, 
+    },
     debug
   );
 };
 
 /**
  * Save the single rendered react content based on the meta data available.
- * 
+ *
  * @private
  * @param {TemplateRenderResult} renderedContent the react content rendered
  * @param {String} outputPath Path to the file being rendered.
+ * @param {String[]} noOverwriteGlobs Array of globs to skip overwriting files.
  */
-const saveContentToFile = async (renderedContent, outputPath) => {
+const saveContentToFile = async (renderedContent, outputPath, noOverwriteGlobs = []) => {
   let filePath = outputPath;
-  // Might be the same as in the `fs` package, but is an active choice for our default file permission for any rendered files. 
+  // Might be the same as in the `fs` package, but is an active choice for our default file permission for any rendered files.
   let permissions = 0o666;
   const content = renderedContent.content;
 
@@ -78,21 +82,33 @@ const saveContentToFile = async (renderedContent, outputPath) => {
     }
   }
 
-  await writeFile(filePath, content, {
-    mode: permissions
-  });
+  // get the final file name of the file
+  const finalFileName = path.basename(filePath);
+  // check whether the filename should be ignored based on user's inputs
+  const shouldOverwrite = !noOverwriteGlobs.some(globExp => minimatch(finalFileName, globExp));
+  console.log('globExp: ', noOverwriteGlobs, '\nfinalFilename: ', finalFileName, ' shouldOverwrite: ', shouldOverwrite)
+
+  // Write the file only if it should not be skipped
+  if (shouldOverwrite) {
+    await writeFile(filePath, content, {
+      mode: permissions
+    });
+  } else {
+    console.log(logMessage.skipOverwrite(filePath));
+  }
 };
 
 /**
  * Save the rendered react content based on the meta data available.
- * 
+ *
  * @private
  * @param {TemplateRenderResult[] | TemplateRenderResult} renderedContent the react content rendered
  * @param {String} outputPath Path to the file being rendered.
+ * @param {String[]} noOverwriteGlobs Array of globs to skip overwriting files.
  */
-reactExport.saveRenderedReactContent = async (renderedContent, outputPath) => {
+reactExport.saveRenderedReactContent = async (renderedContent, outputPath, noOverwriteGlobs = []) => {
   if (Array.isArray(renderedContent)) {
-    return Promise.all(renderedContent.map(content => saveContentToFile(content, outputPath)));
+    return Promise.all(renderedContent.map(content => saveContentToFile(content, outputPath, noOverwriteGlobs)));
   }
-  return saveContentToFile(renderedContent, outputPath);
+  return await saveContentToFile(renderedContent, outputPath, noOverwriteGlobs);
 };

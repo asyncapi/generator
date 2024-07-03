@@ -15,7 +15,7 @@ const mainTestResultPath = 'test/temp/integrationTestResult';
 const reactTemplate = 'test/test-templates/react-template';
 const nunjucksTemplate = 'test/test-templates/nunjucks-template';
 const logMessage = require('../lib/logMessages.js');
-const log = require('loglevel');
+// const log = require('loglevel');
 
 describe('Integration testing generateFromFile() to make sure the result of the generation is not changend comparing to snapshot', () => {
   const generateFolderName = () => {

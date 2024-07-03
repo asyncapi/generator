@@ -2,7 +2,7 @@ const path = require('path');
 const AsyncReactSDK = require('@asyncapi/generator-react-sdk');
 const minimatch = require('minimatch');
 const logMessage = require('../logMessages.js');
-const log = require('loglevel');
+// const log = require('loglevel');
 const {
   writeFile
 } = require('../utils');
@@ -86,7 +86,7 @@ const saveContentToFile = async (renderedContent, outputPath, noOverwriteGlobs =
   const finalFileName = path.basename(filePath);
   // check whether the filename should be ignored based on user's inputs
   const shouldOverwrite = !noOverwriteGlobs.some(globExp => minimatch(finalFileName, globExp));
-  console.log('globExp: ', noOverwriteGlobs, '\nfinalFilename: ', finalFileName, ' shouldOverwrite: ', shouldOverwrite)
+  console.log('globExp: ', noOverwriteGlobs, '\nfinalFilename: ', finalFileName, ' shouldOverwrite: ', shouldOverwrite);
 
   // Write the file only if it should not be skipped
   if (shouldOverwrite) {

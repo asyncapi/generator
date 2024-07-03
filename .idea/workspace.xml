@@ -6,11 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="cb157250-1e9a-454c-ac94-070ecd731c6b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/generator/lib/generator.js" beforeDir="false" afterPath="$PROJECT_DIR$/apps/generator/lib/generator.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/generator/lib/logMessages.js" beforeDir="false" afterPath="$PROJECT_DIR$/apps/generator/lib/logMessages.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/generator/lib/renderer/react.js" beforeDir="false" afterPath="$PROJECT_DIR$/apps/generator/lib/renderer/react.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/generator/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/apps/generator/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/generator/test/integration.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/apps/generator/test/integration.test.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,7 +65,7 @@
       <workItem from="1718216875854" duration="4313000" />
       <workItem from="1718556369667" duration="598000" />
       <workItem from="1718648708626" duration="602000" />
-      <workItem from="1719867079181" duration="8510000" />
+      <workItem from="1719867079181" duration="8889000" />
     </task>
     <servers />
   </component>

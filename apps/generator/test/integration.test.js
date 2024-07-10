@@ -4,6 +4,8 @@
 
 const { readFile } = require('fs').promises;
 const path = require('path');
+const { promises: fsPromise } = require('fs');
+const { readFileSync} = require('fs');
 const Generator = require('../lib/generator');
 const dummySpecPath = path.resolve(__dirname, './docs/dummy.yml');
 const refSpecPath = path.resolve(__dirname, './docs/apiwithref.json');
@@ -21,6 +23,7 @@ describe('Integration testing generateFromFile() to make sure the result of the 
 
   jest.setTimeout(60000);
   const testOutputFile = 'test-file.md';
+  const tempOutputFile = 'temp.md';
 
   it('generated using Nunjucks template', async () => {
     const outputDir = generateFolderName();
@@ -54,5 +57,31 @@ describe('Integration testing generateFromFile() to make sure the result of the 
     await generator.generateFromFile(refSpecPath);
     const file = await readFile(path.join(outputDir, testOutputFile), 'utf8');
     expect(file).toMatchSnapshot();
+  });
+
+  it('check if the temp.md file is created with compile option true', async () => {
+    const logSpyDebug = jest.spyOn(console, 'log').mockImplementation(() => {});
+    // log.debug = jest.fn();
+
+    const outputDir = generateFolderName();
+    await fsPromise.mkdir(outputDir, { recursive: true });
+    const testContent = 'Test';
+    // eslint-disable-next-line sonarjs/no-duplicate-string
+    const testFilePath = path.normalize(path.resolve(outputDir, tempOutputFile));
+    await fsPromise.writeFile(testFilePath, testContent);
+    const fileContentBefore = readFileSync(testFilePath, 'utf8');
+    expect(fileContentBefore).toBe(testContent);
+
+    const generator = new Generator(reactTemplate, outputDir, {
+      forceWrite: true,
+      compile: true,
+      debug: true
+    });
+
+    await generator.generateFromFile(dummySpecPath);
+
+    const fileContent = readFileSync(tempFilePath, 'utf8');
+    expect(fileContent).toBe(testContent);
+    logSpyDebug.mockRestore();
   });
 });

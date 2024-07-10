@@ -84,6 +84,7 @@ program
   })
   .option('-d, --disable-hook [hooks...]', 'disable a specific hook type or hooks from given hook type', disableHooksParser)
   .option('--debug', 'enable more specific errors in the console')
+  .option('--compile', 'compile the template files before rendering')
   .option('-i, --install', 'installs the template and its dependencies (defaults to false)')
   .option('-n, --no-overwrite <glob>', 'glob or path of the file(s) to skip when regenerating', noOverwriteParser)
   .option('-o, --output <outputDir>', 'directory where to put the generated files (defaults to current directory)', parseOutput, process.cwd())
@@ -150,6 +151,7 @@ function generate(targetDir) {
         forceWrite: program.forceWrite,
         install: program.install,
         debug: program.debug,
+        compile: program.compile,
         mapBaseUrlToFolder
       });
 

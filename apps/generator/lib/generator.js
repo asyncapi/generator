@@ -88,6 +88,7 @@ class Generator {
    * @param {Boolean} [options.forceWrite=false] Force writing of the generated files to given directory even if it is a git repo with unstaged files or not empty dir. Default is set to false.
    * @param {Boolean} [options.install=false] Install the template and its dependencies, even when the template has already been installed.
    * @param {Boolean} [options.debug=false] Enable more specific errors in the console. At the moment it only shows specific errors about filters. Keep in mind that as a result errors about template are less descriptive.
+   * @param {Boolean} [options.compile=false] Whether to compile the template or use the cached transpiled version provided by template in '__transpiled' folder
    * @param {Object<String, String>} [options.mapBaseUrlToFolder] Optional parameter to map schema references from a base url to a local base folder e.g. url=https://schema.example.com/crm/  folder=./test/docs/ .
    * @param {Object} [options.registry]           Optional parameter with private registry configuration
    * @param {String} [options.registry.url]       Parameter to pass npm registry url

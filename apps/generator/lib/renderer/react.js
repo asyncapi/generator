@@ -3,6 +3,8 @@ const AsyncReactSDK = require('@asyncapi/generator-react-sdk');
 const {
   writeFile
 } = require('../utils');
+const logMessage = require('../logMessages');
+const log = require('loglevel')
 
 const reactExport = module.exports;
 
@@ -17,7 +19,8 @@ const reactExport = module.exports;
  */
 reactExport.configureReact = async (templateLocation, templateContentDir, transpiledTemplateLocation) => {
   const outputDir = path.resolve(templateLocation, `./${transpiledTemplateLocation}`);
-  console.log(`Transpilation of files ${templateContentDir} into ${outputDir} started`)
+  // console.log(`Transpilation of files ${templateContentDir} into ${outputDir} started`)
+  log.debug(logMessage.compileEnabled(templateContentDir, outputDir))
   await AsyncReactSDK.transpileFiles(templateContentDir, outputDir, {
     recursive: true
   });

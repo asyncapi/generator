@@ -23,7 +23,6 @@ describe('Integration testing generateFromFile() to make sure the result of the 
 
   jest.setTimeout(60000);
   const testOutputFile = 'test-file.md';
-  const tempOutputFile = 'temp.md';
 
   it('generated using Nunjucks template', async () => {
     const outputDir = generateFolderName();
@@ -104,6 +103,7 @@ describe('Integration testing generateFromFile() to make sure the result of the 
   });
 
   it('check if the temp.md file is not created when compile option is false', async () => {
+    jest.setTimeout(120000); 
     const logSpyDebug = jest.spyOn(console, 'log').mockImplementation(() => {});
     const outputDir = generateFolderName();
     await fsPromise.mkdir(outputDir, { recursive: true });

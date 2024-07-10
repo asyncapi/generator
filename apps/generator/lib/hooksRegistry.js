@@ -37,12 +37,8 @@ async function registerLocalHooks(hooks, templateDir, hooksDir) {
     walker.on('file', async (root, stats, next) => {
       try {
         const filePath = path.resolve(templateDir, path.resolve(root, stats.name));
-        const isTypescriptFile = filePath.endsWith('.ts');
-
-        // Register ts-node if the current file is a TypeScript file
-        if (isTypescriptFile) {
-          registerTypeScript();
-        }
+        
+        registerTypeScript(filePath);
 
         delete require.cache[require.resolve(filePath)];
         const mod = require(filePath);

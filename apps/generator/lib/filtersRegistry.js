@@ -38,11 +38,8 @@ function registerLocalFilters(nunjucks, templateDir, filtersDir) {
           templateDir,
           path.resolve(root, stats.name)
         );
-        const isTypescriptFile = filePath.endsWith('.ts');
-        // Register ts-node if the current file is a TypeScript file
-        if (isTypescriptFile) {
-          registerTypeScript(filePath);
-        }
+
+        registerTypeScript(filePath);
         // If it's a module constructor, inject dependencies to ensure consistent usage in remote templates in other projects or plain directories.
         delete require.cache[require.resolve(filePath)];
         const mod = require(filePath);

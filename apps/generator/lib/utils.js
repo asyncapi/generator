@@ -149,7 +149,14 @@ utils.registerSourceMap = () => {
  *
  * @private
  */
-utils.registerTypeScript = () => {
+utils.registerTypeScript = (filePath) => {
+
+  const isTypescriptFile = filePath.endsWith('.ts');
+  
+  if (!isTypescriptFile) {
+    return;
+  }
+  
   const { REGISTER_INSTANCE, register } = require('ts-node');
   // if the ts-node has already been registered before, do not register it again.
   // Check the env. TS_NODE_ENV if ts-node started via ts-node-dev package

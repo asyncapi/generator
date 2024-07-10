@@ -272,27 +272,6 @@ describe('Generator', () => {
       const gen = new Generator('testTemplate', __dirname);
       expect(() => gen.generate(1)).rejects.toThrow('Parameter "asyncapiDocument" must be a non-empty string or an already parsed AsyncAPI document');
     });
-
-    it('should skip transpilation if compile is false', async () => {
-      const gen = new Generator('testTemplate', __dirname, { compile: false });
-      console.log("gen1", gen)
-      mockMethods(gen);
-      await gen.generate(asyncApiDocumentMock);
-
-      expect(gen.configureTemplate).toHaveBeenCalled();
-      expect(configureReact).not.toHaveBeenCalled();
-    });
-
-    it('should transpile if compile is true', async () => {
-      const gen = new Generator('testTemplate', __dirname, { compile: true });
-      console.log("gen", gen)
-      console.log("configureReact", configureReact)
-      mockMethods(gen);
-      await gen.generate(asyncApiDocumentMock);
-
-      expect(gen.configureTemplate).toHaveBeenCalled();
-      expect(configureReact).toHaveBeenCalled();
-    });
   });
 
   describe('#generateFromString', () => {

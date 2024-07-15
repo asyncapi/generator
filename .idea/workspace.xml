@@ -6,12 +6,24 @@
   <component name="ChangeListManager">
     <list default="true" id="cb157250-1e9a-454c-ac94-070ecd731c6b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/generator/jest.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/apps/generator/jest.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/generator/lib/generator.js" beforeDir="false" afterPath="$PROJECT_DIR$/apps/generator/lib/generator.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/generator/lib/renderer/react.js" beforeDir="false" afterPath="$PROJECT_DIR$/apps/generator/lib/renderer/react.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/generator/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/apps/generator/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/generator/test/integration.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/apps/generator/test/integration.test.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
   </component>
   <component name="FormatOnSaveOptions">
     <option name="myRunOnSave" value="false" />
@@ -31,23 +43,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "fix-noOverwriteGlobs-1128-monorepo",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "/Users/yuanyuan/workspace/generator/node_modules/typescript/lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;fix-noOverwriteGlobs-1128-monorepo&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/yuanyuan/workspace/generator/node_modules/typescript/lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-WS-241.17890.13" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-WS-241.18034.50" />
       </set>
     </attachedChunks>
   </component>
@@ -64,8 +77,13 @@
       <workItem from="1718199295038" duration="3813000" />
       <workItem from="1718216875854" duration="4313000" />
       <workItem from="1718556369667" duration="598000" />
-      <workItem from="1718648708626" duration="602000" />
-      <workItem from="1719867079181" duration="8889000" />
+      <workItem from="1718648708626" duration="599000" />
+      <workItem from="1719326590386" duration="3426000" />
+      <workItem from="1719337260375" duration="2714000" />
+      <workItem from="1719408764444" duration="5234000" />
+      <workItem from="1720044484419" duration="13982000" />
+      <workItem from="1720538031511" duration="13159000" />
+      <workItem from="1720729371136" duration="605000" />
     </task>
     <servers />
   </component>

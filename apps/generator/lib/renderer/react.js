@@ -2,7 +2,7 @@ const path = require('path');
 const AsyncReactSDK = require('@asyncapi/generator-react-sdk');
 const minimatch = require('minimatch');
 const logMessage = require('../logMessages.js');
-// const log = require('loglevel');
+const log = require('loglevel');
 const {
   writeFile
 } = require('../utils');
@@ -94,7 +94,7 @@ const saveContentToFile = async (renderedContent, outputPath, noOverwriteGlobs =
       mode: permissions
     });
   } else {
-    console.log(logMessage.skipOverwrite(filePath));
+    await log.debug(logMessage.skipOverwrite(filePath));
   }
 };
 

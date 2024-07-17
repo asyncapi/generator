@@ -270,7 +270,7 @@ class Generator {
    * @returns {void}
    */
   setLogLevel() {
-    if (this.debug) log.setLevel("debug");
+    log.setLevel('debug');
   }
 
   /**

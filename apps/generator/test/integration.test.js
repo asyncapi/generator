@@ -14,8 +14,6 @@ const crypto = require('crypto');
 const mainTestResultPath = 'test/temp/integrationTestResult';
 const reactTemplate = 'test/test-templates/react-template';
 const nunjucksTemplate = 'test/test-templates/nunjucks-template';
-const logMessage = require('../lib/logMessages.js');
-const log = require('loglevel');
 
 describe('Integration testing generateFromFile() to make sure the result of the generation is not changend comparing to snapshot', () => {
   const generateFolderName = () => {
@@ -87,10 +85,8 @@ describe('Integration testing generateFromFile() to make sure the result of the 
     // Check if the files have been overwritten
     expect(fileContent).toBe(testContent);
     // Check if the log debug message was printed
-    // expect(logSpyDebug).toHaveBeenCalledWith(logMessage.skipOverwrite(testFilePath));
-    // expect(log.debug).toHaveBeenCalledWith(logMessage.skipOverwrite(testFilePath));
-
-    // Clean up
-    // logSpyDebug.mockRestore();
+    /*TODO:
+       Include log message test in the future to ensure that the log.debug for skipping overwrite is called
+     */
   });
 });

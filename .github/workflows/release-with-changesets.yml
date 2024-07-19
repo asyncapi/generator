@@ -114,7 +114,7 @@ jobs:
         with:
           version: npx -p @changesets/cli changeset version
           commit: version packages
-          title: "chore: version packages"
+          title: "feat: version packages"
           publish: npx -p @changesets/cli changeset publish
           setupGitUser: false
         env:

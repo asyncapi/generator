@@ -17,7 +17,7 @@
     "generator:docker:build": "turbo run docker:build --filter=@asyncapi/generator",
     "generator:lint": "turbo run lint --filter=@asyncapi/generator",
     "generator:lint:tpl:validator": "turbo run lint:tpl:validator --filter=@asyncapi/generator",
-    "generator-filters:test": "turbo run test --filter=@asyncapi/generator-filters"
+    "nunjucks-filters:test": "turbo run test --filter=@asyncapi/generator-filters"
   },
   "devDependencies": {
     "turbo": "1.13.3"

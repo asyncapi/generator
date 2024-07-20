@@ -6,6 +6,7 @@
   "linked": [],
   "access": "public",
   "baseBranch": "master",
+  "ignore": ["@asyncapi/generator-filters"],
   "updateInternalDependencies": "patch",
   "privatePackages": {
     "version": true,

@@ -113,7 +113,7 @@ jobs:
         id: release
         with:
           version: npx -p @changesets/cli changeset version
-          commit: version packages
+          commit: "feat: version packages"
           title: "feat: version packages"
           publish: npx -p @changesets/cli changeset publish
           setupGitUser: false

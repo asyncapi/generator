@@ -2,7 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const xfs = require('fs.extra');
 const { isAsyncFunction } = require('./utils');
-const nunjucksFilters = require("nunjucks-filters");
+const nunjucksFilters = require('nunjucks-filters');
 
 /**
  * Registers all template filters.

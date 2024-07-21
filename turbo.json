@@ -17,7 +17,8 @@
     "docs": {},
     "docker:build": {},
     "lint": {},
-    "lint:tpl:validator": {},
+    "lint:fix":{"cache": false},
+    "lint:tpl:v}alidator": {},
     "test:integration:update":{"cache": false}
   },
   "experimentalUI": true

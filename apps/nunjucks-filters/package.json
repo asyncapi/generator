@@ -1,5 +1,5 @@
 {
-  "name": "@asyncapi/generator-filters",
+  "name": "@asyncapi/nunjucks-filters",
   "version": "2.1.0",
   "description": "Library with Nunjucks filters for templates using AsyncAPI Generator",
   "private": false,

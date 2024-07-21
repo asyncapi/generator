@@ -2,6 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const xfs = require('fs.extra');
 const { isAsyncFunction } = require('./utils');
+const nunjucksFilters = require("nunjucks-filters");
 
 /**
  * Registers all template filters.
@@ -13,6 +14,7 @@ const { isAsyncFunction } = require('./utils');
 module.exports.registerFilters = async (nunjucks, templateConfig, templateDir, filtersDir) => {
   await registerLocalFilters(nunjucks, templateDir, filtersDir);
   registerConfigFilters(nunjucks, templateDir, templateConfig);
+  addFilters(nunjucks, nunjucksFilters);
 };
 
 /**
@@ -40,7 +42,7 @@ function registerLocalFilters(nunjucks, templateDir, filtersDir) {
         const mod = require(filePath);
 
         addFilters(nunjucks, mod);
-        
+
         next();
       } catch (e) {
         reject(e);
@@ -58,14 +60,14 @@ function registerLocalFilters(nunjucks, templateDir, filtersDir) {
 }
 
 /**
-* Registers the additionally configured filters.
-* @private
-* @param {Object} nunjucks Nunjucks environment.
-* @param {String} templateDir Directory where template is located.
-* @param {Object} templateConfig Template configuration.
-*/
+ * Registers the additionally configured filters.
+ * @private
+ * @param {Object} nunjucks Nunjucks environment.
+ * @param {String} templateDir Directory where template is located.
+ * @param {Object} templateConfig Template configuration.
+ */
 async function registerConfigFilters(nunjucks, templateDir, templateConfig) {
-  const confFilters = templateConfig.filters; 
+  const confFilters = templateConfig.filters;
   const DEFAULT_MODULES_DIR = 'node_modules';
   if (!Array.isArray(confFilters)) return;
 
@@ -87,7 +89,7 @@ async function registerConfigFilters(nunjucks, templateDir, templateConfig) {
           filterName = path.resolve(templateDir, '../..', filtersModule);
           mod = require(filterName);
         } catch (error) {
-          //in rare cases, especially in isolated tests, it may happen that installation 
+          //in rare cases, especially in isolated tests, it may happen that installation
           //ends but is not yet fully completed, so initial require of the same path do not work
           //but in next attempt it works
           //we need to keep this workaround until we find a solution
@@ -117,5 +119,5 @@ function addFilters(nunjucks, filters) {
     } else {
       nunjucks.addFilter(key, value);
     }
-  });      
+  });
 }

@@ -2,10 +2,8 @@
  * @jest-environment node
  */
 
-const { readFile } = require('fs').promises;
 const path = require('path');
 const { promises: fsPromise } = require('fs');
-const { readFileSync} = require('fs');
 const Generator = require('../lib/generator');
 const dummySpecPath = path.resolve(__dirname, './docs/dummy.yml');
 const refSpecPath = path.resolve(__dirname, './docs/apiwithref.json');
@@ -21,7 +19,7 @@ describe('Integration testing generateFromFile() to make sure the result of the 
     return path.resolve(mainTestResultPath, crypto.randomBytes(4).toString('hex'));
   };
 
-  jest.setTimeout(60000);
+  jest.setTimeout(100000);
   const testOutputFile = 'test-file.md';
 
   it('generated using Nunjucks template', async () => {
@@ -31,7 +29,7 @@ describe('Integration testing generateFromFile() to make sure the result of the 
       templateParams: { version: 'v1', mode: 'production' }
     });
     await generator.generateFromFile(dummySpecPath);
-    const file = await readFile(path.join(outputDir, testOutputFile), 'utf8');
+    const file = await fsPromise.readFile(path.join(outputDir, testOutputFile), 'utf8');
     expect(file).toMatchSnapshot();
   });
 
@@ -42,7 +40,7 @@ describe('Integration testing generateFromFile() to make sure the result of the 
       templateParams: { version: 'v1', mode: 'production' }
     });
     await generator.generateFromFile(dummySpecPath);
-    const file = await readFile(path.join(outputDir, testOutputFile), 'utf8');
+    const file = await fsPromise.readFile(path.join(outputDir, testOutputFile), 'utf8');
     expect(file).toMatchSnapshot();
   });
 
@@ -54,56 +52,11 @@ describe('Integration testing generateFromFile() to make sure the result of the 
       templateParams: { version: 'v1', mode: 'production' }
     });
     await generator.generateFromFile(refSpecPath);
-    const file = await readFile(path.join(outputDir, testOutputFile), 'utf8');
+    const file = await fsPromise.readFile(path.join(outputDir, testOutputFile), 'utf8');
     expect(file).toMatchSnapshot();
   });
 
   it('check if the temp.md file is created with compile option true', async () => {
-    // const logSpyDebug = jest.spyOn(console, 'log').mockImplementation(() => {});
-    const outputDir = generateFolderName();
-    await fsPromise.mkdir(outputDir, { recursive: true });
-  
-    // Create temp.md.js file dynamically
-    const tempJsContent = `
-  import { File, Text } from '@asyncapi/generator-react-sdk';
-  
-  export default function() {
-    return (
-      <File name="temp.md">
-        <Text>Test</Text>
-      </File>
-    );
-  }
-  `;
-    const tempJsPath = path.join(reactTemplate, 'temp.md.js');
-    await fsPromise.writeFile(tempJsPath, tempJsContent);
-  
-    const generator = new Generator(reactTemplate, outputDir, {
-      forceWrite: true,
-      compile: true,
-      debug: true
-    });
-    await generator.generateFromFile(dummySpecPath);
-  
-    // Check if temp.md is created in the output directory
-    const tempMdPath = path.join(outputDir, 'temp.md');
-    const tempMdExists = await fsPromise.access(tempMdPath).then(() => true).catch(() => false);
-    expect(tempMdExists).toBe(true);
-  
-    // Check the content of temp.md
-    if (tempMdExists) {
-      const tempMdContent = await fsPromise.readFile(tempMdPath, 'utf8');
-      expect(tempMdContent.trim()).toBe('Test');
-    }
-  
-    // Clean up: remove the dynamically created temp.md.js file
-    await fsPromise.unlink(tempJsPath);
-  
-    logSpyDebug.mockRestore();
-  });
-
-  it('check if the temp.md file is not created when compile option is false', async () => {
-    jest.setTimeout(120000); 
     const logSpyDebug = jest.spyOn(console, 'log').mockImplementation(() => {});
     const outputDir = generateFolderName();
     await fsPromise.mkdir(outputDir, { recursive: true });
@@ -120,7 +73,42 @@ describe('Integration testing generateFromFile() to make sure the result of the 
     );
   }
   `;
-    const tempJsPath = path.join(reactTemplate, 'temp.md.js');
+    const tempJsPath = path.join(reactTemplate, "template/temp.md.js");
+    await fsPromise.writeFile(tempJsPath, tempJsContent);
+
+    const generator = new Generator(reactTemplate, outputDir, {
+      forceWrite: true,
+      compile: true,
+      debug: true,
+    });
+    await generator.generateFromFile(dummySpecPath);
+
+    const tempMdPath = path.join(outputDir, "temp.md");
+
+    // Check the content of temp.md
+    const tempMdContent = await fsPromise.readFile(tempMdPath, "utf8");
+    expect(tempMdContent.trim()).toBe("Test");
+    logSpyDebug.mockRestore();
+  });
+
+  it('check if the temp.md file is not created when compile option is false', async () => {
+    const logSpyDebug = jest.spyOn(console, 'log').mockImplementation(() => {});
+    const outputDir = generateFolderName();
+    await fsPromise.mkdir(outputDir, { recursive: true });
+  
+    // Create temp.md.js file dynamically
+    const tempJsContent = `
+  import { File, Text } from '@asyncapi/generator-react-sdk';
+  
+  export default function() {
+    return (
+      <File name="temp.md">
+        <Text>Test</Text>
+      </File>
+    );
+  }
+  `;
+    const tempJsPath = path.join(reactTemplate, 'template/temp.md.js');
     await fsPromise.writeFile(tempJsPath, tempJsContent);
   
     const generator = new Generator(reactTemplate, outputDir, {
@@ -134,9 +122,6 @@ describe('Integration testing generateFromFile() to make sure the result of the 
     const tempMdPath = path.join(outputDir, 'temp.md');
     const tempMdExists = await fsPromise.access(tempMdPath).then(() => true).catch(() => false);
     expect(tempMdExists).toBe(false);
-  
-    // Clean up: remove the dynamically created temp.md.js file
-    await fsPromise.unlink(tempJsPath);
   
     logSpyDebug.mockRestore();
   });

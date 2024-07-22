@@ -15,7 +15,7 @@ module.exports.registerFilters = async (nunjucks, templateConfig, templateDir, f
   await registerLocalFilters(nunjucks, templateDir, filtersDir);
   registerConfigFilters(nunjucks, templateDir, templateConfig);
 
-// Register Nunjucks filters from the 'nunjucks-filters' module without needing to list them explicitly in package.json
+  // Register Nunjucks filters from the 'nunjucks-filters' module without needing to list them explicitly in package.json
   addFilters(nunjucks, nunjucksFilters);
 };
 

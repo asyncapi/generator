@@ -59,7 +59,7 @@ This library contains generator filters that can be reused across multiple templ
 
 This library consists of:
 
-- Custom filters. Check out [API docs](apps/generator/docs/api.md) for complete list
+- Custom filters. Check out [API docs](apps/nunjucks-filters/docs/api.md) for complete list
 - Lodash-powered filters. For the list of all available filters check [official docs](https://lodash.com/docs/)
 
 ## Contributing

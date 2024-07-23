@@ -19,7 +19,7 @@
     "lint": {},
     "lint:fix":{"cache": false},
     "lint:tpl:v}alidator": {},
-    "test:integration:update":{"cache": false}
-  },
-  "experimentalUI": true
+    "test:integration:update":{"cache": false},
+    "changeset": {"cache": false}
+  }
 }

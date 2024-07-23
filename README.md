@@ -69,17 +69,79 @@ To Add a major/minor/patch Type Changes:
 1.  Create a new markdown file in the `.changeset` directory. The filename should be descriptive of the change.
 2.  Add the following content to the file in this particular format:
 
-### ---
+```markdown
+---
+"@package-name-1": [type] (major/minor/patch)
+"@package-name-2": [type]
+---
 
-##### "[package-name-1]": [type] (minor/major/patch)
+[Provide a brief description of the changes. For example: Added a new Release GitHub Flow to the Turborepo. No new features or bugfixes were introduced.]
+```
 
-##### "[package-name-2]": [type]
+#### For Example:
+```markdown
+---
+"@asyncapi/generator": minor
+---
 
-### ---
+Adding new Release Github Flow to the Turborepo.No new features or bugfixes were introduced.
 
-##### [Provide a brief description of the changes. For example: Added a new Release Github Flow to the Turborepo. No new features or bugfixes were introduced.]
+```
 
 3. Simply push the changes with your PR.
+
+
+### Documentation Link 
+For more detailed instructions, you can refer to the official documentation for creating a changeset:
+[Adding a changeset](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md)
+
+
+### Release Flow:
+
+1. **Add a Changeset**:
+   - When you make changes that need to be released, create a markdown file in the `.changeset` directory stating the package name and level of change (major/minor/patch). 
+
+2. **Open a Pull Request**:
+   - Push your changes and open a Pull Request (PR). The changeset file helps communicate the type of changes (major, minor, patch).
+
+3. **CI Processes Changeset**:
+   - During the CI/CD pipeline, the following `changesets/action` step runs:
+
+     ```yaml
+     uses: changesets/action@v1
+     id: release
+     with:
+       version: npx -p @changesets/cli changeset version
+       commit: "feat: version packages"
+       title: "feat: version packages"
+       publish: npx -p @changesets/cli changeset publish
+       setupGitUser: false
+     ```
+
+   - This action reads the markdown files in the `.changeset` folder and creates a PR with the updated version of the package and removes the markdown file. For example:
+
+     Before:
+     ```json
+     "name": "@asyncapi/generator",
+     "version": "2.0.1",
+     ```
+
+     After:
+     ```json
+     "name": "@asyncapi/generator",
+     "version": "3.0.1",
+     ```
+
+   - The new PR will also contain the description from the markdown files.
+
+4. **Merge the Versioning PR**:
+   - Once the versioning PR is created, it should be merged (automatically by the bot in this case).
+
+5. **Release the Package**:
+   - After the PR is merged, the CI/CD pipeline runs again. The `changesets/action` step detects that the PR was created by itself and runs the `publish` command to release the package.
+
+
+
 
 Read [CONTRIBUTING](CONTRIBUTING.md) guide.
 

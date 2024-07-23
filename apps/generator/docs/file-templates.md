@@ -3,10 +3,11 @@ title: "File templates"
 weight: 140
 ---
 
-## Generating files with nun-jucks render engine
+## Generating files with the Nunjucks render engine
 
-> **Note**: This section applies only to the Nunjucks render engine. For information on using the React render engine, refer to the section below.
-It is possible to generate files for each specific object in your AsyncAPI documentation using the Nunjucks render engine. For example, you can specify a filename like `$$channel$$.js` to generate a file for each channel defined in your AsyncAPI. The following file-template names and extra variables in them are available:
+> **Note**: This section applies only to the Nunjucks render engine. For information on using the React render engine, refer to the refer to the [Generating files with the React render engine](#generating-files-with-the-react-render-engine) section below.
+
+It is possible to generate files for each specific object in your AsyncAPI documentation using the Nunjucks render engine. For example, you can specify a filename like `$$channel$$.js` to generate a file for each channel defined in your AsyncAPI. The following file-template names and extra variables are available:
 
    - `$$channel$$`, within the template-file you have access to two variables [`channel`](https://github.com/asyncapi/parser-api/blob/master/docs/api.md#channel) and [`channelName`](https://github.com/asyncapi/parser-api/blob/master/docs/api.md#channels). Where the `channel` contains the current channel being rendered.
    - `$$message$$`, within the template-file you have access to two variables [`message`](https://github.com/asyncapi/parser-api/blob/master/docs/api.md#message) and [`messageName`](https://github.com/asyncapi/parser-api/blob/master/docs/api.md#message). Where `message` contains the current message being rendered.
@@ -28,7 +29,7 @@ Schema name is '{{schemaName}}' and properties are:
 {% endfor %}
 ```
 
-With following AsyncAPI:
+With the following AsyncAPI:
 ```
 components:
   schemas: 
@@ -56,15 +57,15 @@ Schema name is 'people' and properties are:
 - id
 ```
 
-> You can see an example of a file template that uses the Nunjucks render engine [here](https://github.com/asyncapi/template-for-generator-templates/tree/nunjucks/template/schemas)
+> You can see an example of a file template that uses the Nunjucks render engine [here](https://github.com/asyncapi/template-for-generator-templates/tree/nunjucks/template/schemas).
 
-## Generating files with nun-jucks render engine
+## Generating files with the React render engine
 
-The above way of rendering **file templates** only works for the Nunjucks render engines. To use the React render engine, you need to follow a different approach. The React render engine allows for a more generic way to render multiple files by returning an array of `File` components in the rendering component.
+The above method of rendering **file templates** only works for the Nunjucks render engine. To use the React render engine, you need to follow a different approach. The React render engine allows for a more generic way to render multiple files by returning an array of `File` components in the rendering component. This can be particularly useful for complex templates or when you need to generate a large number of files with varying content.
 
 ### Example
 
-The following is a simple hardcoded way to render multiple files using the React render engine:
+The following is a simple hardcoded example of how to render multiple files using the React render engine:
 
 ```tsx
 export default function({ asyncapi }) {
@@ -75,7 +76,7 @@ export default function({ asyncapi }) {
 }
 ```
 
-In real life, to render multiple files, you'll iterate over the array of files as shown in the example below:
+In practice, to render the multiple files, that are generated from the data defined in your AsyncAPI, you'll iterate over the array of schemas and generate a file for each schema as shown in the example below:
 
 ```js
 /*

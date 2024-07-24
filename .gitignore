@@ -14,3 +14,4 @@ coverage
 # Turbo
 .turbo
 
+/.idea

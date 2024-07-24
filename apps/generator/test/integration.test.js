@@ -71,7 +71,7 @@ describe('Integration testing generateFromFile() to make sure the result of the 
     );
   }
   `;
-    const tempJsPath = path.join(reactTemplate, "template/temp.md.js");
+    const tempJsPath = path.join(reactTemplate, 'template/temp.md.js');
     await writeFile(tempJsPath, tempJsContent);
 
     const generator = new Generator(reactTemplate, outputDir, {
@@ -81,11 +81,11 @@ describe('Integration testing generateFromFile() to make sure the result of the 
     });
     await generator.generateFromFile(dummySpecPath);
 
-    const tempMdPath = path.join(outputDir, "temp.md");
+    const tempMdPath = path.join(outputDir, 'temp.md');
 
     // Check the content of temp.md
-    const tempMdContent = await readFile(tempMdPath, "utf8");
-    expect(tempMdContent.trim()).toBe("Test");
+    const tempMdContent = await readFile(tempMdPath, 'utf8');
+    expect(tempMdContent.trim()).toBe('Test');
   });
 
   it('check if the temp.md file is not created when compile option is false', async () => {

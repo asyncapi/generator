@@ -66,6 +66,7 @@ This library consists of:
 
 To Add a major/minor/patch Type Changes:
 
+### Manual
 1.  Create a new markdown file in the `.changeset` directory. The filename should be descriptive of the change.
 2.  Add the following content to the file in this particular format:
 
@@ -86,6 +87,11 @@ To Add a major/minor/patch Type Changes:
 
 Adding new Release Github Flow to the Turborepo.No new features or bugfixes were introduced.
 
+```
+
+### Using CLI
+```cli 
+npx -p @changesets/cli changeset
 ```
 
 3. Simply push the changes with your PR.

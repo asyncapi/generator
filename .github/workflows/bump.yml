@@ -1,10 +1,4 @@
-# This action is centrally managed in https://github.com/asyncapi/.github/
-# Don't make changes to this file in this repo as they will be overwritten with changes made to the same file in above mentioned repo
-
-# Purpose of this action is to update npm package in libraries that use it. It is like dependabot for asyncapi npm modules only. 
-# It runs in a repo after merge of release commit and searches for other packages that use released package. Every found package gets updated with lates version
-
-name: Bump package version in dependent repos - if Node project
+name: Bump package version in dependent repos
 
 on:
   # It cannot run on release event as when release is created then version is not yet bumped in package.json
@@ -32,4 +26,5 @@ jobs:
           committer_username: asyncapi-bot
           committer_email: info@asyncapi.io
           repos_to_ignore: spec,bindings,saunter,server-api
+          packagejson_path: ./apps/generator
           custom_id: "dependency update from asyncapi bot"

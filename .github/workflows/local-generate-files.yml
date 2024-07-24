@@ -1,0 +1,50 @@
+# this workflow runs after releases to generate some files like for example api.md
+name: Autogenerate API files
+
+on: 
+  release:
+    types: 
+      - published
+
+jobs:
+  version_bump:
+    name: Generate assets and bump NodeJS
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          # target branch of release. More info https://docs.github.com/en/rest/reference/repos#releases
+          # in case release is created from release branch then we need to checkout from given branch
+          # if @semantic-release/github is used to publish, the minimum version is 7.2.0 for proper working
+          ref: ${{ github.event.release.target_commitish }}
+      - name: Check package-lock version
+        uses: asyncapi/.github/.github/actions/get-node-version-from-package-lock@master
+        id: lockversion
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "${{ steps.lockversion.outputs.version }}"
+      - name: Install dependencies
+        run: npm ci
+      - name: Assets generation
+        run: npm run generate:assets --if-present
+      - name: Create Pull Request with updated asset files including package.json
+        uses: peter-evans/create-pull-request@38e0b6e68b4c852a5500a94740f0e535e0d7ba54 # use 4.2.4 https://github.com/peter-evans/create-pull-request/releases/tag/v4.2.4
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+          commit-message: 'chore(release): ${{github.event.release.tag_name}}'
+          committer: asyncapi-bot <info@asyncapi.io>
+          author: asyncapi-bot <info@asyncapi.io>
+          title: 'chore: update assets'
+          body: 'Updating assets like for example API.md, but not only, that shoudl be generated and not manually updated'
+          branch: assets-update/${{github.event.release.tag_name}}
+      - if: failure() # Only, on failure, send a message on the 94_bot-failing-ci slack channel
+        name: Report workflow run status to Slack
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          fields: repo,action,workflow
+          text: 'Unable to bump the version in package.json after the release'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_CI_FAIL_NOTIFY }}

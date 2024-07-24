@@ -5,7 +5,6 @@ const Generator = require('../lib/generator');
 const log = require('loglevel');
 const unixify = require('unixify');
 const dummyYAML = fs.readFileSync(path.resolve(__dirname, './docs/dummy.yml'), 'utf8');
-const { configureReact } = require('../lib/renderer/react.js');
 
 const logMessage = require('./../lib/logMessages.js');
 
@@ -13,9 +12,6 @@ jest.mock('../lib/utils');
 jest.mock('../lib/filtersRegistry');
 jest.mock('../lib/hooksRegistry');
 jest.mock('../lib/templateConfigValidator');
-jest.mock('../lib/renderer/react.js', () => ({
-  configureReact: jest.fn(),
-}));
 
 describe('Generator', () => {
   describe('constructor', () => {

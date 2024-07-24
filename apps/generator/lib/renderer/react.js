@@ -19,7 +19,6 @@ const reactExport = module.exports;
  */
 reactExport.configureReact = async (templateLocation, templateContentDir, transpiledTemplateLocation) => {
   const outputDir = path.resolve(templateLocation, `./${transpiledTemplateLocation}`);
-  // console.log(`Transpilation of files ${templateContentDir} into ${outputDir} started`)
   log.debug(logMessage.compileEnabled(templateContentDir, outputDir))
   await AsyncReactSDK.transpileFiles(templateContentDir, outputDir, {
     recursive: true

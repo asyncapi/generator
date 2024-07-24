@@ -150,7 +150,6 @@ utils.registerSourceMap = () => {
  * @private
  */
 utils.registerTypeScript = (filePath) => {
-
   const isTypescriptFile = filePath.endsWith('.ts');
   
   if (!isTypescriptFile) {

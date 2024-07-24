@@ -23,6 +23,7 @@ jobs:
       (startsWith( github.event.commits[0].message , 'fix:' ) ||
       startsWith( github.event.commits[0].message, 'fix!:' ) ||
       startsWith( github.event.commits[0].message, 'feat:' ) ||
+      startsWith( github.event.commits[0].message, 'chore(release):' ) ||
       startsWith( github.event.commits[0].message, 'feat!:' ))
     name: Test NodeJS release on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
@@ -113,8 +114,8 @@ jobs:
         id: release
         with:
           version: npx -p @changesets/cli changeset version
-          commit: "feat: version packages"
-          title: "feat: version packages"
+          commit: "chore(release): version packages"
+          title: "chore(release): version packages"
           publish: npx -p @changesets/cli changeset publish
           setupGitUser: false
         env:

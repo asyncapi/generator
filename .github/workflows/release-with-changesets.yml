@@ -20,7 +20,7 @@ jobs:
     # "commits" contains an array of objects where one of the properties is the commit "message"
     # Release workflow will be skipped if release conventional commits are not used
     if: |
-      startsWith( github.repository, 'asyncapi/' ) &&
+      startsWith( github.repository, 'ayushnau/' ) &&
       (startsWith( github.event.commits[0].message , 'fix:' ) ||
       startsWith( github.event.commits[0].message, 'fix!:' ) ||
       startsWith( github.event.commits[0].message, 'feat:' ) ||

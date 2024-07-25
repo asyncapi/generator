@@ -9,17 +9,16 @@
       "cache": false,
       "persistent": true
     },
-    "test": { "cache": false },
-    "test:unit": {"cache":false},
-    "test:integration": {"cache": false},
-    "test:cli": {},
-    "test:cleanup": {},
-    "docs": {},
-    "docker:build": {},
-    "lint": {},
-    "lint:fix":{"cache": false},
-    "lint:tpl:v}alidator": {},
-    "test:integration:update":{"cache": false},
-    "changeset": {"cache": false}
+  "test": { "cache": false },
+  "test:unit": {"cache":false},
+  "test:integration": {"cache": false},
+  "test:cli": {},
+  "test:cleanup": {},
+  "docs": {},
+  "docker:build": {},
+  "lint": {},
+  "lint:fix":{"cache": false},
+  "lint:tpl:validator": {},
+  "test:integration:update":{"cache": false}
   }
 }

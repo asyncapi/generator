@@ -36,6 +36,7 @@ jobs:
       - name: Build Image
         uses: docker/build-push-action@v4
         with:
+          context: './apps/generator'
           push: true
           load: false
           build-args: |

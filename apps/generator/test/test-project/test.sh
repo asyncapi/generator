@@ -63,7 +63,7 @@ echo "##########
 Running installation in test-project
 ##########"
 npm install
-npm install --install-links ../.. #installing generator without symlink
+npm install ../.. #installing generator without symlink
 
 echo "##########
 Publish test template to local npm-verdaccio

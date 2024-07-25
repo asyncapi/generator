@@ -9,4 +9,4 @@
 cp -r /apptemp /app
 
 # Execute the bash script
-bash /app/test/test-project/test.sh test-project
+bash /app/apps/generator/test/test-project/test.sh test-project

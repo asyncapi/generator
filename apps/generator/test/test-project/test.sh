@@ -7,22 +7,22 @@ Starting standard project test
 ##########"
   # Copy to isolated env
   cp -r /app /testprojectA
-  cd /testprojectA/test/test-project
+  cd /testprojectA/apps/generator/test/test-project
   npm install react-template@0.0.1 # installing old version of template
   npm run test:project:A
   # Copy to isolated env
   cp -r /app /testprojectB
-  cd /testprojectB/test/test-project
+  cd /testprojectB/apps/generator/test/test-project
   npm run test:project:B
   # Copy to isolated env
   cp -r /app /testprojectC
-  cd /testprojectC/test/test-project
+  cd /testprojectC/apps/generator/test/test-project
   npm run test:project:C
   echo "##########
 Starting test of global template installation
 ##########"
   cp -r /app /testprojectglobal
-  cd /testprojectglobal/test/test-project
+  cd /testprojectglobal/apps/generator/test/test-project
   # Installing test template globally before global tests
   npm install -g react-template@0.0.1
   npm run test:global
@@ -35,7 +35,7 @@ Starting registry test
 ##########"
   echo "0.0.0.0 registry.npmjs.org" > /etc/hosts # no access to registry.npmjs.org directly
   cp -r /app /testprojectregistry
-  cd /testprojectregistry/test/test-project
+  cd /testprojectregistry/apps/generator/test/test-project
 
   npm config delete registry #making sure we do not have verdaccio details in config and test really use library arguments
   npm run test:registry:arg
@@ -57,7 +57,7 @@ echo "##########
 Running installation in root
 ##########"
 npm install
-cd test/test-project
+cd apps/generator/test/test-project
 
 echo "##########
 Running installation in test-project

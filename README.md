@@ -98,8 +98,8 @@ npx -p @changesets/cli changeset
 3. Simply push the changes with your PR.
 
 
-### Documentation Link 
-For more detailed instructions, you can refer to the official documentation for creating a changeset:
+> [!TIP]
+> For more detailed instructions, you can refer to the official documentation for creating a changeset:
 [Adding a changeset](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md)
 
 

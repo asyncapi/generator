@@ -12,6 +12,7 @@ on:
       - beta
       - alpha
       - next
+      - localtesting
 
 jobs:
   test-nodejs:

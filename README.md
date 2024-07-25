@@ -67,7 +67,7 @@ This library consists of:
 To release a major/minor/patch:
 
 ### Manual
-1.  Create a new markdown file in the `.changeset` directory. The filename should be descriptive of the change.
+1.  Create a new markdown file in the `.changeset` directory. The filename should indicate what the change is about.
 2.  Add the following content to the file in this particular format:
 
 ```markdown

@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/asyncapi/generator-filters.git"
+    "url": "git+https://github.com/asyncapi/generator.git"
   },
   "keywords": [
     "asyncapi",
@@ -24,12 +24,12 @@
   "author": "Lukasz Gornicki <lpgornicki@gmail.com>",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/asyncapi/generator-filters/issues"
+    "url": "https://github.com/asyncapi/generator/issues"
   },
   "publishConfig": {
     "access": "public"
   },
-  "homepage": "https://github.com/asyncapi/generator-filters#readme",
+  "homepage": "https://github.com/asyncapi/generator#readme",
   "devDependencies": {
     "@asyncapi/parser": "^1.15.1",
     "ava": "^4.3.3",

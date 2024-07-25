@@ -70,14 +70,14 @@ To release a major/minor/patch:
 1.  Create a new markdown file in the `.changeset` directory. The filename should indicate what the change is about.
 2.  Add the following content to the file in this particular format:
 
-```markdown
----
-"@package-name-1": [type] (major/minor/patch)
-"@package-name-2": [type]
----
+    ```markdown
+    ---
+    "@package-name-1": [type] (major/minor/patch)
+    "@package-name-2": [type]
+    ---
 
-[Provide a brief description of the changes. For example: Added a new Release GitHub Flow to the Turborepo. No new features or bugfixes were introduced.]
-```
+    [Provide a brief description of the changes. For example: Added a new Release GitHub Flow to the Turborepo. No new features or bugfixes were introduced.]
+    ```
 
 #### For Example:
 ```markdown

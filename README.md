@@ -64,7 +64,7 @@ This library consists of:
 
 ## Contributing
 
-To Add a major/minor/patch Type Changes:
+To release a major/minor/patch:
 
 ### Manual
 1.  Create a new markdown file in the `.changeset` directory. The filename should be descriptive of the change.

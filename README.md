@@ -79,15 +79,16 @@ To release a major/minor/patch:
     [Provide a brief description of the changes. For example: Added a new Release GitHub Flow to the Turborepo. No new features or bugfixes were introduced.]
     ```
 
-#### For Example:
-```markdown
----
-"@asyncapi/generator": minor
----
+    For Example:
+    
+    ```markdown
+    ---
+    "@asyncapi/generator": minor
+    ---
 
-Adding new Release Github Flow to the Turborepo.No new features or bugfixes were introduced.
+    Adding new Release Github Flow to the Turborepo.No new features or bugfixes were introduced.
 
-```
+    ```
 
 ### Using CLI
 ```cli 

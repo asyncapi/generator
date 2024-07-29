@@ -4,7 +4,7 @@ This is a Monorepo managed using [Turborepo](https://turbo.build/) and contains 
 
 1. [Generator](apps/generator): This is a tool that you can use to generate whatever you want basing on the AsyncAPI specification file as an input.
 
-2. [Generator-filters](apps/nunjucks-filters): This library contains generator filters that can be reused across multiple templates, helping to avoid redundant work. These filters are designed specifically for Nunjucks templates and are included by default with the generator, so there's no need to add them to  dependencies seprately.
+2. [Nunjucks-filters](apps/nunjucks-filters): This library contains generator filters that can be reused across multiple templates, helping to avoid redundant work. These filters are designed specifically for Nunjucks templates and are included by default with the generator, so there's no need to add them to  dependencies seprately.
 
 
 ![npm](https://img.shields.io/npm/v/@asyncapi/generator?style=for-the-badge) ![npm](https://img.shields.io/npm/dt/@asyncapi/generator?style=for-the-badge)
@@ -66,8 +66,19 @@ This library consists of:
 
 To release a major/minor/patch:
 
-### Manual
-1.  Create a new markdown file in the `.changeset` directory. The filename should indicate what the change is about.
+### Conventional Commits:
+
+To maintain a clear git history of commits and easily identify what each commit changed and whether it triggered a release, we use conventional commits. The feat and fix prefixes are particularly important as they are needed to trigger changesets. Using these prefixes ensures that the changes are correctly categorized and the versioning system functions as expected.
+
+For Example:
+```
+feat: add new feature
+```
+    
+#### Manual
+
+1.  Create a new release markdown file in the `.changeset` directory. The filename should indicate what the change is about.
+  
 2.  Add the following content to the file in this particular format:
 
     ```markdown
@@ -86,21 +97,25 @@ To release a major/minor/patch:
     "@asyncapi/generator": minor
     ---
 
-    Adding new Release Github Flow to the Turborepo.No new features or bugfixes were introduced.
+    Adding new Release Github Flow to the Turborepo. No new features or bugfixes were introduced.
 
     ```
 
-### Using CLI
-```cli 
-npx -p @changesets/cli changeset
-```
+3. Include the file in your pull request.
 
-3. Simply push the changes with your PR.
+#### Using CLI
 
+1. Create a new release markdown file using changeset CLI. Below command will trigger an interactive prompt that you can use to specify release type and affected packages.
+    ```cli 
+    npx -p @changesets/cli@2.27.7 changeset
+    ```
+
+2. Include the file in your pull request.
 
 > [!TIP]
 > For more detailed instructions, you can refer to the official documentation for creating a changeset:
 [Adding a changeset](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md)
+
 
 
 ### Release Flow:
@@ -112,7 +127,7 @@ npx -p @changesets/cli changeset
    - Push your changes and open a Pull Request (PR). After the PR is merged the changeset file helps communicate the type of changes (major, minor, patch).
 
 3. **CI Processes Changeset**:
-   - During the CI/CD pipeline, the following `changesets/action` step runs:
+   - After PR is merged, a dedicated GitHub Actions release workflow runs using changeset action,
 
    - This action reads the markdown files in the `.changeset` folder and creates a PR with the updated version of the package and removes the markdown file. For example:
 
@@ -128,21 +143,13 @@ npx -p @changesets/cli changeset
      "version": "3.0.1",
      ```
 
-   - The new PR will also contain the description from the markdown files.
+   - The new PR will also contain the description from the markdown files,
 
-4. **Merge the Versioning and Release Triggering PR**:
-   - Once the versioning and Release Triggering PR is created, it should be merged (automatically by the bot in this case).
+   - AsyncAPI bot automatically merge such release PR.
 
-5. **Release the Package**:
-   - After the PR is merged, the CI/CD pipeline triggers again. The changesets/action step identifies that the PR was created by itself. It then verifies if the current version of the package is greater than the previously released version. If a difference is detected, it executes the publish command to release the updated package.
+4. **Release the Package**:
 
- ### Conventional Commits:
-
-  - To maintain a clear git history of commits and easily identify what each commit changed and whether it triggered a release, we use conventional commits. The feat and fix prefixes are particularly important as they are needed to trigger changesets. Using these prefixes ensures that the changes are correctly categorized and the versioning system functions as expected.
-  For Example:
-    ```
-    feat: Added the Changesets 
-    ```
+   - After the PR is merged, the CI/CD pipeline triggers again. The `changesets/action` step identifies that the PR was created by itself. It then verifies if the current version of the package is greater than the previously released version. If a difference is detected, it executes the publish command to release the updated package.
 
 ## Contributing
 

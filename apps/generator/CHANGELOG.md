@@ -1,5 +1,11 @@
 # @asyncapi/generator
 
+## 2.1.1
+
+### Patch Changes
+
+- 36ee8a8: Fix docker image publishing. Removed package name from version tag for Docker tagging.
+
 ## 2.1.0
 
 ### Minor Changes

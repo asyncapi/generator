@@ -14,7 +14,7 @@ jobs:
         id: version
         run: |
           VERSION=${{github.event.release.tag_name}}
-          VERSION_WITHOUT_V=${VERSION:1}
+          VERSION_WITHOUT_V="${VERSION##*@}"
           echo "value=${VERSION_WITHOUT_V}" >> $GITHUB_OUTPUT
 
       - name: Set Up QEMU

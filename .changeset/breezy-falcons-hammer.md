@@ -2,4 +2,4 @@
 "@asyncapi/generator": patch
 ---
 
-Removed package name from version tag for Docker tagging
+Fix docker image publishing. Removed package name from version tag for Docker tagging.

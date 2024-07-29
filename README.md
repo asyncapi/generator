@@ -1,8 +1,15 @@
 [![AsyncAPI Generator](./assets/readme-banner.png)](https://www.asyncapi.com/tools/generator)
 
+This is a Monorepo managed using [Turborepo](https://turbo.build/) and contains the following package:
+
+1. [Generator](apps/generator): This is a tool that you can use to generate whatever you want basing on the AsyncAPI specification file as an input.
+
+2. [Nunjucks-filters](apps/nunjucks-filters): This library contains generator filters that can be reused across multiple templates, helping to avoid redundant work. These filters are designed specifically for Nunjucks templates and are included by default with the generator, so there's no need to add them to  dependencies seprately.
+
+
 ![npm](https://img.shields.io/npm/v/@asyncapi/generator?style=for-the-badge) ![npm](https://img.shields.io/npm/dt/@asyncapi/generator?style=for-the-badge)
 
-> :warning: This package doesn't support AsyncAPI 1.x anymore. We recommend to upgrade to the latest AsyncAPI version using the [AsyncAPI converter](https://github.com/asyncapi/converter-js). If you need to convert documents on the fly, you may use the [Node.js](https://github.com/asyncapi/converter-js) or [Go](https://github.com/asyncapi/converter-go) converters.
+> warning: This package doesn't support AsyncAPI 1.x anymore. We recommend to upgrade to the latest AsyncAPI version using the [AsyncAPI converter](https://github.com/asyncapi/converter-js) (You can refer to [installation guide](/apps/generator//docs//installation-guide.md)). If you need to convert documents on the fly, you may use the [Node.js](https://github.com/asyncapi/converter-js) or [Go](https://github.com/asyncapi/converter-go) converters.
 
 <!-- toc is generated with GitHub Actions do not remove toc markers -->
 
@@ -26,25 +33,123 @@ There is a large number of templates that are ready to use and are officially su
 <!-- templates list is validated with GitHub Actions do not remove list markers -->
 <!-- TEMPLATES-LIST:START -->
 
-Template Name | Description | Source code
----|---|---
-`@asyncapi/nodejs-template` | Generates Nodejs service that uses Hermes package | [click here](https://github.com/asyncapi/nodejs-template)
-`@asyncapi/nodejs-ws-template` | Generates Nodejs service that supports WebSockets protocol only | [click here](https://github.com/asyncapi/nodejs-ws-template)
-`@asyncapi/java-template` | Generates Java JMS application | [click here](https://github.com/asyncapi/java-template)
-`@asyncapi/java-spring-template` | Generates Java Spring service | [click here](https://github.com/asyncapi/java-spring-template)
-`@asyncapi/java-spring-cloud-stream-template` | Generates Java Spring Cloud Stream service | [click here](https://github.com/asyncapi/java-spring-cloud-stream-template)
-`@asyncapi/python-paho-template` | Generates Python service that uses Paho library | [click here](https://github.com/asyncapi/python-paho-template)
-`@asyncapi/html-template` | Generates HTML documentation site | [click here](https://github.com/asyncapi/html-template)
-`@asyncapi/markdown-template` | Generates documentation in Markdown file | [click here](https://github.com/asyncapi/markdown-template)
-`@asyncapi/ts-nats-template` | Generates TypeScript NATS client | [click here](https://github.com/asyncapi/ts-nats-template/)
-`@asyncapi/go-watermill-template` | Generates Go client using Watermill | [click here](https://github.com/asyncapi/go-watermill-template)
-`@asyncapi/dotnet-nats-template` | Generates .NET C# client using NATS | [click here](https://github.com/asyncapi/dotnet-nats-template)
-`@asyncapi/php-template` | Generates PHP client using RabbitMQ | [click here](https://github.com/asyncapi/php-template)
-`@asyncapi/dotnet-rabbitmq-template` | Generates .NET C# client using RabbitMQ | [click here](https://github.com/asyncapi/dotnet-rabbitmq-template)
+| Template Name                                 | Description                                                     | Source code                                                                 |
+| --------------------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| `@asyncapi/nodejs-template`                   | Generates Nodejs service that uses Hermes package               | [click here](https://github.com/asyncapi/nodejs-template)                   |
+| `@asyncapi/nodejs-ws-template`                | Generates Nodejs service that supports WebSockets protocol only | [click here](https://github.com/asyncapi/nodejs-ws-template)                |
+| `@asyncapi/java-template`                     | Generates Java JMS application                                  | [click here](https://github.com/asyncapi/java-template)                     |
+| `@asyncapi/java-spring-template`              | Generates Java Spring service                                   | [click here](https://github.com/asyncapi/java-spring-template)              |
+| `@asyncapi/java-spring-cloud-stream-template` | Generates Java Spring Cloud Stream service                      | [click here](https://github.com/asyncapi/java-spring-cloud-stream-template) |
+| `@asyncapi/python-paho-template`              | Generates Python service that uses Paho library                 | [click here](https://github.com/asyncapi/python-paho-template)              |
+| `@asyncapi/html-template`                     | Generates HTML documentation site                               | [click here](https://github.com/asyncapi/html-template)                     |
+| `@asyncapi/markdown-template`                 | Generates documentation in Markdown file                        | [click here](https://github.com/asyncapi/markdown-template)                 |
+| `@asyncapi/ts-nats-template`                  | Generates TypeScript NATS client                                | [click here](https://github.com/asyncapi/ts-nats-template/)                 |
+| `@asyncapi/go-watermill-template`             | Generates Go client using Watermill                             | [click here](https://github.com/asyncapi/go-watermill-template)             |
+| `@asyncapi/dotnet-nats-template`              | Generates .NET C# client using NATS                             | [click here](https://github.com/asyncapi/dotnet-nats-template)              |
+| `@asyncapi/php-template`                      | Generates PHP client using RabbitMQ                             | [click here](https://github.com/asyncapi/php-template)                      |
+| `@asyncapi/dotnet-rabbitmq-template`          | Generates .NET C# client using RabbitMQ                         | [click here](https://github.com/asyncapi/dotnet-rabbitmq-template)          |
 
 <!-- TEMPLATES-LIST:END -->
 
 You can find above templates and the ones provided by the community in **[this list](https://github.com/search?q=topic%3Aasyncapi+topic%3Agenerator+topic%3Atemplate)**
+
+# Generator Filters
+
+This library contains generator filters that can be reused across multiple templates, helping to avoid redundant work. These filters are designed specifically for Nunjucks templates and are included by default with the generator, so there's no need to add them to  dependencies seprately.
+
+This library consists of:
+
+- Custom filters. Check out [API docs](apps/nunjucks-filters/docs/api.md) for complete list
+- Lodash-powered filters. For the list of all available filters check [official docs](https://lodash.com/docs/)
+
+## Release Process
+
+To release a major/minor/patch:
+
+### Conventional Commits:
+
+To maintain a clear git history of commits and easily identify what each commit changed and whether it triggered a release, we use conventional commits. The feat and fix prefixes are particularly important as they are needed to trigger changesets. Using these prefixes ensures that the changes are correctly categorized and the versioning system functions as expected.
+
+For Example:
+```
+feat: add new feature
+```
+    
+#### Manual
+
+1.  Create a new release markdown file in the `.changeset` directory. The filename should indicate what the change is about.
+  
+2.  Add the following content to the file in this particular format:
+
+    ```markdown
+    ---
+    "@package-name-1": [type] (major/minor/patch)
+    "@package-name-2": [type]
+    ---
+
+    [Provide a brief description of the changes. For example: Added a new Release GitHub Flow to the Turborepo. No new features or bugfixes were introduced.]
+    ```
+
+    For Example:
+    
+    ```markdown
+    ---
+    "@asyncapi/generator": minor
+    ---
+
+    Adding new Release Github Flow to the Turborepo. No new features or bugfixes were introduced.
+
+    ```
+
+3. Include the file in your pull request.
+
+#### Using CLI
+
+1. Create a new release markdown file using changeset CLI. Below command will trigger an interactive prompt that you can use to specify release type and affected packages.
+    ```cli 
+    npx -p @changesets/cli@2.27.7 changeset
+    ```
+
+2. Include the file in your pull request.
+
+> [!TIP]
+> For more detailed instructions, you can refer to the official documentation for creating a changeset:
+[Adding a changeset](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md)
+
+
+
+### Release Flow:
+
+1. **Add a Changeset**:
+   - When you make changes that need to be released, create a markdown file in the `.changeset` directory stating the package name and level of change (major/minor/patch). 
+
+2. **Open a Pull Request**:
+   - Push your changes and open a Pull Request (PR). After the PR is merged the changeset file helps communicate the type of changes (major, minor, patch).
+
+3. **CI Processes Changeset**:
+   - After PR is merged, a dedicated GitHub Actions release workflow runs using changeset action,
+
+   - This action reads the markdown files in the `.changeset` folder and creates a PR with the updated version of the package and removes the markdown file. For example:
+
+     Before:
+     ```json
+     "name": "@asyncapi/generator",
+     "version": "2.0.1",
+     ```
+
+     After:
+     ```json
+     "name": "@asyncapi/generator",
+     "version": "3.0.1",
+     ```
+
+   - The new PR will also contain the description from the markdown files,
+
+   - AsyncAPI bot automatically merge such release PR.
+
+4. **Release the Package**:
+
+   - After the PR is merged, the CI/CD pipeline triggers again. The `changesets/action` step identifies that the PR was created by itself. It then verifies if the current version of the package is greater than the previously released version. If a difference is detected, it executes the publish command to release the updated package.
 
 ## Contributing
 

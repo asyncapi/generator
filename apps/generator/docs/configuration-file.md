@@ -60,8 +60,8 @@ The `generator` property from `package.json` file must contain a JSON object tha
     "lib/lib/config.js"
   ],
   "generator": "<2.0.0",
-  "filters": [
-    "@asyncapi/generator-filters"
+  "filters":[
+    "my-package-with-filters"
   ],
   "hooks": {
     "@asyncapi/generator-hooks": "hookFunctionName"

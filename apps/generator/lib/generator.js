@@ -7,6 +7,7 @@ const filenamify = require('filenamify');
 const git = require('simple-git');
 const log = require('loglevel');
 const Arborist = require('@npmcli/arborist');
+const pacote = require('pacote');
 const Config = require('@npmcli/config');
 const requireg = require('requireg');
 const npmPath = requireg.resolve('npm').replace('index.js','');
@@ -607,14 +608,15 @@ class Generator {
         saveType: 'prod',
         save: false
       });
+  
+      const manifest = await pacote.manifest(this.templateName);
+      if (!manifest) throw new Error('Unable to resolve the name of the added package. It was most probably not added to node_modules successfully');
 
-      const addResult = arb[Symbol.for('resolvedAdd')];
-      if (!addResult) throw new Error('Unable to resolve the name of the added package. It was most probably not added to node_modules successfully');
-
-      const packageName = addResult[0].name;
+      const packageName = manifest.name;
       const packageVersion = installResult.children.get(packageName).version;
-      const packagePath = installResult.children.get(packageName).path;
 
+      const packagePath = installResult.children.get(packageName).path; 
+  
       if (!isFileSystemPath(this.templateName)) log.debug(logMessage.templateSuccessfullyInstalled(packageName, packagePath));
       if (packageVersion) log.debug(logMessage.templateVersion(packageVersion));
 

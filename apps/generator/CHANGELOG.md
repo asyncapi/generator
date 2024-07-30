@@ -1,5 +1,11 @@
 # @asyncapi/generator
 
+## 2.1.2
+
+### Patch Changes
+
+- a3e93ef: update the git context for the docker versioning.
+
 ## 2.1.1
 
 ### Patch Changes

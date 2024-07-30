@@ -194,9 +194,9 @@ class Generator {
    * @return {Promise<void>} A Promise that resolves when the generation is completed.
    */
   async generate(asyncapiDocument, parseOptions = {}) {
-    this.validateAsyncAPIDocument(asyncapiDocument);
+    await this.validateAsyncAPIDocument(asyncapiDocument);
     await this.setupOutput();
-    this.setLogLevel();
+    await this.setLogLevel();
 
     await this.installAndSetupTemplate();
     await this.configureTemplateWorkflow(parseOptions);
@@ -852,7 +852,7 @@ class Generator {
     if (renderContent === undefined) {
       return;
     } else if (isReactTemplate(this.templateConfig)) {
-      await saveRenderedReactContent(renderContent, outputpath);
+      await saveRenderedReactContent(renderContent, outputpath, this.noOverwriteGlobs);
     } else {
       await writeFile(outputpath, renderContent);
     }

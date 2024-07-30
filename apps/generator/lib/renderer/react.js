@@ -85,7 +85,6 @@ const saveContentToFile = async (renderedContent, outputPath, noOverwriteGlobs =
   const finalFileName = path.basename(filePath);
   // check whether the filename should be ignored based on user's inputs
   const shouldOverwrite = !noOverwriteGlobs.some(globExp => minimatch(finalFileName, globExp));
-  console.log('globExp: ', noOverwriteGlobs, '\nfinalFilename: ', finalFileName, ' shouldOverwrite: ', shouldOverwrite);
 
   // Write the file only if it should not be skipped
   if (shouldOverwrite) {

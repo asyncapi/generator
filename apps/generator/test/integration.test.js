@@ -2,9 +2,7 @@
  * @jest-environment node
  */
 
-const { readFile } = require('fs').promises;
-const { promises: fsPromise } = require('fs');
-const { readFileSync} = require('fs');
+const { mkdir, writeFile, readFile } = require('fs').promises;
 const path = require('path');
 const Generator = require('../lib/generator');
 const dummySpecPath = path.resolve(__dirname, './docs/dummy.yml');
@@ -61,13 +59,13 @@ describe('Integration testing generateFromFile() to make sure the result of the 
   it('should ignore specified files with noOverwriteGlobs', async () => {
     const outputDir = generateFolderName();
     // Manually create a file to test if it's not overwritten
-    await fsPromise.mkdir(outputDir, { recursive: true });
+    await mkdir(outputDir, { recursive: true });
     // Create a variable to store the file content
     const testContent = '<script>const initialContent = "This should not change";</script>';
     // eslint-disable-next-line sonarjs/no-duplicate-string
     const testFilePath = path.normalize(path.resolve(outputDir, testOutputFile));
-    await fsPromise.writeFile(testFilePath, testContent);
-    const fileContentBefore = readFileSync(testFilePath, 'utf8');
+    await writeFile(testFilePath, testContent);
+    const fileContentBefore = await readFile(testFilePath, 'utf8');
     // Check if the file was created
     expect(fileContentBefore).toBe(testContent);
 
@@ -81,7 +79,7 @@ describe('Integration testing generateFromFile() to make sure the result of the 
     await generator.generateFromFile(dummySpecPath);
 
     // Read the file to confirm it was not overwritten
-    const fileContent = readFileSync(testFilePath, 'utf8');
+    const fileContent = await readFile(testFilePath, 'utf8');
     // Check if the files have been overwritten
     expect(fileContent).toBe(testContent);
     // Check if the log debug message was printed

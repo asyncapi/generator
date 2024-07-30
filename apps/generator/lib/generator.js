@@ -194,9 +194,9 @@ class Generator {
    * @return {Promise<void>} A Promise that resolves when the generation is completed.
    */
   async generate(asyncapiDocument, parseOptions = {}) {
-    await this.validateAsyncAPIDocument(asyncapiDocument);
+    this.validateAsyncAPIDocument(asyncapiDocument);
     await this.setupOutput();
-    await this.setLogLevel();
+    this.setLogLevel();
 
     await this.installAndSetupTemplate();
     await this.configureTemplateWorkflow(parseOptions);

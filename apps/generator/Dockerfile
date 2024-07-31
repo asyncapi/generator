@@ -1,6 +1,6 @@
 ARG ASYNCAPI_GENERATOR_VERSION=1.10.9
 
-FROM node:14-alpine
+FROM node:18-alpine
 
 WORKDIR /app
 

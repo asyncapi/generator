@@ -3,7 +3,7 @@
  */
 
 const path = require('path');
-const { readFile, writeFile, access } = require('fs').promises;
+const { readFile, writeFile, access, unlink } = require('fs').promises;
 const Generator = require('../lib/generator');
 const dummySpecPath = path.resolve(__dirname, './docs/dummy.yml');
 const refSpecPath = path.resolve(__dirname, './docs/apiwithref.json');
@@ -21,6 +21,18 @@ describe('Integration testing generateFromFile() to make sure the result of the 
 
   jest.setTimeout(100000);
   const testOutputFile = 'test-file.md';
+
+  const tempJsContent = `
+  import { File, Text } from '@asyncapi/generator-react-sdk';
+  
+  export default function() {
+    return (
+      <File name="temp.md">
+        <Text>Test</Text>
+      </File>
+    );
+  }
+  `;
 
   it('generated using Nunjucks template', async () => {
     const outputDir = generateFolderName();
@@ -60,17 +72,6 @@ describe('Integration testing generateFromFile() to make sure the result of the 
     const outputDir = generateFolderName();
   
     // Create temp.md.js file dynamically
-    const tempJsContent = `
-  import { File, Text } from '@asyncapi/generator-react-sdk';
-  
-  export default function() {
-    return (
-      <File name="temp.md">
-        <Text>Test</Text>
-      </File>
-    );
-  }
-  `;
     const tempJsPath = path.join(reactTemplate, 'template/temp.md.js');
     await writeFile(tempJsPath, tempJsContent);
 
@@ -90,19 +91,13 @@ describe('Integration testing generateFromFile() to make sure the result of the 
 
   it('check if the temp.md file is not created when compile option is false', async () => {
     const outputDir = generateFolderName();
-  
+    
+    // first we need to do cleanup of the react template `__transpiled` folder as from previous test it will have the transpiled files
+    const transpiledPath = path.join(reactTemplate, '__transpiled');
+    await unlink(path.join(transpiledPath, 'temp-file.md.js')).catch(() => {});
+    await unlink(path.join(transpiledPath, 'temp-file.md.js')).catch(() => {});
+
     // Create temp.md.js file dynamically
-    const tempJsContent = `
-  import { File, Text } from '@asyncapi/generator-react-sdk';
-  
-  export default function() {
-    return (
-      <File name="temp.md">
-        <Text>Test</Text>
-      </File>
-    );
-  }
-  `;
     const tempJsPath = path.join(reactTemplate, 'template/temp.md.js');
     await writeFile(tempJsPath, tempJsContent);
   

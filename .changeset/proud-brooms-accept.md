@@ -2,4 +2,4 @@
 "@asyncapi/generator": patch
 ---
 
-update the git context for the docker versioning.
+Updated the method for importing the Nunjucks filter dependency

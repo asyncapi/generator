@@ -1,5 +1,11 @@
 # @asyncapi/generator
 
+## 2.1.3
+
+### Patch Changes
+
+- 93fb8e8: Updated the method for importing the Nunjucks filter dependency
+
 ## 2.1.2
 
 ### Patch Changes

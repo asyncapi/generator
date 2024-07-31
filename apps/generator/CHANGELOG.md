@@ -1,5 +1,11 @@
 # @asyncapi/generator
 
+## 2.2.0
+
+### Minor Changes
+
+- 81dfd0c: Enable `noOverwriteGlobs` option for templates based on react rendering engine.
+
 ## 2.1.3
 
 ### Patch Changes

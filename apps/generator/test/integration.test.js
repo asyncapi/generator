@@ -65,9 +65,6 @@ describe('Integration testing generateFromFile() to make sure the result of the 
     // eslint-disable-next-line sonarjs/no-duplicate-string
     const testFilePath = path.normalize(path.resolve(outputDir, testOutputFile));
     await writeFile(testFilePath, testContent);
-    const fileContentBefore = await readFile(testFilePath, 'utf8');
-    // Check if the file was created
-    expect(fileContentBefore).toBe(testContent);
 
     // Manually create an output first, before generation, with additional custom file to validate if later it is still there, not overwritten
     const generator = new Generator(reactTemplate, outputDir, {

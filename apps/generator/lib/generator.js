@@ -854,7 +854,7 @@ class Generator {
     if (renderContent === undefined) {
       return;
     } else if (isReactTemplate(this.templateConfig)) {
-      await saveRenderedReactContent(renderContent, outputpath);
+      await saveRenderedReactContent(renderContent, outputpath, this.noOverwriteGlobs);
     } else {
       await writeFile(outputpath, renderContent);
     }

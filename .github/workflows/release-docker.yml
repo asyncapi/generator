@@ -26,7 +26,7 @@ jobs:
       - name: login to Docker Hub
         uses: docker/login-action@v2
         with:
-          username: ayushnautiyal706020
+          username: ayush706020
           password: dockerayushnau
 
       # This workflow triggers on GitHub Release, but it may start before the npm package is published.
@@ -51,7 +51,7 @@ jobs:
       - name: Update Docker Hub Readme
         uses: meeDamian/sync-readme@v1.0.6
         with:
-           user: ayushnautiyal706020
+           user: ayush706020
            pass: dockerayushnau
            slug: asyncapi/generator
            readme: ../../README.md

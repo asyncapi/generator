@@ -1,7 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 const xfs = require('fs.extra');
-const { isAsyncFunction } = require('./utils');
+const { isAsyncFunction, registerTypeScript } = require('./utils');
 const nunjucksFilters = require('@asyncapi/nunjucks-filters');
 
 /**

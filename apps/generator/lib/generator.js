@@ -28,7 +28,6 @@ const {
   isReactTemplate,
   isJsFile,
   registerSourceMap,
-  registerTypeScript,
   getTemplateDetails,
   convertCollectionToObject,
 } = require('./utils');
@@ -59,7 +58,6 @@ const shouldIgnoreDir = dirPath =>
   || dirPath.startsWith(`.git${path.sep}`);
 
 registerSourceMap();
-registerTypeScript();
 
 class Generator {
   /**

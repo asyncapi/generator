@@ -14,8 +14,8 @@ services:
     privileged: true
     image: "node:${NODE_IMAGE_TAG}"
     volumes:
-      - ../../:/apptemp
-    command: bash /apptemp/test/test-project/test-entrypoint.sh
+      - ../../../../:/apptemp
+    command: bash /apptemp/apps/generator/test/test-project/test-entrypoint.sh
     networks:
       - mynetwork
   

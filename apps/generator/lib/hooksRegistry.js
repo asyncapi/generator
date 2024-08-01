@@ -1,6 +1,6 @@
 const path = require('path');
 const xfs = require('fs.extra');
-const { exists } = require('./utils');
+const { exists, registerTypeScript } = require('./utils');
 
 /**
  * Registers all template hooks.
@@ -37,6 +37,9 @@ async function registerLocalHooks(hooks, templateDir, hooksDir) {
     walker.on('file', async (root, stats, next) => {
       try {
         const filePath = path.resolve(templateDir, path.resolve(root, stats.name));
+        
+        registerTypeScript(filePath);
+
         delete require.cache[require.resolve(filePath)];
         const mod = require(filePath);
 

@@ -1,7 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 const xfs = require('fs.extra');
-const { isAsyncFunction } = require('./utils');
+const { isAsyncFunction, registerTypeScript } = require('./utils');
 const nunjucksFilters = require('@asyncapi/nunjucks-filters');
 
 /**
@@ -38,7 +38,12 @@ function registerLocalFilters(nunjucks, templateDir, filtersDir) {
 
     walker.on('file', async (root, stats, next) => {
       try {
-        const filePath = path.resolve(templateDir, path.resolve(root, stats.name));
+        const filePath = path.resolve(
+          templateDir,
+          path.resolve(root, stats.name)
+        );
+
+        registerTypeScript(filePath);
         // If it's a module constructor, inject dependencies to ensure consistent usage in remote templates in other projects or plain directories.
         delete require.cache[require.resolve(filePath)];
         const mod = require(filePath);

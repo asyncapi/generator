@@ -1,10 +1,4 @@
-# Documentation
-## Overview
-
 Generator is a tool that you can use to generate whatever you want basing on the AsyncAPI specification file as an input. For more information [read the docs](https://www.asyncapi.com/docs/tools/generator).
-
-Read the docs on [https://www.asyncapi.com/docs/tools/generator](https://www.asyncapi.com/docs/tools/generator). You can still read the docs from here, but some of the links may be broken.
-
 
 There is a large number of templates that are ready to use and are officially supported by the AsyncAPI Initiative.
 

@@ -57,5 +57,5 @@ jobs:
            user: ${{ secrets.DOCKER_USERNAME }}
            pass: ${{ secrets.DOCKER_PASSWORD }}
            slug: asyncapi/generator
-           readme: ./README.md
+           readme: ./apps/generator/README.md
            description: Use your AsyncAPI definition to generate literally anything. Markdown documentation, Node.js code, HTML documentation, anything!

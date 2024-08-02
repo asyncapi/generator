@@ -10,6 +10,9 @@ jobs:
     name: Docker build and push
     runs-on: ubuntu-latest
     steps:
+      - name: Check out the repository
+        uses: actions/checkout@v2
+
       - name: Get version without v character
         id: version
         run: |
@@ -54,5 +57,5 @@ jobs:
            user: ${{ secrets.DOCKER_USERNAME }}
            pass: ${{ secrets.DOCKER_PASSWORD }}
            slug: asyncapi/generator
-           readme: ../../README.md
+           readme: ./README.md
            description: Use your AsyncAPI definition to generate literally anything. Markdown documentation, Node.js code, HTML documentation, anything!

@@ -10,9 +10,6 @@ jobs:
     name: Docker build and push
     runs-on: ubuntu-latest
     steps:
-      - name: Check out the repository
-        uses: actions/checkout@v2
-
       - name: Get version without v character
         id: version
         run: |

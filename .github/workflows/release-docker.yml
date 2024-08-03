@@ -49,7 +49,7 @@ jobs:
           cache-to: type=gha
           
       - name: Check out the repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         
       - name: Update Docker Hub Readme
         uses: meeDamian/sync-readme@v1.0.6

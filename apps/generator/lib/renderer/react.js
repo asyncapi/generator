@@ -6,7 +6,6 @@ const log = require('loglevel');
 const {
   writeFile
 } = require('../utils');
-const logMessage = require('../logMessages');
 const log = require('loglevel');
 
 const reactExport = module.exports;

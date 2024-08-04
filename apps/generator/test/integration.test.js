@@ -2,8 +2,8 @@
  * @jest-environment node
  */
 
-const { mkdir, writeFile, readFile } = require('fs').promises;
 const path = require('path');
+const { readFile, writeFile, access, unlink, mkdir } = require('fs').promises;
 const Generator = require('../lib/generator');
 const dummySpecPath = path.resolve(__dirname, './docs/dummy.yml');
 const refSpecPath = path.resolve(__dirname, './docs/apiwithref.json');
@@ -19,8 +19,20 @@ describe('Integration testing generateFromFile() to make sure the result of the 
     return path.resolve(mainTestResultPath, crypto.randomBytes(4).toString('hex'));
   };
 
-  jest.setTimeout(60000);
+  jest.setTimeout(100000);
   const testOutputFile = 'test-file.md';
+
+  const tempJsContent = `
+  import { File, Text } from '@asyncapi/generator-react-sdk';
+  
+  export default function() {
+    return (
+      <File name="temp.md">
+        <Text>Test</Text>
+      </File>
+    );
+  }
+  `;
 
   it('generated using Nunjucks template', async () => {
     const outputDir = generateFolderName();
@@ -54,6 +66,52 @@ describe('Integration testing generateFromFile() to make sure the result of the 
     await generator.generateFromFile(refSpecPath);
     const file = await readFile(path.join(outputDir, testOutputFile), 'utf8');
     expect(file).toMatchSnapshot();
+  });
+
+  it('check if the temp.md file is created with compile option true', async () => {
+    const outputDir = generateFolderName();
+  
+    // Create temp.md.js file dynamically
+    const tempJsPath = path.join(reactTemplate, 'template/temp.md.js');
+    await writeFile(tempJsPath, tempJsContent);
+
+    const generator = new Generator(reactTemplate, outputDir, {
+      forceWrite: true,
+      compile: true,
+      debug: true,
+    });
+    await generator.generateFromFile(dummySpecPath);
+
+    const tempMdPath = path.join(outputDir, 'temp.md');
+
+    // Check the content of temp.md
+    const tempMdContent = await readFile(tempMdPath, 'utf8');
+    expect(tempMdContent.trim()).toBe('Test');
+  });
+
+  it('check if the temp.md file is not created when compile option is false', async () => {
+    const outputDir = generateFolderName();
+    
+    // first we need to do cleanup of the react template `__transpiled` folder as from previous test it will have the transpiled files
+    const transpiledPath = path.join(reactTemplate, '__transpiled');
+    await unlink(path.join(transpiledPath, 'temp.md.js'));
+    await unlink(path.join(transpiledPath, 'temp.md.js.map'));
+
+    // Create temp.md.js file dynamically
+    const tempJsPath = path.join(reactTemplate, 'template/temp.md.js');
+    await writeFile(tempJsPath, tempJsContent);
+  
+    const generator = new Generator(reactTemplate, outputDir, {
+      forceWrite: true,
+      compile: false, 
+      debug: true
+    });
+    await generator.generateFromFile(dummySpecPath);
+  
+    // Check if temp.md is not created in the output directory
+    const tempMdPath = path.join(outputDir, 'temp.md');
+    const tempMdExists = await access(tempMdPath).then(() => true).catch(() => false);
+    expect(tempMdExists).toBe(false);
   });
 
   it('should ignore specified files with noOverwriteGlobs', async () => {

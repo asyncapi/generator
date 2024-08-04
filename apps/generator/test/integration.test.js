@@ -94,8 +94,8 @@ describe('Integration testing generateFromFile() to make sure the result of the 
     
     // first we need to do cleanup of the react template `__transpiled` folder as from previous test it will have the transpiled files
     const transpiledPath = path.join(reactTemplate, '__transpiled');
-    await unlink(path.join(transpiledPath, 'temp-file.md.js')).catch(() => {});
-    await unlink(path.join(transpiledPath, 'temp-file.md.js.map')).catch(() => {});
+    await unlink(path.join(transpiledPath, 'temp.md.js'));
+    await unlink(path.join(transpiledPath, 'temp.md.js.map'));
 
     // Create temp.md.js file dynamically
     const tempJsPath = path.join(reactTemplate, 'template/temp.md.js');

@@ -6,7 +6,6 @@
   "linked": [],
   "access": "public",
   "baseBranch": "master",
-  "ignore": ["@asyncapi/nunjucks-filters"],
   "updateInternalDependencies": "patch",
   "privatePackages": {
     "version": true,

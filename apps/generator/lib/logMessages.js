@@ -63,5 +63,7 @@ module.exports = {
   templateSuccessfullyInstalled,
   relativeSourceFileNotGenerated,
   conditionalFilesMatched,
-  compileEnabled
+  compileEnabled,
+  compileEnabled,
+  skipOverwrite
 };

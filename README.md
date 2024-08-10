@@ -11,6 +11,9 @@ This is a Monorepo managed using [Turborepo](https://turbo.build/) and contains 
 
 > warning: This package doesn't support AsyncAPI 1.x anymore. We recommend to upgrade to the latest AsyncAPI version using the [AsyncAPI converter](https://github.com/asyncapi/converter-js) (You can refer to [installation guide](/apps/generator//docs//installation-guide.md)). If you need to convert documents on the fly, you may use the [Node.js](https://github.com/asyncapi/converter-js) or [Go](https://github.com/asyncapi/converter-go) converters.
 
+> **Deprecation Notice**: The use of `cli.js` for documentation generation is deprecated and will be removed in future releases. We strongly encourage migrating to the new AsyncAPI CLI. The migration process is straightforward, and you can find the necessary steps in our [migration guide](/apps/generator/docs/deprecate-cli.sj-ag.md). Please ensure that your projects are updated accordingly to avoid any disruptions.
+
+
 <!-- toc is generated with GitHub Actions do not remove toc markers -->
 
 <!-- toc -->

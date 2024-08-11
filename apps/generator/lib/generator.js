@@ -28,7 +28,6 @@ const {
   isReactTemplate,
   isJsFile,
   registerSourceMap,
-  registerTypeScript,
   getTemplateDetails,
   convertCollectionToObject,
 } = require('./utils');
@@ -59,7 +58,6 @@ const shouldIgnoreDir = dirPath =>
   || dirPath.startsWith(`.git${path.sep}`);
 
 registerSourceMap();
-registerTypeScript();
 
 class Generator {
   /**
@@ -854,7 +852,7 @@ class Generator {
     if (renderContent === undefined) {
       return;
     } else if (isReactTemplate(this.templateConfig)) {
-      await saveRenderedReactContent(renderContent, outputpath);
+      await saveRenderedReactContent(renderContent, outputpath, this.noOverwriteGlobs);
     } else {
       await writeFile(outputpath, renderContent);
     }
@@ -933,9 +931,11 @@ class Generator {
   async renderFile(asyncapiDocument, filePath, extraTemplateData = {}) {
     if (isReactTemplate(this.templateConfig)) {
       return await renderReact(asyncapiDocument, filePath, extraTemplateData, this.templateDir, this.templateContentDir, TRANSPILED_TEMPLATE_LOCATION, this.templateParams, this.debug, this.originalAsyncAPI);
+    } else {
+      console.warn('Deprecation Warning: Nunjucks templates are deprecated. Please migrate to React templates.');
+      const templateString = await readFile(filePath, 'utf8');
+      return renderNunjucks(asyncapiDocument, templateString, filePath, extraTemplateData, this.templateParams, this.originalAsyncAPI, this.nunjucks);
     }
-    const templateString = await readFile(filePath, 'utf8');
-    return renderNunjucks(asyncapiDocument, templateString, filePath, extraTemplateData, this.templateParams, this.originalAsyncAPI, this.nunjucks);
   }
 
   /**

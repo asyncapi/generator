@@ -3,7 +3,7 @@
  */
 
 const path = require('path');
-const { readFile, writeFile, access } = require('fs').promises;
+const { readFile, writeFile, access, unlink, mkdir } = require('fs').promises;
 const Generator = require('../lib/generator');
 const dummySpecPath = path.resolve(__dirname, './docs/dummy.yml');
 const refSpecPath = path.resolve(__dirname, './docs/apiwithref.json');
@@ -22,9 +22,21 @@ describe('Integration testing generateFromFile() to make sure the result of the 
   jest.setTimeout(100000);
   const testOutputFile = 'test-file.md';
 
+  const tempJsContent = `
+  import { File, Text } from '@asyncapi/generator-react-sdk';
+  
+  export default function() {
+    return (
+      <File name="temp.md">
+        <Text>Test</Text>
+      </File>
+    );
+  }
+  `;
+
   it('generated using Nunjucks template', async () => {
     const outputDir = generateFolderName();
-    const generator = new Generator(nunjucksTemplate, outputDir, { 
+    const generator = new Generator(nunjucksTemplate, outputDir, {
       forceWrite: true,
       templateParams: { version: 'v1', mode: 'production' }
     });
@@ -35,7 +47,7 @@ describe('Integration testing generateFromFile() to make sure the result of the 
 
   it('generate using React template', async () => {
     const outputDir = generateFolderName();
-    const generator = new Generator(reactTemplate, outputDir, { 
+    const generator = new Generator(reactTemplate, outputDir, {
       forceWrite: true ,
       templateParams: { version: 'v1', mode: 'production' }
     });
@@ -60,17 +72,6 @@ describe('Integration testing generateFromFile() to make sure the result of the 
     const outputDir = generateFolderName();
   
     // Create temp.md.js file dynamically
-    const tempJsContent = `
-  import { File, Text } from '@asyncapi/generator-react-sdk';
-  
-  export default function() {
-    return (
-      <File name="temp.md">
-        <Text>Test</Text>
-      </File>
-    );
-  }
-  `;
     const tempJsPath = path.join(reactTemplate, 'template/temp.md.js');
     await writeFile(tempJsPath, tempJsContent);
 
@@ -90,19 +91,13 @@ describe('Integration testing generateFromFile() to make sure the result of the 
 
   it('check if the temp.md file is not created when compile option is false', async () => {
     const outputDir = generateFolderName();
-  
+    
+    // first we need to do cleanup of the react template `__transpiled` folder as from previous test it will have the transpiled files
+    const transpiledPath = path.join(reactTemplate, '__transpiled');
+    await unlink(path.join(transpiledPath, 'temp.md.js'));
+    await unlink(path.join(transpiledPath, 'temp.md.js.map'));
+
     // Create temp.md.js file dynamically
-    const tempJsContent = `
-  import { File, Text } from '@asyncapi/generator-react-sdk';
-  
-  export default function() {
-    return (
-      <File name="temp.md">
-        <Text>Test</Text>
-      </File>
-    );
-  }
-  `;
     const tempJsPath = path.join(reactTemplate, 'template/temp.md.js');
     await writeFile(tempJsPath, tempJsContent);
   
@@ -117,5 +112,34 @@ describe('Integration testing generateFromFile() to make sure the result of the 
     const tempMdPath = path.join(outputDir, 'temp.md');
     const tempMdExists = await access(tempMdPath).then(() => true).catch(() => false);
     expect(tempMdExists).toBe(false);
+  });
+
+  it('should ignore specified files with noOverwriteGlobs', async () => {
+    const outputDir = generateFolderName();
+    // Manually create a file to test if it's not overwritten
+    await mkdir(outputDir, { recursive: true });
+    // Create a variable to store the file content
+    const testContent = '<script>const initialContent = "This should not change";</script>';
+    // eslint-disable-next-line sonarjs/no-duplicate-string
+    const testFilePath = path.normalize(path.resolve(outputDir, testOutputFile));
+    await writeFile(testFilePath, testContent);
+
+    // Manually create an output first, before generation, with additional custom file to validate if later it is still there, not overwritten
+    const generator = new Generator(reactTemplate, outputDir, {
+      forceWrite: true,
+      noOverwriteGlobs: [`**/${testOutputFile}`],
+      debug: true,
+    });
+
+    await generator.generateFromFile(dummySpecPath);
+
+    // Read the file to confirm it was not overwritten
+    const fileContent = await readFile(testFilePath, 'utf8');
+    // Check if the files have been overwritten
+    expect(fileContent).toBe(testContent);
+    // Check if the log debug message was printed
+    /*TODO:
+       Include log message test in the future to ensure that the log.debug for skipping overwrite is called
+     */
   });
 });

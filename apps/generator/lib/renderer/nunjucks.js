@@ -9,6 +9,7 @@ const nunjucksExport = module.exports;
  * @param {string} templateDir path
  */
 nunjucksExport.configureNunjucks = (debug, templateDir) => {
+  console.warn('Deprecation Warning: Nunjucks support is being phased out. Please migrate to React templates.');
   const config = {};
   if (debug) config.dev = true;
 

@@ -1,4 +1,5 @@
 import React from "react";
+import fs from "fs";
 
 import { render } from "./renderer";
 import { isJsFile } from "../utils";
@@ -47,10 +48,24 @@ function importComponent(filepath: string): Promise<TemplateFunction | undefined
     try {
       // we should import component only in NodeJS
       if (require === undefined) resolve(undefined);
-      // remove from cache imported file
-      delete require.cache[require.resolve(filepath)];
 
-      const component = require(filepath);
+      let componentPath = filepath;
+
+      // Check if the file exists
+      if (!fs.existsSync(componentPath)) {
+        // If transpiled version doesn't exist, try the original version
+        const originalPath = componentPath.replace('__transpiled', 'template');
+        if (fs.existsSync(originalPath)) {
+          componentPath = originalPath;
+        } else {
+          throw new Error(`Neither transpiled nor original template file found: ${filepath}`);
+        }
+      }
+
+      // Remove from cache and require the file
+      delete require.cache[require.resolve(componentPath)];
+      const component = require(componentPath);
+
       if (typeof component === "function") resolve(component);
       if (typeof component.default === "function") resolve(component.default);
       resolve(undefined);

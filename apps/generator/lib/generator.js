@@ -28,7 +28,6 @@ const {
   isReactTemplate,
   isJsFile,
   registerSourceMap,
-  registerTypeScript,
   getTemplateDetails,
   convertCollectionToObject,
 } = require('./utils');
@@ -59,7 +58,6 @@ const shouldIgnoreDir = dirPath =>
   || dirPath.startsWith(`.git${path.sep}`);
 
 registerSourceMap();
-registerTypeScript();
 
 class Generator {
   /**
@@ -852,7 +850,7 @@ class Generator {
     if (renderContent === undefined) {
       return;
     } else if (isReactTemplate(this.templateConfig)) {
-      await saveRenderedReactContent(renderContent, outputpath);
+      await saveRenderedReactContent(renderContent, outputpath, this.noOverwriteGlobs);
     } else {
       await writeFile(outputpath, renderContent);
     }

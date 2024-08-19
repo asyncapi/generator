@@ -63,7 +63,7 @@ Schema name is 'people' and properties are:
 
 The above method of rendering **file templates** only works for the Nunjucks render engine. To use the React render engine, you need to follow a different approach. The React render engine allows for a more generic way to render multiple files by returning an array of `File` components in the rendering component. This can be particularly useful for complex templates or when you need to generate a large number of files with varying content.
 
-### Example
+### Example 1: Rendering hardcoded files
 
 The following is a simple hardcoded example of how to render multiple files using the React render engine:
 
@@ -75,6 +75,8 @@ export default function({ asyncapi }) {
   ]
 }
 ```
+
+### Example 2: Rendering files based on the AsyncAPI Schema
 
 In practice, to render the multiple files, that are generated from the data defined in your AsyncAPI, you'll iterate over the array of schemas and generate a file for each schema as shown in the example below:
 
@@ -96,6 +98,8 @@ export default function({ asyncapi }) {
   });
 }
 ```
+
+### Example 3: Rendering files for each channel
 
 Additionally, you can generate files for each channel defined in your AsyncAPI specification using the React render engine as shown in the example below:
 

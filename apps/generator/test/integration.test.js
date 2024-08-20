@@ -3,7 +3,8 @@
  */
 
 const path = require('path');
-const { readFile, writeFile, access, unlink, mkdir } = require('fs').promises;
+const { readFile, writeFile, access, mkdir } = require('fs').promises;
+const { copy } = require('fs-extra');
 const Generator = require('../lib/generator');
 const dummySpecPath = path.resolve(__dirname, './docs/dummy.yml');
 const refSpecPath = path.resolve(__dirname, './docs/apiwithref.json');
@@ -12,11 +13,20 @@ const crypto = require('crypto');
 const mainTestResultPath = 'test/temp/integrationTestResult';
 const reactTemplate = 'test/test-templates/react-template';
 const nunjucksTemplate = 'test/test-templates/nunjucks-template';
+//temp location where react template is copied for each test that does some mutation on template files
+const copyOfReactTemplate = 'test/temp/reactTemplate';
 
 describe('Integration testing generateFromFile() to make sure the result of the generation is not changend comparing to snapshot', () => {
   const generateFolderName = () => {
     //you always want to generate to new directory to make sure test runs in clear environment
     return path.resolve(mainTestResultPath, crypto.randomBytes(4).toString('hex'));
+  };
+
+  const getCleanReactTemplate = async () => {
+    //for each test new react template is needed in unique location
+    const newReactTemplateLocation = path.resolve(copyOfReactTemplate, crypto.randomBytes(4).toString('hex'));
+    await copy(reactTemplate, newReactTemplateLocation);
+    return newReactTemplateLocation;
   };
 
   jest.setTimeout(100000);
@@ -70,12 +80,14 @@ describe('Integration testing generateFromFile() to make sure the result of the 
 
   it('check if the temp.md file is created with compile option true', async () => {
     const outputDir = generateFolderName();
-  
+    const cleanReactTemplate = await getCleanReactTemplate();
     // Create temp.md.js file dynamically
-    const tempJsPath = path.join(reactTemplate, 'template/temp.md.js');
+
+    const tempJsPath = path.join(cleanReactTemplate, 'template/temp.md.js');
+    // Create temp.md.js file dynamically
     await writeFile(tempJsPath, tempJsContent);
 
-    const generator = new Generator(reactTemplate, outputDir, {
+    const generator = new Generator(cleanReactTemplate, outputDir, {
       forceWrite: true,
       compile: true,
       debug: true,
@@ -91,17 +103,12 @@ describe('Integration testing generateFromFile() to make sure the result of the 
 
   it('check if the temp.md file is not created when compile option is false', async () => {
     const outputDir = generateFolderName();
-    
-    // first we need to do cleanup of the react template `__transpiled` folder as from previous test it will have the transpiled files
-    const transpiledPath = path.join(reactTemplate, '__transpiled');
-    await unlink(path.join(transpiledPath, 'temp.md.js'));
-    await unlink(path.join(transpiledPath, 'temp.md.js.map'));
-
+    const cleanReactTemplate = await getCleanReactTemplate();
     // Create temp.md.js file dynamically
-    const tempJsPath = path.join(reactTemplate, 'template/temp.md.js');
+    const tempJsPath = path.join(cleanReactTemplate, 'template/temp.md.js');
     await writeFile(tempJsPath, tempJsContent);
   
-    const generator = new Generator(reactTemplate, outputDir, {
+    const generator = new Generator(cleanReactTemplate, outputDir, {
       forceWrite: true,
       compile: false, 
       debug: true
@@ -116,6 +123,7 @@ describe('Integration testing generateFromFile() to make sure the result of the 
 
   it('should ignore specified files with noOverwriteGlobs', async () => {
     const outputDir = generateFolderName();
+    const cleanReactTemplate = await getCleanReactTemplate();
     // Manually create a file to test if it's not overwritten
     await mkdir(outputDir, { recursive: true });
     // Create a variable to store the file content
@@ -125,7 +133,7 @@ describe('Integration testing generateFromFile() to make sure the result of the 
     await writeFile(testFilePath, testContent);
 
     // Manually create an output first, before generation, with additional custom file to validate if later it is still there, not overwritten
-    const generator = new Generator(reactTemplate, outputDir, {
+    const generator = new Generator(cleanReactTemplate, outputDir, {
       forceWrite: true,
       noOverwriteGlobs: [`**/${testOutputFile}`],
       debug: true,

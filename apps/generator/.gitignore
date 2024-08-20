@@ -15,6 +15,7 @@ output
 out/
 coverage
 test/temp/integrationTestResult
+test/temp/reactTemplate
 test/test-project/package-lock.json
 test/test-project/verdaccio/storage/
 test/test-project/storage/

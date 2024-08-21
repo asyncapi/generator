@@ -50,17 +50,10 @@ function importComponent(filepath: string): Promise<TemplateFunction | undefined
       if (require === undefined) resolve(undefined);
 
       let componentPath = filepath;
-
-      // Check if the file exists
-      if (!fs.existsSync(componentPath)) {
-        // If transpiled version doesn't exist, try the original version
-        const originalPath = componentPath.replace('__transpiled', 'template');
-        if (fs.existsSync(originalPath)) {
-          componentPath = originalPath;
-        } else {
-          throw new Error(`Neither transpiled nor original template file found: ${filepath}`);
-        }
-      }
+      
+      // Check if the transpiled version of the template file exists and skip if doesn't
+      //It is needed to support case where you have template files, but do not want to use them yet
+      if (!fs.existsSync(componentPath)) resolve(undefined);
 
       // Remove from cache and require the file
       delete require.cache[require.resolve(componentPath)];

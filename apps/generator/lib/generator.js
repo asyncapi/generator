@@ -27,7 +27,6 @@ const {
   fetchSpec,
   isReactTemplate,
   isJsFile,
-  registerSourceMap,
   getTemplateDetails,
   convertCollectionToObject,
 } = require('./utils');
@@ -56,8 +55,6 @@ const shouldIgnoreFile = filePath =>
 const shouldIgnoreDir = dirPath =>
   dirPath === '.git'
   || dirPath.startsWith(`.git${path.sep}`);
-
-registerSourceMap();
 
 class Generator {
   /**

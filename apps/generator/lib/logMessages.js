@@ -64,6 +64,5 @@ module.exports = {
   relativeSourceFileNotGenerated,
   conditionalFilesMatched,
   compileEnabled,
-  compileEnabled,
   skipOverwrite
 };

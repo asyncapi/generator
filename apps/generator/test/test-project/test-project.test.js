@@ -41,7 +41,7 @@ describe('Testing if markdown was generated with proper version of the template'
   it('Test B - generated markdown should contain new content because of explicit fresh installation of different template version (install: true)', async () => {
     const templateVersion = '0.0.2';
 
-    const generator = new Generator(`${templateName}@${templateVersion}`, tempOutputResults, { forceWrite: true, install: true, debug: true, templateParams: { version: 'v1', mode: 'production' } });
+    const generator = new Generator(`${templateName}@${templateVersion}`, tempOutputResults, { compile: true, forceWrite: true, install: true, debug: true, templateParams: { version: 'v1', mode: 'production' } });
     await generator.generateFromFile(dummySpecPath);
     
     const file = await readFile(path.join(tempOutputResults, fileToCheck), 'utf8');

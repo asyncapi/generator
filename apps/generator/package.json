@@ -86,6 +86,7 @@
     "jsdoc-to-markdown": "^7.1.1",
     "markdown-toc": "^1.2.0",
     "rimraf": "^3.0.2",
-    "unixify": "^1.0.0"
+    "unixify": "^1.0.0",
+    "fs-extra": "9.1.0"
   }
 }

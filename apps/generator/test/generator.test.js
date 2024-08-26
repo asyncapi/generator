@@ -40,7 +40,7 @@ describe('Generator', () => {
         templateParams: {
           test: true,
         },
-        compile: true,
+        compile: false,
       });
       expect(gen.templateName).toStrictEqual('testTemplate');
       expect(gen.targetDir).toStrictEqual(__dirname);
@@ -50,7 +50,7 @@ describe('Generator', () => {
       expect(gen.output).toStrictEqual('string');
       expect(gen.forceWrite).toStrictEqual(true);
       expect(gen.install).toStrictEqual(true);
-      expect(gen.compile).toStrictEqual(true);
+      expect(gen.compile).toStrictEqual(false);
       expect(() => gen.templateParams.test).toThrow('Template parameter "test" has not been defined in the package.json file under generator property. Please make sure it\'s listed there before you use it in your template.');
 
       // Mock params on templateConfig so it doesn't fail.

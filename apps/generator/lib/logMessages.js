@@ -46,6 +46,10 @@ function conditionalFilesMatched(relativeSourceFile) {
   return `${relativeSourceFile} was not generated because condition specified for this file in template configuration in conditionalFiles matched.`;
 }
 
+function compileEnabled(dir, output_dir) {
+  return `Transpilation of files ${dir} into ${output_dir} started.`;
+}
+
 module.exports = {
   TEMPLATE_INSTALL_FLAG_MSG,
   TEMPLATE_INSTALL_DISK_MSG,
@@ -59,5 +63,6 @@ module.exports = {
   templateSuccessfullyInstalled,
   relativeSourceFileNotGenerated,
   conditionalFilesMatched,
+  compileEnabled,
   skipOverwrite
 };

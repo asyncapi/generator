@@ -150,7 +150,6 @@ function generate(targetDir) {
         forceWrite: program.forceWrite,
         install: program.install,
         debug: program.debug,
-        compile: program.compile,
         mapBaseUrlToFolder
       });
 

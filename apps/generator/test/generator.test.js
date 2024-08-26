@@ -26,7 +26,7 @@ describe('Generator', () => {
       expect(gen.forceWrite).toStrictEqual(false);
       expect(gen.install).toStrictEqual(false);
       expect(gen.templateParams).toStrictEqual({});
-      expect(gen.compile).toStrictEqual(false);
+      expect(gen.compile).toStrictEqual(true);
     });
 
     it('works with all the params', () => {

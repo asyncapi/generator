@@ -1,5 +1,5 @@
 ---
-"@asyncapi/generator": minor
+"@asyncapi/generator": patch
 ---
 
 Remove `source-map-support` package

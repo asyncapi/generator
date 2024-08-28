@@ -16,6 +16,7 @@ describe('Integration testing generateFromFile() to make sure the template can b
   it('generated using private registory', async () => {
     const generator = new Generator('react-template', tempOutputResults,
       {
+        compile: true,
         debug: true,
         install: true,
         forceWrite: true,
@@ -41,6 +42,7 @@ describe('Integration testing generateFromFile() to make sure the template can b
   it('generated using private registory from npm config', async () => {
     const generator = new Generator('react-template', tempOutputResults,
       {
+        compile: true,
         debug: true,
         install: true,
         forceWrite: true,

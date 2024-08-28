@@ -47,7 +47,7 @@ const DEFAULT_TEMPLATES_DIR = path.resolve(ROOT_DIR, 'node_modules');
 
 const TRANSPILED_TEMPLATE_LOCATION = '__transpiled';
 const TEMPLATE_CONTENT_DIRNAME = 'template';
-const GENERATOR_OPTIONS = ['debug', 'disabledHooks', 'entrypoint', 'forceWrite', 'install', 'noOverwriteGlobs', 'output', 'templateParams', 'mapBaseUrlToFolder', 'url', 'auth', 'token', 'registry'];
+const GENERATOR_OPTIONS = ['debug', 'disabledHooks', 'entrypoint', 'forceWrite', 'install', 'noOverwriteGlobs', 'output', 'templateParams', 'mapBaseUrlToFolder', 'url', 'auth', 'token', 'registry', 'compile'];
 const logMessage = require('./logMessages');
 
 const shouldIgnoreFile = filePath =>
@@ -86,6 +86,7 @@ class Generator {
    * @param {Boolean} [options.forceWrite=false] Force writing of the generated files to given directory even if it is a git repo with unstaged files or not empty dir. Default is set to false.
    * @param {Boolean} [options.install=false] Install the template and its dependencies, even when the template has already been installed.
    * @param {Boolean} [options.debug=false] Enable more specific errors in the console. At the moment it only shows specific errors about filters. Keep in mind that as a result errors about template are less descriptive.
+   * @param {Boolean} [options.compile=true] Whether to compile the template or use the cached transpiled version provided by template in '__transpiled' folder
    * @param {Object<String, String>} [options.mapBaseUrlToFolder] Optional parameter to map schema references from a base url to a local base folder e.g. url=https://schema.example.com/crm/  folder=./test/docs/ .
    * @param {Object} [options.registry]           Optional parameter with private registry configuration
    * @param {String} [options.registry.url]       Parameter to pass npm registry url
@@ -93,13 +94,14 @@ class Generator {
    * @param {String} [options.registry.token]     Optional parameter to pass npm registry auth token that you can grab from .npmrc file
    */
 
-  constructor(templateName, targetDir, { templateParams = {}, entrypoint, noOverwriteGlobs, disabledHooks, output = 'fs', forceWrite = false, install = false, debug = false, mapBaseUrlToFolder = {}, registry = {}} = {}) {
+  constructor(templateName, targetDir, { templateParams = {}, entrypoint, noOverwriteGlobs, disabledHooks, output = 'fs', forceWrite = false, install = false, debug = false, mapBaseUrlToFolder = {}, registry = {}, compile = true } = {}) {
     const options = arguments[arguments.length - 1];
     this.verifyoptions(options);
     if (!templateName) throw new Error('No template name has been specified.');
     if (!entrypoint && !targetDir) throw new Error('No target directory has been specified.');
     if (!['fs', 'string'].includes(output)) throw new Error(`Invalid output type ${output}. Valid values are 'fs' and 'string'.`);
-
+    /** @type {Boolean} Whether to compile the template or use the cached transpiled version provided by template in '__transpiled' folder. */
+    this.compile = compile;
     /** @type {Object} Npm registry information. */
     this.registry = registry;
     /** @type {String} Name of the template to generate. */
@@ -393,7 +395,7 @@ class Generator {
    * Configure the templates based the desired renderer.
    */
   async configureTemplate() {
-    if (isReactTemplate(this.templateConfig)) {
+    if (isReactTemplate(this.templateConfig) && this.compile) {
       await configureReact(this.templateDir, this.templateContentDir, TRANSPILED_TEMPLATE_LOCATION);
     } else {
       this.nunjucks = configureNunjucks(this.debug, this.templateDir);

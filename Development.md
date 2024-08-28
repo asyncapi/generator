@@ -1,8 +1,8 @@
-# Development Guide
+# Development guide
 
 This guide will help you set up the `generator` locally, run tests, and use Docker for isolated testing.
 
-## Getting Started
+## Getting started
 
 1. Clone the repository:
 
@@ -17,9 +17,9 @@ cd generator
 npm install
 ```
 
-## Running Tests
+## Running tests
 
-### Local Testing
+### Local testing
 
 To run all tests locally:
 
@@ -27,7 +27,7 @@ To run all tests locally:
 - Integration tests: `npm run generator:test:integration`
 - CLI tests: `npm run generator:test:cli`
 
-### Adding Tests
+### Adding tests
 
 1. Create new test files in the appropriate directory under `test/`:
 
@@ -35,7 +35,7 @@ To run all tests locally:
 
 3. Run your new tests using the commands mentioned above.
 
-## Docker Isolated Testing
+## Docker isolated testing
 
 To run tests in an isolated Docker environment:
 
@@ -52,7 +52,7 @@ npm test
 "
 ```
 
-This command does the following:
+This command above does the following:
 - Mounts the current directory to `/app` in the container
 - Copies the project to a temporary directory
 - Installs dependencies
@@ -60,7 +60,7 @@ This command does the following:
 
 Note: This approach ensures a clean environment for each test run by removing any existing `node_modules`.
 
-## Additional Commands
+## Additional commands
 
 - Lint the code: `npm run lint`
 - Generate documentation: `npm run docs`

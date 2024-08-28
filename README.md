@@ -153,6 +153,8 @@ feat: add new feature
 
 ## Contributing
 
+For developement setup you can follow the detailed guide in [Developement guide](Development.md)
+
 Read [CONTRIBUTING](CONTRIBUTING.md) guide.
 
 ## Contributors ✨

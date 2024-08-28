@@ -101,31 +101,30 @@ export default function({ asyncapi }) {
 
 ### Example 3: Rendering files for each channel
 
-Additionally, you can generate files for each channel defined in your AsyncAPI specification using the React render engine as shown in the example below:
+Additionally, you can generate multiple files for each channel defined in your AsyncAPI specification using the React render engine as shown in the example below:
 
 ```js
-import { File } from '@asyncapi/generator-react-sdk';
+import { File, Text } from "@asyncapi/generator-react-sdk";
 
-export default function({ asyncapi }) {
+export default function ({ asyncapi }) {
   const files = [];
 
   // Generate files for channels
-  asyncapi.channels().forEach((channel, channelName) => {
+  asyncapi.channels().forEach((channel) => {
+    const channelName = channel.id();
+
     files.push(
-      <File name={`channels/${channelName}.md`}>
-        # Channel: {channelName}
-
-        Description: {channel.description() || 'No description provided'}
-
-        ## Operations
-        {channel.publish() && <div>Publish: {channel.publish().summary()}</div>}
-        {channel.subscribe() && <div>Subscribe: {channel.subscribe().summary()}</div>}
+      <File name={`${channelName}.md`}>
+        <Text newLines={2}># Channel: {channelName}</Text>
+        <Text>
+          {channel.hasDescription() && `${channel.description()}`}
+        </Text>
       </File>
     );
   });
-
   return files;
 }
 ```
+The code snippet above uses the `Text` component to write file content to the `.md` markdown file. The `newline` property is used to ensure that the content isn't all rendered in one line in the markdown file. In summary, the code snippet above is a practical guide on generating properly formatted multiline Markdown files for each channel in an AsyncAPI document.
 
 > You can see an example of a file template that uses the React render engine [here](https://github.com/asyncapi/template-for-generator-templates/blob/master/template/schemas/schema.js).

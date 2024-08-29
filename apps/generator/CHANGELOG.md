@@ -1,5 +1,11 @@
 # @asyncapi/generator
 
+## 2.4.1
+
+### Patch Changes
+
+- 3a372c4: Removed the source-map-support package from the AsyncAPI Generator, as it is no longer required for version 2, which now supports Node.js version 18.12.0 and above.
+
 ## 2.4.0
 
 ### Minor Changes

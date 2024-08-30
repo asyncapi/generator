@@ -68,6 +68,8 @@ The above method of rendering **file templates** only works for the Nunjucks ren
 The following is a simple hardcoded example of how to render multiple files using the React render engine:
 
 ```tsx
+import { File} from "@asyncapi/generator-react-sdk";
+
 export default function({ asyncapi }) {
   return [
     <File name={`file1.html`}>Content</File>,
@@ -81,14 +83,17 @@ export default function({ asyncapi }) {
 In practice, to render the multiple files, that are generated from the data defined in your AsyncAPI, you'll iterate over the array of schemas and generate a file for each schema as shown in the example below:
 
 ```js
+import { File} from "@asyncapi/generator-react-sdk";
+
 /*
  * To render multiple files, it is enough to return an array of `File` components in the rendering component, like in following example.
  */
 export default function({ asyncapi }) {
   const schemas = asyncapi.allSchemas();
+  const files = [];
   // schemas is an instance of the Map
-  return Array.from(schemas).map(([schemaName, schema]) => {
-    return (
+  schemas.forEach((schema, schemaName) => {
+    files.push(
       // We return a react file component and each time we do it, the name of the generated file will be a schema name
       <File name={`${schemaName}.js`}>
         // Content of the file will be a single schema definition
@@ -96,6 +101,7 @@ export default function({ asyncapi }) {
       </File>
     );
   });
+  return files;
 }
 ```
 
@@ -105,6 +111,7 @@ Additionally, you can generate multiple files for each channel defined in your A
 
 ```js
 import { File, Text } from "@asyncapi/generator-react-sdk";
+
 
 export default function ({ asyncapi }) {
   const files = [];

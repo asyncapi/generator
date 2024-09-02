@@ -92,12 +92,13 @@ export default function({ asyncapi }) {
   const schemas = asyncapi.allSchemas();
   const files = [];
   // schemas is an instance of the Map
-  schemas.forEach((schema, schemaName) => {
+  schemas.forEach((schema) => {
+    
     files.push(
       // We return a react file component and each time we do it, the name of the generated file will be a schema name
-      <File name={`${schemaName}.js`}>
-        // Content of the file will be a single schema definition
-        {schema}
+      // Content of the file will be a variable representing schema
+      <File name={`${schema.id()}.js`}>
+        const { schema.id() } = { JSON.stringify(schema._json, null, 2) }
       </File>
     );
   });

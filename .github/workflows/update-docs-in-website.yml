@@ -37,10 +37,10 @@ jobs:
         run: |
           rm -r ./markdown/docs/tools/generator
           mkdir -p ./markdown/docs/tools/generator
-          rm ./apps/generator/docs/README.md
-          rm -r ./apps/generator/docs/jsdoc2md-handlebars
+          rm ../generator/apps/generator/docs/README.md
+          rm -r ../generator/apps/generator/docs/jsdoc2md-handlebars
           printf "%s\ntitle: Generator\nweight: 3\n%s" "---" "---"> ../generator/docs/_section.md
-          mv ./apps/generator/docs/*.md ./markdown/docs/tools/generator
+          mv ../generator/apps/generator/docs/*.md ./markdown/docs/tools/generator
       - name: Commit and push
         working-directory: ./website
         run: |

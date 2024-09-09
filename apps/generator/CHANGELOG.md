@@ -1,5 +1,17 @@
 # @asyncapi/generator
 
+## 2.4.1
+
+### Patch Changes
+
+- 3a372c4: Removed the source-map-support package from the AsyncAPI Generator, as it is no longer required for version 2, which now supports Node.js version 18.12.0 and above.
+
+## 2.4.0
+
+### Minor Changes
+
+- 46114d8: Add `compile` option to enable rerun of transpilation of templates build with react engine. It is set to `true` by default. In future major releases it will be set to `false` and we will explain how to publish template to include transpilation files by default. Transpiled files are already included in [`html-template`](https://github.com/asyncapi/html-template/pull/575). It means that you can run generator for `html-template` (it's latest version) with `compile=false` and this will improve the speed of HTML generation for you.
+
 ## 2.3.0
 
 ### Minor Changes

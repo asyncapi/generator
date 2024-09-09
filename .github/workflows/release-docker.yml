@@ -47,11 +47,15 @@ jobs:
           platforms: linux/amd64,linux/arm64
           cache-from: type=gha
           cache-to: type=gha
-
+          
+      - name: Check out the repository
+        uses: actions/checkout@v4
+        
       - name: Update Docker Hub Readme
         uses: meeDamian/sync-readme@v1.0.6
         with:
            user: ${{ secrets.DOCKER_USERNAME }}
            pass: ${{ secrets.DOCKER_PASSWORD }}
            slug: asyncapi/generator
+           readme: ./apps/generator/README.md
            description: Use your AsyncAPI definition to generate literally anything. Markdown documentation, Node.js code, HTML documentation, anything!

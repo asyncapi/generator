@@ -6,6 +6,7 @@ on:
       - 'master'
     paths:
       - 'apps/generator/docs/*.md'
+      - '.github/workflows/update-docs-in-website.yml'
 
 jobs:
   Make-PR:

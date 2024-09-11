@@ -1,0 +1,28 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "commitType": "docs",
+  "commitConvention": "angular",
+  "contributors": [
+    {
+      "login": "Julusian",
+      "name": "Julian Waller",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1327476?v=4",
+      "profile": "https://github.com/Julusian",
+      "contributions": [
+        "bug",
+        "test",
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "skipCi": true,
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "projectName": "generator-react-sdk",
+  "projectOwner": "asyncapi"
+}

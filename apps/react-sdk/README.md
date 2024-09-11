@@ -1,4 +1,7 @@
 [![AsyncAPI React SDK](./assets/readme-banner.png)](https://www.asyncapi.com)
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 AsyncAPI React SDK is a set of components/functions to use React as render engine in the [Generator](https://github.com/asyncapi/generator).
 
@@ -106,3 +109,25 @@ For more help join our [Slack](https://www.asyncapi.com/slack-invite/) workspace
 ## Contributing
 
 Read [CONTRIBUTING](https://github.com/asyncapi/.github/blob/master/CONTRIBUTING.md) guide.
+
+## Contributors ✨
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Julusian"><img src="https://avatars.githubusercontent.com/u/1327476?v=4?s=100" width="100px;" alt="Julian Waller"/><br /><sub><b>Julian Waller</b></sub></a><br /><a href="https://github.com/asyncapi/generator-react-sdk/issues?q=author%3AJulusian" title="Bug reports">🐛</a> <a href="https://github.com/asyncapi/generator-react-sdk/commits?author=Julusian" title="Tests">⚠️</a> <a href="https://github.com/asyncapi/generator-react-sdk/commits?author=Julusian" title="Code">💻</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!

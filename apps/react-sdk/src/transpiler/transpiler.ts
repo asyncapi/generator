@@ -52,7 +52,7 @@ export async function transpileFiles(directory: string, outputDir: string, optio
             dir: outputDir,
             exports: "auto",
             paths: {
-              'react/jsx-runtime': 'react/cjs/react-jsx-runtime.production.min',
+              'react/jsx-runtime': require.resolve('react/cjs/react-jsx-runtime.production.min').replace(/\\/g, '/'),
             },
             sanitizeFileName: false,
         })

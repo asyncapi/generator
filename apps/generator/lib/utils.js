@@ -135,16 +135,6 @@ utils.isAsyncFunction = (fn) => {
 };
 
 /**
- * Register `source-map-support` package.
- * This package provides source map support for stack traces in Node - also for transpiled code from TS.
- *
- * @private
- */
-utils.registerSourceMap = () => {
-  require('source-map-support').install();
-};
-
-/**
  * Register TypeScript transpiler. It enables transpilation of TS filters and hooks on the fly.
  *
  * @private

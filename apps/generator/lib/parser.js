@@ -1,6 +1,6 @@
 const fs = require('fs');
 const { convertToOldAPI } = require('@asyncapi/parser');
-const { ConvertDocumentParserAPIVersion, NewParser } = require('@smoya/multi-parser');
+const { ConvertDocumentParserAPIVersion, NewParser } = require('@asyncapi/multi-parser');
 
 const parser = module.exports;
 

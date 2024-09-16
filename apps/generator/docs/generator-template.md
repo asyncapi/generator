@@ -159,7 +159,7 @@ To see this in action, navigate to the **python-mqtt-client-template** directory
 
 ``` cmd
 Generation in progress. Keep calm and wait a bit... done
-Check out your shiny new generated files at output.
+Check out your shiny new generated files at test/project.
 ```
 
 Navigating to the **test/project** directory. You should see a **client.py** file; the only content is `Temperature Service`.

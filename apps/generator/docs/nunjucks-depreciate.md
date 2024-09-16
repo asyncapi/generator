@@ -23,6 +23,8 @@ Change your template configuration in `package.json`:
 }
 ```
 
+Once deprecation period is ended, and we remove default nunjucks engine, react will become default and this setting will no longer be needed to configure
+
 #### 2. Install dependencies
 
 Install the necessary React dependencies:
@@ -32,6 +34,7 @@ npm install @asyncapi/generator-react-sdk
 ```
 
 #### 3. File naming
+
 In Nunjucks, the template's filename directly corresponds to the output file. For example, a template named index.html will generate an index.html file.
 
 In React, the filename of the generated file is not controlled by the file itself, but rather by the File component. The React component itself can be named anything with a `.js` extension, but the output file is controlled by the `name` attribute of the File component:

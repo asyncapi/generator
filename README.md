@@ -191,6 +191,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     </tr>
     <tr>
       <td align="center" valign="top" width="33.33%"><a href="https://github.com/pierrick-boule"><img src="https://avatars.githubusercontent.com/u/3237116?v=4?s=100" width="100px;" alt="pierrick-boule"/><br /><sub><b>pierrick-boule</b></sub></a><br /><a href="https://github.com/asyncapi/generator/commits?author=pierrick-boule" title="Code">💻</a> <a href="https://github.com/asyncapi/generator/commits?author=pierrick-boule" title="Tests">⚠️</a> <a href="https://github.com/asyncapi/generator/commits?author=pierrick-boule" title="Documentation">📖</a></td>
+      <td align="center" valign="top" width="33.33%"><a href="https://dhaiyra-majmudar.netlify.app/"><img src="https://avatars.githubusercontent.com/u/124715224?v=4?s=100" width="100px;" alt="Dhairya Majmudar"/><br /><sub><b>Dhairya Majmudar</b></sub></a><br /><a href="https://github.com/asyncapi/generator/issues?q=author%3ADhairyaMajmudar" title="Bug reports">🐛</a></td>
     </tr>
   </tbody>
 </table>

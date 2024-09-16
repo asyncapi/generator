@@ -1,5 +1,5 @@
-const migrationGuideUrl = '../docs/deprecate-cli.js-ag.md'
-const installationGuideUrl = 'https://github.com/asyncapi/website/blob/master/assets/docs/fragments/cli-installation.md'
+const migrationGuideUrl = '../docs/deprecate-cli.js-ag.md';
+const installationGuideUrl = 'https://github.com/asyncapi/website/blob/master/assets/docs/fragments/cli-installation.md';
 
 console.log(`
 *************************************

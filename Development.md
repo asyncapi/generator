@@ -4,12 +4,16 @@ This guide will help you set up the `generator` locally, run tests, and use Dock
 
 ## Getting started
 
-1. Clone the repository:
+1. Fork & Clone the repository:
+
+First fork the repository from github and then clone it,
 
 ```bash
 git clone https://github.com/asyncapi/generator.git
 cd generator
 ```
+
+After cloning the repository, you should setup the fork properly and configure the `remote` repository as described [here](https://github.com/asyncapi/community/blob/master/git-workflow.md)
 
 2. Install dependencies:
 
@@ -29,7 +33,7 @@ To run all tests locally:
 
 ### Adding tests
 
-1. Create new test files in the appropriate directory under `test/`:
+1. Create new test files in the appropriate directory under `generator/apps/test/`:
 
 2. Follow the existing test patterns.
 
@@ -59,6 +63,25 @@ This command above does the following:
 - Runs all tests
 
 Note: This approach ensures a clean environment for each test run by removing any existing `node_modules`.
+
+### Manually testing with test templates
+
+To test template features manually we have `react-template` and `nunjucks-template` in `apps/generator/test/templates`, you can use this templates to manually test your changes like this:
+
+1. Navigate to the generator directory:
+
+```bash
+cd apps/generator
+```
+2.Modify the react-template in `./test/test-templates/react-template` to test different features.
+
+3. Run the generator with the react-template:
+
+```bash
+asyncapi generate fromTemplate  ./test/docs/dummy.yml ./test/test-templates/react-template -o ./test/output --force-write
+```
+
+4. Check the output in the `./test/output` directory to verify the output that you desired.
 
 ## Additional commands
 

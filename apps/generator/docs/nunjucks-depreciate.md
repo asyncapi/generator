@@ -7,7 +7,7 @@ weight: 170
 
 ### Introduction
 
-The asyncAPI generator is moving away from Nunjucks templates in favor of React templates. This guide will help you migrate your existing Nunjucks templates to React.
+The asyncAPI generator is moving away from Nunjucks templates in favor of React templates. This guide will help you migrate your existing Nunjucks templates to React. For a comprehensive understanding of why we introduced React as an alternative in 2021 and why we're now removing Nunjucks entirely, please read our article [React as a Generator Engine](https://www.asyncapi.com/blog/react-as-generator-engine). The principles discussed in this article still apply to our current transition.
 
 ### Step-by-step migration guide
 
@@ -114,6 +114,17 @@ export default function({ asyncapi }) {
 #### 6. File template 
 
 //TODO: we can add a link to Florence docs once it is merged
+
+### Additional Resources and Information
+
+#### Template Examples
+For a complete example of React features in use, please refer to the [AsyncAPI Template for Generator Templates](https://github.com/asyncapi/template-for-generator-templates). The `master` branch demonstrates all React features, while the `nunjucks` branch shows the old Nunjucks implementation. This comparison can be particularly helpful in understanding the differences and migration process.
+
+#### Filters to Helpers
+If you've been using Nunjucks filters placed in the `filters` directory, you can still use this functionality in React. However, they should be treated as normal functions that you import into your components. We recommend renaming the `filters` directory to `helpers` to better reflect their new usage in React.
+
+#### Hooks Remain Unchanged
+It's important to note that hooks remain unchanged in this migration process. Hooks are not related to the render engine functionality, so you can continue to use them as you have been.
 
 ### Testing your migration
 

@@ -9,7 +9,7 @@ This guide will help you set up the `generator` locally, run tests, and use Dock
 First fork the repository from github and then clone it,
 
 ```bash
-git clone https://github.com/asyncapi/generator.git
+git clone https://github.com/{your_username}/generator.git
 cd generator
 ```
 
@@ -33,7 +33,7 @@ To run all tests locally:
 
 ### Adding tests
 
-1. Create new test files in the appropriate directory under `generator/apps/test/`:
+1. Create new test files in the appropriate directory under `apps/generator/test/`:
 
 2. Follow the existing test patterns.
 
@@ -73,7 +73,7 @@ To test template features manually we have `react-template` and `nunjucks-templa
 ```bash
 cd apps/generator
 ```
-2.Modify the react-template in `./test/test-templates/react-template` to test different features.
+2. Modify the react-template in `./test/test-templates/react-template` to test different features.
 
 3. Run the generator with the react-template:
 
@@ -82,6 +82,60 @@ asyncapi generate fromTemplate  ./test/docs/dummy.yml ./test/test-templates/reac
 ```
 
 4. Check the output in the `./test/output` directory to verify the output that you desired.
+
+## Release process
+
+To release a major/minor/patch:
+
+### Conventional Commits:
+
+To maintain a clear git history of commits and easily identify what each commit changed and whether it triggered a release, we use conventional commits. The feat and fix prefixes are particularly important as they are needed to trigger changesets. Using these prefixes ensures that the changes are correctly categorized and the versioning system functions as expected.
+
+For Example:
+```
+feat: add new feature
+```
+    
+#### Manual
+
+1.  Create a new release markdown file in the `.changeset` directory. The filename should indicate what the change is about.
+  
+2.  Add the following content to the file in this particular format:
+
+    ```markdown
+    ---
+    "@package-name-1": [type] (major/minor/patch)
+    "@package-name-2": [type]
+    ---
+
+    [Provide a brief description of the changes. For example: Added a new Release GitHub Flow to the Turborepo. No new features or bugfixes were introduced.]
+    ```
+
+    For Example:
+    
+    ```markdown
+    ---
+    "@asyncapi/generator": minor
+    ---
+
+    Adding new Release Github Flow to the Turborepo. No new features or bugfixes were introduced.
+
+    ```
+
+3. Include the file in your pull request.
+
+#### Using CLI
+
+1. Create a new release markdown file using changeset CLI. Below command will trigger an interactive prompt that you can use to specify release type and affected packages.
+    ```cli 
+    npx -p @changesets/cli@2.27.7 changeset
+    ```
+
+2. Include the file in your pull request.
+
+> [!TIP]
+> For more detailed instructions, you can refer to the official documentation for creating a changeset:
+[Adding a changeset](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md)
 
 ## Additional commands
 

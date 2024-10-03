@@ -1,22 +1,29 @@
-'use strict';
+"use strict";
 
-require('source-map-support/register');
-var generatorReactSdk = require('@asyncapi/generator-react-sdk');
-var jsxRuntime = require('/home/bedi/Desktop/code/generator/apps/generator/node_modules/react/cjs/react-jsx-runtime.production.min.js');
+require("source-map-support/register");
+var generatorReactSdk = require("@asyncapi/generator-react-sdk");
+var jsxRuntime = require("react/jsx-runtime");
 
-function testFile_md ({
-  asyncapi,
-  params
-}) {
-  return /*#__PURE__*/jsxRuntime.jsxs(generatorReactSdk.File, {
+function testFile_md({ asyncapi, params }) {
+  return /*#__PURE__*/ jsxRuntime.jsxs(generatorReactSdk.File, {
     name: "test-file.md",
-    children: [/*#__PURE__*/jsxRuntime.jsx(generatorReactSdk.Text, {
-      children: "This is a markdown file for my application."
-    }), /*#__PURE__*/jsxRuntime.jsxs(generatorReactSdk.Text, {
-      children: ["App name is: **", asyncapi.info().title(), "**"]
-    }), /*#__PURE__*/jsxRuntime.jsxs(generatorReactSdk.Text, {
-      children: ["Version ", params.version, " running on ", params.mode, " mode "]
-    })]
+    children: [
+      /*#__PURE__*/ jsxRuntime.jsx(generatorReactSdk.Text, {
+        children: "This is a markdown file for my application.",
+      }),
+      /*#__PURE__*/ jsxRuntime.jsxs(generatorReactSdk.Text, {
+        children: ["App name is: **", asyncapi.info().title(), "**"],
+      }),
+      /*#__PURE__*/ jsxRuntime.jsxs(generatorReactSdk.Text, {
+        children: [
+          "Version ",
+          params.version,
+          " running on ",
+          params.mode,
+          " mode ",
+        ],
+      }),
+    ],
   });
 }
 

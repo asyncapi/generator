@@ -195,6 +195,9 @@ class Generator {
     // 3. Improved readability: The code is now more compact and easier to understand at a glance.
     // 4. Maintained functionality: Despite the changes, the core logic remains the same,
     //    ensuring backwards compatibility.
+
+    // NOTE: This refactoring addresses the SonarCloud suggestion to use optional chaining
+    // and improves overall code quality by using modern JavaScript features.
   }
 
   /**
@@ -941,7 +944,7 @@ class Generator {
     let wasSeparated = false;
     for (const prop in fileNamesForSeparation) {
       if (
-        Object.prototype.hasOwnProperty.call(fileNamesForSeparation, prop) &&
+        Object.hasOwn(fileNamesForSeparation, prop) && // Use Object.hasOwn() here
         stats.name.includes(`$$${prop}$$`)
       ) {
         await this.generateSeparateFiles(
@@ -957,10 +960,11 @@ class Generator {
         );
         fs.unlink(path.resolve(this.targetDir, templateFilePath), next);
         wasSeparated = true;
-        //The filename can only contain 1 specifier (message, scheme etc)
+        // The filename can only contain 1 specifier (message, scheme, etc.)
         break;
       }
     }
+
     // If it was not separated process normally
     if (!wasSeparated) {
       await this.generateFile(asyncapiDocument, stats.name, root);
@@ -1232,12 +1236,11 @@ class Generator {
    */
   isNonRenderableFile(fileName) {
     const nonRenderableFiles = this.templateConfig.nonRenderableFiles || [];
-    if (!Array.isArray(nonRenderableFiles)) return false;
-    if (nonRenderableFiles.some((globExp) => minimatch(fileName, globExp)))
-      return true;
-    if (isReactTemplate(this.templateConfig) && !isJsFile(fileName))
-      return true;
-    return false;
+    return (
+      Array.isArray(nonRenderableFiles) &&
+      (nonRenderableFiles.some((globExp) => minimatch(fileName, globExp)) ||
+        (isReactTemplate(this.templateConfig) && !isJsFile(fileName)))
+    );
   }
 
   /**

@@ -2,7 +2,6 @@
 
 require("source-map-support/register");
 var generatorReactSdk = require("@asyncapi/generator-react-sdk");
-var jsxRuntime = require("react/jsx-runtime");
 
 function testFile_md({ asyncapi, params }) {
   return /*#__PURE__*/ jsxRuntime.jsxs(generatorReactSdk.File, {

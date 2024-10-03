@@ -1136,6 +1136,7 @@ class Generator {
       this.templateConfig.conditionalFiles &&
       this.templateConfig.conditionalFiles[relativeSourceFile]
     ) {
+      /**Above 5 lines showing this error Prefer using an optional chain expression instead, as it's more concise and easier to read. */
       const server =
         this.templateParams.server &&
         asyncapiDocument.servers().get(this.templateParams.server);

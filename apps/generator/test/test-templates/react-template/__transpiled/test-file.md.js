@@ -1,8 +1,8 @@
 'use strict';
 
 require('source-map-support/register');
-const generatorReactSdk = require('@asyncapi/generator-react-sdk');
-const jsxRuntime = require('react/cjs/react-jsx-runtime.production.min');
+var generatorReactSdk = require('@asyncapi/generator-react-sdk');
+var jsxRuntime = require('/home/bedi/Desktop/code/generator/apps/generator/node_modules/react/cjs/react-jsx-runtime.production.min.js');
 
 function testFile_md ({
   asyncapi,

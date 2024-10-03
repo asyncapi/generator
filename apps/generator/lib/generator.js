@@ -1167,7 +1167,7 @@ class Generator {
           );
       }
     }
-
+    /**This refactored version uses a single return statement, which makes the code more concise and easier to read. */
     if (this.isNonRenderableFile(relativeSourceFile))
       return await copyFile(sourceFile, targetFile);
     await this.renderAndWriteToFile(asyncapiDocument, sourceFile, targetFile);

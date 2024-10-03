@@ -822,7 +822,7 @@ class Generator {
       filename = filenamify(filename, { replacement: '-', maxLength: 255 });
     }
 
-    const newFileName = fileName.replace(`\$\$${template}\$\$`, filename);
+    const newFileName = fileName.replace(`$$${template}$$`, filename);
     const targetFile = path.resolve(this.targetDir, relativeBaseDir, newFileName);
     const relativeTargetFile = path.relative(this.targetDir, targetFile);
     const shouldOverwriteFile = await this.shouldOverwriteFile(relativeTargetFile);

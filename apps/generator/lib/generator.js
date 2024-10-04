@@ -1132,11 +1132,8 @@ class Generator {
     );
     if (!shouldOverwriteFile) return;
 
-    if (
-      this.templateConfig.conditionalFiles &&
-      this.templateConfig.conditionalFiles[relativeSourceFile]
-    ) {
-      /**Above 5 lines showing this error Prefer using an optional chain expression instead, as it's more concise and easier to read. */
+    // Refactored the conditional files check to use optional chaining and simplify logic.
+    if (this.templateConfig.conditionalFiles?.[relativeSourceFile]) {
       const server =
         this.templateParams.server &&
         asyncapiDocument.servers().get(this.templateParams.server);

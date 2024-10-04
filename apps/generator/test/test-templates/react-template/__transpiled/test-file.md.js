@@ -1,7 +1,8 @@
 "use strict";
 
 require("source-map-support/register");
-var generatorReactSdk = require("@asyncapi/generator-react-sdk");
+const generatorReactSdk = require("@asyncapi/generator-react-sdk");
+const jsxRuntime = require("react/cjs/react-jsx-runtime.production.min");
 
 function testFile_md({ asyncapi, params }) {
   return /*#__PURE__*/ jsxRuntime.jsxs(generatorReactSdk.File, {

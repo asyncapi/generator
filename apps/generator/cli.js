@@ -141,7 +141,7 @@ xfs.mkdirp(program.output, async err => {
  * @param {*} targetDir The path to the target directory.
  */
 function generate(targetDir) {
-  return new Promise(async (resolve, reject) => {
+  return new Promise((resolve, reject) => {
     try {
       const generator = new Generator(template, targetDir || path.resolve(os.tmpdir(), 'asyncapi-generator'), {
         templateParams: params,

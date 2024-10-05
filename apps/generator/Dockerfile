@@ -16,6 +16,6 @@ ARG ASYNCAPI_GENERATOR_VERSION=1.10.9
 # Install dependencies and AsyncAPI Generator in a single RUN command
 RUN apk --no-cache add git chromium && \
     rm -rf /var/cache/apk/* && \
-    npm install -g "@asyncapi/generator@${ASYNCAPI_GENERATOR_VERSION}"
+    npm install -g --ignore-scripts "@asyncapi/generator@${ASYNCAPI_GENERATOR_VERSION}"
 
 ENTRYPOINT [ "ag" ]

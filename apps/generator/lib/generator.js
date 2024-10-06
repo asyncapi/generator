@@ -759,7 +759,7 @@ class Generator {
     // Check if the filename dictates it should be separated
     let wasSeparated = false;
     for (const prop in fileNamesForSeparation) {
-      if (Object.prototype.hasOwnProperty.call(fileNamesForSeparation, prop) && stats.name.includes(`$$${prop}$$`)) {
+      if (Object.hasOwn(fileNamesForSeparation, prop) && stats.name.includes(`$$${prop}$$`)) {
         await this.generateSeparateFiles(asyncapiDocument, fileNamesForSeparation[prop], prop, stats.name, root);
         const templateFilePath = path.relative(this.templateContentDir, path.resolve(root, stats.name));
         fs.unlink(path.resolve(this.targetDir, templateFilePath), next);
@@ -822,7 +822,7 @@ class Generator {
       filename = filenamify(filename, { replacement: '-', maxLength: 255 });
     }
 
-    const newFileName = fileName.replace(`\$\$${template}\$\$`, filename);
+    const newFileName = fileName.replace(`$$${template}$$`, filename);
     const targetFile = path.resolve(this.targetDir, relativeBaseDir, newFileName);
     const relativeTargetFile = path.relative(this.targetDir, targetFile);
     const shouldOverwriteFile = await this.shouldOverwriteFile(relativeTargetFile);

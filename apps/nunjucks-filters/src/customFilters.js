@@ -147,7 +147,7 @@ function docline(field, fieldName, scopePropName) {
   const getType = (f) => f.type() ? f.type() : 'string';
   const getDescription = (f) => f.description() ? ` - ${f.description().replace(/\r?\n|\r/g, '')}` : '';
   const getDefault = (f, type) => (f.default() && type === 'string') ? `'${f.default()}'` : f.default();
-  const getPName = (pName) => pName ? `${pName}.` : ``;
+  const getPName = (pName) => pName ? `${pName}.` : '';
 
   const buildLine = (f, fName, pName) => {
     const type = getType(f);

@@ -19,45 +19,51 @@ module.exports.registerHooks = async (hooks, templateConfig, templateDir, hooksD
 
 /**
  * Loads the local template hooks from default location.
+ * This function walks through the hooks directory and registers each hook file it finds.
  * @private
  * @param {Object} hooks Object that stores information about all available hook functions grouped by the type of the hook.
  * @param {String} templateDir Directory where template is located.
  * @param {String} hooksDir Directory where local hooks are located.
+ * @returns {Promise<Object>} - A promise that resolves to the updated hooks object.
  */
-async function registerLocalHooks(hooks, templateDir, hooksDir) {
-  return new Promise(async (resolve, reject) => {
+function registerLocalHooks(hooks, templateDir, hooksDir) {
+  return new Promise((resolve, reject) => {
     const localHooks = path.resolve(templateDir, hooksDir);
 
-    if (!await exists(localHooks)) return resolve(hooks);
+    exists(localHooks)
+      .then(exists => {
+        if (!exists) {
+          resolve(hooks);
+          return;
+        }
 
-    const walker = xfs.walk(localHooks, {
-      followLinks: false
-    });
-    
-    walker.on('file', async (root, stats, next) => {
-      try {
-        const filePath = path.resolve(templateDir, path.resolve(root, stats.name));
-        
-        registerTypeScript(filePath);
+        const walker = xfs.walk(localHooks, { followLinks: false });
 
-        delete require.cache[require.resolve(filePath)];
-        const mod = require(filePath);
+        walker.on('file', (root, stats, next) => {
+          const filePath = path.resolve(root, stats.name);
+          
+          registerTypeScript(filePath);
 
-        addHook(hooks, mod);
+          delete require.cache[require.resolve(filePath)];
+          
+          try {
+            const mod = require(filePath);
+            addHook(hooks, mod);
+            next();
+          } catch (e) {
+            next(e);
+          }
+        });
 
-        next();
-      } catch (e) {
-        reject(e);
-      }
-    });
+        walker.on('errors', (root, nodeStatsArray) => {
+          reject(new Error(`Error walking directory: ${nodeStatsArray}`));
+        });
 
-    walker.on('errors', (root, nodeStatsArray) => {
-      reject(nodeStatsArray);
-    });
-
-    walker.on('end', async () => {
-      resolve(hooks);
-    });
+        walker.on('end', () => {
+          resolve(hooks);
+        });
+      })
+      .catch(reject);
   });
 }
 

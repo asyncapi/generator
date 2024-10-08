@@ -133,27 +133,15 @@ class Generator {
       Object.defineProperty(this.templateParams, key, {
         enumerable: true,
         get: () => {
-          if (this.templateConfig.parameters?.[key] == null) {
+          if (!this.templateConfig.parameters || this.templateConfig.parameters[key] == null) {
             throw new Error(
               `Template parameter "${key}" has not been defined in the package.json file under generator property. Please make sure it's listed there before you use it in your template.`
             );
           }
-          // If we got here, the parameter exists, so just return it
           return templateParams[key];
         },
       });
     });
-    // CHANGES EXPLAINED:
-    // 1. Removed 'self' variable: Arrow function in the getter automatically binds 'this'
-    //    to the correct context, eliminating the need for 'const self = this'.
-    // 2. Simplified null check: Using '?.' and '== null' checks for both null and undefined
-    //    in a more concise way.
-    // 3. Improved readability: The code is now more compact and easier to understand at a glance.
-    // 4. Maintained functionality: Despite the changes, the core logic remains the same,
-    //    ensuring backwards compatibility.
-
-    // NOTE: This refactoring addresses the SonarCloud suggestion to use optional chaining
-    // and improves overall code quality by using modern JavaScript features.
   }
 
   /**

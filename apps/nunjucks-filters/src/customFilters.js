@@ -198,7 +198,7 @@ function replaceServerVariablesWithValues(url, serverVariables) {
   const getVariableValue = (object, variable) => {
     const keyValue = object[variable]._json;
 
-    if (keyValue) return keyValue.default || (keyValue.enum && keyValue.enum[0]);
+    if (keyValue) return keyValue.default ?? keyValue.enum?.[0];
   };
 
   const urlVariables = getVariablesNamesFromUrl(url);

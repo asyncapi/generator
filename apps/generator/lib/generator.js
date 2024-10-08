@@ -133,7 +133,7 @@ class Generator {
       Object.defineProperty(this.templateParams, key, {
         enumerable: true,
         get: () => {
-          if (!this.templateConfig.parameters || this.templateConfig.parameters[key] == null) {
+          if (this.templateConfig.parameters?.[key] == null) {
             throw new Error(
               `Template parameter "${key}" has not been defined in the package.json file under generator property. Please make sure it's listed there before you use it in your template.`
             );

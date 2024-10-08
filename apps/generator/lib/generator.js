@@ -133,8 +133,6 @@ class Generator {
       Object.defineProperty(this.templateParams, key, {
         enumerable: true,
         get: () => {
-          // Using ?. to check if parameters and the key exist
-          // This is shorter and does the same thing as the old if statements
           if (this.templateConfig.parameters?.[key] == null) {
             throw new Error(
               `Template parameter "${key}" has not been defined in the package.json file under generator property. Please make sure it's listed there before you use it in your template.`

@@ -194,4 +194,5 @@ async function watcherHandler(changedFiles) {
     showError(e);
   }
 }
+
 process.on('unhandledRejection', showErrorAndExit);

@@ -58,7 +58,7 @@ function getPayloadExamples(msg) {
   }
 
   const payload = msg.payload();
-  if (payload?.examples()) {
+  if (payload && payload.examples()) {
     return payload.examples().map(example => ({ example }));
   }
 }
@@ -90,7 +90,7 @@ function getHeadersExamples(msg) {
   }
 
   const headers = msg.headers();
-  if (headers?.examples()) {
+  if (headers && headers.examples()) {
     return headers.examples().map(example => ({ example }));
   }
 }
@@ -198,7 +198,11 @@ function replaceServerVariablesWithValues(url, serverVariables) {
   const getVariableValue = (object, variable) => {
     const keyValue = object[variable]._json;
 
+<<<<<<< HEAD
     if (keyValue) return keyValue.default ?? keyValue.enum?.[0];
+=======
+    if (keyValue) return keyValue.default || (keyValue.enum && keyValue.enum[0]);
+>>>>>>> 9907055 (refactor: improve custom filters readability with optional chaining)
   };
 
   const urlVariables = getVariablesNamesFromUrl(url);

@@ -23,7 +23,6 @@ module.exports.registerHooks = async (hooks, templateConfig, templateDir, hooksD
  * @param {Object} hooks Object that stores information about all available hook functions grouped by the type of the hook.
  * @param {String} templateDir Directory where template is located.
  * @param {String} hooksDir Directory where local hooks are located.
- * @returns {Promise<Object>} - A promise that resolves to the updated hooks object.
  */
 async function registerLocalHooks(hooks, templateDir, hooksDir) {
   return new Promise((resolve, reject) => {
@@ -61,6 +60,7 @@ async function registerLocalHooks(hooks, templateDir, hooksDir) {
     });
   });
 }
+
 /**
  * Loads the template hooks provided in template config.
  * @private

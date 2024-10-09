@@ -9,7 +9,8 @@ This is a Monorepo managed using [Turborepo](https://turbo.build/) and contains 
 
 ![npm](https://img.shields.io/npm/v/@asyncapi/generator?style=for-the-badge) ![npm](https://img.shields.io/npm/dt/@asyncapi/generator?style=for-the-badge)
 
-> warning: This package doesn't support AsyncAPI 1.x anymore. We recommend to upgrade to the latest AsyncAPI version using the [AsyncAPI converter](https://github.com/asyncapi/converter-js) (You can refer to [installation guide](/apps/generator//docs//installation-guide.md)). If you need to convert documents on the fly, you may use the [Node.js](https://github.com/asyncapi/converter-js) or [Go](https://github.com/asyncapi/converter-go) converters.
+[!IMPORTANT]
+Deprecation Notice: The use of ag for documentation generation is deprecated and will be removed in future releases. We strongly encourage migrating to the new AsyncAPI CLI.
 
 <!-- toc is generated with GitHub Actions do not remove toc markers -->
 

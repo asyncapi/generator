@@ -58,7 +58,7 @@ function getPayloadExamples(msg) {
   }
 
   const payload = msg.payload();
-  if (payload && payload.examples()) {
+  if (payload?.examples()) {
     return payload.examples().map(example => ({ example }));
   }
 }
@@ -90,7 +90,7 @@ function getHeadersExamples(msg) {
   }
 
   const headers = msg.headers();
-  if (headers && headers.examples()) {
+  if (headers?.examples()) {
     return headers.examples().map(example => ({ example }));
   }
 }
@@ -142,7 +142,7 @@ filter.oneLine = oneLine;
  * @scopePropName {string} - Name of param for JSDocs
  * @returns {string} JSDoc compatible entry
  */
-  function docline(field, fieldName, scopePropName) {
+function docline(field, fieldName, scopePropName) {
   /* eslint-disable sonarjs/cognitive-complexity */
   const getType = (f) => f.type() || 'string';
   const getDescription = (f) => f.description() ? ` - ${f.description().replace(/\r?\n|\r/g, '')}` : '';
@@ -198,11 +198,7 @@ function replaceServerVariablesWithValues(url, serverVariables) {
   const getVariableValue = (object, variable) => {
     const keyValue = object[variable]._json;
 
-<<<<<<< HEAD
     if (keyValue) return keyValue.default ?? keyValue.enum?.[0];
-=======
-    if (keyValue) return keyValue.default || (keyValue.enum && keyValue.enum[0]);
->>>>>>> 9907055 (refactor: improve custom filters readability with optional chaining)
   };
 
   const urlVariables = getVariablesNamesFromUrl(url);

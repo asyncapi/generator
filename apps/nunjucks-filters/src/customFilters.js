@@ -142,39 +142,37 @@ filter.oneLine = oneLine;
  * @scopePropName {string} - Name of param for JSDocs
  * @returns {string} JSDoc compatible entry
  */
-function docline(field, fieldName, scopePropName) {
+  function docline(field, fieldName, scopePropName) {
   /* eslint-disable sonarjs/cognitive-complexity */
-  const getType = (f) => f.type() ? f.type() : 'string';
+  const getType = (f) => f.type() || 'string';
   const getDescription = (f) => f.description() ? ` - ${f.description().replace(/\r?\n|\r/g, '')}` : '';
   const getDefault = (f, type) => (f.default() && type === 'string') ? `'${f.default()}'` : f.default();
   const getPName = (pName) => pName ? `${pName}.` : '';
 
+  const buildLineCore = (type, def, pName, fName) => {
+    return `* @param {${type}} ${pName}${fName}${def !== undefined ? `=${def}` : ''}`;
+  };
+
   const buildLine = (f, fName, pName) => {
     const type = getType(f);
-    const description = getDescription(f);
-    let def = getDefault(f, type);
-
-    let line = ` * @param {${type}} ${getPName(pName)}${fName}`;
-    line += def !== undefined ? `=${def}]` : ``;
-
-    return type === 'object' ? `${line}`:`${line}${description}`;
+    const def = getDefault(f, type);
+    const line = buildLineCore(type, def, getPName(pName), fName);
+    return line + (type === 'object' ? '' : getDescription(f));
   };
 
   const buildObjectLines = (f, fName, pName) => {
-    let lines = `${buildLine(f, fName, pName)}\n`;
-    let first = true;
-    for (const propName in f.properties()) {
-      lines += `${first ? '' : '\n'}${buildLine(f.properties()[propName], propName, `${getPName(pName)}${fName}`)}`;
-      first = false;
-    }
-    return lines;
+    const properties = f.properties();
+    const mainLine = buildLine(f, fName, pName);
+
+    return `${mainLine  }\n${  Object.keys(properties).map((propName) =>
+      buildLine(properties[propName], propName, `${getPName(pName)}${fName}`)
+    ).join('\n')}`;
   };
 
   return getType(field) === 'object'
     ? buildObjectLines(field, fieldName, scopePropName)
     : buildLine(field, fieldName, scopePropName);
 }
-
 filter.docline = docline;
 
 /**
@@ -200,7 +198,7 @@ function replaceServerVariablesWithValues(url, serverVariables) {
   const getVariableValue = (object, variable) => {
     const keyValue = object[variable]._json;
 
-    if (keyValue) return keyValue.default || (keyValue.enum?.[0]);
+    if (keyValue) return keyValue.default ?? keyValue.enum?.[0];
   };
 
   const urlVariables = getVariablesNamesFromUrl(url);

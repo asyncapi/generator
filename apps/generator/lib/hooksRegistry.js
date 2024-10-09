@@ -26,11 +26,11 @@ module.exports.registerHooks = async (hooks, templateConfig, templateDir, hooksD
  * @returns {Promise<Object>} - A promise that resolves to the updated hooks object.
  */
 async function registerLocalHooks(hooks, templateDir, hooksDir) {
-  const localHooks = path.resolve(templateDir, hooksDir);
-
-  if (!await exists(localHooks)) return hooks;
-
   return new Promise((resolve, reject) => {
+    const localHooks = path.resolve(templateDir, hooksDir);
+
+    if (!await exists(localHooks)) return resolve(hooks);
+
     const walker = xfs.walk(localHooks, {
       followLinks: false
     });
@@ -56,7 +56,7 @@ async function registerLocalHooks(hooks, templateDir, hooksDir) {
       reject(nodeStatsArray);
     });
 
-    walker.on('end', () => {
+    walker.on('end', async () => {
       resolve(hooks);
     });
   });

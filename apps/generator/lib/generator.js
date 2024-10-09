@@ -562,8 +562,8 @@ class Generator {
 
       try {
         installedPkg = getTemplateDetails(this.templateName, PACKAGE_JSON_FILENAME);
-        pkgPath = installedPkg && installedPkg.pkgPath;
-        packageVersion = installedPkg && installedPkg.version;
+        pkgPath = installedPkg?.pkgPath;
+        packageVersion = installedPkg?.version;
         log.debug(logMessage.templateSource(pkgPath));
         if (packageVersion) log.debug(logMessage.templateVersion(packageVersion));
 

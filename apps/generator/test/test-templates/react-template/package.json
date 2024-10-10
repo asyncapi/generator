@@ -7,7 +7,7 @@
     },
     "generator": {
         "renderer": "react",
-        "api": "v3",
+        "apiVersion": "v3",
         "parameters": {
             "version": {
                 "description": "Custom version to be used"

@@ -3,7 +3,7 @@ const nunjucksExport = module.exports;
 
 /**
  * Configures Nunjucks templating system
- * 
+ * @deprecated since version 3.0
  * @private
  * @param {boolean} debug flag
  * @param {string} templateDir path
@@ -18,6 +18,7 @@ nunjucksExport.configureNunjucks = (debug, templateDir) => {
 /**
  * Renders the template with nunjucks and returns a string.
  * 
+ * @deprecated since version 3.0
  * @param {import('@asyncapi/parser').AsyncAPIDocument} asyncapiDocument 
  * @param {string} templateString template filecontent to be rendered with nunjucks
  * @param {string} filePath path to the template file

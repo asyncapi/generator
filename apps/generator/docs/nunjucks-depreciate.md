@@ -61,7 +61,7 @@ export default function({ asyncapi }) {
 }
 ```
 
-#### 5. Macros
+#### 5. Macros and Partials
 
 Replace macros with React components:
 
@@ -113,7 +113,7 @@ export default function({ asyncapi }) {
 
 #### 6. File template 
 
-//TODO: we can add a link to Florence docs once it is merged
+The detailed guide on file template can be found in [this](file-templates.md) guide.
 
 ### Additional Resources and Information
 

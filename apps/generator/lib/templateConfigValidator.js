@@ -97,7 +97,7 @@ function getParamSuggestion(wrongParam, configParams) {
  * @param {Object} templateParams All parameters provided to generator
  */
 function isProvidedParameterSupported(configParams, templateParams) {
-  const wrongParams = Object.keys(templateParams || {}).filter(key => !configParams || !configParams[key]);
+  const wrongParams = Object.keys(templateParams || {}).filter(key => !configParams?.[key]);
 
   if (!wrongParams.length) return;
   if (!configParams) throw new Error('This template doesn\'t have any params.');

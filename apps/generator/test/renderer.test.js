@@ -10,8 +10,8 @@ jest.mock('@asyncapi/generator-react-sdk');
 
 describe('React renderer', () => {
   describe('saveRenderedReactContent', () => {
-    let util = undefined;
-    let AsyncReactSDK = undefined;
+    let util;
+    let AsyncReactSDK;
     beforeAll(() => {
       util = require('../lib/utils');
       AsyncReactSDK = require('@asyncapi/generator-react-sdk');

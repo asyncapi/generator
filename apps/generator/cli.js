@@ -141,41 +141,29 @@ xfs.mkdirp(program.output, async err => {
  * @param {*} targetDir The path to the target directory.
  */
 function generate(targetDir) {
-  return new Promise((resolve, reject) => {
-    (async () => {
-      try {
-        const generator = new Generator(
-          template,
-          targetDir || path.resolve(os.tmpdir(), "asyncapi-generator"),
-          {
-            templateParams: params,
-            noOverwriteGlobs,
-            disabledHooks,
-            forceWrite: program.forceWrite,
-            install: program.install,
-            debug: program.debug,
-            mapBaseUrlToFolder,
-          }
-        );
+  return new Promise(async (resolve, reject) => {
+    try {
+      const generator = new Generator(template, targetDir || path.resolve(os.tmpdir(), 'asyncapi-generator'), {
+        templateParams: params,
+        noOverwriteGlobs,
+        disabledHooks,
+        forceWrite: program.forceWrite,
+        install: program.install,
+        debug: program.debug,
+        mapBaseUrlToFolder
+      });
 
-        if (isAsyncapiDocLocal) {
-          await generator.generateFromFile(path.resolve(asyncapiDocPath));
-        } else {
-          await generator.generateFromURL(asyncapiDocPath);
-        }
-        console.log(green("\n\nDone! ✨"));
-        console.log(
-          `${
-            yellow("Check out your shiny new generated files at ") +
-            magenta(program.output) +
-            yellow(".")
-          }\n`
-        );
-        resolve();
-      } catch (e) {
-        reject(e);
+      if (isAsyncapiDocLocal) {
+        await generator.generateFromFile(path.resolve(asyncapiDocPath));
+      } else {
+        await generator.generateFromURL(asyncapiDocPath);
       }
-    })(); //Immediately invoke the async function
+      console.log(green('\n\nDone! ✨'));
+      console.log(`${yellow('Check out your shiny new generated files at ') + magenta(program.output) + yellow('.')}\n`);
+      resolve();
+    } catch (e) {
+      reject(e);
+    }
   });
 }
 

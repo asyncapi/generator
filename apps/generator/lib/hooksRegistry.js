@@ -24,11 +24,12 @@ module.exports.registerHooks = async (hooks, templateConfig, templateDir, hooksD
  * @param {String} templateDir Directory where template is located.
  * @param {String} hooksDir Directory where local hooks are located.
  */
-async function registerLocalHooks(hooks, templateDir, hooksDir) {
-  return new Promise(async (resolve, reject) => {
+function registerLocalHooks(hooks, templateDir, hooksDir) {
+  return new Promise((resolve, reject) => {
     const localHooks = path.resolve(templateDir, hooksDir);
 
-    if (!await exists(localHooks)) return resolve(hooks);
+    exists(localHooks).then(localHooksExist => {
+    if (!localHooksExist) return resolve(hooks);
 
     const walker = xfs.walk(localHooks, {
       followLinks: false
@@ -58,7 +59,8 @@ async function registerLocalHooks(hooks, templateDir, hooksDir) {
     walker.on('end', async () => {
       resolve(hooks);
     });
-  });
+  }).catch(reject);
+ });
 }
 
 /**

@@ -150,7 +150,7 @@ function docline(field, fieldName, scopePropName) {
   const getPName = (pName) => pName ? `${pName}.` : '';
 
   const buildLineCore = (type, def, pName, fName) => {
-    return `* @param {${type}} ${pName}${fName}${def !== undefined ? `=${def}` : ''}`;
+    return `* @param {${type}} ${pName}${fName}${def !== undefined ? '=' + def : ''}`;
   };
 
   const buildLine = (f, fName, pName) => {

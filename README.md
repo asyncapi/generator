@@ -63,96 +63,9 @@ This library consists of:
 - Custom filters. Check out [API docs](apps/nunjucks-filters/docs/api.md) for complete list
 - Lodash-powered filters. For the list of all available filters check [official docs](https://lodash.com/docs/)
 
-## Release Process
-
-To release a major/minor/patch:
-
-### Conventional Commits:
-
-To maintain a clear git history of commits and easily identify what each commit changed and whether it triggered a release, we use conventional commits. The feat and fix prefixes are particularly important as they are needed to trigger changesets. Using these prefixes ensures that the changes are correctly categorized and the versioning system functions as expected.
-
-For Example:
-```
-feat: add new feature
-```
-    
-#### Manual
-
-1.  Create a new release markdown file in the `.changeset` directory. The filename should indicate what the change is about.
-  
-2.  Add the following content to the file in this particular format:
-
-    ```markdown
-    ---
-    "@package-name-1": [type] (major/minor/patch)
-    "@package-name-2": [type]
-    ---
-
-    [Provide a brief description of the changes. For example: Added a new Release GitHub Flow to the Turborepo. No new features or bugfixes were introduced.]
-    ```
-
-    For Example:
-    
-    ```markdown
-    ---
-    "@asyncapi/generator": minor
-    ---
-
-    Adding new Release Github Flow to the Turborepo. No new features or bugfixes were introduced.
-
-    ```
-
-3. Include the file in your pull request.
-
-#### Using CLI
-
-1. Create a new release markdown file using changeset CLI. Below command will trigger an interactive prompt that you can use to specify release type and affected packages.
-    ```cli 
-    npx -p @changesets/cli@2.27.7 changeset
-    ```
-
-2. Include the file in your pull request.
-
-> [!TIP]
-> For more detailed instructions, you can refer to the official documentation for creating a changeset:
-[Adding a changeset](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md)
-
-
-
-### Release Flow:
-
-1. **Add a Changeset**:
-   - When you make changes that need to be released, create a markdown file in the `.changeset` directory stating the package name and level of change (major/minor/patch). 
-
-2. **Open a Pull Request**:
-   - Push your changes and open a Pull Request (PR). After the PR is merged the changeset file helps communicate the type of changes (major, minor, patch).
-
-3. **CI Processes Changeset**:
-   - After PR is merged, a dedicated GitHub Actions release workflow runs using changeset action,
-
-   - This action reads the markdown files in the `.changeset` folder and creates a PR with the updated version of the package and removes the markdown file. For example:
-
-     Before:
-     ```json
-     "name": "@asyncapi/generator",
-     "version": "2.0.1",
-     ```
-
-     After:
-     ```json
-     "name": "@asyncapi/generator",
-     "version": "3.0.1",
-     ```
-
-   - The new PR will also contain the description from the markdown files,
-
-   - AsyncAPI bot automatically merge such release PR.
-
-4. **Release the Package**:
-
-   - After the PR is merged, the CI/CD pipeline triggers again. The `changesets/action` step identifies that the PR was created by itself. It then verifies if the current version of the package is greater than the previously released version. If a difference is detected, it executes the publish command to release the updated package.
-
 ## Contributing
+
+For developement setup you can follow the detailed guide in [Developement guide](Development.md)
 
 Read [CONTRIBUTING](CONTRIBUTING.md) guide.
 
@@ -192,6 +105,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     </tr>
     <tr>
       <td align="center" valign="top" width="33.33%"><a href="https://github.com/pierrick-boule"><img src="https://avatars.githubusercontent.com/u/3237116?v=4?s=100" width="100px;" alt="pierrick-boule"/><br /><sub><b>pierrick-boule</b></sub></a><br /><a href="https://github.com/asyncapi/generator/commits?author=pierrick-boule" title="Code">💻</a> <a href="https://github.com/asyncapi/generator/commits?author=pierrick-boule" title="Tests">⚠️</a> <a href="https://github.com/asyncapi/generator/commits?author=pierrick-boule" title="Documentation">📖</a></td>
+      <td align="center" valign="top" width="33.33%"><a href="https://dhaiyra-majmudar.netlify.app/"><img src="https://avatars.githubusercontent.com/u/124715224?v=4?s=100" width="100px;" alt="Dhairya Majmudar"/><br /><sub><b>Dhairya Majmudar</b></sub></a><br /><a href="https://github.com/asyncapi/generator/issues?q=author%3ADhairyaMajmudar" title="Bug reports">🐛</a></td>
     </tr>
   </tbody>
 </table>

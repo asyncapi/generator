@@ -63,7 +63,7 @@ function convertOldOptionsToNew(oldOptions, generator) {
   }
 
   const resolvers = [];
-  if (generator && generator.mapBaseUrlToFolder && generator.mapBaseUrlToFolder.url) {
+  if (generator?.mapBaseUrlToFolder?.url) {
     resolvers.push(...getMapBaseUrlToFolderResolvers(generator.mapBaseUrlToFolder));
   }
   if (oldOptions.resolve) {

@@ -196,6 +196,15 @@
         "test",
         "doc"
       ]
+    },
+    {
+      "login": "DhairyaMajmudar",
+      "name": "Dhairya Majmudar",
+      "avatar_url": "https://avatars.githubusercontent.com/u/124715224?v=4",
+      "profile": "https://dhaiyra-majmudar.netlify.app/",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 3,

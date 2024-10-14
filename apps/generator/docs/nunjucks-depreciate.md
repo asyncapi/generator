@@ -1,5 +1,5 @@
 --
-title: "Migration guide from nunjucks render engine"
+title: "Migrating from Nunjucks to React render engine"
 weight: 170
 ---
 
@@ -23,7 +23,7 @@ Change your template configuration in `package.json`:
 }
 ```
 
-Once deprecation period is ended, and we remove default nunjucks engine, react will become default and this setting will no longer be needed to configure
+Once the deprecation period has ended, and we remove the default Nunjucks, the React render engine will be used by default and this setting will no longer be needed to configure
 
 #### 2. Install dependencies
 

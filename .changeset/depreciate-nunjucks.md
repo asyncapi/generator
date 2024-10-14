@@ -2,4 +2,4 @@
 "@asyncapi/generator": major
 ---
 
-Migration guide for nunjucks render engine to react render engine
+Migrating from Nunjucks render engine to React render engine

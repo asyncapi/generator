@@ -10,7 +10,7 @@ This is a Monorepo managed using [Turborepo](https://turbo.build/) and contains 
 ![npm](https://img.shields.io/npm/v/@asyncapi/generator?style=for-the-badge) ![npm](https://img.shields.io/npm/dt/@asyncapi/generator?style=for-the-badge)
 
 [!IMPORTANT]
-Deprecation Notice: The nunjucks renderer engine is depreciated and will be removed in the future releases.We strongly recommend using the react renderer engine instead, you can find how to migrate from nunjucks to react in the [migration guide](apps/generator/docs/nunjucks-depreciate.md) 
+Deprecation Notice: The Nunjucks renderer engine is deprecated and will be removed in future releases. We strongly recommend using the React renderer engine instead, you can find how to migrate from Nunjucks to React in the [migration guide](apps/generator/docs/nunjucks-depreciate.md) 
 
 <!-- toc is generated with GitHub Actions do not remove toc markers -->
 

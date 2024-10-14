@@ -5,9 +5,9 @@ weight: 140
 
 ## Generating files with the Nunjucks render engine
 
-> **Note**: This section applies only to the Nunjucks render engine. For information on using the React render engine, refer to the [Generating files with the React render engine](#generating-files-with-the-react-render-engine) section below.
+> **Note**: This section applies only to the Nunjucks render engine. For information on using the React render engine, please look at the [Generating files with the React render engine](#generating-files-with-the-react-render-engine) section below.
 
-> **Note**: Nunjucks renderer engine will be depreciated in the future release and we strongly recommend using the react renderer engine instead.
+> **Note**: Nunjucks renderer engine will be deprecated in the future release and we strongly recommend using the React renderer engine instead.
 
 It is possible to generate files for each specific object in your AsyncAPI documentation using the Nunjucks render engine. For example, you can specify a filename like `$$channel$$.js` to generate a file for each channel defined in your AsyncAPI. The following file-template names and extra variables are available:
 

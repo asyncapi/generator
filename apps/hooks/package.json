@@ -1,0 +1,37 @@
+{
+  "name": "@asyncapi/generator-hooks",
+  "version": "0.1.0",
+  "description": "Library with hooks function for templates using AsyncAPI Generator",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo There are no tests yet",
+    "lint": "eslint --config .eslintrc .",
+    "lint:fix": "eslint --fix --config .eslintrc .",
+    "generate:assets": "echo 'No additional assets need to be generated at the moment'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/asyncapi/generator-hooks.git"
+  },
+  "keywords": [
+    "asyncapi",
+    "generator"
+  ],
+  "author": "Lukasz Gornicki <lpgornicki@gmail.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/asyncapi/generator-hooks/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "homepage": "https://github.com/asyncapi/generator-hooks#readme",
+  "dependencies": {
+    "fs.extra": "^1.3.2"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-plugin-sonarjs": "^0.5.0",
+    "jsdoc-to-markdown": "^7.1.1"
+  }
+}

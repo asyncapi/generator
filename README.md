@@ -4,12 +4,12 @@ This is a Monorepo managed using [Turborepo](https://turbo.build/) and contains 
 
 1. [Generator](apps/generator): This is a tool that you can use to generate whatever you want basing on the AsyncAPI specification file as an input.
 
-2. [Nunjucks-filters](apps/nunjucks-filters): This library contains generator filters that can be reused across multiple templates, helping to avoid redundant work. These filters are designed specifically for Nunjucks templates and are included by default with the generator, so there's no need to add them to  dependencies seprately.
+1. [Hooks](apps/hooks): This library contains generator filters that can be reused across multiple templates, helping to avoid redundant work. Hooks are designed to let template developer to hook into the template generation process. Like for example one can create a hook code that will be automatically invoked right after the template generation process has ended.
+
+1. [Nunjucks-filters](apps/nunjucks-filters): This library contains generator filters that can be reused across multiple templates, helping to avoid redundant work. These filters are designed specifically for Nunjucks templates and are included by default with the generator, so there's no need to add them to  dependencies seprately.
 
 
 ![npm](https://img.shields.io/npm/v/@asyncapi/generator?style=for-the-badge) ![npm](https://img.shields.io/npm/dt/@asyncapi/generator?style=for-the-badge)
-
-> warning: This package doesn't support AsyncAPI 1.x anymore. We recommend to upgrade to the latest AsyncAPI version using the [AsyncAPI converter](https://github.com/asyncapi/converter-js) (You can refer to [installation guide](/apps/generator//docs//installation-guide.md)). If you need to convert documents on the fly, you may use the [Node.js](https://github.com/asyncapi/converter-js) or [Go](https://github.com/asyncapi/converter-go) converters.
 
 <!-- toc is generated with GitHub Actions do not remove toc markers -->
 
@@ -17,6 +17,8 @@ This is a Monorepo managed using [Turborepo](https://turbo.build/) and contains 
 
 - [Overview](#overview)
 - [List of official generator templates](#list-of-official-generator-templates)
+- [Filters](#filters)
+- [Hooks](#hooks)
 - [Contributing](#contributing)
 - [Contributors ✨](#contributors-%E2%9C%A8)
 
@@ -53,14 +55,25 @@ There is a large number of templates that are ready to use and are officially su
 
 You can find above templates and the ones provided by the community in **[this list](https://github.com/search?q=topic%3Aasyncapi+topic%3Agenerator+topic%3Atemplate)**
 
-# Generator Filters
+## Filters
 
-This library contains generator filters that can be reused across multiple templates, helping to avoid redundant work. These filters are designed specifically for Nunjucks templates and are included by default with the generator, so there's no need to add them to  dependencies seprately.
+ `apps/nunjucks-filters` library contains generator filters that can be reused across multiple templates, helping to avoid redundant work. These filters are designed specifically for Nunjucks templates and are included by default with the generator, so there's no need to add them to  dependencies seprately.
 
 This library consists of:
 
 - Custom filters. Check out [API docs](apps/nunjucks-filters/docs/api.md) for complete list
 - Lodash-powered filters. For the list of all available filters check [official docs](https://lodash.com/docs/)
+
+## Hooks
+
+`apps/hooks` library contains generator filters that can be reused across multiple templates, helping to avoid redundant work. [Hooks](https://www.asyncapi.com/docs/tools/generator/hooks) are functions called by the generator on a specific moment in the generation process. Hooks can be anonymous functions but you can also add function names. These hooks can have arguments provided to them or being expected to return a value.
+
+This library consists of the following hooks:
+|Hook name|Hook type|Description|
+|---|---|---|
+| `createAsyncapiFile` | `generate:after` | It creates AsyncAPI file with content of the spec file passed to the generator. By default it created the file in the root of the generation output directory. This hook also supports custom parameters that user can pass to template generation. Parameter called `asyncapiFileDir` allows user to specify the location where spec file should be created. To make your template users use this parameter, you need to add it to the configuration of your template like other parameters |
+
+These hooks are included in generator without adding any specific dependency to the library. You still have to enable given hook in the configuration explicitly because some hooks can execute automatically without passing a specific parameter. 
 
 ## Contributing
 

@@ -24,43 +24,46 @@ module.exports.registerHooks = async (hooks, templateConfig, templateDir, hooksD
  * @param {String} templateDir Directory where template is located.
  * @param {String} hooksDir Directory where local hooks are located.
  */
-function registerLocalHooks(hooks, templateDir, hooksDir) {
-  return new Promise((resolve, reject) => {
-    const localHooks = path.resolve(templateDir, hooksDir);
+async function registerLocalHooks(hooks, templateDir, hooksDir) {
+  const localHooks = path.resolve(templateDir, hooksDir);
 
-    exists(localHooks).then(localHooksExist => {
-    if (!localHooksExist) return resolve(hooks);
+  try {
+    const localHooksExist = await exists(localHooks);
+    if (!localHooksExist) return hooks;
 
-    const walker = xfs.walk(localHooks, {
-      followLinks: false
-    });
+    return new Promise((resolve, reject) => {
+      const walker = xfs.walk(localHooks, {
+        followLinks: false
+      });
     
-    walker.on('file', async (root, stats, next) => {
-      try {
-        const filePath = path.resolve(templateDir, path.resolve(root, stats.name));
+      walker.on('file', async (root, stats, next) => {
+        try {
+          const filePath = path.resolve(templateDir, path.resolve(root, stats.name));
         
-        registerTypeScript(filePath);
+          await registerTypeScript(filePath);
 
-        delete require.cache[require.resolve(filePath)];
-        const mod = require(filePath);
+          delete require.cache[require.resolve(filePath)];
+          const mod = require(filePath);
 
-        addHook(hooks, mod);
+          addHook(hooks, mod);
 
-        next();
-      } catch (e) {
-        reject(e);
-      }
+          next();
+        } catch (e) {
+          reject(e);
+        }
+      });
+
+      walker.on('errors', (root, nodeStatsArray) => {
+        reject(nodeStatsArray);
+      });
+
+      walker.on('end', () => {
+        resolve(hooks);
+      });
     });
-
-    walker.on('errors', (root, nodeStatsArray) => {
-      reject(nodeStatsArray);
-    });
-
-    walker.on('end', async () => {
-      resolve(hooks);
-    });
-  }).catch(reject);
- });
+  } catch (error) {
+    throw error;
+  }
 }
 
 /**

@@ -5,8 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "test": "echo There are no tests yet",
-    "lint": "eslint --config .eslintrc .",
-    "lint:fix": "eslint --fix --config .eslintrc .",
+    "lint": "eslint --max-warnings 0 --config ../../.eslintrc --ignore-path ../../.eslintignore .",
+    "lint:fix": "eslint --fix --max-warnings 0 --config ../../.eslintrc --ignore-path ../../.eslintignore .",
     "generate:assets": "echo 'No additional assets need to be generated at the moment'"
   },
   "repository": {

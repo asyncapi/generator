@@ -150,9 +150,11 @@ function docline(field, fieldName, scopePropName) {
   const getPName = (pName) => pName ? `${pName}.` : '';
 
   const buildLineCore = (type, def, pName, fName) => {
-    return `* @param {${type}} ${pName}${fName}${def !== undefined ? `=${def}` : ''}`;
+    const paramName = `${pName}${fName}`;
+    const defaultValue = def !== undefined ? `=${def}` : '';
+    return `* @param {${type}} ${paramName}${defaultValue}`;
   };
-
+  
   const buildLine = (f, fName, pName) => {
     const type = getType(f);
     const def = getDefault(f, type);

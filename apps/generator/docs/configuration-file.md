@@ -20,7 +20,7 @@ The `generator` property from `package.json` file must contain a JSON object tha
 |`nonRenderableFiles`| [String] | A list of file paths or [globs](https://en.wikipedia.org/wiki/Glob_(programming)) that must be copied "as-is" to the target directory, i.e., without performing any rendering process. This is useful when you want to copy binary files.
 |`generator`| [String] | A string representing the generator version-range the template is compatible with. This value must follow the [semver](https://nodejs.dev/learn/semantic-versioning-using-npm) syntax. E.g., `>=1.0.0`, `>=1.0.0 <=2.0.0`, `~1.0.0`, `^1.0.0`, `1.0.0`, etc. [Read more about semver](https://docs.npmjs.com/about-semantic-versioning).
 |`filters`| [String] | A list of modules containing functions that can be used as Nunjucks filters. In case of external modules, remember they need to be added as a dependency in `package.json` of your template.
-|`hooks`| Object[String, String] or Object[String, Array[String]] | A list of modules containing hooks, except for the ones you keep locally in your template in default location. For each module you must specify the exact name of the hook that should be used in the template. For a single hook you can specify it as a string, for more you must pass an array of strings. In case of external modules, remember they need to be added as a dependency in `package.json` of your template.
+|`hooks`| Object[String, String] or Object[String, Array[String]] | A list of modules containing hooks, except for the ones you keep locally in your template in default location. For each module you must specify the exact name of the hook that should be used in the template. For a single hook you can specify it as a string, for more you must pass an array of strings. In case of external modules, remember they need to be added as a dependency in `package.json` of your template. There is also [an official hooks library](hooks#official-library) always included in the generator. As this is a library of multiple hooks, you still need to explicitly specify in the configuration which one you want to use. Use `@asyncapi/generator-hooks` as the library name.
 
 ### Example
 
@@ -64,7 +64,8 @@ The `generator` property from `package.json` file must contain a JSON object tha
     "my-package-with-filters"
   ],
   "hooks": {
-    "@asyncapi/generator-hooks": "hookFunctionName"
+    "@asyncapi/generator-hooks": "hookFunctionName",
+    "my-custom-hooks-package": ["myHook", "andAnotherOne"]
   }
 }
 ```

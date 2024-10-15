@@ -68,12 +68,7 @@ This library consists of:
 
 `apps/hooks` library contains generator filters that can be reused across multiple templates, helping to avoid redundant work. [Hooks](https://www.asyncapi.com/docs/tools/generator/hooks) are functions called by the generator on a specific moment in the generation process. Hooks can be anonymous functions but you can also add function names. These hooks can have arguments provided to them or being expected to return a value.
 
-This library consists of the following hooks:
-|Hook name|Hook type|Description|
-|---|---|---|
-| `createAsyncapiFile` | `generate:after` | It creates AsyncAPI file with content of the spec file passed to the generator. By default it created the file in the root of the generation output directory. This hook also supports custom parameters that user can pass to template generation. Parameter called `asyncapiFileDir` allows user to specify the location where spec file should be created. To make your template users use this parameter, you need to add it to the configuration of your template like other parameters |
-
-These hooks are included in generator without adding any specific dependency to the library. You still have to enable given hook in the configuration explicitly because some hooks can execute automatically without passing a specific parameter. 
+These hooks are included in generator without adding any specific dependency to the library. You still have to enable given hook in the configuration explicitly because some hooks can execute automatically without passing a specific parameter. [Learn more about configuration and what hooks are available out of the box](https://www.asyncapi.com/docs/tools/generator/hooks#official-library).
 
 ## Contributing
 

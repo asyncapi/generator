@@ -131,7 +131,7 @@ utils.getGeneratorVersion = () => {
  * @returns {Boolean} is function asynchronous
  */
 utils.isAsyncFunction = (fn) => {
-  return fn && fn.constructor && fn.constructor.name === 'AsyncFunction';
+  return fn?.constructor?.name === 'AsyncFunction';
 };
 
 /**

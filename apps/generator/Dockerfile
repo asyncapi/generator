@@ -7,6 +7,7 @@ ENV PUPPETEER_EXECUTABLE_PATH /usr/bin/chromium-browser
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
 
 # Include the ARG instruction in this build stage
+# Define ARG in build stage for use in RUN command
 ARG ASYNCAPI_GENERATOR_VERSION=1.10.9
 
 # Since 0.30.0 release Git is supported and required as a dependency
@@ -16,7 +17,7 @@ ARG ASYNCAPI_GENERATOR_VERSION=1.10.9
 # Install dependencies and AsyncAPI Generator in a single RUN command
 RUN apk --no-cache add git chromium && \
     rm -rf /var/cache/apk/* && \
-    npm install -g --ignore-scripts "@asyncapi/generator@${ASYNCAPI_GENERATOR_VERSION}"
+    npm install -g --ignore-scripts @asyncapi/generator@"${ASYNCAPI_GENERATOR_VERSION}"
 
 
 ENTRYPOINT [ "ag" ]

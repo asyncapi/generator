@@ -5,7 +5,7 @@ weight: 200
 
 This guide will walk you through the process of enabling models/types generation in a template by using [Modelina](https://www.asyncapi.com/tools/modelina).
 
-Modelina is an AsyncAPI library designed for generating data models using inputs such as [AsyncAPI](generator/asyncapi-document), OpenAPI, or JSON schema inputs. Its functionality revolves around creating data models from the provided AsyncAPI document and the model template, which defines message payloads. It is better to use Modelina in your template to handle model generation rather than providing custom templates.
+Modelina is an AsyncAPI library designed for generating data models using inputs such as [AsyncAPI](asyncapi-document.md), OpenAPI, or JSON schema inputs. Its functionality revolves around creating data models from the provided AsyncAPI document and the model template, which defines message payloads. It is better to use Modelina in your template to handle model generation rather than providing custom templates.
 
 You can integrate the work shown in this guide into a template by following the [tutorial about creating a template](https://www.asyncapi.com/docs/tools/generator/generator-template).
 
@@ -17,12 +17,12 @@ Install Modelina in your project using npm: `npm install --save @asyncapi/modeli
 
 Ensure your template's `package.json` file now contains Modelina pointing to its latest version:
 
- ```json
- "dependencies": {
-    // ...
-    "@asyncapi/modelina": "^2.0.5"
-    // ...
-  }
+```json
+"dependencies": {
+   // ...
+   "@asyncapi/modelina": "^2.0.5"
+   // ...
+ }
 ```
 
 ## Create a models.js file
@@ -43,12 +43,12 @@ import { PythonGenerator, FormatHelpers } from '@asyncapi/modelina';
 
 /**
  * Render all schema models
- * @param {RenderArgument} param0 
- * @returns 
+ * @param {RenderArgument} param0
+ * @returns
  */
 // 3
 export default async function schemaRender({ asyncapi }) {
-  // 4 
+  // 4
   const pythonGenerator = new PythonGenerator();
   // 5
   const models = await pythonGenerator.generate(asyncapi);
@@ -74,7 +74,7 @@ Let's break it down. The code snippet above does the following:
 5. The actual model generation is one line of code, and as a result you get an array of models that later you need to turn into files.
 6. You need to define an array that must be returned from `schemaRender` function. The array must contain React components, and in this case, the `<File>` component.
 7. Iterate over generated models and use their content to create proper definitions of `<File>` components.
-8. Notice how using Modelina helpers, in this case the  `toPascalCase` function, let's you make sure that the filename of your model follows specific case pattern.
+8. Notice how using Modelina helpers, in this case the `toPascalCase` function, let's you make sure that the filename of your model follows specific case pattern.
 9. Each component must be added into the `files` array that you later return from the default function. Notice the definition of the `<File>` component that enables you to provide the name of resulting file and the content of the model. Notice also `model.result` that shows that initially generated array with models did not contain raw models content but a set of output objects that contain not only `result` but also other info, like for example `modelName`.
 
 With such a model template that uses Modelina, as a result of generation process you would receive a set of model files in `$OUTPUT_DIR/src/models` directory.

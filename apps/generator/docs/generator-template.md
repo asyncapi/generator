@@ -19,8 +19,7 @@ In this tutorial:
 There is a list of [community maintained templates](https://www.asyncapi.com/docs/tools/generator/template#generator-templates-list), but what if you do not find what you need? In that case, you'll create a user-defined template that generates custom output from the generator.
 Before you create the template, you'll need to have an [AsyncAPI document](https://www.asyncapi.com/docs/tools/generator/asyncapi-document) that defines the properties you want to use in your template to test against. In this tutorial, you'll use the following template saved in the **test/fixtures/asyncapi.yml** file in your template project directory.
 
-``` yml
-
+```yml
 asyncapi: 2.6.0
 
 info:
@@ -75,7 +74,7 @@ components:
 Now your directory should look like this:
 
 ```
-python-mqtt-client-template 
+python-mqtt-client-template
 ├── template
 │   └── index.js
 ├── test
@@ -90,7 +89,7 @@ Lets break it down:
 
 The **package.json** file is used to define the dependencies for your template. Add the following code snippet to your **package.json** file:
 
-``` json
+```json
 {
   "name": "python-mqtt-client-template",
   "version": "0.0.1",
@@ -122,7 +121,7 @@ Here's what is contained in the code snippet above:
   - **supportedProtocols** - A list that specifies which protocols are supported by your template.
 - **dependencies** - specifies which version of [`@asyncapi/generator-react-sdk`](https://github.com/asyncapi/generator-react-sdk) should be used.
 
-Navigate to the ****python-mqtt-client-template** directory. Run the command `npm install` on your terminal to install the dependencies specified in **package.json**.
+Navigate to the \***\*python-mqtt-client-template** directory. Run the command `npm install` on your terminal to install the dependencies specified in **package.json**.
 
 ### index.js file
 
@@ -130,11 +129,11 @@ The **index.js** file is used to define the logic for your template. Inside the 
 
 ```js
 //1
-import { File } from '@asyncapi/generator-react-sdk'
+import { File } from "@asyncapi/generator-react-sdk";
 //2
 export default function ({ asyncapi }) {
-//3
-  return <File name="client.py">{asyncapi.info().title()}</File>
+  //3
+  return <File name="client.py">{asyncapi.info().title()}</File>;
 }
 ```
 
@@ -144,7 +143,7 @@ The code snippet above does the following:
 2. The `asyncapi` argument is an instance of the [AsyncAPI Parser](https://www.asyncapi.com/docs/tools/generator/parser). It will allow you to access the content of the AsyncAPI document in your template using helper functions.
 3. The `asyncapi.info().title()` is using the info() helper function to return the info object from the AsyncAPI document illustrated in the code snippet below:
 
-``` json
+```json
 info:
   title: Temperature Service
   version: 1.0.0
@@ -157,7 +156,7 @@ The `asyncapi.info().title()` returns `Temperature Service`.
 
 To see this in action, navigate to the **python-mqtt-client-template** directory. Then, run `asyncapi generate fromTemplate test/fixtures/asyncapi.yml ./ -o test/project` command on your terminal. If successful, you'll see the message below on your terminal:
 
-``` cmd
+```cmd
 Generation in progress. Keep calm and wait a bit... done
 Check out your shiny new generated files at test/project.
 ```
@@ -187,7 +186,7 @@ In this section, you'll:
 
 Here is the sample code to be pasted in the client.py you generated above running the `asyncapi generate fromTemplate test/fixtures/asyncapi.yml ./ -o test/project` command. It uses the `paho-mqtt` package.
 
-``` python
+```python
 # 1
 import paho.mqtt.client as mqtt
 # 2
@@ -195,7 +194,7 @@ mqttBroker = "test.mosquitto.org"
 
 class TemperatureServiceClient:
     def __init__(self):
-      # 3 
+      # 3
         self.client = mqtt.Client()
       # 4
         self.client.connect(mqttBroker)
@@ -204,7 +203,7 @@ class TemperatureServiceClient:
     def sendTemperatureChange(self, id):
       # 5
         topic = "temperature/changed"
-      # 6 
+      # 6
         self.client.publish(topic, id)
 ```
 
@@ -239,7 +238,7 @@ python-mqtt-client-template
         └── test.py
 ```
 
-``` python
+```python
 from client import TemperatureServiceClient
 from random import randrange
 import time
@@ -260,7 +259,7 @@ while True:
 
 Run the code above in your terminal using the command `python test.py`. You should see output similar to the snippet below logged on your terminal:
 
-``` cmd
+```cmd
 New temperature detected 64250266 sent to temperature/changed
 New temperature detected 36947728 sent to temperature/changed
 New temperature detected 72955029 sent to temperature/changed
@@ -272,8 +271,8 @@ To make sure your **test.py** and client code works check if the broker really r
 
 Open [**index.js**](#indexjs-file) and copy the content of [**client.py**](#1-create-the-client) and replace `{asyncapi.info().title()}` with it. It should look like the code snippet below now:
 
-``` js
-import { File } from '@asyncapi/generator-react-sdk';
+```js
+import { File } from "@asyncapi/generator-react-sdk";
 
 export default function ({ asyncapi }) {
   return (
@@ -292,7 +291,7 @@ class TemperatureServiceClient:
         topic = "temperature/changed"
         self.client.publish(topic, id)`}
     </File>
-  )
+  );
 }
 ```
 
@@ -300,7 +299,7 @@ class TemperatureServiceClient:
 
 In **package.json** you can have the scripts property that you invoke by calling `npm run <your_script>`. Add these scripts to **package.json**:
 
-``` json
+```json
     "scripts": {
         "test:clean": "rimraf test/project/client.py",
         "test:generate": "asyncapi generate fromTemplate test/fixtures/asyncapi.yml ./ --output test/project --force-write",
@@ -365,12 +364,11 @@ You can now replace the static broker from `mqttBroker = 'test.mosquitto.org'` t
 
 Now the template code looks like this:
 
-``` js
-import { File } from '@asyncapi/generator-react-sdk';
+```js
+import { File } from "@asyncapi/generator-react-sdk";
 
 // notice that now the template not only gets the instance of parsed AsyncAPI document but also the parameters
 export default function ({ asyncapi, params }) {
- 
   return (
     <File name="client.py">
       {`import paho.mqtt.client as mqtt
@@ -387,7 +385,7 @@ class TemperatureServiceClient:
         topic = "temperature/changed"
         self.client.publish(topic, id)`}
     </File>
-  )
+  );
 }
 ```
 
@@ -399,24 +397,25 @@ Python takes indentation very seriously, and our generated output will be Python
 
 ```js
 // 1
-import { File, Text } from '@asyncapi/generator-react-sdk'
+import { File, Text } from "@asyncapi/generator-react-sdk";
 export default function ({ asyncapi, params }) {
   return (
     <File name="client.py">
-    // 2
-      <Text newLines={2}>import paho.mqtt.client as mqtt</Text>
-    // 3
-      <Text newLines={2}>mqttBroker = "{asyncapi.servers().get(params.server).url()}"</Text>
-    // 4
-      <Text newLines={2}>class {asyncapi.info().title().replaceAll(' ', '')}Client:</Text>
-    // 5
-      <Text indent={2} newLines={2}>
+      // 2<Text newLines={2}>import paho.mqtt.client as mqtt</Text>
+      // 3<Text newLines={2}>
+        mqttBroker = "{asyncapi.servers().get(params.server).url()}"
+      </Text>
+      // 4
+      <Text newLines={2}>
+        class {asyncapi.info().title().replaceAll(" ", "")}Client:
+      </Text>
+      // 5<Text indent={2} newLines={2}>
         {`def __init__(self):
             self.client = mqtt.Client()
             self.client.connect(mqttBroker)`}
       </Text>
-      </File>
-  )
+    </File>
+  );
 }
 ```
 
@@ -427,7 +426,7 @@ export default function ({ asyncapi, params }) {
 5. There is no templating needed in the `__init__` function, there is only hardcoded information.
 
 > If you're on the fence about which templating engine you should use in your template, check out the [React render engine](https://www.asyncapi.com/docs/tools/generator/react-render-engine) and [nunjucks render engine](https://www.asyncapi.com/docs/tools/generator/nunjucks-render-engine) documentation.
-In the next section, you'll refactor your template to use React.
+> In the next section, you'll refactor your template to use React.
 
 #### 5c. Creating a reusable component
 
@@ -469,16 +468,16 @@ It's recommended to put reusable components outside the template directory in a 
  * As input it requires a list of Channel models from the parsed AsyncAPI document
  */
 export function TopicFunction({ channels }) {
-  const topicsDetails = getTopics(channels)
-  let functions = ''
+  const topicsDetails = getTopics(channels);
+  let functions = "";
 
   topicsDetails.forEach((t) => {
     functions += `def send${t.name}(self, id):
         topic = "${t.topic}"
-        self.client.publish(topic, id)\n`
-  })
+        self.client.publish(topic, id)\n`;
+  });
 
-  return functions
+  return functions;
 }
 
 /*
@@ -489,19 +488,19 @@ export function TopicFunction({ channels }) {
  * As input it requires a list of Channel models from the parsed AsyncAPI document
  */
 function getTopics(channels) {
-  const channelsCanSendTo = channels
-  let topicsDetails = []
+  const channelsCanSendTo = channels;
+  let topicsDetails = [];
 
   channelsCanSendTo.forEach((ch) => {
-    const topic = {}
-    const operationId = ch.operations().filterByReceive()[0].id()
-    topic.name = operationId.charAt(0).toUpperCase() + operationId.slice(1)
-    topic.topic = ch.address()
+    const topic = {};
+    const operationId = ch.operations().filterByReceive()[0].id();
+    topic.name = operationId.charAt(0).toUpperCase() + operationId.slice(1);
+    topic.topic = ch.address();
 
-    topicsDetails.push(topic)
-  })
+    topicsDetails.push(topic);
+  });
 
-  return topicsDetails
+  return topicsDetails;
 }
 ```
 
@@ -511,17 +510,21 @@ function getTopics(channels) {
 Import the `TopicFunction` component in your template code in **index.js** and add the template code to generate the functions to topics that the `Temperature Service` application is subscribed to. In your case, the final version of your template code should look like this:
 
 ```js
-import { File, Text } from '@asyncapi/generator-react-sdk'
-import { TopicFunction } from '../components/TopicFunction'
+import { File, Text } from "@asyncapi/generator-react-sdk";
+import { TopicFunction } from "../components/TopicFunction";
 
 export default function ({ asyncapi, params }) {
   return (
     <File name="client.py">
       <Text newLines={2}>import paho.mqtt.client as mqtt</Text>
 
-      <Text newLines={2}>mqttBroker = "{asyncapi.servers().get(params.server).url()}"</Text>
+      <Text newLines={2}>
+        mqttBroker = "{asyncapi.servers().get(params.server).url()}"
+      </Text>
 
-      <Text newLines={2}>class {asyncapi.info().title().replaceAll(' ', '')}Client:</Text>
+      <Text newLines={2}>
+        class {asyncapi.info().title().replaceAll(" ", "")}Client:
+      </Text>
 
       <Text indent={2} newLines={2}>
         {`def __init__(self):
@@ -533,9 +536,8 @@ export default function ({ asyncapi, params }) {
         <TopicFunction channels={asyncapi.channels().filterByReceive()} />
       </Text>
     </File>
-  )
+  );
 }
-
 ```
 
 Now your directory should look like this:
@@ -554,7 +556,6 @@ python-mqtt-client-template
         └── test.py
 ```
 
-
 Run `npm test` on your terminal to ensure everything works as expected.
 
 In the next section, you'll add another channel to **asyncapi.yml** file called `temperature/dropped` and `temperature/risen` then run the template again to make sure it still works as expected.
@@ -566,7 +567,7 @@ Update the AsyncAPI document to use two channels:
 ```yml
 channels:
   temperature/dropped:
-    description:  Notifies the user when the temperature drops past a certain point.
+    description: Notifies the user when the temperature drops past a certain point.
     publish:
       operationId: temperatureDrop
       message:

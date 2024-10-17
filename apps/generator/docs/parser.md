@@ -5,7 +5,7 @@ weight: 60
 
 ## Parser
 
-The AsyncAPI Parser is a package used to parse and validate the [AsyncAPI documents](asyncapi-document) in your Node.js or browser application. These documents can be either in YAML or JSON format.
+The AsyncAPI Parser is a package used to parse and validate the [AsyncAPI documents](asyncapi-document.md) in your Node.js or browser application. These documents can be either in YAML or JSON format.
 
 The Parser validates these documents using dedicated schema-supported plugins.
 
@@ -19,7 +19,7 @@ Supported schemas:
 
 The Parser allows the template developer to easily access schemas provided in the above supported formats. This is because the JavaScript parser converts all of them into JSON schema.
 
-If the document is valid, the Parser returns an `AsyncAPIDocument instance` with a set of helper functions that enable easier access to the contents of the AsyncAPI document. The parser provides dereferenced output. During the dereference process, the AsyncAPI parser substitutes a reference with a full definition. The dereferenced output is always in JSON format. The parser provides a message listing all errors if a document is invalid. The original AsyncAPI document is part of the [Template Context](template-context) as the generator also passes the original AsyncAPI document to the template context.
+If the document is valid, the Parser returns an `AsyncAPIDocument instance` with a set of helper functions that enable easier access to the contents of the AsyncAPI document. The parser provides dereferenced output. During the dereference process, the AsyncAPI parser substitutes a reference with a full definition. The dereferenced output is always in JSON format. The parser provides a message listing all errors if a document is invalid. The original AsyncAPI document is part of the [Template Context](template-context.md) as the generator also passes the original AsyncAPI document to the template context.
 
 The following AsyncAPI document example has two channels: `channelOne` and `channelTwo`. Each channel has one operation and a single message:
 
@@ -81,7 +81,7 @@ const messages = asyncAPIDocument.allMessages();
    - `invalid-yaml`
    - `impossible-to-convert-to-json`
 1. If the document is valid, the Parser modifies the AsyncAPI document, returns a set of helper functions, and bundles them together into the **asyncapi** variable. These helper functions in the form of an **asyncapi** variable are passed to the **Template Context**.
-1. The Template Context passes all of these values to the [**Render Engine**](react-render-engine) of your choice. Finally, the Render Engine generates whatever output you may have specified in your template. (i.e. code, documentation, diagrams, pdfs, applications, etc.)
+1. The Template Context passes all of these values to the [**Render Engine**](react-render-engine.md) of your choice. Finally, the Render Engine generates whatever output you may have specified in your template. (i.e. code, documentation, diagrams, pdfs, applications, etc.)
 
 ```mermaid
 graph TD

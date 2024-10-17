@@ -2,6 +2,7 @@
 title: "Template development"
 weight: 80
 ---
+
 > **Note**
 > It is advised against attempting to manually template types and models from scratch using the AsyncAPI templating engines such as Nunjucks and React render engines. Instead, it is recommended to use [AsyncAPI Modelina](/docs/tools/generator/model-generation) a dedicated library for model generation.
 
@@ -16,6 +17,7 @@ Let's break down the minimum template requirements: the `template` directory and
 The `template` directory holds all the files that will be used for generating the output. The generator will process all the files stored in this directory.
 
 The following code is an example of an `index.js` file inside the `template` folder.
+
 ```js
 import { File, Text } from "@asyncapi/generator-react-sdk";
 
@@ -35,7 +37,7 @@ The above example will produce an `asyncapi.md` file where usage of the AsyncAPI
 
 Before the generation process begins, the generator installs the template into its dependencies. A `package.json` file is necessary to identify the template name.
 
-The following block shows an example `package.json` file that points to the [React Render Engine](react-render-engine) and necessary dependencies:
+The following block shows an example `package.json` file that points to the [React Render Engine](react-render-engine.md) and necessary dependencies:
 
 ```json
 {
@@ -55,20 +57,20 @@ Every template must depend on the [`@asyncapi/generator-react-sdk` package](http
 
 You must configure the generator's `package.json` file to contain JSON objects with the required parameters for template configuration, such as:
 
-|Name|Type|Description|
-|---|---|---|
-|`renderer`| String | Its value can be either `react` or `nunjucks` (default).
-|`supportedProtocols`| [String] | A list with all the protocols this template supports.
-|`parameters`| Object[String, Object] | An object with all the parameters that can be passed when generating the template. When using the command line, it's done by indicating `--param name=value` or `-p name=value`.
-|`parameters[param].description`| String | A user-friendly description about the parameter.
-|`parameters[param].default`| Any | Default value of the parameter if not specified. Shouldn't be used for mandatory `required=true` parameters.
-|`parameters[param].required`| Boolean | Whether the parameter is required or not.
+| Name                            | Type                   | Description                                                                                                                                                                      |
+| ------------------------------- | ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `renderer`                      | String                 | Its value can be either `react` or `nunjucks` (default).                                                                                                                         |
+| `supportedProtocols`            | [String]               | A list with all the protocols this template supports.                                                                                                                            |
+| `parameters`                    | Object[String, Object] | An object with all the parameters that can be passed when generating the template. When using the command line, it's done by indicating `--param name=value` or `-p name=value`. |
+| `parameters[param].description` | String                 | A user-friendly description about the parameter.                                                                                                                                 |
+| `parameters[param].default`     | Any                    | Default value of the parameter if not specified. Shouldn't be used for mandatory `required=true` parameters.                                                                     |
+| `parameters[param].required`    | Boolean                | Whether the parameter is required or not.                                                                                                                                        |
 
 The above table lists some configuration options that help the generator achieve a specific set of tasks throughout the generation process. The `generator` property from 'package.json' contains all the configuration information. To learn more about template configuration and various supported parameters, read the [generator configuration file](configuration-file).
 
-> Whenever you make a change to the package.json, make sure you perform an update by running `npm install`;  this command synchronizes with the `package-lock.json` and validates the file.
+> Whenever you make a change to the package.json, make sure you perform an update by running `npm install`; this command synchronizes with the `package-lock.json` and validates the file.
 
-### `package.json` configuration options 
+### `package.json` configuration options
 
 The following examples show some advanced configurations that we can use in our `package.json` file:
 
@@ -77,18 +79,17 @@ The following examples show some advanced configurations that we can use in our 
   "name": "myTemplate",
   "generator": {
     "renderer": "react",
-    "supportedProtocols": [
-      "mqtt"
-    ]
+    "supportedProtocols": ["mqtt"]
   },
   "dependencies": {
     "@asyncapi/generator-react-sdk": "^0.2.25"
   }
 }
 ```
-The above `package.json` file has a newly added configuration called `supportedProtocols` which is set to a list containing only `mqtt`. This configuration displays all the protocols that this template supports. You can have multiple supported protocols in our template. 
 
-For example, if you want to generate an output using the above template, you need to have an AsyncAPI document with servers that use `mqtt` to generate your desired output. If your AsyncAPI document has server connections with `kafka`, the generation process will be terminated since the only supported protocol mentioned is `mqtt`. 
+The above `package.json` file has a newly added configuration called `supportedProtocols` which is set to a list containing only `mqtt`. This configuration displays all the protocols that this template supports. You can have multiple supported protocols in our template.
+
+For example, if you want to generate an output using the above template, you need to have an AsyncAPI document with servers that use `mqtt` to generate your desired output. If your AsyncAPI document has server connections with `kafka`, the generation process will be terminated since the only supported protocol mentioned is `mqtt`.
 
 ### Accessing template parameters
 
@@ -99,14 +100,12 @@ Additionally, we can also have a configuration called `parameters`, which is an 
   "name": "myTemplate",
   "generator": {
     "renderer": "react",
-    "supportedProtocols": [
-      "mqtt"
-    ],
+    "supportedProtocols": ["mqtt"],
     "parameters": {
-        "version": {
-          "description": "Overrides application version under `info.version` in the AsyncAPI document.",
-          "required": false
-        }
+      "version": {
+        "description": "Overrides application version under `info.version` in the AsyncAPI document.",
+        "required": false
+      }
     }
   },
   "dependencies": {
@@ -122,7 +121,7 @@ The changes done in the template will be as follows:
 Original:
 
 ```js
-<Text>App name: **{ asyncapi.info().title() }**</Text>
+<Text>App name: **{asyncapi.info().title()}**</Text>
 ```
 
 Newer:
@@ -145,12 +144,13 @@ Hooks help you change the specification version with the new `version` that you 
 
 ```js
 module.exports = {
-  'generate:before': ({ asyncapi, templateParams = {} }) => {
+  "generate:before": ({ asyncapi, templateParams = {} }) => {
     const version = templateParams.version || asyncapi.info().version();
     asyncapi._json.info.version = version;
-  }
+  },
 };
 ```
+
 This can be an even better alternative to overriding the `version` parameter we discussed in the previous section. A markdown document will be generated, and the AsyncAPI document passed to the generator will be returned with the overwritten version.
 
 The updated template looks like the following:

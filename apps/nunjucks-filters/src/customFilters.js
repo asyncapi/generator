@@ -58,7 +58,7 @@ function getPayloadExamples(msg) {
   }
 
   const payload = msg.payload();
-  if (payload && payload.examples()) {
+  if (payload?.examples()) {
     return payload.examples().map(example => ({ example }));
   }
 }
@@ -90,7 +90,7 @@ function getHeadersExamples(msg) {
   }
 
   const headers = msg.headers();
-  if (headers && headers.examples()) {
+  if (headers?.examples()) {
     return headers.examples().map(example => ({ example }));
   }
 }
@@ -120,7 +120,7 @@ filter.oneLine = oneLine;
 
 /**
  * Generate JSDoc from message properties of the header and the payload
- * 
+ *
  * @example
  * docline(
  *  Schema {
@@ -134,9 +134,9 @@ filter.oneLine = oneLine;
  *   my-app-header,
  *   options.message.headers
  * )
- * 
+ *
  * Returned value will be ->  * @param {integer} options.message.headers.my-app-header
- * 
+ *
  * @field {object} - Property object
  * @fieldName {string} - Name of documented property
  * @scopePropName {string} - Name of param for JSDocs
@@ -144,34 +144,36 @@ filter.oneLine = oneLine;
  */
 function docline(field, fieldName, scopePropName) {
   /* eslint-disable sonarjs/cognitive-complexity */
+  const getType = (f) => f.type() || 'string';
+  const getDescription = (f) => f.description() ? ` - ${f.description().replace(/\r?\n|\r/g, '')}` : '';
+  const getDefault = (f, type) => (f.default() && type === 'string') ? `'${f.default()}'` : f.default();
+  const getPName = (pName) => pName ? `${pName}.` : '';
+
+  const buildLineCore = (type, def, pName, fName) => {
+    const paramName = `${pName}${fName}`;
+    const defaultValue = def !== undefined ? `=${def}` : '';
+    return `* @param {${type}} ${paramName}${defaultValue}`;
+  };
+  
   const buildLine = (f, fName, pName) => {
-    const type = f.type() ? f.type() : 'string';
-    const description = f.description() ? ` - ${f.description().replace(/\r?\n|\r/g, '')}` : '';
-    let def = f.default();
-
-    if (def && type === 'string') def = `'${def}'`;
-
-    let line;
-    if (def !== undefined) {
-      line = ` * @param {${type}} [${pName ? `${pName}.` : ''}${fName}=${def}]`;
-    } else {
-      line = ` * @param {${type}} ${pName ? `${pName}.` : ''}${fName}`;
-    }
-
-    if (type === 'object') {
-      let lines = `${line}\n`;
-      let first = true;
-      for (const propName in f.properties()) {
-        lines = `${lines}${first ? '' : '\n'}${buildLine(f.properties()[propName], propName, `${pName ? `${pName}.` : ''}${fName}`)}`;
-        first = false;
-      }
-      return lines;
-    }
-
-    return `${line}${description}`;
+    const type = getType(f);
+    const def = getDefault(f, type);
+    const line = buildLineCore(type, def, getPName(pName), fName);
+    return line + (type === 'object' ? '' : getDescription(f));
   };
 
-  return buildLine(field, fieldName, scopePropName);
+  const buildObjectLines = (f, fName, pName) => {
+    const properties = f.properties();
+    const mainLine = buildLine(f, fName, pName);
+
+    return `${mainLine  }\n${  Object.keys(properties).map((propName) =>
+      buildLine(properties[propName], propName, `${getPName(pName)}${fName}`)
+    ).join('\n')}`;
+  };
+
+  return getType(field) === 'object'
+    ? buildObjectLines(field, fieldName, scopePropName)
+    : buildLine(field, fieldName, scopePropName);
 }
 filter.docline = docline;
 
@@ -179,7 +181,7 @@ filter.docline = docline;
  * Helper function to replace server variables in the url with actual values
  * @url {string} - url string
  * @serverserverVariables {Object} - Variables model map
- * @returns {string} 
+ * @returns {string}
  */
 function replaceServerVariablesWithValues(url, serverVariables) {
   const getVariablesNamesFromUrl = (inputUrl) => {

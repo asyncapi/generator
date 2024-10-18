@@ -1,5 +1,5 @@
-const fs = require('fs');
-const chokidar = require('chokidar');
+const fs = require("fs");
+const chokidar = require("chokidar");
 
 /**
  * Class to watch for change in certain file(s)
@@ -14,7 +14,7 @@ class Watcher {
     //Ensure all backwards slashes are replaced with forward slash based on the requirement from chokidar
     for (const pathIndex in this.paths) {
       const path = this.paths[pathIndex];
-      this.paths[pathIndex] = path.replace(/[\\]/g, '/');
+      this.paths[pathIndex] = path.replace(/[\\]/g, "/");
     }
     this.fsWait = false;
     this.watchers = {};
@@ -29,8 +29,19 @@ class Watcher {
    * @param {*} errorCallback Calback to call when it is no longer possible to watch a file.
    */
   initiateWatchOnPath(path, changeCallback, errorCallback) {
-    const watcher = chokidar.watch(path, {ignoreInitial: true, ignored: this.ignorePaths});
-    watcher.on('all', (eventType, changedPath) => this.fileChanged(path, changedPath, eventType, changeCallback, errorCallback));
+    const watcher = chokidar.watch(path, {
+      ignoreInitial: true,
+      ignored: this.ignorePaths,
+    });
+    watcher.on("all", (eventType, changedPath) =>
+      this.fileChanged(
+        path,
+        changedPath,
+        eventType,
+        changeCallback,
+        errorCallback
+      )
+    );
     this.watchers[path] = watcher;
   }
 
@@ -53,11 +64,20 @@ class Watcher {
    * @param {*} changeCallback Callback to call when changed occur.
    * @param {*} errorCallback Calback to call when it is no longer possible to watch a file.
    */
-  fileChanged(listenerPath, changedPath, eventType, changeCallback, errorCallback) {
+  fileChanged(
+    listenerPath,
+    changedPath,
+    eventType,
+    changeCallback,
+    errorCallback
+  ) {
     try {
       if (fs.existsSync(listenerPath)) {
         const newEventType = this.convertEventType(eventType);
-        this.filesChanged[changedPath] = { eventType: newEventType, path: changedPath};
+        this.filesChanged[changedPath] = {
+          eventType: newEventType,
+          path: changedPath,
+        };
         // Since multiple changes can occur at the same time, lets wait a bit before processing.
         if (this.fsWait) return;
         this.fsWait = setTimeout(async () => {
@@ -82,22 +102,22 @@ class Watcher {
     let newEventType = currentEventType;
     //Change the naming of the event type
     switch (newEventType) {
-    case 'unlink':
-    case 'unlinkDir':
-      newEventType = 'removed';
-      break;
-    case 'addDir':
-    case 'add':
-      newEventType = 'added';
-      break;
-    case 'change':
-      newEventType = 'changed';
-      break;
-    case 'rename':
-      newEventType = 'renamed';
-      break;
-    default:
-      newEventType = `unknown (${currentEventType})`;
+      case "unlink":
+      case "unlinkDir":
+        newEventType = "removed";
+        break;
+      case "addDir":
+      case "add":
+        newEventType = "added";
+        break;
+      case "change":
+        newEventType = "changed";
+        break;
+      case "rename":
+        newEventType = "renamed";
+        break;
+      default:
+        newEventType = `unknown (${currentEventType})`;
     }
     return newEventType;
   }
@@ -137,7 +157,7 @@ class Watcher {
       const watcher = this.watchers[path];
       if (watcher !== null) {
         watcher.close();
-        this.watchers[path] = null;
+        delete this.watchers[path];
       } else {
         //Watcher not found for path
       }

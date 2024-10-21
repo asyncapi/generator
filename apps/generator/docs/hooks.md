@@ -19,7 +19,7 @@ The following types of hooks are currently supported:
 
 The generator parses:
 - All the files in the `.hooks` directory inside the template.
-- All modules listed in the template configuration and triggers only hooks that names were added to the config. You can use an [official hooks library](#official-library) that is bundled together with the generator. To learn how to add hooks to configuration [read more about the configuration file](configuration-file).
+- All modules listed in the template configuration and triggers only hooks whose names were added to the config. You can use an [official hooks library](#official-library) that is bundled together with the generator. To learn how to add hooks to configuration [read more about the configuration file](configuration-file).
 
 ## Examples
 
@@ -87,12 +87,12 @@ module.exports = {
 
 ## Official library
 
-It is a library of reusable hooks that you can use in your templates. You only have to add it's name to configuration: `@asyncapi/generator-hooks` and specify which hook you want to enable.
+It is a library of reusable hooks that you can use in your templates. You only have to add its name to the configuration: `@asyncapi/generator-hooks` and specify which hook you want to enable.
 
 This library consists of the following hooks:
 |Hook name|Hook type|Description|
 |---|---|---|
-| `createAsyncapiFile` | `generate:after` | It creates AsyncAPI file with content of the spec file passed to the generator. By default it created the file in the root of the generation output directory. This hook also supports custom parameters that user can pass to template generation. Parameter called `asyncapiFileDir` allows user to specify the location where spec file should be created. To make your template users use this parameter, you need to add it to the configuration of your template like other parameters |
+| `createAsyncapiFile` | `generate:after` | It creates an AsyncAPI file with the content of the spec file passed to the generator. By default, it creates the file in the root of the generation output directory. This hook also supports custom parameters that the user can pass to template generation. The parameter called `asyncapiFileDir` allows the user to specify the location where the spec file should be created. To make your template users use this parameter, you need to add it to the configuration of your template like other parameters |
 
 1. In your template configuration in `package.json` specify you want to use this library and what hook exactly:
     ```json

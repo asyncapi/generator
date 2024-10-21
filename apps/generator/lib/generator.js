@@ -875,7 +875,7 @@ class Generator {
     const shouldOverwriteFile = await this.shouldOverwriteFile(relativeTargetFile);
     if (!shouldOverwriteFile) return;
 
-    if (this.templateConfig.conditionalFiles && this.templateConfig.conditionalFiles[relativeSourceFile]) {
+    if (this.templateConfig.conditionalFiles?.[relativeSourceFile]) {
       const server = this.templateParams.server && asyncapiDocument.servers().get(this.templateParams.server);
       const source = jmespath.search({
         ...asyncapiDocument.json(),

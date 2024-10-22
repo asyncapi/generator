@@ -1,6 +1,7 @@
 import { File, Text } from '@asyncapi/generator-react-sdk';
+import PropTypes from 'prop-types';
 
-export default function({ asyncapi, params }) {
+const TestFile = ({ asyncapi, params }) => {
   return (
     <File name="test-file.md">
       <Text>This is a markdown file for my application.</Text>
@@ -9,3 +10,16 @@ export default function({ asyncapi, params }) {
     </File>
   );
 }
+
+//props validation
+TestFile.propTypes = {
+  params: PropTypes.shape({
+    version: PropTypes.string.isRequired,  
+    mode: PropTypes.string.isRequired, 
+  }).isRequired,
+  asyncapi: PropTypes.shape({
+    info: PropTypes.func.isRequired,
+  }).isRequired
+};
+
+export default TestFile

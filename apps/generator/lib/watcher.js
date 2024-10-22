@@ -137,7 +137,7 @@ class Watcher {
       const watcher = this.watchers[path];
       if (watcher !== null) {
         watcher.close();
-        this.watchers[path] = null;
+        delete this.watchers[path];
       } else {
         //Watcher not found for path
       }

@@ -1,4 +1,5 @@
 'use strict';
+import PropTypes from 'prop-types';
 
 require('source-map-support/register');
 const generatorReactSdk = require('@asyncapi/generator-react-sdk');
@@ -19,6 +20,17 @@ function testFile_md ({
     })]
   });
 }
+
+//props validation
+testFile_md.propTypes = {
+  params: PropTypes.shape({
+    version: PropTypes.string.isRequired,  
+    mode: PropTypes.string.isRequired, 
+  }).isRequired,
+  asyncapi: PropTypes.shape({
+    info: PropTypes.func.isRequired,
+  }).isRequired
+};
 
 module.exports = testFile_md;
 //# sourceMappingURL=test-file.md.js.map

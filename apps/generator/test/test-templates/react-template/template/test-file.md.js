@@ -1,7 +1,7 @@
 import { File, Text } from '@asyncapi/generator-react-sdk';
 import PropTypes from 'prop-types';
 
-const TestFile = ({ asyncapi, params }) => {
+function TestFile ({ asyncapi, params }) {
   return (
     <File name="test-file.md">
       <Text>This is a markdown file for my application.</Text>

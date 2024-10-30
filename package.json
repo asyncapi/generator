@@ -19,7 +19,8 @@
     "generator:lint": "turbo run lint --filter=@asyncapi/generator",
     "generator:lint:tpl:validator": "turbo run lint:tpl:validator --filter=@asyncapi/generator",
     "generator:update:snapshot": "turbo run test:integration:update --filter=@asyncapi/generator",
-    "nunjucks-filters:test": "turbo run test --filter=@asyncapi/nunjucks-filters"
+    "nunjucks-filters:test": "turbo run test --filter=@asyncapi/nunjucks-filters",
+    "components:test": "turbo run test --filter=@asyncapi/generator-components"
   },
   "devDependencies": {
     "turbo": "1.13.3"

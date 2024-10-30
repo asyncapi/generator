@@ -2,9 +2,9 @@
   "name": "@asyncapi/generator-components",
   "version": "1.0.0",
   "description": "Package with reusable components for generation using React render engine",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --coverage"
   },
   "repository": {
     "type": "git",
@@ -15,5 +15,36 @@
   "dependencies": {
     "@asyncapi/generator-react-sdk": "^1.1.2",
     "@asyncapi/modelina": "^4.0.0-next.62"
+  },
+  "devDependencies": {
+    "jest-esm-transformer": "^1.0.0"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "jsx"
+    ],
+    "setupFilesAfterEnv": [
+      "./test/setupTests.js"
+    ],
+    "transform": {
+      "^.+\\.jsx?$": "babel-jest"
+    },
+    "moduleNameMapper": {
+      "^nimma/legacy$": "<rootDir>/../../node_modules/nimma/dist/legacy/cjs/index.js",
+      "^nimma/(.*)": "<rootDir>/../../node_modules/nimma/dist/cjs/$1"
+    }
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env",
+      [
+        "@babel/preset-react",
+        {
+          "runtime": "automatic"
+        }
+      ]
+    ]
   }
 }

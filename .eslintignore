@@ -3,4 +3,4 @@ apps/generator/output/*
 .github/templates-list-validator/dist/*
 apps/generator/test/temp/*
 apps/generator/test/test-templates/react-template/__transpiled/*
-
+apps/components/lib/*

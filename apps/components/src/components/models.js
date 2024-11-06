@@ -1,5 +1,4 @@
 import { File } from '@asyncapi/generator-react-sdk';
-import { AsyncAPIDocumentInterface } from '@asyncapi/parser';
 import {
   PythonGenerator,
   JavaGenerator,
@@ -60,8 +59,8 @@ export async function Models({ asyncapi, language = 'python', format = 'toPascal
 
   // Create the generator instance with presets and constraints
   const generator = (presets || constraints) 
-  ? new GeneratorClass({ ...(presets && { presets }), ...(constraints && { constraints }) })
-  : new GeneratorClass();
+    ? new GeneratorClass({ ...(presets && { presets }), ...(constraints && { constraints }) })
+    : new GeneratorClass();
 
   // Get the format helper function, defaulting to toPascalCase if unknown
   const formatHelper = formatHelpers[format] || formatHelpers.toPascalCase;

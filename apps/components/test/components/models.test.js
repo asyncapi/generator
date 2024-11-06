@@ -13,8 +13,14 @@ describe('Integration Tests for models function', () => {
     parsedAsyncAPIDocument = parseResult.document;
   });
 
-  test('renders default as Python models correctly', async () => {
+  test('renders default as Python models', async () => {
     const result = await Models({asyncapi: parsedAsyncAPIDocument});
+
+    expect(result).toMatchSnapshot();
+  });
+
+  test('renders Csharp models', async () => {
+    const result = await Models({asyncapi: parsedAsyncAPIDocument, language: 'csharp'});
 
     expect(result).toMatchSnapshot();
   });

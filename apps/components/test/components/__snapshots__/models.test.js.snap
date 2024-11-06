@@ -1,6 +1,39 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Integration Tests for models function renders default as Python models correctly 1`] = `
+exports[`Integration Tests for models function renders Csharp models 1`] = `
+Array [
+  <File
+    name="UserSignedUp.cs"
+  >
+    public partial class UserSignedUp
+{
+  private string? displayName;
+  private string? email;
+  private Dictionary&lt;string, dynamic&gt;? additionalProperties;
+
+  public string? DisplayName 
+  {
+    get { return displayName; }
+    set { this.displayName = value; }
+  }
+
+  public string? Email 
+  {
+    get { return email; }
+    set { this.email = value; }
+  }
+
+  public Dictionary&lt;string, dynamic&gt;? AdditionalProperties 
+  {
+    get { return additionalProperties; }
+    set { this.additionalProperties = value; }
+  }
+}
+  </File>,
+]
+`;
+
+exports[`Integration Tests for models function renders default as Python models 1`] = `
 Array [
   <File
     name="UserSignedUp.py"

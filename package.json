@@ -6,6 +6,7 @@
     "build": "turbo build",
     "dev": "turbo dev",
     "test": "turbo run test",
+    "test:update": "turbo run test:update",
     "lint": "turbo lint",
     "lint:fix": "turbo run lint:fix",
     "generate:assets": "turbo run generate:assets && npm run generate:readme:toc",

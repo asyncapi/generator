@@ -13,6 +13,7 @@ Reference API documentation for AsyncAPI Generator library.
 * [Generator](#Generator)
     * [new Generator(templateName, targetDir, options)](#new_Generator_new)
     * _instance_
+        * [.compile](#Generator+compile) : `Boolean`
         * [.registry](#Generator+registry) : `Object`
         * [.templateName](#Generator+templateName) : `String`
         * [.targetDir](#Generator+targetDir) : `String`
@@ -64,6 +65,7 @@ Instantiates a new Generator object.
     - [.forceWrite] `Boolean` ` = false` - Force writing of the generated files to given directory even if it is a git repo with unstaged files or not empty dir. Default is set to false.
     - [.install] `Boolean` ` = false` - Install the template and its dependencies, even when the template has already been installed.
     - [.debug] `Boolean` ` = false` - Enable more specific errors in the console. At the moment it only shows specific errors about filters. Keep in mind that as a result errors about template are less descriptive.
+    - [.compile] `Boolean` ` = true` - Whether to compile the template or use the cached transpiled version provided by template in '__transpiled' folder
     - [.mapBaseUrlToFolder] `Object.<String, String>` - Optional parameter to map schema references from a base url to a local base folder e.g. url=https://schema.example.com/crm/  folder=./test/docs/ .
     - [.registry] `Object` - Optional parameter with private registry configuration
         - [.url] `String` - Parameter to pass npm registry url
@@ -84,6 +86,13 @@ const generator = new Generator('@asyncapi/html-template', path.resolve(__dirnam
   }
 });
 ```
+
+<a name="Generator+compile"></a>
+
+* generator.compile : `Boolean`** :
+Whether to compile the template or use the cached transpiled version provided by template in '__transpiled' folder.
+
+**Kind**: instance property of [`Generator`](#Generator)  
 
 <a name="Generator+registry"></a>
 

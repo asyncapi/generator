@@ -8,6 +8,8 @@
     "test": "turbo run test",
     "lint": "turbo lint",
     "lint:fix": "turbo run lint:fix",
+    "generate:assets": "turbo run generate:assets && npm run generate:readme:toc",
+    "generate:readme:toc": "markdown-toc -i README.md",
     "generator:test": "turbo run test --filter=@asyncapi/generator",
     "generator:test:dev": "turbo run test:dev",
     "generator:test:unit": "turbo run test:unit  --filter=@asyncapi/generator",
@@ -25,6 +27,7 @@
     "components:lint": "turbo run lint --filter=@asyncapi/generator-components"
   },
   "devDependencies": {
+    "markdown-toc": "^1.2.0",
     "turbo": "1.13.3"
   },
   "engines": {

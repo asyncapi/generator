@@ -62,8 +62,11 @@ describe('Integration testing generateFromFile() to make sure the result of the 
       templateParams: { version: 'v1', mode: 'production' }
     });
     await generator.generateFromFile(dummySpecPath);
-    const file = await readFile(path.join(outputDir, testOutputFile), 'utf8');
-    expect(file).toMatchSnapshot();
+    const mdFile = await readFile(path.join(outputDir, testOutputFile), 'utf8');
+    //react template has hooks lib enabled and generation of asyncapi document that was passed as input should work out of the box without adding @asyncapi/generator-hooks to dependencies
+    const asyncAPIFile = await readFile(path.join(outputDir, 'asyncapi.yaml'), 'utf8');
+    expect(mdFile).toMatchSnapshot();
+    expect(asyncAPIFile).toMatchSnapshot();
   });
 
   it('generate json based api with referenced JSON Schema', async () => {

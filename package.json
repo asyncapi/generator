@@ -21,7 +21,11 @@
     "generator:lint": "turbo run lint --filter=@asyncapi/generator",
     "generator:lint:tpl:validator": "turbo run lint:tpl:validator --filter=@asyncapi/generator",
     "generator:update:snapshot": "turbo run test:integration:update --filter=@asyncapi/generator",
-    "nunjucks-filters:test": "turbo run test --filter=@asyncapi/nunjucks-filters"
+    "nunjucks-filters:build": "turbo run build --filter=@asyncapi/nunjucks-filters",
+    "nunjucks-filters:test": "turbo run test --filter=@asyncapi/nunjucks-filters",
+    "nunjucks-filters:test:unit": "turbo run test:unit --filter=@asyncapi/nunjucks-filters",
+    "nunjucks-filters:test:integration": "turbo run test:integration --filter=@asyncapi/nunjucks-filters",
+    "nunjucks-filters:test:cleanup": "turbo run test:cleanup --filter=@asyncapi/nunjucks-filters"
   },
   "devDependencies": {
     "markdown-toc": "^1.2.0",

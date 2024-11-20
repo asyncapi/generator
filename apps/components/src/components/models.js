@@ -5,7 +5,8 @@ import {
   TypeScriptGenerator,
   CSharpGenerator,
   RustGenerator,
-  FormatHelpers
+  FormatHelpers,
+  JavaScriptGenerator
 } from '@asyncapi/modelina';
 
 /**
@@ -28,6 +29,7 @@ const generatorConfig = {
   typescript: { generator: TypeScriptGenerator, extension: 'ts' },
   rust: { generator: RustGenerator, extension: 'rs' },
   csharp: { generator: CSharpGenerator, extension: 'cs' },
+  js: { generator: JavaScriptGenerator, extension: 'js' },
 };
 
 /**

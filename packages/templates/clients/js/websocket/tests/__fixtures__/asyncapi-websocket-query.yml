@@ -1,0 +1,53 @@
+asyncapi: 3.0.0
+info:
+  title: Gemini Market Data Websocket API
+  version: 1.0.0
+  description: >
+    Market data is a public API that streams all the market data on a given
+    symbol.
+servers:
+  public:
+    host: api.gemini.com
+    protocol: wss
+channels:
+  marketDataV1:
+    address: '/v1/marketdata/{symbol}'
+    parameters:
+      symbol:
+        $ref: '#/components/parameters/symbol'
+    bindings:
+      ws:
+        bindingVersion: 0.1.0
+        query:
+          type: object
+          properties:
+            heartbeat:
+              type: boolean
+              default: false
+            top_of_book:
+              type: boolean
+              default: false
+            bids:
+              type: boolean
+              default: true
+            offers:
+              type: string
+
+  emptyChannel: {}
+
+  marketDataV1NoBinding:
+    address: '/v1/marketdata/{symbol}'
+    parameters:
+      symbol:
+        $ref: '#/components/parameters/symbol'
+
+components:
+  parameters:
+    symbol:
+      description: >
+        Symbols are formatted as CCY1CCY2 where prices are in CCY2 and
+        quantities are in CCY1.
+      enum:
+        - btcusd
+        - ethbtc
+        - ethusd

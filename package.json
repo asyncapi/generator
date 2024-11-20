@@ -6,6 +6,7 @@
     "build": "turbo build",
     "dev": "turbo dev",
     "test": "turbo run test",
+    "test:update": "turbo run test:update",
     "lint": "turbo lint",
     "lint:fix": "turbo run lint:fix",
     "generate:assets": "turbo run generate:assets && npm run generate:readme:toc",
@@ -21,7 +22,10 @@
     "generator:lint": "turbo run lint --filter=@asyncapi/generator",
     "generator:lint:tpl:validator": "turbo run lint:tpl:validator --filter=@asyncapi/generator",
     "generator:update:snapshot": "turbo run test:integration:update --filter=@asyncapi/generator",
-    "nunjucks-filters:test": "turbo run test --filter=@asyncapi/nunjucks-filters"
+    "nunjucks-filters:test": "turbo run test --filter=@asyncapi/nunjucks-filters",
+    "components:test": "turbo run test --filter=@asyncapi/generator-components",
+    "components:build": "turbo run build --filter=@asyncapi/generator-components",
+    "components:lint": "turbo run lint --filter=@asyncapi/generator-components"
   },
   "devDependencies": {
     "markdown-toc": "^1.2.0",

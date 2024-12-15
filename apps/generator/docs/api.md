@@ -75,12 +75,12 @@ Instantiates a new Generator object.
 **Example**  
 ```js
 const path = require('path');
-const generator = new Generator('@asyncapi/html-template', path.resolve(__dirname, 'example'));
+const generator = new Generator('@asyncapi/html-template@3.0.0 --use-new-generator', path.resolve(__dirname, 'example'));
 ```
 **Example** *(Passing custom params to the template)*  
 ```js
 const path = require('path');
-const generator = new Generator('@asyncapi/html-template', path.resolve(__dirname, 'example'), {
+const generator = new Generator('@asyncapi/html-template@3.0.0 --use-new-generator', path.resolve(__dirname, 'example'), {
   templateParams: {
     sidebarOrganization: 'byTags'
   }
@@ -487,10 +487,10 @@ Returns the content of a given template file.
 **Example**  
 ```js
 const Generator = require('@asyncapi/generator');
-const content = await Generator.getTemplateFile('@asyncapi/html-template', 'partials/content.html');
+const content = await Generator.getTemplateFile('@asyncapi/html-template@3.0.0 --use-new-generator', 'partials/content.html');
 ```
 **Example** *(Using a custom &#x60;templatesDir&#x60;)*  
 ```js
 const Generator = require('@asyncapi/generator');
-const content = await Generator.getTemplateFile('@asyncapi/html-template', 'partials/content.html', '~/my-templates');
+const content = await Generator.getTemplateFile('@asyncapi/html-template@3.0.0 --use-new-generator', 'partials/content.html', '~/my-templates');
 ```

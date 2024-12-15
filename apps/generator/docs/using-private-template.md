@@ -26,7 +26,7 @@ npm config set //verdaccio:4873/:_auth=$(echo -n 'username:password' | base64)
 ## Pulling private template using library:
 
 ```javascript
-const generator = new Generator('@asyncapi/html-template', 'output',
+const generator = new Generator('@asyncapi/html-template@3.0.0 --use-new-generator', 'output',
       { 
         debug: true,
         registry: {
@@ -38,4 +38,4 @@ const generator = new Generator('@asyncapi/html-template', 'output',
         }
       });
 ```
-Assuming you host `@asyncapi/html-template` in a private package registry like Verdaccio. To pull this template, you need to provide `registry.url` option that points to the registry URL and `registry.auth` as a base64 encoded value that represents the username and password. Instead of username and password, you can also pass `registry.token`.
+Assuming you host `@asyncapi/html-template@3.0.0 --use-new-generator` in a private package registry like Verdaccio. To pull this template, you need to provide `registry.url` option that points to the registry URL and `registry.auth` as a base64 encoded value that represents the username and password. Instead of username and password, you can also pass `registry.token`.

@@ -15,7 +15,7 @@ USAGE
 
 ARGUMENTS
   ASYNCAPI  - Local path, url or context-name pointing to AsyncAPI file
-  TEMPLATE  - Name of the generator template like for example @asyncapi/html-template or https://github.com/asyncapi/html-template
+  TEMPLATE  - Name of the generator template like for example @asyncapi/html-template@3.0.0 --use-new-generator or https://github.com/asyncapi/html-template
 
 FLAGS
   -d, --disable-hook=<value>...  Disable a specific hook type or hooks from a given hook type
@@ -30,7 +30,7 @@ FLAGS
   --map-base-url=<value>         Maps all schema references from base url to local folder
 
 EXAMPLES
-  $ asyncapi generate fromTemplate asyncapi.yaml @asyncapi/html-template --param version=1.0.0 singleFile=true --output ./docs --force-write
+  $ asyncapi generate fromTemplate asyncapi.yaml @asyncapi/html-template@3.0.0 --use-new-generator --param version=1.0.0 singleFile=true --output ./docs --force-write
 ```
 
 All templates are installable npm packages. Therefore, the value of `template` can be anything supported by `npm install`. Here's a summary of the possibilities:
@@ -51,8 +51,8 @@ npm install <folder>
 You can preinstall templates globally before installing the [AsyncAPI CLI](https://www.asyncapi.com/docs/tools/cli). The generator first tries to locate the template in local dependencies; if absent it checks where the global generator packages are installed.
 
 ```bash
-npm install -g @asyncapi/html-template@0.16.0
-asyncapi generate fromTemplate asyncapi.yaml @asyncapi/html-template
+npm install -g @asyncapi/html-template@3.0.0 --use-new-generator@0.16.0
+asyncapi generate fromTemplate asyncapi.yaml @asyncapi/html-template@3.0.0 --use-new-generator
 # The generator uses html-template version 0.16.0 and not the latest version.
 ```
 
@@ -60,29 +60,29 @@ asyncapi generate fromTemplate asyncapi.yaml @asyncapi/html-template
 
 **The shortest possible syntax:**
 ```bash
-asyncapi generate fromTemplate asyncapi.yaml @asyncapi/html-template
+asyncapi generate fromTemplate asyncapi.yaml @asyncapi/html-template@3.0.0 --use-new-generator
 ```
 
 **Generating from a URL:**
 ```bash
-asyncapi generate fromTemplate https://bit.ly/asyncapi @asyncapi/html-template
+asyncapi generate fromTemplate https://bit.ly/asyncapi @asyncapi/html-template@3.0.0 --use-new-generator
 ```
 
 **Specify where to put the result:**
 ```bash
-asyncapi generate fromTemplate asyncapi.yaml @asyncapi/html-template -o ./docs
+asyncapi generate fromTemplate asyncapi.yaml @asyncapi/html-template@3.0.0 --use-new-generator -o ./docs
 ```
 
 **Passing parameters to templates:**
 ```bash
-asyncapi generate fromTemplate asyncapi.yaml @asyncapi/html-template -o ./docs -p title='Hello from param'
+asyncapi generate fromTemplate asyncapi.yaml @asyncapi/html-template@3.0.0 --use-new-generator -o ./docs -p title='Hello from param'
 ```
 
 In the template you can use it like this: ` {{ params.title }}`
 
 **Disabling the hooks:**
 ```bash
-asyncapi generate fromTemplate asyncapi.yaml @asyncapi/html-template -o ./docs -d generate:before generate:after=foo,bar
+asyncapi generate fromTemplate asyncapi.yaml @asyncapi/html-template@3.0.0 --use-new-generator -o ./docs -d generate:before generate:after=foo,bar
 ```
 
 The generator skips all hooks of the `generate:before` type and `foo`, `bar` hooks of the `generate:after` type.
@@ -101,7 +101,7 @@ asyncapi generate fromTemplate asyncapi.yaml https://github.com/asyncapi/html-te
 
 **Map schema references from baseUrl to local folder:**
 ```bash
-asyncapi generate fromTemplate test/docs/apiwithref.json @asyncapi/html-template -o ./build/ --force-write --map-base-url https://schema.example.com/crm/:./test/docs/
+asyncapi generate fromTemplate test/docs/apiwithref.json @asyncapi/html-template@3.0.0 --use-new-generator -o ./build/ --force-write --map-base-url https://schema.example.com/crm/:./test/docs/
 ```
 
 The parameter `--map-base-url` maps external schema references to local folders.
@@ -122,7 +122,7 @@ asyncapi/cli [COMMAND HERE]
 docker run --rm -it \
    -v ${PWD}/test/fixtures/asyncapi_v1.yml:/app/asyncapi.yml \
    -v ${PWD}/output:/app/output \
-   asyncapi/cli generate fromTemplate -o /app/output /app/asyncapi.yml @asyncapi/html-template --force-write
+   asyncapi/cli generate fromTemplate -o /app/output /app/asyncapi.yml @asyncapi/html-template@3.0.0 --use-new-generator --force-write
 ```
 Note: Use ``` ` ``` instead of `\` for Windows.
 
@@ -133,18 +133,18 @@ Note: Use ``` ` ``` instead of `\` for Windows.
 Use the following npx command on your terminal:
 
 ```bash
-npx -p @asyncapi/cli asyncapi generate fromTemplate ./asyncapi.yaml @asyncapi/html-template
+npx -p @asyncapi/cli asyncapi generate fromTemplate ./asyncapi.yaml @asyncapi/html-template@3.0.0 --use-new-generator
 ```
 
 ## Using as a module/package
-Once you install the generator in your project, you can use it to generate whatever you want. The following code snippet is an example of HTML generation using the official `@asyncapi/html-template` template and fetching the spec document from the server using:
+Once you install the generator in your project, you can use it to generate whatever you want. The following code snippet is an example of HTML generation using the official `@asyncapi/html-template@3.0.0 --use-new-generator` template and fetching the spec document from the server using:
 ```
 https://raw.githubusercontent.com/asyncapi/asyncapi/2.0.0/examples/2.0.0/streetlights.yml
 ```
 
 ```js
 const path = require('path');
-const generator = new Generator('@asyncapi/html-template', path.resolve(__dirname, 'example'));
+const generator = new Generator('@asyncapi/html-template@3.0.0 --use-new-generator', path.resolve(__dirname, 'example'));
 
 try {
   await generator.generateFromURL('https://raw.githubusercontent.com/asyncapi/asyncapi/2.0.0/examples/2.0.0/streetlights.yml');

@@ -2,7 +2,7 @@
 
 require('source-map-support/register');
 var generatorReactSdk = require('@asyncapi/generator-react-sdk');
-var jsxRuntime = require('/Users/karinagornicka/Documents/GitHub/generator/node_modules/react/cjs/react-jsx-runtime.production.min.js');
+var jsxRuntime = require('react/cjs/react-jsx-runtime.production.min.js');
 
 /**
  * Get client name from AsyncAPI info.title

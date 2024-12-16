@@ -49,7 +49,6 @@
   "license": "Apache-2.0",
   "homepage": "https://github.com/asyncapi/generator",
   "dependencies": {
-    "@asyncapi/generator-components": "*",
     "@asyncapi/generator-react-sdk": "^1.1.2",
     "@asyncapi/multi-parser": "^2.1.1",
     "@asyncapi/nunjucks-filters": "*",
@@ -88,6 +87,7 @@
     "jsdoc-to-markdown": "^7.1.1",
     "markdown-toc": "^1.2.0",
     "rimraf": "^3.0.2",
-    "unixify": "^1.0.0"
+    "unixify": "^1.0.0",
+    "@asyncapi/generator-components": "*"
   }
 }

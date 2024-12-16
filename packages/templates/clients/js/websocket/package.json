@@ -1,7 +1,7 @@
 {
-  "name": "js-websocket-client",
+  "name": "@asyncapi/template-js-websocket-client",
   "version": "0.0.1",
-  "description": "This is a template generating JavaScript client",
+  "description": "This is a template generating JavaScript websocket client",
   "scripts": {
     "test": "npm run test:cleanup && jest --updateSnapshot",
     "test:cleanup": "rimraf \"tests/temp\""

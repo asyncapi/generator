@@ -2,7 +2,7 @@
 
 require('source-map-support/register');
 var generatorReactSdk = require('@asyncapi/generator-react-sdk');
-var jsxRuntime = require('/Users/karinagornicka/Documents/GitHub/generator/packages/templates/clients/js/websocket/node_modules/react/cjs/react-jsx-runtime.production.min.js');
+var jsxRuntime = require('/Users/karinagornicka/Documents/GitHub/generator/node_modules/react/cjs/react-jsx-runtime.production.min.js');
 
 /**
  * Get client name from AsyncAPI info.title
@@ -81,6 +81,7 @@ function client_js ({
   const server = asyncapi.servers().get(params.server);
   const info = asyncapi.info();
   const title = info.title();
+  //TODO at this moment this template shows usage of granular components and also generic Text component with lots of code but also not so nice to read. We need to figure the best way of handling this.
   return /*#__PURE__*/jsxRuntime.jsxs(generatorReactSdk.File, {
     name: params.clientFileName,
     children: [/*#__PURE__*/jsxRuntime.jsx(FileHeaderInfo, {

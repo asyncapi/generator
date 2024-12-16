@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "description": "Package with reusable components for generation using React render engine",
   "scripts": {
-    "test": "jest --coverage",
-    "test:update": "jest --coverage -u",
+    "test": "jest --coverage --updateSnapshot",
     "build": "babel src --out-dir lib",
     "prepublishOnly": "npm run build",
     "lint": "eslint --max-warnings 0 --config ../../.eslintrc --ignore-path ../../.eslintignore .",

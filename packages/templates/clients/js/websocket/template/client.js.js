@@ -1,5 +1,6 @@
 import { File, Text } from '@asyncapi/generator-react-sdk';
 import { getClientName } from '../helpers/utils';
+import { getServerUrl } from '../helpers/servers';
 import { FileHeaderInfo }  from '../components/FileHeaderInfo';
 import { Requires } from '../components/Requires';
 
@@ -7,9 +8,9 @@ export default function({ asyncapi, params }) {
   const server = asyncapi.servers().get(params.server);
   const info = asyncapi.info();
   const title = info.title();
-
+  //TODO at this moment this template shows usage of granular components and also generic Text component with lots of code but also not so nice to read. We need to figure the best way of handling this.
   return (
-    <File name="client.js">
+    <File name={params.clientFileName}>
       <FileHeaderInfo
         info={info}
         server={server}
@@ -18,9 +19,10 @@ export default function({ asyncapi, params }) {
       <Text>
         {`class ${getClientName(info)} {
   constructor() {
-    this.url = '${server.host()}';
+    this.url = '${getServerUrl(server)}';
     this.websocket = null;
     this.messageHandlers = [];
+    this.errorHandlers = [];
   }
 
   // Method to establish a WebSocket connection
@@ -45,9 +47,15 @@ export default function({ asyncapi, params }) {
         });
       };
 
-      // On error
+      // On error first call custom error handlers, then default error behavior
       this.websocket.onerror = (error) => {
-        console.error('WebSocket Error:', error);
+        if (this.errorHandlers.length > 0) {
+          // Call custom error handlers
+          this.errorHandlers.forEach(handler => handler(error));
+        } else {
+          // Default error behavior
+          console.error('WebSocket Error:', error);
+        }
         reject(error);
       };
 
@@ -58,8 +66,22 @@ export default function({ asyncapi, params }) {
     });
   }
 
+  // Method to register custom error handlers
   registerMessageHandler(handler) {
-    this.messageHandlers.push(handler);
+    if (typeof handler === 'function') {
+      this.messageHandlers.push(handler);
+    } else {
+      console.warn('Message handler must be a function');
+    }
+  }
+
+  // Method to register custom error handlers
+  registerErrorHandler(handler) {
+    if (typeof handler === 'function') {
+      this.errorHandlers.push(handler);
+    } else {
+      console.warn('Error handler must be a function');
+    }
   }
 
   // Method to handle message with callback

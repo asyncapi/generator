@@ -1,9 +1,9 @@
 import path from 'path';
 import { Parser, fromFile } from '@asyncapi/parser';
-import { getClientName } from '../helpers/utils';
+import { getClientName } from '../../helpers/utils';
 
 const parser = new Parser();
-const asyncapi_v3_path = path.resolve(__dirname, './__fixtures__/asyncapi-websocket-query.yml');
+const asyncapi_v3_path = path.resolve(__dirname, '../__fixtures__/asyncapi-websocket-query.yml');
 
 describe('getClientName integration test with AsyncAPI', () => {
   let parsedAsyncAPIDocument;

@@ -18,7 +18,8 @@
     "@babel/core": "^7.26.0",
     "@babel/preset-env": "^7.26.0",
     "@babel/preset-react": "^7.25.9",
-    "jest-esm-transformer": "^1.0.0"
+    "jest-esm-transformer": "^1.0.0",
+    "@asyncapi/generator": "*"
   },
   "jest": {
     "moduleFileExtensions": [
@@ -53,6 +54,11 @@
       "server": {
         "description": "The name of the server described in AsyncAPI document",
         "required": true
+      },
+      "clientFileName": {
+        "description": "The name of the generated client file",
+        "required": false,
+        "default": "client.js"
       }
     }
   }

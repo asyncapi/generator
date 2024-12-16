@@ -2,6 +2,8 @@
  * Get client name from AsyncAPI info.title
  *
  * @param {object} info - The AsyncAPI info object.
+ * 
+ * return {string} - The client name with "Client" appended at the end.
  */
 function getClientName(info) {
   const title = info.title();
@@ -11,6 +13,6 @@ function getClientName(info) {
     .replace(/^./, char => char.toUpperCase()) // Make the first letter uppercase
   }Client`;
 };
-  
+
 export { getClientName };
   

@@ -8,7 +8,7 @@ info:
 
 servers:
   echoServer:
-    host: wss://echo-websocket.hoppscotch.io
+    host: echo-websocket.hoppscotch.io
     protocol: wss
 
 channels:

@@ -2,12 +2,14 @@
 
 require('source-map-support/register');
 var generatorReactSdk = require('@asyncapi/generator-react-sdk');
-var jsxRuntime = require('/Users/karinagornicka/Documents/GitHub/generator/node_modules/react/cjs/react-jsx-runtime.production.min.js');
+var jsxRuntime = require('/Users/karinagornicka/Documents/GitHub/generator/packages/templates/clients/js/websocket/node_modules/react/cjs/react-jsx-runtime.production.min.js');
 
 /**
  * Get client name from AsyncAPI info.title
  *
  * @param {object} info - The AsyncAPI info object.
+ * 
+ * return {string} - The client name with "Client" appended at the end.
  */
 function getClientName(info) {
   const title = info.title();
@@ -16,6 +18,27 @@ function getClientName(info) {
   return `${title.replace(/\s+/g, '') // Remove all spaces
   .replace(/^./, char => char.toUpperCase()) // Make the first letter uppercase
   }Client`;
+}
+
+/**
+   * Get server URL from AsyncAPI server object.
+   *
+   * @param {object} server - The AsyncAPI server object.
+   * 
+   * return {string} - The server URL.
+   */
+function getServerUrl(server) {
+  let url = server.host();
+
+  //might be that somebody by mistake duplicated protocol info inside the host field
+  //we need to make sure host do not hold protocol info
+  if (server.protocol() && !url.includes(server.protocol())) {
+    url = `${server.protocol()}://${url}`;
+  }
+  if (server.hasPathname()) {
+    url = `${url}${server.pathname()}`;
+  }
+  return url;
 }
 
 function FileHeaderInfo({
@@ -59,16 +82,17 @@ function client_js ({
   const info = asyncapi.info();
   const title = info.title();
   return /*#__PURE__*/jsxRuntime.jsxs(generatorReactSdk.File, {
-    name: "client.js",
+    name: params.clientFileName,
     children: [/*#__PURE__*/jsxRuntime.jsx(FileHeaderInfo, {
       info: info,
       server: server
     }), /*#__PURE__*/jsxRuntime.jsx(Requires, {}), /*#__PURE__*/jsxRuntime.jsx(generatorReactSdk.Text, {
       children: `class ${getClientName(info)} {
   constructor() {
-    this.url = '${server.host()}';
+    this.url = '${getServerUrl(server)}';
     this.websocket = null;
     this.messageHandlers = [];
+    this.errorHandlers = [];
   }
 
   // Method to establish a WebSocket connection
@@ -93,9 +117,15 @@ function client_js ({
         });
       };
 
-      // On error
+      // On error first call custom error handlers, then default error behavior
       this.websocket.onerror = (error) => {
-        console.error('WebSocket Error:', error);
+        if (this.errorHandlers.length > 0) {
+          // Call custom error handlers
+          this.errorHandlers.forEach(handler => handler(error));
+        } else {
+          // Default error behavior
+          console.error('WebSocket Error:', error);
+        }
         reject(error);
       };
 
@@ -106,8 +136,22 @@ function client_js ({
     });
   }
 
+  // Method to register custom error handlers
   registerMessageHandler(handler) {
-    this.messageHandlers.push(handler);
+    if (typeof handler === 'function') {
+      this.messageHandlers.push(handler);
+    } else {
+      console.warn('Message handler must be a function');
+    }
+  }
+
+  // Method to register custom error handlers
+  registerErrorHandler(handler) {
+    if (typeof handler === 'function') {
+      this.errorHandlers.push(handler);
+    } else {
+      console.warn('Error handler must be a function');
+    }
   }
 
   // Method to handle message with callback

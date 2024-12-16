@@ -1,16 +1,25 @@
-const WSClient = require('./tests/temp/snapshotTestResult/client.js');
+const WSClient = require('./tests/temp/snapshotTestResult/client-postman.js');
 // Example usage
 const wsClient = new WSClient();
 
+// Example of how custom message handler that operates on incoming messages can look like
 function myHandler(message) {
+  console.log('====================');
   console.log('Just proving I got the message in myHandler:', message);
+  console.log('====================');  
+}
+
+// Example of custom error handler
+function myErrorHandler(error) {
+  console.error('Errors from Websocket:', error.message);
 }
 
 async function main() {
-// Connect to WebSocket
+  wsClient.registerMessageHandler(myHandler);
+  wsClient.registerErrorHandler(myErrorHandler);
+
   try {
     await wsClient.connect();
-    await wsClient.registerMessageHandler(myHandler);
 
     // Loop to send messages every 5 seconds
     const interval = 5000; // 5 seconds
@@ -26,7 +35,7 @@ async function main() {
       await new Promise(resolve => setTimeout(resolve, interval));
     }
   } catch (error) {
-    console.error('Failed to connect to WebSocket:', error);
+    console.error('Failed to connect to WebSocket:', error.message);
   }
 }
 

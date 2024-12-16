@@ -6,12 +6,32 @@ info:
     Market data is a public API that streams all the market data on a given
     symbol.
 servers:
-  public:
+  withHostDuplicatingProtocol:
+    host: wss://api.gemini.com
+    protocol: wss
+  withoutPathName:
     host: api.gemini.com
     protocol: wss
+  withVariables:
+    host: api.gemini.com
+    protocol: wss
+    pathname: /v1/marketdata/{symbol}
+    variables: 
+      symbol:
+        description: The symbol to get market data for.
+        enum:
+          - btcusd
+          - ethbtc
+          - ethusd
+        default: btcusd
+  withPathname:
+    host: api.gemini.com
+    protocol: wss
+    pathname: /v1/marketdata
+
 channels:
   marketDataV1:
-    address: '/v1/marketdata/{symbol}'
+    address: '{symbol}'
     parameters:
       symbol:
         $ref: '#/components/parameters/symbol'
@@ -36,10 +56,7 @@ channels:
   emptyChannel: {}
 
   marketDataV1NoBinding:
-    address: '/v1/marketdata/{symbol}'
-    parameters:
-      symbol:
-        $ref: '#/components/parameters/symbol'
+    address: '/'
 
 components:
   parameters:

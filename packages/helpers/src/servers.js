@@ -5,7 +5,7 @@
    * 
    * return {string} - The server URL.
    */
-function getServerUrl(server) {
+module.exports.getServerUrl = (server) => {
   let url = server.host();
 
   //might be that somebody by mistake duplicated protocol info inside the host field
@@ -19,9 +19,7 @@ function getServerUrl(server) {
   }
     
   return url;
-}
+};
 
 //TODO: this separate file for helpers for servers represents approach to keep all helpers in separate files related to extractions of data from specific high level AsyncAPI objects. Here we will have more helpers for example related to variables extraction from servers, security, etc.
-  
-export { getServerUrl };
     

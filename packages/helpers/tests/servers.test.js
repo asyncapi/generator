@@ -1,9 +1,9 @@
-import path from 'path';
-import { Parser, fromFile } from '@asyncapi/parser';
-import { getServerUrl } from '../../helpers/servers';
+const path = require('path');
+const { Parser, fromFile } = require('@asyncapi/parser');
+const { getServerUrl } = require('@asyncapi/generator-helpers');
 
 const parser = new Parser();
-const asyncapi_v3_path = path.resolve(__dirname, '../__fixtures__/asyncapi-websocket-query.yml');
+const asyncapi_v3_path = path.resolve(__dirname, './__fixtures__/asyncapi-websocket-query.yml');
 
 describe('getServerUrl integration test with AsyncAPI', () => {
   let parsedAsyncAPIDocument;

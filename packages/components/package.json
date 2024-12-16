@@ -13,7 +13,7 @@
   "main": "lib/index.js", 
   "repository": {
     "type": "git",
-    "url": "https://github.com/asyncapi/generator/apps/components"
+    "url": "https://github.com/asyncapi/generator/packages/components"
   },
   "author": "Lukasz Gornicki",
   "license": "Apache-2.0",
@@ -22,6 +22,7 @@
     "@asyncapi/modelina": "^4.0.0-next.62"
   },
   "devDependencies": {
+    "jest": "^27.3.1",
     "@babel/cli": "^7.25.9",
     "@babel/core": "^7.26.0",
     "@babel/preset-env": "^7.26.0",

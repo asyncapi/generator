@@ -5,7 +5,7 @@
  * 
  * return {string} - The client name with "Client" appended at the end.
  */
-function getClientName(info) {
+module.exports.getClientName = (info) => {
   const title = info.title();
   
   // Remove spaces, make the first letter uppercase, and add "Client" at the end
@@ -13,6 +13,4 @@ function getClientName(info) {
     .replace(/^./, char => char.toUpperCase()) // Make the first letter uppercase
   }Client`;
 };
-
-export { getClientName };
   

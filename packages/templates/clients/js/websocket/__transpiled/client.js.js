@@ -2,44 +2,8 @@
 
 require('source-map-support/register');
 var generatorReactSdk = require('@asyncapi/generator-react-sdk');
+var generatorHelpers = require('@asyncapi/generator-helpers');
 var jsxRuntime = require('react/cjs/react-jsx-runtime.production.min.js');
-
-/**
- * Get client name from AsyncAPI info.title
- *
- * @param {object} info - The AsyncAPI info object.
- * 
- * return {string} - The client name with "Client" appended at the end.
- */
-function getClientName(info) {
-  const title = info.title();
-
-  // Remove spaces, make the first letter uppercase, and add "Client" at the end
-  return `${title.replace(/\s+/g, '') // Remove all spaces
-  .replace(/^./, char => char.toUpperCase()) // Make the first letter uppercase
-  }Client`;
-}
-
-/**
-   * Get server URL from AsyncAPI server object.
-   *
-   * @param {object} server - The AsyncAPI server object.
-   * 
-   * return {string} - The server URL.
-   */
-function getServerUrl(server) {
-  let url = server.host();
-
-  //might be that somebody by mistake duplicated protocol info inside the host field
-  //we need to make sure host do not hold protocol info
-  if (server.protocol() && !url.includes(server.protocol())) {
-    url = `${server.protocol()}://${url}`;
-  }
-  if (server.hasPathname()) {
-    url = `${url}${server.pathname()}`;
-  }
-  return url;
-}
 
 function FileHeaderInfo({
   info,
@@ -88,9 +52,9 @@ function client_js ({
       info: info,
       server: server
     }), /*#__PURE__*/jsxRuntime.jsx(Requires, {}), /*#__PURE__*/jsxRuntime.jsx(generatorReactSdk.Text, {
-      children: `class ${getClientName(info)} {
+      children: `class ${generatorHelpers.getClientName(info)} {
   constructor() {
-    this.url = '${getServerUrl(server)}';
+    this.url = '${generatorHelpers.getServerUrl(server)}';
     this.websocket = null;
     this.messageHandlers = [];
     this.errorHandlers = [];
@@ -175,7 +139,7 @@ function client_js ({
   }
 }
 
-module.exports = ${getClientName(info)};`
+module.exports = ${generatorHelpers.getClientName(info)};`
     })]
   });
 }

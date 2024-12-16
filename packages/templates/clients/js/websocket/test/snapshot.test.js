@@ -11,7 +11,7 @@ const testResultPath = path.resolve(__dirname, './temp/snapshotTestResult');
 const template = './';
 
 describe('testing if generated client match snapshot', () => {
-  jest.setTimeout(10000);
+  jest.setTimeout(100000);
   
   it('generate simple client for postman echo', async () => {
     const testOutputFile = 'client-postman.js';

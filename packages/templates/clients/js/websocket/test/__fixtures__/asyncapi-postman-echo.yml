@@ -1,10 +1,10 @@
 asyncapi: 3.0.0
+
 info:
-  title: Postman Echo WebSocket
+  title: Postman Echo WebSocket Client
   version: 1.0.0
-  description: >
-    Understand how to use the Postman Echo WebSocket as a client.
-    The Postman Echo WebSocket server echoes back any messages sent to it. You can use this to test WebSocket connections and message flows.
+  description: Understand how to use the Postman Echo WebSocket as a client.
+    The Postman Echo WebSocket server echoes back any messages sent to it.
 
 servers:
   echoServer:
@@ -14,8 +14,7 @@ servers:
 
 channels:
   echo:
-    description: >
-      The main channel where messages are sent and echoed back by the Postman Echo WebSocket server. It also sends periodic status updates.
+    description: The main channel where messages are sent and echoed back by the Postman Echo WebSocket server.
     address: /
     messages:
       echo:
@@ -23,10 +22,11 @@ channels:
 
 operations:
   sendEchoMessage:
+    summary: Send a message to the Postman Echo server.
     action: send
     channel: 
       $ref: '#/channels/echo'
-    summary: Send a message to the Postman Echo server.
+
     reply:
       channel: 
         $ref: '#/channels/echo'
@@ -35,8 +35,7 @@ components:
   messages:
     echo:
       summary: A message exchanged with the echo server.
-      payload:
-        type: string
+      payload: {}
       examples:
         - name: string
           payload: test

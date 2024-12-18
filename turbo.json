@@ -1,5 +1,5 @@
 {
-  "$schema": "https://turbo.build/schema.json",
+  "$schema": "https://turbo.build/schema.v1.json",
   "pipeline": {
     "build": {
       "outputs": []
@@ -9,16 +9,20 @@
       "cache": false,
       "persistent": true
     },
-  "test": { "cache": false },
-  "test:unit": {"cache":false},
-  "test:integration": {"cache": false},
-  "test:cli": {},
-  "test:cleanup": {},
-  "docs": {},
-  "docker:build": {},
-  "lint": {},
-  "lint:fix":{"cache": false},
-  "lint:tpl:validator": {},
-  "test:integration:update":{"cache": false}
+    "test": { "cache": false },
+    "test:unit": {"cache":false},
+    "test:integration": {"cache": false},
+    "test:cli": {},
+    "test:cleanup": {},
+    "docs": {},
+    "docker:build": {},
+    "lint": {},
+    "lint:fix":{"cache": false},
+    "lint:tpl:validator": {},
+    "test:integration:update":{"cache": false},
+    "generate:assets": {
+      "dependsOn": [],
+      "outputs": ["assets/**"]
+    }
   }
 }

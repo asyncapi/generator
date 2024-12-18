@@ -72,6 +72,11 @@ npm config set -- //verdaccio:4873/:_auth=YWRtaW46bmltZGE=
 npm config set registry http://verdaccio:4873
 
 echo "##########
+Publish @asyncapi/generator-components to local npm-verdaccio
+##########"
+npm publish ../../../../packages/components
+
+echo "##########
 Publishing the correct template as 0.0.1
 ##########"
 npm publish ../test-templates/react-template

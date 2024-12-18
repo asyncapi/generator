@@ -2,17 +2,24 @@
   "$schema": "https://turbo.build/schema.v1.json",
   "pipeline": {
     "build": {
-      "outputs": []
+      "outputs": ["dist/**", "lib/**"]
     },
     "test:dev": {
       "interactive": true,
       "cache": false,
       "persistent": true
     },
-    "test": { "cache": false },
+    "test": { 
+      "dependsOn": ["build"],
+      "cache": false 
+    },
+    "test:update": { "cache": false },
     "test:unit": {"cache":false},
     "test:integration": {"cache": false},
-    "test:cli": {},
+    "test:cli": { 
+      "dependsOn": ["build"],
+      "cache": false 
+    },
     "test:cleanup": {},
     "docs": {},
     "docker:build": {},

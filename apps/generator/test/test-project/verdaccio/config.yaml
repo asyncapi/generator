@@ -10,7 +10,13 @@ packages:
   "react-template":
     access: admin
     publish: admin
+  "@asyncapi/generator-components":
+    access: admin
+    publish: admin
   "!react-template":
+    access: admin
+    proxy: npmjs
+  "!@asyncapi/generator-components":
     access: admin
     proxy: npmjs
 log: { type: stdout, format: pretty, level: error }

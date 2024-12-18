@@ -10,11 +10,11 @@ const dummySpecPath = path.resolve(__dirname, './docs/dummy.yml');
 const refSpecPath = path.resolve(__dirname, './docs/apiwithref.json');
 const refSpecFolder = path.resolve(__dirname, './docs/');
 const crypto = require('crypto');
-const mainTestResultPath = 'test/temp/integrationTestResult';
-const reactTemplate = 'test/test-templates/react-template';
-const nunjucksTemplate = 'test/test-templates/nunjucks-template';
+const mainTestResultPath = path.resolve(__dirname, './temp/integrationTestResult');
+const reactTemplate = path.resolve(__dirname, './test-templates/react-template');
+const nunjucksTemplate = path.resolve(__dirname, './test-templates/nunjucks-template');
 //temp location where react template is copied for each test that does some mutation on template files
-const copyOfReactTemplate = 'test/temp/reactTemplate';
+const copyOfReactTemplate = path.resolve(__dirname, './temp/reactTemplate');
 
 describe('Integration testing generateFromFile() to make sure the result of the generation is not changend comparing to snapshot', () => {
   const generateFolderName = () => {

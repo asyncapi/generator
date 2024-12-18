@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "description": "This is a template generating JavaScript websocket client",
   "scripts": {
-    "test": "npm run test:cleanup && jest --updateSnapshot",
+    "test": "npm run test:cleanup && jest  --coverage",
+    "test:update": "jest --updateSnapshot",
     "test:cleanup": "rimraf \"tests/temp\""
   },
   "author": "Lukasz Gornicki <lpgornicki@gmail.com>",

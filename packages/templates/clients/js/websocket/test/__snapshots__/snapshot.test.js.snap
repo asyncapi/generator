@@ -105,7 +105,7 @@ module.exports = HoppscotchEchoWebSocketClient;
 exports[`testing if generated client match snapshot generate simple client for postman echo 1`] = `
 "//////////////////////////////////////////////////////////////////////
 //
-// Postman Echo WebSocket - 1.0.0
+// Postman Echo WebSocket Client - 1.0.0
 // Protocol: wss
 // Host: ws.postman-echo.com
 // Path: /raw
@@ -114,7 +114,7 @@ exports[`testing if generated client match snapshot generate simple client for p
 
 const WebSocket = require('ws');
 
-class PostmanEchoWebSocketClient {
+class PostmanEchoWebSocketClientClient {
   constructor() {
     this.url = 'wss://ws.postman-echo.com/raw';
     this.websocket = null;
@@ -129,7 +129,7 @@ class PostmanEchoWebSocketClient {
 
       // On successful connection
       this.websocket.onopen = () => {
-        console.log('Connected to Postman Echo WebSocket server');
+        console.log('Connected to Postman Echo WebSocket Client server');
         resolve();
       };
 
@@ -158,7 +158,7 @@ class PostmanEchoWebSocketClient {
 
       // On connection close
       this.websocket.onclose = () => {
-        console.log('Disconnected from Postman Echo WebSocket server');
+        console.log('Disconnected from Postman Echo WebSocket Client server');
       };
     });
   }
@@ -201,6 +201,6 @@ class PostmanEchoWebSocketClient {
   }
 }
 
-module.exports = PostmanEchoWebSocketClient;
+module.exports = PostmanEchoWebSocketClientClient;
 "
 `;

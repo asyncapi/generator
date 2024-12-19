@@ -56,6 +56,17 @@ reactExport.renderReact = async (asyncapiDocument, filePath, extraTemplateData, 
   );
 };
 
+const skipOverwrite = (filePath, noOverwriteGlobs) => {
+  if (!Array.isArray(noOverwriteGlobs)) return false;
+  const shouldSkip = noOverwriteGlobs.some(globExp => minimatch(filePath, globExp));
+  if (shouldSkip) {
+    console.debug(`Skipping overwrite for: ${filePath}`);
+  }
+  return shouldSkip;
+};
+
+
+
 /**
  * Save the single rendered react content based on the meta data available.
  *
@@ -86,9 +97,10 @@ const saveContentToFile = async (renderedContent, outputPath, noOverwriteGlobs =
   // get the final file name of the file
   const finalFileName = path.basename(filePath);
   // check whether the filename should be ignored based on user's inputs
-  const shouldOverwrite = !noOverwriteGlobs.some(globExp => minimatch(finalFileName, globExp));
+  const shouldOverwrite = !skipOverwrite(filePath, noOverwriteGlobs);
 
   // Write the file only if it should not be skipped
+ 
   if (shouldOverwrite) {
     await writeFile(filePath, content, {
       mode: permissions

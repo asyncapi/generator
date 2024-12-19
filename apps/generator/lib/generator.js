@@ -91,6 +91,23 @@ class Generator {
    * @param {String} [options.registry.token]     Optional parameter to pass npm registry auth token that you can grab from .npmrc file
    */
 
+  /**
+   * Checks if a given file should be skipped based on the noOverwriteGlobs option.
+   *
+   * @private
+   * @param {string} filePath Path to the file to check against a list of glob patterns.
+   * @return {boolean}
+   */
+  skipOverwrite(filePath) {
+    if (!Array.isArray(this.noOverwriteGlobs)) return false;
+    const shouldSkip = this.noOverwriteGlobs.some(globExp => minimatch(filePath, globExp));
+    if (shouldSkip) {
+      console.debug(`Skipping overwrite for: ${filePath}`);
+    }
+    return shouldSkip;
+  }
+
+
   constructor(templateName, targetDir, { templateParams = {}, entrypoint, noOverwriteGlobs, disabledHooks, output = 'fs', forceWrite = false, install = false, debug = false, mapBaseUrlToFolder = {}, registry = {}, compile = true } = {}) {
     const options = arguments[arguments.length - 1];
     this.verifyoptions(options);
@@ -871,10 +888,14 @@ class Generator {
     const relativeTargetFile = path.relative(this.targetDir, targetFile);
 
     if (shouldIgnoreFile(relativeSourceFile)) return;
-
+    if (this.skipOverwrite(relativeTargetFile)) {
+      return;
+    }
     const shouldOverwriteFile = await this.shouldOverwriteFile(relativeTargetFile);
-    if (!shouldOverwriteFile) return;
-
+    if (!shouldOverwriteFile) {
+      log.debug(logMessage.skipOverwrite(sourceFile)); 
+      return;
+    }
     if (this.templateConfig.conditionalFiles?.[relativeSourceFile]) {
       const server = this.templateParams.server && asyncapiDocument.servers().get(this.templateParams.server);
       const source = jmespath.search({

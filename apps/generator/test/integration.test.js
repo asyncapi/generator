@@ -135,12 +135,19 @@ describe('Integration testing generateFromFile() to make sure the result of the 
     const testFilePath = path.normalize(path.resolve(outputDir, testOutputFile));
     await writeFile(testFilePath, testContent);
 
+      // Mock the console.debug method
+    const debugMock = jest.spyOn(console, 'debug').mockImplementation(() => {});
+
+
     // Manually create an output first, before generation, with additional custom file to validate if later it is still there, not overwritten
     const generator = new Generator(cleanReactTemplate, outputDir, {
       forceWrite: true,
       noOverwriteGlobs: [`**/${testOutputFile}`],
       debug: true,
     });
+
+
+    console.log('Generator options:', generator.options);
 
     await generator.generateFromFile(dummySpecPath);
 
@@ -152,5 +159,9 @@ describe('Integration testing generateFromFile() to make sure the result of the 
     /*TODO:
        Include log message test in the future to ensure that the log.debug for skipping overwrite is called
      */
+
+       expect(debugMock).toHaveBeenCalledWith(expect.stringContaining('Skipping overwrite for'));
+       // Restore the original console.debug method
+       debugMock.mockRestore();
   });
 });

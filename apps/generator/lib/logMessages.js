@@ -38,7 +38,7 @@ function relativeSourceFileNotGenerated(relativeSourceFile , subject) {
   return `${relativeSourceFile} was not generated because ${subject} specified in template configuration in conditionalFiles was not found in provided AsyncAPI specification file.`;
 }
 
-function write(testFilePath) {
+function skipOverwrite(testFilePath) {
   return `Skipping overwrite for: ${testFilePath}`;
 }
 
@@ -64,5 +64,5 @@ module.exports = {
   relativeSourceFileNotGenerated,
   conditionalFilesMatched,
   compileEnabled,
-  write
+  skipOverwrite
 };

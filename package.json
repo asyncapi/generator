@@ -21,7 +21,13 @@
     "generator:lint": "turbo run lint --filter=@asyncapi/generator",
     "generator:lint:tpl:validator": "turbo run lint:tpl:validator --filter=@asyncapi/generator",
     "generator:update:snapshot": "turbo run test:integration:update --filter=@asyncapi/generator",
-    "nunjucks-filters:test": "turbo run test --filter=@asyncapi/nunjucks-filters"
+    "nunjucks-filters:test": "turbo run test --filter=@asyncapi/nunjucks-filters",
+    "components:test": "turbo run test --filter=@asyncapi/generator-components",
+    "components:build": "turbo run build --filter=@asyncapi/generator-components",
+    "components:lint": "turbo run lint --filter=@asyncapi/generator-components",
+    "helpers:test": "turbo run test --filter=@asyncapi/generator-helpers",
+    "helpers:lint": "turbo run lint --filter=@asyncapi/generator-helpers",
+    "templates:test": "turbo run test --filter=@asyncapi/template*"
   },
   "devDependencies": {
     "markdown-toc": "^1.2.0",
@@ -33,6 +39,6 @@
   "packageManager": "npm@9.5.0",
   "workspaces": [
     "apps/*",
-    "packages/*"
+    "packages/**"
   ]
 }

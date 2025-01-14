@@ -436,7 +436,7 @@ class Generator {
    * @param  {String} asyncapiString AsyncAPI string to use as source.
    * @param  {Object} [parseOptions={}] AsyncAPI Parser parse options. Check out {@link https://www.github.com/asyncapi/parser-js|@asyncapi/parser} for more information.
    * @deprecated Use the `generate` function instead. Just change the function name and it works out of the box.
-   * @return {Promise}
+   * @return {Promise<TemplateRenderResult|undefined>}
    */
   async generateFromString(asyncapiString, parseOptions = {}) {
     const isParsableCompatible = asyncapiString && typeof asyncapiString === 'string';
@@ -466,7 +466,7 @@ class Generator {
    * }
    *
    * @param  {String} asyncapiURL Link to AsyncAPI file
-   * @return {Promise}
+   * @return {Promise<TemplateRenderResult|undefined>}
    */
   async generateFromURL(asyncapiURL) {
     const doc = await fetchSpec(asyncapiURL);
@@ -493,7 +493,7 @@ class Generator {
    * }
    *
    * @param  {String} asyncapiFile AsyncAPI file to use as source.
-   * @return {Promise}
+   * @return {Promise<TemplateRenderResult|undefined>}
    */
   async generateFromFile(asyncapiFile) {
     const doc = await readFile(asyncapiFile, { encoding: 'utf8' });

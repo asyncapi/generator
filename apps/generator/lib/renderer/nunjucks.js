@@ -3,7 +3,7 @@ const nunjucksExport = module.exports;
 
 /**
  * Configures Nunjucks templating system
- * 
+ * @deprecated This method is deprecated. For more details, see the release notes: https://github.com/asyncapi/generator/releases/tag/%40asyncapi%2Fgenerator%402.6.0
  * @private
  * @param {boolean} debug flag
  * @param {string} templateDir path
@@ -17,7 +17,7 @@ nunjucksExport.configureNunjucks = (debug, templateDir) => {
 
 /**
  * Renders the template with nunjucks and returns a string.
- * 
+ * @deprecated This method is deprecated. For more details, see the release notes: https://github.com/asyncapi/generator/releases/tag/%40asyncapi%2Fgenerator%402.6.0
  * @param {import('@asyncapi/parser').AsyncAPIDocument} asyncapiDocument 
  * @param {string} templateString template filecontent to be rendered with nunjucks
  * @param {string} filePath path to the template file

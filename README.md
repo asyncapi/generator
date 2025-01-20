@@ -1,5 +1,7 @@
 [![AsyncAPI Generator](./assets/readme-banner.png)](https://www.asyncapi.com/tools/generator)
 
+> Some parts of the AsyncAPI Generator are deprecated and the plan is to remove them in October 2025. For more details read notes from release [@asyncapi/generator@2.6.0](https://github.com/asyncapi/generator/releases/tag/%40asyncapi%2Fgenerator%402.6.0).
+
 This is a Monorepo managed using [Turborepo](https://turbo.build/) and contains the following package:
 
 1. [Generator](apps/generator): This is a tool that you can use to generate whatever you want basing on the AsyncAPI specification file as an input.
@@ -8,6 +10,8 @@ This is a Monorepo managed using [Turborepo](https://turbo.build/) and contains 
 
 1. [Nunjucks-filters](apps/nunjucks-filters): This library contains generator filters that can be reused across multiple templates, helping to avoid redundant work. These filters are designed specifically for Nunjucks templates and are included by default with the generator, so there's no need to add them to dependencies separately.
 
+[!IMPORTANT]
+Deprecation Notice: The Nunjucks renderer engine is deprecated and will be removed in future releases. We strongly recommend using the React renderer engine instead, you can find how to migrate from Nunjucks to React in the [migration guide](apps/generator/docs/nunjucks-depreciate.md)
 
 ![npm](https://img.shields.io/npm/v/@asyncapi/generator?style=for-the-badge) ![npm](https://img.shields.io/npm/dt/@asyncapi/generator?style=for-the-badge)
 

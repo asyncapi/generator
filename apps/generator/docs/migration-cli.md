@@ -3,7 +3,7 @@ title: "Migrating from `ag` CLI to AsyncAPI CLI"
 weight: 260
 ---
 
-This guide provides detailed instructions on how to transition from old `ag` Generator CLI  to the new AsyncAPI CLI.
+This guide provides detailed instructions on how to transition from the old `ag` Generator CLI  to the new AsyncAPI CLI.
 
 ## Options Overview
 
@@ -40,11 +40,11 @@ Here is a list of `ag` options and their equivalents in the AsyncAPI CLI:
 
 ### 1. Install AsyncAPI CLI
 
-There are multiple different artifacts that AsyncAPI CLI is provided as. Get familiar with [official CLI installation guide](https://www.asyncapi.com/docs/tools/cli/installation).
+There are multiple different artifacts that AsyncAPI CLI is provided as. Get familiar with the [official CLI installation guide](https://www.asyncapi.com/docs/tools/cli/installation).
 
 ### 2. Update Your Commands
 
-Replace the deprecated `ag` commands with their AsyncAPI CLI equivalents. Below are examples of how to update your commands:
+Replace the deprecated `ag` commands with the AsyncAPI CLI equivalents. Below are examples of how to update your commands:
 
 **Using `ag`**:
 ```
@@ -60,7 +60,7 @@ Notice that the change basically related to changing from `ag` to `asyncapi gene
 
 ### 3. Verify and Test
 
-Run the updated commands to ensure they work as expected. Verify the output and ensure that all files are generated correctly.
+Run the updated commands to ensure they work as expected and verify that the output files are generated correctly.
 
 ## Additional Resources
 

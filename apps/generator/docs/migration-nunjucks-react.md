@@ -31,9 +31,9 @@ npm install @asyncapi/generator-react-sdk
 
 ### 3. File naming
 
-In Nunjucks, the template's filename directly corresponds to the output file. For example, a template named index.html will generate an index.html file.
+In Nunjucks, the template's filename directly corresponds to the output file. For example, a template named **index.html** will generate an **index.html** file.
 
-In React, the filename of the generated file is not controlled by the file itself, but rather by the File component. The React component itself can be named anything with a `.js` extension because the output filename is controlled by the `name` attribute of the `File` component used inside the template file. Below you can see some examples of filenames: 
+In React, the filename of the generated file is not controlled by the file itself, but rather by the `File` component. The React component itself can be named anything with a `.js` extension because the output filename is controlled by the `name` attribute of the `File` component used inside the template file. Below you can see some examples of filenames: 
 
 Nunjucks: `index.html`
 React: `index.js` or `index.html.js` or `anything-you-want.js`
@@ -112,11 +112,11 @@ export default function({ asyncapi }) {
 
 ### 6. File template 
 
-Check [detailed guide on file templates](file-templates.md) to learn what is the difference between templating multiple file output in Nunjucks and React.
+Check the [detailed guide on file templates](file-templates.md) to learn what is the difference between templating multiple file outputs in Nunjucks and React.
 
 ### 7. Models generation
 
-If you have a template written with Nunjucks, it is almost certain that you have your own custom models/classes/types templates in place. Instead of migrating them to React render engine we strongly advise you to delegate models generation to AsyncAPI Modelina project. Learn more on [how to add models generation using Modelina](https://www.asyncapi.com/docs/tools/generator/model-generation).
+If you have a template written with Nunjucks, it is almost certain that you have your own custom models, classes, or types templates in place. Instead of migrating them to React render engine we strongly advise you to delegate models generation to AsyncAPI Modelina project. Learn more about [how to add models generation using Modelina](https://www.asyncapi.com/docs/tools/generator/model-generation).
 
 ## Additional Resources and Information
 
@@ -137,7 +137,7 @@ After migrating, test your template thoroughly:
 2. Compare the output with the previous Nunjucks template output
 3. Check for any missing or incorrectly rendered content
 
-You might want to consider implementing snapshot tests for your template before starting migration. This will ease the review of changes in content rendered after render engine changes. Snapshot tests allow you to have tests that will persist expected output from Nunjucks template, and compare it with output produced after you do the migration. Check the [example of such snapshot integration test for our internal react template we use for development and testing](https://github.com/asyncapi/generator/blob/master/apps/generator/test/integration.test.js#L66).
+Consider implementing snapshot tests for your template before starting the migration. This will ease the review of changes in comparing the content rendered after render engine changes. Snapshot tests allow you to have tests that will persist expected output from Nunjucks template, and compare it with output generated after the migration. Check out an [example of such snapshot integration test for our internal react template we use for development and testing](https://github.com/asyncapi/generator/blob/master/apps/generator/test/integration.test.js#L66).
 
 ## Conclusion
 

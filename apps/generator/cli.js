@@ -95,7 +95,7 @@ program
   .parse(process.argv);
 
 if (!program.disableWarning) {
-  console.yellow(red(
+  console.warn(yellow(
     'Warning: The "ag" CLI is deprecated and will be removed in a future release. Please use the AsyncAPI CLI instead. See release notes for details: https://github.com/asyncapi/generator/releases/tag/%40asyncapi%2Fgenerator%402.6.0. You can hide this working using --disable-warning flag.')
   );
 }

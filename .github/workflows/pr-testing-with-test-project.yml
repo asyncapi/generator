@@ -4,16 +4,14 @@ on:
   pull_request:
     types: [opened, reopened, synchronize, ready_for_review]
     paths:
-      - '!**/*.md'
-      - '!README*'
-      - '!CONTRIBUTING*'
-      - '!LICENSE'
-      - '!CODE_OF_CONDUCT.md'
-      - '!.all-contributorsrc'
       - 'package.json'
       - 'package-lock.json'
       - 'apps/**'
       - 'packages/**'
+      - '.github/workflows/**'
+      # Explicitly ignore documentation
+      - '!**/*.md'
+      - '!docs/**'
 
 jobs:
   should-test:
@@ -24,11 +22,9 @@ jobs:
       - name: Check if tests should run
         id: check
         run: |
-          if [[ "${{ github.actor }}" == "asyncapi-bot" ]] && [[ "${{ github.event.pull_request.title }}" =~ ^(ci: update|chore\(release\):) ]]; then
-            echo "run_tests=false" >> $GITHUB_OUTPUT
-          elif [[ "${{ github.actor }}" == "allcontributors[bot]" ]] && [[ "${{ github.event.pull_request.title }}" =~ ^docs: ]]; then
-            echo "run_tests=false" >> $GITHUB_OUTPUT
-          elif [[ ! -e ./package.json ]]; then
+          # Skip for bot PRs with specific titles
+          if [[ "${{ github.actor }}" == "asyncapi-bot" && "${{ github.event.pull_request.title }}" =~ ^(ci:\ update|chore\(release\):) ]] || \
+             [[ "${{ github.actor }}" == "allcontributors[bot]" && "${{ github.event.pull_request.title }}" =~ ^docs: ]]; then
             echo "run_tests=false" >> $GITHUB_OUTPUT
           else
             echo "run_tests=true" >> $GITHUB_OUTPUT
@@ -45,14 +41,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-      - name: Check package.json exists
-        id: packagejson
-        run: test -e ./package.json && echo "exists=true" >> $GITHUB_OUTPUT || echo "exists=false" >> $GITHUB_OUTPUT
-        shell: bash
-      - if: steps.packagejson.outputs.exists == 'true'
-        name: Install dependencies
-        run: npm ci
-      - if: steps.packagejson.outputs.exists == 'true'
-        name: Test
+        
+      - name: Run test
         run: NODE_IMAGE_TAG=${{ matrix.node }} docker compose up --abort-on-container-exit --remove-orphans --force-recreate
         working-directory: ./apps/generator/test/test-project

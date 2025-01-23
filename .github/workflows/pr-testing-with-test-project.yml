@@ -33,6 +33,10 @@ jobs:
       matrix:
         node: ["18", "20"]
     steps:
+      - name: Debug modified files
+        run: |
+          echo "Modified files:"
+          echo "${{ toJson(github.event.pull_request.files.*.path) }}"
       - name: Checkout repository
         uses: actions/checkout@v3
       - name: Run test

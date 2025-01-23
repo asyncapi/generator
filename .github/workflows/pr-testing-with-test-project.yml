@@ -1,4 +1,3 @@
-#This workflow runs the tests in the test projects to make sure the generator works as a library where it is a Node dependency along with the template.
 name: Test using test project
 
 on:
@@ -11,22 +10,25 @@ jobs:
     outputs:
       should_skip: ${{ steps.check.outputs.should_skip }}
     steps:
+      - name: Debug modified files
+        run: |
+          echo "Modified files:"
+          echo "${{ toJson(github.event.pull_request.files.*.path) }}"
       - name: Check for skippable files
         id: check
-        env:
-          PR_FILES: ${{ toJson(github.event.pull_request.files.*.path) }}
         run: |
-          SKIPPABLE_FILES=('README.md' 'docs/**' '.github/**' 'CONTRIBUTING.md' 'Development.md')
-          SKIP=false
-          
-          for file in "${SKIPPABLE_FILES[@]}"; do
-            if echo "$PR_FILES" | grep -q "$file"; then
-              SKIP=true
+          SKIPPABLE_FILES='README.md docs/ .github/ CONTRIBUTING.md Development.md'
+          SHOULD_SKIP=false
+
+          for file in $SKIPPABLE_FILES; do
+            if [[ "${{ github.event.pull_request.files.*.path }}" == *"$file"* ]]; then
+              SHOULD_SKIP=true
               break
             fi
           done
-          
-          echo "should_skip=$SKIP" >> $GITHUB_OUTPUT
+
+          echo "should_skip=$SHOULD_SKIP" >> $GITHUB_OUTPUT
+          echo "Should skip tests: $SHOULD_SKIP"
 
   test:
     needs: check-files
@@ -52,6 +54,9 @@ jobs:
       matrix:
         node: ["18", "20"]
     steps:
+      - name: Debug if condition
+        run: |
+          echo "Should run tests: ${{ github.event.pull_request.draft == false && needs.check-files.outputs.should_skip != 'true' && !(github.actor == 'asyncapi-bot' || github.actor == 'asyncapi-bot-eve' || github.actor == 'allcontributors[bot]') }}"
       - name: Checkout repository
         uses: actions/checkout@v3
       - name: Run test

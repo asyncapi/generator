@@ -4,28 +4,37 @@ on:
     types: [opened, reopened, synchronize, ready_for_review]
     paths:
       - '!**/*.md'
+      - '!**/*.txt'
       - '!README*'
       - '!CONTRIBUTING*'
-      - '!.all-contributorsrc'
       - '!LICENSE'
       - '!CODE_OF_CONDUCT.md'
+      - '!.all-contributorsrc'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'apps/**'
+      - 'packages/**'
 
 jobs:
+  should-test:
+    runs-on: ubuntu-latest
+    outputs:
+      run_tests: ${{ steps.check.outputs.run_tests }}
+    steps:
+      - name: Check if tests should run
+        id: check
+        run: |
+          if [[ "${{ github.actor }}" == "asyncapi-bot" ]] && [[ "${{ github.event.pull_request.title }}" =~ ^(ci: update|chore\(release\):) ]]; then
+            echo "run_tests=false" >> $GITHUB_OUTPUT
+          elif [[ "${{ github.actor }}" == "allcontributors[bot]" ]] && [[ "${{ github.event.pull_request.title }}" =~ ^docs: ]]; then
+            echo "run_tests=false" >> $GITHUB_OUTPUT
+          else
+            echo "run_tests=true" >> $GITHUB_OUTPUT
+          fi
+
   test:
-    if: >
-      !github.event.pull_request.draft && !(
-        (github.actor == 'asyncapi-bot' && (
-          startsWith(github.event.pull_request.title, 'ci: update of files from global .github repo') || 
-          startsWith(github.event.pull_request.title, 'chore(release):')
-        )) ||
-        (github.actor == 'asyncapi-bot-eve' && (
-          startsWith(github.event.pull_request.title, 'ci: update of files from global .github repo') || 
-          startsWith(github.event.pull_request.title, 'chore(release):')
-        )) ||
-        (github.actor == 'allcontributors[bot]' && 
-          startsWith(github.event.pull_request.title, 'docs: add')
-        )
-      )
+    needs: should-test
+    if: needs.should-test.outputs.run_tests == 'true' && !github.event.pull_request.draft
     name: Test generator as dependency with Node ${{ matrix.node }}
     runs-on: ubuntu-latest
     strategy:

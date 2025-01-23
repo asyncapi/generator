@@ -7,7 +7,26 @@ on:
 
 jobs:
   test:
-    if: github.event.pull_request.draft == false
+    if: >
+      github.event.pull_request.draft == false &&
+      !(
+        (github.actor == 'asyncapi-bot' && (
+          startsWith(github.event.pull_request.title, 'ci: update of files from global .github repo') || 
+          startsWith(github.event.pull_request.title, 'chore(release):')
+        )) ||
+        (github.actor == 'asyncapi-bot-eve' && (
+          startsWith(github.event.pull_request.title, 'ci: update of files from global .github repo') || 
+          startsWith(github.event.pull_request.title, 'chore(release):')
+        )) ||
+        (github.actor == 'allcontributors[bot]' && 
+          startsWith(github.event.pull_request.title, 'docs: add')
+        ) ||
+        (github.event.pull_request.files.*.path == 'README.md') ||
+        (github.event.pull_request.files.*.path == 'docs/**') ||
+        (github.event.pull_request.files.*.path == '.github/**') ||
+        (github.event.pull_request.files.*.path == 'CONTRIBUTING.md') ||
+        (github.event.pull_request.files.*.path == 'Development.md')
+      )
     name: Test generator as dependency with Node ${{ matrix.node }}
     runs-on: ubuntu-latest
     strategy:

@@ -1,41 +1,19 @@
 name: Test using test project
-
 on:
   pull_request:
     types: [opened, reopened, synchronize, ready_for_review]
+    paths:
+      - '!**/*.md'
+      - '!README*'
+      - '!CONTRIBUTING*'
+      - '!.all-contributorsrc'
+      - '!LICENSE'
+      - '!CODE_OF_CONDUCT.md'
 
 jobs:
-  check-files:
-    runs-on: ubuntu-latest
-    outputs:
-      should_skip: ${{ steps.check.outputs.should_skip }}
-    steps:
-      - name: Debug modified files
-        run: |
-          echo "Modified files:"
-          echo "${{ toJson(github.event.pull_request.files.*.path) }}"
-      - name: Check for skippable files
-        id: check
-        run: |
-          SKIPPABLE_FILES='README.md docs/ .github/ CONTRIBUTING.md Development.md'
-          SHOULD_SKIP=false
-
-          for file in $SKIPPABLE_FILES; do
-            if [[ "${{ github.event.pull_request.files.*.path }}" == *"$file"* ]]; then
-              SHOULD_SKIP=true
-              break
-            fi
-          done
-
-          echo "should_skip=$SHOULD_SKIP" >> $GITHUB_OUTPUT
-          echo "Should skip tests: $SHOULD_SKIP"
-
   test:
-    needs: check-files
     if: >
-      github.event.pull_request.draft == false &&
-      needs.check-files.outputs.should_skip != 'true' &&
-      !(
+      !github.event.pull_request.draft && !(
         (github.actor == 'asyncapi-bot' && (
           startsWith(github.event.pull_request.title, 'ci: update of files from global .github repo') || 
           startsWith(github.event.pull_request.title, 'chore(release):')
@@ -54,9 +32,6 @@ jobs:
       matrix:
         node: ["18", "20"]
     steps:
-      - name: Debug if condition
-        run: |
-          echo "Should run tests: ${{ github.event.pull_request.draft == false && needs.check-files.outputs.should_skip != 'true' && !(github.actor == 'asyncapi-bot' || github.actor == 'asyncapi-bot-eve' || github.actor == 'allcontributors[bot]') }}"
       - name: Checkout repository
         uses: actions/checkout@v3
       - name: Run test

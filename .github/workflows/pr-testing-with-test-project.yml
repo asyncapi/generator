@@ -1,10 +1,10 @@
 name: Test using test project
+
 on:
   pull_request:
     types: [opened, reopened, synchronize, ready_for_review]
     paths:
       - '!**/*.md'
-      - '!**/*.txt'
       - '!README*'
       - '!CONTRIBUTING*'
       - '!LICENSE'
@@ -28,13 +28,15 @@ jobs:
             echo "run_tests=false" >> $GITHUB_OUTPUT
           elif [[ "${{ github.actor }}" == "allcontributors[bot]" ]] && [[ "${{ github.event.pull_request.title }}" =~ ^docs: ]]; then
             echo "run_tests=false" >> $GITHUB_OUTPUT
+          elif [[ ! -e ./package.json ]]; then
+            echo "run_tests=false" >> $GITHUB_OUTPUT
           else
             echo "run_tests=true" >> $GITHUB_OUTPUT
           fi
 
   test:
     needs: should-test
-    if: needs.should-test.outputs.run_tests == 'true' && !github.event.pull_request.draft
+    if: needs.should-test.outputs.run_tests == 'true' && github.event.pull_request.draft == false
     name: Test generator as dependency with Node ${{ matrix.node }}
     runs-on: ubuntu-latest
     strategy:
@@ -43,6 +45,14 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-      - name: Run test
+      - name: Check package.json exists
+        id: packagejson
+        run: test -e ./package.json && echo "exists=true" >> $GITHUB_OUTPUT || echo "exists=false" >> $GITHUB_OUTPUT
+        shell: bash
+      - if: steps.packagejson.outputs.exists == 'true'
+        name: Install dependencies
+        run: npm ci
+      - if: steps.packagejson.outputs.exists == 'true'
+        name: Test
         run: NODE_IMAGE_TAG=${{ matrix.node }} docker compose up --abort-on-container-exit --remove-orphans --force-recreate
         working-directory: ./apps/generator/test/test-project

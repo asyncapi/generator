@@ -6,9 +6,33 @@ on:
     types: [opened, reopened, synchronize, ready_for_review]
 
 jobs:
+  check-files:
+    runs-on: ubuntu-latest
+    outputs:
+      should_skip: ${{ steps.check.outputs.should_skip }}
+    steps:
+      - name: Check for skippable files
+        id: check
+        env:
+          PR_FILES: ${{ toJson(github.event.pull_request.files.*.path) }}
+        run: |
+          SKIPPABLE_FILES=('README.md' 'docs/**' '.github/**' 'CONTRIBUTING.md' 'Development.md')
+          SKIP=false
+          
+          for file in "${SKIPPABLE_FILES[@]}"; do
+            if echo "$PR_FILES" | grep -q "$file"; then
+              SKIP=true
+              break
+            fi
+          done
+          
+          echo "should_skip=$SKIP" >> $GITHUB_OUTPUT
+
   test:
+    needs: check-files
     if: >
       github.event.pull_request.draft == false &&
+      needs.check-files.outputs.should_skip != 'true' &&
       !(
         (github.actor == 'asyncapi-bot' && (
           startsWith(github.event.pull_request.title, 'ci: update of files from global .github repo') || 
@@ -20,12 +44,7 @@ jobs:
         )) ||
         (github.actor == 'allcontributors[bot]' && 
           startsWith(github.event.pull_request.title, 'docs: add')
-        ) ||
-        (github.event.pull_request.files.*.path == 'README.md') ||
-        (github.event.pull_request.files.*.path == 'docs/**') ||
-        (github.event.pull_request.files.*.path == '.github/**') ||
-        (github.event.pull_request.files.*.path == 'CONTRIBUTING.md') ||
-        (github.event.pull_request.files.*.path == 'Development.md')
+        )
       )
     name: Test generator as dependency with Node ${{ matrix.node }}
     runs-on: ubuntu-latest
@@ -33,10 +52,6 @@ jobs:
       matrix:
         node: ["18", "20"]
     steps:
-      - name: Debug modified files
-        run: |
-          echo "Modified files:"
-          echo "${{ toJson(github.event.pull_request.files.*.path) }}"
       - name: Checkout repository
         uses: actions/checkout@v3
       - name: Run test

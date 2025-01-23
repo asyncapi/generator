@@ -47,7 +47,7 @@ We use Github to host code, to track issues and feature requests, as well as acc
 
 ## Bug Reports and Feature Requests
 
-Please use our issues templates that provide you with hints on what information we need from you to help you out.
+Please use the issues templates that provide you with hints on what information we need from you to help you out.
 
 ## Pull Requests
 

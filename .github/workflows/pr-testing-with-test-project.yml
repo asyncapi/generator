@@ -9,7 +9,6 @@ on:
       - 'apps/**'
       - 'packages/**'
       - '.github/workflows/**'
-      # Explicitly ignore documentation
       - '!**/*.md'
       - '!docs/**'
 

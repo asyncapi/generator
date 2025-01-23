@@ -3,6 +3,8 @@ title: "Nunjucks render engine"
 weight: 120
 ---
 
+> **Note**: Nunjucks renderer engine is deprecated and will be removed in the future. Use the React renderer engine instead. For more details read notes from release [@asyncapi/generator@2.6.0](https://github.com/asyncapi/generator/releases/tag/%40asyncapi%2Fgenerator%402.6.0).
+
 [Nunjucks](https://mozilla.github.io/nunjucks) is the default render engine, however, we strongly recommend adopting the [React](#react) engine.
 
 ### Common assumptions

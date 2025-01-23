@@ -18,13 +18,13 @@ Here is a list of `ag` options and their equivalents in the AsyncAPI CLI:
 - **-i, --install**
   - **AsyncAPI CLI equivalent:** `asyncapi generate fromTemplate <ASYNCAPI> <TEMPLATE> --install`
 
-- **-n, --no-overwrite <glob>**
+- **-n, --no-overwrite &#x3C;glob&#x3E;**
   - **AsyncAPI CLI equivalent:** `asyncapi generate fromTemplate <ASYNCAPI> <TEMPLATE> --no-overwrite <glob>`
 
-- **-o, --output <outputDir>**
+- **-o, --output &#x3C;outputDir&#x3E;**
   - **AsyncAPI CLI equivalent:** `asyncapi generate fromTemplate <ASYNCAPI> <TEMPLATE> --output <outputDir>`
 
-- **-p, --param <name=value>**
+- **-p, --param &#x3C;name&#x3D;value&#x3E;**
   - **AsyncAPI CLI equivalent:** `asyncapi generate fromTemplate <ASYNCAPI> <TEMPLATE> --param <name=value>`
 
 - **--force-write**
@@ -33,7 +33,7 @@ Here is a list of `ag` options and their equivalents in the AsyncAPI CLI:
 - **--watch-template**
   - **AsyncAPI CLI equivalent:** `asyncapi generate fromTemplate <ASYNCAPI> <TEMPLATE> --watch`
 
-- **--map-base-url <url:folder>**
+- **--map-base-url &#x3C;url:folder&#x3E;**
   - **AsyncAPI CLI equivalent:** `asyncapi generate fromTemplate <ASYNCAPI> <TEMPLATE> --map-base-url <url:folder>`
 
 ## Migration Steps

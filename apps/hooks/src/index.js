@@ -15,6 +15,7 @@ function createAsyncapiFile(generator) {
   try {
     JSON.parse(asyncapi);
     extension = 'json';
+    console.log("Hello world");
   } catch (e) {
     extension = 'yaml';
   }

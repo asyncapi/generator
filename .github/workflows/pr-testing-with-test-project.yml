@@ -7,10 +7,10 @@ on:
     paths:
       - 'package.json'
       - 'package-lock.json'
-      - 'apps/'
-      - 'packages/'
-      - '.github/workflows/'
-      - '!/*.md'
+      - 'apps/**'
+      - 'packages/**'
+      - '.github/workflows/**'
+      - '!**/*.md'
       - '!docs/**'
 
 jobs:

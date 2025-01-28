@@ -1,4 +1,4 @@
-#This workflow runs the tests in the test projects to make sure the generator works as a library where it is a Node dependency along with the template.
+# This workflow runs the tests in the test projects to make sure the generator works as a library where it is a Node dependency along with the template.
 name: Test using test project
 
 on:
@@ -15,6 +15,7 @@ on:
 
 jobs:
   test:
+    if: github.event.pull_request.draft == false
     name: Test generator as dependency with Node ${{ matrix.node }}
     runs-on: ubuntu-latest
     strategy:
@@ -43,8 +44,7 @@ jobs:
         run: echo "shouldrun=true" >> $GITHUB_OUTPUT
         shell: bash
 
-      - if: steps.should_run.outputs.shouldrun == true
+      - if: steps.should_run.outputs.shouldrun == 'true'
         name: Run test
         run: NODE_IMAGE_TAG=${{ matrix.node }} docker compose up --abort-on-container-exit --remove-orphans --force-recreate
         working-directory: ./apps/generator/test/test-project
-        

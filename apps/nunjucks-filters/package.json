@@ -1,6 +1,6 @@
 {
   "name": "@asyncapi/nunjucks-filters",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Library with Nunjucks filters for templates using AsyncAPI Generator",
   "private": false,
   "main": "src/index.js",

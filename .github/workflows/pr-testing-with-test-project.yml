@@ -1,9 +1,17 @@
-#This workflow runs the tests in the test projects to make sure the generator works as a library where it is a Node dependency along with the template.
+# This workflow runs the tests in the test projects to make sure the generator works as a library where it is a Node dependency along with the template.
 name: Test using test project
 
 on:
   pull_request:
     types: [opened, reopened, synchronize, ready_for_review]
+    paths:
+      - 'package.json'
+      - 'package-lock.json'
+      - 'apps/**'
+      - 'packages/**'
+      - '.github/workflows/**'
+      - '!**/*.md'
+      - '!docs/**'
 
 jobs:
   test:
@@ -16,6 +24,27 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-      - name: Run test
+
+      - name: Determine if tests should run
+        id: should_run
+        if: >
+          !github.event.pull_request.draft && !(
+            (github.actor == 'asyncapi-bot' && (
+              startsWith(github.event.pull_request.title, 'ci: update of files from global .github repo') || 
+              startsWith(github.event.pull_request.title, 'chore(release):')
+            )) ||
+            (github.actor == 'asyncapi-bot-eve' && (
+              startsWith(github.event.pull_request.title, 'ci: update of files from global .github repo') || 
+              startsWith(github.event.pull_request.title, 'chore(release):')
+            )) ||
+            (github.actor == 'allcontributors[bot]' && 
+              startsWith(github.event.pull_request.title, 'docs: add')
+            )
+          )
+        run: echo "shouldrun=true" >> $GITHUB_OUTPUT
+        shell: bash
+
+      - if: steps.should_run.outputs.shouldrun == 'true'
+        name: Run test
         run: NODE_IMAGE_TAG=${{ matrix.node }} docker compose up --abort-on-container-exit --remove-orphans --force-recreate
         working-directory: ./apps/generator/test/test-project

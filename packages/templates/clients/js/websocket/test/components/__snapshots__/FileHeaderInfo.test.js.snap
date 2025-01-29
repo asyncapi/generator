@@ -1,0 +1,74 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing of FileHeaderInfo function render websockets file header info correctly 1`] = `
+<Text>
+  <Text>
+    //////////////////////////////////////////////////////////////////////
+  </Text>
+  <Text>
+    //
+  </Text>
+  <Text>
+    //
+     
+    Test AsyncAPI Service
+     - 
+    1.0.0
+  </Text>
+  <Text>
+    //
+     Protocol: 
+    mqtt
+  </Text>
+  <Text>
+    //
+     Host: 
+    test.mosquitto.org
+  </Text>
+  <Text>
+    //
+     Path: 
+    /mqtt
+  </Text>
+  <Text>
+    //
+  </Text>
+  <Text>
+    //////////////////////////////////////////////////////////////////////
+  </Text>
+</Text>
+`;
+
+exports[`testing of FileHeaderInfo function render websockets file header when path is missing 1`] = `
+<Text>
+  <Text>
+    //////////////////////////////////////////////////////////////////////
+  </Text>
+  <Text>
+    //
+  </Text>
+  <Text>
+    //
+     
+    Test AsyncAPI Service
+     - 
+    1.0.0
+  </Text>
+  <Text>
+    //
+     Protocol: 
+    mqtt
+  </Text>
+  <Text>
+    //
+     Host: 
+    test.mosquitto.org
+  </Text>
+  <Text>
+    //
+  </Text>
+  <Text>
+    //////////////////////////////////////////////////////////////////////
+  </Text>
+</Text>
+`;

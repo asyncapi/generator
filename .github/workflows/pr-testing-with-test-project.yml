@@ -12,7 +12,7 @@ jobs:
       should_test: ${{ steps.filter.outputs.changes }}
     steps:
       - uses: actions/checkout@v3
-      - uses: dorny/paths-filter@v3
+      - uses: dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36 # v3.0.2 https://github.com/dorny/paths-filter/releases/tag/v3.0.2
         id: filter
         with:
           filters: |
@@ -41,15 +41,15 @@ jobs:
         if: >
           !github.event.pull_request.draft && !(
             (github.actor == 'asyncapi-bot' && (
-              startsWith(github.event.pull_request.title, 'ci: update of files from global .github repo') || 
-              startsWith(github.event.pull_request.title, 'chore(release):')
+              startsWith(github.event.pull_request.title, 'ci: update of files from global .github repo') ||
+               startsWith(github.event.pull_request.title, 'chore(release):')
             )) ||
             (github.actor == 'asyncapi-bot-eve' && (
-              startsWith(github.event.pull_request.title, 'ci: update of files from global .github repo') || 
-              startsWith(github.event.pull_request.title, 'chore(release):')
+              startsWith(github.event.pull_request.title, 'ci: update of files from global .github repo') ||
+               startsWith(github.event.pull_request.title, 'chore(release):')
             )) ||
-            (github.actor == 'allcontributors[bot]' && 
-              startsWith(github.event.pull_request.title, 'docs: add')
+            (github.actor == 'allcontributors[bot]' &&
+               startsWith(github.event.pull_request.title, 'docs: add')
             )
           )
         run: echo "shouldrun=true" >> $GITHUB_OUTPUT

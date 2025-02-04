@@ -5,6 +5,7 @@ const levenshtein = require('levenshtein-edit-distance');
 // eslint-disable-next-line no-unused-vars
 const {AsyncAPIDocumentInterface, AsyncAPIDocument} = require('@asyncapi/parser');
 const { usesNewAPI } = require('./parser');
+const { getVersionsList } = require('./versions');
 
 const ajv = new Ajv({ allErrors: true });
 
@@ -23,7 +24,7 @@ const supportedParserAPIMajorVersions = [
  * @param  {AsyncAPIDocumentInterface | AsyncAPIDocument} asyncapiDocument AsyncAPIDocument object to use as source.
  * @return {Boolean}
  */
-module.exports.validateTemplateConfig = (templateConfig, templateParams, asyncapiDocument) => {
+module.exports.validateTemplateConfig = async(templateConfig, templateParams, asyncapiDocument) => {
   const { parameters, supportedProtocols, conditionalFiles, generator, apiVersion } = templateConfig;
 
   validateConditionalFiles(conditionalFiles);
@@ -51,10 +52,25 @@ module.exports.validateTemplateConfig = (templateConfig, templateParams, asyncap
  * @param {String} generator Information about supported generator version that is part of the template configuration
  * @param {String} generator Information about supported Parser-API version that is part of the template configuration
  */
-function isTemplateCompatible(generator, apiVersion) {
+async function isTemplateCompatible(generator, apiVersion) {
   const generatorVersion = getGeneratorVersion();
   if (typeof generator === 'string' && !semver.satisfies(generatorVersion, generator, {includePrerelease: true})) {
-    throw new Error(`This template is not compatible with the current version of the generator (${generatorVersion}). This template is compatible with the following version range: ${generator}.`);
+    const allVersions = await getVersionsList();
+    const compatibleVersions = allVersions
+    .filter(version => semver.satisfies(version, generator, {includePrerelease: true}))
+    .sort(semver.compare);
+
+    const latestCompatibleVersion = compatibleVersions.length > 0 
+      ? compatibleVersions[compatibleVersions.length - 1] 
+      : null;
+
+      let errorMessage = `This template is not compatible with the current version of the generator (${generatorVersion}). `;
+      errorMessage += `This template is compatible with the following version range: ${generator}`;
+
+      if (latestCompatibleVersion) {
+        errorMessage += `\nTo use this template, please install generator version ${latestCompatibleVersion} using:\nnpm install -g @asyncapi/generator@${latestCompatibleVersion}`;
+      }
+    throw new Error(errorMessage);
   }
 
   if (typeof apiVersion === 'string' && !supportedParserAPIMajorVersions.includes(apiVersion)) {

@@ -99,6 +99,7 @@ feat: add new feature
 
 ### Pull Request Title Guidelines:
 To ensure successful workflow execution, all PR titles must follow the Conventional Commits format and PR titles should start with a lowercase character. Incorrect PR titles can cause workflow failures, preventing PRs from being merged.
+For the PR titles you can refer to [this guide](https://github.com/asyncapi/generator/blob/31851c765396be5ab8fd219bebccb6f61340ab68/CONTRIBUTING.md?plain=1#L60)
 
 #### Manual
 

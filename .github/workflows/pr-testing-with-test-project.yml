@@ -12,7 +12,7 @@ on:
       - '.github/workflows/**'
       - '!**/*.md'
       - '!docs/**'
-
+      - '!.all-contributorsrc'  
 jobs:
   test:
     if: github.event.pull_request.draft == false

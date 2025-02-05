@@ -24,6 +24,7 @@ jobs:
               - '.github/workflows/**'
               - '!**/*.md'
               - '!docs/**'
+              - '!.all-contributorsrc'
 
   test:
     needs: changes

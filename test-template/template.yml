@@ -1,0 +1,2 @@
+version: 1.0.0
+generator: '>=3.0.0'  # This forces incompatibility with a 2.x.x generator.

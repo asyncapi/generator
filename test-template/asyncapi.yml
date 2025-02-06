@@ -1,0 +1,10 @@
+asyncapi: '2.0.0'
+info:
+  title: Example API
+  version: '1.0.0'
+channels:
+  exampleChannel:
+    publish:
+      message:
+        payload:
+          type: string

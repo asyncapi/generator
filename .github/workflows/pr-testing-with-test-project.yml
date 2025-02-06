@@ -15,6 +15,7 @@ jobs:
       - uses: dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36 # v3.0.2 https://github.com/dorny/paths-filter/releases/tag/v3.0.2
         id: filter
         with:
+          base: 'master'
           filters: |
             changes:
               - 'package.json'
@@ -57,5 +58,7 @@ jobs:
         shell: bash
       - if: steps.should_run.outputs.shouldrun == 'true'
         name: Run test
-        run: NODE_IMAGE_TAG=${{ matrix.node }} docker compose up --abort-on-container-exit --remove-orphans --force-recreate
+        run: |
+          docker compose down
+          NODE_IMAGE_TAG=${{ matrix.node }} docker compose up --abort-on-container-exit
         working-directory: ./apps/generator/test/test-project

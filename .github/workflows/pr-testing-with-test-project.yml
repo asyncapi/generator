@@ -1,10 +1,8 @@
 # This workflow runs the tests in the test projects to make sure the generator works as a library where it is a Node dependency along with the template.
 name: Test using test project
-
 on:
   pull_request:
     types: [opened, reopened, synchronize, ready_for_review]
-
 jobs:
   changes:
     runs-on: ubuntu-latest
@@ -15,7 +13,7 @@ jobs:
       - uses: dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36 # v3.0.2 https://github.com/dorny/paths-filter/releases/tag/v3.0.2
         id: filter
         with:
-          base: 'master'
+          base: 'master'  
           filters: |
             changes:
               - 'package.json'
@@ -26,7 +24,6 @@ jobs:
               - '!**/*.md'
               - '!docs/**'
               - '!.all-contributorsrc'
-
   test:
     needs: changes
     if: ${{ needs.changes.outputs.should_test == 'true' && github.event.pull_request.draft == false }}
@@ -58,7 +55,5 @@ jobs:
         shell: bash
       - if: steps.should_run.outputs.shouldrun == 'true'
         name: Run test
-        run: |
-          docker compose down
-          NODE_IMAGE_TAG=${{ matrix.node }} docker compose up --abort-on-container-exit
+        run: NODE_IMAGE_TAG=${{ matrix.node }} docker compose up --abort-on-container-exit --remove-orphans --force-recreate
         working-directory: ./apps/generator/test/test-project

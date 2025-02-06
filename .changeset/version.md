@@ -1,8 +1,6 @@
 ---
-"@asyncapi/generator-hooks": patch
-"@asyncapi/nunjucks-filters": patch
-"@asyncapi/generator-components": patch
-"@asyncapi/generator-helpers": patch
+"@asyncapi/generator": patch
+
 ---
 
 - Changed the version of `@asyncapi/generator-hooks`, `@asyncapi/generator-components`, `@asyncapi/generator-helpers` and `@asyncapi/nunjucks-filters` from '*' to their original version.

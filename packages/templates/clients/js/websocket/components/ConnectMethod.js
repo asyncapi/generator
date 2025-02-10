@@ -1,5 +1,5 @@
 import { Text } from '@asyncapi/generator-react-sdk';
-import { OnOpen, OnMessage, OnError, OnClose } from './event-handlers';
+import { OnOpen, OnMessage, OnError, OnClose } from './EventHandlerMethods';
 
 export function ConnectMethod({ title }) {
   return (

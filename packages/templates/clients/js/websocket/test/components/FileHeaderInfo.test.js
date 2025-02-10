@@ -1,34 +1,45 @@
+import path from 'path';
+import { Parser, fromFile } from '@asyncapi/parser';
 import { FileHeaderInfo } from '../../components/FileHeaderInfo';
 
-describe('testing of FileHeaderInfo function', () => {
-  jest.setTimeout(100000);
+const parser = new Parser();
+const asyncapi_websocket_query = path.resolve(__dirname, '../../../../../../helpers/test/__fixtures__/asyncapi-websocket-query.yml');
 
-  const mockData = {
-    info: {
-      title: () => 'Test AsyncAPI Service',
-      version: () => '1.0.0'
-    },
-    server: {
-      protocol: () => 'mqtt',
-      host: () => 'test.mosquitto.org',
-      pathname: () => '/mqtt',
-      hasPathname: () => true
-    },
-    serverWithoutPath: {
-      protocol: () => 'mqtt',
-      host: () => 'test.mosquitto.org',
-      pathname: () => '',
-      hasPathname: () => false
-    }
-  };
+describe('Testing of FileHeaderInfo function', () => {
+  let parsedAsyncAPIDocument;
 
-  test('render websockets file header info correctly', () => {
-    const wrapper = FileHeaderInfo({ info: mockData.info, server: mockData.server });
-    expect(wrapper).toMatchSnapshot();
+  beforeAll(async () => {
+    const parseResult = await fromFile(parser, asyncapi_websocket_query).parse();
+    parsedAsyncAPIDocument = parseResult.document;
   });
 
-  test('render websockets file header when path is missing', () => {
-    const wrapper = FileHeaderInfo({ info: mockData.info, server: mockData.serverWithoutPath });
-    expect(wrapper).toMatchSnapshot();
+  test('render websockets file header info correctly', () => {
+    console.log('yooo', parsedAsyncAPIDocument);
+    const info = {
+      title: () => parsedAsyncAPIDocument.info.title,
+      version: () => parsedAsyncAPIDocument.info.version,
+    };
+
+    const serverWithPathname = {
+      protocol: () => parsedAsyncAPIDocument.servers()[3].protocol(),
+      host: () => parsedAsyncAPIDocument.servers()[3].host(),
+      pathname: () => parsedAsyncAPIDocument.servers()[3].pathname(),
+      hasPathname: () => true
+    };
+
+    const wrapperWithPathname = FileHeaderInfo({ info, server: serverWithPathname });
+
+    expect(wrapperWithPathname).toMatchSnapshot();
+
+    const serverWithoutPathname = {
+      protocol: () => parsedAsyncAPIDocument.servers()[1].protocol(),
+      host: () => parsedAsyncAPIDocument.servers()[1].host(),
+      pathname: () => '',
+      hasPathname: () => false
+    };
+
+    const wrapperWithoutPathname = FileHeaderInfo({ info, server: serverWithoutPathname });
+
+    expect(wrapperWithoutPathname).toMatchSnapshot();
   });
 });

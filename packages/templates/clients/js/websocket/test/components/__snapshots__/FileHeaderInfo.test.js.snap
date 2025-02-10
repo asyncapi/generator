@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`testing of FileHeaderInfo function render websockets file header info correctly 1`] = `
+exports[`Testing of FileHeaderInfo function render websockets file header info correctly 1`] = `
 <Text>
   <Text>
     //////////////////////////////////////////////////////////////////////
@@ -11,24 +11,22 @@ exports[`testing of FileHeaderInfo function render websockets file header info c
   <Text>
     //
      
-    Test AsyncAPI Service
      - 
-    1.0.0
   </Text>
   <Text>
     //
      Protocol: 
-    mqtt
+    wss
   </Text>
   <Text>
     //
      Host: 
-    test.mosquitto.org
+    api.gemini.com
   </Text>
   <Text>
     //
      Path: 
-    /mqtt
+    /v1/marketdata
   </Text>
   <Text>
     //
@@ -39,7 +37,7 @@ exports[`testing of FileHeaderInfo function render websockets file header info c
 </Text>
 `;
 
-exports[`testing of FileHeaderInfo function render websockets file header when path is missing 1`] = `
+exports[`Testing of FileHeaderInfo function render websockets file header info correctly 2`] = `
 <Text>
   <Text>
     //////////////////////////////////////////////////////////////////////
@@ -50,19 +48,17 @@ exports[`testing of FileHeaderInfo function render websockets file header when p
   <Text>
     //
      
-    Test AsyncAPI Service
      - 
-    1.0.0
   </Text>
   <Text>
     //
      Protocol: 
-    mqtt
+    wss
   </Text>
   <Text>
     //
      Host: 
-    test.mosquitto.org
+    api.gemini.com
   </Text>
   <Text>
     //

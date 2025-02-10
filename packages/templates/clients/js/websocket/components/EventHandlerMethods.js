@@ -1,6 +1,7 @@
 import { Text } from '@asyncapi/generator-react-sdk';
 
-export function OnOpen({ title }) {
+// On successful connection
+export function onOpen({ title }) {
   return (
     <Text>
       {`
@@ -12,7 +13,8 @@ export function OnOpen({ title }) {
   );
 }
 
-export function OnMessage() {
+// On receiving a message
+export function onMessage() {
   return (
     <Text>
       {`
@@ -28,7 +30,8 @@ export function OnMessage() {
   );
 }
 
-export function OnError() {
+// On error first call custom error handlers, then default error behavior
+export function onError() {
   return (
     <Text>
       {`
@@ -44,7 +47,8 @@ export function OnError() {
   );
 }
 
-export function OnClose({ title }) {
+// On connection close
+export function onClose({ title }) {
   return (
     <Text>
       {`

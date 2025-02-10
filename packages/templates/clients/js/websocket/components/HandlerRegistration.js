@@ -1,5 +1,6 @@
 import { Text } from '@asyncapi/generator-react-sdk';
 
+// Method to register custom error handlers
 export function HandlerRegistration({ handlerType }) {
   return (
     <Text>

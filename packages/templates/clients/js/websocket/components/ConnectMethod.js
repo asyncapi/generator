@@ -1,6 +1,7 @@
 import { Text } from '@asyncapi/generator-react-sdk';
-import { OnOpen, OnMessage, OnError, OnClose } from './event-handlers';
+import { onOpen, onMessage, onError, onClose } from './EventHandlerMethods';
 
+// Method to establish a WebSocket connection
 export function ConnectMethod({ title }) {
   return (
     <Text>
@@ -8,10 +9,10 @@ export function ConnectMethod({ title }) {
   connect() {
     return new Promise((resolve, reject) => {
       this.websocket = new WebSocket(this.url);
-      ${OnOpen({ title })}
-      ${OnMessage()}
-      ${OnError()}
-      ${OnClose({ title })}
+      ${onOpen({ title })}
+      ${onMessage()}
+      ${onError()}
+      ${onClose({ title })}
     });
   }`}
     </Text>

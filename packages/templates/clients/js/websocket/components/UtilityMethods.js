@@ -1,5 +1,6 @@
 import { Text } from '@asyncapi/generator-react-sdk';
 
+// Method to handle message with callback
 export function HandleMessageMethod() {
   return (
     <Text>
@@ -11,6 +12,7 @@ export function HandleMessageMethod() {
   );
 }
 
+// Method to send an echo message to the server
 export function SendEchoMessageMethod() {
   return (
     <Text>
@@ -23,6 +25,7 @@ export function SendEchoMessageMethod() {
   );
 }
 
+// Method to close the WebSocket connection
 export function CloseMethod() {
   return (
     <Text>

@@ -14,31 +14,11 @@ describe('Testing of FileHeaderInfo function', () => {
   });
 
   test('render websockets file header info correctly', () => {
-    console.log('yooo', parsedAsyncAPIDocument);
-    const info = {
-      title: () => parsedAsyncAPIDocument.info.title,
-      version: () => parsedAsyncAPIDocument.info.version,
-    };
-
-    const serverWithPathname = {
-      protocol: () => parsedAsyncAPIDocument.servers()[3].protocol(),
-      host: () => parsedAsyncAPIDocument.servers()[3].host(),
-      pathname: () => parsedAsyncAPIDocument.servers()[3].pathname(),
-      hasPathname: () => true
-    };
-
-    const wrapperWithPathname = FileHeaderInfo({ info, server: serverWithPathname });
+    const wrapperWithPathname = FileHeaderInfo({ info: parsedAsyncAPIDocument.info(), server: parsedAsyncAPIDocument.servers().get('withPathname') });
 
     expect(wrapperWithPathname).toMatchSnapshot();
 
-    const serverWithoutPathname = {
-      protocol: () => parsedAsyncAPIDocument.servers()[1].protocol(),
-      host: () => parsedAsyncAPIDocument.servers()[1].host(),
-      pathname: () => '',
-      hasPathname: () => false
-    };
-
-    const wrapperWithoutPathname = FileHeaderInfo({ info, server: serverWithoutPathname });
+    const wrapperWithoutPathname = FileHeaderInfo({ info: parsedAsyncAPIDocument.info(), server: parsedAsyncAPIDocument.servers().get('withoutPathName') });
 
     expect(wrapperWithoutPathname).toMatchSnapshot();
   });

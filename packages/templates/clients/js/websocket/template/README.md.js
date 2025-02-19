@@ -29,7 +29,7 @@ const ${clientName} = require('./${params.clientFileName.replace('.js', '')}');
 const wsClient = new ${clientName}();
 \`\`\`
 
-Here the client is an instance of the \`${clientName}\` class.
+Here the wsClient is an instance of the \`${clientName}\` class.
 ### Core Methods
 
 #### \`connect()\`

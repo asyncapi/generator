@@ -24,6 +24,12 @@ ${info.description() || `A WebSocket client for ${info.title()}.`}
 
 ## Client API Reference
 
+\`\`\`javascript
+const ${clientName} = require('./${params.clientFileName.replace('.js', '')}');
+const wsClient = new ${clientName}();
+\`\`\`
+
+Here the client is an instance of the \`${clientName}\` class.
 ### Core Methods
 
 #### \`connect()\`
@@ -31,11 +37,11 @@ Establishes a WebSocket connection to the server.
 
 #### \`registerMessageHandler(handlerFunction)\`
 Registers a callback to handle incoming messages.
-- **Parameter:** \`handlerFunction\` - Function that receives message data
+- **Parameter:** \`handlerFunction\` - This Function takes a parameter \`message\` which is a string. 
 
 #### \`registerErrorHandler(handlerFunction)\`
 Registers a callback to handle WebSocket errors.
-- **Parameter:** \`handlerFunction\` - Function that receives error object
+- **Parameter:** \`handlerFunction\` - This Function takes a parameter \`error\` which is an object
 
 #### \`close()\`
 Closes the WebSocket connection.

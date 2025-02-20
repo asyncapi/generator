@@ -4,34 +4,15 @@ weight: 30
 ---
 
 There are two ways to use the generator:
-- [AsyncAPI CLI](#generator-cli)
-- [Generator library](#using-as-a-modulepackage)
+- [AsyncAPI CLI](#asyncapi-cli)
+  - [Global templates installed with `yarn` or `npm`](#global-templates-installed-with-yarn-or-npm)
+  - [CLI usage examples](#cli-usage-examples)
+  - [CLI usage with Docker](#cli-usage-with-docker)
+  - [CLI usage with `npx` instead of `npm`](#cli-usage-with-npx-instead-of-npm)
+- [Using as a module/package](#using-as-a-modulepackage)
 
 ## AsyncAPI CLI
-Generates whatever you want using templates compatible with AsyncAPI Generator.
-```bash
-USAGE
-  $ asyncapi generate fromTemplate [ASYNCAPI] [TEMPLATE] [-h] [-d <value>] [-i] [--debug] [-n <value>] [-o <value>] [--force-write] [-w] [-p <value>] [--map-base-url <value>]
-
-ARGUMENTS
-  ASYNCAPI  - Local path, url or context-name pointing to AsyncAPI file
-  TEMPLATE  - Name of the generator template like for example @asyncapi/html-template or https://github.com/asyncapi/html-template
-
-FLAGS
-  -d, --disable-hook=<value>...  Disable a specific hook type or hooks from a given hook type
-  -h, --help                     Show CLI help.
-  -i, --install                  Installs the template and its dependencies (defaults to false)
-  -n, --no-overwrite=<value>...  Glob or path of the file(s) to skip when regenerating
-  -o, --output=<value>           Directory where to put the generated files (defaults to current directory)
-  -p, --param=<value>...         Additional param to pass to templates
-  -w, --watch                    Watches the template directory and the AsyncAPI document, and re-generate the files when changes occur. Ignores the output directory.
-  --debug                        Enable more specific errors in the console
-  --force-write                  Force writing of the generated files to given directory even if it is a git repo with unstaged files or not empty dir (defaults to false)
-  --map-base-url=<value>         Maps all schema references from base url to local folder
-
-EXAMPLES
-  $ asyncapi generate fromTemplate asyncapi.yaml @asyncapi/html-template@3.0.0 --use-new-generator --param version=1.0.0 singleFile=true --output ./docs --force-write
-```
+Generates whatever you want using templates compatible with AsyncAPI Generator. For complete command usage and options, refer to the official [AsyncAPI CLI documentation](https://www.asyncapi.com/docs/tools/cli/usage#asyncapi-generate-fromtemplate-asyncapi-template).
 
 All templates are installable npm packages. Therefore, the value of `template` can be anything supported by `npm install`. Here's a summary of the possibilities:
 ```

@@ -5,6 +5,7 @@ weight: 30
 
 There are two ways to use the generator:
 - [AsyncAPI CLI](#asyncapi-cli)
+  - [`asyncapi generate fromTemplate ASYNCAPI TEMPLATE`](#asyncapi-generate-fromtemplate-asyncapi-template)
   - [Global templates installed with `yarn` or `npm`](#global-templates-installed-with-yarn-or-npm)
   - [CLI usage examples](#cli-usage-examples)
   - [CLI usage with Docker](#cli-usage-with-docker)
@@ -12,6 +13,9 @@ There are two ways to use the generator:
 - [Using as a module/package](#using-as-a-modulepackage)
 
 ## AsyncAPI CLI
+
+### `asyncapi generate fromTemplate ASYNCAPI TEMPLATE`
+
 Generates whatever you want using templates compatible with AsyncAPI Generator. For complete command usage and options, refer to the official [AsyncAPI CLI documentation](https://www.asyncapi.com/docs/tools/cli/usage#asyncapi-generate-fromtemplate-asyncapi-template).
 
 All templates are installable npm packages. Therefore, the value of `template` can be anything supported by `npm install`. Here's a summary of the possibilities:

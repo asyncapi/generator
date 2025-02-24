@@ -4,13 +4,8 @@ weight: 30
 ---
 
 There are two ways to use the generator:
-- [AsyncAPI CLI](#asyncapi-cli)
-  - [`asyncapi generate fromTemplate ASYNCAPI TEMPLATE`](#asyncapi-generate-fromtemplate-asyncapi-template)
-  - [Global templates installed with `yarn` or `npm`](#global-templates-installed-with-yarn-or-npm)
-  - [CLI usage examples](#cli-usage-examples)
-  - [CLI usage with Docker](#cli-usage-with-docker)
-  - [CLI usage with `npx` instead of `npm`](#cli-usage-with-npx-instead-of-npm)
-- [Using as a module/package](#using-as-a-modulepackage)
+- [AsyncAPI CLI](#generator-cli)
+- [Generator library](#using-as-a-modulepackage)
 
 ## AsyncAPI CLI
 

@@ -73,221 +73,196 @@ describe('Utils', () => {
       expect(exists).toBeFalsy();
     });
   });
+  describe('#isFileSystemPath', () => {
+    afterEach(() => {
+      jest.restoreAllMocks(); 
+    });
 
- describe('#isFileSystemPath', () => {
-      it('returns true for absolute paths', () => {
-        expect(utils.isFileSystemPath('/absolute/path')).toBe(true);
-      });
-  
-      it('returns true for relative paths', () => {
-        expect(utils.isFileSystemPath('./relative/path')).toBe(true);
-        expect(utils.isFileSystemPath('../relative/path')).toBe(true);
-      });
-  
-      it('returns true for home directory paths', () => {
-        expect(utils.isFileSystemPath('~/home/path')).toBe(true);
-      });
-  
-      it('returns false for URLs', () => {
-        expect(utils.isFileSystemPath('https://example.com')).toBe(false);
-      });
+    it('returns true for absolute paths', () => {
+      expect(utils.isFileSystemPath('/absolute/path')).toBe(true);
     });
-  
-    describe('#convertMapToObject', () => {
-      it('converts a Map to an object', () => {
-        const map = new Map([
-          ['key1', 'value1'],
-          ['key2', 'value2'],
-        ]);
-        const result = utils.convertMapToObject(map);
-        expect(result).toEqual({ key1: 'value1', key2: 'value2' });
-      });
+
+    it('returns true for relative paths', () => {
+      expect(utils.isFileSystemPath('./relative/path')).toBe(true);
+      expect(utils.isFileSystemPath('../relative/path')).toBe(true);
     });
-  
-    describe('#isLocalTemplate', () => {
-      it('returns true for symbolic links', async () => {
-        jest.spyOn(fs, 'lstat').mockResolvedValue({ isSymbolicLink: () => true });
-        const result = await utils.isLocalTemplate('/path/to/template');
-        expect(result).toBe(true);
-      });
-  
-      it('returns false for non-symbolic links', async () => {
-        jest.spyOn(fs, 'lstat').mockResolvedValue({ isSymbolicLink: () => false });
-        const result = await utils.isLocalTemplate('/path/to/template');
-        expect(result).toBe(false);
-      });
+
+    it('returns true for home directory paths', () => {
+      expect(utils.isFileSystemPath('~/home/path')).toBe(true);
     });
-  
-    describe('#isReactTemplate', () => {
-      it('returns true for React templates', () => {
-        const templateConfig = { renderer: 'react' };
-        expect(utils.isReactTemplate(templateConfig)).toBe(true);
-      });
-  
-      it('returns false for non-React templates', () => {
-        const templateConfig = { renderer: 'html' };
-        expect(utils.isReactTemplate(templateConfig)).toBe(false);
-      });
+
+    it('returns false for URLs', () => {
+      expect(utils.isFileSystemPath('https://example.com')).toBe(false);
     });
-  
-    describe('#isFileSystemPath', () => {
-      it('returns true for absolute paths', () => {
-        expect(utils.isFileSystemPath('/absolute/path')).toBe(true);
-      });
-  
-      it('returns true for relative paths', () => {
-        expect(utils.isFileSystemPath('./relative/path')).toBe(true);
-        expect(utils.isFileSystemPath('../relative/path')).toBe(true);
-      });
-  
-      it('returns true for home directory paths', () => {
-        expect(utils.isFileSystemPath('~/home/path')).toBe(true);
-      });
-  
-      it('returns false for URLs', () => {
-        expect(utils.isFileSystemPath('https://example.com')).toBe(false);
-      });
+  });
+
+  describe('#convertMapToObject', () => {
+    afterEach(() => {
+      jest.restoreAllMocks(); 
     });
-  
-    describe('#convertMapToObject', () => {
-      it('converts a Map to an object', () => {
-        const map = new Map([
-          ['key1', 'value1'],
-          ['key2', 'value2'],
-        ]);
-        const result = utils.convertMapToObject(map);
-        expect(result).toEqual({ key1: 'value1', key2: 'value2' });
-      });
+
+    it('converts a Map to an object', () => {
+      const map = new Map([
+        ['key1', 'value1'],
+        ['key2', 'value2'],
+      ]);
+      const result = utils.convertMapToObject(map);
+      expect(result).toEqual({ key1: 'value1', key2: 'value2' });
     });
-  
-    describe('#isLocalTemplate', () => {
-      afterEach(() => {
-        jest.restoreAllMocks(); 
-      });
-  
-      it('returns true for symbolic links', async () => {
-        jest.spyOn(fs, 'lstat').mockResolvedValue({ isSymbolicLink: () => true });
-        const result = await utils.isLocalTemplate('/path/to/template');
-        expect(result).toBe(true);
-      });
-  
-      it('returns false for non-symbolic links', async () => {
-        jest.spyOn(fs, 'lstat').mockResolvedValue({ isSymbolicLink: () => false });
-        const result = await utils.isLocalTemplate('/path/to/template');
-        expect(result).toBe(false);
-      });
+  });
+
+  describe('#isLocalTemplate', () => {
+    afterEach(() => {
+      jest.restoreAllMocks(); 
     });
-  
-    describe('#isReactTemplate', () => {
-      it('returns true for React templates', () => {
-        const templateConfig = { renderer: 'react' };
-        expect(utils.isReactTemplate(templateConfig)).toBe(true);
-      });
-  
-      it('returns false for non-React templates', () => {
-        const templateConfig = { renderer: 'html' };
-        expect(utils.isReactTemplate(templateConfig)).toBe(false);
-      });
+
+    it('returns true for symbolic links', async () => {
+      jest.spyOn(fs, 'lstat').mockResolvedValue({ isSymbolicLink: () => true });
+      const result = await utils.isLocalTemplate('/path/to/template');
+      expect(result).toBe(true);
     });
-  
-    describe('#fetchSpec', () => {
-      afterEach(() => {
-        jest.restoreAllMocks(); 
-      });
-  
-      it('fetches content from a URL', async () => {
-        const mockResponse = 'AsyncAPI content';
-        jest.spyOn(global, 'fetch').mockResolvedValue({ text: () => mockResponse });
-        const result = await utils.fetchSpec('https://example.com/asyncapi.yaml');
-        expect(result).toBe(mockResponse);
-      });
-  
-      it('handles network errors', async () => {
-        jest.spyOn(global, 'fetch').mockRejectedValue(new Error('Network error'));
-        await expect(utils.fetchSpec('https://example.com/spec')).rejects.toThrow('Network error');
-      });
+
+    it('returns false for non-symbolic links', async () => {
+      jest.spyOn(fs, 'lstat').mockResolvedValue({ isSymbolicLink: () => false });
+      const result = await utils.isLocalTemplate('/path/to/template');
+      expect(result).toBe(false);
     });
-  
-    describe('#isFilePath', () => {
-      it('returns true for file paths', () => {
-        expect(utils.isFilePath('./path/to/file')).toBe(true);
-      });
-  
-      it('returns false for URLs', () => {
-        expect(utils.isFilePath('https://example.com')).toBe(false);
-      });
+  });
+
+  describe('#isReactTemplate', () => {
+    afterEach(() => {
+      jest.restoreAllMocks(); 
     });
-  
-    describe('#isJsFile', () => {
-      it('returns true for JavaScript files', () => {
-        expect(utils.isJsFile('file.js')).toBe(true);
-        expect(utils.isJsFile('file.jsx')).toBe(true);
-        expect(utils.isJsFile('file.cjs')).toBe(true);
-      });
-  
-      it('returns false for non-JavaScript files', () => {
-        expect(utils.isJsFile('file.txt')).toBe(false);
-      });
+
+    it('returns true for React templates', () => {
+      const templateConfig = { renderer: 'react' };
+      expect(utils.isReactTemplate(templateConfig)).toBe(true);
     });
-  
-    describe('#getGeneratorVersion', () => {
-      it('returns the generator version', () => {
-        const version = utils.getGeneratorVersion();
-        expect(version).toBeDefined();
-        expect(typeof version).toBe('string');
-      });
+
+    it('returns false for non-React templates', () => {
+      const templateConfig = { renderer: 'html' };
+      expect(utils.isReactTemplate(templateConfig)).toBe(false);
     });
-  
-    describe('#isAsyncFunction', () => {
-      it('returns true for async functions', () => {
-        const asyncFn = async () => {};
-        expect(utils.isAsyncFunction(asyncFn)).toBe(true);
-      });
-  
-      it('returns false for non-async functions', () => {
-        const syncFn = () => {};
-        expect(utils.isAsyncFunction(syncFn)).toBe(false);
-      });
+  });
+
+  describe('#fetchSpec', () => {
+    afterEach(() => {
+      jest.restoreAllMocks();
     });
-  
-    describe('#registerTypeScript', () => {
-      afterEach(() => {
-        jest.restoreAllMocks(); 
-      });
-  
-      it('registers TypeScript for .ts files', () => {
-        const tsNode = require('ts-node');
-        jest.spyOn(tsNode, 'register');
-        utils.registerTypeScript('file.ts');
-        expect(tsNode.register).toHaveBeenCalled();
-      });
-  
-      it('registers TypeScript for .tsx files', () => {
-        const tsNode = require('ts-node');
-        jest.spyOn(tsNode, 'register');
-        utils.registerTypeScript('file.tsx');
-        expect(tsNode.register).toHaveBeenCalled();
-      });
-  
-      it('does not register TypeScript for non-.ts files', () => {
-        const tsNode = require('ts-node');
-        jest.spyOn(tsNode, 'register');
-        utils.registerTypeScript('file.js');
-        expect(tsNode.register).not.toHaveBeenCalled();
-      });
+
+    it('fetches content from a URL', async () => {
+      const mockResponse = 'AsyncAPI content';
+      jest.spyOn(global, 'fetch').mockResolvedValue({ text: () => mockResponse });
+      const result = await utils.fetchSpec('https://example.com/asyncapi.yaml');
+      expect(result).toBe(mockResponse);
     });
-  
-    describe('#convertCollectionToObject', () => {
-      it('converts an array to an object', () => {
-        const array = [
-          { id: () => 'key1', value: 'value1' },
-          { id: () => 'key2', value: 'value2' },
-        ];
-        const result = utils.convertCollectionToObject(array, (item) => item.id());
-        expect(result).toEqual({
-          key1: { id: () => 'key1', value: 'value1' },
-          key2: { id: () => 'key2', value: 'value2' },
-        });
+
+    it('handles network errors', async () => {
+      jest.spyOn(global, 'fetch').mockRejectedValue(new Error('Network error'));
+      await expect(utils.fetchSpec('https://example.com/spec')).rejects.toThrow('Network error');
+    });
+  });
+
+  describe('#isFilePath', () => {
+    afterEach(() => {
+      jest.restoreAllMocks(); 
+    });
+
+    it('returns true for file paths', () => {
+      expect(utils.isFilePath('./path/to/file')).toBe(true);
+    });
+
+    it('returns false for URLs', () => {
+      expect(utils.isFilePath('https://example.com')).toBe(false);
+    });
+  });
+
+  describe('#isJsFile', () => {
+    afterEach(() => {
+      jest.restoreAllMocks(); 
+    });
+
+    it('returns true for JavaScript files', () => {
+      expect(utils.isJsFile('file.js')).toBe(true);
+      expect(utils.isJsFile('file.jsx')).toBe(true);
+      expect(utils.isJsFile('file.cjs')).toBe(true);
+    });
+
+    it('returns false for non-JavaScript files', () => {
+      expect(utils.isJsFile('file.txt')).toBe(false);
+    });
+  });
+
+  describe('#getGeneratorVersion', () => {
+    afterEach(() => {
+      jest.restoreAllMocks(); 
+    });
+
+    it('returns the generator version', () => {
+      const version = utils.getGeneratorVersion();
+      expect(version).toBeDefined();
+      expect(typeof version).toBe('string');
+    });
+  });
+
+  describe('#isAsyncFunction', () => {
+    afterEach(() => {
+      jest.restoreAllMocks(); 
+    });
+
+    it('returns true for async functions', () => {
+      const asyncFn = async () => {};
+      expect(utils.isAsyncFunction(asyncFn)).toBe(true);
+    });
+
+    it('returns false for non-async functions', () => {
+      const syncFn = () => {};
+      expect(utils.isAsyncFunction(syncFn)).toBe(false);
+    });
+  });
+
+  describe('#registerTypeScript', () => {
+    afterEach(() => {
+      jest.restoreAllMocks(); 
+    });
+
+    it('registers TypeScript for .ts files', () => {
+      const tsNode = require('ts-node');
+      jest.spyOn(tsNode, 'register');
+      utils.registerTypeScript('file.ts');
+      expect(tsNode.register).toHaveBeenCalled();
+    });
+
+    it('registers TypeScript for .tsx files', () => {
+      const tsNode = require('ts-node');
+      jest.spyOn(tsNode, 'register');
+      utils.registerTypeScript('file.tsx');
+      expect(tsNode.register).toHaveBeenCalled();
+    });
+
+    it('does not register TypeScript for non-.ts files', () => {
+      const tsNode = require('ts-node');
+      jest.spyOn(tsNode, 'register');
+      utils.registerTypeScript('file.js');
+      expect(tsNode.register).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('#convertCollectionToObject', () => {
+    afterEach(() => {
+      jest.restoreAllMocks(); 
+    });
+
+    it('converts an array to an object', () => {
+      const array = [
+        { id: () => 'key1', value: 'value1' },
+        { id: () => 'key2', value: 'value2' },
+      ];
+      const result = utils.convertCollectionToObject(array, (item) => item.id());
+      expect(result).toEqual({
+        key1: { id: () => 'key1', value: 'value1' },
+        key2: { id: () => 'key2', value: 'value2' },
       });
     });
   });
+});

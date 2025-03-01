@@ -2,7 +2,7 @@ const fs = require('fs');
 const util = require('util');
 const path = require('path');
 const fetch = require('node-fetch');
-const url = require('url');
+const { URL } = require('url');
 const resolvePkg = require('resolve-pkg');
 const resolveFrom = require('resolve-from');
 const globalDirs = require('global-dirs');
@@ -101,7 +101,12 @@ utils.fetchSpec = (link) => {
  * @returns {Boolean}
  */
 utils.isFilePath = (str) => {
-  return !url.parse(str).hostname;
+  try {
+    const url = new URL(str);
+    return !url.hostname;
+  } catch (error) {
+    return true;
+  }
 };
 
 /**

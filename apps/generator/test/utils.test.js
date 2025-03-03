@@ -91,5 +91,9 @@ describe('Utils', () => {
       const isJsFile = utils.isJsFile('./invalid-file.txt');
       expect(isJsFile).toBeFalsy();
     });
+    it('should return false if it is not a JS file', () => {
+      const isJsFile = utils.isJsFile('./invalid-file');
+      expect(isJsFile).toBeFalsy();
+    });
   });
 });

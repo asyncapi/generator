@@ -24,7 +24,7 @@ jobs:
               - '.github/workflows/**'
               - '!**/*.md'
               - '!docs/**'
-
+              - '!.all-contributorsrc'
   test:
     needs: changes
     if: ${{ needs.changes.outputs.should_test == 'true' && github.event.pull_request.draft == false }}

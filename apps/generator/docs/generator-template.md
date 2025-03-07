@@ -122,7 +122,7 @@ Here's what is contained in the code snippet above:
   - **supportedProtocols** - A list that specifies which protocols are supported by your template.
 - **dependencies** - specifies which version of [`@asyncapi/generator-react-sdk`](https://github.com/asyncapi/generator-react-sdk) should be used.
 
-Navigate to the ****python-mqtt-client-template** directory. Run the command `npm install` on your terminal to install the dependencies specified in **package.json**.
+Navigate to the **python-mqtt-client-template** directory. Run the command `npm install` on your terminal to install the dependencies specified in **package.json**.
 
 ### index.js file
 
@@ -258,7 +258,7 @@ while True:
 
 ```
 
-Run the code above in your terminal using the command `python test.py`. You should see output similar to the snippet below logged on your terminal:
+Navigate to the **python-mqtt-client-template/test/project** directory. Run the command `python test.py` on your terminal. You should see output similar to the snippet below logged on your terminal:
 
 ``` cmd
 New temperature detected 64250266 sent to temperature/changed
@@ -298,18 +298,35 @@ class TemperatureServiceClient:
 
 ### 4. Write script to run the test code
 
-In **package.json** you can have the scripts property that you invoke by calling `npm run <your_script>`. Add these scripts to **package.json**:
+In **package.json** you can have the scripts property that you invoke by calling `npm run <your_script>`. After adding these scripts in **package.json**, it will look like the following code snippet:
 
 ``` json
-    "scripts": {
+    {
+      "name": "python-mqtt-client-template",
+      "version": "0.0.1",
+      "description": "A template that generates a Python MQTT client using MQTT.",
+      "scripts": {
         "test:clean": "rimraf test/project/client.py",
         "test:generate": "asyncapi generate fromTemplate test/fixtures/asyncapi.yml ./ --output test/project --force-write",
         "test:start": "python test/project/test.py",
         "test": "npm run test:clean && npm run test:generate && npm run test:start"
+      },
+      "generator": {
+        "renderer": "react",
+        "apiVersion": "v1",
+        "generator": ">=1.10.0 <2.0.0",
+        "supportedProtocols": ["mqtt"]
+      },
+      "dependencies": {
+        "@asyncapi/generator-react-sdk": "^0.2.25"
+      },
+      "devDependencies": {
+        "rimraf": "^5.0.0"
+      }
     }
 ```
 
-The 4 scripts above do the following:
+The 4 scripts added in **package.json** do the following:
 
 1. `test:clean`: This script uses the `rimraf` package to remove the old version of the file **test/project/client.py** every time you run your test.
 2. `test:generate`: This script uses the AsyncAPI CLI to generate a new version of **client.py**.
@@ -469,16 +486,16 @@ It's recommended to put reusable components outside the template directory in a 
  * As input it requires a list of Channel models from the parsed AsyncAPI document
  */
 export function TopicFunction({ channels }) {
-  const topicsDetails = getTopics(channels)
-  let functions = ''
+  const topicsDetails = getTopics(channels);
+  let functions = '';
 
   topicsDetails.forEach((t) => {
     functions += `def send${t.name}(self, id):
         topic = "${t.topic}"
         self.client.publish(topic, id)\n`
-  })
+  });
 
-  return functions
+  return functions;
 }
 
 /*
@@ -489,19 +506,19 @@ export function TopicFunction({ channels }) {
  * As input it requires a list of Channel models from the parsed AsyncAPI document
  */
 function getTopics(channels) {
-  const channelsCanSendTo = channels
-  let topicsDetails = []
+  const channelsCanSendTo = channels;
+  let topicsDetails = [];
 
   channelsCanSendTo.forEach((ch) => {
-    const topic = {}
-    const operationId = ch.operations().filterByReceive()[0].id()
-    topic.name = operationId.charAt(0).toUpperCase() + operationId.slice(1)
-    topic.topic = ch.address()
+    const topic = {};
+    const operationId = ch.operations().filterByReceive()[0].id();
+    topic.name = operationId.charAt(0).toUpperCase() + operationId.slice(1);
+    topic.topic = ch.address();
 
-    topicsDetails.push(topic)
+    topicsDetails.push(topic);
   })
 
-  return topicsDetails
+  return topicsDetails;
 }
 ```
 

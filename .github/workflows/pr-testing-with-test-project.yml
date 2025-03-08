@@ -19,11 +19,11 @@ jobs:
             modified_files:
               - 'package.json'
               - 'package-lock.json'
-              - 'apps/'
-              - 'packages/'
-              - '.github/workflows/'
-              - '!/*.md'
-              - '!docs/'
+              - 'apps/**'
+              - 'packages/**'
+              - '.github/workflows/**'
+              - '!**/*.md'
+              - '!docs/**'
               - '!.all-contributorsrc'
   test:
     needs: changes

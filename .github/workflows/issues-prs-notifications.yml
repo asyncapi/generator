@@ -53,15 +53,15 @@ jobs:
 
   discussion:
     if: github.event_name == 'discussion' && github.actor != 'asyncapi-bot' && github.actor != 'dependabot[bot]' && github.actor != 'dependabot-preview[bot]'
-    name: Notify slack on every new pull request
+    name: Notify slack on every new discussion
     runs-on: ubuntu-latest
     steps:
-      - name: Convert markdown to slack markdown for pull request
+      - name: Convert markdown to slack markdown for discussion
         uses: asyncapi/.github/.github/actions/slackify-markdown@master
         id: discussionmarkdown
         with:
           markdown: "[${{github.event.discussion.title}}](${{github.event.discussion.html_url}}) \n ${{github.event.discussion.body}}"
-      - name: Send info about pull request
+      - name: Send info about discussion
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_WEBHOOK: ${{secrets.SLACK_GITHUB_NEWISSUEPR}}

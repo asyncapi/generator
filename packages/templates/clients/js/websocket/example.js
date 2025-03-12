@@ -6,7 +6,7 @@ const wsClient = new WSClient();
 function myHandler(message) {
   console.log('====================');
   console.log('Just proving I got the message in myHandler:', message);
-  console.log('====================');  
+  console.log('====================');
 }
 
 // Example of custom error handler

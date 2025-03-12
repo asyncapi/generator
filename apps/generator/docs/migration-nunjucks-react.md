@@ -112,7 +112,7 @@ export default function({ asyncapi }) {
 
 ### 6. File template 
 
-Check the [detailed guide on file templates](file-templates.md) to learn what is the difference between templating multiple file outputs in Nunjucks and React.
+Check the [detailed guide on file templates](file-templates) to learn what is the difference between templating multiple file outputs in Nunjucks and React.
 
 ### 7. Models generation
 

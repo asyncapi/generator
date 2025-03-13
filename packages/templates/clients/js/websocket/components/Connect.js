@@ -1,11 +1,10 @@
 import { Text } from '@asyncapi/generator-react-sdk';
 
-export function Connect ({ title }) {
+export function Connect({ title }) {
   return (
-  <Text>
-    <Text>
-        {
-           `  // Method to establish a WebSocket connection
+    <Text newLines={2}>
+      {
+        `  // Method to establish a WebSocket connection
   connect() {
     return new Promise((resolve, reject) => {
       this.websocket = new WebSocket(this.url);
@@ -45,8 +44,7 @@ export function Connect ({ title }) {
       };
     });
   }`
-        }
+      }
     </Text>
-  </Text>
   );
 }

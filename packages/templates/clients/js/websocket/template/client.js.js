@@ -1,15 +1,8 @@
-import { File, Text } from '@asyncapi/generator-react-sdk';
+import { File } from '@asyncapi/generator-react-sdk';
 import { getClientName, getServerUrl } from '@asyncapi/generator-helpers';
 import { FileHeaderInfo } from '../components/FileHeaderInfo';
 import { Requires } from '../components/Requires';
-import { Constructor } from '../components/Constructor';
-import { Connect } from '../components/Connect';
-import { RegisterMessageHandler } from '../components/RegisterMessageHandler';
-import { RegisterErrorHandler } from '../components/RegisterErrorHandler';
-import { HandleMessage } from '../components/HandleMessage';
-import { SendEchoMessage } from '../components/SendEchoMessage';
-import { CloseConnection } from '../components/CloseConnection';
-import { ModuleExport } from '../components/ModuleExport';
+import { ClientClass } from '../components/ClientClass';
 
 export default function ({ asyncapi, params }) {
   const server = asyncapi.servers().get(params.server);
@@ -25,22 +18,7 @@ export default function ({ asyncapi, params }) {
         server={server}
       />
       <Requires />
-        <Text>
-           {`class ${clientName} {`}
-        </Text>
-          <Constructor serverName={serverName} />
-          <Connect title={title} />
-          <RegisterMessageHandler />
-          <RegisterErrorHandler />
-          <HandleMessage />
-          <SendEchoMessage />
-          <CloseConnection />
-        <Text>
-          {
-            `}`
-          }
-        </Text>
-        <ModuleExport clientName={clientName} />
+      <ClientClass clientName={clientName} serverName={serverName} title={title} />
     </File>
   );
 }

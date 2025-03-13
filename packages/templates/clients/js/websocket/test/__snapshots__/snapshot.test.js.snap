@@ -12,6 +12,7 @@ exports[`testing if generated client match snapshot generate simple client for h
 const WebSocket = require('ws');
 
 class HoppscotchEchoWebSocketClient {
+
   constructor() {
     this.url = 'wss://echo-websocket.hoppscotch.io';
     this.websocket = null;
@@ -98,6 +99,7 @@ class HoppscotchEchoWebSocketClient {
   }
 }
 module.exports = HoppscotchEchoWebSocketClient;
+
 "
 `;
 
@@ -114,6 +116,7 @@ exports[`testing if generated client match snapshot generate simple client for p
 const WebSocket = require('ws');
 
 class PostmanEchoWebSocketClientClient {
+
   constructor() {
     this.url = 'wss://ws.postman-echo.com/raw';
     this.websocket = null;
@@ -200,5 +203,6 @@ class PostmanEchoWebSocketClientClient {
   }
 }
 module.exports = PostmanEchoWebSocketClientClient;
+
 "
 `;

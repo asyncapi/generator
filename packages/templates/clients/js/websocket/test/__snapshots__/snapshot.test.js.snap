@@ -60,7 +60,7 @@ class HoppscotchEchoWebSocketClient {
     });
   }
 
-  // Method to register custom error handlers
+  // Method to register custom message handlers
   registerMessageHandler(handler) {
     if (typeof handler === 'function') {
       this.messageHandlers.push(handler);
@@ -162,7 +162,7 @@ class PostmanEchoWebSocketClientClient {
     });
   }
 
-  // Method to register custom error handlers
+  // Method to register custom message handlers
   registerMessageHandler(handler) {
     if (typeof handler === 'function') {
       this.messageHandlers.push(handler);

@@ -5,7 +5,7 @@ export function RegisterMessageHandler () {
   <Text>
     <Text>
         {
-          `  // Method to register custom error handlers
+          `  // Method to register custom message handlers
   registerMessageHandler(handler) {
     if (typeof handler === 'function') {
       this.messageHandlers.push(handler);

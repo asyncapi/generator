@@ -2,9 +2,9 @@ import { Text } from '@asyncapi/generator-react-sdk';
 
 export function CloseConnection() {
   return (
-    <Text>
+    <Text indent={2}>
       {
-        `  // Method to close the WebSocket connection
+        `// Method to close the WebSocket connection
   close() {
     if (this.websocket) {
       this.websocket.close();

@@ -2,9 +2,9 @@ import { Text } from '@asyncapi/generator-react-sdk';
 
 export function Connect({ title }) {
   return (
-    <Text newLines={2}>
+    <Text newLines={2} indent={2}>
       {
-        `  // Method to establish a WebSocket connection
+        `// Method to establish a WebSocket connection
   connect() {
     return new Promise((resolve, reject) => {
       this.websocket = new WebSocket(this.url);

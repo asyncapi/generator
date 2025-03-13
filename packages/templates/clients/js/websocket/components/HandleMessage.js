@@ -5,9 +5,9 @@ export function HandleMessage() {
     <Text newLines={2} indent={2}>
       {
         `// Method to handle message with callback
-  handleMessage(message, cb) {
-    if (cb) cb(message);
-  }`
+handleMessage(message, cb) {
+  if (cb) cb(message);
+}`
       }
     </Text>
   );

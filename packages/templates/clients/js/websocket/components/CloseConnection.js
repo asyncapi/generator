@@ -5,12 +5,12 @@ export function CloseConnection() {
     <Text indent={2}>
       {
         `// Method to close the WebSocket connection
-  close() {
-    if (this.websocket) {
-      this.websocket.close();
-      console.log('WebSocket connection closed.');
-    }
-  }`
+close() {
+  if (this.websocket) {
+    this.websocket.close();
+    console.log('WebSocket connection closed.');
+  }
+}`
       }
     </Text>
   );

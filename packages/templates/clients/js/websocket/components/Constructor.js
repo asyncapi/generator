@@ -5,11 +5,11 @@ export function Constructor({ serverName }) {
     <Text indent={2}>
       {
         `constructor() {
-    this.url = '${serverName}';
-    this.websocket = null;
-    this.messageHandlers = [];
-    this.errorHandlers = [];
-  }
+  this.url = '${serverName}';
+  this.websocket = null;
+  this.messageHandlers = [];
+  this.errorHandlers = [];
+}
 `
       }
     </Text>

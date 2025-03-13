@@ -14,11 +14,11 @@ const WebSocket = require('ws');
 class HoppscotchEchoWebSocketClient {
 
   constructor() {
-      this.url = 'wss://echo-websocket.hoppscotch.io';
-      this.websocket = null;
-      this.messageHandlers = [];
-      this.errorHandlers = [];
-    }
+    this.url = 'wss://echo-websocket.hoppscotch.io';
+    this.websocket = null;
+    this.messageHandlers = [];
+    this.errorHandlers = [];
+  }
 
   // Method to establish a WebSocket connection
   connect() {
@@ -118,11 +118,11 @@ const WebSocket = require('ws');
 class PostmanEchoWebSocketClientClient {
 
   constructor() {
-      this.url = 'wss://ws.postman-echo.com/raw';
-      this.websocket = null;
-      this.messageHandlers = [];
-      this.errorHandlers = [];
-    }
+    this.url = 'wss://ws.postman-echo.com/raw';
+    this.websocket = null;
+    this.messageHandlers = [];
+    this.errorHandlers = [];
+  }
 
   // Method to establish a WebSocket connection
   connect() {

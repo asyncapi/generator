@@ -22,9 +22,7 @@ export function ClientClass({ clientName, serverName, title }) {
             <SendEchoMessage />
             <CloseConnection />
             <Text>
-                {
-                    `}`
-                }
+                {`}`}
             </Text>
             <ModuleExport clientName={clientName} />
         </Text>

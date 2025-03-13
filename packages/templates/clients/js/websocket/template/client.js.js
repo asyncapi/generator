@@ -10,7 +10,6 @@ export default function ({ asyncapi, params }) {
   const title = info.title();
   const clientName = getClientName(info);
   const serverName = getServerUrl(server);
-  //TODO at this moment this template shows usage of granular components and also generic Text component with lots of code but also not so nice to read. We need to figure the best way of handling this.
   return (
     <File name={params.clientFileName}>
       <FileHeaderInfo

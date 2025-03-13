@@ -97,7 +97,6 @@ class HoppscotchEchoWebSocketClient {
     }
   }
 }
-
 module.exports = HoppscotchEchoWebSocketClient;
 "
 `;
@@ -200,7 +199,6 @@ class PostmanEchoWebSocketClientClient {
     }
   }
 }
-
 module.exports = PostmanEchoWebSocketClientClient;
 "
 `;

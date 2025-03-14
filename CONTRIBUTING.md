@@ -5,6 +5,25 @@ We love your input! We want to make contributing to this project as easy and tra
 
 We use [All Contributors](https://allcontributors.org/docs/en/specification) specification to handle recognitions. For more details read [this](https://github.com/asyncapi/community/blob/master/recognize-contributors.md) document.
 
+## Guidelines for new contributors to the AsyncAPI Generator Repository 
+
+1. Read the [docs](https://www.asyncapi.com/docs/tools/generator) of generator to get an overview about what project is all about.
+2. While reading through the docs one might find bugs (e.g maybe link is not working, text formatting issues etc).
+3. Some concepts in docs might not be explained in best possible way so a contributor can suggest some ideas regarding improvements in a particular docs (e.g adding more examples/code snippets to make the explanation more effective).
+4. Familiarize yourself with the project's structure by reviewing the source code, understand the role of different files and components.
+5. Testing is one of the area where new contributors can contribute as when tests are run they provide you what are uncovered lines of a particular file i.e **test coverage report**.
+6. You can then try to add tests for those uncovered lines (e.g maybe a function written inside a file is not covered in tests). For reference you can checkout [PR](https://github.com/asyncapi/generator/pull/1379).
+7. Instead of creating entirely new tests, consider improving existing ones by adding more edge cases (e.g only few testcases are written in a test but if you figure out more potential cases it would be great).
+
+## Few tips for effective contributions
+
+1. **PATIENCE** is the key. You can’t hurry and try to create a PR which doesn’t really add much value in the project.
+2. Adding completely new features might be challenging in generator as majority of things are working fine, you just need to spend more time understanding the repository to figure out issues.
+3. You should do research on Google regarding the @asyncapi/generator and related repository(eg. @asyncapi/parser or any of the template repository) to find a potential improvements that can be done and AI is not bad, as long as it is used as assistant and not main developer. Always double check the information provided by AI with Google or StackOverflow.
+4. Understanding how the Generator works is key to making valuable contributions.
+5. Follow **"Issue First, PR Later"** - Always check if there’s an existing issue before creating new one and raise PR once issue is confirmed/approved by any of the maintainers.
+6. Keep PRs small and focused – A small PR with a well-defined scope is easier to review and merge. Avoid bundling multiple changes into one PR.
+
 ## Summary of the contribution flow
 
 The following is a summary of the ideal contribution flow. Please, note that Pull Requests can also be rejected by the maintainers when appropriate.

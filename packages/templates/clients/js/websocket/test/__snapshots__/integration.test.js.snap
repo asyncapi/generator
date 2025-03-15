@@ -103,7 +103,7 @@ module.exports = HoppscotchEchoWebSocketClient;
 "
 `;
 
-exports[`testing if generated client match snapshot generate simple client for hoppscotch echo without clientFileName 1`] = `
+exports[`testing if generated client match snapshot generate simple client for hoppscotch echo without clientFileName param 1`] = `
 "//////////////////////////////////////////////////////////////////////
 //
 // Hoppscotch Echo WebSocket - 1.0.0

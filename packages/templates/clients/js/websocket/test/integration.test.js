@@ -77,7 +77,7 @@ describe('testing if generated client match snapshot', () => {
     });
 
     await expect(generator.generateFromFile(asyncapi_v3_path_postman))
-      .rejects.toThrow(/This template requires the following missing params: server/);
+      .rejects.toThrow('This template requires the following missing params: server');
   });
 
 });

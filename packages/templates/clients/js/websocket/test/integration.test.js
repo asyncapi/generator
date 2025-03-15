@@ -12,7 +12,7 @@ const template = './';
 
 describe('testing if generated client match snapshot', () => {
   jest.setTimeout(100000);
-  
+
   it('generate simple client for postman echo', async () => {
     const testOutputFile = 'client-postman.js';
 
@@ -46,4 +46,38 @@ describe('testing if generated client match snapshot', () => {
     const client = await readFile(path.join(testResultPath, testOutputFile), 'utf8');
     expect(client).toMatchSnapshot();
   });
+
+  it('generate simple client for hoppscotch echo without clientFileName param', async () => {
+    const defaultOutputFile = 'client.js';
+
+    const generator = new Generator(template, testResultPath, {
+      forceWrite: true,
+      templateParams: {
+        server: 'echoServer',
+      }
+    });
+
+    await generator.generateFromFile(asyncapi_v3_path_hoppscotch);
+
+    const clientOutputFile = path.join(testResultPath, defaultOutputFile);
+    expect(clientOutputFile).toBeDefined();
+
+    const client = await readFile(clientOutputFile, 'utf8');
+    expect(client).toMatchSnapshot();
+  });
+
+  it('should throw an error when server param is missing during simple client generation for hoppscotch echo', async () => {
+    const testOutputFile = 'client-hoppscotch.js';
+
+    const generator = new Generator(template, testResultPath, {
+      forceWrite: true,
+      templateParams: {
+        clientFileName: testOutputFile
+      }
+    });
+
+    await expect(generator.generateFromFile(asyncapi_v3_path_postman))
+      .rejects.toThrow(/This template requires the following missing params: server/);
+  });
+
 });

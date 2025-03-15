@@ -6,7 +6,7 @@ export default function () {
       <Text>
         {`websocket-client==1.8.0
 certifi==2025.1.31
-requests==2.20.0`}
+requests==2.32.3`}
       </Text>
     </File>
   );

@@ -60,8 +60,7 @@
       "clientFileName": {
         "description": "The name of the generated client file",
         "required": false,
--       "default": "client.js"
-+       "default": "client.py"
+        "default": "client.py"
       }
     }
   }

@@ -14,7 +14,7 @@ describe('testing if generated client match snapshot', () => {
   jest.setTimeout(100000);
   
   it('generate simple client for postman echo', async () => {
-    const testOutputFiles = ['client-postman.py', 'requirements.txt'];
+    const testOutputFiles = ['client_postman.py', 'requirements.txt'];
 
     const generator = new Generator(template, testResultPath, {
       forceWrite: true,
@@ -35,7 +35,7 @@ describe('testing if generated client match snapshot', () => {
   });
 
   it('generate simple client for hoppscotch echo', async () => {
-    const testOutputFiles = ['client-hoppscotch.py', 'requirements.txt'];
+    const testOutputFiles = ['client_hoppscotch.py', 'requirements.txt'];
 
     const generator = new Generator(template, testResultPath, {
       forceWrite: true,

@@ -29,7 +29,6 @@ To run all tests locally:
 
 - Unit tests: `npm run generator:test:unit`
 - Integration tests: `npm run generator:test:integration`
-- CLI tests: `npm run generator:test:cli`
 
 ### Adding tests
 

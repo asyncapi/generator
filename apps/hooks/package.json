@@ -1,6 +1,6 @@
 {
   "name": "@asyncapi/generator-hooks",
-  "version": "0.2.0",
+  "version": "0.1.0",
   "description": "Library with hooks function for templates using AsyncAPI Generator",
   "main": "src/index.js",
   "scripts": {

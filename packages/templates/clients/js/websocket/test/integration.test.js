@@ -2,9 +2,8 @@
  * @jest-environment node
  */
 
-const fs = require('fs');
 const path = require('path');
-const { readFile } = require('fs').promises;
+const { readFile, stat } = require('fs').promises;
 const Generator = require('@asyncapi/generator');
 const asyncapi_v3_path_postman = path.resolve(__dirname, './__fixtures__/asyncapi-postman-echo.yml');
 const asyncapi_v3_path_hoppscotch = path.resolve(__dirname, './__fixtures__/asyncapi-hoppscotch-echo.yml');
@@ -61,8 +60,11 @@ describe('testing if generated client match snapshot', () => {
     await generator.generateFromFile(asyncapi_v3_path_hoppscotch);
 
     const clientOutputFile = path.join(testResultPath, defaultOutputFile);
-    
-    expect(fs.existsSync(clientOutputFile)).toBeTruthy();
+
+    const checkClientOutputFileExists = await stat(clientOutputFile);
+
+    expect(checkClientOutputFileExists.isFile()).toBeTruthy();
+
   });
 
   it('should throw an error when server param is missing during simple client generation for hoppscotch echo', async () => {

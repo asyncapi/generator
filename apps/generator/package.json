@@ -50,8 +50,8 @@
   "dependencies": {
     "@asyncapi/generator-react-sdk": "^1.1.2",
     "@asyncapi/multi-parser": "^2.1.1",
-    "@asyncapi/nunjucks-filters": "2.2.0",
-    "@asyncapi/generator-hooks": "0.2.0",
+    "@asyncapi/nunjucks-filters": "*",
+    "@asyncapi/generator-hooks": "*",
     "@asyncapi/parser": "^3.0.14",
     "@npmcli/arborist": "5.6.3",
     "@npmcli/config": "^8.0.2",

@@ -22,7 +22,7 @@ node -v
 
 If you don't have either Node or Npm installed, use the [official node.js installer](https://nodejs.org/en/download/).
 
-If you have the correct versions installed, proceed to the CLI installation guide below. Otherwise, upgrading the Npm or Node version is lower than the recommended versions specified above.
+If you have the correct versions installed, proceed to the CLI installation guide below. Otherwise, upgrade NPM or Node if your version is lower than the recommended one.
 
 ## AsyncAPI CLI
 The AsyncAPI CLI tool allows you to do many different things with the [AsyncAPI document](asyncapi-document). You can generate message-based API boilerplate code, documentation, or anything else you need as long as you specify it in your [template](template) or the existing template already supports it. To use the generator via the AsyncAPI CLI, you need to install the AsyncAPI CLI tool. For the latest installation instructions, visit the official AsyncAPI CLI [installation guide](https://www.asyncapi.com/docs/tools/cli/installation).

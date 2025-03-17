@@ -14,6 +14,18 @@ In this tutorial:
 - You'll create a React template that will use the MQTT broker to allow you to monitor your bedroom's temperature and notify you when the temperature drops or rises above 22 °C.
 - Lastly, create a reusable component for the output code's `sendTemperatureDrop` and `sendTemperatureRise` functions.
 
+> **Note:** In this tutorial, we are using `test.mosquitto.org` as the public broker. However, sometimes it may not be reachable. If you experience any difficulty connecting to it, you can run a broker on your localhost instead.  
+>  
+> If you choose to run the broker on localhost, then in the further steps, replace all occurrences of `test.mosquitto.org` with `localhost` and run the following Docker command:  
+>  
+> ```sh
+> docker run -d --name mosquitto -p 1883:1883 eclipse-mosquitto
+> ```
+>  
+> This starts an Eclipse Mosquitto broker locally on your machine, listening on port 1883.  
+>  
+> If you don’t want to use Docker, you can install Mosquitto manually. Follow the [official installation guide](https://mosquitto.org/download/) for your operating system.
+
 ## Background context
 
 There is a list of [community maintained templates](https://www.asyncapi.com/docs/tools/generator/template#generator-templates-list), but what if you do not find what you need? In that case, you'll create a user-defined template that generates custom output from the generator.

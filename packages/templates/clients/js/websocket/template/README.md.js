@@ -2,6 +2,7 @@ import { File, Text } from '@asyncapi/generator-react-sdk';
 import { getClientName } from '@asyncapi/generator-helpers';
 
 export default function({ asyncapi, params }) {
+  // The generator already includes built-in checks for required parameters during template generation, so there is no need to manually validate them explicitly.
   const server = asyncapi.servers().get(params.server);
   const info = asyncapi.info();
   const clientName = getClientName(info);

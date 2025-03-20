@@ -23,7 +23,11 @@ In this tutorial:
 > ```
 >  
 > This starts an Eclipse Mosquitto broker locally on your machine, listening on port 1883.  
->  
+>  To verify the broker is running properly, you can check with:
+>  ```sh
+>  docker ps | grep mosquitto
+>  ```
+>
 > If you don’t want to use Docker, you can install Mosquitto manually. Follow the [official installation guide](https://mosquitto.org/download/) for your operating system.
 
 ## Background context

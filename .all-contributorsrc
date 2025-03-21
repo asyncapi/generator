@@ -224,6 +224,15 @@
         "review",
         "test"
       ]
+    },
+    {
+      "login": "AdityaP700",
+      "name": "AdityaPat_",
+      "avatar_url": "https://avatars.githubusercontent.com/u/126982848?v=4",
+      "profile": "https://linktr.ee/aditya_pat",
+      "contributions": [
+        "infra"
+      ]
     }
   ],
   "contributorsPerLine": 3,

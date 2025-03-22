@@ -1,7 +1,7 @@
 # Contributing to AsyncAPI
 We love your input! We want to make contributing to this project as easy and transparent as possible.
 
-## Contribution recogniton
+## Contribution recognition
 
 We use [All Contributors](https://allcontributors.org/docs/en/specification) specification to handle recognitions. For more details read [this](https://github.com/asyncapi/community/blob/master/recognize-contributors.md) document.
 

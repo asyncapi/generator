@@ -19,11 +19,11 @@ In this tutorial:
 Before you begin, make sure you have the following set up:
 
 - **Basic Programming Knowledge** – Familiarity with JavaScript and Python.
-- **NPM & PIP** – Required for installing dependencies.
+- **NPM & PIP** – Required for installing dependencies. Install NPM from the [official guide](https://nodejs.org/en/download) and PIP from the [official guide](https://pip.pypa.io/en/stable/installation).
 - **AsyncAPI CLI** – Used for code generation, install using [CLI installation guide](https://www.asyncapi.com/docs/tools/cli/installation).
 - **Docker** - Required for running MQTT CLI. Install it from the official [Docker](https://docs.docker.com/) website.
 - **Code Editor (VS Code recommended)** – A good code editor is essential for development and debugging.
-- **Knowledge of Template Development** – Review the [Template Development Guide](https://www.asyncapi.com/docs/tools/generator/template-development) to understand the structure and requirements of AsyncAPI templates.
+- **Knowledge of Template Development** – Review the [Template Development Guide](template-development) to understand the structure and minimum requirements for templates.
 
 ## Background context
 
@@ -66,13 +66,6 @@ components:
         temperatureId:
           type: string
 ```
-
-<Remember>
-
-- To generate code, use the [AsyncAPI CLI](https://www.asyncapi.com/tools/cli). If you don't have the CLI installed, follow [CLI installation guide](/docs/tools/generator/installation-guide#asyncapi-cli).
-- If you are new to AsyncAPI Generator, check out the following docs: [template development](/docs/tools/generator/template-development), which explains the minimum requirements for a template and possible features.
-
-</Remember>
 
 ## Overview of steps
 

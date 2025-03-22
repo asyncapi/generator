@@ -7,18 +7,18 @@ We use [All Contributors](https://allcontributors.org/docs/en/specification) spe
 
 ## Guidelines for new contributors 
 
-1. Read the [generator docs](https://www.asyncapi.com/docs/tools/generator) to get an overview of what the project is all about.
-2. While reading through the docs one might identify issues (e.g., maybe a link is not working, text formatting issues, etc.).
-3. Some concepts in the documentation might not be presented clearly, so contributors can suggest improvements (e.g., adding more examples or code snippets to make the content more effective).
+1. Read the [generator docs](https://www.asyncapi.com/docs/tools/generator) to get an overview of what the project is about.
+2. While reading through the docs one might identify issues (e.g., broken links, text formatting issues, etc.).
+3. Some concepts in the documentation might not be presented clearly, so contributors can suggest improvements (e.g., adding more examples or code snippets to make the documentation easy to understand).
 4. Familiarize yourself with the project's structure by reviewing the source code and understanding the roles of different files and components.
-5. Testing is one of the areas where new contributors can contribute, as running tests reveals uncovered lines in a particular file (i.e., a **test coverage report**).
-6. You can then try to add tests for those uncovered lines (e.g., a function within a file might not be covered). For reference, you can check out [PR](https://github.com/asyncapi/generator/pull/1379).
-7. Instead of creating entirely new tests, consider enhancing existing ones by adding more edge cases (e.g., if only a few test cases are written, consider including additional scenarios).
-8. We encourage contributors to help improve code quality by reviewing reported issues on [SonarCloud](https://sonarcloud.io/project/issues?issueStatuses=OPEN%2CCONFIRMED&id=asyncapi_generator). Contributors can help by reviewing reported issues and suggested improvements, identifying false reported issues that may need removal, and proposing fixes for valid issues to enhance the codebase.
+5. Testing is one of the areas where new contributors can contribute, as running tests reveals uncovered lines in a particular file (e.g., a **test coverage report**).
+6. You can then try to add tests for those uncovered lines (e.g., a function within a file might not be covered). For reference, you can check out this [PR](https://github.com/asyncapi/generator/pull/1379).
+7. Instead of creating entirely new tests, consider enhancing existing ones by adding more edge cases to include additional test scenarios.
+8. We encourage contributors to help improve code quality by reviewing reported issues on [SonarCloud](https://sonarcloud.io/project/issues?issueStatuses=OPEN%2CCONFIRMED&id=asyncapi_generator) and suggesting improvements, identifying false reported issues that may need to be removed, and proposing fixes for valid issues.
 
 ## Few tips for effective contributions
 
-1. Understanding how the Generator works is key to making valuable contributions. You can start by actively following along and executing the steps given in the [tutorial on creating a template](https://www.asyncapi.com/docs/tools/generator/generator-template). Hands-on practice will provide you with a comprehensive understanding of how the Generator processes templates and allow you to experiment with customization.
+1. Understanding how the Generator works is key to making valuable contributions. You can start by actively following along and executing the steps given in the [generator template tutorial](https://www.asyncapi.com/docs/tools/generator/generator-template). Hands-on practice will provide you with a comprehensive understanding of how the Generator processes templates and allow you to experiment with customization.
 2. **PATIENCE** is crucial. Focus on creating meaningful contributions rather than rushing to submit a PR that adds little or no value to the project.
 3. Adding entirely new features might be challenging because most features are already well-established. You may need to spend more time understanding the repository to identify areas for improvement.
 4. You should research on Google regarding the @asyncapi/generator and related repositories (e.g., @asyncapi/parser or any of the template repositories) to identify potential improvements. AI can be a helpful assistant, but always double-check the information it provides with Google or StackOverflow.

@@ -1,11 +1,11 @@
 import { Text } from '@asyncapi/generator-react-sdk';
 
-export function Constructor({ serverName }) {
+export function Constructor({ serverUrl }) {
   return (
     <Text indent={2}>
       {
         `constructor() {
-  this.url = '${serverName}';
+  this.url = '${serverUrl}';
   this.websocket = null;
   this.messageHandlers = [];
   this.errorHandlers = [];

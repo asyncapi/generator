@@ -7,8 +7,8 @@ const { readFile } = require('fs').promises;
 const Generator = require('@asyncapi/generator');
 const asyncapi_v3_path_postman = path.resolve(__dirname, './__fixtures__/asyncapi-postman-echo.yml');
 const asyncapi_v3_path_hoppscotch = path.resolve(__dirname, './__fixtures__/asyncapi-hoppscotch-echo.yml');
-const testResultPathPostman = path.resolve(__dirname, './temp/snapshotTestResultPostman');
-const testResultPathHoppscotch = path.resolve(__dirname, './temp/snapshotTestResultHoppscotch');
+const testResultPathPostman = path.resolve(__dirname, './temp/postmanClient');
+const testResultPathHoppscotch = path.resolve(__dirname, './temp/hoppscotchClient');
 const template = './';
 
 describe('testing if generated client match snapshot', () => {

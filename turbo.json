@@ -16,6 +16,10 @@
     "test:update": { "cache": false },
     "test:unit": {"cache":false},
     "test:integration": {"cache": false},
+    "test:cli": { 
+      "dependsOn": ["build"],
+      "cache": false 
+    },
     "test:cleanup": {},
     "docs": {},
     "docker:build": {},

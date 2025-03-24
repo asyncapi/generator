@@ -14,6 +14,7 @@
     "generator:test:dev": "turbo run test:dev",
     "generator:test:unit": "turbo run test:unit  --filter=@asyncapi/generator",
     "generator:test:integration": "turbo run test:integration --filter=@asyncapi/generator",
+    "generator:test:cli": "turbo run test:cli --filter=@asyncapi/generator",
     "generator:test:cleanup": "turbo run test:cleanup --filter=@asyncapi/generator",
     "generator:docs": "turbo run docs --filter=@asyncapi/generator",
     "generator:docker:build": "turbo run docker:build --filter=@asyncapi/generator",

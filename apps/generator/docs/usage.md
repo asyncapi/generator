@@ -8,10 +8,30 @@ There are two ways to use the generator:
 - [Generator library](#using-as-a-modulepackage)
 
 ## AsyncAPI CLI
+Generates whatever you want using templates compatible with AsyncAPI Generator.
+```bash
+USAGE
+  $ asyncapi generate fromTemplate [ASYNCAPI] [TEMPLATE] [-h] [-d <value>] [-i] [--debug] [-n <value>] [-o <value>] [--force-write] [-w] [-p <value>] [--map-base-url <value>]
 
-### `asyncapi generate fromTemplate ASYNCAPI TEMPLATE`
+ARGUMENTS
+  ASYNCAPI  - Local path, url or context-name pointing to AsyncAPI file
+  TEMPLATE  - Name of the generator template like for example @asyncapi/html-template or https://github.com/asyncapi/html-template
 
-Generates whatever you want using templates compatible with AsyncAPI Generator. For complete command usage and options, refer to the official [AsyncAPI CLI documentation](https://www.asyncapi.com/docs/tools/cli/usage#asyncapi-generate-fromtemplate-asyncapi-template).
+FLAGS
+  -d, --disable-hook=<value>...  Disable a specific hook type or hooks from a given hook type
+  -h, --help                     Show CLI help.
+  -i, --install                  Installs the template and its dependencies (defaults to false)
+  -n, --no-overwrite=<value>...  Glob or path of the file(s) to skip when regenerating
+  -o, --output=<value>           Directory where to put the generated files (defaults to current directory)
+  -p, --param=<value>...         Additional param to pass to templates
+  -w, --watch                    Watches the template directory and the AsyncAPI document, and re-generate the files when changes occur. Ignores the output directory.
+  --debug                        Enable more specific errors in the console
+  --force-write                  Force writing of the generated files to given directory even if it is a git repo with unstaged files or not empty dir (defaults to false)
+  --map-base-url=<value>         Maps all schema references from base url to local folder
+
+EXAMPLES
+  $ asyncapi generate fromTemplate asyncapi.yaml @asyncapi/html-template@3.0.0 --use-new-generator --param version=1.0.0 singleFile=true --output ./docs --force-write
+```
 
 All templates are installable npm packages. Therefore, the value of `template` can be anything supported by `npm install`. Here's a summary of the possibilities:
 ```
@@ -94,14 +114,12 @@ Install [Docker](https://docs.docker.com/get-docker/) first, then use docker to 
 
 ```bash
 docker run --rm -it \
---user=root \
 -v [ASYNCAPI SPEC FILE LOCATION]:/app/asyncapi.yml \
 -v [GENERATED FILES LOCATION]:/app/output \
-asyncapi/cli # docker image [COMMAND HERE]
+asyncapi/cli [COMMAND HERE]
 
 # Example that you can run inside the cli directory after cloning this repository. First, you specify the mount in the location of your AsyncAPI specification file and then you mount it in the directory where the generation result should be saved.
 docker run --rm -it \
-   --user=root \
    -v ${PWD}/test/fixtures/asyncapi_v1.yml:/app/asyncapi.yml \
    -v ${PWD}/output:/app/output \
    asyncapi/cli generate fromTemplate -o /app/output /app/asyncapi.yml @asyncapi/html-template@3.0.0 --use-new-generator --force-write

@@ -1,4 +1,4 @@
-const WSClient = require('./test/temp/snapshotTestResult/client-postman');
+const WSClient = require('./tests/temp/snapshotTestResult/client-postman.js');
 // Example usage
 const wsClient = new WSClient();
 
@@ -6,7 +6,7 @@ const wsClient = new WSClient();
 function myHandler(message) {
   console.log('====================');
   console.log('Just proving I got the message in myHandler:', message);
-  console.log('====================');
+  console.log('====================');  
 }
 
 // Example of custom error handler

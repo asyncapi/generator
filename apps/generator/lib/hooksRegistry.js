@@ -1,15 +1,16 @@
 const path = require('path');
 const xfs = require('fs.extra');
+const fs = require('fs');
 const { exists, registerTypeScript } = require('./utils');
 
 /**
- * Registers all template hooks.
+ * Registers all template hooks. carefully cahnged signature 
  * @param {Object} hooks Object that stores information about all available hook functions grouped by the type of the hook.
  * @param {Object} templateConfig Template configuration.
  * @param {String} templateDir Directory where template is located.
  * @param {String} hooksDir Directory where local hooks are located.
  */
-module.exports.registerHooks = async (hooks, templateConfig, templateDir, hooksDir) => {
+const registerHooks = async (hooks, templateConfig, templateDir, hooksDir) => {
   await registerLocalHooks(hooks, templateDir, hooksDir);
 
   if (templateConfig && Object.keys(templateConfig).length > 0) await registerConfigHooks(hooks, templateDir, templateConfig);
@@ -122,3 +123,10 @@ function addHook(hooks, mod, config) {
   });
   return hooks;
 }
+
+module.exports = {
+  registerHooks,
+  registerLocalHooks,
+  registerConfigHooks,
+  addHook
+};

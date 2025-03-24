@@ -1,10 +1,9 @@
 const path = require('path');
 const xfs = require('fs.extra');
-const fs = require('fs');
 const { exists, registerTypeScript } = require('./utils');
 
 /**
- * Registers all template hooks. carefully cahnged signature 
+ * Registers all template hooks.
  * @param {Object} hooks Object that stores information about all available hook functions grouped by the type of the hook.
  * @param {Object} templateConfig Template configuration.
  * @param {String} templateDir Directory where template is located.

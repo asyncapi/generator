@@ -73,4 +73,57 @@ describe('Utils', () => {
       expect(exists).toBeFalsy();
     });
   });
+
+  describe('#isJsFile',() => {
+    it('should return true if file extension is .js', () => {
+      const isJsFile = utils.isJsFile('./valid-file.js');
+      expect(isJsFile).toBeTruthy();
+    });
+    it('should return true if file extension is .jsx', () => {
+      const isJsFile = utils.isJsFile('./valid-file.jsx');
+      expect(isJsFile).toBeTruthy();
+    });
+    it('should return true if file extension is .cjs', () => {
+      const isJsFile = utils.isJsFile('./valid-file.cjs');
+      expect(isJsFile).toBeTruthy();
+    });
+    it('should return false if it is not a JS file', () => {
+      const isJsFile = utils.isJsFile('./invalid-file.txt');
+      expect(isJsFile).toBeFalsy();
+    });
+    it('should return false if it is not a JS file', () => {
+      const isJsFile = utils.isJsFile('./invalid-file');
+      expect(isJsFile).toBeFalsy();
+    });
+  });
+
+  describe('#isReactTemplate', () => {
+    it('should return true if it is a react template', () => {
+      const templateConfig  = {
+        renderer: 'react'
+      };
+      const isReactTemplate = utils.isReactTemplate(templateConfig);
+      expect(isReactTemplate).toBeTruthy();
+    });
+
+    it('should return false if it is not a react template', () => {
+      const templateConfig  = {
+        renderer: 'nunjucks'
+      };
+      const isReactTemplate = utils.isReactTemplate(templateConfig);
+      expect(isReactTemplate).toBeFalsy();
+    });
+    
+    it('should return false if template config is not specified', () => {
+      const templateConfig  = {};
+      const isReactTemplate = utils.isReactTemplate(templateConfig);
+      expect(isReactTemplate).toBeFalsy();
+    });
+
+    it('should return false if template config is undefined', () => {
+      const templateConfig  = undefined;
+      const isReactTemplate = utils.isReactTemplate(templateConfig);
+      expect(isReactTemplate).toBeFalsy();
+    });
+  });
 });

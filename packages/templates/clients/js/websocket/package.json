@@ -5,7 +5,7 @@
   "scripts": {
     "test": "npm run test:cleanup && jest  --coverage",
     "test:update": "jest --updateSnapshot",
-    "test:cleanup": "rimraf \"tests/temp\""
+    "test:cleanup": "rimraf \"test/temp\""
   },
   "author": "Lukasz Gornicki <lpgornicki@gmail.com>",
   "license": "Apache-2.0",

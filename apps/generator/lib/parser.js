@@ -27,7 +27,6 @@ parser.parse = async (asyncapi, oldOptions, generator) => {
   if (!document) {
     return {document, diagnostics};
   }
-  // console.log('Document:', document);
   const correctDocument = this.getProperApiDocument(document, generator.templateConfig);
   return {document: correctDocument, diagnostics};
 };

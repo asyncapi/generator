@@ -1,7 +1,6 @@
 const fs = require('fs');
 const path = require('path');
 const { sanitizeTemplateApiVersion, usesNewAPI, parse, getProperApiDocument, convertOldOptionsToNew } = require('../lib/parser');
-const exp = require('constants');
 const dummyV2Document = fs.readFileSync(path.resolve(__dirname, './docs/dummy.yml'), 'utf8');
 const dummyV3Document = fs.readFileSync(path.resolve(__dirname, './docs/dummyV3.yml'), 'utf8');
 

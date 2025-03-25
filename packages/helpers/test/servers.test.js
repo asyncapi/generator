@@ -43,7 +43,6 @@ describe('getServerUrl integration test with AsyncAPI', () => {
 
 describe('getServer integration test with AsyncAPI', () => {
   let parsedAsyncAPIDocument;
-  let servers;
 
   beforeAll(async () => {
     const parseResult = await fromFile(parser, asyncapi_v3_path).parse();

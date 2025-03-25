@@ -32,10 +32,10 @@ const getServerUrl = (server) => {
  * @returns {object} The AsyncAPI server object corresponding to the given server name.
  */
 const getServer = (servers, serverName) => {
-  if(!servers){
+  if (!servers) {
     throw new Error('No server found in AsyncAPI document.');
   }
-  if(!serverName){
+  if (!serverName) {
     throw new Error('Server name must be provided.');
   }
   if (!servers.has(serverName)) {

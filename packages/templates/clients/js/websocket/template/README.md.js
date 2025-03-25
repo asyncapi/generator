@@ -1,8 +1,8 @@
 import { File, Text } from '@asyncapi/generator-react-sdk';
-import { getClientName } from '@asyncapi/generator-helpers';
+import { getClientName, getServer } from '@asyncapi/generator-helpers';
 
 export default function({ asyncapi, params }) {
-  const server = asyncapi.servers().get(params.server);
+  const server = getServer(asyncapi.servers(), params.server);
   const info = asyncapi.info();
   const clientName = getClientName(info);
   

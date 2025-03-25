@@ -1,6 +1,6 @@
 const path = require('path');
 const { Parser, fromFile } = require('@asyncapi/parser');
-const { getServerUrl } = require('@asyncapi/generator-helpers');
+const { getServerUrl, getServer } = require('@asyncapi/generator-helpers');
 
 const parser = new Parser();
 const asyncapi_v3_path = path.resolve(__dirname, './__fixtures__/asyncapi-websocket-query.yml');
@@ -38,5 +38,42 @@ describe('getServerUrl integration test with AsyncAPI', () => {
 
     // Example assertion: Ensure the pathname is appended to the URL
     expect(serverUrl).toBe('wss://api.gemini.com/v1/marketdata');
+  });
+});
+
+describe('getServer integration test with AsyncAPI', () => {
+  let parsedAsyncAPIDocument;
+  let servers;
+
+  beforeAll(async () => {
+    const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
+    parsedAsyncAPIDocument = parseResult.document;
+    servers = parsedAsyncAPIDocument.servers();
+  });
+
+  it('should return the exact server object when server exists', () => {
+    const serverName = 'withoutPathName';
+
+    const expectedServer = servers.get(serverName);
+
+    const actualServer = getServer(servers, serverName);
+
+    expect(actualServer).toBe(expectedServer);
+  });
+
+  it('should throw error when server does not exist in the document', () => {
+    const serverName = 'nonExistentServer';
+
+    expect(() => {
+      getServer(servers, serverName);
+    }).toThrow(`Server ${serverName} not found in AsyncAPI document.`);
+  });
+
+  it('should throw error when server name is not provided', () => {
+    const serverName = '';
+
+    expect(() => {
+      getServer(servers, serverName);
+    }).toThrow(`Server ${serverName} not found in AsyncAPI document.`);
   });
 });

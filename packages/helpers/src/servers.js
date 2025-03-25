@@ -36,11 +36,11 @@ const getServer = (servers, serverName) => {
     return servers.get(serverName);
   }
   throw new Error(`Server ${serverName} not found in AsyncAPI document.`);
-}
+};
 
 module.exports = {
   getServerUrl,
   getServer
-}
+};
 
 //TODO: this separate file for helpers for servers represents approach to keep all helpers in separate files related to extractions of data from specific high level AsyncAPI objects. Here we will have more helpers for example related to variables extraction from servers, security, etc.

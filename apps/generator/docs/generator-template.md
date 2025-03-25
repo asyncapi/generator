@@ -53,7 +53,7 @@ info:
 
 servers:
   dev:
-    url: test.mosquitto.org
+    url: test.mosquitto.org #in case you're using local mosquitto instance, change this value to localhost.
     protocol: mqtt
 
 channels:

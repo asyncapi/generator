@@ -19,7 +19,7 @@ describe('hooksRegistry', () => {
 
   describe('registerHooks', () => {
     it('registers both local and config hooks', async () => {
-      const templateDir = path.join(__dirname, '\\fixtures\\template\\hooks');
+      const templateDir = path.join(__dirname, 'fixtures', 'template', 'hooks');      
       const hooksDir = path.join(__dirname, 'hooks');
       
       fs.mkdirSync(hooksDir, { recursive: true });
@@ -42,7 +42,7 @@ describe('hooksRegistry', () => {
       expect(result.preGenerate).toHaveLength(1); 
       expect(result.preGenerate[0].name).toBe('configPreGenerateHook');
       
-      fs.rmSync(templateDir, { recursive: true, force: true });
+      fs.rmSync(hooksDir, { recursive: true, force: true });
     });
   });
 
@@ -66,6 +66,20 @@ describe('hooksRegistry', () => {
       const result = await registerLocalHooks(hooks, '/non/existent/path', 'hooks');
       expect(result).toBe(hooks);
       expect(result.preGenerate).toBeUndefined();
+    });
+    
+    it('handles errors during hook loading', async () => {
+      fs.existsSync.mockReturnValue(true);
+      fs.readdirSync.mockReturnValue(['errorHook.js']);
+      
+      jest.mock('fixtures/template/hooks/errorHook.js', () => {
+        throw new Error('Mock import error');
+      }, { virtual: true });
+      
+      await expect(registerLocalHooks(hooks, 'fixtures/template', 'hooks'))
+        .resolves.not.toThrow();
+        
+      expect(hooks).toEqual({});
     });
   });
 
@@ -92,6 +106,7 @@ describe('hooksRegistry', () => {
     it('handles missing hooks in config', async () => {
       const result = await registerConfigHooks(hooks, '', {});
       expect(result).toBeUndefined();
+      expect(hooks).toEqual({}); 
     });
   });
 

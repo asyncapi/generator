@@ -48,10 +48,11 @@ describe('getServer integration test with AsyncAPI', () => {
   beforeAll(async () => {
     const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
     parsedAsyncAPIDocument = parseResult.document;
-    servers = parsedAsyncAPIDocument.servers();
   });
 
   it('should return the exact server object when server exists', () => {
+    const servers = parsedAsyncAPIDocument.servers();
+
     const serverName = 'withoutPathName';
 
     const expectedServer = servers.get(serverName);
@@ -62,18 +63,22 @@ describe('getServer integration test with AsyncAPI', () => {
   });
 
   it('should throw error when server does not exist in the document', () => {
+    const servers = parsedAsyncAPIDocument.servers();
+
     const serverName = 'nonExistentServer';
 
     expect(() => {
       getServer(servers, serverName);
-    }).toThrow(`Server ${serverName} not found in AsyncAPI document.`);
+    }).toThrow(`Server "${serverName}" not found in AsyncAPI document. Available servers: ${Array.from(servers.keys()).join(', ')}`);
   });
 
   it('should throw error when server name is not provided', () => {
+    const servers = parsedAsyncAPIDocument.servers();
+    
     const serverName = '';
 
     expect(() => {
       getServer(servers, serverName);
-    }).toThrow(`Server ${serverName} not found in AsyncAPI document.`);
+    }).toThrow('Server name must be provided.');
   });
 });

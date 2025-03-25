@@ -32,10 +32,16 @@ const getServerUrl = (server) => {
  * @returns {object} The AsyncAPI server object corresponding to the given server name.
  */
 const getServer = (servers, serverName) => {
-  if (serverName && servers.has(serverName)) {
-    return servers.get(serverName);
+  if(!servers){
+    throw new Error('No server found in AsyncAPI document.');
   }
-  throw new Error(`Server ${serverName} not found in AsyncAPI document.`);
+  if(!serverName){
+    throw new Error('Server name must be provided.');
+  }
+  if (!servers.has(serverName)) {
+    throw new Error(`Server "${serverName}" not found in AsyncAPI document. Available servers: ${Array.from(servers.keys()).join(', ')}`);
+  }
+  return servers.get(serverName);
 };
 
 module.exports = {

@@ -113,7 +113,6 @@ describe('Parser', () => {
       };
       const templateConfig = {};
       const properDocument = getProperApiDocument(asyncapiDocument, templateConfig);
-      console.log(properDocument);
       expect(properDocument).toBeDefined();
       expect(properDocument._json.version).toEqual('2.0.0');
     });
@@ -122,7 +121,6 @@ describe('Parser', () => {
       const asyncapiDocument = await parse(dummyV2Document, {}, {templateConfig: {apiVersion: 'v2'}});
       const templateConfig = { apiVersion: 'v2' };
       const properDocument = getProperApiDocument(asyncapiDocument, templateConfig);
-      console.log(properDocument);
 
       expect(properDocument).toBeDefined();
       expect(properDocument.document._json.asyncapi).toEqual('2.3.0'); 

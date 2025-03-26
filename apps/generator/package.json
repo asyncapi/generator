@@ -17,7 +17,6 @@
     "test:dev": "npm run test:unit -- --watchAll",
     "test:integration": "npm run test:cleanup && jest --testPathPattern=integration --modulePathIgnorePatterns='./__mocks__(?!\\/loglevel\\.js$)'",
     "test:integration:update": "jest --updateSnapshot --testPathPattern=integration --modulePathIgnorePatterns='./__mocks__(?!\\/loglevel\\.js$)'",
-    "test:hooks": "jest --testPathPattern=hooksRegistry",
     "test:cleanup": "rimraf \"test/temp\"",
     "docs": "jsdoc2md --partial docs/jsdoc2md-handlebars/custom-sig-name.hbs docs/jsdoc2md-handlebars/main.hbs docs/jsdoc2md-handlebars/docs.hbs docs/jsdoc2md-handlebars/header.hbs docs/jsdoc2md-handlebars/defaultvalue.hbs docs/jsdoc2md-handlebars/link.hbs docs/jsdoc2md-handlebars/params-table.hbs --files lib/generator.js > docs/api.md",
     "docker:build": "docker build -t asyncapi/generator:latest .",

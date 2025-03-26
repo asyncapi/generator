@@ -13,10 +13,6 @@
       "dependsOn": ["build"],
       "cache": false 
     },
-    "test:hooks": { 
-      "dependsOn": ["build"],
-      "cache": false 
-    },
     "test:update": { "cache": false },
     "test:unit": {"cache":false},
     "test:integration": {"cache": false},

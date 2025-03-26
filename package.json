@@ -13,7 +13,6 @@
     "generator:test": "turbo run test --filter=@asyncapi/generator",
     "generator:test:dev": "turbo run test:dev",
     "generator:test:unit": "turbo run test:unit  --filter=@asyncapi/generator",
-    "generator:test:hooks": "turbo run test:hooks --filter=@asyncapi/generator",
     "generator:test:integration": "turbo run test:integration --filter=@asyncapi/generator",
     "generator:test:cleanup": "turbo run test:cleanup --filter=@asyncapi/generator",
     "generator:docs": "turbo run docs --filter=@asyncapi/generator",

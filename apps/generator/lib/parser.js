@@ -143,3 +143,5 @@ function canReadFn(uri, canRead) {
   }
   return false;
 }
+
+module.exports.convertOldOptionsToNew = convertOldOptionsToNew;

@@ -27,7 +27,7 @@ const getServerUrl = (server) => {
  * @param {Map<string, object>} servers - A map of server names to AsyncAPI server objects.
  * @param {string} serverName - The name of the server to retrieve.
  * 
- * @throws {Error} If the specified server name is not found in the provided servers map.
+ * @throws {Error} If any of the parameter is missing or invalid.
  *
  * @returns {object} The AsyncAPI server object corresponding to the given server name.
  */

@@ -23,7 +23,7 @@ This approach with templates developed as part of `generator` repository is a wo
 5. Each new template or new feature in existing template must be done with reusability in mind. Custom helpers and components should be limited to minimum.
 6. Helpers need dedicated tests. We are yet to agree if we should base these on dummy AsyncAPI documents or just mock fake Parser objects inside tests.
 7. Components should also be tested separately, expecially if they are reused across templates.
-8. Each template should have a set of snapshot tests that help understand if changes in the PR affect the output of the template.
+8. Each template should have a set of snapshot tests that help understand if changes in the PR affect the output of the template. Only template components with conditions require separate testing.
 9. Every time new template feature is added it must be consulted with:
    - Spec references docs using [raw docs](https://www.asyncapi.com/docs/reference/specification/v3.0.0) or [visualizer](https://www.asyncapi.com/docs/reference/specification/v3.0.0-explorer) .
    - [Parser API](https://github.com/asyncapi/parser-api/blob/master/docs/api.md) to use it's capabilities instead of doing workarounds like for example `binding.json()["query"]["properties"]`

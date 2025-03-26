@@ -1,11 +1,11 @@
 {
-  "name": "@asyncapi/template-js-websocket-client",
+  "name": "@asyncapi/template-python-websocket-client",
   "version": "0.0.1",
-  "description": "This is a template generating JavaScript websocket client",
+  "description": "This is a template generating Python websocket client",
   "scripts": {
     "test": "npm run test:cleanup && jest  --coverage",
     "test:update": "jest --updateSnapshot",
-    "test:cleanup": "rimraf \"test/temp\""
+    "test:cleanup": "rimraf \"tests/temp\""
   },
   "author": "Lukasz Gornicki <lpgornicki@gmail.com>",
   "license": "Apache-2.0",
@@ -60,7 +60,7 @@
       "clientFileName": {
         "description": "The name of the generated client file",
         "required": false,
-        "default": "client.js"
+        "default": "client.py"
       }
     }
   }

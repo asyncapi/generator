@@ -14,7 +14,7 @@ ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 # Installing latest released npm package
 RUN apk --update add git chromium && \
     rm /var/cache/apk/* && \
-    npm install -g @asyncapi/generator@$ASYNCAPI_GENERATOR_VERSION
+    npm install --ignore-scripts -g @asyncapi/generator@$ASYNCAPI_GENERATOR_VERSION
 
 
 ENTRYPOINT [ "ag" ]

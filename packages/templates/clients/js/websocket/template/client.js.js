@@ -9,7 +9,7 @@ export default function ({ asyncapi, params }) {
   const info = asyncapi.info();
   const title = info.title();
   const clientName = getClientName(info);
-  const serverName = getServerUrl(server);
+  const serverUrl = getServerUrl(server);
   return (
     <File name={params.clientFileName}>
       <FileHeaderInfo
@@ -17,7 +17,7 @@ export default function ({ asyncapi, params }) {
         server={server}
       />
       <Requires />
-      <ClientClass clientName={clientName} serverName={serverName} title={title} />
+      <ClientClass clientName={clientName} serverUrl={serverUrl} title={title} />
     </File>
   );
 }

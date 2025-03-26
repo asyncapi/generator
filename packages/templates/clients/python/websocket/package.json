@@ -1,7 +1,7 @@
 {
-  "name": "@asyncapi/template-js-websocket-client",
+  "name": "@asyncapi/template-python-websocket-client",
   "version": "0.0.1",
-  "description": "This is a template generating JavaScript websocket client",
+  "description": "This is a template generating Python websocket client",
   "scripts": {
     "test": "npm run test:cleanup && jest  --coverage",
     "test:update": "jest --updateSnapshot",
@@ -11,7 +11,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@asyncapi/generator-react-sdk": "^1.1.2",
-    "@asyncapi/generator-helpers": "1.0.0",
+    "@asyncapi/generator-helpers": "*",
     "rimraf": "^3.0.2"
   },
   "devDependencies": {
@@ -60,7 +60,7 @@
       "clientFileName": {
         "description": "The name of the generated client file",
         "required": false,
-        "default": "client.js"
+        "default": "client.py"
       }
     }
   }

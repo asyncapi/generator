@@ -1,7 +1,8 @@
-const { getServerUrl }  = require('./servers');
+const { getServerUrl, getServer }  = require('./servers');
 const { getClientName } = require('./utils');
 
 module.exports = {
   getServerUrl,
-  getClientName
+  getClientName,
+  getServer
 };

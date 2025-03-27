@@ -9,22 +9,22 @@ import { CloseConnection } from './CloseConnection';
 import { ModuleExport } from './ModuleExport';
 
 export function ClientClass({ clientName, serverName, title }) {
-    return (
-        <Text>
-            <Text newLines={2}>
-                {`class ${clientName} {`}
-            </Text>
-            <Constructor serverName={serverName} />
-            <Connect title={title} />
-            <RegisterMessageHandler />
-            <RegisterErrorHandler />
-            <HandleMessage />
-            <SendEchoMessage />
-            <CloseConnection />
-            <Text>
-                {`}`}
-            </Text>
-            <ModuleExport clientName={clientName} />
-        </Text>
-    );
+  return (
+    <Text>
+      <Text newLines={2}>
+        {`class ${clientName} {`}
+      </Text>
+      <Constructor serverName={serverName} />
+      <Connect title={title} />
+      <RegisterMessageHandler />
+      <RegisterErrorHandler />
+      <HandleMessage />
+      <SendEchoMessage />
+      <CloseConnection />
+      <Text>
+        {'}'}
+      </Text>
+      <ModuleExport clientName={clientName} />
+    </Text>
+  );
 }

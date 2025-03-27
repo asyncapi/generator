@@ -5,7 +5,9 @@
   "scripts": {
     "test": "npm run test:cleanup && jest  --coverage",
     "test:update": "jest --updateSnapshot",
-    "test:cleanup": "rimraf \"test/temp\""
+    "test:cleanup": "rimraf \"test/temp\"",
+    "lint": "eslint --max-warnings 0 --config ../../../../../.eslintrc --ignore-path ../../../../../.eslintignore .",
+    "lint:fix": "eslint --fix --max-warnings 0 --config ../../../../../.eslintrc --ignore-path ../../../../../.eslintignore ."
   },
   "author": "Lukasz Gornicki <lpgornicki@gmail.com>",
   "license": "Apache-2.0",
@@ -21,7 +23,11 @@
     "@babel/preset-env": "^7.26.0",
     "@babel/preset-react": "^7.25.9",
     "jest-esm-transformer": "^1.0.0",
-    "@asyncapi/generator": "*"
+    "@asyncapi/generator": "*",
+    "eslint": "^6.8.0",
+    "eslint-plugin-jest": "^23.8.2",
+    "eslint-plugin-react": "^7.34.1",
+    "eslint-plugin-sonarjs": "^0.5.0"
   },
   "jest": {
     "moduleFileExtensions": [

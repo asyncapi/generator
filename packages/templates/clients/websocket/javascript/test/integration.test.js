@@ -64,7 +64,6 @@ describe('testing if generated client match snapshot', () => {
     const checkClientOutputFileExists = await stat(clientOutputFile);
 
     expect(checkClientOutputFileExists.isFile()).toBeTruthy();
-
   });
 
   it('should throw an error when server param is missing during simple client generation for hoppscotch echo', async () => {
@@ -79,5 +78,4 @@ describe('testing if generated client match snapshot', () => {
 
     await expect(generator.generateFromFile(asyncapi_v3_path_hoppscotch)).rejects.toThrow('This template requires the following missing params: server');
   });
-
 });

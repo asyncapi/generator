@@ -184,7 +184,7 @@ For the PR titles you can refer to [this guide](CONTRIBUTING.md?plain=1#L60)
 
 If you encounter any issues during development or testing, please check the following:
 
-1. Ensure you're using the correct Node.js version (18.12.0 or higher) and npm version (8.19.0 or higher).
+1. Ensure you're using the correct Node.js version (18.20.8 or higher) and npm version (10.8.2 or higher).
 2. Clear the `node_modules` directory and reinstall dependencies if you encounter unexpected behavior.
 3. For Docker-related issues, make sure Docker is running and you have sufficient permissions.
 

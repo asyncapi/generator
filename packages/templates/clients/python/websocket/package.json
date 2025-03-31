@@ -11,7 +11,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@asyncapi/generator-react-sdk": "^1.1.2",
-    "@asyncapi/generator-helpers": "*",
+    "@asyncapi/generator-helpers": "1.0.0",
     "rimraf": "^3.0.2"
   },
   "devDependencies": {

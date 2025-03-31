@@ -1,206 +1,210 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`testing if generated client match snapshot generate simple client for hoppscotch echo 1`] = `
-"//////////////////////////////////////////////////////////////////////
-//
-// Hoppscotch Echo WebSocket - 1.0.0
-// Protocol: wss
-// Host: echo-websocket.hoppscotch.io
-//
-//////////////////////////////////////////////////////////////////////
 
-const WebSocket = require('ws');
+exports[`testing if generated client match snapshot generate simple client and README for hoppscotch echo 2`] = `
+"# Hoppscotch Echo WebSocket 
 
-class HoppscotchEchoWebSocketClient {
-  constructor() {
-    this.url = 'wss://echo-websocket.hoppscotch.io';
-    this.websocket = null;
-    this.messageHandlers = [];
-    this.errorHandlers = [];
-  }
+## Overview
 
-  // Method to establish a WebSocket connection
-  connect() {
-    return new Promise((resolve, reject) => {
-      this.websocket = new WebSocket(this.url);
+Undestand how to use Hoppscotch Echo WebSocket as a client. Hoppscotch Echo WebSocket server echoes back any messages sent to it. You can use this to test WebSocket connections and message flows.
 
-      // On successful connection
-      this.websocket.onopen = () => {
-        console.log('Connected to Hoppscotch Echo WebSocket server');
-        resolve();
-      };
 
-      // On receiving a message
-      this.websocket.onmessage = (event) => {
-        console.log('Message received:', event.data);
+- **Version:** 1.0.0
+- **URL:** wss://echo-websocket.hoppscotch.io/
 
-        this.messageHandlers.forEach(handler => {
-          if (typeof handler === 'function') {
-            this.handleMessage(event.data, handler);
-          }
-        });
-      };
 
-      // On error first call custom error handlers, then default error behavior
-      this.websocket.onerror = (error) => {
-        if (this.errorHandlers.length > 0) {
-          // Call custom error handlers
-          this.errorHandlers.forEach(handler => handler(error));
-        } else {
-          // Default error behavior
-          console.error('WebSocket Error:', error);
-        }
-        reject(error);
-      };
+## Client API Reference
 
-      // On connection close
-      this.websocket.onclose = () => {
-        console.log('Disconnected from Hoppscotch Echo WebSocket server');
-      };
-    });
-  }
+\`\`\`javascript
+const HoppscotchEchoWebSocketClient = require('./client-hoppscotch');
+const wsClient = new HoppscotchEchoWebSocketClient();
+\`\`\`
 
-  // Method to register custom error handlers
-  registerMessageHandler(handler) {
-    if (typeof handler === 'function') {
-      this.messageHandlers.push(handler);
-    } else {
-      console.warn('Message handler must be a function');
+Here the wsClient is an instance of the \`HoppscotchEchoWebSocketClient\` class.
+### Core Methods
+
+#### \`connect()\`
+Establishes a WebSocket connection to the server.
+
+#### \`registerMessageHandler(handlerFunction)\`
+Registers a callback to handle incoming messages.
+- **Parameter:** \`handlerFunction\` - This Function takes a parameter \`message\` which is a string. 
+
+#### \`registerErrorHandler(handlerFunction)\`
+Registers a callback to handle WebSocket errors.
+- **Parameter:** \`handlerFunction\` - This Function takes a parameter \`error\` which is an object
+
+#### \`close()\`
+Closes the WebSocket connection.
+
+### Available Operations
+
+#### \`handleTimeStampMessage(payload)\`
+Receive the timestamp message sent from server every second.
+
+
+**Example:**
+\`\`\`javascript
+client.handleTimeStampMessage(\\"test\\");
+\`\`\`
+
+#### \`sendEchoMessage(payload)\`
+Send a message to the echo server.
+
+
+**Example:**
+\`\`\`javascript
+client.sendEchoMessage(\\"test\\");
+\`\`\`
+
+## Testing the client
+
+\`\`\`javascript
+const HoppscotchEchoWebSocketClient = require('./client-hoppscotch');
+const wsClient = new HoppscotchEchoWebSocketClient();
+
+
+// Example of how custom message handler that operates on incoming messages can look like
+
+function myHandler(message) {
+  console.log('====================');
+  console.log('Just proving I got the message in myHandler:', message);
+  console.log('====================');  
+}
+
+// Example of custom error handler
+
+function myErrorHandler(error) {
+  console.error('Errors from Websocket:', error.message);
+}
+
+async function main() {
+  wsClient.registerMessageHandler(myHandler);
+  wsClient.registerErrorHandler(myErrorHandler);
+
+  try {
+    await wsClient.connect();
+
+    // Loop to send messages every 5 seconds
+    const interval = 5000; // 5 seconds
+    const message = 'Hello, Echo!';
+
+    while (true) {
+      try {
+        await wsClient.sendEchoMessage(message);
+      } catch (error) {
+        console.error('Error while sending message:', error);
+      }
+      // Wait for the interval before sending the next message
+      await new Promise(resolve => setTimeout(resolve, interval));
     }
-  }
-
-  // Method to register custom error handlers
-  registerErrorHandler(handler) {
-    if (typeof handler === 'function') {
-      this.errorHandlers.push(handler);
-    } else {
-      console.warn('Error handler must be a function');
-    }
-  }
-
-  // Method to handle message with callback
-  handleMessage(message, cb) {
-    if (cb) cb(message);
-  }
-
-  // Method to send an echo message to the server
-  sendEchoMessage(message) {
-    this.websocket.send(JSON.stringify(message));
-    console.log('Sent message to echo server:', message);
-  }
-
-  // Method to close the WebSocket connection
-  close() {
-    if (this.websocket) {
-      this.websocket.close();
-      console.log('WebSocket connection closed.');
-    }
+  } catch (error) {
+    console.error('Failed to connect to WebSocket:', error.message);
   }
 }
 
-module.exports = HoppscotchEchoWebSocketClient;
+main();
+\`\`\`
+
+
 "
 `;
 
-exports[`testing if generated client match snapshot generate simple client for postman echo 1`] = `
-"//////////////////////////////////////////////////////////////////////
-//
-// Postman Echo WebSocket Client - 1.0.0
-// Protocol: wss
-// Host: ws.postman-echo.com
-// Path: /raw
-//
-//////////////////////////////////////////////////////////////////////
+exports[`testing if generated client match snapshot generate simple client and README for postman echo 2`] = `
+"# Postman Echo WebSocket Client 
 
-const WebSocket = require('ws');
+## Overview
 
-class PostmanEchoWebSocketClientClient {
-  constructor() {
-    this.url = 'wss://ws.postman-echo.com/raw';
-    this.websocket = null;
-    this.messageHandlers = [];
-    this.errorHandlers = [];
-  }
+Understand how to use the Postman Echo WebSocket as a client. The Postman Echo WebSocket server echoes back any messages sent to it.
 
-  // Method to establish a WebSocket connection
-  connect() {
-    return new Promise((resolve, reject) => {
-      this.websocket = new WebSocket(this.url);
+- **Version:** 1.0.0
+- **URL:** wss://ws.postman-echo.com/raw
 
-      // On successful connection
-      this.websocket.onopen = () => {
-        console.log('Connected to Postman Echo WebSocket Client server');
-        resolve();
-      };
 
-      // On receiving a message
-      this.websocket.onmessage = (event) => {
-        console.log('Message received:', event.data);
+## Client API Reference
 
-        this.messageHandlers.forEach(handler => {
-          if (typeof handler === 'function') {
-            this.handleMessage(event.data, handler);
-          }
-        });
-      };
+\`\`\`javascript
+const PostmanEchoWebSocketClientClient = require('./client-postman');
+const wsClient = new PostmanEchoWebSocketClientClient();
+\`\`\`
 
-      // On error first call custom error handlers, then default error behavior
-      this.websocket.onerror = (error) => {
-        if (this.errorHandlers.length > 0) {
-          // Call custom error handlers
-          this.errorHandlers.forEach(handler => handler(error));
-        } else {
-          // Default error behavior
-          console.error('WebSocket Error:', error);
-        }
-        reject(error);
-      };
+Here the wsClient is an instance of the \`PostmanEchoWebSocketClientClient\` class.
+### Core Methods
 
-      // On connection close
-      this.websocket.onclose = () => {
-        console.log('Disconnected from Postman Echo WebSocket Client server');
-      };
-    });
-  }
+#### \`connect()\`
+Establishes a WebSocket connection to the server.
 
-  // Method to register custom error handlers
-  registerMessageHandler(handler) {
-    if (typeof handler === 'function') {
-      this.messageHandlers.push(handler);
-    } else {
-      console.warn('Message handler must be a function');
+#### \`registerMessageHandler(handlerFunction)\`
+Registers a callback to handle incoming messages.
+- **Parameter:** \`handlerFunction\` - This Function takes a parameter \`message\` which is a string. 
+
+#### \`registerErrorHandler(handlerFunction)\`
+Registers a callback to handle WebSocket errors.
+- **Parameter:** \`handlerFunction\` - This Function takes a parameter \`error\` which is an object
+
+#### \`close()\`
+Closes the WebSocket connection.
+
+### Available Operations
+
+#### \`sendEchoMessage(payload)\`
+Send a message to the Postman Echo server.
+
+
+**Example:**
+\`\`\`javascript
+client.sendEchoMessage(\\"test\\");
+\`\`\`
+
+## Testing the client
+
+\`\`\`javascript
+const PostmanEchoWebSocketClientClient = require('./client-postman');
+const wsClient = new PostmanEchoWebSocketClientClient();
+
+
+// Example of how custom message handler that operates on incoming messages can look like
+
+function myHandler(message) {
+  console.log('====================');
+  console.log('Just proving I got the message in myHandler:', message);
+  console.log('====================');  
+}
+
+// Example of custom error handler
+
+function myErrorHandler(error) {
+  console.error('Errors from Websocket:', error.message);
+}
+
+async function main() {
+  wsClient.registerMessageHandler(myHandler);
+  wsClient.registerErrorHandler(myErrorHandler);
+
+  try {
+    await wsClient.connect();
+
+    // Loop to send messages every 5 seconds
+    const interval = 5000; // 5 seconds
+    const message = 'Hello, Echo!';
+
+    while (true) {
+      try {
+        await wsClient.sendEchoMessage(message);
+      } catch (error) {
+        console.error('Error while sending message:', error);
+      }
+      // Wait for the interval before sending the next message
+      await new Promise(resolve => setTimeout(resolve, interval));
     }
-  }
-
-  // Method to register custom error handlers
-  registerErrorHandler(handler) {
-    if (typeof handler === 'function') {
-      this.errorHandlers.push(handler);
-    } else {
-      console.warn('Error handler must be a function');
-    }
-  }
-
-  // Method to handle message with callback
-  handleMessage(message, cb) {
-    if (cb) cb(message);
-  }
-
-  // Method to send an echo message to the server
-  sendEchoMessage(message) {
-    this.websocket.send(JSON.stringify(message));
-    console.log('Sent message to echo server:', message);
-  }
-
-  // Method to close the WebSocket connection
-  close() {
-    if (this.websocket) {
-      this.websocket.close();
-      console.log('WebSocket connection closed.');
-    }
+  } catch (error) {
+    console.error('Failed to connect to WebSocket:', error.message);
   }
 }
 
-module.exports = PostmanEchoWebSocketClientClient;
+main();
+\`\`\`
+
+
 "
 `;

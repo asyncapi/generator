@@ -11,6 +11,7 @@ export default function ({ asyncapi, params }) {
   const clientName = getClientName(info);
   const serverUrl = getServerUrl(server);
   return (
+    // The clientFileName default values can be found and modified under the package.json
     <File name={params.clientFileName}>
       <FileHeaderInfo
         info={info}

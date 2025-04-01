@@ -9,15 +9,16 @@ export default function ({ asyncapi, params }) {
   const info = asyncapi.info();
   const title = info.title();
   const clientName = getClientName(info);
-  const serverName = getServerUrl(server);
+  const serverUrl = getServerUrl(server);
   return (
+    // The clientFileName default values can be found and modified under the package.json
     <File name={params.clientFileName}>
       <FileHeaderInfo
         info={info}
         server={server}
       />
       <Requires />
-      <ClientClass clientName={clientName} serverName={serverName} title={title} />
+      <ClientClass clientName={clientName} serverUrl={serverUrl} title={title} />
     </File>
   );
 }

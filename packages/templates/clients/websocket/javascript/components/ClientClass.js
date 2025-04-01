@@ -8,13 +8,13 @@ import { SendEchoMessage } from './SendEchoMessage';
 import { CloseConnection } from './CloseConnection';
 import { ModuleExport } from './ModuleExport';
 
-export function ClientClass({ clientName, serverName, title }) {
+export function ClientClass({ clientName, serverUrl, title }) {
   return (
     <Text>
       <Text newLines={2}>
         {`class ${clientName} {`}
       </Text>
-      <Constructor serverName={serverName} />
+      <Constructor serverUrl={serverUrl} />
       <Connect title={title} />
       <RegisterMessageHandler />
       <RegisterErrorHandler />

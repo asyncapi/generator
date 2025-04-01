@@ -5,14 +5,13 @@
   "scripts": {
     "test": "npm run test:cleanup && jest  --coverage",
     "test:update": "jest --updateSnapshot",
-    "test:cleanup": "rimraf \"tests/temp\""
+    "test:cleanup": "rimraf \"test/temp\""
   },
   "author": "Lukasz Gornicki <lpgornicki@gmail.com>",
   "license": "Apache-2.0",
   "dependencies": {
     "@asyncapi/generator-react-sdk": "^1.1.2",
-    "@asyncapi/generator-helpers": "*",
-    "rimraf": "^3.0.2"
+    "@asyncapi/generator-helpers": "1.0.0"
   },
   "devDependencies": {
     "@asyncapi/parser": "^3.0.14",
@@ -21,7 +20,8 @@
     "@babel/preset-env": "^7.26.0",
     "@babel/preset-react": "^7.25.9",
     "jest-esm-transformer": "^1.0.0",
-    "@asyncapi/generator": "*"
+    "@asyncapi/generator": "*",
+    "rimraf": "^3.0.2"
   },
   "jest": {
     "moduleFileExtensions": [

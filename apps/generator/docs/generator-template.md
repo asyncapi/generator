@@ -14,6 +14,17 @@ In this tutorial:
 - You'll create a React template that will use the MQTT broker to allow you to monitor your bedroom's temperature and notify you when the temperature drops or rises above 22 °C.
 - Lastly, create a reusable component for the output code's `sendTemperatureDrop` and `sendTemperatureRise` functions.
 
+## Prerequisites
+
+Before you begin, make sure you have the following set up:
+
+- **Basic Programming Knowledge** – Familiarity with JavaScript and Python.
+- **NPM & PIP** – Required for installing dependencies. Install NPM from the [official guide](https://nodejs.org/en/download) and PIP from the [official guide](https://pip.pypa.io/en/stable/installation).
+- **AsyncAPI CLI** – Used for code generation, install using [CLI installation guide](https://www.asyncapi.com/docs/tools/cli/installation).
+- **Docker** - Required for running MQTT CLI. Install it from the official [Docker](https://docs.docker.com/) website.
+- **Code Editor (VS Code recommended)** – A good code editor is essential for development and debugging.
+- **Knowledge of Template Development** – Review the [Template Development Guide](template-development) to understand the structure and minimum requirements for templates.
+
 ## Background context
 
 There is a list of [community maintained templates](https://www.asyncapi.com/docs/tools/generator/template#generator-templates-list), but what if you do not find what you need? In that case, you'll create a user-defined template that generates custom output from the generator.
@@ -55,13 +66,6 @@ components:
         temperatureId:
           type: string
 ```
-
-<Remember>
-
-- To generate code, use the [AsyncAPI CLI](https://www.asyncapi.com/tools/cli). If you don't have the CLI installed, follow [CLI installation guide](/docs/tools/generator/installation-guide#asyncapi-cli).
-- If you are new to AsyncAPI Generator, check out the following docs: [template development](/docs/tools/generator/template-development), which explains the minimum requirements for a template and possible features.
-
-</Remember>
 
 ## Overview of steps
 

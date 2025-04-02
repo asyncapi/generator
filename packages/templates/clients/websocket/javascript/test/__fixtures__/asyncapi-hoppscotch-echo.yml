@@ -21,6 +21,9 @@ channels:
         $ref: '#/components/messages/echo'
       timestamp:
         $ref: '#/components/messages/timestamp'
+    bindings:
+      ws:
+        method: POST
 
 operations:
   handleTimeStampMessage:
@@ -44,6 +47,9 @@ components:
       summary: A message sent from server with current timestamp.
       payload: 
         $ref: '#/components/schemas/currentTime'
+      examples:
+        - name: someRandomDate
+          payload: 11:13:24 GMT+0000 (Coordinated Universal Time)
     echo:
       summary: A message exchanged with the echo server.
       payload: {}

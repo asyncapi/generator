@@ -19,6 +19,9 @@ channels:
     messages:
       echo:
         $ref: '#/components/messages/echo'
+    bindings:
+      ws:
+        method: POST
 
 operations:
   sendEchoMessage:
@@ -26,7 +29,8 @@ operations:
     action: send
     channel: 
       $ref: '#/channels/echo'
-
+    messages:
+      - $ref: '#/channels/echo/messages/echo'
     reply:
       channel: 
         $ref: '#/channels/echo'

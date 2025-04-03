@@ -1,5 +1,5 @@
-from temp.snapshotTestResult.client_postman import PostmanEchoWebSocketClientClient
-import time
+from temp.snapshotTestResult.client_hoppscotch import HoppscotchEchoWebSocketClient
+
 
 def custom_message_handler(message):
     print(f"\033[94mCustom processing of received message\033[0m: {message}")

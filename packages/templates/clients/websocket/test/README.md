@@ -13,9 +13,13 @@ Microcks is a tool for mocking. To test our generated clients, we need to mock t
 1. Install [Podman](https://podman.io/docs/installation). 
     > Microcks needs some services running to simulate the infrastructure and this requires multiple resources. Docker is not the best solution for this, thus better use Podman that manages resources better.
 
+1. Install [docker-compose](https://docs.docker.com/compose/install/) that `podman compose` uses.
+
+1. Create `microcks-data` directory where mongo will keep data after you start it with podman: `mkdir microcks-data`.
+
 1. Start Microcks infrastructure: `podman compose -f microcks-podman.yml up -d`.
 
-1. Check with `podman ps` command if all services are running. It may take few minutes to start all containers.
+1. Check with `podman ps` command if all services are running. It may take few minutes to start all containers. You can also run special script that will confirm services are ready: `bash checkMicrocksReady.sh`.
 
 1. Access Microcks UI with `open http://localhost:8080`.
 
@@ -54,3 +58,8 @@ curl -X POST http://localhost:8080/api/tests \
 ```
 
 You can also check the status of tests in the Microcks UI.
+
+
+### Cleanup
+
+Run `podman compose -f microcks-podman.yml down --remove-orphans` to clean everything.

@@ -942,10 +942,9 @@ class Generator {
    */
   isNonRenderableFile(fileName) {
     const nonRenderableFiles = this.templateConfig.nonRenderableFiles || [];
-    if (!Array.isArray(nonRenderableFiles)) return false;
-    if (nonRenderableFiles.some(globExp => minimatch(fileName, globExp))) return true;
-    if (isReactTemplate(this.templateConfig) && !isJsFile(fileName)) return true;
-    return false;
+    return Array.isArray(nonRenderableFiles) &&
+    (nonRenderableFiles.some(globExp => minimatch(fileName, globExp)) ||
+    (isReactTemplate(this.templateConfig) && !isJsFile(fileName)));
   }
 
   /**

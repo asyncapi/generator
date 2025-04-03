@@ -13,7 +13,7 @@ const asyncapi_v3_path_postman = path.resolve(
 );
 const asyncapi_v3_path_hoppscotch = path.resolve(
   __dirname,
-  "../../test/__fixtures__asyncapi-hoppscotch-echoyml"git 
+  "../../test/__fixtures__asyncapi-hoppscotch-echoyml"
 );
 
 const testResultPath = path.resolve(__dirname, "./temp/snapshotTestResult");

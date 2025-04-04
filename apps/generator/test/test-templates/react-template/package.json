@@ -9,7 +9,7 @@
         "renderer": "react",
         "apiVersion": "v3",
         "hooks": {
-            "@asyncapi/generator-hooks": "createAsyncapiFile" 
+            "@asyncapi/generator-hooks": "createAsyncapiFile"
         },
         "parameters": {
             "version": {

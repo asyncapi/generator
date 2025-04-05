@@ -1,106 +1,63 @@
 import { File, Text } from '@asyncapi/generator-react-sdk';
 import { getClientName, getServer } from '@asyncapi/generator-helpers';
 
-//TODO this one needs refactor: first thing is to pull out to separate helper logic that starts at 52 with ${operations.length > 0 ? 
-/* eslint-disable sonarjs/cognitive-complexity */
-export default function({ asyncapi, params }) {
-  const server = getServer(asyncapi.servers(), params.server);
-  const info = asyncapi.info();
-  const clientName = getClientName(info);
-
-  const operations = asyncapi.operations().all();
-  
-  return (
-    <File name="README.md">
-      <Text>
-        {`# ${info.title()} 
-
-## Overview
-
-${info.description() || `A WebSocket client for ${info.title()}.`}
-
-- **Version:** ${info.version()}
-- **URL:** ${server.url()}
-
-
-## Client API Reference
-
-\`\`\`javascript
-const ${clientName} = require('./${params.clientFileName.replace('.js', '')}');
-const wsClient = new ${clientName}();
-\`\`\`
-
-Here the wsClient is an instance of the \`${clientName}\` class.
-### Core Methods
-
-#### \`connect()\`
-Establishes a WebSocket connection to the server.
-
-#### \`registerMessageHandler(handlerFunction)\`
-Registers a callback to handle incoming messages.
-- **Parameter:** \`handlerFunction\` - This Function takes a parameter \`message\` which is a string. 
-
-#### \`registerErrorHandler(handlerFunction)\`
-Registers a callback to handle WebSocket errors.
-- **Parameter:** \`handlerFunction\` - This Function takes a parameter \`error\` which is an object
-
-#### \`close()\`
-Closes the WebSocket connection.
-
-### Available Operations
-
-${operations.length > 0 ? 
-      operations.map(operation => {
-        const operationId = operation.id();
-   
-        const channels = operation.channels().all();
-        const channelAddress = channels.length > 0 ? channels[0].address() : 'default';
-    
-        let messageExamples = '';
-        if (channels.length > 0) {
-          const channelMessages = channels[0].messages().all();
-          if (channelMessages && channelMessages.length > 0) {
-            const firstMessage = channelMessages[0];
-            if (firstMessage.examples && firstMessage.examples().length > 0) {
-              const example = firstMessage.examples()[0];
-              messageExamples = `\n\n**Example:**\n\`\`\`javascript\nclient.${operationId}(${JSON.stringify(example.payload(), null, 2)});\n\`\`\``;
-            }
-          }
-        }
-    
-        return `#### \`${operationId}(payload)\`
-${operation.summary() || `Sends a message to the '${channelAddress}' channel.`}
-${operation.description() ? `\n${operation.description()}` : ''}${messageExamples}`;
-      }).join('\n\n')
-      : 
-      `#### \`sendEchoMessage(payload)\`
+function renderOperations(operations) {
+  if (operations.length === 0) {
+    return `#### \`sendEchoMessage(payload)\`
 Sends a message to the server that will be echoed back.
 
 **Example:**
 \`\`\`javascript
 client.sendEchoMessage({ message: "Hello World" });
 \`\`\`
-`}
+`;
+  }
 
+  return operations.map(operation => {
+    const operationId = operation.id();
+    const channel = operation.channels().all()[0];
+    const channelAddress = channel ? channel.address() : 'default';
+    const example = getFirstExample(channel);
+
+    return `#### \`${operationId}(payload)\`
+${operation.summary() || `Sends a message to the '${channelAddress}' channel.`}
+${operation.description() ? `\n${operation.description()}` : ''}${example}`;
+  }).join('\n\n');
+}
+
+function getFirstExample(channel) {
+  if (!channel) return '';
+  const messages = channel.messages().all();
+  if (!messages.length) return '';
+
+  const firstExample = messages[0].examples()?.[0];
+  if (!firstExample) return '';
+
+  return `
+
+**Example:**
+\`\`\`javascript
+client.${channel.address()}(${JSON.stringify(firstExample.payload(), null, 2)});
+\`\`\`
+`;
+}
+
+function renderTestingSection(clientName, params) {
+  return `
 ## Testing the client
 
 \`\`\`javascript
 const ${clientName} = require('./${params.clientFileName.replace('.js', '')}');
 const wsClient = new ${clientName}();
 
-
-// Example of how custom message handler that operates on incoming messages can look like
-
+// Example of message handler
 function myHandler(message) {
-  console.log('====================');
-  console.log('Just proving I got the message in myHandler:', message);
-  console.log('====================');  
+  console.log('Received message:', message);
 }
 
-// Example of custom error handler
-
+// Example of error handler
 function myErrorHandler(error) {
-  console.error('Errors from Websocket:', error.message);
+  console.error('WebSocket error:', error.message);
 }
 
 async function main() {
@@ -110,27 +67,73 @@ async function main() {
   try {
     await wsClient.connect();
 
-    // Loop to send messages every 5 seconds
-    const interval = 5000; // 5 seconds
+    const interval = 5000;
     const message = 'Hello, Echo!';
 
     while (true) {
       try {
         await wsClient.sendEchoMessage(message);
       } catch (error) {
-        console.error('Error while sending message:', error);
+        console.error('Error sending message:', error);
       }
-      // Wait for the interval before sending the next message
       await new Promise(resolve => setTimeout(resolve, interval));
     }
   } catch (error) {
-    console.error('Failed to connect to WebSocket:', error.message);
+    console.error('Connection failed:', error.message);
   }
 }
 
 main();
 \`\`\`
+`;
+}
 
+export default function({ asyncapi, params }) {
+  const server = getServer(asyncapi.servers(), params.server);
+  const info = asyncapi.info();
+  const clientName = getClientName(info);
+  const operations = asyncapi.operations().all();
+
+  return (
+    <File name="README.md">
+      <Text>
+        {`# ${info.title()}
+
+## Overview
+
+${info.description() || `A WebSocket client for ${info.title()}.`}
+
+- **Version:** ${info.version()}
+- **URL:** ${server.url()}
+
+## Client API Reference
+
+\`\`\`javascript
+const ${clientName} = require('./${params.clientFileName.replace('.js', '')}');
+const wsClient = new ${clientName}();
+\`\`\`
+
+Here the wsClient is an instance of the \`${clientName}\` class.
+
+### Core Methods
+
+#### \`connect()\`
+Establishes a WebSocket connection to the server.
+
+#### \`registerMessageHandler(handlerFunction)\`
+Registers a callback to handle incoming messages.
+
+#### \`registerErrorHandler(handlerFunction)\`
+Registers a callback to handle WebSocket errors.
+
+#### \`close()\`
+Closes the WebSocket connection.
+
+### Available Operations
+
+${renderOperations(operations)}
+
+${renderTestingSection(clientName, params)}
 `}
       </Text>
     </File>

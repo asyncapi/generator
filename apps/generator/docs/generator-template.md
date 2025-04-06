@@ -648,11 +648,11 @@ Temperature rise detected 66943992 sent to temperature/risen
 Looking for more?
 
 This section will guide you in creating a flexible MQTT-supported template that will generate a **Java** client from the template and the AsyncAPI document above.
-The follow steps will be similar to the [initial steps](https://www.asyncapi.com/docs/tools/generator/generator-template#overview-of-steps) but with a few differences. This will help developers practice with AsyncAPI generator tool using staticallly typed languge **Java**.
+The follow steps will be similar to the [initial steps](https://www.asyncapi.com/docs/tools/generator/generator-template#overview-of-steps) but with a few differences. This will help developers practice with AsyncAPI generator tool using statically typed language **Java**.
 
-## Java Prerequisistes
+## Java Prerequisites
 
-To run it ensure your have java jdk 8 or higher, gradle, and AsyncAPI generator.
+To run it, ensure you have Java JDK 8 or higher, Gradle, and the AsyncAPI generator.
 - **Gradle** -Get gradle at https://gradle.org/install/ 
 - **JDK** -Get jdk at https://www.oracle.com/ca-en/java/technologies/downloads/
 
@@ -674,7 +674,7 @@ Once that is done you should create some new sub-directories to begin building y
   2. Change directory into `src` then make two new subdirectories called `fictures` and `main/java` and `template`.
   3. Create a file named asyncapi.yml in your fixtures directory and paste the asyncapi.yml document mentionned [above](https://www.asyncapi.com/docs/tools/generator/generator-template#background-context) into it.
   4. Create a new file named **package.json** in your **java-mqtt-client-template** directory. This file is used to define the **dependencies** for your template.
-  5. Create a n file called **build.gradle** in your **java-mqtt-client-template** directory. This file is used to build your generated java code for your template.
+  5. Create a new file called **build.gradle** in your **java-mqtt-client-template** directory. This file is used to build your generated java code for your template.
   6.  Create a new file named **index.js** in your **template** directory. This file is used to define the **logic** for your template.
 
 Now your directory should look like this:
@@ -740,7 +740,7 @@ To see this in action, navigate to the **java-mqtt-client-template** directory. 
 ### 2. Create the java client
 
   ##### a. Setting up gradle
-First step to create the java client the send message using the mqtt protocol is to ensure that your **build.gradle** file has the right dependencies. Add the code snippet below into your **build.gradle** file.
+The first step in creating the Java client to send messages using the MQTT protocol is to ensure that your build.gradle file includes the correct dependencies Add the code snippet below into your **build.gradle** file.
 
 ```groovy
 plugins {

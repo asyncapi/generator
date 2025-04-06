@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "markdown-toc": "^1.2.0",
-    "turbo": "1.13.3"
+    "turbo": "^1.13.3"
   },
   "engines": {
     "node": ">=18.12.1"

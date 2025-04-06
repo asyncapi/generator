@@ -99,7 +99,6 @@ describe('Parser', () => {
     });
     it('should be able to parse AsyncAPI v3 document for parser API v3', async () => {
       const parsedDocument = await parse(dummyV3Document, {}, {templateConfig: {apiVersion: 'v3'}});
-
       expect(parsedDocument).toBeDefined();
       expect(parsedDocument.document.version()).toEqual('3.0.0');
     });
@@ -107,25 +106,60 @@ describe('Parser', () => {
   
   describe('getProperApiDocument', () => {
     it('should convert to old API if apiVersion is undefined', async () => {
-      const asyncapiDocument = {
-        version: '2.0.0',
-        json: jest.fn().mockReturnValue({ version: '2.0.0' })
-      };
+      // parse calls the get properAPIDocument and returns it along with a diagnostic in a Object
+      // so its like called the get properAPIDocument function and then returned the result
       const templateConfig = {};
-      const properDocument = getProperApiDocument(asyncapiDocument, templateConfig);
+      const properDocument = await parse(dummyV2Document, {}, { templateConfig }); 
+
+      // Validate that properDocument convert it to expected API version from the template
       expect(properDocument).toBeDefined();
-      expect(properDocument._json.version).toEqual('2.0.0');
+
+      expect(properDocument).toBeDefined();
+      expect(properDocument.document._json).toBeDefined();
+      expect(properDocument.document._json.asyncapi).toEqual('2.3.0');
+      expect(properDocument.diagnostics).toBeDefined();
+      expect(properDocument.diagnostics.length).toBeGreaterThan(0);
+
+      expect(properDocument.document._json['x-parser-api-version']).toBeDefined();
+      expect(properDocument.document._json['x-parser-api-version']).toEqual(0);
+      expect(properDocument.document._json['x-parser-spec-parsed']).toBeDefined(); 
+      expect(properDocument.document._json['x-parser-spec-parsed']).toEqual(true); 
+
+      expect(properDocument.document._meta).toBeDefined();
+      expect(properDocument.document._meta).toEqual({});
+      expect(properDocument.document._json.components.messages.dummyCreated).toBeDefined(); 
+      expect(properDocument.document._json.components.messages.dummyCreated['x-parser-original-schema-format']).toBeDefined(); // Only old API includes this filed
+      expect(properDocument.document._json.components.messages.dummyCreated['x-parser-original-payload']).toBeDefined();
+      expect(properDocument.document._json.components.messages.dummyCreated['x-parser-message-parsed']).toBeDefined();
     });
 
     it('should convert to specified API version', async () => {
-      const asyncapiDocument = await parse(dummyV2Document, {}, {templateConfig: {apiVersion: 'v2'}});
       const templateConfig = { apiVersion: 'v2' };
-      const properDocument = getProperApiDocument(asyncapiDocument, templateConfig);
+      const properDocument = await parse(dummyV2Document, {}, { templateConfig });
 
+      // Validate that properDocument is defined
       expect(properDocument).toBeDefined();
-      expect(properDocument.document._json.asyncapi).toEqual('2.3.0'); 
+
+      // Validate that the document is converted to the specified API version
+      expect(properDocument.document._json.asyncapi).toEqual('2.3.0');
       expect(properDocument.diagnostics).toBeDefined();
       expect(properDocument.diagnostics.length).toBeGreaterThan(0);
+      
+      expect(properDocument.document._json['x-parser-api-version']).toBeDefined();
+      expect(properDocument.document._json['x-parser-spec-parsed']).toBeDefined();
+      expect(properDocument.document._json['x-parser-api-version']).toEqual(2);
+      expect(properDocument.document._json['x-parser-spec-parsed']).toEqual(true);
+
+      expect(properDocument.document._meta).toBeDefined();
+      expect(properDocument.document._json.components.messages.dummyCreated).toBeDefined(); 
+      expect(properDocument.document._json.components.messages.dummyCreated['x-parser-original-schema-format']).toBeUndefined(); 
+      expect(properDocument.document._json.components.messages.dummyCreated['x-parser-original-payload']).toBeUndefined();
+      expect(properDocument.document._json.components.messages.dummyCreated['x-parser-message-parsed']).toBeUndefined();
+    
+      // Validate that old API-specific functions and properties are not present
+      expect(properDocument.oldApiSpecificFunction).toBeUndefined();
+      expect(properDocument.oldApiSpecificProperty).toBeUndefined();
+      expect(properDocument.anotherOldApiFunction).toBeUndefined();
     });
   });
 

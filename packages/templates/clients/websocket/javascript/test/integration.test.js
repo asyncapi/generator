@@ -8,6 +8,9 @@ const Generator = require('@asyncapi/generator');
 const asyncapi_v3_path_postman = path.resolve(__dirname, './__fixtures__/asyncapi-postman-echo.yml');
 const asyncapi_v3_path_hoppscotch = path.resolve(__dirname, './__fixtures__/asyncapi-hoppscotch-echo.yml');
 const testResultPath = path.resolve(__dirname, './temp/snapshotTestResult');
+const testResultPathPostman = path.resolve(__dirname, './temp/snapshotTestResult/postmanClient');
+const testResultPathHoppscotch = path.resolve(__dirname, './temp/snapshotTestResult/hoppscotchClient');
+const testResultPathClient = path.resolve(__dirname, './temp/client');
 const template = path.resolve(__dirname, '../');
 
 describe('testing if generated client match snapshot', () => {

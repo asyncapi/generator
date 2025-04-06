@@ -627,6 +627,551 @@ Temperature drop detected 66943992 sent to temperature/dropped
 Temperature rise detected 66943992 sent to temperature/risen
 ```
 
+## Creating a Java template
+
+Looking for more?
+
+This section will guide you in creating a flexible MQTT-supported template that will generate a **Java** client from the template and the AsyncAPI document above.
+The follow steps will be similar to the [initial steps](https://www.asyncapi.com/docs/tools/generator/generator-template#overview-of-steps) but with a few differences. This will help developers practice with AsyncAPI generator tool using staticallly typed languge **Java**.
+
+## Java Prerequisistes
+
+To run it ensure your have java jdk 8 or higher, gradle, and AsyncAPI generator.
+- **Gradle** -Get gradle at https://gradle.org/install/ 
+- **JDK** -Get jdk at https://www.oracle.com/ca-en/java/technologies/downloads/
+
+## Overview of Java Template
+
+In this section, you'll:
+
+1. Create new directory to run java code.
+2. Create the java client.
+3. Output Java template code.
+4. Creating more channels
+
+### 1. Create new directory to run java code
+
+Create a new directory called **java-mqtt-client-template** at the root of your project. This is where all your java templating work will go.
+
+Once that is done you should create some new sub-directories to begin building your Java client.
+  1. Create a new sub directory called `src`
+  2. Change directory into `src` then make two new subdirectories called `fictures` and `main/java` and `template`.
+  3. Create a file named asyncapi.yml in your fixtures directory and paste the asyncapi.yml document mentionned [above](https://www.asyncapi.com/docs/tools/generator/generator-template#background-context) into it.
+  4. Create a new file named **package.json** in your **java-mqtt-client-template** directory. This file is used to define the **dependencies** for your template.
+  5. Create a n file called **build.gradle** in your **java-mqtt-client-template** directory. This file is used to build your generated java code for your template.
+  6.  Create a new file named **index.js** in your **template** directory. This file is used to define the **logic** for your template.
+
+Now your directory should look like this:
+
+```
+java-mqtt-client-template 
+├── src
+|   └── fixtures
+|       └── asyncapi.yml
+│   └── main/java
+├── template
+|   └── index.js
+└── package.json
+└── build.gradle
+```
+
+
+Note the client.java code must be in your src/main/java directory or else gradle won't build you applicaiton.
+
+### java - package.json file
+Add the following code snippet to your package.json file:
+
+``` json
+{
+    "name": "java-mqtt-client-template",
+    "version": "0.0.1",
+    "description": "A template that generates a java MQTT client using MQTT.",
+    "generator": {
+      "renderer": "react",
+      "apiVersion": "v1",
+      "generator": ">=1.10.0 <2.0.0",
+      "supportedProtocols": ["mqtt"],
+    },
+    "dependencies": {
+      "@asyncapi/generator-react-sdk": "^0.2.25"
+    },
+    "devDependencies": {
+      "rimraf": "^5.0.0"
+    }
+}
+```
+
+Navigate to the **java-mqtt-client-template** directory. Run the command `npm install` on your terminal to install the dependencies specified in **package.json**.
+
+### java - index.js file
+
+The **index.js** file is used to define the logic for your template. Inside the template folder, create an **index.js** file and add the code snippet below:
+
+```js
+//1
+import { File } from '@asyncapi/generator-react-sdk'
+//2
+export default function ({ asyncapi }) {
+//3
+  return <File name="Client.java">{asyncapi.info().title()}</File>
+}
+```
+
+To see this in action, navigate to the **java-mqtt-client-template** directory. Then, run `asyncapi generate fromTemplate src/fixtures/asyncapi.yml ./ --output src/main/java` command on your terminal. Should get the same sucess message and a **Client.java** file in **src/main/java**.
+
+**NOTE: Nothing different has occured so far**
+
+### 2. Create the java client
+
+  ##### a. Setting up gradle
+First step to create the java client the send message using the mqtt protocol is to ensure that your **build.gradle** file has the right dependencies. Add the code snippet below into your **build.gradle** file.
+
+```groovy
+plugins {
+    id 'java'
+    id 'application'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.5'
+}
+
+application{
+    mainClass = project.hasProperty('mainClass') ? project.mainClass : 'Client'  // Default to 'Client' if no property is passed
+}
+```
+Here's what is contained in the code snippet above:
+
+- **pluggins** - This section defines the plugins applied to the Gradle project.
+  - **id 'java'** - This applies the Java plugin, which allows you to compile and run Java code.
+  - **id 'application'** - This plugin is used to support building and running applications. It helps with creating an executable JAR.
+- **repositories** - This section tells you app to fetch dependencies from Maven Central to retrieve the MQTT client library.
+- **dependencies** This specifies that the project depends on the Eclipse Paho MQTT client version 1.2.5 and is needed to compile and run.
+- **application** - This section defines how the application should be executed. **mainClass** specifies the main class to be executed in a java application. It can be specificec via CL, else it defaults to **Client.java** file.
+
+Navigate to the `java-mqtt-client-template` directory. Run the command `gradle build` on your terminal to build your java application. Note: everytime you update the build.gradle you must recmopile it to get the new changes. 
+
+  ##### b. Beefing up Client.java
+
+Here is the sample code to be pasted in the Client.java you generated above running the `asyncapi generate fromTemplate src/fixtures/asyncapi.yml ./ --output src/main/java` command. 
+
+```java
+import org.eclipse.paho.client.mqttv3.*;
+
+public class Client {
+    private static final String BROKER_URL = "tcp://test.mosquitto.org:1883";
+    private static final String TOPIC = "temperature/changed";
+
+    private MqttClient client;
+
+    public Client() {
+        try {
+            // Generate a unique client ID
+            String clientId = MqttClient.generateClientId();
+                    
+            // Create and connect the MQTT client
+            client = new MqttClient(BROKER_URL, clientId);
+            MqttConnectOptions options = new MqttConnectOptions();
+            options.setCleanSession(true);
+                    
+            client.connect(options);
+            System.out.println("Connected to MQTT broker: " + BROKER_URL);
+        } catch (MqttException e) {
+            e.printStackTrace();
+        }
+    }
+     public void sendTemperatureChange(String id) {
+        try {
+            // Publish the message with the temperature change
+            MqttMessage message = new MqttMessage(id.getBytes());
+            client.publish(TOPIC, message);
+        } catch (MqttException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+  ##### b. Test Client.java
+Create a **src/main/java/test.java** file in your project and add the code snippet below:
+
+Now your directory should look like this:
+
+```
+java-mqtt-client-template 
+├── src
+|   └── fixtures
+|       └── asyncapi.yml
+│   └── main/java
+|       └── Client.java
+|       └── test.java
+├── template
+|   └── index.js
+└── package.json
+└── build.gradle
+```
+
+```java
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
+
+public class test {
+    public static void main(String[] args) {
+        Client client = new Client();
+        Random random = new Random();
+
+        int idLength = 8;
+        int minValue = (int) Math.pow(10, idLength - 1); // Minimum 8-digit number (e.g., 10000000)
+        int maxValue = (int) Math.pow(10, idLength) - 1; // Maximum 8-digit number (e.g., 99999999)
+        System.out.println("Validating generated generated Client.java");
+        System.out.println("Running tests in test.java");
+        System.out.println("Sending temperature changes to the broker...");
+        System.err.println("\n");
+        while (true) {
+            int randomId = random.nextInt(maxValue - minValue + 1) + minValue;
+            client.sendTemperatureChange(String.valueOf(randomId));
+            System.out.println("New temperature detected " + randomId + " sent to temperature/changed");
+
+            try {
+                TimeUnit.SECONDS.sleep(1); // Sleep for 1 second
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+```
+Run the command `gradle run -PmainClass=test` to run your java program with gradle on your terminal. You should see output similar to the snippet below logged on your terminal:
+
+``` cmd
+New temperature detected 64250266 sent to temperature/changed
+New temperature detected 36947728 sent to temperature/changed
+New temperature detected 72955029 sent to temperature/changed
+```
+### 3. Output Java template code.
+Open [**index.js**](#java - indexjs-file) and copy the content of [**client.py**](#1-create-the-client) and replace `{asyncapi.info().title()}` with it. It should look like the code snippet below now:
+
+``` js
+//1
+import { File } from '@asyncapi/generator-react-sdk'
+//2
+export default function ({ asyncapi }) {
+//3
+  return <File name="Client.java">
+  {
+    `import org.eclipse.paho.client.mqttv3.*;
+
+public class Client {
+    private static final String BROKER_URL = "tcp://test.mosquitto.org:1883";
+    private static final String TOPIC = "temperature/changed";
+
+    private MqttClient client;
+
+    public Client() {
+        try {
+            // Generate a unique client ID
+            String clientId = MqttClient.generateClientId();
+                    
+            // Create and connect the MQTT client
+            client = new MqttClient(BROKER_URL, clientId);
+            MqttConnectOptions options = new MqttConnectOptions();
+            options.setCleanSession(true);
+                    
+            client.connect(options);
+            System.out.println("Connected to MQTT broker: " + BROKER_URL);
+        } catch (MqttException e) {
+            e.printStackTrace();
+        }
+    }
+     public void sendTemperatureChange(String id) {
+        try {
+            // Publish the message with the temperature change
+            MqttMessage message = new MqttMessage(id.getBytes());
+            client.publish(TOPIC, message);
+        } catch (MqttException e) {
+            e.printStackTrace();
+        }
+    }
+}`
+  }</File>
+}
+```
+##### b. Write script to run the test code
+In **package.json** you can have the scripts property that you invoke by calling `npm run <your_script>`. After adding these scripts in **package.json**, it will look like the following code snippet:
+
+``` json
+   {
+    "name": "java-mqtt-client-template",
+    "version": "0.0.1",
+    "description": "A template that generates a java MQTT client using MQTT.",
+    "generator": {
+      "renderer": "react",
+      "apiVersion": "v1",
+      "generator": ">=1.10.0 <2.0.0",
+      "supportedProtocols": ["mqtt"],
+      "parameters": {
+            "server": {
+              "description": "The server you want to use in the code.",
+              "required": true
+            }
+        }
+    },
+    "scripts": {
+        "test:clean": "rimraf src/main/java/Client.java",
+        "test:generate": "asyncapi generate fromTemplate src/fixtures/asyncapi.yml ./ --output src/main/java --force-write --param server=dev",
+        "test:start": "gradle run -PmainClass=test",
+        "test": "npm run test:clean && npm run test:generate && npm run test:start"
+    },
+    "dependencies": {
+      "@asyncapi/generator-react-sdk": "^0.2.25"
+    },
+    "devDependencies": {
+      "rimraf": "^5.0.0"
+    }
+  }
+```
+Run `npm test` to see if everything is working.
+### 4. Creating more channels
+
+##### a. Creating more resuable componenents
+
+Similar to the previous `TopicFunction` function we will create a function to make resuable components no matter the amount of channels in the asyncAPI document. 
+
+Create a **componenets** directory at the root of your project and create a file named `TopicFunction.js` and put the code snippet below:
+
+```js
+/*
+ * This component returns a block of functions that user can use to send messages to specific topic.
+ * As input it requires a list of Channel models from the parsed AsyncAPI document
+ */
+export function TopicFunction({ channels }) {
+  const topicsDetails = getTopics(channels);
+  let functions = '';
+
+  topicsDetails.forEach((t) => {
+    functions += `
+    public void send${t.name}(String id) {
+        String topic = "${t.topic}";
+        try {
+            MqttMessage message = new MqttMessage(id.getBytes());
+            client.publish(topic, message);
+            System.out.println("${t.name} change sent: " + id);
+        } catch (MqttException e) {
+            e.printStackTrace();
+        }
+    }\n`;
+  });
+
+  return functions;
+}
+  
+  /*
+   * This function returns a list of objects, one for each channel with two properties, name and topic
+   * name - holds information about the operationId provided in the AsyncAPI document
+   * topic - holds information about the address of the topic
+   *
+   * As input it requires a list of Channel models from the parsed AsyncAPI document
+   */
+  function getTopics(channels) {
+    const channelsCanSendTo = channels
+    let topicsDetails = []
+  
+    channelsCanSendTo.forEach((ch) => {
+      const topic = {}
+      const operationId = ch.operations().filterByReceive()[0].id()
+      topic.name = operationId.charAt(0).toUpperCase() + operationId.slice(1)
+      topic.topic = ch.address()
+  
+      topicsDetails.push(topic)
+    })
+  
+    return topicsDetails
+  }
+
+```
+
+Import the `TopicFunction` component in your template code in **index.js** and add the template code to generate the functions to topics that the `Temperature Service` application is subscribed to. In your case, the final version of your template code should look like this:
+
+```js
+import { File, Text } from '@asyncapi/generator-react-sdk';
+import { TopicFunction } from '../components/TopicFunction'
+
+export default function ({ asyncapi, params }) {
+    let channels = asyncapi.channels().filterByReceive();  // Get all the channels that receive messages
+
+    // Generate Java code for each topic dynamically using TopicFunction
+    const topicMethods = TopicFunction({ channels });  // This will return Java methods as text
+    
+    return (
+    <File name="Client.java">
+    {
+      
+`import org.eclipse.paho.client.mqttv3.*;
+
+public class Client {
+    private static final String BROKER_URL = "${asyncapi.servers().get(params.server).url()}";
+    private static final String TOPIC = "temperature/changed";
+
+    private MqttClient client;
+
+    public Client() {
+        try {
+            // Generate a unique client ID
+            String clientId = MqttClient.generateClientId();
+                    
+            // Create and connect the MQTT client
+            client = new MqttClient(BROKER_URL, clientId);
+            MqttConnectOptions options = new MqttConnectOptions();
+            options.setCleanSession(true);
+                    
+            client.connect(options);
+            System.out.println("Connected to MQTT broker: " + BROKER_URL);
+        } catch (MqttException e) {
+            e.printStackTrace();
+        }
+    }
+
+    ${topicMethods}
+
+    public static void main(String[] args) {
+        Client serviceClient = new Client();
+                
+        // Simulate sending a temperature change
+        //serviceClient.sendTemperatureDrop("Sensor-1: 25°C");
+    }
+}`
+    }
+    </File>
+  );
+}
+```
+Now your directory should look like this:
+```
+java-mqtt-client-template 
+├── componenets
+|   └── TopicFunction.js
+├── src
+|   └── fixtures
+|       └── asyncapi.yml
+│   └── main/java
+|       └── Client.java
+|       └── test.java
+├── template
+|   └── index.js
+└── package.json
+└── build.gradle
+```
+
+##### b. Updates AsyncAPI document with more channels
+
+Add the follow AsyncAPI document to have more channels:
+
+```
+asyncapi: 2.6.0
+
+info:
+  title: Temperature Service
+  version: 1.0.0
+  description: This service is in charge of processing all the events related to temperature.
+
+servers:
+  dev:
+    url: tcp://test.mosquitto.org:1883
+    protocol: mqtt
+
+channels:
+  temperature/dropped:
+    description:  Notifies the user when the temperature drops past a certain point.
+    publish:
+      operationId: temperatureDrop
+      message:
+        description: Message that is being sent when the temperature drops past a certain point.
+        payload:
+          type: object
+          additionalProperties: false
+          properties:
+            temperatureId:
+              type: string
+
+  temperature/risen:
+    description: Notifies the user when the temperature rises past a certain point.
+    publish:
+      operationId: temperatureRise
+      message:
+        description: Message that is being sent when the temperature rises past a certain point.
+        payload:
+          type: object
+          additionalProperties: false
+          properties:
+            temperatureId:
+              type: string
+
+components:
+  schemas:
+    temperatureId:
+      type: object
+      additionalProperties: false
+      properties:
+        temperatureId:
+          type: string
+
+```
+##### c. Update test.java
+We must now update the **test.java** file to test the different channels in the AsyncAPI document above. The tests will be similar to the previous ones we performed. Paste this code snippet into your **test.java** file:
+
+```java
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
+
+public class test {
+    public static void main(String[] args) {
+        Client client = new Client();
+        Random random = new Random();
+
+        int idLength = 8;
+        int minValue = (int) Math.pow(10, idLength - 1); // Minimum 8-digit number (e.g., 10000000)
+        int maxValue = (int) Math.pow(10, idLength) - 1; // Maximum 8-digit number (e.g., 99999999)
+        System.out.println("Validating generated generated Client.java");
+        System.out.println("Running tests in test.java");
+        System.out.println("Sending temperature changes to the broker...");
+        System.err.println("\n");
+        while (true) {
+            int randomId = random.nextInt(maxValue - minValue + 1) + minValue;
+            client.sendTemperatureDrop(String.valueOf(randomId));
+            System.out.println("Temperature drop detected " + randomId + " sent to temperature/dropped");
+            
+            client.sendTemperatureRise(String.valueOf(randomId));
+            System.out.println("Temperature risen detected " + randomId + " sent to temperature/risen");
+
+            try {
+                TimeUnit.SECONDS.sleep(1); // Sleep for 1 second
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+```
+
+Run `npm test` to validate that everything works as expected. You should see logs similar to the snippet below in your terminal:
+
+```cmd
+Connected to MQTT broker: tcp://test.mosquitto.org:1883
+
+Validating generated generated Client.java
+Running tests in test.java
+Sending temperature changes to the broker...
+TemperatureDrop change sent: 43289900
+Temperature drop detected 43289900 sent to temperature/dropped
+TemperatureRise change sent: 43289900
+Temperature risen detected 43289900 sent to temperature/risen
+```
+
+
 ## Where to go from here?
 
 Great job completing this tutorial! You have learnt how to use an AsyncAPI file to create a Python MQTT template and used it with the Paho-MQTT library in Python to connect to an MQTT broker and publish messages.😃

@@ -1192,6 +1192,6 @@ Temperature risen detected 43289900 sent to temperature/risen
 
 Great job completing this tutorial! You have learnt how to use an AsyncAPI file to create a Python MQTT template and used it with the Paho-MQTT library in Python to connect to an MQTT broker and publish messages.😃
 
-If you want to tinker with a completed template and see what it would look like in production, check out the [Paho-MQTT template](https://github.com/derberg/python-mqtt-client-template/tree/v1.0.0). You can also check out the accompanying [article about creating MQTT client code](https://www.brainfart.dev/blog/asyncapi-codegen-python).
+If you want to tinker with a completed template and see what it would look like in production, check out the [Paho-MQTT template](https://github.com/derberg/python-mqtt-client-template/tree/v1.0.0) and/or [Java-MQTT-client-template](https://github.com/ssala034/Java-MQTT-client-template). You can also check out the accompanying [article about creating MQTT client code](https://www.brainfart.dev/blog/asyncapi-codegen-python).
 
 You can also check out the [MQTT beginners guide](https://medium.com/python-point/mqtt-basics-with-python-examples-7c758e605d4) tutorial to learn more about asynchronous messaging using MQTT.

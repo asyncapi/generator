@@ -3,32 +3,35 @@
  */
 
 const WSClient = require('../javascript/test/temp/snapshotTestResult/client-hoppscotch');
-const { waitForMessageLog, delay } = require('./utils');
+const { waitForMessage, delay } = require('./utils');
 const wsClient = new WSClient('ws://localhost:8081/api/ws/Hoppscotch+WebSocket+Server/1.0.0/sendTimeStampMessage');
 
 describe('client - receiver tests', () => {
   jest.setTimeout(10000);
-  const logSpy = jest.spyOn(console, 'log').mockImplementation();
 
   it('javascript client should receive a message', async () => {
-    // registering message handler that drops incomming message to logs
-    // later logs are evaluated to make sure the message sent from server is received by the client
+    const received_messages = [];
+    const expectedMessage = '11:13:24 GMT+0000 (Coordinated Universal Time)';
+    // registering message handler that adds incomming messages to an array
+    // later messages from array are evaluated to make sure the message sent from server is received by the client
     wsClient.registerMessageHandler(
       (message) => {
-        console.log(message);
+        received_messages.push(message);
       }
     );
 
     await wsClient.connect();
 
     // wait for the incomming message to be logged
-    await waitForMessageLog(
-      logSpy, 
-      '11:13:24 GMT+0000 (Coordinated Universal Time)'
+    await waitForMessage(
+      received_messages, 
+      expectedMessage
     );
 
+    const isReceived = received_messages.some(message => message.includes(expectedMessage));
+
     // checking if microcks mock send proper message
-    expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('11:13:24 GMT+0000 (Coordinated Universal Time)'));
+    expect(isReceived).toEqual(true);
   });
 
   afterAll(async () => {
@@ -37,7 +40,5 @@ describe('client - receiver tests', () => {
     //jest doesn't like that on client closure some logs are printed
     // so we need to wait second or 2 until all logs are printed
     await delay();
-
-    logSpy.mockRestore();
   });
 });

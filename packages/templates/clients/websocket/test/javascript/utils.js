@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 /**
  * Wait for a specific message to appear in the spy's log calls.
  * @param {array} a - array with messages

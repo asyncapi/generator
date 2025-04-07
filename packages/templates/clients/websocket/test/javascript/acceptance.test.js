@@ -2,7 +2,7 @@
  * @jest-environment node
  */
 
-const WSClient = require('../javascript/test/temp/snapshotTestResult/client-hoppscotch');
+const WSClient = require('../../javascript/test/temp/snapshotTestResult/client-hoppscotch');
 const { waitForMessage, delay } = require('./utils');
 const wsClient = new WSClient('ws://localhost:8081/api/ws/Hoppscotch+WebSocket+Server/1.0.0/sendTimeStampMessage');
 

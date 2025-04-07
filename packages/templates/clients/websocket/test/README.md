@@ -1,3 +1,11 @@
+## Test Project
+
+This `test` directory contains acceptance tests that check different clients with tests written in their respective languages. So JavaScript client is tested with JavaScript test, and Python with Python tests, and so on.
+
+To run Python test: `pytest python/`
+
+To run JavaScript test: `npm --prefix javascript test`
+
 ## Testing Clients with Microcks
 
 This instruction is just a set of notes about how to play locally with Microcks that we already use for automated testing.

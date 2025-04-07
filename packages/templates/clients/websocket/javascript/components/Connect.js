@@ -17,13 +17,17 @@ connect() {
 
     // On receiving a message
     this.websocket.onmessage = (event) => {
-      console.log('Message received:', event.data);
-
-      this.messageHandlers.forEach(handler => {
-        if (typeof handler === 'function') {
-          this.handleMessage(event.data, handler);
-        }
-      });
+      if (this.messageHandlers.length > 0) {
+        // Call custom message handlers
+        this.messageHandlers.forEach(handler => {
+          if (typeof handler === 'function') {
+            this.handleMessage(event.data, handler);
+          }
+        });
+      } else {
+        // Default message logging
+        console.log('Message received:', event.data);
+      }
     };
 
     // On error first call custom error handlers, then default error behavior

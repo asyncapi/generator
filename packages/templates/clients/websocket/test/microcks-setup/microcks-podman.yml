@@ -1,9 +1,12 @@
+volumes:
+  microcks-data:
+  
 services:
   mongo:
     image: docker.io/mongo:4.4.29
     container_name: microcks-db
     volumes:
-      - ./microcks-data:/data/db:Z
+      - microcks-data:/data/db
     healthcheck:
       test: ["CMD", "mongo", "--eval", "db.adminCommand('ping')"]
       interval: 30s

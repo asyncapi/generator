@@ -1,12 +1,14 @@
 ## Testing Clients with Microcks
 
+This instruction is just a set of notes about how to play locally with Microcks that we already use for automated testing.
+
 ### Concept
 
 Microcks is a tool for mocking. To test our generated clients, we need to mock the server. In other words, if we want to check if the generated client for Postman works well, we need to mock the server that the client will communicate with while testing.
 
 ### Using Microcks locally
 
-> This instruction assumes you are located in directory where `microcks-podman.yml` is located
+> This instruction assumes you are located in directory where `microcks-setup` directory is located
 
 #### Start Microcks
 
@@ -15,11 +17,9 @@ Microcks is a tool for mocking. To test our generated clients, we need to mock t
 
 1. Install [docker-compose](https://docs.docker.com/compose/install/) that `podman compose` uses.
 
-1. Create `microcks-data` directory where mongo will keep data after you start it with podman: `mkdir microcks-data`.
+1. Start Microcks infrastructure: `podman compose -f ./microcks-setup/microcks-podman.yml up -d`.
 
-1. Start Microcks infrastructure: `podman compose -f microcks-podman.yml up -d`.
-
-1. Check with `podman ps` command if all services are running. It may take few minutes to start all containers. You can also run special script that will confirm services are ready: `bash checkMicrocksReady.sh`.
+1. Check with `podman ps` command if all services are running. It may take few minutes to start all containers. You can also run special script that will confirm services are ready: `bash ./microcks-setup/checkMicrocksReady.sh`.
 
 1. Access Microcks UI with `open http://localhost:8080`.
 
@@ -35,6 +35,7 @@ To test clients, we need to mock the server. Remember to load AsyncAPI documents
       --microcksURL=http://localhost:8080/api/ \
       --keycloakClientId=microcks-serviceaccount \
       --keycloakClientSecret="ab54d329-e435-41ae-a900-ec6b3fe15c54"
+    ```
 
 1. See the mock in the Microcks UI with `open http://localhost:8080/#/services`
 
@@ -62,4 +63,4 @@ You can also check the status of tests in the Microcks UI.
 
 ### Cleanup
 
-Run `podman compose -f microcks-podman.yml down --remove-orphans` to clean everything.
+Run `podman compose -f ./microcks-setup/microcks-podman.yml down --remove-orphans` to clean everything.

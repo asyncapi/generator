@@ -16,8 +16,15 @@ import websocket
 
 class HoppscotchEchoWebSocketClient:
 
-  def __init__(self):
-      self.url = \\"wss://echo-websocket.hoppscotch.io\\"
+  def __init__(self, url: str = \\"wss://echo-websocket.hoppscotch.io\\"):
+      \\"\\"\\"
+      Constructor to initialize the WebSocket client.
+
+      Args:
+          url (str, optional): The WebSocket server URL. Use it if the server URL is 
+          different from the default one taken from the AsyncAPI document.
+      \\"\\"\\"
+      self.url = url
       self.ws_app = None  # Instance of WebSocketApp
       self.message_handlers = []      # Callables for incoming messages
       self.error_handlers = []        # Callables for errors
@@ -28,7 +35,6 @@ class HoppscotchEchoWebSocketClient:
       print(\\"Connected to Hoppscotch Echo WebSocket server\\")
 
   def on_message(self, ws, message):
-      print(\\"\\\\033[94mReceived raw message:\\\\033[0m\\", message)
       self.handle_message(message)
 
   def on_error(self, ws, error):
@@ -85,15 +91,20 @@ class HoppscotchEchoWebSocketClient:
           print(\\"Outgoing processor must be callable\\")
 
   def handle_message(self, message):
-      \\"\\"\\"Pass the incoming message to all registered message handlers.\\"\\"\\"
-      print(\\"\\\\033[94mProcessing message:\\\\033[0m\\", message)
-      for handler in self.message_handlers:
+      \\"\\"\\"Pass the incoming message to all registered message handlers. \\"\\"\\"
+      if len(self.message_handlers) == 0:
+        print(\\"\\\\033[94mReceived raw message:\\\\033[0m\\", message)
+      else:
+        for handler in self.message_handlers:
           handler(message)
 
   def handle_error(self, error):
-      \\"\\"\\"Pass the error to all registered error handlers.\\"\\"\\"
-      print(\\"Handling error:\\", error)
-      for handler in self.error_handlers:
+      \\"\\"\\"Pass the error to all registered error handlers. Generic log message is printed if no handlers are registered.\\"\\"\\"
+      if len(self.error_handlers) == 0:
+        print(\\"\\\\033[91mError occurred:\\\\033[0m\\", error)
+      else:
+        # Call custom error handlers
+        for handler in self.error_handlers:
           handler(error)
 
   def send_message(self, message):
@@ -148,8 +159,15 @@ import websocket
 
 class PostmanEchoWebSocketClientClient:
 
-  def __init__(self):
-      self.url = \\"wss://ws.postman-echo.com/raw\\"
+  def __init__(self, url: str = \\"wss://ws.postman-echo.com/raw\\"):
+      \\"\\"\\"
+      Constructor to initialize the WebSocket client.
+
+      Args:
+          url (str, optional): The WebSocket server URL. Use it if the server URL is 
+          different from the default one taken from the AsyncAPI document.
+      \\"\\"\\"
+      self.url = url
       self.ws_app = None  # Instance of WebSocketApp
       self.message_handlers = []      # Callables for incoming messages
       self.error_handlers = []        # Callables for errors
@@ -160,7 +178,6 @@ class PostmanEchoWebSocketClientClient:
       print(\\"Connected to Postman Echo WebSocket Client server\\")
 
   def on_message(self, ws, message):
-      print(\\"\\\\033[94mReceived raw message:\\\\033[0m\\", message)
       self.handle_message(message)
 
   def on_error(self, ws, error):
@@ -217,15 +234,20 @@ class PostmanEchoWebSocketClientClient:
           print(\\"Outgoing processor must be callable\\")
 
   def handle_message(self, message):
-      \\"\\"\\"Pass the incoming message to all registered message handlers.\\"\\"\\"
-      print(\\"\\\\033[94mProcessing message:\\\\033[0m\\", message)
-      for handler in self.message_handlers:
+      \\"\\"\\"Pass the incoming message to all registered message handlers. \\"\\"\\"
+      if len(self.message_handlers) == 0:
+        print(\\"\\\\033[94mReceived raw message:\\\\033[0m\\", message)
+      else:
+        for handler in self.message_handlers:
           handler(message)
 
   def handle_error(self, error):
-      \\"\\"\\"Pass the error to all registered error handlers.\\"\\"\\"
-      print(\\"Handling error:\\", error)
-      for handler in self.error_handlers:
+      \\"\\"\\"Pass the error to all registered error handlers. Generic log message is printed if no handlers are registered.\\"\\"\\"
+      if len(self.error_handlers) == 0:
+        print(\\"\\\\033[91mError occurred:\\\\033[0m\\", error)
+      else:
+        # Call custom error handlers
+        for handler in self.error_handlers:
           handler(error)
 
   def send_message(self, message):

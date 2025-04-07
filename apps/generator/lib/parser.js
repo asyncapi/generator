@@ -50,6 +50,14 @@ parser.getProperApiDocument = (asyncapiDocument, templateConfig = {}) => {
   return ConvertDocumentParserAPIVersion(asyncapiDocument, apiVersion);
 };
 
+/**
+ * Converts old parser options to the new format.
+ * 
+ * @private - This function should not be used outside this module.
+ * @param {object} oldOptions - The old options to convert.
+ * @param {object} generator - The generator instance.
+ * @returns {object} The converted options.
+ */
 // The new options for the v2 Parser are different from those for the v1 version, but in order not to release Generator v2, we are converting the old options of Parser to the new ones.
 function convertOldOptionsToNew(oldOptions, generator) {
   if (!oldOptions) return;

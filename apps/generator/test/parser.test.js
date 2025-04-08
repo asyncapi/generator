@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { sanitizeTemplateApiVersion, usesNewAPI, parse, getProperApiDocument, convertOldOptionsToNew } = require('../lib/parser');
+const { sanitizeTemplateApiVersion, usesNewAPI, parse, convertOldOptionsToNew } = require('../lib/parser');
 const dummyV2Document = fs.readFileSync(path.resolve(__dirname, './docs/dummy.yml'), 'utf8');
 const dummyV3Document = fs.readFileSync(path.resolve(__dirname, './docs/dummyV3.yml'), 'utf8');
 
@@ -105,6 +105,11 @@ describe('Parser', () => {
   });
   
   describe('getProperApiDocument', () => {
+    const parser_api_version = 'x-parser-api-version';
+    const parser_spec_parsed = 'x-parser-spec-parsed';
+    const parser_original_schema = 'x-parser-original-schema-format';
+    const parser_original_payload = 'x-parser-original-payload';
+    const parser_message = 'x-parser-message-parsed';
     it('should convert to old API if apiVersion is undefined', async () => {
       // parse calls the get properAPIDocument and returns it along with a diagnostic in a Object
       // so its like called the get properAPIDocument function and then returned the result
@@ -120,17 +125,17 @@ describe('Parser', () => {
       expect(properDocument.diagnostics).toBeDefined();
       expect(properDocument.diagnostics.length).toBeGreaterThan(0);
 
-      expect(properDocument.document._json['x-parser-api-version']).toBeDefined();
-      expect(properDocument.document._json['x-parser-api-version']).toEqual(0);
-      expect(properDocument.document._json['x-parser-spec-parsed']).toBeDefined(); 
-      expect(properDocument.document._json['x-parser-spec-parsed']).toEqual(true); 
+      expect(properDocument.document._json[parser_api_version]).toBeDefined();
+      expect(properDocument.document._json[parser_api_version]).toEqual(0);
+      expect(properDocument.document._json[parser_spec_parsed]).toBeDefined(); 
+      expect(properDocument.document._json[parser_spec_parsed]).toEqual(true); 
 
       expect(properDocument.document._meta).toBeDefined();
       expect(properDocument.document._meta).toEqual({});
       expect(properDocument.document._json.components.messages.dummyCreated).toBeDefined(); 
-      expect(properDocument.document._json.components.messages.dummyCreated['x-parser-original-schema-format']).toBeDefined(); // Only old API includes this filed
-      expect(properDocument.document._json.components.messages.dummyCreated['x-parser-original-payload']).toBeDefined();
-      expect(properDocument.document._json.components.messages.dummyCreated['x-parser-message-parsed']).toBeDefined();
+      expect(properDocument.document._json.components.messages.dummyCreated[parser_original_schema]).toBeDefined(); // Only old API includes this filed
+      expect(properDocument.document._json.components.messages.dummyCreated[parser_original_payload]).toBeDefined();
+      expect(properDocument.document._json.components.messages.dummyCreated[parser_message]).toBeDefined();
     });
 
     it('should convert to specified API version', async () => {
@@ -145,16 +150,16 @@ describe('Parser', () => {
       expect(properDocument.diagnostics).toBeDefined();
       expect(properDocument.diagnostics.length).toBeGreaterThan(0);
       
-      expect(properDocument.document._json['x-parser-api-version']).toBeDefined();
-      expect(properDocument.document._json['x-parser-spec-parsed']).toBeDefined();
-      expect(properDocument.document._json['x-parser-api-version']).toEqual(2);
-      expect(properDocument.document._json['x-parser-spec-parsed']).toEqual(true);
+      expect(properDocument.document._json[parser_api_version]).toBeDefined();
+      expect(properDocument.document._json[parser_spec_parsed]).toBeDefined();
+      expect(properDocument.document._json[parser_api_version]).toEqual(2);
+      expect(properDocument.document._json[parser_spec_parsed]).toEqual(true);
 
       expect(properDocument.document._meta).toBeDefined();
       expect(properDocument.document._json.components.messages.dummyCreated).toBeDefined(); 
-      expect(properDocument.document._json.components.messages.dummyCreated['x-parser-original-schema-format']).toBeUndefined(); 
-      expect(properDocument.document._json.components.messages.dummyCreated['x-parser-original-payload']).toBeUndefined();
-      expect(properDocument.document._json.components.messages.dummyCreated['x-parser-message-parsed']).toBeUndefined();
+      expect(properDocument.document._json.components.messages.dummyCreated[parser_original_schema]).toBeUndefined();
+      expect(properDocument.document._json.components.messages.dummyCreated[parser_original_payload]).toBeUndefined();
+      expect(properDocument.document._json.components.messages.dummyCreated[parser_message]).toBeUndefined();
     
       // Validate that old API-specific functions and properties are not present
       expect(properDocument.oldApiSpecificFunction).toBeUndefined();

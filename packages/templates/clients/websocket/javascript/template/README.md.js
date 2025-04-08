@@ -1,11 +1,12 @@
 import { File, Text } from '@asyncapi/generator-react-sdk';
-import { getClientName } from '@asyncapi/generator-helpers';
+import { getClientName, getServer } from '@asyncapi/generator-helpers';
 
+//TODO this one needs refactor: first thing is to pull out to separate helper logic that starts at 52 with ${operations.length > 0 ? 
+/* eslint-disable sonarjs/cognitive-complexity */
 export default function({ asyncapi, params }) {
-  const server = asyncapi.servers().get(params.server);
+  const server = getServer(asyncapi.servers(), params.server);
   const info = asyncapi.info();
   const clientName = getClientName(info);
-  
 
   const operations = asyncapi.operations().all();
   
@@ -49,30 +50,30 @@ Closes the WebSocket connection.
 ### Available Operations
 
 ${operations.length > 0 ? 
-  operations.map(operation => {
-    const operationId = operation.id();
+      operations.map(operation => {
+        const operationId = operation.id();
    
-    const channels = operation.channels().all();
-    const channelAddress = channels.length > 0 ? channels[0].address() : 'default';
+        const channels = operation.channels().all();
+        const channelAddress = channels.length > 0 ? channels[0].address() : 'default';
     
-    let messageExamples = '';
-    if (channels.length > 0) {
-      const channelMessages = channels[0].messages().all();
-      if (channelMessages && channelMessages.length > 0) {
-        const firstMessage = channelMessages[0];
-        if (firstMessage.examples && firstMessage.examples().length > 0) {
-          const example = firstMessage.examples()[0];
-          messageExamples = `\n\n**Example:**\n\`\`\`javascript\nclient.${operationId}(${JSON.stringify(example.payload(), null, 2)});\n\`\`\``;
+        let messageExamples = '';
+        if (channels.length > 0) {
+          const channelMessages = channels[0].messages().all();
+          if (channelMessages && channelMessages.length > 0) {
+            const firstMessage = channelMessages[0];
+            if (firstMessage.examples && firstMessage.examples().length > 0) {
+              const example = firstMessage.examples()[0];
+              messageExamples = `\n\n**Example:**\n\`\`\`javascript\nclient.${operationId}(${JSON.stringify(example.payload(), null, 2)});\n\`\`\``;
+            }
+          }
         }
-      }
-    }
     
-    return `#### \`${operationId}(payload)\`
+        return `#### \`${operationId}(payload)\`
 ${operation.summary() || `Sends a message to the '${channelAddress}' channel.`}
 ${operation.description() ? `\n${operation.description()}` : ''}${messageExamples}`;
-  }).join('\n\n')
-  : 
-  `#### \`sendEchoMessage(payload)\`
+      }).join('\n\n')
+      : 
+      `#### \`sendEchoMessage(payload)\`
 Sends a message to the server that will be echoed back.
 
 **Example:**

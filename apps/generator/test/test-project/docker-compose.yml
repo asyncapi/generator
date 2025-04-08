@@ -1,5 +1,3 @@
-version: '3'
-
 services:
   verdaccio:
     image: verdaccio/verdaccio:5
@@ -12,13 +10,14 @@ services:
 
   test-project:
     privileged: true
-    image: "node:${NODE_IMAGE_TAG}"
-    volumes:
-      - ../../../../:/apptemp
-    command: bash /apptemp/apps/generator/test/test-project/test-entrypoint.sh
+    build:
+      context: ../../../../  # Root of the project
+      dockerfile: apps/generator/test/test-project/Dockerfile
+      args:
+        NODE_VERSION: ${NODE_IMAGE_TAG}
     networks:
       - mynetwork
-  
+
 networks:
   mynetwork:
     driver: bridge

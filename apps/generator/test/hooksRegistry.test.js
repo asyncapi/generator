@@ -1,8 +1,8 @@
 /**
  * @jest-environment node
  */
-const fs = require('fs')
-const path = require('path')
+const fs = require('fs');
+const path = require('path');
 const { addHook, registerLocalHooks, registerConfigHooks, registerHooks } = require('../lib/hooksRegistry');
 
 jest.mock('fs');

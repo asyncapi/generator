@@ -9,7 +9,6 @@ services:
       - mynetwork
 
   test-project:
-    privileged: true
     build:
       context: ../../../../  # Root of the project
       dockerfile: apps/generator/test/test-project/Dockerfile

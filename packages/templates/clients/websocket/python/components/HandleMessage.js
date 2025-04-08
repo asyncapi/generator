@@ -5,9 +5,11 @@ export function HandleMessage() {
     <Text newLines={2} indent={2}>
       {
         `def handle_message(self, message):
-    """Pass the incoming message to all registered message handlers."""
-    print("\\033[94mProcessing message:\\033[0m", message)
-    for handler in self.message_handlers:
+    """Pass the incoming message to all registered message handlers. """
+    if len(self.message_handlers) == 0:
+      print("\\033[94mReceived raw message:\\033[0m", message)
+    else:
+      for handler in self.message_handlers:
         handler(message)`
       }
     </Text>

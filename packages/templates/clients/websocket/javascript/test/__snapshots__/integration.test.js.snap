@@ -13,8 +13,12 @@ const WebSocket = require('ws');
 
 class HoppscotchEchoWebSocketClient {
 
-  constructor() {
-    this.url = 'wss://echo-websocket.hoppscotch.io';
+  /*
+    * Constructor to initialize the WebSocket client
+    * @param {string} url - The WebSocket server URL. Use it if the server URL is different from the default one taken from the AsyncAPI document.
+  */
+  constructor(url) {
+    this.url = url || 'wss://echo-websocket.hoppscotch.io';
     this.websocket = null;
     this.messageHandlers = [];
     this.errorHandlers = [];
@@ -33,13 +37,17 @@ class HoppscotchEchoWebSocketClient {
 
       // On receiving a message
       this.websocket.onmessage = (event) => {
-        console.log('Message received:', event.data);
-
-        this.messageHandlers.forEach(handler => {
-          if (typeof handler === 'function') {
-            this.handleMessage(event.data, handler);
-          }
-        });
+        if (this.messageHandlers.length > 0) {
+          // Call custom message handlers
+          this.messageHandlers.forEach(handler => {
+            if (typeof handler === 'function') {
+              this.handleMessage(event.data, handler);
+            }
+          });
+        } else {
+          // Default message logging
+          console.log('Message received:', event.data);
+        }
       };
 
       // On error first call custom error handlers, then default error behavior
@@ -117,8 +125,12 @@ const WebSocket = require('ws');
 
 class PostmanEchoWebSocketClientClient {
 
-  constructor() {
-    this.url = 'wss://ws.postman-echo.com/raw';
+  /*
+    * Constructor to initialize the WebSocket client
+    * @param {string} url - The WebSocket server URL. Use it if the server URL is different from the default one taken from the AsyncAPI document.
+  */
+  constructor(url) {
+    this.url = url || 'wss://ws.postman-echo.com/raw';
     this.websocket = null;
     this.messageHandlers = [];
     this.errorHandlers = [];
@@ -137,13 +149,17 @@ class PostmanEchoWebSocketClientClient {
 
       // On receiving a message
       this.websocket.onmessage = (event) => {
-        console.log('Message received:', event.data);
-
-        this.messageHandlers.forEach(handler => {
-          if (typeof handler === 'function') {
-            this.handleMessage(event.data, handler);
-          }
-        });
+        if (this.messageHandlers.length > 0) {
+          // Call custom message handlers
+          this.messageHandlers.forEach(handler => {
+            if (typeof handler === 'function') {
+              this.handleMessage(event.data, handler);
+            }
+          });
+        } else {
+          // Default message logging
+          console.log('Message received:', event.data);
+        }
       };
 
       // On error first call custom error handlers, then default error behavior

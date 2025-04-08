@@ -8,7 +8,6 @@ export function Connect({ title }) {
     print("Connected to ${title} server")
 
 def on_message(self, ws, message):
-    print("\\033[94mReceived raw message:\\033[0m", message)
     self.handle_message(message)
 
 def on_error(self, ws, error):

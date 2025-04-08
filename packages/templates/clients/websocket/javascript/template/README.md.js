@@ -1,5 +1,5 @@
 import { File, Text } from '@asyncapi/generator-react-sdk';
-import { getClientName, getServer } from '@asyncapi/generator-helpers';
+import { getClientName, getOperationMessageExamplePayloads, getServer } from '@asyncapi/generator-helpers';
 
 export default function({ asyncapi, params }) {
   const server = getServer(asyncapi.servers(), params.server);
@@ -47,7 +47,32 @@ Closes the WebSocket connection.
 
 ### Available Operations
 
-${generateOperationsSection(operations)}
+${operations.length > 0 ? 
+      operations.map(operation => {
+        const operationId = operation.id();
+        const channels = operation.channels().all();
+        
+        const channelAddress = channels.length > 0 ? channels[0].address() : 'default';
+
+        const examplePayloads = getOperationMessageExamplePayloads(operation);
+        let messageExamples = '';
+        if (examplePayloads.length > 0) {
+          const firstExample = examplePayloads[0];
+          messageExamples = `\n\n**Example:**\n\`\`\`javascript\nclient.${operationId}(${JSON.stringify(firstExample, null, 2)});\n\`\`\``;
+        }
+        return `#### \`${operationId}(payload)\`
+${operation.summary() || `Sends a message to the '${channelAddress}' channel.`}
+${operation.description() ? `\n${operation.description()}` : ''}${messageExamples}`;
+      }).join('\n\n')
+      : 
+      `#### \`sendEchoMessage(payload)\`
+Sends a message to the server that will be echoed back.
+**Example:**
+\`\`\`javascript
+client.sendEchoMessage({ message: "Hello World" });
+\`\`\`
+`}
+
 ## Testing the client
 
 \`\`\`javascript
@@ -101,40 +126,4 @@ main();
       </Text>
     </File>
   );
-}
-function getMessageExamples(operationId, channels) {
-  if (channels.length === 0) return '';
-
-  const channelMessages = channels[0].messages().all();
-  if (!channelMessages || channelMessages.length === 0) return '';
-
-  const firstMessage = channelMessages[0];
-  if (!firstMessage.examples || firstMessage.examples().length === 0) return '';
-
-  const example = firstMessage.examples()[0];
-  return `\n\n**Example:**\n\`\`\`javascript\nclient.${operationId}(${JSON.stringify(example.payload(), null, 2)});\n\`\`\``;
-}
-
-function formatOperation(operation) {
-  const operationId = operation.id();
-   
-  const channels = operation.channels().all();
-  const channelAddress = channels.length > 0 ? channels[0].address() : 'default';
-  const messageExamples = getMessageExamples(operationId, channels);
-
-  return `#### \`${operationId}(payload)\`
-    ${operation.summary() || `Sends a message to the '${channelAddress}' channel.`}
-    ${operation.description() ? `\n${operation.description()}` : ''}${messageExamples}`;
-}
-
-function generateOperationsSection(operations) {
-  return operations.length > 0 ? operations.map(formatOperation).join('\n\n') : 
-    `#### \`sendEchoMessage(payload)\`
-Sends a message to the server that will be echoed back.
-
-**Example:**
-\`\`\`javascript
-client.sendEchoMessage({ message: "Hello World" });
-\`\`\`
-`;
 }

@@ -968,16 +968,29 @@ class Generator {
    */
   async loadTemplateConfig() {
     try {
-      const configPath = path.resolve(this.templateDir, CONFIG_FILENAME);
-      if (!fs.existsSync(configPath)) {
-        this.templateConfig = {};
-        return;
+      // First, check for .ageneratorrc file
+      const rcConfigPath = path.resolve(this.templateDir, '.ageneratorrc');
+      
+      if (fs.existsSync(rcConfigPath)) {
+        // Load and parse YAML from .ageneratorrc
+        const yaml = await readFile(rcConfigPath, { encoding: 'utf8' });
+        // You'll need to import a YAML parser like js-yaml
+        const yamlConfig = require('js-yaml').load(yaml);
+        this.templateConfig = yamlConfig || {};
+      } else {
+        // Fallback to package.json only if .ageneratorrc doesn't exist
+        const configPath = path.resolve(this.templateDir, CONFIG_FILENAME);
+        if (!fs.existsSync(configPath)) {
+          this.templateConfig = {};
+          return;
+        }
+  
+        const json = await readFile(configPath, { encoding: 'utf8' });
+        const generatorProp = JSON.parse(json).generator;
+        this.templateConfig = generatorProp || {};
       }
-
-      const json = await readFile(configPath, { encoding: 'utf8' });
-      const generatorProp = JSON.parse(json).generator;
-      this.templateConfig = generatorProp || {};
     } catch (e) {
+      console.error('Error loading template config:', e);
       this.templateConfig = {};
     }
     await this.loadDefaultValues();

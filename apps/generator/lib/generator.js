@@ -971,23 +971,24 @@ class Generator {
       // First, check for .ageneratorrc file
       const rcConfigPath = path.resolve(this.templateDir, '.ageneratorrc');
       
-      if (fs.existsSync(rcConfigPath)) {
-        // Load and parse YAML from .ageneratorrc
+      try {
+        await fs.promises.access(rcConfigPath);
         const yaml = await readFile(rcConfigPath, { encoding: 'utf8' });
-        // You'll need to import a YAML parser like js-yaml
         const yamlConfig = require('js-yaml').load(yaml);
         this.templateConfig = yamlConfig || {};
-      } else {
-        // Fallback to package.json only if .ageneratorrc doesn't exist
+      } catch (accessError) {
+        // File doesn't exist, fallback to package.json
         const configPath = path.resolve(this.templateDir, CONFIG_FILENAME);
-        if (!fs.existsSync(configPath)) {
+        
+        try {
+          await fs.promises.access(configPath);
+          const json = await readFile(configPath, { encoding: 'utf8' });
+          const generatorProp = JSON.parse(json).generator;
+          this.templateConfig = generatorProp || {};
+        } catch (packageAccessError) {
+          // package.json doesn't exist or can't be accessed
           this.templateConfig = {};
-          return;
         }
-  
-        const json = await readFile(configPath, { encoding: 'utf8' });
-        const generatorProp = JSON.parse(json).generator;
-        this.templateConfig = generatorProp || {};
       }
     } catch (e) {
       console.error('Error loading template config:', e);

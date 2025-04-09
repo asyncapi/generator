@@ -15,7 +15,14 @@ const logMessage = require('../../lib/logMessages.js');
 const newContentNotExpectedInTest = 'new content';
 const version = '0.0.1';
 
-console.log = jest.fn();
+// Save the original console.log
+const originalConsoleLog = console.log;
+
+// Replace console.log with a custom mock function
+console.log = jest.fn((...args) => {
+  // Call the original function to actually log to the console
+  originalConsoleLog(...args);
+});
 
 describe('Testing if markdown was generated with proper version of the template', () => {
   jest.setTimeout(5000000);

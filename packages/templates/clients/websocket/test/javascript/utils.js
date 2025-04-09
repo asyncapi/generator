@@ -1,4 +1,39 @@
 /* istanbul ignore file */
+const fetch = require('node-fetch');
+
+/**
+ * Polls the Microcks API every 2 seconds until a test with the given ID reports success.
+ *
+ * @param {string} url - link to endpoint providing info on particular test
+ * @returns {Promise<boolean>} Resolves with `true` when the test is marked as successful.
+ */
+async function waitForTestSuccess(url) {
+  while (true) {
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+      });
+
+      if (!response.ok) {
+        console.error(`Request failed with status: ${response.status}`);
+        break;
+      }
+
+      const data = await response.json();
+
+      if (data.success) {
+        return true;
+      }
+    } catch (err) {
+      break;
+    }
+
+    await new Promise(resolve => setTimeout(resolve, 2000)); // Wait 2 seconds
+  }
+
+  return false;
+}
 
 /**
  * Wait for a specific message to appear in the spy's log calls.
@@ -30,5 +65,6 @@ async function delay(time = 1000) {
   
 module.exports = {
   waitForMessage,
-  delay
+  delay,
+  waitForTestSuccess
 };

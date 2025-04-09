@@ -1,14 +1,24 @@
+## Prerequisites
+
+Install [Podman](https://podman.io/docs/installation). 
+
+> Microcks needs some services running to simulate the infrastructure and this requires multiple resources. Docker is not the best solution for this, thus better use Podman that manages resources better.
+
+You can also install [docker-compose](https://docs.docker.com/compose/install/) that `podman compose` will later use.
+
 ## Test Project
 
 This `test` directory contains acceptance tests that check different clients with tests written in their respective languages. So JavaScript client is tested with JavaScript test, and Python with Python tests, and so on.
 
-To run Python test: `pytest python/`
+To run tests: `podman compose -f ./microcks-setup/microcks-podman.yml --profile tests up -d`
 
-To run JavaScript test: `npm --prefix javascript test`
+> You need to remember about `--profile test` to run whole setup with tests. This way you ensure that proper importer container imports `__fixtures__/asyncapi-hoppscotch-server.yml` into Microcks and tests run against it.
 
 ## Testing Clients with Microcks
 
 This instruction is just a set of notes about how to play locally with Microcks that we already use for automated testing.
+
+Tests also run in containers, although with provided configuration you can start also testing environment without running tests, just to play with Microcks and understand more how it works.
 
 ### Concept
 
@@ -19,11 +29,6 @@ Microcks is a tool for mocking. To test our generated clients, we need to mock t
 > This instruction assumes you are located in directory where `microcks-setup` directory is located
 
 #### Start Microcks
-
-1. Install [Podman](https://podman.io/docs/installation). 
-    > Microcks needs some services running to simulate the infrastructure and this requires multiple resources. Docker is not the best solution for this, thus better use Podman that manages resources better.
-
-1. Install [docker-compose](https://docs.docker.com/compose/install/) that `podman compose` uses.
 
 1. Start Microcks infrastructure: `podman compose -f ./microcks-setup/microcks-podman.yml up -d`.
 
@@ -55,13 +60,13 @@ You should run tests only on one operation at a time.
 
 ```bash
 # the higher timeout the more test samples will run
-microcks-cli test 'Hoppscotch WebSocket Server:1.0.0' ws://localhost:8082 ASYNC_API_SCHEMA \
+microcks-cli test 'Hoppscotch WebSocket Server:1.0.0' localhost:8081/api/ws/Hoppscotch+WebSocket+Server/1.0.0/sendTimeStampMessage ASYNC_API_SCHEMA \
     --microcksURL=http://localhost:8080/api/ \
     --insecure \
     --waitFor=15sec \
     --keycloakClientId=microcks-serviceaccount \
     --keycloakClientSecret="ab54d329-e435-41ae-a900-ec6b3fe15c54" \
-    --filteredOperations="[\"RECEIVE handleEchoMessage\"]"
+    --filteredOperations="[\"SEND sendTimeStampMessage\"]"
 ```
 
 You can also check the status of tests in the Microcks UI.

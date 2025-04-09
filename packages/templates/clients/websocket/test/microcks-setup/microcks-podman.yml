@@ -89,3 +89,35 @@ services:
       interval: 10s
       timeout: 2s
       retries: 3
+  
+  importer:
+    profiles:
+      - tests
+    image: quay.io/microcks/microcks-cli:latest
+    container_name: microcks-cli-importer
+    working_dir: /usr/src/app
+    volumes:
+      - ../:/usr/src/app
+    depends_on:
+      app:
+        condition: service_healthy
+    command: >
+      sh -c "microcks-cli import __fixtures__/asyncapi-hoppscotch-server.yml
+      --microcksURL=http://microcks:8080/api/
+      --keycloakClientId=microcks-serviceaccount
+      --keycloakClientSecret=ab54d329-e435-41ae-a900-ec6b3fe15c54"
+
+  tester:
+    profiles:
+      - tests
+    image: node:18
+    container_name: websocket-acceptance-tester
+    ports:
+      - 8082:8082
+    working_dir: /usr/src/app
+    volumes:
+      - ../../../../../../:/usr/src/app
+    depends_on:
+      app:
+        condition: service_healthy
+    command: ["sh", "-c", "npm install && cd packages/templates/clients/websocket/test/javascript && npm test"]

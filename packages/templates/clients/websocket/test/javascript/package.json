@@ -1,34 +1,32 @@
 {
     "scripts": {
-      "test": "jest  --coverage",
-      "lint": "eslint --max-warnings 0 --config ../../../../../.eslintrc --ignore-path ../../../../../.eslintignore .",
-      "lint:fix": "eslint --fix --max-warnings 0 --config ../../../../../.eslintrc --ignore-path ../../../../../.eslintignore ."
-  
+        "test": "jest --coverage",
+        "lint": "eslint --max-warnings 0 --config ../../../../../../.eslintrc --ignore-path ../../../../../../.eslintignore .",
+        "lint:fix": "eslint --fix --max-warnings 0 --config ../../../../../../.eslintrc --ignore-path ../../../../../../.eslintignore ."
     },
     "devDependencies": {
-      "@babel/cli": "^7.25.9",
-      "@babel/core": "^7.26.0",
-      "@babel/preset-env": "^7.26.0",
-      "@babel/preset-react": "^7.25.9",
-      "jest-esm-transformer": "^1.0.0",
-      "eslint": "^6.8.0",
-      "eslint-plugin-jest": "^23.8.2",
-      "eslint-plugin-react": "^7.34.1",
-      "eslint-plugin-sonarjs": "^0.5.0"
+        "@babel/cli": "^7.25.9",
+        "@babel/core": "^7.26.0",
+        "@babel/preset-env": "^7.26.0",
+        "@babel/preset-react": "^7.25.9",
+        "eslint": "^6.8.0",
+        "eslint-plugin-jest": "^23.8.2",
+        "eslint-plugin-react": "^7.34.1",
+        "eslint-plugin-sonarjs": "^0.5.0",
+        "jest-esm-transformer": "^1.0.0"
     },
     "jest": {
-      "moduleFileExtensions": [
-        "js",
-        "json",
-        "jsx"
-      ],
-      "transform": {
-        "^.+\\.jsx?$": "babel-jest"
-      },
-      "moduleNameMapper": {
-        "^nimma/legacy$": "<rootDir>/../../../../../node_modules/nimma/dist/legacy/cjs/index.js",
-        "^nimma/(.*)": "<rootDir>/../../../../../node_modules/nimma/dist/cjs/$1"
-      }
+        "moduleFileExtensions": [
+            "js",
+            "json",
+            "jsx"
+        ],
+        "transform": {
+            "^.+\\.jsx?$": "babel-jest"
+        },
+        "moduleNameMapper": {
+            "^nimma/legacy$": "<rootDir>/../../../../../node_modules/nimma/dist/legacy/cjs/index.js",
+            "^nimma/(.*)": "<rootDir>/../../../../../node_modules/nimma/dist/cjs/$1"
+        }
     }
-  }
-  
+}

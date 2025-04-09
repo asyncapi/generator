@@ -55,19 +55,16 @@ You should run tests only on one operation at a time.
 
 ```bash
 # the higher timeout the more test samples will run
-curl -X POST http://localhost:8080/api/tests \
-  -H "Content-Type: application/json" \
-  -d '{
-    "serviceId": "Hoppscotch WebSocket Server:1.0.0",
-    "testEndpoint": "ws://localhost:8081/api/ws/Hoppscotch+WebSocket+Server/1.0.0/sendTimeStampMessage",
-    "runnerType": "ASYNC_API_SCHEMA",
-    "timeout": 30000,
-    "filteredOperations": ["SEND sendTimeStampMessage"]
-  }'
+microcks-cli test 'Hoppscotch WebSocket Server:1.0.0' ws://localhost:8082 ASYNC_API_SCHEMA \
+    --microcksURL=http://localhost:8080/api/ \
+    --insecure \
+    --waitFor=15sec \
+    --keycloakClientId=microcks-serviceaccount \
+    --keycloakClientSecret="ab54d329-e435-41ae-a900-ec6b3fe15c54" \
+    --filteredOperations="[\"RECEIVE handleEchoMessage\"]"
 ```
 
 You can also check the status of tests in the Microcks UI.
-
 
 ### Cleanup
 

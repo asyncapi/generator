@@ -135,7 +135,7 @@ class Generator {
         enumerable: true,
         get() {
           if (!self.templateConfig.parameters?.[key]) {
-            throw new Error(`Template parameter "${key}" has not been defined in the package.json file under generator property. Please make sure it's listed there before you use it in your template.`);
+            throw new Error(`Template parameter "${key}" has not been defined in the .ageneratorrc file. Please make sure it's listed there before you use it in your template.`);
           }
           return templateParams[key];
         }

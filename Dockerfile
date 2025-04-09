@@ -7,7 +7,8 @@ WORKDIR /app
 FROM base AS installer
 
 # COPY the whole project to the container
-COPY . . // NOSONAR
+# NOSONAR
+COPY . .
 
 # Run turbo prune to prune the project down to just package.json files of the project
 # This creates a new directory called /out with the following structure:

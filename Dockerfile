@@ -7,8 +7,10 @@ WORKDIR /app
 FROM base AS installer
 
 # COPY the whole project to the container
-# // NOSONAR
-COPY . ./
+# The following line raises a security hotspot in SonarQube, but it is necessary to copy the whole project to the container
+# We can ignore this and deem it as false positive, because this is mainly for local development and testing
+# We have manually marked this as safe in SonarQube UI
+COPY . .
 
 # Run turbo prune to prune the project down to just package.json files of the project
 # This creates a new directory called /out with the following structure:

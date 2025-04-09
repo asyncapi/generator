@@ -1,0 +1,286 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing if generated client match snapshot generate simple client for hoppscotch echo: client_hoppscotch.py 1`] = `
+"# //////////////////////////////////////////////////////////////////////////
+#
+# Hoppscotch Echo WebSocket - 1.0.0
+# Protocol: wss
+# Host: echo-websocket.hoppscotch.io
+#
+# //////////////////////////////////////////////////////////////////////////
+
+import json
+import certifi
+import threading
+import websocket
+
+class HoppscotchEchoWebSocketClient:
+
+  def __init__(self, url: str = \\"wss://echo-websocket.hoppscotch.io\\"):
+      \\"\\"\\"
+      Constructor to initialize the WebSocket client.
+
+      Args:
+          url (str, optional): The WebSocket server URL. Use it if the server URL is 
+          different from the default one taken from the AsyncAPI document.
+      \\"\\"\\"
+      self.url = url
+      self.ws_app = None  # Instance of WebSocketApp
+      self.message_handlers = []      # Callables for incoming messages
+      self.error_handlers = []        # Callables for errors
+      self.outgoing_processors = []   # Callables to process outgoing messages
+      self._stop_event = threading.Event()
+
+  def on_open(self, ws):
+      print(\\"Connected to Hoppscotch Echo WebSocket server\\")
+
+  def on_message(self, ws, message):
+      self.handle_message(message)
+
+  def on_error(self, ws, error):
+      print(\\"WebSocket Error:\\", error)
+      self.handle_error(error)
+
+  def on_close(self, ws, close_status_code, close_msg):
+      print(\\"Disconnected from Hoppscotch Echo WebSocket\\", close_status_code, close_msg)
+
+  def connect(self):
+      \\"\\"\\"Establish the connection and start the run_forever loop in a background thread.\\"\\"\\"
+      ssl_opts = {\\"ca_certs\\": certifi.where()}
+      self.ws_app = websocket.WebSocketApp(
+          self.url,
+          on_open=self.on_open,
+          on_message=self.on_message,
+          on_error=self.on_error,
+          on_close=self.on_close
+      )
+      # Run the WebSocketApp's run_forever in a separate thread with multithreading enabled.
+      def run():
+          while not self._stop_event.is_set():
+              try:
+                  print(\\"Starting WebSocket thread...\\")
+                  self.ws_app.run_forever(sslopt=ssl_opts)
+              except Exception as e:
+                  print(f\\"Exception in WebSocket thread: {e}\\")  # Print full error details
+
+      thread = threading.Thread(target=run, daemon=True)
+      thread.start()
+
+  def register_message_handler(self, handler):
+      \\"\\"\\"Register a callable to process incoming messages.\\"\\"\\"
+      if callable(handler):
+          self.message_handlers.append(handler)
+      else:
+          print(\\"Message handler must be callable\\")
+
+  def register_error_handler(self, handler):
+      \\"\\"\\"Register a callable to process errors.\\"\\"\\"
+      if callable(handler):
+          self.error_handlers.append(handler)
+      else:
+          print(\\"Error handler must be callable\\")
+
+  def register_outgoing_processor(self, processor):
+      \\"\\"\\"
+      Register a callable that processes outgoing messages automatically.
+      These processors run in sequence before each message is sent.
+      \\"\\"\\"
+      if callable(processor):
+          self.outgoing_processors.append(processor)
+      else:
+          print(\\"Outgoing processor must be callable\\")
+
+  def handle_message(self, message):
+      \\"\\"\\"Pass the incoming message to all registered message handlers. \\"\\"\\"
+      if len(self.message_handlers) == 0:
+        print(\\"\\\\033[94mReceived raw message:\\\\033[0m\\", message)
+      else:
+        for handler in self.message_handlers:
+          handler(message)
+
+  def handle_error(self, error):
+      \\"\\"\\"Pass the error to all registered error handlers. Generic log message is printed if no handlers are registered.\\"\\"\\"
+      if len(self.error_handlers) == 0:
+        print(\\"\\\\033[91mError occurred:\\\\033[0m\\", error)
+      else:
+        # Call custom error handlers
+        for handler in self.error_handlers:
+          handler(error)
+
+  def send_message(self, message):
+      \\"\\"\\"
+      Automatically process the outgoing message with registered processors and send it
+      using the active WebSocket connection.
+      \\"\\"\\"
+      # Apply outgoing processors sequentially.
+      for processor in self.outgoing_processors:
+          message = processor(message)
+
+      if self.ws_app and self.ws_app.sock and self.ws_app.sock.connected:
+          try:
+              self.ws_app.send(json.dumps(message))
+              print(\\"\\\\033[92mSent:\\\\033[0m\\", message)
+          except Exception as error:
+              self.handle_error(error)
+      else:
+          print(\\"Error: WebSocket is not connected.\\")
+
+  def close(self):
+      \\"\\"\\"Cleanly close the WebSocket connection.\\"\\"\\"
+      self._stop_event.set()
+      if self.ws_app:
+          self.ws_app.close()
+          print(\\"WebSocket connection closed.\\")
+
+"
+`;
+
+exports[`testing if generated client match snapshot generate simple client for hoppscotch echo: requirements.txt 1`] = `
+"websocket-client==1.8.0
+certifi==2025.1.31
+requests==2.32.3
+"
+`;
+
+exports[`testing if generated client match snapshot generate simple client for postman echo: client_postman.py 1`] = `
+"# //////////////////////////////////////////////////////////////////////////
+#
+# Postman Echo WebSocket Client - 1.0.0
+# Protocol: wss
+# Host: ws.postman-echo.com
+# Path: /raw
+#
+# //////////////////////////////////////////////////////////////////////////
+
+import json
+import certifi
+import threading
+import websocket
+
+class PostmanEchoWebSocketClientClient:
+
+  def __init__(self, url: str = \\"wss://ws.postman-echo.com/raw\\"):
+      \\"\\"\\"
+      Constructor to initialize the WebSocket client.
+
+      Args:
+          url (str, optional): The WebSocket server URL. Use it if the server URL is 
+          different from the default one taken from the AsyncAPI document.
+      \\"\\"\\"
+      self.url = url
+      self.ws_app = None  # Instance of WebSocketApp
+      self.message_handlers = []      # Callables for incoming messages
+      self.error_handlers = []        # Callables for errors
+      self.outgoing_processors = []   # Callables to process outgoing messages
+      self._stop_event = threading.Event()
+
+  def on_open(self, ws):
+      print(\\"Connected to Postman Echo WebSocket Client server\\")
+
+  def on_message(self, ws, message):
+      self.handle_message(message)
+
+  def on_error(self, ws, error):
+      print(\\"WebSocket Error:\\", error)
+      self.handle_error(error)
+
+  def on_close(self, ws, close_status_code, close_msg):
+      print(\\"Disconnected from Postman Echo WebSocket Client\\", close_status_code, close_msg)
+
+  def connect(self):
+      \\"\\"\\"Establish the connection and start the run_forever loop in a background thread.\\"\\"\\"
+      ssl_opts = {\\"ca_certs\\": certifi.where()}
+      self.ws_app = websocket.WebSocketApp(
+          self.url,
+          on_open=self.on_open,
+          on_message=self.on_message,
+          on_error=self.on_error,
+          on_close=self.on_close
+      )
+      # Run the WebSocketApp's run_forever in a separate thread with multithreading enabled.
+      def run():
+          while not self._stop_event.is_set():
+              try:
+                  print(\\"Starting WebSocket thread...\\")
+                  self.ws_app.run_forever(sslopt=ssl_opts)
+              except Exception as e:
+                  print(f\\"Exception in WebSocket thread: {e}\\")  # Print full error details
+
+      thread = threading.Thread(target=run, daemon=True)
+      thread.start()
+
+  def register_message_handler(self, handler):
+      \\"\\"\\"Register a callable to process incoming messages.\\"\\"\\"
+      if callable(handler):
+          self.message_handlers.append(handler)
+      else:
+          print(\\"Message handler must be callable\\")
+
+  def register_error_handler(self, handler):
+      \\"\\"\\"Register a callable to process errors.\\"\\"\\"
+      if callable(handler):
+          self.error_handlers.append(handler)
+      else:
+          print(\\"Error handler must be callable\\")
+
+  def register_outgoing_processor(self, processor):
+      \\"\\"\\"
+      Register a callable that processes outgoing messages automatically.
+      These processors run in sequence before each message is sent.
+      \\"\\"\\"
+      if callable(processor):
+          self.outgoing_processors.append(processor)
+      else:
+          print(\\"Outgoing processor must be callable\\")
+
+  def handle_message(self, message):
+      \\"\\"\\"Pass the incoming message to all registered message handlers. \\"\\"\\"
+      if len(self.message_handlers) == 0:
+        print(\\"\\\\033[94mReceived raw message:\\\\033[0m\\", message)
+      else:
+        for handler in self.message_handlers:
+          handler(message)
+
+  def handle_error(self, error):
+      \\"\\"\\"Pass the error to all registered error handlers. Generic log message is printed if no handlers are registered.\\"\\"\\"
+      if len(self.error_handlers) == 0:
+        print(\\"\\\\033[91mError occurred:\\\\033[0m\\", error)
+      else:
+        # Call custom error handlers
+        for handler in self.error_handlers:
+          handler(error)
+
+  def send_message(self, message):
+      \\"\\"\\"
+      Automatically process the outgoing message with registered processors and send it
+      using the active WebSocket connection.
+      \\"\\"\\"
+      # Apply outgoing processors sequentially.
+      for processor in self.outgoing_processors:
+          message = processor(message)
+
+      if self.ws_app and self.ws_app.sock and self.ws_app.sock.connected:
+          try:
+              self.ws_app.send(json.dumps(message))
+              print(\\"\\\\033[92mSent:\\\\033[0m\\", message)
+          except Exception as error:
+              self.handle_error(error)
+      else:
+          print(\\"Error: WebSocket is not connected.\\")
+
+  def close(self):
+      \\"\\"\\"Cleanly close the WebSocket connection.\\"\\"\\"
+      self._stop_event.set()
+      if self.ws_app:
+          self.ws_app.close()
+          print(\\"WebSocket connection closed.\\")
+
+"
+`;
+
+exports[`testing if generated client match snapshot generate simple client for postman echo: requirements.txt 1`] = `
+"websocket-client==1.8.0
+certifi==2025.1.31
+requests==2.32.3
+"
+`;

@@ -71,6 +71,12 @@ microcks-cli test 'Hoppscotch WebSocket Server:1.0.0' localhost:8081/api/ws/Hopp
 
 You can also check the status of tests in the Microcks UI.
 
+### Debugging 
+
+File `microcks-podman.yml` contains commented out configuration for debbuging container you can start with the entire testing environment.
+
+Useful is also to connect to Microcks containers and checkout logs: `podman logs -f  microcks-async-minion`. Minion is the service that handles API calls.
+
 ### Cleanup
 
 Run `podman compose -f ./microcks-setup/microcks-podman.yml down --remove-orphans` to clean everything.

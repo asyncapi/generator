@@ -107,11 +107,13 @@ services:
       --keycloakClientId=microcks-serviceaccount
       --keycloakClientSecret=ab54d329-e435-41ae-a900-ec6b3fe15c54"
 
-  tester:
+  #TODO:1: make these tester containers work in way that if test fails, they fails as well. So also good to do starting of podman in a way that it is awaiting status
+  #TODO:2: add CI/CD pipeline for these tests
+  tester-js:
     profiles:
       - tests
     image: node:18
-    container_name: websocket-acceptance-tester
+    container_name: websocket-acceptance-tester-js
     ports:
       - 8082:8082
     working_dir: /usr/src/app
@@ -121,3 +123,29 @@ services:
       app:
         condition: service_healthy
     command: ["sh", "-c", "npm install && cd packages/templates/clients/websocket/test/javascript && npm test"]
+  
+  tester-py:
+    profiles:
+      - tests
+    image: python:3.11
+    container_name: websocket-acceptance-tester-py
+    ports:
+      - "8083:8083"
+    working_dir: /usr/src/app
+    volumes:
+      - ../../../../../../:/usr/src/app
+    depends_on:
+      app:
+        condition: service_healthy
+    command: ["sh", "-c", "cd packages/templates/clients/websocket/python/test/temp/snapshotTestResult && pip install -r requirements.txt && cd ../../../../test/python && pip install -r requirements.txt && pytest"]
+
+  # Below for debugging purposes. 
+  # Just uncomment below and after starting environment you can enter the constainer with "podman exec -it net-debug sh" and use websocat to test the websocket connection
+
+  # net-debug:
+  #   image: nicolaka/netshoot
+  #   container_name: net-debug
+  #   stdin_open: true
+  #   tty: true
+  #   command: >
+  #     sh -c "apk add --no-cache websocat && sh"

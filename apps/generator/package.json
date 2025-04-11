@@ -47,10 +47,10 @@
   "license": "Apache-2.0",
   "homepage": "https://github.com/asyncapi/generator",
   "dependencies": {
+    "@asyncapi/generator-hooks": "*",
     "@asyncapi/generator-react-sdk": "^1.1.2",
     "@asyncapi/multi-parser": "^2.1.1",
     "@asyncapi/nunjucks-filters": "*",
-    "@asyncapi/generator-hooks": "*",
     "@asyncapi/parser": "^3.0.14",
     "@npmcli/arborist": "5.6.3",
     "@npmcli/config": "^8.0.2",

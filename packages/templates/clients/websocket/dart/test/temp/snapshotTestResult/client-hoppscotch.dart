@@ -6,6 +6,7 @@
 ///
 //////////////////////////////////////////////////////////////////////
 
+import 'dart:convert';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 class HoppscotchEchoWebSocketClient {
@@ -70,24 +71,25 @@ class HoppscotchEchoWebSocketClient {
   }
 
   /// Method to handle message with callback
-  void _handleMessage(String message, void Function(String) cb) {
+  void _handleMessage(dynamic message, void Function(String) cb) {
     cb(message);
   }
 
   /// Method to send an echo message to the server
-  void sendEchoMessage(String message) {
+  void sendEchoMessage(dynamic message) {
     if (_channel != null) {
-      _channel!.sink.add(message);
-      print('Sent message to echo server: $message');
+      final payload = message is String ? message : jsonEncode(message);
+      _channel!.sink.add(payload);
+      print('Sent message to echo server: $payload');
     }
   }
 
   /// Method to close the WebSocket connection
   void close() {
-      if (_channel != null) {
-        _channel!.sink.close();
-        print('WebSocket connection closed.');
-      }
+    if (_channel != null) {
+      _channel!.sink.close();
+      print('WebSocket connection closed.');
+    }
   }
 }
 

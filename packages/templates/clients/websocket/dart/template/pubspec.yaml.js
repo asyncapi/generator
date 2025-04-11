@@ -9,7 +9,7 @@ environment:
   sdk: '>=3.0.0 <4.0.0'
 dependencies:
   web_socket_channel: ^3.0.2`
-}
+        }
       </Text>
     </File>
   );

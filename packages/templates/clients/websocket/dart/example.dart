@@ -8,7 +8,7 @@ void myHandler(String message) {
 }
 
 void myErrorHandler(Object error) {
-  print('Errors from WebSocket: ${error.toString()}');
+  print('Errors from WebSocket: $error');
 }
 
 Future<void> main() async {
@@ -31,6 +31,6 @@ Future<void> main() async {
       await Future.delayed(interval);
     }
   } catch (error) {
-    print('Failed to connect to WebSocket: ${error.toString()}');
+    print('Failed to connect to WebSocket: $error');
   }
 }

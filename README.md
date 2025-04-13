@@ -24,7 +24,7 @@ This is a Monorepo managed using [Turborepo](https://turbo.build/) and contains 
 - [Filters](#filters)
 - [Hooks](#hooks)
 - [Contributing](#contributing)
-- [Contributors ✨](#contributors-%E2%9C%A8)
+- [Contributors ✨](#contributors-)
 
 <!-- tocstop -->
 

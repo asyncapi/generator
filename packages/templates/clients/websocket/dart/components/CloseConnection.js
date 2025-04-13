@@ -9,6 +9,8 @@ void close() {
   if (_channel != null) {
     _channel!.sink.close();
     print('WebSocket connection closed.');
+  } else {
+    print('No active WebSocket connection to close.');
   }
 }`}
     </Text>

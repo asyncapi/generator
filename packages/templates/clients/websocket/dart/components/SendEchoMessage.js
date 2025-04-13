@@ -10,6 +10,8 @@ void sendEchoMessage(dynamic message) {
     final payload = message is String ? message : jsonEncode(message);
     _channel!.sink.add(payload);
     print('Sent message to echo server: $payload');
+  } else {
+    print('Error: WebSocket is not connected.');
   }
 }`
       }

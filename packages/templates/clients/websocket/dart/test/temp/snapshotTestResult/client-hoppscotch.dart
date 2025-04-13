@@ -81,6 +81,8 @@ class HoppscotchEchoWebSocketClient {
       final payload = message is String ? message : jsonEncode(message);
       _channel!.sink.add(payload);
       print('Sent message to echo server: $payload');
+    } else {
+      print('Error: WebSocket is not connected.');
     }
   }
 
@@ -89,6 +91,8 @@ class HoppscotchEchoWebSocketClient {
     if (_channel != null) {
       _channel!.sink.close();
       print('WebSocket connection closed.');
+    } else {
+      print('No active WebSocket connection to close.');
     }
   }
 }

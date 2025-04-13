@@ -31,7 +31,7 @@ class HoppscotchEchoWebSocketClient {
       print('Connected to Hoppscotch Echo WebSocket server');
 
         /// Listen to the incoming message stream
-      _channel!.stream.listen(
+      _channel?.stream.listen(
         (message) {
           if (_messageHandlers.isNotEmpty) {
             for (var handler in _messageHandlers) {
@@ -44,20 +44,21 @@ class HoppscotchEchoWebSocketClient {
         onError: (error) {
           if (_errorHandlers.isNotEmpty) {
             for (var handler in _errorHandlers) {
-            handler(error);
+              handler(error);
+            }
+          } else {
+            print('WebSocket Error: $error');
           }
-        } else {
-          print('WebSocket Error: $error');
-        }
-      },
-      onDone: () {
-        print('Disconnected from Hoppscotch Echo WebSocket server');
-      },
-    );
-  } catch (error) {
-    print('Connection failed: $error');
-    rethrow;
-   }
+        },
+        onDone: () {
+          _channel = null;
+          print('Disconnected from Hoppscotch Echo WebSocket server');
+        },
+      );
+    } catch (error) {
+      print('Connection failed: $error');
+      rethrow;
+    }
   }
 
   /// Method to register custom message handlers
@@ -77,23 +78,20 @@ class HoppscotchEchoWebSocketClient {
 
   /// Method to send an echo message to the server
   void sendEchoMessage(dynamic message) {
-    if (_channel != null) {
-      final payload = message is String ? message : jsonEncode(message);
-      _channel!.sink.add(payload);
-      print('Sent message to echo server: $payload');
-    } else {
+    if (_channel == null) {
       print('Error: WebSocket is not connected.');
+      return;
     }
+    final payload = message is String ? message : jsonEncode(message);
+    _channel!.sink.add(payload);
+    print('Sent message to echo server: $payload');
   }
 
   /// Method to close the WebSocket connection
   void close() {
-    if (_channel != null) {
-      _channel!.sink.close();
-      print('WebSocket connection closed.');
-    } else {
-      print('No active WebSocket connection to close.');
-    }
+    _channel?.sink.close();
+    _channel = null;
+    print('WebSocket connection closed.');
   }
 }
 

@@ -6,12 +6,9 @@ export function CloseConnection() {
       {
         `/// Method to close the WebSocket connection
 void close() {
-  if (_channel != null) {
-    _channel!.sink.close();
-    print('WebSocket connection closed.');
-  } else {
-    print('No active WebSocket connection to close.');
-  }
+  _channel?.sink.close();
+  _channel = null;
+  print('WebSocket connection closed.');
 }`}
     </Text>
   );

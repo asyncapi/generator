@@ -11,7 +11,7 @@ Future<void> connect() async {
     print('Connected to ${title} server');
 
       /// Listen to the incoming message stream
-    _channel!.stream.listen(
+    _channel?.stream.listen(
       (message) {
         if (_messageHandlers.isNotEmpty) {
           for (var handler in _messageHandlers) {
@@ -24,20 +24,21 @@ Future<void> connect() async {
       onError: (error) {
         if (_errorHandlers.isNotEmpty) {
           for (var handler in _errorHandlers) {
-          handler(error);
+            handler(error);
+          }
+        } else {
+          print('WebSocket Error: $error');
         }
-      } else {
-        print('WebSocket Error: $error');
-      }
-    },
-    onDone: () {
-      print('Disconnected from ${title} server');
-    },
-  );
-} catch (error) {
-  print('Connection failed: $error');
-  rethrow;
- }
+      },
+      onDone: () {
+        _channel = null;
+        print('Disconnected from ${title} server');
+      },
+    );
+  } catch (error) {
+    print('Connection failed: $error');
+    rethrow;
+  }
 }`}
     </Text>
   );

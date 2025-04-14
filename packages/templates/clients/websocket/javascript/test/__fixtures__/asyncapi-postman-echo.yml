@@ -26,7 +26,8 @@ operations:
     action: send
     channel: 
       $ref: '#/channels/echo'
-
+    messages:
+      - $ref: '#/channels/echo/messages/echo'
     reply:
       channel: 
         $ref: '#/channels/echo'

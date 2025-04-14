@@ -13,8 +13,8 @@ export function SendEchoMessage() {
    * @param {WebSocket} socket - An existing WebSocket connection to use for sending the message.
 */
 static sendEchoMessage(message, socket) {
-  if (socket) this.websocket = socket;
-  this.websocket.send(JSON.stringify(message));
+  const websocket = socket || this.websocket;
+  websocket.send(JSON.stringify(message));
 }`
       }
     </Text>

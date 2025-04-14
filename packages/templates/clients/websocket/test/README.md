@@ -12,7 +12,7 @@ This `test` directory contains acceptance tests that check different clients wit
 
 To run tests: `podman compose -f ./microcks-setup/microcks-podman.yml --profile tests up -d`
 
-> You need to remember about `--profile test` to run whole setup with tests. This way you ensure that proper importer container imports `__fixtures__/asyncapi-hoppscotch-server.yml` into Microcks and tests run against it.
+> You need to remember about `--profile tests` to run whole setup with tests. This way you ensure that proper importer container imports `__fixtures__/asyncapi-hoppscotch-server.yml` into Microcks and tests run against it.
 
 ## Testing Clients with Microcks
 

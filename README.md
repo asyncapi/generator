@@ -24,7 +24,7 @@ This is a Monorepo managed using [Turborepo](https://turbo.build/) and contains 
 - [Filters](#filters)
 - [Hooks](#hooks)
 - [Contributing](#contributing)
-- [Contributors ✨](#contributors-%E2%9C%A8)
+- [Contributors ✨](#contributors-)
 
 <!-- tocstop -->
 
@@ -118,6 +118,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="33.33%"><a href="https://github.com/pierrick-boule"><img src="https://avatars.githubusercontent.com/u/3237116?v=4?s=100" width="100px;" alt="pierrick-boule"/><br /><sub><b>pierrick-boule</b></sub></a><br /><a href="https://github.com/asyncapi/generator/commits?author=pierrick-boule" title="Code">💻</a> <a href="https://github.com/asyncapi/generator/commits?author=pierrick-boule" title="Tests">⚠️</a> <a href="https://github.com/asyncapi/generator/commits?author=pierrick-boule" title="Documentation">📖</a></td>
       <td align="center" valign="top" width="33.33%"><a href="https://dhaiyra-majmudar.netlify.app/"><img src="https://avatars.githubusercontent.com/u/124715224?v=4?s=100" width="100px;" alt="Dhairya Majmudar"/><br /><sub><b>Dhairya Majmudar</b></sub></a><br /><a href="https://github.com/asyncapi/generator/issues?q=author%3ADhairyaMajmudar" title="Bug reports">🐛</a></td>
       <td align="center" valign="top" width="33.33%"><a href="https://github.com/Gmin2"><img src="https://avatars.githubusercontent.com/u/127925465?v=4?s=100" width="100px;" alt="Mintu Gogoi"/><br /><sub><b>Mintu Gogoi</b></sub></a><br /><a href="https://github.com/asyncapi/generator/issues?q=author%3AGmin2" title="Bug reports">🐛</a> <a href="https://github.com/asyncapi/generator/commits?author=Gmin2" title="Code">💻</a> <a href="#ideas-Gmin2" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/asyncapi/generator/commits?author=Gmin2" title="Documentation">📖</a> <a href="https://github.com/asyncapi/generator/pulls?q=is%3Apr+reviewed-by%3AGmin2" title="Reviewed Pull Requests">👀</a> <a href="https://github.com/asyncapi/generator/commits?author=Gmin2" title="Tests">⚠️</a></td>
+    </tr>
+    <tr>
+      <td align="center" valign="top" width="33.33%"><a href="https://linktr.ee/aditya_pat"><img src="https://avatars.githubusercontent.com/u/126982848?v=4?s=100" width="100px;" alt="AdityaPat_"/><br /><sub><b>AdityaPat_</b></sub></a><br /><a href="#infra-AdityaP700" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
     </tr>
   </tbody>
 </table>

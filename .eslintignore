@@ -1,5 +1,5 @@
 apps/generator/output/*
 **/node_modules/
-**/temp/* 
+**/temp/*
 **/__transpiled/*
 packages/components/lib/*

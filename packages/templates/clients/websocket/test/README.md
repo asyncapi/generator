@@ -60,7 +60,7 @@ You should run tests only on one operation at a time.
 
 ```bash
 # the higher timeout the more test samples will run
-microcks-cli test 'Hoppscotch WebSocket Server:1.0.0' localhost:8081/api/ws/Hoppscotch+WebSocket+Server/1.0.0/sendTimeStampMessage ASYNC_API_SCHEMA \
+microcks-cli test 'Hoppscotch WebSocket Server:1.0.0' ws://localhost:8081/api/ws/Hoppscotch+WebSocket+Server/1.0.0/sendTimeStampMessage ASYNC_API_SCHEMA \
     --microcksURL=http://localhost:8080/api/ \
     --insecure \
     --waitFor=15sec \

@@ -17,3 +17,5 @@ coverage
 /.idea
 temp
 __pycache__
+
+microcks-data

@@ -29,7 +29,8 @@ describe('testing if generated client match snapshot', () => {
 
     await generator.generateFromFile(asyncapi_v3_path_postman);
 
-    const client = await readFile(path.join(testResultPath, testOutputFile), 'utf8');
+    
+    const client = await readFile(path.join(testResultPathPostman, testOutputFile), 'utf8');
     expect(client).toMatchSnapshot();
   });
 
@@ -46,7 +47,7 @@ describe('testing if generated client match snapshot', () => {
 
     await generator.generateFromFile(asyncapi_v3_path_hoppscotch);
 
-    const client = await readFile(path.join(testResultPath, testOutputFile), 'utf8');
+    const client = await readFile(path.join(testResultPathHoppscotch, testOutputFile), 'utf8');
     expect(client).toMatchSnapshot();
   });
 
@@ -62,7 +63,8 @@ describe('testing if generated client match snapshot', () => {
 
     await generator.generateFromFile(asyncapi_v3_path_hoppscotch);
 
-    const clientOutputFile = path.join(testResultPath, defaultOutputFile);
+    
+    const clientOutputFile = path.join(testResultPathClient, defaultOutputFile);
 
     const checkClientOutputFileExists = await stat(clientOutputFile);
 

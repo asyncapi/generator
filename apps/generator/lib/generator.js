@@ -8,7 +8,7 @@ const git = require('simple-git');
 const log = require('loglevel');
 const Arborist = require('@npmcli/arborist');
 const Config = require('@npmcli/config');
-const requireg = require('requireg');  
+const requireg = require('requireg');
 const npmPath = requireg.resolve('npm').replace('index.js','');
 
 const { isAsyncAPIDocument } = require('@asyncapi/parser/cjs/document');

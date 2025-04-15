@@ -1,4 +1,10 @@
+import sys
+import os
+
+sys.path.append(os.path.join(os.path.dirname(__file__), 'test'))
+
 from temp.snapshotTestResult.client_postman import PostmanEchoWebSocketClientClient
+
 import time
 
 def custom_message_handler(message):

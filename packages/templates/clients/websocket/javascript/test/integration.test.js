@@ -8,8 +8,8 @@ const Generator = require('@asyncapi/generator');
 const asyncapi_v3_path_postman = path.resolve(__dirname, './__fixtures__/asyncapi-postman-echo.yml');
 const asyncapi_v3_path_hoppscotch = path.resolve(__dirname, './__fixtures__/asyncapi-hoppscotch-echo.yml');
 const testResultPath = path.resolve(__dirname, './temp/snapshotTestResult');
-const testResultPathPostman = path.join(testResultPath, 'postman-client');
-const testResultPathHoppscotch = path.join(testResultPath, 'hoppscotch-client');
+const testResultPathPostman = path.join(testResultPath, 'client-postman');
+const testResultPathHoppscotch = path.join(testResultPath, 'client-hoppscotch');
 const testResultPathClient = path.join(testResultPath, 'client');
 const template = path.resolve(__dirname, '../');
 
@@ -17,7 +17,7 @@ describe('testing if generated client match snapshot', () => {
   jest.setTimeout(100000);
 
   it('generate simple client for postman echo', async () => {
-    const testOutputFile = 'client-postman.js';
+    const testOutputFile = 'client.js';
 
     const generator = new Generator(template, testResultPathPostman, {
       forceWrite: true,
@@ -35,7 +35,7 @@ describe('testing if generated client match snapshot', () => {
   });
 
   it('generate simple client for hoppscotch echo', async () => {
-    const testOutputFile = 'client-hoppscotch.js';
+    const testOutputFile = 'client.js';
 
     const generator = new Generator(template, testResultPathHoppscotch, {
       forceWrite: true,

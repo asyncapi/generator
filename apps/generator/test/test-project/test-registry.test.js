@@ -9,6 +9,11 @@ const dummySpecPath = path.resolve(__dirname, '../docs/dummy.yml');
 const tempOutputResults = path.resolve(__dirname, 'output');
 
 console.log = jest.fn();
+const originalConsoleLog = console.log;
+
+console.log = jest.fn((...args) => {
+  originalConsoleLog(...args);
+});
 
 describe('Integration testing generateFromFile() to make sure the template can be download from the private repository from argument', () => {
   jest.setTimeout(1000000);

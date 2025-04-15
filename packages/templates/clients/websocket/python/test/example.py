@@ -13,7 +13,7 @@ def outgoing_message_processor(message):
     return {"Processed outgoing message": message, "timestamp": "2025-03-13T12:00:00Z"}
 
 def main():
-    client = PostmanEchoWebSocketClient()
+    client = PostmanEchoWebSocketClientClient()
     client.register_message_handler(custom_message_handler)
     client.register_error_handler(custom_error_handler)
     client.register_outgoing_processor(outgoing_message_processor)

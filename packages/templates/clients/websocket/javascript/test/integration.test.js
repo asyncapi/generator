@@ -8,9 +8,6 @@ const Generator = require('@asyncapi/generator');
 const asyncapi_v3_path_postman = path.resolve(__dirname, './__fixtures__/asyncapi-postman-echo.yml');
 const asyncapi_v3_path_hoppscotch = path.resolve(__dirname, './__fixtures__/asyncapi-hoppscotch-echo.yml');
 const testResultPath = path.resolve(__dirname, './temp/snapshotTestResult');
-const testResultPathPostman = path.join(testResultPath, 'postman-client');
-const testResultPathHoppscotch = path.join(testResultPath, 'hoppscotch-client');
-const testResultPathClient = path.join(testResultPath, 'client');
 const template = path.resolve(__dirname, '../');
 
 describe('testing if generated client match snapshot', () => {
@@ -19,7 +16,7 @@ describe('testing if generated client match snapshot', () => {
   it('generate simple client for postman echo', async () => {
     const testOutputFile = 'client-postman.js';
 
-    const generator = new Generator(template, testResultPathPostman, {
+    const generator = new Generator(template, testResultPath, {
       forceWrite: true,
       templateParams: {
         server: 'echoServer',
@@ -36,7 +33,7 @@ describe('testing if generated client match snapshot', () => {
   it('generate simple client for hoppscotch echo', async () => {
     const testOutputFile = 'client-hoppscotch.js';
 
-    const generator = new Generator(template, testResultPathHoppscotch, {
+    const generator = new Generator(template, testResultPath, {
       forceWrite: true,
       templateParams: {
         server: 'echoServer',
@@ -53,7 +50,7 @@ describe('testing if generated client match snapshot', () => {
   it('generate simple client for hoppscotch echo without clientFileName param', async () => {
     const defaultOutputFile = 'client.js';
 
-    const generator = new Generator(template, testResultPathClient, {
+    const generator = new Generator(template, testResultPath, {
       forceWrite: true,
       templateParams: {
         server: 'echoServer',
@@ -72,7 +69,7 @@ describe('testing if generated client match snapshot', () => {
   it('should throw an error when server param is missing during simple client generation for hoppscotch echo', async () => {
     const testOutputFile = 'client-hoppscotch.js';
 
-    const generator = new Generator(template, testResultPathHoppscotch, {
+    const generator = new Generator(template, testResultPath, {
       forceWrite: true,
       templateParams: {
         clientFileName: testOutputFile

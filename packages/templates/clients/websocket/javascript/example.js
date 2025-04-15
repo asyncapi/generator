@@ -1,4 +1,4 @@
-const WSClient = require('./test/temp/snapshotTestResult/postman-client/client-postman.js');
+const WSClient = require('./test/temp/snapshotTestResult/client-postman');
 // Example usage
 const wsClient = new WSClient();
 

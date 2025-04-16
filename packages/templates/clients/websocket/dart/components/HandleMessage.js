@@ -6,7 +6,7 @@ export function HandleMessage() {
       {
         `/// Method to handle message with callback
 void _handleMessage(dynamic message, void Function(String) cb) {
-  cb(message);
+  cb(message is String ? message : message.toString());
 }`
       }
     </Text>

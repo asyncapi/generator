@@ -26,6 +26,10 @@ class PostmanEchoWebSocketClientClient {
 
   /// Method to establish a WebSocket connection
   Future<void> connect() async {
+    if (_channel != null) {
+      print('Already connected to Postman Echo WebSocket Client server');
+      return;
+    }
     try {
       final wsUrl = Uri.parse(_url);
       _channel = WebSocketChannel.connect(wsUrl);
@@ -74,7 +78,7 @@ class PostmanEchoWebSocketClientClient {
 
   /// Method to handle message with callback
   void _handleMessage(dynamic message, void Function(String) cb) {
-    cb(message);
+    cb(message is String ? message : message.toString());
   }
 
   /// Method to send an echo message to the server

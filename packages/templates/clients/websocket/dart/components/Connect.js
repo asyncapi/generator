@@ -5,6 +5,10 @@ export function Connect({ title }) {
     <Text newLines={2} indent={2}>
       {`/// Method to establish a WebSocket connection
 Future<void> connect() async {
+  if (_channel != null) {
+    print('Already connected to ${title} server');
+    return;
+  }
   try {
     final wsUrl = Uri.parse(_url);
     _channel = WebSocketChannel.connect(wsUrl);

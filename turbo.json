@@ -9,29 +9,19 @@
       "cache": false,
       "persistent": true
     },
-    "test": {
+    "test": { 
       "dependsOn": ["build"],
-      "cache": false
+      "cache": false 
     },
-    "test:update": {
-      "cache": false
-    },
-    "test:unit": {
-      "cache": false
-    },
-    "test:integration": {
-      "cache": false
-    },
+    "test:update": { "cache": false },
+    "test:unit": { "cache": false },
+    "test:integration": { "cache": false },
     "test:cleanup": {},
     "docs": {},
     "docker:build": {},
     "lint": {},
-    "lint:fix": {
-      "cache": false
-    },
-    "test:integration:update": {
-      "cache": false
-    },
+    "lint:fix": { "cache": false },
+    "test:integration:update": { "cache": false },
     "generate:assets": {
       "dependsOn": [],
       "outputs": ["assets/**"]

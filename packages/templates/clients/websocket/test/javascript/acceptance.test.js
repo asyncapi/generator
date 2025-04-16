@@ -2,8 +2,7 @@
  * @jest-environment node
  */
 
-const WSClient = require('./test/temp/snapshotTestResult/client-postman/client.js');
-const { waitForMessage, delay, waitForTestSuccess } = require('./utils');
+const WSClient = require('./test/temp/snapshotTestResult/client-hoppscotch/client.js');
 const fetch = require('node-fetch');
 const WebSocket = require('ws');
 const microcksTestEndpoint = 'http://microcks:8080/api/tests';

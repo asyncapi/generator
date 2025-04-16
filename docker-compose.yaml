@@ -3,4 +3,4 @@ services:
     image: asyncapi-generator
     pull_policy: build
     build: .
-    command: npm test
+    command: sh -c "npm test ${LINT:+&& npm run lint}" # run tests and optionally lint if LINT is set

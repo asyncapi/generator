@@ -50,6 +50,10 @@ To run tests in an isolated Docker environment:
 docker compose up
 ```
 
+You can also opt in to run the lint checks after the tests, by setting an environment variable `LINT` with any value before the command:
+   - Windows: `set LINT=true && docker compose up`
+   - Linux/macOS: `LINT=true docker compose up`
+
 Note: This approach ensures a clean environment for each test run by cleanly installing dependencies and running tests in a Docker container.
 
 ### Manually testing with test templates

@@ -1,10 +1,10 @@
 asyncapi: 3.0.0
+defaultContentType: text/plain
 info:
-  title: Hoppscotch Echo WebSocket
+  title: Hoppscotch WebSocket Server
   version: 1.0.0
   description: >
-    Undestand how to use Hoppscotch Echo WebSocket as a client.
-    Hoppscotch Echo WebSocket server echoes back any messages sent to it. You can use this to test WebSocket connections and message flows.
+    This document is purely for mocking the official Hoppscotch Websocket Echo server.
 
 servers:
   echoServer:
@@ -21,17 +21,20 @@ channels:
         $ref: '#/components/messages/echo'
       timestamp:
         $ref: '#/components/messages/timestamp'
+    bindings:
+      ws:
+        method: POST
 
 operations:
-  handleTimeStampMessage:
-    action: receive
+  sendTimeStampMessage:
+    action: send
     channel: 
       $ref: '#/channels/echo'
     summary: Receive the timestamp message sent from server every second.
     messages:
       - $ref: '#/channels/echo/messages/timestamp'
-  sendEchoMessage:
-    action: send
+  handleEchoMessage:
+    action: receive
     channel: 
       $ref: '#/channels/echo'
     summary: Send a message to the echo server.
@@ -44,12 +47,19 @@ components:
       summary: A message sent from server with current timestamp.
       payload: 
         $ref: '#/components/schemas/currentTime'
+      examples:
+        - name: someRandomDate
+          payload: 11:13:24 GMT+0000 (Coordinated Universal Time)
     echo:
       summary: A message exchanged with the echo server.
       payload: {}
       examples:
         - name: string
-          payload: test
+          payload: "test"
+        - name: boolean
+          payload: true
+        - name: number
+          payload: 123
         - name: object
           payload: 
             test: test text

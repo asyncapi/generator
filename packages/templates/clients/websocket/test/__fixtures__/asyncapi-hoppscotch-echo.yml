@@ -30,13 +30,13 @@ operations:
     summary: Receive the timestamp message sent from server every second.
     messages:
       - $ref: '#/channels/echo/messages/timestamp'
-  # sendEchoMessage:
-  #   action: send
-  #   channel: 
-  #     $ref: '#/channels/echo'
-  #   summary: Send a message to the echo server.
-  #   messages:
-  #     - $ref: '#/channels/echo/messages/echo'
+  sendEchoMessage:
+    action: send
+    channel: 
+      $ref: '#/channels/echo'
+    summary: Send a message to the echo server.
+    messages:
+      - $ref: '#/channels/echo/messages/echo'
 
 components:
   messages:
@@ -44,6 +44,9 @@ components:
       summary: A message sent from server with current timestamp.
       payload: 
         $ref: '#/components/schemas/currentTime'
+      examples:
+        - name: someRandomDate
+          payload: 11:13:24 GMT+0000 (Coordinated Universal Time)
     echo:
       summary: A message exchanged with the echo server.
       payload: {}

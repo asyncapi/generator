@@ -606,7 +606,10 @@ class Generator {
         save: false
       });
       log.debug(`Completed installation of template represented as: ${this.templateName}`);
-      const manifest = await pacote.manifest(this.templateName);
+      const packageNameForManifest = this.templateName.includes('@') ? 
+        this.templateName.split('@')[0] : 
+        this.templateName;
+      const manifest = await pacote.manifest(packageNameForManifest);      
       const packageName = manifest.name;
       log.debug(`Actual name of installed template is: ${packageName}`);
       const packageVersion = installResult.children.get(packageName).version;

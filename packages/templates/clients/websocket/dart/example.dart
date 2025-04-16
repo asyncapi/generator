@@ -12,7 +12,7 @@ void myErrorHandler(Object error) {
 }
 
 Future<void> main() async {
-  final wsClient = PostmanEchoWebSocketClient();
+  final wsClient = PostmanEchoWebSocketClientClient();
   wsClient.registerMessageHandler(myHandler);
   wsClient.registerErrorHandler(myErrorHandler);
 

@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////
 ///
-/// Postman Echo WebSocket - 1.0.0
+/// Postman Echo WebSocket Client - 1.0.0
 /// Protocol: wss
 /// Host: ws.postman-echo.com
 /// Path: /raw
@@ -10,7 +10,7 @@
 import 'dart:convert';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
-class PostmanEchoWebSocketClient {
+class PostmanEchoWebSocketClientClient {
 
   final String _url;
   WebSocketChannel? _channel;
@@ -20,7 +20,7 @@ class PostmanEchoWebSocketClient {
   /// Constructor to initialize the WebSocket client
   /// 
   /// [url] - The WebSocket server URL. Use it if the server URL is different from the default one taken from the AsyncAPI document.
-  PostmanEchoWebSocketClient({String? url})
+  PostmanEchoWebSocketClientClient({String? url})
     : _url = url ?? 'wss://ws.postman-echo.com/raw';
 
 
@@ -29,7 +29,7 @@ class PostmanEchoWebSocketClient {
     try {
       final wsUrl = Uri.parse(_url);
       _channel = WebSocketChannel.connect(wsUrl);
-      print('Connected to Postman Echo WebSocket server');
+      print('Connected to Postman Echo WebSocket Client server');
 
         /// Listen to the incoming message stream
       _channel?.stream.listen(
@@ -53,7 +53,7 @@ class PostmanEchoWebSocketClient {
         },
         onDone: () {
           _channel = null;
-          print('Disconnected from Postman Echo WebSocket server');
+          print('Disconnected from Postman Echo WebSocket Client server');
         },
       );
     } catch (error) {

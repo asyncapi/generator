@@ -1,6 +1,5 @@
 apps/generator/output/*
 **/node_modules/
-.github/templates-list-validator/dist/*
 **/temp/*
 **/__transpiled/*
 packages/components/lib/*

@@ -1,0 +1,22 @@
+messages:
+  timestamp:
+    summary: A message sent from server with current timestamp.
+    payload: 
+      $ref: './schemas.yml#/schemas/currentTime'
+    examples:
+      - name: someRandomDate
+        payload: 11:13:24 GMT+0000 (Coordinated Universal Time)
+
+  echo:
+    summary: A message exchanged with the echo server.
+    payload: {}
+    examples:
+      - name: string
+        payload: test
+      - name: boolean
+        payload: true
+      - name: number
+        payload: 123
+      - name: object
+        payload: 
+          test: test text

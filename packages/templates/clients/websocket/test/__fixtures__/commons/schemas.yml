@@ -1,0 +1,5 @@
+schemas:
+  currentTime:
+    type: string
+    description: A timestamp with GMT timezone.
+    example: 11:13:24 GMT+0000 (Coordinated Universal Time)

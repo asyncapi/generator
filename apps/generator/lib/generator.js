@@ -9,6 +9,7 @@ const log = require('loglevel');
 const Arborist = require('@npmcli/arborist');
 const Config = require('@npmcli/config');
 const requireg = require('requireg');
+const pacote = require('pacote');
 const npmPath = requireg.resolve('npm').replace('index.js','');
 
 const { isAsyncAPIDocument } = require('@asyncapi/parser/cjs/document');
@@ -604,11 +605,13 @@ class Generator {
         saveType: 'prod',
         save: false
       });
-
-      const addResult = arb[Symbol.for('resolvedAdd')];
-      if (!addResult) throw new Error('Unable to resolve the name of the added package. It was most probably not added to node_modules successfully');
-
-      const packageName = addResult[0].name;
+      log.debug(`Completed installation of template represented as: ${this.templateName}`);
+      const packageNameForManifest = this.templateName.includes('@') ? 
+        this.templateName.split('@')[0] : 
+        this.templateName;
+      const manifest = await pacote.manifest(packageNameForManifest);      
+      const packageName = manifest.name;
+      log.debug(`Actual name of installed template is: ${packageName}`);
       const packageVersion = installResult.children.get(packageName).version;
       const packagePath = installResult.children.get(packageName).path;
 

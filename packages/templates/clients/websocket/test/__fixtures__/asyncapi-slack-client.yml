@@ -39,8 +39,8 @@ channels:
     messages:
       hello:
         $ref: '#/components/messages/hello'
-      reaction:
-        $ref: '#/components/messages/reaction'
+      event:
+        $ref: '#/components/messages/event'
       acknowledge:
         $ref: '#/components/messages/acknowledge'
       disconnect:
@@ -68,12 +68,12 @@ operations:
       $ref: '#/channels/root'
     messages:
       - $ref: '#/channels/root/messages/hello'
-  onReactionEvent:
+  onEvent:
     action: receive
     channel:
       $ref: '#/channels/root'
     messages:
-      - $ref: '#/channels/root/messages/reaction'
+      - $ref: '#/channels/root/messages/event'
     reply:
       messages:
         - $ref: '#/channels/root/messages/acknowledge'
@@ -87,11 +87,46 @@ operations:
       - $ref: '#/channels/root/messages/disconnect'
 components:
   messages:
-    reaction:
-      summary: Action triggered when the channel receives a new reaction-added event
+    event:
+      summary: Event message representing different event types
       payload:
-        $ref: '#/components/schemas/reaction'
+        $ref: '#/components/schemas/event'
       examples:
+        - summary: New member joined channel
+          payload:
+            envelope_id: c044c358-d17e-4f6d-94aa-3ddadb82ef59
+            payload:
+              token: el8A2aGi0yIJ2so0ENvWcAfX
+              team_id: T34F2JRQU
+              context_team_id: T34F2JRQU
+              context_enterprise_id: null
+              api_app_id: A08NKKBFGBD
+              event:
+                subtype: channel_join
+                user: U08NR6C69R8
+                text: <@U08NR6C69R8> has joined the channel
+                inviter: UD698Q5LM
+                type: message
+                ts: '1744903248.779009'
+                channel: C072JMTJ85Q
+                event_ts: '1744903248.779009'
+                channel_type: channel
+              type: event_callback
+              event_id: Ev08NDP302UE
+              event_time: 1744903248
+              authorizations:
+                - enterprise_id: null
+                  team_id: T34F2JRQU
+                  user_id: U08NR6C69R8
+                  is_bot: true
+                  is_enterprise_install: false
+              is_ext_shared_channel: false
+              event_context: >-
+                4-eyJldCI6Im1lc3NhZ2UiLCJ0aWQiOiJUMzRGMkpSUVUiLCJhaWQiOiJBMDhOS0tCRkdCRCIsImNpZCI6IkMwNzJKTVRKODVRIn0
+            type: events_api
+            accepts_response_payload: false
+            retry_attempt: 0
+            retry_reason: ''
         - summary: Reaction added
           payload: 
             envelope_id: 6d0b4caf-95d3-410c-b85d-ce592e622aea
@@ -235,46 +270,203 @@ components:
               type: integer
             approximate_connection_time:
               type: integer
-    reaction:
+    event:
       type: object
+      additionalProperties: false
       properties:
         envelope_id:
           type: string
           description: 'Unique ID assigned to payload'
         payload:
           type: object
-          description: 'Payload of the reaction added event'
+          description: 'Payload of the event with some differences per event type inside event object'
+          additionalProperties: false
           properties:
             token:
               type: string
+              description: 'The shared-private callback token that authenticates this callback to the application as having come from Slack. Match this against what you were given when the subscription was created. If it does not match, do not process the event and discard it. Example: JhjZd2rVax7ZwH7jRYyWjbDl'
             team_id:
               type: string
+              description: 'The unique identifier for the workspace/team where this event occurred.'
+              example: T34F2JRQU
+            context_team_id:
+              type: string
+              description: 'The unique identifier for the workspace/team where this event occurred.'
+              example: T461EG9ZZ
+            context_enterprise_id:
+              type: ["string", "null"]
+              description: 'The unique identifier for the enterprise where this event occurred.'
+              example: E1234567890
+            api_app_id:
+              type: string
+              description: "The unique identifier for the application this event is intended for. Your application's ID can be found in the URL of the your application console. If your Request URL manages multiple applications, use this field along with the token field to validate and route incoming requests."
+              example: A4ZFV49KK
             event:
               type: object
-              properties:
-                user:
-                  type: string
-                  description: User ID who performed this event
-                reaction:
-                  type: string
-                  description: The only reaction that you need is a heart emoji
-                item_user:
-                  type: string
-                  description: |
-                    User ID that created the original item that has been reacted
-                    to
-                item:
-                  type: object
+              oneOf:
+                - title: channelJoin
+                  additionalProperties: false
                   properties:
-                    channel:
+                    type:
+                      const: message
+                    subtype:
                       type: string
-                      description: Channel information of original message
+                      const: channel_join
+                    inviter:
+                      type: string
+                      description: The user ID of the user that invited the new member to the channel
+                      example: U123456789
+                    text: 
+                      type: string
+                      description: The text of the message that was sent to the channel
+                      example: '<@U2147483828|cal> has joined the channel'
+                    user:
+                      type: string
+                      description: The user ID belonging to the user that incited this action. Not included in all events as not all events are controlled by users.
+                      example: UD698Q5LM
                     ts:
                       type: string
                       description: Timestamp information of original message
+                    channel_type:
+                      type: string
+                      description: Type of channel where the event occurred
+                      example: channel
+                - title: reactionAdded
+                  additionalProperties: false
+                  properties:
+                    type:
+                      const: reaction_added
+                    reaction:
+                      type: string
+                      description: The only reaction that you need is a heart emoji
+                      example: beers
+                    user:
+                      type: string
+                      description: The user ID belonging to the user that incited this action. Not included in all events as not all events are controlled by users.
+                      example: UD698Q5LM
+                    item:
+                      type: object
+                      properties:
+                        channel:
+                          type: string
+                          description: Channel information of original message
+                        ts:
+                          type: string
+                          description: Timestamp information of original message
+                - title: messageDeleted
+                  additionalProperties: false
+                  properties:
+                    type:
+                      type: string
+                      const: message
+                    subtype:
+                      const: message_deleted
+                    deleted_ts:
+                      type: string
+                      description: Gives the timestamp of the message that was deleted.
+                    channel:
+                      type: string
+                      description: Information in which channel the message was deleted
+                    ts:
+                      type: string
+                      description: Timestamp information of original message
+                    channel_type:
+                      type: string
+                      description: Type of channel where the event occurred
+                      example: channel
+                    previous_message:
+                      type: object
+                      properties:
+                        user:
+                          type: string
+                          description: The user ID belonging to the user that incited this action. Not included in all events as not all events are controlled by users.
+                          example: UD698Q5LM
+                        ts:
+                          type: string
+                          description: Timestamp information of original message
+                          example: 1744904504.505559
+                        client_msg_id:
+                          type: string
+                          description: Client message ID of original message
+                          example: c6d9111e-f9df-4b52-ba17-7bbb04255243
+                        text:
+                          type: string
+                          description: Text of original message
+                          example: Hi can we connect on linkedin
+                        team:
+                          type: string
+                          description: Team ID of original message
+                          example: T34F2JRQU
+                        blocks:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              type:
+                                type: string
+                                description: Type of block in the message
+                                example: rich_text
+                              block_id:
+                                type: string
+                                description: Block ID of the block in the message
+                                example: gCBVb
+                              elements:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    type:
+                                      type: string
+                                      description: Type of element in the block
+                                      example: text
+                                    text:
+                                      type: string
+                                      description: Text of the element in the block
+                                      example: Hi can we connect on linkedin
+              properties:
+                type:
+                  type: string
+                  description: 'The specific name of the event described by its adjacent fields. This field is included with every inner event type.'
+                  example: reaction_added
                 event_ts:
                   type: string
-                  description: Reaction timestamp
+                  description: The timestamp of the event. The combination of event_ts,team_id, user_id, or channel_id is intended to be unique. This field is included with every inner event type.
+                  example: '1469470591.759709'
+            type:
+              type: string
+              description: 'This reflects the type of callback you are receiving. Typically, that is event_callback. You may encounter url_verification during the configuration process. The event field "inner event" will also contain a type field indicating which event type lurks within'
+            event_id:
+              type: string
+              description: 'A unique identifier for this specific event, globally unique across all workspaces.'
+            event_time:
+              type: integer
+              description: 'The epoch timestamp in seconds indicating when this event was dispatched.'
+            event_context:
+              type: string
+              description: 'An identifier for this specific event. This field can be used with the apps.event.authorizations.list method to obtain a full list of installations of your app for which this event is visible.'
+            authorizations:
+              type: array
+              items:
+                type: object
+                properties:
+                  enterprise_id:
+                    type: ["string", "null"]
+                    description: 'The unique identifier for the enterprise where this event occurred.'
+                  team_id:
+                    type: string
+                    description: 'The unique identifier for the workspace/team where this event occurred.'
+                  user_id:
+                    type: string
+                    description: 'The unique identifier for the user who triggered this event.'
+                  is_bot:
+                    type: boolean
+                    description: 'Whether the user is a bot or not'
+                  is_enterprise_install:
+                    type: boolean
+                    description: 'Whether the app is installed in an enterprise or not'
+              is_ext_shared_channel:
+                type: boolean
+                description: 'Whether the event is from an external shared channel or not'
         type:
           type: string
         accepts_response_payload:

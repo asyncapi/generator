@@ -1,0 +1,313 @@
+asyncapi: 3.0.0
+info:
+  title: Slack Websocket API Client
+  version: 1.0.0
+  externalDocs:
+    description: Slack Websocket API
+    url: https://api.slack.com/apis/socket-mode
+  description: >
+    AsyncAPI document that represent the API of the application that is a client of the official Slack Websocket API
+
+    To start using the Slack Websocket API, you need to create a Slack app and install it in your workspace. Make sure that the app is approved by the admin of the workspace.
+
+    1. Create app in Slack: https://api.slack.com/apps. Do it by selecting option to create from scratch. Provide a name and select the workspace where the app will be used.
+    
+    1. Enable Socket Mode: Go to the "Socket Mode" section and enable the API. Follow all steps and save generated token for later. By default you are not yet subscribed to any events.
+    
+    1. Subscribe to events: Go to the "Event Subscriptions" section and enable the API. Subscribe to the bot events you want to receive. For example, you can subscribe to the `reaction_added` event. Remember to save changes.
+    
+    1. Install the app: Go to the "Install App" section and install the app in your workspace. After that make sure admin approved it for the workspace.
+    
+    1. Generate WebSocket URL: Make a REST call to the endpoint that will generate the WebSocket URL.  Use the `apps.connections.open` path from Slack's API. The response will contain a `url` field with the WebSocket URL. Use this URL to connect to the WebSocket API.
+        ```
+        curl --location --request POST 'https://slack.com/api/apps.connections.open' \
+      --header 'Authorization: Bearer USE_TOKEN_GENERATED_DURING_SOCKET_MODE_ENABLEMENT' \
+        ```
+    
+    1. Generated URL is the WebSocket URL you need to use to connect to the Slack WebSocket API. The URL will look like this:
+        ```
+        wss://wss-primary.slack.com/link?app_id=YOUR_APP_ID&ticket=YOUR_TICKET
+servers:
+  production:
+    host: wss-primary.slack.com
+    pathname: /link
+    protocol: wss
+    description: Slack's server in Socket Mode for real-time communication
+channels:
+  root:
+    address: /
+    messages:
+      hello:
+        $ref: '#/components/messages/hello'
+      reaction:
+        $ref: '#/components/messages/reaction'
+      acknowledge:
+        $ref: '#/components/messages/acknowledge'
+      disconnect:
+        $ref: '#/components/messages/disconnect'
+    bindings:
+      ws:
+        query:
+          type: object
+          description: >-
+            Tokens are produced in the WebSocket URL generated from the
+            [apps.connections.open](https://api.slack.com/methods/apps.connections.open)
+            method from Slack's API
+          properties:
+            ticket:
+              type: string
+              description: Temporary token generated when connection is initiated
+            app_id:
+              type: string
+              description: Unique identifier assigned to the Slack app
+operations:
+  onHelloMessage:
+    summary: One time operation. You receive one message once you connect to the API
+    action: receive
+    channel:
+      $ref: '#/channels/root'
+    messages:
+      - $ref: '#/channels/root/messages/hello'
+  onReactionEvent:
+    action: receive
+    channel:
+      $ref: '#/channels/root'
+    messages:
+      - $ref: '#/channels/root/messages/reaction'
+    reply:
+      messages:
+        - $ref: '#/channels/root/messages/acknowledge'
+      channel:
+        $ref: '#/channels/root'
+  onDisconnectMessage:
+    action: receive
+    channel:
+      $ref: '#/channels/root'
+    messages:
+      - $ref: '#/channels/root/messages/disconnect'
+components:
+  messages:
+    reaction:
+      summary: Action triggered when the channel receives a new reaction-added event
+      payload:
+        $ref: '#/components/schemas/reaction'
+      examples:
+        - summary: Reaction added
+          payload: 
+            envelope_id: 6d0b4caf-95d3-410c-b85d-ce592e622aea
+            payload:
+              token: el8A2aGi0yIJ2so0ENvWcAfX
+              team_id: T34F2JRQU
+              context_team_id: T34F2JRQU
+              context_enterprise_id: null
+              api_app_id: A08NKKBFGBD
+              event:
+                type: reaction_added
+                user: UD698Q5LM
+                reaction: beers
+                item:
+                  type: message
+                  channel: C072JMTJ85Q
+                  ts: '1744903248.779009'
+                event_ts: '1744903279.021400'
+              type: event_callback
+              event_id: Ev08NRBU37QB
+              event_time: 1744903279
+              authorizations:
+                - enterprise_id: null
+                  team_id: T34F2JRQU
+                  user_id: U08NR6C69R8
+                  is_bot: true
+                  is_enterprise_install: false
+              is_ext_shared_channel: false
+              event_context: >-
+                4-eyJldCI6InJlYWN0aW9uX2FkZGVkIiwidGlkIjoiVDM0RjJKUlFVIiwiYWlkIjoiQTA4TktLQkZHQkQiLCJjaWQiOiJDMDcySk1USjg1USJ9
+            type: events_api
+            accepts_response_payload: false
+            retry_attempt: 3
+            retry_reason: timeout
+        - summary: Message deleted
+          payload:
+            envelope_id: aefc571f-0d8f-4f2a-a5e7-6acc7f986816
+            payload:
+              token: el8A2aGi0yIJ2so0ENvWcAfX
+              team_id: T34F2JRQU
+              context_team_id: T34F2JRQU
+              context_enterprise_id: null
+              api_app_id: A08NKKBFGBD
+              event:
+                type: message
+                subtype: message_deleted
+                previous_message:
+                  user: U08KSJS9Z4N
+                  type: message
+                  ts: '1744904504.505559'
+                  client_msg_id: c6d9111e-f9df-4b52-ba17-7bbb04255243
+                  text: Hi can we connect on linkedin
+                  team: T34F2JRQU
+                  blocks:
+                    - type: rich_text
+                      block_id: gCBVb
+                      elements:
+                        - type: rich_text_section
+                          elements:
+                            - type: text
+                              text: Hi can we connect on linkedin
+                channel: C072JMTJ85Q
+                hidden: true
+                deleted_ts: '1744904504.505559'
+                event_ts: '1744904513.021500'
+                ts: '1744904513.021500'
+                channel_type: channel
+              type: event_callback
+              event_id: Ev08N76U6JHM
+              event_time: 1744904513
+              authorizations:
+                - enterprise_id: null
+                  team_id: T34F2JRQU
+                  user_id: U08NR6C69R8
+                  is_bot: true
+                  is_enterprise_install: false
+              is_ext_shared_channel: false
+              event_context: >-
+                4-eyJldCI6Im1lc3NhZ2UiLCJ0aWQiOiJUMzRGMkpSUVUiLCJhaWQiOiJBMDhOS0tCRkdCRCIsImNpZCI6IkMwNzJKTVRKODVRIn0
+            type: events_api
+            accepts_response_payload: false
+            retry_attempt: 3
+            retry_reason: timeout
+    hello:
+      summary: Message triggered when a successful WebSocket connection is established
+      description: | 
+        One time message that helps undestand connection was successful. Use the `approximate_connection_time` (in seconds) to estimate how long the connection will persist until Slack refreshes it.
+      payload:
+        $ref: '#/components/schemas/hello'
+      examples:
+        - payload:
+            type: hello
+            num_connections: 1
+            debug_info:
+              host: applink-8
+              build_number: 105
+              approximate_connection_time: 18060
+            connection_info:
+              app_id: A08NKKBFGBD
+    acknowledge:
+      summary: Acknowledgement response sent to Server
+      payload:
+        $ref: '#/components/schemas/acknowledge'
+    disconnect:
+      summary: Message you receive to warn you the connection with the API will be terminated
+      payload:
+        $ref: '#/components/schemas/disconnect'
+      examples:
+        - payload:
+            type: disconnect
+            reason: warning
+            debug_info:
+              host: applink-0
+        - payload:
+            type: disconnect
+            reason: refresh_requested
+            debug_info:
+              host: applink-0
+  schemas:
+    hello:
+      type: object
+      properties:
+        type:
+          type: string
+          description: A hello string confirming WebSocket connection
+        connection_info:
+          type: object
+          properties:
+            app_id:
+              type: string
+        num_connections:
+          type: integer
+        debug_info:
+          type: object
+          properties:
+            host:
+              type: string
+            started:
+              type: string
+            build_number:
+              type: integer
+            approximate_connection_time:
+              type: integer
+    reaction:
+      type: object
+      properties:
+        envelope_id:
+          type: string
+          description: 'Unique ID assigned to payload'
+        payload:
+          type: object
+          description: 'Payload of the reaction added event'
+          properties:
+            token:
+              type: string
+            team_id:
+              type: string
+            event:
+              type: object
+              properties:
+                user:
+                  type: string
+                  description: User ID who performed this event
+                reaction:
+                  type: string
+                  description: The only reaction that you need is a heart emoji
+                item_user:
+                  type: string
+                  description: |
+                    User ID that created the original item that has been reacted
+                    to
+                item:
+                  type: object
+                  properties:
+                    channel:
+                      type: string
+                      description: Channel information of original message
+                    ts:
+                      type: string
+                      description: Timestamp information of original message
+                event_ts:
+                  type: string
+                  description: Reaction timestamp
+        type:
+          type: string
+        accepts_response_payload:
+          type: boolean
+        retry_attempt:
+          description: How many times the event was retried and no acknowledgement was received by the server.
+          type: integer
+        retry_reason:
+          type: string
+          description: Reason for retrying the event
+    acknowledge:
+      type: object
+      properties:
+        envelope_id:
+          type: string
+          description: 'Unique ID of acknowledged payload'
+        payload:
+          type: object
+          description: 'Optional payload of event'
+    disconnect:
+      type: object
+      properties:
+        type:
+          type: string
+          cont: disconnect
+        reason:
+          type: string
+          enum:
+            - link_disabled
+            - warning
+            - refresh_requested
+        debug_info:
+          type: object
+          properties:
+            host:
+              type: string

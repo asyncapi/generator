@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'test/temp/snapshotTestResult/client-postman.dart';
+import 'test/temp/snapshotTestResult/client_postman/client.dart';
 
 void myHandler(String message) {
   print('====================');

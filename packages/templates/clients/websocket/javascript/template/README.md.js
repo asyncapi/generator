@@ -1,5 +1,6 @@
 import { File, Text } from '@asyncapi/generator-react-sdk';
-import { getClientName, getOperationMessageExamplePayloads, getServer } from '@asyncapi/generator-helpers';
+import { getClientName, getServer } from '@asyncapi/generator-helpers';
+import { AvailableOperations } from '../components/AvailableOperations';
 
 export default function({ asyncapi, params }) {
   const server = getServer(asyncapi.servers(), params.server);
@@ -10,7 +11,7 @@ export default function({ asyncapi, params }) {
   
   return (
     <File name="README.md">
-      <Text>
+      <Text newLines={2}>
         {`# ${info.title()} 
 
 ## Overview
@@ -43,37 +44,11 @@ Registers a callback to handle WebSocket errors.
 - **Parameter:** \`handlerFunction\` - This Function takes a parameter \`error\` which is an object
 
 #### \`close()\`
-Closes the WebSocket connection.
-
-### Available Operations
-
-${operations.length > 0 ? 
-      operations.map(operation => {
-        const operationId = operation.id();
-        const channels = operation.channels().all();
-        
-        const channelAddress = channels.length > 0 ? channels[0].address() : 'default';
-
-        const examplePayloads = getOperationMessageExamplePayloads(operation);
-        let messageExamples = '';
-        if (examplePayloads.length > 0) {
-          const firstExample = examplePayloads[0];
-          messageExamples = `\n\n**Example:**\n\`\`\`javascript\nclient.${operationId}(${JSON.stringify(firstExample, null, 2)});\n\`\`\``;
-        }
-        return `#### \`${operationId}(payload)\`
-${operation.summary() || `Sends a message to the '${channelAddress}' channel.`}
-${operation.description() ? `\n${operation.description()}` : ''}${messageExamples}`;
-      }).join('\n\n')
-      : 
-      `#### \`sendEchoMessage(payload)\`
-Sends a message to the server that will be echoed back.
-**Example:**
-\`\`\`javascript
-client.sendEchoMessage({ message: "Hello World" });
-\`\`\`
-`}
-
-## Testing the client
+Closes the WebSocket connection.`}
+      </Text>
+      <AvailableOperations operations={operations} />
+      <Text newLines={2}>
+        {`## Testing the client
 
 \`\`\`javascript
 const ${clientName} = require('./${params.clientFileName.replace('.js', '')}');

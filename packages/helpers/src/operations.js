@@ -1,27 +1,40 @@
+
 /**
- * Extracts all message example payloads from an AsyncAPI operation.
- *
- * @param {object} operation - The AsyncAPI operation object.
- *
- * @returns {Array<object>} - An array of example payloads extracted from messages. Returns an empty array if no examples are found.
- * @throws {Error} - Throws an error if the operation object is not provided.
+ * Get messages related to the provided operation.
+ * @param {object} operation - The AsyncAPI operation object. 
+ * @throws {Error} If any of the parameter is missing or invalid.
+ * 
+ * @returns messages resulting from operation
  */
-function getOperationMessageExamplePayloads(operation) {
+function getOperationMessages(operation) {
   if (!operation) {
     throw new Error('Operation object must be provided.');
   }
-  const channels = operation.channels().all();
-  if (channels.length === 0) return [];
+  const messages = operation.messages().all();
+  if (messages === undefined || messages.length === 0) {
+    throw new Error('No messages found for the provided operation.');
+  }
+  return messages;
+}
+/**
+ * Get examples related to the provided message.
+ * @param {object} message 
+ * @returns {Array} - An array of examples for the provided message.
+ * @throws {Error} If any of the parameter is missing or invalid.
+ */
 
-  const messages = channels.flatMap(channel => channel.messages().all());
-  if (messages.length === 0) return [];
-
-  const examples = messages.flatMap(message => message.examples?.() || []);
-
-  // filter out any undefined/null results, for example if the payload is not defined
-  return examples.map(example => example.payload()).filter(Boolean);
-};
+function getMessageExamples(message) {
+  if (!message) {
+    throw new Error('Message object must be provided.');
+  }
+  const examples = message.examples();
+  if (examples === undefined || examples.length === 0) {
+    throw new Error('No examples found for the provided message.');
+  }
+  return examples;
+}
 
 module.exports = {
-  getOperationMessageExamplePayloads
+  getOperationMessages,
+  getMessageExamples,
 };

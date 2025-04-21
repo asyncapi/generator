@@ -663,7 +663,7 @@ In this section, you'll:
 1. Create new directory to run java code.
 2. Create the java client.
 3. Output Java template code.
-4. Creating more channels
+4. Create more channels
 
 ### 1. Create new directory to run java code
 

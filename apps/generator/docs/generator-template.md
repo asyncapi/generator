@@ -647,8 +647,8 @@ Temperature rise detected 66943992 sent to temperature/risen
 
 Looking for more?
 
-This section will guide you in creating a flexible MQTT-supported template that will generate a **Java** client from the template and the AsyncAPI document above.
-The follow steps will be similar to the [initial steps](https://www.asyncapi.com/docs/tools/generator/generator-template#overview-of-steps) but with a few differences. This will help developers practice with AsyncAPI generator tool using statically typed language **Java**.
+This section guides you through creating a flexible MQTT-supported template that will generate a **Java** client from the template and the AsyncAPI document referenced above.
+The following steps are similar to the [initial steps](https://www.asyncapi.com/docs/tools/generator/generator-template#overview-of-steps) but with a few differences. This will help developers practice with AsyncAPI generator tool using statically typed language **Java**.
 
 ## Java Prerequisites
 
@@ -692,7 +692,7 @@ java-mqtt-client-template
 ```
 
 
-Note the client.java code must be in your src/main/java directory or else gradle won't build you applicaiton.
+Note: the **client.java** code must be in your **src/main/java** directory, or else gradle won't build your applicaiton.
 
 ### java - package.json file
 Add the following code snippet to your package.json file:
@@ -869,7 +869,7 @@ New temperature detected 36947728 sent to temperature/changed
 New temperature detected 72955029 sent to temperature/changed
 ```
 ### 3. Output Java template code.
-Open [**index.js**](#java - indexjs-file) and copy the content of [**client.py**](#1-create-the-client) and replace `{asyncapi.info().title()}` with it. It should look like the code snippet below now:
+Open [**index.js**](#java - indexjs-file), copy the content of [**client.py**](#1-create-the-client) and replace `{asyncapi.info().title()}` with it so it looks like the code snippet below now:
 
 ``` js
 //1
@@ -916,8 +916,8 @@ public class Client {
   }</File>
 }
 ```
-##### b. Write script to run the test code
-In **package.json** you can have the scripts property that you invoke by calling `npm run <your_script>`. After adding these scripts in **package.json**, it will look like the following code snippet:
+##### b. Write the script to run the test code
+In **package.json** you can deine a scripts property that you invoke by calling `npm run <your_script>`. After adding these scripts in **package.json**, it will look like the following code snippet:
 
 ``` json
    {
@@ -951,7 +951,7 @@ In **package.json** you can have the scripts property that you invoke by calling
   }
 ```
 Run `npm test` to see if everything is working.
-### 4. Creating more channels
+### 4. Create more channels
 
 ##### a. Creating more resuable componenents
 

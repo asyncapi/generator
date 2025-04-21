@@ -1,7 +1,7 @@
 asyncapi: 3.0.0
 defaultContentType: text/plain
 info:
-  title: Hoppscotch WebSocket Server
+  title: Hoppscotch Echo WebSocket Server
   version: 1.0.0
   description: >
     This document is purely for mocking the official Hoppscotch Websocket Echo server.

@@ -1,6 +1,6 @@
 asyncapi: 3.0.0
 info:
-  title: Hoppscotch Echo WebSocket
+  title: Hoppscotch Echo WebSocket Client
   version: 1.0.0
   description: >
     Undestand how to use Hoppscotch Echo WebSocket as a client.

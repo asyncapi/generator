@@ -19,7 +19,7 @@ operations:
     action: send
     channel:
       $ref: '#/channels/echo'
-    summary: Receive the timestamp message sent from server every second.
+    summary: Send the timestamp message to any connected client every second.
     messages:
       - $ref: '#/channels/echo/messages/timestamp'
   
@@ -27,6 +27,6 @@ operations:
     action: receive
     channel:
       $ref: '#/channels/echo'
-    summary: Send a message to the echo server.
+    summary: Receive echo message from the client.
     messages:
       - $ref: '#/channels/echo/messages/echo'

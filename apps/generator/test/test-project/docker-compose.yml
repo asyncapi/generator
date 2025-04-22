@@ -5,8 +5,6 @@ services:
       - '4873:4873'
     volumes:
       - './verdaccio:/verdaccio/conf'
-    networks:
-      - mynetwork
 
   test-project:
     pull_policy: build
@@ -16,9 +14,3 @@ services:
         NODE_VERSION: ${NODE_IMAGE_TAG}
     user: root # Use root user to avoid permission issues when creating directories
     command: ["sh", "/app/apps/generator/test/test-project/test.sh", "test-project"]
-    networks:
-      - mynetwork
-
-networks:
-  mynetwork:
-    driver: bridge

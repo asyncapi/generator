@@ -3,6 +3,6 @@ The purpose of this project is to test AsyncAPI Generator library use case outsi
 
 Instead of running tests with `npm test`, make sure you have Docker Compose and run the following command:
 
-Linux/MacOS: `NODE_IMAGE_TAG=18 docker-compose up --abort-on-container-exit --force-recreate`.
+Linux/MacOS: `NODE_VERSION=18 docker-compose up --abort-on-container-exit --force-recreate`.
 
-Windows: `set NODE_IMAGE_TAG=18&& docker-compose up --abort-on-container-exit --force-recreate`.
+Windows: `set NODE_VERSION=18&& docker-compose up --abort-on-container-exit --force-recreate`.

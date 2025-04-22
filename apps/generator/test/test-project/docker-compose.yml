@@ -11,6 +11,6 @@ services:
     build:
       context: ../../../../  # Root of the project
       args:
-        NODE_VERSION: ${NODE_IMAGE_TAG}
+        NODE_VERSION: ${NODE_VERSION}
     user: root # Use root user to avoid permission issues when creating directories
     command: ["sh", "/app/apps/generator/test/test-project/test.sh", "test-project"]

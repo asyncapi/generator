@@ -9,11 +9,13 @@ services:
       - mynetwork
 
   test-project:
+    pull_policy: build
     build:
       context: ../../../../  # Root of the project
-      dockerfile: apps/generator/test/test-project/Dockerfile
       args:
         NODE_VERSION: ${NODE_IMAGE_TAG}
+    user: root # Use root user to avoid permission issues when creating directories
+    command: ["sh", "/app/apps/generator/test/test-project/test.sh", "test-project"]
     networks:
       - mynetwork
 

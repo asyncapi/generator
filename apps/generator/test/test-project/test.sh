@@ -51,7 +51,7 @@ Starting registry test
 sudo chown -R 1001:121 "/root/.npm"
 
 # Always run these steps
-cd app
+cd /app
 
 echo "##########
 Running installation in root

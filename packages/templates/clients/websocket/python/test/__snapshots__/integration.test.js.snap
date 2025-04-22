@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`testing if generated client match snapshot generate simple client for hoppscotch echo: client_hoppscotch.py 1`] = `
+exports[`testing if generated client match snapshot generate simple client for hoppscotch echo: client.py 1`] = `
 "# //////////////////////////////////////////////////////////////////////////
 #
 # Hoppscotch Echo WebSocket - 1.0.0
@@ -169,7 +169,7 @@ requests==2.32.3
 "
 `;
 
-exports[`testing if generated client match snapshot generate simple client for postman echo: client_postman.py 1`] = `
+exports[`testing if generated client match snapshot generate simple client for postman echo: client.py 1`] = `
 "# //////////////////////////////////////////////////////////////////////////
 #
 # Postman Echo WebSocket Client - 1.0.0

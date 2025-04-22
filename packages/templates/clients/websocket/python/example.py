@@ -1,4 +1,10 @@
-from temp.snapshotTestResult.client_postman import PostmanEchoWebSocketClientClient
+from temp.snapshotTestResult.client_postman.client import PostmanEchoWebSocketClientClient
+
+import sys
+import os
+
+sys.path.append(os.path.join(os.path.dirname(__file__), 'test'))
+
 import time
 
 def custom_message_handler(message):
@@ -31,4 +37,6 @@ def main():
 
     # Keep program alive for a while to allow message processing
     time.sleep(10)
+
 main()
+

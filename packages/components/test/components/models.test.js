@@ -6,7 +6,7 @@ import { Parser, fromFile } from '@asyncapi/parser';
 const parser = new Parser();
 const asyncapi_v3_path = path.resolve(__dirname, '../__fixtures__/asyncapi-v3.yml');
 
-describe('Models component rendering as string', () => {
+describe('Integration Tests for models function', () => {
   let parsedAsyncAPIDocument;
 
   beforeAll(async () => {
@@ -14,14 +14,14 @@ describe('Models component rendering as string', () => {
     parsedAsyncAPIDocument = parseResult.document;
   });
 
-  test('renders default Python models as plain string output', async () => {
+  test('renders default as Python models', async () => {
     const component = await Models({ asyncapi: parsedAsyncAPIDocument });
     const result = render(component);
     const actual = result.trim();
     expect(actual).toMatchSnapshot();
   });
 
-  test('renders C# models as plain string output', async () => {
+  test('renders Csharp models', async () => {
     const component = await Models({ asyncapi: parsedAsyncAPIDocument, language: 'csharp' });
     const result = render(component);
     const actual = result.trim();

@@ -24,7 +24,7 @@ describe('testing if generated client match snapshot', () => {
       templateParams: {
         server: 'echoServer',
         clientFileName: testOutputFiles[0],
-        appendClientSuffix: false
+        appendClientSuffix: true
       }
     });
 
@@ -44,7 +44,6 @@ describe('testing if generated client match snapshot', () => {
       templateParams: {
         server: 'echoServer',
         clientFileName: testOutputFiles[0],
-        appendClientSuffix: false
       }
     });
 
@@ -64,7 +63,6 @@ describe('testing if generated client match snapshot', () => {
       templateParams: {
         server: 'echoServer',
         clientFileName: testOutputFiles[0],
-        appendClientSuffix: false,
         customClientName: 'HoppscotchClient'
       }
     });

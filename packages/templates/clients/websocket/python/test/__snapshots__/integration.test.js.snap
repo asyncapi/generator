@@ -353,7 +353,7 @@ import certifi
 import threading
 import websocket
 
-class PostmanEchoWebSocketClient:
+class PostmanEchoWebSocketClientClient:
 
   def __init__(self, url: str = \\"wss://ws.postman-echo.com/raw\\"):
       \\"\\"\\"

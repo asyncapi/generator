@@ -248,7 +248,7 @@ exports[`testing if generated client match snapshot generate simple client for p
 
 const WebSocket = require('ws');
 
-class PostmanEchoWebSocketClient {
+class PostmanEchoWebSocketClientClient {
 
   /*
     * Constructor to initialize the WebSocket client
@@ -350,7 +350,7 @@ class PostmanEchoWebSocketClient {
     }
   }
 }
-module.exports = PostmanEchoWebSocketClient;
+module.exports = PostmanEchoWebSocketClientClient;
 
 "
 `;

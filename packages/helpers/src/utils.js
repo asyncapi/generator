@@ -13,8 +13,7 @@ module.exports.getClientName = (info, appendClientSuffix, customClientName) => {
   }
   const title = info.title();
   const baseName = `${title.replace(/\s+/g, '') // Remove all spaces
-    .replace(/^./, char => char.toUpperCase()) // Make the first letter uppercase
-  }`;
+    .replace(/^./, char => char.toUpperCase())}`; // Make the first letter uppercase
   return appendClientSuffix ? `${baseName}Client` : baseName;
 };
   

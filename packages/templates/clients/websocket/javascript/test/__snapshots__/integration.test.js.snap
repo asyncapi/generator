@@ -3,7 +3,7 @@
 exports[`testing if generated client match snapshot generate simple client for hoppscotch echo 1`] = `
 "//////////////////////////////////////////////////////////////////////
 //
-// Hoppscotch Echo WebSocket - 1.0.0
+// Hoppscotch Echo WebSocket Client - 1.0.0
 // Protocol: wss
 // Host: echo-websocket.hoppscotch.io
 //
@@ -11,7 +11,7 @@ exports[`testing if generated client match snapshot generate simple client for h
 
 const WebSocket = require('ws');
 
-class HoppscotchEchoWebSocketClient {
+class HoppscotchEchoWebSocketClientClient {
 
   /*
     * Constructor to initialize the WebSocket client
@@ -31,7 +31,7 @@ class HoppscotchEchoWebSocketClient {
 
       // On successful connection
       this.websocket.onopen = () => {
-        console.log('Connected to Hoppscotch Echo WebSocket server');
+        console.log('Connected to Hoppscotch Echo WebSocket Client server');
         resolve();
       };
 
@@ -64,7 +64,7 @@ class HoppscotchEchoWebSocketClient {
 
       // On connection close
       this.websocket.onclose = () => {
-        console.log('Disconnected from Hoppscotch Echo WebSocket server');
+        console.log('Disconnected from Hoppscotch Echo WebSocket Client server');
       };
     });
   }
@@ -113,7 +113,7 @@ class HoppscotchEchoWebSocketClient {
     }
   }
 }
-module.exports = HoppscotchEchoWebSocketClient;
+module.exports = HoppscotchEchoWebSocketClientClient;
 
 "
 `;

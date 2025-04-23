@@ -1,9 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`testing if generated client match snapshot generate simple client for hoppscotch echo: client_hoppscotch.py 1`] = `
+exports[`testing if generated client match snapshot generate simple client for hoppscotch echo: client.py 1`] = `
 "# //////////////////////////////////////////////////////////////////////////
 #
-# Hoppscotch Echo WebSocket - 1.0.0
+# Hoppscotch Echo WebSocket Client - 1.0.0
 # Protocol: wss
 # Host: echo-websocket.hoppscotch.io
 #
@@ -14,7 +14,7 @@ import certifi
 import threading
 import websocket
 
-class HoppscotchEchoWebSocketClient:
+class HoppscotchEchoWebSocketClientClient:
 
   def __init__(self, url: str = \\"wss://echo-websocket.hoppscotch.io\\"):
       \\"\\"\\"
@@ -32,7 +32,7 @@ class HoppscotchEchoWebSocketClient:
       self._stop_event = threading.Event()
 
   def on_open(self, ws):
-      print(\\"Connected to Hoppscotch Echo WebSocket server\\")
+      print(\\"Connected to Hoppscotch Echo WebSocket Client server\\")
 
   def on_message(self, ws, message):
       self.handle_message(message)
@@ -42,7 +42,7 @@ class HoppscotchEchoWebSocketClient:
       self.handle_error(error)
 
   def on_close(self, ws, close_status_code, close_msg):
-      print(\\"Disconnected from Hoppscotch Echo WebSocket\\", close_status_code, close_msg)
+      print(\\"Disconnected from Hoppscotch Echo WebSocket Client\\", close_status_code, close_msg)
 
   def connect(self):
       \\"\\"\\"Establish the connection and start the run_forever loop in a background thread.\\"\\"\\"
@@ -169,7 +169,7 @@ requests==2.32.3
 "
 `;
 
-exports[`testing if generated client match snapshot generate simple client for postman echo: client_postman.py 1`] = `
+exports[`testing if generated client match snapshot generate simple client for postman echo: client.py 1`] = `
 "# //////////////////////////////////////////////////////////////////////////
 #
 # Postman Echo WebSocket Client - 1.0.0

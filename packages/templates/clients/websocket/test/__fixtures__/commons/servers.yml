@@ -1,0 +1,4 @@
+servers:
+  echoServer:
+    host: echo-websocket.hoppscotch.io
+    protocol: wss

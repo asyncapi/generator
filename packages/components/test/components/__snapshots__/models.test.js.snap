@@ -1,15 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Integration Tests for models function renders Csharp models 1`] = `
-Array [
-  <File
-    name="UserSignedUp.cs"
-  >
-    public partial class UserSignedUp
+exports[`Models component rendering as string renders C# models as plain string output 1`] = `
+"public partial class UserSignedUp
 {
   private string? displayName;
   private string? email;
-  private Dictionary&lt;string, dynamic&gt;? additionalProperties;
+  private Dictionary<string, dynamic>? additionalProperties;
 
   public string? DisplayName 
   {
@@ -23,22 +19,16 @@ Array [
     set { this.email = value; }
   }
 
-  public Dictionary&lt;string, dynamic&gt;? AdditionalProperties 
+  public Dictionary<string, dynamic>? AdditionalProperties 
   {
     get { return additionalProperties; }
     set { this.additionalProperties = value; }
   }
-}
-  </File>,
-]
+}"
 `;
 
-exports[`Integration Tests for models function renders default as Python models 1`] = `
-Array [
-  <File
-    name="UserSignedUp.py"
-  >
-    class UserSignedUp: 
+exports[`Models component rendering as string renders default Python models as plain string output 1`] = `
+"class UserSignedUp: 
   def __init__(self, input: Dict):
     if 'display_name' in input:
       self._display_name: str = input['display_name']
@@ -48,26 +38,23 @@ Array [
       self._additional_properties: dict[str, Any] = input['additional_properties']
 
   @property
-  def display_name(self) -&gt; str:
+  def display_name(self) -> str:
     return self._display_name
   @display_name.setter
   def display_name(self, display_name: str):
     self._display_name = display_name
 
   @property
-  def email(self) -&gt; str:
+  def email(self) -> str:
     return self._email
   @email.setter
   def email(self, email: str):
     self._email = email
 
   @property
-  def additional_properties(self) -&gt; dict[str, Any]:
+  def additional_properties(self) -> dict[str, Any]:
     return self._additional_properties
   @additional_properties.setter
   def additional_properties(self, additional_properties: dict[str, Any]):
-    self._additional_properties = additional_properties
-
-  </File>,
-]
+    self._additional_properties = additional_properties"
 `;

@@ -72,9 +72,8 @@ describe('testing if generated client match snapshot', () => {
     await generator.generateFromFile(asyncapi_v3_path_hoppscotch);
 
     for (const testOutputFile of testOutputFiles) {
-      const filePath = path.join(testResultPathHoppscotch, testOutputFile);
+      const filePath = path.join(testResultPathCustomHoppscotch, testOutputFile);
       const content = await readFile(filePath, 'utf8');
-
       expect(content).toMatchSnapshot(testOutputFile);
     }
   });

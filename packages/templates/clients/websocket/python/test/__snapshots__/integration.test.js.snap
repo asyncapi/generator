@@ -14,7 +14,7 @@ import certifi
 import threading
 import websocket
 
-class HoppscotchEchoWebSocketClient:
+class HoppscotchClient:
 
   def __init__(self, url: str = \\"wss://echo-websocket.hoppscotch.io\\"):
       \\"\\"\\"

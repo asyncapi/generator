@@ -4,6 +4,7 @@
  * @param {object} operation - The AsyncAPI operation object. 
  * @throws {Error} If any of the parameter is missing or invalid.
  * 
+ * @returns {null} if there are no messages
  * @returns messages resulting from operation
  */
 function getOperationMessages(operation) {
@@ -12,7 +13,7 @@ function getOperationMessages(operation) {
   }
   const messages = operation.messages().all();
   if (messages === undefined || messages.length === 0) {
-    throw new Error('No messages found for the provided operation.');
+    return null;
   }
   return messages;
 }

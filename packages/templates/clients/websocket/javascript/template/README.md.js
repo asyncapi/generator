@@ -46,7 +46,7 @@ Registers a callback to handle WebSocket errors.
 #### \`close()\`
 Closes the WebSocket connection.`}
       </Text>
-      <AvailableOperations operations={operations} />
+      {operations.length > 0 &&  <AvailableOperations operations={operations} />}
       <Text newLines={2}>
         {`## Testing the client
 

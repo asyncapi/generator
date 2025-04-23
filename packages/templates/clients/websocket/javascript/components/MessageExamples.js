@@ -6,15 +6,17 @@ export default function MessageExamples({operation}) {
   const operationId = operation.id();
   let messageExamples = '';
   const messages = getOperationMessages(operation);
-  const firstMessage = messages[0];
 
-  const firstExample = getMessageExamples(firstMessage)[0];
-  const payload = firstExample.payload();
+  if (messages) {
+    const firstMessage = messages[0];
+    const firstExample = getMessageExamples(firstMessage)[0];
+    const payload = firstExample.payload();
+    messageExamples = `\n\n**Example:**\n\`\`\`javascript\nclient.${operationId}(${JSON.stringify(payload, null, 2)});\n\`\`\``;
+  }
 
-  messageExamples = `\n\n**Example:**\n\`\`\`javascript\nclient.${operationId}(${JSON.stringify(payload, null, 2)});\n\`\`\``;
   return (
     <Text>
-      {operation.description() ? `\n${operation.description()}` : ''}{messageExamples}
+      {messageExamples}
     </Text>
   );
 }

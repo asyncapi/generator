@@ -67,6 +67,15 @@
         "description": "The name of the generated client file",
         "required": false,
         "default": "client.js"
+      },
+      "appendClientSuffix": {
+        "description": "Add Client at the end of the class name",
+        "required": false,
+        "default": false
+      },
+      "customClientName": {
+        "description": "The custom name for the generated client class",
+        "required": false
       }
     }
   }

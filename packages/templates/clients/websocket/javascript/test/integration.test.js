@@ -20,7 +20,8 @@ describe('testing if generated client match snapshot', () => {
       forceWrite: true,
       templateParams: {
         server: 'echoServer',
-        clientFileName: testOutputFile
+        clientFileName: testOutputFile,
+        appendClientSuffix: false
       }
     });
 
@@ -37,7 +38,27 @@ describe('testing if generated client match snapshot', () => {
       forceWrite: true,
       templateParams: {
         server: 'echoServer',
-        clientFileName: testOutputFile
+        clientFileName: testOutputFile,
+        appendClientSuffix: false
+      }
+    });
+
+    await generator.generateFromFile(asyncapi_v3_path_hoppscotch);
+
+    const client = await readFile(path.join(testResultPath, testOutputFile), 'utf8');
+    expect(client).toMatchSnapshot();
+  });
+
+  it('generate simple client for hoppscotch echo with custom client name', async () => {
+    const testOutputFile = 'custom-client-hoppscotch.js';
+
+    const generator = new Generator(template, testResultPath, {
+      forceWrite: true,
+      templateParams: {
+        server: 'echoServer',
+        clientFileName: testOutputFile,
+        customClientName: 'HoppscotchClient',
+        appendClientSuffix: false
       }
     });
 
@@ -54,6 +75,7 @@ describe('testing if generated client match snapshot', () => {
       forceWrite: true,
       templateParams: {
         server: 'echoServer',
+        appendClientSuffix: false
       }
     });
 

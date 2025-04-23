@@ -13,12 +13,36 @@ describe('getClientName integration test with AsyncAPI', () => {
     parsedAsyncAPIDocument = parseResult.document;
   });
 
-  it('should generate correct client name for the provided AsyncAPI info object', () => {
+  it('should generate correct client name for the provided AsyncAPI info object without appendClientSuffix', () => {
     const info = parsedAsyncAPIDocument.info();
+    const appendClientSuffix = false;
+    const customClientName = '';
 
-    const clientName = getClientName(info);
+    const clientName = getClientName(info, appendClientSuffix, customClientName);
+
+    // Example assertion: Check if the name is formatted correctly
+    expect(clientName).toBe('GeminiMarketDataWebsocketAPI');
+  });
+
+  it('should generate correct client name for the provided AsyncAPI info object with appendClientSuffix', () => {
+    const info = parsedAsyncAPIDocument.info();
+    const appendClientSuffix = true;
+    const customClientName = '';
+
+    const clientName = getClientName(info, appendClientSuffix, customClientName);
 
     // Example assertion: Check if the name is formatted correctly
     expect(clientName).toBe('GeminiMarketDataWebsocketAPIClient');
+  });
+
+  it('should return customClientName', () => {
+    const info = parsedAsyncAPIDocument.info();
+    const appendClientSuffix = false;
+    const customClientName = 'GeminiClient';
+
+    const clientName = getClientName(info, appendClientSuffix, customClientName);
+
+    // Example assertion: Check if the name is formatted correctly
+    expect(clientName).toBe('GeminiClient');
   });
 });

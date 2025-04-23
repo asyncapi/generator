@@ -1,0 +1,13 @@
+channels:
+  echo:
+    description: >
+      The single channel where messages are sent to and echoed back. Echo server also regularly drops a timestamp to that channel.
+    address: /
+    messages:
+      echo:
+        $ref: '../commons/messages.yml#/messages/echo'
+      timestamp:
+        $ref: '../commons/messages.yml#/messages/timestamp'
+    bindings:
+      ws:
+        method: POST

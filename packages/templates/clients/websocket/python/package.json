@@ -69,7 +69,7 @@
         "default": "client.py"
       },
       "appendClientSuffix": {
-        "description": "Add Client at the end of the class name",
+        "description": "Add 'Client' suffix at the end of the class name",
         "required": false,
         "default": false
       },

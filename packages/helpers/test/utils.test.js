@@ -43,6 +43,6 @@ describe('getClientName integration test with AsyncAPI', () => {
     const clientName = getClientName(info, appendClientSuffix, customClientName);
 
     // Example assertion: Check if the name is formatted correctly
-    expect(clientName).toBe('GeminiClient');
+    expect(clientName).toBe(customClientName);
   });
 });

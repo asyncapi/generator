@@ -28,4 +28,3 @@ describe('Integration Tests for models function', () => {
     expect(actual).toMatchSnapshot();
   });
 });
-44

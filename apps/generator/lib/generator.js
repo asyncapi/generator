@@ -135,7 +135,7 @@ class Generator {
         enumerable: true,
         get() {
           if (!self.templateConfig.parameters?.[key]) {
-            throw new Error(`Template parameter "${key}" has not been defined in the package.json file under generator property. Please make sure it's listed there before you use it in your template.`);
+            throw new Error(`Template parameter "${key}" has not been defined in the .ageneratorrc file. Please make sure it's listed there before you use it in your template.`);
           }
           return templateParams[key];
         }
@@ -968,16 +968,30 @@ class Generator {
    */
   async loadTemplateConfig() {
     try {
-      const configPath = path.resolve(this.templateDir, CONFIG_FILENAME);
-      if (!fs.existsSync(configPath)) {
-        this.templateConfig = {};
-        return;
+      // First, check for .ageneratorrc file
+      const rcConfigPath = path.resolve(this.templateDir, '.ageneratorrc');
+      
+      try {
+        await fs.promises.access(rcConfigPath);
+        const yaml = await readFile(rcConfigPath, { encoding: 'utf8' });
+        const yamlConfig = require('js-yaml').load(yaml);
+        this.templateConfig = yamlConfig || {};
+      } catch (accessError) {
+        // File doesn't exist, fallback to package.json
+        const configPath = path.resolve(this.templateDir, CONFIG_FILENAME);
+        
+        try {
+          await fs.promises.access(configPath);
+          const json = await readFile(configPath, { encoding: 'utf8' });
+          const generatorProp = JSON.parse(json).generator;
+          this.templateConfig = generatorProp || {};
+        } catch (packageAccessError) {
+          // package.json doesn't exist or can't be accessed
+          this.templateConfig = {};
+        }
       }
-
-      const json = await readFile(configPath, { encoding: 'utf8' });
-      const generatorProp = JSON.parse(json).generator;
-      this.templateConfig = generatorProp || {};
     } catch (e) {
+      console.error('Error loading template config:', e);
       this.templateConfig = {};
     }
     await this.loadDefaultValues();

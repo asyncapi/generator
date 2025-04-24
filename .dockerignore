@@ -35,3 +35,7 @@ Thumbs.db
 **/coverage
 .nyc_output
 test-results
+
+**/Dockerfile
+**/docker-compose*.yml
+**/docker-compose*.yaml

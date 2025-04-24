@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'test/temp/snapshotTestResult/client_postman/client.dart';
+import 'test/temp/snapshotTestResult/custom_client_hoppscotch/client.dart';
 
 void myHandler(String message) {
   print('====================');
@@ -12,7 +12,7 @@ void myErrorHandler(Object error) {
 }
 
 Future<void> main() async {
-  final wsClient = PostmanEchoWebSocketClientClient();
+  final wsClient = HoppscotchClient();
   wsClient.registerMessageHandler(myHandler);
   wsClient.registerErrorHandler(myErrorHandler);
 

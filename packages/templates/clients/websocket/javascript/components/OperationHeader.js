@@ -5,8 +5,8 @@ export default function OperationHeader({operation}) {
   return (
     <Text>
       {`#### \`${operationId}(payload)\`
-${operation.summary() || ''}
-${operation.description() ? `\n${operation.description()}` : ''}`}
+${operation.hasSummary() ?  operation.summary() : ''}
+${operation.hasDescription() ? `\n${operation.description()}` : ''}`}
     </Text>
   );
 }

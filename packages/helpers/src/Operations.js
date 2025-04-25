@@ -11,11 +11,11 @@ function getOperationMessages(operation) {
   if (!operation) {
     throw new Error('Operation object must be provided.');
   }
-  const messages = operation.messages().all();
-  if (messages === undefined || messages.length === 0) {
+  const messages = operation.messages();
+  if (messages.isEmpty()) {
     return null;
   }
-  return messages;
+  return messages.all();
 }
 /**
    * Get examples related to the provided message.

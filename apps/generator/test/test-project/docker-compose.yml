@@ -1,5 +1,3 @@
-version: '3'
-
 services:
   verdaccio:
     image: verdaccio/verdaccio:5
@@ -7,18 +5,12 @@ services:
       - '4873:4873'
     volumes:
       - './verdaccio:/verdaccio/conf'
-    networks:
-      - mynetwork
 
   test-project:
-    privileged: true
-    image: "node:${NODE_IMAGE_TAG}"
-    volumes:
-      - ../../../../:/apptemp
-    command: bash /apptemp/apps/generator/test/test-project/test-entrypoint.sh
-    networks:
-      - mynetwork
-  
-networks:
-  mynetwork:
-    driver: bridge
+    pull_policy: build
+    build:
+      context: ../../../../  # Root of the project
+      args:
+        NODE_VERSION: ${NODE_VERSION}
+    user: root # Use root user to avoid permission issues when creating directories
+    command: ["sh", "/app/apps/generator/test/test-project/test.sh", "test-project"]

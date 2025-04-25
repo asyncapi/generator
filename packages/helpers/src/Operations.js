@@ -21,6 +21,7 @@ function getOperationMessages(operation) {
    * Get examples related to the provided message.
    * @param {object} message 
    * @returns {Array} - An array of examples for the provided message.
+   * @returns {null} if there are no examples
    * @throws {Error} If any of the parameter is missing or invalid.
    */
   
@@ -30,7 +31,7 @@ function getMessageExamples(message) {
   }
   const examples = message.examples();
   if (examples === undefined || examples.length === 0) {
-    throw new Error('No examples found for the provided message.');
+    return null;
   }
   return examples;
 }

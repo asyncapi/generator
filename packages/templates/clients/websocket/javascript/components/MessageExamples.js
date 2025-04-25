@@ -9,9 +9,11 @@ export default function MessageExamples({operation}) {
 
   if (messages) {
     const firstMessage = messages[0];
-    const firstExample = getMessageExamples(firstMessage)[0];
-    const payload = firstExample.payload();
-    messageExamples = `\n\n**Example:**\n\`\`\`javascript\nclient.${operationId}(${JSON.stringify(payload, null, 2)});\n\`\`\``;
+    const firstExample = getMessageExamples(firstMessage) ? getMessageExamples(firstMessage)[0] : null;
+    if (firstExample) {
+      const payload = firstExample.payload();
+      messageExamples = `\n\n**Example:**\n\`\`\`javascript\nclient.${operationId}(${JSON.stringify(payload, null, 2)});\n\`\`\``;
+    }
   }
 
   return (

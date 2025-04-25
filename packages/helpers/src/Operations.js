@@ -2,7 +2,7 @@
 /**
  * Get messages related to the provided operation.
  * @param {object} operation - The AsyncAPI operation object. 
- * @throws {Error} If any of the parameter is missing or invalid.
+ * @throws {Error} If opeartion object is not provided or is invalid.
  * 
  * @returns {null} if there are no messages
  * @returns messages resulting from operation
@@ -22,7 +22,7 @@ function getOperationMessages(operation) {
    * @param {object} message 
    * @returns {Array} - An array of examples for the provided message.
    * @returns {null} if there are no examples
-   * @throws {Error} If any of the parameter is missing or invalid.
+   * @throws {Error} If message object is not provided or is invalid.
    */
   
 function getMessageExamples(message) {
@@ -30,7 +30,7 @@ function getMessageExamples(message) {
     throw new Error('Message object must be provided.');
   }
   const examples = message.examples();
-  if (examples === undefined || examples.length === 0) {
+  if (examples.isEmpty()) {
     return null;
   }
   return examples;

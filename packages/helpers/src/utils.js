@@ -1,5 +1,4 @@
 const { readdir } = require('fs/promises');
-const { relative, normalize } = require('path');
 
 /**
  * Get client name from AsyncAPI info.title or uses a custom name if provided.
@@ -33,7 +32,7 @@ const listFiles = async (dir) => {
   // Filter to only files, map to full paths
   return dirElements
     .filter(dirE => dirE.isFile())
-    .map(dirE => normalize(relative(process.cwd(), `${dir}/${dirE.name}`)));
+    .map(dirE => dirE.name);
 };
 
 module.exports = {

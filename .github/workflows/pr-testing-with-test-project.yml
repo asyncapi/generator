@@ -9,11 +9,13 @@ jobs:
   changes:
     runs-on: ubuntu-latest
     outputs:
-      should_test: ${{ steps.filter.outputs.modified_files }}
+      should_test: ${{ steps.filter.outputs.modified_files }} # might be able to access this variable ???, not sure about what it returns but check the logs, might do != '' or == 'true' or something like that
     steps:
       - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3 https://github.com/actions/checkout/releases/tag/v3
-      - uses: rohansingh/paths-filter@084ca29929a4e7e708a4aa8b790347facfd830c9 # fork with predicate-quantifier fix
+      - name: Checks paths-filter
+        uses: rohansingh/paths-filter@084ca29929a4e7e708a4aa8b790347facfd830c9 # fork with predicate-quantifier fix
         #TODO check if we can switch back to https://github.com/dorny/paths-filter in a month or 2 (today 17.03.2025)
+        id: filter
         with:
           predicate-quantifier: 'every'
           filters: |
@@ -26,6 +28,22 @@ jobs:
               - '!**/*.md'
               - '!docs/**'
               - '!.all-contributorsrc'
+
+      # for tests, will remove later
+      - name: Log the modified files output
+        run: |
+          echo "Modified files:"
+          echo "${{ steps.filter.outputs.modified_files }}"  # Log the output of the modified files
+
+      - name: Check if there are modified files and set should_test
+        run: |
+          if [ -z "${{ steps.filter.outputs.modified_files }}" ]; then
+            echo "No files were modified that match the filter."
+            echo "should_test=false" >> $GITHUB_ENV
+          else
+            echo "Modified files found!"
+            echo "should_test=true" >> $GITHUB_ENV
+          fi
 
   test:
     needs: changes

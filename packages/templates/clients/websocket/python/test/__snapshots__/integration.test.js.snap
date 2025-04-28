@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`testing if generated client match snapshot generate client for slack: /Users/karinagornicka/Documents/GitHub/generator/packages/templates/clients/websocket/python/test/temp/snapshotTestResult/client_slack/Acknowledge.py 1`] = `
+exports[`testing if generated client match snapshot generate client for slack: test/temp/snapshotTestResult/client_slack/Acknowledge.py 1`] = `
 "class Acknowledge: 
   def __init__(self, input: Dict):
     if 'envelope_id' in input:
@@ -33,7 +33,7 @@ exports[`testing if generated client match snapshot generate client for slack: /
 "
 `;
 
-exports[`testing if generated client match snapshot generate client for slack: /Users/karinagornicka/Documents/GitHub/generator/packages/templates/clients/websocket/python/test/temp/snapshotTestResult/client_slack/Authorization.py 1`] = `
+exports[`testing if generated client match snapshot generate client for slack: test/temp/snapshotTestResult/client_slack/Authorization.py 1`] = `
 "class Authorization: 
   def __init__(self, input: Dict):
     if 'enterprise_id' in input:
@@ -93,7 +93,7 @@ exports[`testing if generated client match snapshot generate client for slack: /
 "
 `;
 
-exports[`testing if generated client match snapshot generate client for slack: /Users/karinagornicka/Documents/GitHub/generator/packages/templates/clients/websocket/python/test/temp/snapshotTestResult/client_slack/ChannelJoin.py 1`] = `
+exports[`testing if generated client match snapshot generate client for slack: test/temp/snapshotTestResult/client_slack/ChannelJoin.py 1`] = `
 "class ChannelJoin: 
   def __init__(self, input: Dict):
     self._type: str = 'message'
@@ -152,7 +152,7 @@ exports[`testing if generated client match snapshot generate client for slack: /
 "
 `;
 
-exports[`testing if generated client match snapshot generate client for slack: /Users/karinagornicka/Documents/GitHub/generator/packages/templates/clients/websocket/python/test/temp/snapshotTestResult/client_slack/ConnectionInfo.py 1`] = `
+exports[`testing if generated client match snapshot generate client for slack: test/temp/snapshotTestResult/client_slack/ConnectionInfo.py 1`] = `
 "class ConnectionInfo: 
   def __init__(self, input: Dict):
     if 'app_id' in input:
@@ -176,7 +176,7 @@ exports[`testing if generated client match snapshot generate client for slack: /
 "
 `;
 
-exports[`testing if generated client match snapshot generate client for slack: /Users/karinagornicka/Documents/GitHub/generator/packages/templates/clients/websocket/python/test/temp/snapshotTestResult/client_slack/DebugInfo.py 1`] = `
+exports[`testing if generated client match snapshot generate client for slack: test/temp/snapshotTestResult/client_slack/DebugInfo.py 1`] = `
 "class DebugInfo: 
   def __init__(self, input: Dict):
     if 'host' in input:
@@ -227,7 +227,7 @@ exports[`testing if generated client match snapshot generate client for slack: /
 "
 `;
 
-exports[`testing if generated client match snapshot generate client for slack: /Users/karinagornicka/Documents/GitHub/generator/packages/templates/clients/websocket/python/test/temp/snapshotTestResult/client_slack/Disconnect.py 1`] = `
+exports[`testing if generated client match snapshot generate client for slack: test/temp/snapshotTestResult/client_slack/Disconnect.py 1`] = `
 "class Disconnect: 
   def __init__(self, input: Dict):
     if 'type' in input:
@@ -269,14 +269,14 @@ exports[`testing if generated client match snapshot generate client for slack: /
 "
 `;
 
-exports[`testing if generated client match snapshot generate client for slack: /Users/karinagornicka/Documents/GitHub/generator/packages/templates/clients/websocket/python/test/temp/snapshotTestResult/client_slack/DisconnectReasonEnum.py 1`] = `
+exports[`testing if generated client match snapshot generate client for slack: test/temp/snapshotTestResult/client_slack/DisconnectReasonEnum.py 1`] = `
 "class DisconnectReasonEnum(Enum): 
   LINK_DISABLED = \\"link_disabled\\"
   WARNING = \\"warning\\"
   REFRESH_REQUESTED = \\"refresh_requested\\""
 `;
 
-exports[`testing if generated client match snapshot generate client for slack: /Users/karinagornicka/Documents/GitHub/generator/packages/templates/clients/websocket/python/test/temp/snapshotTestResult/client_slack/Event.py 1`] = `
+exports[`testing if generated client match snapshot generate client for slack: test/temp/snapshotTestResult/client_slack/Event.py 1`] = `
 "class Event: 
   def __init__(self, input: Dict):
     if 'envelope_id' in input:
@@ -336,7 +336,7 @@ exports[`testing if generated client match snapshot generate client for slack: /
 "
 `;
 
-exports[`testing if generated client match snapshot generate client for slack: /Users/karinagornicka/Documents/GitHub/generator/packages/templates/clients/websocket/python/test/temp/snapshotTestResult/client_slack/EventPayload.py 1`] = `
+exports[`testing if generated client match snapshot generate client for slack: test/temp/snapshotTestResult/client_slack/EventPayload.py 1`] = `
 "class EventPayload: 
   def __init__(self, input: Dict):
     if 'token' in input:
@@ -441,7 +441,7 @@ exports[`testing if generated client match snapshot generate client for slack: /
 "
 `;
 
-exports[`testing if generated client match snapshot generate client for slack: /Users/karinagornicka/Documents/GitHub/generator/packages/templates/clients/websocket/python/test/temp/snapshotTestResult/client_slack/Hello.py 1`] = `
+exports[`testing if generated client match snapshot generate client for slack: test/temp/snapshotTestResult/client_slack/Hello.py 1`] = `
 "class Hello: 
   def __init__(self, input: Dict):
     if 'type' in input:
@@ -492,7 +492,7 @@ exports[`testing if generated client match snapshot generate client for slack: /
 "
 `;
 
-exports[`testing if generated client match snapshot generate client for slack: /Users/karinagornicka/Documents/GitHub/generator/packages/templates/clients/websocket/python/test/temp/snapshotTestResult/client_slack/MessageDeleted.py 1`] = `
+exports[`testing if generated client match snapshot generate client for slack: test/temp/snapshotTestResult/client_slack/MessageDeleted.py 1`] = `
 "class MessageDeleted: 
   def __init__(self, input: Dict):
     self._type: str = 'message'
@@ -551,7 +551,7 @@ exports[`testing if generated client match snapshot generate client for slack: /
 "
 `;
 
-exports[`testing if generated client match snapshot generate client for slack: /Users/karinagornicka/Documents/GitHub/generator/packages/templates/clients/websocket/python/test/temp/snapshotTestResult/client_slack/ReactionAdded.py 1`] = `
+exports[`testing if generated client match snapshot generate client for slack: test/temp/snapshotTestResult/client_slack/ReactionAdded.py 1`] = `
 "class ReactionAdded: 
   def __init__(self, input: Dict):
     self._type: str = 'message'
@@ -595,7 +595,7 @@ exports[`testing if generated client match snapshot generate client for slack: /
 "
 `;
 
-exports[`testing if generated client match snapshot generate client for slack: /Users/karinagornicka/Documents/GitHub/generator/packages/templates/clients/websocket/python/test/temp/snapshotTestResult/client_slack/client.py 1`] = `
+exports[`testing if generated client match snapshot generate client for slack: test/temp/snapshotTestResult/client_slack/client.py 1`] = `
 "# //////////////////////////////////////////////////////////////////////////
 #
 # Slack Websocket API Client - 1.0.0
@@ -778,14 +778,14 @@ class SlackWebsocketAPIClient:
 "
 `;
 
-exports[`testing if generated client match snapshot generate client for slack: /Users/karinagornicka/Documents/GitHub/generator/packages/templates/clients/websocket/python/test/temp/snapshotTestResult/client_slack/requirements.txt 1`] = `
+exports[`testing if generated client match snapshot generate client for slack: test/temp/snapshotTestResult/client_slack/requirements.txt 1`] = `
 "websocket-client==1.8.0
 certifi==2025.1.31
 requests==2.32.3
 "
 `;
 
-exports[`testing if generated client match snapshot generate simple client for hoppscotch echo with custom client name: client.py 1`] = `
+exports[`testing if generated client match snapshot generate simple client for hoppscotch echo with custom client name: test/temp/snapshotTestResult/custom_client_hoppscotch/client.py 1`] = `
 "# //////////////////////////////////////////////////////////////////////////
 #
 # Hoppscotch Echo WebSocket Client - 1.0.0
@@ -959,14 +959,14 @@ class HoppscotchClient:
 "
 `;
 
-exports[`testing if generated client match snapshot generate simple client for hoppscotch echo with custom client name: requirements.txt 1`] = `
+exports[`testing if generated client match snapshot generate simple client for hoppscotch echo with custom client name: test/temp/snapshotTestResult/custom_client_hoppscotch/requirements.txt 1`] = `
 "websocket-client==1.8.0
 certifi==2025.1.31
 requests==2.32.3
 "
 `;
 
-exports[`testing if generated client match snapshot generate simple client for hoppscotch echo: client.py 1`] = `
+exports[`testing if generated client match snapshot generate simple client for hoppscotch echo: test/temp/snapshotTestResult/client_hoppscotch/client.py 1`] = `
 "# //////////////////////////////////////////////////////////////////////////
 #
 # Hoppscotch Echo WebSocket Client - 1.0.0
@@ -1140,14 +1140,14 @@ class HoppscotchEchoWebSocketClient:
 "
 `;
 
-exports[`testing if generated client match snapshot generate simple client for hoppscotch echo: requirements.txt 1`] = `
+exports[`testing if generated client match snapshot generate simple client for hoppscotch echo: test/temp/snapshotTestResult/client_hoppscotch/requirements.txt 1`] = `
 "websocket-client==1.8.0
 certifi==2025.1.31
 requests==2.32.3
 "
 `;
 
-exports[`testing if generated client match snapshot generate simple client for postman echo: client.py 1`] = `
+exports[`testing if generated client match snapshot generate simple client for postman echo: test/temp/snapshotTestResult/client_postman/client.py 1`] = `
 "# //////////////////////////////////////////////////////////////////////////
 #
 # Postman Echo WebSocket Client - 1.0.0
@@ -1322,7 +1322,7 @@ class PostmanEchoWebSocketClientClient:
 "
 `;
 
-exports[`testing if generated client match snapshot generate simple client for postman echo: requirements.txt 1`] = `
+exports[`testing if generated client match snapshot generate simple client for postman echo: test/temp/snapshotTestResult/client_postman/requirements.txt 1`] = `
 "websocket-client==1.8.0
 certifi==2025.1.31
 requests==2.32.3

@@ -35,9 +35,7 @@ describe('testing if generated client match snapshot', () => {
     const testOutputFiles = await listFiles(testResultPathPostman);
 
     for (const testOutputFile of testOutputFiles) {
-      const filePath = path.join(testResultPathPostman, testOutputFile);
-      const content = await readFile(filePath, 'utf8');
-
+      const content = await readFile(testOutputFile, 'utf8');
       expect(content).toMatchSnapshot(testOutputFile);
     }
   });
@@ -56,9 +54,7 @@ describe('testing if generated client match snapshot', () => {
     const testOutputFiles = await listFiles(testResultPathHoppscotch);
 
     for (const testOutputFile of testOutputFiles) {
-      const filePath = path.join(testResultPathHoppscotch, testOutputFile);
-      const content = await readFile(filePath, 'utf8');
-
+      const content = await readFile(testOutputFile, 'utf8');
       expect(content).toMatchSnapshot(testOutputFile);
     }
   });
@@ -78,8 +74,7 @@ describe('testing if generated client match snapshot', () => {
     const testOutputFiles = await listFiles(testResultPathCustomHoppscotch);
 
     for (const testOutputFile of testOutputFiles) {
-      const filePath = path.join(testResultPathCustomHoppscotch, testOutputFile);
-      const content = await readFile(filePath, 'utf8');
+      const content = await readFile(testOutputFile, 'utf8');
       expect(content).toMatchSnapshot(testOutputFile);
     }
   });
@@ -98,8 +93,8 @@ describe('testing if generated client match snapshot', () => {
     const testOutputFiles = await listFiles(testResultPathSlack);
     
     for (const testOutputFile of testOutputFiles) {
-      const filePath = path.join(testOutputFile);
-      const content = await readFile(filePath, 'utf8');
+      console.log(testOutputFile);
+      const content = await readFile(testOutputFile, 'utf8');
       expect(content).toMatchSnapshot(testOutputFile);
     }
   });

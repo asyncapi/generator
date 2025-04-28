@@ -8,7 +8,7 @@ module.exports = {
   getClientName,
   getServer,
   listFiles,
-  getQueryParams
+  getQueryParams,
   getOperationMessages,
   getMessageExamples
 };

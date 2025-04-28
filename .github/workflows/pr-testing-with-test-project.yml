@@ -46,10 +46,19 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744
+      # for logging if value passed through jobs
+      - name: Log should_test value and condition result
+        run: |
+          echo "should_test value: ${{ needs.changes.outputs.should_test }}"
+          if [[ "${{ needs.changes.outputs.should_test }}" == "true" ]]; then
+            echo "Condition result: true"
+          else
+            echo "Condition result: false"
+          fi
+        shell: bash
       - name: Determine if tests should run
         id: should_run
         if: >
-          needs.changes.outputs.should_test == 'true' &&
           !github.event.pull_request.draft && !(
             (github.actor == 'asyncapi-bot' && (
               startsWith(github.event.pull_request.title, 'ci: update of files from global .github repo') ||

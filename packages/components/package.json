@@ -11,7 +11,7 @@
     "lint:fix": "eslint --max-warnings 0 --config ../../.eslintrc --ignore-path ../../.eslintignore . --fix",
     "generate:assets": "npm run prepublishOnly"
   },
-  "main": "lib/index.js", 
+  "main": "lib/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/asyncapi/generator/packages/components"
@@ -20,14 +20,14 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@asyncapi/generator-react-sdk": "^1.1.2",
-    "@asyncapi/modelina": "^4.0.0-next.62"
+    "@asyncapi/modelina": "^4.0.3"
   },
   "devDependencies": {
-    "jest": "^27.3.1",
     "@babel/cli": "^7.25.9",
     "@babel/core": "^7.26.0",
     "@babel/preset-env": "^7.26.0",
     "@babel/preset-react": "^7.25.9",
+    "jest": "^27.3.1",
     "jest-esm-transformer": "^1.0.0"
   },
   "jest": {

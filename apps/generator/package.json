@@ -1,6 +1,6 @@
 {
   "name": "@asyncapi/generator",
-  "version": "2.5.0",
+  "version": "2.6.0",
   "description": "The AsyncAPI generator. It can generate documentation, code, anything!",
   "main": "./lib/generator.js",
   "bin": {
@@ -21,7 +21,6 @@
     "docs": "jsdoc2md --partial docs/jsdoc2md-handlebars/custom-sig-name.hbs docs/jsdoc2md-handlebars/main.hbs docs/jsdoc2md-handlebars/docs.hbs docs/jsdoc2md-handlebars/header.hbs docs/jsdoc2md-handlebars/defaultvalue.hbs docs/jsdoc2md-handlebars/link.hbs docs/jsdoc2md-handlebars/params-table.hbs --files lib/generator.js > docs/api.md",
     "docker:build": "docker build -t asyncapi/generator:latest .",
     "lint": "eslint --max-warnings 0 --config ../../.eslintrc --ignore-path ../../.eslintignore .",
-    "lint:tpl:validator": "eslint --fix --config ../../.eslintrc ../../.github/templates-list-validator",
     "generate:readme:toc": "markdown-toc -i README.md",
     "generate:assets": "npm run docs && npm run generate:readme:toc",
     "bump:version": "npm --no-git-tag-version --allow-same-version version $VERSION"
@@ -48,10 +47,10 @@
   "license": "Apache-2.0",
   "homepage": "https://github.com/asyncapi/generator",
   "dependencies": {
+    "@asyncapi/generator-hooks": "*",
     "@asyncapi/generator-react-sdk": "^1.1.2",
     "@asyncapi/multi-parser": "^2.1.1",
     "@asyncapi/nunjucks-filters": "*",
-    "@asyncapi/generator-hooks": "*",
     "@asyncapi/parser": "^3.0.14",
     "@npmcli/arborist": "5.6.3",
     "@npmcli/config": "^8.0.2",

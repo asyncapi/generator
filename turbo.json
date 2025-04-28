@@ -14,19 +14,14 @@
       "cache": false 
     },
     "test:update": { "cache": false },
-    "test:unit": {"cache":false},
-    "test:integration": {"cache": false},
-    "test:cli": { 
-      "dependsOn": ["build"],
-      "cache": false 
-    },
+    "test:unit": { "cache": false },
+    "test:integration": { "cache": false },
     "test:cleanup": {},
     "docs": {},
     "docker:build": {},
     "lint": {},
-    "lint:fix":{"cache": false},
-    "lint:tpl:validator": {},
-    "test:integration:update":{"cache": false},
+    "lint:fix": { "cache": false },
+    "test:integration:update": { "cache": false },
     "generate:assets": {
       "dependsOn": [],
       "outputs": ["assets/**"]

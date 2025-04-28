@@ -1,4 +1,4 @@
-#This workflow runs the tests in the test projects to make sure the generator works as a library where it is a Node dependency along with the template.
+# This workflow runs the tests in the test projects to make sure the generator works as a library where it is a Node dependency along with the template.
 name: Test using test project
 
 on:
@@ -6,8 +6,28 @@ on:
     types: [opened, reopened, synchronize, ready_for_review]
 
 jobs:
+  changes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3 https://github.com/actions/checkout/releases/tag/v3
+      - uses: rohansingh/paths-filter@084ca29929a4e7e708a4aa8b790347facfd830c9 # fork with predicate-quantifier fix
+        #TODO check if we can switch back to https://github.com/dorny/paths-filter in a month or 2 (today 17.03.2025)
+        with:
+          predicate-quantifier: 'every'
+          filters: |
+            modified_files:
+              - 'package.json'
+              - 'package-lock.json'
+              - 'apps/**'
+              - 'packages/**'
+              - '.github/workflows/**'
+              - '!**/*.md'
+              - '!docs/**'
+              - '!.all-contributorsrc'
+
   test:
-    if: github.event.pull_request.draft == false
+    needs: changes
+    if: ${{ github.event.pull_request.draft == false }}
     name: Test generator as dependency with Node ${{ matrix.node }}
     runs-on: ubuntu-latest
     strategy:
@@ -15,7 +35,26 @@ jobs:
         node: ["18", "20"]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
-      - name: Run test
-        run: NODE_IMAGE_TAG=${{ matrix.node }} docker compose up --abort-on-container-exit --remove-orphans --force-recreate
+        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744
+      - name: Determine if tests should run
+        id: should_run
+        if: >
+          !(
+            (github.actor == 'asyncapi-bot' && (
+              startsWith(github.event.pull_request.title, 'ci: update of files from global .github repo') ||
+               startsWith(github.event.pull_request.title, 'chore(release):')
+            )) ||
+            (github.actor == 'asyncapi-bot-eve' && (
+              startsWith(github.event.pull_request.title, 'ci: update of files from global .github repo') ||
+               startsWith(github.event.pull_request.title, 'chore(release):')
+            )) ||
+            (github.actor == 'allcontributors[bot]' &&
+               startsWith(github.event.pull_request.title, 'docs: add')
+            )
+          )
+        run: echo "shouldrun=true" >> $GITHUB_OUTPUT
+        shell: bash
+      - if: steps.should_run.outputs.shouldrun == 'true'
+        name: Run test
+        run: NODE_VERSION=${{ matrix.node }} docker compose up --abort-on-container-exit --force-recreate
         working-directory: ./apps/generator/test/test-project

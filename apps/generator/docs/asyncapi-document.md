@@ -68,9 +68,10 @@ function createAsyncapiFile(generator) {
 
   const outputFileName = `asyncapi.${extension}`;
 
-  const asyncapiOutputLocation = path.resolve('./'', outputFileName);
+  const asyncapiOutputLocation = path.resolve('./', outputFileName);
 
   fs.writeFileSync(asyncapiOutputLocation, asyncapi);
+}
 ```
 
 ### Method 2: `asyncapi` and template

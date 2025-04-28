@@ -6,6 +6,7 @@ const nunjucksFilters = require('@asyncapi/nunjucks-filters');
 
 /**
  * Registers all template filters.
+ * @deprecated This method is deprecated. For more details, see the release notes: https://github.com/asyncapi/generator/releases/tag/%40asyncapi%2Fgenerator%402.6.0
  * @param {Object} nunjucks Nunjucks environment.
  * @param {Object} templateConfig Template configuration.
  * @param {String} templateDir Directory where template is located.
@@ -21,6 +22,7 @@ module.exports.registerFilters = async (nunjucks, templateConfig, templateDir, f
 
 /**
  * Registers the local template filters.
+ * @deprecated This method is deprecated. For more details, see the release notes: https://github.com/asyncapi/generator/releases/tag/%40asyncapi%2Fgenerator%402.6.0
  * @private
  * @param {Object} nunjucks Nunjucks environment.
  * @param {String} templateDir Directory where template is located.
@@ -68,6 +70,7 @@ function registerLocalFilters(nunjucks, templateDir, filtersDir) {
 
 /**
  * Registers the additionally configured filters.
+ * @deprecated This method is deprecated. For more details, see the release notes: https://github.com/asyncapi/generator/releases/tag/%40asyncapi%2Fgenerator%402.6.0
  * @private
  * @param {Object} nunjucks Nunjucks environment.
  * @param {String} templateDir Directory where template is located.
@@ -112,6 +115,7 @@ async function registerConfigFilters(nunjucks, templateDir, templateConfig) {
 
 /**
  * Add filter functions to Nunjucks environment. Only owned functions from the module are added.
+ * @deprecated This method is deprecated. For more details, see the release notes: https://github.com/asyncapi/generator/releases/tag/%40asyncapi%2Fgenerator%402.6.0
  * @private
  * @param {Object} nunjucks Nunjucks environment.
  * @param {Object} filters Module with functions.

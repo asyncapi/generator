@@ -29,7 +29,6 @@ To run all tests locally:
 
 - Unit tests: `npm run generator:test:unit`
 - Integration tests: `npm run generator:test:integration`
-- CLI tests: `npm run generator:test:cli`
 
 ### Adding tests
 
@@ -48,21 +47,14 @@ To run tests in an isolated Docker environment:
 2. Run the following command from the project root:
 
 ```bash
-docker run --rm -v ${PWD}:/app -w /app node:18 sh -c "
-cp -r /app /tmp/app &&
-cd /tmp/app &&
-npm install &&
-npm test
-"
+docker compose up
 ```
 
-This command above does the following:
-- Mounts the current directory to `/app` in the container
-- Copies the project to a temporary directory
-- Installs dependencies
-- Runs all tests
+You can also opt in to run the lint checks after the tests, by setting an environment variable `LINT` with any value before the command:
+   - Windows: `set LINT=true && docker compose up`
+   - Linux/macOS: `LINT=true docker compose up`
 
-Note: This approach ensures a clean environment for each test run by removing any existing `node_modules`.
+> This approach ensures a clean environment for each test run by cleanly installing dependencies and running tests in a Docker container.
 
 ### Manually testing with test templates
 
@@ -78,7 +70,7 @@ cd apps/generator
 3. Run the generator with the react-template:
 
 ```bash
-asyncapi generate fromTemplate  ./test/docs/dummy.yml ./test/test-templates/react-template -o ./test/output --force-write
+node ./cli  ./test/docs/dummy.yml ./test/test-templates/react-template -o ./test/output --force-write
 ```
 
 4. Check the output in the `./test/output` directory to verify the output that you desired.
@@ -89,13 +81,18 @@ To release a major/minor/patch:
 
 ### Conventional Commits:
 
+For a detailed explanation of conventional commits, refer to [this guide](CONTRIBUTING.md#conventional-commits)
 To maintain a clear git history of commits and easily identify what each commit changed and whether it triggered a release, we use conventional commits. The feat and fix prefixes are particularly important as they are needed to trigger changesets. Using these prefixes ensures that the changes are correctly categorized and the versioning system functions as expected.
 
 For Example:
 ```
 feat: add new feature
 ```
-    
+
+### Pull Request Title Guidelines:
+To ensure successful workflow execution, all PR titles must follow the Conventional Commits format and PR titles should start with a lowercase character. Incorrect PR titles can cause workflow failures, preventing PRs from being merged.
+For the PR titles you can refer to [this guide](CONTRIBUTING.md?plain=1#L60)
+
 #### Manual
 
 1.  Create a new release markdown file in the `.changeset` directory. The filename should indicate what the change is about.
@@ -180,7 +177,7 @@ feat: add new feature
 
 If you encounter any issues during development or testing, please check the following:
 
-1. Ensure you're using the correct Node.js version (18.12.0 or higher) and npm version (8.19.0 or higher).
+1. Ensure you're using the correct Node.js version (18.20.8 or higher) and npm version (10.8.2 or higher).
 2. Clear the `node_modules` directory and reinstall dependencies if you encounter unexpected behavior.
 3. For Docker-related issues, make sure Docker is running and you have sufficient permissions.
 

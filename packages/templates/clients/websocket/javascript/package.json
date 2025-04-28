@@ -1,0 +1,82 @@
+{
+  "name": "@asyncapi/template-js-websocket-client",
+  "version": "0.0.1",
+  "description": "This is a template generating JavaScript websocket client",
+  "scripts": {
+    "test": "npm run test:cleanup && jest  --coverage",
+    "test:update": "jest --updateSnapshot",
+    "test:cleanup": "rimraf \"test/temp\"",
+    "lint": "eslint --max-warnings 0 --config ../../../../../.eslintrc --ignore-path ../../../../../.eslintignore .",
+    "lint:fix": "eslint --fix --max-warnings 0 --config ../../../../../.eslintrc --ignore-path ../../../../../.eslintignore ."
+  },
+  "author": "Lukasz Gornicki <lpgornicki@gmail.com>",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@asyncapi/generator-react-sdk": "^1.1.2",
+    "@asyncapi/generator-helpers": "1.0.0"
+  },
+  "devDependencies": {
+    "@asyncapi/parser": "^3.0.14",
+    "@babel/cli": "^7.25.9",
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
+    "@babel/preset-react": "^7.25.9",
+    "jest-esm-transformer": "^1.0.0",
+    "@asyncapi/generator": "*",
+    "eslint": "^6.8.0",
+    "eslint-plugin-jest": "^23.8.2",
+    "eslint-plugin-react": "^7.34.1",
+    "eslint-plugin-sonarjs": "^0.5.0",
+    "rimraf": "^3.0.2"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "jsx"
+    ],
+    "transform": {
+      "^.+\\.jsx?$": "babel-jest"
+    },
+    "moduleNameMapper": {
+      "^nimma/legacy$": "<rootDir>/../../../../../node_modules/nimma/dist/legacy/cjs/index.js",
+      "^nimma/(.*)": "<rootDir>/../../../../../node_modules/nimma/dist/cjs/$1"
+    }
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env",
+      [
+        "@babel/preset-react",
+        {
+          "runtime": "automatic"
+        }
+      ]
+    ]
+  },
+  "generator": {
+    "renderer": "react",
+    "apiVersion": "v3",
+    "generator": ">=1.3.0 <3.0.0",
+    "parameters": {
+      "server": {
+        "description": "The name of the server described in AsyncAPI document",
+        "required": true
+      },
+      "clientFileName": {
+        "description": "The name of the generated client file",
+        "required": false,
+        "default": "client.js"
+      },
+      "appendClientSuffix": {
+        "description": "Add 'Client' suffix at the end of the class name. This option has no effect if 'customClientName' is specified.",
+        "required": false,
+        "default": false
+      },
+      "customClientName": {
+        "description": "The custom name for the generated client class",
+        "required": false
+      }
+    }
+  }
+}

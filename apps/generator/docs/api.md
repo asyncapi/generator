@@ -39,9 +39,9 @@ Reference API documentation for AsyncAPI Generator library.
         * [.executeAfterHook()](#Generator+executeAfterHook) ⇒ `Promise.<void>`
         * [.parseInput()](#Generator+parseInput)
         * [.configureTemplate()](#Generator+configureTemplate)
-        * ~~[.generateFromString(asyncapiString, [parseOptions])](#Generator+generateFromString) ⇒ `Promise`~~
-        * [.generateFromURL(asyncapiURL)](#Generator+generateFromURL) ⇒ `Promise`
-        * [.generateFromFile(asyncapiFile)](#Generator+generateFromFile) ⇒ `Promise`
+        * ~~[.generateFromString(asyncapiString, [parseOptions])](#Generator+generateFromString) ⇒ `Promise.<(TemplateRenderResult|undefined)>`~~
+        * [.generateFromURL(asyncapiURL)](#Generator+generateFromURL) ⇒ `Promise.<(TemplateRenderResult|undefined)>`
+        * [.generateFromFile(asyncapiFile)](#Generator+generateFromFile) ⇒ `Promise.<(TemplateRenderResult|undefined)>`
         * [.installTemplate([force])](#Generator+installTemplate)
     * _static_
         * [.getTemplateFile(templateName, filePath, [templatesDir])](#Generator.getTemplateFile) ⇒ `Promise`

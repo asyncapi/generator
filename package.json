@@ -14,7 +14,6 @@
     "generator:test:dev": "turbo run test:dev",
     "generator:test:unit": "turbo run test:unit  --filter=@asyncapi/generator",
     "generator:test:integration": "turbo run test:integration --filter=@asyncapi/generator",
-    "generator:test:cli": "turbo run test:cli --filter=@asyncapi/generator",
     "generator:test:cleanup": "turbo run test:cleanup --filter=@asyncapi/generator",
     "generator:docs": "turbo run docs --filter=@asyncapi/generator",
     "generator:docker:build": "turbo run docker:build --filter=@asyncapi/generator",
@@ -22,12 +21,16 @@
     "generator:lint:tpl:validator": "turbo run lint:tpl:validator --filter=@asyncapi/generator",
     "generator:update:snapshot": "turbo run test:integration:update --filter=@asyncapi/generator",
     "nunjucks-filters:test": "turbo run test --filter=@asyncapi/nunjucks-filters",
+    "nunjucks-filters:docs": "turbo run docs --filter=@asyncapi/nunjucks-filters",
+    "nunjucks-filters:lint": "turbo run lint --filter=@asyncapi/nunjucks-filters",
+    "nunjucks-filters:lint:fix": "turbo run lint:fix --filter=@asyncapi/nunjucks-filters",
     "components:test": "turbo run test --filter=@asyncapi/generator-components",
     "components:build": "turbo run build --filter=@asyncapi/generator-components",
     "components:lint": "turbo run lint --filter=@asyncapi/generator-components",
     "helpers:test": "turbo run test --filter=@asyncapi/generator-helpers",
     "helpers:lint": "turbo run lint --filter=@asyncapi/generator-helpers",
-    "templates:test": "turbo run test --filter=@asyncapi/template*"
+    "templates:test": "turbo run test --filter=@asyncapi/template*",
+    "hooks:test": "turbo run test --filter=@asyncapi/generator-hooks"
   },
   "devDependencies": {
     "markdown-toc": "^1.2.0",

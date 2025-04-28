@@ -183,7 +183,12 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/16447041?v=4",
       "profile": "https://github.com/lmgyuan",
       "contributions": [
-        "doc"
+        "doc",
+        "bug",
+        "code",
+        "ideas",
+        "review",
+        "test"
       ]
     },
     {
@@ -204,6 +209,29 @@
       "profile": "https://dhaiyra-majmudar.netlify.app/",
       "contributions": [
         "bug"
+      ]
+    },
+    {
+      "login": "Gmin2",
+      "name": "Mintu Gogoi",
+      "avatar_url": "https://avatars.githubusercontent.com/u/127925465?v=4",
+      "profile": "https://github.com/Gmin2",
+      "contributions": [
+        "bug",
+        "code",
+        "ideas",
+        "doc",
+        "review",
+        "test"
+      ]
+    },
+    {
+      "login": "AdityaP700",
+      "name": "AdityaPat_",
+      "avatar_url": "https://avatars.githubusercontent.com/u/126982848?v=4",
+      "profile": "https://linktr.ee/aditya_pat",
+      "contributions": [
+        "infra"
       ]
     }
   ],

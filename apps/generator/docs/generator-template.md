@@ -14,6 +14,29 @@ In this tutorial:
 - You'll create a React template that will use the MQTT broker to allow you to monitor your bedroom's temperature and notify you when the temperature drops or rises above 22 °C.
 - Lastly, create a reusable component for the output code's `sendTemperatureDrop` and `sendTemperatureRise` functions.
 
+## Prerequisites
+
+Before you begin, make sure you have the following set up:
+
+- **Basic Programming Knowledge** – Familiarity with JavaScript and Python.
+- **NPM & PIP** – Required for installing dependencies. Install NPM from the [official guide](https://nodejs.org/en/download) and PIP from the [official guide](https://pip.pypa.io/en/stable/installation).
+- **AsyncAPI CLI** – Used for code generation, install using [CLI installation guide](https://www.asyncapi.com/docs/tools/cli/installation).
+- **Docker** - Required for running MQTT CLI. Install it from the official [Docker](https://docs.docker.com/) website.
+- **Code Editor (VS Code recommended)** – A good code editor is essential for development and debugging.
+- **Knowledge of Template Development** – Review the [Template Development Guide](template-development) to understand the structure and minimum requirements for templates.
+
+> **Note:** In this tutorial, we are using `test.mosquitto.org` as the public broker. However, sometimes it may not be reachable. If you experience any difficulty connecting to it, you can run a broker on your localhost instead.  
+>  
+> If you choose to run the broker on localhost, then in the further steps, replace all occurrences of `test.mosquitto.org` with `localhost` and run the following Docker command:  
+>  
+> ```sh
+> docker run -d --name mosquitto -p 1883:1883 eclipse-mosquitto
+> ```
+>  
+> This starts an Eclipse Mosquitto broker locally on your machine, listening on port 1883.  
+>  
+> If you don’t want to use Docker, you can install Mosquitto manually. Follow the [official installation guide](https://mosquitto.org/download/) for your operating system.
+
 ## Background context
 
 There is a list of [community maintained templates](https://www.asyncapi.com/docs/tools/generator/template#generator-templates-list), but what if you do not find what you need? In that case, you'll create a user-defined template that generates custom output from the generator.
@@ -30,7 +53,7 @@ info:
 
 servers:
   dev:
-    url: test.mosquitto.org
+    url: test.mosquitto.org #in case you're using local mosquitto instance, change this value to localhost.
     protocol: mqtt
 
 channels:
@@ -55,13 +78,6 @@ components:
         temperatureId:
           type: string
 ```
-
-<Remember>
-
-- To generate code, use the [AsyncAPI CLI](https://www.asyncapi.com/tools/cli). If you don't have the CLI installed, follow [CLI installation guide](/docs/tools/generator/installation-guide#asyncapi-cli).
-- If you are new to AsyncAPI Generator, check out the following docs: [template development](/docs/tools/generator/template-development), which explains the minimum requirements for a template and possible features.
-
-</Remember>
 
 ## Overview of steps
 
@@ -122,7 +138,7 @@ Here's what is contained in the code snippet above:
   - **supportedProtocols** - A list that specifies which protocols are supported by your template.
 - **dependencies** - specifies which version of [`@asyncapi/generator-react-sdk`](https://github.com/asyncapi/generator-react-sdk) should be used.
 
-Navigate to the ****python-mqtt-client-template** directory. Run the command `npm install` on your terminal to install the dependencies specified in **package.json**.
+Navigate to the **python-mqtt-client-template** directory. Run the command `npm install` on your terminal to install the dependencies specified in **package.json**.
 
 ### index.js file
 
@@ -258,7 +274,7 @@ while True:
 
 ```
 
-Run the code above in your terminal using the command `python test.py`. You should see output similar to the snippet below logged on your terminal:
+Navigate to the **python-mqtt-client-template/test/project** directory. Run the command `python test.py` on your terminal. You should see output similar to the snippet below logged on your terminal:
 
 ``` cmd
 New temperature detected 64250266 sent to temperature/changed
@@ -298,18 +314,35 @@ class TemperatureServiceClient:
 
 ### 4. Write script to run the test code
 
-In **package.json** you can have the scripts property that you invoke by calling `npm run <your_script>`. Add these scripts to **package.json**:
+In **package.json** you can have the scripts property that you invoke by calling `npm run <your_script>`. After adding these scripts in **package.json**, it will look like the following code snippet:
 
 ``` json
-    "scripts": {
+    {
+      "name": "python-mqtt-client-template",
+      "version": "0.0.1",
+      "description": "A template that generates a Python MQTT client using MQTT.",
+      "scripts": {
         "test:clean": "rimraf test/project/client.py",
         "test:generate": "asyncapi generate fromTemplate test/fixtures/asyncapi.yml ./ --output test/project --force-write",
         "test:start": "python test/project/test.py",
         "test": "npm run test:clean && npm run test:generate && npm run test:start"
+      },
+      "generator": {
+        "renderer": "react",
+        "apiVersion": "v1",
+        "generator": ">=1.10.0 <2.0.0",
+        "supportedProtocols": ["mqtt"]
+      },
+      "dependencies": {
+        "@asyncapi/generator-react-sdk": "^0.2.25"
+      },
+      "devDependencies": {
+        "rimraf": "^5.0.0"
+      }
     }
 ```
 
-The 4 scripts above do the following:
+The 4 scripts added in **package.json** do the following:
 
 1. `test:clean`: This script uses the `rimraf` package to remove the old version of the file **test/project/client.py** every time you run your test.
 2. `test:generate`: This script uses the AsyncAPI CLI to generate a new version of **client.py**.
@@ -456,7 +489,7 @@ class TemperatureServiceClient:
 You'll then need to template to dynamically generate `sendTemperatureDrop` and `sendTemperatureRise` functions in the generated code based off the AsyncAPI document content. The goal is to write template code that returns functions for channels that the Temperature Service application is subscribed to. The template code to generate these functions will look like this:
 
 ```js
-<Text newLines={2}>
+<Text indent={2} newLines={2}>
   <TopicFunction channels={asyncapi.channels().filterByReceive()} />
 </Text>
 ```
@@ -469,16 +502,16 @@ It's recommended to put reusable components outside the template directory in a 
  * As input it requires a list of Channel models from the parsed AsyncAPI document
  */
 export function TopicFunction({ channels }) {
-  const topicsDetails = getTopics(channels)
-  let functions = ''
+  const topicsDetails = getTopics(channels);
+  let functions = '';
 
   topicsDetails.forEach((t) => {
     functions += `def send${t.name}(self, id):
         topic = "${t.topic}"
         self.client.publish(topic, id)\n`
-  })
+  });
 
-  return functions
+  return functions;
 }
 
 /*
@@ -489,19 +522,19 @@ export function TopicFunction({ channels }) {
  * As input it requires a list of Channel models from the parsed AsyncAPI document
  */
 function getTopics(channels) {
-  const channelsCanSendTo = channels
-  let topicsDetails = []
+  const channelsCanSendTo = channels;
+  let topicsDetails = [];
 
   channelsCanSendTo.forEach((ch) => {
-    const topic = {}
-    const operationId = ch.operations().filterByReceive()[0].id()
-    topic.name = operationId.charAt(0).toUpperCase() + operationId.slice(1)
-    topic.topic = ch.address()
+    const topic = {};
+    const operationId = ch.operations().filterByReceive()[0].id();
+    topic.name = operationId.charAt(0).toUpperCase() + operationId.slice(1);
+    topic.topic = ch.address();
 
-    topicsDetails.push(topic)
+    topicsDetails.push(topic);
   })
 
-  return topicsDetails
+  return topicsDetails;
 }
 ```
 
@@ -529,7 +562,7 @@ export default function ({ asyncapi, params }) {
             self.client.connect(mqttBroker)`}
       </Text>
 
-      <Text indent={2}>
+      <Text indent={2} newLines={2}>
         <TopicFunction channels={asyncapi.channels().filterByReceive()} />
       </Text>
     </File>

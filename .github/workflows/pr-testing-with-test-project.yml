@@ -35,16 +35,6 @@ jobs:
           echo "Modified files:"
           echo "${{ steps.filter.outputs.modified_files }}"  # Log the output of the modified files
 
-      - name: Check if there are modified files and set should_test
-        run: |
-          if [ -z "${{ steps.filter.outputs.modified_files }}" ]; then
-            echo "No files were modified that match the filter."
-            echo "should_test=false" >> $GITHUB_ENV
-          else
-            echo "Modified files found!"
-            echo "should_test=true" >> $GITHUB_ENV
-          fi
-
   test:
     needs: changes
     if: ${{ github.event.pull_request.draft == false }}

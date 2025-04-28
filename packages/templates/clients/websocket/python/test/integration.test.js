@@ -35,7 +35,7 @@ describe('testing if generated client match snapshot', () => {
     const testOutputFiles = await listFiles(testResultPathPostman);
 
     for (const testOutputFile of testOutputFiles) {
-      const content = await readFile(testOutputFile, 'utf8');
+      const content = await readFile(path.normalize(testOutputFile, 'utf8'));
       expect(content).toMatchSnapshot(testOutputFile);
     }
   });
@@ -54,7 +54,7 @@ describe('testing if generated client match snapshot', () => {
     const testOutputFiles = await listFiles(testResultPathHoppscotch);
 
     for (const testOutputFile of testOutputFiles) {
-      const content = await readFile(testOutputFile, 'utf8');
+      const content = await readFile(path.normalize(testOutputFile, 'utf8'));
       expect(content).toMatchSnapshot(testOutputFile);
     }
   });
@@ -74,7 +74,7 @@ describe('testing if generated client match snapshot', () => {
     const testOutputFiles = await listFiles(testResultPathCustomHoppscotch);
 
     for (const testOutputFile of testOutputFiles) {
-      const content = await readFile(testOutputFile, 'utf8');
+      const content = await readFile(path.normalize(testOutputFile, 'utf8'));
       expect(content).toMatchSnapshot(testOutputFile);
     }
   });
@@ -94,7 +94,7 @@ describe('testing if generated client match snapshot', () => {
     
     for (const testOutputFile of testOutputFiles) {
       console.log(testOutputFile);
-      const content = await readFile(testOutputFile, 'utf8');
+      const content = await readFile(path.normalize(testOutputFile, 'utf8'));
       expect(content).toMatchSnapshot(testOutputFile);
     }
   });

@@ -1,5 +1,5 @@
 import { getMessageExamples,  } from '@asyncapi/generator-helpers';
-import { getOperationMessages } from '@asyncapi/generator-helpers/src/operations';
+import { getOperationMessages } from '@asyncapi/generator-helpers';
 import { Text } from '@asyncapi/generator-react-sdk';
 
 export default function MessageExamples({operation}) {

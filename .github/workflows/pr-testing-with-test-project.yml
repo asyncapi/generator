@@ -9,7 +9,7 @@ jobs:
   changes:
     runs-on: ubuntu-latest
     outputs:
-      should_test: ${{ steps.filter.outputs.modified_files }} # might be able to access this variable ???, not sure about what it returns but check the logs, might do != '' or == 'true' or something like that
+      should_test: ${{ steps.filter.outputs.modified_files == 'true' }} # might be able to access this variable ???, not sure about what it returns but check the logs, might do != '' or == 'true' or something like that
     steps:
       - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3 https://github.com/actions/checkout/releases/tag/v3
       - name: Checks paths-filter
@@ -17,7 +17,7 @@ jobs:
         #TODO check if we can switch back to https://github.com/dorny/paths-filter in a month or 2 (today 17.03.2025)
         id: filter
         with:
-          predicate-quantifier: 'every'
+          predicate-quantifier: 'some'
           filters: |
             modified_files:
               - 'package.json'

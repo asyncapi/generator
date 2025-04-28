@@ -1,11 +1,10 @@
-from temp.snapshotTestResult.client_postman.client import PostmanEchoWebSocketClientClient
-
 import sys
 import os
+import time
 
 sys.path.append(os.path.join(os.path.dirname(__file__), 'test'))
 
-import time
+from temp.snapshotTestResult.client_postman.client import PostmanEchoWebSocketClientClient
 
 def custom_message_handler(message):
     print(f"\033[94mCustom processing of received message\033[0m: {message}")

@@ -4,27 +4,39 @@ info:
   version: 1.0.0
   externalDocs:
     description: Slack Websocket API
-    url: https://api.slack.com/apis/socket-mode
+    url: 'https://api.slack.com/apis/socket-mode'
   description: >
-    AsyncAPI document that represent the API of the application that is a client of the official Slack Websocket API
+    AsyncAPI document that represent the API of the application that is a client
+    of the official Slack Websocket API To start using the Slack Websocket API,
+    you need to create a Slack app and install it in your workspace. Make sure
+    that the app is approved by the admin of the workspace.
 
-    To start using the Slack Websocket API, you need to create a Slack app and install it in your workspace. Make sure that the app is approved by the admin of the workspace.
+    1. Create app in Slack: https://api.slack.com/apps. Do it by selecting
+    option to create from scratch. Provide a name and select the workspace where
+    the app will be used.
 
-    1. Create app in Slack: https://api.slack.com/apps. Do it by selecting option to create from scratch. Provide a name and select the workspace where the app will be used.
-    
-    1. Enable Socket Mode: Go to the "Socket Mode" section and enable the API. Follow all steps and save generated token for later. By default you are not yet subscribed to any events.
-    
-    1. Subscribe to events: Go to the "Event Subscriptions" section and enable the API. Subscribe to the bot events you want to receive. For example, you can subscribe to the `reaction_added` event. Remember to save changes.
-    
-    1. Install the app: Go to the "Install App" section and install the app in your workspace. After that make sure admin approved it for the workspace.
-    
-    1. Generate WebSocket URL: Make a REST call to the endpoint that will generate the WebSocket URL.  Use the `apps.connections.open` path from Slack's API. The response will contain a `url` field with the WebSocket URL. Use this URL to connect to the WebSocket API.
+    1. Enable Socket Mode: Go to the "Socket Mode" section and enable the API.
+    Follow all steps and save generated token for later. By default you are not
+    yet subscribed to any events.
+
+    1. Subscribe to events: Go to the "Event Subscriptions" section and enable
+    the API. Subscribe to the bot events you want to receive. For example, you
+    can subscribe to the `reaction_added` event. Remember to save changes.
+
+    1. Install the app: Go to the "Install App" section and install the app in
+    your workspace. After that make sure admin approved it for the workspace.
+
+    1. Generate WebSocket URL: Make a REST call to the endpoint that will
+    generate the WebSocket URL.  Use the `apps.connections.open` path from
+    Slack's API. The response will contain a `url` field with the WebSocket URL.
+    Use this URL to connect to the WebSocket API.
         ```
         curl --location --request POST 'https://slack.com/api/apps.connections.open' \
       --header 'Authorization: Bearer USE_TOKEN_GENERATED_DURING_SOCKET_MODE_ENABLEMENT' \
         ```
-    
-    1. Generated URL is the WebSocket URL you need to use to connect to the Slack WebSocket API. The URL will look like this:
+
+    1. Generated URL is the WebSocket URL you need to use to connect to the
+    Slack WebSocket API. The URL will look like this:
         ```
         wss://wss-primary.slack.com/link?app_id=YOUR_APP_ID&ticket=YOUR_TICKET
 servers:
@@ -48,6 +60,7 @@ channels:
     bindings:
       ws:
         query:
+          title: connectionQueryParams
           type: object
           description: >-
             Tokens are produced in the WebSocket URL generated from the
@@ -128,7 +141,7 @@ components:
             retry_attempt: 0
             retry_reason: ''
         - summary: Reaction added
-          payload: 
+          payload:
             envelope_id: 6d0b4caf-95d3-410c-b85d-ce592e622aea
             payload:
               token: el8A2aGi0yIJ2so0ENvWcAfX
@@ -212,8 +225,10 @@ components:
             retry_reason: timeout
     hello:
       summary: Message triggered when a successful WebSocket connection is established
-      description: | 
-        One time message that helps undestand connection was successful. Use the `approximate_connection_time` (in seconds) to estimate how long the connection will persist until Slack refreshes it.
+      description: >
+        One time message that helps undestand connection was successful. Use the
+        `approximate_connection_time` (in seconds) to estimate how long the
+        connection will persist until Slack refreshes it.
       payload:
         $ref: '#/components/schemas/hello'
       examples:
@@ -230,8 +245,13 @@ components:
       summary: Acknowledgement response sent to Server
       payload:
         $ref: '#/components/schemas/acknowledge'
+      examples:
+        - payload:
+            envelope_id: bb491378-bb91-48d2-b082-777a7e4e9663
     disconnect:
-      summary: Message you receive to warn you the connection with the API will be terminated
+      summary: >-
+        Message you receive to warn you the connection with the API will be
+        terminated
       payload:
         $ref: '#/components/schemas/disconnect'
       examples:
@@ -253,6 +273,7 @@ components:
           type: string
           description: A hello string confirming WebSocket connection
         connection_info:
+          title: connectionInfo
           type: object
           properties:
             app_id:
@@ -260,219 +281,146 @@ components:
         num_connections:
           type: integer
         debug_info:
-          type: object
-          properties:
-            host:
-              type: string
-            started:
-              type: string
-            build_number:
-              type: integer
-            approximate_connection_time:
-              type: integer
+          $ref: '#/components/schemas/debugInfo'
+
     event:
       type: object
       additionalProperties: false
       properties:
         envelope_id:
           type: string
-          description: 'Unique ID assigned to payload'
+          description: Unique ID assigned to payload
         payload:
+          title: eventPayload
           type: object
-          description: 'Payload of the event with some differences per event type inside event object'
+          description: >-
+            Payload of the event with some differences per event type inside
+            event object
           additionalProperties: false
           properties:
             token:
               type: string
-              description: 'The shared-private callback token that authenticates this callback to the application as having come from Slack. Match this against what you were given when the subscription was created. If it does not match, do not process the event and discard it. Example: JhjZd2rVax7ZwH7jRYyWjbDl'
+              description: >-
+                The shared-private callback token that authenticates this
+                callback to the application as having come from Slack. Match
+                this against what you were given when the subscription was
+                created. If it does not match, do not process the event and
+                discard it. Example: JhjZd2rVax7ZwH7jRYyWjbDl
             team_id:
               type: string
-              description: 'The unique identifier for the workspace/team where this event occurred.'
+              description: >-
+                The unique identifier for the workspace/team where this event
+                occurred.
               example: T34F2JRQU
             context_team_id:
               type: string
-              description: 'The unique identifier for the workspace/team where this event occurred.'
+              description: >-
+                The unique identifier for the workspace/team where this event
+                occurred.
               example: T461EG9ZZ
             context_enterprise_id:
-              type: ["string", "null"]
-              description: 'The unique identifier for the enterprise where this event occurred.'
+              type:
+                - string
+                - 'null'
+              description: >-
+                The unique identifier for the enterprise where this event
+                occurred.
               example: E1234567890
             api_app_id:
               type: string
-              description: "The unique identifier for the application this event is intended for. Your application's ID can be found in the URL of the your application console. If your Request URL manages multiple applications, use this field along with the token field to validate and route incoming requests."
+              description: >-
+                The unique identifier for the application this event is intended
+                for. Your application's ID can be found in the URL of the your
+                application console. If your Request URL manages multiple
+                applications, use this field along with the token field to
+                validate and route incoming requests.
               example: A4ZFV49KK
             event:
+              title: eventData
               type: object
               oneOf:
-                - title: channelJoin
-                  additionalProperties: false
-                  properties:
-                    type:
-                      const: message
-                    subtype:
-                      type: string
-                      const: channel_join
-                    inviter:
-                      type: string
-                      description: The user ID of the user that invited the new member to the channel
-                      example: U123456789
-                    text: 
-                      type: string
-                      description: The text of the message that was sent to the channel
-                      example: '<@U2147483828|cal> has joined the channel'
-                    user:
-                      type: string
-                      description: The user ID belonging to the user that incited this action. Not included in all events as not all events are controlled by users.
-                      example: UD698Q5LM
-                    ts:
-                      type: string
-                      description: Timestamp information of original message
-                    channel_type:
-                      type: string
-                      description: Type of channel where the event occurred
-                      example: channel
-                - title: reactionAdded
-                  additionalProperties: false
-                  properties:
-                    type:
-                      const: reaction_added
-                    reaction:
-                      type: string
-                      description: The only reaction that you need is a heart emoji
-                      example: beers
-                    user:
-                      type: string
-                      description: The user ID belonging to the user that incited this action. Not included in all events as not all events are controlled by users.
-                      example: UD698Q5LM
-                    item:
-                      type: object
-                      properties:
-                        channel:
-                          type: string
-                          description: Channel information of original message
-                        ts:
-                          type: string
-                          description: Timestamp information of original message
-                - title: messageDeleted
-                  additionalProperties: false
-                  properties:
-                    type:
-                      type: string
-                      const: message
-                    subtype:
-                      const: message_deleted
-                    deleted_ts:
-                      type: string
-                      description: Gives the timestamp of the message that was deleted.
-                    channel:
-                      type: string
-                      description: Information in which channel the message was deleted
-                    ts:
-                      type: string
-                      description: Timestamp information of original message
-                    channel_type:
-                      type: string
-                      description: Type of channel where the event occurred
-                      example: channel
-                    previous_message:
-                      type: object
-                      properties:
-                        user:
-                          type: string
-                          description: The user ID belonging to the user that incited this action. Not included in all events as not all events are controlled by users.
-                          example: UD698Q5LM
-                        ts:
-                          type: string
-                          description: Timestamp information of original message
-                          example: 1744904504.505559
-                        client_msg_id:
-                          type: string
-                          description: Client message ID of original message
-                          example: c6d9111e-f9df-4b52-ba17-7bbb04255243
-                        text:
-                          type: string
-                          description: Text of original message
-                          example: Hi can we connect on linkedin
-                        team:
-                          type: string
-                          description: Team ID of original message
-                          example: T34F2JRQU
-                        blocks:
-                          type: array
-                          items:
-                            type: object
-                            properties:
-                              type:
-                                type: string
-                                description: Type of block in the message
-                                example: rich_text
-                              block_id:
-                                type: string
-                                description: Block ID of the block in the message
-                                example: gCBVb
-                              elements:
-                                type: array
-                                items:
-                                  type: object
-                                  properties:
-                                    type:
-                                      type: string
-                                      description: Type of element in the block
-                                      example: text
-                                    text:
-                                      type: string
-                                      description: Text of the element in the block
-                                      example: Hi can we connect on linkedin
+                - $ref: '#/components/schemas/channelJoin'
+                - $ref: '#/components/schemas/reactionAdded'
+                - $ref: '#/components/schemas/messageDeleted'
               properties:
                 type:
                   type: string
-                  description: 'The specific name of the event described by its adjacent fields. This field is included with every inner event type.'
+                  description: >-
+                    The specific name of the event described by its adjacent
+                    fields. This field is included with every inner event type.
                   example: reaction_added
                 event_ts:
                   type: string
-                  description: The timestamp of the event. The combination of event_ts,team_id, user_id, or channel_id is intended to be unique. This field is included with every inner event type.
+                  description: >-
+                    The timestamp of the event. The combination of
+                    event_ts,team_id, user_id, or channel_id is intended to be
+                    unique. This field is included with every inner event type.
                   example: '1469470591.759709'
             type:
               type: string
-              description: 'This reflects the type of callback you are receiving. Typically, that is event_callback. You may encounter url_verification during the configuration process. The event field "inner event" will also contain a type field indicating which event type lurks within'
+              description: >-
+                This reflects the type of callback you are receiving. Typically,
+                that is event_callback. You may encounter url_verification
+                during the configuration process. The event field "inner event"
+                will also contain a type field indicating which event type lurks
+                within
             event_id:
               type: string
-              description: 'A unique identifier for this specific event, globally unique across all workspaces.'
+              description: >-
+                A unique identifier for this specific event, globally unique
+                across all workspaces.
             event_time:
               type: integer
-              description: 'The epoch timestamp in seconds indicating when this event was dispatched.'
+              description: >-
+                The epoch timestamp in seconds indicating when this event was
+                dispatched.
             event_context:
               type: string
-              description: 'An identifier for this specific event. This field can be used with the apps.event.authorizations.list method to obtain a full list of installations of your app for which this event is visible.'
+              description: >-
+                An identifier for this specific event. This field can be used
+                with the apps.event.authorizations.list method to obtain a full
+                list of installations of your app for which this event is
+                visible.
             authorizations:
               type: array
               items:
+                title: authorization
                 type: object
                 properties:
                   enterprise_id:
-                    type: ["string", "null"]
-                    description: 'The unique identifier for the enterprise where this event occurred.'
+                    type:
+                      - string
+                      - 'null'
+                    description: >-
+                      The unique identifier for the enterprise where this event
+                      occurred.
                   team_id:
                     type: string
-                    description: 'The unique identifier for the workspace/team where this event occurred.'
+                    description: >-
+                      The unique identifier for the workspace/team where this
+                      event occurred.
                   user_id:
                     type: string
-                    description: 'The unique identifier for the user who triggered this event.'
+                    description: >-
+                      The unique identifier for the user who triggered this
+                      event.
                   is_bot:
                     type: boolean
-                    description: 'Whether the user is a bot or not'
+                    description: Whether the user is a bot or not
                   is_enterprise_install:
                     type: boolean
-                    description: 'Whether the app is installed in an enterprise or not'
+                    description: Whether the app is installed in an enterprise or not
               is_ext_shared_channel:
                 type: boolean
-                description: 'Whether the event is from an external shared channel or not'
+                description: Whether the event is from an external shared channel or not
         type:
           type: string
         accepts_response_payload:
           type: boolean
         retry_attempt:
-          description: How many times the event was retried and no acknowledgement was received by the server.
+          description: >-
+            How many times the event was retried and no acknowledgement was
+            received by the server.
           type: integer
         retry_reason:
           type: string
@@ -482,10 +430,10 @@ components:
       properties:
         envelope_id:
           type: string
-          description: 'Unique ID of acknowledged payload'
+          description: Unique ID of acknowledged payload
         payload:
           type: object
-          description: 'Optional payload of event'
+          description: Optional payload of event
     disconnect:
       type: object
       properties:
@@ -493,13 +441,148 @@ components:
           type: string
           cont: disconnect
         reason:
+          title: disconnectReasonEnum
           type: string
           enum:
             - link_disabled
             - warning
             - refresh_requested
         debug_info:
+          $ref: '#/components/schemas/debugInfo'
+    channelJoin:
+      additionalProperties: false
+      properties:
+        type:
+          const: message
+        subtype:
+          type: string
+          const: channel_join
+        inviter:
+          type: string
+          description: The user ID of the user that invited the new member to the channel
+          example: U123456789
+        text:
+          type: string
+          description: The text of the message that was sent to the channel
+          example: <@U2147483828|cal> has joined the channel
+        user:
+          type: string
+          description: >-
+            The user ID belonging to the user that incited this action. Not
+            included in all events as not all events are controlled by users.
+          example: UD698Q5LM
+        ts:
+          type: string
+          description: Timestamp information of original message
+        channel_type:
+          type: string
+          description: Type of channel where the event occurred
+          example: channel
+    reactionAdded:
+      additionalProperties: false
+      properties:
+        type:
+          const: reaction_added
+        reaction:
+          type: string
+          description: The only reaction that you need is a heart emoji
+          example: beers
+        user:
+          type: string
+          description: >-
+            The user ID belonging to the user that incited this action. Not
+            included in all events as not all events are controlled by users.
+          example: UD698Q5LM
+        item:
           type: object
           properties:
-            host:
+            channel:
               type: string
+              description: Channel information of original message
+            ts:
+              type: string
+              description: Timestamp information of original message
+    messageDeleted:
+      additionalProperties: false
+      properties:
+        type:
+          type: string
+          const: message
+        subtype:
+          const: message_deleted
+        deleted_ts:
+          type: string
+          description: Gives the timestamp of the message that was deleted.
+        channel:
+          type: string
+          description: Information in which channel the message was deleted
+        ts:
+          type: string
+          description: Timestamp information of original message
+        channel_type:
+          type: string
+          description: Type of channel where the event occurred
+          example: channel
+        previous_message:
+          type: object
+          properties:
+            user:
+              type: string
+              description: >-
+                The user ID belonging to the user that incited this action. Not
+                included in all events as not all events are controlled by
+                users.
+              example: UD698Q5LM
+            ts:
+              type: string
+              description: Timestamp information of original message
+              example: 1744904504.505559
+            client_msg_id:
+              type: string
+              description: Client message ID of original message
+              example: c6d9111e-f9df-4b52-ba17-7bbb04255243
+            text:
+              type: string
+              description: Text of original message
+              example: Hi can we connect on linkedin
+            team:
+              type: string
+              description: Team ID of original message
+              example: T34F2JRQU
+            blocks:
+              type: array
+              items:
+                type: object
+                properties:
+                  type:
+                    type: string
+                    description: Type of block in the message
+                    example: rich_text
+                  block_id:
+                    type: string
+                    description: Block ID of the block in the message
+                    example: gCBVb
+                  elements:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: Type of element in the block
+                          example: text
+                        text:
+                          type: string
+                          description: Text of the element in the block
+                          example: Hi can we connect on linkedin
+    debugInfo:
+      type: object
+      properties:
+        host:
+          type: string
+        started:
+          type: string
+        build_number:
+          type: integer
+        approximate_connection_time:
+          type: integer

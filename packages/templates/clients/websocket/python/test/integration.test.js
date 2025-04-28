@@ -15,8 +15,7 @@ const testResultPathHoppscotch = path.join(testResultPath, 'client_hoppscotch');
 const testResultPathCustomHoppscotch = path.join(testResultPath, 'custom_client_hoppscotch');
 const testResultPathSlack = path.join(testResultPath, 'client_slack');
 const template = path.resolve(__dirname, '../');
-
-const testOutputFiles = ['client.py', 'requirements.txt'];
+const clientFileName = 'client.py';
 
 describe('testing if generated client match snapshot', () => {
   jest.setTimeout(100000);
@@ -26,12 +25,14 @@ describe('testing if generated client match snapshot', () => {
       forceWrite: true,
       templateParams: {
         server: 'echoServer',
-        clientFileName: testOutputFiles[0],
+        clientFileName,
         appendClientSuffix: true
       }
     });
 
     await generator.generateFromFile(asyncapi_v3_path_postman);
+
+    const testOutputFiles = await listFiles(testResultPathPostman);
 
     for (const testOutputFile of testOutputFiles) {
       const filePath = path.join(testResultPathPostman, testOutputFile);
@@ -46,11 +47,13 @@ describe('testing if generated client match snapshot', () => {
       forceWrite: true,
       templateParams: {
         server: 'echoServer',
-        clientFileName: testOutputFiles[0],
+        clientFileName
       }
     });
 
     await generator.generateFromFile(asyncapi_v3_path_hoppscotch);
+
+    const testOutputFiles = await listFiles(testResultPathHoppscotch);
 
     for (const testOutputFile of testOutputFiles) {
       const filePath = path.join(testResultPathHoppscotch, testOutputFile);
@@ -65,12 +68,14 @@ describe('testing if generated client match snapshot', () => {
       forceWrite: true,
       templateParams: {
         server: 'echoServer',
-        clientFileName: testOutputFiles[0],
+        clientFileName,
         customClientName: 'HoppscotchClient'
       }
     });
 
     await generator.generateFromFile(asyncapi_v3_path_hoppscotch);
+
+    const testOutputFiles = await listFiles(testResultPathCustomHoppscotch);
 
     for (const testOutputFile of testOutputFiles) {
       const filePath = path.join(testResultPathCustomHoppscotch, testOutputFile);
@@ -84,7 +89,7 @@ describe('testing if generated client match snapshot', () => {
       forceWrite: true,
       templateParams: {
         server: 'production',
-        clientFileName: 'client.py'
+        clientFileName
       }
     });
 

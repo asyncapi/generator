@@ -67,5 +67,5 @@ jobs:
         shell: bash
       - if: steps.should_run.outputs.shouldrun == 'true'
         name: Run test
-        run: NODE_IMAGE_TAG=${{ matrix.node }} docker compose up --abort-on-container-exit --force-recreate
+        run: NODE_VERSION=${{ matrix.node }} docker compose up --abort-on-container-exit --force-recreate
         working-directory: ./apps/generator/test/test-project

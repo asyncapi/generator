@@ -13,11 +13,11 @@ const testResultPathHoppscotch = path.join(testResultPath, 'client_hoppscotch');
 const testResultPathCustomHoppscotch = path.join(testResultPath, 'custom_client_hoppscotch');
 const template = path.resolve(__dirname, '../');
 
-const testOutputFiles = ['client.py', 'requirements.txt'];
+const testOutputFiles = ['client.dart', 'pubspec.yaml'];
 
 describe('testing if generated client match snapshot', () => {
   jest.setTimeout(100000);
-  
+
   it('generate simple client for postman echo', async () => {
     const generator = new Generator(template, testResultPathPostman, {
       forceWrite: true,
@@ -43,7 +43,7 @@ describe('testing if generated client match snapshot', () => {
       forceWrite: true,
       templateParams: {
         server: 'echoServer',
-        clientFileName: testOutputFiles[0],
+        clientFileName: testOutputFiles[0]
       }
     });
 

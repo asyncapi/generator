@@ -9,7 +9,7 @@ export function InitSignature({ queryParams, serverUrl }) {
     );
   }
   
-  const queryParamsArguments = queryParams && queryParams.map((param) => {
+  const queryParamsArguments = queryParams?.map((param) => {
     const paramName = param[0];
     const paramDefaultValue = param[1];
     const defaultValue = paramDefaultValue ? `"${paramDefaultValue}"` : 'None';

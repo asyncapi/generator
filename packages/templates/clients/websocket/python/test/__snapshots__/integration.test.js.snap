@@ -612,7 +612,7 @@ import websocket
 import os
 from urllib.parse import urlencode
 
-class SlackWebsocketAPIClientClient:
+class SlackWebsocketAPIClient:
 
   def __init__(self, url: str = \\"wss://wss-primary.slack.com/link\\", ticket: str = None, app_id: str = None):
 
@@ -785,10 +785,191 @@ requests==2.32.3
 "
 `;
 
+exports[`testing if generated client match snapshot generate simple client for hoppscotch echo with custom client name: client.py 1`] = `
+"# //////////////////////////////////////////////////////////////////////////
+#
+# Hoppscotch Echo WebSocket Client - 1.0.0
+# Protocol: wss
+# Host: echo-websocket.hoppscotch.io
+#
+# //////////////////////////////////////////////////////////////////////////
+
+import json
+import certifi
+import threading
+import websocket
+
+
+
+class HoppscotchClient:
+
+  def __init__(self, url: str = \\"wss://echo-websocket.hoppscotch.io\\"):
+
+        \\"\\"\\"
+        Constructor to initialize the WebSocket client.
+
+        Args:
+            url (str, optional): The WebSocket server URL. Use it if the server URL is 
+            different from the default one taken from the AsyncAPI document.
+        \\"\\"\\"
+        self.ws_app = None  # Instance of WebSocketApp
+        self.message_handlers = []      # Callables for incoming messages
+        self.error_handlers = []        # Callables for errors
+        self.outgoing_processors = []   # Callables to process outgoing messages
+        self._stop_event = threading.Event()
+      
+      
+
+        
+        self.url = url
+
+  def on_open(self, ws):
+      print(\\"Connected to Hoppscotch Echo WebSocket Client server\\")
+
+  def on_message(self, ws, message):
+      self.handle_message(message)
+
+  def on_error(self, ws, error):
+      print(\\"WebSocket Error:\\", error)
+      self.handle_error(error)
+
+  def on_close(self, ws, close_status_code, close_msg):
+      print(\\"Disconnected from Hoppscotch Echo WebSocket Client\\", close_status_code, close_msg)
+
+  def connect(self):
+      \\"\\"\\"Establish the connection and start the run_forever loop in a background thread.\\"\\"\\"
+      ssl_opts = {\\"ca_certs\\": certifi.where()}
+      self.ws_app = websocket.WebSocketApp(
+          self.url,
+          on_open=self.on_open,
+          on_message=self.on_message,
+          on_error=self.on_error,
+          on_close=self.on_close
+      )
+      # Run the WebSocketApp's run_forever in a separate thread with multithreading enabled.
+      def run():
+
+          retry = 0
+          max_retries = 5
+        
+          while not self._stop_event.is_set() and retry < max_retries:
+              try:
+                  retry += 1
+                  print(\\"Starting WebSocket thread...\\")
+                  self.ws_app.run_forever(sslopt=ssl_opts)
+              except Exception as e:
+                  print(f\\"Exception in WebSocket thread: {e}\\")  # Print full error details
+
+      thread = threading.Thread(target=run, daemon=True)
+      thread.start()
+
+  def register_message_handler(self, handler):
+      \\"\\"\\"Register a callable to process incoming messages.\\"\\"\\"
+      if callable(handler):
+          self.message_handlers.append(handler)
+      else:
+          print(\\"Message handler must be callable\\")
+
+  def register_error_handler(self, handler):
+      \\"\\"\\"Register a callable to process errors.\\"\\"\\"
+      if callable(handler):
+          self.error_handlers.append(handler)
+      else:
+          print(\\"Error handler must be callable\\")
+
+  def register_outgoing_processor(self, processor):
+      \\"\\"\\"
+      Register a callable that processes outgoing messages automatically.
+      These processors run in sequence before each message is sent.
+      \\"\\"\\"
+      if callable(processor):
+          self.outgoing_processors.append(processor)
+      else:
+          print(\\"Outgoing processor must be callable\\")
+
+  def handle_message(self, message):
+      \\"\\"\\"Pass the incoming message to all registered message handlers. \\"\\"\\"
+      if len(self.message_handlers) == 0:
+        print(\\"\\\\033[94mReceived raw message:\\\\033[0m\\", message)
+      else:
+        for handler in self.message_handlers:
+          handler(message)
+
+  def handle_error(self, error):
+      \\"\\"\\"Pass the error to all registered error handlers. Generic log message is printed if no handlers are registered.\\"\\"\\"
+      if len(self.error_handlers) == 0:
+        print(\\"\\\\033[91mError occurred:\\\\033[0m\\", error)
+      else:
+        # Call custom error handlers
+        for handler in self.error_handlers:
+          handler(error)
+
+  async def send_message(self, message):
+      \\"\\"\\"
+      Send a message using the WebSocket connection attached to this instance.
+
+      Args:
+          message (dict or str): The message to send. Will be serialized to JSON if it's a dictionary.
+
+      Raises:
+          Exception: If sending fails or the socket is not connected.
+      \\"\\"\\"
+      await self._send(message, self.ws_app)
+
+  @staticmethod
+  async def send_message_static(message, socket):
+      \\"\\"\\"
+      Send a message using a provided WebSocket connection, without needing an instance.
+
+      Args:
+          message (dict or str): The message to send.
+          socket (websockets.WebSocketCommonProtocol): The WebSocket to send through.
+
+      Raises:
+          Exception: If sending fails or the socket is not connected.
+      \\"\\"\\"
+      await HoppscotchEchoWebSocketClient._send(message, socket)
+
+  @staticmethod
+  async def _send(message, socket):
+      \\"\\"\\"
+      Internal helper to handle the actual sending logic.
+
+      Args:
+          message (dict or str): The message to send.
+          socket (websockets.WebSocketCommonProtocol): The WebSocket to send through.
+
+      Notes:
+          If message is a dictionary, it will be automatically converted to JSON.
+      \\"\\"\\"
+      try:
+          if isinstance(message, dict):
+              message = json.dumps(message)
+          await socket.send(message)
+      except Exception as e:
+          print(\\"Error sending:\\", e)
+
+  def close(self):
+      \\"\\"\\"Cleanly close the WebSocket connection.\\"\\"\\"
+      self._stop_event.set()
+      if self.ws_app:
+          self.ws_app.close()
+          print(\\"WebSocket connection closed.\\")
+
+"
+`;
+
+exports[`testing if generated client match snapshot generate simple client for hoppscotch echo with custom client name: requirements.txt 1`] = `
+"websocket-client==1.8.0
+certifi==2025.1.31
+requests==2.32.3
+"
+`;
+
 exports[`testing if generated client match snapshot generate simple client for hoppscotch echo: client.py 1`] = `
 "# //////////////////////////////////////////////////////////////////////////
 #
-# Hoppscotch Echo WebSocket - 1.0.0
+# Hoppscotch Echo WebSocket Client - 1.0.0
 # Protocol: wss
 # Host: echo-websocket.hoppscotch.io
 #
@@ -824,7 +1005,7 @@ class HoppscotchEchoWebSocketClient:
         self.url = url
 
   def on_open(self, ws):
-      print(\\"Connected to Hoppscotch Echo WebSocket server\\")
+      print(\\"Connected to Hoppscotch Echo WebSocket Client server\\")
 
   def on_message(self, ws, message):
       self.handle_message(message)
@@ -834,7 +1015,7 @@ class HoppscotchEchoWebSocketClient:
       self.handle_error(error)
 
   def on_close(self, ws, close_status_code, close_msg):
-      print(\\"Disconnected from Hoppscotch Echo WebSocket\\", close_status_code, close_msg)
+      print(\\"Disconnected from Hoppscotch Echo WebSocket Client\\", close_status_code, close_msg)
 
   def connect(self):
       \\"\\"\\"Establish the connection and start the run_forever loop in a background thread.\\"\\"\\"

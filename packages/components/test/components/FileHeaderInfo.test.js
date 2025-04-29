@@ -19,7 +19,7 @@ describe('Testing of FileHeaderInfo function', () => {
       <FileHeaderInfo 
         info={parsedAsyncAPIDocument.info()} 
         server={parsedAsyncAPIDocument.servers().get('withPathname')} 
-        language="js" 
+        language="javascript" 
       />
     );
     const actual = result.trim();
@@ -31,7 +31,30 @@ describe('Testing of FileHeaderInfo function', () => {
       <FileHeaderInfo 
         info={parsedAsyncAPIDocument.info()} 
         server={parsedAsyncAPIDocument.servers().get('withoutPathName')} 
-          language="js"
+          language="javascript"
+      />
+    );
+    const actual = result.trim();
+    expect(actual).toMatchSnapshot();
+  });
+  test('render websockets file header info with pathname correctly (Python)', () => {
+    const result = render(
+      <FileHeaderInfo 
+        info={parsedAsyncAPIDocument.info()} 
+        server={parsedAsyncAPIDocument.servers().get('withPathname')} 
+        language="python" 
+      />
+    );
+    const actual = result.trim();
+    expect(actual).toMatchSnapshot();
+  });
+
+  test('render websockets file header info without pathname correctly (Python)', () => {
+    const result = render(
+      <FileHeaderInfo 
+        info={parsedAsyncAPIDocument.info()} 
+        server={parsedAsyncAPIDocument.servers().get('withoutPathName')} 
+        language="python"
       />
     );
     const actual = result.trim();

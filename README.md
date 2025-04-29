@@ -121,6 +121,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     </tr>
     <tr>
       <td align="center" valign="top" width="33.33%"><a href="https://linktr.ee/aditya_pat"><img src="https://avatars.githubusercontent.com/u/126982848?v=4?s=100" width="100px;" alt="AdityaPat_"/><br /><sub><b>AdityaPat_</b></sub></a><br /><a href="#infra-AdityaP700" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
+      <td align="center" valign="top" width="33.33%"><a href="https://achaljhawar.github.io/"><img src="https://avatars.githubusercontent.com/u/35405812?v=4?s=100" width="100px;" alt="Achal Jhawar"/><br /><sub><b>Achal Jhawar</b></sub></a><br /><a href="https://github.com/asyncapi/generator/commits?author=achaljhawar" title="Tests">⚠️</a></td>
     </tr>
   </tbody>
 </table>

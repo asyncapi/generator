@@ -20,20 +20,20 @@ export function FileHeaderInfo({ info, server, language }) {
       <Text>{commentChar}</Text>
 
       <Text>
-        {commentChar} {info.title()} - {info.version()}
+      {commentChar} {info.title?.() || 'Untitled'} - {info.version?.() || 'No version'}
       </Text>
 
       <Text>
-        {commentChar} Protocol: {server.protocol()}
+      {commentChar} Protocol: {server.protocol?.() || 'Unknown'}
       </Text>
 
       <Text>
-        {commentChar} Host: {server.host()}
+      {commentChar} Host: {server.host?.() || 'Unknown'}
       </Text>
 
-      {server.hasPathname() && (
+      +  {server.hasPathname?.() && (
         <Text>
-          {commentChar} Path: {server.pathname()}
+           {commentChar} Path: {server.pathname?.() || ''}
         </Text>
       )}
 

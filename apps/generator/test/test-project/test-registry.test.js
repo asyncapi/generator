@@ -8,8 +8,14 @@ const Generator = require('@asyncapi/generator');
 const dummySpecPath = path.resolve(__dirname, '../docs/dummy.yml');
 const tempOutputResults = path.resolve(__dirname, 'output');
 
-console.log = jest.fn();
+// Save the original console.log
+const originalConsoleLog = console.log;
 
+// Replace console.log with a custom mock function
+console.log = jest.fn((...args) => {
+  // Call the original function to actually log to the console
+  originalConsoleLog(...args);
+});
 describe('Integration testing generateFromFile() to make sure the template can be download from the private repository from argument', () => {
   jest.setTimeout(1000000);
 
@@ -38,7 +44,6 @@ describe('Integration testing generateFromFile() to make sure the template can b
 
 describe('Integration testing generateFromFile() to make sure the template can be download from the private repository from npm config', () => {
   jest.setTimeout(1000000);
-
   it('generated using private registory from npm config', async () => {
     const generator = new Generator('react-template', tempOutputResults,
       {

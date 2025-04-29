@@ -23,7 +23,7 @@ console.log = jest.fn((...args) => {
   originalConsoleLog(...args);
 });
 describe('Testing if markdown was generated with proper version of the template', () => {
-  jest.setTimeout(5000000);
+  jest.setTimeout(1000000);
   it('Test A - generated markdown should not contain new content in modified template', async () => {
     //we setup generator using template name, not path, without explicitly running installation
     //generator picks up template that is already in node_modules as it was installed before as node dependency

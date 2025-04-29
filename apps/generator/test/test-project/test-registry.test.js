@@ -43,7 +43,7 @@ describe('Integration testing generateFromFile() to make sure the template can b
 });
 
 describe('Integration testing generateFromFile() to make sure the template can be download from the private repository from npm config', () => {
-  jest.setTimeout(5000000);
+  jest.setTimeout(1000000);
   it('generated using private registory from npm config', async () => {
     const generator = new Generator('react-template', tempOutputResults,
       {

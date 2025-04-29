@@ -1,6 +1,6 @@
 import { File } from '@asyncapi/generator-react-sdk';
 import { getClientName, getServerUrl, getServer } from '@asyncapi/generator-helpers';
-import { FileHeaderInfo } from '../components/FileHeaderInfo';
+import { FileHeaderInfo } from '@asyncapi/generator-components';
 import { Requires } from '../components/Requires';
 import { ClientClass } from '../components/ClientClass';
 
@@ -15,6 +15,7 @@ export default function ({ asyncapi, params }) {
       <FileHeaderInfo
         info={info}
         server={server}
+        language="javascript"
       />
       <Requires />
       <ClientClass clientName={clientName} serverUrl={serverUrl} title={title} />

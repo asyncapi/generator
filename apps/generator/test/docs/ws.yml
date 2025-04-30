@@ -1,36 +1,72 @@
-asyncapi: 2.0.0
+asyncapi: 3.0.0
 info:
-  title: WebSockets echo server
+  title: Comments Service
   version: 1.0.0
-
+  description: This service is in charge of processing all the events related to comments.
 servers:
-  localhost:
-    url: localhost
-    protocol: ws
-
+  dev:
+    host: test.mosquitto.org
+    protocol: mqtt
 channels:
-  /echo:
-    bindings:
-      ws:
-        query:
-          type: object
-          properties:
-            times:
-              type: integer
-              description: How many times the message should be echoed.
-              minimum: 1
-        bindingVersion: 0.1.0
-    subscribe:
-      operationId: onEcho
-      message:
-        $ref: '#/components/messages/echo'
-    publish:
-      operationId: sendEcho
-      message:
-        $ref: '#/components/messages/echo'
-
+  sendCommentLiked:
+    address: comment/liked
+    messages:
+      commentLiked:
+        description: Message that is being sent when a comment has been liked by someone.
+        payload:
+          $ref: '#/components/schemas/commentReaction'
+    description: Updates the likes count in the database when new like is noticed.
+  sendCommentUnliked:
+    address: comment/unliked
+    messages:
+      commentUnliked:
+        description: Message that is being sent when a comment has been unliked by someone.
+        payload:
+          $ref: '#/components/schemas/commentReaction'
+    description: Updates the likes count in the database when comment is unliked.
+  receiveCommentViews:
+    address: comment/views
+    messages:
+      commentViews:
+        description: >-
+          Message that is being recived with the total number of views in a
+          comment.
+        payload:
+          $ref: '#/components/schemas/commentCount'
+    description: Gets the total number of comment views.
+operations:
+  sendCommentLiked:
+    action: send
+    summary: Message sent to the broker when a comment is liked
+    channel:
+      $ref: '#/channels/sendCommentLiked'
+  sendCommentUnliked:
+    action: send
+    summary: Message sent to the broker when a comment is unliked
+    channel:
+      $ref: '#/channels/sendCommentUnliked'
+  receiveCommentViews:
+    action: receive
+    summary: Message received when a comment is viewed
+    channel:
+      $ref: '#/channels/receiveCommentViews'
 components:
-  messages:
-    echo:
-      payload:
-        type: string
+  schemas:
+    commentCount:
+      type: object
+      additionalProperties: false
+      properties:
+       commentId:
+        $ref: '#/components/schemas/commentId'
+      count:
+        $ref: '#/components/schemas/count'
+    commentReaction:
+      type: object
+      additionalProperties: false
+      properties:
+        commentId:
+          $ref: '#/components/schemas/commentId'
+    count:
+      type: integer
+    commentId:
+      type: string

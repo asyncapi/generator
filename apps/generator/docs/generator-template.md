@@ -42,42 +42,92 @@ Before you begin, make sure you have the following set up:
 There is a list of [community maintained templates](https://www.asyncapi.com/docs/tools/generator/template#generator-templates-list), but what if you do not find what you need? In that case, you'll create a user-defined template that generates custom output from the generator.
 Before you create the template, you'll need to have an [AsyncAPI document](https://www.asyncapi.com/docs/tools/generator/asyncapi-document) that defines the properties you want to use in your template to test against. In this tutorial, you'll use the following template saved in the **test/fixtures/asyncapi.yml** file in your template project directory.
 
-``` yml
-
-asyncapi: 2.6.0
-
+```yaml
+asyncapi: 3.0.0
 info:
-  title: Temperature Service
+  title: Comments Service
   version: 1.0.0
-  description: This service is in charge of processing all the events related to temperature.
+  description: This service is in charge of processing all the events related to comments.
 
 servers:
   dev:
-    url: test.mosquitto.org #in case you're using local mosquitto instance, change this value to localhost.
+    host: test.mosquitto.org
     protocol: mqtt
 
 channels:
-  temperature/changed:
-    description: Updates the bedroom temperature in the database when the temperatures drops or goes up.
-    publish:
-      operationId: temperatureChange
-      message:
-        description: Message that is being sent when the temperature in the bedroom changes.
+  sendCommentLiked:
+    address: comment/liked
+    messages:
+      commentLiked:
+        description: Message that is being sent when a comment has been liked by someone.
         payload:
-          type: object
-          additionalProperties: false
-          properties:
-            temperatureId:
-              type: string
+          $ref: '#/components/schemas/commentReaction'
+    description: Updates the likes count in the database when new like is noticed.
+
+  sendCommentUnliked:
+    address: comment/unliked
+    messages:
+      commentUnliked:
+        description: Message that is being sent when a comment has been unliked by someone.
+        payload:
+          $ref: '#/components/schemas/commentReaction'
+    description: Updates the likes count in the database when comment is unliked.
+
+  receiveCommentViews:
+    address: comment/views
+    messages:
+      commentViews:
+        description: >
+          Message that is being recived with the total number of views in a
+          comment.
+        payload:
+          $ref: '#/components/schemas/commentCount'
+    description: Gets the total number of comment views.
+
+operations:
+  sendCommentLiked:
+    action: send
+    summary: Message sent to the broker when a comment is liked
+    channel:
+      $ref: '#/channels/sendCommentLiked'
+
+  sendCommentUnliked:
+    action: send
+    summary: Message sent to the broker when a comment is unliked
+    channel:
+      $ref: '#/channels/sendCommentUnliked'
+
+  receiveCommentViews:
+    action: receive
+    summary: Message received when a comment is viewed
+    channel:
+      $ref: '#/channels/receiveCommentViews'
+
 components:
   schemas:
-    temperatureId:
+    commentCount:
       type: object
       additionalProperties: false
       properties:
-        temperatureId:
-          type: string
+        commentId:
+          $ref: '#/components/schemas/commentId'
+        count:
+          $ref: '#/components/schemas/count'
+
+    commentReaction:
+      type: object
+      additionalProperties: false
+      properties:
+        commentId:
+          $ref: '#/components/schemas/commentId'
+
+    count:
+      type: integer
+
+    commentId:
+      type: string
 ```
+> ⚠️ This document now uses AsyncAPI v3.0.0. Key differences include the use of top-level `operations`, and `channels` now require an `address` field instead of defining operations directly under them. Refer to the [AsyncAPI v3.0.0 spec](https://www.asyncapi.com/docs/reference/specification/v3.0.0) for more.
 
 ## Overview of steps
 

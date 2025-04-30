@@ -1,5 +1,0 @@
-apps/generator/output/*
-**/node_modules/
-**/temp/*
-**/__transpiled/*
-packages/components/lib/*

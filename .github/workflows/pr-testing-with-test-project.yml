@@ -9,7 +9,7 @@ jobs:
   changes:
     runs-on: ubuntu-latest
     outputs:
-      should_test: ${{ steps.filter.outputs.modified_files }} # might be able to access this variable ???, not sure about what it returns but check the logs, might do != '' or == 'true' or something like that
+      should_test: ${{ steps.filter.outputs.modified_files }}
     steps:
       - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3 https://github.com/actions/checkout/releases/tag/v3
       - name: Checks paths-filter
@@ -28,13 +28,6 @@ jobs:
               - '!**/*.md'
               - '!docs/**'
               - '!.all-contributorsrc'
-
-      # for tests, will remove later
-      - name: Log the modified files output
-        run: |
-          echo "Modified files:"
-          echo "${{ steps.filter.outputs.modified_files }}"  # Log the output of the modified files
-
   test:
     needs: changes
     if: ${{ github.event.pull_request.draft == false }}
@@ -46,19 +39,13 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744
-      # for logging if value passed through jobs
-      - name: Log should_test value and condition result
+      - name: Log should_test value across jobs
         run: |
           echo "should_test value: ${{ needs.changes.outputs.should_test }}"
-          if [[ "${{ needs.changes.outputs.should_test }}" == "true" ]]; then
-            echo "Condition result: true"
-          else
-            echo "Condition result: false"
-          fi
-        shell: bash
       - name: Determine if tests should run
         id: should_run
         if: >
+          needs.changes.outputs.should_test == 'true' &&
           !github.event.pull_request.draft && !(
             (github.actor == 'asyncapi-bot' && (
               startsWith(github.event.pull_request.title, 'ci: update of files from global .github repo') ||

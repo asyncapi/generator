@@ -10,7 +10,7 @@ const Arborist = require('@npmcli/arborist');
 const Config = require('@npmcli/config');
 const requireg = require('requireg');
 const npmPath = requireg.resolve('npm').replace('index.js','');
-
+const Ajv = require('ajv');
 const { isAsyncAPIDocument } = require('@asyncapi/parser/cjs/document');
 
 const { configureReact, renderReact, saveRenderedReactContent } = require('./renderer/react');
@@ -620,7 +620,7 @@ class Generator {
         path: packagePath,
       };
     } catch (err) {
-      throw new Error(`Installation failed: ${ err.message }`);
+      throw new Error('Installation failed', err);
     }
   }
 
@@ -865,37 +865,41 @@ class Generator {
    * @return {Promise}
    */
   async generateFile(asyncapiDocument, fileName, baseDir) {
+
     const sourceFile = path.resolve(baseDir, fileName);
     const relativeSourceFile = path.relative(this.templateContentDir, sourceFile);
+    
     const targetFile = path.resolve(this.targetDir, this.maybeRenameSourceFile(relativeSourceFile));
     const relativeTargetFile = path.relative(this.targetDir, targetFile);
-
+   
     if (shouldIgnoreFile(relativeSourceFile)) return;
-
     const shouldOverwriteFile = await this.shouldOverwriteFile(relativeTargetFile);
     if (!shouldOverwriteFile) return;
 
-    if (this.templateConfig.conditionalFiles?.[relativeSourceFile]) {
-      const server = this.templateParams.server && asyncapiDocument.servers().get(this.templateParams.server);
-      const source = jmespath.search({
-        ...asyncapiDocument.json(),
-        ...{
-          server: server ? server.json() : undefined,
-        },
-      }, this.templateConfig.conditionalFiles[relativeSourceFile].subject);
+    if (this.templateConfig.conditionalGeneration?.[relativeSourceFile]) {
+      const parameter = this.templateConfig.conditionalGeneration[relativeSourceFile].subject;
+      const value =  await this.getParameterValue(asyncapiDocument, parameter)
+  
+      if (value !== undefined) {
 
-      if (!source) return log.debug(logMessage.relativeSourceFileNotGenerated(relativeSourceFile, this.templateConfig.conditionalFiles[relativeSourceFile].subject));
+        const schema = this.templateConfig.conditionalGeneration[relativeSourceFile].validation;
+        const ajv = new Ajv();
+        const validate = ajv.compile(schema);
+        const isValid = validate(value); 
 
-      if (source) {
-        const validate = this.templateConfig.conditionalFiles[relativeSourceFile].validate;
-        const valid = validate(source);
-        if (!valid) return log.debug(logMessage.conditionalFilesMatched(relativeSourceFile));
+        if (!isValid) return log.debug(logMessage.conditionalFilesMatched(relativeSourceFile));
       }
+
+    if (this.isNonRenderableFile(relativeSourceFile)) {
+      return await copyFile(sourceFile, targetFile);
     }
+    
+    await this.renderAndWriteToFile(asyncapiDocument, sourceFile, targetFile);
 
     if (this.isNonRenderableFile(relativeSourceFile)) return await copyFile(sourceFile, targetFile);
     await this.renderAndWriteToFile(asyncapiDocument, sourceFile, targetFile);
   }
+}
 
   /**
    * It may rename the source file name in cases where special names are not supported, like .gitignore or .npmignore.
@@ -1085,3 +1089,5 @@ Generator.DEFAULT_TEMPLATES_DIR = DEFAULT_TEMPLATES_DIR;
 Generator.TRANSPILED_TEMPLATE_LOCATION = TRANSPILED_TEMPLATE_LOCATION;
 
 module.exports = Generator;
+
+

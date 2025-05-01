@@ -855,6 +855,34 @@ class Generator {
     }
   }
 
+   /**
+   * Check whether the parameter is present in the asyncapi document or not.
+   *
+   * @private
+   * @param {AsyncAPIDocument} asyncapiDocument AsyncAPI document which is passed as input.
+   * @param {String} parameter parameter that is passed in config.
+   */
+
+  async getParameterValue(asyncapiDocument, parameter) {
+    // 1. Check in info
+    const info = asyncapiDocument.info();
+    if (typeof info[parameter] === 'function') {
+      const value = info[parameter]();
+      if (value !== undefined) return value;
+    }
+    // 2. Check in servers
+    const servers = asyncapiDocument.servers();
+    for (const server of servers) {
+      if (typeof server[parameter] === 'function') {
+        const value = server[parameter]();
+        if (value !== undefined) return value;
+      }
+    }
+
+    return  this.templateParams[""+parameter]
+
+  }
+
   /**
    * Generates a file.
    *
@@ -889,6 +917,7 @@ class Generator {
 
         if (!isValid) return log.debug(logMessage.conditionalFilesMatched(relativeSourceFile));
       }
+    }
 
     if (this.isNonRenderableFile(relativeSourceFile)) {
       return await copyFile(sourceFile, targetFile);
@@ -899,7 +928,6 @@ class Generator {
     if (this.isNonRenderableFile(relativeSourceFile)) return await copyFile(sourceFile, targetFile);
     await this.renderAndWriteToFile(asyncapiDocument, sourceFile, targetFile);
   }
-}
 
   /**
    * It may rename the source file name in cases where special names are not supported, like .gitignore or .npmignore.

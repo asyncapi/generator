@@ -24,9 +24,9 @@ const supportedParserAPIMajorVersions = [
  * @return {Boolean}
  */
 module.exports.validateTemplateConfig = (templateConfig, templateParams, asyncapiDocument) => {
-  const { parameters, supportedProtocols, conditionalFiles, generator, apiVersion } = templateConfig;
+  const { parameters, supportedProtocols, conditionalGeneration, generator, apiVersion } = templateConfig;
 
-  validateConditionalFiles(conditionalFiles);
+  validateconditionalGeneration(conditionalGeneration);
   isTemplateCompatible(generator, apiVersion);
   isRequiredParamProvided(parameters, templateParams);
   isProvidedTemplateRendererSupported(templateConfig);
@@ -151,17 +151,17 @@ function isServerProvidedInDocument(server, paramsServerName) {
 /**
  * Checks if conditional files are specified properly in the template
  * @private
- * @param {Object} conditionalFiles conditions specified in the template config
+ * @param {Object} conditionalGeneration conditions specified in the template config
  */
-function validateConditionalFiles(conditionalFiles) {
-  if (typeof conditionalFiles === 'object') {
-    const fileNames = Object.keys(conditionalFiles);
+function validateconditionalGeneration(conditionalGeneration) {
+  if (typeof conditionalGeneration === 'object') {
+    const fileNames = Object.keys(conditionalGeneration);
 
     fileNames.forEach(fileName => {
-      const def = conditionalFiles[fileName];
-      if (typeof def.subject !== 'string') throw new Error(`Invalid conditional file subject for ${fileName}: ${def.subject}.`);
+      const def = conditionalGeneration[fileName];
+      if (typeof def.parameter !== 'string') throw new Error(`Invalid conditional file parameter for ${fileName}: ${def.parameter}.`);
       if (typeof def.validation !== 'object') throw new Error(`Invalid conditional file validation object for ${fileName}: ${def.validation}.`);
-      conditionalFiles[fileName].validate = ajv.compile(conditionalFiles[fileName].validation);
+      conditionalGeneration[fileName].validate = ajv.compile(conditionalGeneration[fileName].validation);
     });
   }
 }

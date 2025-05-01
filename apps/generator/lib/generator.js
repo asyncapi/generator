@@ -876,30 +876,22 @@ class Generator {
     if (!shouldOverwriteFile) return;
 
     if (this.templateConfig.conditionalFiles?.[relativeSourceFile]) {
-      const parameter = this.templateConfig.conditionalFiles[relativeSourceFile].subject;
-      const value =  await this.getParameterValue(asyncapiDocument, parameter)
-     if (value !== undefined) {
-          const validation = this.templateConfig.conditionalFiles[relativeSourceFile].validation;
-          // Handle "const"
-          if (validation?.const !== undefined) {
-            const isValid = value === validation.const;
-            console.log(isValid)
-            if (!isValid) {
-              return log.debug(logMessage.conditionalFilesMatched(relativeSourceFile));
-            }
-          }
-      
-          // Handle "not"
-          if (validation?.not !== undefined) {
-            const isNotValid = value === validation.not;
-            if (isNotValid) {
-              return log.debug(logMessage.conditionalFilesMatched(relativeSourceFile));
-            }
-          }
-      
-          // You can keep adding more types like "enum", "pattern", etc.
-        }
+      const server = this.templateParams.server && asyncapiDocument.servers().get(this.templateParams.server);
+      const source = jmespath.search({
+        ...asyncapiDocument.json(),
+        ...{
+          server: server ? server.json() : undefined,
+        },
+      }, this.templateConfig.conditionalFiles[relativeSourceFile].subject);
+
+      if (!source) return log.debug(logMessage.relativeSourceFileNotGenerated(relativeSourceFile, this.templateConfig.conditionalFiles[relativeSourceFile].subject));
+
+      if (source) {
+        const validate = this.templateConfig.conditionalFiles[relativeSourceFile].validate;
+        const valid = validate(source);
+        if (!valid) return log.debug(logMessage.conditionalFilesMatched(relativeSourceFile));
       }
+    }
 
     if (this.isNonRenderableFile(relativeSourceFile)) return await copyFile(sourceFile, targetFile);
     await this.renderAndWriteToFile(asyncapiDocument, sourceFile, targetFile);

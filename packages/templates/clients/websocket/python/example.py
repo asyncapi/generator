@@ -1,11 +1,10 @@
 import sys
 import os
+import time
 
 sys.path.append(os.path.join(os.path.dirname(__file__), 'test'))
 
-from temp.snapshotTestResult.client_postman import PostmanEchoWebSocketClientClient
-
-import time
+from temp.snapshotTestResult.custom_client_hoppscotch.client import HoppscotchClient
 
 def custom_message_handler(message):
     print(f"\033[94mCustom processing of received message\033[0m: {message}")
@@ -19,7 +18,7 @@ def outgoing_message_processor(message):
     return {"Processed outgoing message": message, "timestamp": "2025-03-13T12:00:00Z"}
 
 def main():
-    client = PostmanEchoWebSocketClientClient()
+    client = HoppscotchClient()
     client.register_message_handler(custom_message_handler)
     client.register_error_handler(custom_error_handler)
     client.register_outgoing_processor(outgoing_message_processor)
@@ -37,4 +36,6 @@ def main():
 
     # Keep program alive for a while to allow message processing
     time.sleep(10)
+
 main()
+

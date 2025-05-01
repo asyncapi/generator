@@ -1,71 +1,32 @@
 asyncapi: 3.0.0
 defaultContentType: text/plain
 info:
-  title: Hoppscotch WebSocket Server
+  title: Hoppscotch Echo WebSocket Server
   version: 1.0.0
   description: >
     This document is purely for mocking the official Hoppscotch Websocket Echo server.
 
 servers:
   echoServer:
-    host: echo-websocket.hoppscotch.io
-    protocol: wss
+    $ref: './commons/servers.yml#/servers/echoServer'
 
 channels:
   echo:
-    description: >
-      The single channel where messages are sent to and echoed back. Echo server also regularly drops a timestampl to that channel.
-    address: /
-    messages:
-      echo:
-        $ref: '#/components/messages/echo'
-      timestamp:
-        $ref: '#/components/messages/timestamp'
-    bindings:
-      ws:
-        method: POST
+    $ref: './commons/channels.yml#/channels/echo'
 
 operations:
   sendTimeStampMessage:
     action: send
-    channel: 
+    channel:
       $ref: '#/channels/echo'
-    summary: Receive the timestamp message sent from server every second.
+    summary: Send the timestamp message to any connected client every second.
     messages:
       - $ref: '#/channels/echo/messages/timestamp'
+  
   handleEchoMessage:
     action: receive
-    channel: 
+    channel:
       $ref: '#/channels/echo'
-    summary: Send a message to the echo server.
+    summary: Receive echo message from the client.
     messages:
       - $ref: '#/channels/echo/messages/echo'
-
-components:
-  messages:
-    timestamp:
-      summary: A message sent from server with current timestamp.
-      payload: 
-        $ref: '#/components/schemas/currentTime'
-      examples:
-        - name: someRandomDate
-          payload: 11:13:24 GMT+0000 (Coordinated Universal Time)
-    echo:
-      summary: A message exchanged with the echo server.
-      payload: {}
-      examples:
-        - name: string
-          payload: "test"
-        - name: boolean
-          payload: true
-        - name: number
-          payload: 123
-        - name: object
-          payload: 
-            test: test text
-  
-  schemas:
-    currentTime:
-      type: string
-      description: A timestamp with GMT timezone.
-      example: 11:13:24 GMT+0000 (Coordinated Universal Time)

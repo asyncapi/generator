@@ -1,4 +1,6 @@
+
 const WSClient = require('./test/temp/snapshotTestResult/client-postman/client.js');
+
 // Example usage
 const wsClient = new WSClient();
 
@@ -27,7 +29,7 @@ async function main() {
 
     while (true) {
       try {
-        await wsClient.sendEchoMessage(message);
+        await WSClient.sendEchoMessage(message, wsClient.websocket);
       } catch (error) {
         console.error('Error while sending message:', error);
       }

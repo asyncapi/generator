@@ -863,22 +863,20 @@ class Generator {
    */
 
   async getParameterValue(asyncapiDocument, parameter) {
-    // 1. Check in info
-    const info = asyncapiDocument.info();
-    if (typeof info[parameter] === 'function') {
-      const value = info[parameter]();
-      if (value !== undefined) return value;
+    const tryGet = obj =>
+      (obj && typeof obj[parameter] === 'function')
+        ? obj[parameter]()
+        : undefined;
+       
+    const fromInfo = tryGet(asyncapiDocument.info());
+    if (fromInfo !== undefined) return fromInfo;
+       
+    for (const server of asyncapiDocument.servers().values()) {
+      const fromServer = tryGet(server);
+      if (fromServer !== undefined) return fromServer;
     }
-    // 2. Check in servers
-    const servers = asyncapiDocument.servers();
-    for (const server of servers) {
-      if (typeof server[parameter] === 'function') {
-        const value = server[parameter]();
-        if (value !== undefined) return value;
-      }
-    }
-
-    return  this.templateParams[`${parameter}`];
+       
+    return this.templateParams[parameter];
   }
 
   /**

@@ -964,7 +964,7 @@ class Generator {
  * @param {String} relativeSourceFile The relative path of the source file.
  */
   async handleMissingParameterValue(relativeSourceFile) {
-    const parameter = this.templateConfig.conditionalFiles?.[relativeSourceFile]?.parameter;
+    const parameter = this.templateConfig.conditionalGeneration?.[relativeSourceFile]?.parameter;
     log.debug(logMessage.relativeSourceFileNotGenerated(relativeSourceFile, parameter));
   }
 
@@ -984,7 +984,7 @@ class Generator {
         this.removeParentDirectory(relativeTargetFile);
         return true;
       }
-      log.debug(logMessage.conditionalFilesMatched(matchedConditionPath));
+      log.debug(logMessage.conditionalGenerationMatched(matchedConditionPath));
 
       return false;
     }
@@ -997,7 +997,7 @@ class Generator {
 
     // If the parameter is not valid → skip generation
     if (!isValid) {
-      log.debug(logMessage.conditionalFilesMatched(matchedConditionPath));
+      log.debug(logMessage.conditionalGenerationMatched(matchedConditionPath));
       return true;
     }
   

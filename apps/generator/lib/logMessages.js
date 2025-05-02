@@ -42,7 +42,7 @@ function skipOverwrite(testFilePath) {
   return `Skipping overwrite for: ${testFilePath}`;
 }
 
-function conditionalFilesMatched(relativeSourceFile) {
+function conditionalGenerationMatched(relativeSourceFile) {
   return `${relativeSourceFile} was not generated because condition specified for this file in template configuration in conditionalFiles matched.`;
 }
 

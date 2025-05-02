@@ -45,89 +45,44 @@ Before you create the template, you'll need to have an [AsyncAPI document](https
 ```yaml
 asyncapi: 3.0.0
 info:
-  title: Comments Service
+  title: Temperature Service
   version: 1.0.0
-  description: This service is in charge of processing all the events related to comments.
+  description: Service that emits temperature changes from a bedroom sensor.
 
 servers:
-  dev:
-    host: test.mosquitto.org
+  production:
+    host: broker.example.com
     protocol: mqtt
 
 channels:
-  sendCommentLiked:
-    address: comment/liked
+  temperatureChanged:
+    address: temperature/changed
     messages:
-      commentLiked:
-        description: Message that is being sent when a comment has been liked by someone.
+      temperatureChange:
+        description: Message sent when the temperature in the bedroom changes.
         payload:
-          $ref: '#/components/schemas/commentReaction'
-    description: Updates the likes count in the database when new like is noticed.
-
-  sendCommentUnliked:
-    address: comment/unliked
-    messages:
-      commentUnliked:
-        description: Message that is being sent when a comment has been unliked by someone.
-        payload:
-          $ref: '#/components/schemas/commentReaction'
-    description: Updates the likes count in the database when comment is unliked.
-
-  receiveCommentViews:
-    address: comment/views
-    messages:
-      commentViews:
-        description: >
-          Message that is being recived with the total number of views in a
-          comment.
-        payload:
-          $ref: '#/components/schemas/commentCount'
-    description: Gets the total number of comment views.
+          $ref: '#/components/schemas/Temperature'
 
 operations:
-  sendCommentLiked:
+  sendTemperatureChanged:
     action: send
-    summary: Message sent to the broker when a comment is liked
+    summary: Temperature changes are pushed to the broker
     channel:
-      $ref: '#/channels/sendCommentLiked'
-
-  sendCommentUnliked:
-    action: send
-    summary: Message sent to the broker when a comment is unliked
-    channel:
-      $ref: '#/channels/sendCommentUnliked'
-
-  receiveCommentViews:
-    action: receive
-    summary: Message received when a comment is viewed
-    channel:
-      $ref: '#/channels/receiveCommentViews'
+      $ref: '#/channels/temperatureChanged'
 
 components:
   schemas:
-    commentCount:
+    Temperature:
       type: object
       additionalProperties: false
       properties:
-        commentId:
-          $ref: '#/components/schemas/commentId'
-        count:
-          $ref: '#/components/schemas/count'
+        value:
+          type: number
+        unit:
+          type: string
 
-    commentReaction:
-      type: object
-      additionalProperties: false
-      properties:
-        commentId:
-          $ref: '#/components/schemas/commentId'
-
-    count:
-      type: integer
-
-    commentId:
-      type: string
 ```
-> ⚠️ This document now uses AsyncAPI v3.0.0. Key differences include the use of top-level `operations`, and `channels` now require an `address` field instead of defining operations directly under them. Refer to the [AsyncAPI v3.0.0 spec](https://www.asyncapi.com/docs/reference/specification/v3.0.0) for more.
+> 🆕 This document uses the AsyncAPI 3.0.0 structure. Notable changes include `operations` now being top-level and the use of `address:` in `channels` instead of nested publish/subscribe.
 
 ## Overview of steps
 

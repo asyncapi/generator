@@ -62,7 +62,7 @@ module.exports = {
   installationDebugMessage,
   templateSuccessfullyInstalled,
   relativeSourceFileNotGenerated,
-  conditionalFilesMatched,
+  conditionalGenerationMatched,
   compileEnabled,
   skipOverwrite
 };

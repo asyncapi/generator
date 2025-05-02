@@ -899,10 +899,9 @@ class Generator {
     if (shouldIgnoreFile(relativeSourceFile)) return;
     if (!(await this.shouldOverwriteFile(relativeTargetFile))) return;
   
-    const status = await this.shouldSkipGeneration(asyncapiDocument, relativeSourceFile, relativeSourceDirectory);
+    const skipGeneration = await this.shouldSkipGeneration(asyncapiDocument, relativeSourceFile, relativeSourceDirectory,relativeTargetFile);
   
-    if (status === true) {
-      this.removeParentDirectory(relativeTargetFile);
+    if (skipGeneration === true) {
       return;
     }
   
@@ -922,19 +921,19 @@ class Generator {
  * @param {String} relativeSourceDirectory The relative path of the source directory derived from the source file.
  * @return {Promise<boolean>} A promise that resolves to `true` if the file should be skipped, `false` otherwise.
  */
-  async shouldSkipGeneration(asyncapiDocument, relativeSourceFile, relativeSourceDirectory) {
+  async shouldSkipGeneration(asyncapiDocument, relativeSourceFile, relativeSourceDirectory,relativeTargetFile) {
     const matchedConditionPath = await this.getMatchedConditionPath(relativeSourceFile, relativeSourceDirectory);
     if (!matchedConditionPath) return false;
 
     const { subject, validation } = this.templateConfig.conditionalGeneration[matchedConditionPath];
     const parameterValue = await this.getParameterValue(asyncapiDocument, subject);
 
-    if (!parameterValue) {
+    if (!parameterValue) { // if the parameter is not found we need to skip 
       await this.handleMissingParameterValue(relativeSourceFile);
       return true;
     }
 
-    return await this.validateParameterValue(validation, parameterValue, matchedConditionPath, relativeSourceDirectory);
+    return await this.validateParameterValue(validation, parameterValue, matchedConditionPath, relativeSourceDirectory, relativeTargetFile);
   }
 
   /**
@@ -978,16 +977,31 @@ class Generator {
  * @param {String} matchedConditionPath The matched condition path.
  * @return {Promise<boolean>} A promise that resolves to `true` if validation fails, `false` otherwise.
  */
-  async validateParameterValue(validation, parameterValue, matchedConditionPath, relativeSourceDirectory) {
+  async validateParameterValue(validation, parameterValue, matchedConditionPath, relativeSourceDirectory,relativeTargetFile) {
     if (validation.hasOwnProperty('not')) {
       const isNotValid = this.validateNot(validation.not, parameterValue);
       if (isNotValid && matchedConditionPath === relativeSourceDirectory) {
+        this.removeParentDirectory(relativeTargetFile);
         return true;
       }
       log.debug(logMessage.conditionalFilesMatched(matchedConditionPath));
 
       return false;
     }
+
+    const ajv = new Ajv();
+    
+    // Case: standard validation
+    const validate = ajv.compile(validation);
+    const isValid = validate(parameterValue);
+
+    // If the parameter is not valid → skip generation
+    if (!isValid) {
+      log.debug(logMessage.conditionalFilesMatched(matchedConditionPath));
+      return true;
+    }
+  
+    return false;
   }
 
   /**

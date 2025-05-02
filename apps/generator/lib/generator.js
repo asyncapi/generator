@@ -890,74 +890,162 @@ class Generator {
    */
   async generateFile(asyncapiDocument, fileName, baseDir) {
     const sourceFile = path.resolve(baseDir, fileName);
-  
     const relativeSourceFile = path.relative(this.templateContentDir, sourceFile);
     const relativeSourceDirectory = relativeSourceFile.split(path.sep)[0] || '.';
-
+  
     const targetFile = path.resolve(this.targetDir, this.maybeRenameSourceFile(relativeSourceFile));
     const relativeTargetFile = path.relative(this.targetDir, targetFile);
- 
+  
     if (shouldIgnoreFile(relativeSourceFile)) return;
-    const shouldOverwriteFile = await this.shouldOverwriteFile(relativeTargetFile);
-    if (!shouldOverwriteFile) return;
-    
-    const fileCondition = this.templateConfig.conditionalGeneration?.[relativeSourceFile];
-    const dirCondition = this.templateConfig.conditionalGeneration?.[relativeSourceDirectory];
-
-    let matchedConditionPath = null;
-    if (fileCondition) {
-      matchedConditionPath = relativeSourceFile;
-    } else if (dirCondition) {
-      matchedConditionPath = relativeSourceDirectory;
-    }
-    let status;
-    if (matchedConditionPath) {
-      const { subject, validation } = this.templateConfig.conditionalGeneration[matchedConditionPath];
-      const parameterValue = await this.getParameterValue(asyncapiDocument, subject);
-
-      if (!parameterValue) return log.debug(logMessage.relativeSourceFileNotGenerated(relativeSourceFile, this.templateConfig.conditionalFiles[relativeSourceFile].parameter));
-    
-      const ajv = new Ajv();
-      const validate = ajv.compile(validation);
-      let isValid = validate(parameterValue);
-
-      if (validation.hasOwnProperty('not')) {
-        // Compile the "not" schema for negation
-        const validate = ajv.compile(validation.not);
-        isValid = validate(parameterValue); // Negate the result
-
-        if (isValid) {
-          if (matchedConditionPath === relativeSourceDirectory) {
-            status = true;
-          }
-        } else {
-        // If no "not" schema, just validate the value normally
-          const validate = ajv.compile(validation);
-          isValid = validate(parameterValue);
-          if (!isValid) {
-            return log.debug(logMessage.conditionalFilesMatched(matchedConditionPath));
-          }
-        }
-      }
-    }
+    if (!(await this.shouldOverwriteFile(relativeTargetFile))) return;
+  
+    const status = await this.shouldSkipGeneration(asyncapiDocument, relativeSourceFile, relativeSourceDirectory);
+  
     if (status === true) {
-      const fullFilePath = path.join(this.targetDir,relativeTargetFile);
-      const parentDir = path.dirname(fullFilePath);
-
-      if (fs.existsSync(parentDir)) {
-        const stats = fs.lstatSync(parentDir);
-        if (stats.isDirectory()) {
-          fs.rmdirSync(parentDir, { recursive: true });
-        }
-      } 
+      this.removeParentDirectory(relativeTargetFile);
       return;
     }
-     
-    // Check if the file is non-renderable, if so copy directly, otherwise render and write
+  
     if (this.isNonRenderableFile(relativeSourceFile)) {
       await copyFile(sourceFile, targetFile);
     } else {
       await this.renderAndWriteToFile(asyncapiDocument, sourceFile, targetFile);
+    }
+  }
+ 
+  /**
+ * Determines if the file generation should be skipped based on conditional generation rules.
+ *
+ * @private
+ * @param {AsyncAPIDocument} asyncapiDocument The AsyncAPI document to use as the source for parameter validation.
+ * @param {String} relativeSourceFile The relative path of the source file in relation to the template content directory.
+ * @param {String} relativeSourceDirectory The relative path of the source directory derived from the source file.
+ * @return {Promise<boolean>} A promise that resolves to `true` if the file should be skipped, `false` otherwise.
+ */
+  async shouldSkipGeneration(asyncapiDocument, relativeSourceFile, relativeSourceDirectory) {
+    const matchedConditionPath = await this.getMatchedConditionPath(relativeSourceFile, relativeSourceDirectory);
+    if (!matchedConditionPath) return false;
+
+    const { subject, validation } = this.templateConfig.conditionalGeneration[matchedConditionPath];
+    const parameterValue = await this.getParameterValue(asyncapiDocument, subject);
+
+    if (!parameterValue) {
+      await this.handleMissingParameterValue(relativeSourceFile);
+      return true;
+    }
+
+    return await this.validateParameterValue(validation, parameterValue, matchedConditionPath, relativeSourceDirectory);
+  }
+
+  /**
+ * Gets the matched condition path based on file or directory condition.
+ *
+ * @private
+ * @param {String} relativeSourceFile The relative path of the source file.
+ * @param {String} relativeSourceDirectory The relative path of the source directory.
+ * @return {Promise<String|null>} The matched condition path or null if none matched.
+ */
+  async getMatchedConditionPath(relativeSourceFile, relativeSourceDirectory) {
+    const fileCondition = this.templateConfig.conditionalGeneration?.[relativeSourceFile];
+    const dirCondition = this.templateConfig.conditionalGeneration?.[relativeSourceDirectory];
+
+    if (fileCondition) {
+      return relativeSourceFile;
+    } else if (dirCondition) {
+      return relativeSourceDirectory;
+    }
+  
+    return null;
+  }
+
+  /**
+ * Handles the case where the parameter value is missing for conditional file generation.
+ *
+ * @private
+ * @param {String} relativeSourceFile The relative path of the source file.
+ */
+  async handleMissingParameterValue(relativeSourceFile) {
+    const parameter = this.templateConfig.conditionalFiles?.[relativeSourceFile]?.parameter;
+    log.debug(logMessage.relativeSourceFileNotGenerated(relativeSourceFile, parameter));
+  }
+
+  /**
+ * Validates the parameter value based on the provided validation schema.
+ *
+ * @private
+ * @param {Object} validation The validation schema to use.
+ * @param {any} parameterValue The value to validate.
+ * @param {String} matchedConditionPath The matched condition path.
+ * @return {Promise<boolean>} A promise that resolves to `true` if validation fails, `false` otherwise.
+ */
+  async validateParameterValue(validation, parameterValue, matchedConditionPath, relativeSourceDirectory) {
+    if (validation.hasOwnProperty('not')) {
+      const isNotValid = this.validateNot(validation.not, parameterValue);
+      if (isNotValid && matchedConditionPath === relativeSourceDirectory) {
+        return true;
+      }
+
+      const isValid = this.validate(validation, parameterValue);
+      if (!isValid) {
+        log.debug(logMessage.conditionalFilesMatched(matchedConditionPath));
+        return false;
+      }
+    } else {
+      const isValid = this.validate(validation, parameterValue);
+      if (!isValid) {
+        log.debug(logMessage.conditionalFilesMatched(matchedConditionPath));
+        return false;
+      }
+    }
+
+    return false;
+  }
+
+  /**
+ * Validates the parameter value using a "not" schema.
+ *
+ * @private
+ * @param {Object} notSchema The "not" schema to use for validation.
+ * @param {any} parameterValue The value to validate.
+ * @return {boolean} `true` if validation fails, `false` otherwise.
+ */
+  async validateNot(notSchema, parameterValue) {
+    const ajv = new Ajv();
+    const validateNot = ajv.compile(notSchema);
+    return validateNot(parameterValue);
+  }
+
+  /**
+ * Validates the parameter value using the provided validation schema.
+ *
+ * @private
+ * @param {Object} validation The validation schema to use.
+ * @param {any} parameterValue The value to validate.
+ * @return {boolean} `true` if validation passes, `false` otherwise.
+ */
+  async validate(validation, parameterValue) {
+    const ajv = new Ajv();
+    const validate = ajv.compile(validation);
+    return validate(parameterValue);
+  }
+
+  /**
+ * Removes the parent directory of the specified target file if it exists and is a directory.
+ *
+ * @private
+ * @param {String} relativeTargetFile The relative path of the target file used to determine the parent directory.
+ * @return {Promise<void>} A promise that resolves once the parent directory is removed (if applicable).
+ */
+
+  async removeParentDirectory(relativeTargetFile) {
+    const fullFilePath = path.join(this.targetDir, relativeTargetFile);
+    const parentDir = path.dirname(fullFilePath);
+  
+    if (fs.existsSync(parentDir)) {
+      const stats = fs.lstatSync(parentDir);
+      if (stats.isDirectory()) {
+        fs.rmdirSync(parentDir, { recursive: true });
+      }
     }
   }
 

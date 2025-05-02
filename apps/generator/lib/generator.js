@@ -890,37 +890,75 @@ class Generator {
    */
   async generateFile(asyncapiDocument, fileName, baseDir) {
     const sourceFile = path.resolve(baseDir, fileName);
+  
     const relativeSourceFile = path.relative(this.templateContentDir, sourceFile);
-    
+    const relativeSourceDirectory = relativeSourceFile.split(path.sep)[0] || '.';
+
     const targetFile = path.resolve(this.targetDir, this.maybeRenameSourceFile(relativeSourceFile));
     const relativeTargetFile = path.relative(this.targetDir, targetFile);
-   
+ 
     if (shouldIgnoreFile(relativeSourceFile)) return;
     const shouldOverwriteFile = await this.shouldOverwriteFile(relativeTargetFile);
     if (!shouldOverwriteFile) return;
+    
+    const fileCondition = this.templateConfig.conditionalGeneration?.[relativeSourceFile];
+    const dirCondition = this.templateConfig.conditionalGeneration?.[relativeSourceDirectory];
 
-    if (this.templateConfig.conditionalGeneration?.[relativeSourceFile]) {
-      const parameter = this.templateConfig.conditionalGeneration[relativeSourceFile].subject;
-      const value =  await this.getParameterValue(asyncapiDocument, parameter);
-  
-      if (value !== undefined) {
-        const schema = this.templateConfig.conditionalGeneration[relativeSourceFile].validation;
-        const ajv = new Ajv();
-        const validate = ajv.compile(schema);
-        const isValid = validate(value); 
+    let matchedConditionPath = null;
+    if (fileCondition) {
+      matchedConditionPath = relativeSourceFile;
+    } else if (dirCondition) {
+      matchedConditionPath = relativeSourceDirectory;
+    }
+    let status;
+    if (matchedConditionPath) {
+      const { subject, validation } = this.templateConfig.conditionalGeneration[matchedConditionPath];
+      const parameterValue = await this.getParameterValue(asyncapiDocument, subject);
 
-        if (!isValid) return log.debug(logMessage.conditionalFilesMatched(relativeSourceFile));
+      if (!parameterValue) return log.debug(logMessage.relativeSourceFileNotGenerated(relativeSourceFile, this.templateConfig.conditionalFiles[relativeSourceFile].parameter));
+    
+      const ajv = new Ajv();
+      const validate = ajv.compile(validation);
+      let isValid = validate(parameterValue);
+
+      if (validation.hasOwnProperty('not')) {
+        // Compile the "not" schema for negation
+        const validate = ajv.compile(validation.not);
+        isValid = validate(parameterValue); // Negate the result
+
+        if (isValid) {
+          if (matchedConditionPath === relativeSourceDirectory) {
+            status = true;
+          }
+        } else {
+        // If no "not" schema, just validate the value normally
+          const validate = ajv.compile(validation);
+          isValid = validate(parameterValue);
+          if (!isValid) {
+            return log.debug(logMessage.conditionalFilesMatched(matchedConditionPath));
+          }
+        }
       }
     }
+    if (status === true) {
+      const fullFilePath = path.join(this.targetDir,relativeTargetFile);
+      const parentDir = path.dirname(fullFilePath);
 
-    if (this.isNonRenderableFile(relativeSourceFile)) {
-      return await copyFile(sourceFile, targetFile);
+      if (fs.existsSync(parentDir)) {
+        const stats = fs.lstatSync(parentDir);
+        if (stats.isDirectory()) {
+          fs.rmdirSync(parentDir, { recursive: true });
+        }
+      } 
+      return;
     }
-    
-    await this.renderAndWriteToFile(asyncapiDocument, sourceFile, targetFile);
-
-    if (this.isNonRenderableFile(relativeSourceFile)) return await copyFile(sourceFile, targetFile);
-    await this.renderAndWriteToFile(asyncapiDocument, sourceFile, targetFile);
+     
+    // Check if the file is non-renderable, if so copy directly, otherwise render and write
+    if (this.isNonRenderableFile(relativeSourceFile)) {
+      await copyFile(sourceFile, targetFile);
+    } else {
+      await this.renderAndWriteToFile(asyncapiDocument, sourceFile, targetFile);
+    }
   }
 
   /**
@@ -1111,4 +1149,3 @@ Generator.DEFAULT_TEMPLATES_DIR = DEFAULT_TEMPLATES_DIR;
 Generator.TRANSPILED_TEMPLATE_LOCATION = TRANSPILED_TEMPLATE_LOCATION;
 
 module.exports = Generator;
-

@@ -984,21 +984,10 @@ class Generator {
       if (isNotValid && matchedConditionPath === relativeSourceDirectory) {
         return true;
       }
+      log.debug(logMessage.conditionalFilesMatched(matchedConditionPath));
 
-      const isValid = this.validate(validation, parameterValue);
-      if (!isValid) {
-        log.debug(logMessage.conditionalFilesMatched(matchedConditionPath));
-        return false;
-      }
-    } else {
-      const isValid = this.validate(validation, parameterValue);
-      if (!isValid) {
-        log.debug(logMessage.conditionalFilesMatched(matchedConditionPath));
-        return false;
-      }
+      return false;
     }
-
-    return false;
   }
 
   /**

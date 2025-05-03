@@ -35,9 +35,9 @@ describe('testing if generated client match snapshot', () => {
   });
 
   it('generate simple client for hoppscotch echo', async () => {
-    const testOutputFile = 'client.js';
+    const testOutputFile = 'custom-client-hoppscotch.js';
 
-    const generator = new Generator(template, testResultPathHoppscotch, {
+    const generator = new Generator(template, testResultPath, {
       forceWrite: true,
       templateParams: {
         server: 'echoServer',
@@ -52,9 +52,9 @@ describe('testing if generated client match snapshot', () => {
   });
 
   it('generate simple client for hoppscotch echo with custom client name', async () => {
-    const testOutputFile = 'custom-client-hoppscotch.js';
+    const testOutputFile = 'client.js';
 
-    const generator = new Generator(template, testResultPath, {
+    const generator = new Generator(template, testResultPathHoppscotch, {
       forceWrite: true,
       templateParams: {
         server: 'echoServer',

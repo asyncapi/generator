@@ -33,6 +33,19 @@ const {
 const { parse, usesNewAPI, getProperApiDocument } = require('./parser');
 const { registerFilters } = require('./filtersRegistry');
 const { registerHooks } = require('./hooksRegistry');
+//const { parse, deref } = require('@asyncapi/parser');
+const { document: doc, diagnostics } = await parse(rawSpec, options, generator); // ✅ cleaner
+
+if (diagnostics?.length > 0) {
+  console.warn('⚠️ AsyncAPI Diagnostics:', diagnostics);
+}
+
+await renderNunjucks(doc, options, generator);  // 👈 use doc here
+
+
+// using derefDoc from now on instead of doc
+generateStuff(derefDoc); // not doc
+
 const { definitions, flatten, shorthands } = require('@npmcli/config/lib/definitions');
 
 const FILTERS_DIRNAME = 'filters';

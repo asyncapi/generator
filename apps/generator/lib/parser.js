@@ -24,11 +24,16 @@ parser.parse = async (asyncapi, oldOptions, generator) => {
   const options = convertOldOptionsToNew(oldOptions, generator);
   const parser = NewParser(apiVersion, {parserOptions: options, includeSchemaParsers: true});
   const { document, diagnostics } = await parser.parse(asyncapi, options);
+
+  
   if (!document) {
     return {document, diagnostics};
   }
+
+  const derefDoc = await deref(document); // ✅ this is key
   const correctDocument = this.getProperApiDocument(document, generator.templateConfig);
-  return {document: correctDocument, diagnostics};
+
+  return {document: derefDoc, diagnostics};
 };
 
 /**

@@ -5,92 +5,74 @@ weight: 60
 
 ## Parser
 
-The AsyncAPI Parser is a package used to parse and validate the [AsyncAPI documents](asyncapi-document) in your Node.js or browser application. These documents can be either in YAML or JSON format.
+The **AsyncAPI Parser** is a powerful library for parsing and validating [AsyncAPI documents](asyncapi-document) in both Node.js and browser environments. It supports YAML and JSON inputs and ensures correctness through schema validation.
 
-The Parser validates these documents using dedicated schema-supported plugins.
+### ✅ Supported schema formats:
 
-Supported schemas:
+- AsyncAPI (v2 and v3)
+- OpenAPI
+- JSON Schema
+- Avro
+- RAML
 
-- AsyncAPI schema (no plugin needed)
-- OpenAPI schema
-- JSON schema
-- Avro schema
-- RAML data-type schema
+These schemas are automatically transformed into JSON Schema format internally, simplifying access and manipulation.
 
-The Parser allows the template developer to easily access schemas provided in the above supported formats. This is because the JavaScript parser converts all of them into JSON schema.
+---
 
-If the document is valid, the Parser returns an `AsyncAPIDocument instance` with a set of helper functions that enable easier access to the contents of the AsyncAPI document. The parser provides dereferenced output. During the dereference process, the AsyncAPI parser substitutes a reference with a full definition. The dereferenced output is always in JSON format. The parser provides a message listing all errors if a document is invalid. The original AsyncAPI document is part of the [Template Context](template-context) as the generator also passes the original AsyncAPI document to the template context.
+## Key Features
 
-The following AsyncAPI document example has two channels: `channelOne` and `channelTwo`. Each channel has one operation and a single message:
+- **Parsing** of AsyncAPI YAML/JSON files.
+- **Validation** against AsyncAPI and referenced schemas.
+- **Dereferencing** of `$ref` values into inlined content.
+- **Helper functions** to access channels, messages, schemas, and more.
+
+---
+
+## Example: AsyncAPI v3 Document
+
+Below is a minimal v3.0.0-compliant AsyncAPI document using `channels`, `operations`, and component references:
 
 ```yaml
-asyncapi: "2.5.0"
+asyncapi: 3.0.0
 info:
-  title: Demo API
-  version: "1.0.0"
+  title: Comments Service
+  version: 1.0.0
+  description: Handles all comment-related events.
+servers:
+  dev:
+    host: test.mosquitto.org
+    protocol: mqtt
 channels:
-  channelOne:
-    publish:
-      summary: This is the first sample channel
-      operationId: onMessage
-      message:
-        name: FirstMessage
-        payload:
-          id:
-            type: integer
-            minimum: 0
-            description: Id of the channel
-          sentAt:
-            type: string
-            format: date-time
-            description: Date and time when the message was sent.
-  channelTwo:
-    publish:
-      summary: This is the second sample channel
-      operationId: messageRead
-      message:
-        name: SecondMessage
-        payload:
-          id:
-            type: integer
-            minimum: 0
-            description: Id of the channel
-          sentAt:
-            type: string
-            format: date-time
-            description: Date and time when the message was sent.
-```
-
-We can use helper functions provided by the Parser to operate on the above JSON file. For example, we can use the helper method `asyncAPIDocument.channelNames()`, which returns an array of all channel names currently present in the AsyncAPI document. Another example where you can use a helper function is to list out messages present in your JSON file. Instead of fetching a single message one at a time, you can use the function `asyncAPIDocument.allMessages()` that returns the map of all messages in your AsyncAPI document.
-
-```js
-const channelNames = asyncAPIDocument.channelNames();
-const messages = asyncAPIDocument.allMessages();
-```
-
-> The Parser gives you access to a number of these [helper functions](https://github.com/asyncapi/parser-api/blob/master/docs/api.md) that you can implement to access the contents of your AsyncAPI document.
-
-## AsyncAPI document validation process
-
-1. **AsyncAPI document** is fed as an input to the Generator.
-1. Generator sends the AsyncAPI document to the Parser as **asyncapiString**; the stringified version of the original AsyncAPI document.
-1. The Parser uses additional plugins such as the OpenAPI, RAML, or Avro schemas to validate custom schemas of message payloads defined in the AsyncAPI document.
-1. If the AsyncAPI document is invalid, it throws an error based on the encountered failure type. For example, if the AsyncAPI document is not a string nor a JavaScript object, the Parser throws an `invalid-document-type` error.
-   Similarly, you may encounter errors such as:
-   - `invalid-json`
-   - `invalid-yaml`
-   - `impossible-to-convert-to-json`
-1. If the document is valid, the Parser modifies the AsyncAPI document, returns a set of helper functions, and bundles them together into the **asyncapi** variable. These helper functions in the form of an **asyncapi** variable are passed to the **Template Context**.
-1. The Template Context passes all of these values to the [**Render Engine**](react-render-engine) of your choice. Finally, the Render Engine generates whatever output you may have specified in your template. (i.e. code, documentation, diagrams, pdfs, applications, etc.)
-
-```mermaid
-graph TD
-    A[AsyncAPI document] --> B
-    B[Generator] -->|asyncapiString| C(Parser)
-    C --> D{Validation}
-    D -->|invalid| B
-    D -->|asyncapi -> helper functions| E[Template Context]
-    E --> F[Render Engine]
-```
-
-> To learn more about the Parser and access all of its features, check out the AsyncAPI [Parser’s GitHub repository](https://github.com/asyncapi/parser-js).
+  sendCommentLiked:
+    address: comment/liked
+    messages:
+      commentLiked:
+        $ref: '#/components/messages/commentLiked'
+  sendCommentUnliked:
+    address: comment/unliked
+    messages:
+      commentUnliked:
+        $ref: '#/components/messages/commentUnliked'
+operations:
+  sendCommentLiked:
+    action: send
+    channel:
+      $ref: '#/channels/sendCommentLiked'
+  sendCommentUnliked:
+    action: send
+    channel:
+      $ref: '#/channels/sendCommentUnliked'
+components:
+  messages:
+    commentLiked:
+      payload:
+        $ref: '#/components/schemas/commentReaction'
+    commentUnliked:
+      payload:
+        $ref: '#/components/schemas/commentReaction'
+  schemas:
+    commentReaction:
+      type: object
+      properties:
+        commentId:
+          type: string

@@ -10,7 +10,7 @@ const getServerUrl = (server) => {
 
   //might be that somebody by mistake duplicated protocol info inside the host field
   //we need to make sure host do not hold protocol info
-  if (server.protocol() && !url.includes(server.protocol())) {
+  if (server.protocol() && !url.includes(`${server.protocol()}://`)) {
     url = `${server.protocol()}://${url}`;
   }
 

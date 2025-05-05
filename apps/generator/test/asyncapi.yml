@@ -29,7 +29,7 @@ channels:
     messages:
       commentViews:
         description: >-
-          Message that is being recived with the total number of views in a
+          Message that is being recieved with the total number of views in a
           comment.
         payload:
           $ref: '#/components/schemas/commentCount'

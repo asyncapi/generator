@@ -1,7 +1,6 @@
 {
     "description": "Test project. More info in the readme.",
     "scripts": {
-        "test": "jest",
         "test": "npm run test:cleanup && npm run test:project && npm run test:global && npm run test:registry",
         "test:project:A": "jest --testNamePattern='Test A' --detectOpenHandles --testPathPattern=test-project/test-project --modulePathIgnorePatterns='./__mocks__'",
         "test:project:B": "jest --testNamePattern='Test B' --detectOpenHandles --testPathPattern=test-project/test-project --modulePathIgnorePatterns='./__mocks__'",

@@ -925,10 +925,11 @@ class Generator {
     const matchedConditionPath = await this.getMatchedConditionPath(relativeSourceFile, relativeSourceDirectory);
     if (!matchedConditionPath) return false;
 
-    const { subject, validation } = this.templateConfig.conditionalGeneration[matchedConditionPath];
-    const parameterValue = await this.getParameterValue(asyncapiDocument, subject);
+    const { parameter, validation } = this.templateConfig.conditionalGeneration[matchedConditionPath];
+    const parameterValue = await this.getParameterValue(asyncapiDocument, parameter);
 
-    if (!parameterValue) { // if the parameter is not found we need to skip 
+    if (!parameterValue) {
+      // if the parameter is not found we need to skip 
       await this.handleMissingParameterValue(relativeSourceFile);
       return true;
     }
@@ -978,7 +979,7 @@ class Generator {
  * @return {Promise<boolean>} A promise that resolves to `true` if validation fails, `false` otherwise.
  */
   async validateParameterValue(validation, parameterValue, matchedConditionPath, relativeSourceDirectory,relativeTargetFile) {
-    if (validation.hasOwnProperty('not')) {
+    if (Object.hasOwn(validation, 'not')) {
       const isNotValid = this.validateNot(validation.not, parameterValue);
       if (isNotValid && matchedConditionPath === relativeSourceDirectory) {
         this.removeParentDirectory(relativeTargetFile);

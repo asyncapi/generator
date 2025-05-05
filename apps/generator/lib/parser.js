@@ -4,9 +4,6 @@ const { ConvertDocumentParserAPIVersion, NewParser } = require('@asyncapi/multi-
 
 const parser = module.exports;
 
-/**
- * Convert the template defined value `apiVersion: 'v1'` to only contain the numeric value `1`.
- */
 parser.sanitizeTemplateApiVersion = (apiVersion) => {
   if (!apiVersion) return;
   if (apiVersion && apiVersion.length > 1) {
@@ -15,47 +12,44 @@ parser.sanitizeTemplateApiVersion = (apiVersion) => {
   return Number(apiVersion);
 };
 
-parser.parse = async (asyncapi, oldOptions, generator) => {
+parser.parse = async function(asyncapi, oldOptions, generator) {
   let apiVersion = this.sanitizeTemplateApiVersion(generator.templateConfig.apiVersion);
-  // Defaulting to apiVersion v1 to convert it to the Parser-API v1 afterwards.
+
   if (!this.usesNewAPI(generator.templateConfig)) {
     apiVersion = 1;
   }
-  const options = convertOldOptionsToNew(oldOptions, generator);
-  const parser = NewParser(apiVersion, {parserOptions: options, includeSchemaParsers: true});
-  const { document, diagnostics } = await parser.parse(asyncapi, options);
 
-  
+  const options = convertOldOptionsToNew(oldOptions, generator);
+  const parserInstance = NewParser(apiVersion, {
+    parserOptions: options,
+    includeSchemaParsers: true
+  });
+
+  const { document, diagnostics } = await parserInstance.parse(asyncapi, options);
+
   if (!document) {
-    return {document, diagnostics};
+    return { document, diagnostics };
   }
 
-  const derefDoc = await deref(document); // ✅ this is key
-  const correctDocument = this.getProperApiDocument(document, generator.templateConfig);
-
-  return {document: derefDoc, diagnostics};
+  // 🔁 AsyncAPI v3 already returns fully dereferenced document
+  return {
+    document: this.getProperApiDocument(document, generator.templateConfig),
+    diagnostics
+  };
 };
 
-/**
- * If the template expect one of the Parser-API versions, it must be above 0
- */
-parser.usesNewAPI = (templateConfig = {}) => {
+parser.usesNewAPI = function(templateConfig = {}) {
   return this.sanitizeTemplateApiVersion(templateConfig.apiVersion) > 0;
 };
 
-/**
- * Based on the current parsed AsyncAPI document, convert it to expected API version from the template.
- */
-parser.getProperApiDocument = (asyncapiDocument, templateConfig = {}) => {
+parser.getProperApiDocument = function(asyncapiDocument, templateConfig = {}) {
   const apiVersion = this.sanitizeTemplateApiVersion(templateConfig.apiVersion);
   if (apiVersion === undefined) {
-    // Convert to old API from JS Parser v1
     return convertToOldAPI(asyncapiDocument);
   }
   return ConvertDocumentParserAPIVersion(asyncapiDocument, apiVersion);
 };
 
-// The new options for the v2 Parser are different from those for the v1 version, but in order not to release Generator v2, we are converting the old options of Parser to the new ones.
 function convertOldOptionsToNew(oldOptions, generator) {
   if (!oldOptions) return;
   const newOptions = {};
@@ -77,52 +71,39 @@ function convertOldOptionsToNew(oldOptions, generator) {
 
   if (resolvers.length) {
     newOptions.__unstable = {};
-    newOptions.__unstable.resolver = {
-      resolvers,
-    };
+    newOptions.__unstable.resolver = { resolvers };
   }
 
   return newOptions;
 }
 
-/**
- * Creates a custom resolver that maps urlToFolder.url to urlToFolder.folder
- * Building your custom resolver is explained here: https://apitools.dev/json-schema-ref-parser/docs/plugins/resolvers.html
- *
- * @private
- * @param  {object} urlToFolder to resolve url e.g. https://schema.example.com/crm/ to a folder e.g. ./test/docs/.
- * @return {{read(*, *, *): Promise<unknown>, canRead(*): boolean, order: number}}
- */
 function getMapBaseUrlToFolderResolvers({ url: baseUrl, folder: baseDir }) {
   const resolver = {
     order: 1,
     canRead: true,
     read(uri) {
-      return new Promise(((resolve, reject) => {
+      return new Promise((resolve, reject) => {
         const path = uri.toString();
         const localpath = path.replace(baseUrl, baseDir);
         try {
           fs.readFile(localpath, (err, data) => {
-            if (err) {
-              reject(`Error opening file "${localpath}"`);
-            } else {
-              resolve(data.toString());
-            }
+            if (err) reject(`Error opening file "${localpath}"`);
+            else resolve(data.toString());
           });
         } catch (err) {
           reject(`Error opening file "${localpath}"`);
         }
-      }));
+      });
     }
   };
 
   return [
-    { schema: 'http', ...resolver, },
-    { schema: 'https', ...resolver, },
+    { schema: 'http', ...resolver },
+    { schema: 'https', ...resolver }
   ];
-};
+}
 
-function convertOldResolvers(resolvers = {}) { // NOSONAR
+function convertOldResolvers(resolvers = {}) {
   if (Object.keys(resolvers).length === 0) return [];
 
   return Object.entries(resolvers).map(([protocol, resolver]) => {

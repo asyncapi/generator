@@ -32,6 +32,7 @@
     "templates:test": "turbo run test --filter=@asyncapi/template*"
   },
   "devDependencies": {
+    "jest": "^29.7.0",
     "markdown-toc": "^1.2.0",
     "turbo": "1.13.3"
   },

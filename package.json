@@ -12,7 +12,7 @@
     "generate:readme:toc": "markdown-toc -i README.md",
     "generator:test": "turbo run test --filter=@asyncapi/generator",
     "generator:test:dev": "turbo run test:dev",
-    "generator:test:unit": "turbo run test:unit  --filter=@asyncapi/generator",
+    "generator:test:unit": "turbo run test:unit --filter=@asyncapi/generator",
     "generator:test:integration": "turbo run test:integration --filter=@asyncapi/generator",
     "generator:test:cleanup": "turbo run test:cleanup --filter=@asyncapi/generator",
     "generator:docs": "turbo run docs --filter=@asyncapi/generator",
@@ -30,11 +30,17 @@
     "helpers:test": "turbo run test --filter=@asyncapi/generator-helpers",
     "helpers:lint": "turbo run lint --filter=@asyncapi/generator-helpers",
     "templates:test": "turbo run test --filter=@asyncapi/template*",
-    "hooks:test": "turbo run test --filter=@asyncapi/generator-hooks"
+    "hooks:test": "turbo run test --filter=@asyncapi/generator-hooks",
+    "prettier:check": "prettier --check .",
+    "prettier:fix": "prettier --write .",
+    "security:audit": "npm audit --production",
+    "clean:cache": "rimraf .turbo && rimraf node_modules"
   },
   "devDependencies": {
     "markdown-toc": "^1.2.0",
-    "turbo": "1.13.3"
+    "turbo": "1.13.3",
+    "prettier": "^2.8.0",
+    "rimraf": "^5.0.0"
   },
   "engines": {
     "node": ">=18.12.1"

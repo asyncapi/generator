@@ -233,6 +233,15 @@
       "contributions": [
         "infra"
       ]
+    },
+    {
+      "login": "achaljhawar",
+      "name": "Achal Jhawar",
+      "avatar_url": "https://avatars.githubusercontent.com/u/35405812?v=4",
+      "profile": "https://achaljhawar.github.io/",
+      "contributions": [
+        "test"
+      ]
     }
   ],
   "contributorsPerLine": 3,

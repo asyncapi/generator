@@ -242,6 +242,16 @@
       "contributions": [
         "test"
       ]
+    },
+    {
+      "login": "ssala034",
+      "name": "Shuaib S.",
+      "avatar_url": "https://avatars.githubusercontent.com/u/143904652?v=4",
+      "profile": "https://github.com/ssala034",
+      "contributions": [
+        "test",
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 3,

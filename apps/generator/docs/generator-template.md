@@ -84,6 +84,21 @@ components:
 ```
 > 🆕 This document uses the AsyncAPI 3.0.0 structure. Notable changes include `operations` now being top-level and the use of `address:` in `channels` instead of nested publish/subscribe.
 
+## Handling Diagnostics (Warnings)
+
+When using the latest AsyncAPI parser, it's important to handle not just errors but also diagnostics (warnings). These help identify non-critical issues, such as missing recommended fields like `license`, `contact`, or outdated spec versions.
+
+```ts
+const { parseFromFile } = require('@asyncapi/parser');
+
+const result = await parseFromFile('example-asyncapi.yaml');
+
+if (result.diagnostics && result.diagnostics.length > 0) {
+  console.warn('⚠️ Found diagnostics:');
+  console.dir(result.diagnostics, { depth: null });
+}
+
+
 ## Overview of steps
 
 1. Create a new directory for your template named **python-mqtt-client-template**.

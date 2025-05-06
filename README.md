@@ -129,6 +129,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="33.33%"><a href="https://www.linkedin.com/in/kunalnasa/"><img src="https://avatars.githubusercontent.com/u/111643119?v=4?s=100" width="100px;" alt="Kunal Nasa"/><br /><sub><b>Kunal Nasa</b></sub></a><br /><a href="https://github.com/asyncapi/generator/commits?author=KunalNasa" title="Code">💻</a> <a href="https://github.com/asyncapi/generator/commits?author=KunalNasa" title="Documentation">📖</a> <a href="https://github.com/asyncapi/generator/issues?q=author%3AKunalNasa" title="Bug reports">🐛</a></td>
       <td align="center" valign="top" width="33.33%"><a href="https://thulieblack.github.io"><img src="https://avatars.githubusercontent.com/u/66913810?v=4?s=100" width="100px;" alt="V Thulisile Sibanda"/><br /><sub><b>V Thulisile Sibanda</b></sub></a><br /><a href="https://github.com/asyncapi/generator/commits?author=thulieblack" title="Tests">⚠️</a></td>
     </tr>
+    <tr>
+      <td align="center" valign="top" width="33.33%"><a href="https://github.com/nightknighto"><img src="https://avatars.githubusercontent.com/u/52013393?v=4?s=100" width="100px;" alt="Ahmed Atwa"/><br /><sub><b>Ahmed Atwa</b></sub></a><br /><a href="https://github.com/asyncapi/generator/commits?author=nightknighto" title="Tests">⚠️</a> <a href="#infra-nightknighto" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
+    </tr>
   </tbody>
 </table>
 

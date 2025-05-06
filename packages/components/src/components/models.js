@@ -69,9 +69,10 @@ export async function Models({ asyncapi, language = 'python', format = 'toPascal
 
   // Generate models asynchronously
   const models = await generator.generate(asyncapi);
-
+ 
   return models.map(model => {
+    const modelContent = model.result;
     const modelFileName = `${formatHelper(model.modelName)}.${extension}`;
-    return <File name={modelFileName}>{model.result}</File>;
+    if (modelContent) return <File name={modelFileName}>{modelContent}</File>;
   });
 }

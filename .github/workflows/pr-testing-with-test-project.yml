@@ -8,12 +8,16 @@ on:
 jobs:
   changes:
     runs-on: ubuntu-latest
+    outputs:
+      should_test: ${{ steps.filter.outputs.modified_files }}
     steps:
       - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3 https://github.com/actions/checkout/releases/tag/v3
-      - uses: rohansingh/paths-filter@084ca29929a4e7e708a4aa8b790347facfd830c9 # fork with predicate-quantifier fix
+      - name: Checks paths-filter
+        uses: rohansingh/paths-filter@084ca29929a4e7e708a4aa8b790347facfd830c9 # fork with predicate-quantifier fix
         #TODO check if we can switch back to https://github.com/dorny/paths-filter in a month or 2 (today 17.03.2025)
+        id: filter
         with:
-          predicate-quantifier: 'every'
+          predicate-quantifier: 'some'
           filters: |
             modified_files:
               - 'package.json'
@@ -24,7 +28,6 @@ jobs:
               - '!**/*.md'
               - '!docs/**'
               - '!.all-contributorsrc'
-
   test:
     needs: changes
     if: ${{ github.event.pull_request.draft == false }}
@@ -36,10 +39,14 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744
+      - name: Log should_test value across jobs
+        run: |
+          echo "should_test value: ${{ needs.changes.outputs.should_test }}"
       - name: Determine if tests should run
         id: should_run
         if: >
-          !(
+          needs.changes.outputs.should_test == 'true' &&
+          !github.event.pull_request.draft && !(
             (github.actor == 'asyncapi-bot' && (
               startsWith(github.event.pull_request.title, 'ci: update of files from global .github repo') ||
                startsWith(github.event.pull_request.title, 'chore(release):')

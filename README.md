@@ -124,6 +124,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="33.33%"><a href="https://achaljhawar.github.io/"><img src="https://avatars.githubusercontent.com/u/35405812?v=4?s=100" width="100px;" alt="Achal Jhawar"/><br /><sub><b>Achal Jhawar</b></sub></a><br /><a href="https://github.com/asyncapi/generator/commits?author=achaljhawar" title="Tests">⚠️</a></td>
       <td align="center" valign="top" width="33.33%"><a href="https://github.com/ssala034"><img src="https://avatars.githubusercontent.com/u/143904652?v=4?s=100" width="100px;" alt="Shuaib S."/><br /><sub><b>Shuaib S.</b></sub></a><br /><a href="https://github.com/asyncapi/generator/commits?author=ssala034" title="Tests">⚠️</a> <a href="https://github.com/asyncapi/generator/commits?author=ssala034" title="Documentation">📖</a> <a href="#infra-ssala034" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
     </tr>
+    <tr>
+      <td align="center" valign="top" width="33.33%"><a href="https://github.com/Adi-204"><img src="https://avatars.githubusercontent.com/u/114283933?v=4?s=100" width="100px;" alt="Adi Boghawala"/><br /><sub><b>Adi Boghawala</b></sub></a><br /><a href="https://github.com/asyncapi/generator/issues?q=author%3AAdi-204" title="Bug reports">🐛</a> <a href="https://github.com/asyncapi/generator/commits?author=Adi-204" title="Code">💻</a> <a href="#ideas-Adi-204" title="Ideas, Planning, & Feedback">🤔</a> <a href="#infra-Adi-204" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="https://github.com/asyncapi/generator/pulls?q=is%3Apr+reviewed-by%3AAdi-204" title="Reviewed Pull Requests">👀</a> <a href="https://github.com/asyncapi/generator/commits?author=Adi-204" title="Tests">⚠️</a> <a href="https://github.com/asyncapi/generator/commits?author=Adi-204" title="Documentation">📖</a></td>
+    </tr>
   </tbody>
 </table>
 

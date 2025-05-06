@@ -279,6 +279,15 @@
         "doc",
         "bug"
       ]
+    },
+    {
+      "login": "thulieblack",
+      "name": "V Thulisile Sibanda",
+      "avatar_url": "https://avatars.githubusercontent.com/u/66913810?v=4",
+      "profile": "https://thulieblack.github.io",
+      "contributions": [
+        "test"
+      ]
     }
   ],
   "contributorsPerLine": 3,

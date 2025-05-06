@@ -10,7 +10,7 @@ const asyncapi_v3_path_hoppscotch = path.resolve(__dirname, '../../test/__fixtur
 const testResultPath = path.resolve(__dirname, './temp/snapshotTestResult');
 const testResultPathPostman = path.join(testResultPath, 'client-postman');
 const testResultPathHoppscotch = path.join(testResultPath, 'client-hoppscotch');
-const testResultPathClient = path.join(testResultPath, 'client');
+const testResultPathClient = path.join(testResultPath, 'custom-client-hoppscotch');
 const template = path.resolve(__dirname, '../');
 
 describe('testing if generated client match snapshot', () => {

@@ -1,5 +1,5 @@
 
-const WSClient = require('./test/temp/snapshotTestResult/client-postman/client.js');
+const WSClient = require('./test/temp/snapshotTestResult/custom-client-hoppscotch.js');
 
 // Example usage
 const wsClient = new WSClient();

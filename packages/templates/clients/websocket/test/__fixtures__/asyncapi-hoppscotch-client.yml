@@ -1,0 +1,32 @@
+asyncapi: 3.0.0
+info:
+  title: Hoppscotch Echo WebSocket Client
+  version: 1.0.0
+  description: >
+    Undestand how to use Hoppscotch Echo WebSocket as a client.
+    Hoppscotch Echo WebSocket server echoes back any messages sent to it. You can use this to test WebSocket connections and message flows.
+
+servers:
+  echoServer:
+    $ref: './commons/servers.yml#/servers/echoServer'
+
+channels:
+  echo:
+    $ref: './commons/channels.yml#/channels/echo'
+
+operations:
+  sendEchoMessage:
+    action: send
+    channel:
+      $ref: '#/channels/echo'
+    summary: Send a message to the echo server.
+    messages:
+      - $ref: '#/channels/echo/messages/echo'  
+
+  handleTimeStampMessage:
+    action: receive
+    channel:
+      $ref: '#/channels/echo'
+    summary: Receive the timestamp message sent from server every second.
+    messages:
+      - $ref: '#/channels/echo/messages/timestamp' 

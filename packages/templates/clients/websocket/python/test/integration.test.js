@@ -5,52 +5,99 @@
 const path = require('path');
 const { readFile } = require('fs').promises;
 const Generator = require('@asyncapi/generator');
-const asyncapi_v3_path_postman = path.resolve(__dirname, './__fixtures__/asyncapi-postman-echo.yml');
-const asyncapi_v3_path_hoppscotch = path.resolve(__dirname, './__fixtures__/asyncapi-hoppscotch-echo.yml');
+const { listFiles } = require('@asyncapi/generator-helpers');
+const asyncapi_v3_path_postman = path.resolve(__dirname, '../../test/__fixtures__/asyncapi-postman-echo.yml');
+const asyncapi_v3_path_hoppscotch = path.resolve(__dirname, '../../test/__fixtures__/asyncapi-hoppscotch-client.yml');
+const asyncapi_v3_path_slack = path.resolve(__dirname, '../../test/__fixtures__/asyncapi-slack-client.yml');
 const testResultPath = path.resolve(__dirname, './temp/snapshotTestResult');
+const testResultPathPostman = path.join(testResultPath, 'client_postman');
+const testResultPathHoppscotch = path.join(testResultPath, 'client_hoppscotch');
+const testResultPathCustomHoppscotch = path.join(testResultPath, 'custom_client_hoppscotch');
+const testResultPathSlack = path.join(testResultPath, 'client_slack');
 const template = path.resolve(__dirname, '../');
+const clientFileName = 'client.py';
 
 describe('testing if generated client match snapshot', () => {
   jest.setTimeout(100000);
   
   it('generate simple client for postman echo', async () => {
-    const testOutputFiles = ['client_postman.py', 'requirements.txt'];
-
-    const generator = new Generator(template, testResultPath, {
+    const generator = new Generator(template, testResultPathPostman, {
       forceWrite: true,
       templateParams: {
         server: 'echoServer',
-        clientFileName: testOutputFiles[0]
+        clientFileName,
+        appendClientSuffix: true
       }
     });
 
     await generator.generateFromFile(asyncapi_v3_path_postman);
 
-    for (const testOutputFile of testOutputFiles) {
-      const filePath = path.join(testResultPath, testOutputFile);
-      const content = await readFile(filePath, 'utf8');
+    const testOutputFiles = await listFiles(testResultPathPostman);
 
+    for (const testOutputFile of testOutputFiles) {
+      const filePath = path.join(testResultPathPostman, testOutputFile);
+      const content = await readFile(filePath, 'utf8');
       expect(content).toMatchSnapshot(testOutputFile);
     }
   });
 
   it('generate simple client for hoppscotch echo', async () => {
-    const testOutputFiles = ['client_hoppscotch.py', 'requirements.txt'];
-
-    const generator = new Generator(template, testResultPath, {
+    const generator = new Generator(template, testResultPathHoppscotch, {
       forceWrite: true,
       templateParams: {
         server: 'echoServer',
-        clientFileName: testOutputFiles[0]
+        clientFileName
       }
     });
 
     await generator.generateFromFile(asyncapi_v3_path_hoppscotch);
 
-    for (const testOutputFile of testOutputFiles) {
-      const filePath = path.join(testResultPath, testOutputFile);
-      const content = await readFile(filePath, 'utf8');
+    const testOutputFiles = await listFiles(testResultPathHoppscotch);
 
+    for (const testOutputFile of testOutputFiles) {
+      const filePath = path.join(testResultPathHoppscotch, testOutputFile);
+      const content = await readFile(filePath, 'utf8');
+      expect(content).toMatchSnapshot(testOutputFile);
+    }
+  });
+
+  it('generate simple client for hoppscotch echo with custom client name', async () => {
+    const generator = new Generator(template, testResultPathCustomHoppscotch, {
+      forceWrite: true,
+      templateParams: {
+        server: 'echoServer',
+        clientFileName,
+        customClientName: 'HoppscotchClient'
+      }
+    });
+
+    await generator.generateFromFile(asyncapi_v3_path_hoppscotch);
+
+    const testOutputFiles = await listFiles(testResultPathCustomHoppscotch);
+
+    for (const testOutputFile of testOutputFiles) {
+      const filePath = path.join(testResultPathCustomHoppscotch, testOutputFile);
+      const content = await readFile(filePath, 'utf8');
+      expect(content).toMatchSnapshot(testOutputFile);
+    }
+  });
+
+  it('generate client for slack', async () => {
+    const generator = new Generator(template, testResultPathSlack, {
+      forceWrite: true,
+      templateParams: {
+        server: 'production',
+        clientFileName
+      }
+    });
+
+    await generator.generateFromFile(asyncapi_v3_path_slack);
+
+    const testOutputFiles = await listFiles(testResultPathSlack);
+    
+    for (const testOutputFile of testOutputFiles) {
+      const filePath = path.join(testResultPathSlack, testOutputFile);
+      const content = await readFile(filePath, 'utf8');
       expect(content).toMatchSnapshot(testOutputFile);
     }
   });

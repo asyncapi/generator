@@ -1,74 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Testing of FileHeaderInfo function render websockets file header info correctly 1`] = `
-<Text>
-  <Text>
-    //////////////////////////////////////////////////////////////////////
-  </Text>
-  <Text>
-    //
-  </Text>
-  <Text>
-    //
-     
-    Gemini Market Data Websocket API
-     - 
-    1.0.0
-  </Text>
-  <Text>
-    //
-     Protocol: 
-    wss
-  </Text>
-  <Text>
-    //
-     Host: 
-    api.gemini.com
-  </Text>
-  <Text>
-    //
-     Path: 
-    /v1/marketdata
-  </Text>
-  <Text>
-    //
-  </Text>
-  <Text>
-    //////////////////////////////////////////////////////////////////////
-  </Text>
-</Text>
+exports[`Testing of FileHeaderInfo function render websockets file header info with pathname correctly 1`] = `
+"//////////////////////////////////////////////////////////////////////
+//
+// Gemini Market Data Websocket API - 1.0.0
+// Protocol: wss
+// Host: api.gemini.com
+// Path: /v1/marketdata
+//
+//////////////////////////////////////////////////////////////////////"
 `;
 
-exports[`Testing of FileHeaderInfo function render websockets file header info correctly 2`] = `
-<Text>
-  <Text>
-    //////////////////////////////////////////////////////////////////////
-  </Text>
-  <Text>
-    //
-  </Text>
-  <Text>
-    //
-     
-    Gemini Market Data Websocket API
-     - 
-    1.0.0
-  </Text>
-  <Text>
-    //
-     Protocol: 
-    wss
-  </Text>
-  <Text>
-    //
-     Host: 
-    api.gemini.com
-  </Text>
-  <Text>
-    //
-  </Text>
-  <Text>
-    //////////////////////////////////////////////////////////////////////
-  </Text>
-</Text>
+exports[`Testing of FileHeaderInfo function render websockets file header info without pathname correctly 1`] = `
+"//////////////////////////////////////////////////////////////////////
+//
+// Gemini Market Data Websocket API - 1.0.0
+// Protocol: wss
+// Host: api.gemini.com
+//
+//////////////////////////////////////////////////////////////////////"
 `;

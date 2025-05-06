@@ -253,6 +253,21 @@
         "doc",
         "infra"
       ]
+    },
+    {
+      "login": "Adi-204",
+      "name": "Adi Boghawala",
+      "avatar_url": "https://avatars.githubusercontent.com/u/114283933?v=4",
+      "profile": "https://github.com/Adi-204",
+      "contributions": [
+        "bug",
+        "code",
+        "ideas",
+        "infra",
+        "review",
+        "test",
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 3,

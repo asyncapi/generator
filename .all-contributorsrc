@@ -268,6 +268,17 @@
         "test",
         "doc"
       ]
+    },
+    {
+      "login": "KunalNasa",
+      "name": "Kunal Nasa",
+      "avatar_url": "https://avatars.githubusercontent.com/u/111643119?v=4",
+      "profile": "https://www.linkedin.com/in/kunalnasa/",
+      "contributions": [
+        "code",
+        "doc",
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 3,

@@ -131,6 +131,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     </tr>
     <tr>
       <td align="center" valign="top" width="33.33%"><a href="https://github.com/nightknighto"><img src="https://avatars.githubusercontent.com/u/52013393?v=4?s=100" width="100px;" alt="Ahmed Atwa"/><br /><sub><b>Ahmed Atwa</b></sub></a><br /><a href="https://github.com/asyncapi/generator/commits?author=nightknighto" title="Tests">⚠️</a> <a href="#infra-nightknighto" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
+      <td align="center" valign="top" width="33.33%"><a href="https://github.com/Light13008"><img src="https://avatars.githubusercontent.com/u/111660124?v=4?s=100" width="100px;" alt="Sarvesh.Patil"/><br /><sub><b>Sarvesh.Patil</b></sub></a><br /><a href="https://github.com/asyncapi/generator/commits?author=Light13008" title="Tests">⚠️</a> <a href="https://github.com/asyncapi/generator/pulls?q=is%3Apr+reviewed-by%3ALight13008" title="Reviewed Pull Requests">👀</a></td>
     </tr>
   </tbody>
 </table>

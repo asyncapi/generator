@@ -968,25 +968,23 @@ class Generator {
    */
   async loadTemplateConfig() {
     try {
-      // First, check for .ageneratorrc file
+      // First, try to read .ageneratorrc file directly
       const rcConfigPath = path.resolve(this.templateDir, '.ageneratorrc');
       
       try {
-        await fs.promises.access(rcConfigPath);
         const yaml = await readFile(rcConfigPath, { encoding: 'utf8' });
         const yamlConfig = require('js-yaml').load(yaml);
         this.templateConfig = yamlConfig || {};
-      } catch (accessError) {
-        // File doesn't exist, fallback to package.json
+      } catch (rcError) {
+        // If reading .ageneratorrc fails, try package.json
         const configPath = path.resolve(this.templateDir, CONFIG_FILENAME);
         
         try {
-          await fs.promises.access(configPath);
           const json = await readFile(configPath, { encoding: 'utf8' });
           const generatorProp = JSON.parse(json).generator;
           this.templateConfig = generatorProp || {};
-        } catch (packageAccessError) {
-          // package.json doesn't exist or can't be accessed
+        } catch (packageError) {
+          // If reading package.json fails, use empty config
           this.templateConfig = {};
         }
       }

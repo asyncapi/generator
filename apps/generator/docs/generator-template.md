@@ -25,47 +25,79 @@ Before you begin, make sure you have the following set up:
 - **Code Editor (VS Code recommended)** – A good code editor is essential for development and debugging.
 - **Knowledge of Template Development** – Review the [Template Development Guide](template-development) to understand the structure and minimum requirements for templates.
 
+> **Note:** In this tutorial, we are using `test.mosquitto.org` as the public broker. However, sometimes it may not be reachable. If you experience any difficulty connecting to it, you can run a broker on your localhost instead.  
+>  
+> If you choose to run the broker on localhost, then in the further steps, replace all occurrences of `test.mosquitto.org` with `localhost` and run the following Docker command:  
+>  
+> ```sh
+> docker run -d --name mosquitto -p 1883:1883 eclipse-mosquitto
+> ```
+>  
+> This starts an Eclipse Mosquitto broker locally on your machine, listening on port 1883.  
+>  
+> If you don’t want to use Docker, you can install Mosquitto manually. Follow the [official installation guide](https://mosquitto.org/download/) for your operating system.
+
 ## Background context
 
 There is a list of [community maintained templates](https://www.asyncapi.com/docs/tools/generator/template#generator-templates-list), but what if you do not find what you need? In that case, you'll create a user-defined template that generates custom output from the generator.
 Before you create the template, you'll need to have an [AsyncAPI document](https://www.asyncapi.com/docs/tools/generator/asyncapi-document) that defines the properties you want to use in your template to test against. In this tutorial, you'll use the following template saved in the **test/fixtures/asyncapi.yml** file in your template project directory.
 
-``` yml
-
-asyncapi: 2.6.0
-
+```yaml
+asyncapi: 3.0.0
 info:
   title: Temperature Service
   version: 1.0.0
-  description: This service is in charge of processing all the events related to temperature.
+  description: Service that emits temperature changes from a bedroom sensor.
 
 servers:
-  dev:
-    url: test.mosquitto.org
+  production:
+    host: broker.example.com
     protocol: mqtt
 
 channels:
-  temperature/changed:
-    description: Updates the bedroom temperature in the database when the temperatures drops or goes up.
-    publish:
-      operationId: temperatureChange
-      message:
-        description: Message that is being sent when the temperature in the bedroom changes.
+  temperatureChanged:
+    address: temperature/changed
+    messages:
+      temperatureChange:
+        description: Message sent when the temperature in the bedroom changes.
         payload:
-          type: object
-          additionalProperties: false
-          properties:
-            temperatureId:
-              type: string
+          $ref: '#/components/schemas/Temperature'
+
+operations:
+  sendTemperatureChanged:
+    action: send
+    summary: Temperature changes are pushed to the broker
+    channel:
+      $ref: '#/channels/temperatureChanged'
+
 components:
   schemas:
-    temperatureId:
+    Temperature:
       type: object
       additionalProperties: false
       properties:
-        temperatureId:
+        value:
+          type: number
+        unit:
           type: string
+
 ```
+> 🆕 This document uses the AsyncAPI 3.0.0 structure. Notable changes include `operations` now being top-level and the use of `address:` in `channels` instead of nested publish/subscribe.
+
+## Handling Diagnostics (Warnings)
+
+When using the latest AsyncAPI parser, it's important to handle not just errors but also diagnostics (warnings). These help identify non-critical issues, such as missing recommended fields like `license`, `contact`, or outdated spec versions.
+
+```ts
+const { parseFromFile } = require('@asyncapi/parser');
+
+const result = await parseFromFile('example-asyncapi.yaml');
+
+if (result.diagnostics && result.diagnostics.length > 0) {
+  console.warn('⚠️ Found diagnostics:');
+  console.dir(result.diagnostics, { depth: null });
+}
+
 
 ## Overview of steps
 
@@ -477,7 +509,7 @@ class TemperatureServiceClient:
 You'll then need to template to dynamically generate `sendTemperatureDrop` and `sendTemperatureRise` functions in the generated code based off the AsyncAPI document content. The goal is to write template code that returns functions for channels that the Temperature Service application is subscribed to. The template code to generate these functions will look like this:
 
 ```js
-<Text newLines={2}>
+<Text indent={2} newLines={2}>
   <TopicFunction channels={asyncapi.channels().filterByReceive()} />
 </Text>
 ```
@@ -550,7 +582,7 @@ export default function ({ asyncapi, params }) {
             self.client.connect(mqttBroker)`}
       </Text>
 
-      <Text indent={2}>
+      <Text indent={2} newLines={2}>
         <TopicFunction channels={asyncapi.channels().filterByReceive()} />
       </Text>
     </File>

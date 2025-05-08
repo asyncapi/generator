@@ -1,6 +1,6 @@
 ---
 title: "Creating a template - Java"
-weight: 170
+weight: 190
 ---
 
 This tutorial teaches you how to create a simple generator template using a Java MQTT client. You'll use the AsyncAPI document and the template you develop to generate Java code. Additionally, you'll create template code with a reusable component to reuse the custom functionality you create and test your code using an MQTT client.
@@ -19,8 +19,9 @@ In this section, you'll:
 
 1. Create a new directory to run Java code.
 2. Create the Java client.
-3. Output Java template code.
-4. Create more channels
+3. Test the Java Client
+4. Output Java template code.
+5. Create more channels
 
 ### 1. Create a new directory to run Java code
 
@@ -99,7 +100,7 @@ Check out your shiny new generated files at test/project.
 
 ### 2. Create the Java client
 
-  ##### a. Setting up Gradle
+  #### a. Setting up Gradle
 The first step in creating the Java client to send messages using the MQTT protocol is to ensure that your `build.gradle` file includes the correct dependencies. Add the code snippet below into your `build.gradle` file.
 
 ```groovy
@@ -132,7 +133,7 @@ Here's what is contained in the code snippet above:
 
 Navigate to the `java-mqtt-client-template` directory. Run the command `gradle build` in your terminal to build your Java application. **Note**: Every time you update the `build.gradle` file, you must recompile it to get the new changes. 
 
-  ##### b. Beefing up Client.java
+  #### b. Beefing up Client.java
 
 Here is the sample code to pasted into the `Client.java` file you generated above running the `asyncapi generate fromTemplate src/fixtures/asyncapi.yml ./ --output src/main/java` command. 
 
@@ -173,7 +174,7 @@ public class Client {
 }
 ```
 
-  ##### b. Test Client.java
+### 3. Test the Java Client
 Create a **src/main/java/TestClient.java** file in your project and add the code snippet below.
 
 Your directory should now look like this:
@@ -229,7 +230,7 @@ New temperature detected 64250266 sent to temperature/changed
 New temperature detected 36947728 sent to temperature/changed
 New temperature detected 72955029 sent to temperature/changed
 ```
-### 3. Output Java template code.
+### 4. Output Java template code.
 Open [**index.js**](#java - indexjs-file), copy the content of [**client.py**](#1-create-the-client) and replace `{asyncapi.info().title()}` with it so it looks like the code snippet below now:
 
 ```js
@@ -277,7 +278,7 @@ public class Client {
   }</File>
 }
 ```
-##### b. Write the script to run the test code
+#### b. Write the script to run the test code
 In **package.json** define a script property that you invoke by calling `npm run <your_script>`. After adding these scripts in **package.json**, it will look like the following code snippet:
 
 ``` json
@@ -312,9 +313,9 @@ In **package.json** define a script property that you invoke by calling `npm run
   }
 ```
 Run `npm test` to see if everything is working.
-### 4. Create more channels
+### 5. Create more channels
 
-##### a. Creating more reusable components
+#### a. Creating more reusable components
 
 Similar to the previous `TopicFunction` function we will create a function to make reusable components regardless of the number of channels in the asyncAPI document. 
 
@@ -445,7 +446,7 @@ java-mqtt-client-template
 └── build.gradle
 ```
 
-##### b. Update AsyncAPI document with more channels
+#### b. Update AsyncAPI document with more channels
 
 Add the following AsyncAPI document to have more channels:
 
@@ -499,7 +500,7 @@ components:
           type: string
 
 ```
-##### c. Update TestClient.java
+#### c. Update TestClient.java
 We must now update the **TestClient.java** file to test the different channels in the AsyncAPI document above. The tests will be similar to the previous ones you performed earlier. Paste the following code snippet into your **TestClient.java** file:
 
 ```java

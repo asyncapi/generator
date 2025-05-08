@@ -29,11 +29,11 @@ Create a new directory called **java-mqtt-client-template** at the root of your 
 
 Once that is done, you should create some new sub-directories to begin building your Java client.
   1. Create a new subdirectory called `src`
-  2. Change into `src` and create two new subdirectories: `fixtures` and `main/java/template`.
+  2. Change into `src` and create two new subdirectories: `fixtures` and `main/java`.
   3. Create a file named `asyncapi.yml` in your fixtures directory and paste the `asyncapi.yml` document mentioned [here](https://www.asyncapi.com/docs/tools/generator/generator-template#background-context) into it.
   4. Create a new file named **package.json** in your **java-mqtt-client-template** directory. This file is used to define the **dependencies** for your template.
   5. Create a new file called **build.gradle** in your **java-mqtt-client-template** directory. This file is used to build your generated java code for your template.
-  6.  Create a new file named **index.js** in your **template** directory. This file is used to define the **logic** for your template.
+  6. Create a new file named **index.js** in a `template` folder from root directory. This file is used to define the **logic** for your template.
 
 Now your directory should look like this:
 
@@ -100,7 +100,7 @@ Check out your shiny new generated files at test/project.
 
 ### 2. Create the Java client
 
-  #### a. Setting up Gradle
+  #### 2a. Setting up Gradle
 The first step in creating the Java client to send messages using the MQTT protocol is to ensure that your `build.gradle` file includes the correct dependencies. Add the code snippet below into your `build.gradle` file.
 
 ```groovy
@@ -133,7 +133,7 @@ Here's what is contained in the code snippet above:
 
 Navigate to the `java-mqtt-client-template` directory. Run the command `gradle build` in your terminal to build your Java application. **Note**: Every time you update the `build.gradle` file, you must recompile it to get the new changes. 
 
-  #### b. Beefing up Client.java
+  #### 2b. Beefing up Client.java
 
 Here is the sample code to pasted into the `Client.java` file you generated above running the `asyncapi generate fromTemplate src/fixtures/asyncapi.yml ./ --output src/main/java` command. 
 
@@ -231,7 +231,7 @@ New temperature detected 36947728 sent to temperature/changed
 New temperature detected 72955029 sent to temperature/changed
 ```
 ### 4. Output Java template code.
-Open [**index.js**](#java - indexjs-file), copy the content of [**client.py**](#1-create-the-client) and replace `{asyncapi.info().title()}` with it so it looks like the code snippet below now:
+Open **index.js** and copy the content below so your file looks like the code snippet below:
 
 ```js
 //1
@@ -240,9 +240,9 @@ import { File } from '@asyncapi/generator-react-sdk'
 export default function ({ asyncapi }) {
 //3
   return <File name="Client.java">
-  {
-    `import org.eclipse.paho.client.mqttv3.*;
+  {`
 
+import org.eclipse.paho.client.mqttv3.*;
 public class Client {
     private static final String BROKER_URL = "tcp://test.mosquitto.org:1883";
     private static final String TOPIC = "temperature/changed";
@@ -278,7 +278,7 @@ public class Client {
   }</File>
 }
 ```
-#### b. Write the script to run the test code
+#### 4a. Write the script to run the test code
 In **package.json** define a script property that you invoke by calling `npm run <your_script>`. After adding these scripts in **package.json**, it will look like the following code snippet:
 
 ``` json
@@ -315,7 +315,7 @@ In **package.json** define a script property that you invoke by calling `npm run
 Run `npm test` to see if everything is working.
 ### 5. Create more channels
 
-#### a. Creating more reusable components
+#### 5a. Creating more reusable components
 
 Similar to the previous `TopicFunction` function we will create a function to make reusable components regardless of the number of channels in the asyncAPI document. 
 
@@ -446,7 +446,7 @@ java-mqtt-client-template
 └── build.gradle
 ```
 
-#### b. Update AsyncAPI document with more channels
+#### 5b. Update AsyncAPI document with more channels
 
 Add the following AsyncAPI document to have more channels:
 
@@ -500,7 +500,7 @@ components:
           type: string
 
 ```
-#### c. Update TestClient.java
+#### 5c. Update TestClient.java
 We must now update the **TestClient.java** file to test the different channels in the AsyncAPI document above. The tests will be similar to the previous ones you performed earlier. Paste the following code snippet into your **TestClient.java** file:
 
 ```java

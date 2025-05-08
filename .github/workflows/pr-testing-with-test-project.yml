@@ -9,7 +9,7 @@ jobs:
   changes:
     runs-on: ubuntu-latest
     outputs:
-      should_test: ${{ steps.filter.outputs.modified_files }}
+      should_test: ${{ steps.should_run.outputs.shouldrun }}
     steps:
       - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3 https://github.com/actions/checkout/releases/tag/v3
       - name: Checks paths-filter
@@ -28,24 +28,10 @@ jobs:
               - '!**/*.md'
               - '!docs/**'
               - '!.all-contributorsrc'
-  test:
-    needs: changes
-    if: ${{ github.event.pull_request.draft == false }}
-    name: Test generator as dependency with Node ${{ matrix.node }}
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node: ["18", "20"]
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744
-      - name: Log should_test value across jobs
-        run: |
-          echo "should_test value: ${{ needs.changes.outputs.should_test }}"
       - name: Determine if tests should run
         id: should_run
         if: >
-          needs.changes.outputs.should_test == 'true' &&
+          steps.filter.outputs.modified_files == 'true' &&
           !github.event.pull_request.draft && !(
             (github.actor == 'asyncapi-bot' && (
               startsWith(github.event.pull_request.title, 'ci: update of files from global .github repo') ||
@@ -56,12 +42,43 @@ jobs:
                startsWith(github.event.pull_request.title, 'chore(release):')
             )) ||
             (github.actor == 'allcontributors[bot]' &&
-               startsWith(github.event.pull_request.title, 'docs: add')
+              startsWith(github.event.pull_request.title, 'docs: add')
             )
           )
         run: echo "shouldrun=true" >> $GITHUB_OUTPUT
         shell: bash
-      - if: steps.should_run.outputs.shouldrun == 'true'
+
+  #this test job is responsible for running dedicated complex integration tests for the generator
+  test:
+    needs: changes
+    name: Test generator as dependency with Node ${{ matrix.node }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: ["18", "20"]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744
+      - name: Log should_test value across jobs #it has to stay here for some time for debugging
+        run: |
+          echo "should_test value: ${{ needs.changes.outputs.should_test }}"
+      - if: needs.changes.outputs.should_test == 'true'
         name: Run test
         run: NODE_VERSION=${{ matrix.node }} docker compose up --abort-on-container-exit --force-recreate
         working-directory: ./apps/generator/test/test-project
+
+  #this test job runs acceptance tests that use microcks and check generated code against the asyncapi contract
+  acceptance:
+    needs: changes
+    name: Acceptance tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744
+      - name: Log should_test value across jobs #it has to stay here for some time for debugging
+        run: |
+          echo "should_test value: ${{ needs.changes.outputs.should_test }}"
+      - if: needs.changes.outputs.should_test == 'true'
+        name: Run acceptance tests
+        run: docker compose -f ./microcks-setup/microcks-podman.yml --profile tests up --wait -d --abort-on-container-exit --force-recreate
+        working-directory: ./packages/templates/clients/websocket/test

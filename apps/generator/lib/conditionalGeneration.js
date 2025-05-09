@@ -15,7 +15,7 @@ const jmespath = require('jmespath');
  * @param  {String} targetDir Directory where the generated files are written.
  * @return {Promise<Boolean>} Returns true if generation should be skipped.
  */
-module.exports.conditionalGeneration = async function (
+function conditionalGeneration (
   relativeSourceFile,
   relativeSourceDirectory,
   relativeTargetFile,
@@ -38,7 +38,7 @@ module.exports.conditionalGeneration = async function (
   }
   const parameterValue = getParameterValue(templateParams, parameter);
   if (!parameterValue) {
-    await handleMissingParameterValue(relativeSourceFile, templateConfig);
+    handleMissingParameterValue(relativeSourceFile, templateConfig);
     return false;
   }
 
@@ -63,7 +63,7 @@ module.exports.conditionalGeneration = async function (
  * @param {String} relativeSourceDirectory - The relative path to the directory of the source file.
  * @returns {Boolean} - Returns `true` if the file should be included; `false` if it should be skipped.
  */
-module.exports.conditionalFiles = async function (
+function conditionalFiles (
   asyncapiDocument,
   templateParams,
   templateConfig,
@@ -123,7 +123,7 @@ function handleMissingParameterValue(relativeSourceFile,templateConfig) {
  * @param {String} targetDir The directory where the generated files are written.
  * @return {Promise<Boolean>} A promise that resolves to true if the generation should be skipped.
  */
-function validateParameterValue(
+async function validateParameterValue(
   validation,
   argument,
   matchedConditionPath,
@@ -134,7 +134,7 @@ function validateParameterValue(
   if (Object.hasOwn(validation, 'not')) {
     const isNotValid = validateNot(validation.not, argument);
     if (isNotValid && matchedConditionPath === relativeSourceDirectory) {
-      removeParentDirectory(relativeTargetFile, targetDir);
+      await removeParentDirectory(relativeTargetFile, targetDir);
       return false;
     }
     log.debug(logMessage.conditionalFilesMatched(matchedConditionPath));
@@ -150,7 +150,7 @@ function validateParameterValue(
     return true;
   }
   
-  removeParentDirectory(relativeTargetFile, targetDir);
+  await removeParentDirectory(relativeTargetFile, targetDir);
   return false;
 }
 
@@ -196,3 +196,8 @@ function removeParentDirectory(relativeTargetFile, targetDir) {
 function getParameterValue(templateParams, parameter) {
   return templateParams[parameter];
 }
+
+module.exports = {
+  conditionalGeneration,
+  conditionalFiles
+};

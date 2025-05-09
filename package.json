@@ -43,8 +43,5 @@
   "workspaces": [
     "apps/*",
     "packages/**"
-  ],
-  "dependencies": {
-    "ajv": "^8.17.1"
-  }
+  ]
 }

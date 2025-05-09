@@ -113,12 +113,12 @@ describe('Template Configuration Validator', () => {
 
     expect(() => validateTemplateConfig(templateConfig, templateParams, asyncapiDocument)).toThrow('This template doesn\'t have any params.');
   });
-  it('Validation throw error if parameter in condition files is not string', () => {
+  it('Validation throw error if subject in condition files is not string', () => {
     const templateParams = {};
     const templateConfig  = {
-      conditionalGeneration: {
+      conditionalFiles: {
         'my/path/to/file.js': {
-          parameter: ['server.protocol'],
+          subject: ['server.protocol'],
           validation: {
             const: 'myprotocol'
           }
@@ -126,15 +126,15 @@ describe('Template Configuration Validator', () => {
       }
     };
 
-    expect(() => validateTemplateConfig(templateConfig, templateParams)).toThrow('Invalid conditional file parameter for my/path/to/file.js: server.protocol.');
+    expect(() => validateTemplateConfig(templateConfig, templateParams)).toThrow('Invalid conditional file subject for my/path/to/file.js: server.protocol.');
   });
 
   it('Validation throw error if validation in condition files is not object', () => {
     const templateParams = {};
     const templateConfig  = {
-      conditionalGeneration: {
+      conditionalFiles: {
         'my/path/to/file.js': {
-          parameter: 'server.url',
+          subject: 'server.url',
           validation: 'http://example.com'
         }
       }
@@ -146,9 +146,9 @@ describe('Template Configuration Validator', () => {
   it('Validation enrich conditional files object with validate object', () => {
     const templateParams = {};
     const templateConfig  = {
-      conditionalGeneration: {
+      conditionalFiles: {
         'my/path/to/file.js': {
-          parameter: 'server.protocol',
+          subject: 'server.protocol',
           validation: {
             const: 'myprotocol'
           }
@@ -157,7 +157,24 @@ describe('Template Configuration Validator', () => {
     };
     validateTemplateConfig(templateConfig, templateParams);
 
-    expect(templateConfig.conditionalGeneration['my/path/to/file.js']).toBeDefined();
+    expect(templateConfig.conditionalFiles['my/path/to/file.js']).toBeDefined();
+  });
+
+  it('Validation enrich conditional files object with validate object if the subject is info', () => {
+    const templateParams = {};
+    const templateConfig  = {
+      conditionalFiles: {
+        'my/path/to/file.js': {
+          subject: 'info.title',
+          validation: {
+            const: 'asyncapi'
+          }
+        }
+      }
+    };
+    validateTemplateConfig(templateConfig, templateParams);
+
+    expect(templateConfig.conditionalFiles['my/path/to/file.js']).toBeDefined();
   });
 
   it('Validation throw error if specified server is not in asyncapi document', () => {

@@ -43,7 +43,7 @@ function skipOverwrite(testFilePath) {
 }
 
 function conditionalFilesMatched(relativeSourceFile) {
-  return `${relativeSourceFile} was not generated because condition specified for this file in template configuration in conditionalGeneration matched.`;
+  return `${relativeSourceFile} was not generated because condition specified for this file in template configuration in conditionalFiles matched.`;
 }
 
 function compileEnabled(dir, output_dir) {

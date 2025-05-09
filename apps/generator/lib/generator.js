@@ -620,7 +620,7 @@ class Generator {
         path: packagePath,
       };
     } catch (err) {
-      throw new Error('Installation failed', err);
+      throw new Error(`Installation failed: ${ err.message }`);
     }
   }
 

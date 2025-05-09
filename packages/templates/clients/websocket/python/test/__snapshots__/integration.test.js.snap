@@ -785,8 +785,6 @@ requests==2.32.3
 "
 `;
 
-exports[`testing if generated client match snapshot generate simple client for hoppscotch echo with custom client name: .py 1`] = `""`;
-
 exports[`testing if generated client match snapshot generate simple client for hoppscotch echo with custom client name: client.py 1`] = `
 "# //////////////////////////////////////////////////////////////////////////
 #
@@ -968,8 +966,6 @@ requests==2.32.3
 "
 `;
 
-exports[`testing if generated client match snapshot generate simple client for hoppscotch echo: .py 1`] = `""`;
-
 exports[`testing if generated client match snapshot generate simple client for hoppscotch echo: client.py 1`] = `
 "# //////////////////////////////////////////////////////////////////////////
 #
@@ -1150,8 +1146,6 @@ certifi==2025.1.31
 requests==2.32.3
 "
 `;
-
-exports[`testing if generated client match snapshot generate simple client for postman echo: .py 1`] = `""`;
 
 exports[`testing if generated client match snapshot generate simple client for postman echo: client.py 1`] = `
 "# //////////////////////////////////////////////////////////////////////////

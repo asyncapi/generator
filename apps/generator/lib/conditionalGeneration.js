@@ -3,6 +3,7 @@ const path = require('path');
 const Ajv = require('ajv');
 const log = require('loglevel');
 const logMessage = require('./logMessages');
+const jmespath = require('jmespath');
 /**
  * Determines if file generation should be skipped based on templateConfig conditions.
  *
@@ -24,7 +25,7 @@ module.exports.conditionalGeneration = async function (
   templateParams,
   asyncapiDocument 
 ) {
-  const conditionConfig = templateConfig.conditionalGeneration[matchedConditionPath];
+  const conditionConfig = templateConfig?.conditionalGeneration?.[matchedConditionPath] || {};
   const { parameter, subject, validation } = conditionConfig;
   
   if (subject) {
@@ -32,8 +33,7 @@ module.exports.conditionalGeneration = async function (
       asyncapiDocument,
       templateParams,
       templateConfig,
-      relativeSourceFile,
-      relativeSourceDirectory
+      relativeSourceFile
     );
   }
   const parameterValue = getParameterValue(templateParams, parameter);
@@ -50,6 +50,53 @@ module.exports.conditionalGeneration = async function (
     relativeTargetFile,
     targetDir
   );
+};
+
+/**
+ * Determines whether a file should be conditionally included based on the provided subject expression
+ * and optional validation logic defined in the template configuration.
+ *
+ * @param {Object} asyncapiDocument - The parsed AsyncAPI document instance used for context evaluation.
+ * @param {Object} templateParams - The template parameters passed by the user (e.g. server selection).
+ * @param {Object} templateConfig - The configuration object that contains `conditionalFiles` rules.
+ * @param {String} relativeSourceFile - The relative path to the source file being evaluated.
+ * @param {String} relativeSourceDirectory - The relative path to the directory of the source file.
+ * @returns {Boolean} - Returns `true` if the file should be included; `false` if it should be skipped.
+ */
+module.exports.conditionalFiles = async function (
+  asyncapiDocument,
+  templateParams,
+  templateConfig,
+  relativeSourceFile
+) {
+  const fileCondition = templateConfig.conditionalFiles?.[relativeSourceFile];
+  if (!fileCondition || !fileCondition.subject) {
+    return true; 
+  }
+
+  const { subject, validate } = fileCondition;
+
+  const server = templateParams.server && asyncapiDocument.servers().get(templateParams.server);
+  const context = {
+    ...asyncapiDocument.json(),
+    server: server ? server.json() : undefined,
+    info: asyncapiDocument.info()?.json(),
+    channels: asyncapiDocument.channels() || undefined,
+    components: asyncapiDocument.components()?.json(),
+  };
+
+  const source = jmespath.search(context, subject);
+  if (!source) {
+    log.debug(logMessage.relativeSourceFileNotGenerated(relativeSourceFile, subject));
+    return false;
+  }
+
+  if (validate && !validate(source)) {
+    log.debug(logMessage.conditionalFilesMatched(relativeSourceFile));
+    return false;
+  }
+
+  return true;
 };
 
 /**

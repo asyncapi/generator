@@ -899,7 +899,7 @@ class Generator {
     // This will deprecate soon 
     // TODO: https://github.com/asyncapi/generator/issues/1553
     if (this.templateConfig.conditionalFiles?.[relativeSourceFile]) {
-      const fileGeneration = await conditionalFiles(asyncapiDocument, this.templateParams, this.templateConfig, relativeSourceFile, relativeSourceDirectory);
+      const fileGeneration = await conditionalFiles(asyncapiDocument, this.templateParams, this.templateConfig, relativeSourceFile);
       if (fileGeneration === false) return;
     }      
     const matchedConditionPath = await this.getMatchedConditionPath(relativeSourceFile, relativeSourceDirectory);

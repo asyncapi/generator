@@ -3,7 +3,7 @@
 exports[`testing if generated client match snapshot generate simple client for hoppscotch echo 1`] = `
 "//////////////////////////////////////////////////////////////////////
 //
-// Hoppscotch Echo WebSocket - 1.0.0
+// Hoppscotch Echo WebSocket Client - 1.0.0
 // Protocol: wss
 // Host: echo-websocket.hoppscotch.io
 //
@@ -13,8 +13,12 @@ const WebSocket = require('ws');
 
 class HoppscotchEchoWebSocketClient {
 
-  constructor() {
-    this.url = 'wss://echo-websocket.hoppscotch.io';
+  /*
+    * Constructor to initialize the WebSocket client
+    * @param {string} url - The WebSocket server URL. Use it if the server URL is different from the default one taken from the AsyncAPI document.
+  */
+  constructor(url) {
+    this.url = url || 'wss://echo-websocket.hoppscotch.io';
     this.websocket = null;
     this.messageHandlers = [];
     this.errorHandlers = [];
@@ -27,19 +31,23 @@ class HoppscotchEchoWebSocketClient {
 
       // On successful connection
       this.websocket.onopen = () => {
-        console.log('Connected to Hoppscotch Echo WebSocket server');
+        console.log('Connected to Hoppscotch Echo WebSocket Client server');
         resolve();
       };
 
       // On receiving a message
       this.websocket.onmessage = (event) => {
-        console.log('Message received:', event.data);
-
-        this.messageHandlers.forEach(handler => {
-          if (typeof handler === 'function') {
-            this.handleMessage(event.data, handler);
-          }
-        });
+        if (this.messageHandlers.length > 0) {
+          // Call custom message handlers
+          this.messageHandlers.forEach(handler => {
+            if (typeof handler === 'function') {
+              this.handleMessage(event.data, handler);
+            }
+          });
+        } else {
+          // Default message logging
+          console.log('Message received:', event.data);
+        }
       };
 
       // On error first call custom error handlers, then default error behavior
@@ -56,7 +64,7 @@ class HoppscotchEchoWebSocketClient {
 
       // On connection close
       this.websocket.onclose = () => {
-        console.log('Disconnected from Hoppscotch Echo WebSocket server');
+        console.log('Disconnected from Hoppscotch Echo WebSocket Client server');
       };
     });
   }
@@ -84,10 +92,17 @@ class HoppscotchEchoWebSocketClient {
     if (cb) cb(message);
   }
 
-  // Method to send an echo message to the server
-  sendEchoMessage(message) {
-    this.websocket.send(JSON.stringify(message));
-    console.log('Sent message to echo server:', message);
+  /**
+     * By default sends a message over a provided WebSocket connection.
+     * Useful when you already have an established WebSocket connection
+     * and want to send a message without creating a class instance.
+     *
+     * @param {Object} message - The message to send. It will be stringified to JSON.
+     * @param {WebSocket} socket - An existing WebSocket connection to use for sending the message.
+  */
+  static sendEchoMessage(message, socket) {
+    const websocket = socket || this.websocket;
+    websocket.send(JSON.stringify(message));
   }
 
   // Method to close the WebSocket connection
@@ -99,6 +114,124 @@ class HoppscotchEchoWebSocketClient {
   }
 }
 module.exports = HoppscotchEchoWebSocketClient;
+
+"
+`;
+
+exports[`testing if generated client match snapshot generate simple client for hoppscotch echo with custom client name 1`] = `
+"//////////////////////////////////////////////////////////////////////
+//
+// Hoppscotch Echo WebSocket Client - 1.0.0
+// Protocol: wss
+// Host: echo-websocket.hoppscotch.io
+//
+//////////////////////////////////////////////////////////////////////
+
+const WebSocket = require('ws');
+
+class HoppscotchClient {
+
+  /*
+    * Constructor to initialize the WebSocket client
+    * @param {string} url - The WebSocket server URL. Use it if the server URL is different from the default one taken from the AsyncAPI document.
+  */
+  constructor(url) {
+    this.url = url || 'wss://echo-websocket.hoppscotch.io';
+    this.websocket = null;
+    this.messageHandlers = [];
+    this.errorHandlers = [];
+  }
+
+  // Method to establish a WebSocket connection
+  connect() {
+    return new Promise((resolve, reject) => {
+      this.websocket = new WebSocket(this.url);
+
+      // On successful connection
+      this.websocket.onopen = () => {
+        console.log('Connected to Hoppscotch Echo WebSocket Client server');
+        resolve();
+      };
+
+      // On receiving a message
+      this.websocket.onmessage = (event) => {
+        if (this.messageHandlers.length > 0) {
+          // Call custom message handlers
+          this.messageHandlers.forEach(handler => {
+            if (typeof handler === 'function') {
+              this.handleMessage(event.data, handler);
+            }
+          });
+        } else {
+          // Default message logging
+          console.log('Message received:', event.data);
+        }
+      };
+
+      // On error first call custom error handlers, then default error behavior
+      this.websocket.onerror = (error) => {
+        if (this.errorHandlers.length > 0) {
+          // Call custom error handlers
+          this.errorHandlers.forEach(handler => handler(error));
+        } else {
+          // Default error behavior
+          console.error('WebSocket Error:', error);
+        }
+        reject(error);
+      };
+
+      // On connection close
+      this.websocket.onclose = () => {
+        console.log('Disconnected from Hoppscotch Echo WebSocket Client server');
+      };
+    });
+  }
+
+  // Method to register custom message handlers
+  registerMessageHandler(handler) {
+    if (typeof handler === 'function') {
+      this.messageHandlers.push(handler);
+    } else {
+      console.warn('Message handler must be a function');
+    }
+  }
+
+  // Method to register custom error handlers
+  registerErrorHandler(handler) {
+    if (typeof handler === 'function') {
+      this.errorHandlers.push(handler);
+    } else {
+      console.warn('Error handler must be a function');
+    }
+  }
+
+  // Method to handle message with callback
+  handleMessage(message, cb) {
+    if (cb) cb(message);
+  }
+
+  /**
+     * By default sends a message over a provided WebSocket connection.
+     * Useful when you already have an established WebSocket connection
+     * and want to send a message without creating a class instance.
+     *
+     * @param {Object} message - The message to send. It will be stringified to JSON.
+     * @param {WebSocket} socket - An existing WebSocket connection to use for sending the message.
+  */
+  static sendEchoMessage(message, socket) {
+    const websocket = socket || this.websocket;
+    websocket.send(JSON.stringify(message));
+  }
+
+  // Method to close the WebSocket connection
+  close() {
+    if (this.websocket) {
+      this.websocket.close();
+      console.log('WebSocket connection closed.');
+    }
+  }
+}
+module.exports = HoppscotchClient;
 
 "
 `;
@@ -117,8 +250,12 @@ const WebSocket = require('ws');
 
 class PostmanEchoWebSocketClientClient {
 
-  constructor() {
-    this.url = 'wss://ws.postman-echo.com/raw';
+  /*
+    * Constructor to initialize the WebSocket client
+    * @param {string} url - The WebSocket server URL. Use it if the server URL is different from the default one taken from the AsyncAPI document.
+  */
+  constructor(url) {
+    this.url = url || 'wss://ws.postman-echo.com/raw';
     this.websocket = null;
     this.messageHandlers = [];
     this.errorHandlers = [];
@@ -137,13 +274,17 @@ class PostmanEchoWebSocketClientClient {
 
       // On receiving a message
       this.websocket.onmessage = (event) => {
-        console.log('Message received:', event.data);
-
-        this.messageHandlers.forEach(handler => {
-          if (typeof handler === 'function') {
-            this.handleMessage(event.data, handler);
-          }
-        });
+        if (this.messageHandlers.length > 0) {
+          // Call custom message handlers
+          this.messageHandlers.forEach(handler => {
+            if (typeof handler === 'function') {
+              this.handleMessage(event.data, handler);
+            }
+          });
+        } else {
+          // Default message logging
+          console.log('Message received:', event.data);
+        }
       };
 
       // On error first call custom error handlers, then default error behavior
@@ -188,10 +329,17 @@ class PostmanEchoWebSocketClientClient {
     if (cb) cb(message);
   }
 
-  // Method to send an echo message to the server
-  sendEchoMessage(message) {
-    this.websocket.send(JSON.stringify(message));
-    console.log('Sent message to echo server:', message);
+  /**
+     * By default sends a message over a provided WebSocket connection.
+     * Useful when you already have an established WebSocket connection
+     * and want to send a message without creating a class instance.
+     *
+     * @param {Object} message - The message to send. It will be stringified to JSON.
+     * @param {WebSocket} socket - An existing WebSocket connection to use for sending the message.
+  */
+  static sendEchoMessage(message, socket) {
+    const websocket = socket || this.websocket;
+    websocket.send(JSON.stringify(message));
   }
 
   // Method to close the WebSocket connection

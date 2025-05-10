@@ -15,7 +15,7 @@ const jmespath = require('jmespath');
  * @param  {String} targetDir Directory where the generated files are written.
  * @return {Promise<Boolean>} Returns true if generation should be skipped.
  */
-function conditionalGeneration (
+async function conditionalGeneration (
   relativeSourceFile,
   relativeSourceDirectory,
   relativeTargetFile,
@@ -29,7 +29,7 @@ function conditionalGeneration (
   const { parameter, subject, validation } = conditionConfig;
   
   if (subject) {
-    return module.exports.conditionalFiles(
+    return await module.exports.conditionalFiles(
       asyncapiDocument,
       templateParams,
       templateConfig,
@@ -63,7 +63,7 @@ function conditionalGeneration (
  * @param {String} relativeSourceDirectory - The relative path to the directory of the source file.
  * @returns {Boolean} - Returns `true` if the file should be included; `false` if it should be skipped.
  */
-function conditionalFiles (
+async function conditionalFiles (
   asyncapiDocument,
   templateParams,
   templateConfig,

@@ -10,6 +10,7 @@ const dummySpecPath = path.resolve(__dirname, './docs/dummy.yml');
 const refSpecPath = path.resolve(__dirname, './docs/apiwithref.json');
 const refSpecFolder = path.resolve(__dirname, './docs/');
 const crypto = require('crypto');
+const fs = require('fs');
 const mainTestResultPath = path.resolve(__dirname, './temp/integrationTestResult');
 const reactTemplate = path.resolve(__dirname, './test-templates/react-template');
 const nunjucksTemplate = path.resolve(__dirname, './test-templates/nunjucks-template');
@@ -152,5 +153,63 @@ describe('Integration testing generateFromFile() to make sure the result of the 
     /*TODO:
        Include log message test in the future to ensure that the log.debug for skipping overwrite is called
      */
+  });
+
+  it('should not generate the conditionalFolder if the singleFile parameter is set true', async () => {
+    const outputDir = generateFolderName();
+    const generator = new Generator(reactTemplate, outputDir, {
+      forceWrite: true ,
+      templateParams: { version: 'v1', mode: 'production', singleFile: true }
+    });
+    await generator.generateFromFile(dummySpecPath);
+    const conditionalFolderPath = path.join(outputDir, 'conditionalFolder');
+    const exists = fs.existsSync(conditionalFolderPath);
+    expect(exists).toBe(false);
+  });
+  
+  it('should generate the conditionalFolder if the singleFile parameter is set false by default', async () => {
+    const outputDir = generateFolderName();
+    const generator = new Generator(reactTemplate, outputDir, {
+      forceWrite: true ,
+      templateParams: { version: 'v1', mode: 'production' }
+    });
+    await generator.generateFromFile(dummySpecPath);
+    const conditionalFolderPath = path.join(outputDir, 'conditionalFolder');
+    const exists = fs.existsSync(conditionalFolderPath);
+    expect(exists).toBe(true);
+  });
+
+  it('should not generate the conditionalFolder in one by one process in a single folder, if the singleFile parameter is set true', async () => {
+    const outputDir = generateFolderName();
+    for (let i = 1; i <= 3; i++) {
+      const generator = new Generator(reactTemplate, outputDir, {
+        forceWrite: true ,
+        templateParams: { version: 'v1', mode: 'production', singleFile: true}
+      });
+      await generator.generateFromFile(dummySpecPath);
+    }
+    const conditionalFolderPath = path.join(outputDir, 'conditionalFolder');
+    const exists = fs.existsSync(conditionalFolderPath);
+    expect(exists).toBe(false);
+  });
+
+  it('should not generate the conditionalFolder when generating multiple times sequentially into the same folder with singleFile set to true', async () => {
+    const outputDir = generateFolderName();
+    const promises = [];
+  
+    for (let i = 1; i <= 3; i++) {
+      const generator = new Generator(reactTemplate, outputDir, {
+        forceWrite: true,
+        templateParams: { version: 'v1', mode: 'production', singleFile: true }
+      });
+      promises.push(generator.generateFromFile(dummySpecPath));
+    }
+  
+    await Promise.all(promises);
+  
+    const conditionalFolderPath = path.join(outputDir, 'conditionalFolder');
+    const exists = fs.existsSync(conditionalFolderPath);
+  
+    expect(exists).toBe(false);
   });
 });

@@ -2,7 +2,6 @@ const path = require('path');
 const fs = require('fs');
 const xfs = require('fs.extra');
 const minimatch = require('minimatch');
-const jmespath = require('jmespath');
 const filenamify = require('filenamify');
 const git = require('simple-git');
 const log = require('loglevel');
@@ -10,12 +9,13 @@ const Arborist = require('@npmcli/arborist');
 const Config = require('@npmcli/config');
 const requireg = require('requireg');
 const npmPath = requireg.resolve('npm').replace('index.js','');
-
 const { isAsyncAPIDocument } = require('@asyncapi/parser/cjs/document');
 
 const { configureReact, renderReact, saveRenderedReactContent } = require('./renderer/react');
 const { configureNunjucks, renderNunjucks } = require('./renderer/nunjucks');
 const { validateTemplateConfig } = require('./templateConfigValidator');
+const { conditionalGeneration } = require('./conditionalGeneration');
+const { conditionalFiles  } = require('./conditionalGeneration');
 const {
   convertMapToObject,
   isFileSystemPath,
@@ -854,7 +854,27 @@ class Generator {
       await writeFile(outputpath, renderContent);
     }
   }
-
+  /**
+ * Gets the matched condition path based on file or directory condition.
+ *
+ * @private
+ * @param {String} relativeSourceFile The relative path of the source file.
+ * @param {String} relativeSourceDirectory The relative path of the source directory.
+ * @return {Promise<String|null>} The matched condition path or null if none matched.
+ */
+  async getMatchedConditionPath(relativeSourceFile, relativeSourceDirectory) {
+    const fileCondition = this.templateConfig.conditionalGeneration?.[relativeSourceFile];
+    const dirCondition = this.templateConfig.conditionalGeneration?.[relativeSourceDirectory];
+  
+    if (fileCondition) {
+      return relativeSourceFile;
+    } else if (dirCondition) {
+      return relativeSourceDirectory;
+    }
+    
+    return null;
+  }
+  
   /**
    * Generates a file.
    *
@@ -867,34 +887,43 @@ class Generator {
   async generateFile(asyncapiDocument, fileName, baseDir) {
     const sourceFile = path.resolve(baseDir, fileName);
     const relativeSourceFile = path.relative(this.templateContentDir, sourceFile);
+    const relativeSourceDirectory = relativeSourceFile.split(path.sep)[0] || '.';
+  
     const targetFile = path.resolve(this.targetDir, this.maybeRenameSourceFile(relativeSourceFile));
     const relativeTargetFile = path.relative(this.targetDir, targetFile);
-
+    let shouldGenerate = true;
+  
     if (shouldIgnoreFile(relativeSourceFile)) return;
+    
+    if (!(await this.shouldOverwriteFile(relativeTargetFile))) return;
 
-    const shouldOverwriteFile = await this.shouldOverwriteFile(relativeTargetFile);
-    if (!shouldOverwriteFile) return;
-
+    // The conditionalFiles configuration will deprecate soon 
+    // TODO: https://github.com/asyncapi/generator/issues/1553
     if (this.templateConfig.conditionalFiles?.[relativeSourceFile]) {
-      const server = this.templateParams.server && asyncapiDocument.servers().get(this.templateParams.server);
-      const source = jmespath.search({
-        ...asyncapiDocument.json(),
-        ...{
-          server: server ? server.json() : undefined,
-        },
-      }, this.templateConfig.conditionalFiles[relativeSourceFile].subject);
+      shouldGenerate = await conditionalFiles(asyncapiDocument, this.templateParams, this.templateConfig, relativeSourceFile);
+    }      
+    const matchedConditionPath = await this.getMatchedConditionPath(relativeSourceFile, relativeSourceDirectory);
 
-      if (!source) return log.debug(logMessage.relativeSourceFileNotGenerated(relativeSourceFile, this.templateConfig.conditionalFiles[relativeSourceFile].subject));
+    if (this.templateConfig.conditionalGeneration?.[matchedConditionPath]) {
+      shouldGenerate = await conditionalGeneration(
+        relativeSourceFile,
+        relativeSourceDirectory,
+        relativeTargetFile,
+        this.templateConfig,
+        this.targetDir,
+        matchedConditionPath,
+        this.templateParams,
+        asyncapiDocument
 
-      if (source) {
-        const validate = this.templateConfig.conditionalFiles[relativeSourceFile].validate;
-        const valid = validate(source);
-        if (!valid) return log.debug(logMessage.conditionalFilesMatched(relativeSourceFile));
+      );
+    }
+    if (shouldGenerate) {
+      if (this.isNonRenderableFile(relativeSourceFile)) {
+        await copyFile(sourceFile, targetFile);
+      } else {
+        await this.renderAndWriteToFile(asyncapiDocument, sourceFile, targetFile);
       }
     }
-
-    if (this.isNonRenderableFile(relativeSourceFile)) return await copyFile(sourceFile, targetFile);
-    await this.renderAndWriteToFile(asyncapiDocument, sourceFile, targetFile);
   }
 
   /**

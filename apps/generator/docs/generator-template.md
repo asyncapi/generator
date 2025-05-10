@@ -42,42 +42,64 @@ Before you begin, make sure you have the following set up:
 There is a list of [community maintained templates](https://www.asyncapi.com/docs/tools/generator/template#generator-templates-list), but what if you do not find what you need? In that case, you'll create a user-defined template that generates custom output from the generator.
 Before you create the template, you'll need to have an [AsyncAPI document](https://www.asyncapi.com/docs/tools/generator/asyncapi-document) that defines the properties you want to use in your template to test against. In this tutorial, you'll use the following template saved in the **test/fixtures/asyncapi.yml** file in your template project directory.
 
-``` yml
-
-asyncapi: 2.6.0
-
+```yaml
+asyncapi: 3.0.0
 info:
   title: Temperature Service
   version: 1.0.0
-  description: This service is in charge of processing all the events related to temperature.
+  description: Service that emits temperature changes from a bedroom sensor.
 
 servers:
+  production:
+    host: broker.example.com
   dev:
     url: test.mosquitto.org #in case you're using local mosquitto instance, change this value to localhost.
     protocol: mqtt
 
 channels:
-  temperature/changed:
-    description: Updates the bedroom temperature in the database when the temperatures drops or goes up.
-    publish:
-      operationId: temperatureChange
-      message:
-        description: Message that is being sent when the temperature in the bedroom changes.
+  temperatureChanged:
+    address: temperature/changed
+    messages:
+      temperatureChange:
+        description: Message sent when the temperature in the bedroom changes.
         payload:
-          type: object
-          additionalProperties: false
-          properties:
-            temperatureId:
-              type: string
+          $ref: '#/components/schemas/Temperature'
+
+operations:
+  sendTemperatureChanged:
+    action: send
+    summary: Temperature changes are pushed to the broker
+    channel:
+      $ref: '#/channels/temperatureChanged'
+
 components:
   schemas:
-    temperatureId:
+    Temperature:
       type: object
       additionalProperties: false
       properties:
-        temperatureId:
+        value:
+          type: number
+        unit:
           type: string
+
 ```
+> 🆕 This document uses the AsyncAPI 3.0.0 structure. Notable changes include `operations` now being top-level and the use of `address:` in `channels` instead of nested publish/subscribe.
+
+## Handling Diagnostics (Warnings)
+
+When using the latest AsyncAPI parser, it's important to handle not just errors but also diagnostics (warnings). These help identify non-critical issues, such as missing recommended fields like `license`, `contact`, or outdated spec versions.
+
+```ts
+const { parseFromFile } = require('@asyncapi/parser');
+
+const result = await parseFromFile('example-asyncapi.yaml');
+
+if (result.diagnostics && result.diagnostics.length > 0) {
+  console.warn('⚠️ Found diagnostics:');
+  console.dir(result.diagnostics, { depth: null });
+}
+
 
 ## Overview of steps
 

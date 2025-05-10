@@ -891,21 +891,21 @@ class Generator {
   
     const targetFile = path.resolve(this.targetDir, this.maybeRenameSourceFile(relativeSourceFile));
     const relativeTargetFile = path.relative(this.targetDir, targetFile);
+    let shouldGenerate = true;
   
     if (shouldIgnoreFile(relativeSourceFile)) return;
     
     if (!(await this.shouldOverwriteFile(relativeTargetFile))) return;
 
-    // This will deprecate soon 
+    // The conditionalFiles configuration will deprecate soon 
     // TODO: https://github.com/asyncapi/generator/issues/1553
     if (this.templateConfig.conditionalFiles?.[relativeSourceFile]) {
-      const fileGeneration = await conditionalFiles(asyncapiDocument, this.templateParams, this.templateConfig, relativeSourceFile);
-      if (fileGeneration === false) return;
+      shouldGenerate = await conditionalFiles(asyncapiDocument, this.templateParams, this.templateConfig, relativeSourceFile);
     }      
     const matchedConditionPath = await this.getMatchedConditionPath(relativeSourceFile, relativeSourceDirectory);
 
     if (this.templateConfig.conditionalGeneration?.[matchedConditionPath]) {
-      const conditionalGenerationStatus = await conditionalGeneration(
+      shouldGenerate = await conditionalGeneration(
         relativeSourceFile,
         relativeSourceDirectory,
         relativeTargetFile,
@@ -916,16 +916,13 @@ class Generator {
         asyncapiDocument
 
       );
-  
-      if (conditionalGenerationStatus === false) {
-        return;
-      }
     }
-  
-    if (this.isNonRenderableFile(relativeSourceFile)) {
-      await copyFile(sourceFile, targetFile);
-    } else {
-      await this.renderAndWriteToFile(asyncapiDocument, sourceFile, targetFile);
+    if (shouldGenerate) {
+      if (this.isNonRenderableFile(relativeSourceFile)) {
+        await copyFile(sourceFile, targetFile);
+      } else {
+        await this.renderAndWriteToFile(asyncapiDocument, sourceFile, targetFile);
+      }
     }
   }
 

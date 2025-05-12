@@ -74,7 +74,8 @@ services:
 
   async-minion:
     depends_on:
-      - app
+      app:
+        condition: service_healthy
     image: quay.io/microcks/microcks-async-minion:1.11.2
     container_name: microcks-async-minion
     restart: on-failure

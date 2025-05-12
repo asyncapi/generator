@@ -91,6 +91,19 @@ services:
       timeout: 2s
       retries: 3
   
+  #this only runs on local with tests profile. In CI/CD there is a dedicated job step for that
+  asyncapi-bundler:
+    profiles:
+      - tests
+    image: asyncapi/cli:3.1.1
+    container_name: asyncapi-bundler
+    working_dir: /usr/src/app
+    volumes:
+      - ../:/usr/src/app
+    command: >
+      bundle __fixtures__/asyncapi-hoppscotch-server.yml
+      --output __fixtures__/bundled.yml
+
   importer:
     profiles:
       - tests
@@ -104,11 +117,12 @@ services:
       app:
         condition: service_healthy
     command: >
-      sh -c "microcks-cli import __fixtures__/asyncapi-hoppscotch-server.yml
+      sh -c "microcks-cli import __fixtures__/bundled.yml
       --microcksURL=http://microcks:8080/api/
       --keycloakClientId=microcks-serviceaccount
       --keycloakClientSecret=ab54d329-e435-41ae-a900-ec6b3fe15c54 && sleep infinity"
 
+  #this only runs on local with tests profile. In CI/CD there is a dedicated job step for that
   npm-test:
     profiles:
       - tests

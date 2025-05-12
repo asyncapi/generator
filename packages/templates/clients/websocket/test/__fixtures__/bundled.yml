@@ -1,0 +1,59 @@
+asyncapi: 3.0.0
+info:
+  title: Hoppscotch Echo WebSocket Server
+  version: 1.0.0
+  description: >
+    This document is purely for mocking the official Hoppscotch Websocket Echo
+    server.
+defaultContentType: text/plain
+servers:
+  echoServer:
+    host: echo-websocket.hoppscotch.io
+    protocol: wss
+channels:
+  echo:
+    description: >
+      The single channel where messages are sent to and echoed back. Echo server
+      also regularly drops a timestamp to that channel.
+    address: /
+    messages:
+      echo:
+        summary: A message exchanged with the echo server.
+        payload: {}
+        examples:
+          - name: string
+            payload: test
+          - name: boolean
+            payload: true
+          - name: number
+            payload: 123
+          - name: object
+            payload:
+              test: test text
+      timestamp:
+        summary: A message sent from server with current timestamp.
+        payload:
+          type: string
+          description: A timestamp with GMT timezone.
+          example: 11:13:24 GMT+0000 (Coordinated Universal Time)
+        examples:
+          - name: someRandomDate
+            payload: 11:13:24 GMT+0000 (Coordinated Universal Time)
+    bindings:
+      ws:
+        method: POST
+operations:
+  sendTimeStampMessage:
+    action: send
+    channel:
+      $ref: '#/channels/echo'
+    summary: Send the timestamp message to any connected client every second.
+    messages:
+      - $ref: '#/channels/echo/messages/timestamp'
+  handleEchoMessage:
+    action: receive
+    channel:
+      $ref: '#/channels/echo'
+    summary: Receive echo message from the client.
+    messages:
+      - $ref: '#/channels/echo/messages/echo'

@@ -90,6 +90,11 @@ jobs:
         name: Run package tests to generate clients #TODO: remove this step as we have a way to run the generator as a library and instead of running all integration tests again better to generate required clients separately/independently
         run: npm run packages:test
       - if: needs.changes.outputs.should_test == 'true'
+        name: Bundle AsyncAPI spec
+        uses: asyncapi/cli@1b8a4d320bb0e58d19d250dfe69e630df0cac9cd
+        with:
+          custom_command: bundle packages/templates/clients/websocket/test/__fixtures__/asyncapi-hoppscotch-server.yml --output packages/templates/clients/websocket/test/__fixtures__/bundled.yml
+      - if: needs.changes.outputs.should_test == 'true'
         name: Run acceptance tests
         run: docker compose -f ./microcks-setup/microcks-podman.yml --profile ci up  --abort-on-container-exit --force-recreate
         working-directory: ./packages/templates/clients/websocket/test

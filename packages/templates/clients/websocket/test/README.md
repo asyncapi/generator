@@ -10,7 +10,7 @@ You can also install [docker-compose](https://docs.docker.com/compose/install/) 
 
 This `test` directory contains acceptance tests that check different clients with tests written in their respective languages. So JavaScript client is tested with JavaScript test, and Python with Python tests, and so on.
 
-To run tests: `podman compose -f ./microcks-setup/microcks-podman.yml --profile tests up -d`
+To run tests: `cd microcks-setup && podman compose -f microcks-podman.yml --profile tests up -d`
 
 > You need to remember about `--profile tests` to run whole setup with tests. This way you ensure that proper importer container imports `__fixtures__/asyncapi-hoppscotch-server.yml` into Microcks and tests run against it.
 
@@ -44,7 +44,7 @@ To test clients, we need to mock the server. Remember to load AsyncAPI documents
 
 1. Import AsyncAPI document
     ```bash
-    microcks-cli import __fixtures__/asyncapi-hoppscotch-server.yml \
+    microcks-cli import __fixtures__/asyncapi-postman-client.yml \
       --microcksURL=http://localhost:8080/api/ \
       --keycloakClientId=microcks-serviceaccount \
       --keycloakClientSecret="ab54d329-e435-41ae-a900-ec6b3fe15c54"
@@ -60,13 +60,13 @@ You should run tests only on one operation at a time.
 
 ```bash
 # the higher timeout the more test samples will run
-microcks-cli test 'Hoppscotch WebSocket Server:1.0.0' ws://localhost:8081/api/ws/Hoppscotch+WebSocket+Server/1.0.0/sendTimeStampMessage ASYNC_API_SCHEMA \
+microcks-cli test 'Hoppscotch Echo WebSocket Client:1.0.0' ws://localhost:8081/api/ws/Postman+Echo+WebSocket+Client/1.0.0/sendTimeStampMessage ASYNC_API_SCHEMA \
     --microcksURL=http://localhost:8080/api/ \
     --insecure \
     --waitFor=15sec \
     --keycloakClientId=microcks-serviceaccount \
     --keycloakClientSecret="ab54d329-e435-41ae-a900-ec6b3fe15c54" \
-    --filteredOperations="[\"SEND sendTimeStampMessage\"]"
+    --filteredOperations="[\"SEND sendEchoMessage\"]"
 ```
 
 You can also check the status of tests in the Microcks UI.

@@ -1,11 +1,6 @@
 volumes:
   microcks-data:
 
-networks:
-  default:
-    name: microcks_default
-    driver: bridge
-
 services:
   mongo:
     image: docker.io/mongo:4.4.29
@@ -17,8 +12,6 @@ services:
       interval: 30s
       timeout: 1s
       retries: 3
-    networks:
-      - default
 
   kafka:
     image: docker.io/redpandadata/redpanda:v24.3.1
@@ -49,11 +42,8 @@ services:
       timeout: 5s
       retries: 3
       start_period: 10s
-    networks:
-      - default
 
   app:
-    hostname: microcks
     depends_on:
       - mongo
     image: quay.io/microcks/microcks:1.11.2
@@ -79,28 +69,10 @@ services:
       interval: 10s
       timeout: 3s
       retries: 3
-    networks:
-      default:
-        aliases:
-          - microcks
 
   async-minion:
     depends_on:
       - app
-    entrypoint:
-      - sh
-      - -c
-      - |
-          echo "Waiting for microcks to be available..."
-          until curl -sf http://microcks:8080/api/health; do
-            echo "  microcks not up yet, retrying..."
-            sleep 5
-          done
-          exec java -Dquarkus.http.host=0.0.0.0 \
-                   -Djava.util.logging.manager=org.jboss.logmanager.LogManager \
-                   -XX:+ExitOnOutOfMemoryError \
-                   -cp .:/deployments/* \
-                   io.quarkus.runner.GeneratedMain
     image: quay.io/microcks/microcks-async-minion:1.11.2
     container_name: microcks-async-minion
     restart: on-failure
@@ -116,10 +88,8 @@ services:
       interval: 10s
       timeout: 2s
       retries: 3
-    networks:
-      - default
-  
-  importer:
+
+  microcks-cli-importer:
     profiles:
       - tests
     image: quay.io/microcks/microcks-cli:latest
@@ -135,8 +105,6 @@ services:
       --microcksURL=http://microcks:8080/api/ \
       --keycloakClientId=microcks-serviceaccount \
       --keycloakClientSecret=ab54d329-e435-41ae-a900-ec6b3fe15c54"
-    networks:
-      - default
 
   npm-test:
     image: node:20
@@ -144,15 +112,13 @@ services:
     working_dir: /usr/src/app
     volumes:
       - ../../../../../../:/usr/src/app
-    environment:
-      - NODE_OPTIONS=--max-old-space-size=2048
-    mem_limit: 2g
+    depends_on:
+      microcks-cli-importer:
+        condition: service_completed_successfully
     command: ["sh", "-c", "npm ci && npm run packages:test"]
     restart: "no"
-    networks:
-      - default
 
-  tester-js:
+  websocket-acceptance-tester-js:
     profiles:
       - tests
     image: node:20
@@ -169,10 +135,8 @@ services:
         condition: service_completed_successfully
     command: ["sh", "-c", "npm install && cd packages/templates/clients/websocket/test/javascript && npm test"]
     restart: "no"
-    networks:
-      - default
 
-  tester-py:
+  websocket-acceptance-tester-py:
     profiles:
       - tests
     image: python:3.11
@@ -189,8 +153,6 @@ services:
         condition: service_completed_successfully
     command: ["sh", "-c", "cd packages/templates/clients/websocket/python/test/temp/snapshotTestResult/client_hoppscotch && pip install -r requirements.txt && cd ../../../../test/python && pip install -r requirements.txt && pytest"]
     restart: "no"
-    networks:
-      - default
 
   # Below for debugging purposes.
   # Just uncomment below and after starting environment you can enter the container with "podman exec -it net-debug sh" and use websocat to test the websocket connection

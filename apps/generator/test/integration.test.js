@@ -193,23 +193,31 @@ describe('Integration testing generateFromFile() to make sure the result of the 
     expect(exists).toBe(false);
   });
 
-  it('should not generate the conditionalFolder when generating multiple times sequentially into the same folder with singleFile set to true', async () => {
+  it('should handle concurrent generation to the same output directory using reactTemplate without errors or inconsistent file structure', async () => {
     const outputDir = generateFolderName();
+    const numConcurrentGenerations = 5;
     const promises = [];
   
-    for (let i = 1; i <= 3; i++) {
+    for (let i = 0; i < numConcurrentGenerations; i++) {
       const generator = new Generator(reactTemplate, outputDir, {
         forceWrite: true,
-        templateParams: { version: 'v1', mode: 'production', singleFile: true }
+        // Setting singleFile: false makes the generator produce multiple files and folders,
+        // which increases the likelihood of file system conflicts during concurrent generation
+        templateParams: { singleFile: false }
       });
       promises.push(generator.generateFromFile(dummySpecPath));
     }
   
-    await Promise.all(promises);
+    // Wait for all generations to complete
+    const results = await Promise.allSettled(promises);
   
-    const conditionalFolderPath = path.join(outputDir, 'conditionalFolder');
-    const exists = fs.existsSync(conditionalFolderPath);
+    // Ensure that all generations completed without errors
+    const failures = results.filter(r => r.status === 'rejected');
+    expect(failures.length).toBe(0);
   
-    expect(exists).toBe(false);
+    // Verify that the expected folder exists after concurrent generation
+    const expectedFolder = path.join(outputDir, 'conditionalFolder'); // assuming reactTemplate generates this
+    const folderExists = fs.existsSync(expectedFolder);
+    expect(folderExists).toBe(true);
   });
 });

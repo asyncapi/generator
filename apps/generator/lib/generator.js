@@ -14,8 +14,7 @@ const { isAsyncAPIDocument } = require('@asyncapi/parser/cjs/document');
 const { configureReact, renderReact, saveRenderedReactContent } = require('./renderer/react');
 const { configureNunjucks, renderNunjucks } = require('./renderer/nunjucks');
 const { validateTemplateConfig } = require('./templateConfigValidator');
-const { conditionalGeneration } = require('./conditionalGeneration');
-const { conditionalFiles  } = require('./conditionalGeneration');
+const { conditionalGeneration, conditionalFiles } = require('./conditionalGeneration');
 const {
   convertMapToObject,
   isFileSystemPath,
@@ -897,7 +896,7 @@ class Generator {
     
     if (!(await this.shouldOverwriteFile(relativeTargetFile))) return;
 
-    // The conditionalFiles configuration will deprecate soon 
+    // It becomes deprecated with this PR, and soon will be removed.
     // TODO: https://github.com/asyncapi/generator/issues/1553
     if (this.templateConfig.conditionalFiles?.[relativeSourceFile]) {
       shouldGenerate = await conditionalFiles(asyncapiDocument, this.templateParams, this.templateConfig, relativeSourceFile);

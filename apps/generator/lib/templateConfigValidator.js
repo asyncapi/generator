@@ -24,7 +24,7 @@ const supportedParserAPIMajorVersions = [
  * @return {Boolean}
  */
 module.exports.validateTemplateConfig = (templateConfig, templateParams, asyncapiDocument) => {
-  const { parameters, supportedProtocols,  conditionalFiles, generator, apiVersion } = templateConfig;
+  const { parameters, supportedProtocols, conditionalFiles, generator, apiVersion } = templateConfig;
 
   validateConditionalFiles(conditionalFiles);
   isTemplateCompatible(generator, apiVersion);

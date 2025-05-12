@@ -84,6 +84,7 @@ services:
       - 8081:8081
     environment:
       QUARKUS_PROFILE: docker-compose
+      KAFKA_BOOTSTRAP_SERVERS: ""
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8081/q/health/ready"]
       start_period: 10s

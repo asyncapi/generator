@@ -1,12 +1,21 @@
 volumes:
   microcks-data:
 
+networks:
+  microcks-net:
+    driver: bridge
+
 services:
   mongo:
     image: docker.io/mongo:4.4.29
     container_name: microcks-db
     volumes:
       - microcks-data:/data/db
+    networks:
+      microcks-net:
+        aliases:
+          - mongo
+          - microcks-db
     healthcheck:
       test: ["CMD", "mongo", "--eval", "db.adminCommand('ping')"]
       interval: 30s
@@ -16,6 +25,11 @@ services:
   kafka:
     image: docker.io/redpandadata/redpanda:v24.3.1
     container_name: microcks-kafka
+    networks:
+      microcks-net:
+        aliases:
+          - kafka
+          - microcks-kafka
     command:
       - redpanda
       - start
@@ -46,8 +60,14 @@ services:
   app:
     depends_on:
       - mongo
+      - kafka
     image: quay.io/microcks/microcks:1.11.2
     container_name: microcks
+    networks:
+      microcks-net:
+        aliases:
+          - microcks
+          - app
     volumes:
       - ./config:/deployments/config:Z
     ports:
@@ -76,12 +96,28 @@ services:
     image: quay.io/microcks/microcks-async-minion:1.11.2
     container_name: microcks-async-minion
     restart: on-failure
+    networks:
+      microcks-net:
+        aliases:
+          - microcks-async-minion
     volumes:
       - ./config:/deployments/config:Z
     ports:
       - 8081:8081
-    environment:
-      QUARKUS_PROFILE: docker-compose
+    entrypoint:
+      - sh
+      - -c
+      - |
+          echo "Waiting for microcks to be available..."
+          until curl -sf http://microcks:8080/api/health; do
+            echo "  microcks not up yet, retrying..."
+            sleep 5
+          done
+          exec java -Dquarkus.http.host=0.0.0.0 \
+                   -Djava.util.logging.manager=org.jboss.logmanager.LogManager \
+                   -XX:+ExitOnOutOfMemoryError \
+                   -cp .:/deployments/* \
+                   io.quarkus.runner.GeneratedMain
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8081/q/health/ready"]
       start_period: 10s
@@ -95,6 +131,10 @@ services:
     image: quay.io/microcks/microcks-cli:latest
     container_name: microcks-cli-importer
     working_dir: /usr/src/app
+    networks:
+      microcks-net:
+        aliases:
+          - microcks-cli-importer
     volumes:
       - ../:/usr/src/app
     depends_on:
@@ -110,6 +150,10 @@ services:
     image: node:20
     container_name: npm-test
     working_dir: /usr/src/app
+    networks:
+      microcks-net:
+        aliases:
+          - npm-test
     volumes:
       - ../../../../../../:/usr/src/app
     depends_on:
@@ -123,6 +167,10 @@ services:
       - tests
     image: node:20
     container_name: websocket-acceptance-tester-js
+    networks:
+      microcks-net:
+        aliases:
+          - websocket-acceptance-tester-js
     ports:
       - 8082:8082
     working_dir: /usr/src/app
@@ -141,6 +189,10 @@ services:
       - tests
     image: python:3.11
     container_name: websocket-acceptance-tester-py
+    networks:
+      microcks-net:
+        aliases:
+          - websocket-acceptance-tester-py
     ports:
       - "8083:8083"
     working_dir: /usr/src/app
@@ -162,5 +214,11 @@ services:
   #   container_name: net-debug
   #   stdin_open: true
   #   tty: true
+  #   networks:
+  #     microcks-net:
+  #       aliases:
+  #         - net-debug
   #   command: >
   #     sh -c "apk add --no-cache websocat && sh"
+
+# Attach all services to the default microcks-net network

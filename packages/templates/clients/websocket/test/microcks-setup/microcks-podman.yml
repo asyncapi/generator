@@ -71,7 +71,6 @@ services:
       TEST_CALLBACK_URL: http://microcks:8080
       SERVICES_UPDATE_INTERVAL: "0 0 0/2 * * *"
       KEYCLOAK_ENABLED: "false"
-      #MAX_UPLOAD_FILE_SIZE: 3MB
       ASYNC_MINION_URL: http://microcks-async-minion:8081
       KAFKA_BOOTSTRAP_SERVER: kafka:19092
     healthcheck:
@@ -145,6 +144,9 @@ services:
     working_dir: /usr/src/app
     volumes:
       - ../../../../../../:/usr/src/app
+    environment:
+      - NODE_OPTIONS=--max-old-space-size=2048
+    mem_limit: 2g
     command: ["sh", "-c", "npm ci && npm run packages:test"]
     restart: "no"
     networks:

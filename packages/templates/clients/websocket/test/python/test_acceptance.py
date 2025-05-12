@@ -18,7 +18,7 @@ from client import HoppscotchEchoWebSocketClient
 
 def test_hoppscotch_client_receives_message():
     # Instantiate the client using the default URL.
-    client = HoppscotchEchoWebSocketClient('ws://microcks-async-minion:8081/api/ws/Hoppscotch+WebSocket+Server/1.0.0/sendTimeStampMessage')
+    client = HoppscotchEchoWebSocketClient('ws://microcks-async-minion:8081/api/ws/Hoppscotch+Echo+WebSocket+Server/1.0.0/sendTimeStampMessage')
 
     received_messages = []
     expected_message = "GMT+0000 (Coordinated Universal Time)"

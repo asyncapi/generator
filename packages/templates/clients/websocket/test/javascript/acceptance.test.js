@@ -14,7 +14,7 @@ describe('client - receiver tests', () => {
   * TEST: we test if the generated client can be instantiated with custom URL
   */
   const wsClient = new WSClient(
-    'ws://microcks-async-minion:8081/api/ws/Hoppscotch+WebSocket+Server/1.0.0/sendTimeStampMessage'
+    'ws://microcks-async-minion:8081/api/ws/Hoppscotch+Echo+WebSocket+Server/1.0.0/sendTimeStampMessage'
   );
 
   it('javascript client should receive a message', async () => {

@@ -1,6 +1,11 @@
 volumes:
   microcks-data:
 
+networks:
+  default:
+    name: microcks_default
+    driver: bridge
+
 services:
   mongo:
     image: docker.io/mongo:4.4.29
@@ -12,6 +17,8 @@ services:
       interval: 30s
       timeout: 1s
       retries: 3
+    networks:
+      - default
 
   kafka:
     image: docker.io/redpandadata/redpanda:v24.3.1
@@ -42,6 +49,8 @@ services:
       timeout: 5s
       retries: 3
       start_period: 10s
+    networks:
+      - default
 
   app:
     depends_on:
@@ -93,6 +102,8 @@ services:
       interval: 10s
       timeout: 2s
       retries: 3
+    networks:
+      - default
   
   importer:
     profiles:
@@ -106,10 +117,12 @@ services:
       app:
         condition: service_healthy
     command: >
-      sh -c "microcks-cli import __fixtures__/asyncapi-hoppscotch-server.yml
-      --microcksURL=http://microcks:8080/api/
-      --keycloakClientId=microcks-serviceaccount
+      sh -c "microcks-cli import __fixtures__/asyncapi-hoppscotch-server.yml \
+      --microcksURL=http://microcks:8080/api/ \
+      --keycloakClientId=microcks-serviceaccount \
       --keycloakClientSecret=ab54d329-e435-41ae-a900-ec6b3fe15c54"
+    networks:
+      - default
 
   npm-test:
     image: node:20
@@ -119,6 +132,8 @@ services:
       - ../../../../../../:/usr/src/app
     command: ["sh", "-c", "npm ci && npm run packages:test"]
     restart: "no"
+    networks:
+      - default
 
   tester-js:
     profiles:
@@ -137,6 +152,8 @@ services:
         condition: service_completed_successfully
     command: ["sh", "-c", "npm install && cd packages/templates/clients/websocket/test/javascript && npm test"]
     restart: "no"
+    networks:
+      - default
 
   tester-py:
     profiles:
@@ -155,9 +172,11 @@ services:
         condition: service_completed_successfully
     command: ["sh", "-c", "cd packages/templates/clients/websocket/python/test/temp/snapshotTestResult/client_hoppscotch && pip install -r requirements.txt && cd ../../../../test/python && pip install -r requirements.txt && pytest"]
     restart: "no"
+    networks:
+      - default
 
-  # Below for debugging purposes. 
-  # Just uncomment below and after starting environment you can enter the constainer with "podman exec -it net-debug sh" and use websocat to test the websocket connection
+  # Below for debugging purposes.
+  # Just uncomment below and after starting environment you can enter the container with "podman exec -it net-debug sh" and use websocat to test the websocket connection
 
   # net-debug:
   #   image: nicolaka/netshoot

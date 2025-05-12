@@ -53,6 +53,7 @@ services:
       - default
 
   app:
+    hostname: microcks
     depends_on:
       - mongo
     image: quay.io/microcks/microcks:1.11.2
@@ -87,6 +88,20 @@ services:
   async-minion:
     depends_on:
       - app
+    entrypoint:
+      - sh
+      - -c
+      - |
+          echo "Waiting for microcks to be available..."
+          until curl -sf http://microcks:8080/api/health; do
+            echo "  microcks not up yet, retrying..."
+            sleep 5
+          done
+          exec java -Dquarkus.http.host=0.0.0.0 \
+                   -Djava.util.logging.manager=org.jboss.logmanager.LogManager \
+                   -XX:+ExitOnOutOfMemoryError \
+                   -cp .:/deployments/* \
+                   io.quarkus.runner.GeneratedMain
     image: quay.io/microcks/microcks-async-minion:1.11.2
     container_name: microcks-async-minion
     restart: on-failure

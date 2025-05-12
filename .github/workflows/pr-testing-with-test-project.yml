@@ -79,6 +79,17 @@ jobs:
         run: |
           echo "should_test value: ${{ needs.changes.outputs.should_test }}"
       - if: needs.changes.outputs.should_test == 'true'
+        name: Use Node.js 20
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 20
+      - if: needs.changes.outputs.should_test == 'true'
+        name: Install dependencies
+        run: npm ci
+      - if: needs.changes.outputs.should_test == 'true'
+        name: Run package tests to generate clients #TODO: remove this step as we have a way to run the generator as a library and instead of running all integration tests again better to generate required clients separately/independently
+        run: npm run packages:test
+      - if: needs.changes.outputs.should_test == 'true'
         name: Run acceptance tests
-        run: docker compose -f ./microcks-setup/microcks-podman.yml --profile tests up --force-recreate
+        run: docker compose -f ./microcks-setup/microcks-podman.yml --profile ci up  --abort-on-container-exit --force-recreate
         working-directory: ./packages/templates/clients/websocket/test

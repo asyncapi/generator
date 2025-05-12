@@ -94,7 +94,8 @@ services:
   importer:
     profiles:
       - tests
-    image: quay.io/microcks/microcks-cli:latest
+      - ci
+    image: quay.io/microcks/microcks-cli:0.5.8
     container_name: microcks-cli-importer
     working_dir: /usr/src/app
     volumes:
@@ -109,17 +110,19 @@ services:
       --keycloakClientSecret=ab54d329-e435-41ae-a900-ec6b3fe15c54 && sleep infinity"
 
   npm-test:
+    profiles:
+      - tests
     image: node:20
     container_name: npm-test
     working_dir: /usr/src/app
     volumes:
       - ../../../../../../:/usr/src/app
-    command: ["sh", "-c", "npm ci && npm run packages:test && sleep infinity"]
-    restart: "no"
+    command: ["sh", "-c", "npm ci && npm run packages:test"]
 
   tester-js:
     profiles:
       - tests
+      - ci
     image: node:20
     container_name: websocket-acceptance-tester-js
     ports:
@@ -137,6 +140,7 @@ services:
   tester-py:
     profiles:
       - tests
+      - ci
     image: python:3.11
     container_name: websocket-acceptance-tester-py
     ports:

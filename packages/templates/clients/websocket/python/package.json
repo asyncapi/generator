@@ -13,7 +13,8 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@asyncapi/generator-react-sdk": "^1.1.2",
-    "@asyncapi/generator-helpers": "1.0.0"
+    "@asyncapi/generator-helpers": "1.0.0",
+    "@asyncapi/generator-components": "1.0.0"
   },
   "devDependencies": {
     "@asyncapi/parser": "^3.0.14",

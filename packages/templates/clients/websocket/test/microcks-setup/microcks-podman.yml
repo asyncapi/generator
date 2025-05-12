@@ -1,78 +1,54 @@
-version: '3.9'
-
 volumes:
   microcks-data:
-  signals-data:
-
-networks:
-  microcks-net:
-    driver: bridge
-
+  
 services:
   mongo:
     image: docker.io/mongo:4.4.29
     container_name: microcks-db
     volumes:
       - microcks-data:/data/db
-    networks:
-      microcks-net:
-        aliases:
-          - mongo
-          - microcks-db
     healthcheck:
       test: ["CMD", "mongo", "--eval", "db.adminCommand('ping')"]
       interval: 30s
       timeout: 1s
       retries: 3
 
-  kafka:
-    image: docker.io/redpandadata/redpanda:v24.3.1
-    container_name: microcks-kafka
-    networks:
-      microcks-net:
-        aliases:
-          - kafka
-          - microcks-kafka
-    command:
-      - redpanda
-      - start
-      - --overprovisioned
-      - --smp
-      - "1"
-      - --memory
-      - 1G
-      - --reserve-memory
-      - 0M
-      - --node-id
-      - "0"
-      - --check=false
-      - --kafka-addr
-      - PLAINTEXT://0.0.0.0:19092,EXTERNAL://0.0.0.0:9092
-      - --advertise-kafka-addr
-      - PLAINTEXT://kafka:19092,EXTERNAL://localhost:9092
-    ports:
-      - 9092:9092
-      - 19092:19092
-    healthcheck:
-      test: ["CMD-SHELL", "timeout 5 bash -c 'echo > /dev/tcp/localhost/19092'"]
-      interval: 10s
-      timeout: 5s
-      retries: 3
-      start_period: 10s
+  # Uncomment below if you want to use Kafka as a message broker
+  # kafka:
+  #   image: docker.io/redpandadata/redpanda:v24.3.1
+  #   container_name: microcks-kafka
+  #   command:
+  #     - redpanda
+  #     - start
+  #     - --overprovisioned
+  #     - --smp
+  #     - "1"
+  #     - --memory
+  #     - 1G
+  #     - --reserve-memory
+  #     - 0M
+  #     - --node-id
+  #     - "0"
+  #     - --check=false
+  #     - --kafka-addr
+  #     - PLAINTEXT://0.0.0.0:19092,EXTERNAL://0.0.0.0:9092
+  #     - --advertise-kafka-addr
+  #     - PLAINTEXT://kafka:19092,EXTERNAL://localhost:9092
+  #   ports:
+  #     - 9092:9092
+  #     - 19092:19092
+  #   healthcheck:
+  #     test: ["CMD-SHELL", "timeout 5 bash -c 'echo > /dev/tcp/localhost/19092'"]
+  #     interval: 10s
+  #     timeout: 5s
+  #     retries: 3
+  #     start_period: 10s
 
   app:
     depends_on:
-      kafka:
-        condition: service_healthy
-      mongo:
-        condition: service_healthy
+      - mongo
     image: quay.io/microcks/microcks:1.11.2
     container_name: microcks
-    networks:
-      microcks-net:
-        aliases:
-          - microcks
-          - app
     volumes:
       - ./config:/deployments/config:Z
     ports:
@@ -86,8 +62,9 @@ services:
       TEST_CALLBACK_URL: http://microcks:8080
       SERVICES_UPDATE_INTERVAL: "0 0 0/2 * * *"
       KEYCLOAK_ENABLED: "false"
+      #MAX_UPLOAD_FILE_SIZE: 3MB
       ASYNC_MINION_URL: http://microcks-async-minion:8081
-      KAFKA_BOOTSTRAP_SERVER: kafka:19092
+      # KAFKA_BOOTSTRAP_SERVER: kafka:19092
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/api/health"]
       start_period: 35s
@@ -97,188 +74,79 @@ services:
 
   async-minion:
     depends_on:
-      app:
-        condition: service_healthy
+      - app
     image: quay.io/microcks/microcks-async-minion:1.11.2
     container_name: microcks-async-minion
     restart: on-failure
-    networks:
-      microcks-net:
-        aliases:
-          - microcks-async-minion
     volumes:
       - ./config:/deployments/config:Z
     ports:
       - 8081:8081
-    entrypoint:
-      - sh
-      - -c
-      - |
-          echo "Waiting for microcks to be available..."
-          until curl -sf http://microcks:8080/api/health; do
-            echo "  microcks not up yet, retrying..."
-            sleep 5
-          done
-          exec java -Dquarkus.http.host=0.0.0.0 \
-                   -Djava.util.logging.manager=org.jboss.logmanager.LogManager \
-                   -XX:+ExitOnOutOfMemoryError \
-                   -cp .:/deployments/* \
-                   io.quarkus.runner.GeneratedMain
+    environment:
+      QUARKUS_PROFILE: docker-compose
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8081/q/health/ready"]
       start_period: 10s
       interval: 10s
       timeout: 2s
       retries: 3
-
-  microcks-cli-importer:
+  
+  importer:
     profiles:
       - tests
-    depends_on:
-      app:
-        condition: service_healthy
     image: quay.io/microcks/microcks-cli:latest
     container_name: microcks-cli-importer
     working_dir: /usr/src/app
-    networks:
-      microcks-net:
-        aliases:
-          - microcks-cli-importer
     volumes:
       - ../:/usr/src/app
-      - signals-data:/signals
-    entrypoint:
-      - sh
-      - -c
-      - |
-          echo "Waiting for microcks to be healthy..."
-          until curl -sf http://microcks:8080/api/health; do
-            echo "  microcks not up yet, retrying..."
-            sleep 5
-          done
-          microcks-cli import __fixtures__/asyncapi-hoppscotch-server.yml \
-            --microcksURL=http://microcks:8080/api/ \
-            --keycloakClientId=microcks-serviceaccount \
-            --keycloakClientSecret=ab54d329-e435-41ae-a900-ec6b3fe15c54 && \
-          touch /signals/cli.done
-    restart: "no"
-    healthcheck:
-      test: ["CMD-SHELL", "test -f /signals/cli.done"]
-      interval: 5s
-      retries: 1
-
-  npm-test:
     depends_on:
-      microcks-cli-importer:
-        condition: service_healthy
-    image: node:20
-    container_name: npm-test
-    working_dir: /usr/src/app
-    networks:
-      microcks-net:
-        aliases:
-          - npm-test
-    volumes:
-      - ../../../../../../:/usr/src/app
-      - signals-data:/signals
-    entrypoint:
-      - sh
-      - -c
-      - |
-          echo "Waiting for CLI importer to complete..."
-          until [ -f /signals/cli.done ]; do
-            sleep 2
-          done
-          npm ci && npm run packages:test && \
-          touch /signals/npm.done
-    restart: "no"
-    healthcheck:
-      test: ["CMD-SHELL", "test -f /signals/npm.done"]
-      interval: 5s
-      retries: 1
-
-  websocket-acceptance-tester-js:
-    profiles:
-      - tests
-    depends_on:
-      npm-test:
-        condition: service_healthy
       app:
         condition: service_healthy
-    image: node:20
+    command: >
+      sh -c "microcks-cli import __fixtures__/asyncapi-hoppscotch-server.yml
+      --microcksURL=http://microcks:8080/api/
+      --keycloakClientId=microcks-serviceaccount
+      --keycloakClientSecret=ab54d329-e435-41ae-a900-ec6b3fe15c54"
+
+  #TODO:1: make these tester containers work in way that if test fails, they fails as well. So also good to do starting of podman in a way that it is awaiting status
+  #TODO:2: add CI/CD pipeline for these tests
+  tester-js:
+    profiles:
+      - tests
+    image: node:18
     container_name: websocket-acceptance-tester-js
-    networks:
-      microcks-net:
-        aliases:
-          - websocket-acceptance-tester-js
     ports:
       - 8082:8082
     working_dir: /usr/src/app
     volumes:
       - ../../../../../../:/usr/src/app
-      - signals-data:/signals
-    entrypoint:
-      - sh
-      - -c
-      - |
-          echo "Waiting for npm tests to complete..."
-          until [ -f /signals/npm.done ]; do
-            sleep 2
-          done
-          echo "Waiting for app to be healthy..."
-          until curl -sf http://microcks:8080/api/health; do
-            sleep 5
-          done
-          npm install && cd packages/templates/clients/websocket/test/javascript && npm test
-    restart: "no"
-
-  websocket-acceptance-tester-py:
-    profiles:
-      - tests
     depends_on:
-      npm-test:
-        condition: service_healthy
       app:
         condition: service_healthy
+    command: ["sh", "-c", "npm install && cd packages/templates/clients/websocket/test/javascript && npm test"]
+  
+  tester-py:
+    profiles:
+      - tests
     image: python:3.11
     container_name: websocket-acceptance-tester-py
-    networks:
-      microcks-net:
-        aliases:
-          - websocket-acceptance-tester-py
     ports:
       - "8083:8083"
     working_dir: /usr/src/app
     volumes:
       - ../../../../../../:/usr/src/app
-      - signals-data:/signals
-    entrypoint:
-      - sh
-      - -c
-      - |
-          echo "Waiting for npm tests to complete..."
-          until [ -f /signals/npm.done ]; do
-            sleep 2
-          done
-          echo "Waiting for app to be healthy..."
-          until curl -sf http://microcks:8080/api/health; do
-            sleep 5
-          done
-          cd packages/templates/clients/websocket/python/test/temp/snapshotTestResult/client_hoppscotch && pip install -r requirements.txt && \
-          cd ../../../../test/python && pip install -r requirements.txt && pytest
-    restart: "no"
+    depends_on:
+      app:
+        condition: service_healthy
+    command: ["sh", "-c", "cd packages/templates/clients/websocket/python/test/temp/snapshotTestResult && pip install -r requirements.txt && cd ../../../../test/python && pip install -r requirements.txt && pytest"]
 
-  # Below for debugging purposes.
-  # Just uncomment below and after starting environment you can enter the container with "podman exec -it net-debug sh" and use websocat to test the websocket connection
+  # Below for debugging purposes. 
+  # Just uncomment below and after starting environment you can enter the constainer with "podman exec -it net-debug sh" and use websocat to test the websocket connection
 
   # net-debug:
   #   image: nicolaka/netshoot
   #   container_name: net-debug
   #   stdin_open: true
   #   tty: true
-  #   networks:
-  #     microcks-net:
-  #       aliases:
-  #         - net-debug
   #   command: >
   #     sh -c "apk add --no-cache websocat && sh"

@@ -1,3 +1,5 @@
+version: '3.9'
+
 volumes:
   microcks-data:
   signals-data:
@@ -60,8 +62,10 @@ services:
 
   app:
     depends_on:
-      - mongo
-      - kafka
+      kafka:
+        condition: service_healthy
+      mongo:
+        condition: service_healthy
     image: quay.io/microcks/microcks:1.11.2
     container_name: microcks
     networks:
@@ -93,7 +97,8 @@ services:
 
   async-minion:
     depends_on:
-      - app
+      app:
+        condition: service_healthy
     image: quay.io/microcks/microcks-async-minion:1.11.2
     container_name: microcks-async-minion
     restart: on-failure
@@ -129,6 +134,9 @@ services:
   microcks-cli-importer:
     profiles:
       - tests
+    depends_on:
+      app:
+        condition: service_healthy
     image: quay.io/microcks/microcks-cli:latest
     container_name: microcks-cli-importer
     working_dir: /usr/src/app
@@ -139,8 +147,6 @@ services:
     volumes:
       - ../:/usr/src/app
       - signals-data:/signals
-    depends_on:
-      - app
     entrypoint:
       - sh
       - -c
@@ -156,8 +162,15 @@ services:
             --keycloakClientSecret=ab54d329-e435-41ae-a900-ec6b3fe15c54 && \
           touch /signals/cli.done
     restart: "no"
+    healthcheck:
+      test: ["CMD-SHELL", "test -f /signals/cli.done"]
+      interval: 5s
+      retries: 1
 
   npm-test:
+    depends_on:
+      microcks-cli-importer:
+        condition: service_healthy
     image: node:20
     container_name: npm-test
     working_dir: /usr/src/app
@@ -179,10 +192,19 @@ services:
           npm ci && npm run packages:test && \
           touch /signals/npm.done
     restart: "no"
+    healthcheck:
+      test: ["CMD-SHELL", "test -f /signals/npm.done"]
+      interval: 5s
+      retries: 1
 
   websocket-acceptance-tester-js:
     profiles:
       - tests
+    depends_on:
+      npm-test:
+        condition: service_healthy
+      app:
+        condition: service_healthy
     image: node:20
     container_name: websocket-acceptance-tester-js
     networks:
@@ -213,6 +235,11 @@ services:
   websocket-acceptance-tester-py:
     profiles:
       - tests
+    depends_on:
+      npm-test:
+        condition: service_healthy
+      app:
+        condition: service_healthy
     image: python:3.11
     container_name: websocket-acceptance-tester-py
     networks:
@@ -255,5 +282,3 @@ services:
   #         - net-debug
   #   command: >
   #     sh -c "apk add --no-cache websocat && sh"
-
-# Attach all services to the default microcks-net network

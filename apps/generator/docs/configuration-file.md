@@ -14,11 +14,11 @@ The `generator` property from `package.json` file must contain a JSON object tha
 |`parameters[param].description`| String | A user-friendly description about the parameter.
 |`parameters[param].default`| Any | Default value of the parameter if not specified. Shouldn't be used for mandatory `required=true` parameters.
 |`parameters[param].required`| Boolean | Whether the parameter is required or not.
-|`conditionalFiles`| Object[String, Object] | An object containing all the file paths that should be conditionally rendered. Each key represents a file path and each value must be an object with the keys `subject` and `validation`. The file path should be relative to the `template` directory inside the template.
-|`conditionalFiles[filePath].subject`| String | The `subject` is a [JMESPath](http://jmespath.org/) query to grab the value you want to apply the condition to. It queries an object with the whole AsyncAPI document and, when specified, the given server. The object looks like this: `{ asyncapi: { ... }, server: { ... } }`. If the template supports `server` parameter, you can access server details like for example protocol this way: `server.protocol`. During validation with `conditionalFiles` only the server that template user selected is available in the specification file. For more information about `server` parameter [read about special parameters](#special-parameters).
+|`conditionalFiles`| Object[String, Object] | An object containing all the file paths that should be conditionally rendered. Each key represents a file path and each value must be an object with the keys `subject` and `validation`. The file path should be relative to the `template` directory inside the template. **Note: It is deprecated and will be removed with future releases**
+|`conditionalFiles[filePath].subject`| String | The `subject` is a [JMESPath](http://jmespath.org/) query to grab the value you want to apply the condition to. It queries an object with the whole AsyncAPI document and, when specified, the given server. The object looks like this: `{ asyncapi: { ... }, server: { ... } }`. If the template supports `server` parameter, you can access server details like for example protocol this way: `server.protocol`. During validation with `conditionalFiles` only the server that template user selected is available in the specification file. For more information about `server` parameter [read about special parameters].(#special-parameters) **Note: It is deprecated and will be removed with future releases**.
+|`conditionalFiles[filePath].validation`| Object | The `validation` is a JSON Schema Draft 07 object. This JSON Schema definition will be applied to the JSON value resulting from the `subject` query. If validation doesn't have errors, the condition is met, and therefore the given file will be rendered. Otherwise, the file is ignored. Check [JSON Schema Validation](https://json-schema.org/draft-07/json-schema-validation.html#rfc.section.6) document for a list of all possible validation keywords. **Note: It is deprecated and will be removed with future releases**.
 |`conditionalGeneration[filePath/directoryName].subject`| String | The `subject` is a [JMESPath](http://jmespath.org/) query to grab the value you want to apply the condition to. It queries an object with the whole AsyncAPI document and, when specified, the given server. The object looks like this: `{ asyncapi: { ... }, server: { ... } }`. If the template supports `server` parameter, you can access server details like for example protocol this way: `server.protocol`. During validation with `conditionalFiles` only the server that template user selected is available in the specification file. For more information about `server` parameter [read about special parameters](#special-parameters).
-|`conditionalGeneration[filePath/directoryName].parameter`| String | The valid template Parameter that will be passed during the generation process.
-|`conditionalFiles[filePath].validation`| Object | The `validation` is a JSON Schema Draft 07 object. This JSON Schema definition will be applied to the JSON value resulting from the `subject` query. If validation doesn't have errors, the condition is met, and therefore the given file will be rendered. Otherwise, the file is ignored. Check [JSON Schema Validation](https://json-schema.org/draft-07/json-schema-validation.html#rfc.section.6) document for a list of all possible validation keywords.
+| `conditionalGeneration[filePath/directoryName].parameter` | String | The `parameter` is the name of a custom template parameter passed through `templateParams` that controls whether a specific file or folder should be included in the generated output. You must define a `validation` rule using a JSON Schema fragment to apply the condition. For example, if you define `"parameter": "includeDocs"` with `"validation": { "const": true }`, the corresponding folder (e.g., `docs/`) will only be generated when the user passes `{ includeDocs: true }`. If `includeDocs` is `false`, it will be skipped. |
 |`nonRenderableFiles`| [String] | A list of file paths or [globs](https://en.wikipedia.org/wiki/Glob_(programming)) that must be copied "as-is" to the target directory, i.e., without performing any rendering process. This is useful when you want to copy binary files.
 |`generator`| [String] | A string representing the generator version-range the template is compatible with. This value must follow the [semver](https://nodejs.dev/learn/semantic-versioning-using-npm) syntax. E.g., `>=1.0.0`, `>=1.0.0 <=2.0.0`, `~1.0.0`, `^1.0.0`, `1.0.0`, etc. [Read more about semver](https://docs.npmjs.com/about-semantic-versioning).
 |`filters`| [String] | A list of modules containing functions that can be used as Nunjucks filters. In case of external modules, remember they need to be added as a dependency in `package.json` of your template.
@@ -57,15 +57,15 @@ The `generator` property from `package.json` file must contain a JSON object tha
         }
     }
   },
- "conditionalGeneration": {
-    "directoryName": {
-      "parameter": "singleFile",
-      "validation": {
-        "not": { "const": true }
-      }
+  "conditionalGeneration": {
+     "directoryName": { 
+       // Name of the directory without ./ or any kind of path, e.g., "docs" or "output"
+     "parameter": "singleFile", // The template parameter that will determine whether the directory is generated
+     "validation": {
+       // The validation rule that determines when the directory should be generated
+       "not": { "const": true } // This rule ensures the directory is not generated if "singleFile" is true
     }
   },
-  
   "nonRenderableFiles": [
     "src/api/middlewares/*.*",
     "lib/lib/config.js"

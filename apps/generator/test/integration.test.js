@@ -177,9 +177,6 @@ describe('Integration testing generateFromFile() to make sure the result of the 
     const exists = await access(conditionalFolderPath).then(() => true).catch(() => false);
     expect(exists).toBe(true);
   });
-
-
-
   it('should handle concurrent generation to the same output directory using reactTemplate without errors or inconsistent file structure', async () => {
     const outputDir = generateFolderName();
     const numConcurrentGenerations = 5;

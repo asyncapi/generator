@@ -133,8 +133,6 @@ services:
     depends_on:
       app:
         condition: service_healthy
-      npm-test:
-        condition: service_completed_successfully
     command: ["sh", "-c", "npm install && cd packages/templates/clients/websocket/test/javascript && npm test"]
   
   tester-py:
@@ -151,8 +149,6 @@ services:
     depends_on:
       app:
         condition: service_healthy
-      npm-test:
-        condition: service_completed_successfully
     command: ["sh", "-c", "cd packages/templates/clients/websocket/python/test/temp/snapshotTestResult/client_hoppscotch && pip install -r requirements.txt && cd ../../../../../test/python && pip install -r requirements.txt && pytest"]
 
   # Below for debugging purposes. 

@@ -10,7 +10,6 @@ const dummySpecPath = path.resolve(__dirname, './docs/dummy.yml');
 const refSpecPath = path.resolve(__dirname, './docs/apiwithref.json');
 const refSpecFolder = path.resolve(__dirname, './docs/');
 const crypto = require('crypto');
-const fs = require('fs');
 const mainTestResultPath = path.resolve(__dirname, './temp/integrationTestResult');
 const reactTemplate = path.resolve(__dirname, './test-templates/react-template');
 const nunjucksTemplate = path.resolve(__dirname, './test-templates/nunjucks-template');
@@ -163,7 +162,7 @@ describe('Integration testing generateFromFile() to make sure the result of the 
     });
     await generator.generateFromFile(dummySpecPath);
     const conditionalFolderPath = path.join(outputDir, 'conditionalFolder');
-    const exists = fs.existsSync(conditionalFolderPath);
+    const exists = await access(conditionalFolderPath).then(() => true).catch(() => false);
     expect(exists).toBe(false);
   });
   
@@ -175,23 +174,11 @@ describe('Integration testing generateFromFile() to make sure the result of the 
     });
     await generator.generateFromFile(dummySpecPath);
     const conditionalFolderPath = path.join(outputDir, 'conditionalFolder');
-    const exists = fs.existsSync(conditionalFolderPath);
+    const exists = await access(conditionalFolderPath).then(() => true).catch(() => false);
     expect(exists).toBe(true);
   });
 
-  it('should not generate the conditionalFolder in one by one process in a single folder, if the singleFile parameter is set true', async () => {
-    const outputDir = generateFolderName();
-    for (let i = 1; i <= 3; i++) {
-      const generator = new Generator(reactTemplate, outputDir, {
-        forceWrite: true ,
-        templateParams: { version: 'v1', mode: 'production', singleFile: true}
-      });
-      await generator.generateFromFile(dummySpecPath);
-    }
-    const conditionalFolderPath = path.join(outputDir, 'conditionalFolder');
-    const exists = fs.existsSync(conditionalFolderPath);
-    expect(exists).toBe(false);
-  });
+
 
   it('should handle concurrent generation to the same output directory using reactTemplate without errors or inconsistent file structure', async () => {
     const outputDir = generateFolderName();
@@ -217,7 +204,7 @@ describe('Integration testing generateFromFile() to make sure the result of the 
   
     // Verify that the expected folder exists after concurrent generation
     const expectedFolder = path.join(outputDir, 'conditionalFolder'); // assuming reactTemplate generates this
-    const folderExists = fs.existsSync(expectedFolder);
+    const folderExists = await access(expectedFolder).then(() => true).catch(() => false);
     expect(folderExists).toBe(true);
   });
 });

@@ -1,6 +1,6 @@
 volumes:
   microcks-data:
-  
+
 services:
   mongo:
     image: docker.io/mongo:4.4.29
@@ -70,6 +70,10 @@ services:
       interval: 10s
       timeout: 3s
       retries: 3
+    networks:
+      default:
+        aliases:
+          - microcks
 
   async-minion:
     depends_on:

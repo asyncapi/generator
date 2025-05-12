@@ -1,5 +1,6 @@
 volumes:
   microcks-data:
+  signals-data:
 
 networks:
   microcks-net:
@@ -137,14 +138,24 @@ services:
           - microcks-cli-importer
     volumes:
       - ../:/usr/src/app
+      - signals-data:/signals
     depends_on:
-      app:
-        condition: service_healthy
-    command: >
-      sh -c "microcks-cli import __fixtures__/asyncapi-hoppscotch-server.yml \
-      --microcksURL=http://microcks:8080/api/ \
-      --keycloakClientId=microcks-serviceaccount \
-      --keycloakClientSecret=ab54d329-e435-41ae-a900-ec6b3fe15c54"
+      - app
+    entrypoint:
+      - sh
+      - -c
+      - |
+          echo "Waiting for microcks to be healthy..."
+          until curl -sf http://microcks:8080/api/health; do
+            echo "  microcks not up yet, retrying..."
+            sleep 5
+          done
+          microcks-cli import __fixtures__/asyncapi-hoppscotch-server.yml \
+            --microcksURL=http://microcks:8080/api/ \
+            --keycloakClientId=microcks-serviceaccount \
+            --keycloakClientSecret=ab54d329-e435-41ae-a900-ec6b3fe15c54 && \
+          touch /signals/cli.done
+    restart: "no"
 
   npm-test:
     image: node:20
@@ -156,10 +167,17 @@ services:
           - npm-test
     volumes:
       - ../../../../../../:/usr/src/app
-    depends_on:
-      microcks-cli-importer:
-        condition: service_completed_successfully
-    command: ["sh", "-c", "npm ci && npm run packages:test"]
+      - signals-data:/signals
+    entrypoint:
+      - sh
+      - -c
+      - |
+          echo "Waiting for CLI importer to complete..."
+          until [ -f /signals/cli.done ]; do
+            sleep 2
+          done
+          npm ci && npm run packages:test && \
+          touch /signals/npm.done
     restart: "no"
 
   websocket-acceptance-tester-js:
@@ -176,12 +194,20 @@ services:
     working_dir: /usr/src/app
     volumes:
       - ../../../../../../:/usr/src/app
-    depends_on:
-      app:
-        condition: service_healthy
-      npm-test:
-        condition: service_completed_successfully
-    command: ["sh", "-c", "npm install && cd packages/templates/clients/websocket/test/javascript && npm test"]
+      - signals-data:/signals
+    entrypoint:
+      - sh
+      - -c
+      - |
+          echo "Waiting for npm tests to complete..."
+          until [ -f /signals/npm.done ]; do
+            sleep 2
+          done
+          echo "Waiting for app to be healthy..."
+          until curl -sf http://microcks:8080/api/health; do
+            sleep 5
+          done
+          npm install && cd packages/templates/clients/websocket/test/javascript && npm test
     restart: "no"
 
   websocket-acceptance-tester-py:
@@ -198,12 +224,21 @@ services:
     working_dir: /usr/src/app
     volumes:
       - ../../../../../../:/usr/src/app
-    depends_on:
-      app:
-        condition: service_healthy
-      npm-test:
-        condition: service_completed_successfully
-    command: ["sh", "-c", "cd packages/templates/clients/websocket/python/test/temp/snapshotTestResult/client_hoppscotch && pip install -r requirements.txt && cd ../../../../test/python && pip install -r requirements.txt && pytest"]
+      - signals-data:/signals
+    entrypoint:
+      - sh
+      - -c
+      - |
+          echo "Waiting for npm tests to complete..."
+          until [ -f /signals/npm.done ]; do
+            sleep 2
+          done
+          echo "Waiting for app to be healthy..."
+          until curl -sf http://microcks:8080/api/health; do
+            sleep 5
+          done
+          cd packages/templates/clients/websocket/python/test/temp/snapshotTestResult/client_hoppscotch && pip install -r requirements.txt && \
+          cd ../../../../test/python && pip install -r requirements.txt && pytest
     restart: "no"
 
   # Below for debugging purposes.

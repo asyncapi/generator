@@ -6,7 +6,7 @@ import asyncio
 import websockets
 import requests
 
-module_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../python/test/temp/snapshotTestResult'))
+module_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../python/test/temp/snapshotTestResult/client_hoppscotch'))
 
 microcks_test_endpoint = 'http://microcks:8080/api/tests'
 
@@ -14,7 +14,7 @@ microcks_test_endpoint = 'http://microcks:8080/api/tests'
 if module_path not in sys.path:
     sys.path.insert(0, module_path)
 
-from client_hoppscotch import HoppscotchEchoWebSocketClient
+from client import HoppscotchEchoWebSocketClient
 
 def test_hoppscotch_client_receives_message():
     # Instantiate the client using the default URL.

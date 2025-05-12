@@ -97,15 +97,25 @@ class HoppscotchEchoWebSocketClient {
    * 
    * @param {Object} message - The message payload to send. Should match the schema defined in the AsyncAPI document.
    * @param {WebSocket} [socket] - The WebSocket connection to use. If not provided, the client's own connection will be used.
+   * @throws {TypeError} If message cannot be stringified to JSON
+   * @throws {Error} If WebSocket connection is not in OPEN state
    */
   static sendEchoMessage(message, socket) {
-    socket.send(JSON.stringify(message));
+    try {
+      socket.send(JSON.stringify(message));
+    } catch (error) {
+      console.error('Error sending sendEchoMessage message:', error);
+    }
   }
   /**
    * Instance method version of sendEchoMessage that uses the client's own WebSocket connection.
    * @param {Object} message - The message payload to send
+   * @throws {Error} If WebSocket connection is not established
    */
   sendEchoMessage(message){
+    if(!this.websocket){
+      throw new Error('WebSocket connection not established. Call connect() first.');
+    }
     HoppscotchEchoWebSocketClient.sendEchoMessage(message, this.websocket);
   }
   
@@ -220,15 +230,25 @@ class HoppscotchClient {
    * 
    * @param {Object} message - The message payload to send. Should match the schema defined in the AsyncAPI document.
    * @param {WebSocket} [socket] - The WebSocket connection to use. If not provided, the client's own connection will be used.
+   * @throws {TypeError} If message cannot be stringified to JSON
+   * @throws {Error} If WebSocket connection is not in OPEN state
    */
   static sendEchoMessage(message, socket) {
-    socket.send(JSON.stringify(message));
+    try {
+      socket.send(JSON.stringify(message));
+    } catch (error) {
+      console.error('Error sending sendEchoMessage message:', error);
+    }
   }
   /**
    * Instance method version of sendEchoMessage that uses the client's own WebSocket connection.
    * @param {Object} message - The message payload to send
+   * @throws {Error} If WebSocket connection is not established
    */
   sendEchoMessage(message){
+    if(!this.websocket){
+      throw new Error('WebSocket connection not established. Call connect() first.');
+    }
     HoppscotchClient.sendEchoMessage(message, this.websocket);
   }
   
@@ -344,15 +364,25 @@ class PostmanEchoWebSocketClientClient {
    * 
    * @param {Object} message - The message payload to send. Should match the schema defined in the AsyncAPI document.
    * @param {WebSocket} [socket] - The WebSocket connection to use. If not provided, the client's own connection will be used.
+   * @throws {TypeError} If message cannot be stringified to JSON
+   * @throws {Error} If WebSocket connection is not in OPEN state
    */
   static sendEchoMessage(message, socket) {
-    socket.send(JSON.stringify(message));
+    try {
+      socket.send(JSON.stringify(message));
+    } catch (error) {
+      console.error('Error sending sendEchoMessage message:', error);
+    }
   }
   /**
    * Instance method version of sendEchoMessage that uses the client's own WebSocket connection.
    * @param {Object} message - The message payload to send
+   * @throws {Error} If WebSocket connection is not established
    */
   sendEchoMessage(message){
+    if(!this.websocket){
+      throw new Error('WebSocket connection not established. Call connect() first.');
+    }
     PostmanEchoWebSocketClientClient.sendEchoMessage(message, this.websocket);
   }
   

@@ -80,5 +80,5 @@ jobs:
           echo "should_test value: ${{ needs.changes.outputs.should_test }}"
       - if: needs.changes.outputs.should_test == 'true'
         name: Run acceptance tests
-        run: docker compose -f ./microcks-setup/microcks-podman.yml --profile tests up --abort-on-container-exit --force-recreate
+        run: docker compose -f ./microcks-setup/microcks-podman.yml --profile tests up --force-recreate
         working-directory: ./packages/templates/clients/websocket/test

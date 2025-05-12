@@ -103,6 +103,8 @@ services:
     depends_on:
       app:
         condition: service_healthy
+      npm-test:
+        condition: service_completed_successfully
     command: >
       sh -c "microcks-cli import __fixtures__/asyncapi-hoppscotch-server.yml
       --microcksURL=http://microcks:8080/api/

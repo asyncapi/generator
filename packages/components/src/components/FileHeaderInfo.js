@@ -1,17 +1,35 @@
 import { Text } from '@asyncapi/generator-react-sdk';
 
-export function FileHeaderInfo({ info, server, language }) {
-  let commentChar;
-  let line;
+/**
+ * @typedef {'python' | 'javascript' | 'typescript' | 'java' | 'csharp' | 'rust'} Language
+ * Supported programming languages.
+ */
 
-  // Decide comment style based on language
-  if (language === 'python') {
-    commentChar = '#';
-    line = commentChar + ' ' + '/'.repeat(70);
-  } else {
-    commentChar = '//';
-    line = commentChar + '/'.repeat(70);
-  }
+/**
+ * Mapping of language to comment styles.
+ * @type {Record<Language, string>}
+ */
+const commentStyles = {
+  python: '#',
+  javascript: '//',
+  typescript: '//',
+  java: '//',
+  csharp: '//',
+  rust: '//',
+};
+
+/**
+ * Renders a file header with metadata information such as title, version, protocol, host, and path.
+ *
+ * @param {Object} props - Component props.
+ * @param {object} props.info - Info object from the AsyncAPI document.
+ * @param {object} props.server - Server object from the AsyncAPI document.
+ * @param {Language} props.language - Programming language used for comment formatting.
+ * @returns {JSX.Element} Rendered file header.
+ */
+export function FileHeaderInfo({ info, server, language }) {
+  const commentChar = commentStyles[language] || '//';
+  const line = `${commentChar}${language === 'python' ? ' ' : ''}${'/'.repeat(70)}`;
 
   return (
     <Text>

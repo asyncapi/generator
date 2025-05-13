@@ -45,6 +45,12 @@ servers:
     pathname: /link
     protocol: wss
     description: Slack's server in Socket Mode for real-time communication
+    security:
+    - type: http
+      scheme: bearer
+      bearerFormat: OAuth2
+      description: |
+        First you need to obtain a token and connection URL by making a HTTP request to `https://slack.com/api/apps.connections.open`. In response you receive WebSocket connection link that includes query parameters containing authorization information. Each time you connect with the WebSocket API, you need to generate a new connection link.
 channels:
   root:
     address: /

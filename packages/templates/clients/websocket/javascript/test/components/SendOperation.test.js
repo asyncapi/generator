@@ -35,5 +35,4 @@ describe('Testing of SendOperation function', () => {
     const actual = result.trim();
     expect(actual).toMatchSnapshot();
   });
-  
 });

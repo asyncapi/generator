@@ -29,4 +29,4 @@ exports[`Testing of SendOperation function render websockets with send operation
   }"
 `;
 
-exports[`Testing of SendOperation function render websockets without send operations and client name 1`] = `""`;
+exports[`Testing of SendOperation function render websockets without send operations 1`] = `""`;

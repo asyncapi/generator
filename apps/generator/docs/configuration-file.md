@@ -58,8 +58,8 @@ The `generator` property from `package.json` file must contain a JSON object tha
     }
   },
   "conditionalGeneration": {
-     "directoryName": { 
-       // Name of the directory without ./ or any kind of path, e.g., "docs" or "output"
+     "directoryName/fileName": { 
+       // Name of the directory or fileName without ./ or any kind of path, e.g., "docs" or "output"
      "parameter": "singleFile", // The template parameter that will determine whether the directory is generated
      "validation": {
        // The validation rule that determines when the directory should be generated

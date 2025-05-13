@@ -133,8 +133,11 @@ async function validateParameterValue(
 ) {
   if (Object.hasOwn(validation, 'not')) {
     const isNotValid = validateNot(validation.not, argument);
-    if (isNotValid && matchedConditionPath === relativeSourceDirectory) {
+    if (isNotValid && (matchedConditionPath === relativeSourceDirectory)) {
       await removeParentDirectory(relativeTargetFile, targetDir);
+      return false;
+    } else 
+    if (isNotValid && (matchedConditionPath === relativeTargetFile)) {
       return false;
     }
     log.debug(logMessage.conditionalFilesMatched(matchedConditionPath));
@@ -148,6 +151,9 @@ async function validateParameterValue(
   if (!isValid) {
     log.debug(logMessage.conditionalFilesMatched(matchedConditionPath));
     return true;
+  } else 
+  if (isValid && (matchedConditionPath === relativeTargetFile)) {
+    return false;
   }
   
   await removeParentDirectory(relativeTargetFile, targetDir);

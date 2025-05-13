@@ -154,15 +154,26 @@ describe('Integration testing generateFromFile() to make sure the result of the 
      */
   });
 
-  it('should not generate the conditionalFolder if the singleFile parameter is set true', async () => {
+  it('should not generate the conditionalFolder if the singleFolder parameter is set true', async () => {
     const outputDir = generateFolderName();
     const generator = new Generator(reactTemplate, outputDir, {
       forceWrite: true ,
-      templateParams: { version: 'v1', mode: 'production', singleFile: true }
+      templateParams: { version: 'v1', mode: 'production', singleFolder: true }
     });
     await generator.generateFromFile(dummySpecPath);
     const conditionalFolderPath = path.join(outputDir, 'conditionalFolder');
     const exists = await access(conditionalFolderPath).then(() => true).catch(() => false);
+    expect(exists).toBe(false);
+  });
+  it('should not generate the conditionalFile if the singleFile parameter is set true', async () => {
+    const outputDir = generateFolderName();
+    const generator = new Generator(reactTemplate, outputDir, {
+      forceWrite: true ,
+      templateParams: { version: 'v1', mode: 'production', singleFolder: true }
+    });
+    await generator.generateFromFile(dummySpecPath);
+    const conditionalFolderPath = path.join(outputDir, 'conditionalFile.text');
+    const exists = await readFile(conditionalFolderPath).then(() => true).catch(() => false);
     expect(exists).toBe(false);
   });
 });

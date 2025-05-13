@@ -1,1 +1,0 @@
-The complete directory will be generate only if singleFile param is set as false

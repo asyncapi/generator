@@ -15,8 +15,8 @@ export default function MessageExamples({operation}) {
   });
   return (
     <Text>
-      {messageExamples.map((example, index) => (
-        <Text key={index}>
+      {messageExamples.map(example => (
+        <Text>
           {example}
         </Text>
       ))}

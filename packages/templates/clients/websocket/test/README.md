@@ -40,6 +40,8 @@ Microcks is a tool for mocking. To test our generated clients, we need to mock t
 
 To test clients, we need to mock the server. Remember to load AsyncAPI documents that represent the server.
 
+> If you work with documents that contain `$ref` pointing to external files, like for example `packages/templates/clients/websocket/test/__fixtures__/asyncapi-hoppscotch-client.yml`, you need to first bundle them into a single AsyncAPI document. Instal AsyncAPI CLI and use `bundle` command. 
+
 1. Install [Microcks CLI](https://microcks.io/documentation/guides/automation/cli/)
 
 1. Import AsyncAPI document

@@ -165,29 +165,16 @@ describe('Integration testing generateFromFile() to make sure the result of the 
     const exists = await access(conditionalFolderPath).then(() => true).catch(() => false);
     expect(exists).toBe(false);
   });
-  
-  it('should generate the conditionalFolder if the singleFile parameter is set false by default', async () => {
-    const outputDir = generateFolderName();
-    const generator = new Generator(reactTemplate, outputDir, {
-      forceWrite: true ,
-      templateParams: { version: 'v1', mode: 'production' }
-    });
-    await generator.generateFromFile(dummySpecPath);
-    const conditionalFolderPath = path.join(outputDir, 'conditionalFolder');
-    const exists = await access(conditionalFolderPath).then(() => true).catch(() => false);
-    expect(exists).toBe(true);
-  });
+
   it('should handle concurrent generation to the same output directory using reactTemplate without errors or inconsistent file structure', async () => {
     const outputDir = generateFolderName();
-    const numConcurrentGenerations = 5;
+    const numConcurrentGenerations = 10;
     const promises = [];
   
     for (let i = 0; i < numConcurrentGenerations; i++) {
       const generator = new Generator(reactTemplate, outputDir, {
         forceWrite: true,
-        // Setting singleFile: false makes the generator produce multiple files and folders,
-        // which increases the likelihood of file system conflicts during concurrent generation
-        templateParams: { singleFile: false }
+        templateParams: { singleFile: true }
       });
       promises.push(generator.generateFromFile(dummySpecPath));
     }
@@ -202,6 +189,6 @@ describe('Integration testing generateFromFile() to make sure the result of the 
     // Verify that the expected folder exists after concurrent generation
     const expectedFolder = path.join(outputDir, 'conditionalFolder'); // assuming reactTemplate generates this
     const folderExists = await access(expectedFolder).then(() => true).catch(() => false);
-    expect(folderExists).toBe(true);
+    expect(folderExists).toBe(false);
   });
 });

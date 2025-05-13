@@ -44,7 +44,7 @@ To test clients, we need to mock the server. Remember to load AsyncAPI documents
 
 1. Import AsyncAPI document
     ```bash
-    microcks-cli import __fixtures__/asyncapi-postman-client.yml \
+    microcks-cli import __fixtures__/asyncapi-postman-echo.yml \
       --microcksURL=http://localhost:8080/api/ \
       --keycloakClientId=microcks-serviceaccount \
       --keycloakClientSecret="ab54d329-e435-41ae-a900-ec6b3fe15c54"
@@ -60,7 +60,7 @@ You should run tests only on one operation at a time.
 
 ```bash
 # the higher timeout the more test samples will run
-microcks-cli test 'Hoppscotch Echo WebSocket Client:1.0.0' ws://localhost:8081/api/ws/Postman+Echo+WebSocket+Client/1.0.0/sendTimeStampMessage ASYNC_API_SCHEMA \
+microcks-cli test 'Postman Echo WebSocket Client:1.0.0' ws://localhost:8081/api/ws/Postman+Echo+WebSocket+Client/1.0.0/sendTimeStampMessage ASYNC_API_SCHEMA \
     --microcksURL=http://localhost:8080/api/ \
     --insecure \
     --waitFor=15sec \

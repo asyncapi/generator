@@ -70,7 +70,7 @@ jobs:
   #this test job runs acceptance tests that use microcks and check generated code against the asyncapi contract
   acceptance:
     needs: changes
-    name: Acceptance tests
+    name: Acceptance tests for generated templates
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository

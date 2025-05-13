@@ -163,7 +163,7 @@ services:
     depends_on:
       app:
         condition: service_healthy
-    command: ["sh", "-c", "ls && cd packages/templates/clients/websocket/python/test/temp/snapshotTestResult/client_hoppscotch && pip install -r requirements.txt && cd ../../../../../test/python && pip install -r requirements.txt && pytest"]
+    command: ["sh", "-c", "cd packages/templates/clients/websocket/python/test/temp/snapshotTestResult/client_hoppscotch && pip install -r requirements.txt && cd ../../../../../test/python && pip install -r requirements.txt && pytest"]
 
   # Below for debugging purposes. 
   # Just uncomment below and after starting environment you can enter the constainer with "podman exec -it net-debug sh" and use websocat to test the websocket connection

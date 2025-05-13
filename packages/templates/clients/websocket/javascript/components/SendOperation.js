@@ -1,6 +1,10 @@
 import { Text } from '@asyncapi/generator-react-sdk';
 
 export function SendOperation({ sendOperations, clientName }) {
+  if (!sendOperations || sendOperations.length === 0) {
+    return null;
+  }
+
   return (
     <>
       {sendOperations.map((operation) => (

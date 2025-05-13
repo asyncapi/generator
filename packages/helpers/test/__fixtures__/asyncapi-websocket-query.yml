@@ -52,6 +52,13 @@ channels:
               default: true
             offers:
               type: string
+    messages:
+      subscribeMarket:
+        summary: Request to subscribe to market data updates.
+        payload: {}
+      marketUpdate:
+        summary: Market data update.
+        payload: {}
 
   emptyChannel: {}
 
@@ -68,3 +75,20 @@ components:
         - btcusd
         - ethbtc
         - ethusd
+
+operations:
+  sendSubscribeMarket:
+    summary: Allows clients to subscribe to market data.
+    action: send
+    channel:
+      $ref: '#/channels/marketDataV1'
+    messages:
+      - $ref: '#/channels/marketDataV1/messages/subscribeMarket'
+
+  receiveMarketUpdate:
+    summary: Receive real-time market data updates.
+    action: receive
+    channel:
+      $ref: '#/channels/marketDataV1'
+    messages:
+      - $ref: '#/channels/marketDataV1/messages/marketUpdate'

@@ -169,11 +169,11 @@ describe('Integration testing generateFromFile() to make sure the result of the 
     const outputDir = generateFolderName();
     const generator = new Generator(reactTemplate, outputDir, {
       forceWrite: true ,
-      templateParams: { version: 'v1', mode: 'production', singleFolder: true }
+      templateParams: { version: 'v1', mode: 'production', singleFile: true }
     });
     await generator.generateFromFile(dummySpecPath);
-    const conditionalFolderPath = path.join(outputDir, 'conditionalFile.text');
-    const exists = await readFile(conditionalFolderPath).then(() => true).catch(() => false);
+    const conditionalFilePath = path.join(outputDir, 'conditionalFile.text');
+    const exists = await readFile(conditionalFilePath).then(() => true).catch(() => false);
     expect(exists).toBe(false);
   });
 });

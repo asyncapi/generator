@@ -50,7 +50,7 @@ async def test_hoppscotch_client_sends_message():
 
     # payload for trigger Microcks test
     payload = {
-        "serviceId": "Hoppscotch WebSocket Server:1.0.0",
+        "serviceId": "Hoppscotch Echo WebSocket Server:1.0.0",
         "testEndpoint": "ws://websocket-acceptance-tester-py:8083/ws",
         "runnerType": "ASYNC_API_SCHEMA",
         "timeout": 30000,

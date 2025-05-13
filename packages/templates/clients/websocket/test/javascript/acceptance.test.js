@@ -59,7 +59,7 @@ describe('client - sender tests', () => {
   jest.setTimeout(100000);
   const port = 8082;
   const payload = JSON.stringify({
-    serviceId: 'Hoppscotch WebSocket Server:1.0.0',
+    serviceId: 'Hoppscotch Echo WebSocket Server:1.0.0',
     testEndpoint: 'ws://websocket-acceptance-tester-js:8082/ws',
     runnerType: 'ASYNC_API_SCHEMA',
     timeout: 30000,

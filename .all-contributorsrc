@@ -242,6 +242,83 @@
       "contributions": [
         "test"
       ]
+    },
+    {
+      "login": "ssala034",
+      "name": "Shuaib S.",
+      "avatar_url": "https://avatars.githubusercontent.com/u/143904652?v=4",
+      "profile": "https://github.com/ssala034",
+      "contributions": [
+        "test",
+        "doc",
+        "infra"
+      ]
+    },
+    {
+      "login": "Adi-204",
+      "name": "Adi Boghawala",
+      "avatar_url": "https://avatars.githubusercontent.com/u/114283933?v=4",
+      "profile": "https://github.com/Adi-204",
+      "contributions": [
+        "bug",
+        "code",
+        "ideas",
+        "infra",
+        "review",
+        "test",
+        "doc"
+      ]
+    },
+    {
+      "login": "KunalNasa",
+      "name": "Kunal Nasa",
+      "avatar_url": "https://avatars.githubusercontent.com/u/111643119?v=4",
+      "profile": "https://www.linkedin.com/in/kunalnasa/",
+      "contributions": [
+        "code",
+        "doc",
+        "bug"
+      ]
+    },
+    {
+      "login": "thulieblack",
+      "name": "V Thulisile Sibanda",
+      "avatar_url": "https://avatars.githubusercontent.com/u/66913810?v=4",
+      "profile": "https://thulieblack.github.io",
+      "contributions": [
+        "test"
+      ]
+    },
+    {
+      "login": "nightknighto",
+      "name": "Ahmed Atwa",
+      "avatar_url": "https://avatars.githubusercontent.com/u/52013393?v=4",
+      "profile": "https://github.com/nightknighto",
+      "contributions": [
+        "test",
+        "infra"
+      ]
+    },
+    {
+      "login": "Light13008",
+      "name": "Sarvesh.Patil",
+      "avatar_url": "https://avatars.githubusercontent.com/u/111660124?v=4",
+      "profile": "https://github.com/Light13008",
+      "contributions": [
+        "test",
+        "review"
+      ]
+    },
+    {
+      "login": "ItshMoh",
+      "name": "Mohan Kumar",
+      "avatar_url": "https://avatars.githubusercontent.com/u/121867882?v=4",
+      "profile": "https://github.com/ItshMoh",
+      "contributions": [
+        "review",
+        "code",
+        "ideas"
+      ]
     }
   ],
   "contributorsPerLine": 3,

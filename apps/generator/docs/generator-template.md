@@ -1,5 +1,5 @@
 ---
-title: "Creating a template"
+title: "Creating a template - Python"
 weight: 170
 ---
 

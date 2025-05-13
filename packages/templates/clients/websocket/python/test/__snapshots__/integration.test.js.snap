@@ -1,5 +1,790 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`testing if generated client match snapshot generate client for slack: Acknowledge.py 1`] = `
+"class Acknowledge: 
+  def __init__(self, input: Dict):
+    if 'envelope_id' in input:
+      self._envelope_id: str = input['envelope_id']
+    if 'payload' in input:
+      self._payload: dict[str, Any] = input['payload']
+    if 'additional_properties' in input:
+      self._additional_properties: dict[str, Any] = input['additional_properties']
+
+  @property
+  def envelope_id(self) -> str:
+    return self._envelope_id
+  @envelope_id.setter
+  def envelope_id(self, envelope_id: str):
+    self._envelope_id = envelope_id
+
+  @property
+  def payload(self) -> dict[str, Any]:
+    return self._payload
+  @payload.setter
+  def payload(self, payload: dict[str, Any]):
+    self._payload = payload
+
+  @property
+  def additional_properties(self) -> dict[str, Any]:
+    return self._additional_properties
+  @additional_properties.setter
+  def additional_properties(self, additional_properties: dict[str, Any]):
+    self._additional_properties = additional_properties
+"
+`;
+
+exports[`testing if generated client match snapshot generate client for slack: Authorization.py 1`] = `
+"class Authorization: 
+  def __init__(self, input: Dict):
+    if 'enterprise_id' in input:
+      self._enterprise_id: str = input['enterprise_id']
+    if 'team_id' in input:
+      self._team_id: str = input['team_id']
+    if 'user_id' in input:
+      self._user_id: str = input['user_id']
+    if 'is_bot' in input:
+      self._is_bot: bool = input['is_bot']
+    if 'is_enterprise_install' in input:
+      self._is_enterprise_install: bool = input['is_enterprise_install']
+    if 'additional_properties' in input:
+      self._additional_properties: dict[str, Any] = input['additional_properties']
+
+  @property
+  def enterprise_id(self) -> str:
+    return self._enterprise_id
+  @enterprise_id.setter
+  def enterprise_id(self, enterprise_id: str):
+    self._enterprise_id = enterprise_id
+
+  @property
+  def team_id(self) -> str:
+    return self._team_id
+  @team_id.setter
+  def team_id(self, team_id: str):
+    self._team_id = team_id
+
+  @property
+  def user_id(self) -> str:
+    return self._user_id
+  @user_id.setter
+  def user_id(self, user_id: str):
+    self._user_id = user_id
+
+  @property
+  def is_bot(self) -> bool:
+    return self._is_bot
+  @is_bot.setter
+  def is_bot(self, is_bot: bool):
+    self._is_bot = is_bot
+
+  @property
+  def is_enterprise_install(self) -> bool:
+    return self._is_enterprise_install
+  @is_enterprise_install.setter
+  def is_enterprise_install(self, is_enterprise_install: bool):
+    self._is_enterprise_install = is_enterprise_install
+
+  @property
+  def additional_properties(self) -> dict[str, Any]:
+    return self._additional_properties
+  @additional_properties.setter
+  def additional_properties(self, additional_properties: dict[str, Any]):
+    self._additional_properties = additional_properties
+"
+`;
+
+exports[`testing if generated client match snapshot generate client for slack: ChannelJoin.py 1`] = `
+"class ChannelJoin: 
+  def __init__(self, input: Dict):
+    self._type: str = 'message'
+    if 'event_ts' in input:
+      self._event_ts: str = input['event_ts']
+    self._subtype: str = 'message'
+    self._inviter: str = 'message'
+    self._text: str = 'message'
+    self._user: str = 'message'
+    self._ts: str = 'message'
+    self._channel_type: str = 'message'
+    if 'additional_properties' in input:
+      self._additional_properties: dict[str, Any] = input['additional_properties']
+
+  @property
+  def type(self) -> str:
+    return self._type
+
+  @property
+  def event_ts(self) -> str:
+    return self._event_ts
+  @event_ts.setter
+  def event_ts(self, event_ts: str):
+    self._event_ts = event_ts
+
+  @property
+  def subtype(self) -> str:
+    return self._subtype
+
+  @property
+  def inviter(self) -> str:
+    return self._inviter
+
+  @property
+  def text(self) -> str:
+    return self._text
+
+  @property
+  def user(self) -> str:
+    return self._user
+
+  @property
+  def ts(self) -> str:
+    return self._ts
+
+  @property
+  def channel_type(self) -> str:
+    return self._channel_type
+
+  @property
+  def additional_properties(self) -> dict[str, Any]:
+    return self._additional_properties
+  @additional_properties.setter
+  def additional_properties(self, additional_properties: dict[str, Any]):
+    self._additional_properties = additional_properties
+"
+`;
+
+exports[`testing if generated client match snapshot generate client for slack: ConnectionInfo.py 1`] = `
+"class ConnectionInfo: 
+  def __init__(self, input: Dict):
+    if 'app_id' in input:
+      self._app_id: str = input['app_id']
+    if 'additional_properties' in input:
+      self._additional_properties: dict[str, Any] = input['additional_properties']
+
+  @property
+  def app_id(self) -> str:
+    return self._app_id
+  @app_id.setter
+  def app_id(self, app_id: str):
+    self._app_id = app_id
+
+  @property
+  def additional_properties(self) -> dict[str, Any]:
+    return self._additional_properties
+  @additional_properties.setter
+  def additional_properties(self, additional_properties: dict[str, Any]):
+    self._additional_properties = additional_properties
+"
+`;
+
+exports[`testing if generated client match snapshot generate client for slack: DebugInfo.py 1`] = `
+"class DebugInfo: 
+  def __init__(self, input: Dict):
+    if 'host' in input:
+      self._host: str = input['host']
+    if 'started' in input:
+      self._started: str = input['started']
+    if 'build_number' in input:
+      self._build_number: int = input['build_number']
+    if 'approximate_connection_time' in input:
+      self._approximate_connection_time: int = input['approximate_connection_time']
+    if 'additional_properties' in input:
+      self._additional_properties: dict[str, Any] = input['additional_properties']
+
+  @property
+  def host(self) -> str:
+    return self._host
+  @host.setter
+  def host(self, host: str):
+    self._host = host
+
+  @property
+  def started(self) -> str:
+    return self._started
+  @started.setter
+  def started(self, started: str):
+    self._started = started
+
+  @property
+  def build_number(self) -> int:
+    return self._build_number
+  @build_number.setter
+  def build_number(self, build_number: int):
+    self._build_number = build_number
+
+  @property
+  def approximate_connection_time(self) -> int:
+    return self._approximate_connection_time
+  @approximate_connection_time.setter
+  def approximate_connection_time(self, approximate_connection_time: int):
+    self._approximate_connection_time = approximate_connection_time
+
+  @property
+  def additional_properties(self) -> dict[str, Any]:
+    return self._additional_properties
+  @additional_properties.setter
+  def additional_properties(self, additional_properties: dict[str, Any]):
+    self._additional_properties = additional_properties
+"
+`;
+
+exports[`testing if generated client match snapshot generate client for slack: Disconnect.py 1`] = `
+"class Disconnect: 
+  def __init__(self, input: Dict):
+    if 'type' in input:
+      self._type: str = input['type']
+    if 'reason' in input:
+      self._reason: DisconnectReasonEnum.DisconnectReasonEnum = DisconnectReasonEnum.DisconnectReasonEnum(input['reason'])
+    if 'debug_info' in input:
+      self._debug_info: DebugInfo.DebugInfo = DebugInfo.DebugInfo(input['debug_info'])
+    if 'additional_properties' in input:
+      self._additional_properties: dict[str, Any] = input['additional_properties']
+
+  @property
+  def type(self) -> str:
+    return self._type
+  @type.setter
+  def type(self, type: str):
+    self._type = type
+
+  @property
+  def reason(self) -> DisconnectReasonEnum.DisconnectReasonEnum:
+    return self._reason
+  @reason.setter
+  def reason(self, reason: DisconnectReasonEnum.DisconnectReasonEnum):
+    self._reason = reason
+
+  @property
+  def debug_info(self) -> DebugInfo.DebugInfo:
+    return self._debug_info
+  @debug_info.setter
+  def debug_info(self, debug_info: DebugInfo.DebugInfo):
+    self._debug_info = debug_info
+
+  @property
+  def additional_properties(self) -> dict[str, Any]:
+    return self._additional_properties
+  @additional_properties.setter
+  def additional_properties(self, additional_properties: dict[str, Any]):
+    self._additional_properties = additional_properties
+"
+`;
+
+exports[`testing if generated client match snapshot generate client for slack: DisconnectReasonEnum.py 1`] = `
+"class DisconnectReasonEnum(Enum): 
+  LINK_DISABLED = \\"link_disabled\\"
+  WARNING = \\"warning\\"
+  REFRESH_REQUESTED = \\"refresh_requested\\""
+`;
+
+exports[`testing if generated client match snapshot generate client for slack: Event.py 1`] = `
+"class Event: 
+  def __init__(self, input: Dict):
+    if 'envelope_id' in input:
+      self._envelope_id: str = input['envelope_id']
+    if 'payload' in input:
+      self._payload: EventPayload.EventPayload = EventPayload.EventPayload(input['payload'])
+    if 'type' in input:
+      self._type: str = input['type']
+    if 'accepts_response_payload' in input:
+      self._accepts_response_payload: bool = input['accepts_response_payload']
+    if 'retry_attempt' in input:
+      self._retry_attempt: int = input['retry_attempt']
+    if 'retry_reason' in input:
+      self._retry_reason: str = input['retry_reason']
+
+  @property
+  def envelope_id(self) -> str:
+    return self._envelope_id
+  @envelope_id.setter
+  def envelope_id(self, envelope_id: str):
+    self._envelope_id = envelope_id
+
+  @property
+  def payload(self) -> EventPayload.EventPayload:
+    return self._payload
+  @payload.setter
+  def payload(self, payload: EventPayload.EventPayload):
+    self._payload = payload
+
+  @property
+  def type(self) -> str:
+    return self._type
+  @type.setter
+  def type(self, type: str):
+    self._type = type
+
+  @property
+  def accepts_response_payload(self) -> bool:
+    return self._accepts_response_payload
+  @accepts_response_payload.setter
+  def accepts_response_payload(self, accepts_response_payload: bool):
+    self._accepts_response_payload = accepts_response_payload
+
+  @property
+  def retry_attempt(self) -> int:
+    return self._retry_attempt
+  @retry_attempt.setter
+  def retry_attempt(self, retry_attempt: int):
+    self._retry_attempt = retry_attempt
+
+  @property
+  def retry_reason(self) -> str:
+    return self._retry_reason
+  @retry_reason.setter
+  def retry_reason(self, retry_reason: str):
+    self._retry_reason = retry_reason
+"
+`;
+
+exports[`testing if generated client match snapshot generate client for slack: EventPayload.py 1`] = `
+"class EventPayload: 
+  def __init__(self, input: Dict):
+    if 'token' in input:
+      self._token: str = input['token']
+    if 'team_id' in input:
+      self._team_id: str = input['team_id']
+    if 'context_team_id' in input:
+      self._context_team_id: str = input['context_team_id']
+    if 'context_enterprise_id' in input:
+      self._context_enterprise_id: str = input['context_enterprise_id']
+    if 'api_app_id' in input:
+      self._api_app_id: str = input['api_app_id']
+    if 'event' in input:
+      self._event: ChannelJoin.ChannelJoin | ReactionAdded.ReactionAdded | MessageDeleted.MessageDeleted = input['event']
+    if 'type' in input:
+      self._type: str = input['type']
+    if 'event_id' in input:
+      self._event_id: str = input['event_id']
+    if 'event_time' in input:
+      self._event_time: int = input['event_time']
+    if 'event_context' in input:
+      self._event_context: str = input['event_context']
+    if 'authorizations' in input:
+      self._authorizations: List[Authorization.Authorization] = input['authorizations']
+
+  @property
+  def token(self) -> str:
+    return self._token
+  @token.setter
+  def token(self, token: str):
+    self._token = token
+
+  @property
+  def team_id(self) -> str:
+    return self._team_id
+  @team_id.setter
+  def team_id(self, team_id: str):
+    self._team_id = team_id
+
+  @property
+  def context_team_id(self) -> str:
+    return self._context_team_id
+  @context_team_id.setter
+  def context_team_id(self, context_team_id: str):
+    self._context_team_id = context_team_id
+
+  @property
+  def context_enterprise_id(self) -> str:
+    return self._context_enterprise_id
+  @context_enterprise_id.setter
+  def context_enterprise_id(self, context_enterprise_id: str):
+    self._context_enterprise_id = context_enterprise_id
+
+  @property
+  def api_app_id(self) -> str:
+    return self._api_app_id
+  @api_app_id.setter
+  def api_app_id(self, api_app_id: str):
+    self._api_app_id = api_app_id
+
+  @property
+  def event(self) -> ChannelJoin.ChannelJoin | ReactionAdded.ReactionAdded | MessageDeleted.MessageDeleted:
+    return self._event
+  @event.setter
+  def event(self, event: ChannelJoin.ChannelJoin | ReactionAdded.ReactionAdded | MessageDeleted.MessageDeleted):
+    self._event = event
+
+  @property
+  def type(self) -> str:
+    return self._type
+  @type.setter
+  def type(self, type: str):
+    self._type = type
+
+  @property
+  def event_id(self) -> str:
+    return self._event_id
+  @event_id.setter
+  def event_id(self, event_id: str):
+    self._event_id = event_id
+
+  @property
+  def event_time(self) -> int:
+    return self._event_time
+  @event_time.setter
+  def event_time(self, event_time: int):
+    self._event_time = event_time
+
+  @property
+  def event_context(self) -> str:
+    return self._event_context
+  @event_context.setter
+  def event_context(self, event_context: str):
+    self._event_context = event_context
+
+  @property
+  def authorizations(self) -> List[Authorization.Authorization]:
+    return self._authorizations
+  @authorizations.setter
+  def authorizations(self, authorizations: List[Authorization.Authorization]):
+    self._authorizations = authorizations
+"
+`;
+
+exports[`testing if generated client match snapshot generate client for slack: Hello.py 1`] = `
+"class Hello: 
+  def __init__(self, input: Dict):
+    if 'type' in input:
+      self._type: str = input['type']
+    if 'connection_info' in input:
+      self._connection_info: ConnectionInfo.ConnectionInfo = ConnectionInfo.ConnectionInfo(input['connection_info'])
+    if 'num_connections' in input:
+      self._num_connections: int = input['num_connections']
+    if 'debug_info' in input:
+      self._debug_info: DebugInfo.DebugInfo = DebugInfo.DebugInfo(input['debug_info'])
+    if 'additional_properties' in input:
+      self._additional_properties: dict[str, Any] = input['additional_properties']
+
+  @property
+  def type(self) -> str:
+    return self._type
+  @type.setter
+  def type(self, type: str):
+    self._type = type
+
+  @property
+  def connection_info(self) -> ConnectionInfo.ConnectionInfo:
+    return self._connection_info
+  @connection_info.setter
+  def connection_info(self, connection_info: ConnectionInfo.ConnectionInfo):
+    self._connection_info = connection_info
+
+  @property
+  def num_connections(self) -> int:
+    return self._num_connections
+  @num_connections.setter
+  def num_connections(self, num_connections: int):
+    self._num_connections = num_connections
+
+  @property
+  def debug_info(self) -> DebugInfo.DebugInfo:
+    return self._debug_info
+  @debug_info.setter
+  def debug_info(self, debug_info: DebugInfo.DebugInfo):
+    self._debug_info = debug_info
+
+  @property
+  def additional_properties(self) -> dict[str, Any]:
+    return self._additional_properties
+  @additional_properties.setter
+  def additional_properties(self, additional_properties: dict[str, Any]):
+    self._additional_properties = additional_properties
+"
+`;
+
+exports[`testing if generated client match snapshot generate client for slack: MessageDeleted.py 1`] = `
+"class MessageDeleted: 
+  def __init__(self, input: Dict):
+    self._type: str = 'message'
+    if 'event_ts' in input:
+      self._event_ts: str = input['event_ts']
+    self._subtype: str = 'message'
+    self._deleted_ts: str = 'message'
+    self._channel: str = 'message'
+    self._ts: str = 'message'
+    self._channel_type: str = 'message'
+    self._previous_message: str = 'message'
+    if 'additional_properties' in input:
+      self._additional_properties: dict[str, Any] = input['additional_properties']
+
+  @property
+  def type(self) -> str:
+    return self._type
+
+  @property
+  def event_ts(self) -> str:
+    return self._event_ts
+  @event_ts.setter
+  def event_ts(self, event_ts: str):
+    self._event_ts = event_ts
+
+  @property
+  def subtype(self) -> str:
+    return self._subtype
+
+  @property
+  def deleted_ts(self) -> str:
+    return self._deleted_ts
+
+  @property
+  def channel(self) -> str:
+    return self._channel
+
+  @property
+  def ts(self) -> str:
+    return self._ts
+
+  @property
+  def channel_type(self) -> str:
+    return self._channel_type
+
+  @property
+  def previous_message(self) -> str:
+    return self._previous_message
+
+  @property
+  def additional_properties(self) -> dict[str, Any]:
+    return self._additional_properties
+  @additional_properties.setter
+  def additional_properties(self, additional_properties: dict[str, Any]):
+    self._additional_properties = additional_properties
+"
+`;
+
+exports[`testing if generated client match snapshot generate client for slack: ReactionAdded.py 1`] = `
+"class ReactionAdded: 
+  def __init__(self, input: Dict):
+    self._type: str = 'message'
+    if 'event_ts' in input:
+      self._event_ts: str = input['event_ts']
+    self._reaction: str = 'message'
+    self._user: str = 'message'
+    self._item: str = 'message'
+    if 'additional_properties' in input:
+      self._additional_properties: dict[str, Any] = input['additional_properties']
+
+  @property
+  def type(self) -> str:
+    return self._type
+
+  @property
+  def event_ts(self) -> str:
+    return self._event_ts
+  @event_ts.setter
+  def event_ts(self, event_ts: str):
+    self._event_ts = event_ts
+
+  @property
+  def reaction(self) -> str:
+    return self._reaction
+
+  @property
+  def user(self) -> str:
+    return self._user
+
+  @property
+  def item(self) -> str:
+    return self._item
+
+  @property
+  def additional_properties(self) -> dict[str, Any]:
+    return self._additional_properties
+  @additional_properties.setter
+  def additional_properties(self, additional_properties: dict[str, Any]):
+    self._additional_properties = additional_properties
+"
+`;
+
+exports[`testing if generated client match snapshot generate client for slack: client.py 1`] = `
+"# //////////////////////////////////////////////////////////////////////////
+#
+# Slack Websocket API Client - 1.0.0
+# Protocol: wss
+# Host: wss-primary.slack.com
+# Path: /link
+#
+# //////////////////////////////////////////////////////////////////////////
+
+import json
+import certifi
+import threading
+import websocket
+import os
+from urllib.parse import urlencode
+
+class SlackWebsocketAPIClient:
+
+  def __init__(self, url: str = \\"wss://wss-primary.slack.com/link\\", ticket: str = None, app_id: str = None):
+
+        \\"\\"\\"
+        Constructor to initialize the WebSocket client.
+
+        Args:
+            url (str, optional): The WebSocket server URL. Use it if the server URL is 
+            different from the default one taken from the AsyncAPI document.
+ ticket (str, optional):If provided (or if TICKET environment variable is set), added as ?ticket=… to URL
+ app_id (str, optional):If provided (or if APP_ID environment variable is set), added as ?app_id=… to URL
+        \\"\\"\\"
+        self.ws_app = None  # Instance of WebSocketApp
+        self.message_handlers = []      # Callables for incoming messages
+        self.error_handlers = []        # Callables for errors
+        self.outgoing_processors = []   # Callables to process outgoing messages
+        self._stop_event = threading.Event()
+      
+        params = {}
+        ticket = ticket or os.getenv(\\"TICKET\\")
+        if ticket is not None:
+          params[\\"ticket\\"] = ticket
+        app_id = app_id or os.getenv(\\"APP_ID\\")
+        if app_id is not None:
+          params[\\"app_id\\"] = app_id
+
+        qs = urlencode(params) if params else \\"\\"
+        self.url = f\\"{url}{f'?{qs}' if qs else ''}\\"
+
+  def on_open(self, ws):
+      print(\\"Connected to Slack Websocket API Client server\\")
+
+  def on_message(self, ws, message):
+      self.handle_message(message)
+
+  def on_error(self, ws, error):
+      print(\\"WebSocket Error:\\", error)
+      self.handle_error(error)
+
+  def on_close(self, ws, close_status_code, close_msg):
+      print(\\"Disconnected from Slack Websocket API Client\\", close_status_code, close_msg)
+
+  def connect(self):
+      \\"\\"\\"Establish the connection and start the run_forever loop in a background thread.\\"\\"\\"
+      ssl_opts = {\\"ca_certs\\": certifi.where()}
+      self.ws_app = websocket.WebSocketApp(
+          self.url,
+          on_open=self.on_open,
+          on_message=self.on_message,
+          on_error=self.on_error,
+          on_close=self.on_close
+      )
+      # Run the WebSocketApp's run_forever in a separate thread with multithreading enabled.
+      def run():
+
+          retry = 0
+          max_retries = 5
+        
+          while not self._stop_event.is_set() and retry < max_retries:
+              try:
+                  retry += 1
+                  print(\\"Starting WebSocket thread...\\")
+                  self.ws_app.run_forever(sslopt=ssl_opts)
+              except Exception as e:
+                  print(f\\"Exception in WebSocket thread: {e}\\")  # Print full error details
+
+      thread = threading.Thread(target=run, daemon=True)
+      thread.start()
+
+  def register_message_handler(self, handler):
+      \\"\\"\\"Register a callable to process incoming messages.\\"\\"\\"
+      if callable(handler):
+          self.message_handlers.append(handler)
+      else:
+          print(\\"Message handler must be callable\\")
+
+  def register_error_handler(self, handler):
+      \\"\\"\\"Register a callable to process errors.\\"\\"\\"
+      if callable(handler):
+          self.error_handlers.append(handler)
+      else:
+          print(\\"Error handler must be callable\\")
+
+  def register_outgoing_processor(self, processor):
+      \\"\\"\\"
+      Register a callable that processes outgoing messages automatically.
+      These processors run in sequence before each message is sent.
+      \\"\\"\\"
+      if callable(processor):
+          self.outgoing_processors.append(processor)
+      else:
+          print(\\"Outgoing processor must be callable\\")
+
+  def handle_message(self, message):
+      \\"\\"\\"Pass the incoming message to all registered message handlers. \\"\\"\\"
+      if len(self.message_handlers) == 0:
+        print(\\"\\\\033[94mReceived raw message:\\\\033[0m\\", message)
+      else:
+        for handler in self.message_handlers:
+          handler(message)
+
+  def handle_error(self, error):
+      \\"\\"\\"Pass the error to all registered error handlers. Generic log message is printed if no handlers are registered.\\"\\"\\"
+      if len(self.error_handlers) == 0:
+        print(\\"\\\\033[91mError occurred:\\\\033[0m\\", error)
+      else:
+        # Call custom error handlers
+        for handler in self.error_handlers:
+          handler(error)
+
+  async def send_message(self, message):
+      \\"\\"\\"
+      Send a message using the WebSocket connection attached to this instance.
+
+      Args:
+          message (dict or str): The message to send. Will be serialized to JSON if it's a dictionary.
+
+      Raises:
+          Exception: If sending fails or the socket is not connected.
+      \\"\\"\\"
+      await self._send(message, self.ws_app)
+
+  @staticmethod
+  async def send_message_static(message, socket):
+      \\"\\"\\"
+      Send a message using a provided WebSocket connection, without needing an instance.
+
+      Args:
+          message (dict or str): The message to send.
+          socket (websockets.WebSocketCommonProtocol): The WebSocket to send through.
+
+      Raises:
+          Exception: If sending fails or the socket is not connected.
+      \\"\\"\\"
+      await HoppscotchEchoWebSocketClient._send(message, socket)
+
+  @staticmethod
+  async def _send(message, socket):
+      \\"\\"\\"
+      Internal helper to handle the actual sending logic.
+
+      Args:
+          message (dict or str): The message to send.
+          socket (websockets.WebSocketCommonProtocol): The WebSocket to send through.
+
+      Notes:
+          If message is a dictionary, it will be automatically converted to JSON.
+      \\"\\"\\"
+      try:
+          if isinstance(message, dict):
+              message = json.dumps(message)
+          await socket.send(message)
+      except Exception as e:
+          print(\\"Error sending:\\", e)
+
+  def close(self):
+      \\"\\"\\"Cleanly close the WebSocket connection.\\"\\"\\"
+      self._stop_event.set()
+      if self.ws_app:
+          self.ws_app.close()
+          print(\\"WebSocket connection closed.\\")
+
+"
+`;
+
+exports[`testing if generated client match snapshot generate client for slack: requirements.txt 1`] = `
+"websocket-client==1.8.0
+certifi==2025.1.31
+requests==2.32.3
+"
+`;
+
 exports[`testing if generated client match snapshot generate simple client for hoppscotch echo with custom client name: client.py 1`] = `
 "# //////////////////////////////////////////////////////////////////////////
 #
@@ -14,22 +799,29 @@ import certifi
 import threading
 import websocket
 
+
+
 class HoppscotchClient:
 
   def __init__(self, url: str = \\"wss://echo-websocket.hoppscotch.io\\"):
-      \\"\\"\\"
-      Constructor to initialize the WebSocket client.
 
-      Args:
-          url (str, optional): The WebSocket server URL. Use it if the server URL is 
-          different from the default one taken from the AsyncAPI document.
-      \\"\\"\\"
-      self.url = url
-      self.ws_app = None  # Instance of WebSocketApp
-      self.message_handlers = []      # Callables for incoming messages
-      self.error_handlers = []        # Callables for errors
-      self.outgoing_processors = []   # Callables to process outgoing messages
-      self._stop_event = threading.Event()
+        \\"\\"\\"
+        Constructor to initialize the WebSocket client.
+
+        Args:
+            url (str, optional): The WebSocket server URL. Use it if the server URL is 
+            different from the default one taken from the AsyncAPI document.
+        \\"\\"\\"
+        self.ws_app = None  # Instance of WebSocketApp
+        self.message_handlers = []      # Callables for incoming messages
+        self.error_handlers = []        # Callables for errors
+        self.outgoing_processors = []   # Callables to process outgoing messages
+        self._stop_event = threading.Event()
+      
+      
+
+        
+        self.url = url
 
   def on_open(self, ws):
       print(\\"Connected to Hoppscotch Echo WebSocket Client server\\")
@@ -56,8 +848,13 @@ class HoppscotchClient:
       )
       # Run the WebSocketApp's run_forever in a separate thread with multithreading enabled.
       def run():
-          while not self._stop_event.is_set():
+
+          retry = 0
+          max_retries = 5
+        
+          while not self._stop_event.is_set() and retry < max_retries:
               try:
+                  retry += 1
                   print(\\"Starting WebSocket thread...\\")
                   self.ws_app.run_forever(sslopt=ssl_opts)
               except Exception as e:
@@ -183,22 +980,29 @@ import certifi
 import threading
 import websocket
 
+
+
 class HoppscotchEchoWebSocketClient:
 
   def __init__(self, url: str = \\"wss://echo-websocket.hoppscotch.io\\"):
-      \\"\\"\\"
-      Constructor to initialize the WebSocket client.
 
-      Args:
-          url (str, optional): The WebSocket server URL. Use it if the server URL is 
-          different from the default one taken from the AsyncAPI document.
-      \\"\\"\\"
-      self.url = url
-      self.ws_app = None  # Instance of WebSocketApp
-      self.message_handlers = []      # Callables for incoming messages
-      self.error_handlers = []        # Callables for errors
-      self.outgoing_processors = []   # Callables to process outgoing messages
-      self._stop_event = threading.Event()
+        \\"\\"\\"
+        Constructor to initialize the WebSocket client.
+
+        Args:
+            url (str, optional): The WebSocket server URL. Use it if the server URL is 
+            different from the default one taken from the AsyncAPI document.
+        \\"\\"\\"
+        self.ws_app = None  # Instance of WebSocketApp
+        self.message_handlers = []      # Callables for incoming messages
+        self.error_handlers = []        # Callables for errors
+        self.outgoing_processors = []   # Callables to process outgoing messages
+        self._stop_event = threading.Event()
+      
+      
+
+        
+        self.url = url
 
   def on_open(self, ws):
       print(\\"Connected to Hoppscotch Echo WebSocket Client server\\")
@@ -225,8 +1029,13 @@ class HoppscotchEchoWebSocketClient:
       )
       # Run the WebSocketApp's run_forever in a separate thread with multithreading enabled.
       def run():
-          while not self._stop_event.is_set():
+
+          retry = 0
+          max_retries = 5
+        
+          while not self._stop_event.is_set() and retry < max_retries:
               try:
+                  retry += 1
                   print(\\"Starting WebSocket thread...\\")
                   self.ws_app.run_forever(sslopt=ssl_opts)
               except Exception as e:
@@ -353,22 +1162,29 @@ import certifi
 import threading
 import websocket
 
+
+
 class PostmanEchoWebSocketClientClient:
 
   def __init__(self, url: str = \\"wss://ws.postman-echo.com/raw\\"):
-      \\"\\"\\"
-      Constructor to initialize the WebSocket client.
 
-      Args:
-          url (str, optional): The WebSocket server URL. Use it if the server URL is 
-          different from the default one taken from the AsyncAPI document.
-      \\"\\"\\"
-      self.url = url
-      self.ws_app = None  # Instance of WebSocketApp
-      self.message_handlers = []      # Callables for incoming messages
-      self.error_handlers = []        # Callables for errors
-      self.outgoing_processors = []   # Callables to process outgoing messages
-      self._stop_event = threading.Event()
+        \\"\\"\\"
+        Constructor to initialize the WebSocket client.
+
+        Args:
+            url (str, optional): The WebSocket server URL. Use it if the server URL is 
+            different from the default one taken from the AsyncAPI document.
+        \\"\\"\\"
+        self.ws_app = None  # Instance of WebSocketApp
+        self.message_handlers = []      # Callables for incoming messages
+        self.error_handlers = []        # Callables for errors
+        self.outgoing_processors = []   # Callables to process outgoing messages
+        self._stop_event = threading.Event()
+      
+      
+
+        
+        self.url = url
 
   def on_open(self, ws):
       print(\\"Connected to Postman Echo WebSocket Client server\\")
@@ -395,8 +1211,13 @@ class PostmanEchoWebSocketClientClient:
       )
       # Run the WebSocketApp's run_forever in a separate thread with multithreading enabled.
       def run():
-          while not self._stop_event.is_set():
+
+          retry = 0
+          max_retries = 5
+        
+          while not self._stop_event.is_set() and retry < max_retries:
               try:
+                  retry += 1
                   print(\\"Starting WebSocket thread...\\")
                   self.ws_app.run_forever(sslopt=ssl_opts)
               except Exception as e:

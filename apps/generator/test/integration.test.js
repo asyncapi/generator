@@ -172,8 +172,20 @@ describe('Integration testing generateFromFile() to make sure the result of the 
       templateParams: { version: 'v1', mode: 'production', singleFile: true }
     });
     await generator.generateFromFile(dummySpecPath);
-    const conditionalFilePath = path.join(outputDir, 'conditionalFile.text');
+    const conditionalFilePath = path.join(outputDir, 'conditionalFile.txt');
     const exists = await readFile(conditionalFilePath).then(() => true).catch(() => false);
     expect(exists).toBe(false);
+  });
+
+  it('should generate the conditionalFile if the singleFile parameter is set false', async () => {
+    const outputDir = generateFolderName();
+    const generator = new Generator(reactTemplate, outputDir, {
+      forceWrite: true ,
+      templateParams: { version: 'v1', mode: 'production', singleFile: false }
+    });
+    await generator.generateFromFile(dummySpecPath);
+    const conditionalFilePath = path.join(outputDir, 'conditionalFile.txt');
+    const exists = await readFile(conditionalFilePath).then(() => true).catch(() => false);
+    expect(exists).toBe(true);
   });
 });

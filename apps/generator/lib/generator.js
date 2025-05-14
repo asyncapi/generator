@@ -853,26 +853,6 @@ class Generator {
       await writeFile(outputpath, renderContent);
     }
   }
-  /**
- * Gets the matched condition path based on file or directory condition.
- *
- * @private
- * @param {String} relativeSourceFile The relative path of the source file.
- * @param {String} relativeSourceDirectory The relative path of the source directory.
- * @return {Promise<String|null>} The matched condition path or null if none matched.
- */
-  async getMatchedConditionPath(relativeSourceFile, relativeSourceDirectory) {
-    const fileCondition = this.templateConfig.conditionalGeneration?.[relativeSourceFile];
-    const dirCondition = this.templateConfig.conditionalGeneration?.[relativeSourceDirectory];
-  
-    if (fileCondition) {
-      return relativeSourceFile;
-    } else if (dirCondition) {
-      return relativeSourceDirectory;
-    }
-    
-    return null;
-  }
   
   /**
    * Generates a file.
@@ -901,21 +881,34 @@ class Generator {
     if (this.templateConfig.conditionalFiles?.[relativeSourceFile]) {
       shouldGenerate = await conditionalFiles(asyncapiDocument, this.templateParams, this.templateConfig, relativeSourceFile);
     }      
-    const matchedConditionPath = await this.getMatchedConditionPath(relativeSourceFile, relativeSourceDirectory);
-
-    if (this.templateConfig.conditionalGeneration?.[matchedConditionPath]) {
+    if (this.templateConfig.conditionalGeneration?.[relativeSourceDirectory]) {
       shouldGenerate = await conditionalGeneration(
         relativeSourceFile,
         relativeSourceDirectory,
         relativeTargetFile,
         this.templateConfig,
         this.targetDir,
-        matchedConditionPath,
+        relativeSourceDirectory,
         this.templateParams,
         asyncapiDocument
 
       );
     }
+    if (this.templateConfig.conditionalGeneration?.[relativeSourceFile]) {
+      // console.log(sourceFile+" "+relativeSourceFile+" "+relativeSourceDirectory)
+      shouldGenerate = await conditionalGeneration(
+        relativeSourceFile,
+        relativeSourceDirectory,
+        relativeTargetFile,
+        this.templateConfig,
+        this.targetDir,
+        relativeSourceFile,
+        this.templateParams,
+        asyncapiDocument
+
+      );
+    }
+  
     if (shouldGenerate) {
       if (this.isNonRenderableFile(relativeSourceFile)) {
         await copyFile(sourceFile, targetFile);

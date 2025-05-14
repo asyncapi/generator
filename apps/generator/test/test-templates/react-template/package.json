@@ -37,7 +37,7 @@
             }
           }
         },
-        "conditional.txt":{
+        "conditionalFile.txt":{
           "parameter": "singleFile",
           "validation": {
             "not": {

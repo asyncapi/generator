@@ -37,7 +37,7 @@ async function conditionalGeneration (
     );
   }
   const parameterValue = getParameterValue(templateParams, parameter);
-  if (!parameterValue) {
+  if (parameterValue === undefined) {
     handleMissingParameterValue(relativeSourceFile, templateConfig);
     return false;
   }
@@ -140,7 +140,7 @@ async function validateParameterValue(
     if (isNotValid && (matchedConditionPath === relativeTargetFile)) {
       return false;
     }
-    log.debug(logMessage.conditionalFilesMatched(matchedConditionPath));
+    log.debug(logMessage.conditionalGenerationMatched(matchedConditionPath));
     return true;
   }
 
@@ -149,15 +149,17 @@ async function validateParameterValue(
   const isValid = validate(argument);
 
   if (!isValid) {
-    log.debug(logMessage.conditionalFilesMatched(matchedConditionPath));
+    log.debug(logMessage.conditionalGenerationMatched(matchedConditionPath));
     return true;
   } else 
   if (isValid && (matchedConditionPath === relativeTargetFile)) {
     return false;
+  } else
+  if (isValid && (matchedConditionPath === relativeSourceDirectory)) {
+    await removeParentDirectory(relativeTargetFile, targetDir);
+    return false;
   }
-  
-  await removeParentDirectory(relativeTargetFile, targetDir);
-  return false;
+  return true;
 }
 
 /**

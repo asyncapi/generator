@@ -42,6 +42,9 @@ function skipOverwrite(testFilePath) {
   return `Skipping overwrite for: ${testFilePath}`;
 }
 
+function conditionalGenerationMatched(conditionalPath) {
+  return `${conditionalPath} was not generated because condition specified for this location in template configuration in conditionalGeneration matched.`;
+}
 function conditionalFilesMatched(relativeSourceFile) {
   return `${relativeSourceFile} was not generated because condition specified for this file in template configuration in conditionalFiles matched.`;
 }
@@ -62,6 +65,7 @@ module.exports = {
   installationDebugMessage,
   templateSuccessfullyInstalled,
   relativeSourceFileNotGenerated,
+  conditionalGenerationMatched,
   conditionalFilesMatched,
   compileEnabled,
   skipOverwrite

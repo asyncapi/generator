@@ -38,7 +38,7 @@ async function conditionalGeneration (
   }
   const parameterValue = getParameterValue(templateParams, parameter);
   if (parameterValue === undefined) {
-    handleMissingParameterValue(relativeSourceFile, templateConfig);
+    handleMissingParameterValue(matchedConditionPath, templateConfig);
     return false;
   }
 

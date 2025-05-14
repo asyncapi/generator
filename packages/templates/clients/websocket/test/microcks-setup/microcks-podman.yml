@@ -2,7 +2,10 @@ volumes:
   microcks-data:
   
 services:
+  # ───────────── infrastructure ─────────────────────
   mongo:
+    profiles:
+      - infra
     image: docker.io/mongo:4.4.29
     container_name: microcks-db
     volumes:
@@ -14,6 +17,8 @@ services:
       retries: 3
 
   kafka:
+    profiles:
+      - infra
     image: docker.io/redpandadata/redpanda:v24.3.1
     container_name: microcks-kafka
     command:
@@ -44,6 +49,8 @@ services:
       start_period: 10s
 
   app:
+    profiles:
+      - infra
     depends_on:
       - mongo
     image: quay.io/microcks/microcks:1.11.2
@@ -72,6 +79,8 @@ services:
       retries: 3
 
   async-minion:
+    profiles: 
+      - infra
     depends_on:
       app:
         condition: service_healthy
@@ -95,6 +104,7 @@ services:
   asyncapi-bundler:
     profiles:
       - tests
+      - infra
     image: asyncapi/cli:3.1.1
     container_name: asyncapi-bundler
     working_dir: /usr/src/app
@@ -107,6 +117,7 @@ services:
   importer:
     profiles:
       - tests
+      - infra
       - ci
     image: quay.io/microcks/microcks-cli:0.5.8
     container_name: microcks-cli-importer
@@ -126,6 +137,7 @@ services:
   npm-test:
     profiles:
       - tests
+      - infra
     image: node:20
     container_name: npm-test
     working_dir: /usr/src/app
@@ -133,26 +145,26 @@ services:
       - ../../../../../../:/usr/src/app
     command: ["sh", "-c", "npm ci && npm run packages:test"]
 
+  # ───────────── tests runners ─────────────────────
+  # each client has separate test runner as long term they need to run conditionally
+  # TODO: figure out in future how to detect that PR has changes only in the Py client for example, so only Py test runs in the CI/CD
   tester-js:
     profiles:
       - tests
-      - ci
-    image: node:20
+      - test-js
+    image: node:22
     container_name: websocket-acceptance-tester-js
     ports:
       - 8082:8082
     working_dir: /usr/src/app
     volumes:
       - ../../../../../../:/usr/src/app
-    depends_on:
-      app:
-        condition: service_healthy
     command: ["sh", "-c", "npm install && cd packages/templates/clients/websocket/test/javascript && npm test"]
   
   tester-py:
     profiles:
       - tests
-      - ci
+      - test-py
     image: python:3.11
     container_name: websocket-acceptance-tester-py
     ports:
@@ -160,9 +172,6 @@ services:
     working_dir: /usr/src/app
     volumes:
       - ../../../../../../:/usr/src/app
-    depends_on:
-      app:
-        condition: service_healthy
     command: ["sh", "-c", "cd packages/templates/clients/websocket/python/test/temp/snapshotTestResult/client_hoppscotch && pip install -r requirements.txt && cd ../../../../../test/python && pip install -r requirements.txt && pytest"]
 
   # Below for debugging purposes. 

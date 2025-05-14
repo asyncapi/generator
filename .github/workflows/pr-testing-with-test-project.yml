@@ -96,7 +96,7 @@ jobs:
           custom_command: bundle packages/templates/clients/websocket/test/__fixtures__/asyncapi-hoppscotch-server.yml --output packages/templates/clients/websocket/test/__fixtures__/bundled.yml
       - if: needs.changes.outputs.should_test == 'true'
         name: Setup microcks environment
-        run: docker compose -f ./microcks-setup/microcks-podman.yml --profile ci up  --abort-on-container-exit --force-recreate
+        run: docker compose -f ./microcks-setup/microcks-podman.yml --profile ci up  -d --force-recreate
         working-directory: ./packages/templates/clients/websocket/test
       - if: needs.changes.outputs.should_test == 'true'
         name: Run JS acceptance tests

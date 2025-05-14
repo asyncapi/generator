@@ -16,7 +16,7 @@ To run tests:
 
 1. Setup infra based on Microcks and proper AsyncAPI documents: `podman compose -f microcks-podman.yml --profile infra up -d`
 
-    > You need to remember about `--profile infra` to run whole setup with tests. This way you ensure that proper importer container imports `__fixtures__/asyncapi-hoppscotch-server.yml` into Microcks and tests run against it.
+    > You need to remember about `--profile infra` to run whole setup with tests. This way you ensure that the `asyncapi-bundler` service produces `__fixtures__/bundled.yml`, which the importer container will import into Microcks.
 
 1. Run tests for given client, for example `podman compose -f microcks-podman.yml --profile test-js up --abort-on-container-exit` to run JS client tests. Use `test-py` profile for Python client tests.
 

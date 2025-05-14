@@ -10,9 +10,15 @@ You can also install [docker-compose](https://docs.docker.com/compose/install/) 
 
 This `test` directory contains acceptance tests that check different clients with tests written in their respective languages. So JavaScript client is tested with JavaScript test, and Python with Python tests, and so on.
 
-To run tests: `cd microcks-setup && podman compose -f microcks-podman.yml --profile tests up -d`
+To run tests: 
 
-> You need to remember about `--profile tests` to run whole setup with tests. This way you ensure that proper importer container imports `__fixtures__/asyncapi-hoppscotch-server.yml` into Microcks and tests run against it.
+1. Go to microcks directory: `cd microcks-setup`
+
+1. Setup infra based on Microcks and proper AsyncAPI documents: `podman compose -f microcks-podman.yml --profile infra up -d`
+
+    > You need to remember about `--profile infra` to run whole setup with tests. This way you ensure that proper importer container imports `__fixtures__/asyncapi-hoppscotch-server.yml` into Microcks and tests run against it.
+
+1. Run tests for given client, for example `podman compose -f microcks-podman.yml --profile test-js up --abort-on-container-exit` to run JS client tests. Use `test-py` profile for Python client tests.
 
 ## Testing Clients with Microcks
 
@@ -30,7 +36,9 @@ Microcks is a tool for mocking. To test our generated clients, we need to mock t
 
 #### Start Microcks
 
-1. Start Microcks infrastructure: `podman compose -f ./microcks-setup/microcks-podman.yml up -d`.
+1. Start Microcks infrastructure: 
+    - Go to microcks directory: `cd microcks-setup`
+    - Setup infra: `podman compose -f microcks-podman.yml --profile infra up -d`.
 
 1. Check with `podman ps` command if all services are running. It may take few minutes to start all containers. You can also run a special script that will confirm that services are ready: `bash ./microcks-setup/checkMicrocksReady.sh`.
 
@@ -91,8 +99,3 @@ Do below to start receiving example messages in the terminal:
 ```
 websocat ws://localhost:8081/api/ws/Hoppscotch+WebSocket+Server/1.0.0/sendTimeStampMessage
 ```
-
-
-
-keilian knudsen
-

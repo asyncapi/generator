@@ -107,7 +107,6 @@ services:
   #this only runs on local with tests profile. In CI/CD there is a dedicated job step for that
   asyncapi-bundler:
     profiles:
-      - tests
       - infra
     image: asyncapi/cli:3.1.1
     container_name: asyncapi-bundler
@@ -120,7 +119,6 @@ services:
 
   importer:
     profiles:
-      - tests
       - infra
       - ci
     image: quay.io/microcks/microcks-cli:0.5.8
@@ -140,7 +138,6 @@ services:
   #this only runs on local with tests profile. In CI/CD there is a dedicated job step for that
   npm-test:
     profiles:
-      - tests
       - infra
     image: node:20
     container_name: npm-test
@@ -154,7 +151,6 @@ services:
   # TODO: figure out in future how to detect that PR has changes only in the Py client for example, so only Py test runs in the CI/CD
   tester-js:
     profiles:
-      - tests
       - test-js
     image: node:22
     container_name: websocket-acceptance-tester-js
@@ -167,7 +163,6 @@ services:
   
   tester-py:
     profiles:
-      - tests
       - test-py
     image: python:3.11
     container_name: websocket-acceptance-tester-py

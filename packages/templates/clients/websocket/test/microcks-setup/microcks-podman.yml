@@ -6,6 +6,7 @@ services:
   mongo:
     profiles:
       - infra
+      - ci
     image: docker.io/mongo:4.4.29
     container_name: microcks-db
     volumes:
@@ -19,6 +20,7 @@ services:
   kafka:
     profiles:
       - infra
+      - ci
     image: docker.io/redpandadata/redpanda:v24.3.1
     container_name: microcks-kafka
     command:
@@ -51,6 +53,7 @@ services:
   app:
     profiles:
       - infra
+      - ci
     depends_on:
       - mongo
     image: quay.io/microcks/microcks:1.11.2
@@ -81,6 +84,7 @@ services:
   async-minion:
     profiles: 
       - infra
+      - ci
     depends_on:
       app:
         condition: service_healthy

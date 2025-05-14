@@ -81,7 +81,7 @@ channels:
 
 operations:
   noMessage:
-    action: receive
+    action: send
     channel:
       $ref: '#/channels/marketDataV1'
     summary: Operation with no messages
@@ -112,7 +112,7 @@ operations:
       - $ref: '#/channels/marketDataV1/messages/multipleExamples'
 
   mixedMessageExamples:
-    action: receive
+    action: send
     channel:
       $ref: '#/channels/marketDataV1'
     summary: Mixed message example coverage
@@ -131,20 +131,3 @@ components:
         - btcusd
         - ethbtc
         - ethusd
-
-operations:
-  sendSubscribeMarket:
-    summary: Allows clients to subscribe to market data.
-    action: send
-    channel:
-      $ref: '#/channels/marketDataV1'
-    messages:
-      - $ref: '#/channels/marketDataV1/messages/subscribeMarket'
-
-  receiveMarketUpdate:
-    summary: Receive real-time market data updates.
-    action: receive
-    channel:
-      $ref: '#/channels/marketDataV1'
-    messages:
-      - $ref: '#/channels/marketDataV1/messages/marketUpdate'

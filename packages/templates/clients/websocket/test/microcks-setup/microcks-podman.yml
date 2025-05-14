@@ -133,7 +133,7 @@ services:
       sh -c "microcks-cli import __fixtures__/bundled.yml
       --microcksURL=http://microcks:8080/api/
       --keycloakClientId=microcks-serviceaccount
-      --keycloakClientSecret=ab54d329-e435-41ae-a900-ec6b3fe15c54 && sleep infinity"
+      --keycloakClientSecret=ab54d329-e435-41ae-a900-ec6b3fe15c54"
 
   #this only runs on local with tests profile. In CI/CD there is a dedicated job step for that
   npm-test:

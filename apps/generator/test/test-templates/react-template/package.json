@@ -53,11 +53,10 @@
         }
       }
     },
-      "dependencies": {
+    "dependencies": {
         "@asyncapi/generator-react-sdk": "^1.1.2",
         "@asyncapi/generator-components": "1.0.0"
-      }
-    
-  }
+    }
+}
   
   

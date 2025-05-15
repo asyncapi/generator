@@ -154,51 +154,50 @@ describe('Integration testing generateFromFile() to make sure the result of the 
      */
   });
 
-  // it('should not generate the conditionalFolder if the singleFolder parameter is set true', async () => {
-  //   const outputDir = generateFolderName();
-  //   const generator = new Generator(reactTemplate, outputDir, {
-  //     forceWrite: true ,
-  //     templateParams: { version: 'v1', mode: 'production', singleFolder: true }
-  //   });
-  //   await generator.generateFromFile(dummySpecPath);
-  //   const conditionalFolderPath = path.join(outputDir, 'conditionalFolder');
-  //   const exists = await access(conditionalFolderPath).then(() => true).catch(() => false);
-  //   expect(exists).toBe(false);
-  // });
-  // it('should not generate the conditionalFile if the singleFile parameter is set true', async () => {
-  //   const outputDir = generateFolderName();
-  //   const generator = new Generator(reactTemplate, outputDir, {
-  //     forceWrite: true ,
-  //     templateParams: { version: 'v1', mode: 'production', singleFile: true }
-  //   });
-  //   await generator.generateFromFile(dummySpecPath);
-  //   const conditionalFilePath = path.join(outputDir, 'conditionalFile.txt');
-  //   const exists = await readFile(conditionalFilePath).then(() => true).catch(() => false);
-  //   expect(exists).toBe(false);
-  // });
-
-  // it('should generate the conditionalFile if the singleFile parameter is set false', async () => {
-  //   const outputDir = generateFolderName();
-  //   const generator = new Generator(reactTemplate, outputDir, {
-  //     forceWrite: true ,
-  //     templateParams: { version: 'v1', mode: 'production', singleFile: false }
-  //   });
-  //   await generator.generateFromFile(dummySpecPath);
-  //   const conditionalFilePath = path.join(outputDir, 'conditionalFile.txt');
-  //   const exists = await readFile(conditionalFilePath).then(() => true).catch(() => false);
-  //   expect(exists).toBe(true);
-  // });
-
-  it('should generate the conditionalFile if the servers protocol matched', async () => {
+  it('should not generate the conditionalFolder if the singleFolder parameter is set true', async () => {
     const outputDir = generateFolderName();
-    console.log(outputDir);
+    const generator = new Generator(reactTemplate, outputDir, {
+      forceWrite: true ,
+      templateParams: { version: 'v1', mode: 'production', singleFolder: true }
+    });
+    await generator.generateFromFile(dummySpecPath);
+    const conditionalFolderPath = path.join(outputDir, 'conditionalFolder');
+    const exists = await access(conditionalFolderPath).then(() => true).catch(() => false);
+    expect(exists).toBe(false);
+  });
+  it('should not generate the conditionalFile if the singleFile parameter is set true', async () => {
+    const outputDir = generateFolderName();
+    const generator = new Generator(reactTemplate, outputDir, {
+      forceWrite: true ,
+      templateParams: { version: 'v1', mode: 'production', singleFile: true }
+    });
+    await generator.generateFromFile(dummySpecPath);
+    const conditionalFilePath = path.join(outputDir, 'conditionalFile.txt');
+    const exists = await readFile(conditionalFilePath).then(() => true).catch(() => false);
+    expect(exists).toBe(false);
+  });
+
+  it('should generate the conditionalFile if the singleFile parameter is set false', async () => {
+    const outputDir = generateFolderName();
+    const generator = new Generator(reactTemplate, outputDir, {
+      forceWrite: true ,
+      templateParams: { version: 'v1', mode: 'production', singleFile: false }
+    });
+    await generator.generateFromFile(dummySpecPath);
+    const conditionalFilePath = path.join(outputDir, 'conditionalFile.txt');
+    const exists = await readFile(conditionalFilePath).then(() => true).catch(() => false);
+    expect(exists).toBe(true);
+  });
+
+  it('should generate the conditionalFile if the info contact name matched', async () => {
+    const outputDir = generateFolderName();
     const generator = new Generator(reactTemplate, outputDir, {
       forceWrite: true ,
       templateParams: { version: 'v1', mode: 'production' }
     });
     await generator.generateFromFile(dummySpecPath);
-    const conditionalFilePath = path.join(outputDir, 'conditionalFolder2/conditionalFile.txt');
+    const conditionalFilePath = path.join(outputDir, 'conditionalFolder2/input.txt');
     const exists = await readFile(conditionalFilePath).then(() => true).catch(() => false);
-    expect(exists).toBe(false);
+    expect(exists).toBe(true);
   });
 });

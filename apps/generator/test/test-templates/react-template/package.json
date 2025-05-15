@@ -44,6 +44,12 @@
               "const": true
             }
           }
+        },
+        "conditionalFolder2/input.txt":{
+          "subject": "info.contact.name",
+          "validation": {
+            "const": "API Support"
+          }
         }
       }
     },

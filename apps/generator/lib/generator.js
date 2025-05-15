@@ -14,7 +14,7 @@ const { isAsyncAPIDocument } = require('@asyncapi/parser/cjs/document');
 const { configureReact, renderReact, saveRenderedReactContent } = require('./renderer/react');
 const { configureNunjucks, renderNunjucks } = require('./renderer/nunjucks');
 const { validateTemplateConfig } = require('./templateConfigValidator');
-const { conditionalGeneration, conditionalFiles } = require('./conditionalGeneration');
+const { conditionalGeneration } = require('./conditionalGeneration');
 const {
   convertMapToObject,
   isFileSystemPath,
@@ -875,37 +875,27 @@ class Generator {
     if (shouldIgnoreFile(relativeSourceFile)) return;
     
     if (!(await this.shouldOverwriteFile(relativeTargetFile))) return;
-
+    let conditionalPath = '';
     // It becomes deprecated with this PR, and soon will be removed.
     // TODO: https://github.com/asyncapi/generator/issues/1553
     if (this.templateConfig.conditionalFiles?.[relativeSourceFile]) {
-      shouldGenerate = await conditionalFiles(asyncapiDocument, this.templateParams, this.templateConfig, relativeSourceFile);
-    }      
-    if (this.templateConfig.conditionalGeneration?.[relativeSourceDirectory]) {
-      shouldGenerate = await conditionalGeneration(
-        relativeSourceFile,
-        relativeSourceDirectory,
-        relativeTargetFile,
-        this.templateConfig,
-        this.targetDir,
-        relativeSourceDirectory,
-        this.templateParams,
-        asyncapiDocument
-
-      );
+      conditionalPath = relativeSourceDirectory;
+    } else if (this.templateConfig.conditionalGeneration?.[relativeSourceDirectory]) {
+      conditionalPath = relativeSourceDirectory;
+    } else if (this.templateConfig.conditionalGeneration?.[relativeSourceFile]) {
+      conditionalPath = relativeSourceFile;
     }
-    if (this.templateConfig.conditionalGeneration?.[relativeSourceFile]) {
-      // console.log(sourceFile+" "+relativeSourceFile+" "+relativeSourceDirectory)
+    
+    if (conditionalPath) {
       shouldGenerate = await conditionalGeneration(
         relativeSourceFile,
         relativeSourceDirectory,
         relativeTargetFile,
         this.templateConfig,
         this.targetDir,
-        relativeSourceFile,
+        conditionalPath,
         this.templateParams,
         asyncapiDocument
-
       );
     }
   

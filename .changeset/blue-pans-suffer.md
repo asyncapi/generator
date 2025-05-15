@@ -1,6 +1,13 @@
 ---
 "@asyncapi/generator": minor
 ---
-- Moved the logic of **conditionalFile generation** to a new **conditionalGeneration module**, which now supports both file and folder generation in a unified way.
-- Introduced a new **conditionalGeneration** configuration that supports **subject** and **parameter** fields, enabling flexible and granular conditional generation.
-- The conditionalFile configuration is planned for deprecation in favor of the new conditionalGeneration setup. You can track the deprecation in the issue [#1553](https://github.com/asyncapi/generator/issues/1553).
+### What's new
+
+- Introduced a new `conditionalGeneration` configuration for template authors.
+- Supports conditional generation of both files and folders.
+- Allows conditions based on values from the AsyncAPI document (`subject`) and custom template parameters.
+
+### Deprecation notice
+
+- The existing `conditionalFile` configuration is now deprecated and will be removed in a future release.
+- To migrate, rename `conditionalFile` to `conditionalGeneration` in your template configuration. The structure remains the same, with added flexibility in condition handling.

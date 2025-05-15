@@ -17,6 +17,7 @@ The `generator` property from `package.json` file must contain a JSON object tha
 |`conditionalFiles`| Object[String, Object] | An object containing all the file paths that should be conditionally rendered. Each key represents a file path and each value must be an object with the keys `subject` and `validation`. The file path should be relative to the `template` directory inside the template. **Note: It is deprecated and will be removed with future releases. Use `conditionalGeneration` instead**.
 |`conditionalFiles[filePath].subject`| String | The `subject` is a [JMESPath](http://jmespath.org/) query to grab the value you want to apply the condition to. It queries an object with the whole AsyncAPI document and, when specified, the given server. The object looks like this: `{ asyncapi: { ... }, server: { ... } }`. If the template supports `server` parameter, you can access server details like for example protocol this way: `server.protocol`. During validation with `conditionalFiles` only the server that template user selected is available in the specification file. For more information about `server` parameter [read about special parameters].(#special-parameters) **Note: It is deprecated and will be removed with future releases. Use `conditionalGeneration` instead**.
 |`conditionalFiles[filePath].validation`| Object | The `validation` is a JSON Schema Draft 07 object. This JSON Schema definition will be applied to the JSON value resulting from the `subject` query. If validation doesn't have errors, the condition is met, and therefore the given file will be rendered. Otherwise, the file is ignored. Check [JSON Schema Validation](https://json-schema.org/draft-07/json-schema-validation.html#rfc.section.6) document for a list of all possible validation keywords. **Note: It is deprecated and will be removed with future releases. Use `conditionalGeneration` instead*.
+|`conditionalGeneration`| Object[String, String, Object] | An object containing all the file paths or the directory name that should be conditionally rendered. Each key represents a file path or directory name and each value must be an object with the keys `subject`, `parameter` and `validation`. We can use either subject or parameter according to the use case. The path should be relative to the `template` directory inside the template. 
 |`conditionalGeneration[filePath/directoryName].subject`| String | The `subject` is a [JMESPath](http://jmespath.org/) query to grab the value you want to apply the condition to. It queries an object with the whole AsyncAPI document and, when specified, the given server. The object looks like this: `{ asyncapi: { ... }, server: { ... } }`. If the template supports `server` parameter, you can access server details like for example protocol this way: `server.protocol`. During validation with `conditionalFiles` only the server that template user selected is available in the specification file. For more information about `server` parameter [read about special parameters](#special-parameters).
 | `conditionalGeneration[filePath/directoryName].parameter` | String | The `parameter` is the name of a custom template parameter passed through `templateParams` that controls whether a specific file or folder should be included in the generated output. You must define a `validation` rule using a JSON Schema fragment to apply the condition. For example, if you define `"parameter": "includeDocs"` with `"validation": { "const": true }`, the corresponding folder (e.g., `docs/`) will only be generated when the user passes `{ includeDocs: true }`. If `includeDocs` is `false`, it will be skipped. |
 |`nonRenderableFiles`| [String] | A list of file paths or [globs](https://en.wikipedia.org/wiki/Glob_(programming)) that must be copied "as-is" to the target directory, i.e., without performing any rendering process. This is useful when you want to copy binary files.
@@ -43,27 +44,24 @@ The `generator` property from `package.json` file must contain a JSON object tha
       "required": false
     }
   },
-  "conditionalFiles": {
-    "path/to/file/that/is/relative/to/template/dir/test-amqp.js": {
-      "subject": "server.protocol",
-      "validation": {
-        "const": "amqp"
+  "conditionalGeneration": {
+     "conditionalOnFile.js": { 
+       "parameter": "singleFile", 
+       "validation": {
+          "not": { "const": true } 
       }
     },
-    "path/to/file/that/is/relative/to/template/dir/support.html": {
-      "subject": "info.contact",
-        "validation": {
-          "required": ["url"]
+     "conditionOnFolder":{
+       "parameter": "singleFolder", 
+       "validation": {
+          "not": { "const": true } 
+      }
+    },
+     "conditionOnFolder":{
+       "subject": "info.contact.name",
+       "validation": {
+            "const": "API Support"
         }
-    }
-  },
-  "conditionalGeneration": {
-     "directoryName/fileName": { 
-       // Name of the directory or fileName without ./ or any kind of path, e.g., "docs" or "output"
-     "parameter": "singleFile", // The template parameter that will determine whether the directory is generated
-     "validation": {
-       // The validation rule that determines when the directory should be generated
-       "not": { "const": true } // This rule ensures the directory is not generated if "singleFile" is true
     }
   },
   "nonRenderableFiles": [
@@ -87,6 +85,6 @@ There are some template parameters that have a special meaning:
 
 |Name|Description|
 |---|---|
-|`server`| It is used to let the template know which server from the AsyncAPI specification file you want to use. In some cases, this may be required. For instance, when generating code that connects to a specific server. Use this parameter in case your template relies on users' information about what server from the specification file they want to use during generation. You also need this parameter if you want to use `server.protocol` notation within `conditionalFiles` configuration option. Once you decide to specify this parameter for your template, it is recommended you make it a mandatory parameter otherwise a feature like `conditionalFiles` is not going to work if your users do not use this parameter obligatory.
+|`server`| It is used to let the template know which server from the AsyncAPI specification file you want to use. In some cases, this may be required. For instance, when generating code that connects to a specific server. Use this parameter in case your template relies on users' information about what server from the specification file they want to use during generation. You also need this parameter if you want to use `server.protocol` notation within `conditionalGeneration` configuration option. Once you decide to specify this parameter for your template, it is recommended you make it a mandatory parameter otherwise a feature like `conditionalGeneration` is not going to work if your users do not use this parameter obligatory.
 
 

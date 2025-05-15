@@ -3,7 +3,7 @@
     "version": "0.0.1",
     "description": "Simple react-based template that showcases different generator features that we can test in integration tests",
     "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1"
+       "test": "echo \"Error: no test specified\" && exit 1"
     },
     "generator": {
       "renderer": "react",

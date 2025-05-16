@@ -7,7 +7,7 @@
 - Introduced a new `conditionalGeneration` configuration for templates.
 - Supports conditional generation of both files and folders.
 - Enables conditions based on values from the AsyncAPI document (`subject`) and custom template `parameters`.
-- **`parameter`** allows users to pass custom flags or values at generation time (via the CLI or programmatically) to control what parts of the template get rendered.
+- The **`parameter`** allows users to pass custom flags or values at generation time (via the CLI or programmatically) to control what parts of the template get rendered.
 
 ### Deprecation notice
 

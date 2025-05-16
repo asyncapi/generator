@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Constructor component (integration with AsyncAPI document) renders with neither serverUrl nor query 1`] = `
+"def __init__(self, url: str = \\"null\\"):
+
+        \\"\\"\\"
+        Constructor to initialize the WebSocket client.
+
+        Args:
+            url (str, optional): The WebSocket server URL. Use it if the server URL is 
+            different from the default one taken from the AsyncAPI document.
+        \\"\\"\\"
+        self.ws_app = None  # Instance of WebSocketApp
+        self.message_handlers = []      # Callables for incoming messages
+        self.error_handlers = []        # Callables for errors
+        self.outgoing_processors = []   # Callables to process outgoing messages
+        self._stop_event = threading.Event()
+      
+      
+
+        
+        self.url = url"
+`;
+
+exports[`Constructor component (integration with AsyncAPI document) renders with only serverUrl (withHostDuplicatingProtocol) 1`] = `
+"def __init__(self, url: str = \\"wss://api.gemini.com\\"):
+
+        \\"\\"\\"
+        Constructor to initialize the WebSocket client.
+
+        Args:
+            url (str, optional): The WebSocket server URL. Use it if the server URL is 
+            different from the default one taken from the AsyncAPI document.
+        \\"\\"\\"
+        self.ws_app = None  # Instance of WebSocketApp
+        self.message_handlers = []      # Callables for incoming messages
+        self.error_handlers = []        # Callables for errors
+        self.outgoing_processors = []   # Callables to process outgoing messages
+        self._stop_event = threading.Event()
+      
+      
+
+        
+        self.url = url"
+`;
+
+exports[`Constructor component (integration with AsyncAPI document) renders with undefined query 1`] = `
+"def __init__(self, url: str = \\"wss://api.gemini.com/v1/marketdata/{symbol}\\"):
+
+        \\"\\"\\"
+        Constructor to initialize the WebSocket client.
+
+        Args:
+            url (str, optional): The WebSocket server URL. Use it if the server URL is 
+            different from the default one taken from the AsyncAPI document.
+        \\"\\"\\"
+        self.ws_app = None  # Instance of WebSocketApp
+        self.message_handlers = []      # Callables for incoming messages
+        self.error_handlers = []        # Callables for errors
+        self.outgoing_processors = []   # Callables to process outgoing messages
+        self._stop_event = threading.Event()
+      
+      
+
+        
+        self.url = url"
+`;

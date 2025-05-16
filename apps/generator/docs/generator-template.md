@@ -9,7 +9,7 @@ Suppose you can only sleep when the AC in your bedroom is set to 22 °C, and you
 
 In this tutorial:
 
-- You'll use the [Eclipse Mosquito](https://test.mosquitto.org) **MQTT broker**, which you'll connect to subscribe and publish messages using an MQTT client.
+- You'll use the [Eclipse Mosquitto](https://test.mosquitto.org) **MQTT broker**, which you'll connect to subscribe and publish messages using an MQTT client.
 - You'll use [Python Paho-MQTT](https://pypi.org/project/paho-mqtt/) as the **MQTT client** in this project.
 - You'll create a React template that will use the MQTT broker to allow you to monitor your bedroom's temperature and notify you when the temperature drops or rises above 22 °C.
 - Lastly, create a reusable component for the output code's `sendTemperatureDrop` and `sendTemperatureRise` functions.
@@ -40,7 +40,12 @@ Before you begin, make sure you have the following set up:
 ## Background context
 
 There is a list of [community maintained templates](https://www.asyncapi.com/docs/tools/generator/template#generator-templates-list), but what if you do not find what you need? In that case, you'll create a user-defined template that generates custom output from the generator.
-Before you create the template, you'll need to have an [AsyncAPI document](https://www.asyncapi.com/docs/tools/generator/asyncapi-document) that defines the properties you want to use in your template to test against. In this tutorial, you'll use the following template saved in the **test/fixtures/asyncapi.yml** file in your template project directory.
+Before you create the template, you'll need an [AsyncAPI document](https://www.asyncapi.com/docs/tools/generator/asyncapi-document) that defines the properties used in your generator.
+In this tutorial, we define both a dev and a production server to support parameterized switching (--param server=dev). While this reflects real-world setups, the focus here is solely on extracting data and generating code templates.
+You'll use the following document saved as test/fixtures/asyncapi.yml.
+
+> 🧭 **Note on AsyncAPI v3 semantics:**  
+> In AsyncAPI v3, the meaning of `publish` and `subscribe` has changed from v2. Now, `action: send` under the top-level `operations` object indicates that the application is publishing (i.e., sending) the message. This tutorial uses that new approach.
 
 ```yaml
 asyncapi: 3.0.0
@@ -84,6 +89,9 @@ components:
           type: string
 
 ```
+> 🛠️ **Note on Payload Schema Refactor:**  
+> While updating to AsyncAPI v3, we moved the payload schema into the `components/schemas` section. This change does not alter the structure or semantics of the payload — it still contains the same fields (e.g., `value`, `unit`) — but places them under a reusable schema to promote better organization and maintainability. This follows recommended v3 practices and helps keep the document cleaner, especially when multiple messages use the same schema.
+
 > 🆕 This document uses the AsyncAPI 3.0.0 structure. Notable changes include `operations` now being top-level and the use of `address:` in `channels` instead of nested publish/subscribe.
 
 ## Handling Diagnostics (Warnings)
@@ -122,7 +130,7 @@ python-mqtt-client-template
 └── package.json
 ```
 
-Lets break it down:
+Let's break it down:
 
 ### package.json file
 

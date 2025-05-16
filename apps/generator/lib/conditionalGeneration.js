@@ -28,11 +28,13 @@ async function conditionalGeneration (
   const conditionFilesGeneration = templateConfig?.conditionalFiles?.[matchedConditionPath] || {};
   const conditionalGeneration = templateConfig?.conditionalGeneration?.[matchedConditionPath] || {};
 
-  const config = Object.keys(conditionFilesGeneration).length > 0
-    ? conditionFilesGeneration
+  const config = Object.keys(conditionFilesGeneration).length > 0 
+    ? conditionFilesGeneration 
     : conditionalGeneration;
- 
-  const { parameter, subject, validation } = config;
+  
+  const parameter = config?.parameter;
+  const subject = config?.subject;
+  const validation = config?.validation;
   if (Object.keys(conditionFilesGeneration).length>0 && subject) {
     return conditionalFilesGenerationDeprecateVersion(
       asyncapiDocument,

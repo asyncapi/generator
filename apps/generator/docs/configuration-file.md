@@ -57,7 +57,7 @@ The `generator` property from `package.json` file must contain a JSON object tha
           "not": { "const": true } 
       }
     },
-     "conditionOnFolder":{
+     "conditionOnFolderInfo":{
        "subject": "info.contact.name",
        "validation": {
             "const": "API Support"

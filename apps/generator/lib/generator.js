@@ -2,7 +2,6 @@ const path = require('path');
 const fs = require('fs');
 const xfs = require('fs.extra');
 const minimatch = require('minimatch');
-const jmespath = require('jmespath');
 const filenamify = require('filenamify');
 const git = require('simple-git');
 const log = require('loglevel');
@@ -10,12 +9,12 @@ const Arborist = require('@npmcli/arborist');
 const Config = require('@npmcli/config');
 const requireg = require('requireg');
 const npmPath = requireg.resolve('npm').replace('index.js','');
-
 const { isAsyncAPIDocument } = require('@asyncapi/parser/cjs/document');
 
 const { configureReact, renderReact, saveRenderedReactContent } = require('./renderer/react');
 const { configureNunjucks, renderNunjucks } = require('./renderer/nunjucks');
 const { validateTemplateConfig } = require('./templateConfigValidator');
+const { conditionalGeneration } = require('./conditionalGeneration');
 const {
   convertMapToObject,
   isFileSystemPath,
@@ -854,7 +853,7 @@ class Generator {
       await writeFile(outputpath, renderContent);
     }
   }
-
+  
   /**
    * Generates a file.
    *
@@ -867,34 +866,46 @@ class Generator {
   async generateFile(asyncapiDocument, fileName, baseDir) {
     const sourceFile = path.resolve(baseDir, fileName);
     const relativeSourceFile = path.relative(this.templateContentDir, sourceFile);
+    const relativeSourceDirectory = relativeSourceFile.split(path.sep)[0] || '.';
+  
     const targetFile = path.resolve(this.targetDir, this.maybeRenameSourceFile(relativeSourceFile));
     const relativeTargetFile = path.relative(this.targetDir, targetFile);
-
+    let shouldGenerate = true;
+  
     if (shouldIgnoreFile(relativeSourceFile)) return;
-
-    const shouldOverwriteFile = await this.shouldOverwriteFile(relativeTargetFile);
-    if (!shouldOverwriteFile) return;
-
+    
+    if (!(await this.shouldOverwriteFile(relativeTargetFile))) return;
+    let conditionalPath = '';
+    // It becomes deprecated with this PR, and soon will be removed.
+    // TODO: https://github.com/asyncapi/generator/issues/1553
     if (this.templateConfig.conditionalFiles?.[relativeSourceFile]) {
-      const server = this.templateParams.server && asyncapiDocument.servers().get(this.templateParams.server);
-      const source = jmespath.search({
-        ...asyncapiDocument.json(),
-        ...{
-          server: server ? server.json() : undefined,
-        },
-      }, this.templateConfig.conditionalFiles[relativeSourceFile].subject);
-
-      if (!source) return log.debug(logMessage.relativeSourceFileNotGenerated(relativeSourceFile, this.templateConfig.conditionalFiles[relativeSourceFile].subject));
-
-      if (source) {
-        const validate = this.templateConfig.conditionalFiles[relativeSourceFile].validate;
-        const valid = validate(source);
-        if (!valid) return log.debug(logMessage.conditionalFilesMatched(relativeSourceFile));
+      conditionalPath = relativeSourceDirectory;
+    } else if (this.templateConfig.conditionalGeneration?.[relativeSourceDirectory]) {
+      conditionalPath = relativeSourceDirectory;
+    } else if (this.templateConfig.conditionalGeneration?.[relativeSourceFile]) {
+      conditionalPath = relativeSourceFile;
+    }
+    
+    if (conditionalPath) {
+      shouldGenerate = await conditionalGeneration(
+        relativeSourceFile,
+        relativeSourceDirectory,
+        relativeTargetFile,
+        this.templateConfig,
+        this.targetDir,
+        conditionalPath,
+        this.templateParams,
+        asyncapiDocument
+      );
+    }
+  
+    if (shouldGenerate) {
+      if (this.isNonRenderableFile(relativeSourceFile)) {
+        await copyFile(sourceFile, targetFile);
+      } else {
+        await this.renderAndWriteToFile(asyncapiDocument, sourceFile, targetFile);
       }
     }
-
-    if (this.isNonRenderableFile(relativeSourceFile)) return await copyFile(sourceFile, targetFile);
-    await this.renderAndWriteToFile(asyncapiDocument, sourceFile, targetFile);
   }
 
   /**

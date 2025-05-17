@@ -81,7 +81,7 @@ channels:
 
 operations:
   noMessage:
-    action: receive
+    action: send
     channel:
       $ref: '#/channels/marketDataV1'
     summary: Operation with no messages
@@ -112,7 +112,7 @@ operations:
       - $ref: '#/channels/marketDataV1/messages/multipleExamples'
 
   mixedMessageExamples:
-    action: receive
+    action: send
     channel:
       $ref: '#/channels/marketDataV1'
     summary: Mixed message example coverage

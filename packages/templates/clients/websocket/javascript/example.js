@@ -27,7 +27,7 @@ async function main() {
 
     while (true) {
       try {
-        await WSClient.sendEchoMessage(message, wsClient.websocket);
+        await wsClient.sendEchoMessage(message);
       } catch (error) {
         console.error('Error while sending message:', error);
       }

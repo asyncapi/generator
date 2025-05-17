@@ -4,11 +4,11 @@ import { Connect } from './Connect';
 import { RegisterMessageHandler } from './RegisterMessageHandler';
 import { RegisterErrorHandler } from './RegisterErrorHandler';
 import { HandleMessage } from './HandleMessage';
-import { SendEchoMessage } from './SendEchoMessage';
+import { SendOperation } from './SendOperation';
 import { CloseConnection } from './CloseConnection';
 import { ModuleExport } from './ModuleExport';
 
-export function ClientClass({ clientName, serverUrl, title }) {
+export function ClientClass({ clientName, serverUrl, title, sendOperations}) {
   return (
     <Text>
       <Text newLines={2}>
@@ -19,7 +19,7 @@ export function ClientClass({ clientName, serverUrl, title }) {
       <RegisterMessageHandler />
       <RegisterErrorHandler />
       <HandleMessage />
-      <SendEchoMessage />
+      <SendOperation sendOperations={sendOperations} clientName={clientName} />
       <CloseConnection />
       <Text>
         {'}'}

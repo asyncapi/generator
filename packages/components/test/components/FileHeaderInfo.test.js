@@ -31,7 +31,7 @@ describe('Testing of FileHeaderInfo function', () => {
       <FileHeaderInfo 
         info={parsedAsyncAPIDocument.info()} 
         server={parsedAsyncAPIDocument.servers().get('withoutPathName')} 
-          language="javascript"
+        language="javascript"
       />
     );
     const actual = result.trim();

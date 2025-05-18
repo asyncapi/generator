@@ -1,0 +1,3 @@
+[submodule "GitHub/generator"]
+	path = GitHub/generator
+	url = https://github.com/AdeebaNizam404/generator.git

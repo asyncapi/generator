@@ -212,7 +212,7 @@ async function handleMissingParameterValue(relativeSourceFile,templateConfig) {
  * @param {String} relativeSourceDirectory The relative path of the source directory.
  * @param {String} relativeTargetFile The relative path of the target file.
  * @param {String} targetDir The directory where the generated files are written.
- * @return {Promise<Boolean>} A promise that resolves to true if the generation should be skipped.
+ * @return {Promise<Boolean>} A promise that resolves to false if the generation should be skipped, true otherwise.
  */
 async function validateParameterValue(
   validation,
@@ -226,17 +226,15 @@ async function validateParameterValue(
     return true;
   }
   if (Object.hasOwn(validation, 'not')) {
-    const isNotValid =  await validateNot(validation.not, argument);
-    if (isNotValid && (matchedConditionPath === relativeSourceDirectory)) {
-      await removeParentDirectory(relativeTargetFile, targetDir);
+    const isNotValid = await validateNot(validation.not, argument);
+
+    if (isNotValid) {
       log.debug(logMessage.conditionalGenerationMatched(matchedConditionPath));
-      return false;
-    } else 
-    if (isNotValid && (matchedConditionPath === relativeTargetFile)) {
-      log.debug(logMessage.conditionalGenerationMatched(matchedConditionPath));
+      if (matchedConditionPath === relativeSourceDirectory) {
+        await removeParentDirectory(relativeTargetFile, targetDir);
+      }
       return false;
     }
-
     return true;
   }
 

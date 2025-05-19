@@ -1,19 +1,23 @@
-const fs = require('fs');
+const fs = require('fs').promises;
 const path = require('path');
 const Ajv = require('ajv');
 const log = require('loglevel');
 const logMessage = require('./logMessages');
 const jmespath = require('jmespath');
+
 /**
- * Determines if file generation should be skipped based on templateConfig conditions.
+ * Determines whether the generation of a file or folder should be skipped
+ * based on conditions defined in the template configuration.
  *
- * @param  {AsyncAPIDocument} asyncapiDocument AsyncAPI document to use for condition evaluation.
- * @param  {String} relativeSourceFile Relative path of the source file.
- * @param  {String} relativeSourceDirectory Relative path of the source directory.
- * @param  {String} relativeTargetFile Relative path of the target file to be generated.
- * @param  {Object} templateConfig Template configuration.
- * @param  {String} targetDir Directory where the generated files are written.
- * @return {Promise<Boolean>} Returns true if generation should be skipped.
+ * @param {string} relativeSourceFile - The relative path of the source file.
+ * @param {string} relativeSourceDirectory - The relative path of the source directory.
+ * @param {string} relativeTargetFile - The relative path of the target file to be generated.
+ * @param {Object} templateConfig - The template configuration containing conditional logic.
+ * @param {string} targetDir - The directory where the generated files are written.
+ * @param {string} matchedConditionPath - The matched path used to find applicable conditions.
+ * @param {Object} templateParams - Parameters passed to the template.
+ * @param {AsyncAPIDocument} asyncapiDocument - The AsyncAPI document used for evaluating conditions.
+ * @returns {Promise<boolean>} A promise that resolves to `true` if generation should be skipped, otherwise `false`.
  */
 async function conditionalGeneration (
   relativeSourceFile,
@@ -35,21 +39,26 @@ async function conditionalGeneration (
   const parameter = config?.parameter;
   const subject = config?.subject;
   const validation = config?.validation;
-  if (Object.keys(conditionFilesGeneration).length>0 && subject) {
+
+  if (Object.keys(conditionFilesGeneration).length > 0 && subject) {
     return conditionalFilesGenerationDeprecatedVersion(
       asyncapiDocument,
       templateParams,
       templateConfig,
       relativeSourceFile
     );
-  } else 
-  if (Object.keys(conditionalGeneration).length>0 && subject) {
-    return conditionalSubjectGeneration(asyncapiDocument,templateConfig,matchedConditionPath);
+  } else if (Object.keys(conditionalGeneration).length > 0 && subject) {
+    return conditionalSubjectGeneration(
+      asyncapiDocument,
+      templateConfig,
+      matchedConditionPath
+    );
   }
-  const parameterValue = getParameterValue(templateParams, parameter);
+
+  const parameterValue = await getParameterValue(templateParams, parameter);
 
   if (parameterValue === undefined) {
-    handleMissingParameterValue(matchedConditionPath, templateConfig);
+    await handleMissingParameterValue(matchedConditionPath, templateConfig);
     return false;
   }
 
@@ -111,11 +120,35 @@ async function conditionalFilesGenerationDeprecatedVersion (
 };
 
 /**
+ * Asynchronously removes the parent directory of the specified target file, 
+ * if it exists and is a directory.
+ *
+ * @param {string} relativeTargetFile - The relative path to the target file, used to locate its parent directory.
+ * @param {string} targetDir - The base directory where the target file resides.
+ * @returns {Promise<void>} A promise that resolves when the parent directory is removed, or if it does not exist.
+ */
+const removeParentDirectory = async (relativeTargetFile, targetDir) => {
+  const fullFilePath = path.join(targetDir, relativeTargetFile);
+  const parentDir = path.dirname(fullFilePath);
+
+  try {
+    const stats = await fs.lstat(parentDir);
+    if (stats.isDirectory()) {
+      await fs.rm(parentDir, { recursive: true, force: true });
+    }
+  } catch (error) {
+    // Ignore error if the directory does not exist
+    if (error.code !== 'ENOENT') {
+      throw error;
+    }
+  }
+};
+
+/**
  * Determines whether a file should be conditionally included based on the provided subject expression
  * and optional validation logic defined in the template configuration.
  *
  * @param {Object} asyncapiDocument - The parsed AsyncAPI document instance used for context evaluation.
- * @param {Object} templateParams - The template parameters passed by the user (e.g. server selection).
  * @param {Object} templateConfig - The configuration object that contains `conditionalFiles` rules.
  * @param {String} matchedConditionPath - The relative path to the directory of the source file.
  * @returns {Boolean} - Returns `true` if the file should be included; `false` if it should be skipped.
@@ -132,7 +165,6 @@ async function conditionalSubjectGeneration (
 
   const { subject, validation } = fileCondition;
 
-  //const server = templateParams.server && asyncapiDocument.servers().get(templateParams.server);
   const context = {
     ...asyncapiDocument.json(),
     server: asyncapiDocument.info()?.json(),
@@ -164,7 +196,7 @@ async function conditionalSubjectGeneration (
  * @private
  * @param {String} relativeSourceFile The relative path of the source file.
  */
-function handleMissingParameterValue(relativeSourceFile,templateConfig) {
+async function handleMissingParameterValue(relativeSourceFile,templateConfig) {
   const parameter = templateConfig.conditionalGeneration?.[relativeSourceFile]?.parameter;
   log.debug(logMessage.relativeSourceFileNotGenerated(relativeSourceFile, parameter));
 }
@@ -238,32 +270,13 @@ async function validateNot(notSchema, parameterValue) {
 }
 
 /**
- * Removes the parent directory of the specified target file if it exists and is a directory.
+ * Retrieves the value of a specified parameter from the template parameters object.
  *
- * @param {String} relativeTargetFile The relative path of the target file used to determine the parent directory.
- * @param {String} targetDir The directory where the generated files are written.
- * @return {Promise<void>} A promise that resolves once the parent directory is removed (if applicable).
+ * @param {Object} templateParams - The object containing parameters, typically derived from an AsyncAPI document.
+ * @param {string} parameter - The name of the parameter to retrieve.
+ * @returns {*} The value of the specified parameter, or undefined if the parameter does not exist.
  */
-async function removeParentDirectory(relativeTargetFile, targetDir) {
-  const fullFilePath = path.join(targetDir, relativeTargetFile);
-  const parentDir = path.dirname(fullFilePath);
-
-  if (fs.existsSync(parentDir)) {
-    const stats = fs.lstatSync(parentDir);
-    if (stats.isDirectory()) {
-      fs.rmdirSync(parentDir, { recursive: true });
-    }
-  }
-}
-
-/**
- * Retrieves the parameter value from the AsyncAPI document.
- *
- * @param {AsyncAPIDocument} asyncapiDocument The AsyncAPI document to extract the parameter value from.
- * @param {String} parameter The parameter name to retrieve.
- * @return {any} The value of the parameter.
- */
-function getParameterValue(templateParams, parameter) {
+async function getParameterValue(templateParams, parameter) {
   return templateParams[parameter];
 }
 

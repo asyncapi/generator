@@ -45,6 +45,8 @@ function skipOverwrite(testFilePath) {
 function conditionalGenerationMatched(conditionalPath) {
   return `${conditionalPath} was not generated because condition specified for this location in template configuration in conditionalGeneration matched.`;
 }
+// It becomes deprecated with this PR, and soon will be removed.
+// TODO: https://github.com/asyncapi/generator/issues/1553
 function conditionalFilesMatched(relativeSourceFile) {
   return `${relativeSourceFile} was not generated because condition specified for this file in template configuration in conditionalFiles matched.`;
 }

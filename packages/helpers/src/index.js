@@ -1,4 +1,4 @@
-const { getMessageExamples, getOperationMessages } = require('./Operations');
+const { getMessageExamples, getOperationMessages } = require('./operations');
 const { getServerUrl, getServer }  = require('./servers');
 const { getClientName, listFiles } = require('./utils');
 const { getQueryParams } = require('./bindings');

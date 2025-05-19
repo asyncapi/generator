@@ -50,7 +50,7 @@ You'll use the following document saved as test/fixtures/asyncapi.yml.
 > In AsyncAPI v3, the meaning of `publish` and `subscribe` has changed from v2. Now, `action: send` under the top-level `operations` object indicates that the application is publishing (i.e., sending) the message. This tutorial uses that new approach.
 
 ```yaml
-asyncapi: 3.0.0
+asyncapi: "3.0.0"
 info:
   title: Temperature Service
   version: 1.0.0

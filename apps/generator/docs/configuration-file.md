@@ -52,13 +52,13 @@ The `generator` property from `package.json` file must contain a JSON object tha
           "not": { "const": true } 
       }
     },
-     "conditionOnFolder":{
+     "conditionOnFolder": {
        "parameter": "singleFolder", 
        "validation": {
           "not": { "const": true } 
       }
     },
-     "conditionOnFolderInfo":{
+     "conditionOnFolderInfo": {
        "subject": "info.contact.name",
        "validation": {
             "const": "API Support"

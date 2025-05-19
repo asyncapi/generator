@@ -967,31 +967,33 @@ class Generator {
    * @private
    */
   async loadTemplateConfig() {
+    this.templateConfig = {};
+    
+    // Try to load config from .ageneratorrc
     try {
-      // First, try to read .ageneratorrc file directly
       const rcConfigPath = path.resolve(this.templateDir, '.ageneratorrc');
+      const yaml = await readFile(rcConfigPath, { encoding: 'utf8' });
+      const yamlConfig = require('js-yaml').load(yaml);
+      this.templateConfig = yamlConfig || {};
       
-      try {
-        const yaml = await readFile(rcConfigPath, { encoding: 'utf8' });
-        const yamlConfig = require('js-yaml').load(yaml);
-        this.templateConfig = yamlConfig || {};
-      } catch (rcError) {
-        // If reading .ageneratorrc fails, try package.json
-        const configPath = path.resolve(this.templateDir, CONFIG_FILENAME);
-        
-        try {
-          const json = await readFile(configPath, { encoding: 'utf8' });
-          const generatorProp = JSON.parse(json).generator;
-          this.templateConfig = generatorProp || {};
-        } catch (packageError) {
-          // If reading package.json fails, use empty config
-          this.templateConfig = {};
-        }
-      }
-    } catch (e) {
-      console.error('Error loading template config:', e);
-      this.templateConfig = {};
+
+      await this.loadDefaultValues();
+      return;
+    } catch (rcError) {
+      console.error('Could not load .ageneratorrc file:', rcError);
+      // Continue to try package.json if .ageneratorrc fails
     }
+    
+    // Try to load config from package.json
+    try {
+      const configPath = path.resolve(this.templateDir, CONFIG_FILENAME);
+      const json = await readFile(configPath, { encoding: 'utf8' });
+      const generatorProp = JSON.parse(json).generator;
+      this.templateConfig = generatorProp || {};
+    } catch (packageError) {
+      console.error('Could not load generator config from package.json:', packageError);
+    }
+    
     await this.loadDefaultValues();
   }
 

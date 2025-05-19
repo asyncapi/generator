@@ -90,7 +90,7 @@ components:
 
 ```
 > 🛠️ **Note on Payload Schema Refactor:**  
-> n this version, the payload definition has been moved to a reusable schema component (#/components/schemas/Temperature). This change reflects AsyncAPI v3 best practices, but doesn't affect functionality. This aligns with AsyncAPI v3's best practices for reuse and separation of concerns. Only the naming changed (temperatureId → value) to more clearly match the data's purpose. This is purely cosmetic and doesn’t affect function.
+> In this version, the payload definition has been moved to a reusable schema component (#/components/schemas/Temperature). This change reflects AsyncAPI v3 best practices, but doesn't affect functionality. This aligns with AsyncAPI v3's best practices for reuse and separation of concerns. Only the naming changed (temperatureId → value) to more clearly match the data's purpose. This is purely cosmetic and doesn’t affect function.
 
 > 🆕 This document uses the AsyncAPI 3.0.0 structure. Notable changes include `operations` now being top-level and the use of `address:` in `channels` instead of nested publish/subscribe.
 ## Handling Diagnostics (Warnings)

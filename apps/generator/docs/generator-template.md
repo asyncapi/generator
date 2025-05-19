@@ -90,22 +90,12 @@ components:
 
 ```
 > 🛠️ **Note on Payload Schema Refactor:**  
-> The payload was previously inline with a field like temperatureId. In this version, it’s refactored into a reusable Temperature schema component. While the field names were also cleaned up (temperatureId → value, unit), the functional meaning remains unchanged. This aligns with AsyncAPI v3's best practices for reuse and separation of concerns. Only the naming changed (temperatureId → value) to more clearly match the data's purpose. This is purely cosmetic and doesn’t affect function.
+> n this version, the payload definition has been moved to a reusable schema component (#/components/schemas/Temperature). This change reflects AsyncAPI v3 best practices, but doesn't affect functionality. This aligns with AsyncAPI v3's best practices for reuse and separation of concerns. Only the naming changed (temperatureId → value) to more clearly match the data's purpose. This is purely cosmetic and doesn’t affect function.
 
 > 🆕 This document uses the AsyncAPI 3.0.0 structure. Notable changes include `operations` now being top-level and the use of `address:` in `channels` instead of nested publish/subscribe.
 ## Handling Diagnostics (Warnings)
 
 When using the latest AsyncAPI parser, it's important to handle not just errors, but also diagnostics (warnings). These help identify non-critical issues, such as missing recommended fields like `license`, `contact`, or outdated spec versions.
-
-```ts
-const { parseFromFile } = require('@asyncapi/parser');
-
-const result = await parseFromFile('example-asyncapi.yaml');
-
-if (result.diagnostics && result.diagnostics.length > 0) {
-  console.warn('⚠️ Found diagnostics:');
-  console.dir(result.diagnostics, { depth: null });
-}
 
 
 ## Overview of steps

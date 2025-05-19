@@ -976,11 +976,11 @@ class Generator {
       const yamlConfig = require('js-yaml').load(yaml);
       this.templateConfig = yamlConfig || {};
       
-
       await this.loadDefaultValues();
       return;
     } catch (rcError) {
-      console.error('Could not load .ageneratorrc file:', rcError);
+      // console.error('Could not load .ageneratorrc file:', rcError);
+      log.debug('Could not load .ageneratorrc file:', rcError);
       // Continue to try package.json if .ageneratorrc fails
     }
     
@@ -991,7 +991,8 @@ class Generator {
       const generatorProp = JSON.parse(json).generator;
       this.templateConfig = generatorProp || {};
     } catch (packageError) {
-      console.error('Could not load generator config from package.json:', packageError);
+      // console.error('Could not load generator config from package.json:', packageError);
+      log.debug('Could not load generator config from package.json:', packageError);
     }
     
     await this.loadDefaultValues();

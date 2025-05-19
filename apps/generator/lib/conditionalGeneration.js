@@ -74,7 +74,7 @@ async function conditionalGeneration (
  * @param {String} relativeSourceDirectory - The relative path to the directory of the source file.
  * @returns {Boolean} - Returns `true` if the file should be included; `false` if it should be skipped.
  */
-async function conditionalFilesGenerationDeprecateVersion (
+async function conditionalFilesGenerationDeprecatedVersion (
   asyncapiDocument,
   templateParams,
   templateConfig,

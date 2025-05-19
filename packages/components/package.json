@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Package with reusable components for generation using React render engine",
   "scripts": {
-    "test": "jest --coverage",
+    "test": "npm run build && jest --coverage",
     "test:update": "jest --updateSnapshot",
     "build": "babel src --out-dir lib",
     "prepublishOnly": "npm run build",

@@ -36,7 +36,7 @@ async function conditionalGeneration (
   const subject = config?.subject;
   const validation = config?.validation;
   if (Object.keys(conditionFilesGeneration).length>0 && subject) {
-    return conditionalFilesGenerationDeprecateVersion(
+    return conditionalFilesGenerationDeprecatedVersion(
       asyncapiDocument,
       templateParams,
       templateConfig,

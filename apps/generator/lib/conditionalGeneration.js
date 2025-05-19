@@ -191,15 +191,17 @@ async function validateParameterValue(
   targetDir
 ) {
   if (Object.hasOwn(validation, 'not')) {
-    const isNotValid = validateNot(validation.not, argument);
+    const isNotValid =  await validateNot(validation.not, argument);
     if (isNotValid && (matchedConditionPath === relativeSourceDirectory)) {
       await removeParentDirectory(relativeTargetFile, targetDir);
+      log.debug(logMessage.conditionalGenerationMatched(matchedConditionPath));
       return false;
     } else 
     if (isNotValid && (matchedConditionPath === relativeTargetFile)) {
+      log.debug(logMessage.conditionalGenerationMatched(matchedConditionPath));
       return false;
     }
-    log.debug(logMessage.conditionalGenerationMatched(matchedConditionPath));
+
     return true;
   }
 
@@ -208,13 +210,14 @@ async function validateParameterValue(
   const isValid = validate(argument);
 
   if (!isValid) {
-    log.debug(logMessage.conditionalGenerationMatched(matchedConditionPath));
     return true;
   } else 
   if (isValid && (matchedConditionPath === relativeTargetFile)) {
+    log.debug(logMessage.conditionalGenerationMatched(matchedConditionPath));
     return false;
   } else
   if (isValid && (matchedConditionPath === relativeSourceDirectory)) {
+    log.debug(logMessage.conditionalGenerationMatched(matchedConditionPath));
     await removeParentDirectory(relativeTargetFile, targetDir);
     return false;
   }
@@ -228,7 +231,7 @@ async function validateParameterValue(
  * @param {any} parameterValue The value to validate.
  * @return {Boolean} Returns true if validation fails, false otherwise.
  */
-function validateNot(notSchema, parameterValue) {
+async function validateNot(notSchema, parameterValue) {
   const ajv = new Ajv();
   const validateNot = ajv.compile(notSchema);
   return validateNot(parameterValue);
@@ -241,7 +244,7 @@ function validateNot(notSchema, parameterValue) {
  * @param {String} targetDir The directory where the generated files are written.
  * @return {Promise<void>} A promise that resolves once the parent directory is removed (if applicable).
  */
-function removeParentDirectory(relativeTargetFile, targetDir) {
+async function removeParentDirectory(relativeTargetFile, targetDir) {
   const fullFilePath = path.join(targetDir, relativeTargetFile);
   const parentDir = path.dirname(fullFilePath);
 

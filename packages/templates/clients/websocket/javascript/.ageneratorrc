@@ -9,3 +9,6 @@ parameters:
     description: The name of the generated client file
     required: false
     default: client.js
+  customClientName:
+    description: The custom name for the generated client class
+    required: false  

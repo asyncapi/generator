@@ -40,7 +40,7 @@ describe('Constructor component (integration with AsyncAPI document)', () => {
     const server = getServer(servers, 'withVariables');
     const serverUrl = getServerUrl(server);
     const channels = parsedAsyncAPIDocument.channels();
-    const queryParams = getQueryParams(server, channels);
+    const queryParams = getQueryParams(channels);
     const result = render(<Constructor serverUrl={serverUrl} query={queryParams} />);
     expect(result.trim()).toMatchSnapshot();
   });

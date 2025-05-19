@@ -19,3 +19,4 @@ temp
 __pycache__
 
 microcks-data
+packages/templates/clients/websocket/test/__fixtures__/bundled.yml

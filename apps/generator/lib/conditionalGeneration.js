@@ -244,17 +244,12 @@ async function validateParameterValue(
 
   if (!isValid) {
     return true;
-  } else 
-  if (matchedConditionPath === relativeTargetFile) {
-    log.debug(logMessage.conditionalGenerationMatched(matchedConditionPath));
-    return false;
-  } else
-  if (matchedConditionPath === relativeSourceDirectory) {
-    log.debug(logMessage.conditionalGenerationMatched(matchedConditionPath));
-    await removeParentDirectory(relativeTargetFile, targetDir);
-    return false;
   }
-  return true;
+  log.debug(logMessage.conditionalGenerationMatched(matchedConditionPath));
+  if (matchedConditionPath === relativeSourceDirectory) {
+    await removeParentDirectory(relativeTargetFile, targetDir);
+  }
+  return false;
 }
 
 /**

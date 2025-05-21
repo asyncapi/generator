@@ -9,7 +9,7 @@ Suppose you can only sleep when the AC in your bedroom is set to 22 °C, and you
 
 In this tutorial:
 
-- You'll use the [Eclipse Mosquitto](https://test.mosquitto.org) **MQTT broker**, which you'll connect to subscribe and publish messages using an MQTT client.
+- You'll use the [Eclipse Mosquito](https://test.mosquitto.org) **MQTT broker**, which you'll connect to subscribe and publish messages using an MQTT client.
 - You'll use [Python Paho-MQTT](https://pypi.org/project/paho-mqtt/) as the **MQTT client** in this project.
 - You'll create a React template that will use the MQTT broker to allow you to monitor your bedroom's temperature and notify you when the temperature drops or rises above 22 °C.
 - Lastly, create a reusable component for the output code's `sendTemperatureDrop` and `sendTemperatureRise` functions.
@@ -46,8 +46,6 @@ Before you create the template, you'll need an [AsyncAPI document](https://www.a
 In this tutorial, we use a simplified AsyncAPI document focused on extracting data for template generation.
 You'll use the following document saved as test/fixtures/asyncapi.yml.
 
-> 🧭 **Note on AsyncAPI v3 semantics:**  
-> In AsyncAPI v3, the meaning of `publish` and `subscribe` has changed from v2. Now, `action: send` under the top-level `operations` object indicates that the application is publishing (i.e., sending) the message. This tutorial uses that new approach.
 
 ```yaml
 asyncapi: "3.0.0"
@@ -83,20 +81,10 @@ components:
       type: object
       additionalProperties: false
       properties:
-        value:
-          type: number
-        unit:
+        temperatureId:
           type: string
 
 ```
-> 🛠️ **Note on Payload Schema Refactor:**  
-> In this version, the payload definition has been moved to a reusable schema component (#/components/schemas/Temperature). This change reflects AsyncAPI v3 best practices, but doesn't affect functionality. This aligns with AsyncAPI v3's best practices for reuse and separation of concerns. The payload was also updated to include a unit field (e.g., °C, °F) to better reflect real-world temperature data. While this introduces a slight schema expansion, it enhances clarity for generated code consumers. The value field replaces the previous temperatureId for clearer semantics.
-
-> 🆕 This document uses the AsyncAPI 3.0.0 structure. Notable changes include `operations` now being top-level and the use of `address:` in `channels` instead of nested publish/subscribe.
-## Handling Diagnostics (Warnings)
-
-When using the latest AsyncAPI parser, it's important to handle not just errors, but also diagnostics (warnings). These help identify non-critical issues, such as missing recommended fields like `license`, `contact`, or outdated spec versions.
-
 
 ## Overview of steps
 

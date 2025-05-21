@@ -1,6 +1,26 @@
 const { readdir } = require('fs/promises');
 
 /**
+ * Validate and retrieve the AsyncAPI title parameter in the info object.
+ *
+ * Throws an error if the provided AsyncAPI info object lacks a `title` parameter.
+ *
+ * @param {object} info - The `info` object from an AsyncAPI document.
+ * @throws {Error} When `title` is `null` or `undefined` or `empty string`  .
+ * @returns {string} The retrieved `title` parameter.
+ */
+const getTitle = info => {
+  if (!info.title) {
+    throw new Error('Provided AsyncAPI document info field doesn\'t contain title.');
+  }
+  const title = info.title();
+  if (title === '') {
+    throw new Error('AsyncAPI document title cannot be an empty string.');
+  }
+  
+  return title;
+};
+/**
  * Get client name from AsyncAPI info.title or uses a custom name if provided.
  *
  * @param {object} info - The AsyncAPI info object.
@@ -13,7 +33,7 @@ const getClientName = (info, appendClientSuffix, customClientName) => {
   if (customClientName) {
     return customClientName;
   }
-  const title = info.title();
+  const title = getTitle(info);
   const baseName = `${title.replace(/\s+/g, '') // Remove all spaces
     .replace(/^./, char => char.toUpperCase())}`; // Make the first letter uppercase
   return appendClientSuffix ? `${baseName}Client` : baseName;
@@ -37,6 +57,7 @@ const listFiles = async (dir) => {
 
 module.exports = {
   getClientName,
-  listFiles
+  listFiles,
+  getTitle
 };
   

@@ -116,6 +116,7 @@ operations:
     channel:
       $ref: '#/channels/marketDataV1'
     summary: Mixed message example coverage
+    description: An example of a send operation with multiple message with examples
     messages:
       - $ref: '#/channels/marketDataV1/messages/noExamples'
       - $ref: '#/channels/marketDataV1/messages/oneExample'

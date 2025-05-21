@@ -876,7 +876,7 @@ class Generator {
     
     if (!(await this.shouldOverwriteFile(relativeTargetFile))) return;
     let conditionalPath = '';
-    // It becomes deprecated with this PR, and soon will be removed.
+    // conditionalFiles becomes deprecated with this PR, and soon will be removed.
     // TODO: https://github.com/asyncapi/generator/issues/1553
     if (this.templateConfig.conditionalFiles?.[relativeSourceFile]) {
       conditionalPath = relativeSourceDirectory;

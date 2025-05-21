@@ -148,6 +148,8 @@ function isServerProvidedInDocument(server, paramsServerName) {
   if (typeof paramsServerName === 'string' && !server) throw new Error(`Couldn't find server with name ${paramsServerName}.`);
 }
 
+// conditionalFiles becomes deprecated with this PR, and soon will be removed.
+// TODO: https://github.com/asyncapi/generator/issues/1553
 /**
  * Checks if conditional files are specified properly in the template
  * @private

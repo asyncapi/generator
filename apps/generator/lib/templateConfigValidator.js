@@ -179,7 +179,7 @@ function validateConditionalFiles(conditionalFiles) {
  * @param {Object} conditionalGeneration conditions specified in the template config
  */
 function validateConditionalGeneration(conditionalGeneration) {
-  if (typeof conditionalGeneration === 'object') {
+  if (conditionalGeneration !== undefined && typeof conditionalGeneration === 'object') {
     const fileNames = Object.keys(conditionalGeneration);
 
     fileNames.forEach(fileName => {

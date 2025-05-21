@@ -1,6 +1,5 @@
 const fs = require('fs').promises;
 const path = require('path');
-const Ajv = require('ajv');
 const log = require('loglevel');
 const logMessage = require('./logMessages');
 const jmespath = require('jmespath');
@@ -68,7 +67,8 @@ async function conditionalGeneration (
     matchedConditionPath,
     relativeSourceDirectory,
     relativeTargetFile,
-    targetDir
+    targetDir,
+    templateConfig
   );
 };
 
@@ -163,7 +163,7 @@ async function conditionalSubjectGeneration (
     return true; 
   }
 
-  const { subject, validation } = fileCondition;
+  const { subject } = fileCondition;
 
   const context = {
     ...asyncapiDocument.json(),
@@ -180,8 +180,7 @@ async function conditionalSubjectGeneration (
     return false;
   } else
   if (source) {
-    const ajv = new Ajv();
-    const validate = ajv.compile(validation);
+    const validate = templateConfig.conditionalGeneration?.[matchedConditionPath].validate;
     const isValid = validate(source);
     if (!isValid) {
       log.debug(logMessage.conditionalGenerationMatched(matchedConditionPath));
@@ -220,15 +219,17 @@ async function validateParameterValue(
   matchedConditionPath,
   relativeSourceDirectory,
   relativeTargetFile,
-  targetDir
+  targetDir,
+  templateConfig
 ) {
   if (!validation) {
     return true;
   }
-  if (Object.hasOwn(validation, 'not')) {
-    const isNotValid = await validateNot(validation.not, argument);
+  const validate = templateConfig.conditionalGeneration?.[matchedConditionPath].validate;
 
-    if (isNotValid) {
+  if (Object.hasOwn(validation, 'not')) {
+    const isNotValid =  validate(argument);
+    if (!isNotValid) {
       log.debug(logMessage.conditionalGenerationMatched(matchedConditionPath));
       if (matchedConditionPath === relativeSourceDirectory) {
         await removeParentDirectory(relativeTargetFile, targetDir);
@@ -238,8 +239,6 @@ async function validateParameterValue(
     return true;
   }
 
-  const ajv = new Ajv();
-  const validate = ajv.compile(validation);
   const isValid = validate(argument);
 
   if (!isValid) {
@@ -250,19 +249,6 @@ async function validateParameterValue(
     await removeParentDirectory(relativeTargetFile, targetDir);
   }
   return false;
-}
-
-/**
- * Validates the parameter value using a "not" schema.
- *
- * @param {Object} notSchema The "not" schema to use for validation.
- * @param {any} parameterValue The value to validate.
- * @return {Boolean} Returns true if validation fails, false otherwise.
- */
-async function validateNot(notSchema, parameterValue) {
-  const ajv = new Ajv();
-  const validateNot = ajv.compile(notSchema);
-  return validateNot(parameterValue);
 }
 
 /**

@@ -875,15 +875,26 @@ class Generator {
     if (shouldIgnoreFile(relativeSourceFile)) return;
     
     if (!(await this.shouldOverwriteFile(relativeTargetFile))) return;
+
     let conditionalPath = '';
-    // conditionalFiles becomes deprecated with this PR, and soon will be removed.
-    // TODO: https://github.com/asyncapi/generator/issues/1553
-    if (this.templateConfig.conditionalFiles?.[relativeSourceFile]) {
-      conditionalPath = relativeSourceDirectory;
-    } else if (this.templateConfig.conditionalGeneration?.[relativeSourceDirectory]) {
+    if (
+      this.templateConfig.conditionalFiles &&
+      this.templateConfig.conditionalGeneration
+    ) {
+      log.debug(
+        'Both \'conditionalFiles\' and \'conditionalGeneration\' are defined. Ignoring \'conditionalFiles\' and using \'conditionalGeneration\' only.'
+      );
+    }
+    
+    if (this.templateConfig.conditionalGeneration?.[relativeSourceDirectory]) {
       conditionalPath = relativeSourceDirectory;
     } else if (this.templateConfig.conditionalGeneration?.[relativeSourceFile]) {
       conditionalPath = relativeSourceFile;
+    } else
+    if (this.templateConfig.conditionalFiles?.[relativeSourceFile]) {  
+      // conditionalFiles becomes deprecated with this PR, and soon will be removed.
+      // TODO: https://github.com/asyncapi/generator/issues/1553
+      conditionalPath = relativeSourceDirectory;
     }
     
     if (conditionalPath) {
@@ -901,10 +912,11 @@ class Generator {
   
     if (shouldGenerate) {
       if (this.isNonRenderableFile(relativeSourceFile)) {
-        await copyFile(sourceFile, targetFile);
-      } else {
-        await this.renderAndWriteToFile(asyncapiDocument, sourceFile, targetFile);
-      }
+        log.debug(`${relativeSourceFile} is a non-renderable file and was copied without changes.`);
+        return await copyFile(sourceFile, targetFile); 
+      } 
+      log.debug(`Successfully rendered template and wrote file ${relativeSourceFile} to location: ${targetFile}`);
+      await this.renderAndWriteToFile(asyncapiDocument, sourceFile, targetFile);
     }
   }
 

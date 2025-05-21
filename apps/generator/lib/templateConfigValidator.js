@@ -24,9 +24,14 @@ const supportedParserAPIMajorVersions = [
  * @return {Boolean}
  */
 module.exports.validateTemplateConfig = (templateConfig, templateParams, asyncapiDocument) => {
-  const { parameters, supportedProtocols, conditionalFiles, generator, apiVersion } = templateConfig;
+  // conditionalFiles becomes deprecated with this PR, and soon will be removed.
+  // TODO: https://github.com/asyncapi/generator/issues/1553
+  const { parameters, supportedProtocols, conditionalFiles, conditionalGeneration, generator, apiVersion } = templateConfig;
 
+  // conditionalFiles becomes deprecated with this PR, and soon will be removed.
+  // TODO: https://github.com/asyncapi/generator/issues/1553
   validateConditionalFiles(conditionalFiles);
+  validateConditionalGeneration(conditionalGeneration);
   isTemplateCompatible(generator, apiVersion);
   isRequiredParamProvided(parameters, templateParams);
   isProvidedTemplateRendererSupported(templateConfig);
@@ -164,6 +169,25 @@ function validateConditionalFiles(conditionalFiles) {
       if (typeof def.subject !== 'string') throw new Error(`Invalid conditional file subject for ${fileName}: ${def.subject}.`);
       if (typeof def.validation !== 'object') throw new Error(`Invalid conditional file validation object for ${fileName}: ${def.validation}.`);
       conditionalFiles[fileName].validate = ajv.compile(conditionalFiles[fileName].validation);
+    });
+  }
+}
+
+/**
+ * Checks if conditionalGeneration are specified properly in the template
+ * @private
+ * @param {Object} conditionalGeneration conditions specified in the template config
+ */
+function validateConditionalGeneration(conditionalGeneration) {
+  if (typeof conditionalGeneration === 'object') {
+    const fileNames = Object.keys(conditionalGeneration);
+
+    fileNames.forEach(fileName => {
+      const def = conditionalGeneration[fileName];
+      if (def.subject !== undefined && typeof def.subject !== 'string') throw new Error(`Invalid conditionalGeneration subject for ${fileName}: ${def.subject}.`);
+      if (def.parameter !== undefined && typeof def.parameter !== 'string') throw new Error(`Invalid conditionalGeneration parameter for ${fileName}: ${def.parameter}.`);
+      if (typeof def.validation !== 'object') throw new Error(`Invalid conditionalGeneration validation object for ${fileName}: ${def.validation}.`);
+      conditionalGeneration[fileName].validate = ajv.compile(conditionalGeneration[fileName].validation);
     });
   }
 }

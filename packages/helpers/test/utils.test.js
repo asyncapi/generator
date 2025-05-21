@@ -57,19 +57,27 @@ describe('getInfo integration test with AsyncAPI', () => {
 
   it('should return the exact info object when exists', () => {
     const expectedInfo = parsedAsyncAPIDocument.info();
-    const actualInfo = getInfo(parsedAsyncAPIDocument.info());
+    const actualInfo = getInfo(parsedAsyncAPIDocument);
     expect(actualInfo).toStrictEqual(expectedInfo);
   });
 
-  it('should throw error when info is null', () => {
+  it('should throw error when info method returns empty value', () => {
+    const invalidAsyncAPIDocument = { info: () => {} };
+    expect(() => getInfo(invalidAsyncAPIDocument)).toThrowError(
+      'AsyncAPI document info object cannot be an empty.'
+    );
+  });
+
+  it('should throw error when info method is missing', () => {
+    const invalidAsyncAPIDocument = {};
+    expect(() => getInfo(invalidAsyncAPIDocument)).toThrowError(
+      'Provided AsyncAPI document doesn\'t contain info.'
+    );
+  });
+
+  it('should throw error when AsyncAPI document is invalid', () => {
     expect(() => {
       getInfo(null);
-    }).toThrow('Provided AsyncAPI document doesn\'t contain info.');
-  });
-  
-  it('should throw error when info is undefined', () => {
-    expect(() => {
-      getInfo(undefined);
-    }).toThrow('Provided AsyncAPI document doesn\'t contain info.');
+    }).toThrow('Provided AsyncAPI document is invaild.');
   });
 });

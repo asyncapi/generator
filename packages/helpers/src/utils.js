@@ -36,17 +36,23 @@ const listFiles = async (dir) => {
 };
 
 /**
- * Validate and retrieve the AsyncAPI info object.
+ * Validate and retrieve the AsyncAPI info object from an AsyncAPI document.
  *
  * Throws an error if the provided AsyncAPI document has no `info` section.
  *
- * @param {object|null|undefined} info - The `info` object from an AsyncAPI document.
- * @throws {Error} When `info` is `null` or `undefined`.
- * @returns {object} The validated `info` object.
+ * @param {object} asyncapi - The AsyncAPI document object.
+ * @returns {object} The validated info object from the AsyncAPI document.
  */
-const getInfo = (info) => {
-  if (!info) {
+const getInfo = (asyncapi) => {
+  if (!asyncapi) {
+    throw new Error('Provided AsyncAPI document is invaild.');
+  }
+  if (!asyncapi.info) {
     throw new Error('Provided AsyncAPI document doesn\'t contain info.');
+  }
+  const info = asyncapi.info();
+  if (!info) {
+    throw new Error('AsyncAPI document info object cannot be an empty.');
   }
   return info;
 };

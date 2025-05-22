@@ -912,15 +912,14 @@ class Generator {
       );
     }
     
-    if(!shouldGenerate){
-      if(this.templateConfig.conditionalFiles?.[relativeSourceFile]){
-          // conditionalFiles becomes deprecated with this PR, and soon will be removed.
-          // TODO: https://github.com/asyncapi/generator/issues/1553
-         return log.debug(logMessage.conditionalFilesMatched(relativeSourceFile));
+    if (!shouldGenerate) {
+      if (this.templateConfig.conditionalFiles?.[relativeSourceFile]) {
+        // conditionalFiles becomes deprecated with this PR, and soon will be removed.
+        // TODO: https://github.com/asyncapi/generator/issues/1553
+        return log.debug(logMessage.conditionalFilesMatched(relativeSourceFile));
       }
-      else{
-        return log.debug(logMessage.conditionalGenerationMatched(conditionalPath));
-      }
+      
+      return log.debug(logMessage.conditionalGenerationMatched(conditionalPath));
     }
     
     if (this.isNonRenderableFile(relativeSourceFile)) return await copyFile(sourceFile, targetFile);

@@ -186,7 +186,7 @@ async function conditionalSubjectGeneration (
   if (source) {
     const validate = templateConfig.conditionalGeneration?.[matchedConditionPath].validate;
     const isValid = validate(source);
-    if (isValid === 'false') {
+    if (!isValid) {
       log.debug(logMessage.conditionalGenerationMatched(matchedConditionPath));
       return false;
     }

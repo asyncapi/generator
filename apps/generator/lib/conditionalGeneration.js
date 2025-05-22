@@ -16,7 +16,7 @@ const jmespath = require('jmespath');
  * @param {string} matchedConditionPath - The matched path used to find applicable conditions.
  * @param {Object} templateParams - Parameters passed to the template.
  * @param {AsyncAPIDocument} asyncapiDocument - The AsyncAPI document used for evaluating conditions.
- * @returns {Promise<boolean>} A promise that resolves to `true` if the generation completed, otherwise `false`.
+ * @returns {Promise<boolean>} A promise that resolves to `true` if the condition is met, allowing the file or folder to render; otherwise, resolves to `false`. 
  */
 async function isGenerationConditionMet (
   relativeSourceFile,
@@ -39,6 +39,8 @@ async function isGenerationConditionMet (
   const subject = config?.subject;
   const validation = config?.validation;
 
+  // conditionalFiles becomes deprecated with this PR, and soon will be removed.
+  // TODO: https://github.com/asyncapi/generator/issues/1553
   if (Object.keys(conditionFilesGeneration).length > 0 && subject) {
     return conditionalFilesGenerationDeprecatedVersion(
       asyncapiDocument,
@@ -46,30 +48,31 @@ async function isGenerationConditionMet (
       templateConfig,
       relativeSourceFile
     );
-  } else if (Object.keys(conditionalGeneration).length > 0 && subject) {
-    return conditionalSubjectGeneration(
-      asyncapiDocument,
-      templateConfig,
-      matchedConditionPath
+  } else if (Object.keys(conditionalGeneration).length > 0) {
+    // Case when the subject is present in conditionalGeneration
+    if (subject) {
+      return conditionalSubjectGeneration(
+        asyncapiDocument,
+        templateConfig,
+        matchedConditionPath
+      );
+    }
+    const parameterValue = await getParameterValue(templateParams, parameter);
+    if (parameterValue === undefined) {
+      await handleMissingParameterValue(matchedConditionPath, templateConfig);
+      return false;
+    }
+    // Case when the parameter is present in conditionalGeneration
+    return validateParameterValue(
+      validation,
+      parameterValue,
+      matchedConditionPath,
+      relativeSourceDirectory,
+      relativeTargetFile,
+      targetDir,
+      templateConfig
     );
   }
-
-  const parameterValue = await getParameterValue(templateParams, parameter);
-
-  if (parameterValue === undefined) {
-    await handleMissingParameterValue(matchedConditionPath, templateConfig);
-    return false;
-  }
-
-  return validateParameterValue(
-    validation,
-    parameterValue,
-    matchedConditionPath,
-    relativeSourceDirectory,
-    relativeTargetFile,
-    targetDir,
-    templateConfig
-  );
 };
 
 /**
@@ -94,7 +97,7 @@ async function conditionalFilesGenerationDeprecatedVersion (
     return true; 
   }
 
-  const { subject, validate } = fileCondition;
+  const { subject, validate } = fileCondition || {};
 
   const server = templateParams.server && asyncapiDocument.servers().get(templateParams.server);
   const context = {
@@ -106,10 +109,8 @@ async function conditionalFilesGenerationDeprecatedVersion (
   };
 
   const source = jmespath.search(context, subject);
-  let validateStatus = 'false';
-  if (validate(source) === 'true') {
-    validateStatus = true;
-  }
+  const validateStatus = !validate(source);
+  
   if (!source) {
     log.debug(logMessage.relativeSourceFileNotGenerated(relativeSourceFile, subject));
     return false;
@@ -182,12 +183,10 @@ async function conditionalSubjectGeneration (
   if (!source) {
     log.debug(logMessage.relativeSourceFileNotGenerated(matchedConditionPath, subject));
     return false;
-  } else
-// … previous branch handling “no source” …
-} else {
+  } 
+ 
   const validate = templateConfig.conditionalGeneration?.[matchedConditionPath]?.validate;
   if (!validate) {
-    // No validation function provided → treat as valid
     return true;
   }
   const isValid = validate(source);
@@ -197,9 +196,7 @@ async function conditionalSubjectGeneration (
   }
   return true;
 }
-// … following code …
-  }
-};
+
 /**
  * Handles the case where the parameter value is missing for conditional file generation.
  *

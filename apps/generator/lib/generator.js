@@ -911,15 +911,21 @@ class Generator {
         asyncapiDocument
       );
     }
-  
-    if (shouldGenerate) {
-      if (this.isNonRenderableFile(relativeSourceFile)) {
-        log.debug(`${relativeSourceFile} is a non-renderable file and was copied without changes.`);
-        return await copyFile(sourceFile, targetFile); 
-      } 
-      log.debug(`Successfully rendered template and wrote file ${relativeSourceFile} to location: ${targetFile}`);
-      await this.renderAndWriteToFile(asyncapiDocument, sourceFile, targetFile);
+    
+    if(!shouldGenerate){
+      if(this.templateConfig.conditionalFiles?.[relativeSourceFile]){
+          // conditionalFiles becomes deprecated with this PR, and soon will be removed.
+          // TODO: https://github.com/asyncapi/generator/issues/1553
+         return log.debug(logMessage.conditionalFilesMatched(relativeSourceFile));
+      }
+      else{
+        return log.debug(logMessage.conditionalGenerationMatched(conditionalPath));
+      }
     }
+    
+    if (this.isNonRenderableFile(relativeSourceFile)) return await copyFile(sourceFile, targetFile);
+    await this.renderAndWriteToFile(asyncapiDocument, sourceFile, targetFile);
+    log.debug(`Successfully rendered template and wrote file ${relativeSourceFile} to location: ${targetFile}`);
   }
 
   /**

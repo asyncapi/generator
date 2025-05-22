@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing of SendOperation function render websockets with send operations and client name 1`] = `
+"async def noMessage(self, message):
+      \\"\\"\\"
+      Send a noMessage message using the WebSocket connection attached to this instance.
+
+      Args:
+          message (dict or str): The message to send. Will be serialized to JSON if it's a dictionary.
+
+      Raises:
+          Exception: If sending fails or the socket is not connected.
+      \\"\\"\\"
+      await self._send(message, self.ws_app)
+
+  @staticmethod
+  async def noMessage_static(message, socket):
+      \\"\\"\\"
+      Send a noMessage message using a provided WebSocket connection, without needing an instance.
+
+      Args:
+          message (dict or str): The message to send.
+          socket (websockets.WebSocketCommonProtocol): The WebSocket to send through.
+
+      Raises:
+          Exception: If sending fails or the socket is not connected.
+      \\"\\"\\"
+      await GeminiMarketDataWebsocketAPI._send(message, socket)
+
+
+  async def mixedMessageExamples(self, message):
+      \\"\\"\\"
+      Send a mixedMessageExamples message using the WebSocket connection attached to this instance.
+
+      Args:
+          message (dict or str): The message to send. Will be serialized to JSON if it's a dictionary.
+
+      Raises:
+          Exception: If sending fails or the socket is not connected.
+      \\"\\"\\"
+      await self._send(message, self.ws_app)
+
+  @staticmethod
+  async def mixedMessageExamples_static(message, socket):
+      \\"\\"\\"
+      Send a mixedMessageExamples message using a provided WebSocket connection, without needing an instance.
+
+      Args:
+          message (dict or str): The message to send.
+          socket (websockets.WebSocketCommonProtocol): The WebSocket to send through.
+
+      Raises:
+          Exception: If sending fails or the socket is not connected.
+      \\"\\"\\"
+      await GeminiMarketDataWebsocketAPI._send(message, socket)"
+`;
+
+exports[`Testing of SendOperation function render websockets without send operations 1`] = `""`;

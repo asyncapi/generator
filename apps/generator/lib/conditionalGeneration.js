@@ -183,14 +183,21 @@ async function conditionalSubjectGeneration (
     log.debug(logMessage.relativeSourceFileNotGenerated(matchedConditionPath, subject));
     return false;
   } else
-  if (source) {
-    const validate = templateConfig.conditionalGeneration?.[matchedConditionPath].validate;
-    const isValid = validate(source);
-    if (!isValid) {
-      log.debug(logMessage.conditionalGenerationMatched(matchedConditionPath));
-      return false;
-    }
+// … previous branch handling “no source” …
+} else {
+  const validate = templateConfig.conditionalGeneration?.[matchedConditionPath]?.validate;
+  if (!validate) {
+    // No validation function provided → treat as valid
     return true;
+  }
+  const isValid = validate(source);
+  if (!isValid) {
+    log.debug(logMessage.conditionalGenerationMatched(matchedConditionPath));
+    return false;
+  }
+  return true;
+}
+// … following code …
   }
 };
 /**

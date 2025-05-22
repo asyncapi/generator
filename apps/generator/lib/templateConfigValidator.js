@@ -174,21 +174,23 @@ function validateConditionalFiles(conditionalFiles) {
 }
 
 /**
- * Checks if conditionalGeneration are specified properly in the template
+ * Validates conditionalGeneration settings in the template config.
  * @private
- * @param {Object} conditionalGeneration conditions specified in the template config
+ * @param {Object} conditionalGeneration - The conditions specified in the template config.
  */
 function validateConditionalGeneration(conditionalGeneration) {
-  if (conditionalGeneration !== undefined && typeof conditionalGeneration === 'object') {
-    const fileNames = Object.keys(conditionalGeneration);
-
-    fileNames.forEach(fileName => {
-      const def = conditionalGeneration[fileName];
-      if (def.subject !== undefined && typeof def.subject !== 'string') throw new Error(`Invalid conditionalGeneration subject for ${fileName}: ${def.subject}.`);
-      if (def.parameter !== undefined && typeof def.parameter !== 'string') throw new Error(`Invalid conditionalGeneration parameter for ${fileName}: ${def.parameter}.`);
-      //if (def.parameter !== undefined && def.subject !== undefined )throw new Error(`subject and parameter configuration cannot defined at the same time for ${fileName}.`)
-      if (typeof def.validation !== 'object') throw new Error(`Invalid conditionalGeneration validation object for ${fileName}: ${def.validation}.`);
-      conditionalGeneration[fileName].validate = ajv.compile(conditionalGeneration[fileName].validation);
-    });
+  if (!conditionalGeneration || typeof conditionalGeneration !== 'object') return;
+  
+  for (const [fileName, def] of Object.entries(conditionalGeneration)) {
+    const { subject, parameter, validation } = def;
+    if (subject && typeof subject !== 'string')
+      throw new Error(`Invalid 'subject' for ${fileName}: ${subject}`);
+    if (parameter && typeof parameter !== 'string')
+      throw new Error(`Invalid 'parameter' for ${fileName}: ${parameter}`);
+    if (subject && parameter)
+      throw new Error(`Both 'subject' and 'parameter' cannot be defined for ${fileName}`);
+    if (typeof validation !== 'object')
+      throw new Error(`Invalid 'validation' object for ${fileName}: ${validation}`);
+    def.validate = ajv.compile(validation);
   }
 }

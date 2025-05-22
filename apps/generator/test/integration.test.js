@@ -158,7 +158,7 @@ describe('Integration testing generateFromFile() to make sure the result of the 
     const outputDir = generateFolderName();
     const generator = new Generator(reactTemplate, outputDir, {
       forceWrite: true ,
-      templateParams: { version: 'v1', mode: 'production', singleFolder: true }
+      templateParams: { version: 'v1', mode: 'production', singleFolder: 'true' }
     });
     await generator.generateFromFile(dummySpecPath);
     const conditionalFolderPath = path.join(outputDir, 'conditionalFolder');
@@ -169,7 +169,7 @@ describe('Integration testing generateFromFile() to make sure the result of the 
     const outputDir = generateFolderName();
     const generator = new Generator(reactTemplate, outputDir, {
       forceWrite: true ,
-      templateParams: { version: 'v1', mode: 'production', singleFile: true }
+      templateParams: { version: 'v1', mode: 'production', singleFile: 'true' }
     });
     await generator.generateFromFile(dummySpecPath);
     const conditionalFilePath = path.join(outputDir, 'conditionalFile.txt');
@@ -181,7 +181,7 @@ describe('Integration testing generateFromFile() to make sure the result of the 
     const outputDir = generateFolderName();
     const generator = new Generator(reactTemplate, outputDir, {
       forceWrite: true ,
-      templateParams: { version: 'v1', mode: 'production', singleFile: false }
+      templateParams: { version: 'v1', mode: 'production', singleFile: 'false' }
     });
     await generator.generateFromFile(dummySpecPath);
     const conditionalFilePath = path.join(outputDir, 'conditionalFile.txt');

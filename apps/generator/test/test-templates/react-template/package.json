@@ -33,7 +33,7 @@
           "parameter": "singleFolder",
           "validation": {
             "not": {
-              "const": true
+              "const": "true"
             }
           }
         },
@@ -41,7 +41,7 @@
           "parameter": "singleFile",
           "validation": {
             "not": {
-              "const": true
+              "const": "true"
             }
           }
         },

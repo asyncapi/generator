@@ -16,9 +16,9 @@ const jmespath = require('jmespath');
  * @param {string} matchedConditionPath - The matched path used to find applicable conditions.
  * @param {Object} templateParams - Parameters passed to the template.
  * @param {AsyncAPIDocument} asyncapiDocument - The AsyncAPI document used for evaluating conditions.
- * @returns {Promise<boolean>} A promise that resolves to `true` if generation should be skipped, otherwise `false`.
+ * @returns {Promise<boolean>} A promise that resolves to `true` if the generation completed, otherwise `false`.
  */
-async function conditionalGeneration (
+async function isGenerationConditionMet (
   relativeSourceFile,
   relativeSourceDirectory,
   relativeTargetFile,
@@ -106,12 +106,16 @@ async function conditionalFilesGenerationDeprecatedVersion (
   };
 
   const source = jmespath.search(context, subject);
+  let validateStatus = 'false';
+  if (validate(source) === 'true') {
+    validateStatus = true;
+  }
   if (!source) {
     log.debug(logMessage.relativeSourceFileNotGenerated(relativeSourceFile, subject));
     return false;
   }
 
-  if (validate && !validate(source)) {
+  if (validate && !validateStatus) {
     log.debug(logMessage.conditionalFilesMatched(relativeSourceFile));
     return false;
   }
@@ -127,7 +131,7 @@ async function conditionalFilesGenerationDeprecatedVersion (
  * @param {string} targetDir - The base directory where the target file resides.
  * @returns {Promise<void>} A promise that resolves when the parent directory is removed, or if it does not exist.
  */
-const removeParentDirectory = async (relativeTargetFile, targetDir) => {
+const conditionNotMeet = async (relativeTargetFile, targetDir) => {
   const fullFilePath = path.join(targetDir, relativeTargetFile);
   const parentDir = path.dirname(fullFilePath);
 
@@ -182,7 +186,7 @@ async function conditionalSubjectGeneration (
   if (source) {
     const validate = templateConfig.conditionalGeneration?.[matchedConditionPath].validate;
     const isValid = validate(source);
-    if (!isValid) {
+    if (isValid === 'false') {
       log.debug(logMessage.conditionalGenerationMatched(matchedConditionPath));
       return false;
     }
@@ -222,17 +226,14 @@ async function validateParameterValue(
   targetDir,
   templateConfig
 ) {
-  if (!validation) {
-    return true;
-  }
   const validate = templateConfig.conditionalGeneration?.[matchedConditionPath].validate;
 
   if (Object.hasOwn(validation, 'not')) {
     const isNotValid =  validate(argument);
-    if (!isNotValid) {
+    if (!isNotValid) { 
       log.debug(logMessage.conditionalGenerationMatched(matchedConditionPath));
       if (matchedConditionPath === relativeSourceDirectory) {
-        await removeParentDirectory(relativeTargetFile, targetDir);
+        await conditionNotMeet(relativeTargetFile, targetDir);
       }
       return false;
     }
@@ -242,13 +243,13 @@ async function validateParameterValue(
   const isValid = validate(argument);
 
   if (!isValid) {
-    return true;
+    log.debug(logMessage.conditionalGenerationMatched(matchedConditionPath));
+    if (matchedConditionPath === relativeSourceDirectory) {
+      await conditionNotMeet(relativeTargetFile, targetDir);
+    }
+    return false;
   }
-  log.debug(logMessage.conditionalGenerationMatched(matchedConditionPath));
-  if (matchedConditionPath === relativeSourceDirectory) {
-    await removeParentDirectory(relativeTargetFile, targetDir);
-  }
-  return false;
+  return true;
 }
 
 /**
@@ -263,5 +264,5 @@ async function getParameterValue(templateParams, parameter) {
 }
 
 module.exports = {
-  conditionalGeneration
+  isGenerationConditionMet
 };

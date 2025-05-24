@@ -1,5 +1,7 @@
 const { getQueryParams } = require('../src/bindings');
 
+const WS_BINDING_KEY = 'ws';
+
 class MockChannel {
   constructor(bindings) {
     this._bindings = bindings;
@@ -7,8 +9,8 @@ class MockChannel {
 
   bindings() {
     return {
-      has: (key) => key === 'ws' && !!this._bindings,
-      get: (key) => (key === 'ws' ? this._bindings : undefined),
+      has: (key) => key === WS_BINDING_KEY && !!this._bindings,
+      get: (key) => (key === WS_BINDING_KEY ? this._bindings : undefined),
     };
   }
 }
@@ -76,7 +78,7 @@ describe('getQueryParams', () => {
     expect(getQueryParams(channels)).toBeNull();
   });
 
-   it('should return null if channel itself is not as expected (e.g. missing bindings function)', () => {
+  it('should return null if channel itself is not as expected (e.g. missing bindings function)', () => {
     const channels = new MockChannelsMap();
     channels.set('test/channel', {});
     expect(getQueryParams(channels)).toBeNull();

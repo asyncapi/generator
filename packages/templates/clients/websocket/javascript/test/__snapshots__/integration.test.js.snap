@@ -93,17 +93,32 @@ class HoppscotchEchoWebSocketClient {
   }
 
   /**
-     * By default sends a message over a provided WebSocket connection.
-     * Useful when you already have an established WebSocket connection
-     * and want to send a message without creating a class instance.
-     *
-     * @param {Object} message - The message to send. It will be stringified to JSON.
-     * @param {WebSocket} socket - An existing WebSocket connection to use for sending the message.
-  */
+   * Sends a sendEchoMessage message over the WebSocket connection.
+   * 
+   * @param {Object} message - The message payload to send. Should match the schema defined in the AsyncAPI document.
+   * @param {WebSocket} [socket] - The WebSocket connection to use. If not provided, the client's own connection will be used.
+   * @throws {TypeError} If message cannot be stringified to JSON
+   * @throws {Error} If WebSocket connection is not in OPEN state
+   */
   static sendEchoMessage(message, socket) {
-    const websocket = socket || this.websocket;
-    websocket.send(JSON.stringify(message));
+    try {
+      socket.send(JSON.stringify(message));
+    } catch (error) {
+      console.error('Error sending sendEchoMessage message:', error);
+    }
   }
+  /**
+   * Instance method version of sendEchoMessage that uses the client's own WebSocket connection.
+   * @param {Object} message - The message payload to send
+   * @throws {Error} If WebSocket connection is not established
+   */
+  sendEchoMessage(message){
+    if(!this.websocket){
+      throw new Error('WebSocket connection not established. Call connect() first.');
+    }
+    HoppscotchEchoWebSocketClient.sendEchoMessage(message, this.websocket);
+  }
+  
 
   // Method to close the WebSocket connection
   close() {
@@ -211,17 +226,32 @@ class HoppscotchClient {
   }
 
   /**
-     * By default sends a message over a provided WebSocket connection.
-     * Useful when you already have an established WebSocket connection
-     * and want to send a message without creating a class instance.
-     *
-     * @param {Object} message - The message to send. It will be stringified to JSON.
-     * @param {WebSocket} socket - An existing WebSocket connection to use for sending the message.
-  */
+   * Sends a sendEchoMessage message over the WebSocket connection.
+   * 
+   * @param {Object} message - The message payload to send. Should match the schema defined in the AsyncAPI document.
+   * @param {WebSocket} [socket] - The WebSocket connection to use. If not provided, the client's own connection will be used.
+   * @throws {TypeError} If message cannot be stringified to JSON
+   * @throws {Error} If WebSocket connection is not in OPEN state
+   */
   static sendEchoMessage(message, socket) {
-    const websocket = socket || this.websocket;
-    websocket.send(JSON.stringify(message));
+    try {
+      socket.send(JSON.stringify(message));
+    } catch (error) {
+      console.error('Error sending sendEchoMessage message:', error);
+    }
   }
+  /**
+   * Instance method version of sendEchoMessage that uses the client's own WebSocket connection.
+   * @param {Object} message - The message payload to send
+   * @throws {Error} If WebSocket connection is not established
+   */
+  sendEchoMessage(message){
+    if(!this.websocket){
+      throw new Error('WebSocket connection not established. Call connect() first.');
+    }
+    HoppscotchClient.sendEchoMessage(message, this.websocket);
+  }
+  
 
   // Method to close the WebSocket connection
   close() {
@@ -330,17 +360,32 @@ class PostmanEchoWebSocketClientClient {
   }
 
   /**
-     * By default sends a message over a provided WebSocket connection.
-     * Useful when you already have an established WebSocket connection
-     * and want to send a message without creating a class instance.
-     *
-     * @param {Object} message - The message to send. It will be stringified to JSON.
-     * @param {WebSocket} socket - An existing WebSocket connection to use for sending the message.
-  */
+   * Sends a sendEchoMessage message over the WebSocket connection.
+   * 
+   * @param {Object} message - The message payload to send. Should match the schema defined in the AsyncAPI document.
+   * @param {WebSocket} [socket] - The WebSocket connection to use. If not provided, the client's own connection will be used.
+   * @throws {TypeError} If message cannot be stringified to JSON
+   * @throws {Error} If WebSocket connection is not in OPEN state
+   */
   static sendEchoMessage(message, socket) {
-    const websocket = socket || this.websocket;
-    websocket.send(JSON.stringify(message));
+    try {
+      socket.send(JSON.stringify(message));
+    } catch (error) {
+      console.error('Error sending sendEchoMessage message:', error);
+    }
   }
+  /**
+   * Instance method version of sendEchoMessage that uses the client's own WebSocket connection.
+   * @param {Object} message - The message payload to send
+   * @throws {Error} If WebSocket connection is not established
+   */
+  sendEchoMessage(message){
+    if(!this.websocket){
+      throw new Error('WebSocket connection not established. Call connect() first.');
+    }
+    PostmanEchoWebSocketClientClient.sendEchoMessage(message, this.websocket);
+  }
+  
 
   // Method to close the WebSocket connection
   close() {

@@ -2,35 +2,25 @@
 
 language: en-US
 reviews:
-  # Disable poem generation in walkthrough comments
   poem: false
   suggested_reviewers: false
   suggested_labels: false
   sequence_diagrams: false
-
-  # Keep high level summary (helpful when PR descriptions are lacking)
   high_level_summary: true
   high_level_summary_placeholder: "@coderabbitai summary"
-
-  # Standard review settings
   profile: chill
   auto_review:
     enabled: true
     auto_incremental_review: true
-
-  # Additional useful settings
   review_status: true
   commit_status: true
   changed_files_summary: true
   assess_linked_issues: true
   related_issues: true
   related_prs: true
-
-# Chat configuration
 chat:
   auto_reply: true
 
-# Knowledge base configuration
 knowledge_base:
   learnings:
     scope: auto

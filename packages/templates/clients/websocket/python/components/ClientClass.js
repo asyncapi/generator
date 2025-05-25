@@ -10,19 +10,14 @@ import { CloseConnection } from './CloseConnection';
 import { RegisterOutgoingProcessor } from './RegisterOutgoingProcessor';
 import { HandleError } from './HandleError';
 
-export function ClientClass({ clientName, serverUrl, title }) {
-  const info = asyncapi.info();
-  const clientName = getClientName(info);
-  const server = getServer(asyncapi.servers(), params.server);
-  const serverUrl = getServerUrl(server);
-  const title = info.title();
 
+export function ClientClass({ clientName, serverUrl, title, queryParams }) {
   return (
     <Text>
       <Text newLines={2}>
         {`class ${clientName}:`}
       </Text>
-      <Constructor serverUrl={serverUrl} />
+      <Constructor serverUrl={serverUrl} query={queryParams} />
       <Connect title={title} />
       <RegisterMessageHandler />
       <RegisterErrorHandler />

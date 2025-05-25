@@ -1,0 +1,32 @@
+asyncapi: 3.0.0
+defaultContentType: text/plain
+info:
+  title: Hoppscotch Echo WebSocket Server
+  version: 1.0.0
+  description: >
+    This document is purely for mocking the official Hoppscotch Websocket Echo server.
+
+servers:
+  echoServer:
+    $ref: './commons/servers.yml#/servers/echoServer'
+
+channels:
+  echo:
+    $ref: './commons/channels.yml#/channels/echo'
+
+operations:
+  sendTimeStampMessage:
+    action: send
+    channel:
+      $ref: '#/channels/echo'
+    summary: Send the timestamp message to any connected client every second.
+    messages:
+      - $ref: '#/channels/echo/messages/timestamp'
+  
+  handleEchoMessage:
+    action: receive
+    channel:
+      $ref: '#/channels/echo'
+    summary: Receive echo message from the client.
+    messages:
+      - $ref: '#/channels/echo/messages/echo'

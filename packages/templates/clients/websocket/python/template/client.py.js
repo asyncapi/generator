@@ -1,5 +1,5 @@
 import { File } from '@asyncapi/generator-react-sdk';
-import { getClientName, getServerUrl, getServer, getQueryparams } from '@asyncapi/generator-helpers';
+import { getClientName, getServerUrl, getServer, getQueryParams } from '@asyncapi/generator-helpers';
 import { FileHeaderInfo } from '../components/FileHeaderInfo';
 import { Requires } from '../components/Requires';
 import { ClientClass } from '../components/ClientClass';

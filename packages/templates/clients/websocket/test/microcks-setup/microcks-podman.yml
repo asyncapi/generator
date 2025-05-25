@@ -1,0 +1,185 @@
+volumes:
+  microcks-data:
+  
+services:
+  # ───────────── infrastructure ─────────────────────
+  mongo:
+    profiles:
+      - infra
+      - ci
+    image: docker.io/mongo:4.4.29
+    container_name: microcks-db
+    volumes:
+      - microcks-data:/data/db
+    healthcheck:
+      test: ["CMD", "mongo", "--eval", "db.adminCommand('ping')"]
+      interval: 30s
+      timeout: 1s
+      retries: 3
+
+  kafka:
+    profiles:
+      - infra
+      - ci
+    image: docker.io/redpandadata/redpanda:v24.3.1
+    container_name: microcks-kafka
+    command:
+      - redpanda
+      - start
+      - --overprovisioned
+      - --smp
+      - "1"
+      - --memory
+      - 1G
+      - --reserve-memory
+      - 0M
+      - --node-id
+      - "0"
+      - --check=false
+      - --kafka-addr
+      - PLAINTEXT://0.0.0.0:19092,EXTERNAL://0.0.0.0:9092
+      - --advertise-kafka-addr
+      - PLAINTEXT://kafka:19092,EXTERNAL://localhost:9092
+    ports:
+      - 9092:9092
+      - 19092:19092
+    healthcheck:
+      test: ["CMD-SHELL", "timeout 5 bash -c 'echo > /dev/tcp/localhost/19092'"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  app:
+    profiles:
+      - infra
+      - ci
+    depends_on:
+      - mongo
+    image: quay.io/microcks/microcks:1.11.2
+    container_name: microcks
+    volumes:
+      - ./config:/deployments/config:Z
+    ports:
+      - 8080:8080
+      - 9090:9090
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      SPRING_DATA_MONGODB_URI: mongodb://mongo:27017
+      SPRING_DATA_MONGODB_DATABASE: microcks
+      POSTMAN_RUNNER_URL: http://postman:3000
+      TEST_CALLBACK_URL: http://microcks:8080
+      SERVICES_UPDATE_INTERVAL: "0 0 0/2 * * *"
+      KEYCLOAK_ENABLED: "false"
+      #MAX_UPLOAD_FILE_SIZE: 3MB
+      ASYNC_MINION_URL: http://microcks-async-minion:8081
+      KAFKA_BOOTSTRAP_SERVER: kafka:19092
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/api/health"]
+      start_period: 35s
+      interval: 10s
+      timeout: 3s
+      retries: 3
+
+  async-minion:
+    profiles: 
+      - infra
+      - ci
+    depends_on:
+      app:
+        condition: service_healthy
+    image: quay.io/microcks/microcks-async-minion:1.11.2
+    container_name: microcks-async-minion
+    restart: on-failure
+    volumes:
+      - ./config:/deployments/config:Z
+    ports:
+      - 8081:8081
+    environment:
+      QUARKUS_PROFILE: docker-compose
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081/q/health/ready"]
+      start_period: 10s
+      interval: 10s
+      timeout: 2s
+      retries: 3
+  
+  #this only runs on local with tests profile. In CI/CD there is a dedicated job step for that
+  asyncapi-bundler:
+    profiles:
+      - infra
+    image: asyncapi/cli:3.1.1
+    container_name: asyncapi-bundler
+    working_dir: /usr/src/app
+    volumes:
+      - ../:/usr/src/app
+    command: >
+      bundle __fixtures__/asyncapi-hoppscotch-server.yml
+      --output __fixtures__/bundled.yml
+
+  importer:
+    profiles:
+      - infra
+      - ci
+    image: quay.io/microcks/microcks-cli:0.5.8
+    container_name: microcks-cli-importer
+    working_dir: /usr/src/app
+    volumes:
+      - ../:/usr/src/app
+    depends_on:
+      app:
+        condition: service_healthy
+    command: >
+      sh -c "microcks-cli import __fixtures__/bundled.yml
+      --microcksURL=http://microcks:8080/api/
+      --keycloakClientId=microcks-serviceaccount
+      --keycloakClientSecret=ab54d329-e435-41ae-a900-ec6b3fe15c54"
+
+  #this only runs on local with tests profile. In CI/CD there is a dedicated job step for that
+  npm-test:
+    profiles:
+      - infra
+    image: node:20
+    container_name: npm-test
+    working_dir: /usr/src/app
+    volumes:
+      - ../../../../../../:/usr/src/app
+    command: ["sh", "-c", "npm ci && npm run packages:test"]
+
+  # ───────────── tests runners ─────────────────────
+  # each client has separate test runner as long term they need to run conditionally
+  # TODO: figure out in future how to detect that PR has changes only in the Py client for example, so only Py test runs in the CI/CD
+  tester-js:
+    profiles:
+      - test-js
+    image: node:22
+    container_name: websocket-acceptance-tester-js
+    ports:
+      - 8082:8082
+    working_dir: /usr/src/app
+    volumes:
+      - ../../../../../../:/usr/src/app
+    command: ["sh", "-c", "npm install && cd packages/templates/clients/websocket/test/javascript && npm test"]
+  
+  tester-py:
+    profiles:
+      - test-py
+    image: python:3.11
+    container_name: websocket-acceptance-tester-py
+    ports:
+      - "8083:8083"
+    working_dir: /usr/src/app
+    volumes:
+      - ../../../../../../:/usr/src/app
+    command: ["sh", "-c", "cd packages/templates/clients/websocket/python/test/temp/snapshotTestResult/client_hoppscotch && pip install -r requirements.txt && cd ../../../../../test/python && pip install -r requirements.txt && pytest"]
+
+  # Below for debugging purposes. 
+  # Just uncomment below and after starting environment you can enter the constainer with "podman exec -it net-debug sh" and use websocat to test the websocket connection
+
+  # net-debug:
+  #   image: nicolaka/netshoot
+  #   container_name: net-debug
+  #   stdin_open: true
+  #   tty: true
+  #   command: >
+  #     sh -c "apk add --no-cache websocat && sh"

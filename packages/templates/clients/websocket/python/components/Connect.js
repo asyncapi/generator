@@ -8,7 +8,6 @@ export function Connect({ title }) {
     print("Connected to ${title} server")
 
 def on_message(self, ws, message):
-    print("\\033[94mReceived raw message:\\033[0m", message)
     self.handle_message(message)
 
 def on_error(self, ws, error):
@@ -30,8 +29,13 @@ def connect(self):
     )
     # Run the WebSocketApp's run_forever in a separate thread with multithreading enabled.
     def run():
-        while not self._stop_event.is_set():
+
+        retry = 0
+        max_retries = 5
+        
+        while not self._stop_event.is_set() and retry < max_retries:
             try:
+                retry += 1
                 print("Starting WebSocket thread...")
                 self.ws_app.run_forever(sslopt=ssl_opts)
             except Exception as e:

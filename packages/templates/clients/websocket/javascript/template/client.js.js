@@ -8,8 +8,9 @@ export default function ({ asyncapi, params }) {
   const server = getServer(asyncapi.servers(), params.server);
   const info = asyncapi.info();
   const title = info.title();
-  const clientName = getClientName(info);
+  const clientName = getClientName(info, params.appendClientSuffix, params.customClientName);
   const serverUrl = getServerUrl(server);
+  const sendOperations = asyncapi.operations().filterBySend();
   return (
     <File name={params.clientFileName}>
       <FileHeaderInfo
@@ -17,7 +18,7 @@ export default function ({ asyncapi, params }) {
         server={server}
       />
       <Requires />
-      <ClientClass clientName={clientName} serverUrl={serverUrl} title={title} />
+      <ClientClass clientName={clientName} serverUrl={serverUrl} title={title} sendOperations={sendOperations} />
     </File>
   );
 }

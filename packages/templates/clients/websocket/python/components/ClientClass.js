@@ -1,5 +1,4 @@
 import { Text } from '@asyncapi/generator-react-sdk';
-import { getClientName, getServerUrl, getServer } from '@asyncapi/generator-helpers';
 import { Constructor } from './Constructor';
 import { Connect } from './Connect';
 import { RegisterMessageHandler } from './RegisterMessageHandler';
@@ -9,7 +8,6 @@ import { SendEchoMessage } from './SendEchoMessage';
 import { CloseConnection } from './CloseConnection';
 import { RegisterOutgoingProcessor } from './RegisterOutgoingProcessor';
 import { HandleError } from './HandleError';
-
 
 export function ClientClass({ clientName, serverUrl, title, queryParams }) {
   return (

@@ -45,10 +45,10 @@ const listFiles = async (dir) => {
  */
 const getInfo = (asyncapi) => {
   if (!asyncapi) {
-    throw new Error('Provided AsyncAPI document is invaild.');
+    throw new Error('Make sure you pass AsyncAPI document as an argument.');
   }
   if (!asyncapi.info) {
-    throw new Error('Provided AsyncAPI document doesn\'t contain info.');
+    throw new Error('Provided AsyncAPI document doesn\'t contain Info object.');
   }
   const info = asyncapi.info();
   if (!info) {

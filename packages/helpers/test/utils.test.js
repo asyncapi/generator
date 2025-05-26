@@ -71,13 +71,13 @@ describe('getInfo integration test with AsyncAPI', () => {
   it('should throw error when info method is missing', () => {
     const invalidAsyncAPIDocument = {};
     expect(() => getInfo(invalidAsyncAPIDocument)).toThrowError(
-      'Provided AsyncAPI document doesn\'t contain info.'
+      'Provided AsyncAPI document doesn\'t contain Info object.'
     );
   });
 
-  it('should throw error when AsyncAPI document is invalid', () => {
+  it('should throw error when AsyncAPI document is missing', () => {
     expect(() => {
       getInfo(null);
-    }).toThrow('Provided AsyncAPI document is invaild.');
+    }).toThrow('Make sure you pass AsyncAPI document as an argument.');
   });
 });

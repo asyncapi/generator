@@ -52,7 +52,7 @@ const getInfo = (asyncapi) => {
   }
   const info = asyncapi.info();
   if (!info) {
-    throw new Error('AsyncAPI document info object cannot be an empty.');
+    throw new Error('AsyncAPI document info object cannot be empty.');
   }
   return info;
 };

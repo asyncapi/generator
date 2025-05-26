@@ -64,7 +64,7 @@ describe('getInfo integration test with AsyncAPI', () => {
   it('should throw error when info method returns empty value', () => {
     const invalidAsyncAPIDocument = { info: () => {} };
     expect(() => getInfo(invalidAsyncAPIDocument)).toThrowError(
-      'AsyncAPI document info object cannot be an empty.'
+      'AsyncAPI document info object cannot be empty.'
     );
   });
 

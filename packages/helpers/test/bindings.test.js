@@ -1,6 +1,7 @@
 const { getQueryParams } = require('../src/bindings');
 
 const WS_BINDING_KEY = 'ws';
+const TEST_CHANNEL_NAME = 'test/channel';
 
 class MockChannel {
   constructor(bindings) {
@@ -28,21 +29,21 @@ class MockChannelsMap extends Map {
 describe('getQueryParams', () => {
   it('should return null if there is no WebSocket binding', () => {
     const channels = new MockChannelsMap();
-    channels.set('test/channel', new MockChannel(null));
+    channels.set(TEST_CHANNEL_NAME, new MockChannel(null));
     expect(getQueryParams(channels)).toBeNull();
   });
 
   it('should return null if WebSocket binding exists but has no query parameters', () => {
     const channels = new MockChannelsMap();
     const wsBinding = { value: () => ({}) };
-    channels.set('test/channel', new MockChannel(wsBinding));
+    channels.set(TEST_CHANNEL_NAME, new MockChannel(wsBinding));
     expect(getQueryParams(channels)).toBeNull();
   });
 
   it('should return null if WebSocket binding query exists but has no properties', () => {
     const channels = new MockChannelsMap();
     const wsBinding = { value: () => ({ query: {} }) };
-    channels.set('test/channel', new MockChannel(wsBinding));
+    channels.set(TEST_CHANNEL_NAME, new MockChannel(wsBinding));
     expect(getQueryParams(channels)).toBeNull();
   });
 
@@ -59,7 +60,7 @@ describe('getQueryParams', () => {
         },
       }),
     };
-    channels.set('test/channel', new MockChannel(wsBinding));
+    channels.set(TEST_CHANNEL_NAME, new MockChannel(wsBinding));
     const params = getQueryParams(channels);
     expect(params).not.toBeNull();
     expect(params.get('foo')).toBe('bar');
@@ -74,13 +75,13 @@ describe('getQueryParams', () => {
 
   it('should return null if channel bindings is undefined', () => {
     const channels = new MockChannelsMap();
-    channels.set('test/channel', { bindings: () => undefined });
+    channels.set(TEST_CHANNEL_NAME, { bindings: () => undefined });
     expect(getQueryParams(channels)).toBeNull();
   });
 
   it('should return null if channel itself is not as expected (e.g. missing bindings function)', () => {
     const channels = new MockChannelsMap();
-    channels.set('test/channel', {});
+    channels.set(TEST_CHANNEL_NAME, {});
     expect(getQueryParams(channels)).toBeNull();
   });
 
@@ -93,7 +94,7 @@ describe('getQueryParams', () => {
         },
       }),
     };
-    channels.set('test/channel', new MockChannel(wsBinding));
+    channels.set(TEST_CHANNEL_NAME, new MockChannel(wsBinding));
     expect(getQueryParams(channels)).toBeNull();
   });
 });

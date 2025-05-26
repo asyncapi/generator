@@ -19,7 +19,7 @@ reviews:
   related_issues: true
   related_prs: true
 chat:
-  auto_reply: true
+  auto_reply: false
 
 knowledge_base:
   learnings:

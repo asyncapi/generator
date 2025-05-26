@@ -15,7 +15,7 @@ describe('getOperationMessages integration test with AsyncAPI', () => {
   let operations;
 
   beforeAll(async () => {
-    (operations = await getOperationsFromParsedDoc());
+    operations = await getOperationsFromParsedDoc();
   });
 
   it('should return all messages of an operation when operation exists', () => {

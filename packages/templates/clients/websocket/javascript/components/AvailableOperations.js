@@ -3,6 +3,9 @@ import OperationHeader from './OperationHeader';
 import MessageExamples from './MessageExamples';
 
 export function AvailableOperations({ operations }) {
+  if (!operations || operations.length === 0) {
+    return null;
+  }
   return (
     <>
       <Text newLines={2}>### Available Operations</Text>

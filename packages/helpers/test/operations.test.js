@@ -44,7 +44,7 @@ describe('getMessageExamples integration test with AsyncAPI', () => {
   let operations;
 
   beforeAll(async () => {
-    (operations = await getOperationsFromParsedDoc());
+    operations = await getOperationsFromParsedDoc();
   });
   
   it('Should throw an error when message is null', () => {

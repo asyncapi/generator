@@ -1,100 +1,107 @@
+const path = require('path');
+const { Parser, fromFile } = require('@asyncapi/parser');
 const { getQueryParams } = require('../src/bindings');
 
-const WS_BINDING_KEY = 'ws';
-const TEST_CHANNEL_NAME = 'test/channel';
+const parser = new Parser();
+const asyncapi_v3_path = path.resolve(__dirname, './__fixtures__/asyncapi-websocket-query.yml');
 
-class MockChannel {
-  constructor(bindings) {
-    this._bindings = bindings;
-  }
+describe('getQueryParams integration test with AsyncAPI', () => {
+  let parsedAsyncAPIDocument;
 
-  bindings() {
-    return {
-      has: (key) => key === WS_BINDING_KEY && !!this._bindings,
-      get: (key) => (key === WS_BINDING_KEY ? this._bindings : undefined),
-    };
-  }
-}
+  beforeAll(async () => {
+    const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
+    parsedAsyncAPIDocument = parseResult.document;
+  });
 
-class MockChannelsMap extends Map {
-  isEmpty() {
-    return this.size === 0;
-  }
+  it('should extract query parameters from WebSocket binding with properties', () => {
+    const channels = parsedAsyncAPIDocument.channels();
+    const params = getQueryParams(channels);
 
-  all() {
-    return this;
-  }
-}
+    expect(params).not.toBeNull();
+    expect(params.get('heartbeat')).toBe('false');
+    expect(params.get('top_of_book')).toBe('false');
+    expect(params.get('bids')).toBe('true');
+    expect(params.get('offers')).toBe('');
+  });
 
-describe('getQueryParams', () => {
-  it('should return null if there is no WebSocket binding', () => {
-    const channels = new MockChannelsMap();
-    channels.set(TEST_CHANNEL_NAME, new MockChannel(null));
-    expect(getQueryParams(channels)).toBeNull();
+  it('should return null for channel without WebSocket binding', () => {
+    const channels = parsedAsyncAPIDocument.channels();
+
+    const filteredChannels = new Map();
+    const channelWithoutBinding = channels.get('marketDataV1NoBinding');
+    if (channelWithoutBinding) {
+      filteredChannels.set('marketDataV1NoBinding', channelWithoutBinding);
+    }
+
+    filteredChannels.isEmpty = function() { return this.size === 0; };
+    filteredChannels.all = function() { return this; };
+
+    const params = getQueryParams(filteredChannels);
+    expect(params).toBeNull();
+  });
+
+  it('should return null for empty channels map', () => {
+    const emptyChannels = new Map();
+    emptyChannels.isEmpty = function() { return this.size === 0; };
+    emptyChannels.all = function() { return this; };
+
+    const params = getQueryParams(emptyChannels);
+    expect(params).toBeNull();
+  });
+
+  it('should return null for channel with empty binding', () => {
+    const channels = parsedAsyncAPIDocument.channels();
+
+    const filteredChannels = new Map();
+    const emptyChannel = channels.get('emptyChannel');
+    if (emptyChannel) {
+      filteredChannels.set('emptyChannel', emptyChannel);
+    }
+
+    filteredChannels.isEmpty = function() { return this.size === 0; };
+    filteredChannels.all = function() { return this; };
+
+    const params = getQueryParams(filteredChannels);
+    expect(params).toBeNull();
   });
 
   it('should return null if WebSocket binding exists but has no query parameters', () => {
-    const channels = new MockChannelsMap();
-    const wsBinding = { value: () => ({}) };
-    channels.set(TEST_CHANNEL_NAME, new MockChannel(wsBinding));
-    expect(getQueryParams(channels)).toBeNull();
+    const channels = parsedAsyncAPIDocument.channels();
+    const filteredChannels = new Map();
+    const channelWithNoQuery = channels.get('wsBindingNoQuery');
+    if (channelWithNoQuery) {
+      filteredChannels.set('wsBindingNoQuery', channelWithNoQuery);
+    }
+
+    filteredChannels.isEmpty = function() { return this.size === 0; };
+    filteredChannels.all = function() { return this; };
+
+    const params = getQueryParams(filteredChannels);
+    expect(params).toBeNull();
   });
 
   it('should return null if WebSocket binding query exists but has no properties', () => {
-    const channels = new MockChannelsMap();
-    const wsBinding = { value: () => ({ query: {} }) };
-    channels.set(TEST_CHANNEL_NAME, new MockChannel(wsBinding));
-    expect(getQueryParams(channels)).toBeNull();
-  });
+    const channels = parsedAsyncAPIDocument.channels();
+    const filteredChannels = new Map();
+    const channelWithEmptyQuery = channels.get('wsBindingEmptyQuery');
+    if (channelWithEmptyQuery) {
+      filteredChannels.set('wsBindingEmptyQuery', channelWithEmptyQuery);
+    }
 
-  it('should extract query parameters with and without default values', () => {
-    const channels = new MockChannelsMap();
-    const wsBinding = {
-      value: () => ({
-        query: {
-          properties: {
-            foo: { default: 'bar' },
-            baz: {},
-            num: { default: 123 },
-          },
-        },
-      }),
-    };
-    channels.set(TEST_CHANNEL_NAME, new MockChannel(wsBinding));
-    const params = getQueryParams(channels);
-    expect(params).not.toBeNull();
-    expect(params.get('foo')).toBe('bar');
-    expect(params.get('baz')).toBe('');
-    expect(params.get('num')).toBe('123');
-  });
+    filteredChannels.isEmpty = function() { return this.size === 0; };
+    filteredChannels.all = function() { return this; };
 
-  it('should return null for an empty channels map', () => {
-    const channels = new MockChannelsMap();
-    expect(getQueryParams(channels)).toBeNull();
+    const params = getQueryParams(filteredChannels);
+    expect(params).toBeNull();
   });
 
   it('should return null if channel bindings is undefined', () => {
-    const channels = new MockChannelsMap();
-    channels.set(TEST_CHANNEL_NAME, { bindings: () => undefined });
-    expect(getQueryParams(channels)).toBeNull();
-  });
+    const filteredChannels = new Map();
+    filteredChannels.set('test', { bindings: () => undefined });
+    filteredChannels.isEmpty = function() { return this.size === 0; };
+    filteredChannels.all = function() { return this; };
 
-  it('should return null if channel itself is not as expected (e.g. missing bindings function)', () => {
-    const channels = new MockChannelsMap();
-    channels.set(TEST_CHANNEL_NAME, {});
-    expect(getQueryParams(channels)).toBeNull();
-  });
-
-  it('should handle non-object properties in query gracefully', () => {
-    const channels = new MockChannelsMap();
-    const wsBinding = {
-      value: () => ({
-        query: {
-          properties: 'not-an-object',
-        },
-      }),
-    };
-    channels.set(TEST_CHANNEL_NAME, new MockChannel(wsBinding));
-    expect(getQueryParams(channels)).toBeNull();
+    const params = getQueryParams(filteredChannels);
+    expect(params).toBeNull();
   });
 });

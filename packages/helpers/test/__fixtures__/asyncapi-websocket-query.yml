@@ -74,6 +74,19 @@ channels:
             payload: false
           - name: number
             payload: 123
+  wsBindingNoQuery:
+    address: '/no-query'
+    bindings:
+      ws:
+        bindingVersion: 0.1.0
+  wsBindingEmptyQuery:
+    address: '/empty-query'
+    bindings:
+      ws:
+        bindingVersion: 0.1.0
+        query:
+          type: object
+
   emptyChannel: {}
 
   marketDataV1NoBinding:

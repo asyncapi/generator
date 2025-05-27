@@ -180,13 +180,12 @@ async function conditionalSubjectGeneration (
  *
  * @private
  * @param {String} relativeSourceFile The relative path of the source file.
+ * @param {Object} templateConfig - The template configuration containing conditional logic.
  */
 async function handleMissingParameterValue(relativeSourceFile,templateConfig) {
   const parameter = templateConfig.conditionalGeneration?.[relativeSourceFile]?.parameter;
   log.debug(logMessage.relativeSourceFileNotGenerated(relativeSourceFile, parameter));
 }
-
-/**
 
 /**
  * Validates the argument value based on the provided validation schema.
@@ -207,9 +206,9 @@ async function validateStatus(
   targetDir,
   templateConfig
 ) {
-  const validateStatus = templateConfig.conditionalGeneration?.[matchedConditionPath]?.validate || templateConfig.conditionalFiles?.[matchedConditionPath]?.validate;
+  const validation = templateConfig.conditionalGeneration?.[matchedConditionPath]?.validate || templateConfig.conditionalFiles?.[matchedConditionPath]?.validate;
 
-  const isValid = validateStatus(argument);
+  const isValid = validation(argument);
 
   if (!isValid) {
     if (templateConfig.conditionalGeneration?.[matchedConditionPath]) {

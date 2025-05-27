@@ -37,16 +37,16 @@ async function isGenerationConditionMet (
   
   const parameter = config?.parameter;
   const subject = config?.subject;
-  const validation = config?.validation;
 
   // conditionalFiles becomes deprecated with this PR, and soon will be removed.
   // TODO: https://github.com/asyncapi/generator/issues/1553
   if (Object.keys(conditionFilesGeneration).length > 0 && subject) {
     return conditionalFilesGenerationDeprecatedVersion(
       asyncapiDocument,
-      templateParams,
       templateConfig,
-      relativeSourceFile
+      relativeSourceFile,
+      relativeTargetFile,
+      targetDir
     );
   } else if (Object.keys(conditionalGeneration).length > 0) {
     // Case when the subject is present in conditionalGeneration
@@ -57,14 +57,15 @@ async function isGenerationConditionMet (
         matchedConditionPath
       );
     }
+   
     const parameterValue = await getParameterValue(templateParams, parameter);
+
     if (parameterValue === undefined) {
       await handleMissingParameterValue(matchedConditionPath, templateConfig);
       return false;
     }
     // Case when the parameter is present in conditionalGeneration
-    return validateParameterValue(
-      validation,
+    return validateStatus(
       parameterValue,
       matchedConditionPath,
       relativeSourceDirectory,
@@ -80,45 +81,20 @@ async function isGenerationConditionMet (
  * and optional validation logic defined in the template configuration.
  *
  * @param {Object} asyncapiDocument - The parsed AsyncAPI document instance used for context evaluation.
- * @param {Object} templateParams - The template parameters passed by the user (e.g. server selection).
  * @param {Object} templateConfig - The configuration object that contains `conditionalFiles` rules.
  * @param {String} relativeSourceFile - The relative path to the source file being evaluated.
  * @param {String} relativeSourceDirectory - The relative path to the directory of the source file.
+ * @param {string} targetDir - The directory where the generated files are written.
  * @returns {Boolean} - Returns `true` if the file should be included; `false` if it should be skipped.
  */
 async function conditionalFilesGenerationDeprecatedVersion (
   asyncapiDocument,
-  templateParams,
   templateConfig,
-  relativeSourceFile
+  relativeSourceFile,
+  relativeTargetFile,
+  targetDir
 ) {
-  const fileCondition = templateConfig.conditionalFiles?.[relativeSourceFile];
-  if (!fileCondition || !fileCondition.subject) {
-    return true; 
-  }
-
-  const { subject, validate } = fileCondition || {};
-
-  const server = templateParams.server && asyncapiDocument.servers().get(templateParams.server);
-  const context = {
-    ...asyncapiDocument.json(),
-    server: server ? server.json() : undefined,
-    info: asyncapiDocument.info()?.json(),
-    channels: asyncapiDocument.channels() || undefined,
-    components: asyncapiDocument.components()?.json(),
-  };
-
-  const source = jmespath.search(context, subject);
-  const validateStatus = !validate(source);
-  
-  if (!source) {
-    log.debug(logMessage.relativeSourceFileNotGenerated(relativeSourceFile, subject));
-    return false;
-  }
-  if (validate && !validateStatus) {
-    return false;
-  }
-  return true;
+  return conditionalSubjectGeneration(asyncapiDocument,templateConfig,relativeSourceFile, relativeTargetFile, targetDir);
 };
 
 /**
@@ -153,44 +129,43 @@ const conditionNotMeet = async (relativeTargetFile, targetDir) => {
  * @param {Object} asyncapiDocument - The parsed AsyncAPI document instance used for context evaluation.
  * @param {Object} templateConfig - The configuration object that contains `conditionalFiles` rules.
  * @param {String} matchedConditionPath - The relative path to the directory of the source file.
+ * @param {string} relativeSourceDirectory - The relative path of the source directory.
+ * @param {string} relativeTargetFile - The relative path of the target file to be generated.
+ * @param {string} targetDir - The directory where the generated files are written.
  * @returns {Boolean} - Returns `true` if the file should be included; `false` if it should be skipped.
  */
 async function conditionalSubjectGeneration (
   asyncapiDocument,
   templateConfig,
-  matchedConditionPath
+  matchedConditionPath,
+  relativeSourceDirectory,
+  relativeTargetFile,
+  targetDir
+
 ) {
-  const fileCondition = templateConfig.conditionalGeneration?.[matchedConditionPath];
+  const fileCondition = templateConfig.conditionalGeneration?.[matchedConditionPath] || templateConfig.conditionalFiles?.[matchedConditionPath];
+  
   if (!fileCondition || !fileCondition.subject) {
     return true; 
   }
 
   const { subject } = fileCondition;
 
-  const context = {
-    ...asyncapiDocument.json(),
-    server: asyncapiDocument.info()?.json(),
-    info: asyncapiDocument.info()?.json(),
-    channels: asyncapiDocument.channels() || undefined,
-    components: asyncapiDocument.components()?.json(),
-  };
+  const server = this.templateParams.server && asyncapiDocument.servers().get(this.templateParams.server);
 
-  const source = jmespath.search(context, subject);
+  const source = jmespath.search({
+    ...asyncapiDocument.json(),
+    ...{
+      server: server ? server.json() : undefined,
+    },
+  }, this.templateConfig.conditionalFiles[matchedConditionPath].subject);
   
   if (!source) {
     log.debug(logMessage.relativeSourceFileNotGenerated(matchedConditionPath, subject));
     return false;
   } 
- 
-  const validate = templateConfig.conditionalGeneration?.[matchedConditionPath]?.validate;
-  if (!validate) {
-    return true;
-  }
-  const isValid = validate(source);
-  if (!isValid) {
-    return false;
-  }
-  return true;
+
+  return validateStatus(source, matchedConditionPath, relativeSourceDirectory,relativeTargetFile, targetDir, templateConfig);
 }
 
 /**
@@ -209,16 +184,14 @@ async function handleMissingParameterValue(relativeSourceFile,templateConfig) {
 /**
  * Validates the parameter value based on the provided validation schema.
  *
- * @param {Object} validation The validation schema to use.
- * @param {any} parameterValue The value to validate.
+ * @param {any} argument The value to validate.
  * @param {String} matchedConditionPath The matched condition path.
  * @param {String} relativeSourceDirectory The relative path of the source directory.
  * @param {String} relativeTargetFile The relative path of the target file.
  * @param {String} targetDir The directory where the generated files are written.
  * @return {Promise<Boolean>} A promise that resolves to false if the generation should be skipped, true otherwise.
  */
-async function validateParameterValue(
-  validation,
+async function validateStatus(
   argument,
   matchedConditionPath,
   relativeSourceDirectory,
@@ -226,21 +199,9 @@ async function validateParameterValue(
   targetDir,
   templateConfig
 ) {
-  const validate = templateConfig.conditionalGeneration?.[matchedConditionPath].validate;
+  const validateStatus = templateConfig.conditionalGeneration?.[matchedConditionPath]?.validate || templateConfig.conditionalFiles?.[matchedConditionPath]?.validate;
 
-  if (Object.hasOwn(validation, 'not')) {
-    const isNotValid =  validate(argument);
-    if (!isNotValid) { 
-      log.debug(logMessage.conditionalGenerationMatched(matchedConditionPath));
-      if (matchedConditionPath === relativeSourceDirectory) {
-        await conditionNotMeet(relativeTargetFile, targetDir);
-      }
-      return false;
-    }
-    return true;
-  }
-
-  const isValid = validate(argument);
+  const isValid = validateStatus(argument);
 
   if (!isValid) {
     log.debug(logMessage.conditionalGenerationMatched(matchedConditionPath));

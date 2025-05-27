@@ -887,7 +887,7 @@ class Generator {
         'Both \'conditionalFiles\' and \'conditionalGeneration\' are defined. Ignoring \'conditionalFiles\' and using \'conditionalGeneration\' only.'
       );
     }
-    
+
     if (this.templateConfig.conditionalGeneration?.[relativeSourceDirectory]) {
       conditionalPath = relativeSourceDirectory;
     } else if (this.templateConfig.conditionalGeneration?.[relativeSourceFile]) {
@@ -898,6 +898,7 @@ class Generator {
       // TODO: https://github.com/asyncapi/generator/issues/1553
       conditionalPath = relativeSourceDirectory;
     }
+    //console.log(conditionalPath)
     
     if (conditionalPath) {
       shouldGenerate = await isGenerationConditionMet(

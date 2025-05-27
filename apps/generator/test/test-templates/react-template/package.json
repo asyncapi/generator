@@ -46,9 +46,9 @@
           }
         },
         "conditionalFolder2/input.txt":{
-          "subject": "info.contact.name",
+          "parameter": "singleFile",
           "validation": {
-            "const": "API Support"
+            "enum": ["false"]
           }
         }
       }

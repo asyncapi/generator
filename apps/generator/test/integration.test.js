@@ -189,11 +189,11 @@ describe('Integration testing generateFromFile() to make sure the result of the 
     expect(exists).toBe(true);
   });
 
-  it('should generate the conditionalFile if the info contact name matched', async () => {
+  it('should generate the conditionalFile if the singleFile parameter is set false using enum validation', async () => {
     const outputDir = generateFolderName();
     const generator = new Generator(reactTemplate, outputDir, {
       forceWrite: true ,
-      templateParams: { version: 'v1', mode: 'production' }
+      templateParams: { version: 'v1', mode: 'production', singleFile: 'false' }
     });
     await generator.generateFromFile(dummySpecPath);
     const conditionalFilePath = path.join(outputDir, 'conditionalFolder2/input.txt');

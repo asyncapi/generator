@@ -16,7 +16,7 @@ exports[`Testing of SendOperation function render websockets with send operation
   @staticmethod
   async def no_message_static(message, socket):
       \\"\\"\\"
-      Send a no_message_static message using a provided WebSocket connection, without needing an instance.
+      Send a no_message message using a provided WebSocket connection, without needing an instance.
 
       Args:
           message (dict or str): The message to send.
@@ -43,7 +43,7 @@ exports[`Testing of SendOperation function render websockets with send operation
   @staticmethod
   async def mixed_message_examples_static(message, socket):
       \\"\\"\\"
-      Send a mixed_message_examples_static message using a provided WebSocket connection, without needing an instance.
+      Send a mixed_message_examples message using a provided WebSocket connection, without needing an instance.
 
       Args:
           message (dict or str): The message to send.

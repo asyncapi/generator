@@ -874,7 +874,7 @@ class HoppscotchClient:
   @staticmethod
   async def send_echo_message_static(message, socket):
       \\"\\"\\"
-      Send a send_echo_message_static message using a provided WebSocket connection, without needing an instance.
+      Send a send_echo_message message using a provided WebSocket connection, without needing an instance.
 
       Args:
           message (dict or str): The message to send.
@@ -1056,7 +1056,7 @@ class HoppscotchEchoWebSocketClient:
   @staticmethod
   async def send_echo_message_static(message, socket):
       \\"\\"\\"
-      Send a send_echo_message_static message using a provided WebSocket connection, without needing an instance.
+      Send a send_echo_message message using a provided WebSocket connection, without needing an instance.
 
       Args:
           message (dict or str): The message to send.
@@ -1239,7 +1239,7 @@ class PostmanEchoWebSocketClientClient:
   @staticmethod
   async def send_echo_message_static(message, socket):
       \\"\\"\\"
-      Send a send_echo_message_static message using a provided WebSocket connection, without needing an instance.
+      Send a send_echo_message message using a provided WebSocket connection, without needing an instance.
 
       Args:
           message (dict or str): The message to send.

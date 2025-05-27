@@ -36,7 +36,7 @@ export function SendOperation({ sendOperations, clientName }) {
 @staticmethod
 async def ${staticMethodName}(message, socket):
     """
-    Send a ${staticMethodName} message using a provided WebSocket connection, without needing an instance.
+    Send a ${methodName} message using a provided WebSocket connection, without needing an instance.
 
     Args:
         message (dict or str): The message to send.

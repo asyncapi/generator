@@ -189,13 +189,14 @@ async function handleMissingParameterValue(relativeSourceFile,templateConfig) {
 /**
 
 /**
- * Validates the parameter value based on the provided validation schema.
+ * Validates the argument value based on the provided validation schema.
  *
  * @param {any} argument The value to validate.
  * @param {String} matchedConditionPath The matched condition path.
  * @param {String} relativeSourceDirectory The relative path of the source directory.
  * @param {String} relativeTargetFile The relative path of the target file.
  * @param {String} targetDir The directory where the generated files are written.
+ * @param {Object} templateConfig - The template configuration containing conditional logic.
  * @return {Promise<Boolean>} A promise that resolves to false if the generation should be skipped, true otherwise.
  */
 async function validateStatus(
@@ -211,7 +212,13 @@ async function validateStatus(
   const isValid = validateStatus(argument);
 
   if (!isValid) {
-    log.debug(logMessage.conditionalGenerationMatched(matchedConditionPath));
+    if (templateConfig.conditionalGeneration?.[matchedConditionPath]) {
+      log.debug(logMessage.conditionalGenerationMatched(matchedConditionPath));
+    } else {
+      // conditionalFiles becomes deprecated with this PR, and soon will be removed.
+      // TODO: https://github.com/asyncapi/generator/issues/1553
+      log.debug(logMessage.conditionalFilesMatched(matchedConditionPath));
+    }
     if (matchedConditionPath === relativeSourceDirectory) {
       await conditionNotMeet(relativeTargetFile, targetDir);
     }

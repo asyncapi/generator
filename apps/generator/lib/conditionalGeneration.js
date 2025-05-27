@@ -85,6 +85,7 @@ async function isGenerationConditionMet (
  * @param {String} relativeSourceFile - The relative path to the source file being evaluated.
  * @param {String} relativeSourceDirectory - The relative path to the directory of the source file.
  * @param {string} targetDir - The directory where the generated files are written.
+ * @param {Object} templateParams - Parameters passed to the template.
  * @returns {Boolean} - Returns `true` if the file should be included; `false` if it should be skipped.
  */
 async function conditionalFilesGenerationDeprecatedVersion (
@@ -94,7 +95,7 @@ async function conditionalFilesGenerationDeprecatedVersion (
   relativeTargetFile,
   targetDir
 ) {
-  return conditionalSubjectGeneration(asyncapiDocument,templateConfig,relativeSourceFile, relativeTargetFile, targetDir);
+  return conditionalSubjectGeneration(asyncapiDocument, templateConfig, relativeSourceFile, relativeTargetFile, targetDir, templateParams);
 };
 
 /**
@@ -129,18 +130,18 @@ const conditionNotMeet = async (relativeTargetFile, targetDir) => {
  * @param {Object} asyncapiDocument - The parsed AsyncAPI document instance used for context evaluation.
  * @param {Object} templateConfig - The configuration object that contains `conditionalFiles` rules.
  * @param {String} matchedConditionPath - The relative path to the directory of the source file.
- * @param {string} relativeSourceDirectory - The relative path of the source directory.
  * @param {string} relativeTargetFile - The relative path of the target file to be generated.
  * @param {string} targetDir - The directory where the generated files are written.
+ * @param {Object} templateParams - Parameters passed to the template.
  * @returns {Boolean} - Returns `true` if the file should be included; `false` if it should be skipped.
  */
 async function conditionalSubjectGeneration (
   asyncapiDocument,
   templateConfig,
   matchedConditionPath,
-  relativeSourceDirectory,
   relativeTargetFile,
-  targetDir
+  targetDir,
+  templateParams
 
 ) {
   const fileCondition = templateConfig.conditionalGeneration?.[matchedConditionPath] || templateConfig.conditionalFiles?.[matchedConditionPath];
@@ -151,7 +152,7 @@ async function conditionalSubjectGeneration (
 
   const { subject } = fileCondition;
 
-  const server = this.templateParams.server && asyncapiDocument.servers().get(this.templateParams.server);
+  const server = templateParams.server && asyncapiDocument.servers().get(templateParams.server);
 
   const source = jmespath.search({
     ...asyncapiDocument.json(),

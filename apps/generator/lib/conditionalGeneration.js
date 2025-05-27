@@ -45,6 +45,7 @@ async function isGenerationConditionMet (
       asyncapiDocument,
       templateConfig,
       relativeSourceFile,
+      relativeSourceDirectory,
       relativeTargetFile,
       targetDir,
       templateParams
@@ -207,7 +208,10 @@ async function validateStatus(
   templateConfig
 ) {
   const validation = templateConfig.conditionalGeneration?.[matchedConditionPath]?.validate || templateConfig.conditionalFiles?.[matchedConditionPath]?.validate;
-
+  if (!validation) {
+    return false; 
+  }
+  
   const isValid = validation(argument);
 
   if (!isValid) {

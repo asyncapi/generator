@@ -17,7 +17,7 @@ export function SendOperation({ sendOperations, clientName }) {
       {
         sendOperations.map((operation) => {
           const methodName = toSnakeCase(operation.id());
-          const staticMethodName = `${toSnakeCase(operation.id())  }_static`;
+          const staticMethodName = `${methodName}_static`;
           
           return (
             <Text newLines={2} indent={2}>

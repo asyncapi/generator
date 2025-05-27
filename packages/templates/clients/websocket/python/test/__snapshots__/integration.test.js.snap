@@ -859,9 +859,9 @@ class HoppscotchClient:
         for handler in self.error_handlers:
           handler(error)
 
-  async def sendEchoMessage(self, message):
+  async def send_echo_message(self, message):
       \\"\\"\\"
-      Send a sendEchoMessage message using the WebSocket connection attached to this instance.
+      Send a send_echo_message message using the WebSocket connection attached to this instance.
 
       Args:
           message (dict or str): The message to send. Will be serialized to JSON if it's a dictionary.
@@ -872,9 +872,9 @@ class HoppscotchClient:
       await self._send(message, self.ws_app)
 
   @staticmethod
-  async def sendEchoMessage_static(message, socket):
+  async def send_echo_message_static(message, socket):
       \\"\\"\\"
-      Send a sendEchoMessage message using a provided WebSocket connection, without needing an instance.
+      Send a send_echo_message_static message using a provided WebSocket connection, without needing an instance.
 
       Args:
           message (dict or str): The message to send.
@@ -1041,9 +1041,9 @@ class HoppscotchEchoWebSocketClient:
         for handler in self.error_handlers:
           handler(error)
 
-  async def sendEchoMessage(self, message):
+  async def send_echo_message(self, message):
       \\"\\"\\"
-      Send a sendEchoMessage message using the WebSocket connection attached to this instance.
+      Send a send_echo_message message using the WebSocket connection attached to this instance.
 
       Args:
           message (dict or str): The message to send. Will be serialized to JSON if it's a dictionary.
@@ -1054,9 +1054,9 @@ class HoppscotchEchoWebSocketClient:
       await self._send(message, self.ws_app)
 
   @staticmethod
-  async def sendEchoMessage_static(message, socket):
+  async def send_echo_message_static(message, socket):
       \\"\\"\\"
-      Send a sendEchoMessage message using a provided WebSocket connection, without needing an instance.
+      Send a send_echo_message_static message using a provided WebSocket connection, without needing an instance.
 
       Args:
           message (dict or str): The message to send.
@@ -1224,9 +1224,9 @@ class PostmanEchoWebSocketClientClient:
         for handler in self.error_handlers:
           handler(error)
 
-  async def sendEchoMessage(self, message):
+  async def send_echo_message(self, message):
       \\"\\"\\"
-      Send a sendEchoMessage message using the WebSocket connection attached to this instance.
+      Send a send_echo_message message using the WebSocket connection attached to this instance.
 
       Args:
           message (dict or str): The message to send. Will be serialized to JSON if it's a dictionary.
@@ -1237,9 +1237,9 @@ class PostmanEchoWebSocketClientClient:
       await self._send(message, self.ws_app)
 
   @staticmethod
-  async def sendEchoMessage_static(message, socket):
+  async def send_echo_message_static(message, socket):
       \\"\\"\\"
-      Send a sendEchoMessage message using a provided WebSocket connection, without needing an instance.
+      Send a send_echo_message_static message using a provided WebSocket connection, without needing an instance.
 
       Args:
           message (dict or str): The message to send.

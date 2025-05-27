@@ -63,7 +63,7 @@ async def test_hoppscotch_client_sends_message():
         # Most improtant part of test where we test clients send message
         #
         ###############
-        await HoppscotchEchoWebSocketClient.sendEchoMessage_static(expected_outgoing_message, websocket)
+        await HoppscotchEchoWebSocketClient.send_echo_message_static(expected_outgoing_message, websocket)
 
     # Start the WebSocket server
     server = await websockets.serve(handler, port=port)

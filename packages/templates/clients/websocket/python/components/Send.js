@@ -1,6 +1,10 @@
 import { Text } from '@asyncapi/generator-react-sdk';
 
-export function Send() {
+export function Send({ sendOperations }) {
+  if (!sendOperations || sendOperations.length === 0) {
+    return null;
+  }
+
   return (
     <Text newLines={2} indent={2}>
       {

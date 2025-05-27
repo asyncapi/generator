@@ -5,17 +5,25 @@ export function SendOperation({ sendOperations, clientName }) {
     return null;
   }
 
+  const toSnakeCase = (camelStr) => {
+    return camelStr
+      .replace(/([A-Z])/g, '_$1')
+      .toLowerCase()
+      .replace(/^_/, '');
+  }; 
+
   return (
     <>
       {
         sendOperations.map((operation) => {
-          const staticMethodName = `${operation.id()}_static`;
+          const methodName = toSnakeCase(operation.id());
+          const staticMethodName = `${toSnakeCase(operation.id())  }_static`;
           
           return (
             <Text newLines={2} indent={2}>
-              {`async def ${operation.id()}(self, message):
+              {`async def ${methodName}(self, message):
     """
-    Send a ${operation.id()} message using the WebSocket connection attached to this instance.
+    Send a ${methodName} message using the WebSocket connection attached to this instance.
 
     Args:
         message (dict or str): The message to send. Will be serialized to JSON if it's a dictionary.
@@ -28,7 +36,7 @@ export function SendOperation({ sendOperations, clientName }) {
 @staticmethod
 async def ${staticMethodName}(message, socket):
     """
-    Send a ${operation.id()} message using a provided WebSocket connection, without needing an instance.
+    Send a ${staticMethodName} message using a provided WebSocket connection, without needing an instance.
 
     Args:
         message (dict or str): The message to send.

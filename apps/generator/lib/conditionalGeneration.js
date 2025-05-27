@@ -159,14 +159,14 @@ async function conditionalSubjectGeneration (
     ...{
       server: server ? server.json() : undefined,
     },
-  }, this.templateConfig.conditionalFiles[matchedConditionPath].subject);
+  }, subject);
   
   if (!source) {
     log.debug(logMessage.relativeSourceFileNotGenerated(matchedConditionPath, subject));
     return false;
   } 
 
-  return validateStatus(source, matchedConditionPath, relativeSourceDirectory,relativeTargetFile, targetDir, templateConfig);
+  return validateStatus(source, matchedConditionPath, relativeSourceDirectory, relativeTargetFile, targetDir, templateConfig);
 }
 
 /**

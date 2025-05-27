@@ -46,7 +46,8 @@ async function isGenerationConditionMet (
       templateConfig,
       relativeSourceFile,
       relativeTargetFile,
-      targetDir
+      targetDir,
+      templateParams
     );
   } else if (Object.keys(conditionalGeneration).length > 0) {
     // Case when the subject is present in conditionalGeneration
@@ -84,6 +85,7 @@ async function isGenerationConditionMet (
  * @param {Object} templateConfig - The configuration object that contains `conditionalFiles` rules.
  * @param {String} relativeSourceFile - The relative path to the source file being evaluated.
  * @param {String} relativeSourceDirectory - The relative path to the directory of the source file.
+ * @param {string} relativeTargetFile - The relative path of the target file to be generated.
  * @param {string} targetDir - The directory where the generated files are written.
  * @param {Object} templateParams - Parameters passed to the template.
  * @returns {Boolean} - Returns `true` if the file should be included; `false` if it should be skipped.
@@ -92,10 +94,12 @@ async function conditionalFilesGenerationDeprecatedVersion (
   asyncapiDocument,
   templateConfig,
   relativeSourceFile,
+  relativeSourceDirectory,
   relativeTargetFile,
-  targetDir
+  targetDir,
+  templateParams
 ) {
-  return conditionalSubjectGeneration(asyncapiDocument, templateConfig, relativeSourceFile, relativeTargetFile, targetDir, templateParams);
+  return conditionalSubjectGeneration(asyncapiDocument, templateConfig, relativeSourceFile, relativeSourceDirectory, relativeTargetFile, targetDir, templateParams);
 };
 
 /**
@@ -130,6 +134,7 @@ const conditionNotMeet = async (relativeTargetFile, targetDir) => {
  * @param {Object} asyncapiDocument - The parsed AsyncAPI document instance used for context evaluation.
  * @param {Object} templateConfig - The configuration object that contains `conditionalFiles` rules.
  * @param {String} matchedConditionPath - The relative path to the directory of the source file.
+ * @param {String} relativeSourceDirectory - The relative path to the directory of the source file.
  * @param {string} relativeTargetFile - The relative path of the target file to be generated.
  * @param {string} targetDir - The directory where the generated files are written.
  * @param {Object} templateParams - Parameters passed to the template.
@@ -139,6 +144,7 @@ async function conditionalSubjectGeneration (
   asyncapiDocument,
   templateConfig,
   matchedConditionPath,
+  relativeSourceDirectory,
   relativeTargetFile,
   targetDir,
   templateParams

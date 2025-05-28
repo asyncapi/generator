@@ -39,12 +39,8 @@ Before you begin, make sure you have the following set up:
 
 ## Background context
 
-**This tutorial focuses on code generation using templates — not full AsyncAPI document modeling.**
-
 There is a list of [community maintained templates](https://www.asyncapi.com/docs/tools/generator/template#generator-templates-list), but what if you do not find what you need? In that case, you'll create a user-defined template that generates custom output from the generator.
-Before you create the template, you'll need an [AsyncAPI document](https://www.asyncapi.com/docs/tools/generator/asyncapi-document) that defines the properties used in your generator.
-In this tutorial, we use a simplified AsyncAPI document focused on extracting data for template generation.
-You'll use the following document saved as test/fixtures/asyncapi.yml.
+Before you create the template, you'll need to have an [AsyncAPI document](https://www.asyncapi.com/docs/tools/generator/asyncapi-document) that defines the properties you want to use in your template to test against. In this tutorial, you'll use the following template saved in the **test/fixtures/asyncapi.yml** file in your template project directory.
 
 
 ```yaml
@@ -69,9 +65,9 @@ channels:
           $ref: '#/components/schemas/Temperature' # refactored from inline payload for better reuse
 
 operations:
-  sendTemperatureChanged:
-    action: send
-    summary: Temperature changes are pushed to the broker
+  recieveTemperatureChanged:
+    action: recieve
+    summary: Temperature changes are recieved from the broker
     channel:
       $ref: '#/channels/temperatureChanged'
 

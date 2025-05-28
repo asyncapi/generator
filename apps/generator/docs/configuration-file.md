@@ -3,7 +3,7 @@ title: "Configuration file"
 weight: 90
 ---
 
-You can configure your AsyncAPI Generator template using either a dedicated `.ageneratorrc` YAML file or through the `generator` property in your `package.json` file.Previously, generator configuration had to be defined in the `package.json` file. Now, you can define the configuration in a separate `.ageneratorrc` file. The configuration defined in the `.ageneratorrc` file will override any configuration defined in `package.json`. The generator will first check for the `.ageneratorrc` file in the template's root directory, and if not found, it will look for the generator config in `package.json`.
+You can configure your AsyncAPI Generator template using either a dedicated `.ageneratorrc` YAML file or through the `generator` property in your `package.json` file. Previously, generator configuration had to be defined in the `package.json` file. Now, you can define the configuration in a separate `.ageneratorrc` file. The configuration defined in the `.ageneratorrc` file will override any configuration defined in `package.json`. The generator will first check for the `.ageneratorrc` file in the template's root directory, and if not found, it will look for the generator config in `package.json`.
 
 ---
 

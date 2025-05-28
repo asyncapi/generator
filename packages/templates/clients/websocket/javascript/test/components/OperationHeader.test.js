@@ -23,51 +23,21 @@ describe('Testing of OperationHeader function', () => {
 
   test('render operation header with summary only correctly', () => {
     const operation = parsedAsyncAPIDocument.operations().get('noMessage');
-    
-    const operationWithSummaryOnly = {
-      ...operation,
-      id: () => operation.id(),
-      summary: () => operation.summary(),
-      hasSummary: () => true,
-      hasDescription: () => false,
-      description: () => ''
-    };
-    
-    const result = render(<OperationHeader operation={operationWithSummaryOnly} />);
+    const result = render(<OperationHeader operation={operation} />);
     const actual = result.trim();
     expect(actual).toMatchSnapshot();
   });
 
   test('render operation header with description only correctly', () => {
-    const operation = parsedAsyncAPIDocument.operations().get('noMessageExamples');
-    
-    const operationWithDescriptionOnly = {
-      ...operation,
-      id: () => operation.id(),
-      hasSummary: () => false,
-      summary: () => '',
-      hasDescription: () => true,
-      description: () => 'This is a description without a summary'
-    };
-    
-    const result = render(<OperationHeader operation={operationWithDescriptionOnly} />);
+    const operation = parsedAsyncAPIDocument.operations().get('noSummaryOperations');
+    const result = render(<OperationHeader operation={operation} />);
     const actual = result.trim();
     expect(actual).toMatchSnapshot();
   });
 
   test('render operation header with no summary or description correctly', () => {
-    const operation = parsedAsyncAPIDocument.operations().get('noMessageExamples');
-    
-    const operationWithoutSummaryOrDescription = {
-      ...operation,
-      id: () => operation.id(),
-      hasSummary: () => false,
-      summary: () => '',
-      hasDescription: () => false,
-      description: () => ''
-    };
-    
-    const result = render(<OperationHeader operation={operationWithoutSummaryOrDescription} />);
+    const operation = parsedAsyncAPIDocument.operations().get('noSummaryNoDescriptionOperations');
+    const result = render(<OperationHeader operation={operation} />);
     const actual = result.trim();
     expect(actual).toMatchSnapshot();
   });

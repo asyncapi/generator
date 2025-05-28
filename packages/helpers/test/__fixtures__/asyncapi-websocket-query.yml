@@ -95,6 +95,14 @@ operations:
     messages:
       - $ref: '#/channels/marketDataV1/messages/noExamples'
 
+  noSummaryOperations:
+    action: send
+    channel:
+      $ref: '#/channels/marketDataV1'
+    description: This is a description without a summary
+    messages:
+      - $ref: '#/channels/marketDataV1/messages/noExamples'    
+
   oneMessageExample:
     action: receive
     channel:
@@ -102,6 +110,13 @@ operations:
     summary: One message with one example
     messages:
       - $ref: '#/channels/marketDataV1/messages/oneExample'
+
+  noSummaryNoDescriptionOperations:
+    action: send
+    channel:
+      $ref: '#/channels/marketDataV1'
+    messages:
+      - $ref: '#/channels/marketDataV1/messages/oneExample'    
 
   multipleExamples:
     action: receive

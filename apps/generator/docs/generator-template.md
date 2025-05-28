@@ -79,7 +79,6 @@ components:
       properties:
         temperatureId:
           type: string
-
 ```
 
 ## Overview of steps

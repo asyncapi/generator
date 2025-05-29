@@ -2,7 +2,7 @@
  * @jest-environment node
  */
 
-const WSClient = require('../../javascript/test/temp/snapshotTestResult/client-hoppscotch');
+const WSClient = require('../../javascript/test/temp/snapshotTestResult/client-hoppscotch.js');
 const { waitForMessage, delay, waitForTestSuccess } = require('./utils');
 const fetch = require('node-fetch');
 const WebSocket = require('ws');

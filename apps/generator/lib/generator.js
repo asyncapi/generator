@@ -898,7 +898,6 @@ class Generator {
       // TODO: https://github.com/asyncapi/generator/issues/1553
       conditionalPath = relativeSourceDirectory;
     }
-    //console.log(conditionalPath)
     
     if (conditionalPath) {
       shouldGenerate = await isGenerationConditionMet(

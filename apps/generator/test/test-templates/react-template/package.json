@@ -5,54 +5,6 @@
     "scripts": {
        "test": "echo \"Error: no test specified\" && exit 1"
     },
-    "generator": {
-      "renderer": "react",
-      "apiVersion": "v3",
-      "hooks": {
-        "@asyncapi/generator-hooks": "createAsyncapiFile"
-      },
-      "parameters": {
-        "version": {
-          "description": "Custom version to be used"
-        },
-        "mode": {
-          "description": "development or production"
-        },
-        "asyncapiFileDir": {
-          "description": "This template by default also outputs the AsyncAPI document that was passed as input. You can specify with this parameter what should be the location of this AsyncAPI document, relative to specified template output."
-        },
-        "singleFile": {
-          "description": "Allow to generate conditionalGeneration file only if singleFile is set to false"
-        },
-        "singleFolder": {
-          "description": "Allow to generate conditionalGeneration folder only if singleFolder is set to false"
-        }
-      },
-      "conditionalGeneration": {
-        "conditionalFolder": {
-          "parameter": "singleFolder",
-          "validation": {
-            "not": {
-              "const": "true"
-            }
-          }
-        },
-        "conditionalFile.txt":{
-          "parameter": "singleFile",
-          "validation": {
-            "not": {
-              "const": "true"
-            }
-          }
-        },
-        "conditionalFolder2/input.txt":{
-          "parameter": "singleFile",
-          "validation": {
-            "enum": ["false"]
-          }
-        }
-      }
-    },
     "dependencies": {
         "@asyncapi/generator-react-sdk": "^1.1.2",
         "@asyncapi/generator-components": "1.0.0"

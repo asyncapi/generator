@@ -1,0 +1,14 @@
+renderer: react
+apiVersion: v3
+hooks:
+  "@asyncapi/generator-hooks": createAsyncapiFile
+parameters:
+  version:
+    description: "Custom version to be used"
+  mode:
+    description: "development or production"
+  asyncapiFileDir:
+    description: >
+      This template by default also outputs the AsyncAPI document that was passed as input. 
+      You can specify with this parameter what should be the location of this AsyncAPI document, 
+      relative to specified template output.

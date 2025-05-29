@@ -60,12 +60,6 @@ async function isGenerationConditionMet (
       );
     }
    
-    // const parameterValue = await getParameterValue(templateParams, parameter);
-
-    // if (parameterValue === undefined) {
-    //   await handleMissingParameterValue(matchedConditionPath, templateConfig);
-    //   return false;
-    // }
     // Case when the parameter is present in conditionalGeneration
     return validateStatus(
       templateParams[parameter],
@@ -201,7 +195,8 @@ async function validateStatus(
   }
   if (!argument) {
     const parameter = templateConfig.conditionalGeneration?.[matchedConditionPath]?.parameter;
-    return log.debug(logMessage.invalidParameter(matchedConditionPath, parameter));
+    log.debug(logMessage.invalidParameter(matchedConditionPath, parameter));
+    return false;
   }
   
   const isValid = validation(argument);

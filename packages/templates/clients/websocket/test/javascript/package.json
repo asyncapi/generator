@@ -3,7 +3,7 @@
     "version": "0.0.1",
     "description": "This is an acceptance test for the JavaScript websocket client template",
     "scripts": {
-        "test": "jest --coverage",
+        "test:acceptance": "jest --coverage",
         "lint": "eslint --max-warnings 0 --config ../../../../../../.eslintrc --ignore-path ../../../../../../.eslintignore .",
         "lint:fix": "eslint --fix --max-warnings 0 --config ../../../../../../.eslintrc --ignore-path ../../../../../../.eslintignore ."
     },

@@ -1,4 +1,7 @@
 {
+    "name": "@asyncapi/template-acceptance-test-js",
+    "version": "0.0.1",
+    "description": "This is an acceptance test for the JavaScript websocket client template",
     "scripts": {
         "test": "jest --coverage",
         "lint": "eslint --max-warnings 0 --config ../../../../../../.eslintrc --ignore-path ../../../../../../.eslintignore .",

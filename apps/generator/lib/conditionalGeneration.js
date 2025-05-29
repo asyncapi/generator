@@ -60,15 +60,15 @@ async function isGenerationConditionMet (
       );
     }
    
-    const parameterValue = await getParameterValue(templateParams, parameter);
+    // const parameterValue = await getParameterValue(templateParams, parameter);
 
-    if (parameterValue === undefined) {
-      await handleMissingParameterValue(matchedConditionPath, templateConfig);
-      return false;
-    }
+    // if (parameterValue === undefined) {
+    //   await handleMissingParameterValue(matchedConditionPath, templateConfig);
+    //   return false;
+    // }
     // Case when the parameter is present in conditionalGeneration
     return validateStatus(
-      parameterValue,
+      templateParams[parameter],
       matchedConditionPath,
       relativeSourceDirectory,
       relativeTargetFile,
@@ -177,18 +177,6 @@ async function conditionalSubjectGeneration (
 }
 
 /**
- * Handles the case where the parameter value is missing for conditional file generation.
- *
- * @private
- * @param {String} relativeSourceFile The relative path of the source file.
- * @param {Object} templateConfig - The template configuration containing conditional logic.
- */
-async function handleMissingParameterValue(relativeSourceFile,templateConfig) {
-  const parameter = templateConfig.conditionalGeneration?.[relativeSourceFile]?.parameter;
-  log.debug(logMessage.relativeSourceFileNotGenerated(relativeSourceFile, parameter));
-}
-
-/**
  * Validates the argument value based on the provided validation schema.
  *
  * @param {any} argument The value to validate.
@@ -211,6 +199,10 @@ async function validateStatus(
   if (!validation) {
     return false; 
   }
+  if (!argument) {
+    const parameter = templateConfig.conditionalGeneration?.[matchedConditionPath]?.parameter;
+    return log.debug(logMessage.invalidParameter(matchedConditionPath, parameter));
+  }
   
   const isValid = validation(argument);
 
@@ -228,17 +220,6 @@ async function validateStatus(
     return false;
   }
   return true;
-}
-
-/**
- * Retrieves the value of a specified parameter from the template parameters object.
- *
- * @param {Object} templateParams - The object containing parameters, typically derived from an AsyncAPI document.
- * @param {string} parameter - The name of the parameter to retrieve.
- * @returns {*} The value of the specified parameter, or undefined if the parameter does not exist.
- */
-async function getParameterValue(templateParams, parameter) {
-  return templateParams[parameter];
 }
 
 module.exports = {

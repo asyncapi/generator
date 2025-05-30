@@ -135,7 +135,7 @@ class Generator {
         enumerable: true,
         get() {
           if (!self.templateConfig.parameters?.[key]) {
-            throw new Error(`Template parameter "${key}" has not been defined in the package.json file under generator property. Please make sure it's listed there before you use it in your template.`);
+            throw new Error(`Template parameter "${key}" has not been defined in the Generator Configuration. Please make sure it's listed there before you use it in your template.`);
           }
           return templateParams[key];
         }
@@ -967,19 +967,34 @@ class Generator {
    * @private
    */
   async loadTemplateConfig() {
+    this.templateConfig = {};
+    
+    // Try to load config from .ageneratorrc
+    try {
+      const rcConfigPath = path.resolve(this.templateDir, '.ageneratorrc');
+      const yaml = await readFile(rcConfigPath, { encoding: 'utf8' });
+      const yamlConfig = require('js-yaml').load(yaml);
+      this.templateConfig = yamlConfig || {};
+      
+      await this.loadDefaultValues();
+      return;
+    } catch (rcError) {
+      // console.error('Could not load .ageneratorrc file:', rcError);
+      log.debug('Could not load .ageneratorrc file:', rcError);
+      // Continue to try package.json if .ageneratorrc fails
+    }
+    
+    // Try to load config from package.json
     try {
       const configPath = path.resolve(this.templateDir, CONFIG_FILENAME);
-      if (!fs.existsSync(configPath)) {
-        this.templateConfig = {};
-        return;
-      }
-
       const json = await readFile(configPath, { encoding: 'utf8' });
       const generatorProp = JSON.parse(json).generator;
       this.templateConfig = generatorProp || {};
-    } catch (e) {
-      this.templateConfig = {};
+    } catch (packageError) {
+      // console.error('Could not load generator config from package.json:', packageError);
+      log.debug('Could not load generator config from package.json:', packageError);
     }
+    
     await this.loadDefaultValues();
   }
 

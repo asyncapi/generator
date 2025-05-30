@@ -105,13 +105,7 @@ Alternatively, you can include your configuration in the `generator` property of
        "validation": {
             "const": "API Support"
         }
-    "path/to/file/that/is/relative/to/template/dir/support.html": {
-      "subject": "info.contact",
-      "validation": {
-        "required": ["url"]
-      }
-    }
-  },
+    },
   "nonRenderableFiles": [
     "src/api/middlewares/*.*",
     "lib/lib/config.js"

@@ -31,7 +31,7 @@ def main():
     # Send multiple messages to test stream handling
     for i in range(5):
         message = f'Hello, Echo Yo! {i}'
-        client.send_message(message)
+        client.send_echo_message(message)
         time.sleep(2)  # Wait for a response
 
     # Keep program alive for a while to allow message processing

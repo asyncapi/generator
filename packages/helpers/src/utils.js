@@ -57,9 +57,27 @@ const getInfo = (asyncapi) => {
   return info;
 };
 
+/**
+ * Convert a camelCase or PascalCase string to snake_case.
+ * If the string is already in snake_case, it will be returned unchanged.
+ * 
+ * @param {string} camelStr - The string to convert to snake_case
+ * @returns {string} The converted snake_case string
+ */
+const toSnakeCase = (inputStr) => {
+  if ((/^[a-z]+(_[a-z]+)*$/).test(inputStr)) {
+    return inputStr;
+  }
+  return inputStr
+    .replace(/\W+/g, ' ')
+    .split(/ |\B(?=[A-Z])/)
+    .map((word) => word.toLowerCase())
+    .join('_');
+};
+
 module.exports = {
   getClientName,
   listFiles,
-  getInfo
+  getInfo,
+  toSnakeCase
 };
-  

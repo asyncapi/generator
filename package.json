@@ -44,5 +44,8 @@
   "workspaces": [
     "apps/*",
     "packages/**"
-  ]
+  ],
+  "dependencies": {
+    "@asyncapi/generator": "^2.6.0"
+  }
 }

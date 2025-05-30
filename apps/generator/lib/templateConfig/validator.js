@@ -2,6 +2,7 @@ const semver = require('semver');
 const Ajv = require('ajv');
 const { getGeneratorVersion } = require('../utils');
 const levenshtein = require('levenshtein-edit-distance');
+// eslint-disable-next-line no-unused-vars
 const {AsyncAPIDocumentInterface, AsyncAPIDocument} = require('@asyncapi/parser');
 const { usesNewAPI } = require('../parser');
 

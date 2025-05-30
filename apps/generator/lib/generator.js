@@ -16,7 +16,7 @@ const { isAsyncAPIDocument } = require('@asyncapi/parser/cjs/document');
 const { configureReact, renderReact, saveRenderedReactContent } = require('./renderer/react');
 const { configureNunjucks, renderNunjucks } = require('./renderer/nunjucks');
 const { validateTemplateConfig } = require('./templateConfig/validator');
-const { loadTemplateConfig } = require('./templateConfig/loader');
+const { loadTemplateConfig, loadDefaultValues } = require('./templateConfig/loader');
 const {
   convertMapToObject,
   isFileSystemPath,
@@ -287,7 +287,8 @@ class Generator {
     this.templateName = templatePkgName;
     this.templateContentDir = path.resolve(this.templateDir, TEMPLATE_CONTENT_DIRNAME);
 
-    this.templateConfig = await loadTemplateConfig(this.templateDir, this.templateParams);
+    await this.loadTemplateConfig();
+    await this.loadDefaultValues();
 
     return { templatePkgName, templatePkgPath };
   }
@@ -955,9 +956,11 @@ class Generator {
    * @return {Promise<boolean>}
    */
   async shouldOverwriteFile(filePath) {
-    if (this.forceWrite) return true;
-    if (this.noOverwriteGlobs.some(glob => minimatch(filePath, glob))) return false;
-    return !(await exists(filePath));
+    if (!Array.isArray(this.noOverwriteGlobs)) return true;
+    const fileExists = await exists(path.resolve(this.targetDir, filePath));
+    if (!fileExists) return true;
+
+    return !this.noOverwriteGlobs.some(globExp => minimatch(filePath, globExp));
   }
 
   /**
@@ -1036,6 +1039,22 @@ class Generator {
 
       if (!isDirEmpty) throw new Error(`"${this.targetDir}" is not an empty directory. You might override your work. To skip this rule, please make your code a git repository or use the --force-write flag (not recommended).`);
     }
+  }
+
+  /**
+   * Loads the template configuration.
+   * @private
+   */
+  async loadTemplateConfig() {
+    return await loadTemplateConfig.call(this);
+  }
+
+  /**
+   * Loads default values of parameters from template config.
+   * @private
+   */
+  async loadDefaultValues() {
+    return await loadDefaultValues.call(this);
   }
 }
 

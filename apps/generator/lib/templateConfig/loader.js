@@ -5,53 +5,50 @@ const { readFile } = require('../utils');
 const CONFIG_FILENAME = 'package.json';
 
 /**
- * Loads the template configuration from either .ageneratorrc or package.json
- * 
- * @param {String} templateDir Path to the template directory
- * @param {Object} templateParams Template parameters to be used for default values
- * @returns {Promise<Object>} The loaded template configuration
+ * Loads the template configuration.
+ * @private
  */
-async function loadTemplateConfig(templateDir, templateParams) {
-  let templateConfig = {};
+async function loadTemplateConfig() {
+  this.templateConfig = {};
+
+  // Try to load config from .ageneratorrc
   try {
-    const rcConfigPath = path.resolve(templateDir, '.ageneratorrc');
+    const rcConfigPath = path.resolve(this.templateDir, '.ageneratorrc');
     const yaml = await readFile(rcConfigPath, { encoding: 'utf8' });
     const yamlConfig = require('js-yaml').load(yaml);
-    templateConfig = yamlConfig || {};
+    this.templateConfig = yamlConfig || {};
 
-    await loadDefaultValues(templateConfig, templateParams);
-    return templateConfig;
+    await loadDefaultValues.call(this);
+    return;
   } catch (rcError) {
     log.debug('Could not load .ageneratorrc file:', rcError);
+    // Continue to try package.json if .ageneratorrc fails
   }
 
+  // Try to load config from package.json
   try {
-    const configPath = path.resolve(templateDir, CONFIG_FILENAME);
+    const configPath = path.resolve(this.templateDir, CONFIG_FILENAME);
     const json = await readFile(configPath, { encoding: 'utf8' });
     const generatorProp = JSON.parse(json).generator;
-    templateConfig = generatorProp || {};
+    this.templateConfig = generatorProp || {};
   } catch (packageError) {
     log.debug('Could not load generator config from package.json:', packageError);
   }
 
-  await loadDefaultValues(templateConfig, templateParams);
-  return templateConfig;
+  await loadDefaultValues.call(this);
 }
 
 /**
  * Loads default values of parameters from template config. If value was already set as parameter it will not be
  * overriden.
- * 
- * @param {Object} templateConfig 
- * @param {Object} templateParams
- * @returns {Promise<void>}
+ * @private
  */
-async function loadDefaultValues(templateConfig, templateParams) {
-  const parameters = templateConfig.parameters;
+async function loadDefaultValues() {
+  const parameters = this.templateConfig.parameters;
   const defaultValues = Object.keys(parameters || {}).filter(key => parameters[key].default);
 
-  defaultValues.filter(dv => templateParams[dv] === undefined).forEach(dv =>
-    Object.defineProperty(templateParams, dv, {
+  defaultValues.filter(dv => this.templateParams[dv] === undefined).forEach(dv =>
+    Object.defineProperty(this.templateParams, dv, {
       enumerable: true,
       get() {
         return parameters[dv].default;
@@ -61,5 +58,6 @@ async function loadDefaultValues(templateConfig, templateParams) {
 }
 
 module.exports = {
-  loadTemplateConfig
-}; 
+  loadTemplateConfig,
+  loadDefaultValues
+};

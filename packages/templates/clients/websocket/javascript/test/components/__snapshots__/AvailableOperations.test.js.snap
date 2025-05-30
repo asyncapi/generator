@@ -15,6 +15,13 @@ Message without any examples
 
 
 
+#### \`noSummaryOperations(payload)\`
+
+
+This is a description without a summary
+
+
+
 #### \`oneMessageExample(payload)\`
 One message with one example
 
@@ -23,6 +30,18 @@ One message with one example
 **Example:**
 \`\`\`javascript
 client.oneMessageExample(\\"test\\");
+\`\`\`
+
+
+
+#### \`noSummaryNoDescriptionOperations(payload)\`
+
+
+
+
+**Example:**
+\`\`\`javascript
+client.noSummaryNoDescriptionOperations(\\"test\\");
 \`\`\`
 
 
@@ -54,6 +73,7 @@ client.multipleExamples(123);
 #### \`mixedMessageExamples(payload)\`
 Mixed message example coverage
 
+An example of a send operation with multiple message with examples
 
 
 **Example:**

@@ -964,6 +964,22 @@ class Generator {
   }
 
   /**
+   * Loads the template configuration.
+   * @private
+   */
+  async loadTemplateConfig() {
+    return await loadTemplateConfig.call(this);
+  }
+
+  /**
+   * Loads default values of parameters from template config.
+   * @private
+   */
+  async loadDefaultValues() {
+    return await loadDefaultValues.call(this);
+  }
+
+  /**
    * Launches all the hooks registered at a given hook point/name.
    *
    * @param {string} hookName
@@ -1039,22 +1055,6 @@ class Generator {
 
       if (!isDirEmpty) throw new Error(`"${this.targetDir}" is not an empty directory. You might override your work. To skip this rule, please make your code a git repository or use the --force-write flag (not recommended).`);
     }
-  }
-
-  /**
-   * Loads the template configuration.
-   * @private
-   */
-  async loadTemplateConfig() {
-    return await loadTemplateConfig.call(this);
-  }
-
-  /**
-   * Loads default values of parameters from template config.
-   * @private
-   */
-  async loadDefaultValues() {
-    return await loadDefaultValues.call(this);
   }
 }
 

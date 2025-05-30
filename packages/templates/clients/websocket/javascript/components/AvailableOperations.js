@@ -10,7 +10,7 @@ export function AvailableOperations({ operations }) {
     <>
       <Text newLines={2}>### Available Operations</Text>
       {operations.map((operation) => (
-        <Text newLines={2}>
+        <Text key={operation.id()} newLines={2}>
           <OperationHeader operation={operation} />
           <MessageExamples operation={operation} />
         </Text>

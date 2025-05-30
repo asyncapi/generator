@@ -8,7 +8,7 @@ export function SendOperation({ sendOperations, clientName }) {
   return (
     <>
       {sendOperations.map((operation) => (
-        <Text newLines={2} indent={2}>
+        <Text key={operation.id()} newLines={2} indent={2}>
           {`
 /**
  * Sends a ${operation.id()} message over the WebSocket connection.

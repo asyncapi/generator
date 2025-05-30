@@ -11,8 +11,8 @@ export default function ({ asyncapi, params }) {
   const queryParams = getQueryParams(asyncapi.channels());
   const clientName = getClientName(info, params.appendClientSuffix, params.customClientName);
   const serverUrl = getServerUrl(server);
+
   return (
-    // The clientFileName default values can be found and modified under the package.json
     <File name={params.clientFileName}>
       <FileHeaderInfo
         info={info}

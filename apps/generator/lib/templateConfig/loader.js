@@ -1,5 +1,4 @@
 const path = require('path');
-const fs = require('fs');
 const log = require('loglevel');
 const { readFile } = require('../utils');
 

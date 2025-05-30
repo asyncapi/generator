@@ -38,7 +38,6 @@ const { definitions, flatten, shorthands } = require('@npmcli/config/lib/definit
 
 const FILTERS_DIRNAME = 'filters';
 const HOOKS_DIRNAME = 'hooks';
-const CONFIG_FILENAME = 'package.json';
 const PACKAGE_JSON_FILENAME = 'package.json';
 const GIT_IGNORE_FILENAME = '{.gitignore}';
 const NPM_IGNORE_FILENAME = '{.npmignore}';
@@ -956,13 +955,10 @@ class Generator {
    * @return {Promise<boolean>}
    */
   async shouldOverwriteFile(filePath) {
-    if (!Array.isArray(this.noOverwriteGlobs)) return true;
-    const fileExists = await exists(path.resolve(this.targetDir, filePath));
-    if (!fileExists) return true;
-
-    return !this.noOverwriteGlobs.some(globExp => minimatch(filePath, globExp));
+    if (this.forceWrite) return true;
+    if (this.noOverwriteGlobs.some(glob => minimatch(filePath, glob))) return false;
+    return !(await exists(filePath));
   }
-
 
   /**
    * Launches all the hooks registered at a given hook point/name.

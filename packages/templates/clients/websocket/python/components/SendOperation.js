@@ -1,16 +1,10 @@
 import { Text } from '@asyncapi/generator-react-sdk';
+import { toSnakeCase } from '@asyncapi/generator-helpers';
 
 export function SendOperation({ sendOperations, clientName }) {
   if (!sendOperations || sendOperations.length === 0) {
     return null;
   }
-
-  const toSnakeCase = (camelStr) => {
-    return camelStr
-      .replace(/([A-Z])/g, '_$1')
-      .toLowerCase()
-      .replace(/^_/, '');
-  }; 
 
   return (
     <>

@@ -28,6 +28,60 @@ exports[`Testing of SendOperation function render websockets with send operation
       await GeminiMarketDataWebsocketAPI._send(message, socket)
 
 
+  async def no_summary_operations(self, message):
+      \\"\\"\\"
+      Send a no_summary_operations message using the WebSocket connection attached to this instance.
+
+      Args:
+          message (dict or str): The message to send. Will be serialized to JSON if it's a dictionary.
+
+      Raises:
+          Exception: If sending fails or the socket is not connected.
+      \\"\\"\\"
+      await self._send(message, self.ws_app)
+
+  @staticmethod
+  async def no_summary_operations_static(message, socket):
+      \\"\\"\\"
+      Send a no_summary_operations message using a provided WebSocket connection, without needing an instance.
+
+      Args:
+          message (dict or str): The message to send.
+          socket (websockets.WebSocketCommonProtocol): The WebSocket to send through.
+
+      Raises:
+          Exception: If sending fails or the socket is not connected.
+      \\"\\"\\"
+      await GeminiMarketDataWebsocketAPI._send(message, socket)
+
+
+  async def no_summary_no_description_operations(self, message):
+      \\"\\"\\"
+      Send a no_summary_no_description_operations message using the WebSocket connection attached to this instance.
+
+      Args:
+          message (dict or str): The message to send. Will be serialized to JSON if it's a dictionary.
+
+      Raises:
+          Exception: If sending fails or the socket is not connected.
+      \\"\\"\\"
+      await self._send(message, self.ws_app)
+
+  @staticmethod
+  async def no_summary_no_description_operations_static(message, socket):
+      \\"\\"\\"
+      Send a no_summary_no_description_operations message using a provided WebSocket connection, without needing an instance.
+
+      Args:
+          message (dict or str): The message to send.
+          socket (websockets.WebSocketCommonProtocol): The WebSocket to send through.
+
+      Raises:
+          Exception: If sending fails or the socket is not connected.
+      \\"\\"\\"
+      await GeminiMarketDataWebsocketAPI._send(message, socket)
+
+
   async def mixed_message_examples(self, message):
       \\"\\"\\"
       Send a mixed_message_examples message using the WebSocket connection attached to this instance.
@@ -44,6 +98,33 @@ exports[`Testing of SendOperation function render websockets with send operation
   async def mixed_message_examples_static(message, socket):
       \\"\\"\\"
       Send a mixed_message_examples message using a provided WebSocket connection, without needing an instance.
+
+      Args:
+          message (dict or str): The message to send.
+          socket (websockets.WebSocketCommonProtocol): The WebSocket to send through.
+
+      Raises:
+          Exception: If sending fails or the socket is not connected.
+      \\"\\"\\"
+      await GeminiMarketDataWebsocketAPI._send(message, socket)
+
+
+  async def operation_with_snake_case(self, message):
+      \\"\\"\\"
+      Send a operation_with_snake_case message using the WebSocket connection attached to this instance.
+
+      Args:
+          message (dict or str): The message to send. Will be serialized to JSON if it's a dictionary.
+
+      Raises:
+          Exception: If sending fails or the socket is not connected.
+      \\"\\"\\"
+      await self._send(message, self.ws_app)
+
+  @staticmethod
+  async def operation_with_snake_case_static(message, socket):
+      \\"\\"\\"
+      Send a operation_with_snake_case message using a provided WebSocket connection, without needing an instance.
 
       Args:
           message (dict or str): The message to send.

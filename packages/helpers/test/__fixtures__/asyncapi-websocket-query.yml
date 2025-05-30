@@ -137,6 +137,20 @@ operations:
       - $ref: '#/channels/marketDataV1/messages/oneExample'
       - $ref: '#/channels/marketDataV1/messages/multipleExamples'
 
+  PascalCaseOperation:
+    action: receive
+    channel:
+      $ref: '#/channels/marketDataV1'
+    messages:
+      - $ref: '#/channels/marketDataV1/messages/noExamples'
+    
+  operation_with_snake_case:
+    action: send
+    channel:
+      $ref: '#/channels/marketDataV1'
+    messages:
+      - $ref: '#/channels/marketDataV1/messages/noExamples'
+
 components:
   parameters:
     symbol:

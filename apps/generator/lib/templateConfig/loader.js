@@ -15,7 +15,7 @@ async function loadTemplateConfig() {
   try {
     const rcConfigPath = path.resolve(this.templateDir, '.ageneratorrc');
     const yaml = await readFile(rcConfigPath, { encoding: 'utf8' });
-    const yamlConfig = require('js-yaml').load(yaml);
+    const yamlConfig = require('js-yaml').safeLoad(yaml);
     this.templateConfig = yamlConfig || {};
 
     await loadDefaultValues.call(this);

@@ -35,8 +35,31 @@ const listFiles = async (dir) => {
     .map(dirE => dirE.name);
 };
 
+/**
+ * Validate and retrieve the AsyncAPI info object from an AsyncAPI document.
+ *
+ * Throws an error if the provided AsyncAPI document has no `info` section.
+ *
+ * @param {object} asyncapi - The AsyncAPI document object.
+ * @returns {object} The validated info object from the AsyncAPI document.
+ */
+const getInfo = (asyncapi) => {
+  if (!asyncapi) {
+    throw new Error('Make sure you pass AsyncAPI document as an argument.');
+  }
+  if (!asyncapi.info) {
+    throw new Error('Provided AsyncAPI document doesn\'t contain Info object.');
+  }
+  const info = asyncapi.info();
+  if (!info) {
+    throw new Error('AsyncAPI document info object cannot be empty.');
+  }
+  return info;
+};
+
 module.exports = {
   getClientName,
-  listFiles
+  listFiles,
+  getInfo
 };
   

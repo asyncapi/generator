@@ -11,7 +11,7 @@ const logMessage = require('./../lib/logMessages.js');
 jest.mock('../lib/utils');
 jest.mock('../lib/filtersRegistry');
 jest.mock('../lib/hooksRegistry');
-jest.mock('../lib/templateConfigValidator');
+jest.mock('../lib/templateConfig/validator');
 
 describe('Generator', () => {
   describe('constructor', () => {

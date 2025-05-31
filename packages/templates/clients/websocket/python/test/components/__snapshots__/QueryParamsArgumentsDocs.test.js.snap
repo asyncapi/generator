@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`QueryParamsArgumentsDocs component (integration with AsyncAPI document) render documentation for WebSocket query parameters when they exist in the AsyncAPI document 1`] = `
+"heartbeat (str, optional):If provided (or if HEARTBEAT environment variable is set), added as ?heartbeat=… to URL
+ top_of_book (str, optional):If provided (or if TOP_OF_BOOK environment variable is set), added as ?top_of_book=… to URL
+ bids (str, optional):If provided (or if BIDS environment variable is set), added as ?bids=… to URL
+ offers (str, optional):If provided (or if OFFERS environment variable is set), added as ?offers=… to URL"
+`;
+
+exports[`QueryParamsArgumentsDocs component (integration with AsyncAPI document) render nothing when empty query parameters array is provided 1`] = `""`;
+
+exports[`QueryParamsArgumentsDocs component (integration with AsyncAPI document) render nothing when no query parameters are provided (null input) 1`] = `""`;

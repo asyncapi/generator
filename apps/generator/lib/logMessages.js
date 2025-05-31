@@ -22,7 +22,6 @@ function packageNotAvailable(packageDetails) {
   if (packageDetails?.pkgPath) {
     return `Unable to resolve template location at ${packageDetails.pkgPath}. Package is not available locally.`;
   }
-
   return `Template is not available locally and expected location is undefined. Known details are: ${JSON.stringify(packageDetails, null, 2)}`;
 }
 

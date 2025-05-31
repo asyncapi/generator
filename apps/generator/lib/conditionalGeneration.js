@@ -64,15 +64,15 @@ async function isGenerationConditionMet (
  */
 async function conditionParameterGeneration(templateConfig, matchedConditionPath, templateParams) {
   const conditionalGenerationConfig = templateConfig.conditionalGeneration[matchedConditionPath];
-  const parameter = templateParams[conditionalGenerationConfig.parameter];
+  const parameterValue = templateParams[conditionalGenerationConfig.parameter];
 
-  if (!parameter) {
+  if (!parameterValue) {
     const parameter = conditionalGenerationConfig.parameter;
     log.debug(logMessage.invalidParameter(matchedConditionPath, parameter));
     return false;
   }
 
-  return validateStatus(parameter, matchedConditionPath, templateConfig);
+  return validateStatus(parameterValue, matchedConditionPath, templateConfig);
 }
 
 /**
@@ -82,10 +82,7 @@ async function conditionParameterGeneration(templateConfig, matchedConditionPath
  * @param {Object} asyncapiDocument - The parsed AsyncAPI document instance used for context evaluation.
  * @param {Object} templateConfig - The configuration object that contains `conditionalFiles` rules.
  * @param {String} relativeSourceFile - The relative path to the source file being evaluated.
- * @param {String} relativeSourceDirectory - The relative path to the directory of the source file.
- * @param {string} relativeTargetFile - The relative path of the target file to be generated.
- * @param {string} targetDir - The directory where the generated files are written.
- * @param {Object} templateParams - Parameters passed to the template.
+ * @param {Object} templateParams - The parameters passed to the generator, usually user input or default values.
  * @returns {Boolean} - Returns `true` if the file should be included; `false` if it should be skipped.
  */
 async function conditionalFilesGenerationDeprecatedVersion (
@@ -104,9 +101,6 @@ async function conditionalFilesGenerationDeprecatedVersion (
  * @param {Object} asyncapiDocument - The parsed AsyncAPI document instance used for context evaluation.
  * @param {Object} templateConfig - The configuration object that contains `conditionalFiles` rules.
  * @param {String} matchedConditionPath - The relative path to the directory of the source file.
- * @param {String} relativeSourceDirectory - The relative path to the directory of the source file.
- * @param {string} relativeTargetFile - The relative path of the target file to be generated.
- * @param {string} targetDir - The directory where the generated files are written.
  * @param {Object} templateParams - Parameters passed to the template.
  * @returns {Boolean} - Returns `true` if the file should be included; `false` if it should be skipped.
  */
@@ -118,27 +112,22 @@ async function conditionalSubjectGeneration (
 
 ) {
   const fileCondition = templateConfig.conditionalGeneration?.[matchedConditionPath] || templateConfig.conditionalFiles?.[matchedConditionPath];
-  
   if (!fileCondition || !fileCondition.subject) {
     return true; 
   }
-
   const { subject } = fileCondition;
-
   const server = templateParams.server && asyncapiDocument.servers().get(templateParams.server);
-
   const source = jmespath.search({
     ...asyncapiDocument.json(),
     ...{
       server: server ? server.json() : undefined,
     },
   }, subject);
-  
+
   if (!source) {
     log.debug(logMessage.relativeSourceFileNotGenerated(matchedConditionPath, subject));
     return false;
   } 
-
   return validateStatus(source, matchedConditionPath, templateConfig);
 }
 
@@ -147,9 +136,6 @@ async function conditionalSubjectGeneration (
  *
  * @param {any} argument The value to validate.
  * @param {String} matchedConditionPath The matched condition path.
- * @param {String} relativeSourceDirectory The relative path of the source directory.
- * @param {String} relativeTargetFile The relative path of the target file.
- * @param {String} targetDir The directory where the generated files are written.
  * @param {Object} templateConfig - The template configuration containing conditional logic.
  * @return {Promise<Boolean>} A promise that resolves to false if the generation should be skipped, true otherwise.
  */

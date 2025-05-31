@@ -715,33 +715,28 @@ class Generator {
     const dirPath = path.resolve(this.targetDir, relativeDir);
     const conditionalEntry = this.templateConfig?.conditionalGeneration?.[relativeDir];
   
-    try {
-      if (conditionalEntry) {
-        const paramCondition = await conditionParameterGeneration(
-          this.templateConfig,
-          relativeDir,
-          this.templateParams
-        );
-  
-        if (!paramCondition) return next(); 
-  
-        const subjectCondition = await conditionalSubjectGeneration(
-          this.asyncapiDocument,
-          this.templateConfig,
-          relativeDir,
-          this.templateParams
-        );
-  
-        if (!subjectCondition) return next(); // short-circuit again
-      } else if (!shouldIgnoreDir(relativeDir)) {
-        xfs.mkdirpSync(dirPath);
+    if (conditionalEntry) {
+      const paramCondition = await conditionParameterGeneration(
+        this.templateConfig,
+        relativeDir,
+        this.templateParams
+      );
+      if (!paramCondition) { 
+        log.debug(logMessage.conditionalGenerationMatched(dirPath));
       }
-  
-      next(); // continue normally
-    } catch (err) {
-      console.error(`Error handling directory "${relativeDir}":`, err);
-      next(err); // pass error to caller
+      const subjectCondition = await conditionalSubjectGeneration(
+        this.asyncapiDocument,
+        this.templateConfig,
+        relativeDir,
+        this.templateParams
+      );
+      if (!subjectCondition) { 
+        log.debug(logMessage.conditionalGenerationMatched(dirPath));
+      }
+    } else if (!shouldIgnoreDir(relativeDir)) {
+      xfs.mkdirpSync(dirPath);
     }
+    next();
   }
 
   /**

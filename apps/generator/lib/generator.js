@@ -14,7 +14,7 @@ const { isAsyncAPIDocument } = require('@asyncapi/parser/cjs/document');
 const { configureReact, renderReact, saveRenderedReactContent } = require('./renderer/react');
 const { configureNunjucks, renderNunjucks } = require('./renderer/nunjucks');
 const { validateTemplateConfig } = require('./templateConfigValidator');
-const { isGenerationConditionMet } = require('./conditionalGeneration');
+const { isGenerationConditionMet, conditionParameterGeneration, conditionalSubjectGeneration } = require('./conditionalGeneration');
 const {
   convertMapToObject,
   isFileSystemPath,
@@ -710,13 +710,38 @@ class Generator {
    * @param  {String} stats Information about the file.
    * @param  {Function} next Callback function
    */
-  ignoredDirHandler(root, stats, next) {
+  async ignoredDirHandler(root, stats, next) {
     const relativeDir = path.relative(this.templateContentDir, path.resolve(root, stats.name));
     const dirPath = path.resolve(this.targetDir, relativeDir);
-    if (!shouldIgnoreDir(relativeDir)) {
-      xfs.mkdirpSync(dirPath);
+    const conditionalEntry = this.templateConfig?.conditionalGeneration?.[relativeDir];
+  
+    try {
+      if (conditionalEntry) {
+        const paramCondition = await conditionParameterGeneration(
+          this.templateConfig,
+          relativeDir,
+          this.templateParams
+        );
+  
+        if (!paramCondition) return next(); 
+  
+        const subjectCondition = await conditionalSubjectGeneration(
+          this.asyncapiDocument,
+          this.templateConfig,
+          relativeDir,
+          this.templateParams
+        );
+  
+        if (!subjectCondition) return next(); // short-circuit again
+      } else if (!shouldIgnoreDir(relativeDir)) {
+        xfs.mkdirpSync(dirPath);
+      }
+  
+      next(); // continue normally
+    } catch (err) {
+      console.error(`Error handling directory "${relativeDir}":`, err);
+      next(err); // pass error to caller
     }
-    next();
   }
 
   /**
@@ -898,14 +923,11 @@ class Generator {
       // TODO: https://github.com/asyncapi/generator/issues/1553
       conditionalPath = relativeSourceDirectory;
     }
-    
+   
     if (conditionalPath) {
       shouldGenerate = await isGenerationConditionMet(
         relativeSourceFile,
-        relativeSourceDirectory,
-        relativeTargetFile,
         this.templateConfig,
-        this.targetDir,
         conditionalPath,
         this.templateParams,
         asyncapiDocument

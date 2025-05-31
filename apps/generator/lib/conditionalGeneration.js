@@ -1,5 +1,3 @@
-const fs = require('fs').promises;
-const path = require('path');
 const log = require('loglevel');
 const logMessage = require('./logMessages');
 const jmespath = require('jmespath');
@@ -9,10 +7,7 @@ const jmespath = require('jmespath');
  * based on conditions defined in the template configuration.
  *
  * @param {string} relativeSourceFile - The relative path of the source file.
- * @param {string} relativeSourceDirectory - The relative path of the source directory.
- * @param {string} relativeTargetFile - The relative path of the target file to be generated.
  * @param {Object} templateConfig - The template configuration containing conditional logic.
- * @param {string} targetDir - The directory where the generated files are written.
  * @param {string} matchedConditionPath - The matched path used to find applicable conditions.
  * @param {Object} templateParams - Parameters passed to the template.
  * @param {AsyncAPIDocument} asyncapiDocument - The AsyncAPI document used for evaluating conditions.
@@ -20,10 +15,7 @@ const jmespath = require('jmespath');
  */
 async function isGenerationConditionMet (
   relativeSourceFile,
-  relativeSourceDirectory,
-  relativeTargetFile,
   templateConfig,
-  targetDir,
   matchedConditionPath,
   templateParams,
   asyncapiDocument 
@@ -34,8 +26,7 @@ async function isGenerationConditionMet (
   const config = Object.keys(conditionFilesGeneration).length > 0 
     ? conditionFilesGeneration 
     : conditionalGeneration;
-  
-  const parameter = config?.parameter;
+
   const subject = config?.subject;
 
   // conditionalFiles becomes deprecated with this PR, and soon will be removed.
@@ -45,9 +36,6 @@ async function isGenerationConditionMet (
       asyncapiDocument,
       templateConfig,
       relativeSourceFile,
-      relativeSourceDirectory,
-      relativeTargetFile,
-      targetDir,
       templateParams
     );
   } else if (Object.keys(conditionalGeneration).length > 0) {
@@ -59,18 +47,33 @@ async function isGenerationConditionMet (
         matchedConditionPath
       );
     }
-   
-    // Case when the parameter is present in conditionalGeneration
-    return validateStatus(
-      templateParams[parameter],
-      matchedConditionPath,
-      relativeSourceDirectory,
-      relativeTargetFile,
-      targetDir,
-      templateConfig
-    );
+    return conditionParameterGeneration(templateConfig,matchedConditionPath,templateParams);
   }
 };
+
+/**
+ * Evaluates whether a template path should be conditionally generated 
+ * based on a parameter defined in the template configuration.
+ *
+ * @async
+ * @function conditionParameterGeneration
+ * @param {Object} templateConfig - The full template configuration object.
+ * @param {string} matchedConditionPath - The path of the file/folder being conditionally generated.
+ * @param {Object} templateParams - The parameters passed to the generator, usually user input or default values.
+ * @returns {Promise<boolean>} - Resolves to `true` if the parameter passes validation, `false` otherwise.
+ */
+async function conditionParameterGeneration(templateConfig, matchedConditionPath, templateParams) {
+  const conditionalGenerationConfig = templateConfig.conditionalGeneration[matchedConditionPath];
+  const parameter = templateParams[conditionalGenerationConfig.parameter];
+
+  if (!parameter) {
+    const parameter = conditionalGenerationConfig.parameter;
+    log.debug(logMessage.invalidParameter(matchedConditionPath, parameter));
+    return false;
+  }
+
+  return validateStatus(parameter, matchedConditionPath, templateConfig);
+}
 
 /**
  * Determines whether a file should be conditionally included based on the provided subject expression
@@ -89,37 +92,9 @@ async function conditionalFilesGenerationDeprecatedVersion (
   asyncapiDocument,
   templateConfig,
   relativeSourceFile,
-  relativeSourceDirectory,
-  relativeTargetFile,
-  targetDir,
   templateParams
 ) {
-  return conditionalSubjectGeneration(asyncapiDocument, templateConfig, relativeSourceFile, relativeSourceDirectory, relativeTargetFile, targetDir, templateParams);
-};
-
-/**
- * Asynchronously removes the parent directory of the specified target file, 
- * if it exists and is a directory.
- *
- * @param {string} relativeTargetFile - The relative path to the target file, used to locate its parent directory.
- * @param {string} targetDir - The base directory where the target file resides.
- * @returns {Promise<void>} A promise that resolves when the parent directory is removed, or if it does not exist.
- */
-const conditionNotMeet = async (relativeTargetFile, targetDir) => {
-  const fullFilePath = path.join(targetDir, relativeTargetFile);
-  const parentDir = path.dirname(fullFilePath);
-
-  try {
-    const stats = await fs.lstat(parentDir);
-    if (stats.isDirectory()) {
-      await fs.rm(parentDir, { recursive: true, force: true });
-    }
-  } catch (error) {
-    // Ignore error if the directory does not exist
-    if (error.code !== 'ENOENT') {
-      throw error;
-    }
-  }
+  return conditionalSubjectGeneration(asyncapiDocument, templateConfig, relativeSourceFile, templateParams);
 };
 
 /**
@@ -139,9 +114,6 @@ async function conditionalSubjectGeneration (
   asyncapiDocument,
   templateConfig,
   matchedConditionPath,
-  relativeSourceDirectory,
-  relativeTargetFile,
-  targetDir,
   templateParams
 
 ) {
@@ -167,7 +139,7 @@ async function conditionalSubjectGeneration (
     return false;
   } 
 
-  return validateStatus(source, matchedConditionPath, relativeSourceDirectory, relativeTargetFile, targetDir, templateConfig);
+  return validateStatus(source, matchedConditionPath, templateConfig);
 }
 
 /**
@@ -184,21 +156,13 @@ async function conditionalSubjectGeneration (
 async function validateStatus(
   argument,
   matchedConditionPath,
-  relativeSourceDirectory,
-  relativeTargetFile,
-  targetDir,
   templateConfig
 ) {
   const validation = templateConfig.conditionalGeneration?.[matchedConditionPath]?.validate || templateConfig.conditionalFiles?.[matchedConditionPath]?.validate;
   if (!validation) {
     return false; 
   }
-  if (!argument) {
-    const parameter = templateConfig.conditionalGeneration?.[matchedConditionPath]?.parameter;
-    log.debug(logMessage.invalidParameter(matchedConditionPath, parameter));
-    return false;
-  }
-  
+ 
   const isValid = validation(argument);
 
   if (!isValid) {
@@ -209,14 +173,14 @@ async function validateStatus(
       // TODO: https://github.com/asyncapi/generator/issues/1553
       log.debug(logMessage.conditionalFilesMatched(matchedConditionPath));
     }
-    if (matchedConditionPath === relativeSourceDirectory) {
-      await conditionNotMeet(relativeTargetFile, targetDir);
-    }
+ 
     return false;
   }
   return true;
 }
 
 module.exports = {
-  isGenerationConditionMet
+  isGenerationConditionMet,
+  conditionParameterGeneration,
+  conditionalSubjectGeneration
 };

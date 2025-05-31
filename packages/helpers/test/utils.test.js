@@ -81,3 +81,35 @@ describe('getInfo integration test with AsyncAPI', () => {
     }).toThrow('Make sure you pass AsyncAPI document as an argument.');
   });
 });
+describe('getTitle integration test with AsyncAPI', () => {
+  let parsedAsyncAPIDocument;
+
+  beforeAll(async () => {
+    const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
+    parsedAsyncAPIDocument = parseResult.document;
+  });
+
+  it('should return the exact title parameter when exists', () => {
+    const info = parsedAsyncAPIDocument.info();
+    const expectedTitle = info.title();
+    const actualTitle = getTitle(parsedAsyncAPIDocument.info());
+    expect(actualTitle).toStrictEqual(expectedTitle);
+  });
+  it('should throw error when title function does not exist', () => {
+    const infoWithoutTitle = { /* missing title property */ };
+    expect(() => {
+      getTitle(infoWithoutTitle);
+    }).toThrow('Provided AsyncAPI document info field doesn\'t contain title.');
+  });
+
+  it('should throw error when title is an empty string', () => {
+    // Mock an info object where title() returns an empty string
+    const infoWithEmptyTitle = {
+      title: () => ''
+    };
+
+    expect(() => {
+      getTitle(infoWithEmptyTitle);
+    }).toThrow('AsyncAPI document title cannot be an empty string.');
+  });
+});

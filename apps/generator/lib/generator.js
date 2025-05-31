@@ -686,7 +686,7 @@ class Generator {
 
       walker.on('directory', async (root, stats, next) => {
         try {
-          this.ignoredDirHandler(root, stats, next);
+          await this.ignoredDirHandler(root, stats, next);
         } catch (e) {
           reject(e);
         }

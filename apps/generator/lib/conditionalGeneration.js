@@ -65,12 +65,12 @@ async function isGenerationConditionMet (
 async function conditionParameterGeneration(templateConfig, matchedConditionPath, templateParams) {
   const conditionalGenerationConfig = templateConfig.conditionalGeneration?.[matchedConditionPath];
   
-   if (!conditionalGenerationConfig?.parameter) {
-     log.debug(logMessage.invalidParameter(matchedConditionPath, 'undefined parameter'));
-     return false;
-   }
-   const parameterName = conditionalGenerationConfig.parameter;
-   const parameterValue = templateParams[parameterName];
+  if (!conditionalGenerationConfig?.parameter) {
+    log.debug(logMessage.invalidParameter(matchedConditionPath, 'undefined parameter'));
+    return false;
+  }
+  const parameterName = conditionalGenerationConfig.parameter;
+  const parameterValue = templateParams[parameterName];
   if (!parameterValue) {
     const parameter = conditionalGenerationConfig.parameter;
     log.debug(logMessage.invalidParameter(matchedConditionPath, parameter));

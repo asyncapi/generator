@@ -14,33 +14,30 @@ describe('getClientName integration test with AsyncAPI', () => {
   });
 
   it('should generate correct client name for the provided AsyncAPI info object without appendClientSuffix', () => {
-    const info = parsedAsyncAPIDocument.info();
     const appendClientSuffix = false;
     const customClientName = '';
 
-    const clientName = getClientName(info, appendClientSuffix, customClientName);
+    const clientName = getClientName(parsedAsyncAPIDocument, appendClientSuffix, customClientName);
 
     // Example assertion: Check if the name is formatted correctly
     expect(clientName).toBe('GeminiMarketDataWebsocketAPI');
   });
 
   it('should generate correct client name for the provided AsyncAPI info object with appendClientSuffix', () => {
-    const info = parsedAsyncAPIDocument.info();
     const appendClientSuffix = true;
     const customClientName = '';
 
-    const clientName = getClientName(info, appendClientSuffix, customClientName);
+    const clientName = getClientName(parsedAsyncAPIDocument, appendClientSuffix, customClientName);
 
     // Example assertion: Check if the name is formatted correctly
     expect(clientName).toBe('GeminiMarketDataWebsocketAPIClient');
   });
 
   it('should return customClientName', () => {
-    const info = parsedAsyncAPIDocument.info();
     const appendClientSuffix = false;
     const customClientName = 'GeminiClient';
 
-    const clientName = getClientName(info, appendClientSuffix, customClientName);
+    const clientName = getClientName(parsedAsyncAPIDocument, appendClientSuffix, customClientName);
 
     // Example assertion: Check if the name is formatted correctly
     expect(clientName).toBe(customClientName);
@@ -81,6 +78,7 @@ describe('getInfo integration test with AsyncAPI', () => {
     }).toThrow('Make sure you pass AsyncAPI document as an argument.');
   });
 });
+
 describe('getTitle integration test with AsyncAPI', () => {
   let parsedAsyncAPIDocument;
 
@@ -92,24 +90,30 @@ describe('getTitle integration test with AsyncAPI', () => {
   it('should return the exact title parameter when exists', () => {
     const info = parsedAsyncAPIDocument.info();
     const expectedTitle = info.title();
-    const actualTitle = getTitle(parsedAsyncAPIDocument.info());
+    const actualTitle = getTitle(parsedAsyncAPIDocument);
     expect(actualTitle).toStrictEqual(expectedTitle);
   });
+
   it('should throw error when title function does not exist', () => {
-    const infoWithoutTitle = { /* missing title property */ };
+    const asyncAPIDocWithoutTitle = {
+      info: () => ({
+        // info object without title method
+      })
+    };
     expect(() => {
-      getTitle(infoWithoutTitle);
+      getTitle(asyncAPIDocWithoutTitle);
     }).toThrow('Provided AsyncAPI document info field doesn\'t contain title.');
   });
 
   it('should throw error when title is an empty string', () => {
-    // Mock an info object where title() returns an empty string
-    const infoWithEmptyTitle = {
-      title: () => ''
+    const asyncAPIDocWithEmptyTitle = {
+      info: () => ({
+        title: () => ''
+      })
     };
 
     expect(() => {
-      getTitle(infoWithEmptyTitle);
+      getTitle(asyncAPIDocWithEmptyTitle);
     }).toThrow('AsyncAPI document title cannot be an empty string.');
   });
 });

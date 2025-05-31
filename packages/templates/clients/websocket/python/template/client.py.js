@@ -7,9 +7,9 @@ import { ClientClass } from '../components/ClientClass';
 export default function ({ asyncapi, params }) {
   const server = getServer(asyncapi.servers(), params.server);
   const info = getInfo(asyncapi);
-  const title = getTitle(info);
+  const title = getTitle(asyncapi);
   const queryParams = getQueryParams(asyncapi.channels());
-  const clientName = getClientName(info, params.appendClientSuffix, params.customClientName);
+  const clientName = getClientName(asyncapi, params.appendClientSuffix, params.customClientName);
   const serverUrl = getServerUrl(server);
   return (
     // The clientFileName default values can be found and modified under the package.json

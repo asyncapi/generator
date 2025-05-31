@@ -106,6 +106,7 @@ Alternatively, you can include your configuration in the `generator` property of
             "const": "API Support"
         }
     },
+  },
   "nonRenderableFiles": [
     "src/api/middlewares/*.*",
     "lib/lib/config.js"

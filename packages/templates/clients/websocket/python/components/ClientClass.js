@@ -4,12 +4,14 @@ import { Connect } from './Connect';
 import { RegisterMessageHandler } from './RegisterMessageHandler';
 import { RegisterErrorHandler } from './RegisterErrorHandler';
 import { HandleMessage } from './HandleMessage';
-import { SendEchoMessage } from './SendEchoMessage';
+import { SendOperation } from './SendOperation';
+import { Send } from './Send';
 import { CloseConnection } from './CloseConnection';
 import { RegisterOutgoingProcessor } from './RegisterOutgoingProcessor';
 import { HandleError } from './HandleError';
 
-export function ClientClass({ clientName, serverUrl, title, queryParams }) {
+export function ClientClass({ clientName, serverUrl, title, queryParams, operations }) {
+  const sendOperations = operations.filterBySend();
   return (
     <Text>
       <Text newLines={2}>
@@ -22,7 +24,8 @@ export function ClientClass({ clientName, serverUrl, title, queryParams }) {
       <RegisterOutgoingProcessor />
       <HandleMessage />
       <HandleError />
-      <SendEchoMessage />
+      <SendOperation sendOperations={sendOperations} clientName={clientName} />
+      <Send sendOperations={sendOperations} />
       <CloseConnection />
     </Text>
   );

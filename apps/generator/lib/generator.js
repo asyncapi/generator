@@ -14,7 +14,7 @@ const { isAsyncAPIDocument } = require('@asyncapi/parser/cjs/document');
 const { configureReact, renderReact, saveRenderedReactContent } = require('./renderer/react');
 const { configureNunjucks, renderNunjucks } = require('./renderer/nunjucks');
 const { validateTemplateConfig } = require('./templateConfigValidator');
-const { isGenerationConditionMet, conditionParameterGeneration, conditionalSubjectGeneration } = require('./conditionalGeneration');
+const { isGenerationConditionMet, conditionalParameterGeneration, conditionalSubjectGeneration } = require('./conditionalGeneration');
 const {
   convertMapToObject,
   isFileSystemPath,
@@ -716,7 +716,7 @@ class Generator {
     const conditionalEntry = this.templateConfig?.conditionalGeneration?.[relativeDir];
   
     if (conditionalEntry) {
-      const paramCondition = await conditionParameterGeneration(
+      const paramCondition = await conditionalParameterGeneration(
         this.templateConfig,
         relativeDir,
         this.templateParams

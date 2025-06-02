@@ -47,7 +47,7 @@ async function isGenerationConditionMet (
         matchedConditionPath
       );
     }
-    return conditionParameterGeneration(templateConfig,matchedConditionPath,templateParams);
+    return conditionalParameterGeneration(templateConfig,matchedConditionPath,templateParams);
   }
 };
 
@@ -56,13 +56,13 @@ async function isGenerationConditionMet (
  * based on a parameter defined in the template configuration.
  *
  * @async
- * @function conditionParameterGeneration
+ * @function conditionalParameterGeneration
  * @param {Object} templateConfig - The full template configuration object.
  * @param {string} matchedConditionPath - The path of the file/folder being conditionally generated.
  * @param {Object} templateParams - The parameters passed to the generator, usually user input or default values.
  * @returns {Promise<boolean>} - Resolves to `true` if the parameter passes validation, `false` otherwise.
  */
-async function conditionParameterGeneration(templateConfig, matchedConditionPath, templateParams) {
+async function conditionalParameterGeneration(templateConfig, matchedConditionPath, templateParams) {
   const conditionalGenerationConfig = templateConfig.conditionalGeneration?.[matchedConditionPath];
   
   if (!conditionalGenerationConfig?.parameter) {
@@ -172,6 +172,6 @@ async function validateStatus(
 
 module.exports = {
   isGenerationConditionMet,
-  conditionParameterGeneration,
+  conditionalParameterGeneration,
   conditionalSubjectGeneration
 };

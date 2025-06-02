@@ -722,6 +722,9 @@ class Generator {
         this.templateParams,
         this.asyncapiDocument
       );
+      if (!shouldGenerate) {
+        log.debug(logMessage.conditionalGenerationMatched(relativeDir));
+      }
     }  
     if (!shouldIgnoreDir(relativeDir) && shouldGenerate) {
       xfs.mkdirpSync(dirPath);

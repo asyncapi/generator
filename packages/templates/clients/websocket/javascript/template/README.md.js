@@ -5,7 +5,7 @@ import { AvailableOperations } from '../components/AvailableOperations';
 export default function({ asyncapi, params }) {
   const server = getServer(asyncapi.servers(), params.server);
   const info = asyncapi.info();
-  const clientName = getClientName(asyncapi);
+  const clientName = getClientName(asyncapi,params.appendClientSuffix, params.customClientName);
 
   const operations = asyncapi.operations().all();
   

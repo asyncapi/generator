@@ -97,5 +97,15 @@ client.mixedMessageExamples(false);
 **Example:**
 \`\`\`javascript
 client.mixedMessageExamples(123);
-\`\`\`"
+\`\`\`
+
+
+
+#### \`PascalCaseOperation(payload)\`
+
+
+
+
+
+#### \`operation_with_snake_case(payload)\`"
 `;

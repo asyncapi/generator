@@ -65,9 +65,6 @@ const getInfo = (asyncapi) => {
  * @returns {string} The converted snake_case string
  */
 const toSnakeCase = (inputStr) => {
-  if ((/^[a-z]+(_[a-z]+)*$/).test(inputStr)) {
-    return inputStr;
-  }
   return inputStr
     .replace(/\W+/g, ' ')
     .split(/ |\B(?=[A-Z])/)

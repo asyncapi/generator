@@ -11,6 +11,7 @@ export default function ({ asyncapi, params }) {
   const queryParams = getQueryParams(asyncapi.channels());
   const clientName = getClientName(asyncapi, params.appendClientSuffix, params.customClientName);
   const serverUrl = getServerUrl(server);
+  const operations = asyncapi.operations();
   return (
     // The clientFileName default values can be found and modified under the package.json
     <File name={params.clientFileName}>
@@ -19,7 +20,7 @@ export default function ({ asyncapi, params }) {
         server={server}
       />
       <Requires query={queryParams} />
-      <ClientClass clientName={clientName} serverUrl={serverUrl} title={title} queryParams={queryParams} />
+      <ClientClass clientName={clientName} serverUrl={serverUrl} title={title} queryParams={queryParams} operations={operations} />
     </File>
   );
 }

@@ -37,10 +37,6 @@ function relativeSourceFileNotGenerated(relativeSourceFile , subject) {
   return `${relativeSourceFile} was not generated because ${subject} specified in template configuration in conditionalFiles was not found in provided AsyncAPI specification file.`;
 }
 
-function invalidParameter(matchedConditionPath, parameter) {
-  return `[Warning] Skipping Generation for : "${matchedConditionPath}". This file was not generated because the parameter "${parameter}" defined in 'conditionalGeneration' was not valid.`;
-}
-
 function skipOverwrite(testFilePath) {
   return `Skipping overwrite for: ${testFilePath}`;
 }
@@ -70,7 +66,6 @@ module.exports = {
   installationDebugMessage,
   templateSuccessfullyInstalled,
   relativeSourceFileNotGenerated,
-  invalidParameter,
   conditionalGenerationMatched,
   conditionalFilesMatched,
   compileEnabled,

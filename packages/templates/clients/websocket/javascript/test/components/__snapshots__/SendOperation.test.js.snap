@@ -110,6 +110,34 @@ exports[`Testing of SendOperation function render websockets with send operation
       throw new Error('WebSocket connection not established. Call connect() first.');
     }
     GeminiMarketDataWebsocketAPI.mixedMessageExamples(message, this.websocket);
+  }
+  
+
+  /**
+   * Sends a operation_with_snake_case message over the WebSocket connection.
+   * 
+   * @param {Object} message - The message payload to send. Should match the schema defined in the AsyncAPI document.
+   * @param {WebSocket} [socket] - The WebSocket connection to use. If not provided, the client's own connection will be used.
+   * @throws {TypeError} If message cannot be stringified to JSON
+   * @throws {Error} If WebSocket connection is not in OPEN state
+   */
+  static operation_with_snake_case(message, socket) {
+    try {
+      socket.send(JSON.stringify(message));
+    } catch (error) {
+      console.error('Error sending operation_with_snake_case message:', error);
+    }
+  }
+  /**
+   * Instance method version of operation_with_snake_case that uses the client's own WebSocket connection.
+   * @param {Object} message - The message payload to send
+   * @throws {Error} If WebSocket connection is not established
+   */
+  operation_with_snake_case(message){
+    if(!this.websocket){
+      throw new Error('WebSocket connection not established. Call connect() first.');
+    }
+    GeminiMarketDataWebsocketAPI.operation_with_snake_case(message, this.websocket);
   }"
 `;
 

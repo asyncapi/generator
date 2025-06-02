@@ -1,6 +1,6 @@
 const path = require('path');
 const { Parser, fromFile } = require('@asyncapi/parser');
-const { getClientName, getInfo } = require('@asyncapi/generator-helpers');
+const { getClientName, getInfo, toSnakeCase } = require('@asyncapi/generator-helpers');
 
 const parser = new Parser();
 const asyncapi_v3_path = path.resolve(__dirname, './__fixtures__/asyncapi-websocket-query.yml');
@@ -79,5 +79,42 @@ describe('getInfo integration test with AsyncAPI', () => {
     expect(() => {
       getInfo(null);
     }).toThrow('Make sure you pass AsyncAPI document as an argument.');
+  });
+});
+
+describe('toSnakeCase integration test with AsyncAPI', () => {
+  let parsedAsyncAPIDocument, operations;
+
+  beforeAll(async () => {
+    const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
+    parsedAsyncAPIDocument = parseResult.document;
+    operations = parsedAsyncAPIDocument.operations();
+  });
+
+  it('should convert PascalCase operation names to snake_case format', () => {
+    const operation = operations.get('PascalCaseOperation');
+    const actualOperationId = toSnakeCase(operation.id());
+    const expectedOperationId = 'pascal_case_operation';
+    expect(actualOperationId).toBe(expectedOperationId);
+  });
+
+  it('should leave already snake_case operation names unchanged', () => {
+    const operation = operations.get('operation_with_snake_case');
+    const actualOperationId = toSnakeCase(operation.id());
+    const expectedOperationId = 'operation_with_snake_case';
+    expect(actualOperationId).toBe(expectedOperationId);
+  });
+
+  it('should convert camelCase operation names to snake_case format', () => {
+    const operation = operations.get('noSummaryNoDescriptionOperations');
+    const actualOperationId = toSnakeCase(operation.id());
+    const expectedOperationId = 'no_summary_no_description_operations';
+    expect(actualOperationId).toBe(expectedOperationId);
+  });
+
+  it('should return empty string', () => {
+    const actualOperationId = toSnakeCase('');
+    const expectedOperationId = '';
+    expect(actualOperationId).toBe(expectedOperationId);
   });
 });

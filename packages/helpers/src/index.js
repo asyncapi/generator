@@ -1,6 +1,6 @@
 const { getMessageExamples, getOperationMessages } = require('./operations');
 const { getServerUrl, getServer }  = require('./servers');
-const { getClientName, listFiles, getInfo } = require('./utils');
+const { getClientName, listFiles, getInfo, toSnakeCase } = require('./utils');
 const { getQueryParams } = require('./bindings');
 
 module.exports = {
@@ -11,5 +11,6 @@ module.exports = {
   getQueryParams,
   getOperationMessages,
   getMessageExamples,
-  getInfo
+  getInfo,
+  toSnakeCase
 };

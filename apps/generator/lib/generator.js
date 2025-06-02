@@ -14,7 +14,7 @@ const { isAsyncAPIDocument } = require('@asyncapi/parser/cjs/document');
 const { configureReact, renderReact, saveRenderedReactContent } = require('./renderer/react');
 const { configureNunjucks, renderNunjucks } = require('./renderer/nunjucks');
 const { validateTemplateConfig } = require('./templateConfigValidator');
-const { isGenerationConditionMet, conditionalParameterGeneration, conditionalSubjectGeneration } = require('./conditionalGeneration');
+const { isGenerationConditionMet } = require('./conditionalGeneration');
 const {
   convertMapToObject,
   isFileSystemPath,
@@ -714,26 +714,16 @@ class Generator {
     const relativeDir = path.relative(this.templateContentDir, path.resolve(root, stats.name));
     const dirPath = path.resolve(this.targetDir, relativeDir);
     const conditionalEntry = this.templateConfig?.conditionalGeneration?.[relativeDir];
-  
+    let shouldGenerate =  true;
     if (conditionalEntry) {
-      const paramCondition = await conditionalParameterGeneration(
+      shouldGenerate = await isGenerationConditionMet(
         this.templateConfig,
         relativeDir,
-        this.templateParams
+        this.templateParams,
+        this.asyncapiDocument
       );
-      if (!paramCondition) { 
-        log.debug(logMessage.conditionalGenerationMatched(dirPath));
-      }
-      const subjectCondition = await conditionalSubjectGeneration(
-        this.asyncapiDocument,
-        this.templateConfig,
-        relativeDir,
-        this.templateParams
-      );
-      if (!subjectCondition) { 
-        log.debug(logMessage.conditionalGenerationMatched(dirPath));
-      }
-    } else if (!shouldIgnoreDir(relativeDir)) {
+    }  
+    if (!shouldIgnoreDir(relativeDir) && shouldGenerate) {
       xfs.mkdirpSync(dirPath);
     }
     next();
@@ -921,7 +911,6 @@ class Generator {
    
     if (conditionalPath) {
       shouldGenerate = await isGenerationConditionMet(
-        relativeSourceFile,
         this.templateConfig,
         conditionalPath,
         this.templateParams,

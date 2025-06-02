@@ -6,7 +6,6 @@ const jmespath = require('jmespath');
  * Determines whether the generation of a file or folder should be skipped
  * based on conditions defined in the template configuration.
  *
- * @param {string} relativeSourceFile - The relative path of the source file.
  * @param {Object} templateConfig - The template configuration containing conditional logic.
  * @param {string} matchedConditionPath - The matched path used to find applicable conditions.
  * @param {Object} templateParams - Parameters passed to the template.
@@ -14,7 +13,6 @@ const jmespath = require('jmespath');
  * @returns {Promise<boolean>} A promise that resolves to `true` if the condition is met, allowing the file or folder to render; otherwise, resolves to `false`. 
  */
 async function isGenerationConditionMet (
-  relativeSourceFile,
   templateConfig,
   matchedConditionPath,
   templateParams,
@@ -35,7 +33,7 @@ async function isGenerationConditionMet (
     return conditionalFilesGenerationDeprecatedVersion(
       asyncapiDocument,
       templateConfig,
-      relativeSourceFile,
+      matchedConditionPath,
       templateParams
     );
   } else if (Object.keys(conditionalGeneration).length > 0) {
@@ -54,7 +52,7 @@ async function isGenerationConditionMet (
 /**
  * Evaluates whether a template path should be conditionally generated 
  * based on a parameter defined in the template configuration.
- *
+ * @private
  * @async
  * @function conditionalParameterGeneration
  * @param {Object} templateConfig - The full template configuration object.
@@ -83,10 +81,10 @@ async function conditionalParameterGeneration(templateConfig, matchedConditionPa
 /**
  * Determines whether a file should be conditionally included based on the provided subject expression
  * and optional validation logic defined in the template configuration.
- *
+ * @private
  * @param {Object} asyncapiDocument - The parsed AsyncAPI document instance used for context evaluation.
  * @param {Object} templateConfig - The configuration object that contains `conditionalFiles` rules.
- * @param {String} relativeSourceFile - The relative path to the source file being evaluated.
+ * @param {string} matchedConditionPath - The path of the file/folder being conditionally generated.
  * @param {Object} templateParams - The parameters passed to the generator, usually user input or default values.
  * @returns {Boolean} - Returns `true` if the file should be included; `false` if it should be skipped.
  */
@@ -102,7 +100,7 @@ async function conditionalFilesGenerationDeprecatedVersion (
 /**
  * Determines whether a file should be conditionally included based on the provided subject expression
  * and optional validation logic defined in the template configuration.
- *
+ * @private
  * @param {Object} asyncapiDocument - The parsed AsyncAPI document instance used for context evaluation.
  * @param {Object} templateConfig - The configuration object that contains `conditionalFiles` rules.
  * @param {String} matchedConditionPath - The relative path to the directory of the source file.
@@ -171,7 +169,5 @@ async function validateStatus(
 }
 
 module.exports = {
-  isGenerationConditionMet,
-  conditionalParameterGeneration,
-  conditionalSubjectGeneration
+  isGenerationConditionMet
 };

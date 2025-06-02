@@ -78,3 +78,79 @@ describe('getInfo integration test with AsyncAPI', () => {
     }).toThrow('Make sure you pass AsyncAPI document as an argument.');
   });
 });
+
+describe('getTitle integration test with AsyncAPI', () => {
+  let parsedAsyncAPIDocument;
+
+  beforeAll(async () => {
+    const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
+    parsedAsyncAPIDocument = parseResult.document;
+  });
+
+  it('should return the exact title parameter when exists', () => {
+    const info = parsedAsyncAPIDocument.info();
+    const expectedTitle = info.title();
+    const actualTitle = getTitle(parsedAsyncAPIDocument);
+    expect(actualTitle).toStrictEqual(expectedTitle);
+  });
+
+  it('should throw error when title function does not exist', () => {
+    const asyncAPIDocWithoutTitle = {
+      info: () => ({
+        // info object without title method
+      })
+    };
+    expect(() => {
+      getTitle(asyncAPIDocWithoutTitle);
+    }).toThrow('Provided AsyncAPI document info field doesn\'t contain title.');
+  });
+
+  it('should throw error when title is an empty string', () => {
+    const asyncAPIDocWithEmptyTitle = {
+      info: () => ({
+        title: () => ''
+      })
+    };
+
+    expect(() => {
+      getTitle(asyncAPIDocWithEmptyTitle);
+    }).toThrow('AsyncAPI document title cannot be an empty string.');
+  });
+});
+
+describe('toSnakeCase integration test with AsyncAPI', () => {
+  let parsedAsyncAPIDocument, operations;
+
+  beforeAll(async () => {
+    const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
+    parsedAsyncAPIDocument = parseResult.document;
+    operations = parsedAsyncAPIDocument.operations();
+  });
+
+  it('should convert PascalCase operation names to snake_case format', () => {
+    const operation = operations.get('PascalCaseOperation');
+    const actualOperationId = toSnakeCase(operation.id());
+    const expectedOperationId = 'pascal_case_operation';
+    expect(actualOperationId).toBe(expectedOperationId);
+  });
+
+  it('should leave already snake_case operation names unchanged', () => {
+    const operation = operations.get('operation_with_snake_case');
+    const actualOperationId = toSnakeCase(operation.id());
+    const expectedOperationId = 'operation_with_snake_case';
+    expect(actualOperationId).toBe(expectedOperationId);
+  });
+
+  it('should convert camelCase operation names to snake_case format', () => {
+    const operation = operations.get('noSummaryNoDescriptionOperations');
+    const actualOperationId = toSnakeCase(operation.id());
+    const expectedOperationId = 'no_summary_no_description_operations';
+    expect(actualOperationId).toBe(expectedOperationId);
+  });
+
+  it('should return empty string', () => {
+    const actualOperationId = toSnakeCase('');
+    const expectedOperationId = '';
+    expect(actualOperationId).toBe(expectedOperationId);
+  });
+});

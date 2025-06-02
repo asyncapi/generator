@@ -80,10 +80,10 @@ async function conditionalParameterGeneration(templateConfig, matchedConditionPa
 async function conditionalFilesGenerationDeprecatedVersion (
   asyncapiDocument,
   templateConfig,
-  relativeSourceFile,
+  matchedConditionPath,
   templateParams
 ) {
-  return conditionalSubjectGeneration(asyncapiDocument, templateConfig, relativeSourceFile, templateParams);
+  return conditionalSubjectGeneration(asyncapiDocument, templateConfig, matchedConditionPath, templateParams);
 };
 
 /**

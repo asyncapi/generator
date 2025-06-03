@@ -52,11 +52,104 @@ channels:
               default: true
             offers:
               type: string
-
+    messages:
+      noExamples:
+        summary: A message without any examples
+        payload:
+          type: string
+      oneExample:
+        summary: A message with one example
+        payload:
+          type: string
+        examples:
+          - name: string
+            payload: test
+      multipleExamples:
+        summary: A message with multiple examples
+        payload: {}
+        examples:
+          - name: string
+            payload: test
+          - name: boolean
+            payload: false
+          - name: number
+            payload: 123
   emptyChannel: {}
 
   marketDataV1NoBinding:
     address: '/'
+
+operations:
+  noMessage:
+    action: send
+    channel:
+      $ref: '#/channels/marketDataV1'
+    summary: Operation with no messages
+    messages: []
+
+  noMessageExamples:
+    action: receive
+    channel:
+      $ref: '#/channels/marketDataV1'
+    summary: Message without any examples
+    messages:
+      - $ref: '#/channels/marketDataV1/messages/noExamples'
+
+  noSummaryOperations:
+    action: send
+    channel:
+      $ref: '#/channels/marketDataV1'
+    description: This is a description without a summary
+    messages:
+      - $ref: '#/channels/marketDataV1/messages/noExamples'    
+
+  oneMessageExample:
+    action: receive
+    channel:
+      $ref: '#/channels/marketDataV1'
+    summary: One message with one example
+    messages:
+      - $ref: '#/channels/marketDataV1/messages/oneExample'
+
+  noSummaryNoDescriptionOperations:
+    action: send
+    channel:
+      $ref: '#/channels/marketDataV1'
+    messages:
+      - $ref: '#/channels/marketDataV1/messages/oneExample'    
+
+  multipleExamples:
+    action: receive
+    channel:
+      $ref: '#/channels/marketDataV1'
+    summary: Multiple messages with examples
+    messages:
+      - $ref: '#/channels/marketDataV1/messages/multipleExamples'
+
+  mixedMessageExamples:
+    action: send
+    channel:
+      $ref: '#/channels/marketDataV1'
+    summary: Mixed message example coverage
+    description: An example of a send operation with multiple message with examples
+    messages:
+      - $ref: '#/channels/marketDataV1/messages/noExamples'
+      - $ref: '#/channels/marketDataV1/messages/oneExample'
+      - $ref: '#/channels/marketDataV1/messages/multipleExamples'
+
+  PascalCaseOperation:
+    action: receive
+    channel:
+      $ref: '#/channels/marketDataV1'
+    messages:
+      - $ref: '#/channels/marketDataV1/messages/noExamples'
+    
+  operation_with_snake_case:
+    action: send
+    channel:
+      $ref: '#/channels/marketDataV1'
+    messages:
+      - $ref: '#/channels/marketDataV1/messages/noExamples'
 
 components:
   parameters:

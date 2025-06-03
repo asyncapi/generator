@@ -2,7 +2,11 @@ volumes:
   microcks-data:
   
 services:
+  # ───────────── infrastructure ─────────────────────
   mongo:
+    profiles:
+      - infra
+      - ci
     image: docker.io/mongo:4.4.29
     container_name: microcks-db
     volumes:
@@ -14,6 +18,9 @@ services:
       retries: 3
 
   kafka:
+    profiles:
+      - infra
+      - ci
     image: docker.io/redpandadata/redpanda:v24.3.1
     container_name: microcks-kafka
     command:
@@ -44,6 +51,9 @@ services:
       start_period: 10s
 
   app:
+    profiles:
+      - infra
+      - ci
     depends_on:
       - mongo
     image: quay.io/microcks/microcks:1.11.2
@@ -72,8 +82,12 @@ services:
       retries: 3
 
   async-minion:
+    profiles: 
+      - infra
+      - ci
     depends_on:
-      - app
+      app:
+        condition: service_healthy
     image: quay.io/microcks/microcks-async-minion:1.11.2
     container_name: microcks-async-minion
     restart: on-failure
@@ -90,10 +104,24 @@ services:
       timeout: 2s
       retries: 3
   
+  #this only runs on local with tests profile. In CI/CD there is a dedicated job step for that
+  asyncapi-bundler:
+    profiles:
+      - infra
+    image: asyncapi/cli:3.1.1
+    container_name: asyncapi-bundler
+    working_dir: /usr/src/app
+    volumes:
+      - ../:/usr/src/app
+    command: >
+      bundle __fixtures__/asyncapi-hoppscotch-server.yml
+      --output __fixtures__/bundled.yml
+
   importer:
     profiles:
-      - tests
-    image: quay.io/microcks/microcks-cli:latest
+      - infra
+      - ci
+    image: quay.io/microcks/microcks-cli:0.5.8
     container_name: microcks-cli-importer
     working_dir: /usr/src/app
     volumes:
@@ -102,31 +130,40 @@ services:
       app:
         condition: service_healthy
     command: >
-      sh -c "microcks-cli import __fixtures__/asyncapi-hoppscotch-server.yml
+      sh -c "microcks-cli import __fixtures__/bundled.yml
       --microcksURL=http://microcks:8080/api/
       --keycloakClientId=microcks-serviceaccount
       --keycloakClientSecret=ab54d329-e435-41ae-a900-ec6b3fe15c54"
 
-  #TODO:1: make these tester containers work in way that if test fails, they fails as well. So also good to do starting of podman in a way that it is awaiting status
-  #TODO:2: add CI/CD pipeline for these tests
+  #this only runs on local with tests profile. In CI/CD there is a dedicated job step for that
+  npm-test:
+    profiles:
+      - infra
+    image: node:20
+    container_name: npm-test
+    working_dir: /usr/src/app
+    volumes:
+      - ../../../../../../:/usr/src/app
+    command: ["sh", "-c", "npm ci && npm run packages:test"]
+
+  # ───────────── tests runners ─────────────────────
+  # each client has separate test runner as long term they need to run conditionally
+  # TODO: figure out in future how to detect that PR has changes only in the Py client for example, so only Py test runs in the CI/CD
   tester-js:
     profiles:
-      - tests
-    image: node:18
+      - test-js
+    image: node:22
     container_name: websocket-acceptance-tester-js
     ports:
       - 8082:8082
     working_dir: /usr/src/app
     volumes:
       - ../../../../../../:/usr/src/app
-    depends_on:
-      app:
-        condition: service_healthy
-    command: ["sh", "-c", "npm install && cd packages/templates/clients/websocket/test/javascript && npm test"]
+    command: ["sh", "-c", "npm install && cd packages/templates/clients/websocket/test/javascript && npm run test:acceptance"]
   
   tester-py:
     profiles:
-      - tests
+      - test-py
     image: python:3.11
     container_name: websocket-acceptance-tester-py
     ports:
@@ -134,10 +171,7 @@ services:
     working_dir: /usr/src/app
     volumes:
       - ../../../../../../:/usr/src/app
-    depends_on:
-      app:
-        condition: service_healthy
-    command: ["sh", "-c", "cd packages/templates/clients/websocket/python/test/temp/snapshotTestResult && pip install -r requirements.txt && cd ../../../../test/python && pip install -r requirements.txt && pytest"]
+    command: ["sh", "-c", "cd packages/templates/clients/websocket/python/test/temp/snapshotTestResult/client_hoppscotch && pip install -r requirements.txt && cd ../../../../../test/python && pip install -r requirements.txt && pytest"]
 
   # Below for debugging purposes. 
   # Just uncomment below and after starting environment you can enter the constainer with "podman exec -it net-debug sh" and use websocat to test the websocket connection

@@ -134,6 +134,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="33.33%"><a href="https://github.com/Light13008"><img src="https://avatars.githubusercontent.com/u/111660124?v=4?s=100" width="100px;" alt="Sarvesh.Patil"/><br /><sub><b>Sarvesh.Patil</b></sub></a><br /><a href="https://github.com/asyncapi/generator/commits?author=Light13008" title="Tests">⚠️</a> <a href="https://github.com/asyncapi/generator/pulls?q=is%3Apr+reviewed-by%3ALight13008" title="Reviewed Pull Requests">👀</a></td>
       <td align="center" valign="top" width="33.33%"><a href="https://github.com/ItshMoh"><img src="https://avatars.githubusercontent.com/u/121867882?v=4?s=100" width="100px;" alt="Mohan Kumar"/><br /><sub><b>Mohan Kumar</b></sub></a><br /><a href="https://github.com/asyncapi/generator/pulls?q=is%3Apr+reviewed-by%3AItshMoh" title="Reviewed Pull Requests">👀</a> <a href="https://github.com/asyncapi/generator/commits?author=ItshMoh" title="Code">💻</a> <a href="#ideas-ItshMoh" title="Ideas, Planning, & Feedback">🤔</a></td>
     </tr>
+    <tr>
+      <td align="center" valign="top" width="33.33%"><a href="https://github.com/AayushSaini101"><img src="https://avatars.githubusercontent.com/u/60972989?v=4?s=100" width="100px;" alt="Moderator "/><br /><sub><b>Moderator </b></sub></a><br /><a href="https://github.com/asyncapi/generator/commits?author=AayushSaini101" title="Code">💻</a> <a href="https://github.com/asyncapi/generator/commits?author=AayushSaini101" title="Documentation">📖</a> <a href="https://github.com/asyncapi/generator/commits?author=AayushSaini101" title="Tests">⚠️</a></td>
+    </tr>
   </tbody>
 </table>
 

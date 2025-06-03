@@ -1,0 +1,30 @@
+# CodeRabbit Configuration File
+
+language: en-US
+reviews:
+  poem: false
+  suggested_reviewers: false
+  suggested_labels: false
+  sequence_diagrams: false
+  high_level_summary: true
+  high_level_summary_placeholder: "@coderabbitai summary"
+  profile: chill
+  auto_review:
+    enabled: true
+    auto_incremental_review: true
+  review_status: true
+  commit_status: true
+  changed_files_summary: true
+  assess_linked_issues: true
+  related_issues: true
+  related_prs: true
+chat:
+  auto_reply: false
+
+knowledge_base:
+  learnings:
+    scope: auto
+  issues:
+    scope: auto
+  pull_requests:
+    scope: auto

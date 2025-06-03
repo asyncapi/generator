@@ -2,7 +2,6 @@ const path = require('path');
 const fs = require('fs');
 const xfs = require('fs.extra');
 const minimatch = require('minimatch');
-const jmespath = require('jmespath');
 const filenamify = require('filenamify');
 const git = require('simple-git');
 const log = require('loglevel');
@@ -10,12 +9,12 @@ const Arborist = require('@npmcli/arborist');
 const Config = require('@npmcli/config');
 const requireg = require('requireg');
 const npmPath = requireg.resolve('npm').replace('index.js','');
-
 const { isAsyncAPIDocument } = require('@asyncapi/parser/cjs/document');
 
 const { configureReact, renderReact, saveRenderedReactContent } = require('./renderer/react');
 const { configureNunjucks, renderNunjucks } = require('./renderer/nunjucks');
 const { validateTemplateConfig } = require('./templateConfigValidator');
+const { isGenerationConditionMet } = require('./conditionalGeneration');
 const {
   convertMapToObject,
   isFileSystemPath,
@@ -135,7 +134,7 @@ class Generator {
         enumerable: true,
         get() {
           if (!self.templateConfig.parameters?.[key]) {
-            throw new Error(`Template parameter "${key}" has not been defined in the package.json file under generator property. Please make sure it's listed there before you use it in your template.`);
+            throw new Error(`Template parameter "${key}" has not been defined in the Generator Configuration. Please make sure it's listed there before you use it in your template.`);
           }
           return templateParams[key];
         }
@@ -687,7 +686,7 @@ class Generator {
 
       walker.on('directory', async (root, stats, next) => {
         try {
-          this.ignoredDirHandler(root, stats, next);
+          await this.ignoredDirHandler(root, stats, next);
         } catch (e) {
           reject(e);
         }
@@ -711,10 +710,23 @@ class Generator {
    * @param  {String} stats Information about the file.
    * @param  {Function} next Callback function
    */
-  ignoredDirHandler(root, stats, next) {
+  async ignoredDirHandler(root, stats, next) {
     const relativeDir = path.relative(this.templateContentDir, path.resolve(root, stats.name));
     const dirPath = path.resolve(this.targetDir, relativeDir);
-    if (!shouldIgnoreDir(relativeDir)) {
+    const conditionalEntry = this.templateConfig?.conditionalGeneration?.[relativeDir];
+    let shouldGenerate =  true;
+    if (conditionalEntry) {
+      shouldGenerate = await isGenerationConditionMet(
+        this.templateConfig,
+        relativeDir,
+        this.templateParams,
+        this.asyncapiDocument
+      );
+      if (!shouldGenerate) {
+        log.debug(logMessage.conditionalGenerationMatched(relativeDir));
+      }
+    }  
+    if (!shouldIgnoreDir(relativeDir) && shouldGenerate) {
       xfs.mkdirpSync(dirPath);
     }
     next();
@@ -854,7 +866,7 @@ class Generator {
       await writeFile(outputpath, renderContent);
     }
   }
-
+  
   /**
    * Generates a file.
    *
@@ -867,34 +879,61 @@ class Generator {
   async generateFile(asyncapiDocument, fileName, baseDir) {
     const sourceFile = path.resolve(baseDir, fileName);
     const relativeSourceFile = path.relative(this.templateContentDir, sourceFile);
+    const relativeSourceDirectory = relativeSourceFile.split(path.sep)[0] || '.';
+  
     const targetFile = path.resolve(this.targetDir, this.maybeRenameSourceFile(relativeSourceFile));
     const relativeTargetFile = path.relative(this.targetDir, targetFile);
-
+    let shouldGenerate = true;
+  
     if (shouldIgnoreFile(relativeSourceFile)) return;
+    
+    if (!(await this.shouldOverwriteFile(relativeTargetFile))) return;
 
-    const shouldOverwriteFile = await this.shouldOverwriteFile(relativeTargetFile);
-    if (!shouldOverwriteFile) return;
-
-    if (this.templateConfig.conditionalFiles?.[relativeSourceFile]) {
-      const server = this.templateParams.server && asyncapiDocument.servers().get(this.templateParams.server);
-      const source = jmespath.search({
-        ...asyncapiDocument.json(),
-        ...{
-          server: server ? server.json() : undefined,
-        },
-      }, this.templateConfig.conditionalFiles[relativeSourceFile].subject);
-
-      if (!source) return log.debug(logMessage.relativeSourceFileNotGenerated(relativeSourceFile, this.templateConfig.conditionalFiles[relativeSourceFile].subject));
-
-      if (source) {
-        const validate = this.templateConfig.conditionalFiles[relativeSourceFile].validate;
-        const valid = validate(source);
-        if (!valid) return log.debug(logMessage.conditionalFilesMatched(relativeSourceFile));
-      }
+    // conditionalFiles becomes deprecated with this PR, and soon will be removed.
+    // TODO: https://github.com/asyncapi/generator/issues/1553
+    let conditionalPath = '';
+    if (
+      this.templateConfig.conditionalFiles &&
+      this.templateConfig.conditionalGeneration
+    ) {
+      log.debug(
+        'Both \'conditionalFiles\' and \'conditionalGeneration\' are defined. Ignoring \'conditionalFiles\' and using \'conditionalGeneration\' only.'
+      );
     }
 
+    if (this.templateConfig.conditionalGeneration?.[relativeSourceDirectory]) {
+      conditionalPath = relativeSourceDirectory;
+    } else if (this.templateConfig.conditionalGeneration?.[relativeSourceFile]) {
+      conditionalPath = relativeSourceFile;
+    } else
+    if (this.templateConfig.conditionalFiles?.[relativeSourceFile]) {  
+      // conditionalFiles becomes deprecated with this PR, and soon will be removed.
+      // TODO: https://github.com/asyncapi/generator/issues/1553
+      conditionalPath = relativeSourceDirectory;
+    }
+   
+    if (conditionalPath) {
+      shouldGenerate = await isGenerationConditionMet(
+        this.templateConfig,
+        conditionalPath,
+        this.templateParams,
+        asyncapiDocument
+      );
+    }
+    
+    if (!shouldGenerate) {
+      if (this.templateConfig.conditionalFiles?.[relativeSourceFile]) {
+        // conditionalFiles becomes deprecated with this PR, and soon will be removed.
+        // TODO: https://github.com/asyncapi/generator/issues/1553
+        return log.debug(logMessage.conditionalFilesMatched(relativeSourceFile));
+      }
+      
+      return log.debug(logMessage.conditionalGenerationMatched(conditionalPath));
+    }
+    
     if (this.isNonRenderableFile(relativeSourceFile)) return await copyFile(sourceFile, targetFile);
     await this.renderAndWriteToFile(asyncapiDocument, sourceFile, targetFile);
+    log.debug(`Successfully rendered template and wrote file ${relativeSourceFile} to location: ${targetFile}`);
   }
 
   /**
@@ -967,19 +1006,34 @@ class Generator {
    * @private
    */
   async loadTemplateConfig() {
+    this.templateConfig = {};
+    
+    // Try to load config from .ageneratorrc
+    try {
+      const rcConfigPath = path.resolve(this.templateDir, '.ageneratorrc');
+      const yaml = await readFile(rcConfigPath, { encoding: 'utf8' });
+      const yamlConfig = require('js-yaml').load(yaml);
+      this.templateConfig = yamlConfig || {};
+      
+      await this.loadDefaultValues();
+      return;
+    } catch (rcError) {
+      // console.error('Could not load .ageneratorrc file:', rcError);
+      log.debug('Could not load .ageneratorrc file:', rcError);
+      // Continue to try package.json if .ageneratorrc fails
+    }
+    
+    // Try to load config from package.json
     try {
       const configPath = path.resolve(this.templateDir, CONFIG_FILENAME);
-      if (!fs.existsSync(configPath)) {
-        this.templateConfig = {};
-        return;
-      }
-
       const json = await readFile(configPath, { encoding: 'utf8' });
       const generatorProp = JSON.parse(json).generator;
       this.templateConfig = generatorProp || {};
-    } catch (e) {
-      this.templateConfig = {};
+    } catch (packageError) {
+      // console.error('Could not load generator config from package.json:', packageError);
+      log.debug('Could not load generator config from package.json:', packageError);
     }
+    
     await this.loadDefaultValues();
   }
 

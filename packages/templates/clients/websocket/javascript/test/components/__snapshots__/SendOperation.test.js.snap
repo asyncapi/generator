@@ -1,0 +1,144 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing of SendOperation function render websockets with send operations and client name 1`] = `
+"/**
+   * Sends a noMessage message over the WebSocket connection.
+   * 
+   * @param {Object} message - The message payload to send. Should match the schema defined in the AsyncAPI document.
+   * @param {WebSocket} [socket] - The WebSocket connection to use. If not provided, the client's own connection will be used.
+   * @throws {TypeError} If message cannot be stringified to JSON
+   * @throws {Error} If WebSocket connection is not in OPEN state
+   */
+  static noMessage(message, socket) {
+    try {
+      socket.send(JSON.stringify(message));
+    } catch (error) {
+      console.error('Error sending noMessage message:', error);
+    }
+  }
+  /**
+   * Instance method version of noMessage that uses the client's own WebSocket connection.
+   * @param {Object} message - The message payload to send
+   * @throws {Error} If WebSocket connection is not established
+   */
+  noMessage(message){
+    if(!this.websocket){
+      throw new Error('WebSocket connection not established. Call connect() first.');
+    }
+    GeminiMarketDataWebsocketAPI.noMessage(message, this.websocket);
+  }
+  
+
+  /**
+   * Sends a noSummaryOperations message over the WebSocket connection.
+   * 
+   * @param {Object} message - The message payload to send. Should match the schema defined in the AsyncAPI document.
+   * @param {WebSocket} [socket] - The WebSocket connection to use. If not provided, the client's own connection will be used.
+   * @throws {TypeError} If message cannot be stringified to JSON
+   * @throws {Error} If WebSocket connection is not in OPEN state
+   */
+  static noSummaryOperations(message, socket) {
+    try {
+      socket.send(JSON.stringify(message));
+    } catch (error) {
+      console.error('Error sending noSummaryOperations message:', error);
+    }
+  }
+  /**
+   * Instance method version of noSummaryOperations that uses the client's own WebSocket connection.
+   * @param {Object} message - The message payload to send
+   * @throws {Error} If WebSocket connection is not established
+   */
+  noSummaryOperations(message){
+    if(!this.websocket){
+      throw new Error('WebSocket connection not established. Call connect() first.');
+    }
+    GeminiMarketDataWebsocketAPI.noSummaryOperations(message, this.websocket);
+  }
+  
+
+  /**
+   * Sends a noSummaryNoDescriptionOperations message over the WebSocket connection.
+   * 
+   * @param {Object} message - The message payload to send. Should match the schema defined in the AsyncAPI document.
+   * @param {WebSocket} [socket] - The WebSocket connection to use. If not provided, the client's own connection will be used.
+   * @throws {TypeError} If message cannot be stringified to JSON
+   * @throws {Error} If WebSocket connection is not in OPEN state
+   */
+  static noSummaryNoDescriptionOperations(message, socket) {
+    try {
+      socket.send(JSON.stringify(message));
+    } catch (error) {
+      console.error('Error sending noSummaryNoDescriptionOperations message:', error);
+    }
+  }
+  /**
+   * Instance method version of noSummaryNoDescriptionOperations that uses the client's own WebSocket connection.
+   * @param {Object} message - The message payload to send
+   * @throws {Error} If WebSocket connection is not established
+   */
+  noSummaryNoDescriptionOperations(message){
+    if(!this.websocket){
+      throw new Error('WebSocket connection not established. Call connect() first.');
+    }
+    GeminiMarketDataWebsocketAPI.noSummaryNoDescriptionOperations(message, this.websocket);
+  }
+  
+
+  /**
+   * Sends a mixedMessageExamples message over the WebSocket connection.
+   * 
+   * @param {Object} message - The message payload to send. Should match the schema defined in the AsyncAPI document.
+   * @param {WebSocket} [socket] - The WebSocket connection to use. If not provided, the client's own connection will be used.
+   * @throws {TypeError} If message cannot be stringified to JSON
+   * @throws {Error} If WebSocket connection is not in OPEN state
+   */
+  static mixedMessageExamples(message, socket) {
+    try {
+      socket.send(JSON.stringify(message));
+    } catch (error) {
+      console.error('Error sending mixedMessageExamples message:', error);
+    }
+  }
+  /**
+   * Instance method version of mixedMessageExamples that uses the client's own WebSocket connection.
+   * @param {Object} message - The message payload to send
+   * @throws {Error} If WebSocket connection is not established
+   */
+  mixedMessageExamples(message){
+    if(!this.websocket){
+      throw new Error('WebSocket connection not established. Call connect() first.');
+    }
+    GeminiMarketDataWebsocketAPI.mixedMessageExamples(message, this.websocket);
+  }
+  
+
+  /**
+   * Sends a operation_with_snake_case message over the WebSocket connection.
+   * 
+   * @param {Object} message - The message payload to send. Should match the schema defined in the AsyncAPI document.
+   * @param {WebSocket} [socket] - The WebSocket connection to use. If not provided, the client's own connection will be used.
+   * @throws {TypeError} If message cannot be stringified to JSON
+   * @throws {Error} If WebSocket connection is not in OPEN state
+   */
+  static operation_with_snake_case(message, socket) {
+    try {
+      socket.send(JSON.stringify(message));
+    } catch (error) {
+      console.error('Error sending operation_with_snake_case message:', error);
+    }
+  }
+  /**
+   * Instance method version of operation_with_snake_case that uses the client's own WebSocket connection.
+   * @param {Object} message - The message payload to send
+   * @throws {Error} If WebSocket connection is not established
+   */
+  operation_with_snake_case(message){
+    if(!this.websocket){
+      throw new Error('WebSocket connection not established. Call connect() first.');
+    }
+    GeminiMarketDataWebsocketAPI.operation_with_snake_case(message, this.websocket);
+  }"
+`;
+
+exports[`Testing of SendOperation function render websockets without send operations 1`] = `""`;

@@ -319,6 +319,17 @@
         "code",
         "ideas"
       ]
+    },
+    {
+      "login": "AayushSaini101",
+      "name": "Moderator ",
+      "avatar_url": "https://avatars.githubusercontent.com/u/60972989?v=4",
+      "profile": "https://github.com/AayushSaini101",
+      "contributions": [
+        "code",
+        "doc",
+        "test"
+      ]
     }
   ],
   "contributorsPerLine": 3,

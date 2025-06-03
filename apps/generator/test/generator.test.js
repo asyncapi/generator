@@ -5,6 +5,7 @@ const Generator = require('../lib/generator');
 const log = require('loglevel');
 const unixify = require('unixify');
 const dummyYAML = fs.readFileSync(path.resolve(__dirname, './docs/dummy.yml'), 'utf8');
+const { loadDefaultValues } = require('../lib/templateConfig/loader');
 
 const logMessage = require('./../lib/logMessages.js');
 
@@ -500,7 +501,7 @@ describe('Generator', () => {
         }
       };
 
-      await gen.loadDefaultValues();
+      await loadDefaultValues.call(gen);
 
       expect(gen.templateParams).toStrictEqual({
         test: true,
@@ -524,7 +525,7 @@ describe('Generator', () => {
         }
       };
 
-      await gen.loadDefaultValues();
+      await loadDefaultValues.call(gen);
 
       expect(gen.templateParams).toStrictEqual({
         test: true
@@ -550,7 +551,7 @@ describe('Generator', () => {
         }
       };
 
-      await gen.loadDefaultValues();
+      await loadDefaultValues.call(gen);
 
       expect(gen.templateParams).toStrictEqual({
         test: true

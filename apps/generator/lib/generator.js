@@ -14,7 +14,7 @@ const { isAsyncAPIDocument } = require('@asyncapi/parser/cjs/document');
 const { configureReact, renderReact, saveRenderedReactContent } = require('./renderer/react');
 const { configureNunjucks, renderNunjucks } = require('./renderer/nunjucks');
 const { validateTemplateConfig } = require('./templateConfig/validator');
-const { loadTemplateConfig, loadDefaultValues } = require('./templateConfig/loader');
+const { loadTemplateConfig } = require('./templateConfig/loader');
 const { isGenerationConditionMet } = require('./conditionalGeneration');
 const {
   convertMapToObject,
@@ -287,7 +287,6 @@ class Generator {
     this.templateContentDir = path.resolve(this.templateDir, TEMPLATE_CONTENT_DIRNAME);
 
     await this.loadTemplateConfig();
-    await this.loadDefaultValues();
 
     return { templatePkgName, templatePkgPath };
   }
@@ -1006,16 +1005,8 @@ class Generator {
    * Loads the template configuration.
    * @private
    */
-  async loadTemplateConfig() {
-    return await loadTemplateConfig.call(this);
-  }
-
-  /**
-   * Loads default values of parameters from template config.
-   * @private
-   */
-  async loadDefaultValues() {
-    return await loadDefaultValues.call(this);
+   loadTemplateConfig() {
+    return loadTemplateConfig.call(this);
   }
 
   /**

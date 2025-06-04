@@ -1,0 +1,111 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing AvailableOperations component Must render all available operations 1`] = `
+"### Available Operations
+
+#### \`noMessage(payload)\`
+Operation with no messages
+
+
+
+
+#### \`noMessageExamples(payload)\`
+Message without any examples
+
+
+
+
+#### \`noSummaryOperations(payload)\`
+
+
+This is a description without a summary
+
+
+
+#### \`oneMessageExample(payload)\`
+One message with one example
+
+
+
+**Example:**
+\`\`\`javascript
+client.oneMessageExample(\\"test\\");
+\`\`\`
+
+
+
+#### \`noSummaryNoDescriptionOperations(payload)\`
+
+
+
+
+**Example:**
+\`\`\`javascript
+client.noSummaryNoDescriptionOperations(\\"test\\");
+\`\`\`
+
+
+
+#### \`multipleExamples(payload)\`
+Multiple messages with examples
+
+
+
+**Example:**
+\`\`\`javascript
+client.multipleExamples(\\"test\\");
+\`\`\`
+
+
+**Example:**
+\`\`\`javascript
+client.multipleExamples(false);
+\`\`\`
+
+
+**Example:**
+\`\`\`javascript
+client.multipleExamples(123);
+\`\`\`
+
+
+
+#### \`mixedMessageExamples(payload)\`
+Mixed message example coverage
+
+An example of a send operation with multiple message with examples
+
+
+**Example:**
+\`\`\`javascript
+client.mixedMessageExamples(\\"test\\");
+\`\`\`
+
+
+**Example:**
+\`\`\`javascript
+client.mixedMessageExamples(\\"test\\");
+\`\`\`
+
+
+**Example:**
+\`\`\`javascript
+client.mixedMessageExamples(false);
+\`\`\`
+
+
+**Example:**
+\`\`\`javascript
+client.mixedMessageExamples(123);
+\`\`\`
+
+
+
+#### \`PascalCaseOperation(payload)\`
+
+
+
+
+
+#### \`operation_with_snake_case(payload)\`"
+`;

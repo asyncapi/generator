@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing of OperationHeader function render operation header with description only correctly 1`] = `
+"#### \`noSummaryOperations(payload)\`
+
+
+This is a description without a summary"
+`;
+
+exports[`Testing of OperationHeader function render operation header with no summary or description correctly 1`] = `"#### \`noSummaryNoDescriptionOperations(payload)\`"`;
+
+exports[`Testing of OperationHeader function render operation header with summary and description correctly 1`] = `
+"#### \`mixedMessageExamples(payload)\`
+Mixed message example coverage
+
+An example of a send operation with multiple message with examples"
+`;
+
+exports[`Testing of OperationHeader function render operation header with summary only correctly 1`] = `
+"#### \`noMessage(payload)\`
+Operation with no messages"
+`;

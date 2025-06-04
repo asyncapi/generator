@@ -5,7 +5,7 @@ import { AvailableOperations } from '../components/AvailableOperations';
 export default function({ asyncapi, params }) {
   const server = getServer(asyncapi.servers(), params.server);
   const info = asyncapi.info();
-  const clientName = getClientName(info);
+  const clientName = getClientName(asyncapi, params.appendClientSuffix, params.customClientName);
 
   const operations = asyncapi.operations().all();
   
@@ -46,7 +46,7 @@ Registers a callback to handle WebSocket errors.
 #### \`close()\`
 Closes the WebSocket connection.`}
       </Text>
-      {operations.length > 0 &&  <AvailableOperations operations={operations} />}
+      <AvailableOperations operations={operations} />
       <Text newLines={2}>
         {`## Testing the client
 

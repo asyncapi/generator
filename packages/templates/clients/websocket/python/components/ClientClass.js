@@ -10,8 +10,7 @@ import { CloseConnection } from './CloseConnection';
 import { RegisterOutgoingProcessor } from './RegisterOutgoingProcessor';
 import { HandleError } from './HandleError';
 
-export function ClientClass({ clientName, serverUrl, title, queryParams, operations }) {
-  const sendOperations = operations.filterBySend();  //just to pass the commiting chnage from codespace //hi //hellooo //hi
+export function ClientClass({ clientName, serverUrl, title, queryParams, }) {
   return (
     <Text>
       <Text newLines={2}>
@@ -24,8 +23,7 @@ export function ClientClass({ clientName, serverUrl, title, queryParams, operati
       <RegisterOutgoingProcessor />
       <HandleMessage />
       <HandleError />
-      <SendOperation sendOperations={sendOperations} clientName={clientName} />
-      <Send sendOperations={sendOperations} />
+      <SendEchoMessage />
       <CloseConnection />
     </Text>
   );

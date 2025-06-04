@@ -10,7 +10,7 @@ export default function ({ asyncapi, params }) {
   const title = getTitle(asyncapi);
   const queryParams = getQueryParams(asyncapi.channels());
   const clientName = getClientName(asyncapi, params.appendClientSuffix, params.customClientName);
-  const serverUrl = getServerUrl(server);
+  const serverUrl = getServerUrl(server);  //hi just to have the make some changeset
 
   return (
     <File name={params.clientFileName}>

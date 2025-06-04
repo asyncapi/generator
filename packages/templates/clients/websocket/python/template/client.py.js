@@ -19,7 +19,6 @@ export default function ({ asyncapi, params }) {
         server={server}
       />
       <Requires query={queryParams} />
-          <Requires query={queryParams} />
       <ClientClass clientName={clientName} serverUrl={serverUrl} title={title} queryParams={queryParams} />
     </File>
   );

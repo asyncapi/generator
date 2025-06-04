@@ -1005,7 +1005,7 @@ class Generator {
    * Loads the template configuration.
    * @private
    */
-   loadTemplateConfig() {
+  loadTemplateConfig() {
     return loadTemplateConfig.call(this);
   }
 

@@ -11,7 +11,7 @@ import { RegisterOutgoingProcessor } from './RegisterOutgoingProcessor';
 import { HandleError } from './HandleError';
 
 export function ClientClass({ clientName, serverUrl, title, queryParams, operations }) {
-  const sendOperations = operations.filterBySend();  //just to pass the commiting chnage from codespace //hi //help
+  const sendOperations = operations.filterBySend();  //just to pass the commiting chnage from codespace //hi //hellooo
   return (
     <Text>
       <Text newLines={2}>

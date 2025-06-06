@@ -1,5 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Testing of Send component render Send component with null send operations 1`] = `""`;
+
 exports[`Testing of Send component render Send component with send operations 1`] = `
 "@staticmethod
   async def _send(message, socket):

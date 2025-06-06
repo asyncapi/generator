@@ -501,7 +501,7 @@ describe('Generator', () => {
         }
       };
 
-      await loadDefaultValues.call(gen);
+      await gen.loadDefaultValues();
 
       expect(gen.templateParams).toStrictEqual({
         test: true,
@@ -525,7 +525,7 @@ describe('Generator', () => {
         }
       };
 
-      await loadDefaultValues.call(gen);
+      await gen.loadDefaultValues();
 
       expect(gen.templateParams).toStrictEqual({
         test: true
@@ -551,7 +551,7 @@ describe('Generator', () => {
         }
       };
 
-      await loadDefaultValues.call(gen);
+      await gen.loadDefaultValues();
 
       expect(gen.templateParams).toStrictEqual({
         test: true

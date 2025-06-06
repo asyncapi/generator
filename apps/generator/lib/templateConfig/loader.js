@@ -1,6 +1,7 @@
 const path = require('path');
 const { readFile } = require('../utils');
 const log = require('loglevel');
+const fs = require('fs');
 
 const CONFIG_FILENAME = 'package.json';
 
@@ -8,8 +9,21 @@ const CONFIG_FILENAME = 'package.json';
  * Loads template configuration from either .ageneratorrc or package.json
  * @param {string} templateDir - Path to the template directory
  * @returns {Promise<Object>} Template configuration object
+ * @throws {Error} If templateDir is invalid or directory doesn't exist
  */
 async function loadTemplateConfig(templateDir) {
+  if (!templateDir || typeof templateDir !== 'string') {
+    throw new Error('templateDir must be a valid string path');
+  }
+
+  if (!fs.existsSync(templateDir)) {
+    throw new Error(`Template directory does not exist: ${templateDir}`);
+  }
+
+  if (!fs.statSync(templateDir).isDirectory()) {
+    throw new Error(`Path is not a directory: ${templateDir}`);
+  }
+
   let templateConfig = {};
 
   // Try to load config from .ageneratorrc

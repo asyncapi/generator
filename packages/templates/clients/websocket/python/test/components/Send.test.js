@@ -21,7 +21,7 @@ describe('Testing of Send component', () => {
     expect(actual).toMatchSnapshot();
   });
 
-  test('render Send component without send operations', () => {
+  test('renders nothing when send operations is empty', () => {
     const result = render(<Send sendOperations={[]} />);
     const actual = result.trim();
     expect(actual).toMatchSnapshot();

@@ -31,7 +31,7 @@ describe('Testing of Send component', () => {
     const actual = result.trim();
     expect(actual).toMatchSnapshot();
   });
-  test('render Send component with undefined send operations', () => {
+  test('renders nothing without send operations', () => {
     const result = render(<Send />);
     const actual = result.trim();
     expect(actual).toMatchSnapshot();

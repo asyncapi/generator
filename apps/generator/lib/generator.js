@@ -1005,16 +1005,18 @@ class Generator {
    * Loads the template configuration.
    * @private
    */
-  async loadTemplateConfig() {
-    this.templateConfig = await loadTemplateConfig(this.templateDir);
-    await this.loadDefaultValues();
+  loadTemplateConfig() {
+    return loadTemplateConfig(this.templateDir).then(config => {
+      this.templateConfig = config;
+      return this.loadDefaultValues();
+    });
   }
 
   /**
    * Loads default values of parameters from template config using the external loader.
    * @private
    */
-  async loadDefaultValues() {
+  loadDefaultValues() {
     loadDefaultValues(this.templateConfig, this.templateParams);
   }
   

@@ -32,7 +32,7 @@
     "templates:test": "turbo run test --filter=@asyncapi/template*",
     "packages:test": "turbo run test --filter=./packages/** --only",
     "hooks:test": "turbo run test --filter=@asyncapi/generator-hooks",
-    "test:update": "npm run test -- -u"
+    "test:update": "turbo run test -- -u"
   },
   "devDependencies": {
     "markdown-toc": "^1.2.0",

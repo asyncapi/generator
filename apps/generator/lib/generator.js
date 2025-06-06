@@ -14,7 +14,7 @@ const { isAsyncAPIDocument } = require('@asyncapi/parser/cjs/document');
 const { configureReact, renderReact, saveRenderedReactContent } = require('./renderer/react');
 const { configureNunjucks, renderNunjucks } = require('./renderer/nunjucks');
 const { validateTemplateConfig } = require('./templateConfig/validator');
-const { loadTemplateConfig } = require('./templateConfig/loader');
+const { loadTemplateConfig, loadDefaultValues } = require('./templateConfig/loader');
 const { isGenerationConditionMet } = require('./conditionalGeneration');
 const {
   convertMapToObject,
@@ -1005,10 +1005,19 @@ class Generator {
    * Loads the template configuration.
    * @private
    */
-  loadTemplateConfig() {
-    return loadTemplateConfig.call(this);
+  async loadTemplateConfig() {
+    this.templateConfig = await loadTemplateConfig(this.templateDir);
+    await this.loadDefaultValues();
   }
 
+  /**
+   * Loads default values of parameters from template config using the external loader.
+   * @private
+   */
+  async loadDefaultValues() {
+    loadDefaultValues(this.templateConfig, this.templateParams);
+  }
+  
   /**
    * Launches all the hooks registered at a given hook point/name.
    *

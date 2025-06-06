@@ -5,7 +5,6 @@ const Generator = require('../lib/generator');
 const log = require('loglevel');
 const unixify = require('unixify');
 const dummyYAML = fs.readFileSync(path.resolve(__dirname, './docs/dummy.yml'), 'utf8');
-const { loadDefaultValues } = require('../lib/templateConfig/loader');
 
 const logMessage = require('./../lib/logMessages.js');
 

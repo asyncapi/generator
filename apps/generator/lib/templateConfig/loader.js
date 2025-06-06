@@ -1,63 +1,66 @@
 const path = require('path');
-const log = require('loglevel');
 const { readFile } = require('../utils');
+const log = require('loglevel');
 
 const CONFIG_FILENAME = 'package.json';
 
 /**
- * Loads the template configuration.
- * @private
+ * Loads template configuration from either .ageneratorrc or package.json
+ * @param {string} templateDir - Path to the template directory
+ * @returns {Promise<Object>} Template configuration object
  */
-async function loadTemplateConfig() {
-    this.templateConfig = {};
+async function loadTemplateConfig(templateDir) {
+  let templateConfig = {};
 
-    // Try to load config from .ageneratorrc
-    try {
-      const rcConfigPath = path.resolve(this.templateDir, '.ageneratorrc');
-      const yaml = await readFile(rcConfigPath, { encoding: 'utf8' });
-      const yamlConfig = require('js-yaml').load(yaml);
-      this.templateConfig = yamlConfig || {};
+  // Try to load config from .ageneratorrc
+  try {
+    const rcConfigPath = path.resolve(templateDir, '.ageneratorrc');
+    const yaml = await readFile(rcConfigPath, { encoding: 'utf8' });
+    const yamlConfig = require('js-yaml').load(yaml);
+    templateConfig = yamlConfig || {};
 
-      await this.loadDefaultValues();
-      return;
-    } catch (rcError) {
-      // console.error('Could not load .ageneratorrc file:', rcError);
-      log.debug('Could not load .ageneratorrc file:', rcError);
-      // Continue to try package.json if .ageneratorrc fails
-    }
-
-    // Try to load config from package.json
-    try {
-      const configPath = path.resolve(this.templateDir, CONFIG_FILENAME);
-      const json = await readFile(configPath, { encoding: 'utf8' });
-      const generatorProp = JSON.parse(json).generator;
-      this.templateConfig = generatorProp || {};
-    } catch (packageError) {
-      // console.error('Could not load generator config from package.json:', packageError);
-      log.debug('Could not load generator config from package.json:', packageError);
-    }
-
-    await this.loadDefaultValues();
+    log.debug('Template configuration loaded from .ageneratorrc');
+    return templateConfig;
+  } catch (rcError) {
+    log.debug('Could not load .ageneratorrc file:', rcError);
+    // Continue to try package.json if .ageneratorrc fails
   }
 
-  /**
-   * Loads default values of parameters from template config. If value was already set as parameter it will not be
-   * overriden.
-   * @private
-   */
-async function loadDefaultValues() {
-    const parameters = this.templateConfig.parameters;
-    const defaultValues = Object.keys(parameters || {}).filter(key => parameters[key].default);
+  // Try to load config from package.json
+  try {
+    const configPath = path.resolve(templateDir, CONFIG_FILENAME);
+    const json = await readFile(configPath, { encoding: 'utf8' });
+    const generatorProp = JSON.parse(json).generator;
+    templateConfig = generatorProp || {};
 
-    defaultValues.filter(dv => this.templateParams[dv] === undefined).forEach(dv =>
-      Object.defineProperty(this.templateParams, dv, {
+    log.debug('Template configuration loaded from package.json');
+  } catch (packageError) {
+    log.debug('Could not load generator config from package.json:', packageError);
+  }
+
+  return templateConfig;
+}
+
+/**
+ * Loads default values of parameters from template config
+ * @param {Object} templateConfig - The template configuration object
+ * @param {Object} templateParams - The template parameters object to modify
+ */
+function loadDefaultValues(templateConfig, templateParams) {
+  const parameters = templateConfig.parameters;
+  const defaultValues = Object.keys(parameters || {}).filter(key => parameters[key].default);
+
+  defaultValues
+    .filter(dv => templateParams[dv] === undefined)
+    .forEach(dv => {
+      Object.defineProperty(templateParams, dv, {
         enumerable: true,
         get() {
           return parameters[dv].default;
         }
-      })
-    );
-  }
+      });
+    });
+}
 
 module.exports = {
   loadTemplateConfig,

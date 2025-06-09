@@ -124,8 +124,6 @@ class Generator {
     this.hooks = {};
     /** @type {Object} Maps schema URL to folder. */
     this.mapBaseUrlToFolder = mapBaseUrlToFolder;
-    this.loadTemplateConfig = loadTemplateConfig.bind(this);
-    this.loadDefaultValues = loadDefaultValues.bind(this);
 
     // Load template configuration
     /** @type {Object} The template parameters. The structure for this object is based on each individual template. */
@@ -1001,6 +999,25 @@ class Generator {
     if (!fileExists) return true;
 
     return !this.noOverwriteGlobs.some(globExp => minimatch(filePath, globExp));
+  }
+
+  /**
+   * Loads the template configuration.
+   * @private
+   */
+  loadTemplateConfig() {
+    return loadTemplateConfig(this.templateDir).then(config => {
+      this.templateConfig = config;
+      return this.loadDefaultValues();
+    });
+  }
+
+  /**
+   * Loads default values of parameters from template config using the external loader.
+   * @private
+   */
+  loadDefaultValues() {
+    loadDefaultValues(this.templateConfig, this.templateParams);
   }
   
   /**

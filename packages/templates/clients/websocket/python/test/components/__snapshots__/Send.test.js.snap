@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing of Send component render Send component with send operations 1`] = `
+"@staticmethod
+  async def _send(message, socket):
+      \\"\\"\\"
+      Internal helper to handle the actual sending logic.
+
+      Args:
+          message (dict or str): The message to send.
+          socket (websockets.WebSocketCommonProtocol): The WebSocket to send through.
+
+      Notes:
+          If message is a dictionary, it will be automatically converted to JSON.
+      \\"\\"\\"
+      try:
+          if isinstance(message, dict):
+              message = json.dumps(message)
+          await socket.send(message)
+      except Exception as e:
+          print(\\"Error sending:\\", e)"
+`;
+
+exports[`Testing of Send component render nothing when send operations is null 1`] = `""`;
+
+exports[`Testing of Send component renders nothing when send operations is empty 1`] = `""`;
+
+exports[`Testing of Send component renders nothing without send operations 1`] = `""`;

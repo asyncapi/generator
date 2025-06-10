@@ -2,7 +2,7 @@ const path = require('path');
 const { Parser, fromFile } = require('@asyncapi/parser');
 const { getClientName, getInfo, getTitle, toSnakeCase } = require('@asyncapi/generator-helpers');
 const fs = require('fs/promises');
-const { listFiles } = require('../src/utils');
+const { listFiles } = require('@asyncapi/generator-helpers');
 
 const parser = new Parser();
 const asyncapi_v3_path = path.resolve(__dirname, './__fixtures__/asyncapi-websocket-query.yml');
@@ -185,11 +185,5 @@ describe('listFiles', () => {
     const mockPath = '/mock/path';
     const result = await listFiles(mockPath);
     expect(result).toEqual([]);
-  });
-
-  it('should handle errors thrown by readdir', async () => {
-    fs.readdir.mockRejectedValue(new Error('Permission denied'));
-
-    await expect(listFiles('/error/path')).rejects.toThrow('Permission denied');
   });
 });

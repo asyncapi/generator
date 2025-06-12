@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Requires component renders correctly when query is false 1`] = `
+"import json
+import certifi
+import threading
+import websocket"
+`;
+
+exports[`Requires component renders correctly when query is true 1`] = `
+"import json
+import certifi
+import threading
+import websocket
+import os
+from urllib.parse import urlencode"
+`;
+
+exports[`Requires component renders correctly when query is undefined 1`] = `
+"import json
+import certifi
+import threading
+import websocket"
+`;

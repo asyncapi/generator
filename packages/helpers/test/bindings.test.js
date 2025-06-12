@@ -22,6 +22,15 @@ describe('getQueryParams integration test with AsyncAPI', () => {
     parsedAsyncAPIDocument = parseResult.document;
   });
 
+  const getQueryParamsForChannels = (channelNames) => {
+    const channels = parsedAsyncAPIDocument.channels();
+    const filteredChannelsMap = createChannelsWithOnly(channelNames, channels);
+    return getQueryParams({
+      isEmpty: () => filteredChannelsMap.size === 0,
+      all: () => filteredChannelsMap
+    });
+  };
+
   it('should extract query parameters from WebSocket binding with properties', () => {
     const channels = parsedAsyncAPIDocument.channels();
     const params = getQueryParams(channels);
@@ -34,12 +43,7 @@ describe('getQueryParams integration test with AsyncAPI', () => {
   });
 
   it('should return null for channel without WebSocket binding', () => {
-    const channels = parsedAsyncAPIDocument.channels();
-    const filteredChannelsMap = createChannelsWithOnly(['marketDataV1NoBinding'], channels);
-    const params = getQueryParams({
-      isEmpty: () => filteredChannelsMap.size === 0,
-      all: () => filteredChannelsMap
-    });
+    const params = getQueryParamsForChannels(['marketDataV1NoBinding']);
     expect(params).toBeNull();
   });
 
@@ -53,32 +57,17 @@ describe('getQueryParams integration test with AsyncAPI', () => {
   });
 
   it('should return null for channel with empty binding', () => {
-    const channels = parsedAsyncAPIDocument.channels();
-    const filteredChannelsMap = createChannelsWithOnly(['emptyChannel'], channels);
-    const params = getQueryParams({
-      isEmpty: () => filteredChannelsMap.size === 0,
-      all: () => filteredChannelsMap
-    });
+    const params = getQueryParamsForChannels(['emptyChannel']);
     expect(params).toBeNull();
   });
 
   it('should return null if WebSocket binding exists but has no query parameters', () => {
-    const channels = parsedAsyncAPIDocument.channels();
-    const filteredChannelsMap = createChannelsWithOnly(['wsBindingNoQuery'], channels);
-    const params = getQueryParams({
-      isEmpty: () => filteredChannelsMap.size === 0,
-      all: () => filteredChannelsMap
-    });
+    const params = getQueryParamsForChannels(['wsBindingNoQuery']);
     expect(params).toBeNull();
   });
 
   it('should return null if WebSocket binding query exists but has no properties', () => {
-    const channels = parsedAsyncAPIDocument.channels();
-    const filteredChannelsMap = createChannelsWithOnly(['wsBindingEmptyQuery'], channels);
-    const params = getQueryParams({
-      isEmpty: () => filteredChannelsMap.size === 0,
-      all: () => filteredChannelsMap
-    });
+    const params = getQueryParamsForChannels(['wsBindingEmptyQuery']);
     expect(params).toBeNull();
   });
 });

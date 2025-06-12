@@ -5,6 +5,8 @@ const parser = new Parser();
 const asyncapi_v3_path = path.resolve(__dirname, './__fixtures__/asyncapi-websocket-query.yml');
 
 function createChannelsWithOnly(keysToKeep, originalChannels) {
+  // Create a copy to avoid mutating the original channels map - 
+  // other tests need the original data intact
   const channelsMap = new Map(originalChannels.all());  
   for (const key of channelsMap.keys()) {
     if (!keysToKeep.includes(key)) {
@@ -22,9 +24,12 @@ describe('getQueryParams integration test with AsyncAPI', () => {
     parsedAsyncAPIDocument = parseResult.document;
   });
 
+  // Helper function to create filtered channels and get query params
   const getQueryParamsForChannels = (channelNames) => {
     const channels = parsedAsyncAPIDocument.channels();
     const filteredChannelsMap = createChannelsWithOnly(channelNames, channels);
+    // Mock the channels interface that getQueryParams() expects - it needs
+    // isEmpty() and all() methods, not direct Map access
     return getQueryParams({
       isEmpty: () => filteredChannelsMap.size === 0,
       all: () => filteredChannelsMap
@@ -48,6 +53,8 @@ describe('getQueryParams integration test with AsyncAPI', () => {
   });
 
   it('should return null for empty channels map', () => {
+    // Mock channels object to simulate empty state - getQueryParams() expects 
+    // channels with isEmpty() and all() methods, not a plain Map
     const emptyChannels = {
       isEmpty: () => true,
       all: () => new Map()

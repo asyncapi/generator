@@ -4,7 +4,7 @@
   "description": "Package with reusable components for generation using React render engine",
   "scripts": {
     "test": "npm run build && jest --coverage",
-    "test:update": "jest --updateSnapshot",
+    "test:update": "npm run test -- -u",
     "build": "babel src --out-dir lib",
     "prepublishOnly": "npm run build",
     "lint": "eslint --max-warnings 0 --config ../../.eslintrc --ignore-path ../../.eslintignore .",

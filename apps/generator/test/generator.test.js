@@ -11,7 +11,7 @@ const logMessage = require('./../lib/logMessages.js');
 jest.mock('../lib/utils');
 jest.mock('../lib/filtersRegistry');
 jest.mock('../lib/hooksRegistry');
-jest.mock('../lib/templateConfigValidator');
+jest.mock('../lib/templateConfig/validator');
 
 describe('Generator', () => {
   describe('constructor', () => {
@@ -131,7 +131,7 @@ describe('Generator', () => {
       util = require('../lib/utils');
       filtersRegistry = require('../lib/filtersRegistry');
       hooksRegistry = require('../lib/hooksRegistry');
-      templateConfigValidator = require('../lib/templateConfigValidator');
+      templateConfigValidator = require('../lib/templateConfig/validator');
       xfsMock = require('fs.extra');
       const { AsyncAPIDocument } = require('@asyncapi/parser/cjs/models/v2/asyncapi');
       asyncApiDocumentMock = new AsyncAPIDocument({ 'x-parser-api-version': 0 });

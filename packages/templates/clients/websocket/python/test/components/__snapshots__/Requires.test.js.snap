@@ -1,5 +1,28 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Requires component (integration with AsyncAPI document) renders correctly with null query 1`] = `
+"import json
+import certifi
+import threading
+import websocket"
+`;
+
+exports[`Requires component (integration with AsyncAPI document) renders correctly with query params 1`] = `
+"import json
+import certifi
+import threading
+import websocket
+import os
+from urllib.parse import urlencode"
+`;
+
+exports[`Requires component (integration with AsyncAPI document) renders correctly with undefined query 1`] = `
+"import json
+import certifi
+import threading
+import websocket"
+`;
+
 exports[`Requires component renders correctly when query is false 1`] = `
 "import json
 import certifi

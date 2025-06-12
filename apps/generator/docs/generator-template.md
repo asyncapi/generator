@@ -42,14 +42,13 @@ Before you begin, make sure you have the following set up:
 There is a list of [community maintained templates](https://www.asyncapi.com/docs/tools/generator/template#generator-templates-list), but what if you do not find what you need? In that case, you'll create a user-defined template that generates custom output from the generator.
 Before you create the template, you'll need to have an [AsyncAPI document](https://www.asyncapi.com/docs/tools/generator/asyncapi-document) that defines the properties you want to use in your template to test against. In this tutorial, you'll use the following template saved in the **test/fixtures/asyncapi.yml** file in your template project directory.
 
-``` yml
 
-asyncapi: 2.6.0
-
+```yaml
+asyncapi: "3.0.0"
 info:
   title: Temperature Service
   version: 1.0.0
-  description: This service is in charge of processing all the events related to temperature.
+  description: Service that emits temperature changes from a bedroom sensor.
 
 servers:
   dev:
@@ -57,21 +56,24 @@ servers:
     protocol: mqtt
 
 channels:
-  temperature/changed:
-    description: Updates the bedroom temperature in the database when the temperatures drops or goes up.
-    publish:
-      operationId: temperatureChange
-      message:
-        description: Message that is being sent when the temperature in the bedroom changes.
+  temperatureChanged:
+    address: temperature/changed
+    messages:
+      temperatureChange:
+        description: Message sent when the temperature in the bedroom changes.
         payload:
-          type: object
-          additionalProperties: false
-          properties:
-            temperatureId:
-              type: string
+          $ref: '#/components/schemas/Temperature' # refactored from inline payload for better reuse
+
+operations:
+  recieveTemperatureChanged:
+    action: recieve
+    summary: Temperature changes are recieved from the broker
+    channel:
+      $ref: '#/channels/temperatureChanged'
+
 components:
   schemas:
-    temperatureId:
+    Temperature:
       type: object
       additionalProperties: false
       properties:
@@ -100,7 +102,7 @@ python-mqtt-client-template
 └── package.json
 ```
 
-Lets break it down:
+Let's break it down:
 
 ### package.json file
 

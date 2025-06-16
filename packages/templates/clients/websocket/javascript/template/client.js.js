@@ -17,7 +17,7 @@ export default function ({ asyncapi, params }) {
         info={info}
         server={server}
       />
-      <Requires />
+      <Requires sendOperations={sendOperations} />
       <ClientClass clientName={clientName} serverUrl={serverUrl} title={title} sendOperations={sendOperations} />
     </File>
   );

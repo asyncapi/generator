@@ -7,9 +7,11 @@ export function SendOperation({ sendOperations, clientName }) {
 
   return (
     <>
-      {sendOperations.map((operation) => (
-        <Text newLines={2} indent={2}>
-          {`
+      {sendOperations.map((operation) => {
+        const schemaName = `${operation.id()}Schemas`;
+        return (
+          <Text newLines={2} indent={2}>
+            {`
 /**
  * Sends a ${operation.id()} message over the WebSocket connection.
  * 
@@ -18,7 +20,11 @@ export function SendOperation({ sendOperations, clientName }) {
  * @throws {TypeError} If message cannot be stringified to JSON
  * @throws {Error} If WebSocket connection is not in OPEN state
  */
-static ${operation.id()}(message, socket) {
+static async ${operation.id()}(message, socket) {
+  const isValid = await ${clientName}.messageValidator(message, ${schemaName});
+  if (!isValid) {
+    throw new Error('Invalid message format for ${operation.id()}');
+  }
   try {
     socket.send(JSON.stringify(message));
   } catch (error) {
@@ -37,8 +43,10 @@ ${operation.id()}(message){
   ${clientName}.${operation.id()}(message, this.websocket);
 }
   `}
-        </Text>
-      ))}
+          </Text>
+        );
+      })
+      }
     </>
   );
 }

@@ -9,7 +9,11 @@ exports[`Testing of SendOperation function render websockets with send operation
    * @throws {TypeError} If message cannot be stringified to JSON
    * @throws {Error} If WebSocket connection is not in OPEN state
    */
-  static noMessage(message, socket) {
+  static async noMessage(message, socket) {
+    const isValid = await GeminiMarketDataWebsocketAPI.messageValidator(message, noMessageSchemas);
+    if (!isValid) {
+      throw new Error('Invalid message format for noMessage');
+    }
     try {
       socket.send(JSON.stringify(message));
     } catch (error) {
@@ -37,7 +41,11 @@ exports[`Testing of SendOperation function render websockets with send operation
    * @throws {TypeError} If message cannot be stringified to JSON
    * @throws {Error} If WebSocket connection is not in OPEN state
    */
-  static noSummaryOperations(message, socket) {
+  static async noSummaryOperations(message, socket) {
+    const isValid = await GeminiMarketDataWebsocketAPI.messageValidator(message, noSummaryOperationsSchemas);
+    if (!isValid) {
+      throw new Error('Invalid message format for noSummaryOperations');
+    }
     try {
       socket.send(JSON.stringify(message));
     } catch (error) {
@@ -65,7 +73,11 @@ exports[`Testing of SendOperation function render websockets with send operation
    * @throws {TypeError} If message cannot be stringified to JSON
    * @throws {Error} If WebSocket connection is not in OPEN state
    */
-  static noSummaryNoDescriptionOperations(message, socket) {
+  static async noSummaryNoDescriptionOperations(message, socket) {
+    const isValid = await GeminiMarketDataWebsocketAPI.messageValidator(message, noSummaryNoDescriptionOperationsSchemas);
+    if (!isValid) {
+      throw new Error('Invalid message format for noSummaryNoDescriptionOperations');
+    }
     try {
       socket.send(JSON.stringify(message));
     } catch (error) {
@@ -93,7 +105,11 @@ exports[`Testing of SendOperation function render websockets with send operation
    * @throws {TypeError} If message cannot be stringified to JSON
    * @throws {Error} If WebSocket connection is not in OPEN state
    */
-  static mixedMessageExamples(message, socket) {
+  static async mixedMessageExamples(message, socket) {
+    const isValid = await GeminiMarketDataWebsocketAPI.messageValidator(message, mixedMessageExamplesSchemas);
+    if (!isValid) {
+      throw new Error('Invalid message format for mixedMessageExamples');
+    }
     try {
       socket.send(JSON.stringify(message));
     } catch (error) {
@@ -121,7 +137,11 @@ exports[`Testing of SendOperation function render websockets with send operation
    * @throws {TypeError} If message cannot be stringified to JSON
    * @throws {Error} If WebSocket connection is not in OPEN state
    */
-  static operation_with_snake_case(message, socket) {
+  static async operation_with_snake_case(message, socket) {
+    const isValid = await GeminiMarketDataWebsocketAPI.messageValidator(message, operation_with_snake_caseSchemas);
+    if (!isValid) {
+      throw new Error('Invalid message format for operation_with_snake_case');
+    }
     try {
       socket.send(JSON.stringify(message));
     } catch (error) {

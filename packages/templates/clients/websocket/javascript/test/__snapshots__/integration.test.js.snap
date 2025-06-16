@@ -146,6 +146,7 @@ exports[`testing if generated client match snapshot generate simple client for h
 //////////////////////////////////////////////////////////////////////
 
 const WebSocket = require('ws');
+const { sendEchoMessageSchemas } = require('./schemas.js');
 
 class HoppscotchClient {
 
@@ -229,6 +230,34 @@ class HoppscotchClient {
   }
 
   /**
+  * Validates a message payload against an array of operation message schemas.
+  * This method uses the Hyperjump JSON Schema validator (Draft-07) to check if
+  * the given message object conforms to at least one of the provided operation-level
+  * message schemas (as defined in the AsyncAPI document).
+  * @async
+  * @static
+  * @param {Object} message - The message payload to be validated.
+  * @param {Array<Object>} schemas - An array of JSON Schema objects representing operation message schemas.
+  * @returns {Promise<boolean>} - Resolves to true if the message is valid against any of the schemas, otherwise false.
+  */
+  static async messageValidator(message, schemas) {
+    try {
+      const { registerSchema, validate, unregisterSchema } = await import(\\"@hyperjump/json-schema/draft-07\\");
+      for (let i = 0; i < schemas.length; i++) {
+        const schemaId = \`http://example.com/schema-\${i}\`;
+        registerSchema(schemas[i], schemaId, \\"http://json-schema.org/draft-07/schema#\\");
+        const result = await validate(schemaId, message);
+        unregisterSchema(schemaId);
+        if (result.valid) return true;
+      }
+      return false;  
+    } catch (error) {
+      console.error(\\"Validation error:\\", error);
+      return false;
+    }
+  }
+
+  /**
    * Sends a sendEchoMessage message over the WebSocket connection.
    * 
    * @param {Object} message - The message payload to send. Should match the schema defined in the AsyncAPI document.
@@ -236,7 +265,11 @@ class HoppscotchClient {
    * @throws {TypeError} If message cannot be stringified to JSON
    * @throws {Error} If WebSocket connection is not in OPEN state
    */
-  static sendEchoMessage(message, socket) {
+  static async sendEchoMessage(message, socket) {
+    const isValid = await HoppscotchClient.messageValidator(message, sendEchoMessageSchemas);
+    if (!isValid) {
+      throw new Error('Invalid message format for sendEchoMessage');
+    }
     try {
       socket.send(JSON.stringify(message));
     } catch (error) {
@@ -266,6 +299,28 @@ class HoppscotchClient {
 }
 module.exports = HoppscotchClient;
 
+"
+`;
+
+exports[`testing if generated client match snapshot generate simple client for hoppscotch echo with custom client name: schemas.js 1`] = `
+"const sendEchoMessageSchemas = [
+  {
+    \\"x-parser-schema-id\\": \\"<anonymous-schema-1>\\"
+  }
+];
+const handleTimeStampMessageSchemas = [
+  {
+    \\"type\\": \\"string\\",
+    \\"description\\": \\"A timestamp with GMT timezone.\\",
+    \\"example\\": \\"11:13:24 GMT+0000 (Coordinated Universal Time)\\",
+    \\"x-parser-schema-id\\": \\"<anonymous-schema-2>\\"
+  }
+];
+module.exports = {
+  sendEchoMessageSchemas,
+  handleTimeStampMessageSchemas
+};
+        
 "
 `;
 
@@ -415,6 +470,7 @@ exports[`testing if generated client match snapshot generate simple client for h
 //////////////////////////////////////////////////////////////////////
 
 const WebSocket = require('ws');
+const { sendEchoMessageSchemas } = require('./schemas.js');
 
 class HoppscotchEchoWebSocketClient {
 
@@ -498,6 +554,34 @@ class HoppscotchEchoWebSocketClient {
   }
 
   /**
+  * Validates a message payload against an array of operation message schemas.
+  * This method uses the Hyperjump JSON Schema validator (Draft-07) to check if
+  * the given message object conforms to at least one of the provided operation-level
+  * message schemas (as defined in the AsyncAPI document).
+  * @async
+  * @static
+  * @param {Object} message - The message payload to be validated.
+  * @param {Array<Object>} schemas - An array of JSON Schema objects representing operation message schemas.
+  * @returns {Promise<boolean>} - Resolves to true if the message is valid against any of the schemas, otherwise false.
+  */
+  static async messageValidator(message, schemas) {
+    try {
+      const { registerSchema, validate, unregisterSchema } = await import(\\"@hyperjump/json-schema/draft-07\\");
+      for (let i = 0; i < schemas.length; i++) {
+        const schemaId = \`http://example.com/schema-\${i}\`;
+        registerSchema(schemas[i], schemaId, \\"http://json-schema.org/draft-07/schema#\\");
+        const result = await validate(schemaId, message);
+        unregisterSchema(schemaId);
+        if (result.valid) return true;
+      }
+      return false;  
+    } catch (error) {
+      console.error(\\"Validation error:\\", error);
+      return false;
+    }
+  }
+
+  /**
    * Sends a sendEchoMessage message over the WebSocket connection.
    * 
    * @param {Object} message - The message payload to send. Should match the schema defined in the AsyncAPI document.
@@ -505,7 +589,11 @@ class HoppscotchEchoWebSocketClient {
    * @throws {TypeError} If message cannot be stringified to JSON
    * @throws {Error} If WebSocket connection is not in OPEN state
    */
-  static sendEchoMessage(message, socket) {
+  static async sendEchoMessage(message, socket) {
+    const isValid = await HoppscotchEchoWebSocketClient.messageValidator(message, sendEchoMessageSchemas);
+    if (!isValid) {
+      throw new Error('Invalid message format for sendEchoMessage');
+    }
     try {
       socket.send(JSON.stringify(message));
     } catch (error) {
@@ -535,6 +623,28 @@ class HoppscotchEchoWebSocketClient {
 }
 module.exports = HoppscotchEchoWebSocketClient;
 
+"
+`;
+
+exports[`testing if generated client match snapshot generate simple client for hoppscotch echo: schemas.js 1`] = `
+"const sendEchoMessageSchemas = [
+  {
+    \\"x-parser-schema-id\\": \\"<anonymous-schema-1>\\"
+  }
+];
+const handleTimeStampMessageSchemas = [
+  {
+    \\"type\\": \\"string\\",
+    \\"description\\": \\"A timestamp with GMT timezone.\\",
+    \\"example\\": \\"11:13:24 GMT+0000 (Coordinated Universal Time)\\",
+    \\"x-parser-schema-id\\": \\"<anonymous-schema-2>\\"
+  }
+];
+module.exports = {
+  sendEchoMessageSchemas,
+  handleTimeStampMessageSchemas
+};
+        
 "
 `;
 
@@ -660,6 +770,7 @@ exports[`testing if generated client match snapshot generate simple client for p
 //////////////////////////////////////////////////////////////////////
 
 const WebSocket = require('ws');
+const { sendEchoMessageSchemas } = require('./schemas.js');
 
 class PostmanEchoWebSocketClientClient {
 
@@ -743,6 +854,34 @@ class PostmanEchoWebSocketClientClient {
   }
 
   /**
+  * Validates a message payload against an array of operation message schemas.
+  * This method uses the Hyperjump JSON Schema validator (Draft-07) to check if
+  * the given message object conforms to at least one of the provided operation-level
+  * message schemas (as defined in the AsyncAPI document).
+  * @async
+  * @static
+  * @param {Object} message - The message payload to be validated.
+  * @param {Array<Object>} schemas - An array of JSON Schema objects representing operation message schemas.
+  * @returns {Promise<boolean>} - Resolves to true if the message is valid against any of the schemas, otherwise false.
+  */
+  static async messageValidator(message, schemas) {
+    try {
+      const { registerSchema, validate, unregisterSchema } = await import(\\"@hyperjump/json-schema/draft-07\\");
+      for (let i = 0; i < schemas.length; i++) {
+        const schemaId = \`http://example.com/schema-\${i}\`;
+        registerSchema(schemas[i], schemaId, \\"http://json-schema.org/draft-07/schema#\\");
+        const result = await validate(schemaId, message);
+        unregisterSchema(schemaId);
+        if (result.valid) return true;
+      }
+      return false;  
+    } catch (error) {
+      console.error(\\"Validation error:\\", error);
+      return false;
+    }
+  }
+
+  /**
    * Sends a sendEchoMessage message over the WebSocket connection.
    * 
    * @param {Object} message - The message payload to send. Should match the schema defined in the AsyncAPI document.
@@ -750,7 +889,11 @@ class PostmanEchoWebSocketClientClient {
    * @throws {TypeError} If message cannot be stringified to JSON
    * @throws {Error} If WebSocket connection is not in OPEN state
    */
-  static sendEchoMessage(message, socket) {
+  static async sendEchoMessage(message, socket) {
+    const isValid = await PostmanEchoWebSocketClientClient.messageValidator(message, sendEchoMessageSchemas);
+    if (!isValid) {
+      throw new Error('Invalid message format for sendEchoMessage');
+    }
     try {
       socket.send(JSON.stringify(message));
     } catch (error) {
@@ -780,5 +923,18 @@ class PostmanEchoWebSocketClientClient {
 }
 module.exports = PostmanEchoWebSocketClientClient;
 
+"
+`;
+
+exports[`testing if generated client match snapshot generate simple client for postman echo: schemas.js 1`] = `
+"const sendEchoMessageSchemas = [
+  {
+    \\"x-parser-schema-id\\": \\"<anonymous-schema-1>\\"
+  }
+];
+module.exports = {
+  sendEchoMessageSchemas
+};
+        
 "
 `;

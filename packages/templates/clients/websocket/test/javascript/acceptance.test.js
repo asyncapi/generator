@@ -75,12 +75,13 @@ describe('client - sender tests', () => {
     //await delay(100000);
     const expectedMessage = 'Sending acceptance test message';
 
-    wsServer.on('connection', (socket) => {
-      /*
-      * TEST: sending message with generated function to microcks test client that connected to our custom server
-      */
-      WSClient.sendEchoMessage(expectedMessage, socket);
-    });
+   wsServer.on('connection', async (socket) => {
+      try {
+        await WSClient.sendEchoMessage(expectedMessage, socket);
+      } catch (err) {
+        console.error('Error in sending message:', err);
+      }
+   });
 
     // Start test in Microcks
     const response = await fetch(microcksTestEndpoint, {

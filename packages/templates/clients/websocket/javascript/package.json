@@ -14,7 +14,7 @@
   "dependencies": {
     "@asyncapi/generator-helpers": "1.0.0",
     "@asyncapi/generator-react-sdk": "^1.1.2",
-    "@hyperjump/json-schema": "^1.15.1"
+    "@hyperjump/json-schema": "^1.16.0"
   },
   "devDependencies": {
     "@asyncapi/generator": "*",

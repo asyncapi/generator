@@ -21,7 +21,7 @@ This approach with templates developed as part of `generator` repository is a wo
 3. `components` package should contain a set of reusable react components that could be shared between templates.
 4. `helpers` package should contain a set of reusable helpers that focus mainly on smart extract of info from AsyncAPI document using the Parser API. Templates should rely on well-tested `helpers` rather than directly using the AsyncAPI Parser API.
 5. Each new template or new feature in existing template must be done with reusability in mind. Custom helpers and components should be limited to minimum.
-6. Helpers need dedicated tests. We are yet to agree if we should base these on dummy AsyncAPI documents or just mock fake Parser objects inside tests.
+6. Helpers need dedicated tests. Always push for having test cases presented through dummy AsyncAPI documents. mock fake Parser objects inside tests.
 7. Components should also be tested separately, expecially if they are reused across templates.
 8. Each template should have a set of snapshot tests that help understand if changes in the PR affect the output of the template. Only template components with conditions require separate testing.
 9. Every time new template feature is added it must be consulted with:

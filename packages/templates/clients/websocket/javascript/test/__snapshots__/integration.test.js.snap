@@ -281,11 +281,11 @@ class HoppscotchClient {
    * @param {Object} message - The message payload to send
    * @throws {Error} If WebSocket connection is not established
    */
-  sendEchoMessage(message){
+  async sendEchoMessage(message){
     if(!this.websocket){
       throw new Error('WebSocket connection not established. Call connect() first.');
     }
-    HoppscotchClient.sendEchoMessage(message, this.websocket);
+    await HoppscotchClient.sendEchoMessage(message, this.websocket);
   }
   
 
@@ -605,11 +605,11 @@ class HoppscotchEchoWebSocketClient {
    * @param {Object} message - The message payload to send
    * @throws {Error} If WebSocket connection is not established
    */
-  sendEchoMessage(message){
+  async sendEchoMessage(message){
     if(!this.websocket){
       throw new Error('WebSocket connection not established. Call connect() first.');
     }
-    HoppscotchEchoWebSocketClient.sendEchoMessage(message, this.websocket);
+    await HoppscotchEchoWebSocketClient.sendEchoMessage(message, this.websocket);
   }
   
 
@@ -905,11 +905,11 @@ class PostmanEchoWebSocketClientClient {
    * @param {Object} message - The message payload to send
    * @throws {Error} If WebSocket connection is not established
    */
-  sendEchoMessage(message){
+  async sendEchoMessage(message){
     if(!this.websocket){
       throw new Error('WebSocket connection not established. Call connect() first.');
     }
-    PostmanEchoWebSocketClientClient.sendEchoMessage(message, this.websocket);
+    await PostmanEchoWebSocketClientClient.sendEchoMessage(message, this.websocket);
   }
   
 

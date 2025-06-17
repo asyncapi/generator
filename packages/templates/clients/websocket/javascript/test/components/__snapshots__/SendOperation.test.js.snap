@@ -25,11 +25,11 @@ exports[`Testing of SendOperation function render websockets with send operation
    * @param {Object} message - The message payload to send
    * @throws {Error} If WebSocket connection is not established
    */
-  noMessage(message){
+  async noMessage(message){
     if(!this.websocket){
       throw new Error('WebSocket connection not established. Call connect() first.');
     }
-    GeminiMarketDataWebsocketAPI.noMessage(message, this.websocket);
+    await GeminiMarketDataWebsocketAPI.noMessage(message, this.websocket);
   }
   
 
@@ -57,11 +57,11 @@ exports[`Testing of SendOperation function render websockets with send operation
    * @param {Object} message - The message payload to send
    * @throws {Error} If WebSocket connection is not established
    */
-  noSummaryOperations(message){
+  async noSummaryOperations(message){
     if(!this.websocket){
       throw new Error('WebSocket connection not established. Call connect() first.');
     }
-    GeminiMarketDataWebsocketAPI.noSummaryOperations(message, this.websocket);
+    await GeminiMarketDataWebsocketAPI.noSummaryOperations(message, this.websocket);
   }
   
 
@@ -89,11 +89,11 @@ exports[`Testing of SendOperation function render websockets with send operation
    * @param {Object} message - The message payload to send
    * @throws {Error} If WebSocket connection is not established
    */
-  noSummaryNoDescriptionOperations(message){
+  async noSummaryNoDescriptionOperations(message){
     if(!this.websocket){
       throw new Error('WebSocket connection not established. Call connect() first.');
     }
-    GeminiMarketDataWebsocketAPI.noSummaryNoDescriptionOperations(message, this.websocket);
+    await GeminiMarketDataWebsocketAPI.noSummaryNoDescriptionOperations(message, this.websocket);
   }
   
 
@@ -121,11 +121,11 @@ exports[`Testing of SendOperation function render websockets with send operation
    * @param {Object} message - The message payload to send
    * @throws {Error} If WebSocket connection is not established
    */
-  mixedMessageExamples(message){
+  async mixedMessageExamples(message){
     if(!this.websocket){
       throw new Error('WebSocket connection not established. Call connect() first.');
     }
-    GeminiMarketDataWebsocketAPI.mixedMessageExamples(message, this.websocket);
+    await GeminiMarketDataWebsocketAPI.mixedMessageExamples(message, this.websocket);
   }
   
 
@@ -153,11 +153,11 @@ exports[`Testing of SendOperation function render websockets with send operation
    * @param {Object} message - The message payload to send
    * @throws {Error} If WebSocket connection is not established
    */
-  operation_with_snake_case(message){
+  async operation_with_snake_case(message){
     if(!this.websocket){
       throw new Error('WebSocket connection not established. Call connect() first.');
     }
-    GeminiMarketDataWebsocketAPI.operation_with_snake_case(message, this.websocket);
+    await GeminiMarketDataWebsocketAPI.operation_with_snake_case(message, this.websocket);
   }"
 `;
 

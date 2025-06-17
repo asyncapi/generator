@@ -36,11 +36,11 @@ static async ${operation.id()}(message, socket) {
  * @param {Object} message - The message payload to send
  * @throws {Error} If WebSocket connection is not established
  */
-${operation.id()}(message){
+async ${operation.id()}(message){
   if(!this.websocket){
     throw new Error('WebSocket connection not established. Call connect() first.');
   }
-  ${clientName}.${operation.id()}(message, this.websocket);
+  await ${clientName}.${operation.id()}(message, this.websocket);
 }
   `}
           </Text>

@@ -76,11 +76,7 @@ describe('client - sender tests', () => {
     const expectedMessage = 'Sending acceptance test message';
 
     wsServer.on('connection', async (socket) => {
-      try {
-        await WSClient.sendEchoMessage(expectedMessage, socket);
-      } catch (err) {
-        console.error('Error in sending message:', err);
-      }
+      await WSClient.sendEchoMessage(expectedMessage, socket);
     });
 
     // Start test in Microcks

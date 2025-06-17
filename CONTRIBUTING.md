@@ -18,13 +18,14 @@ We use [All Contributors](https://allcontributors.org/docs/en/specification) spe
 
 ## Few tips for effective contributions
 
-1. Understanding how the Generator works is key to making valuable contributions. You can start by actively following along and executing the steps given in the [generator template tutorial](https://www.asyncapi.com/docs/tools/generator/generator-template). Hands-on practice will provide you with a comprehensive understanding of how the Generator processes templates and allow you to experiment with customization.
-2. **PATIENCE** is crucial. Focus on creating meaningful contributions rather than rushing to submit a PR that adds little or no value to the project.
-3. Adding entirely new features might be challenging because most features are already well-established. You may need to spend more time understanding the repository to identify areas for improvement.
-4. You should research on Google regarding the @asyncapi/generator and related repositories (e.g., @asyncapi/parser or any of the template repositories) to identify potential improvements. AI can be a helpful assistant, but always double-check the information it provides with Google or StackOverflow.
-5. Follow **Issue First, PR Later** - Always check if there’s an existing issue before creating a new one, and raise your PR once the issue is confirmed/approved by any of the maintainers.
-6. Keep **PRs small and focused** – A small PR with a well-defined scope is easier to review and merge. Avoid bundling multiple changes into one PR.
-7. Collaborate with Other Contributors – If someone else has already raised an issue and you are interested in contributing to it, please communicate with them and collaborate instead of raising a separate PR independently. Working together leads to better contributions and avoids duplication of efforts. Open source is driven by **collaboration, not competition**.
+1. **Join the AsyncAPI Slack Workspace** - Connect with maintainers and fellow contributors in the `#generator` channel on [AsyncAPI Slack](https://www.asyncapi.com/slack-invite) to ask questions, share ideas, and get help.  Also, consider attending the **weekly Knowledge Sharing meetings held every Wednesday**, details are shared in the channel.
+2. Understanding how the Generator works is key to making valuable contributions. You can start by actively following along and executing the steps given in the [generator template tutorial](https://www.asyncapi.com/docs/tools/generator/generator-template). Hands-on practice will provide you with a comprehensive understanding of how the Generator processes templates and allow you to experiment with customization.
+3. **PATIENCE** is crucial. Focus on creating meaningful contributions rather than rushing to submit a PR that adds little or no value to the project.
+4. Adding entirely new features might be challenging because most features are already well-established. You may need to spend more time understanding the repository to identify areas for improvement.
+5. You should research on Google regarding the @asyncapi/generator and related repositories (e.g., @asyncapi/parser or any of the template repositories) to identify potential improvements. AI can be a helpful assistant, but always double-check the information it provides with Google or StackOverflow.
+6. Follow **Issue First, PR Later** - Always check if there’s an existing issue before creating a new one, and raise your PR once the issue is confirmed/approved by any of the maintainers.
+7. Keep **PRs small and focused** – A small PR with a well-defined scope is easier to review and merge. Avoid bundling multiple changes into one PR.
+8. Collaborate with Other Contributors – If someone else has already raised an issue and you are interested in contributing to it, please communicate with them and collaborate instead of raising a separate PR independently. Working together leads to better contributions and avoids duplication of efforts. Open source is driven by **collaboration, not competition**.
 
 ## Summary of the contribution flow
 

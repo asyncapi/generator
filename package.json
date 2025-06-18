@@ -32,7 +32,10 @@
     "templates:test": "turbo run test --filter=@asyncapi/template*",
     "packages:test": "turbo run test --filter=./packages/** --only",
     "hooks:test": "turbo run test --filter=@asyncapi/generator-hooks",
-    "test:update": "turbo run test -- -u"
+    "test:update": "turbo run test -- -u",
+    "message-validation:test": "turbo run test --filter=@asyncapi/message-validation",
+    "message-validation:build": "turbo run build --filter=@asyncapi/message-validation",
+    "message-validation:lint": "turbo run lint --filter=@asyncapi/message-validation"
   },
   "devDependencies": {
     "markdown-toc": "^1.2.0",

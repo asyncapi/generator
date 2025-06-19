@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`QueryParamsVariables component (integration with AsyncAPI document) renders correctly with query parameters 1`] = `
+"heartbeat = heartbeat or os.getenv("HEARTBEAT")
+        if heartbeat is not None:
+          params["heartbeat"] = heartbeat
+        top_of_book = top_of_book or os.getenv("TOP_OF_BOOK")
+        if top_of_book is not None:
+          params["top_of_book"] = top_of_book
+        bids = bids or os.getenv("BIDS")
+        if bids is not None:
+          params["bids"] = bids
+        offers = offers or os.getenv("OFFERS")
+        if offers is not None:
+          params["offers"] = offers"
+`;

@@ -26,6 +26,7 @@ We use [All Contributors](https://allcontributors.org/docs/en/specification) spe
 6. Follow **Issue First, PR Later** - Always check if there’s an existing issue before creating a new one, and raise your PR once the issue is confirmed/approved by any of the maintainers.
 7. Keep **PRs small and focused** – A small PR with a well-defined scope is easier to review and merge. Avoid bundling multiple changes into one PR.
 8. Collaborate with Other Contributors – If someone else has already raised an issue and you are interested in contributing to it, please communicate with them and collaborate instead of raising a separate PR independently. Working together leads to better contributions and avoids duplication of efforts. Open source is driven by **collaboration, not competition**.
+9. **Respond to Maintainer Reviews Promptly** - If a maintainer requests changes or provides feedback on your PR, please try to address them within **7 days**. If you’re unable to respond by then, the PR may be closed with a note. Contributors are always welcome to reopen or open a new PR once they’re ready to continue.
 
 ## Summary of the contribution flow
 

@@ -14,12 +14,8 @@ describe('QueryParamsVariables component (integration with AsyncAPI document)', 
   let parsedAsyncAPIDocument;
 
   beforeAll(async () => {
-    try {
-      const parseResult = await fromFile(parser, asyncapiFilePath).parse();
-      parsedAsyncAPIDocument = parseResult.document;
-    } catch (error) {
-      throw new Error(`Failed to parse AsyncAPI document: ${error.message}`);
-    }
+    const parseResult = await fromFile(parser, asyncapiFilePath).parse();
+    parsedAsyncAPIDocument = parseResult.document;
   });
 
   test('renders correctly with query parameters', () => {
@@ -37,6 +33,11 @@ describe('QueryParamsVariables component (integration with AsyncAPI document)', 
 
   test('renders nothing when queryParams is undefined', () => {
     const result = render(<QueryParamsVariables />);
+    expect(result).toBe('');
+  });
+
+  test('renders nothing when queryParams is an empty array', () => {
+    const result = render(<QueryParamsVariables queryParams={[]} />);
     expect(result).toBe('');
   });
 });

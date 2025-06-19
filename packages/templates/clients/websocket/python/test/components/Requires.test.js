@@ -14,12 +14,8 @@ describe('Requires component (integration with AsyncAPI document)', () => {
   let parsedAsyncAPIDocument;
 
   beforeAll(async () => {
-    try {
-      const parseResult = await fromFile(parser, asyncapiFilePath).parse();
-      parsedAsyncAPIDocument = parseResult.document;
-    } catch (error) {
-      throw new Error(`Failed to parse AsyncAPI document: ${error.message}`);
-    }
+    const parseResult = await fromFile(parser, asyncapiFilePath).parse();
+    parsedAsyncAPIDocument = parseResult.document;
   });
 
   test('renders correctly with query params', () => {

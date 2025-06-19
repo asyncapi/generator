@@ -28,16 +28,16 @@ describe('QueryParamsVariables component (integration with AsyncAPI document)', 
 
   test('renders nothing when queryParams is null', () => {
     const result = render(<QueryParamsVariables queryParams={null} />);
-    expect(result).toBe('');
+    expect(result.trim()).toMatchSnapshot();
   });
 
   test('renders nothing when queryParams is undefined', () => {
     const result = render(<QueryParamsVariables />);
-    expect(result).toBe('');
+    expect(result.trim()).toMatchSnapshot();
   });
 
   test('renders nothing when queryParams is an empty array', () => {
     const result = render(<QueryParamsVariables queryParams={[]} />);
-    expect(result).toBe('');
+    expect(result.trim()).toMatchSnapshot();
   });
 });

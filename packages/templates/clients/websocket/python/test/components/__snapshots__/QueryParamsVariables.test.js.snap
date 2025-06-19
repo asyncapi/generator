@@ -14,3 +14,9 @@ exports[`QueryParamsVariables component (integration with AsyncAPI document) ren
         if offers is not None:
           params["offers"] = offers"
 `;
+
+exports[`QueryParamsVariables component (integration with AsyncAPI document) renders nothing when queryParams is an empty array 1`] = `""`;
+
+exports[`QueryParamsVariables component (integration with AsyncAPI document) renders nothing when queryParams is null 1`] = `""`;
+
+exports[`QueryParamsVariables component (integration with AsyncAPI document) renders nothing when queryParams is undefined 1`] = `""`;

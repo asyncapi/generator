@@ -18,14 +18,14 @@ function getQueryParams(channels) {
 
   const queryMap = new Map();
   
-  const hasWsBinding = channel?.bindings?.().has('ws');
+  const bindings = channel?.bindings?.();
+  const hasWsBinding = bindings?.has('ws');
 
   if (!hasWsBinding) {
     return null;
   }
 
-  const wsBinding = channel.bindings().get('ws');
-
+  const wsBinding = bindings.get('ws');
   const query = wsBinding.value()?.query;
   //we do not throw error, as user do not have to use query params, we just exit with null as it doesn't make sense to continue with query building
   if (!query) {

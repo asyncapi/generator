@@ -14,7 +14,6 @@
     "url": "https://github.com/asyncapi/generator/app/message-validation"
   },
   "main": "lib/cjs/index.js",
-  "module": "lib/esm/index.js",
   "author": "Adi Boghawala <boghawalaadi@gmail.com>",
   "license": "Apache-2.0",
   "dependencies": {

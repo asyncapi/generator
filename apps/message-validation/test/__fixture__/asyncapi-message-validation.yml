@@ -1,0 +1,40 @@
+asyncapi: 3.0.0
+
+info:
+  title: WebSocket Client
+  version: 1.0.0
+  description: A simple WebSocket API that connects to the server. It demonstrates how messages sent by the client.
+
+channels:
+  hello:
+    address: /hello
+    messages:
+      hello:
+        $ref: '#/components/messages/hello'
+
+operations:
+  sendHelloMessage:
+    summary: Send a hello message to the server.
+    action: send
+    channel: 
+      $ref: '#/channels/hello'
+    messages:
+      - $ref: '#/channels/hello/messages/hello'
+
+components:
+  messages:
+    hello:
+      payload:
+        type: object
+        properties:
+          content:
+            type: string
+            description: The content to be echoed back
+            example: "test message"
+          timestamp:
+            type: string
+            format: date-time
+            description: When the message was sent
+        required:
+          - content
+      

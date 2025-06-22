@@ -44,5 +44,8 @@
   "workspaces": [
     "apps/*",
     "packages/**"
-  ]
+  ],
+  "dependencies": {
+    "@asyncapi/modelina": "^5.2.5"
+  }
 }

@@ -10,7 +10,7 @@ info:
     url: https://www.apache.org/licenses/LICENSE-2.0
 
 servers:
-  mosquitto:
+  dev:
     url: mqtt://test.mosquitto.org
     protocol: mqtt
 

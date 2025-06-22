@@ -33,7 +33,13 @@ get to the point where if I do generator command it give the correct file based 
 
 
 Goal 2:
-add websocket quakrkus functionalityy
+add websocket quakrkus functionalityy in the configuration file of the websocket
+
+currently I am trying to generate models from a spec file. Once I can generate model I am going to try to inject certain annotations so I can send websocket messages. I am using websocket-next dependency
+( https://quarkus.io/guides/websockets-next-tutorial)
+Is that a good starting point or should I try even smaller goal.
+
+then add in config.java
 
 
 

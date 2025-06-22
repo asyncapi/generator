@@ -1,0 +1,31 @@
+import { Text } from '@asyncapi/generator-react-sdk';
+
+export function Requires() {
+  return (
+    <Text>
+      <Text>
+        {`
+import io.quarkus.websockets.next.WebSocketClient;
+import io.quarkus.websockets.next.WebSocketClientConnection;
+import io.quarkus.websockets.next.OnOpen;
+import io.quarkus.websockets.next.OnClose;
+import io.quarkus.websockets.next.OnTextMessage;
+import jakarta.inject.Inject;
+import io.quarkus.logging.Log;`}
+      </Text>
+    </Text>
+  );
+}
+
+
+/**
+ * Old
+ * 
+ * import jakarta.websocket.Session;
+
+import io.quarkus.websockets.next.Session;
+
+
+import io.quarkus.websockets.next.WebSocketSession;
+
+ */

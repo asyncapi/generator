@@ -13,7 +13,7 @@
     "type": "git",
     "url": "https://github.com/asyncapi/generator/app/message-validation"
   },
-  "main": "lib/cjs/index.js",
+  "main": "lib/index.js",
   "author": "Adi Boghawala <boghawalaadi@gmail.com>",
   "license": "Apache-2.0",
   "dependencies": {

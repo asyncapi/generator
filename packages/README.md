@@ -28,5 +28,5 @@ This approach with templates developed as part of `generator` repository is a wo
    - Spec references docs using [raw docs](https://www.asyncapi.com/docs/reference/specification/v3.0.0) or [visualizer](https://www.asyncapi.com/docs/reference/specification/v3.0.0-explorer) .
    - [Parser API](https://github.com/asyncapi/parser-api/blob/master/docs/api.md) to use it's capabilities instead of doing workarounds like for example `binding.json()["query"]["properties"]`
 10. Turporepo gives us a lot of control on tests running. We can for example have `templates:test` script that will run tests only for templates. So we can get very generic and also very granular on tests execution. This is needed in case we want to improve PR testing speed and for example. Depending on the changes in the PR scope, only the relevant tests can be executed.
-11. Templates is considered to be of a good quality and ready for use if it has acceptance tests configured using Microcks that provides mocks and runtime. Example implementation available in [tests for websocket](/packages/templates/clients/websocket/test)
+11. A templates is considered to be of a good quality and ready for use if it has acceptance tests configured using Microcks that provides both mocks and runtime support. Example implementation available in [tests for websocket](/packages/templates/clients/websocket/test)
 

@@ -1,3 +1,4 @@
+
 import io.quarkus.websockets.next.WebSocketConnector;
 import io.quarkus.websockets.next.WebSocketClientConnection;
 import jakarta.inject.Inject;
@@ -7,25 +8,15 @@ import java.net.URI;
 import io.quarkus.logging.Log;
 import io.quarkus.runtime.Startup;
 
-
-@Startup  // Seem to make it work, now I need to limit the number of echo message and Ask them if I should put because the user may  Inject it somewhere else (manual trigger), Then CDI will instantiate it because it's used.
-@Singleton
-public class TriggerConnector {
+  @Startup
+  @Singleton  
+  public class PostmanEchoWebSocketClientConnector{
 
     @Inject
     WebSocketConnector<PostmanEchoWebSocketClient> connector;
 
-    
-    // void openAndSendMessage() {
-    //     Log.info("Starting WebSocket connection attempt");
-    //      WebSocketClientConnection connection = connector
-    //         .baseUri(URI.create("wss://ws.postman-echo.com"))
-    //         .connectAndAwait();
 
-    //     connection.sendTextAndAwait("Hello from Quarkus!");
-    //     System.out.println("Connect call executed");
 
-    // }
     @PostConstruct
     void openAndSendMessagesWithDelay() {
         /**
@@ -48,7 +39,7 @@ public class TriggerConnector {
                     String msg = "Message #" + i + " from Quarkus";
                     connection.sendTextAndAwait(msg);
                     Log.info("Sent: " + msg);
-                    Thread.sleep(2000); // Optional: small delay between messages
+                    Thread.sleep(5000);
                 }
 
                 // Wait 10 seconds after final message
@@ -63,4 +54,7 @@ public class TriggerConnector {
             }
         }).start();
     }
-}
+  }
+
+
+

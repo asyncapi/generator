@@ -16,18 +16,3 @@ export default function OnClose({ title }) {
 </Text>
   );
 }
-
-
-/**
- * 
- * Old
- * 
- *  if (!operation || operation.length === 0) {
-    return null;
-
-    if(session != null && session.isOpen()) {
-      String closingMessage = session.getPathParameters().get("${pathName}");
-      // connection.broadcast().sendTextAndAwait(closingMessage);
-      session.close();
-  }
- */

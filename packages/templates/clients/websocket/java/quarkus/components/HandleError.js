@@ -13,9 +13,3 @@ public void onError(Throwable throwable) {
     );
 }
 
-
-/**
- * if (session != null || session.isOpen()) {
-        session.close();     
-    }
- */

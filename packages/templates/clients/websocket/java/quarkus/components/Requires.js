@@ -17,15 +17,3 @@ import io.quarkus.logging.Log;`}
   );
 }
 
-
-/**
- * Old
- * 
- * import jakarta.websocket.Session;
-
-import io.quarkus.websockets.next.Session;
-
-
-import io.quarkus.websockets.next.WebSocketSession;
-
- */

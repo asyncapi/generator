@@ -14,17 +14,3 @@ public void onBinaryMessage( String message) {
   </Text>
   );
 }
-
-
-
-/**
- * OLD
- * try {
-    return input.sendMessage();  // can edit what gets sent later!! clientName.sendMessage("methodName}", message);
-  } catch (Exception e) {
-    System.err.println("Error sending: " + e.getMessage());
-  }
-
-  console.log('DEBUG OnTextMessage operation:\n', operation);
-  const name = toSnakeCase(operation.id());
- */

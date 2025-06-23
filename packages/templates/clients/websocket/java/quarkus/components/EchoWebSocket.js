@@ -7,8 +7,6 @@ import { Text } from '@asyncapi/generator-react-sdk';
 
 
 export function EchoWebSocket({ clientName, pathName, title, operations }) {
-  const sendOperations = operations.filterBySend();
-  // console.log("DEBUG SERver URL echo:\n", serverUrl);
   return (
     <Text>
       <Text newLines={2}>
@@ -23,18 +21,3 @@ public class ${clientName}{`}
     </Text>
   );
 }
-
-
-/**
- * old
- * <Constructor serverUrl={serverUrl} query={queryParams} />
-      <Connect title={title} />
-      <RegisterMessageHandler />
-      <RegisterErrorHandler />
-      <RegisterOutgoingProcessor />
-      <HandleMessage />
-      <HandleError />
-      <SendOperation sendOperations={sendOperations} clientName={clientName} />
-      <Send sendOperations={sendOperations} />
-      <CloseConnection />
- */

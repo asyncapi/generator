@@ -5,6 +5,8 @@ export function Requires() {
     <Text>
       <Text>
         {`
+package com.asyncapi;
+
 import io.quarkus.websockets.next.WebSocketClient;
 import io.quarkus.websockets.next.WebSocketClientConnection;
 import io.quarkus.websockets.next.OnOpen;

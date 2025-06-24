@@ -1,7 +1,7 @@
-import { getClientName, getInfo, getQueryParams, getServer, getServerUrl } from '@asyncapi/generator-helpers';
+import { getClientName, getInfo, getServer } from '@asyncapi/generator-helpers';
 import { File } from '@asyncapi/generator-react-sdk';
-import { ConnectorDependencies } from '../../../../components/ConnectorDependencies.js';
-import ClientConnector from '../../../../components/ClientConnector.js';
+import { ConnectorDependencies } from '../../../../../../components/ConnectorDependencies.js';
+import ClientConnector from '../../../../../../components/ClientConnector.js';
 
 
 export default async function ({ asyncapi, params }) {

@@ -1,4 +1,6 @@
 
+package com.asyncapi;
+
 import io.quarkus.websockets.next.WebSocketConnector;
 import io.quarkus.websockets.next.WebSocketClientConnection;
 import jakarta.inject.Inject;

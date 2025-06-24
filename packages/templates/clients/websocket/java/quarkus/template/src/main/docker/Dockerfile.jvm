@@ -7,11 +7,11 @@
 #
 # Then, build the image with:
 #
-# docker build -f src/main/docker/Dockerfile.jvm -t quarkus/websockets-next-quickstart-jvm .
+# docker build -f src/main/docker/Dockerfile.jvm -t quarkus/quarkus-websocket-jvm .
 #
 # Then run the container using:
 #
-# docker run -i --rm -p 8080:8080 quarkus/websockets-next-quickstart-jvm
+# docker run -i --rm -p 8080:8080 quarkus/quarkus-websocket-jvm
 #
 # If you want to include the debug port into your docker image
 # you will have to expose the debug port (default 5005 being the default) like this :  EXPOSE 8080 5005.
@@ -20,7 +20,7 @@
 #
 # Then run the container using :
 #
-# docker run -i --rm -p 8080:8080 quarkus/websockets-next-quickstart-jvm
+# docker run -i --rm -p 8080:8080 quarkus/quarkus-websocket-jvm
 #
 # This image uses the `run-java.sh` script to run the application.
 # This scripts computes the command line to execute your Java application, and

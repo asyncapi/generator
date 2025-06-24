@@ -20,7 +20,7 @@ To run the Slack Client example, follow the steps above but with 2 exceptions:
 
 You can use our AsyncAPI's credentials to access different set of events produced in AsyncAPI Slack workspace, in the `#generator` channel.
 
-1. Generate an access ticket with an application ID that will enable you to establish a websocket connection:
+1. Generate an access ticket with an application ID that will enable you to establish a websocket connection. Replace below bearer token with real token that you can find in `slack-example.md` document added to bookmarks of `#generator` channel in [AsyncAPI Slack workspace](https://www.asyncapi.com/slack-invite):
     ```
     curl --location --request POST 'https://slack.com/api/apps.connections.open' \
     --header 'Authorization: Bearer xapp-1-A08NKKBFGBD-8768087393844-b85d0215e33ec13272e523e47d96b602d9dc5e57863e5b2df79d81b999da10bc'
@@ -47,9 +47,3 @@ You can use our AsyncAPI's credentials to access different set of events produce
     {"type":"hello","num_connections":1,"debug_info":{"host":"applink-3","build_number":118,"approximate_connection_time":18060},"connection_info":{"app_id":"A08NKKBFGBD"}}
     ```
     If you did not receive it, you probably connect with wrong credentials. Remember that generated `ticket` can be used only once to establish a websocket connection.
-
-### Security Concerns
-
-The `App-Level Token` that is shared in this readme can be used only to obtain the websocket ticket. This token has only `connections:write` scope.
-
-Events that the application is subscribed too are read only, and the bot user for `WebSocketConsumer` has access to `#generator` channel only in the AsyncAPI Slack workspace.

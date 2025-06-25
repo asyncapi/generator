@@ -25,6 +25,7 @@ You can use our AsyncAPI's credentials to access different set of events produce
     curl --location --request POST 'https://slack.com/api/apps.connections.open' \
     --header 'Authorization: Bearer xapp-1-A08NKKBFGBD-8768087393844-b85d0215e33ec13272e523e47d96b602d9dc5e57863e5b2df79d81b999da10bc'
     ```
+>**Note**:  Ensure that you do not expose the real token on GitHub or any other public platform because it will be disabled by Slack.
 
     Example response with `ticket` and `app_id`:
     ```

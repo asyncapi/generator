@@ -9,6 +9,7 @@ export default function ({ asyncapi, params }) {
   const info = getInfo(asyncapi);
   const queryParams = getQueryParams(asyncapi.channels());
   return (
+    // The clientFileName default values can be found and modified under the .ageneratorrc
     <File name={params.clientFileName}>
       <FileHeaderInfo
         info={info}

@@ -1,0 +1,5 @@
+node_modules
+.vscode
+coverage
+lib
+src/transpiler/__tests__/__transpiled_testfiles

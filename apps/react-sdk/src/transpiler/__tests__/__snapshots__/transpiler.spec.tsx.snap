@@ -1,0 +1,133 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Transpiler should keep names of files, even if special chars with a simple setup and import correctly 1`] = `
+"'use strict';
+
+var jsxRuntime = require('/full/path/to/react/cjs/react-jsx-runtime.production.min.js');
+require('source-map-support/register');
+var path = require('path');
+
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var path__default = /*#__PURE__*/_interopDefaultLegacy(path);
+
+// eslint-disable-next-line security/detect-non-literal-require, no-undef
+
+const {
+  File
+} = require(path__default[\\"default\\"].resolve(__dirname, '../../../../components'));
+
+const greetings = name => \`hello \${name}\`; // eslint-disable-next-line react/display-name
+
+
+function $$simple$$ () {
+  return /*#__PURE__*/jsxRuntime.jsx(File, {
+    children: greetings('Test')
+  });
+}
+
+module.exports = $$simple$$;
+//# sourceMappingURL=$$simple$$.js.map
+"
+`;
+
+exports[`Transpiler should keep names of files, even if special chars with a simple setup and import correctly 2`] = `"{\\"version\\":3,\\"file\\":\\"$$simple$$.js\\",\\"sources\\":[\\"../../testfiles/SpecialChars/$$simple$$.js\\"],\\"sourcesContent\\":[\\"import path from 'path';\\\\n// this weird import are only necessary because we test within the SDK itself.\\\\n// eslint-disable-next-line security/detect-non-literal-require, no-undef\\\\nconst {File} = require(path.resolve(__dirname, '../../../../components'));\\\\nconst greetings = name => \`hello \${name}\`;\\\\n// eslint-disable-next-line react/display-name\\\\nexport default function() {\\\\n  return (\\\\n    <File>\\\\n      {greetings('Test')}\\\\n    </File>\\\\n  );\\\\n}\\"],\\"names\\":[\\"File\\",\\"require\\",\\"path\\",\\"resolve\\",\\"__dirname\\",\\"greetings\\",\\"name\\",\\"_jsx\\"],\\"mappings\\":\\";;;;;;;;;;AAEA;;AACA,MAAM;AAACA,EAAAA;AAAD,IAASC,OAAO,CAACC,wBAAI,CAACC,OAAL,CAAaC,SAAb,EAAwB,wBAAxB,CAAD,CAAtB;;AACA,MAAMC,SAAS,GAAGC,IAAI,IAAK,SAAQA,IAAK,EAAxC;;;AAEe,uBAAW;AACxB,sBACEC,eAAC,IAAD;AAAA,cACGF,SAAS,CAAC,MAAD;AADZ,IADF;AAKD;;;;\\"}"`;
+
+exports[`Transpiler should transpile CommonJS files with a simple setup and import correctly 1`] = `
+"'use strict';
+
+var jsxRuntime = require('/full/path/to/react/cjs/react-jsx-runtime.production.min.js');
+require('source-map-support/register');
+
+/* eslint-disable no-undef */
+const path = require('path'); // this weird import are only necessary because we test within the SDK itself.
+// eslint-disable-next-line security/detect-non-literal-require
+
+
+const {
+  File
+} = require(path.resolve(__dirname, '../../../../components'));
+
+function greetings(name) {
+  return \`hello \${name}\`;
+} // eslint-disable-next-line react/display-name
+
+
+module.exports = function () {
+  return /*#__PURE__*/jsxRuntime.jsx(File, {
+    children: greetings('Test')
+  });
+};
+//# sourceMappingURL=simple.js.map
+"
+`;
+
+exports[`Transpiler should transpile CommonJS files with a simple setup and import correctly 2`] = `"{\\"version\\":3,\\"file\\":\\"simple.js\\",\\"sources\\":[\\"../../testfiles/CommonJS/simple.js\\"],\\"sourcesContent\\":[\\"/* eslint-disable no-undef */\\\\nconst path = require('path');\\\\n// this weird import are only necessary because we test within the SDK itself.\\\\n// eslint-disable-next-line security/detect-non-literal-require\\\\nconst {File} = require(path.resolve(__dirname, '../../../../components'));\\\\nfunction greetings(name) {\\\\n  return \`hello \${name}\`;\\\\n}\\\\n// eslint-disable-next-line react/display-name\\\\nmodule.exports = function() {\\\\n  return (\\\\n    <File>\\\\n      {greetings('Test')}\\\\n    </File>\\\\n  );\\\\n};\\"],\\"names\\":[\\"path\\",\\"require\\",\\"File\\",\\"resolve\\",\\"__dirname\\",\\"greetings\\",\\"name\\",\\"module\\",\\"exports\\",\\"_jsx\\"],\\"mappings\\":\\";;;;;AAAA;AACA,MAAMA,IAAI,GAAGC,OAAO,CAAC,MAAD,CAApB;AAEA;;;AACA,MAAM;AAACC,EAAAA;AAAD,IAASD,OAAO,CAACD,IAAI,CAACG,OAAL,CAAaC,SAAb,EAAwB,wBAAxB,CAAD,CAAtB;;AACA,SAASC,SAAT,CAAmBC,IAAnB,EAAyB;AACvB,SAAQ,SAAQA,IAAK,EAArB;AACD;;;AAEDC,MAAM,CAACC,OAAP,GAAiB,YAAW;AAC1B,sBACEC,eAAC,IAAD;AAAA,cACGJ,SAAS,CAAC,MAAD;AADZ,IADF;AAKD,CAND;;\\"}"`;
+
+exports[`Transpiler should transpile ES5 files with a simple setup and import correctly 1`] = `
+"'use strict';
+
+var jsxRuntime = require('/full/path/to/react/cjs/react-jsx-runtime.production.min.js');
+require('source-map-support/register');
+var path = require('path');
+
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var path__default = /*#__PURE__*/_interopDefaultLegacy(path);
+
+// eslint-disable-next-line security/detect-non-literal-require, no-undef
+
+const {
+  File
+} = require(path__default[\\"default\\"].resolve(__dirname, '../../../../components'));
+
+function greetings(name) {
+  return \`hello \${name}\`;
+} // eslint-disable-next-line react/display-name
+
+
+function simple () {
+  return /*#__PURE__*/jsxRuntime.jsx(File, {
+    children: greetings('Test')
+  });
+}
+
+module.exports = simple;
+//# sourceMappingURL=simple.js.map
+"
+`;
+
+exports[`Transpiler should transpile ES5 files with a simple setup and import correctly 2`] = `"{\\"version\\":3,\\"file\\":\\"simple.js\\",\\"sources\\":[\\"../../testfiles/ES5/simple.js\\"],\\"sourcesContent\\":[\\"import path from 'path';\\\\n// this weird import are only necessary because we test within the SDK itself.\\\\n// eslint-disable-next-line security/detect-non-literal-require, no-undef\\\\nconst {File} = require(path.resolve(__dirname, '../../../../components'));\\\\nfunction greetings(name) {\\\\n  return \`hello \${name}\`;\\\\n}\\\\n// eslint-disable-next-line react/display-name\\\\nexport default function() {\\\\n  return (\\\\n    <File>\\\\n      {greetings('Test')}\\\\n    </File>\\\\n  );\\\\n}\\"],\\"names\\":[\\"File\\",\\"require\\",\\"path\\",\\"resolve\\",\\"__dirname\\",\\"greetings\\",\\"name\\",\\"_jsx\\"],\\"mappings\\":\\";;;;;;;;;;AAEA;;AACA,MAAM;AAACA,EAAAA;AAAD,IAASC,OAAO,CAACC,wBAAI,CAACC,OAAL,CAAaC,SAAb,EAAwB,wBAAxB,CAAD,CAAtB;;AACA,SAASC,SAAT,CAAmBC,IAAnB,EAAyB;AACvB,SAAQ,SAAQA,IAAK,EAArB;AACD;;;AAEc,mBAAW;AACxB,sBACEC,eAAC,IAAD;AAAA,cACGF,SAAS,CAAC,MAAD;AADZ,IADF;AAKD;;;;\\"}"`;
+
+exports[`Transpiler should transpile ES6 files with a simple setup and import correctly 1`] = `
+"'use strict';
+
+var jsxRuntime = require('/full/path/to/react/cjs/react-jsx-runtime.production.min.js');
+require('source-map-support/register');
+var path = require('path');
+
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var path__default = /*#__PURE__*/_interopDefaultLegacy(path);
+
+// eslint-disable-next-line security/detect-non-literal-require, no-undef
+
+const {
+  File
+} = require(path__default[\\"default\\"].resolve(__dirname, '../../../../components'));
+
+const greetings = name => \`hello \${name}\`; // eslint-disable-next-line react/display-name
+
+
+function simple () {
+  return /*#__PURE__*/jsxRuntime.jsx(File, {
+    children: greetings('Test')
+  });
+}
+
+module.exports = simple;
+//# sourceMappingURL=simple.js.map
+"
+`;
+
+exports[`Transpiler should transpile ES6 files with a simple setup and import correctly 2`] = `"{\\"version\\":3,\\"file\\":\\"simple.js\\",\\"sources\\":[\\"../../testfiles/ES6/simple.js\\"],\\"sourcesContent\\":[\\"import path from 'path';\\\\n// this weird import are only necessary because we test within the SDK itself.\\\\n// eslint-disable-next-line security/detect-non-literal-require, no-undef\\\\nconst {File} = require(path.resolve(__dirname, '../../../../components'));\\\\nconst greetings = name => \`hello \${name}\`;\\\\n// eslint-disable-next-line react/display-name\\\\nexport default function() {\\\\n  return (\\\\n    <File>\\\\n      {greetings('Test')}\\\\n    </File>\\\\n  );\\\\n}\\"],\\"names\\":[\\"File\\",\\"require\\",\\"path\\",\\"resolve\\",\\"__dirname\\",\\"greetings\\",\\"name\\",\\"_jsx\\"],\\"mappings\\":\\";;;;;;;;;;AAEA;;AACA,MAAM;AAACA,EAAAA;AAAD,IAASC,OAAO,CAACC,wBAAI,CAACC,OAAL,CAAaC,SAAb,EAAwB,wBAAxB,CAAD,CAAtB;;AACA,MAAMC,SAAS,GAAGC,IAAI,IAAK,SAAQA,IAAK,EAAxC;;;AAEe,mBAAW;AACxB,sBACEC,eAAC,IAAD;AAAA,cACGF,SAAS,CAAC,MAAD;AADZ,IADF;AAKD;;;;\\"}"`;

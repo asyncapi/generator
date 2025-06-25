@@ -1,0 +1,94 @@
+# This workflow is centrally managed in https://github.com/asyncapi/.github/
+# Don't make changes to this file in this repo as they will be overwritten with changes made to the same file in above mentioned repo
+
+# Purpose of this workflow is to allow people to merge PR without a need of maintainer doing it. If all checks are in place (including maintainers approval) - JUST MERGE IT!
+name: Automerge For Humans
+
+on:
+  pull_request_target:
+    types:
+      - labeled
+      - unlabeled
+      - synchronize
+      - opened
+      - edited
+      - ready_for_review
+      - reopened
+      - unlocked
+
+jobs:
+  automerge-for-humans:
+    # it runs only if PR actor is not a bot, at least not a bot that we know
+    if: |
+      github.event.pull_request.draft == false && 
+      (github.event.pull_request.user.login != 'asyncapi-bot' || 
+      github.event.pull_request.user.login != 'dependabot[bot]' || 
+      github.event.pull_request.user.login != 'dependabot-preview[bot]') 
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get PR authors
+        id: authors
+        uses: actions/github-script@v7
+        with:
+          script: |
+            // Get paginated list of all commits in the PR
+            try {
+              const commitOpts = github.rest.pulls.listCommits.endpoint.merge({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: context.issue.number
+              });
+
+              const commits = await github.paginate(commitOpts);
+              return commits;
+            } catch (error) {
+              core.setFailed(error.message);
+              return [];
+            }
+
+      - name: Create commit message
+        id: create-commit-message
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const commits = ${{ steps.authors.outputs.result }};
+
+            if (commits.length === 0) {
+              core.setFailed('No commits found in the PR');
+              return '';
+            }
+
+            // Get unique authors from the commits list
+            const authors = commits.reduce((acc, commit) => {
+              const username = commit.author?.login || commit.commit.author?.name;
+              if (username && !acc[username]) {
+                acc[username] = {
+                  name: commit.commit.author?.name,
+                  email: commit.commit.author?.email,
+                }
+              }
+
+              return acc;
+            }, {});
+
+            // Create a string of the form "Co-authored-by: Name <email>"
+            // ref: https://docs.github.com/en/pull-requests/committing-changes-to-your-project/creating-and-editing-commits/creating-a-commit-with-multiple-authors
+            const coAuthors = Object.values(authors).map(author => {
+              return `Co-authored-by: ${author.name} <${author.email}>`;
+            }).join('\n');
+
+            core.debug(coAuthors);;
+
+            return coAuthors;
+
+      - name: Automerge PR
+        uses: pascalgn/automerge-action@22948e0bc22f0aa673800da838595a3e7347e584 #v0.15.6 https://github.com/pascalgn/automerge-action/releases/tag/v0.15.6
+        env:
+          GITHUB_TOKEN: "${{ secrets.GH_TOKEN }}"
+          MERGE_LABELS: "!do-not-merge,ready-to-merge"
+          MERGE_METHOD: "squash"
+          # Using the output of the previous step (`Co-authored-by: ...` lines) as commit description.
+          # Important to keep 2 empty lines as https://docs.github.com/en/pull-requests/committing-changes-to-your-project/creating-and-editing-commits/creating-a-commit-with-multiple-authors#creating-co-authored-commits-on-the-command-line mentions
+          MERGE_COMMIT_MESSAGE: "{pullRequest.title} (#{pullRequest.number})\n\n\n${{ fromJSON(steps.create-commit-message.outputs.result) }}"
+          MERGE_RETRIES: "20"
+          MERGE_RETRY_SLEEP: "30000"

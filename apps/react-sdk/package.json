@@ -26,8 +26,7 @@
   "types": "lib/index.d.ts",
   "files": [
     "/lib",
-    "./README.md",
-    "./LICENSE"
+    "./README.md"
   ],
   "dependencies": {
     "@asyncapi/parser": "^3.1.0",
@@ -51,7 +50,6 @@
     "eslint-plugin-sonarjs": "^0.20.0",
     "jest": "^26.6.3",
     "jsdoc-to-markdown": "^8.0.0",
-    "markdown-toc": "^1.2.0",
     "ts-jest": "^26.4.4",
     "typescript": "^4.1.2"
   },

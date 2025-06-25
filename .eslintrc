@@ -112,3 +112,11 @@ rules:
   react/prop-types: off
   react/jsx-key: off
   react/no-unescaped-entities: off
+
+  overrides:
+  - files: "*.spec.js"
+    rules:
+      prefer-arrow-callback: 0
+      sonarjs/no-duplicate-string: 0
+      security/detect-object-injection: 0
+      security/detect-non-literal-fs-filename: 0

@@ -136,6 +136,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     </tr>
     <tr>
       <td align="center" valign="top" width="33.33%"><a href="https://github.com/AayushSaini101"><img src="https://avatars.githubusercontent.com/u/60972989?v=4?s=100" width="100px;" alt="Moderator "/><br /><sub><b>Moderator </b></sub></a><br /><a href="https://github.com/asyncapi/generator/commits?author=AayushSaini101" title="Code">💻</a> <a href="https://github.com/asyncapi/generator/commits?author=AayushSaini101" title="Documentation">📖</a> <a href="https://github.com/asyncapi/generator/commits?author=AayushSaini101" title="Tests">⚠️</a></td>
+      <td align="center" valign="top" width="33.33%"><a href="https://github.com/blazethunderstorm"><img src="https://avatars.githubusercontent.com/u/149250431?v=4?s=100" width="100px;" alt="ANIRUDH"/><br /><sub><b>ANIRUDH</b></sub></a><br /><a href="https://github.com/asyncapi/generator/commits?author=blazethunderstorm" title="Tests">⚠️</a></td>
     </tr>
   </tbody>
 </table>

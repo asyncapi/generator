@@ -330,6 +330,15 @@
         "doc",
         "test"
       ]
+    },
+    {
+      "login": "blazethunderstorm",
+      "name": "ANIRUDH",
+      "avatar_url": "https://avatars.githubusercontent.com/u/149250431?v=4",
+      "profile": "https://github.com/blazethunderstorm",
+      "contributions": [
+        "test"
+      ]
     }
   ],
   "contributorsPerLine": 3,

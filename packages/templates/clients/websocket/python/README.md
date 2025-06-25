@@ -14,7 +14,7 @@ You can test this template:
 
 To run the Slack Client example, follow the steps above but with 2 exceptions:
 - Use `example-slack.py` instead of `example.py`.
-- You need to pass environment variables with proper authorization details. Your command must look like this: `TICKET=1d967f38-ccff-44f6-adec-9616eec9c4b7 APP_ID=00dfdcccb53a2645dd3f1773fcb10fa7b0a598cf333a990a9db12375ef1865dd python example-slack.py`
+- You need to pass environment variables with proper authorization details. Your command must look like this: `TICKET={provide secret info} APP_ID={provide id of the slack app} python example-slack.py`. For example: `TICKET=1d967f38-ccff-44f6-adec-9616eec9c4b7 APP_ID=00dfdcccb53a2645dd3f1773fcb10fa7b0a598cf333a990a9db12375ef1865dd python example-slack.py`.
 
 > Instructions on how to create the Slack app and also obtain authorization is described in details in the [Slack AsyncAPI document](../test/__fixtures__/asyncapi-slack-client.yml).
 

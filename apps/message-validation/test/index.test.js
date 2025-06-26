@@ -3,7 +3,7 @@ import { Parser, fromFile } from '@asyncapi/parser';
 import { validateMessage } from '../src/index.js';
 
 const parser = new Parser();
-const asyncapi_v3_path = path.resolve(__dirname, '../__fixtures__/asyncapi-message-validation.yml');
+const asyncapi_v3_path = path.resolve(__dirname, '../test/__fixtures__/asyncapi-message-validation.yml');
 
 describe('Integration Tests for validateMessage function', () => {
   let parsedAsyncAPIDocument;

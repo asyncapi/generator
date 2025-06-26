@@ -41,7 +41,8 @@
     },
     "moduleNameMapper": {
       "^nimma/legacy$": "<rootDir>/../../node_modules/nimma/dist/legacy/cjs/index.js",
-      "^nimma/(.*)": "<rootDir>/../../node_modules/nimma/dist/cjs/$1"
+      "^nimma/(.*)": "<rootDir>/../../node_modules/nimma/dist/cjs/$1",
+      "^@hyperjump/browser/jref$": "<rootDir>/../../node_modules/@hyperjump/browser/lib/jref/index.js"
     }
   },
   "babel": {

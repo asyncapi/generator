@@ -3,3 +3,4 @@ apps/generator/output/*
 **/temp/*
 **/__transpiled/*
 packages/components/lib/*
+apps/message-validation/lib/*

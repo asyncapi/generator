@@ -79,27 +79,29 @@ describe('JavaScript Client', () => {
 
   runCommonTests('JavaScript', config);
 
-  it('generate simple client for hoppscotch echo without clientFileName param', async () => {
-    const defaultOutputFile = 'client.js';
-    const generator = new Generator(config.template, config.testResultPath, {
-      forceWrite: true,
-      templateParams: {
-        server: 'echoServer',
-      }
+  describe('Additional tests for python websocket client', () => {
+    it('generate simple client for hoppscotch echo without clientFileName param', async () => {
+      const defaultOutputFile = 'client.js';
+      const generator = new Generator(config.template, config.testResultPath, {
+        forceWrite: true,
+        templateParams: {
+          server: 'echoServer',
+        }
+      });
+      await generator.generateFromFile(asyncapi_v3_path_hoppscotch);
+      const clientOutputFile = path.join(config.testResultPath, defaultOutputFile);
+      const checkClientOutputFileExists = await stat(clientOutputFile);
+      expect(checkClientOutputFileExists.isFile()).toBeTruthy();
     });
-    await generator.generateFromFile(asyncapi_v3_path_hoppscotch);
-    const clientOutputFile = path.join(config.testResultPath, defaultOutputFile);
-    const checkClientOutputFileExists = await stat(clientOutputFile);
-    expect(checkClientOutputFileExists.isFile()).toBeTruthy();
-  });
 
-  it('should throw an error when server param is missing during simple client generation for hoppscotch echo', async () => {
-    const generator = new Generator(config.template, config.testResultPath, {
-      forceWrite: true,
-      templateParams: {
-        clientFileName: config.clientFileName
-      }
+    it('should throw an error when server param is missing during simple client generation for hoppscotch echo', async () => {
+      const generator = new Generator(config.template, config.testResultPath, {
+        forceWrite: true,
+        templateParams: {
+          clientFileName: config.clientFileName
+        }
+      });
+      await expect(generator.generateFromFile(asyncapi_v3_path_hoppscotch)).rejects.toThrow('This template requires the following missing params: server');
     });
-    await expect(generator.generateFromFile(asyncapi_v3_path_hoppscotch)).rejects.toThrow('This template requires the following missing params: server');
   });
 });

@@ -1,33 +1,10 @@
-
+// test/shared/commonTests.js
 const path = require('path');
 const { readFile } = require('fs').promises;
-const { rm } = require('fs/promises');
 const Generator = require('@asyncapi/generator');
 const { listFiles } = require('@asyncapi/generator-helpers');
 const asyncapi_v3_path_postman = path.resolve(__dirname, '../__fixtures__/asyncapi-postman-echo.yml');
 const asyncapi_v3_path_hoppscotch = path.resolve(__dirname, '../__fixtures__/asyncapi-hoppscotch-client.yml');
-
-/**
- * Configuration for different target languages.
- * Defines template location, client file name, and output directory for test results.
- */
-const languageConfig = {
-  python: {
-    clientFileName: 'client.py',
-    testResultPath: path.resolve(__dirname, '../../python/test/temp/snapshotTestResult'),
-    template: path.resolve(__dirname, '../../python')
-  },
-  js: {
-    clientFileName: 'client.js',
-    testResultPath: path.resolve(__dirname, '../../javascript/test/temp/snapshotTestResult'),
-    template: path.resolve(__dirname, '../../javascript')
-  },
-  dart: {
-    clientFileName: 'client.dart',
-    testResultPath: path.resolve(__dirname, '../../dart/test/temp/snapshotTestResult'),
-    template: path.resolve(__dirname, '../../dart')
-  }
-};
 
 /**
  * Run snapshot tests for code generation across multiple AsyncAPI specifications.
@@ -35,18 +12,16 @@ const languageConfig = {
  *
  * @param {string} language - Name of the language being tested (e.g., "Python", "JavaScript", "Dart")
  * @param {object} config - Configuration object from languageConfig
+ * @param {string} asyncapi_v3_path_postman - Path to Postman AsyncAPI fixture
+ * @param {string} asyncapi_v3_path_hoppscotch - Path to Hoppscotch AsyncAPI fixture
  */
 async function runCommonTests(language, config) {
   const testResultPathPostman = path.join(config.testResultPath, 'client_postman');
   const testResultPathHoppscotch = path.join(config.testResultPath, 'client_hoppscotch');
   const testResultPathCustomHoppscotch = path.join(config.testResultPath, 'custom_client_hoppscotch');
 
-  describe(`Testing ${language} client generation`, () => {
+  describe(`Common Integration test for ${language} client generation`, () => {
     jest.setTimeout(100000);
-
-    beforeAll(async () => {
-      await rm(config.testResultPath, { recursive: true, force: true });
-    });
 
     it('generate simple client for postman echo', async () => {
       const generator = new Generator(config.template, testResultPathPostman, {
@@ -112,18 +87,4 @@ async function runCommonTests(language, config) {
   });
 }
 
-describe('Dart Client', () => {
-  const config = languageConfig.dart;
-  runCommonTests('Dart', config);
-});
-
-describe('Python Client', () => {
-  const config = languageConfig.python;
-  runCommonTests('Python', config);
-});
-
-describe('JavaScript Client', () => {
-  const config = languageConfig.js;
-  runCommonTests('JavaScript', config);
-});
-
+module.exports = { runCommonTests };

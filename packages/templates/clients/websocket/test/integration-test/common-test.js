@@ -12,8 +12,6 @@ const asyncapi_v3_path_hoppscotch = path.resolve(__dirname, '../__fixtures__/asy
  *
  * @param {string} language - Name of the language being tested (e.g., "Python", "JavaScript", "Dart")
  * @param {object} config - Configuration object from languageConfig
- * @param {string} asyncapi_v3_path_postman - Path to Postman AsyncAPI fixture
- * @param {string} asyncapi_v3_path_hoppscotch - Path to Hoppscotch AsyncAPI fixture
  */
 async function runCommonTests(language, config) {
   const testResultPathPostman = path.join(config.testResultPath, 'client_postman');

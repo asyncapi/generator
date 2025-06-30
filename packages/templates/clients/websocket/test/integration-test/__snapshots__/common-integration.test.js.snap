@@ -1,0 +1,1674 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Dart Client Testing Dart client generation generate simple client for hoppscotch echo with custom client name: client.dart 1`] = `
+"//////////////////////////////////////////////////////////////////////
+///
+/// Hoppscotch Echo WebSocket Client - 1.0.0
+/// Protocol: wss
+/// Host: echo-websocket.hoppscotch.io
+///
+//////////////////////////////////////////////////////////////////////
+
+import 'dart:convert';
+import 'package:web_socket_channel/web_socket_channel.dart';
+
+class HoppscotchClient {
+
+  final String _url;
+  WebSocketChannel? _channel;
+  final List<void Function(String)> _messageHandlers = [];
+  final List<void Function(Object)> _errorHandlers = [];
+
+  /// Constructor to initialize the WebSocket client
+  /// 
+  /// [url] - The WebSocket server URL. Use it if the server URL is different from the default one taken from the AsyncAPI document.
+  HoppscotchClient({String? url})
+    : _url = url ?? 'wss://echo-websocket.hoppscotch.io';
+
+
+  /// Method to establish a WebSocket connection
+  Future<void> connect() async {
+    if (_channel != null) {
+      print('Already connected to Hoppscotch Echo WebSocket Client server');
+      return;
+    }
+    try {
+      final wsUrl = Uri.parse(_url);
+      _channel = WebSocketChannel.connect(wsUrl);
+      print('Connected to Hoppscotch Echo WebSocket Client server');
+
+        /// Listen to the incoming message stream
+      _channel?.stream.listen(
+        (message) {
+          if (_messageHandlers.isNotEmpty) {
+            for (var handler in _messageHandlers) {
+              _handleMessage(message, handler);
+            }
+          } else {
+            print('Message received: $message');
+          }
+        },
+        onError: (error) {
+          if (_errorHandlers.isNotEmpty) {
+            for (var handler in _errorHandlers) {
+              handler(error);
+            }
+          } else {
+            print('WebSocket Error: $error');
+          }
+        },
+        onDone: () {
+          _channel = null;
+          print('Disconnected from Hoppscotch Echo WebSocket Client server');
+        },
+      );
+    } catch (error) {
+      print('Connection failed: $error');
+      rethrow;
+    }
+  }
+
+  /// Method to register custom message handlers
+  void registerMessageHandler(void Function(String) handler) {
+    _messageHandlers.add(handler);
+  }
+
+  /// Method to register custom error handlers
+  void registerErrorHandler(void Function(Object) handler) {
+    _errorHandlers.add(handler);
+  }
+
+  /// Method to handle message with callback
+  void _handleMessage(dynamic message, void Function(String) cb) {
+    cb(message is String ? message : message.toString());
+  }
+
+  /// Method to send an echo message to the server
+  void sendEchoMessage(dynamic message) {
+    if (_channel == null) {
+      print('Error: WebSocket is not connected.');
+      return;
+    }
+    final payload = message is String ? message : jsonEncode(message);
+    _channel!.sink.add(payload);
+    print('Sent message to echo server: $payload');
+  }
+
+  /// Method to close the WebSocket connection
+  void close() {
+    _channel?.sink.close();
+    _channel = null;
+    print('WebSocket connection closed.');
+  }
+}
+
+"
+`;
+
+exports[`Dart Client Testing Dart client generation generate simple client for hoppscotch echo with custom client name: pubspec.yaml 1`] = `
+"name: wsclient
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+dependencies:
+  web_socket_channel: ^3.0.2
+"
+`;
+
+exports[`Dart Client Testing Dart client generation generate simple client for hoppscotch echo: client.dart 1`] = `
+"//////////////////////////////////////////////////////////////////////
+///
+/// Hoppscotch Echo WebSocket Client - 1.0.0
+/// Protocol: wss
+/// Host: echo-websocket.hoppscotch.io
+///
+//////////////////////////////////////////////////////////////////////
+
+import 'dart:convert';
+import 'package:web_socket_channel/web_socket_channel.dart';
+
+class HoppscotchEchoWebSocketClient {
+
+  final String _url;
+  WebSocketChannel? _channel;
+  final List<void Function(String)> _messageHandlers = [];
+  final List<void Function(Object)> _errorHandlers = [];
+
+  /// Constructor to initialize the WebSocket client
+  /// 
+  /// [url] - The WebSocket server URL. Use it if the server URL is different from the default one taken from the AsyncAPI document.
+  HoppscotchEchoWebSocketClient({String? url})
+    : _url = url ?? 'wss://echo-websocket.hoppscotch.io';
+
+
+  /// Method to establish a WebSocket connection
+  Future<void> connect() async {
+    if (_channel != null) {
+      print('Already connected to Hoppscotch Echo WebSocket Client server');
+      return;
+    }
+    try {
+      final wsUrl = Uri.parse(_url);
+      _channel = WebSocketChannel.connect(wsUrl);
+      print('Connected to Hoppscotch Echo WebSocket Client server');
+
+        /// Listen to the incoming message stream
+      _channel?.stream.listen(
+        (message) {
+          if (_messageHandlers.isNotEmpty) {
+            for (var handler in _messageHandlers) {
+              _handleMessage(message, handler);
+            }
+          } else {
+            print('Message received: $message');
+          }
+        },
+        onError: (error) {
+          if (_errorHandlers.isNotEmpty) {
+            for (var handler in _errorHandlers) {
+              handler(error);
+            }
+          } else {
+            print('WebSocket Error: $error');
+          }
+        },
+        onDone: () {
+          _channel = null;
+          print('Disconnected from Hoppscotch Echo WebSocket Client server');
+        },
+      );
+    } catch (error) {
+      print('Connection failed: $error');
+      rethrow;
+    }
+  }
+
+  /// Method to register custom message handlers
+  void registerMessageHandler(void Function(String) handler) {
+    _messageHandlers.add(handler);
+  }
+
+  /// Method to register custom error handlers
+  void registerErrorHandler(void Function(Object) handler) {
+    _errorHandlers.add(handler);
+  }
+
+  /// Method to handle message with callback
+  void _handleMessage(dynamic message, void Function(String) cb) {
+    cb(message is String ? message : message.toString());
+  }
+
+  /// Method to send an echo message to the server
+  void sendEchoMessage(dynamic message) {
+    if (_channel == null) {
+      print('Error: WebSocket is not connected.');
+      return;
+    }
+    final payload = message is String ? message : jsonEncode(message);
+    _channel!.sink.add(payload);
+    print('Sent message to echo server: $payload');
+  }
+
+  /// Method to close the WebSocket connection
+  void close() {
+    _channel?.sink.close();
+    _channel = null;
+    print('WebSocket connection closed.');
+  }
+}
+
+"
+`;
+
+exports[`Dart Client Testing Dart client generation generate simple client for hoppscotch echo: pubspec.yaml 1`] = `
+"name: wsclient
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+dependencies:
+  web_socket_channel: ^3.0.2
+"
+`;
+
+exports[`Dart Client Testing Dart client generation generate simple client for postman echo: client.dart 1`] = `
+"//////////////////////////////////////////////////////////////////////
+///
+/// Postman Echo WebSocket Client - 1.0.0
+/// Protocol: wss
+/// Host: ws.postman-echo.com
+/// Path: /raw
+///
+//////////////////////////////////////////////////////////////////////
+
+import 'dart:convert';
+import 'package:web_socket_channel/web_socket_channel.dart';
+
+class PostmanEchoWebSocketClientClient {
+
+  final String _url;
+  WebSocketChannel? _channel;
+  final List<void Function(String)> _messageHandlers = [];
+  final List<void Function(Object)> _errorHandlers = [];
+
+  /// Constructor to initialize the WebSocket client
+  /// 
+  /// [url] - The WebSocket server URL. Use it if the server URL is different from the default one taken from the AsyncAPI document.
+  PostmanEchoWebSocketClientClient({String? url})
+    : _url = url ?? 'wss://ws.postman-echo.com/raw';
+
+
+  /// Method to establish a WebSocket connection
+  Future<void> connect() async {
+    if (_channel != null) {
+      print('Already connected to Postman Echo WebSocket Client server');
+      return;
+    }
+    try {
+      final wsUrl = Uri.parse(_url);
+      _channel = WebSocketChannel.connect(wsUrl);
+      print('Connected to Postman Echo WebSocket Client server');
+
+        /// Listen to the incoming message stream
+      _channel?.stream.listen(
+        (message) {
+          if (_messageHandlers.isNotEmpty) {
+            for (var handler in _messageHandlers) {
+              _handleMessage(message, handler);
+            }
+          } else {
+            print('Message received: $message');
+          }
+        },
+        onError: (error) {
+          if (_errorHandlers.isNotEmpty) {
+            for (var handler in _errorHandlers) {
+              handler(error);
+            }
+          } else {
+            print('WebSocket Error: $error');
+          }
+        },
+        onDone: () {
+          _channel = null;
+          print('Disconnected from Postman Echo WebSocket Client server');
+        },
+      );
+    } catch (error) {
+      print('Connection failed: $error');
+      rethrow;
+    }
+  }
+
+  /// Method to register custom message handlers
+  void registerMessageHandler(void Function(String) handler) {
+    _messageHandlers.add(handler);
+  }
+
+  /// Method to register custom error handlers
+  void registerErrorHandler(void Function(Object) handler) {
+    _errorHandlers.add(handler);
+  }
+
+  /// Method to handle message with callback
+  void _handleMessage(dynamic message, void Function(String) cb) {
+    cb(message is String ? message : message.toString());
+  }
+
+  /// Method to send an echo message to the server
+  void sendEchoMessage(dynamic message) {
+    if (_channel == null) {
+      print('Error: WebSocket is not connected.');
+      return;
+    }
+    final payload = message is String ? message : jsonEncode(message);
+    _channel!.sink.add(payload);
+    print('Sent message to echo server: $payload');
+  }
+
+  /// Method to close the WebSocket connection
+  void close() {
+    _channel?.sink.close();
+    _channel = null;
+    print('WebSocket connection closed.');
+  }
+}
+
+"
+`;
+
+exports[`Dart Client Testing Dart client generation generate simple client for postman echo: pubspec.yaml 1`] = `
+"name: wsclient
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+dependencies:
+  web_socket_channel: ^3.0.2
+"
+`;
+
+exports[`JavaScript Client Testing JavaScript client generation generate simple client for hoppscotch echo with custom client name: README.md 1`] = `
+"# Hoppscotch Echo WebSocket Client 
+
+## Overview
+
+Undestand how to use Hoppscotch Echo WebSocket as a client. Hoppscotch Echo WebSocket server echoes back any messages sent to it. You can use this to test WebSocket connections and message flows.
+
+
+- **Version:** 1.0.0
+- **URL:** wss://echo-websocket.hoppscotch.io/
+
+
+## Client API Reference
+
+\`\`\`javascript
+const HoppscotchClient = require('./client');
+const wsClient = new HoppscotchClient();
+\`\`\`
+
+Here the wsClient is an instance of the \`HoppscotchClient\` class.
+### Core Methods
+
+#### \`connect()\`
+Establishes a WebSocket connection to the server.
+
+#### \`registerMessageHandler(handlerFunction)\`
+Registers a callback to handle incoming messages.
+- **Parameter:** \`handlerFunction\` - This Function takes a parameter \`message\` which is a string. 
+
+#### \`registerErrorHandler(handlerFunction)\`
+Registers a callback to handle WebSocket errors.
+- **Parameter:** \`handlerFunction\` - This Function takes a parameter \`error\` which is an object
+
+#### \`close()\`
+Closes the WebSocket connection.
+
+### Available Operations
+
+#### \`sendEchoMessage(payload)\`
+Send a message to the echo server.
+
+
+
+**Example:**
+\`\`\`javascript
+client.sendEchoMessage(\\"test\\");
+\`\`\`
+
+
+**Example:**
+\`\`\`javascript
+client.sendEchoMessage(true);
+\`\`\`
+
+
+**Example:**
+\`\`\`javascript
+client.sendEchoMessage(123);
+\`\`\`
+
+
+**Example:**
+\`\`\`javascript
+client.sendEchoMessage({
+  \\"test\\": \\"test text\\"
+});
+\`\`\`
+
+
+
+#### \`handleTimeStampMessage(payload)\`
+Receive the timestamp message sent from server every second.
+
+
+
+**Example:**
+\`\`\`javascript
+client.handleTimeStampMessage(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\\");
+\`\`\`
+
+
+
+## Testing the client
+
+\`\`\`javascript
+const HoppscotchClient = require('./client');
+const wsClient = new HoppscotchClient();
+
+
+// Example of how custom message handler that operates on incoming messages can look like
+
+function myHandler(message) {
+  console.log('====================');
+  console.log('Just proving I got the message in myHandler:', message);
+  console.log('====================');  
+}
+
+// Example of custom error handler
+
+function myErrorHandler(error) {
+  console.error('Errors from Websocket:', error.message);
+}
+
+async function main() {
+  wsClient.registerMessageHandler(myHandler);
+  wsClient.registerErrorHandler(myErrorHandler);
+
+  try {
+    await wsClient.connect();
+
+    // Loop to send messages every 5 seconds
+    const interval = 5000; // 5 seconds
+    const message = 'Hello, Echo!';
+
+    while (true) {
+      try {
+        await wsClient.sendEchoMessage(message);
+      } catch (error) {
+        console.error('Error while sending message:', error);
+      }
+      // Wait for the interval before sending the next message
+      await new Promise(resolve => setTimeout(resolve, interval));
+    }
+  } catch (error) {
+    console.error('Failed to connect to WebSocket:', error.message);
+  }
+}
+
+main();
+\`\`\`
+
+
+
+"
+`;
+
+exports[`JavaScript Client Testing JavaScript client generation generate simple client for hoppscotch echo with custom client name: client.js 1`] = `
+"//////////////////////////////////////////////////////////////////////
+//
+// Hoppscotch Echo WebSocket Client - 1.0.0
+// Protocol: wss
+// Host: echo-websocket.hoppscotch.io
+//
+//////////////////////////////////////////////////////////////////////
+
+const WebSocket = require('ws');
+
+class HoppscotchClient {
+
+  /*
+    * Constructor to initialize the WebSocket client
+    * @param {string} url - The WebSocket server URL. Use it if the server URL is different from the default one taken from the AsyncAPI document.
+  */
+  constructor(url) {
+    this.url = url || 'wss://echo-websocket.hoppscotch.io';
+    this.websocket = null;
+    this.messageHandlers = [];
+    this.errorHandlers = [];
+  }
+
+  // Method to establish a WebSocket connection
+  connect() {
+    return new Promise((resolve, reject) => {
+      this.websocket = new WebSocket(this.url);
+
+      // On successful connection
+      this.websocket.onopen = () => {
+        console.log('Connected to Hoppscotch Echo WebSocket Client server');
+        resolve();
+      };
+
+      // On receiving a message
+      this.websocket.onmessage = (event) => {
+        if (this.messageHandlers.length > 0) {
+          // Call custom message handlers
+          this.messageHandlers.forEach(handler => {
+            if (typeof handler === 'function') {
+              this.handleMessage(event.data, handler);
+            }
+          });
+        } else {
+          // Default message logging
+          console.log('Message received:', event.data);
+        }
+      };
+
+      // On error first call custom error handlers, then default error behavior
+      this.websocket.onerror = (error) => {
+        if (this.errorHandlers.length > 0) {
+          // Call custom error handlers
+          this.errorHandlers.forEach(handler => handler(error));
+        } else {
+          // Default error behavior
+          console.error('WebSocket Error:', error);
+        }
+        reject(error);
+      };
+
+      // On connection close
+      this.websocket.onclose = () => {
+        console.log('Disconnected from Hoppscotch Echo WebSocket Client server');
+      };
+    });
+  }
+
+  // Method to register custom message handlers
+  registerMessageHandler(handler) {
+    if (typeof handler === 'function') {
+      this.messageHandlers.push(handler);
+    } else {
+      console.warn('Message handler must be a function');
+    }
+  }
+
+  // Method to register custom error handlers
+  registerErrorHandler(handler) {
+    if (typeof handler === 'function') {
+      this.errorHandlers.push(handler);
+    } else {
+      console.warn('Error handler must be a function');
+    }
+  }
+
+  // Method to handle message with callback
+  handleMessage(message, cb) {
+    if (cb) cb(message);
+  }
+
+  /**
+   * Sends a sendEchoMessage message over the WebSocket connection.
+   * 
+   * @param {Object} message - The message payload to send. Should match the schema defined in the AsyncAPI document.
+   * @param {WebSocket} [socket] - The WebSocket connection to use. If not provided, the client's own connection will be used.
+   * @throws {TypeError} If message cannot be stringified to JSON
+   * @throws {Error} If WebSocket connection is not in OPEN state
+   */
+  static sendEchoMessage(message, socket) {
+    try {
+      socket.send(JSON.stringify(message));
+    } catch (error) {
+      console.error('Error sending sendEchoMessage message:', error);
+    }
+  }
+  /**
+   * Instance method version of sendEchoMessage that uses the client's own WebSocket connection.
+   * @param {Object} message - The message payload to send
+   * @throws {Error} If WebSocket connection is not established
+   */
+  sendEchoMessage(message){
+    if(!this.websocket){
+      throw new Error('WebSocket connection not established. Call connect() first.');
+    }
+    HoppscotchClient.sendEchoMessage(message, this.websocket);
+  }
+  
+
+  // Method to close the WebSocket connection
+  close() {
+    if (this.websocket) {
+      this.websocket.close();
+      console.log('WebSocket connection closed.');
+    }
+  }
+}
+module.exports = HoppscotchClient;
+
+"
+`;
+
+exports[`JavaScript Client Testing JavaScript client generation generate simple client for hoppscotch echo: README.md 1`] = `
+"# Hoppscotch Echo WebSocket Client 
+
+## Overview
+
+Undestand how to use Hoppscotch Echo WebSocket as a client. Hoppscotch Echo WebSocket server echoes back any messages sent to it. You can use this to test WebSocket connections and message flows.
+
+
+- **Version:** 1.0.0
+- **URL:** wss://echo-websocket.hoppscotch.io/
+
+
+## Client API Reference
+
+\`\`\`javascript
+const HoppscotchEchoWebSocketClient = require('./client');
+const wsClient = new HoppscotchEchoWebSocketClient();
+\`\`\`
+
+Here the wsClient is an instance of the \`HoppscotchEchoWebSocketClient\` class.
+### Core Methods
+
+#### \`connect()\`
+Establishes a WebSocket connection to the server.
+
+#### \`registerMessageHandler(handlerFunction)\`
+Registers a callback to handle incoming messages.
+- **Parameter:** \`handlerFunction\` - This Function takes a parameter \`message\` which is a string. 
+
+#### \`registerErrorHandler(handlerFunction)\`
+Registers a callback to handle WebSocket errors.
+- **Parameter:** \`handlerFunction\` - This Function takes a parameter \`error\` which is an object
+
+#### \`close()\`
+Closes the WebSocket connection.
+
+### Available Operations
+
+#### \`sendEchoMessage(payload)\`
+Send a message to the echo server.
+
+
+
+**Example:**
+\`\`\`javascript
+client.sendEchoMessage(\\"test\\");
+\`\`\`
+
+
+**Example:**
+\`\`\`javascript
+client.sendEchoMessage(true);
+\`\`\`
+
+
+**Example:**
+\`\`\`javascript
+client.sendEchoMessage(123);
+\`\`\`
+
+
+**Example:**
+\`\`\`javascript
+client.sendEchoMessage({
+  \\"test\\": \\"test text\\"
+});
+\`\`\`
+
+
+
+#### \`handleTimeStampMessage(payload)\`
+Receive the timestamp message sent from server every second.
+
+
+
+**Example:**
+\`\`\`javascript
+client.handleTimeStampMessage(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\\");
+\`\`\`
+
+
+
+## Testing the client
+
+\`\`\`javascript
+const HoppscotchEchoWebSocketClient = require('./client');
+const wsClient = new HoppscotchEchoWebSocketClient();
+
+
+// Example of how custom message handler that operates on incoming messages can look like
+
+function myHandler(message) {
+  console.log('====================');
+  console.log('Just proving I got the message in myHandler:', message);
+  console.log('====================');  
+}
+
+// Example of custom error handler
+
+function myErrorHandler(error) {
+  console.error('Errors from Websocket:', error.message);
+}
+
+async function main() {
+  wsClient.registerMessageHandler(myHandler);
+  wsClient.registerErrorHandler(myErrorHandler);
+
+  try {
+    await wsClient.connect();
+
+    // Loop to send messages every 5 seconds
+    const interval = 5000; // 5 seconds
+    const message = 'Hello, Echo!';
+
+    while (true) {
+      try {
+        await wsClient.sendEchoMessage(message);
+      } catch (error) {
+        console.error('Error while sending message:', error);
+      }
+      // Wait for the interval before sending the next message
+      await new Promise(resolve => setTimeout(resolve, interval));
+    }
+  } catch (error) {
+    console.error('Failed to connect to WebSocket:', error.message);
+  }
+}
+
+main();
+\`\`\`
+
+
+
+"
+`;
+
+exports[`JavaScript Client Testing JavaScript client generation generate simple client for hoppscotch echo: client.js 1`] = `
+"//////////////////////////////////////////////////////////////////////
+//
+// Hoppscotch Echo WebSocket Client - 1.0.0
+// Protocol: wss
+// Host: echo-websocket.hoppscotch.io
+//
+//////////////////////////////////////////////////////////////////////
+
+const WebSocket = require('ws');
+
+class HoppscotchEchoWebSocketClient {
+
+  /*
+    * Constructor to initialize the WebSocket client
+    * @param {string} url - The WebSocket server URL. Use it if the server URL is different from the default one taken from the AsyncAPI document.
+  */
+  constructor(url) {
+    this.url = url || 'wss://echo-websocket.hoppscotch.io';
+    this.websocket = null;
+    this.messageHandlers = [];
+    this.errorHandlers = [];
+  }
+
+  // Method to establish a WebSocket connection
+  connect() {
+    return new Promise((resolve, reject) => {
+      this.websocket = new WebSocket(this.url);
+
+      // On successful connection
+      this.websocket.onopen = () => {
+        console.log('Connected to Hoppscotch Echo WebSocket Client server');
+        resolve();
+      };
+
+      // On receiving a message
+      this.websocket.onmessage = (event) => {
+        if (this.messageHandlers.length > 0) {
+          // Call custom message handlers
+          this.messageHandlers.forEach(handler => {
+            if (typeof handler === 'function') {
+              this.handleMessage(event.data, handler);
+            }
+          });
+        } else {
+          // Default message logging
+          console.log('Message received:', event.data);
+        }
+      };
+
+      // On error first call custom error handlers, then default error behavior
+      this.websocket.onerror = (error) => {
+        if (this.errorHandlers.length > 0) {
+          // Call custom error handlers
+          this.errorHandlers.forEach(handler => handler(error));
+        } else {
+          // Default error behavior
+          console.error('WebSocket Error:', error);
+        }
+        reject(error);
+      };
+
+      // On connection close
+      this.websocket.onclose = () => {
+        console.log('Disconnected from Hoppscotch Echo WebSocket Client server');
+      };
+    });
+  }
+
+  // Method to register custom message handlers
+  registerMessageHandler(handler) {
+    if (typeof handler === 'function') {
+      this.messageHandlers.push(handler);
+    } else {
+      console.warn('Message handler must be a function');
+    }
+  }
+
+  // Method to register custom error handlers
+  registerErrorHandler(handler) {
+    if (typeof handler === 'function') {
+      this.errorHandlers.push(handler);
+    } else {
+      console.warn('Error handler must be a function');
+    }
+  }
+
+  // Method to handle message with callback
+  handleMessage(message, cb) {
+    if (cb) cb(message);
+  }
+
+  /**
+   * Sends a sendEchoMessage message over the WebSocket connection.
+   * 
+   * @param {Object} message - The message payload to send. Should match the schema defined in the AsyncAPI document.
+   * @param {WebSocket} [socket] - The WebSocket connection to use. If not provided, the client's own connection will be used.
+   * @throws {TypeError} If message cannot be stringified to JSON
+   * @throws {Error} If WebSocket connection is not in OPEN state
+   */
+  static sendEchoMessage(message, socket) {
+    try {
+      socket.send(JSON.stringify(message));
+    } catch (error) {
+      console.error('Error sending sendEchoMessage message:', error);
+    }
+  }
+  /**
+   * Instance method version of sendEchoMessage that uses the client's own WebSocket connection.
+   * @param {Object} message - The message payload to send
+   * @throws {Error} If WebSocket connection is not established
+   */
+  sendEchoMessage(message){
+    if(!this.websocket){
+      throw new Error('WebSocket connection not established. Call connect() first.');
+    }
+    HoppscotchEchoWebSocketClient.sendEchoMessage(message, this.websocket);
+  }
+  
+
+  // Method to close the WebSocket connection
+  close() {
+    if (this.websocket) {
+      this.websocket.close();
+      console.log('WebSocket connection closed.');
+    }
+  }
+}
+module.exports = HoppscotchEchoWebSocketClient;
+
+"
+`;
+
+exports[`JavaScript Client Testing JavaScript client generation generate simple client for postman echo: README.md 1`] = `
+"# Postman Echo WebSocket Client 
+
+## Overview
+
+Understand how to use the Postman Echo WebSocket as a client. The Postman Echo WebSocket server echoes back any messages sent to it.
+
+- **Version:** 1.0.0
+- **URL:** wss://ws.postman-echo.com/raw
+
+
+## Client API Reference
+
+\`\`\`javascript
+const PostmanEchoWebSocketClientClient = require('./client');
+const wsClient = new PostmanEchoWebSocketClientClient();
+\`\`\`
+
+Here the wsClient is an instance of the \`PostmanEchoWebSocketClientClient\` class.
+### Core Methods
+
+#### \`connect()\`
+Establishes a WebSocket connection to the server.
+
+#### \`registerMessageHandler(handlerFunction)\`
+Registers a callback to handle incoming messages.
+- **Parameter:** \`handlerFunction\` - This Function takes a parameter \`message\` which is a string. 
+
+#### \`registerErrorHandler(handlerFunction)\`
+Registers a callback to handle WebSocket errors.
+- **Parameter:** \`handlerFunction\` - This Function takes a parameter \`error\` which is an object
+
+#### \`close()\`
+Closes the WebSocket connection.
+
+### Available Operations
+
+#### \`sendEchoMessage(payload)\`
+Send a message to the Postman Echo server.
+
+
+
+**Example:**
+\`\`\`javascript
+client.sendEchoMessage(\\"test\\");
+\`\`\`
+
+
+**Example:**
+\`\`\`javascript
+client.sendEchoMessage({
+  \\"test\\": \\"test text\\"
+});
+\`\`\`
+
+
+
+## Testing the client
+
+\`\`\`javascript
+const PostmanEchoWebSocketClientClient = require('./client');
+const wsClient = new PostmanEchoWebSocketClientClient();
+
+
+// Example of how custom message handler that operates on incoming messages can look like
+
+function myHandler(message) {
+  console.log('====================');
+  console.log('Just proving I got the message in myHandler:', message);
+  console.log('====================');  
+}
+
+// Example of custom error handler
+
+function myErrorHandler(error) {
+  console.error('Errors from Websocket:', error.message);
+}
+
+async function main() {
+  wsClient.registerMessageHandler(myHandler);
+  wsClient.registerErrorHandler(myErrorHandler);
+
+  try {
+    await wsClient.connect();
+
+    // Loop to send messages every 5 seconds
+    const interval = 5000; // 5 seconds
+    const message = 'Hello, Echo!';
+
+    while (true) {
+      try {
+        await wsClient.sendEchoMessage(message);
+      } catch (error) {
+        console.error('Error while sending message:', error);
+      }
+      // Wait for the interval before sending the next message
+      await new Promise(resolve => setTimeout(resolve, interval));
+    }
+  } catch (error) {
+    console.error('Failed to connect to WebSocket:', error.message);
+  }
+}
+
+main();
+\`\`\`
+
+
+
+"
+`;
+
+exports[`JavaScript Client Testing JavaScript client generation generate simple client for postman echo: client.js 1`] = `
+"//////////////////////////////////////////////////////////////////////
+//
+// Postman Echo WebSocket Client - 1.0.0
+// Protocol: wss
+// Host: ws.postman-echo.com
+// Path: /raw
+//
+//////////////////////////////////////////////////////////////////////
+
+const WebSocket = require('ws');
+
+class PostmanEchoWebSocketClientClient {
+
+  /*
+    * Constructor to initialize the WebSocket client
+    * @param {string} url - The WebSocket server URL. Use it if the server URL is different from the default one taken from the AsyncAPI document.
+  */
+  constructor(url) {
+    this.url = url || 'wss://ws.postman-echo.com/raw';
+    this.websocket = null;
+    this.messageHandlers = [];
+    this.errorHandlers = [];
+  }
+
+  // Method to establish a WebSocket connection
+  connect() {
+    return new Promise((resolve, reject) => {
+      this.websocket = new WebSocket(this.url);
+
+      // On successful connection
+      this.websocket.onopen = () => {
+        console.log('Connected to Postman Echo WebSocket Client server');
+        resolve();
+      };
+
+      // On receiving a message
+      this.websocket.onmessage = (event) => {
+        if (this.messageHandlers.length > 0) {
+          // Call custom message handlers
+          this.messageHandlers.forEach(handler => {
+            if (typeof handler === 'function') {
+              this.handleMessage(event.data, handler);
+            }
+          });
+        } else {
+          // Default message logging
+          console.log('Message received:', event.data);
+        }
+      };
+
+      // On error first call custom error handlers, then default error behavior
+      this.websocket.onerror = (error) => {
+        if (this.errorHandlers.length > 0) {
+          // Call custom error handlers
+          this.errorHandlers.forEach(handler => handler(error));
+        } else {
+          // Default error behavior
+          console.error('WebSocket Error:', error);
+        }
+        reject(error);
+      };
+
+      // On connection close
+      this.websocket.onclose = () => {
+        console.log('Disconnected from Postman Echo WebSocket Client server');
+      };
+    });
+  }
+
+  // Method to register custom message handlers
+  registerMessageHandler(handler) {
+    if (typeof handler === 'function') {
+      this.messageHandlers.push(handler);
+    } else {
+      console.warn('Message handler must be a function');
+    }
+  }
+
+  // Method to register custom error handlers
+  registerErrorHandler(handler) {
+    if (typeof handler === 'function') {
+      this.errorHandlers.push(handler);
+    } else {
+      console.warn('Error handler must be a function');
+    }
+  }
+
+  // Method to handle message with callback
+  handleMessage(message, cb) {
+    if (cb) cb(message);
+  }
+
+  /**
+   * Sends a sendEchoMessage message over the WebSocket connection.
+   * 
+   * @param {Object} message - The message payload to send. Should match the schema defined in the AsyncAPI document.
+   * @param {WebSocket} [socket] - The WebSocket connection to use. If not provided, the client's own connection will be used.
+   * @throws {TypeError} If message cannot be stringified to JSON
+   * @throws {Error} If WebSocket connection is not in OPEN state
+   */
+  static sendEchoMessage(message, socket) {
+    try {
+      socket.send(JSON.stringify(message));
+    } catch (error) {
+      console.error('Error sending sendEchoMessage message:', error);
+    }
+  }
+  /**
+   * Instance method version of sendEchoMessage that uses the client's own WebSocket connection.
+   * @param {Object} message - The message payload to send
+   * @throws {Error} If WebSocket connection is not established
+   */
+  sendEchoMessage(message){
+    if(!this.websocket){
+      throw new Error('WebSocket connection not established. Call connect() first.');
+    }
+    PostmanEchoWebSocketClientClient.sendEchoMessage(message, this.websocket);
+  }
+  
+
+  // Method to close the WebSocket connection
+  close() {
+    if (this.websocket) {
+      this.websocket.close();
+      console.log('WebSocket connection closed.');
+    }
+  }
+}
+module.exports = PostmanEchoWebSocketClientClient;
+
+"
+`;
+
+exports[`Python Client Testing Python client generation generate simple client for hoppscotch echo with custom client name: client.py 1`] = `
+"# //////////////////////////////////////////////////////////////////////////
+#
+# Hoppscotch Echo WebSocket Client - 1.0.0
+# Protocol: wss
+# Host: echo-websocket.hoppscotch.io
+#
+# //////////////////////////////////////////////////////////////////////////
+
+import json
+import certifi
+import threading
+import websocket
+
+
+
+class HoppscotchClient:
+
+  def __init__(self, url: str = \\"wss://echo-websocket.hoppscotch.io\\"):
+
+        \\"\\"\\"
+        Constructor to initialize the WebSocket client.
+
+        Args:
+            url (str, optional): The WebSocket server URL. Use it if the server URL is 
+            different from the default one taken from the AsyncAPI document.
+        \\"\\"\\"
+        self.ws_app = None  # Instance of WebSocketApp
+        self.message_handlers = []      # Callables for incoming messages
+        self.error_handlers = []        # Callables for errors
+        self.outgoing_processors = []   # Callables to process outgoing messages
+        self._stop_event = threading.Event()
+      
+      
+
+        
+        self.url = url
+
+  def on_open(self, ws):
+      print(\\"Connected to Hoppscotch Echo WebSocket Client server\\")
+
+  def on_message(self, ws, message):
+      self.handle_message(message)
+
+  def on_error(self, ws, error):
+      print(\\"WebSocket Error:\\", error)
+      self.handle_error(error)
+
+  def on_close(self, ws, close_status_code, close_msg):
+      print(\\"Disconnected from Hoppscotch Echo WebSocket Client\\", close_status_code, close_msg)
+
+  def connect(self):
+      \\"\\"\\"Establish the connection and start the run_forever loop in a background thread.\\"\\"\\"
+      ssl_opts = {\\"ca_certs\\": certifi.where()}
+      self.ws_app = websocket.WebSocketApp(
+          self.url,
+          on_open=self.on_open,
+          on_message=self.on_message,
+          on_error=self.on_error,
+          on_close=self.on_close
+      )
+      # Run the WebSocketApp's run_forever in a separate thread with multithreading enabled.
+      def run():
+
+          retry = 0
+          max_retries = 5
+        
+          while not self._stop_event.is_set() and retry < max_retries:
+              try:
+                  retry += 1
+                  print(\\"Starting WebSocket thread...\\")
+                  self.ws_app.run_forever(sslopt=ssl_opts)
+              except Exception as e:
+                  print(f\\"Exception in WebSocket thread: {e}\\")  # Print full error details
+
+      thread = threading.Thread(target=run, daemon=True)
+      thread.start()
+
+  def register_message_handler(self, handler):
+      \\"\\"\\"Register a callable to process incoming messages.\\"\\"\\"
+      if callable(handler):
+          self.message_handlers.append(handler)
+      else:
+          print(\\"Message handler must be callable\\")
+
+  def register_error_handler(self, handler):
+      \\"\\"\\"Register a callable to process errors.\\"\\"\\"
+      if callable(handler):
+          self.error_handlers.append(handler)
+      else:
+          print(\\"Error handler must be callable\\")
+
+  def register_outgoing_processor(self, processor):
+      \\"\\"\\"
+      Register a callable that processes outgoing messages automatically.
+      These processors run in sequence before each message is sent.
+      \\"\\"\\"
+      if callable(processor):
+          self.outgoing_processors.append(processor)
+      else:
+          print(\\"Outgoing processor must be callable\\")
+
+  def handle_message(self, message):
+      \\"\\"\\"Pass the incoming message to all registered message handlers. \\"\\"\\"
+      if len(self.message_handlers) == 0:
+        print(\\"\\\\033[94mReceived raw message:\\\\033[0m\\", message)
+      else:
+        for handler in self.message_handlers:
+          handler(message)
+
+  def handle_error(self, error):
+      \\"\\"\\"Pass the error to all registered error handlers. Generic log message is printed if no handlers are registered.\\"\\"\\"
+      if len(self.error_handlers) == 0:
+        print(\\"\\\\033[91mError occurred:\\\\033[0m\\", error)
+      else:
+        # Call custom error handlers
+        for handler in self.error_handlers:
+          handler(error)
+
+  async def send_echo_message(self, message):
+      \\"\\"\\"
+      Send a send_echo_message message using the WebSocket connection attached to this instance.
+
+      Args:
+          message (dict or str): The message to send. Will be serialized to JSON if it's a dictionary.
+
+      Raises:
+          Exception: If sending fails or the socket is not connected.
+      \\"\\"\\"
+      await self._send(message, self.ws_app)
+
+  @staticmethod
+  async def send_echo_message_static(message, socket):
+      \\"\\"\\"
+      Send a send_echo_message message using a provided WebSocket connection, without needing an instance.
+
+      Args:
+          message (dict or str): The message to send.
+          socket (websockets.WebSocketCommonProtocol): The WebSocket to send through.
+
+      Raises:
+          Exception: If sending fails or the socket is not connected.
+      \\"\\"\\"
+      await HoppscotchClient._send(message, socket)
+
+
+  @staticmethod
+  async def _send(message, socket):
+      \\"\\"\\"
+      Internal helper to handle the actual sending logic.
+
+      Args:
+          message (dict or str): The message to send.
+          socket (websockets.WebSocketCommonProtocol): The WebSocket to send through.
+
+      Notes:
+          If message is a dictionary, it will be automatically converted to JSON.
+      \\"\\"\\"
+      try:
+          if isinstance(message, dict):
+              message = json.dumps(message)
+          await socket.send(message)
+      except Exception as e:
+          print(\\"Error sending:\\", e)
+
+  def close(self):
+      \\"\\"\\"Cleanly close the WebSocket connection.\\"\\"\\"
+      self._stop_event.set()
+      if self.ws_app:
+          self.ws_app.close()
+          print(\\"WebSocket connection closed.\\")
+
+"
+`;
+
+exports[`Python Client Testing Python client generation generate simple client for hoppscotch echo with custom client name: requirements.txt 1`] = `
+"websocket-client==1.8.0
+certifi==2025.1.31
+requests==2.32.3
+"
+`;
+
+exports[`Python Client Testing Python client generation generate simple client for hoppscotch echo: client.py 1`] = `
+"# //////////////////////////////////////////////////////////////////////////
+#
+# Hoppscotch Echo WebSocket Client - 1.0.0
+# Protocol: wss
+# Host: echo-websocket.hoppscotch.io
+#
+# //////////////////////////////////////////////////////////////////////////
+
+import json
+import certifi
+import threading
+import websocket
+
+
+
+class HoppscotchEchoWebSocketClient:
+
+  def __init__(self, url: str = \\"wss://echo-websocket.hoppscotch.io\\"):
+
+        \\"\\"\\"
+        Constructor to initialize the WebSocket client.
+
+        Args:
+            url (str, optional): The WebSocket server URL. Use it if the server URL is 
+            different from the default one taken from the AsyncAPI document.
+        \\"\\"\\"
+        self.ws_app = None  # Instance of WebSocketApp
+        self.message_handlers = []      # Callables for incoming messages
+        self.error_handlers = []        # Callables for errors
+        self.outgoing_processors = []   # Callables to process outgoing messages
+        self._stop_event = threading.Event()
+      
+      
+
+        
+        self.url = url
+
+  def on_open(self, ws):
+      print(\\"Connected to Hoppscotch Echo WebSocket Client server\\")
+
+  def on_message(self, ws, message):
+      self.handle_message(message)
+
+  def on_error(self, ws, error):
+      print(\\"WebSocket Error:\\", error)
+      self.handle_error(error)
+
+  def on_close(self, ws, close_status_code, close_msg):
+      print(\\"Disconnected from Hoppscotch Echo WebSocket Client\\", close_status_code, close_msg)
+
+  def connect(self):
+      \\"\\"\\"Establish the connection and start the run_forever loop in a background thread.\\"\\"\\"
+      ssl_opts = {\\"ca_certs\\": certifi.where()}
+      self.ws_app = websocket.WebSocketApp(
+          self.url,
+          on_open=self.on_open,
+          on_message=self.on_message,
+          on_error=self.on_error,
+          on_close=self.on_close
+      )
+      # Run the WebSocketApp's run_forever in a separate thread with multithreading enabled.
+      def run():
+
+          retry = 0
+          max_retries = 5
+        
+          while not self._stop_event.is_set() and retry < max_retries:
+              try:
+                  retry += 1
+                  print(\\"Starting WebSocket thread...\\")
+                  self.ws_app.run_forever(sslopt=ssl_opts)
+              except Exception as e:
+                  print(f\\"Exception in WebSocket thread: {e}\\")  # Print full error details
+
+      thread = threading.Thread(target=run, daemon=True)
+      thread.start()
+
+  def register_message_handler(self, handler):
+      \\"\\"\\"Register a callable to process incoming messages.\\"\\"\\"
+      if callable(handler):
+          self.message_handlers.append(handler)
+      else:
+          print(\\"Message handler must be callable\\")
+
+  def register_error_handler(self, handler):
+      \\"\\"\\"Register a callable to process errors.\\"\\"\\"
+      if callable(handler):
+          self.error_handlers.append(handler)
+      else:
+          print(\\"Error handler must be callable\\")
+
+  def register_outgoing_processor(self, processor):
+      \\"\\"\\"
+      Register a callable that processes outgoing messages automatically.
+      These processors run in sequence before each message is sent.
+      \\"\\"\\"
+      if callable(processor):
+          self.outgoing_processors.append(processor)
+      else:
+          print(\\"Outgoing processor must be callable\\")
+
+  def handle_message(self, message):
+      \\"\\"\\"Pass the incoming message to all registered message handlers. \\"\\"\\"
+      if len(self.message_handlers) == 0:
+        print(\\"\\\\033[94mReceived raw message:\\\\033[0m\\", message)
+      else:
+        for handler in self.message_handlers:
+          handler(message)
+
+  def handle_error(self, error):
+      \\"\\"\\"Pass the error to all registered error handlers. Generic log message is printed if no handlers are registered.\\"\\"\\"
+      if len(self.error_handlers) == 0:
+        print(\\"\\\\033[91mError occurred:\\\\033[0m\\", error)
+      else:
+        # Call custom error handlers
+        for handler in self.error_handlers:
+          handler(error)
+
+  async def send_echo_message(self, message):
+      \\"\\"\\"
+      Send a send_echo_message message using the WebSocket connection attached to this instance.
+
+      Args:
+          message (dict or str): The message to send. Will be serialized to JSON if it's a dictionary.
+
+      Raises:
+          Exception: If sending fails or the socket is not connected.
+      \\"\\"\\"
+      await self._send(message, self.ws_app)
+
+  @staticmethod
+  async def send_echo_message_static(message, socket):
+      \\"\\"\\"
+      Send a send_echo_message message using a provided WebSocket connection, without needing an instance.
+
+      Args:
+          message (dict or str): The message to send.
+          socket (websockets.WebSocketCommonProtocol): The WebSocket to send through.
+
+      Raises:
+          Exception: If sending fails or the socket is not connected.
+      \\"\\"\\"
+      await HoppscotchEchoWebSocketClient._send(message, socket)
+
+
+  @staticmethod
+  async def _send(message, socket):
+      \\"\\"\\"
+      Internal helper to handle the actual sending logic.
+
+      Args:
+          message (dict or str): The message to send.
+          socket (websockets.WebSocketCommonProtocol): The WebSocket to send through.
+
+      Notes:
+          If message is a dictionary, it will be automatically converted to JSON.
+      \\"\\"\\"
+      try:
+          if isinstance(message, dict):
+              message = json.dumps(message)
+          await socket.send(message)
+      except Exception as e:
+          print(\\"Error sending:\\", e)
+
+  def close(self):
+      \\"\\"\\"Cleanly close the WebSocket connection.\\"\\"\\"
+      self._stop_event.set()
+      if self.ws_app:
+          self.ws_app.close()
+          print(\\"WebSocket connection closed.\\")
+
+"
+`;
+
+exports[`Python Client Testing Python client generation generate simple client for hoppscotch echo: requirements.txt 1`] = `
+"websocket-client==1.8.0
+certifi==2025.1.31
+requests==2.32.3
+"
+`;
+
+exports[`Python Client Testing Python client generation generate simple client for postman echo: client.py 1`] = `
+"# //////////////////////////////////////////////////////////////////////////
+#
+# Postman Echo WebSocket Client - 1.0.0
+# Protocol: wss
+# Host: ws.postman-echo.com
+# Path: /raw
+#
+# //////////////////////////////////////////////////////////////////////////
+
+import json
+import certifi
+import threading
+import websocket
+
+
+
+class PostmanEchoWebSocketClientClient:
+
+  def __init__(self, url: str = \\"wss://ws.postman-echo.com/raw\\"):
+
+        \\"\\"\\"
+        Constructor to initialize the WebSocket client.
+
+        Args:
+            url (str, optional): The WebSocket server URL. Use it if the server URL is 
+            different from the default one taken from the AsyncAPI document.
+        \\"\\"\\"
+        self.ws_app = None  # Instance of WebSocketApp
+        self.message_handlers = []      # Callables for incoming messages
+        self.error_handlers = []        # Callables for errors
+        self.outgoing_processors = []   # Callables to process outgoing messages
+        self._stop_event = threading.Event()
+      
+      
+
+        
+        self.url = url
+
+  def on_open(self, ws):
+      print(\\"Connected to Postman Echo WebSocket Client server\\")
+
+  def on_message(self, ws, message):
+      self.handle_message(message)
+
+  def on_error(self, ws, error):
+      print(\\"WebSocket Error:\\", error)
+      self.handle_error(error)
+
+  def on_close(self, ws, close_status_code, close_msg):
+      print(\\"Disconnected from Postman Echo WebSocket Client\\", close_status_code, close_msg)
+
+  def connect(self):
+      \\"\\"\\"Establish the connection and start the run_forever loop in a background thread.\\"\\"\\"
+      ssl_opts = {\\"ca_certs\\": certifi.where()}
+      self.ws_app = websocket.WebSocketApp(
+          self.url,
+          on_open=self.on_open,
+          on_message=self.on_message,
+          on_error=self.on_error,
+          on_close=self.on_close
+      )
+      # Run the WebSocketApp's run_forever in a separate thread with multithreading enabled.
+      def run():
+
+          retry = 0
+          max_retries = 5
+        
+          while not self._stop_event.is_set() and retry < max_retries:
+              try:
+                  retry += 1
+                  print(\\"Starting WebSocket thread...\\")
+                  self.ws_app.run_forever(sslopt=ssl_opts)
+              except Exception as e:
+                  print(f\\"Exception in WebSocket thread: {e}\\")  # Print full error details
+
+      thread = threading.Thread(target=run, daemon=True)
+      thread.start()
+
+  def register_message_handler(self, handler):
+      \\"\\"\\"Register a callable to process incoming messages.\\"\\"\\"
+      if callable(handler):
+          self.message_handlers.append(handler)
+      else:
+          print(\\"Message handler must be callable\\")
+
+  def register_error_handler(self, handler):
+      \\"\\"\\"Register a callable to process errors.\\"\\"\\"
+      if callable(handler):
+          self.error_handlers.append(handler)
+      else:
+          print(\\"Error handler must be callable\\")
+
+  def register_outgoing_processor(self, processor):
+      \\"\\"\\"
+      Register a callable that processes outgoing messages automatically.
+      These processors run in sequence before each message is sent.
+      \\"\\"\\"
+      if callable(processor):
+          self.outgoing_processors.append(processor)
+      else:
+          print(\\"Outgoing processor must be callable\\")
+
+  def handle_message(self, message):
+      \\"\\"\\"Pass the incoming message to all registered message handlers. \\"\\"\\"
+      if len(self.message_handlers) == 0:
+        print(\\"\\\\033[94mReceived raw message:\\\\033[0m\\", message)
+      else:
+        for handler in self.message_handlers:
+          handler(message)
+
+  def handle_error(self, error):
+      \\"\\"\\"Pass the error to all registered error handlers. Generic log message is printed if no handlers are registered.\\"\\"\\"
+      if len(self.error_handlers) == 0:
+        print(\\"\\\\033[91mError occurred:\\\\033[0m\\", error)
+      else:
+        # Call custom error handlers
+        for handler in self.error_handlers:
+          handler(error)
+
+  async def send_echo_message(self, message):
+      \\"\\"\\"
+      Send a send_echo_message message using the WebSocket connection attached to this instance.
+
+      Args:
+          message (dict or str): The message to send. Will be serialized to JSON if it's a dictionary.
+
+      Raises:
+          Exception: If sending fails or the socket is not connected.
+      \\"\\"\\"
+      await self._send(message, self.ws_app)
+
+  @staticmethod
+  async def send_echo_message_static(message, socket):
+      \\"\\"\\"
+      Send a send_echo_message message using a provided WebSocket connection, without needing an instance.
+
+      Args:
+          message (dict or str): The message to send.
+          socket (websockets.WebSocketCommonProtocol): The WebSocket to send through.
+
+      Raises:
+          Exception: If sending fails or the socket is not connected.
+      \\"\\"\\"
+      await PostmanEchoWebSocketClientClient._send(message, socket)
+
+
+  @staticmethod
+  async def _send(message, socket):
+      \\"\\"\\"
+      Internal helper to handle the actual sending logic.
+
+      Args:
+          message (dict or str): The message to send.
+          socket (websockets.WebSocketCommonProtocol): The WebSocket to send through.
+
+      Notes:
+          If message is a dictionary, it will be automatically converted to JSON.
+      \\"\\"\\"
+      try:
+          if isinstance(message, dict):
+              message = json.dumps(message)
+          await socket.send(message)
+      except Exception as e:
+          print(\\"Error sending:\\", e)
+
+  def close(self):
+      \\"\\"\\"Cleanly close the WebSocket connection.\\"\\"\\"
+      self._stop_event.set()
+      if self.ws_app:
+          self.ws_app.close()
+          print(\\"WebSocket connection closed.\\")
+
+"
+`;
+
+exports[`Python Client Testing Python client generation generate simple client for postman echo: requirements.txt 1`] = `
+"websocket-client==1.8.0
+certifi==2025.1.31
+requests==2.32.3
+"
+`;

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Dart Client Common Integration test for Dart client generation generate simple client for hoppscotch echo with custom client name: client.dart 1`] = `
+exports[`Dart Client Common Integration tests for Dart client generation generate simple client for hoppscotch echo with custom client name: client.dart 1`] = `
 "//////////////////////////////////////////////////////////////////////
 ///
 /// Hoppscotch Echo WebSocket Client - 1.0.0
@@ -105,7 +105,7 @@ class HoppscotchClient {
 "
 `;
 
-exports[`Dart Client Common Integration test for Dart client generation generate simple client for hoppscotch echo with custom client name: pubspec.yaml 1`] = `
+exports[`Dart Client Common Integration tests for Dart client generation generate simple client for hoppscotch echo with custom client name: pubspec.yaml 1`] = `
 "name: wsclient
 environment:
   sdk: '>=3.0.0 <4.0.0'
@@ -114,7 +114,7 @@ dependencies:
 "
 `;
 
-exports[`Dart Client Common Integration test for Dart client generation generate simple client for hoppscotch echo: client.dart 1`] = `
+exports[`Dart Client Common Integration tests for Dart client generation generate simple client for hoppscotch echo: client.dart 1`] = `
 "//////////////////////////////////////////////////////////////////////
 ///
 /// Hoppscotch Echo WebSocket Client - 1.0.0
@@ -219,7 +219,7 @@ class HoppscotchEchoWebSocketClient {
 "
 `;
 
-exports[`Dart Client Common Integration test for Dart client generation generate simple client for hoppscotch echo: pubspec.yaml 1`] = `
+exports[`Dart Client Common Integration tests for Dart client generation generate simple client for hoppscotch echo: pubspec.yaml 1`] = `
 "name: wsclient
 environment:
   sdk: '>=3.0.0 <4.0.0'
@@ -228,7 +228,7 @@ dependencies:
 "
 `;
 
-exports[`Dart Client Common Integration test for Dart client generation generate simple client for postman echo: client.dart 1`] = `
+exports[`Dart Client Common Integration tests for Dart client generation generate simple client for postman echo: client.dart 1`] = `
 "//////////////////////////////////////////////////////////////////////
 ///
 /// Postman Echo WebSocket Client - 1.0.0
@@ -334,7 +334,7 @@ class PostmanEchoWebSocketClientClient {
 "
 `;
 
-exports[`Dart Client Common Integration test for Dart client generation generate simple client for postman echo: pubspec.yaml 1`] = `
+exports[`Dart Client Common Integration tests for Dart client generation generate simple client for postman echo: pubspec.yaml 1`] = `
 "name: wsclient
 environment:
   sdk: '>=3.0.0 <4.0.0'
@@ -343,7 +343,7 @@ dependencies:
 "
 `;
 
-exports[`JavaScript Client Common Integration test for JavaScript client generation generate simple client for hoppscotch echo with custom client name: README.md 1`] = `
+exports[`JavaScript Client Common Integration tests for JavaScript client generation generate simple client for hoppscotch echo with custom client name: README.md 1`] = `
 "# Hoppscotch Echo WebSocket Client 
 
 ## Overview
@@ -479,7 +479,7 @@ main();
 "
 `;
 
-exports[`JavaScript Client Common Integration test for JavaScript client generation generate simple client for hoppscotch echo with custom client name: client.js 1`] = `
+exports[`JavaScript Client Common Integration tests for JavaScript client generation generate simple client for hoppscotch echo with custom client name: client.js 1`] = `
 "//////////////////////////////////////////////////////////////////////
 //
 // Hoppscotch Echo WebSocket Client - 1.0.0
@@ -612,7 +612,7 @@ module.exports = HoppscotchClient;
 "
 `;
 
-exports[`JavaScript Client Common Integration test for JavaScript client generation generate simple client for hoppscotch echo: README.md 1`] = `
+exports[`JavaScript Client Common Integration tests for JavaScript client generation generate simple client for hoppscotch echo: README.md 1`] = `
 "# Hoppscotch Echo WebSocket Client 
 
 ## Overview
@@ -748,7 +748,7 @@ main();
 "
 `;
 
-exports[`JavaScript Client Common Integration test for JavaScript client generation generate simple client for hoppscotch echo: client.js 1`] = `
+exports[`JavaScript Client Common Integration tests for JavaScript client generation generate simple client for hoppscotch echo: client.js 1`] = `
 "//////////////////////////////////////////////////////////////////////
 //
 // Hoppscotch Echo WebSocket Client - 1.0.0
@@ -881,7 +881,7 @@ module.exports = HoppscotchEchoWebSocketClient;
 "
 `;
 
-exports[`JavaScript Client Common Integration test for JavaScript client generation generate simple client for postman echo: README.md 1`] = `
+exports[`JavaScript Client Common Integration tests for JavaScript client generation generate simple client for postman echo: README.md 1`] = `
 "# Postman Echo WebSocket Client 
 
 ## Overview
@@ -992,7 +992,7 @@ main();
 "
 `;
 
-exports[`JavaScript Client Common Integration test for JavaScript client generation generate simple client for postman echo: client.js 1`] = `
+exports[`JavaScript Client Common Integration tests for JavaScript client generation generate simple client for postman echo: client.js 1`] = `
 "//////////////////////////////////////////////////////////////////////
 //
 // Postman Echo WebSocket Client - 1.0.0
@@ -1866,7 +1866,7 @@ requests==2.32.3
 "
 `;
 
-exports[`Python Client Common Integration test for Python client generation generate simple client for hoppscotch echo with custom client name: client.py 1`] = `
+exports[`Python Client Common Integration tests for Python client generation generate simple client for hoppscotch echo with custom client name: client.py 1`] = `
 "# //////////////////////////////////////////////////////////////////////////
 #
 # Hoppscotch Echo WebSocket Client - 1.0.0
@@ -2041,14 +2041,14 @@ class HoppscotchClient:
 "
 `;
 
-exports[`Python Client Common Integration test for Python client generation generate simple client for hoppscotch echo with custom client name: requirements.txt 1`] = `
+exports[`Python Client Common Integration tests for Python client generation generate simple client for hoppscotch echo with custom client name: requirements.txt 1`] = `
 "websocket-client==1.8.0
 certifi==2025.1.31
 requests==2.32.3
 "
 `;
 
-exports[`Python Client Common Integration test for Python client generation generate simple client for hoppscotch echo: client.py 1`] = `
+exports[`Python Client Common Integration tests for Python client generation generate simple client for hoppscotch echo: client.py 1`] = `
 "# //////////////////////////////////////////////////////////////////////////
 #
 # Hoppscotch Echo WebSocket Client - 1.0.0
@@ -2223,14 +2223,14 @@ class HoppscotchEchoWebSocketClient:
 "
 `;
 
-exports[`Python Client Common Integration test for Python client generation generate simple client for hoppscotch echo: requirements.txt 1`] = `
+exports[`Python Client Common Integration tests for Python client generation generate simple client for hoppscotch echo: requirements.txt 1`] = `
 "websocket-client==1.8.0
 certifi==2025.1.31
 requests==2.32.3
 "
 `;
 
-exports[`Python Client Common Integration test for Python client generation generate simple client for postman echo: client.py 1`] = `
+exports[`Python Client Common Integration tests for Python client generation generate simple client for postman echo: client.py 1`] = `
 "# //////////////////////////////////////////////////////////////////////////
 #
 # Postman Echo WebSocket Client - 1.0.0
@@ -2406,7 +2406,7 @@ class PostmanEchoWebSocketClientClient:
 "
 `;
 
-exports[`Python Client Common Integration test for Python client generation generate simple client for postman echo: requirements.txt 1`] = `
+exports[`Python Client Common Integration tests for Python client generation generate simple client for postman echo: requirements.txt 1`] = `
 "websocket-client==1.8.0
 certifi==2025.1.31
 requests==2.32.3

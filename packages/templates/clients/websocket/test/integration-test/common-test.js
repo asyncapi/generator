@@ -1,10 +1,29 @@
-// test/shared/commonTests.js
 const path = require('path');
 const { readFile } = require('fs').promises;
 const Generator = require('@asyncapi/generator');
 const { listFiles } = require('@asyncapi/generator-helpers');
 const asyncapi_v3_path_postman = path.resolve(__dirname, '../__fixtures__/asyncapi-postman-echo.yml');
 const asyncapi_v3_path_hoppscotch = path.resolve(__dirname, '../__fixtures__/asyncapi-hoppscotch-client.yml');
+
+/**
+ * Helper function to generate client and verify snapshots
+ */
+async function generateAndVerifyClient(template, outputPath, asyncapiPath, params) {
+  const generator = new Generator(template, outputPath, {
+    forceWrite: true,
+    templateParams: params
+  });
+
+  await generator.generateFromFile(asyncapiPath);
+
+  const testOutputFiles = await listFiles(outputPath);
+  
+  for (const testOutputFile of testOutputFiles) {
+    const filePath = path.join(outputPath, testOutputFile);
+    const content = await readFile(filePath, 'utf8');
+    expect(content).toMatchSnapshot(testOutputFile);
+  }
+}
 
 /**
  * Run snapshot tests for code generation across multiple AsyncAPI specifications.
@@ -18,69 +37,40 @@ async function runCommonTests(language, config) {
   const testResultPathHoppscotch = path.join(config.testResultPath, 'client_hoppscotch');
   const testResultPathCustomHoppscotch = path.join(config.testResultPath, 'custom_client_hoppscotch');
 
-  describe(`Common Integration test for ${language} client generation`, () => {
+  describe(`Common Integration tests for ${language} client generation`, () => {
     jest.setTimeout(100000);
-
-    it('generate simple client for postman echo', async () => {
-      const generator = new Generator(config.template, testResultPathPostman, {
-        forceWrite: true,
-        templateParams: {
+    test.each([
+      [
+        'postman echo',
+        testResultPathPostman,
+        asyncapi_v3_path_postman,
+        {
           server: 'echoServer',
           clientFileName: config.clientFileName,
           appendClientSuffix: true
         }
-      });
-
-      await generator.generateFromFile(asyncapi_v3_path_postman);
-
-      const testOutputFiles = await listFiles(testResultPathPostman);
-
-      for (const testOutputFile of testOutputFiles) {
-        const filePath = path.join(testResultPathPostman, testOutputFile);
-        const content = await readFile(filePath, 'utf8');
-        expect(content).toMatchSnapshot(testOutputFile);
-      }
-    });
-
-    it('generate simple client for hoppscotch echo', async () => {
-      const generator = new Generator(config.template, testResultPathHoppscotch, {
-        forceWrite: true,
-        templateParams: {
+      ],
+      [
+        'hoppscotch echo',
+        testResultPathHoppscotch,
+        asyncapi_v3_path_hoppscotch,
+        {
           server: 'echoServer',
           clientFileName: config.clientFileName
         }
-      });
-
-      await generator.generateFromFile(asyncapi_v3_path_hoppscotch);
-
-      const testOutputFiles = await listFiles(testResultPathHoppscotch);
-
-      for (const testOutputFile of testOutputFiles) {
-        const filePath = path.join(testResultPathHoppscotch, testOutputFile);
-        const content = await readFile(filePath, 'utf8');
-        expect(content).toMatchSnapshot(testOutputFile);
-      }
-    });
-
-    it('generate simple client for hoppscotch echo with custom client name', async () => {
-      const generator = new Generator(config.template, testResultPathCustomHoppscotch, {
-        forceWrite: true,
-        templateParams: {
+      ],
+      [
+        'hoppscotch echo with custom client name',
+        testResultPathCustomHoppscotch,
+        asyncapi_v3_path_hoppscotch,
+        {
           server: 'echoServer',
           clientFileName: config.clientFileName,
           customClientName: 'HoppscotchClient'
         }
-      });
-
-      await generator.generateFromFile(asyncapi_v3_path_hoppscotch);
-
-      const testOutputFiles = await listFiles(testResultPathCustomHoppscotch);
-
-      for (const testOutputFile of testOutputFiles) {
-        const filePath = path.join(testResultPathCustomHoppscotch, testOutputFile);
-        const content = await readFile(filePath, 'utf8');
-        expect(content).toMatchSnapshot(testOutputFile);
-      }
+      ]
+    ])('generate simple client for %s', async (_, outputPath, asyncapiPath, params) => {
+      await generateAndVerifyClient(config.template, outputPath, asyncapiPath, params);
     });
   });
 }

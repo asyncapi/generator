@@ -49,7 +49,7 @@ describe('Python Client', () => {
 
   runCommonTests('Python', config);
 
-  describe('Additional tests for python websocket client', () => {
+  describe('Additional tests for Python client', () => {
     it('generate client for slack', async () => {
       const testResultPathSlack = path.join(config.testResultPath, 'client_slack');
       const generator = new Generator(config.template, testResultPathSlack, {
@@ -79,7 +79,7 @@ describe('JavaScript Client', () => {
 
   runCommonTests('JavaScript', config);
 
-  describe('Additional tests for python websocket client', () => {
+  describe('Additional tests for JavaScript client', () => {
     it('generate simple client for hoppscotch echo without clientFileName param', async () => {
       const defaultOutputFile = 'client.js';
       const generator = new Generator(config.template, config.testResultPath, {

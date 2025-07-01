@@ -32,7 +32,7 @@ async function generateAndVerifyClient(template, outputPath, asyncapiPath, param
  * @param {string} language - Name of the language being tested (e.g., "Python", "JavaScript", "Dart")
  * @param {object} config - Configuration object from languageConfig
  */
-async function runCommonTests(language, config) {
+function runCommonTests(language, config) {
   const testResultPathPostman = path.join(config.testResultPath, 'client_postman');
   const testResultPathHoppscotch = path.join(config.testResultPath, 'client_hoppscotch');
   const testResultPathCustomHoppscotch = path.join(config.testResultPath, 'custom_client_hoppscotch');

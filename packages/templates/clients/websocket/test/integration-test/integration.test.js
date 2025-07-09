@@ -1,7 +1,5 @@
-
 const path = require('path');
-const { readFile, stat } = require('fs').promises;
-const { rm } = require('fs/promises');
+const { readFile, stat, rm } = require('fs').promises;
 const Generator = require('@asyncapi/generator');
 const { listFiles } = require('@asyncapi/generator-helpers');
 const { runCommonTests } = require('./common-test.js');

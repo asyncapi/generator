@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Dart Client Common Integration tests for Dart client generation generate simple client for hoppscotch echo with custom client name: client.dart 1`] = `
+exports[`WebSocket Clients Integration Tests Dart Client Common Integration tests for Dart client generation generate simple client for hoppscotch echo with custom client name: client.dart 1`] = `
 "//////////////////////////////////////////////////////////////////////
 ///
 /// Hoppscotch Echo WebSocket Client - 1.0.0
@@ -105,7 +105,7 @@ class HoppscotchClient {
 "
 `;
 
-exports[`Dart Client Common Integration tests for Dart client generation generate simple client for hoppscotch echo with custom client name: pubspec.yaml 1`] = `
+exports[`WebSocket Clients Integration Tests Dart Client Common Integration tests for Dart client generation generate simple client for hoppscotch echo with custom client name: pubspec.yaml 1`] = `
 "name: wsclient
 environment:
   sdk: '>=3.0.0 <4.0.0'
@@ -114,7 +114,7 @@ dependencies:
 "
 `;
 
-exports[`Dart Client Common Integration tests for Dart client generation generate simple client for hoppscotch echo: client.dart 1`] = `
+exports[`WebSocket Clients Integration Tests Dart Client Common Integration tests for Dart client generation generate simple client for hoppscotch echo: client.dart 1`] = `
 "//////////////////////////////////////////////////////////////////////
 ///
 /// Hoppscotch Echo WebSocket Client - 1.0.0
@@ -219,7 +219,7 @@ class HoppscotchEchoWebSocketClient {
 "
 `;
 
-exports[`Dart Client Common Integration tests for Dart client generation generate simple client for hoppscotch echo: pubspec.yaml 1`] = `
+exports[`WebSocket Clients Integration Tests Dart Client Common Integration tests for Dart client generation generate simple client for hoppscotch echo: pubspec.yaml 1`] = `
 "name: wsclient
 environment:
   sdk: '>=3.0.0 <4.0.0'
@@ -228,7 +228,7 @@ dependencies:
 "
 `;
 
-exports[`Dart Client Common Integration tests for Dart client generation generate simple client for postman echo: client.dart 1`] = `
+exports[`WebSocket Clients Integration Tests Dart Client Common Integration tests for Dart client generation generate simple client for postman echo: client.dart 1`] = `
 "//////////////////////////////////////////////////////////////////////
 ///
 /// Postman Echo WebSocket Client - 1.0.0
@@ -334,7 +334,7 @@ class PostmanEchoWebSocketClientClient {
 "
 `;
 
-exports[`Dart Client Common Integration tests for Dart client generation generate simple client for postman echo: pubspec.yaml 1`] = `
+exports[`WebSocket Clients Integration Tests Dart Client Common Integration tests for Dart client generation generate simple client for postman echo: pubspec.yaml 1`] = `
 "name: wsclient
 environment:
   sdk: '>=3.0.0 <4.0.0'
@@ -343,7 +343,7 @@ dependencies:
 "
 `;
 
-exports[`JavaScript Client Common Integration tests for JavaScript client generation generate simple client for hoppscotch echo with custom client name: README.md 1`] = `
+exports[`WebSocket Clients Integration Tests JavaScript Client Common Integration tests for JavaScript client generation generate simple client for hoppscotch echo with custom client name: README.md 1`] = `
 "# Hoppscotch Echo WebSocket Client 
 
 ## Overview
@@ -479,7 +479,7 @@ main();
 "
 `;
 
-exports[`JavaScript Client Common Integration tests for JavaScript client generation generate simple client for hoppscotch echo with custom client name: client.js 1`] = `
+exports[`WebSocket Clients Integration Tests JavaScript Client Common Integration tests for JavaScript client generation generate simple client for hoppscotch echo with custom client name: client.js 1`] = `
 "//////////////////////////////////////////////////////////////////////
 //
 // Hoppscotch Echo WebSocket Client - 1.0.0
@@ -612,7 +612,7 @@ module.exports = HoppscotchClient;
 "
 `;
 
-exports[`JavaScript Client Common Integration tests for JavaScript client generation generate simple client for hoppscotch echo: README.md 1`] = `
+exports[`WebSocket Clients Integration Tests JavaScript Client Common Integration tests for JavaScript client generation generate simple client for hoppscotch echo: README.md 1`] = `
 "# Hoppscotch Echo WebSocket Client 
 
 ## Overview
@@ -748,7 +748,7 @@ main();
 "
 `;
 
-exports[`JavaScript Client Common Integration tests for JavaScript client generation generate simple client for hoppscotch echo: client.js 1`] = `
+exports[`WebSocket Clients Integration Tests JavaScript Client Common Integration tests for JavaScript client generation generate simple client for hoppscotch echo: client.js 1`] = `
 "//////////////////////////////////////////////////////////////////////
 //
 // Hoppscotch Echo WebSocket Client - 1.0.0
@@ -881,7 +881,7 @@ module.exports = HoppscotchEchoWebSocketClient;
 "
 `;
 
-exports[`JavaScript Client Common Integration tests for JavaScript client generation generate simple client for postman echo: README.md 1`] = `
+exports[`WebSocket Clients Integration Tests JavaScript Client Common Integration tests for JavaScript client generation generate simple client for postman echo: README.md 1`] = `
 "# Postman Echo WebSocket Client 
 
 ## Overview
@@ -992,7 +992,7 @@ main();
 "
 `;
 
-exports[`JavaScript Client Common Integration tests for JavaScript client generation generate simple client for postman echo: client.js 1`] = `
+exports[`WebSocket Clients Integration Tests JavaScript Client Common Integration tests for JavaScript client generation generate simple client for postman echo: client.js 1`] = `
 "//////////////////////////////////////////////////////////////////////
 //
 // Postman Echo WebSocket Client - 1.0.0
@@ -1126,7 +1126,7 @@ module.exports = PostmanEchoWebSocketClientClient;
 "
 `;
 
-exports[`Python Client Additional tests for Python client generate client for slack: Acknowledge.py 1`] = `
+exports[`WebSocket Clients Integration Tests Python Client Additional tests for Python client generate client for slack: Acknowledge.py 1`] = `
 "class Acknowledge: 
   def __init__(self, input: Dict):
     if 'envelope_id' in input:
@@ -1159,7 +1159,7 @@ exports[`Python Client Additional tests for Python client generate client for sl
 "
 `;
 
-exports[`Python Client Additional tests for Python client generate client for slack: Authorization.py 1`] = `
+exports[`WebSocket Clients Integration Tests Python Client Additional tests for Python client generate client for slack: Authorization.py 1`] = `
 "class Authorization: 
   def __init__(self, input: Dict):
     if 'enterprise_id' in input:
@@ -1219,7 +1219,7 @@ exports[`Python Client Additional tests for Python client generate client for sl
 "
 `;
 
-exports[`Python Client Additional tests for Python client generate client for slack: ChannelJoin.py 1`] = `
+exports[`WebSocket Clients Integration Tests Python Client Additional tests for Python client generate client for slack: ChannelJoin.py 1`] = `
 "class ChannelJoin: 
   def __init__(self, input: Dict):
     self._type: str = 'message'
@@ -1278,7 +1278,7 @@ exports[`Python Client Additional tests for Python client generate client for sl
 "
 `;
 
-exports[`Python Client Additional tests for Python client generate client for slack: ConnectionInfo.py 1`] = `
+exports[`WebSocket Clients Integration Tests Python Client Additional tests for Python client generate client for slack: ConnectionInfo.py 1`] = `
 "class ConnectionInfo: 
   def __init__(self, input: Dict):
     if 'app_id' in input:
@@ -1302,7 +1302,7 @@ exports[`Python Client Additional tests for Python client generate client for sl
 "
 `;
 
-exports[`Python Client Additional tests for Python client generate client for slack: DebugInfo.py 1`] = `
+exports[`WebSocket Clients Integration Tests Python Client Additional tests for Python client generate client for slack: DebugInfo.py 1`] = `
 "class DebugInfo: 
   def __init__(self, input: Dict):
     if 'host' in input:
@@ -1353,7 +1353,7 @@ exports[`Python Client Additional tests for Python client generate client for sl
 "
 `;
 
-exports[`Python Client Additional tests for Python client generate client for slack: Disconnect.py 1`] = `
+exports[`WebSocket Clients Integration Tests Python Client Additional tests for Python client generate client for slack: Disconnect.py 1`] = `
 "class Disconnect: 
   def __init__(self, input: Dict):
     if 'type' in input:
@@ -1395,14 +1395,14 @@ exports[`Python Client Additional tests for Python client generate client for sl
 "
 `;
 
-exports[`Python Client Additional tests for Python client generate client for slack: DisconnectReasonEnum.py 1`] = `
+exports[`WebSocket Clients Integration Tests Python Client Additional tests for Python client generate client for slack: DisconnectReasonEnum.py 1`] = `
 "class DisconnectReasonEnum(Enum): 
   LINK_DISABLED = \\"link_disabled\\"
   WARNING = \\"warning\\"
   REFRESH_REQUESTED = \\"refresh_requested\\""
 `;
 
-exports[`Python Client Additional tests for Python client generate client for slack: Event.py 1`] = `
+exports[`WebSocket Clients Integration Tests Python Client Additional tests for Python client generate client for slack: Event.py 1`] = `
 "class Event: 
   def __init__(self, input: Dict):
     if 'envelope_id' in input:
@@ -1462,7 +1462,7 @@ exports[`Python Client Additional tests for Python client generate client for sl
 "
 `;
 
-exports[`Python Client Additional tests for Python client generate client for slack: EventPayload.py 1`] = `
+exports[`WebSocket Clients Integration Tests Python Client Additional tests for Python client generate client for slack: EventPayload.py 1`] = `
 "class EventPayload: 
   def __init__(self, input: Dict):
     if 'token' in input:
@@ -1567,7 +1567,7 @@ exports[`Python Client Additional tests for Python client generate client for sl
 "
 `;
 
-exports[`Python Client Additional tests for Python client generate client for slack: Hello.py 1`] = `
+exports[`WebSocket Clients Integration Tests Python Client Additional tests for Python client generate client for slack: Hello.py 1`] = `
 "class Hello: 
   def __init__(self, input: Dict):
     if 'type' in input:
@@ -1618,7 +1618,7 @@ exports[`Python Client Additional tests for Python client generate client for sl
 "
 `;
 
-exports[`Python Client Additional tests for Python client generate client for slack: MessageDeleted.py 1`] = `
+exports[`WebSocket Clients Integration Tests Python Client Additional tests for Python client generate client for slack: MessageDeleted.py 1`] = `
 "class MessageDeleted: 
   def __init__(self, input: Dict):
     self._type: str = 'message'
@@ -1677,7 +1677,7 @@ exports[`Python Client Additional tests for Python client generate client for sl
 "
 `;
 
-exports[`Python Client Additional tests for Python client generate client for slack: ReactionAdded.py 1`] = `
+exports[`WebSocket Clients Integration Tests Python Client Additional tests for Python client generate client for slack: ReactionAdded.py 1`] = `
 "class ReactionAdded: 
   def __init__(self, input: Dict):
     self._type: str = 'message'
@@ -1721,7 +1721,7 @@ exports[`Python Client Additional tests for Python client generate client for sl
 "
 `;
 
-exports[`Python Client Additional tests for Python client generate client for slack: client.py 1`] = `
+exports[`WebSocket Clients Integration Tests Python Client Additional tests for Python client generate client for slack: client.py 1`] = `
 "# //////////////////////////////////////////////////////////////////////////
 #
 # Slack Websocket API Client - 1.0.0
@@ -1859,14 +1859,14 @@ class SlackWebsocketAPIClient:
 "
 `;
 
-exports[`Python Client Additional tests for Python client generate client for slack: requirements.txt 1`] = `
+exports[`WebSocket Clients Integration Tests Python Client Additional tests for Python client generate client for slack: requirements.txt 1`] = `
 "websocket-client==1.8.0
 certifi==2025.1.31
 requests==2.32.3
 "
 `;
 
-exports[`Python Client Common Integration tests for Python client generation generate simple client for hoppscotch echo with custom client name: client.py 1`] = `
+exports[`WebSocket Clients Integration Tests Python Client Common Integration tests for Python client generation generate simple client for hoppscotch echo with custom client name: client.py 1`] = `
 "# //////////////////////////////////////////////////////////////////////////
 #
 # Hoppscotch Echo WebSocket Client - 1.0.0
@@ -2041,14 +2041,14 @@ class HoppscotchClient:
 "
 `;
 
-exports[`Python Client Common Integration tests for Python client generation generate simple client for hoppscotch echo with custom client name: requirements.txt 1`] = `
+exports[`WebSocket Clients Integration Tests Python Client Common Integration tests for Python client generation generate simple client for hoppscotch echo with custom client name: requirements.txt 1`] = `
 "websocket-client==1.8.0
 certifi==2025.1.31
 requests==2.32.3
 "
 `;
 
-exports[`Python Client Common Integration tests for Python client generation generate simple client for hoppscotch echo: client.py 1`] = `
+exports[`WebSocket Clients Integration Tests Python Client Common Integration tests for Python client generation generate simple client for hoppscotch echo: client.py 1`] = `
 "# //////////////////////////////////////////////////////////////////////////
 #
 # Hoppscotch Echo WebSocket Client - 1.0.0
@@ -2223,14 +2223,14 @@ class HoppscotchEchoWebSocketClient:
 "
 `;
 
-exports[`Python Client Common Integration tests for Python client generation generate simple client for hoppscotch echo: requirements.txt 1`] = `
+exports[`WebSocket Clients Integration Tests Python Client Common Integration tests for Python client generation generate simple client for hoppscotch echo: requirements.txt 1`] = `
 "websocket-client==1.8.0
 certifi==2025.1.31
 requests==2.32.3
 "
 `;
 
-exports[`Python Client Common Integration tests for Python client generation generate simple client for postman echo: client.py 1`] = `
+exports[`WebSocket Clients Integration Tests Python Client Common Integration tests for Python client generation generate simple client for postman echo: client.py 1`] = `
 "# //////////////////////////////////////////////////////////////////////////
 #
 # Postman Echo WebSocket Client - 1.0.0
@@ -2406,7 +2406,7 @@ class PostmanEchoWebSocketClientClient:
 "
 `;
 
-exports[`Python Client Common Integration tests for Python client generation generate simple client for postman echo: requirements.txt 1`] = `
+exports[`WebSocket Clients Integration Tests Python Client Common Integration tests for Python client generation generate simple client for postman echo: requirements.txt 1`] = `
 "websocket-client==1.8.0
 certifi==2025.1.31
 requests==2.32.3

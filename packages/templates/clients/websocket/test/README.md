@@ -1,6 +1,6 @@
 ## Test Project
 
-This `test` directory contains two types of testing - 
+This `test` directory contains two types of testing: 
 - [Acceptance Testing](#acceptance-testing)
 - [Integration Testing](#integration-testing)
 
@@ -115,7 +115,7 @@ The integration tests follow a centralized approach: they use common test helper
 1. Go to integration test suite: `cd integration-test`.
 
 2. Add your client configuration to `languageConfig` in `integration.test.js`:
-```
+```js
 const languageConfig = {
   // ...existing configs
   yourlang: {
@@ -127,7 +127,7 @@ const languageConfig = {
 ```
 
 3. Add a new describe block inside main `WebSocket Clients Integration Tests` block following this pattern:
-```
+```js
 describe('YourLang Client', () => {
   // Runs all standard tests
   runCommonTests('YourLang', languageConfig.YourLang);

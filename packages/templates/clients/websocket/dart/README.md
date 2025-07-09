@@ -2,7 +2,7 @@
 
 You can test this template:
 1. Clone the project and run `npm install`
-2. Navigate to `packages/templates/clients/websocket/test/integration-test` and run the tests with `npm run test` to generate Websocket clients
+2. Navigate to `packages/templates/clients/websocket/test/integration-test` and run the tests with `npm run test` to generate WebSocket clients
 3. Navigate to `packages/templates/clients/websocket/dart`
 4. Install with `npm install` and run test with `npm run test`
 5. Navigate to the generated Hoppscotch client folder with `cd test/temp/snapshotTestResult/custom_client_hoppscotch`

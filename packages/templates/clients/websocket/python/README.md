@@ -3,7 +3,7 @@
 
 You can test this template:
 1. Clone the project and run `npm install`
-1. Navigate to `packages/templates/clients/websocket/test/integration-test` and run the tests with `npm run test` to generate Websocket clients
+1. Navigate to `packages/templates/clients/websocket/test/integration-test` and run the tests with `npm run test` to generate WebSocket clients
 1. Navigate to `packages/templates/clients/websocket/python`
 1. Install with `npm install` and run test with `npm run test`
 1. Install dependencies of the generated client: `pip install -r test/temp/snapshotTestResult/custom_client_hoppscotch/requirements.txt`

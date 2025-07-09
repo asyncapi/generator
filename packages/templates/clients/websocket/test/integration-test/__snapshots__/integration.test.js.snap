@@ -1359,9 +1359,9 @@ exports[`Python Client Additional tests for Python client generate client for sl
     if 'type' in input:
       self._type: str = input['type']
     if 'reason' in input:
-      self._reason: DisconnectReasonEnum.DisconnectReasonEnum = DisconnectReasonEnum.DisconnectReasonEnum(input['reason'])
+      self._reason: DisconnectReasonEnum = DisconnectReasonEnum(input['reason'])
     if 'debug_info' in input:
-      self._debug_info: DebugInfo.DebugInfo = DebugInfo.DebugInfo(input['debug_info'])
+      self._debug_info: DebugInfo = DebugInfo(input['debug_info'])
     if 'additional_properties' in input:
       self._additional_properties: dict[str, Any] = input['additional_properties']
 
@@ -1373,17 +1373,17 @@ exports[`Python Client Additional tests for Python client generate client for sl
     self._type = type
 
   @property
-  def reason(self) -> DisconnectReasonEnum.DisconnectReasonEnum:
+  def reason(self) -> DisconnectReasonEnum:
     return self._reason
   @reason.setter
-  def reason(self, reason: DisconnectReasonEnum.DisconnectReasonEnum):
+  def reason(self, reason: DisconnectReasonEnum):
     self._reason = reason
 
   @property
-  def debug_info(self) -> DebugInfo.DebugInfo:
+  def debug_info(self) -> DebugInfo:
     return self._debug_info
   @debug_info.setter
-  def debug_info(self, debug_info: DebugInfo.DebugInfo):
+  def debug_info(self, debug_info: DebugInfo):
     self._debug_info = debug_info
 
   @property
@@ -1408,7 +1408,7 @@ exports[`Python Client Additional tests for Python client generate client for sl
     if 'envelope_id' in input:
       self._envelope_id: str = input['envelope_id']
     if 'payload' in input:
-      self._payload: EventPayload.EventPayload = EventPayload.EventPayload(input['payload'])
+      self._payload: EventPayload = EventPayload(input['payload'])
     if 'type' in input:
       self._type: str = input['type']
     if 'accepts_response_payload' in input:
@@ -1426,10 +1426,10 @@ exports[`Python Client Additional tests for Python client generate client for sl
     self._envelope_id = envelope_id
 
   @property
-  def payload(self) -> EventPayload.EventPayload:
+  def payload(self) -> EventPayload:
     return self._payload
   @payload.setter
-  def payload(self, payload: EventPayload.EventPayload):
+  def payload(self, payload: EventPayload):
     self._payload = payload
 
   @property
@@ -1476,7 +1476,7 @@ exports[`Python Client Additional tests for Python client generate client for sl
     if 'api_app_id' in input:
       self._api_app_id: str = input['api_app_id']
     if 'event' in input:
-      self._event: ChannelJoin.ChannelJoin | ReactionAdded.ReactionAdded | MessageDeleted.MessageDeleted = input['event']
+      self._event: ChannelJoin | ReactionAdded | MessageDeleted = input['event']
     if 'type' in input:
       self._type: str = input['type']
     if 'event_id' in input:
@@ -1486,7 +1486,7 @@ exports[`Python Client Additional tests for Python client generate client for sl
     if 'event_context' in input:
       self._event_context: str = input['event_context']
     if 'authorizations' in input:
-      self._authorizations: List[Authorization.Authorization] = input['authorizations']
+      self._authorizations: List[Authorization] = input['authorizations']
 
   @property
   def token(self) -> str:
@@ -1524,10 +1524,10 @@ exports[`Python Client Additional tests for Python client generate client for sl
     self._api_app_id = api_app_id
 
   @property
-  def event(self) -> ChannelJoin.ChannelJoin | ReactionAdded.ReactionAdded | MessageDeleted.MessageDeleted:
+  def event(self) -> ChannelJoin | ReactionAdded | MessageDeleted:
     return self._event
   @event.setter
-  def event(self, event: ChannelJoin.ChannelJoin | ReactionAdded.ReactionAdded | MessageDeleted.MessageDeleted):
+  def event(self, event: ChannelJoin | ReactionAdded | MessageDeleted):
     self._event = event
 
   @property
@@ -1559,10 +1559,10 @@ exports[`Python Client Additional tests for Python client generate client for sl
     self._event_context = event_context
 
   @property
-  def authorizations(self) -> List[Authorization.Authorization]:
+  def authorizations(self) -> List[Authorization]:
     return self._authorizations
   @authorizations.setter
-  def authorizations(self, authorizations: List[Authorization.Authorization]):
+  def authorizations(self, authorizations: List[Authorization]):
     self._authorizations = authorizations
 "
 `;
@@ -1573,11 +1573,11 @@ exports[`Python Client Additional tests for Python client generate client for sl
     if 'type' in input:
       self._type: str = input['type']
     if 'connection_info' in input:
-      self._connection_info: ConnectionInfo.ConnectionInfo = ConnectionInfo.ConnectionInfo(input['connection_info'])
+      self._connection_info: ConnectionInfo = ConnectionInfo(input['connection_info'])
     if 'num_connections' in input:
       self._num_connections: int = input['num_connections']
     if 'debug_info' in input:
-      self._debug_info: DebugInfo.DebugInfo = DebugInfo.DebugInfo(input['debug_info'])
+      self._debug_info: DebugInfo = DebugInfo(input['debug_info'])
     if 'additional_properties' in input:
       self._additional_properties: dict[str, Any] = input['additional_properties']
 
@@ -1589,10 +1589,10 @@ exports[`Python Client Additional tests for Python client generate client for sl
     self._type = type
 
   @property
-  def connection_info(self) -> ConnectionInfo.ConnectionInfo:
+  def connection_info(self) -> ConnectionInfo:
     return self._connection_info
   @connection_info.setter
-  def connection_info(self, connection_info: ConnectionInfo.ConnectionInfo):
+  def connection_info(self, connection_info: ConnectionInfo):
     self._connection_info = connection_info
 
   @property
@@ -1603,10 +1603,10 @@ exports[`Python Client Additional tests for Python client generate client for sl
     self._num_connections = num_connections
 
   @property
-  def debug_info(self) -> DebugInfo.DebugInfo:
+  def debug_info(self) -> DebugInfo:
     return self._debug_info
   @debug_info.setter
-  def debug_info(self, debug_info: DebugInfo.DebugInfo):
+  def debug_info(self, debug_info: DebugInfo):
     self._debug_info = debug_info
 
   @property

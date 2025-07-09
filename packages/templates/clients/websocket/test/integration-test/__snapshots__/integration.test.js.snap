@@ -1,6 +1,1132 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`testing if generated client match snapshot generate client for slack: Acknowledge.py 1`] = `
+exports[`WebSocket Clients Integration Tests Dart Client Common Integration tests for Dart client generation generate simple client for hoppscotch echo with custom client name: client.dart 1`] = `
+"//////////////////////////////////////////////////////////////////////
+///
+/// Hoppscotch Echo WebSocket Client - 1.0.0
+/// Protocol: wss
+/// Host: echo-websocket.hoppscotch.io
+///
+//////////////////////////////////////////////////////////////////////
+
+import 'dart:convert';
+import 'package:web_socket_channel/web_socket_channel.dart';
+
+class HoppscotchClient {
+
+  final String _url;
+  WebSocketChannel? _channel;
+  final List<void Function(String)> _messageHandlers = [];
+  final List<void Function(Object)> _errorHandlers = [];
+
+  /// Constructor to initialize the WebSocket client
+  /// 
+  /// [url] - The WebSocket server URL. Use it if the server URL is different from the default one taken from the AsyncAPI document.
+  HoppscotchClient({String? url})
+    : _url = url ?? 'wss://echo-websocket.hoppscotch.io';
+
+
+  /// Method to establish a WebSocket connection
+  Future<void> connect() async {
+    if (_channel != null) {
+      print('Already connected to Hoppscotch Echo WebSocket Client server');
+      return;
+    }
+    try {
+      final wsUrl = Uri.parse(_url);
+      _channel = WebSocketChannel.connect(wsUrl);
+      print('Connected to Hoppscotch Echo WebSocket Client server');
+
+        /// Listen to the incoming message stream
+      _channel?.stream.listen(
+        (message) {
+          if (_messageHandlers.isNotEmpty) {
+            for (var handler in _messageHandlers) {
+              _handleMessage(message, handler);
+            }
+          } else {
+            print('Message received: $message');
+          }
+        },
+        onError: (error) {
+          if (_errorHandlers.isNotEmpty) {
+            for (var handler in _errorHandlers) {
+              handler(error);
+            }
+          } else {
+            print('WebSocket Error: $error');
+          }
+        },
+        onDone: () {
+          _channel = null;
+          print('Disconnected from Hoppscotch Echo WebSocket Client server');
+        },
+      );
+    } catch (error) {
+      print('Connection failed: $error');
+      rethrow;
+    }
+  }
+
+  /// Method to register custom message handlers
+  void registerMessageHandler(void Function(String) handler) {
+    _messageHandlers.add(handler);
+  }
+
+  /// Method to register custom error handlers
+  void registerErrorHandler(void Function(Object) handler) {
+    _errorHandlers.add(handler);
+  }
+
+  /// Method to handle message with callback
+  void _handleMessage(dynamic message, void Function(String) cb) {
+    cb(message is String ? message : message.toString());
+  }
+
+  /// Method to send an echo message to the server
+  void sendEchoMessage(dynamic message) {
+    if (_channel == null) {
+      print('Error: WebSocket is not connected.');
+      return;
+    }
+    final payload = message is String ? message : jsonEncode(message);
+    _channel!.sink.add(payload);
+    print('Sent message to echo server: $payload');
+  }
+
+  /// Method to close the WebSocket connection
+  void close() {
+    _channel?.sink.close();
+    _channel = null;
+    print('WebSocket connection closed.');
+  }
+}
+
+"
+`;
+
+exports[`WebSocket Clients Integration Tests Dart Client Common Integration tests for Dart client generation generate simple client for hoppscotch echo with custom client name: pubspec.yaml 1`] = `
+"name: wsclient
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+dependencies:
+  web_socket_channel: ^3.0.2
+"
+`;
+
+exports[`WebSocket Clients Integration Tests Dart Client Common Integration tests for Dart client generation generate simple client for hoppscotch echo: client.dart 1`] = `
+"//////////////////////////////////////////////////////////////////////
+///
+/// Hoppscotch Echo WebSocket Client - 1.0.0
+/// Protocol: wss
+/// Host: echo-websocket.hoppscotch.io
+///
+//////////////////////////////////////////////////////////////////////
+
+import 'dart:convert';
+import 'package:web_socket_channel/web_socket_channel.dart';
+
+class HoppscotchEchoWebSocketClient {
+
+  final String _url;
+  WebSocketChannel? _channel;
+  final List<void Function(String)> _messageHandlers = [];
+  final List<void Function(Object)> _errorHandlers = [];
+
+  /// Constructor to initialize the WebSocket client
+  /// 
+  /// [url] - The WebSocket server URL. Use it if the server URL is different from the default one taken from the AsyncAPI document.
+  HoppscotchEchoWebSocketClient({String? url})
+    : _url = url ?? 'wss://echo-websocket.hoppscotch.io';
+
+
+  /// Method to establish a WebSocket connection
+  Future<void> connect() async {
+    if (_channel != null) {
+      print('Already connected to Hoppscotch Echo WebSocket Client server');
+      return;
+    }
+    try {
+      final wsUrl = Uri.parse(_url);
+      _channel = WebSocketChannel.connect(wsUrl);
+      print('Connected to Hoppscotch Echo WebSocket Client server');
+
+        /// Listen to the incoming message stream
+      _channel?.stream.listen(
+        (message) {
+          if (_messageHandlers.isNotEmpty) {
+            for (var handler in _messageHandlers) {
+              _handleMessage(message, handler);
+            }
+          } else {
+            print('Message received: $message');
+          }
+        },
+        onError: (error) {
+          if (_errorHandlers.isNotEmpty) {
+            for (var handler in _errorHandlers) {
+              handler(error);
+            }
+          } else {
+            print('WebSocket Error: $error');
+          }
+        },
+        onDone: () {
+          _channel = null;
+          print('Disconnected from Hoppscotch Echo WebSocket Client server');
+        },
+      );
+    } catch (error) {
+      print('Connection failed: $error');
+      rethrow;
+    }
+  }
+
+  /// Method to register custom message handlers
+  void registerMessageHandler(void Function(String) handler) {
+    _messageHandlers.add(handler);
+  }
+
+  /// Method to register custom error handlers
+  void registerErrorHandler(void Function(Object) handler) {
+    _errorHandlers.add(handler);
+  }
+
+  /// Method to handle message with callback
+  void _handleMessage(dynamic message, void Function(String) cb) {
+    cb(message is String ? message : message.toString());
+  }
+
+  /// Method to send an echo message to the server
+  void sendEchoMessage(dynamic message) {
+    if (_channel == null) {
+      print('Error: WebSocket is not connected.');
+      return;
+    }
+    final payload = message is String ? message : jsonEncode(message);
+    _channel!.sink.add(payload);
+    print('Sent message to echo server: $payload');
+  }
+
+  /// Method to close the WebSocket connection
+  void close() {
+    _channel?.sink.close();
+    _channel = null;
+    print('WebSocket connection closed.');
+  }
+}
+
+"
+`;
+
+exports[`WebSocket Clients Integration Tests Dart Client Common Integration tests for Dart client generation generate simple client for hoppscotch echo: pubspec.yaml 1`] = `
+"name: wsclient
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+dependencies:
+  web_socket_channel: ^3.0.2
+"
+`;
+
+exports[`WebSocket Clients Integration Tests Dart Client Common Integration tests for Dart client generation generate simple client for postman echo: client.dart 1`] = `
+"//////////////////////////////////////////////////////////////////////
+///
+/// Postman Echo WebSocket Client - 1.0.0
+/// Protocol: wss
+/// Host: ws.postman-echo.com
+/// Path: /raw
+///
+//////////////////////////////////////////////////////////////////////
+
+import 'dart:convert';
+import 'package:web_socket_channel/web_socket_channel.dart';
+
+class PostmanEchoWebSocketClientClient {
+
+  final String _url;
+  WebSocketChannel? _channel;
+  final List<void Function(String)> _messageHandlers = [];
+  final List<void Function(Object)> _errorHandlers = [];
+
+  /// Constructor to initialize the WebSocket client
+  /// 
+  /// [url] - The WebSocket server URL. Use it if the server URL is different from the default one taken from the AsyncAPI document.
+  PostmanEchoWebSocketClientClient({String? url})
+    : _url = url ?? 'wss://ws.postman-echo.com/raw';
+
+
+  /// Method to establish a WebSocket connection
+  Future<void> connect() async {
+    if (_channel != null) {
+      print('Already connected to Postman Echo WebSocket Client server');
+      return;
+    }
+    try {
+      final wsUrl = Uri.parse(_url);
+      _channel = WebSocketChannel.connect(wsUrl);
+      print('Connected to Postman Echo WebSocket Client server');
+
+        /// Listen to the incoming message stream
+      _channel?.stream.listen(
+        (message) {
+          if (_messageHandlers.isNotEmpty) {
+            for (var handler in _messageHandlers) {
+              _handleMessage(message, handler);
+            }
+          } else {
+            print('Message received: $message');
+          }
+        },
+        onError: (error) {
+          if (_errorHandlers.isNotEmpty) {
+            for (var handler in _errorHandlers) {
+              handler(error);
+            }
+          } else {
+            print('WebSocket Error: $error');
+          }
+        },
+        onDone: () {
+          _channel = null;
+          print('Disconnected from Postman Echo WebSocket Client server');
+        },
+      );
+    } catch (error) {
+      print('Connection failed: $error');
+      rethrow;
+    }
+  }
+
+  /// Method to register custom message handlers
+  void registerMessageHandler(void Function(String) handler) {
+    _messageHandlers.add(handler);
+  }
+
+  /// Method to register custom error handlers
+  void registerErrorHandler(void Function(Object) handler) {
+    _errorHandlers.add(handler);
+  }
+
+  /// Method to handle message with callback
+  void _handleMessage(dynamic message, void Function(String) cb) {
+    cb(message is String ? message : message.toString());
+  }
+
+  /// Method to send an echo message to the server
+  void sendEchoMessage(dynamic message) {
+    if (_channel == null) {
+      print('Error: WebSocket is not connected.');
+      return;
+    }
+    final payload = message is String ? message : jsonEncode(message);
+    _channel!.sink.add(payload);
+    print('Sent message to echo server: $payload');
+  }
+
+  /// Method to close the WebSocket connection
+  void close() {
+    _channel?.sink.close();
+    _channel = null;
+    print('WebSocket connection closed.');
+  }
+}
+
+"
+`;
+
+exports[`WebSocket Clients Integration Tests Dart Client Common Integration tests for Dart client generation generate simple client for postman echo: pubspec.yaml 1`] = `
+"name: wsclient
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+dependencies:
+  web_socket_channel: ^3.0.2
+"
+`;
+
+exports[`WebSocket Clients Integration Tests JavaScript Client Common Integration tests for JavaScript client generation generate simple client for hoppscotch echo with custom client name: README.md 1`] = `
+"# Hoppscotch Echo WebSocket Client 
+
+## Overview
+
+Undestand how to use Hoppscotch Echo WebSocket as a client. Hoppscotch Echo WebSocket server echoes back any messages sent to it. You can use this to test WebSocket connections and message flows.
+
+
+- **Version:** 1.0.0
+- **URL:** wss://echo-websocket.hoppscotch.io/
+
+
+## Client API Reference
+
+\`\`\`javascript
+const HoppscotchClient = require('./client');
+const wsClient = new HoppscotchClient();
+\`\`\`
+
+Here the wsClient is an instance of the \`HoppscotchClient\` class.
+### Core Methods
+
+#### \`connect()\`
+Establishes a WebSocket connection to the server.
+
+#### \`registerMessageHandler(handlerFunction)\`
+Registers a callback to handle incoming messages.
+- **Parameter:** \`handlerFunction\` - This Function takes a parameter \`message\` which is a string. 
+
+#### \`registerErrorHandler(handlerFunction)\`
+Registers a callback to handle WebSocket errors.
+- **Parameter:** \`handlerFunction\` - This Function takes a parameter \`error\` which is an object
+
+#### \`close()\`
+Closes the WebSocket connection.
+
+### Available Operations
+
+#### \`sendEchoMessage(payload)\`
+Send a message to the echo server.
+
+
+
+**Example:**
+\`\`\`javascript
+client.sendEchoMessage(\\"test\\");
+\`\`\`
+
+
+**Example:**
+\`\`\`javascript
+client.sendEchoMessage(true);
+\`\`\`
+
+
+**Example:**
+\`\`\`javascript
+client.sendEchoMessage(123);
+\`\`\`
+
+
+**Example:**
+\`\`\`javascript
+client.sendEchoMessage({
+  \\"test\\": \\"test text\\"
+});
+\`\`\`
+
+
+
+#### \`handleTimeStampMessage(payload)\`
+Receive the timestamp message sent from server every second.
+
+
+
+**Example:**
+\`\`\`javascript
+client.handleTimeStampMessage(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\\");
+\`\`\`
+
+
+
+## Testing the client
+
+\`\`\`javascript
+const HoppscotchClient = require('./client');
+const wsClient = new HoppscotchClient();
+
+
+// Example of how custom message handler that operates on incoming messages can look like
+
+function myHandler(message) {
+  console.log('====================');
+  console.log('Just proving I got the message in myHandler:', message);
+  console.log('====================');  
+}
+
+// Example of custom error handler
+
+function myErrorHandler(error) {
+  console.error('Errors from Websocket:', error.message);
+}
+
+async function main() {
+  wsClient.registerMessageHandler(myHandler);
+  wsClient.registerErrorHandler(myErrorHandler);
+
+  try {
+    await wsClient.connect();
+
+    // Loop to send messages every 5 seconds
+    const interval = 5000; // 5 seconds
+    const message = 'Hello, Echo!';
+
+    while (true) {
+      try {
+        await wsClient.sendEchoMessage(message);
+      } catch (error) {
+        console.error('Error while sending message:', error);
+      }
+      // Wait for the interval before sending the next message
+      await new Promise(resolve => setTimeout(resolve, interval));
+    }
+  } catch (error) {
+    console.error('Failed to connect to WebSocket:', error.message);
+  }
+}
+
+main();
+\`\`\`
+
+
+
+"
+`;
+
+exports[`WebSocket Clients Integration Tests JavaScript Client Common Integration tests for JavaScript client generation generate simple client for hoppscotch echo with custom client name: client.js 1`] = `
+"//////////////////////////////////////////////////////////////////////
+//
+// Hoppscotch Echo WebSocket Client - 1.0.0
+// Protocol: wss
+// Host: echo-websocket.hoppscotch.io
+//
+//////////////////////////////////////////////////////////////////////
+
+const WebSocket = require('ws');
+
+class HoppscotchClient {
+
+  /*
+    * Constructor to initialize the WebSocket client
+    * @param {string} url - The WebSocket server URL. Use it if the server URL is different from the default one taken from the AsyncAPI document.
+  */
+  constructor(url) {
+    this.url = url || 'wss://echo-websocket.hoppscotch.io';
+    this.websocket = null;
+    this.messageHandlers = [];
+    this.errorHandlers = [];
+  }
+
+  // Method to establish a WebSocket connection
+  connect() {
+    return new Promise((resolve, reject) => {
+      this.websocket = new WebSocket(this.url);
+
+      // On successful connection
+      this.websocket.onopen = () => {
+        console.log('Connected to Hoppscotch Echo WebSocket Client server');
+        resolve();
+      };
+
+      // On receiving a message
+      this.websocket.onmessage = (event) => {
+        if (this.messageHandlers.length > 0) {
+          // Call custom message handlers
+          this.messageHandlers.forEach(handler => {
+            if (typeof handler === 'function') {
+              this.handleMessage(event.data, handler);
+            }
+          });
+        } else {
+          // Default message logging
+          console.log('Message received:', event.data);
+        }
+      };
+
+      // On error first call custom error handlers, then default error behavior
+      this.websocket.onerror = (error) => {
+        if (this.errorHandlers.length > 0) {
+          // Call custom error handlers
+          this.errorHandlers.forEach(handler => handler(error));
+        } else {
+          // Default error behavior
+          console.error('WebSocket Error:', error);
+        }
+        reject(error);
+      };
+
+      // On connection close
+      this.websocket.onclose = () => {
+        console.log('Disconnected from Hoppscotch Echo WebSocket Client server');
+      };
+    });
+  }
+
+  // Method to register custom message handlers
+  registerMessageHandler(handler) {
+    if (typeof handler === 'function') {
+      this.messageHandlers.push(handler);
+    } else {
+      console.warn('Message handler must be a function');
+    }
+  }
+
+  // Method to register custom error handlers
+  registerErrorHandler(handler) {
+    if (typeof handler === 'function') {
+      this.errorHandlers.push(handler);
+    } else {
+      console.warn('Error handler must be a function');
+    }
+  }
+
+  // Method to handle message with callback
+  handleMessage(message, cb) {
+    if (cb) cb(message);
+  }
+
+  /**
+   * Sends a sendEchoMessage message over the WebSocket connection.
+   * 
+   * @param {Object} message - The message payload to send. Should match the schema defined in the AsyncAPI document.
+   * @param {WebSocket} [socket] - The WebSocket connection to use. If not provided, the client's own connection will be used.
+   * @throws {TypeError} If message cannot be stringified to JSON
+   * @throws {Error} If WebSocket connection is not in OPEN state
+   */
+  static sendEchoMessage(message, socket) {
+    try {
+      socket.send(JSON.stringify(message));
+    } catch (error) {
+      console.error('Error sending sendEchoMessage message:', error);
+    }
+  }
+  /**
+   * Instance method version of sendEchoMessage that uses the client's own WebSocket connection.
+   * @param {Object} message - The message payload to send
+   * @throws {Error} If WebSocket connection is not established
+   */
+  sendEchoMessage(message){
+    if(!this.websocket){
+      throw new Error('WebSocket connection not established. Call connect() first.');
+    }
+    HoppscotchClient.sendEchoMessage(message, this.websocket);
+  }
+  
+
+  // Method to close the WebSocket connection
+  close() {
+    if (this.websocket) {
+      this.websocket.close();
+      console.log('WebSocket connection closed.');
+    }
+  }
+}
+module.exports = HoppscotchClient;
+
+"
+`;
+
+exports[`WebSocket Clients Integration Tests JavaScript Client Common Integration tests for JavaScript client generation generate simple client for hoppscotch echo: README.md 1`] = `
+"# Hoppscotch Echo WebSocket Client 
+
+## Overview
+
+Undestand how to use Hoppscotch Echo WebSocket as a client. Hoppscotch Echo WebSocket server echoes back any messages sent to it. You can use this to test WebSocket connections and message flows.
+
+
+- **Version:** 1.0.0
+- **URL:** wss://echo-websocket.hoppscotch.io/
+
+
+## Client API Reference
+
+\`\`\`javascript
+const HoppscotchEchoWebSocketClient = require('./client');
+const wsClient = new HoppscotchEchoWebSocketClient();
+\`\`\`
+
+Here the wsClient is an instance of the \`HoppscotchEchoWebSocketClient\` class.
+### Core Methods
+
+#### \`connect()\`
+Establishes a WebSocket connection to the server.
+
+#### \`registerMessageHandler(handlerFunction)\`
+Registers a callback to handle incoming messages.
+- **Parameter:** \`handlerFunction\` - This Function takes a parameter \`message\` which is a string. 
+
+#### \`registerErrorHandler(handlerFunction)\`
+Registers a callback to handle WebSocket errors.
+- **Parameter:** \`handlerFunction\` - This Function takes a parameter \`error\` which is an object
+
+#### \`close()\`
+Closes the WebSocket connection.
+
+### Available Operations
+
+#### \`sendEchoMessage(payload)\`
+Send a message to the echo server.
+
+
+
+**Example:**
+\`\`\`javascript
+client.sendEchoMessage(\\"test\\");
+\`\`\`
+
+
+**Example:**
+\`\`\`javascript
+client.sendEchoMessage(true);
+\`\`\`
+
+
+**Example:**
+\`\`\`javascript
+client.sendEchoMessage(123);
+\`\`\`
+
+
+**Example:**
+\`\`\`javascript
+client.sendEchoMessage({
+  \\"test\\": \\"test text\\"
+});
+\`\`\`
+
+
+
+#### \`handleTimeStampMessage(payload)\`
+Receive the timestamp message sent from server every second.
+
+
+
+**Example:**
+\`\`\`javascript
+client.handleTimeStampMessage(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\\");
+\`\`\`
+
+
+
+## Testing the client
+
+\`\`\`javascript
+const HoppscotchEchoWebSocketClient = require('./client');
+const wsClient = new HoppscotchEchoWebSocketClient();
+
+
+// Example of how custom message handler that operates on incoming messages can look like
+
+function myHandler(message) {
+  console.log('====================');
+  console.log('Just proving I got the message in myHandler:', message);
+  console.log('====================');  
+}
+
+// Example of custom error handler
+
+function myErrorHandler(error) {
+  console.error('Errors from Websocket:', error.message);
+}
+
+async function main() {
+  wsClient.registerMessageHandler(myHandler);
+  wsClient.registerErrorHandler(myErrorHandler);
+
+  try {
+    await wsClient.connect();
+
+    // Loop to send messages every 5 seconds
+    const interval = 5000; // 5 seconds
+    const message = 'Hello, Echo!';
+
+    while (true) {
+      try {
+        await wsClient.sendEchoMessage(message);
+      } catch (error) {
+        console.error('Error while sending message:', error);
+      }
+      // Wait for the interval before sending the next message
+      await new Promise(resolve => setTimeout(resolve, interval));
+    }
+  } catch (error) {
+    console.error('Failed to connect to WebSocket:', error.message);
+  }
+}
+
+main();
+\`\`\`
+
+
+
+"
+`;
+
+exports[`WebSocket Clients Integration Tests JavaScript Client Common Integration tests for JavaScript client generation generate simple client for hoppscotch echo: client.js 1`] = `
+"//////////////////////////////////////////////////////////////////////
+//
+// Hoppscotch Echo WebSocket Client - 1.0.0
+// Protocol: wss
+// Host: echo-websocket.hoppscotch.io
+//
+//////////////////////////////////////////////////////////////////////
+
+const WebSocket = require('ws');
+
+class HoppscotchEchoWebSocketClient {
+
+  /*
+    * Constructor to initialize the WebSocket client
+    * @param {string} url - The WebSocket server URL. Use it if the server URL is different from the default one taken from the AsyncAPI document.
+  */
+  constructor(url) {
+    this.url = url || 'wss://echo-websocket.hoppscotch.io';
+    this.websocket = null;
+    this.messageHandlers = [];
+    this.errorHandlers = [];
+  }
+
+  // Method to establish a WebSocket connection
+  connect() {
+    return new Promise((resolve, reject) => {
+      this.websocket = new WebSocket(this.url);
+
+      // On successful connection
+      this.websocket.onopen = () => {
+        console.log('Connected to Hoppscotch Echo WebSocket Client server');
+        resolve();
+      };
+
+      // On receiving a message
+      this.websocket.onmessage = (event) => {
+        if (this.messageHandlers.length > 0) {
+          // Call custom message handlers
+          this.messageHandlers.forEach(handler => {
+            if (typeof handler === 'function') {
+              this.handleMessage(event.data, handler);
+            }
+          });
+        } else {
+          // Default message logging
+          console.log('Message received:', event.data);
+        }
+      };
+
+      // On error first call custom error handlers, then default error behavior
+      this.websocket.onerror = (error) => {
+        if (this.errorHandlers.length > 0) {
+          // Call custom error handlers
+          this.errorHandlers.forEach(handler => handler(error));
+        } else {
+          // Default error behavior
+          console.error('WebSocket Error:', error);
+        }
+        reject(error);
+      };
+
+      // On connection close
+      this.websocket.onclose = () => {
+        console.log('Disconnected from Hoppscotch Echo WebSocket Client server');
+      };
+    });
+  }
+
+  // Method to register custom message handlers
+  registerMessageHandler(handler) {
+    if (typeof handler === 'function') {
+      this.messageHandlers.push(handler);
+    } else {
+      console.warn('Message handler must be a function');
+    }
+  }
+
+  // Method to register custom error handlers
+  registerErrorHandler(handler) {
+    if (typeof handler === 'function') {
+      this.errorHandlers.push(handler);
+    } else {
+      console.warn('Error handler must be a function');
+    }
+  }
+
+  // Method to handle message with callback
+  handleMessage(message, cb) {
+    if (cb) cb(message);
+  }
+
+  /**
+   * Sends a sendEchoMessage message over the WebSocket connection.
+   * 
+   * @param {Object} message - The message payload to send. Should match the schema defined in the AsyncAPI document.
+   * @param {WebSocket} [socket] - The WebSocket connection to use. If not provided, the client's own connection will be used.
+   * @throws {TypeError} If message cannot be stringified to JSON
+   * @throws {Error} If WebSocket connection is not in OPEN state
+   */
+  static sendEchoMessage(message, socket) {
+    try {
+      socket.send(JSON.stringify(message));
+    } catch (error) {
+      console.error('Error sending sendEchoMessage message:', error);
+    }
+  }
+  /**
+   * Instance method version of sendEchoMessage that uses the client's own WebSocket connection.
+   * @param {Object} message - The message payload to send
+   * @throws {Error} If WebSocket connection is not established
+   */
+  sendEchoMessage(message){
+    if(!this.websocket){
+      throw new Error('WebSocket connection not established. Call connect() first.');
+    }
+    HoppscotchEchoWebSocketClient.sendEchoMessage(message, this.websocket);
+  }
+  
+
+  // Method to close the WebSocket connection
+  close() {
+    if (this.websocket) {
+      this.websocket.close();
+      console.log('WebSocket connection closed.');
+    }
+  }
+}
+module.exports = HoppscotchEchoWebSocketClient;
+
+"
+`;
+
+exports[`WebSocket Clients Integration Tests JavaScript Client Common Integration tests for JavaScript client generation generate simple client for postman echo: README.md 1`] = `
+"# Postman Echo WebSocket Client 
+
+## Overview
+
+Understand how to use the Postman Echo WebSocket as a client. The Postman Echo WebSocket server echoes back any messages sent to it.
+
+- **Version:** 1.0.0
+- **URL:** wss://ws.postman-echo.com/raw
+
+
+## Client API Reference
+
+\`\`\`javascript
+const PostmanEchoWebSocketClientClient = require('./client');
+const wsClient = new PostmanEchoWebSocketClientClient();
+\`\`\`
+
+Here the wsClient is an instance of the \`PostmanEchoWebSocketClientClient\` class.
+### Core Methods
+
+#### \`connect()\`
+Establishes a WebSocket connection to the server.
+
+#### \`registerMessageHandler(handlerFunction)\`
+Registers a callback to handle incoming messages.
+- **Parameter:** \`handlerFunction\` - This Function takes a parameter \`message\` which is a string. 
+
+#### \`registerErrorHandler(handlerFunction)\`
+Registers a callback to handle WebSocket errors.
+- **Parameter:** \`handlerFunction\` - This Function takes a parameter \`error\` which is an object
+
+#### \`close()\`
+Closes the WebSocket connection.
+
+### Available Operations
+
+#### \`sendEchoMessage(payload)\`
+Send a message to the Postman Echo server.
+
+
+
+**Example:**
+\`\`\`javascript
+client.sendEchoMessage(\\"test\\");
+\`\`\`
+
+
+**Example:**
+\`\`\`javascript
+client.sendEchoMessage({
+  \\"test\\": \\"test text\\"
+});
+\`\`\`
+
+
+
+## Testing the client
+
+\`\`\`javascript
+const PostmanEchoWebSocketClientClient = require('./client');
+const wsClient = new PostmanEchoWebSocketClientClient();
+
+
+// Example of how custom message handler that operates on incoming messages can look like
+
+function myHandler(message) {
+  console.log('====================');
+  console.log('Just proving I got the message in myHandler:', message);
+  console.log('====================');  
+}
+
+// Example of custom error handler
+
+function myErrorHandler(error) {
+  console.error('Errors from Websocket:', error.message);
+}
+
+async function main() {
+  wsClient.registerMessageHandler(myHandler);
+  wsClient.registerErrorHandler(myErrorHandler);
+
+  try {
+    await wsClient.connect();
+
+    // Loop to send messages every 5 seconds
+    const interval = 5000; // 5 seconds
+    const message = 'Hello, Echo!';
+
+    while (true) {
+      try {
+        await wsClient.sendEchoMessage(message);
+      } catch (error) {
+        console.error('Error while sending message:', error);
+      }
+      // Wait for the interval before sending the next message
+      await new Promise(resolve => setTimeout(resolve, interval));
+    }
+  } catch (error) {
+    console.error('Failed to connect to WebSocket:', error.message);
+  }
+}
+
+main();
+\`\`\`
+
+
+
+"
+`;
+
+exports[`WebSocket Clients Integration Tests JavaScript Client Common Integration tests for JavaScript client generation generate simple client for postman echo: client.js 1`] = `
+"//////////////////////////////////////////////////////////////////////
+//
+// Postman Echo WebSocket Client - 1.0.0
+// Protocol: wss
+// Host: ws.postman-echo.com
+// Path: /raw
+//
+//////////////////////////////////////////////////////////////////////
+
+const WebSocket = require('ws');
+
+class PostmanEchoWebSocketClientClient {
+
+  /*
+    * Constructor to initialize the WebSocket client
+    * @param {string} url - The WebSocket server URL. Use it if the server URL is different from the default one taken from the AsyncAPI document.
+  */
+  constructor(url) {
+    this.url = url || 'wss://ws.postman-echo.com/raw';
+    this.websocket = null;
+    this.messageHandlers = [];
+    this.errorHandlers = [];
+  }
+
+  // Method to establish a WebSocket connection
+  connect() {
+    return new Promise((resolve, reject) => {
+      this.websocket = new WebSocket(this.url);
+
+      // On successful connection
+      this.websocket.onopen = () => {
+        console.log('Connected to Postman Echo WebSocket Client server');
+        resolve();
+      };
+
+      // On receiving a message
+      this.websocket.onmessage = (event) => {
+        if (this.messageHandlers.length > 0) {
+          // Call custom message handlers
+          this.messageHandlers.forEach(handler => {
+            if (typeof handler === 'function') {
+              this.handleMessage(event.data, handler);
+            }
+          });
+        } else {
+          // Default message logging
+          console.log('Message received:', event.data);
+        }
+      };
+
+      // On error first call custom error handlers, then default error behavior
+      this.websocket.onerror = (error) => {
+        if (this.errorHandlers.length > 0) {
+          // Call custom error handlers
+          this.errorHandlers.forEach(handler => handler(error));
+        } else {
+          // Default error behavior
+          console.error('WebSocket Error:', error);
+        }
+        reject(error);
+      };
+
+      // On connection close
+      this.websocket.onclose = () => {
+        console.log('Disconnected from Postman Echo WebSocket Client server');
+      };
+    });
+  }
+
+  // Method to register custom message handlers
+  registerMessageHandler(handler) {
+    if (typeof handler === 'function') {
+      this.messageHandlers.push(handler);
+    } else {
+      console.warn('Message handler must be a function');
+    }
+  }
+
+  // Method to register custom error handlers
+  registerErrorHandler(handler) {
+    if (typeof handler === 'function') {
+      this.errorHandlers.push(handler);
+    } else {
+      console.warn('Error handler must be a function');
+    }
+  }
+
+  // Method to handle message with callback
+  handleMessage(message, cb) {
+    if (cb) cb(message);
+  }
+
+  /**
+   * Sends a sendEchoMessage message over the WebSocket connection.
+   * 
+   * @param {Object} message - The message payload to send. Should match the schema defined in the AsyncAPI document.
+   * @param {WebSocket} [socket] - The WebSocket connection to use. If not provided, the client's own connection will be used.
+   * @throws {TypeError} If message cannot be stringified to JSON
+   * @throws {Error} If WebSocket connection is not in OPEN state
+   */
+  static sendEchoMessage(message, socket) {
+    try {
+      socket.send(JSON.stringify(message));
+    } catch (error) {
+      console.error('Error sending sendEchoMessage message:', error);
+    }
+  }
+  /**
+   * Instance method version of sendEchoMessage that uses the client's own WebSocket connection.
+   * @param {Object} message - The message payload to send
+   * @throws {Error} If WebSocket connection is not established
+   */
+  sendEchoMessage(message){
+    if(!this.websocket){
+      throw new Error('WebSocket connection not established. Call connect() first.');
+    }
+    PostmanEchoWebSocketClientClient.sendEchoMessage(message, this.websocket);
+  }
+  
+
+  // Method to close the WebSocket connection
+  close() {
+    if (this.websocket) {
+      this.websocket.close();
+      console.log('WebSocket connection closed.');
+    }
+  }
+}
+module.exports = PostmanEchoWebSocketClientClient;
+
+"
+`;
+
+exports[`WebSocket Clients Integration Tests Python Client Additional tests for Python client generate client for slack: Acknowledge.py 1`] = `
 "class Acknowledge: 
   def __init__(self, input: Dict):
     if 'envelope_id' in input:
@@ -33,7 +1159,7 @@ exports[`testing if generated client match snapshot generate client for slack: A
 "
 `;
 
-exports[`testing if generated client match snapshot generate client for slack: Authorization.py 1`] = `
+exports[`WebSocket Clients Integration Tests Python Client Additional tests for Python client generate client for slack: Authorization.py 1`] = `
 "class Authorization: 
   def __init__(self, input: Dict):
     if 'enterprise_id' in input:
@@ -93,7 +1219,7 @@ exports[`testing if generated client match snapshot generate client for slack: A
 "
 `;
 
-exports[`testing if generated client match snapshot generate client for slack: ChannelJoin.py 1`] = `
+exports[`WebSocket Clients Integration Tests Python Client Additional tests for Python client generate client for slack: ChannelJoin.py 1`] = `
 "class ChannelJoin: 
   def __init__(self, input: Dict):
     self._type: str = 'message'
@@ -152,7 +1278,7 @@ exports[`testing if generated client match snapshot generate client for slack: C
 "
 `;
 
-exports[`testing if generated client match snapshot generate client for slack: ConnectionInfo.py 1`] = `
+exports[`WebSocket Clients Integration Tests Python Client Additional tests for Python client generate client for slack: ConnectionInfo.py 1`] = `
 "class ConnectionInfo: 
   def __init__(self, input: Dict):
     if 'app_id' in input:
@@ -176,7 +1302,7 @@ exports[`testing if generated client match snapshot generate client for slack: C
 "
 `;
 
-exports[`testing if generated client match snapshot generate client for slack: DebugInfo.py 1`] = `
+exports[`WebSocket Clients Integration Tests Python Client Additional tests for Python client generate client for slack: DebugInfo.py 1`] = `
 "class DebugInfo: 
   def __init__(self, input: Dict):
     if 'host' in input:
@@ -227,15 +1353,15 @@ exports[`testing if generated client match snapshot generate client for slack: D
 "
 `;
 
-exports[`testing if generated client match snapshot generate client for slack: Disconnect.py 1`] = `
+exports[`WebSocket Clients Integration Tests Python Client Additional tests for Python client generate client for slack: Disconnect.py 1`] = `
 "class Disconnect: 
   def __init__(self, input: Dict):
     if 'type' in input:
       self._type: str = input['type']
     if 'reason' in input:
-      self._reason: DisconnectReasonEnum.DisconnectReasonEnum = DisconnectReasonEnum.DisconnectReasonEnum(input['reason'])
+      self._reason: DisconnectReasonEnum = DisconnectReasonEnum(input['reason'])
     if 'debug_info' in input:
-      self._debug_info: DebugInfo.DebugInfo = DebugInfo.DebugInfo(input['debug_info'])
+      self._debug_info: DebugInfo = DebugInfo(input['debug_info'])
     if 'additional_properties' in input:
       self._additional_properties: dict[str, Any] = input['additional_properties']
 
@@ -247,17 +1373,17 @@ exports[`testing if generated client match snapshot generate client for slack: D
     self._type = type
 
   @property
-  def reason(self) -> DisconnectReasonEnum.DisconnectReasonEnum:
+  def reason(self) -> DisconnectReasonEnum:
     return self._reason
   @reason.setter
-  def reason(self, reason: DisconnectReasonEnum.DisconnectReasonEnum):
+  def reason(self, reason: DisconnectReasonEnum):
     self._reason = reason
 
   @property
-  def debug_info(self) -> DebugInfo.DebugInfo:
+  def debug_info(self) -> DebugInfo:
     return self._debug_info
   @debug_info.setter
-  def debug_info(self, debug_info: DebugInfo.DebugInfo):
+  def debug_info(self, debug_info: DebugInfo):
     self._debug_info = debug_info
 
   @property
@@ -269,20 +1395,20 @@ exports[`testing if generated client match snapshot generate client for slack: D
 "
 `;
 
-exports[`testing if generated client match snapshot generate client for slack: DisconnectReasonEnum.py 1`] = `
+exports[`WebSocket Clients Integration Tests Python Client Additional tests for Python client generate client for slack: DisconnectReasonEnum.py 1`] = `
 "class DisconnectReasonEnum(Enum): 
   LINK_DISABLED = \\"link_disabled\\"
   WARNING = \\"warning\\"
   REFRESH_REQUESTED = \\"refresh_requested\\""
 `;
 
-exports[`testing if generated client match snapshot generate client for slack: Event.py 1`] = `
+exports[`WebSocket Clients Integration Tests Python Client Additional tests for Python client generate client for slack: Event.py 1`] = `
 "class Event: 
   def __init__(self, input: Dict):
     if 'envelope_id' in input:
       self._envelope_id: str = input['envelope_id']
     if 'payload' in input:
-      self._payload: EventPayload.EventPayload = EventPayload.EventPayload(input['payload'])
+      self._payload: EventPayload = EventPayload(input['payload'])
     if 'type' in input:
       self._type: str = input['type']
     if 'accepts_response_payload' in input:
@@ -300,10 +1426,10 @@ exports[`testing if generated client match snapshot generate client for slack: E
     self._envelope_id = envelope_id
 
   @property
-  def payload(self) -> EventPayload.EventPayload:
+  def payload(self) -> EventPayload:
     return self._payload
   @payload.setter
-  def payload(self, payload: EventPayload.EventPayload):
+  def payload(self, payload: EventPayload):
     self._payload = payload
 
   @property
@@ -336,7 +1462,7 @@ exports[`testing if generated client match snapshot generate client for slack: E
 "
 `;
 
-exports[`testing if generated client match snapshot generate client for slack: EventPayload.py 1`] = `
+exports[`WebSocket Clients Integration Tests Python Client Additional tests for Python client generate client for slack: EventPayload.py 1`] = `
 "class EventPayload: 
   def __init__(self, input: Dict):
     if 'token' in input:
@@ -350,7 +1476,7 @@ exports[`testing if generated client match snapshot generate client for slack: E
     if 'api_app_id' in input:
       self._api_app_id: str = input['api_app_id']
     if 'event' in input:
-      self._event: ChannelJoin.ChannelJoin | ReactionAdded.ReactionAdded | MessageDeleted.MessageDeleted = input['event']
+      self._event: ChannelJoin | ReactionAdded | MessageDeleted = input['event']
     if 'type' in input:
       self._type: str = input['type']
     if 'event_id' in input:
@@ -360,7 +1486,7 @@ exports[`testing if generated client match snapshot generate client for slack: E
     if 'event_context' in input:
       self._event_context: str = input['event_context']
     if 'authorizations' in input:
-      self._authorizations: List[Authorization.Authorization] = input['authorizations']
+      self._authorizations: List[Authorization] = input['authorizations']
 
   @property
   def token(self) -> str:
@@ -398,10 +1524,10 @@ exports[`testing if generated client match snapshot generate client for slack: E
     self._api_app_id = api_app_id
 
   @property
-  def event(self) -> ChannelJoin.ChannelJoin | ReactionAdded.ReactionAdded | MessageDeleted.MessageDeleted:
+  def event(self) -> ChannelJoin | ReactionAdded | MessageDeleted:
     return self._event
   @event.setter
-  def event(self, event: ChannelJoin.ChannelJoin | ReactionAdded.ReactionAdded | MessageDeleted.MessageDeleted):
+  def event(self, event: ChannelJoin | ReactionAdded | MessageDeleted):
     self._event = event
 
   @property
@@ -433,25 +1559,25 @@ exports[`testing if generated client match snapshot generate client for slack: E
     self._event_context = event_context
 
   @property
-  def authorizations(self) -> List[Authorization.Authorization]:
+  def authorizations(self) -> List[Authorization]:
     return self._authorizations
   @authorizations.setter
-  def authorizations(self, authorizations: List[Authorization.Authorization]):
+  def authorizations(self, authorizations: List[Authorization]):
     self._authorizations = authorizations
 "
 `;
 
-exports[`testing if generated client match snapshot generate client for slack: Hello.py 1`] = `
+exports[`WebSocket Clients Integration Tests Python Client Additional tests for Python client generate client for slack: Hello.py 1`] = `
 "class Hello: 
   def __init__(self, input: Dict):
     if 'type' in input:
       self._type: str = input['type']
     if 'connection_info' in input:
-      self._connection_info: ConnectionInfo.ConnectionInfo = ConnectionInfo.ConnectionInfo(input['connection_info'])
+      self._connection_info: ConnectionInfo = ConnectionInfo(input['connection_info'])
     if 'num_connections' in input:
       self._num_connections: int = input['num_connections']
     if 'debug_info' in input:
-      self._debug_info: DebugInfo.DebugInfo = DebugInfo.DebugInfo(input['debug_info'])
+      self._debug_info: DebugInfo = DebugInfo(input['debug_info'])
     if 'additional_properties' in input:
       self._additional_properties: dict[str, Any] = input['additional_properties']
 
@@ -463,10 +1589,10 @@ exports[`testing if generated client match snapshot generate client for slack: H
     self._type = type
 
   @property
-  def connection_info(self) -> ConnectionInfo.ConnectionInfo:
+  def connection_info(self) -> ConnectionInfo:
     return self._connection_info
   @connection_info.setter
-  def connection_info(self, connection_info: ConnectionInfo.ConnectionInfo):
+  def connection_info(self, connection_info: ConnectionInfo):
     self._connection_info = connection_info
 
   @property
@@ -477,10 +1603,10 @@ exports[`testing if generated client match snapshot generate client for slack: H
     self._num_connections = num_connections
 
   @property
-  def debug_info(self) -> DebugInfo.DebugInfo:
+  def debug_info(self) -> DebugInfo:
     return self._debug_info
   @debug_info.setter
-  def debug_info(self, debug_info: DebugInfo.DebugInfo):
+  def debug_info(self, debug_info: DebugInfo):
     self._debug_info = debug_info
 
   @property
@@ -492,7 +1618,7 @@ exports[`testing if generated client match snapshot generate client for slack: H
 "
 `;
 
-exports[`testing if generated client match snapshot generate client for slack: MessageDeleted.py 1`] = `
+exports[`WebSocket Clients Integration Tests Python Client Additional tests for Python client generate client for slack: MessageDeleted.py 1`] = `
 "class MessageDeleted: 
   def __init__(self, input: Dict):
     self._type: str = 'message'
@@ -551,7 +1677,7 @@ exports[`testing if generated client match snapshot generate client for slack: M
 "
 `;
 
-exports[`testing if generated client match snapshot generate client for slack: ReactionAdded.py 1`] = `
+exports[`WebSocket Clients Integration Tests Python Client Additional tests for Python client generate client for slack: ReactionAdded.py 1`] = `
 "class ReactionAdded: 
   def __init__(self, input: Dict):
     self._type: str = 'message'
@@ -595,7 +1721,7 @@ exports[`testing if generated client match snapshot generate client for slack: R
 "
 `;
 
-exports[`testing if generated client match snapshot generate client for slack: client.py 1`] = `
+exports[`WebSocket Clients Integration Tests Python Client Additional tests for Python client generate client for slack: client.py 1`] = `
 "# //////////////////////////////////////////////////////////////////////////
 #
 # Slack Websocket API Client - 1.0.0
@@ -733,14 +1859,14 @@ class SlackWebsocketAPIClient:
 "
 `;
 
-exports[`testing if generated client match snapshot generate client for slack: requirements.txt 1`] = `
+exports[`WebSocket Clients Integration Tests Python Client Additional tests for Python client generate client for slack: requirements.txt 1`] = `
 "websocket-client==1.8.0
 certifi==2025.1.31
 requests==2.32.3
 "
 `;
 
-exports[`testing if generated client match snapshot generate simple client for hoppscotch echo with custom client name: client.py 1`] = `
+exports[`WebSocket Clients Integration Tests Python Client Common Integration tests for Python client generation generate simple client for hoppscotch echo with custom client name: client.py 1`] = `
 "# //////////////////////////////////////////////////////////////////////////
 #
 # Hoppscotch Echo WebSocket Client - 1.0.0
@@ -915,14 +2041,14 @@ class HoppscotchClient:
 "
 `;
 
-exports[`testing if generated client match snapshot generate simple client for hoppscotch echo with custom client name: requirements.txt 1`] = `
+exports[`WebSocket Clients Integration Tests Python Client Common Integration tests for Python client generation generate simple client for hoppscotch echo with custom client name: requirements.txt 1`] = `
 "websocket-client==1.8.0
 certifi==2025.1.31
 requests==2.32.3
 "
 `;
 
-exports[`testing if generated client match snapshot generate simple client for hoppscotch echo: client.py 1`] = `
+exports[`WebSocket Clients Integration Tests Python Client Common Integration tests for Python client generation generate simple client for hoppscotch echo: client.py 1`] = `
 "# //////////////////////////////////////////////////////////////////////////
 #
 # Hoppscotch Echo WebSocket Client - 1.0.0
@@ -1097,14 +2223,14 @@ class HoppscotchEchoWebSocketClient:
 "
 `;
 
-exports[`testing if generated client match snapshot generate simple client for hoppscotch echo: requirements.txt 1`] = `
+exports[`WebSocket Clients Integration Tests Python Client Common Integration tests for Python client generation generate simple client for hoppscotch echo: requirements.txt 1`] = `
 "websocket-client==1.8.0
 certifi==2025.1.31
 requests==2.32.3
 "
 `;
 
-exports[`testing if generated client match snapshot generate simple client for postman echo: client.py 1`] = `
+exports[`WebSocket Clients Integration Tests Python Client Common Integration tests for Python client generation generate simple client for postman echo: client.py 1`] = `
 "# //////////////////////////////////////////////////////////////////////////
 #
 # Postman Echo WebSocket Client - 1.0.0
@@ -1280,7 +2406,7 @@ class PostmanEchoWebSocketClientClient:
 "
 `;
 
-exports[`testing if generated client match snapshot generate simple client for postman echo: requirements.txt 1`] = `
+exports[`WebSocket Clients Integration Tests Python Client Common Integration tests for Python client generation generate simple client for postman echo: requirements.txt 1`] = `
 "websocket-client==1.8.0
 certifi==2025.1.31
 requests==2.32.3

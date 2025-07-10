@@ -4,7 +4,7 @@ AsyncAPI message payload validation library that validates messages against JSON
 
 ### Installation
 
-```
+```bash
 npm install @asyncapi/message-validation
 ```
 

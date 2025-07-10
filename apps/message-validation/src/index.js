@@ -49,7 +49,7 @@ export async function validateMessage(message, schemas) {
       try {
         unregisterSchema(schemaId);
       } catch (cleanupError) {
-        console.warn(`Failed to unregister schema ${schemaId}:`, cleanupError);
+        console.error(`Failed to unregister schema ${schemaId}:`, cleanupError);
       }
     }
   }

@@ -3,7 +3,7 @@ asyncapi: 3.0.0
 info:
   title: WebSocket Client
   version: 1.0.0
-  description: A simple WebSocket API that connects to the server. It demonstrates how messages sent by the client.
+  description: A simple WebSocket API that connects to the server. It demonstrates how messages are sent by the client.
 
 channels:
   hello:

@@ -37,4 +37,3 @@ components:
             description: When the message was sent
         required:
           - content
-      

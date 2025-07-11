@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "This is a template generating Dart websocket client",
   "scripts": {
-    "test": "jest  --coverage --passWithNoTests",
+    "test": "jest --coverage --passWithNoTests",
     "test:update": "npm run test -- -u",
     "lint": "eslint --max-warnings 0 --config ../../../../../.eslintrc --ignore-path ../../../../../.eslintignore .",
     "lint:fix": "eslint --fix --max-warnings 0 --config ../../../../../.eslintrc --ignore-path ../../../../../.eslintignore ."
@@ -25,8 +25,7 @@
     "eslint": "^6.8.0",
     "eslint-plugin-jest": "^23.8.2",
     "eslint-plugin-react": "^7.34.1",
-    "eslint-plugin-sonarjs": "^0.5.0",
-    "rimraf": "^3.0.2"
+    "eslint-plugin-sonarjs": "^0.5.0"
   },
   "jest": {
     "moduleFileExtensions": [

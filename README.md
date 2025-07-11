@@ -10,6 +10,8 @@ This is a Monorepo managed using [Turborepo](https://turbo.build/) and contains 
 
 1. [Nunjucks-filters](apps/nunjucks-filters): This library contains generator filters that can be reused across multiple templates helping to avoid redundant work. These filters are designed specifically for Nunjucks templates and are included by default with the generator, so there's no need to add them to dependencies separately.
 
+1. [React-sdk](apps/react-sdk): AsyncAPI React SDK is a set of components/functions to use React as render engine for the generator. This is the library that undestand components from Generator's templates that are configured to use `react` render engine. 
+
 > [!IMPORTANT]
 > **Deprecation Notice:** The Nunjucks renderer engine is deprecated and will be removed in future releases. We strongly recommend using the React renderer engine instead. You can find how to migrate from Nunjucks to React in the [migration guide](apps/generator/docs/nunjucks-depreciate.md)
 

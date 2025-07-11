@@ -2,7 +2,7 @@ import { Text } from "@asyncapi/generator-react-sdk";
 import InitConnector from "./InitConnector";
 import { ConnectorFields } from "./ConnectorFields";
 
-export default function ClientConnector({clientName, serverBaseURI}) {
+export default function ClientConnector({clientName}) {
     return (
         <Text newLines={2} indent={2}>
             <Text newLines={2}>
@@ -11,7 +11,7 @@ export default function ClientConnector({clientName, serverBaseURI}) {
 public class ${clientName}Connector{`}
             </Text>
             <ConnectorFields clientName={clientName} />
-            <InitConnector serverURI={serverBaseURI} />
+            <InitConnector />
         </Text>
 
     );

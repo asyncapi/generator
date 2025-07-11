@@ -10,14 +10,12 @@ export default async function ({ asyncapi, params }) {
   const info = getInfo(asyncapi);
   const clientName = getClientName(asyncapi, params.appendClientSuffix, params.customClientName);
   const clientConnectorName = clientName + "Connector.java";
-  const host = server.host();
-  const serverBaseURI = "wss://" + host;
 
   
   return (
     <File name={clientConnectorName}>
       <ConnectorDependencies/>
-      <ClientConnector clientName={clientName} serverBaseURI={serverBaseURI} />
+      <ClientConnector clientName={clientName} />
     </File>
     
  );

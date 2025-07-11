@@ -1,11 +1,13 @@
-import { getServer } from "@asyncapi/generator-helpers";
-import { Text } from "@asyncapi/generator-react-sdk"
+import { getClientName, getServer } from "@asyncapi/generator-helpers";
+import { Text, File } from "@asyncapi/generator-react-sdk"
+
 
 export default function AppProperties({ asyncapi, params }) {
-    const sever = getServer(asyncapi.servers(), params.server);
-    const host = sever.host();
-    if(!host) {
-        console.log("ERROR: No host found in the server configuration.");
+    const server = getServer(asyncapi.servers(), params.server);
+    const clientName = getClientName(asyncapi, params.appendClientSuffix, params.customClientName);
+    const serverHost = server.host();
+    if(!serverHost) {
+        console.log("ERROR: host found in the server configuration.");
         return null;
     }
 
@@ -15,8 +17,8 @@ export default function AppProperties({ asyncapi, params }) {
             <Text>
 {`# application.properties
 
-# Define a named connector called "echo"
-quarkus.websockets-next.client.echo.url=${host}`}
+# Define a named base-uri for ${clientName}
+com.asyncapi.${clientName}.base-uri=wss://${serverHost}`}
             </Text>
         </File>
     );

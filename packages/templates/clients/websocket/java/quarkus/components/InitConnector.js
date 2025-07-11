@@ -1,24 +1,17 @@
 import { Text } from '@asyncapi/generator-react-sdk';
 
 
-export default function InitConnector({ serverURI }) {
+export default function InitConnector() {
  
   return (
 <Text newLines={1}>
 {`
   @PostConstruct
   void openAndSendMessagesWithDelay() {
-      /**
-       * runs on the main event loop thread — blocking it with Thread.sleep() would stall startup.
-       * By spawning a background thread, you avoid interfering with Quarkus' lifecycle.
-       * give it a lambda function to execute in the new thread
-       */
       new Thread(() -> {
           try {
               Log.info("Starting WebSocket connection attempt...");
-              WebSocketClientConnection connection = connector
-                      .baseUri(URI.create("${serverURI}"))
-                      .connectAndAwait();
+              WebSocketClientConnection connection = connector.connectAndAwait();
 
               // Wait 2 seconds before first message
               Thread.sleep(2000);

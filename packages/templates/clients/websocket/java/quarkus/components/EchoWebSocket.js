@@ -7,6 +7,11 @@ import { Text } from '@asyncapi/generator-react-sdk';
 
 
 export function EchoWebSocket({ clientName, pathName, title, operations }) {
+  const sendOperations = operations.filterBySend();
+  if(!pathName){
+    pathName = '/';
+  }
+
   return (
     <Text>
       <Text newLines={2}>
@@ -15,7 +20,7 @@ public class ${clientName}{`}
       </Text>
       <ClientFields />
       <OnOpen title={title}/>
-      <OnTextMessageHandler />
+      <OnTextMessageHandler sendOperations={sendOperations}/>
       <HandleError/>
       <OnClose title={title} />
     </Text>

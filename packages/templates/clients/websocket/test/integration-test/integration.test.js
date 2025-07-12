@@ -7,6 +7,36 @@ const asyncapi_v3_path_slack = path.resolve(__dirname, '../__fixtures__/asyncapi
 const asyncapi_v3_path_hoppscotch = path.resolve(__dirname, '../__fixtures__/asyncapi-hoppscotch-client.yml');
 
 /**
+ * Helper function to clean up test result paths recursively.
+ * @param {Object} config - The configuration object containing paths to clean. 
+ */
+async function cleanTestResultPaths(config) {
+  if (!config) return;
+
+  if (config.testResultPath) {
+    try {
+      await rm(config.testResultPath, { recursive: true, force: true });
+    } catch (error) {
+      console.error(`Failed to clean ${config.testResultPath}: ${error.message}`);
+    }
+  } else if (!hasNestedConfig(config)) {
+    console.warn('Missing testResultPath:', config);
+  }
+
+  // Recursively check nested configurations
+  for (const subConfig of Object.values(config)) {
+    if (typeof subConfig === 'object' && subConfig !== null) {
+      await cleanTestResultPaths(subConfig);
+    }
+  }
+}
+
+// Helper function to check if config has nested sub-configs
+function hasNestedConfig(obj) {
+  return Object.values(obj).some(val => typeof val === 'object' && val !== null);
+}
+
+/**
  * Configuration for different target languages.
  * Defines template location, client file name, and output directory for test results.
  */
@@ -25,14 +55,21 @@ const languageConfig = {
     clientFileName: 'client.dart',
     testResultPath: path.resolve(__dirname, '../../dart/test/temp/snapshotTestResult'),
     template: path.resolve(__dirname, '../../dart')
+  },
+  java: {
+    quarkus: {
+      clientFileName : 'Client.java',
+      testResultPath: path.resolve(__dirname, '../../java/quarkus/test/temp/snapshotTestResult'),
+      template: path.resolve(__dirname, '../../java/quarkus')
+    }
   }
 };
 
 describe('WebSocket Clients Integration Tests', () => {
   beforeAll(async () => {
     await Promise.all(
-      Object.values(languageConfig).map(config => 
-        rm(config.testResultPath, { recursive: true, force: true })
+      Object.values(languageConfig).map(async (config) => 
+        await cleanTestResultPaths(config)
       )
     );
   });
@@ -41,6 +78,12 @@ describe('WebSocket Clients Integration Tests', () => {
     const config = languageConfig.dart;
 
     runCommonTests('Dart', config);
+  });
+
+  describe('Java Quarkus Client', () => {
+    const config = languageConfig.java.quarkus;
+
+    runCommonTests('Java', config);
   });
 
   describe('Python Client', () => {

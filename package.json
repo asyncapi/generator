@@ -33,9 +33,9 @@
     "packages:test": "turbo run test --filter=./packages/** --only",
     "hooks:test": "turbo run test --filter=@asyncapi/generator-hooks",
     "test:update": "turbo run test -- -u",
-    "message-validation:test": "turbo run test --filter=@asyncapi/message-validation",
-    "message-validation:build": "turbo run build --filter=@asyncapi/message-validation",
-    "message-validation:lint": "turbo run lint --filter=@asyncapi/message-validation"
+    "keeper:test": "turbo run test --filter=@asyncapi/keeper",
+    "keeper:build": "turbo run build --filter=@asyncapi/keeper",
+    "keeper:lint": "turbo run lint --filter=@asyncapi/keeper"
   },
   "devDependencies": {
     "markdown-toc": "^1.2.0",

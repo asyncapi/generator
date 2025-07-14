@@ -1,11 +1,11 @@
-## @asyncapi/message-validation
+## @asyncapi/keeper
 
 AsyncAPI message payload validation library that validates messages against JSON Schema (Draft-07).
 
 ### Installation
 
 ```bash
-npm install @asyncapi/message-validation
+npm install @asyncapi/keeper
 ```
 
 ### API
@@ -27,7 +27,7 @@ npm install @asyncapi/message-validation
 #### Multiple Schema Validation
 
 ```js 
-import { validateMessage } from '@asyncapi/message-validation';
+import { validateMessage } from '@asyncapi/keeper';
 
 // Example message and schemas (schemas as JSON Schema objects)
 const message = { content: 'Hello', timestamp: '2024-05-01T12:00:00Z' };

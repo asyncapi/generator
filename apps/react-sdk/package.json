@@ -66,7 +66,8 @@
     "generate:readme:toc": "markdown-toc -i README.md",
     "bump:version": "npm --no-git-tag-version --allow-same-version version $VERSION",
     "prepublishOnly": "npm run build",
-    "pretest": "npm run build"
+    "pretest": "npm run build",
+    "test:update": "turbo run test -- -u"
   },
   "eslintConfig": {
     "extends": [

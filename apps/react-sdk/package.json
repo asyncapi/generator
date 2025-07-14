@@ -69,12 +69,6 @@
     "pretest": "npm run build",
     "test:update": "turbo run test -- -u"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
   "publishConfig": {
     "access": "public"
   }

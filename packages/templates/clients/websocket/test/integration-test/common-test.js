@@ -20,7 +20,6 @@ async function generateAndVerifyClient(template, outputPath, asyncapiPath, param
   const directoryElements = await getDirElementsRecursive(outputPath);
 
   await verifyDirectoryStructure(directoryElements, outputPath);
-  
 }
 
 /**
@@ -28,7 +27,7 @@ async function generateAndVerifyClient(template, outputPath, asyncapiPath, param
  * @param {string} dir - The directory path to scan.
  */
 async function getDirElementsRecursive(dir) {
-  let elements = [];
+  const elements = [];
   
   const items = await readdir(dir, { withFileTypes: true });
   

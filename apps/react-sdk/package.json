@@ -56,7 +56,7 @@
   "scripts": {
     "start": "tsc --watch",
     "build": "tsc",
-    "test": "cross-env CI=true jest --coverage --maxWorkers=2",
+    "test": "NODE_OPTIONS='--max-old-space-size=4096' cross-env CI=true jest --coverage --maxWorkers=2",
     "test:watch": "jest --watch",
     "docs": "npm run docs:markdown & npm run generate:readme:toc",
     "docs:markdown": "./node_modules/.bin/jsdoc2md lib/index.js -f lib/**/*.js > API.md",

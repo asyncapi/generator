@@ -2,8 +2,7 @@ name: PR Review Checklist
 
 on:
   pull_request:
-    types: 
-      - opened
+    types: [opened, synchronize]
 
 jobs:
   pr-review-list:

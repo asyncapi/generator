@@ -3,3 +3,6 @@ apps/generator/output/*
 **/temp/*
 **/__transpiled/*
 packages/components/lib/*
+apps/react-sdk/lib
+docs
+apps/react-sdk/src/transpiler/__tests__/__transpiled_testfiles/

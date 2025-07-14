@@ -10,7 +10,11 @@ jobs:
     name: Post PR Review Checklist
     runs-on: ubuntu-latest
     steps:
-    - uses: peter-evans/create-or-update-comment@v4
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Post initial PR checklist
+      uses: peter-evans/create-or-update-comment@v4
       with:
         token: ${{ secrets.GH_TOKEN }}
         issue-number: ${{ github.event.pull_request.number }}

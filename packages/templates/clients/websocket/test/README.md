@@ -1,3 +1,13 @@
+## Test Project
+
+This `test` directory contains two types of testing: 
+- [Acceptance Testing](#acceptance-testing)
+- [Integration Testing](#integration-testing)
+
+## Acceptance testing
+
+The acceptance tests check different clients with tests written in their respective languages. So JavaScript client is tested with JavaScript test, and Python with Python tests, and so on.
+
 ## Prerequisites
 
 Install [Podman](https://podman.io/docs/installation). 
@@ -5,10 +15,6 @@ Install [Podman](https://podman.io/docs/installation).
 > Microcks needs some services running to simulate the infrastructure and this requires multiple resources. Docker is not the best solution for this, thus it's better to use Podman that manages resources better.
 
 You can also install [docker-compose](https://docs.docker.com/compose/install/) that `podman compose` will later use.
-
-## Test Project
-
-This `test` directory contains acceptance tests that check different clients with tests written in their respective languages. So JavaScript client is tested with JavaScript test, and Python with Python tests, and so on.
 
 To run tests: 
 
@@ -99,3 +105,40 @@ Do below to start receiving example messages in the terminal:
 ```
 websocat ws://localhost:8081/api/ws/Hoppscotch+WebSocket+Server/1.0.0/sendTimeStampMessage
 ```
+
+## Integration Testing 
+
+The integration tests follow a centralized approach: they use common test helpers for standard validations and include only custom tests for template-specific features.
+
+### Adding a New Client to Integration Tests
+
+1. Go to integration test suite: `cd integration-test`.
+
+2. Add your client configuration to `languageConfig` in `integration.test.js`:
+```js
+const languageConfig = {
+  // ...existing configs
+  yourlang: {
+    clientFileName: your_client_filename,
+    testResultPath: generated_client_path,
+    template: your_template_path
+  }
+}
+```
+
+3. Add a new describe block inside main `WebSocket Clients Integration Tests` block following this pattern:
+```js
+describe('YourLang Client', () => {
+  // Runs all standard tests
+  runCommonTests('YourLang', languageConfig.YourLang);
+
+  // Add template-specific tests below
+  describe('Additional tests', () => {
+    it('should handle specific feature', async () => {
+      // Custom test implementation
+    });
+  });
+});
+```
+
+4. Run `npm run test:update` to generate client on the `testResultPath`. 

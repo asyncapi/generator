@@ -1,0 +1,17 @@
+name: PR Review Checklist
+
+on:
+  pull_request:
+    types: 
+      - opened
+
+jobs:
+  pr-review-list:
+    name: Post PR Review Checklist
+    runs-on: ubuntu-latest
+    steps:
+    - uses: peter-evans/create-or-update-comment@v4
+      with:
+        token: ${{ secrets.GH_TOKEN }}
+        issue-number: ${{ github.event.pull_request.number }}
+        body-path: '.github/pr-review-checklist.md'

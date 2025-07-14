@@ -5,14 +5,12 @@ import { Requires } from '../../../../../../components/Requires.js';
 import { EchoWebSocket } from '../../../../../../components/EchoWebSocket.js';
 
 export default async function ({ asyncapi, params }) {
-
-
   const server = getServer(asyncapi.servers(), params.server);
   const info = getInfo(asyncapi);
   const title = getTitle(asyncapi);
   const clientName = getClientName(asyncapi, params.appendClientSuffix, params.customClientName);
   const operations = asyncapi.operations();
-  const clientJavaName = clientName + ".java";
+  const clientJavaName = `${clientName  }.java`;
   const pathName = server.pathname();
 
   return (

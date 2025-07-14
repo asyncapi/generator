@@ -1,15 +1,11 @@
+import { JAVA_COMMON_PRESET } from '@asyncapi/modelina';
 import { Models } from '../../../../../../../../../../../../components/src/components/models.js';
 
 export default async function({ asyncapi }) {
-  const imports = [
-    'import io.quarkus.websockets.next.WebSocket;',
-    'import io.quarkus.websockets.next.Service;'
-  ];
-
   const websocketJavaPreset = {
     class: {
       self({ content, dependencyManager }) {
-        return `@Websocket\n${content}`;
+        return `package com.asyncapi.model;\n\n@Websocket\n${content}`;
       },
       property({ content, property }) {
         if (property.property && property.property.type === 'Integer') {
@@ -17,22 +13,24 @@ export default async function({ asyncapi }) {
         }
         return content;
       },
-      additionalContent({content, }){
-        return (
-          `@Override
-          public boolean equals(Object o) {
-              if (this == o) {
-                  return true;
-              }
-              if (o == null || getClass() != o.getClass()) {
-                  return false;
-              }
-              Name event = (Nmae) o;
-              return Objects.equals(this.payload, event.payload);
-          }`)
+      additionalContent({content }) {
+        return content;
       }
     }
   };
 
-  return await Models({ asyncapi, language: 'java', format: 'toPascalCase', presets: [websocketJavaPreset]});
+  const combinedPresets = [
+    {
+      preset: JAVA_COMMON_PRESET,
+      options: {
+        equal: true,
+        hashCode: false,
+        classToString: true,
+        marshalling: false
+      }
+    },
+    websocketJavaPreset
+  ];
+
+  return await Models({ asyncapi, language: 'java', format: 'toPascalCase', presets: combinedPresets});
 }

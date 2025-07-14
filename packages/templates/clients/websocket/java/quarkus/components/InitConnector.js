@@ -1,11 +1,9 @@
 import { Text } from '@asyncapi/generator-react-sdk';
 
-
 export default function InitConnector() {
- 
   return (
-<Text newLines={1}>
-{`
+    <Text newLines={1}>
+      {`
   @PostConstruct
   void openAndSendMessagesWithDelay() {
       new Thread(() -> {
@@ -38,6 +36,6 @@ export default function InitConnector() {
   }
 }
 `}
-</Text>
+    </Text>
   );
 }

@@ -1,14 +1,13 @@
-import { ClientFields } from "./ClientFields.js";
-import HandleError from "./HandleError.js";
-import OnClose from "./OnClose.js";
-import OnOpen from "./OnOpen.js";
-import OnTextMessageHandler from "./OnTextMessageHandler.js";
+import { ClientFields } from './ClientFields.js';
+import HandleError from './HandleError.js';
+import OnClose from './OnClose.js';
+import OnOpen from './OnOpen.js';
+import OnTextMessageHandler from './OnTextMessageHandler.js';
 import { Text } from '@asyncapi/generator-react-sdk';
-
 
 export function EchoWebSocket({ clientName, pathName, title, operations }) {
   const sendOperations = operations.filterBySend();
-  if(!pathName){
+  if (!pathName) {
     pathName = '/';
   }
 

@@ -1,11 +1,9 @@
 import { Text } from '@asyncapi/generator-react-sdk';
 
-
 export default function OnClose({ title }) {
- 
   return (
-<Text>
-{`
+    <Text>
+      {`
   @OnClose
    public void onClose(CloseReason reason, WebSocketClientConnection connection) {
       int code = reason.getCode();
@@ -14,6 +12,6 @@ export default function OnClose({ title }) {
 }
 
 `}
-</Text>
+    </Text>
   );
 }

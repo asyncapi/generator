@@ -12,7 +12,7 @@ export default function OnTextMessage({sendOperations}) {
           const methodName = operation.id();          
           return (
             <Text newLines={2} indent={2}>
-          {`@OnTextMessage
+              {`@OnTextMessage
 public void ${methodName}(String message, WebSocketClientConnection connection) {
     Log.info("Received text message: " + message);
 }`}

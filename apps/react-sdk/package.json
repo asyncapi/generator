@@ -65,7 +65,8 @@
     "generate:assets": "npm run prepublishOnly && npm run docs",
     "generate:readme:toc": "markdown-toc -i README.md",
     "bump:version": "npm --no-git-tag-version --allow-same-version version $VERSION",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "pretest": "npm run build"
   },
   "eslintConfig": {
     "extends": [

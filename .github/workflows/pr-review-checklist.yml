@@ -15,6 +15,6 @@ jobs:
     - name: Post initial PR checklist
       uses: peter-evans/create-or-update-comment@v4
       with:
-        token: ${{ secrets.GH_TOKEN }}
+        token: ${{ secrets.GITHUB_TOKEN }}
         issue-number: ${{ github.event.pull_request.number }}
         body-path: '.github/pr-review-checklist.md'

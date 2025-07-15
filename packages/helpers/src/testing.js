@@ -16,7 +16,7 @@ async function cleanTestResultPaths(config) {
       console.error(`Failed to clean ${config.testResultPath}: ${error.message}`);
     }
   } else if (!hasNestedConfig(config)) {
-    console.warn('Missing testResultPath:', config);
+    console.warn('Configuration missing testResultPath - no test results to clean:', config);
   }
 
   // Recursively check nested configurations

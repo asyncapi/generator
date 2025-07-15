@@ -10,7 +10,6 @@ export default function OnClose({ title }) {
       Log.info("Websocket disconnected from ${title} with Close code: " + code);
   }
 }
-
 `}
     </Text>
   );

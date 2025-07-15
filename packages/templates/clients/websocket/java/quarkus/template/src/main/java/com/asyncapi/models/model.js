@@ -13,7 +13,7 @@ export default async function({ asyncapi }) {
         }
         return content;
       },
-      additionalContent({content }) {
+      additionalContent({ content }) {
         return content;
       }
     }

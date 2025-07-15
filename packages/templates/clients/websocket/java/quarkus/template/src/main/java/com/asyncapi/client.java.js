@@ -22,6 +22,5 @@ export default async function ({ asyncapi, params }) {
       <ClientDependencies/>
       <EchoWebSocket clientName={clientName} pathName={pathName} title={title} operations={operations} />
     </File>
-    
   );
 }

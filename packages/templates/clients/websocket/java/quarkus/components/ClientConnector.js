@@ -13,6 +13,5 @@ public class ${clientName}Connector{`}
       <ConnectorFields clientName={clientName} />
       <InitConnector />
     </Text>
-
   );
 }

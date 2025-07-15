@@ -12,6 +12,5 @@ export default async function ({ asyncapi, params }) {
       <ConnectorDependencies/>
       <ClientConnector clientName={clientName} />
     </File>
-    
   );
 }

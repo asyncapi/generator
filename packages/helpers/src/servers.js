@@ -54,8 +54,8 @@ const getServer = (servers, serverName) => {
 const getServerHost = (server) => {
   const serverHost = server.host();
   if (!serverHost) {
-    console.log('ERROR: host found in the server configuration.');
-    return null;
+    console.log('ERROR: host not found in the server configuration.');
+    throw new Error('Host not found in the server configuration.');
   }
   return serverHost;
 };

@@ -1,6 +1,6 @@
 import { Text } from '@asyncapi/generator-react-sdk';
 
-export function Requires() {
+export function ClientDependencies() {
   return (
     <Text>
       <Text>

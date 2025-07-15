@@ -1,11 +1,11 @@
 import { JAVA_COMMON_PRESET } from '@asyncapi/modelina';
-import { Models } from '../../../../../../../../../../../../components/src/components/models.js';
+import { Models } from '@asyncapi/generator-components';
 
 export default async function({ asyncapi }) {
   const websocketJavaPreset = {
     class: {
       self({ content, dependencyManager }) {
-        return `package com.asyncapi.model;\n\n@Websocket\n${content}`;
+        return `package com.asyncapi.models;\n\n${content}`;
       },
       property({ content, property }) {
         if (property.property && property.property.type === 'Integer') {

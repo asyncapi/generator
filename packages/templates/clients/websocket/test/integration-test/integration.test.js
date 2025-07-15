@@ -1,40 +1,11 @@
+const { cleanTestResultPaths } = require('@asyncapi/generator-helpers');
 const path = require('path');
-const { readFile, stat, rm } = require('fs').promises;
+const { readFile, stat } = require('fs').promises;
 const Generator = require('@asyncapi/generator');
 const { listFiles } = require('@asyncapi/generator-helpers');
 const { runCommonTests } = require('./common-test.js');
 const asyncapi_v3_path_slack = path.resolve(__dirname, '../__fixtures__/asyncapi-slack-client.yml');
 const asyncapi_v3_path_hoppscotch = path.resolve(__dirname, '../__fixtures__/asyncapi-hoppscotch-client.yml');
-
-/**
- * Helper function to clean up test result paths recursively.
- * @param {Object} config - The configuration object containing paths to clean. 
- */
-async function cleanTestResultPaths(config) {
-  if (!config) return;
-
-  if (config.testResultPath) {
-    try {
-      await rm(config.testResultPath, { recursive: true, force: true });
-    } catch (error) {
-      console.error(`Failed to clean ${config.testResultPath}: ${error.message}`);
-    }
-  } else if (!hasNestedConfig(config)) {
-    console.warn('Missing testResultPath:', config);
-  }
-
-  // Recursively check nested configurations
-  for (const subConfig of Object.values(config)) {
-    if (typeof subConfig === 'object' && subConfig !== null) {
-      await cleanTestResultPaths(subConfig);
-    }
-  }
-}
-
-// Helper function to check if config has nested sub-configs
-function hasNestedConfig(obj) {
-  return Object.values(obj).some(val => typeof val === 'object' && val !== null);
-}
 
 /**
  * Configuration for different target languages.

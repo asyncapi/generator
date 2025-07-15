@@ -1,7 +1,7 @@
 import { getClientName, getInfo, getServer, getTitle } from '@asyncapi/generator-helpers';
 import { File } from '@asyncapi/generator-react-sdk';
 import { FileHeaderInfo } from '../../../../../../components/FileHeaderInfo.js';
-import { Requires } from '../../../../../../components/Requires.js';
+import { ClientDependencies } from '../../../../../../components/dependencies/ClientDependencies.js';
 import { EchoWebSocket } from '../../../../../../components/EchoWebSocket.js';
 
 export default async function ({ asyncapi, params }) {
@@ -10,7 +10,7 @@ export default async function ({ asyncapi, params }) {
   const title = getTitle(asyncapi);
   const clientName = getClientName(asyncapi, params.appendClientSuffix, params.customClientName);
   const operations = asyncapi.operations();
-  const clientJavaName = `${clientName  }.java`;
+  const clientJavaName = `${clientName}.java`;
   const pathName = server.pathname();
 
   return (
@@ -19,7 +19,7 @@ export default async function ({ asyncapi, params }) {
         info={info}
         server={server}
       />
-      <Requires/>
+      <ClientDependencies/>
       <EchoWebSocket clientName={clientName} pathName={pathName} title={title} operations={operations} />
     </File>
     

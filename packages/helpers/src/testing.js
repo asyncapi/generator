@@ -2,8 +2,6 @@ const { readFile, rm } = require('fs').promises;
 const { readdir } = require('fs/promises');
 const path = require('path');
 
-
-
 /**
  * Helper function to clean up test result paths recursively.
  * @param {Object} config - The configuration object containing paths to clean. 
@@ -87,7 +85,7 @@ async function verifyDirectoryStructure(expectedElements, dirPath) {
         const content = await readFile(filePath, 'utf8');
         expect(content).toMatchSnapshot(element.name);
       } catch (err) {
-        throw new Error(`File ${filePath} not found or couldn't be read.`);
+        throw new Error(`File ${filePath} not found or couldn't be read. Original error: ${err.message}`);
       }
     }
   }

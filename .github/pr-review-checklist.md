@@ -1,5 +1,5 @@
 ### What reviewer looks at during PR review
-The following are ideal points maintainers look for during review. 
+The following are ideal points maintainers look for during review. Reviewing these points yourself beforehand can help streamline the review process and reduce time to merge.
 
 1. **PR Title**: Use a concise title that follows our [Conventional Commits](https://github.com/asyncapi/generator/blob/master/CONTRIBUTING.md#conventional-commits) guidelines and clearly summarizes the change using [imperative mood](https://cbea.ms/git-commit/#imperative) (it means `spoken or written as if giving a command or instruction`, like "add new helper for listing operations")
     > **Note** - In Generator, prepend `feat:` or `fix:` in PR title only when PATCH/MINOR release must be triggered.
@@ -20,3 +20,5 @@ The following are ideal points maintainers look for during review.
 1. **Template Design Principles Alignment**: While reviewing template-related changes in the `packages/` directory, ensure they align with the [Assumptions and Principles](https://github.com/asyncapi/generator/blob/master/packages/README.md#assumptions-and-principles). If any principle feels outdated or no longer applicable, start a discussion these principles are meant to evolve with the project.
 
 1. **Reduce Scope When Needed**: If an issue or PR feels too large or complex, consider splitting it and creating follow-up issues. Smaller, focused PRs are easier to review and merge.
+
+1. **Bot Comments:**  As reviewers, check that contributors have appropriately addressed comments or suggestions made by automated bots. If there are bot comments the reviewer disagrees with, react to them or mark them as resolved, so the review history remains clear and accurate.

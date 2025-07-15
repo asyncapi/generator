@@ -562,7 +562,6 @@ public class HoppscotchClient{
 }
 
 
-
 "
 `;
 
@@ -1706,7 +1705,6 @@ public class HoppscotchEchoWebSocketClient{
       Log.info(\\"Websocket disconnected from Hoppscotch Echo WebSocket Client with Close code: \\" + code);
   }
 }
-
 
 
 "
@@ -2950,7 +2948,6 @@ public class PostmanEchoWebSocketClientClient{
       Log.info(\\"Websocket disconnected from Postman Echo WebSocket Client with Close code: \\" + code);
   }
 }
-
 
 
 "

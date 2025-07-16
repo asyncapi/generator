@@ -3,6 +3,7 @@
 
 You can test this template:
 1. Clone the project and run `npm install`
+1. Navigate to `packages/templates/clients/websocket/test/integration-test` and run the tests with `npm run test` to generate WebSocket clients
 1. Navigate to `packages/templates/clients/websocket/python`
 1. Install with `npm install` and run test with `npm run test`
 1. Install dependencies of the generated client: `pip install -r test/temp/snapshotTestResult/custom_client_hoppscotch/requirements.txt`
@@ -20,10 +21,12 @@ To run the Slack Client example, follow the steps above but with 2 exceptions:
 
 You can use our AsyncAPI's credentials to access different set of events produced in AsyncAPI Slack workspace, in the `#generator` channel.
 
-1. Generate an access ticket with an application ID that will enable you to establish a websocket connection. Replace the following  bearer token with real token that you can find in `slack-example.md` document added to bookmarks of `#generator` channel in [AsyncAPI Slack workspace](https://www.asyncapi.com/slack-invite):
+1. Make sure you are in the `packages/templates/clients/websocket/python` directory.
+1. Install Slack client dependencies by running: `pip install -r test/temp/snapshotTestResult/client_slack/requirements.txt`. If this fails, you probably  did not run tests that generate the client. Fix this by running `npm run test`.
+1. Generate an access ticket with an application ID that will enable you to establish a websocket connection. Such a ticket can be used only once. You need to generate a new one every time you connect to Slack server. Replace the following  bearer token with real token that you can find in `slack-example.md` document added to bookmarks of `#generator` channel in [AsyncAPI Slack workspace](https://www.asyncapi.com/slack-invite):
     ```
     curl --location --request POST 'https://slack.com/api/apps.connections.open' \
-    --header 'Authorization: Bearer xapp-1-A08NKKBFGBD-8768087393844-b85d0215e33ec13272e523e47d96b602d9dc5e57863e5b2df79d81b999da10bc'
+    --header 'Authorization: Bearer TAKE_XAPP_TOKEN_FROM_BOOKMARKS_DOC_IN_SLACK'
     ```
 >**Note**:  Ensure that you do not expose the real token on GitHub or any other public platform because it will be disabled by Slack.
 
@@ -34,14 +37,14 @@ You can use our AsyncAPI's credentials to access different set of events produce
 
     You can take generated `url` and use with CLI websocket client like `websocat` (first remove excape backslashes):
     ```
-    websocat "wss://wss-primary.slack.com/link/?ticket=089a0c38-cdec-409f-99fa-0ca24e216ea4&app_id=00dfdcccb53a2645dd3f1773fcb10fa7b0a598cf333a990a9db12375ef1865dd"
+    websocat "wss://wss-primary.slack.com/link/?ticket=5ad694c1-2a81-4cfc-a503-057b8e798120&app_id=00dfdcccb53a2645dd3f1773fcb10fa7b0a598cf333a990a9db12375ef1865dd"
     ```
 
     But that is just for testing. The point is to use the generated Python client.
 
 1. Start the example that uses generated client. Examine events, and modify example as you want:
     ```
-    TICKET=089a0c38-cdec-409f-99fa-0ca24e216ea4 APP_ID=00dfdcccb53a2645dd3f1773fcb10fa7b0a598cf333a990a9db12375ef1865dd python example-slack.py
+    TICKET=6b150bb1-82b4-457f-a09d-6ff0af1fd2d1 APP_ID=00dfdcccb53a2645dd3f1773fcb10fa7b0a598cf333a990a9db12375ef1865dd python example-slack.py
     ```
     Successfully established connection will welcome you with below event:
     ```

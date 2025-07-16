@@ -5,10 +5,6 @@ parameters:
   server:
     description: The name of the server described in AsyncAPI document
     required: false
-  clientFileName:
-    description: The name of the generated client file
-    required: false
-    default: client.java
   appendClientSuffix:
     description: Add 'Client' suffix at the end of the class name. This option has no effect if 'customClientName' is specified.
     required: false

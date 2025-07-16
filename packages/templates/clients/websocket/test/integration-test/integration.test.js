@@ -29,7 +29,6 @@ const languageConfig = {
   },
   java: {
     quarkus: {
-      clientFileName: 'Client.java',
       testResultPath: path.resolve(__dirname, '../../java/quarkus/test/temp/snapshotTestResult'),
       template: path.resolve(__dirname, '../../java/quarkus')
     }

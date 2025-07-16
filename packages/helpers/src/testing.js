@@ -65,6 +65,27 @@ async function getDirElementsRecursive(dir) {
 }
 
 /**
+ * Helper function to build parameters for the test cases.
+ * 
+ * Note: This function is currently hardcoded to treat 'java' differently by excluding the 'clientFileName' parameter.
+ * Consider refactoring if language-specific logic grows.
+ * 
+ * @param {string} language - The target language (e.g., 'java', 'dart').
+ * @param {Object} config - Configuration object containing test settings.
+ * @param {Object} [baseParams={}] - Additional parameters to merge into the final set.
+ * @returns {Object} - The final parameters object for use in the test case.
+ */
+function buildParams(language, config, baseParams = {}) {
+  const isJava = language.toLowerCase() === 'java';
+
+  return {
+    server: 'echoServer',
+    ...(isJava ? {} : { clientFileName: config.clientFileName }),
+    ...baseParams,
+  };
+}
+
+/**
  * Helper function to verify the directory structure against expected elements.
  * @param {Array} expectedElements - The expected elements in the directory.
  * @param {string} dirPath - The path of the directory to verify.
@@ -94,5 +115,6 @@ async function verifyDirectoryStructure(expectedElements, dirPath) {
 module.exports = {
   cleanTestResultPaths,
   getDirElementsRecursive,
-  verifyDirectoryStructure
+  verifyDirectoryStructure,
+  buildParams
 };

@@ -75,9 +75,6 @@ export async function validateByOperationId(asyncapiFilepath, operationId, messa
   if (typeof operationId !== 'string' || !operationId.trim()) {
     throw new Error(`Invalid "operationId" parameter: must be a non-empty string, received ${operationId}`);
   }
-  if (message === null || message === undefined) {
-    throw new Error(`Invalid "message" parameter: expected a non-null object to validate, but received ${message}`);
-  }
 
   let asyncapi;
   try {

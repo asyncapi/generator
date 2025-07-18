@@ -120,9 +120,4 @@ describe('Integration Tests for validateByOperationId function', () => {
     };
     await expect(validateByOperationId(asyncapi_v3_path, operationId, validMessage)).rejects.toThrow('Invalid "operationId" parameter');
   });
-
-  test('should throw error if message is null', async () => {
-    const operationId = 'sendHelloMessage';
-    await expect(validateByOperationId(asyncapi_v3_path, operationId, null)).rejects.toThrow('Invalid "message" parameter');
-  });
 });

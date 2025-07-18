@@ -1,6 +1,6 @@
 import path from 'path';
 import { Parser, fromFile } from '@asyncapi/parser';
-import { validateMessage } from '../src/index.js';
+import { validateMessage, validateByOperationId } from '../src/index.js';
 
 const parser = new Parser();
 const asyncapi_v3_path = path.resolve(__dirname, '../test/__fixtures__/asyncapi-message-validation.yml');
@@ -82,5 +82,47 @@ describe('Integration Tests for validateMessage function', () => {
   test('should throw error if jsonSchemas is undefined', async () => {
     const validMessage = { content: 'test' };
     await expect(validateMessage(validMessage, undefined)).rejects.toThrow('Invalid "schemas" parameter');
+  });
+});
+
+describe('Integration Tests for validateByOperationId function', () => {
+  test('should validate a correct message against schemas and return true', async () => {
+    const operationId = 'sendHelloMessage';
+    const validMessage = {
+      content: 'This is a test message',
+      timestamp: new Date().toISOString()
+    };
+    const result = await validateByOperationId(asyncapi_v3_path, operationId, validMessage);
+    expect(result).toBe(true);
+  });
+
+  test('should return false for invalid message that does not match any schemas', async () => {
+    const operationId = 'sendHelloMessage';
+    const validMessage = {
+      timestamp: new Date().toISOString()
+    };
+    const result = await validateByOperationId(asyncapi_v3_path, operationId, validMessage);
+    expect(result).toBe(false);
+  });
+
+  test('should throw error if asyncapiFilepath parameter is empty', async () => {
+    const operationId = 'sendHelloMessage';
+    const validMessage = {
+      timestamp: new Date().toISOString()
+    };
+    await expect(validateByOperationId('', operationId, validMessage)).rejects.toThrow('Invalid "asyncapiFilepath" parameter');
+  });
+
+  test('should throw error if operationId parameter is empty', async () => {
+    const operationId = '';
+    const validMessage = {
+      timestamp: new Date().toISOString()
+    };
+    await expect(validateByOperationId(asyncapi_v3_path, operationId, validMessage)).rejects.toThrow('Invalid "operationId" parameter');
+  });
+
+  test('should throw error if message is null', async () => {
+    const operationId = 'sendHelloMessage';
+    await expect(validateByOperationId(asyncapi_v3_path, operationId, null)).rejects.toThrow('Invalid "message" parameter');
   });
 });

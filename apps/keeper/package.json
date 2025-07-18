@@ -16,6 +16,7 @@
   "author": "Adi Boghawala <boghawalaadi@gmail.com>",
   "license": "Apache-2.0",
   "dependencies": {
+    "@asyncapi/parser": "^3.4.0",
     "@hyperjump/json-schema": "^1.16.0"
   },
   "devDependencies": {
@@ -27,7 +28,9 @@
     "jest-esm-transformer": "^1.0.0"
   },
   "jest": {
-    "setupFiles": ["<rootDir>/jest.setup.js"],
+    "setupFiles": [
+      "<rootDir>/jest.setup.js"
+    ],
     "transformIgnorePatterns": [
       "node_modules/(?!@hyperjump)"
     ],

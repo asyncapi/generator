@@ -3,13 +3,13 @@
   "version": "1.1.2",
   "description": "The React SDK for templates.",
   "license": "Apache-2.0",
-  "homepage": "https://github.com/asyncapi/generator-react-sdk",
+  "homepage": "https://github.com/asyncapi/generator",
   "bugs": {
-    "url": "https://github.com/asyncapi/generator-react-sdk/issues"
+    "url": "https://github.com/asyncapi/generator/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/asyncapi/generator-react-sdk.git"
+    "url": "git://github.com/asyncapi/generator.git"
   },
   "keywords": [
     "asyncapi",

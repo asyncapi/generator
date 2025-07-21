@@ -352,7 +352,7 @@ Undestand how to use Hoppscotch Echo WebSocket as a client. Hoppscotch Echo WebS
 
 
 - **Version:** 1.0.0
-- **URL:** wss://echo-websocket.hoppscotch.io/
+- **URL:** wss://echo-websocket.hoppscotch.io
 
 
 ## Client API Reference
@@ -621,7 +621,7 @@ Undestand how to use Hoppscotch Echo WebSocket as a client. Hoppscotch Echo WebS
 
 
 - **Version:** 1.0.0
-- **URL:** wss://echo-websocket.hoppscotch.io/
+- **URL:** wss://echo-websocket.hoppscotch.io
 
 
 ## Client API Reference

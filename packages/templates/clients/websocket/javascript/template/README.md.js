@@ -1,25 +1,27 @@
 import { File, Text } from '@asyncapi/generator-react-sdk';
-import { getClientName, getServer } from '@asyncapi/generator-helpers';
+import { getClientName, getServer, getServerUrl, getInfo, getTitle } from '@asyncapi/generator-helpers';
 import { AvailableOperations } from '../components/AvailableOperations';
 
 export default function({ asyncapi, params }) {
   const server = getServer(asyncapi.servers(), params.server);
-  const info = asyncapi.info();
+  const info = getInfo(asyncapi);
   const clientName = getClientName(asyncapi, params.appendClientSuffix, params.customClientName);
+  const title = getTitle(asyncapi);
+  const serverUrl = getServerUrl(server);
 
   const operations = asyncapi.operations().all();
   
   return (
     <File name="README.md">
       <Text newLines={2}>
-        {`# ${info.title()} 
+        {`# ${title} 
 
 ## Overview
 
-${info.description() || `A WebSocket client for ${info.title()}.`}
+${info.description() || `A WebSocket client for ${title}.`}
 
 - **Version:** ${info.version()}
-- **URL:** ${server.url()}
+- **URL:** ${serverUrl}
 
 
 ## Client API Reference

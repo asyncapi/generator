@@ -16,7 +16,7 @@ export default function ({ asyncapi, params }) {
       <FileHeaderInfo
         info={info}
         server={server}
-        language={'javascript'}
+        language="javascript"
       />
       <Requires />
       <ClientClass clientName={clientName} serverUrl={serverUrl} title={title} sendOperations={sendOperations} />

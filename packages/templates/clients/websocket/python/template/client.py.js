@@ -18,7 +18,7 @@ export default function ({ asyncapi, params }) {
       <FileHeaderInfo
         info={info}
         server={server}
-        language={'python'}
+        language="python"
       />
       <Requires query={queryParams} />
       <ClientClass clientName={clientName} serverUrl={serverUrl} title={title} queryParams={queryParams} operations={operations} />

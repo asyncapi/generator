@@ -13,3 +13,9 @@ parameters:
     description: The custom name for the generated client class
     required: false
 
+nonRenderableFiles:
+  - .dockerignore
+  - .gitignore
+  - .mvn/**
+  - mvnw
+  - mvnw.cmd

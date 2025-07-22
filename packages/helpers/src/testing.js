@@ -1,5 +1,4 @@
-const { readFile, rm } = require('fs').promises;
-const { readdir } = require('fs/promises');
+const { readFile, rm, readdir} = require('fs').promises;
 const path = require('path');
 
 /**
@@ -67,7 +66,6 @@ async function getDirElementsRecursive(dir) {
 /**
  * Helper function to build parameters for the test cases.
  * 
- * Note: This function is currently hardcoded to treat 'java' differently by excluding the 'clientFileName' parameter.
  * Consider refactoring if language-specific logic grows.
  * 
  * @param {string} language - The target language (e.g., 'java', 'dart').
@@ -76,6 +74,7 @@ async function getDirElementsRecursive(dir) {
  * @returns {Object} - The final parameters object for use in the test case.
  */
 function buildParams(language, config, baseParams = {}) {
+  // Note: This function is currently hardcoded to treat 'java' differently by excluding the 'clientFileName' parameter.
   const isJava = language.toLowerCase() === 'java';
 
   return {
@@ -95,11 +94,8 @@ async function verifyDirectoryStructure(expectedElements, dirPath) {
     const filePath = path.join(dirPath, element.name);
 
     if (element.type === 'directory') {
-      // Get the contents of the directory
-      const subdirContent = await getDirElementsRecursive(filePath);
-      
       // Recurse into the subdirectory
-      await verifyDirectoryStructure(subdirContent, filePath);
+      await verifyDirectoryStructure(element.children, filePath);
     } else if (element.type === 'file') {
       // Verifying a file
       try {
@@ -112,9 +108,26 @@ async function verifyDirectoryStructure(expectedElements, dirPath) {
   }
 }
 
+/*
+ * Get the list of files in a directory
+ *
+ * @param {string} dir - The directory path.
+ * 
+ * return {Promise<string[]>} - A promise that resolves to an array of file paths.
+ */
+const listFiles = async (dir) => {
+  const dirElements = await readdir(dir, { withFileTypes: true });
+
+  // Filter to only files, map to full paths
+  return dirElements
+    .filter(dirE => dirE.isFile())
+    .map(dirE => dirE.name);
+};
+
 module.exports = {
   cleanTestResultPaths,
   getDirElementsRecursive,
   verifyDirectoryStructure,
-  buildParams
+  buildParams,
+  listFiles
 };

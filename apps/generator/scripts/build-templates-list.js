@@ -21,6 +21,7 @@ const ALLOWED_TYPE_PATHS = ['docs', 'clients', 'sdks', 'configs'];
  */
 function normalizeType(type) {
   if (type === 'clients') return 'client';
+  if (type === 'sdks') return 'sdk';
   if (type === 'configs') return 'config';
   return type;
 }

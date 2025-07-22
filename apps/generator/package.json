@@ -23,7 +23,9 @@
     "lint": "eslint --max-warnings 0 --config ../../.eslintrc --ignore-path ../../.eslintignore .",
     "generate:readme:toc": "markdown-toc -i README.md",
     "generate:assets": "npm run docs && npm run generate:readme:toc",
-    "bump:version": "npm --no-git-tag-version --allow-same-version version $VERSION"
+    "bump:version": "npm --no-git-tag-version --allow-same-version version $VERSION",
+    "build": "node scripts/build-templates-list.js",
+    "pretest": "npm run build"
   },
   "preferGlobal": true,
   "bugs": {

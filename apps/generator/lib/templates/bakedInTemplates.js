@@ -30,7 +30,7 @@ module.exports.listBakedInTemplates = (filter) => {
  * @returns {boolean} True if the template exists, false otherwise.
  */
 module.exports.isCoreTemplate = (templateName) => {
-  return templates.some(t => !templateName || t.name === templateName);
+  return templates.some(t => t.name === templateName);
 };
 
 /**

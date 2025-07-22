@@ -30,7 +30,7 @@ const commentStyles = {
  */
 export function FileHeaderInfo({ info, server, language }) {
   const commentChar = commentStyles[language] || '//';
-  const line = `${commentChar}${'/'.repeat(70)}`;
+  const line = `${commentChar.repeat(70)}`;
 
   return (
     <Text>

@@ -1,6 +1,5 @@
 {
-  "name": "@asyncapi/template-js-websocket-client",
-  "version": "0.0.1",
+  "name": "@asyncapi/core-template-clients-javascript",
   "description": "This is a template generating JavaScript websocket client",
   "scripts": {
     "test": "jest --coverage",

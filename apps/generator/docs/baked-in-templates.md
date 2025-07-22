@@ -78,7 +78,7 @@ Package name format:  `@asyncapi/core-template-client-websocket-javascript-expre
    - For a clients template:  
      `packages/templates/clients/websocket/rust`
 1. Add required files:  
-   - `.ageneratorrc`
+   - `.ageneratorrc` (do not add `generator` config key as it is not needed)
    - `package.json`
 1. If template is ready to be exposed through the generator, add the template to generator's dependencies like for example:
     ```

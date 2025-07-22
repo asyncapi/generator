@@ -20,7 +20,7 @@ COPY . .
 # ├── full -> full source code of the project
 # └── package-lock.json -> package-lock.json of the project
 # We have to specify the package names. Some packages are included as dependencies in others, they will be automatically included
-RUN npx turbo@1.13.3 prune @asyncapi/generator @asyncapi/template-js-websocket-client @asyncapi/generator-components --docker --out-dir /out
+RUN npx turbo@1.13.3 prune @asyncapi/generator @asyncapi/core-template-client-websocket-javascript @asyncapi/generator-components --docker --out-dir /out
 
 # ----------------------------------------
 # Stage 2: Install dependencies

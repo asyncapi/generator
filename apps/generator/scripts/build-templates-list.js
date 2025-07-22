@@ -12,51 +12,62 @@ const outputTemplatesInfoFile = path.join(generatorLibDir, 'templatesInfo.js');
 // No need to add dirs that start with `.`
 const IGNORED_DIRS = ['test', '__tests__', '__fixtures__', '__snapshots__', 'components', 'helpers', 'node_modules', 'coverage', '__transpiled', ];
 
+// Templates structure inside generator/packages/templates must follow this opinionated naming convention:
+const ALLOWED_TYPE_PATHS = ['docs', 'clients', 'sdks', 'configs'];
+
+/**
+ * Maps plural path type to singular for metadata and templatesInfo.
+ */
+function normalizeType(type) {
+  if (type === 'clients') return 'client';
+  if (type === 'configs') return 'config';
+  return type;
+}
+
 function isIgnored(name) {
   return IGNORED_DIRS.includes(name) || name.startsWith('.');
 }
 
 /**
- * Extracts template metadata from the path segments.
- * The segments should be in the order of [type, protocol, target, stack].
- * If stack is not provided, it will return an object without the stack property.
+ * Extracts template metadata from the path segments and normalizes the type.
  * @param {string[]} segments - The path segments of the template.
- *
- * @returns {Object} An object containing the template metadata.
- * @property {string} type - The type of the template (e.g., 'clients', 'servers').
- * @property {string} protocol - The protocol of the template (e.g., 'websocket', 'http').
- * @property {string} target - The target language or framework of the template (e.g., 'javascript', 'python').
- * @property {string} stack - The stack of the template, if provided (e.g., 'quarkus', 'express').
+ * @returns {Object} The metadata object.
  */
 function getTemplateMeta(segments) {
-  const [type, protocol, target, stack] = segments;
-  if (segments.length === 4) {
-    return { type, protocol, target, stack };
+  if (!segments.length) return {};
+
+  const typePath = segments[0];
+  if (!ALLOWED_TYPE_PATHS.includes(typePath)) throw new Error(`Invalid template type path: ${typePath}. Allowed paths are: ${ALLOWED_TYPE_PATHS.join(', ')}`);
+
+  const type = normalizeType(typePath);
+
+  // docs/html or configs/yaml
+  // assumption is that these two types have only one segment after the type that always describes the target
+  if ((typePath === 'docs' || typePath === 'configs') && segments.length === 2) {
+    const [, target] = segments;
+    return { type, target };
   }
-  if (segments.length === 3) {
-    return { type, protocol, target };
+  else {
+    const [, protocol, target, stack] = segments;
+    return stack
+      ? { type, protocol, target, stack }
+      : { type, protocol, target };
   }
-  return {};
 }
 
 /**
  * Generates a template name based on the metadata.
- * The name is constructed in the format: `@asyncapi/core-template-{type}-{protocol}-{target}-{stack}`.
- * If stack is not provided, it will be omitted from the name.
+ * Format: `@asyncapi/core-template-{type}-{protocol}-{target}-{stack}`.
+ * If protocol/stack are not provided, they're omitted.
  * @param {Object} meta - The metadata of the template.
- * @param {string} meta.type - The type of the template (e.g., 'clients', 'servers').
- * @param {string} meta.protocol - The protocol of the template (e.g., 'websocket', 'http').
- * @param {string} meta.target - The target language or framework of the template (e.g., 'javascript', 'python').
- * @param {string} [meta.stack] - The stack of the template, if provided (e.g., 'quarkus', 'express').
- * @returns {string|undefined} The generated template name in the format `@asyncapi/core-template-{type}-{protocol}-{target}-{stack}`, or undefined if type, protocol, or target is missing.
+ * @returns {string|undefined} The generated template name, or undefined if not enough info.
  */
 function getTemplateName(meta) {
   const { type, protocol, target, stack } = meta;
-
-  let name = [type, protocol, target, stack]
+  let parts = [type, protocol, target, stack]
     .filter(Boolean)
-    .map(s => String(s).toLowerCase())
-    .join('-');
+    .map(s => String(s).toLowerCase());
+  let name = parts.join('-');
   return name ? `@asyncapi/core-template-${name}` : undefined;
 }
 
@@ -125,9 +136,9 @@ async function updateAGeneratorRc(ageneratorrcPath, meta) {
   }
   ageneratorrc.metadata = {
     type: meta.type,
-    protocol: meta.protocol,
+    ...(meta.protocol && { protocol: meta.protocol }),
     target: meta.target,
-    ...(meta.stack && { stack: meta.stack })
+    ...(meta.stack && { stack: meta.stack }),
   };
   const newAgeneratorrcContent = yaml.dump(ageneratorrc, { lineWidth: 120 });
   await writeFile(ageneratorrcPath, newAgeneratorrcContent);
@@ -168,14 +179,19 @@ async function updateTemplatesInfoFile(allTemplatesInfo) {
 
 async function main() {
   const allTemplatesInfo = [];
-
   const templates = await collectTemplates(templatesRoot);
 
   for (const { dir, relPath } of templates) {
     const meta = getTemplateMeta(relPath);
 
-    if (!meta.type || !meta.protocol || !meta.target) {
-      console.warn(`⚠️ Skipping template at ${dir}, could not detect [type/protocol/target] from path: ${relPath.join('/')}`);
+    // For docs and configs: require type and target and no others
+    if ((meta.type === 'docs' || meta.type === 'config') && (!meta.type || !meta.target || meta.protocol)) {
+      console.warn(`⚠️ Skipping template at ${dir}, wrong metadata for docs/config: ${relPath.join('/')}`);
+      continue;
+    }
+    // For clients and sdks: require type, protocol, and target.
+    if ((meta.type === 'client' || meta.type === 'sdk') && (!meta.type || !meta.protocol || !meta.target)) {
+      console.warn(`⚠️ Skipping template at ${dir}, not enough metadata for client/sdk: ${relPath.join('/')}`);
       continue;
     }
 
@@ -189,14 +205,15 @@ async function main() {
     if (!pkgName) continue;
 
     // Gather info for index
-    allTemplatesInfo.push({
+    const templateInfo = {
       name: pkgName,
       path: getTemplatePath(pkgName),
       type: meta.type,
-      protocol: meta.protocol,
-      ...(meta.stack && { stack: meta.stack }),
+      ...(meta.protocol && { protocol: meta.protocol }),
       target: meta.target,
-    });
+      ...(meta.stack && { stack: meta.stack }),
+    };
+    allTemplatesInfo.push(templateInfo);
   }
 
   await updateTemplatesInfoFile(allTemplatesInfo);

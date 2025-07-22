@@ -1,13 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`WebSocket Clients Integration Tests Dart Client Common Integration tests for Dart client generation generate simple client for hoppscotch echo with custom client name: client.dart 1`] = `
-"////////////////////////////////////////////////////////////////////////
-//
-// Hoppscotch Echo WebSocket Client - 1.0.0
-// Protocol: wss
-// Host: echo-websocket.hoppscotch.io
-//
-////////////////////////////////////////////////////////////////////////
+"/////////////////////////////////////////////////////////////////////////
+///
+/// Hoppscotch Echo WebSocket Client - 1.0.0
+/// Protocol: wss
+/// Host: echo-websocket.hoppscotch.io
+///
+/////////////////////////////////////////////////////////////////////////
 
 import 'dart:convert';
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -115,13 +115,13 @@ dependencies:
 `;
 
 exports[`WebSocket Clients Integration Tests Dart Client Common Integration tests for Dart client generation generate simple client for hoppscotch echo: client.dart 1`] = `
-"////////////////////////////////////////////////////////////////////////
-//
-// Hoppscotch Echo WebSocket Client - 1.0.0
-// Protocol: wss
-// Host: echo-websocket.hoppscotch.io
-//
-////////////////////////////////////////////////////////////////////////
+"/////////////////////////////////////////////////////////////////////////
+///
+/// Hoppscotch Echo WebSocket Client - 1.0.0
+/// Protocol: wss
+/// Host: echo-websocket.hoppscotch.io
+///
+/////////////////////////////////////////////////////////////////////////
 
 import 'dart:convert';
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -229,14 +229,14 @@ dependencies:
 `;
 
 exports[`WebSocket Clients Integration Tests Dart Client Common Integration tests for Dart client generation generate simple client for postman echo: client.dart 1`] = `
-"////////////////////////////////////////////////////////////////////////
-//
-// Postman Echo WebSocket Client - 1.0.0
-// Protocol: wss
-// Host: ws.postman-echo.com
-// Path: /raw
-//
-////////////////////////////////////////////////////////////////////////
+"/////////////////////////////////////////////////////////////////////////
+///
+/// Postman Echo WebSocket Client - 1.0.0
+/// Protocol: wss
+/// Host: ws.postman-echo.com
+/// Path: /raw
+///
+/////////////////////////////////////////////////////////////////////////
 
 import 'dart:convert';
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -1722,14 +1722,14 @@ exports[`WebSocket Clients Integration Tests Python Client Additional tests for 
 `;
 
 exports[`WebSocket Clients Integration Tests Python Client Additional tests for Python client generate client for slack: client.py 1`] = `
-"////////////////////////////////////////////////////////////////////////
-//
-// Slack Websocket API Client - 1.0.0
-// Protocol: wss
-// Host: wss-primary.slack.com
-// Path: /link
-//
-////////////////////////////////////////////////////////////////////////
+"#//////////////////////////////////////////////////////////////////////
+#
+# Slack Websocket API Client - 1.0.0
+# Protocol: wss
+# Host: wss-primary.slack.com
+# Path: /link
+#
+#//////////////////////////////////////////////////////////////////////
 
 import json
 import certifi
@@ -1867,13 +1867,13 @@ requests==2.32.3
 `;
 
 exports[`WebSocket Clients Integration Tests Python Client Common Integration tests for Python client generation generate simple client for hoppscotch echo with custom client name: client.py 1`] = `
-"////////////////////////////////////////////////////////////////////////
-//
-// Hoppscotch Echo WebSocket Client - 1.0.0
-// Protocol: wss
-// Host: echo-websocket.hoppscotch.io
-//
-////////////////////////////////////////////////////////////////////////
+"#//////////////////////////////////////////////////////////////////////
+#
+# Hoppscotch Echo WebSocket Client - 1.0.0
+# Protocol: wss
+# Host: echo-websocket.hoppscotch.io
+#
+#//////////////////////////////////////////////////////////////////////
 
 import json
 import certifi
@@ -2049,13 +2049,13 @@ requests==2.32.3
 `;
 
 exports[`WebSocket Clients Integration Tests Python Client Common Integration tests for Python client generation generate simple client for hoppscotch echo: client.py 1`] = `
-"////////////////////////////////////////////////////////////////////////
-//
-// Hoppscotch Echo WebSocket Client - 1.0.0
-// Protocol: wss
-// Host: echo-websocket.hoppscotch.io
-//
-////////////////////////////////////////////////////////////////////////
+"#//////////////////////////////////////////////////////////////////////
+#
+# Hoppscotch Echo WebSocket Client - 1.0.0
+# Protocol: wss
+# Host: echo-websocket.hoppscotch.io
+#
+#//////////////////////////////////////////////////////////////////////
 
 import json
 import certifi
@@ -2231,14 +2231,14 @@ requests==2.32.3
 `;
 
 exports[`WebSocket Clients Integration Tests Python Client Common Integration tests for Python client generation generate simple client for postman echo: client.py 1`] = `
-"////////////////////////////////////////////////////////////////////////
-//
-// Postman Echo WebSocket Client - 1.0.0
-// Protocol: wss
-// Host: ws.postman-echo.com
-// Path: /raw
-//
-////////////////////////////////////////////////////////////////////////
+"#//////////////////////////////////////////////////////////////////////
+#
+# Postman Echo WebSocket Client - 1.0.0
+# Protocol: wss
+# Host: ws.postman-echo.com
+# Path: /raw
+#
+#//////////////////////////////////////////////////////////////////////
 
 import json
 import certifi

@@ -16,6 +16,7 @@ export default function ({ asyncapi, params }) {
       <FileHeaderInfo
         info={info}
         server={server}
+        language={'dart'}
       />
       <Requires />
       <ClientClass clientName={clientName} serverUrl={serverUrl} title={title} />

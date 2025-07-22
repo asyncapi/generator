@@ -17,4 +17,5 @@ parameters:
     required: false
 metadata:
   type: clients
+  protocol: websocket
   target: javascript

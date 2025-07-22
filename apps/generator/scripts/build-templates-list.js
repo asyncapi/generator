@@ -7,7 +7,7 @@ const yaml = require('js-yaml');
 
 const templatesRoot = path.resolve(__dirname, '../../../packages/templates');
 const generatorLibDir = path.resolve(__dirname, '../lib');
-const outputTemplatesInfoFile = path.join(generatorLibDir, 'templates/coreTemplatesList.json');
+const outputTemplatesInfoFile = path.join(generatorLibDir, 'templates/BakedInTemplatesList.json');
 const generatorPkgJsonPath = path.resolve(__dirname, '../package.json');
 
 // No need to add dirs that start with `.`
@@ -179,7 +179,7 @@ async function loadGeneratorDependencies() {
 }
 
 /**
- * Writes the collected templates info into coreTemplatesList.json, but only includes templates
+ * Writes the collected templates info into BakedInTemplatesList.json, but only includes templates
  * that are already defined in dependencies or devDependencies of the generator's package.json.
  * @param {Array} allTemplatesInfo - Array of template info objects.
  * @param {Set<string>} allowedTemplates - Set of allowed package names.
@@ -191,7 +191,7 @@ async function updateTemplatesInfoFile(allTemplatesInfo, allowedTemplates) {
     if (allowedTemplates.has(info.name)) {
       included.push(info);
     } else {
-      console.info(`[info] Template "${info.name}" is valid baked-in template but not added to coreTemplatesList.json because it is not in generator's dependencies yet.`);
+      console.info(`[info] Template "${info.name}" is valid baked-in template but not added to BakedInTemplatesList.json because it is not in generator's dependencies yet.`);
     }
   }
   const body = JSON.stringify(included, null, 2);

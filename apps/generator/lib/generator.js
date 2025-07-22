@@ -15,7 +15,7 @@ const { configureReact, renderReact, saveRenderedReactContent } = require('./ren
 const { configureNunjucks, renderNunjucks } = require('./renderer/nunjucks');
 const { validateTemplateConfig } = require('./templateConfigValidator');
 const { isGenerationConditionMet } = require('./conditionalGeneration');
-const { isCoreTemplate, getTemplate } = require('./templates/listTemplates');
+const { listBakedInTemplates, isCoreTemplate, getTemplate } = require('./templates/bakedInTemplates');
 const {
   convertMapToObject,
   isFileSystemPath,
@@ -1155,3 +1155,4 @@ Generator.DEFAULT_TEMPLATES_DIR = DEFAULT_TEMPLATES_DIR;
 Generator.TRANSPILED_TEMPLATE_LOCATION = TRANSPILED_TEMPLATE_LOCATION;
 
 module.exports = Generator;
+module.exports.listBakedInTemplates = listBakedInTemplates;

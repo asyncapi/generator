@@ -1,4 +1,4 @@
-const templates = require('./coreTemplatesList.json');
+const templates = require('./BakedInTemplatesList.json');
 const path = require('path');
 const { access } = require('fs/promises');
 
@@ -12,7 +12,7 @@ const { access } = require('fs/promises');
  * @param {string} [filter.target] - Filter by target language or format (e.g., 'javascript', 'html').
  * @returns {Array<Object>} Array of template objects matching the filter.
  */
-module.exports.listTemplates = (filter) => {
+module.exports.listBakedInTemplates = (filter) => {
   const { type, stack, protocol, target } = filter || {};
 
   return templates.filter(t =>

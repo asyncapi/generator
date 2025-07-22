@@ -21,6 +21,7 @@
     "docs": "jsdoc2md --partial docs/jsdoc2md-handlebars/custom-sig-name.hbs docs/jsdoc2md-handlebars/main.hbs docs/jsdoc2md-handlebars/docs.hbs docs/jsdoc2md-handlebars/header.hbs docs/jsdoc2md-handlebars/defaultvalue.hbs docs/jsdoc2md-handlebars/link.hbs docs/jsdoc2md-handlebars/params-table.hbs --files lib/generator.js > docs/api.md",
     "docker:build": "docker build -t asyncapi/generator:latest .",
     "lint": "eslint --max-warnings 0 --config ../../.eslintrc --ignore-path ../../.eslintignore .",
+    "lint:fix": "npm run lint -- --fix",
     "generate:readme:toc": "markdown-toc -i README.md",
     "generate:assets": "npm run docs && npm run generate:readme:toc",
     "bump:version": "npm --no-git-tag-version --allow-same-version version $VERSION",

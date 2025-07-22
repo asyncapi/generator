@@ -11,7 +11,7 @@ const outputTemplatesInfoFile = path.join(generatorLibDir, 'templates/BakedInTem
 const generatorPkgJsonPath = path.resolve(__dirname, '../package.json');
 
 // No need to add dirs that start with `.`
-const IGNORED_DIRS = ['test', '__tests__', '__fixtures__', '__snapshots__', 'components', 'helpers', 'node_modules', 'coverage', '__transpiled', ];
+const IGNORED_DIRS = ['test', '__tests__', '__fixtures__', '__snapshots__', 'components', 'helpers', 'node_modules', 'coverage', '__transpiled'];
 
 // Templates structure inside generator/packages/templates must follow this opinionated naming convention:
 const ALLOWED_TYPE_PATHS = ['docs', 'clients', 'sdks', 'configs'];
@@ -49,12 +49,11 @@ function getTemplateMeta(segments) {
     const [, target] = segments;
     return { type, target };
   }
-  else {
-    const [, protocol, target, stack] = segments;
-    return stack
-      ? { type, protocol, target, stack }
-      : { type, protocol, target };
-  }
+  
+  const [, protocol, target, stack] = segments;
+  return stack
+    ? { type, protocol, target, stack }
+    : { type, protocol, target };
 }
 
 /**
@@ -66,10 +65,10 @@ function getTemplateMeta(segments) {
  */
 function getTemplateName(meta) {
   const { type, protocol, target, stack } = meta;
-  let parts = [type, protocol, target, stack]
+  const parts = [type, protocol, target, stack]
     .filter(Boolean)
     .map(s => String(s).toLowerCase());
-  let name = parts.join('-');
+  const name = parts.join('-');
   return name ? `@asyncapi/core-template-${name}` : undefined;
 }
 
@@ -163,7 +162,7 @@ async function updatePackageJson(pkgPath, meta) {
   if (!expectedName) return undefined;
   if (pkg.name !== expectedName) {
     pkg.name = expectedName;
-    await writeFile(pkgPath, JSON.stringify(pkg, null, 2) + '\n');
+    await writeFile(pkgPath, `${JSON.stringify(pkg, null, 2)  }\n`);
   }
   return pkg.name;
 }

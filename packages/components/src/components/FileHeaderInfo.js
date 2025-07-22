@@ -6,17 +6,17 @@ import { Text } from '@asyncapi/generator-react-sdk';
  */
 
 /**
- * Mapping of language to comment styles.
- * @type {Record<Language, string>}
+ * Mapping of supported programming languages to their respective comment syntax configurations.
+ * @type {Record<Language, { commentChar: string, lineStyle: string }>}
  */
-const commentStyles = {
-  python: '#',
-  javascript: '//',
-  typescript: '//',
-  java: '//',
-  csharp: '//',
-  rust: '//',
-  dart: '///'
+const commentConfig = {
+  python: {  commentChar: '#', lineStyle: '#'.repeat(50) },
+  javascript: { commentChar: '//', lineStyle: '//'.repeat(25) },
+  typescript: { commentChar: '//', lineStyle: '//'.repeat(25) },
+  java: { commentChar: '//', lineStyle: '//'.repeat(25) },
+  csharp: { commentChar: '//', lineStyle: '//'.repeat(25) },
+  rust: { commentChar: '//', lineStyle: '//'.repeat(25) },
+  dart: { commentChar: '///', lineStyle: '///' }
 };
 
 /**
@@ -29,12 +29,14 @@ const commentStyles = {
  * @returns {JSX.Element} Rendered file header.
  */
 export function FileHeaderInfo({ info, server, language }) {
-  const commentChar = commentStyles[language] || '//';
-  const line = `${commentChar.repeat(50)}`;
+  const { commentChar, lineStyle } = commentConfig[language] || { 
+    commentChar: '//', 
+    lineStyle: '//'.repeat(25) 
+  };
 
   return (
     <Text>
-      <Text>{line}</Text>
+      <Text>{lineStyle}</Text>
 
       <Text>{commentChar}</Text>
 
@@ -58,7 +60,7 @@ export function FileHeaderInfo({ info, server, language }) {
 
       <Text>{commentChar}</Text>
 
-      <Text>{line}</Text>
+      <Text>{lineStyle}</Text>
     </Text>
   );
 }

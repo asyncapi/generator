@@ -1,5 +1,5 @@
 {
-  "name": "@asyncapi/core-template-clients-websocket-dart",
+  "name": "@asyncapi/core-template-client-websocket-dart",
   "description": "This is a template generating Dart websocket client",
   "scripts": {
     "test": "jest --coverage --passWithNoTests",

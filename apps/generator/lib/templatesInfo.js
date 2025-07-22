@@ -3,23 +3,23 @@
 
 module.exports = [
   {
-    "name": "@asyncapi/core-template-clients-websocket-dart",
-    "path": "node_modules/@asyncapi/core-template-clients-websocket-dart",
-    "type": "clients",
+    "name": "@asyncapi/core-template-client-websocket-dart",
+    "path": "node_modules/@asyncapi/core-template-client-websocket-dart",
+    "type": "client",
     "protocol": "websocket",
     "target": "dart"
   },
   {
-    "name": "@asyncapi/core-template-clients-websocket-javascript",
-    "path": "node_modules/@asyncapi/core-template-clients-websocket-javascript",
-    "type": "clients",
+    "name": "@asyncapi/core-template-client-websocket-javascript",
+    "path": "node_modules/@asyncapi/core-template-client-websocket-javascript",
+    "type": "client",
     "protocol": "websocket",
     "target": "javascript"
   },
   {
-    "name": "@asyncapi/core-template-clients-websocket-python",
-    "path": "node_modules/@asyncapi/core-template-clients-websocket-python",
-    "type": "clients",
+    "name": "@asyncapi/core-template-client-websocket-python",
+    "path": "node_modules/@asyncapi/core-template-client-websocket-python",
+    "type": "client",
     "protocol": "websocket",
     "target": "python"
   }

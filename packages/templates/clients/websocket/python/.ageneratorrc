@@ -16,6 +16,6 @@ parameters:
     description: The custom name for the generated client class
     required: false
 metadata:
-  type: clients
+  type: client
   protocol: websocket
   target: python

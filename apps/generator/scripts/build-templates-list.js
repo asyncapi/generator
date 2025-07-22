@@ -1,6 +1,7 @@
 // This script traverse packages/templates and as a result updates template's .ageneratorrc with metadata and their package.json with proper name, then generate lib/templatesInfo.js
 // Run with: `npm run build` always as pretest script
 
+//TODO: validate if tempate is in package json
 const { readdir, readFile, writeFile } = require('fs/promises');
 const path = require('path');
 const yaml = require('js-yaml');
@@ -78,7 +79,7 @@ function getTemplateName(meta) {
  * @returns {string} The generated template path.
  */
 function getTemplatePath(pkgName) {
-  return `node_modules/${pkgName}`;
+  return `../../node_modules/${pkgName}`;
 }
 
 /**

@@ -49,6 +49,9 @@
   "license": "Apache-2.0",
   "homepage": "https://github.com/asyncapi/generator",
   "dependencies": {
+    "@asyncapi/core-template-client-websocket-dart": "*",
+    "@asyncapi/core-template-client-websocket-javascript": "*",
+    "@asyncapi/core-template-client-websocket-python": "*",
     "@asyncapi/generator-hooks": "*",
     "@asyncapi/generator-react-sdk": "^1.1.2",
     "@asyncapi/multi-parser": "^2.1.1",

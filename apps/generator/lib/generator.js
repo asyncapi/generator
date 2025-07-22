@@ -15,6 +15,7 @@ const { configureReact, renderReact, saveRenderedReactContent } = require('./ren
 const { configureNunjucks, renderNunjucks } = require('./renderer/nunjucks');
 const { validateTemplateConfig } = require('./templateConfigValidator');
 const { isGenerationConditionMet } = require('./conditionalGeneration');
+const { isCoreTemplate, getTemplate } = require('./templates/listTemplates');
 const {
   convertMapToObject,
   isFileSystemPath,
@@ -281,11 +282,26 @@ class Generator {
    *   A promise that resolves to an object containing the name and path of the installed template.
    */
   async installAndSetupTemplate() {
-    const { name: templatePkgName, path: templatePkgPath } = await this.installTemplate(this.install);
+    const shouldSkipInstall = isCoreTemplate(this.templateName);
+
+    let templatePkgName, templatePkgPath;
+
+    if (shouldSkipInstall) {
+      // Use core template info from local registry
+      const template = await getTemplate(this.templateName);
+      templatePkgName = template.name;
+      templatePkgPath = template.path;
+    } else {
+      // Download and install external template
+      const installResult = await this.installTemplate(this.install);
+      templatePkgName = installResult.name;
+      templatePkgPath = installResult.path;
+    }
+
     this.templateDir = templatePkgPath;
     this.templateName = templatePkgName;
     this.templateContentDir = path.resolve(this.templateDir, TEMPLATE_CONTENT_DIRNAME);
-
+    
     await this.loadTemplateConfig();
 
     return { templatePkgName, templatePkgPath };

@@ -48,7 +48,7 @@
   "homepage": "https://github.com/asyncapi/generator",
   "dependencies": {
     "@asyncapi/generator-hooks": "*",
-    "@asyncapi/generator-react-sdk": "^1.1.2",
+    "@asyncapi/generator-react-sdk": "*",
     "@asyncapi/multi-parser": "^2.1.1",
     "@asyncapi/nunjucks-filters": "*",
     "@asyncapi/parser": "^3.0.14",

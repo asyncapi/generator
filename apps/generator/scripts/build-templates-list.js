@@ -1,7 +1,6 @@
 // This script traverse packages/templates and as a result updates template's .ageneratorrc with metadata and their package.json with proper name, then generate lib/templatesInfo.js
 // Run with: `npm run build` always as pretest script
 
-//TODO: validate if tempate is in package json
 const { readdir, readFile, writeFile } = require('fs/promises');
 const path = require('path');
 const yaml = require('js-yaml');
@@ -9,6 +8,7 @@ const yaml = require('js-yaml');
 const templatesRoot = path.resolve(__dirname, '../../../packages/templates');
 const generatorLibDir = path.resolve(__dirname, '../lib');
 const outputTemplatesInfoFile = path.join(generatorLibDir, 'templates/coreTemplatesList.json');
+const generatorPkgJsonPath = path.resolve(__dirname, '../package.json');
 
 // No need to add dirs that start with `.`
 const IGNORED_DIRS = ['test', '__tests__', '__fixtures__', '__snapshots__', 'components', 'helpers', 'node_modules', 'coverage', '__transpiled', ];
@@ -75,7 +75,7 @@ function getTemplateName(meta) {
 
 /**
  * Generates a template path based on the package name.
- * The path is constructed in the format: `node_modules/{pkgName}`.
+ * The path is constructed in the format: `../../node_modules/{pkgName}`.
  * @param {string} pkgName - The name of the package.
  * @returns {string} The generated template path.
  */
@@ -169,18 +169,39 @@ async function updatePackageJson(pkgPath, meta) {
 }
 
 /**
- * Writes the collected templates info into templatesInfo.js.
- * @param {Array} allTemplatesInfo - Array of template info objects.
+ * Loads the dependencies and devDependencies from the generator's package.json.
+ * @returns {Promise<Set<string>>} Set of all dependency names.
  */
-async function updateTemplatesInfoFile(allTemplatesInfo) {
+async function loadGeneratorDependencies() {
+  const pkg = JSON.parse(await readFile(generatorPkgJsonPath, 'utf-8'));
+  const deps = Object.keys(pkg.dependencies);
+  return new Set(deps);
+}
+
+/**
+ * Writes the collected templates info into coreTemplatesList.json, but only includes templates
+ * that are already defined in dependencies or devDependencies of the generator's package.json.
+ * @param {Array} allTemplatesInfo - Array of template info objects.
+ * @param {Set<string>} allowedTemplates - Set of allowed package names.
+ */
+async function updateTemplatesInfoFile(allTemplatesInfo, allowedTemplates) {
   allTemplatesInfo.sort((a, b) => a.name.localeCompare(b.name));
-  const body = JSON.stringify(allTemplatesInfo, null, 2);
+  const included = [];
+  for (const info of allTemplatesInfo) {
+    if (allowedTemplates.has(info.name)) {
+      included.push(info);
+    } else {
+      console.info(`[info] Template "${info.name}" is valid baked-in template but not added to coreTemplatesList.json because it is not in generator's dependencies yet.`);
+    }
+  }
+  const body = JSON.stringify(included, null, 2);
   await writeFile(outputTemplatesInfoFile, body);
 }
 
 async function main() {
   const allTemplatesInfo = [];
   const templates = await collectTemplates(templatesRoot);
+  const allowedTemplates = await loadGeneratorDependencies();
 
   for (const { dir, relPath } of templates) {
     const meta = getTemplateMeta(relPath);
@@ -217,7 +238,7 @@ async function main() {
     allTemplatesInfo.push(templateInfo);
   }
 
-  await updateTemplatesInfoFile(allTemplatesInfo);
+  await updateTemplatesInfoFile(allTemplatesInfo, allowedTemplates);
 
   console.log(`Updated ${allTemplatesInfo.length} templates and generated ${outputTemplatesInfoFile}`);
 }

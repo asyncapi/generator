@@ -49,7 +49,7 @@ module.exports.getTemplate = async (templateName) => {
     // Try to access the path provided by core templates list
     await access(path.resolve(templatePath));
   } catch (e) {
-    templatePath = path.join('node_modules', templateName);
+    templatePath = path.join(__dirname, '../../node_modules', templateName);
   }
 
   return {

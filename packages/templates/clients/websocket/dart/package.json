@@ -1,5 +1,5 @@
 {
-  "name": "@asyncapi/core-template-client-websocket-dart",
+  "name": "core-template-client-websocket-dart",
   "private": true,
   "description": "This is a template generating Dart websocket client",
   "scripts": {

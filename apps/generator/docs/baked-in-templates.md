@@ -35,24 +35,24 @@ packages/templates/{type}/[protocol]/[target]/[stack]
 - `target`: The output language, markup, or format, e.g. `javascript`, `python`, `html`, `yaml`.
 - `stack`: (Optional, for `clients` and `sdks`) Used for technology stack, e.g. `express`, `quarkus`.
 
-#### Type-specific Rules
+#### Type-specific rules
 
 - **docs/configs**:  
   Path must be `type/target` (e.g., `docs/html` or `configs/yaml`).
 - **clients/sdks**:  
   Path must be `type/protocol/target` or `type/protocol/target/stack` (e.g., `clients/websocket/javascript`, `sdks/kafka/java/spring`).
 
-### Required Files
+### Required files
 
 Every template directory **must include**:
 - `.ageneratorrc`: Generator specific configuration, like for example parameters
 - `package.json`: It contains template name. Version information should not be provided as it is versioned together with the generator.
 
-## Metadata and Naming Conventions
+## Metadata and naming conventions
 
 Generator runs a script will normalize metadata for baked-in templates and their naming:
 - Adds/updates metadata in `.ageneratorrc` file.
-- Validates/updates template name in `package.json` file of given template
+- Validates/updates template name in `package.json` file of given template. The name always starts with `core-template-` prefix.
 - Generates JSON file with list of baked in templates and stores the list inside the generator
 
 #### Example
@@ -68,9 +68,9 @@ metadata:
   stack: express
 ```
 
-Package name format:  `@asyncapi/core-template-client-websocket-javascript-express`
+Package name format:  `core-template-client-websocket-javascript-express`
 
-## How to Add a New Template
+## How to add a new template
 
 1. Create the directory in `packages/templates` using the correct structure.
    - For a docs template:  
@@ -80,8 +80,4 @@ Package name format:  `@asyncapi/core-template-client-websocket-javascript-expre
 1. Add required files:  
    - `.ageneratorrc` (do not add `generator` config key as it is not needed)
    - `package.json`
-1. If template is ready to be exposed through the generator, add the template to generator's dependencies like for example:
-    ```
-    "@asyncapi/core-template-client-websocket-rust": "*"
-    ```
 1. Run generator's build command: `npm run build`

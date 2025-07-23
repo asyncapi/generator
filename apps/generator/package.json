@@ -25,7 +25,7 @@
     "generate:readme:toc": "markdown-toc -i README.md",
     "generate:assets": "npm run docs && npm run generate:readme:toc",
     "bump:version": "npm --no-git-tag-version --allow-same-version version $VERSION",
-    "build": "node scripts/build-templates-list.js",
+    "build": "node scripts/build-templates.js",
     "pretest": "npm run build"
   },
   "preferGlobal": true,
@@ -50,9 +50,6 @@
   "license": "Apache-2.0",
   "homepage": "https://github.com/asyncapi/generator",
   "dependencies": {
-    "@asyncapi/core-template-client-websocket-dart": "*",
-    "@asyncapi/core-template-client-websocket-javascript": "*",
-    "@asyncapi/core-template-client-websocket-python": "*",
     "@asyncapi/generator-hooks": "*",
     "@asyncapi/generator-react-sdk": "^1.1.2",
     "@asyncapi/multi-parser": "^2.1.1",

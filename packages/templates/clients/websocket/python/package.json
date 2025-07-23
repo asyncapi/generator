@@ -1,5 +1,5 @@
 {
-  "name": "@asyncapi/core-template-client-websocket-python",
+  "name": "core-template-client-websocket-python",
   "private": true,
   "description": "This is a template generating Python websocket client",
   "scripts": {

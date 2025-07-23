@@ -1,6 +1,6 @@
 import { getClientName, getInfo, getServer, getTitle } from '@asyncapi/generator-helpers';
 import { File } from '@asyncapi/generator-react-sdk';
-import { FileHeaderInfo } from '../../../../../../components/FileHeaderInfo.js';
+import { FileHeaderInfo } from '@asyncapi/generator-components';
 import { ClientDependencies } from '../../../../../../components/dependencies/ClientDependencies.js';
 import { EchoWebSocket } from '../../../../../../components/EchoWebSocket.js';
 
@@ -18,6 +18,7 @@ export default async function ({ asyncapi, params }) {
       <FileHeaderInfo
         info={info}
         server={server}
+        language="java"
       />
       <ClientDependencies/>
       <EchoWebSocket clientName={clientName} pathName={pathName} title={title} operations={operations} />

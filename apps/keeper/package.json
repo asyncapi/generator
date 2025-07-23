@@ -1,16 +1,17 @@
 {
   "name": "@asyncapi/keeper",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "AsyncAPI message payload validation library that validates messages against JSON Schema (Draft-07)",
   "scripts": {
     "build": "babel src --out-dir lib",
-    "test": "npm run build && jest --coverage",
+    "pretest": "npm run build",
+    "test": "npm run pretest && jest --coverage",
     "lint": "eslint --max-warnings 0 --config ../../.eslintrc --ignore-path ../../.eslintignore .",
     "lint:fix": "eslint --max-warnings 0 --config ../../.eslintrc --ignore-path ../../.eslintignore . --fix"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/asyncapi/generator/app/keeper"
+    "url": "https://github.com/asyncapi/generator.git"
   },
   "main": "lib/index.js",
   "author": "Adi Boghawala <boghawalaadi@gmail.com>",

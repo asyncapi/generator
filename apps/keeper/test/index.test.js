@@ -76,8 +76,7 @@ describe('Integration Tests for message validation module', () => {
 
     test('should validate a correct message against operation schemas and return true', async () => {
       const validMessage = {
-        content: 'This is a test message',
-        timestamp: new Date().toISOString()
+        content: 'This is a operation test message'
       };
       const result = validateMessage(compiledSchemas, validMessage);
       expect(result).toBe(true);
@@ -85,7 +84,7 @@ describe('Integration Tests for message validation module', () => {
 
     test('should return false for invalid message against operation schemas', async () => {
       const invalidMessage = {
-        timestamp: new Date().toISOString()
+        time: new Date().toISOString()
       };
       const result = validateMessage(compiledSchemas, invalidMessage);
       expect(result).toBe(false);

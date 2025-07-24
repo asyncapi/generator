@@ -1,6 +1,6 @@
 import { File } from '@asyncapi/generator-react-sdk';
 import { getServer, getQueryParams, getInfo } from '@asyncapi/generator-helpers';
-import { FileHeaderInfo } from '../components/FileHeaderInfo';
+import { FileHeaderInfo } from '@asyncapi/generator-components';
 import { Requires } from '../components/Requires';
 import { ClientClass } from '../components/ClientClass';
 

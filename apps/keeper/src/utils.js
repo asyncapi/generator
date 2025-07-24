@@ -30,5 +30,5 @@ export const parseAsyncAPIDocumentFromFile = async (asyncapiFilepath) => {
  */
 export const generateSchemaURI = () => {
   const timestamp = Date.now().toString();
-  return `http://example.com/schema/${timestamp}`;
+  return `http://asyncapi/keeper/schema/${timestamp}`;
 };

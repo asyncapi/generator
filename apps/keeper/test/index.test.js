@@ -3,7 +3,6 @@ import { Parser, fromFile } from '@asyncapi/parser';
 import {
   compileSchemas,
   validateMessage,
-  validateByOperationId,
   compileSchemasByOperationId,
   removeCompiledSchemas
 } from '../src/index.js';
@@ -17,7 +16,7 @@ describe('Integration Tests for message validation module', () => {
     removeCompiledSchemas();
   });
 
-  describe('Integration Tests for validateMessage function', () => {
+  describe('Schema Compilation & Basic Validation', () => {
     let compiledSchemas;
     let rawSchemas;
 
@@ -68,7 +67,7 @@ describe('Integration Tests for message validation module', () => {
     });
   });
 
-  describe('Integration Tests for validateByOperationId function', () => {
+  describe('Operation-Specific Validation', () => {
     let compiledSchemas;
 
     beforeAll(async () => {
@@ -80,7 +79,7 @@ describe('Integration Tests for message validation module', () => {
         content: 'This is a test message',
         timestamp: new Date().toISOString()
       };
-      const result = validateByOperationId(compiledSchemas, validMessage);
+      const result = validateMessage(compiledSchemas, validMessage);
       expect(result).toBe(true);
     });
 
@@ -88,7 +87,7 @@ describe('Integration Tests for message validation module', () => {
       const invalidMessage = {
         timestamp: new Date().toISOString()
       };
-      const result = validateByOperationId(compiledSchemas, invalidMessage);
+      const result = validateMessage(compiledSchemas, invalidMessage);
       expect(result).toBe(false);
     });
   });

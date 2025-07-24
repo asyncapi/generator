@@ -4,10 +4,18 @@ import { generateSchemaURI, parseAsyncAPIDocumentFromFile } from './utils';
 /**
  * Compiles multiple JSON Schemas for validation.
  * @async
- * @param {Array<Object>} schemas - Array of JSON Schema objects to compile
- * @returns {Promise<Array<Function>>} Array of compiled schema validator functions
+ * @param {Array<object>} schemas - Array of JSON Schema objects to compile
+ * @returns {Promise<Array<function>>} Array of compiled schema validator functions
+ * @throws {Error} When schemas parameter is not an array or when schema registration fails
  */
 export async function compileSchemas(schemas) {
+  if (!Array.isArray(schemas)) {
+    throw new Error(`Invalid "schemas" parameter: expected an array, received ${typeof schemas}`);
+  }
+  if (!schemas || schemas.length === 0) {
+    console.log('Skipping compilation: no schemas provided.');
+    return [];
+  }
   const dialectId = 'http://json-schema.org/draft-07/schema#';
   const schemaUris = [];
 
@@ -30,9 +38,9 @@ export async function compileSchemas(schemas) {
  * Compiles message schemas from an AsyncAPI document for a specific operation.
  * @async
  * @param {string} asyncapiFilepath - Path to the AsyncAPI document file
- * @param {string} operationId - ID of the operation to extract message schemas from asyncapi document
- * @returns {Promise<Array<Function>>} Array of compiled schema validator functions
- * @throws {Error} If filepath operationId is invalid
+ * @param {string} operationId - ID of the operation to extract message schemas from
+ * @returns {Promise<Array<function>>} Array of compiled schema validator functions
+ * @throws {Error} When operationId is invalid or when the operation/messages can't be found
  */
 export async function compileSchemasByOperationId(asyncapiFilepath, operationId) {
   if (typeof operationId !== 'string' || !operationId.trim()) {
@@ -41,8 +49,9 @@ export async function compileSchemasByOperationId(asyncapiFilepath, operationId)
   const asyncapi = await parseAsyncAPIDocumentFromFile(asyncapiFilepath);
   const operation = asyncapi.operations().get(operationId);
   const messages = operation.messages().all();
-  const messagePayloads = messages.map((message) => message.payload());
-  const schemas = messagePayloads.map(payload => payload.json());
+  const schemas = messages
+    .filter(message => message.hasPayload())
+    .map(message => message.payload().json());
   return compileSchemas(schemas);
 }
 
@@ -50,10 +59,10 @@ export async function compileSchemasByOperationId(asyncapiFilepath, operationId)
  * Validates a message payload against an array of operation message schemas.
  * Uses the Hyperjump JSON Schema validator (Draft-07) to check if the message
  * conforms to at least one of the provided schemas.
- * @param {Array<Function>} compiledSchemas - Array of compiled schema validator functions
- * @param {Object} message - The message payload to validate
- * @returns {Promise<boolean>} True if valid against any schema, false otherwise
- * @throws {Error} If message parameter is null or undefined
+ * @param {Array<function>} compiledSchemas - Array of compiled schema validator functions
+ * @param {object} message - The message payload to validate
+ * @returns {boolean} True if valid against any schema, false otherwise
+ * @throws {Error} When message parameter is null or undefined
  */
 export function validateMessage(compiledSchemas, message) {
   if (!compiledSchemas || compiledSchemas.length === 0) {
@@ -70,16 +79,6 @@ export function validateMessage(compiledSchemas, message) {
     }
   }
   return false;
-}
-
-/**
- * Validates a message against compiled schemas.
- * @param {Array<Function>} compiledSchemas - Array of compiled schema validator functions
- * @param {Object} message - The message payload to validate
- * @returns {Promise<boolean>} True if valid against any schema, false otherwise
- */
-export function validateByOperationId(compiledSchemas, message) {
-  return validateMessage(compiledSchemas, message);
 }
 
 /**

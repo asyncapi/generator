@@ -1,1 +1,2 @@
-export { Models } from './components/models';
+export { Models } from './components/Models';
+export { FileHeaderInfo } from './components/FileHeaderInfo';

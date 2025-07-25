@@ -508,13 +508,13 @@ ENTRYPOINT [ \\"/opt/jboss/container/java/run/run-java.sh\\" ]
 `;
 
 exports[`WebSocket Clients Integration Tests Java Quarkus Client Common Integration tests for Java client generation generate simple client for hoppscotch echo with custom client name: HoppscotchClient.java 1`] = `
-"//////////////////////////////////////////////////////////////////////
-///
-/// Hoppscotch Echo WebSocket Client - 1.0.0
-/// Protocol: wss
-/// Host: echo-websocket.hoppscotch.io
-///
-//////////////////////////////////////////////////////////////////////
+"//////////////////////////////////////////////////
+//
+// Hoppscotch Echo WebSocket Client - 1.0.0
+// Protocol: wss
+// Host: echo-websocket.hoppscotch.io
+//
+//////////////////////////////////////////////////
 
 
 package com.asyncapi;
@@ -1653,13 +1653,13 @@ ENTRYPOINT [ \\"/opt/jboss/container/java/run/run-java.sh\\" ]
 `;
 
 exports[`WebSocket Clients Integration Tests Java Quarkus Client Common Integration tests for Java client generation generate simple client for hoppscotch echo: HoppscotchEchoWebSocketClient.java 1`] = `
-"//////////////////////////////////////////////////////////////////////
-///
-/// Hoppscotch Echo WebSocket Client - 1.0.0
-/// Protocol: wss
-/// Host: echo-websocket.hoppscotch.io
-///
-//////////////////////////////////////////////////////////////////////
+"//////////////////////////////////////////////////
+//
+// Hoppscotch Echo WebSocket Client - 1.0.0
+// Protocol: wss
+// Host: echo-websocket.hoppscotch.io
+//
+//////////////////////////////////////////////////
 
 
 package com.asyncapi;
@@ -2895,14 +2895,14 @@ public final class MavenWrapperDownloader {
 `;
 
 exports[`WebSocket Clients Integration Tests Java Quarkus Client Common Integration tests for Java client generation generate simple client for postman echo: PostmanEchoWebSocketClientClient.java 1`] = `
-"//////////////////////////////////////////////////////////////////////
-///
-/// Postman Echo WebSocket Client - 1.0.0
-/// Protocol: wss
-/// Host: ws.postman-echo.com
-/// Path: /raw
-///
-//////////////////////////////////////////////////////////////////////
+"//////////////////////////////////////////////////
+//
+// Postman Echo WebSocket Client - 1.0.0
+// Protocol: wss
+// Host: ws.postman-echo.com
+// Path: /raw
+//
+//////////////////////////////////////////////////
 
 
 package com.asyncapi;

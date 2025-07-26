@@ -26,7 +26,7 @@ describe('Testing of FileDependencies function', () => {
     const result = render(
       <FileDependencies
         language="python"
-        additionalDependencies={["import os", "from urllib.parse import urlencode"]}
+        additionalDependencies={['import os', 'from urllib.parse import urlencode']}
       />
     );
     const actual = result.trim();

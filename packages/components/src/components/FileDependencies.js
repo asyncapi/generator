@@ -1,7 +1,7 @@
 import { Text } from '@asyncapi/generator-react-sdk';
 
 /**
- * @typedef {'python' | 'javascript' | 'typescript' | 'java' | 'csharp' | 'rust' | 'dart'} Language
+ * @typedef {'python' | 'javascript' | 'dart'} Language
  * Supported programming languages.
  */
 
@@ -12,13 +12,13 @@ import { Text } from '@asyncapi/generator-react-sdk';
  */
 const dependeciesConfig = {
   python: {
-    dependecies: ['import json', 'import certifi', 'import threading', 'import websocket']
+    dependencies: ['import json', 'import certifi', 'import threading', 'import websocket']
   },
   javascript: {
-    dependecies: ['const WebSocket = require(\'ws\');']
+    dependencies: ['const WebSocket = require(\'ws\');']
   },
   dart: {
-    dependecies: ['import \'dart:convert\';', 'import \'package:web_socket_channel/web_socket_channel.dart\';']
+    dependencies: ['import \'dart:convert\';', 'import \'package:web_socket_channel/web_socket_channel.dart\';']
   }
 };
 
@@ -31,8 +31,8 @@ const dependeciesConfig = {
  * @returns {JSX.Element} Rendered list of import/require statements.
  */
 export function FileDependencies({ language, additionalDependencies = [] }) {
-  const { dependecies } = dependeciesConfig[language];
-  const allDependencies = [...dependecies, ...additionalDependencies];
+  const { dependencies } = dependeciesConfig[language];
+  const allDependencies = [...dependencies, ...additionalDependencies];
     
   return (
     <Text>

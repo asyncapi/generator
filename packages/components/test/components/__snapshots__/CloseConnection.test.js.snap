@@ -1,16 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Testing of CloseConnection function render dart method with custom name 1`] = `
-"  // Method to close the WebSocket connection
-   disconnect() {
-    if (this.websocket) {
-        this.websocket.close();
-        console.log('WebSocket connection closed.');
-    }
-  }
-"
-`;
-
 exports[`Testing of CloseConnection function render dart method with parameters 1`] = `
 "  /// Method to close the WebSocket connection
   void close(reason, code) {
@@ -42,7 +31,18 @@ exports[`Testing of CloseConnection function render dart with all the props 1`] 
 "
 `;
 
-exports[`Testing of CloseConnection function render js websocket close connection method 1`] = `
+exports[`Testing of CloseConnection function render javascript method with custom name 1`] = `
+"  // Method to close the WebSocket connection
+   disconnect() {
+    if (this.websocket) {
+        this.websocket.close();
+        console.log('WebSocket connection closed.');
+    }
+  }
+"
+`;
+
+exports[`Testing of CloseConnection function render javascript websocket close connection method 1`] = `
 "// Method to close the WebSocket connection
    close() {
     if (this.websocket) {

@@ -2,7 +2,7 @@ import { render } from '@asyncapi/generator-react-sdk';
 import { CloseConnection } from '../../src/index';
 
 describe('Testing of CloseConnection function', () => {
-  test('render js websocket close connection method', () => {
+  test('render javascript websocket close connection method', () => {
     const result = render(
       <CloseConnection language='javascript' />
     );
@@ -32,7 +32,7 @@ describe('Testing of CloseConnection function', () => {
     expect(actual).toMatchSnapshot();
   });
 
-  test('render dart method with custom name', () => {
+  test('render javascript method with custom name', () => {
     const result = render(
       <CloseConnection 
         language='javascript'

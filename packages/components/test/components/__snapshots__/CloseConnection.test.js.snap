@@ -1,0 +1,74 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing of CloseConnection function render dart method with custom name 1`] = `
+"  // Method to close the WebSocket connection
+   disconnect() {
+    if (this.websocket) {
+        this.websocket.close();
+        console.log('WebSocket connection closed.');
+    }
+  }
+"
+`;
+
+exports[`Testing of CloseConnection function render dart method with parameters 1`] = `
+"  /// Method to close the WebSocket connection
+  void close(reason, code) {
+    _channel?.sink.close();
+    _channel = null;
+    print('WebSocket connection closed.');
+  }
+"
+`;
+
+exports[`Testing of CloseConnection function render dart websocket close connection method 1`] = `
+"/// Method to close the WebSocket connection
+  void close() {
+    _channel?.sink.close();
+    _channel = null;
+    print('WebSocket connection closed.');
+  }"
+`;
+
+exports[`Testing of CloseConnection function render dart with all the props 1`] = `
+"  /// Method to close the WebSocket connection
+  void terminateConnection(reason) {
+    // About to terminate connection
+    _channel?.sink.close();
+    _channel = null;
+    print('WebSocket connection closed.');
+    // Connection terminated
+  }
+"
+`;
+
+exports[`Testing of CloseConnection function render js websocket close connection method 1`] = `
+"// Method to close the WebSocket connection
+   close() {
+    if (this.websocket) {
+        this.websocket.close();
+        console.log('WebSocket connection closed.');
+    }
+  }"
+`;
+
+exports[`Testing of CloseConnection function render python websocket close connection method 1`] = `
+"def close(self) :
+    \\"\\"\\"Cleanly close the WebSocket connection.\\"\\"\\"
+    self._stop_event.set()
+    if self.ws_app:
+        self.ws_app.close()
+        print(\\"WebSocket connection closed.\\")"
+`;
+
+exports[`Testing of CloseConnection function render python with pre and post execution code 1`] = `
+"  def close() :
+    # Pre-close operations
+    self._stop_event.set()
+    if self.ws_app:
+        self.ws_app.close()
+        print(\\"WebSocket connection closed.\\")
+    # Post-close cleanup
+
+"
+`;

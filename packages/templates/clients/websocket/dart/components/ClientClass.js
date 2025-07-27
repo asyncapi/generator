@@ -5,7 +5,7 @@ import { RegisterMessageHandler } from './RegisterMessageHandler';
 import { RegisterErrorHandler } from './RegisterErrorHandler';
 import { HandleMessage } from './HandleMessage';
 import { SendEchoMessage } from './SendEchoMessage';
-import { CloseConnection } from './CloseConnection';
+import { CloseConnection } from '@asyncapi/generator-components';
 import { ClientFields } from './ClientFields';
 
 export function ClientClass({ clientName, serverUrl, title }) {
@@ -21,7 +21,7 @@ export function ClientClass({ clientName, serverUrl, title }) {
       <RegisterErrorHandler />
       <HandleMessage />
       <SendEchoMessage />
-      <CloseConnection />
+      <CloseConnection language="dart" />
       <Text>
         {'}'}
       </Text>

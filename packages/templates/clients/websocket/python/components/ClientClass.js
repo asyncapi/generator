@@ -6,7 +6,7 @@ import { RegisterErrorHandler } from './RegisterErrorHandler';
 import { HandleMessage } from './HandleMessage';
 import { SendOperation } from './SendOperation';
 import { Send } from './Send';
-import { CloseConnection } from './CloseConnection';
+import { CloseConnection } from '@asyncapi/generator-components';
 import { RegisterOutgoingProcessor } from './RegisterOutgoingProcessor';
 import { HandleError } from './HandleError';
 
@@ -26,7 +26,11 @@ export function ClientClass({ clientName, serverUrl, title, queryParams, operati
       <HandleError />
       <SendOperation sendOperations={sendOperations} clientName={clientName} />
       <Send sendOperations={sendOperations} />
-      <CloseConnection />
+      <CloseConnection 
+        language="python" 
+        methodParams={['self']}
+        preExecutionCode='"""Cleanly close the WebSocket connection."""'
+      />
     </Text>
   );
 }

@@ -3,3 +3,7 @@ apps/generator/output/*
 **/temp/*
 **/__transpiled/*
 packages/components/lib/*
+**/lib
+docs
+**/transpiler/__tests__/__transpiled_testfiles
+**/transpiler/__tests__/testfiles

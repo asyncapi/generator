@@ -1,26 +1,23 @@
 import { File } from '@asyncapi/generator-react-sdk';
-import { getClientName, getServerUrl, getServer, getQueryParams, getInfo, getTitle } from '@asyncapi/generator-helpers';
-import { FileHeaderInfo } from '../components/FileHeaderInfo';
+import { getServer, getQueryParams, getInfo } from '@asyncapi/generator-helpers';
+import { FileHeaderInfo } from '@asyncapi/generator-components';
 import { Requires } from '../components/Requires';
 import { ClientClass } from '../components/ClientClass';
 
 export default function ({ asyncapi, params }) {
   const server = getServer(asyncapi.servers(), params.server);
   const info = getInfo(asyncapi);
-  const title = getTitle(asyncapi);
   const queryParams = getQueryParams(asyncapi.channels());
-  const clientName = getClientName(asyncapi, params.appendClientSuffix, params.customClientName);
-  const serverUrl = getServerUrl(server);
-  const operations = asyncapi.operations();
   return (
-    // The clientFileName default values can be found and modified under the package.json
+    // The clientFileName default values can be found and modified under the .ageneratorrc
     <File name={params.clientFileName}>
       <FileHeaderInfo
         info={info}
         server={server}
+        language="python"
       />
       <Requires query={queryParams} />
-      <ClientClass clientName={clientName} serverUrl={serverUrl} title={title} queryParams={queryParams} operations={operations} />
+      <ClientClass asyncapi={asyncapi} params={params} />
     </File>
   );
 }

@@ -1,10 +1,10 @@
 import { render } from '@asyncapi/generator-react-sdk';
-import { FileDependencies } from '../../src/index';
+import { DependencyProvider } from '../../src/index';
 
 describe('Testing of FileDependencies function', () => {
   test('render js websockets file dependecies correctly', () => {
     const result = render(
-      <FileDependencies
+      <DependencyProvider
         language="javascript"
       />
     );
@@ -14,7 +14,7 @@ describe('Testing of FileDependencies function', () => {
 
   test('render python websockets file dependecies correctly', () => {
     const result = render(
-      <FileDependencies
+      <DependencyProvider
         language="python"
       />
     );
@@ -24,7 +24,7 @@ describe('Testing of FileDependencies function', () => {
 
   test('render python websockets file dependecies correctly with additionalDependencies', () => {
     const result = render(
-      <FileDependencies
+      <DependencyProvider
         language="python"
         additionalDependencies={['import os', 'from urllib.parse import urlencode']}
       />
@@ -35,7 +35,7 @@ describe('Testing of FileDependencies function', () => {
 
   test('render dart websockets file dependecies correctly', () => {
     const result = render(
-      <FileDependencies
+      <DependencyProvider
         language="dart"
       />
     );

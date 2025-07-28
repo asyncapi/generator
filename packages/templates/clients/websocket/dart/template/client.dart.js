@@ -1,6 +1,6 @@
 import { File } from '@asyncapi/generator-react-sdk';
 import { getClientName, getServerUrl, getServer, getInfo, getTitle } from '@asyncapi/generator-helpers';
-import { FileHeaderInfo, FileDependencies } from '@asyncapi/generator-components';
+import { FileHeaderInfo, DependencyProvider } from '@asyncapi/generator-components';
 import { ClientClass } from '../components/ClientClass';
 
 export default function ({ asyncapi, params }) {
@@ -17,7 +17,7 @@ export default function ({ asyncapi, params }) {
         server={server}
         language="dart"
       />
-      <FileDependencies language="dart" />
+      <DependencyProvider language="dart" />
       <ClientClass clientName={clientName} serverUrl={serverUrl} title={title} />
     </File>
   );

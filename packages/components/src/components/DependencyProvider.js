@@ -10,7 +10,7 @@ import { Text } from '@asyncapi/generator-react-sdk';
  *
  * @type {Record<Language, { dependencies: string[] }>}
  */
-const dependeciesConfig = {
+const dependenciesConfig = {
   python: {
     dependencies: ['import json', 'import certifi', 'import threading', 'import websocket']
   },
@@ -30,8 +30,8 @@ const dependeciesConfig = {
  * @param {string[]} [props.additionalDependencies=[]] - Optional additional dependencies to include.
  * @returns {JSX.Element} Rendered list of import/require statements.
  */
-export function FileDependencies({ language, additionalDependencies = [] }) {
-  const { dependencies } = dependeciesConfig[language];
+export function DependencyProvider({ language, additionalDependencies = [] }) {
+  const { dependencies } = dependenciesConfig[language];
   const allDependencies = [...dependencies, ...additionalDependencies];
     
   return (

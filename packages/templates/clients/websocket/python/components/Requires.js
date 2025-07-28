@@ -1,4 +1,4 @@
-import { FileDependencies } from '@asyncapi/generator-components';
+import { DependencyProvider } from '@asyncapi/generator-components';
 
 export function Requires({ query }) {
   const additionalDependencies = [];
@@ -6,9 +6,8 @@ export function Requires({ query }) {
     additionalDependencies.push('import os');
     additionalDependencies.push('from urllib.parse import urlencode');
   }
-
   return (
-    <FileDependencies
+    <DependencyProvider
       language="python"
       additionalDependencies={additionalDependencies}
     />

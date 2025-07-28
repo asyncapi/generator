@@ -1,7 +1,7 @@
 import { render } from '@asyncapi/generator-react-sdk';
 import { DependencyProvider } from '../../src/index';
 
-describe('Testing of FileDependencies function', () => {
+describe('Testing of DependencyProvider function', () => {
   test('render js websockets file dependecies correctly', () => {
     const result = render(
       <DependencyProvider

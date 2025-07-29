@@ -33,7 +33,8 @@ describe('Integration Tests for message validation module', () => {
         timestamp: new Date().toISOString()
       };
       const result = validateMessage(compiledSchemas, validMessage);
-      expect(result).toBe(true);
+      expect(result.isValid).toBe(true);
+      expect(result.validationErrors).toBeUndefined();
     });
 
     test('should return false for invalid message that does not match data type', async () => {
@@ -41,13 +42,15 @@ describe('Integration Tests for message validation module', () => {
         content: 42
       };
       const result = validateMessage(compiledSchemas, invalidMessage);
-      expect(result).toBe(false);
+      expect(result.isValid).toBe(false);
+      expect(result.validationErrors.length).toBeGreaterThan(0);
     });
 
     test('should return false when message cannot match any schema', async () => {
       const invalidMessage = 42;
       const result = validateMessage(compiledSchemas, invalidMessage);
-      expect(result).toBe(false);
+      expect(result.isValid).toBe(false);
+      expect(result.validationErrors.length).toBeGreaterThan(0);
     });
 
     test('should return false when required field is missing', async () => {
@@ -55,7 +58,8 @@ describe('Integration Tests for message validation module', () => {
         timestamp: new Date().toISOString()
       };
       const result = validateMessage(compiledSchemas, invalidMessage);
-      expect(result).toBe(false);
+      expect(result.isValid).toBe(false);
+      expect(result.validationErrors.length).toBeGreaterThan(0);
     });
 
     test('should throw error if message is null', () => {
@@ -79,7 +83,7 @@ describe('Integration Tests for message validation module', () => {
         content: 'This is a operation test message'
       };
       const result = validateMessage(compiledSchemas, validMessage);
-      expect(result).toBe(true);
+      expect(result.isValid).toBe(true);
     });
 
     test('should return false for invalid message against operation schemas', async () => {
@@ -87,7 +91,8 @@ describe('Integration Tests for message validation module', () => {
         time: new Date().toISOString()
       };
       const result = validateMessage(compiledSchemas, invalidMessage);
-      expect(result).toBe(false);
+      expect(result.isValid).toBe(false);
+      expect(result.validationErrors.length).toBeGreaterThan(0);
     });
   });
 });

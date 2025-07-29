@@ -18,7 +18,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@asyncapi/parser": "^3.4.0",
-    "@hyperjump/json-schema": "^1.16.0"
+    "@hyperjump/json-schema": "^1.16.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.25.9",
@@ -46,7 +46,8 @@
     "moduleNameMapper": {
       "^nimma/legacy$": "<rootDir>/../../node_modules/nimma/dist/legacy/cjs/index.js",
       "^nimma/(.*)": "<rootDir>/../../node_modules/nimma/dist/cjs/$1",
-      "^@hyperjump/browser/jref$": "<rootDir>/../../node_modules/@hyperjump/browser/lib/jref/index.js"
+      "^@hyperjump/browser/jref$": "<rootDir>/../../node_modules/@hyperjump/browser/lib/jref/index.js",
+      "^@hyperjump/json-schema/experimental$": "<rootDir>/node_modules/@hyperjump/json-schema/lib/experimental.js"
     }
   },
   "babel": {

@@ -1,20 +1,29 @@
-import { getAllRegisteredSchemaUris, registerSchema, unregisterSchema, validate } from '@hyperjump/json-schema/draft-07';
+import {
+  getAllRegisteredSchemaUris,
+  registerSchema,
+  unregisterSchema,
+  validate,
+  setMetaSchemaOutputFormat
+} from '@hyperjump/json-schema/draft-07';
 import { generateSchemaURI, parseAsyncAPIDocumentFromFile } from './utils';
+import { DETAILED } from '@hyperjump/json-schema/experimental';
+
+setMetaSchemaOutputFormat(DETAILED);
 
 /**
  * Compiles multiple JSON Schemas for validation.
  * @async
  * @param {Array<object>} schemas - Array of JSON Schema objects to compile
  * @returns {Promise<Array<function>>} Array of compiled schema validator functions
- * @throws {Error} When schemas parameter is not an array or when schema registration fails
+ * @throws {Error} When schemas parameter is not an array
  */
 export async function compileSchemas(schemas) {
-  if (!Array.isArray(schemas)) {
-    throw new Error(`Invalid "schemas" parameter: expected an array, received ${typeof schemas}`);
-  }
   if (!schemas || schemas.length === 0) {
     console.log('Skipping compilation: no schemas provided.');
     return [];
+  }
+  if (!Array.isArray(schemas)) {
+    throw new Error(`Invalid "schemas" parameter: expected an array, received ${typeof schemas}`);
   }
   const dialectId = 'http://json-schema.org/draft-07/schema#';
   const schemaUris = [];
@@ -61,7 +70,7 @@ export async function compileSchemasByOperationId(asyncapiFilepath, operationId)
  * conforms to at least one of the provided schemas.
  * @param {Array<function>} compiledSchemas - Array of compiled schema validator functions
  * @param {object} message - The message payload to validate
- * @returns {boolean} True if valid against any schema, false otherwise
+*  @returns {ValidationResult} Object containing validation result and errors if invalid
  * @throws {Error} When message parameter is null or undefined
  */
 export function validateMessage(compiledSchemas, message) {
@@ -72,13 +81,15 @@ export function validateMessage(compiledSchemas, message) {
   if (message === null || message === undefined) {
     throw new Error(`Invalid "message" parameter: expected a non-null object to validate, but received ${message}`);
   }
+  const validationErrors = [];
   for (const compiledSchema of compiledSchemas) {
-    const result = compiledSchema(message);
+    const result = compiledSchema(message, DETAILED);
     if (result.valid) {
-      return true;
-    }
+      return { isValid: true };
+    } 
+    validationErrors.push(...result.errors);
   }
-  return false;
+  return { isValid: false, validationErrors };
 }
 
 /**

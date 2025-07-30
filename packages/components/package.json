@@ -19,7 +19,7 @@
   "author": "Lukasz Gornicki",
   "license": "Apache-2.0",
   "dependencies": {
-    "@asyncapi/generator-react-sdk": "^1.1.2",
+    "@asyncapi/generator-react-sdk": "*",
     "@asyncapi/modelina": "^5.3.5"
   },
   "devDependencies": {

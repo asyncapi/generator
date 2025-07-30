@@ -1155,4 +1155,15 @@ Generator.DEFAULT_TEMPLATES_DIR = DEFAULT_TEMPLATES_DIR;
 Generator.TRANSPILED_TEMPLATE_LOCATION = TRANSPILED_TEMPLATE_LOCATION;
 
 module.exports = Generator;
+/**
+ * List core templates, optionally filter by type, stack, protocol, or target.
+ * Use name of returned templates as input for the `generate` method for template generation. Such core templates code is part of the @asyncapi/generator package.
+ * 
+ * @param {Object} [filter] - Optional filter object.
+ * @param {string} [filter.type] - Filter by template type (e.g., 'client', 'docs').
+ * @param {string} [filter.stack] - Filter by stack (e.g., 'quarkus', 'express').
+ * @param {string} [filter.protocol] - Filter by protocol (e.g., 'websocket', 'http').
+ * @param {string} [filter.target] - Filter by target language or format (e.g., 'javascript', 'html').
+ * @returns {Array<Object>} Array of template objects matching the filter.
+ */
 module.exports.listBakedInTemplates = listBakedInTemplates;

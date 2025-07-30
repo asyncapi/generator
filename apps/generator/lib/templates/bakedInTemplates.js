@@ -3,7 +3,8 @@ const path = require('path');
 
 const BAKED_IN_TEMPLATES_DIR = path.resolve(__dirname, 'bakedInTemplates');
 /**
- * List core templates, optionally filtering by type, stack, protocol, or target.
+ * List core templates, optionally filter by type, stack, protocol, or target.
+ * Use name of returned templates as input for the `generate` method for template generation. Such core templates code is part of the @asyncapi/generator package.
  * 
  * @param {Object} [filter] - Optional filter object.
  * @param {string} [filter.type] - Filter by template type (e.g., 'client', 'docs').

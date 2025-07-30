@@ -5,7 +5,7 @@ import { RegisterMessageHandler } from './RegisterMessageHandler';
 import { RegisterErrorHandler } from './RegisterErrorHandler';
 import { HandleMessage } from './HandleMessage';
 import { SendOperation } from './SendOperation';
-import { CloseConnection } from './CloseConnection';
+import { CloseConnection } from '@asyncapi/generator-components';
 import { ModuleExport } from './ModuleExport';
 
 export function ClientClass({ clientName, serverUrl, title, sendOperations}) {
@@ -20,7 +20,7 @@ export function ClientClass({ clientName, serverUrl, title, sendOperations}) {
       <RegisterErrorHandler />
       <HandleMessage />
       <SendOperation sendOperations={sendOperations} clientName={clientName} />
-      <CloseConnection />
+      <CloseConnection language="javascript" />
       <Text>
         {'}'}
       </Text>

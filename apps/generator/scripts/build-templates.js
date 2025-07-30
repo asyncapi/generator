@@ -15,6 +15,71 @@ const IGNORED_DIRS = ['test', '__tests__', '__fixtures__', '__snapshots__', 'com
 // Templates structure inside generator/packages/templates must follow this opinionated naming convention:
 const ALLOWED_TYPE_PATHS = ['docs', 'clients', 'sdks', 'configs'];
 
+async function main() {
+  const allTemplatesInfo = [];
+  /*
+  * 1. First we travers all templates in packages/templates and collect their metadata.
+  */
+  const templates = await collectTemplates(TEMPLATES_ROOT);
+
+  for (const { dir, relPath, sourceRelPath } of templates) {
+    /*
+    * 2. Get metadata of single template.
+    */
+    const meta = getTemplateMeta(relPath);
+
+    // For docs and configs: require type and target and no others
+    if ((meta.type === 'docs' || meta.type === 'config') && (!meta.target || meta.protocol)) {
+      console.warn(`⚠️ Skipping template at ${dir}, wrong metadata for docs/config: ${relPath.join('/')}`);
+      continue;
+    }
+    // For clients and sdks: require type, protocol, and target.
+    if ((meta.type === 'client' || meta.type === 'sdk') && (!meta.type || !meta.protocol || !meta.target)) {
+      console.warn(`⚠️ Skipping template at ${dir}, not enough metadata for client/sdk: ${relPath.join('/')}`);
+      continue;
+    }
+
+    /*
+    * 3. Update template's config YAML .ageneratorrc with metadata object
+    */ 
+    const ageneratorrcPath = path.join(dir, '.ageneratorrc');
+    await updateAGeneratorRc(ageneratorrcPath, meta);
+
+    /*
+    * 4. Update template's package.json with the proper template name
+    */
+    const pkgPath = path.join(dir, 'package.json');
+    const pkgName = await updatePackageJson(pkgPath, meta);
+    if (!pkgName) continue;
+
+    /*
+    * 5. Transpile the template files to make them available as part of the generator by default
+    */
+    await transpileTemplate(dir, path.join(GENERATOR_LIB_DIR, 'templates', getTemplatePath(pkgName)));
+
+    /*
+    * 6. Save template information for the BakedInTemplatesList.json file.
+    */
+    const templateInfo = {
+      name: pkgName,
+      path: getTemplatePath(pkgName),
+      templateSourceRelPath: sourceRelPath,
+      type: meta.type,
+      ...(meta.protocol && { protocol: meta.protocol }),
+      target: meta.target,
+      ...(meta.stack && { stack: meta.stack }),
+    };
+    allTemplatesInfo.push(templateInfo);
+  }
+
+  /*
+  * 7. Get all templates info and write it to BakedInTemplatesList.json.
+  */
+  await updateTemplatesInfoFile(allTemplatesInfo);
+
+  console.log(`Updated ${allTemplatesInfo.length} templates and generated ${OUTPUT_TEMPLATES_INFO_FILE}`);
+}
+
 /**
  * Transpiles the template files from the given template path to the output directory.
  * This function makes sure that bundled templates are already transpiled with react engine,
@@ -90,7 +155,6 @@ function getTemplateName(meta) {
 
 /**
  * Generates a template path based on the package name.
- * The path is constructed in the format: `../../node_modules/{pkgName}`.
  * @param {string} pkgName - The name of the package.
  * @returns {string} The generated template path.
  */
@@ -113,11 +177,13 @@ function getTemplatePath(pkgName) {
  * [
  *   {
  *     dir: '/path/to/template/dir',
- *     relPath: ['clients', 'websocket', 'javascript']
+ *     relPath: ['clients', 'websocket', 'javascript'],
+ *     sourceRelPath: 'packages/templates/clients/websocket/javascript'
  *   },
  *   {
  *     dir: '/path/to/another/template/dir',
- *     relPath: ['docs', 'html']
+ *     relPath: ['docs', 'html'],
+ *     sourceRelPath: 'packages/templates/docs/html'
  *   }
  * ]
  */
@@ -198,53 +264,7 @@ async function updatePackageJson(pkgPath, meta) {
 async function updateTemplatesInfoFile(allTemplatesInfo) {
   allTemplatesInfo.sort((a, b) => a.name.localeCompare(b.name));
   const body = JSON.stringify(allTemplatesInfo, null, 2);
--  await writeFile(outputTemplatesInfoFile, body);
-+  await writeFile(OUTPUT_TEMPLATES_INFO_FILE, body);
-}
-
-async function main() {
-  const allTemplatesInfo = [];
-  const templates = await collectTemplates(TEMPLATES_ROOT);
-
-  for (const { dir, relPath, sourceRelPath } of templates) {
-    const meta = getTemplateMeta(relPath);
-
-    // For docs and configs: require type and target and no others
-    if ((meta.type === 'docs' || meta.type === 'config') && (!meta.target || meta.protocol)) {
-      console.warn(`⚠️ Skipping template at ${dir}, wrong metadata for docs/config: ${relPath.join('/')}`);
-      continue;
-    }
-    // For clients and sdks: require type, protocol, and target.
-    if ((meta.type === 'client' || meta.type === 'sdk') && (!meta.type || !meta.protocol || !meta.target)) {
-      console.warn(`⚠️ Skipping template at ${dir}, not enough metadata for client/sdk: ${relPath.join('/')}`);
-      continue;
-    }
-
-    // Update YAML .ageneratorrc with metadata config object
-    const ageneratorrcPath = path.join(dir, '.ageneratorrc');
-    await updateAGeneratorRc(ageneratorrcPath, meta);
-
-    // Update package.json with the proper template name
-    const pkgPath = path.join(dir, 'package.json');
-    const pkgName = await updatePackageJson(pkgPath, meta);
-    if (!pkgName) continue;
-
-    // Gather info for index
-    const templateInfo = {
-      name: pkgName,
-      path: getTemplatePath(pkgName),
-      templateSourceRelPath: sourceRelPath,
-      type: meta.type,
-      ...(meta.protocol && { protocol: meta.protocol }),
-      target: meta.target,
-      ...(meta.stack && { stack: meta.stack }),
-    };
-    allTemplatesInfo.push(templateInfo);
-  }
-
-  await updateTemplatesInfoFile(allTemplatesInfo);
-
-  console.log(`Updated ${allTemplatesInfo.length} templates and generated ${OUTPUT_TEMPLATES_INFO_FILE}`);
+  await writeFile(OUTPUT_TEMPLATES_INFO_FILE, body);
 }
 
 main().catch(err => {

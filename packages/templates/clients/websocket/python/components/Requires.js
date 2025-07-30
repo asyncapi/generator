@@ -1,17 +1,15 @@
-import { Text } from '@asyncapi/generator-react-sdk';
+import { DependencyProvider } from '@asyncapi/generator-components';
 
 export function Requires({ query }) {
+  const additionalDependencies = [];
+  if (query) {
+    additionalDependencies.push('import os');
+    additionalDependencies.push('from urllib.parse import urlencode');
+  }
   return (
-    <Text>
-      <Text>
-        {`import json
-import certifi
-import threading
-import websocket
-${query ? 'import os' : ''}
-${query ? 'from urllib.parse import urlencode' : ''}`}
-      </Text>
-    </Text>
+    <DependencyProvider
+      language="python"
+      additionalDependencies={additionalDependencies}
+    />
   );
 }
-

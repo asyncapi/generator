@@ -1,4 +1,4 @@
-// This script traverse packages/templates and as a result updates template's .ageneratorrc with metadata and their package.json with proper name, then generate lib/templatesInfo.js
+// This script traverse packages/templates and as a result updates template's .ageneratorrc with metadata and their package.json with proper name, then generate lib/templates/BakedInTemplatesList.json
 // Run with: `npm run build` always as pretest script
 
 const { readdir, readFile, writeFile } = require('fs/promises');

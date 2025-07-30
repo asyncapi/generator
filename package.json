@@ -44,7 +44,6 @@
   "packageManager": "npm@9.5.0",
   "workspaces": [
     "apps/*",
-    "packages/**",
-    "!packages/templates/**"
+    "packages/**"
   ]
 }

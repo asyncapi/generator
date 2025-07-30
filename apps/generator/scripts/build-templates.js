@@ -102,8 +102,17 @@ function getTranspiledTemplateInfo(meta, pkgName) {
 async function transpileTemplate(templatePath, outputDir) {
   try {
     await transpileFiles(templatePath, path.join(outputDir, '__transpiled'), { recursive: true });
+    
+    const shouldCopy = (src) => {
+      return (
+        !src.includes('__transpiled') &&
+        !src.includes('node_modules') &&
+        !src.includes('test')
+      );
+    };
+    
     await cp(templatePath, outputDir, { 
-      filter: (src) => !src.includes('__transpiled') && !src.includes('node_modules'),
+      filter: shouldCopy,
       recursive: true
     });
   } catch (error) {

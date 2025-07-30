@@ -1,7 +1,7 @@
 const templates = require('./BakedInTemplatesList.json');
 const path = require('path');
-const { access } = require('fs/promises');
 
+const BAKED_IN_TEMPLATES_DIR = path.resolve(__dirname, 'bakedInTemplates');
 /**
  * List core templates, optionally filtering by type, stack, protocol, or target.
  * 
@@ -44,14 +44,7 @@ module.exports.isCoreTemplate = (templateName) => {
 module.exports.getTemplate = async (templateName) => {
   const template = templates.find(t => t.name === templateName);
 
-  let templatePath = template.path;
-  try {
-    // Try to access the path provided by core templates list
-    await access(path.resolve(templatePath));
-  } catch (e) {
-    templatePath = path.join(__dirname, '../../node_modules', templateName);
-  }
-
+  const templatePath = template?.path || path.resolve(__dirname, BAKED_IN_TEMPLATES_DIR, template.name);
   return {
     name: template.name,
     path: templatePath

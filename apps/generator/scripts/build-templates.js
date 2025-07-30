@@ -1,14 +1,15 @@
 // This script traverse packages/templates and as a result updates template's .ageneratorrc with metadata and their package.json with proper name, then generate lib/templates/BakedInTemplatesList.json
 // Run with: `npm run build` always as pretest script
 
-const { readdir, readFile, writeFile } = require('fs/promises');
+const { readdir, readFile, writeFile, cp } = require('fs/promises');
 const path = require('path');
 const yaml = require('js-yaml');
 const { transpileFiles } = require('@asyncapi/generator-react-sdk');
 
+const MONOREPO_ROOT = path.resolve(__dirname, '../../../');
 const GENERATOR_LIB_DIR = path.resolve(__dirname, '../lib');
 const OUTPUT_TEMPLATES_INFO_FILE = path.join(GENERATOR_LIB_DIR, 'templates/BakedInTemplatesList.json');
-const TEMPLATES_ROOT = '../../../packages/templates';
+const TEMPLATES_ROOT = path.join(MONOREPO_ROOT, 'packages/templates');
 // No need to add dirs that start with `.`
 const IGNORED_DIRS = ['test', '__tests__', '__fixtures__', '__snapshots__', 'components', 'helpers', 'node_modules', 'coverage', '__transpiled'];
 
@@ -22,7 +23,7 @@ async function main() {
   */
   const templates = await collectTemplates(TEMPLATES_ROOT);
 
-  for (const { dir, relPath, sourceRelPath } of templates) {
+  for (const { dir, relPath } of templates) {
     /*
     * 2. Get metadata of single template.
     */
@@ -55,20 +56,12 @@ async function main() {
     /*
     * 5. Transpile the template files to make them available as part of the generator by default
     */
-    await transpileTemplate(dir, path.join(GENERATOR_LIB_DIR, 'templates', getTemplatePath(pkgName)));
+    await transpileTemplate(dir, path.join(GENERATOR_LIB_DIR, 'templates', getTranspiledGeneratorTemplatePath(pkgName)));
 
     /*
     * 6. Save template information for the BakedInTemplatesList.json file.
     */
-    const templateInfo = {
-      name: pkgName,
-      path: getTemplatePath(pkgName),
-      templateSourceRelPath: sourceRelPath,
-      type: meta.type,
-      ...(meta.protocol && { protocol: meta.protocol }),
-      target: meta.target,
-      ...(meta.stack && { stack: meta.stack }),
-    };
+    const templateInfo = getTranspiledTemplateInfo(meta, pkgName);
     allTemplatesInfo.push(templateInfo);
   }
 
@@ -78,6 +71,23 @@ async function main() {
   await updateTemplatesInfoFile(allTemplatesInfo);
 
   console.log(`Updated ${allTemplatesInfo.length} templates and generated ${OUTPUT_TEMPLATES_INFO_FILE}`);
+}
+
+/**
+ * Generates an object with the transpiled template information.
+ * 
+ * @param {Object} meta - The metadata of the template.
+ * @param {string} pkgName - The name of the package.
+ * @returns {Object} An object containing the template information.
+ */
+function getTranspiledTemplateInfo(meta, pkgName) {
+  return {
+    name: pkgName,
+    type: meta.type,
+    ...(meta.protocol && { protocol: meta.protocol }),
+    target: meta.target,
+    ...(meta.stack && { stack: meta.stack }),
+  };
 }
 
 /**
@@ -91,9 +101,16 @@ async function main() {
  */
 async function transpileTemplate(templatePath, outputDir) {
   try {
-    await transpileFiles(templatePath, outputDir, { recursive: true });
+    const packageJsonPath = path.join(templatePath, 'package.json');
+    const ageneratorRcPath = path.join(templatePath, '.ageneratorrc');
+
+    await transpileFiles(templatePath, path.join(outputDir, '__transpiled'), { recursive: true });
+    await cp(templatePath, outputDir, { 
+      filter: (src) => !src.includes('__transpiled') && !src.includes('node_modules'),
+      recursive: true
+    });
   } catch (error) {
-    console.log(`Error during template transpilation at ${templatePath}:`, error);
+    throw new Error(`Error during template transpilation at ${templatePath}: ${error.message}`);
   }
 }
 
@@ -154,12 +171,22 @@ function getTemplateName(meta) {
 }
 
 /**
- * Generates a template path based on the package name.
+ * Generates a template path relative to generator library
  * @param {string} pkgName - The name of the package.
  * @returns {string} The generated template path.
  */
-function getTemplatePath(pkgName) {
-  return `bakedInTemplates/${pkgName}`;
+function getTranspiledGeneratorTemplatePath(pkgName) {
+  return path.join('bakedInTemplates', pkgName);
+}
+
+/**
+ * Generates a template path based on the package name and starting at monorepo root.
+ * @param {string} pkgName - The name of the package.
+ * @returns {string} The generated template path.
+ */
+function getTranspiledMonorepoTemplatePath(pkgName) {
+  const absolutePath = path.join(GENERATOR_LIB_DIR, 'templates', 'bakedInTemplates', pkgName);
+  return path.relative(MONOREPO_ROOT, absolutePath);
 }
 
 /**
@@ -177,13 +204,11 @@ function getTemplatePath(pkgName) {
  * [
  *   {
  *     dir: '/path/to/template/dir',
- *     relPath: ['clients', 'websocket', 'javascript'],
- *     sourceRelPath: 'packages/templates/clients/websocket/javascript'
+ *     relPath: ['clients', 'websocket', 'javascript']
  *   },
  *   {
  *     dir: '/path/to/another/template/dir',
- *     relPath: ['docs', 'html'],
- *     sourceRelPath: 'packages/templates/docs/html'
+ *     relPath: ['docs', 'html']
  *   }
  * ]
  */
@@ -201,7 +226,7 @@ async function collectTemplates(dir, relPath = [], result = []) {
         const relPathToTemplateSegments = [...relPath, entry.name];
         const repPathToTemplateInMonorepo = path.relative(GENERATOR_LIB_DIR, fullPath);
 
-        result.push({ dir: fullPath, relPath: relPathToTemplateSegments, sourceRelPath: repPathToTemplateInMonorepo });
+        result.push({ dir: fullPath, relPath: relPathToTemplateSegments });
       } else {
         const relPathSegments = [...relPath, entry.name];
         await collectTemplates(fullPath, relPathSegments, result);

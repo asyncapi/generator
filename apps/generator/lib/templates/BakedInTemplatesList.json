@@ -1,24 +1,18 @@
 [
   {
     "name": "core-template-client-websocket-dart",
-    "path": "bakedInTemplates/core-template-client-websocket-dart",
-    "templateSourceRelPath": "../../../packages/templates/clients/websocket/dart",
     "type": "client",
     "protocol": "websocket",
     "target": "dart"
   },
   {
     "name": "core-template-client-websocket-javascript",
-    "path": "bakedInTemplates/core-template-client-websocket-javascript",
-    "templateSourceRelPath": "../../../packages/templates/clients/websocket/javascript",
     "type": "client",
     "protocol": "websocket",
     "target": "javascript"
   },
   {
     "name": "core-template-client-websocket-python",
-    "path": "bakedInTemplates/core-template-client-websocket-python",
-    "templateSourceRelPath": "../../../packages/templates/clients/websocket/python",
     "type": "client",
     "protocol": "websocket",
     "target": "python"

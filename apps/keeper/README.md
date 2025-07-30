@@ -100,6 +100,7 @@ removeCompiledSchemas();
 
 ```js
 import { compileSchemasByOperationId, validateMessage, removeCompiledSchemas } from '@asyncapi/keeper';
+import path from 'path';
 
 const asyncapiFilepath = path.resolve(__dirname, './asyncapi.yaml'); // Path to your AsyncAPI document
 const operationId = 'sendHelloMessage'; // The operationId to validate against

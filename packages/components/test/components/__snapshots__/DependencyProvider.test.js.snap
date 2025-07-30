@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing of DependencyProvider function render dart websockets file dependecies correctly 1`] = `
+"import 'dart:convert';
+import 'package:web_socket_channel/web_socket_channel.dart';"
+`;
+
+exports[`Testing of DependencyProvider function render js websockets file dependecies correctly 1`] = `"const WebSocket = require('ws');"`;
+
+exports[`Testing of DependencyProvider function render python websockets file dependecies correctly 1`] = `
+"import json
+import certifi
+import threading
+import websocket"
+`;
+
+exports[`Testing of DependencyProvider function render python websockets file dependecies correctly with additionalDependencies 1`] = `
+"import json
+import certifi
+import threading
+import websocket
+import os
+from urllib.parse import urlencode"
+`;

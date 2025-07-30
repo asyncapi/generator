@@ -1881,8 +1881,6 @@ import certifi
 import threading
 import websocket
 
-
-
 class HoppscotchClient:
 
   def __init__(self, url: str = \\"wss://echo-websocket.hoppscotch.io\\"):
@@ -2063,8 +2061,6 @@ import json
 import certifi
 import threading
 import websocket
-
-
 
 class HoppscotchEchoWebSocketClient:
 
@@ -2247,8 +2243,6 @@ import json
 import certifi
 import threading
 import websocket
-
-
 
 class PostmanEchoWebSocketClientClient:
 

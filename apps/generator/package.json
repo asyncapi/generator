@@ -16,7 +16,7 @@
   },
   "scripts": {
     "test": "npm run test:unit && npm run test:integration",
-    "test:unit": "jest --coverage --testPathIgnorePatterns=integration --testPathIgnorePatterns=test-project",
+    "test:unit": "jest --coverage --testPathIgnorePatterns=bakedInTemplates --testPathIgnorePatterns=integration --testPathIgnorePatterns=test-project",
     "test:dev": "npm run test:unit -- --watchAll",
     "test:integration": "npm run test:cleanup && jest --testPathPattern=integration --modulePathIgnorePatterns='./__mocks__(?!\\/loglevel\\.js$)'",
     "test:integration:update": "npm run test:integration -- -u",

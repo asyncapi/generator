@@ -198,7 +198,8 @@ async function updatePackageJson(pkgPath, meta) {
 async function updateTemplatesInfoFile(allTemplatesInfo) {
   allTemplatesInfo.sort((a, b) => a.name.localeCompare(b.name));
   const body = JSON.stringify(allTemplatesInfo, null, 2);
-  await writeFile(outputTemplatesInfoFile, body);
+-  await writeFile(outputTemplatesInfoFile, body);
++  await writeFile(OUTPUT_TEMPLATES_INFO_FILE, body);
 }
 
 async function main() {

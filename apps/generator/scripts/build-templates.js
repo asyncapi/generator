@@ -101,9 +101,6 @@ function getTranspiledTemplateInfo(meta, pkgName) {
  */
 async function transpileTemplate(templatePath, outputDir) {
   try {
-    const packageJsonPath = path.join(templatePath, 'package.json');
-    const ageneratorRcPath = path.join(templatePath, '.ageneratorrc');
-
     await transpileFiles(templatePath, path.join(outputDir, '__transpiled'), { recursive: true });
     await cp(templatePath, outputDir, { 
       filter: (src) => !src.includes('__transpiled') && !src.includes('node_modules'),
@@ -180,16 +177,6 @@ function getTranspiledGeneratorTemplatePath(pkgName) {
 }
 
 /**
- * Generates a template path based on the package name and starting at monorepo root.
- * @param {string} pkgName - The name of the package.
- * @returns {string} The generated template path.
- */
-function getTranspiledMonorepoTemplatePath(pkgName) {
-  const absolutePath = path.join(GENERATOR_LIB_DIR, 'templates', 'bakedInTemplates', pkgName);
-  return path.relative(MONOREPO_ROOT, absolutePath);
-}
-
-/**
  * Recursively collects templates from the given directory.
  * A template is considered valid if it contains both 'package.json' and '.ageneratorrc' files.
  * The function returns an array of objects, each containing the directory path and relative path
@@ -224,7 +211,6 @@ async function collectTemplates(dir, relPath = [], result = []) {
       const subEntries = await readdir(fullPath);
       if (subEntries.includes('package.json') && subEntries.includes('.ageneratorrc')) {
         const relPathToTemplateSegments = [...relPath, entry.name];
-        const repPathToTemplateInMonorepo = path.relative(GENERATOR_LIB_DIR, fullPath);
 
         result.push({ dir: fullPath, relPath: relPathToTemplateSegments });
       } else {

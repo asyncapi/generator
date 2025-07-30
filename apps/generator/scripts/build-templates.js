@@ -210,7 +210,7 @@ async function main() {
     const meta = getTemplateMeta(relPath);
 
     // For docs and configs: require type and target and no others
-    if ((meta.type === 'docs' || meta.type === 'config') && (!meta.type || !meta.target || meta.protocol)) {
+    if ((meta.type === 'docs' || meta.type === 'config') && (!meta.target || meta.protocol)) {
       console.warn(`⚠️ Skipping template at ${dir}, wrong metadata for docs/config: ${relPath.join('/')}`);
       continue;
     }

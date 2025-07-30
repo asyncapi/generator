@@ -10,27 +10,54 @@ npm install @asyncapi/keeper
 
 ### API
 
-### `await validateMessage(message, schemas)`
+#### `await compileSchemas(schemas)`
 
 #### Parameters
 
 | Parameter | Type               | Description                                                                 | Required |
 |-----------|--------------------|-----------------------------------------------------------------------------|----------|
-| `message` | `any`           | The message payload to validate (any non-null value)                                      | Yes      |
 | `schemas` | `Array<Object>`    | Array of JSON Schema Draft-07 objects representing valid message structures  | Yes      |
 
 #### Returns
-`Promise<boolean>` — Resolves to true if the message is valid against any schema, otherwise false.
+`Promise<Array<function>>` — Array of compiled schema validator functions.
+
+#### `await compileSchemasByOperationId(asyncapiFilepath, operationId)`
+
+#### Parameters
+
+| Parameter           | Type         | Description                                                                                 | Required |
+|---------------------|--------------|---------------------------------------------------------------------------------------------|----------|
+| `asyncapiFilepath`  | `string`     | Path to the AsyncAPI document file.                                                         | Yes      |
+| `operationId`       | `string`     | The ID of the operation to extract message schemas from.                                    | Yes      |
+
+#### Returns
+`Promise<Array<function>>` — Array of compiled schema validator functions for the operation's messages.
+
+#### `validateMessage(compiledSchemas, message)`
+
+#### Parameters
+
+| Parameter        | Type               | Description                                                                 | Required |
+|------------------|--------------------|-----------------------------------------------------------------------------|----------|
+| `compiledSchemas`| `Array<function>`  | Array of compiled schema validator functions                                | Yes      |
+| `message`        | `any`              | The message payload to validate (any non-null value)                       | Yes      |
+
+#### Returns
+`{ isValid: boolean, validationErrors?: Array<object> }` — Object containing validation result and errors if invalid.
+
+#### `removeCompiledSchemas()`
+
+#### Returns
+`void` — Unregisters all currently registered schemas from the validator.
 
 ### Usage
 
-#### Multiple Schema Validation
+#### Basic Schema Compilation and Validation
 
 ```js 
-import { validateMessage } from '@asyncapi/keeper';
+import { compileSchemas, validateMessage, removeCompiledSchemas } from '@asyncapi/keeper';
 
-// Example message and schemas (schemas as JSON Schema objects)
-const message = { content: 'Hello', timestamp: '2024-05-01T12:00:00Z' };
+// Example schemas (JSON Schema Draft-07 objects)
 const schemas = [
   {
     type: 'object',
@@ -51,34 +78,40 @@ const schemas = [
   }
 ];
 
-const isValid = await validateMessage(message, schemas);
-console.log('Valid against any schema:', isValid); // true or false
+// Compile schemas
+const compiledSchemas = await compileSchemas(schemas);
+
+// Validate messages
+const message1 = { content: 'Hello', timestamp: '2024-05-01T12:00:00Z' };
+const result1 = validateMessage(compiledSchemas, message1);
+console.log('Valid:', result1.isValid); // true
+console.log('Errors:', result1.validationErrors); // undefined
+
+const message2 = { content: 42 }; // Invalid: content should be string
+const result2 = validateMessage(compiledSchemas, message2);
+console.log('Valid:', result2.isValid); // false
+console.log('Errors:', result2.validationErrors); // Array of validation errors
+
+// Clean up
+removeCompiledSchemas();
 ```
 
-### `await validateByOperationId(asyncapiFilepath, operationId, message)`
-
-#### Parameters
-
-| Parameter           | Type         | Description                                                                                 | Required |
-|---------------------|--------------|---------------------------------------------------------------------------------------------|----------|
-| `asyncapiFilepath`  | `string`     | Path to the AsyncAPI document file.                                                         | Yes      |
-| `operationId`       | `string`     | The ID of the operation to validate against.                                                       | Yes      |
-| `message`           | `any`        | The message payload to validate (any non-null value)                                        | Yes      |
-
-#### Returns
-`Promise<boolean>` — Resolves to true if the message is valid against any of the operation's message schemas, otherwise false.
-
-### Usage
-
-#### Validate by Operation ID
+#### Operation-Specific Validation
 
 ```js
-import { validateByOperationId } from '@asyncapi/keeper';
+import { compileSchemasByOperationId, validateMessage, removeCompiledSchemas } from '@asyncapi/keeper';
 
 const asyncapiFilepath = path.resolve(__dirname, './asyncapi.yaml'); // Path to your AsyncAPI document
-const operationId = 'sendMessage'; // The operationId you want to validate against
-const message = { content: 'Hello', timestamp: '2024-05-01T12:00:00Z' };
+const operationId = 'sendHelloMessage'; // The operationId to validate against
 
-const isValid = await validateByOperationId(asyncapiFilepath, operationId, message);
-console.log('Valid for operation:', isValid); // true or false
+// Compile schemas for specific operation
+const compiledSchemas = await compileSchemasByOperationId(asyncapiFilepath, operationId);
+
+// Validate message against operation schemas
+const message = { content: 'Hello from operation' };
+const result = validateMessage(compiledSchemas, message);
+console.log('Valid for operation:', result.isValid); // true or false
+
+// Clean up
+removeCompiledSchemas();
 ```

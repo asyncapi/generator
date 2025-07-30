@@ -70,7 +70,7 @@ export async function compileSchemasByOperationId(asyncapiFilepath, operationId)
  * conforms to at least one of the provided schemas.
  * @param {Array<function>} compiledSchemas - Array of compiled schema validator functions
  * @param {object} message - The message payload to validate
- *  @returns {{ isValid: boolean, validationErrors?: Array<object> }} Object containing validation result and errors if invalid
+ * @returns {{ isValid: boolean, validationErrors?: Array<object> }} Object containing validation result and errors if invalid
  * @throws {Error} When message parameter is null or undefined
  */
 export function validateMessage(compiledSchemas, message) {

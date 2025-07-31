@@ -13,10 +13,10 @@ AsyncAPI Generator supports a variety of baked-in template types for generating 
 
 Templates are grouped by **type**, which must be one of the following:
 
-- `docs`: Templates that generate documentation
+- `docs` (not yet implemented): Templates that generate documentation
 - `client`: Templates that generate clients
-- `sdk`: Template that generate full sdk's
-- `config`: Template that generate configuration files
+- `sdk` (not yet implemented): Template that generate full sdk's
+- `config` (not yet implemented): Template that generate configuration files
 
 > **Note:**  
 > The **directory name is always plural** (e.g., `clients`), but the **type recorded in metadata and package name is singular** (e.g., `client`), except for `docs`.
@@ -50,10 +50,10 @@ Every template directory **must include**:
 
 ## Metadata and naming conventions
 
-Generator runs a script will normalize metadata for baked-in templates and their naming:
-- Adds/updates metadata in `.ageneratorrc` file.
+Generator build runs a script that normalize metadata for baked-in templates and their naming:
+- Adds/updates metadata in `.ageneratorrc` file. You do not have to maintain it manually.
 - Validates/updates template name in `package.json` file of given template. The name always starts with `core-template-` prefix.
-- Generates JSON file with list of baked in templates and stores the list inside the generator
+- Generates JSON file with list of baked in templates and stores the list inside the generator: `apps/generator/lib/templates/BakedInTemplatesList.json`
 
 #### Example
 
@@ -70,7 +70,18 @@ metadata:
 
 Package name format:  `core-template-client-websocket-javascript-express`
 
-## How to add a new template
+Resulting entry in `apps/generator/lib/templates/BakedInTemplatesList.json`:
+```json
+  {
+    "name": "core-template-client-websocket-javascript-express",
+    "type": "client",
+    "protocol": "websocket",
+    "target": "javascript",
+    "stack": "express"
+  }
+```
+
+## How to add a new baked-in template
 
 1. Create the directory in `packages/templates` using the correct structure.
    - For a docs template:  

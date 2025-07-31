@@ -20,7 +20,7 @@ Templates can be developed as standalone project. There is also a set of baked-i
 
 > This is a new concept introduced in generator version 2.8. The number of templates is limited and solution is still in experimental phase
 
-Baked-in templates are official AsyncAPI templates that are **developed, versioned, and shipped directly inside the `generator` repository and exposed with `@asyncapi/generator` library**. These templates live in the `packages/templates` directory and are managed alongside the generator’s core source code. Baked-in templates are always available “out of the box” when using the generator. No separate installation or network fetching is required.
+Baked-in templates are official AsyncAPI templates that are **developed, versioned, and shipped directly inside the `generator` repository and exposed with `@asyncapi/generator` library**. Source code of these templates live in the `packages/templates` directory of the `generator` repository. These templates and are managed alongside the generator’s core source code. Baked-in templates are always available “out of the box” when using the generator. No separate installation or network fetching is required.
 
 Baked-in templates benefit from:
 - **Tight integration** with the generator’s features and release cycle.

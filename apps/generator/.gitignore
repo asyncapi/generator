@@ -20,3 +20,4 @@ test/test-project/package-lock.json
 test/test-project/verdaccio/storage/
 test/test-project/storage/
 __transpiled
+lib/templates/bakedInTemplates

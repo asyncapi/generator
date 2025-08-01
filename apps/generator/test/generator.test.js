@@ -12,9 +12,7 @@ jest.mock('../lib/utils');
 jest.mock('../lib/filtersRegistry');
 jest.mock('../lib/hooksRegistry');
 jest.mock('../lib/templates/config/validator');
-jest.mock('../lib/templates/config/loader', () => ({
-  loadTemplateConfig: jest.fn().mockReturnValue({})
-}));
+jest.mock('../lib/templates/config/loader');
 
 describe('Generator', () => {
   describe('constructor', () => {
@@ -150,6 +148,7 @@ describe('Generator', () => {
       expect(gen.verifyTargetDir).toHaveBeenCalledWith(__dirname);
       expect(gen.installTemplate).toHaveBeenCalledWith(false);
       expect(templateConfigLoader.loadTemplateConfig).toHaveBeenCalled();
+      expect(templateConfigLoader.loadDefaultValues).toHaveBeenCalled();
       expect(gen.configureTemplate).toHaveBeenCalled();
       expect(hooksRegistry.registerHooks).toHaveBeenCalled();
       expect(filtersRegistry.registerFilters).toHaveBeenCalled();
@@ -172,6 +171,7 @@ describe('Generator', () => {
       expect(gen.verifyTargetDir).toHaveBeenCalledWith(__dirname);
       expect(gen.installTemplate).toHaveBeenCalledWith(true);
       expect(templateConfigLoader.loadTemplateConfig).toHaveBeenCalled();
+      expect(templateConfigLoader.loadDefaultValues).toHaveBeenCalled();
       expect(gen.configureTemplate).toHaveBeenCalled();
       expect(hooksRegistry.registerHooks).toHaveBeenCalled();
       expect(filtersRegistry.registerFilters).toHaveBeenCalled();
@@ -215,6 +215,7 @@ describe('Generator', () => {
       expect(gen.installTemplate).toHaveBeenCalledWith(true);
       expect(templateConfigLoader.loadTemplateConfig).toHaveBeenCalled();
       expect(templateConfigLoader.loadTemplateConfig).toHaveBeenCalled();
+      expect(templateConfigLoader.loadDefaultValues).toHaveBeenCalled();
       expect(hooksRegistry.registerHooks).toHaveBeenCalled();
       expect(filtersRegistry.registerFilters).toHaveBeenCalled();
       expect(templateConfigValidator.validateTemplateConfig).toHaveBeenCalled();
@@ -239,6 +240,7 @@ describe('Generator', () => {
       expect(gen.installTemplate).toHaveBeenCalledWith(false);
       expect(templateConfigLoader.loadTemplateConfig).toHaveBeenCalled();
       expect(templateConfigLoader.loadTemplateConfig).toHaveBeenCalled();
+      expect(templateConfigLoader.loadDefaultValues).toHaveBeenCalled();
       expect(hooksRegistry.registerHooks).toHaveBeenCalled();
       expect(filtersRegistry.registerFilters).toHaveBeenCalled();
       expect(templateConfigValidator.validateTemplateConfig).toHaveBeenCalled();
@@ -254,7 +256,7 @@ describe('Generator', () => {
 
     it('should be able to generate with string inputs', async () => {
       const gen = new Generator('testTemplate', __dirname);
-
+      templateConfigLoader.loadTemplateConfig.mockReturnValue({});
       mockMethods(gen);
       await gen.generate(dummyYAML);
 

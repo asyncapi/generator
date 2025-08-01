@@ -8,10 +8,9 @@ const CONFIG_FILENAME = 'package.json';
  * Loads the template configuration.
  * @async
  * @param {string} templateDir - Path to the template directory
- * @param  {Object} templateParams Params specified when running generator.
  * @returns {Promise<Object>} Resolves with the loaded template configuration object
 */
-async function loadTemplateConfig(templateDir, templateParams) {
+async function loadTemplateConfig(templateDir) {
     let templateConfig = {};
 
     // Try to load config from .ageneratorrc
@@ -20,8 +19,6 @@ async function loadTemplateConfig(templateDir, templateParams) {
         const yaml = await readFile(rcConfigPath, { encoding: 'utf8' });
         const yamlConfig = require('js-yaml').load(yaml);
         templateConfig = yamlConfig || {};
-
-        loadDefaultValues(templateConfig, templateParams);
         return templateConfig;
     } catch (rcError) {
         // console.error('Could not load .ageneratorrc file:', rcError);
@@ -39,8 +36,6 @@ async function loadTemplateConfig(templateDir, templateParams) {
         // console.error('Could not load generator config from package.json:', packageError);
         log.debug('Could not load generator config from package.json:', packageError);
     }
-
-    loadDefaultValues(templateConfig, templateParams);
     return templateConfig;
 }
 
@@ -65,5 +60,6 @@ function loadDefaultValues(templateConfig, templateParams) {
 }
 
 module.exports = {
-    loadTemplateConfig
+    loadTemplateConfig,
+    loadDefaultValues
 };

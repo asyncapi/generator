@@ -14,7 +14,7 @@ const { isAsyncAPIDocument } = require('@asyncapi/parser/cjs/document');
 const { configureReact, renderReact, saveRenderedReactContent } = require('./renderer/react');
 const { configureNunjucks, renderNunjucks } = require('./renderer/nunjucks');
 const { validateTemplateConfig } = require('./templates/config/validator');
-const { loadTemplateConfig } = require('./templates/config/loader');
+const { loadTemplateConfig, loadDefaultValues } = require('./templates/config/loader');
 const { isGenerationConditionMet } = require('./conditionalGeneration');
 const {
   convertMapToObject,
@@ -286,7 +286,8 @@ class Generator {
     this.templateName = templatePkgName;
     this.templateContentDir = path.resolve(this.templateDir, TEMPLATE_CONTENT_DIRNAME);
 
-    this.templateConfig = await loadTemplateConfig(this.templateDir, this.templateParams);
+    this.templateConfig = await loadTemplateConfig(this.templateDir);
+    loadDefaultValues(this.templateConfig, this.templateParams);
 
     return { templatePkgName, templatePkgPath };
   }

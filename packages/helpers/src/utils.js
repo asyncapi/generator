@@ -1,5 +1,3 @@
-const { readdir } = require('fs/promises');
-
 /**
  * Validate and retrieve the AsyncAPI info object from an AsyncAPI document.
  *
@@ -62,22 +60,6 @@ const getClientName = (asyncapi, appendClientSuffix, customClientName) => {
   return appendClientSuffix ? `${baseName}Client` : baseName;
 };
 
-/*
- * Get the list of files in a directory
- *
- * @param {string} dir - The directory path.
- * 
- * return {Promise<string[]>} - A promise that resolves to an array of file paths.
- */
-const listFiles = async (dir) => {
-  const dirElements = await readdir(dir, { withFileTypes: true });
-
-  // Filter to only files, map to full paths
-  return dirElements
-    .filter(dirE => dirE.isFile())
-    .map(dirE => dirE.name);
-};
-
 /**
  * Convert a camelCase or PascalCase string to snake_case.
  * If the string is already in snake_case, it will be returned unchanged.
@@ -95,7 +77,6 @@ const toSnakeCase = (inputStr) => {
 
 module.exports = {
   getClientName,
-  listFiles,
   getTitle,
   getInfo,
   toSnakeCase

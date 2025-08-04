@@ -32,7 +32,10 @@
     "templates:test": "turbo run test --filter=@asyncapi/template*",
     "packages:test": "turbo run test --filter=./packages/** --only",
     "hooks:test": "turbo run test --filter=@asyncapi/generator-hooks",
-    "test:update": "turbo run test -- -u"
+    "test:update": "turbo run test -- -u",
+    "keeper:test": "turbo run test --filter=@asyncapi/keeper",
+    "keeper:build": "turbo run build --filter=@asyncapi/keeper",
+    "keeper:lint": "turbo run lint --filter=@asyncapi/keeper"
   },
   "devDependencies": {
     "markdown-toc": "^1.2.0",

@@ -1,8 +1,10 @@
 const path = require('path');
 const { readFile } = require('../../utils');
 const log = require('loglevel');
+const yaml = require('js-yaml');
 
-const CONFIG_FILENAME = 'package.json';
+const PRIMARY_CONFIG_FILE = '.ageneratorrc';
+const SECONDARY_CONFIG_FILE = 'package.json';
 
 /** 
  * Loads the template configuration.
@@ -15,9 +17,9 @@ async function loadTemplateConfig(templateDir) {
 
     // Try to load config from .ageneratorrc
     try {
-        const rcConfigPath = path.resolve(templateDir, '.ageneratorrc');
+        const rcConfigPath = path.resolve(templateDir, PRIMARY_CONFIG_FILE);
         const yaml = await readFile(rcConfigPath, { encoding: 'utf8' });
-        const yamlConfig = require('js-yaml').load(yaml);
+        const yamlConfig = yaml.load(yaml);
         templateConfig = yamlConfig || {};
         return templateConfig;
     } catch (rcError) {
@@ -28,7 +30,7 @@ async function loadTemplateConfig(templateDir) {
 
     // Try to load config from package.json
     try {
-        const configPath = path.resolve(templateDir, CONFIG_FILENAME);
+        const configPath = path.resolve(templateDir, SECONDARY_CONFIG_FILE);
         const json = await readFile(configPath, { encoding: 'utf8' });
         const generatorProp = JSON.parse(json).generator;
         templateConfig = generatorProp || {};

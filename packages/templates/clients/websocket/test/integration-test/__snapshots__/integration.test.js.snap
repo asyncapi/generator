@@ -4036,10 +4036,10 @@ class HoppscotchClient {
   
 
   // Method to close the WebSocket connection
-  close() {
+   close() {
     if (this.websocket) {
-      this.websocket.close();
-      console.log('WebSocket connection closed.');
+        this.websocket.close();
+        console.log('WebSocket connection closed.');
     }
   }
 }
@@ -4305,10 +4305,10 @@ class HoppscotchEchoWebSocketClient {
   
 
   // Method to close the WebSocket connection
-  close() {
+   close() {
     if (this.websocket) {
-      this.websocket.close();
-      console.log('WebSocket connection closed.');
+        this.websocket.close();
+        console.log('WebSocket connection closed.');
     }
   }
 }
@@ -4550,10 +4550,10 @@ class PostmanEchoWebSocketClientClient {
   
 
   // Method to close the WebSocket connection
-  close() {
+   close() {
     if (this.websocket) {
-      this.websocket.close();
-      console.log('WebSocket connection closed.');
+        this.websocket.close();
+        console.log('WebSocket connection closed.');
     }
   }
 }
@@ -5285,12 +5285,13 @@ class SlackWebsocketAPIClient:
         for handler in self.error_handlers:
           handler(error)
 
-  def close(self):
-      \\"\\"\\"Cleanly close the WebSocket connection.\\"\\"\\"
-      self._stop_event.set()
-      if self.ws_app:
-          self.ws_app.close()
-          print(\\"WebSocket connection closed.\\")
+  def close(self) :
+    \\"\\"\\"Cleanly close the WebSocket connection.\\"\\"\\"
+    self._stop_event.set()
+    if self.ws_app:
+        self.ws_app.close()
+        print(\\"WebSocket connection closed.\\")
+
 
 "
 `;
@@ -5465,12 +5466,13 @@ class HoppscotchClient:
       except Exception as e:
           print(\\"Error sending:\\", e)
 
-  def close(self):
-      \\"\\"\\"Cleanly close the WebSocket connection.\\"\\"\\"
-      self._stop_event.set()
-      if self.ws_app:
-          self.ws_app.close()
-          print(\\"WebSocket connection closed.\\")
+  def close(self) :
+    \\"\\"\\"Cleanly close the WebSocket connection.\\"\\"\\"
+    self._stop_event.set()
+    if self.ws_app:
+        self.ws_app.close()
+        print(\\"WebSocket connection closed.\\")
+
 
 "
 `;
@@ -5645,12 +5647,13 @@ class HoppscotchEchoWebSocketClient:
       except Exception as e:
           print(\\"Error sending:\\", e)
 
-  def close(self):
-      \\"\\"\\"Cleanly close the WebSocket connection.\\"\\"\\"
-      self._stop_event.set()
-      if self.ws_app:
-          self.ws_app.close()
-          print(\\"WebSocket connection closed.\\")
+  def close(self) :
+    \\"\\"\\"Cleanly close the WebSocket connection.\\"\\"\\"
+    self._stop_event.set()
+    if self.ws_app:
+        self.ws_app.close()
+        print(\\"WebSocket connection closed.\\")
+
 
 "
 `;
@@ -5826,12 +5829,13 @@ class PostmanEchoWebSocketClientClient:
       except Exception as e:
           print(\\"Error sending:\\", e)
 
-  def close(self):
-      \\"\\"\\"Cleanly close the WebSocket connection.\\"\\"\\"
-      self._stop_event.set()
-      if self.ws_app:
-          self.ws_app.close()
-          print(\\"WebSocket connection closed.\\")
+  def close(self) :
+    \\"\\"\\"Cleanly close the WebSocket connection.\\"\\"\\"
+    self._stop_event.set()
+    if self.ws_app:
+        self.ws_app.close()
+        print(\\"WebSocket connection closed.\\")
+
 
 "
 `;

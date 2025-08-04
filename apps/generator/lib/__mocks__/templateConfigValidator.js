@@ -1,3 +1,3 @@
-const templateConfigValidator = jest.genMockFromModule('../templateConfigValidator');
+const templateConfigValidator = jest.genMockFromModule('../templates/config/validator');
 
 module.exports = templateConfigValidator;

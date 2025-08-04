@@ -3,9 +3,6 @@
   "version": "2.7.1",
   "description": "The AsyncAPI generator. It can generate documentation, code, anything!",
   "main": "./lib/generator.js",
-  "files": [
-    "lib/templates/bakedInTemplates"
-  ],
   "bin": {
     "asyncapi-generator": "./cli.js",
     "ag": "./cli.js"

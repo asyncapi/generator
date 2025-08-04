@@ -12,7 +12,7 @@ const SECONDARY_CONFIG_FILE = 'package.json';
  * @param {string} templateDir - Path to the template directory
  * @returns {Promise<Object>} Resolves with the loaded template configuration object
 */
-async function loadTemplateConfig(templateDir) {
+async function loadTemplateConfig(templateDir, templateParams) {
     let templateConfig = {};
 
     // Try to load config from .ageneratorrc
@@ -21,6 +21,7 @@ async function loadTemplateConfig(templateDir) {
         const rcContent = await readFile(rcConfigPath, { encoding: 'utf8' });
         const yamlConfig = yaml.load(rcContent);
         templateConfig = yamlConfig || {};
+        loadDefaultValues(templateConfig, templateParams);
         return templateConfig;
     } catch (rcError) {
         // console.error('Could not load .ageneratorrc file:', rcError);
@@ -38,6 +39,7 @@ async function loadTemplateConfig(templateDir) {
         // console.error('Could not load generator config from package.json:', packageError);
         log.debug('Could not load generator config from package.json:', packageError);
     }
+    loadDefaultValues(templateConfig, templateParams);
     return templateConfig;
 }
 
@@ -54,9 +56,12 @@ function loadDefaultValues(templateConfig, templateParams) {
     defaultValues.filter(dv => templateParams[dv] === undefined).forEach(dv =>
         Object.defineProperty(templateParams, dv, {
             enumerable: true,
-            get() {
-                return parameters[dv].default;
-            }
+            get: (() => {
+                const key = dv;
+                return function () {
+                    return parameters[key].default;
+                };
+            })()
         })
     );
 }

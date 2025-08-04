@@ -18,8 +18,8 @@ async function loadTemplateConfig(templateDir) {
     // Try to load config from .ageneratorrc
     try {
         const rcConfigPath = path.resolve(templateDir, PRIMARY_CONFIG_FILE);
-        const yaml = await readFile(rcConfigPath, { encoding: 'utf8' });
-        const yamlConfig = yaml.load(yaml);
+        const rcContent = await readFile(rcConfigPath, { encoding: 'utf8' });
+        const yamlConfig = yaml.load(rcContent);
         templateConfig = yamlConfig || {};
         return templateConfig;
     } catch (rcError) {

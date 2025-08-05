@@ -43,9 +43,16 @@ You can use our AsyncAPI's credentials to access different set of events produce
     But that is just for testing. The point is to use the generated Python client.
 
 1. Start the example that uses generated client. Examine events, and modify example as you want:
+    
+    Linux/MacOs
     ```
-    TICKET=6b150bb1-82b4-457f-a09d-6ff0af1fd2d1 APP_ID=00dfdcccb53a2645dd3f1773fcb10fa7b0a598cf333a990a9db12375ef1865dd python example-slack.py
+    TICKET=8e359c0d-88df-4cdb-90b5-c8f57e454588 APP_ID=00dfdcccb53a2645dd3f1773fcb10fa7b0a598cf333a990a9db12375ef1865dd python example-slack.py
     ```
+    Windows
+    ```
+    $env:TICKET="dcaa9dc7-b728-40dd-ac40-16dd5f2f8710"; $env:APP_ID="00dfdcccb53a2645dd3f1773fcb10fa7b0a598cf333a990a9db12375ef1865dd"; python example-slack.py
+    ```
+    
     Successfully established connection will welcome you with below event:
     ```
     {"type":"hello","num_connections":1,"debug_info":{"host":"applink-3","build_number":118,"approximate_connection_time":18060},"connection_info":{"app_id":"A08NKKBFGBD"}}

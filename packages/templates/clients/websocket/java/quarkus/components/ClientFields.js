@@ -1,10 +1,25 @@
+import { toCamelCase } from '@asyncapi/generator-helpers';
 import { Text } from '@asyncapi/generator-react-sdk';
 
-export function ClientFields() {
+export function ClientFields({ queryParams }) {
+
+  var queryParamsVariables = '';
+  const queryParamsArray = queryParams && Array.from(queryParams.entries());
+  
+  if(queryParamsArray) {
+    queryParamsVariables = `\nprivate HashMap<String, String> params;\n`;
+    queryParamsVariables += queryParamsArray.map((param) => {
+      const paramName = toCamelCase(param[0]);
+      return `private String ${paramName};`;                               
+    })
+    .join('\n');
+  }
+
   return (
     <Text indent={2} newLines={2}>
       {`@Inject
-WebSocketClientConnection connection;`}
+WebSocketClientConnection connection;
+${queryParamsVariables}`}
     </Text>
   );
 }

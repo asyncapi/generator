@@ -4,17 +4,42 @@ import { Models } from '@asyncapi/generator-components';
 export default async function({ asyncapi }) {
   const websocketJavaPreset = {
     class: {
-      self({ content, dependencyManager }) {
-        return `package com.asyncapi.models;\n\n${content}`;
+      self({ content, model }) {
+        // Temporary solution to handle imports dynamically
+        console.log("Processing class:", model.name, model.type);
+
+        const requiredImports = new Set();
+        requiredImports.add('import java.util.Objects;');
+        Object.values(model.properties).forEach(property => {
+          const type = property.property.type;
+
+          if (type === 'Map<String, Object>') {
+            requiredImports.add('import java.util.Map;'); // need to be better 
+          }
+          // Add other type checks and imports as needed
+        });
+        const imports = Array.from(requiredImports).join('\n');
+        return `package com.asyncapi.models;\n\n${imports}\n\n${content}`;
+
       },
-      property({ content, property }) {
-        if (property.property && property.property.type === 'Integer') {
-          return `@Service\n${content}`;
-        }
+      property({ content }) {
         return content;
       },
       additionalContent({ content }) {
         return content;
+      }
+    },
+    enum:{
+      self({ content }) {
+        console.log("Processing enum content:");
+        return `package com.asyncapi.models;\n\n${content}`;
+      }
+    },
+     interface: {
+      self({ content }) {
+        // doesn't enter here for some reason ----------> Issue casue not adding package and not compiling, doing it by hand!!!
+        console.log("Processing interface content:");
+        return `package com.asyncapi.models;\n\n${content}`;
       }
     }
   };
@@ -34,3 +59,12 @@ export default async function({ asyncapi }) {
 
   return await Models({ asyncapi, language: 'java', format: 'toPascalCase', presets: combinedPresets});
 }
+
+
+/**
+ * old code
+ * 
+ * if (property.property && property.property.type === 'Integer') {
+          return `@Service\n${content}`;
+        }
+ */

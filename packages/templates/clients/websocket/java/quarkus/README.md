@@ -26,3 +26,25 @@ You can test this template (for now modifications are coming):
 
 ## Todo
 - Support slack AsyncAPI document
+
+Note: need onTextMessage always to process the message!!!
+
+re-template with the working example
+
+try to find a use for the constructor, Still keep cause the user may want to do something with it later
+
+might try to handle json message
+
+add getters later
+
+
+Todo Aug 5th:
+
+fix enum and interface pacakge
+add slack test
+add serverhost test
+
+
+Command:
+
+$env:TICKET="ffd199b0-3b97-47b6-901f-960091269cc1"; $env:APPID="00dfdcccb53a2645dd3f1773fcb10fa7b0a598cf333a990a9db12375ef1865dd"; mvn quarkus:dev

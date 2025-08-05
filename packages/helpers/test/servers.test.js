@@ -1,6 +1,6 @@
 const path = require('path');
 const { Parser, fromFile } = require('@asyncapi/parser');
-const { getServerUrl, getServer } = require('@asyncapi/generator-helpers');
+const { getServerUrl, getServer, getServerHost } = require('@asyncapi/generator-helpers');
 
 const parser = new Parser();
 const asyncapi_v3_path = path.resolve(__dirname, './__fixtures__/asyncapi-websocket-query.yml');
@@ -80,4 +80,44 @@ describe('getServer integration test with AsyncAPI', () => {
       getServer(servers, serverName);
     }).toThrow('Server name must be provided.');
   });
+});
+
+describe('getServerHost integration test with AsyncAPI', () => {
+  let parsedAsyncAPIDocument;
+
+  beforeAll(async () => {
+    const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
+    parsedAsyncAPIDocument = parseResult.document;
+  });
+
+  it('should return correct server host when host is provided', () => {
+    const server = parsedAsyncAPIDocument.servers().get('withPathname');
+    
+    const serverHost = getServerHost(server);
+
+    // Example assertion: Ensure the correct host is returned
+    expect(serverHost).toBe('api.gemini.com');
+  });
+
+  // it('should throw an error when host is not found in the server configuration', () => {
+  //   const server = parsedAsyncAPIDocument.servers().get('withoutHost');
+
+  //   expect(() => {
+  //     getServerHost(server);
+  //   }).toThrow('Host not found in the server configuration.');
+  // });
+
+  // it('should handle server with missing host gracefully', () => {
+  //   const server = parsedAsyncAPIDocument.servers().get('withoutHost');
+
+  //   // Example of what the behavior might be if host is missing
+  //   expect(() => getServerHost(server)).toThrow('Host not found in the server configuration.');
+  // });
+
+  /* ask why i can't make a server with no host ?!?!?!?!
+  
+  can't test to full extent 
+  
+  */
+
 });

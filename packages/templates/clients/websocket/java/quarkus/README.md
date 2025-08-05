@@ -43,6 +43,7 @@ Todo Aug 5th:
 fix enum and interface pacakge
 add slack test
 add serverhost test
+add proper documentation for slack
 
 
 Command:

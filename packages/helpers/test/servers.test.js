@@ -99,25 +99,31 @@ describe('getServerHost integration test with AsyncAPI', () => {
     expect(serverHost).toBe('api.gemini.com');
   });
 
-  // it('should throw an error when host is not found in the server configuration', () => {
-  //   const server = parsedAsyncAPIDocument.servers().get('withoutHost');
+  it('should handle server with duplicate protocol in host', () => {
+    const server = parsedAsyncAPIDocument.servers().get('withHostDuplicatingProtocol');    
+    const serverHost = getServerHost(server);
 
-  //   expect(() => {
-  //     getServerHost(server);
-  //   }).toThrow('Host not found in the server configuration.');
-  // });
+    // Should strip the duplicate protocol prefix
+    expect(serverHost).toBe('api.gemini.com');
+  });
 
-  // it('should handle server with missing host gracefully', () => {
-  //   const server = parsedAsyncAPIDocument.servers().get('withoutHost');
+  it('should throw error when server has no host', () => {
+    // Mock a server without host
+    const mockServer = {
+      host: () => null,
+      protocol: () => 'wss'
+    };
+    
+    expect(() => getServerHost(mockServer)).toThrow('Host not found in the server configuration.');
+  });
 
-  //   // Example of what the behavior might be if host is missing
-  //   expect(() => getServerHost(server)).toThrow('Host not found in the server configuration.');
-  // });
-
-  /* ask why i can't make a server with no host ?!?!?!?!
+  it('should throw error when server has no host', () => {
+    // Mock a server without host
+    const mockServer = {
+      host: () => '',
+      protocol: () => 'wss'
+    };
   
-  can't test to full extent 
-  
-  */
-
+    expect(() => getServerHost(mockServer)).toThrow('Host not found in the server configuration.');
+  });
 });

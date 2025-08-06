@@ -36,11 +36,10 @@ add getters later ???
 
 Todo Aug 5th:
 
-fix enum and interface pacakge
-add serverhost test ( need to confirm the no host test case)
+fix enum and interface pacakge !!!
 add proper documentation for slack
 
-
+Ask: add serverhost test ( works and added a checking for duplicate, ask if okay)
 Command:
 
 $env:TICKET="ffd199b0-3b97-47b6-901f-960091269cc1"; $env:APPID="00dfdcccb53a2645dd3f1773fcb10fa7b0a598cf333a990a9db12375ef1865dd"; mvn quarkus:dev

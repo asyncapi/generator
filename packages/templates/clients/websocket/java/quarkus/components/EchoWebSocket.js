@@ -12,7 +12,6 @@ export function EchoWebSocket({ clientName, pathName, title, queryParams, operat
     pathName = '/';
   }
 
-  console.log("EchoWebSocket:", queryParams);
 
   return (
     <Text>

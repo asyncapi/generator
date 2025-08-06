@@ -81,21 +81,3 @@ function runCommonSlackTests(language, config){
 }
 
 module.exports = { runCommonTests, runCommonSlackTests };
-
-
-
-/**
- * const generator = new Generator(config.template, testResultPathSlack, {
-        forceWrite: true,
-        templateParams: buildParams(language, config, production)
-      });
-
-      await generator.generateFromFile(asyncapi_v3_path_slack);
-      
-      const testOutputFiles = await listFiles(testResultPathSlack);
-      for (const testOutputFile of testOutputFiles) {
-        const filePath = path.join(testResultPathSlack, testOutputFile);
-        const content = await readFile(filePath, 'utf8');
-        expect(content).toMatchSnapshot(testOutputFile);
-      }
- */

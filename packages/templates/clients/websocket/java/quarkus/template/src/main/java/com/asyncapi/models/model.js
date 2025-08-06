@@ -30,8 +30,8 @@ export default async function({ asyncapi }) {
       }
     },
     enum:{
-      self({ content }) {
-        console.log("Processing enum content:");
+      self({ content, model}) {
+        console.log("Processing enum content:", model.name, model.type);
         return `package com.asyncapi.models;\n\n${content}`;
       }
     },
@@ -59,12 +59,3 @@ export default async function({ asyncapi }) {
 
   return await Models({ asyncapi, language: 'java', format: 'toPascalCase', presets: combinedPresets});
 }
-
-
-/**
- * old code
- * 
- * if (property.property && property.property.type === 'Integer') {
-          return `@Service\n${content}`;
-        }
- */

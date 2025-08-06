@@ -95,23 +95,3 @@ describe('WebSocket Clients Integration Tests', () => {
     });
   });
 });
-
-// describe('Additional tests for Python client', () => {
-    // //   it('generate client for slack', async () => {
-    // //     const testResultPathSlack = path.join(config.testResultPath, 'client_slack');
-    // //     const generator = new Generator(config.template, testResultPathSlack, {
-    // //       forceWrite: true,
-    // //       templateParams: {
-    // //         server: 'production',
-    // //         clientFileName: config.clientFileName
-    // //       }
-    // //     });
-    // //     await generator.generateFromFile(asyncapi_v3_path_slack);
-    // //     const testOutputFiles = await listFiles(testResultPathSlack);
-    // //     for (const testOutputFile of testOutputFiles) {
-    // //       const filePath = path.join(testResultPathSlack, testOutputFile);
-    // //       const content = await readFile(filePath, 'utf8');
-    // //       expect(content).toMatchSnapshot(testOutputFile);
-    // //     }
-    // //   });
-    //  });

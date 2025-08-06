@@ -29,20 +29,15 @@ You can test this template (for now modifications are coming):
 
 Note: need onTextMessage always to process the message!!!
 
-re-template with the working example
-
 try to find a use for the constructor, Still keep cause the user may want to do something with it later
-
 might try to handle json message
-
-add getters later
+add getters later ???
 
 
 Todo Aug 5th:
 
 fix enum and interface pacakge
-add slack test
-add serverhost test
+add serverhost test ( need to confirm the no host test case)
 add proper documentation for slack
 
 

@@ -56,7 +56,9 @@ const getServerHost = (server) => {
   if (!serverHost) {
     throw new Error('Host not found in the server configuration.');
   }
-  return serverHost;
+  // Match common protocols followed by :// (User should not include protocol in host, check with server.protocol() method)
+  const protocolRegex = /^[a-zA-Z][a-zA-Z0-9+.-]*:\/\//;
+  return serverHost.replace(protocolRegex, '');  
 };
   
 module.exports = {

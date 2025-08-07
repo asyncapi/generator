@@ -5,6 +5,13 @@ export default function AppProperties({ asyncapi, params }) {
   const server = getServer(asyncapi.servers(), params.server);
   const clientName = getClientName(asyncapi, params.appendClientSuffix, params.customClientName);
   const serverHost = getServerHost(server);
+  const serverProtocol = server.protocol();
+  
+  if (!serverProtocol) {
+    throw new Error('Protocol is not defined in server configuration.');
+  }
+ 
+  const protocol = `${serverProtocol}://`;
 
   return (
     <File name="application.properties">
@@ -12,7 +19,7 @@ export default function AppProperties({ asyncapi, params }) {
         {`# application.properties
 
 # Define a named base-uri for ${clientName}
-com.asyncapi.${clientName}.base-uri=wss://${serverHost}`}
+com.asyncapi.${clientName}.base-uri=${protocol}${serverHost}`}
       </Text>
     </File>
   );

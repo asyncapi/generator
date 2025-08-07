@@ -1,11 +1,12 @@
 import { ClientFields } from './ClientFields.js';
+import { Constructor } from './Constructor.js';
 import HandleError from './HandleError.js';
 import OnClose from './OnClose.js';
 import OnOpen from './OnOpen.js';
 import OnTextMessageHandler from './OnTextMessageHandler.js';
 import { Text } from '@asyncapi/generator-react-sdk';
 
-export function EchoWebSocket({ clientName, pathName, title, operations }) {
+export function EchoWebSocket({ clientName, pathName, title, queryParams, operations }) {
   const sendOperations = operations.filterBySend();
   if (!pathName) {
     pathName = '/';
@@ -17,7 +18,8 @@ export function EchoWebSocket({ clientName, pathName, title, operations }) {
         {`@WebSocketClient(path = "${pathName}")  
 public class ${clientName}{`}
       </Text>
-      <ClientFields />
+      <ClientFields queryParams={queryParams} />
+      <Constructor clientName={clientName} query={queryParams} />
       <OnOpen title={title}/>
       <OnTextMessageHandler sendOperations={sendOperations}/>
       <HandleError/>

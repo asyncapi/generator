@@ -1,6 +1,6 @@
 import { Text } from '@asyncapi/generator-react-sdk';
 
-export function ClientDependencies() {
+export function ClientDependencies({ queryParams }) {
   return (
     <Text>
       <Text>
@@ -15,7 +15,8 @@ import io.quarkus.websockets.next.OnError;
 import io.quarkus.websockets.next.OnTextMessage;
 import io.quarkus.websockets.next.CloseReason;
 import jakarta.inject.Inject;
-import io.quarkus.logging.Log;`}
+import io.quarkus.logging.Log;
+${ queryParams ? 'import java.util.HashMap;' : ''}`}
       </Text>
     </Text>
   );

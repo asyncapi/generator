@@ -1,6 +1,6 @@
 const path = require('path');
 const { Parser, fromFile } = require('@asyncapi/parser');
-const { getServerUrl, getServer } = require('@asyncapi/generator-helpers');
+const { getServerUrl, getServer, getServerHost } = require('@asyncapi/generator-helpers');
 
 const parser = new Parser();
 const asyncapi_v3_path = path.resolve(__dirname, './__fixtures__/asyncapi-websocket-query.yml');
@@ -79,5 +79,51 @@ describe('getServer integration test with AsyncAPI', () => {
     expect(() => {
       getServer(servers, serverName);
     }).toThrow('Server name must be provided.');
+  });
+});
+
+describe('getServerHost integration test with AsyncAPI', () => {
+  let parsedAsyncAPIDocument;
+
+  beforeAll(async () => {
+    const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
+    parsedAsyncAPIDocument = parseResult.document;
+  });
+
+  it('should return correct server host when host is provided', () => {
+    const server = parsedAsyncAPIDocument.servers().get('withPathname');
+    
+    const serverHost = getServerHost(server);
+
+    // Example assertion: Ensure the correct host is returned
+    expect(serverHost).toBe('api.gemini.com');
+  });
+
+  it('should handle server with duplicate protocol in host', () => {
+    const server = parsedAsyncAPIDocument.servers().get('withHostDuplicatingProtocol');    
+    const serverHost = getServerHost(server);
+
+    // Should strip the duplicate protocol prefix
+    expect(serverHost).toBe('api.gemini.com');
+  });
+
+  it('should throw error when server has no host', () => {
+    // Mock a server without host
+    const mockServer = {
+      host: () => null,
+      protocol: () => 'wss'
+    };
+    
+    expect(() => getServerHost(mockServer)).toThrow('Host not found in the server configuration.');
+  });
+
+  it('should throw error when server has empty host', () => {
+    // Mock a server without host
+    const mockServer = {
+      host: () => '',
+      protocol: () => 'wss'
+    };
+  
+    expect(() => getServerHost(mockServer)).toThrow('Host not found in the server configuration.');
   });
 });

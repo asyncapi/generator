@@ -24,20 +24,3 @@ export default function InitConnector({ queryParamsArray, pathName }) {
   );
     
 }
-
-
-/**
- * 
- * 1) revert back to old ( the current internal apiu endpoint)
- * 
- * 2) make another connect (idk a "ComplexConnector") so that I can connect to server which need validation etc.
- *  ( look for quarkusb - esk) 
- * 
- * 
- * 
- * Aug 5
- * 
- * Everything is connected but I am not receiving message
- * 
- * I am even sending message via webcoket on postman????
- */

@@ -13,6 +13,7 @@ export default function CloseConnector( ) {
             System.exit(0);
         } catch (Exception e) {
               Log.error("Error during WebSocket communication", e);
+              System.exit(1);
         }
     }).start();
   }

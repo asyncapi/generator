@@ -4,6 +4,10 @@ import { ConnectorFields } from './ConnectorFields';
 
 export default function ClientConnector({ clientName, query, pathName }) {
   const queryParamsArray = query && Array.from(query.entries());
+  if (!pathName) {
+    pathName = '/';
+  }
+  
   return (
     <Text newLines={2} indent={2}>
       <Text newLines={2}>

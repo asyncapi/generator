@@ -1015,7 +1015,9 @@ public class Event {
 `;
 
 exports[`WebSocket Clients Integration Tests Java Quarkus Client Additional tests for Java client generate client for slack: EventData.java 1`] = `
-"/**
+"package com.asyncapi.models;
+
+/**
  * EventData represents a union of types: ChannelJoin, ReactionAdded, MessageDeleted
  */
 public interface EventData {
@@ -1633,13 +1635,21 @@ import java.nio.charset.StandardCharsets;
               String query = \\"\\";
             
               String ticket = System.getenv(\\"TICKET\\");
+              if(ticket == null || ticket.isEmpty()){
+                 throw new IllegalArgumentException(\\"Required environment variable TICKET is missing or empty\\");
+              }
               query += \\"ticket=\\" + URLEncoder.encode(ticket, StandardCharsets.UTF_8);
+
               String appId = System.getenv(\\"APPID\\");
+              if(appId == null || appId.isEmpty()){
+                 throw new IllegalArgumentException(\\"Required environment variable APPID is missing or empty\\");
+              }
               query += \\"&app_id=\\" + URLEncoder.encode(appId, StandardCharsets.UTF_8);
+
 
               String queryUri = baseURI + \\"/link\\" + \\"?\\" + query;
               WebSocketClientConnection connection = connector.baseUri(queryUri).connectAndAwait();
-              Thread.sleep(100000); // Keep the connection open for 2 minutes
+              Thread.sleep(120000); // Keep the connection open for 2 minutes
             
 
               // Close the connection gracefully
@@ -1649,6 +1659,7 @@ import java.nio.charset.StandardCharsets;
               System.exit(0);
           } catch (Exception e) {
                 Log.error(\\"Error during WebSocket communication\\", e);
+                System.exit(1);
           }
       }).start();
     }
@@ -2642,6 +2653,7 @@ import io.quarkus.runtime.Startup;
               System.exit(0);
           } catch (Exception e) {
                 Log.error(\\"Error during WebSocket communication\\", e);
+                System.exit(1);
           }
       }).start();
     }
@@ -3794,6 +3806,7 @@ import io.quarkus.runtime.Startup;
               System.exit(0);
           } catch (Exception e) {
                 Log.error(\\"Error during WebSocket communication\\", e);
+                System.exit(1);
           }
       }).start();
     }
@@ -5044,6 +5057,7 @@ import io.quarkus.runtime.Startup;
               System.exit(0);
           } catch (Exception e) {
                 Log.error(\\"Error during WebSocket communication\\", e);
+                System.exit(1);
           }
       }).start();
     }

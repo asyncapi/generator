@@ -17,14 +17,3 @@ export default async function ({ asyncapi, params }) {
     </File>
   );
 }
-
-
-/**
- * 1) need to add a feature so that it closes by itsself, after time out as Adi said
- * 
- * 2) need to make it so that can have not timed connection for bindings 
- * 
- * 3) and so I can pass those variables to the slack
- * 
- * 4) once you get it to work, try to use more java and cdi software desgin patterns
- */

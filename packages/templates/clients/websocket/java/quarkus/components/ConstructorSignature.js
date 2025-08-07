@@ -22,17 +22,3 @@ export function ConstructorSignature({ clientName, queryParams }) {
     </Text>
   );
 }
-
-
-
-//**
-// 
-// 
-// Might need an empty constructor for quarkus to work
-// 
-// whats params dictionary for Need to store it to append when connecting to websocket
-// for me store in variable
-
-// need default contructor and one with vaues (use if array not empty)
-// 
-//  */

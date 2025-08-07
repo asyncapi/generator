@@ -1,7 +1,6 @@
 import { Text } from '@asyncapi/generator-react-sdk';
 
 export default function OnTextMessage({ sendOperations }) {
-
   return (
     <>
       {
@@ -14,10 +13,10 @@ export default function OnTextMessage({ sendOperations }) {
 public void ${methodName}(String message, WebSocketClientConnection connection) {
     Log.info("Received text message: " + message);
 }`}
-            </Text>
-          );
-        })
-      )}
+              </Text>
+            );
+          })
+        )}
 
       {
         (!sendOperations || sendOperations.length === 0) && (

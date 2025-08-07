@@ -9,7 +9,7 @@ WebSocketConnector<${clientName}> connector;
 ${ queryParamsArray && queryParamsArray.length ? `
 @Inject
 @ConfigProperty(name = "com.asyncapi.${clientName}.base-uri")
-String baseURI;` : ``}
+String baseURI;` : ''}
 `}
     </Text>
   );

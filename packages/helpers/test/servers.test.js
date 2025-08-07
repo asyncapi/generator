@@ -117,7 +117,7 @@ describe('getServerHost integration test with AsyncAPI', () => {
     expect(() => getServerHost(mockServer)).toThrow('Host not found in the server configuration.');
   });
 
-  it('should throw error when server has no host', () => {
+  it('should throw error when server has empty host', () => {
     // Mock a server without host
     const mockServer = {
       host: () => '',

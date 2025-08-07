@@ -61,23 +61,20 @@ function runCommonTests(language, config) {
   });
 }
 
-function runCommonSlackTests(language, config){
+function runCommonSlackTests(language, config) {
   const testResultPathSlack = path.join(config.testResultPath, 'client_slack');
 
   describe(`Additional tests for ${language} client`, () => {
     jest.setTimeout(100000);
     it('generate client for slack', async () => {
-      
       await generateAndVerifyClient(
         config.template,
         testResultPathSlack,
         asyncapi_v3_path_slack,
         buildParams(language, config, 'production')
       );
-      
     });
   });
-
 }
 
 module.exports = { runCommonTests, runCommonSlackTests };

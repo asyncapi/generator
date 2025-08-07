@@ -5,8 +5,8 @@ import { QueryParamsVariables } from './QueryParamsVariables';
 
 export function Constructor({clientName, query}) {
   const queryParamsArray = query && Array.from(query.entries());
-  if(!queryParamsArray || queryParamsArray.length === 0) {
-    return
+  if (!queryParamsArray || queryParamsArray.length === 0) {
+    return;
   }
   
   return (
@@ -14,12 +14,12 @@ export function Constructor({clientName, query}) {
       <DefaultConstructorSignature clientName={clientName} queryParams={queryParamsArray} />
       <ConstructorSignature clientName={clientName} queryParams={queryParamsArray} />
       <Text indent={6} >
-        {`${ query ? 'params = new HashMap<>(); ' : ''}`
+        {`${ queryParamsArray && queryParamsArray.length > 0 ? 'params = new HashMap<>(); ' : ''}`
         }
       </Text>
       <QueryParamsVariables queryParams={queryParamsArray} />
       <Text indent={2}>
-        {`}\n`}
+        {'}\n'}
       </Text>
     </>
   );

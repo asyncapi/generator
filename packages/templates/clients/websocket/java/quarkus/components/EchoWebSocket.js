@@ -12,7 +12,6 @@ export function EchoWebSocket({ clientName, pathName, title, queryParams, operat
     pathName = '/';
   }
 
-
   return (
     <Text>
       <Text newLines={2}>

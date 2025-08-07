@@ -2,7 +2,7 @@ import { toCamelCase } from '@asyncapi/generator-helpers/src/utils';
 import { Text } from '@asyncapi/generator-react-sdk';
 
 export function QueryParamsVariables({ queryParams }) {
-  if (!queryParams) {
+  if (!queryParams || !Array.isArray(queryParams)) { 
     return null;
   }
 

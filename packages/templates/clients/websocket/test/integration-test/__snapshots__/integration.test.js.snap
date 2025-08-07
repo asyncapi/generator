@@ -2638,7 +2638,7 @@ import io.quarkus.runtime.Startup;
                   String msg = \\"Message #\\" + i + \\" from Quarkus\\";
                   connection.sendTextAndAwait(msg);
                   Log.info(\\"Sent: \\" + msg);
-                  Thread.sleep(5000);
+                  Thread.sleep(5000); // Wait 5 seconds between messages
               }
 
               // Wait 10 seconds after final message
@@ -3791,7 +3791,7 @@ import io.quarkus.runtime.Startup;
                   String msg = \\"Message #\\" + i + \\" from Quarkus\\";
                   connection.sendTextAndAwait(msg);
                   Log.info(\\"Sent: \\" + msg);
-                  Thread.sleep(5000);
+                  Thread.sleep(5000); // Wait 5 seconds between messages
               }
 
               // Wait 10 seconds after final message
@@ -5042,7 +5042,7 @@ import io.quarkus.runtime.Startup;
                   String msg = \\"Message #\\" + i + \\" from Quarkus\\";
                   connection.sendTextAndAwait(msg);
                   Log.info(\\"Sent: \\" + msg);
-                  Thread.sleep(5000);
+                  Thread.sleep(5000); // Wait 5 seconds between messages
               }
 
               // Wait 10 seconds after final message

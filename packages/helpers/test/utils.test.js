@@ -159,9 +159,13 @@ describe('toCamelCase integration test with AsyncAPI', () => {
   let parsedAsyncAPIDocument, operations;
 
   beforeAll(async () => {
-    const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
-    parsedAsyncAPIDocument = parseResult.document;
-    operations = parsedAsyncAPIDocument.operations();
+    try {
+      const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
+      parsedAsyncAPIDocument = parseResult.document;
+      operations = parsedAsyncAPIDocument.operations();
+    } catch (error) {
+      throw new Error(`Error parsing AsyncAPI document: ${error.message}`); 
+    }
   });
 
   it('should convert snake_case operation names to camelCase format', () => {

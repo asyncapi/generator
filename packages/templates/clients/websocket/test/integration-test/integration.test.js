@@ -1,9 +1,8 @@
 const path = require('path');
-const { readFile, stat } = require('fs').promises;
+const { stat } = require('fs').promises;
 const Generator = require('@asyncapi/generator');
-const { listFiles, cleanTestResultPaths } = require('@asyncapi/generator-helpers');
+const { cleanTestResultPaths } = require('@asyncapi/generator-helpers');
 const { runCommonTests, runCommonSlackTests } = require('./common-test.js');
-const asyncapi_v3_path_slack = path.resolve(__dirname, '../__fixtures__/asyncapi-slack-client.yml');
 const asyncapi_v3_path_hoppscotch = path.resolve(__dirname, '../__fixtures__/asyncapi-hoppscotch-client.yml');
 
 /**

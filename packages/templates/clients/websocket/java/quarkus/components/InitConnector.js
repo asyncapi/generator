@@ -4,7 +4,6 @@ import CloseConnector from './CloseConnector';
 import URIParams from './URIParams';
 
 export default function InitConnector({ queryParamsArray, pathName }) {
-
   return (
     <Text>
       {`
@@ -20,7 +19,6 @@ export default function InitConnector({ queryParamsArray, pathName }) {
       }
       <URIParams queryParamsArray={queryParamsArray} pathName={pathName} />
       <CloseConnector />
-      </Text>
+    </Text>
   );
-    
 }

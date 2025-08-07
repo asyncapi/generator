@@ -27,26 +27,26 @@ You can use our AsyncAPI's credentials to access different set of events produce
 3. Generate an access ticket with an application ID that will enable you to establish a websocket connection. Such a ticket can be used only once. You need to generate a new one every time you connect to Slack server. Replace the following  bearer token with real token that you can find in `slack-example.md` document added to bookmarks of `#generator` channel in [AsyncAPI Slack workspace](https://www.asyncapi.com/slack-invite):
     
     Linux/MacOs
-    ```
+    ```bash
     curl --location --request POST 'https://slack.com/api/apps.connections.open' \
     --header 'Authorization: Bearer TAKE_XAPP_TOKEN_FROM_BOOKMARKS_DOC_IN_SLACK'
     ```
 
     Windows
-    ```
-    curl.exe --location --request POST 'https://slack.com/api/apps.connections.open' ^
+    ```powershell
+    curl.exe --location --request POST 'https://slack.com/api/apps.connections.open' `
     --header 'Authorization: Bearer TAKE_XAPP_TOKEN_FROM_BOOKMARKS_DOC_IN_SLACK'
     ```
 
 >**Note**:  Ensure that you do not expose the real token on GitHub or any other public platform because it will be disabled by Slack.
 
     Example response with `ticket` and `app_id`:
-    ```
+    ```json
     {"ok":true,"url":"wss:\/\/wss-primary.slack.com\/link\/?ticket=089a0c38-cdec-409f-99fa-0ca24e216ea4&app_id=00dfdcccb53a2645dd3f1773fcb10fa7b0a598cf333a990a9db12375ef1865dd"}
     ```
 
     You can take generated `url` and use with CLI websocket client like `websocat` (first remove excape backslashes):
-    ```
+    ```bash
     websocat "wss://wss-primary.slack.com/link/?ticket=5ad694c1-2a81-4cfc-a503-057b8e798120&app_id=00dfdcccb53a2645dd3f1773fcb10fa7b0a598cf333a990a9db12375ef1865dd"
     ```
 
@@ -55,17 +55,17 @@ You can use our AsyncAPI's credentials to access different set of events produce
 1. Start the example that uses generated client. Examine events, and modify example as you want:
     
     Linux/MacOs
-    ```
+    ```bash
     TICKET=6b150bb1-82b4-457f-a09d-6ff0af1fd2d1 APPID=00dfdcccb53a2645dd3f1773fcb10fa7b0a598cf333a990a9db12375ef1865dd mvn quarkus:dev
     ```
 
     Windows
-    ```
-    $env:TICKET="6b150bb1-82b4-457f-a09d-6ff0af1fd2d1"; $env:APPID="00dfdcccb53a2645dd3f1773fcb10fa7b0a598cf333a990a9db12375ef1865dd"; mvn quarkus:dev
+    ```powershell
+    $env:TICKET="92decefe-5cfa-43fc-8bea-c3554a432191"; $env:APPID="00dfdcccb53a2645dd3f1773fcb10fa7b0a598cf333a990a9db12375ef1865dd"; mvn quarkus:dev
     ```
     
     Successfully established connection will welcome you with below event:
-    ```
+    ```json
     {"type":"hello","num_connections":1,"debug_info":{"host":"applink-3","build_number":118,"approximate_connection_time":18060},"connection_info":{"app_id":"A08NKKBFGBD"}}
     ```
     If you did not receive it, you probably connect with wrong credentials. Remember that generated `ticket` can be used only once to establish a websocket connection.
@@ -79,23 +79,3 @@ You can use our AsyncAPI's credentials to access different set of events produce
 6. Navigate to `outputClient` or any other name you gave the output folder
 7. Run `mvn quarkus:dev`
 8. See the output in the terminal
-
-## Todo
-- Support slack AsyncAPI document
-
-Note: need onTextMessage always to process the message!!!
-
-try to find a use for the constructor, Still keep cause the user may want to do something with it later
-might try to handle json message
-add getters later ???
-
-
-Todo Aug 5th:
-
-fix enum and interface pacakge !!!
-add proper documentation for slack
-
-Ask: add serverhost test ( works and added a checking for duplicate, ask if okay)
-Command:
-
-$env:TICKET="ffd199b0-3b97-47b6-901f-960091269cc1"; $env:APPID="00dfdcccb53a2645dd3f1773fcb10fa7b0a598cf333a990a9db12375ef1865dd"; mvn quarkus:dev

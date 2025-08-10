@@ -1,19 +1,9 @@
-import { Text } from '@asyncapi/generator-react-sdk';
+import { MethodGenerator } from './MethodGenerator';
 
 /**
  * @typedef {'python' | 'javascript' | 'dart'} Language
  * Supported programming languages.
  */
-
-/**
- * Configuration for method syntax based on programming language.
- * @type {Record<Language, { returnType?: string, openingTag?: string, closingTag?: string, indentSize?: number }>}
- */
-const methodConfig = {
-  python: { returnType: 'def', openingTag: ':', indentSize: 2 },
-  javascript: { openingTag: '{', closingTag: '}', indentSize: 2 },
-  dart: { returnType: 'void', openingTag: '{', closingTag: '}', indentSize: 2 }
-};
 
 /**
  * Configuration for WebSocket message handler registration method logic per language.
@@ -52,40 +42,22 @@ else:
  * @returns {JSX.Element} Rendered method block with appropriate formatting.
  */
 export function RegisterMessageHandler({ language, methodName = 'registerMessageHandler', methodParams = [], preExecutionCode = '', postExecutionCode = '' }) {
-  const { 
-    returnType = '', 
-    openingTag = '', 
-    closingTag = '' ,
-    indentSize = 2
-  } = methodConfig[language];
-  const { 
-    methodDocs = '', 
-    methodLogic = '' 
+  const {
+    methodDocs = '',
+    methodLogic = ''
   } = websocketMessageRegisterConfig[language];
-  const params = methodParams.join(', ');
-
-  let completeCode = methodLogic;
-
-  if (preExecutionCode) {
-    completeCode = `${preExecutionCode}\n${completeCode}`;
-  }
-  if (postExecutionCode) {
-    completeCode = `${completeCode}\n${postExecutionCode}`;
-  }
-
-  const innerIndent = (' ').repeat(indentSize);
-  const indentedLogic = completeCode.split('\n')
-    .map(line => line ? `${innerIndent}${line}` : '')
-    .join('\n');
-
-  const methodCode = `${methodDocs}
-${returnType} ${methodName}(${params}) ${openingTag}
-${indentedLogic}
-${closingTag}`;
 
   return (
-    <Text newLines={2} indent={2}>
-      {methodCode}
-    </Text>
+    <MethodGenerator
+      language={language}
+      methodName={methodName}
+      methodParams={methodParams}
+      methodDocs={methodDocs}
+      methodLogic={methodLogic}
+      preExecutionCode={preExecutionCode}
+      postExecutionCode={postExecutionCode}
+      indent={2}
+      newLines={2}
+    />
   );
 }

@@ -1,0 +1,63 @@
+{
+  "name": "@asyncapi/template-java-kafka-quarkus",
+  "version": "0.0.1",
+  "description": "This is a template generating a Java Quarkus kafka client",
+  "keywords": [
+    "asyncapi",
+    "template",
+    "java",
+    "kafka",
+    "quarkus"
+  ],
+  "author": "Shuaib Salad <sh.salat@gmail.com>",
+  "license": "Apache-2.0",
+  "scripts": {
+    "test": "jest  --coverage --passWithNoTests",
+    "test:update": "npm run test -- -u",
+    "lint": "eslint --max-warnings 0 --config ../../../../../../.eslintrc --ignore-path ../../../../../../.eslintignore .",
+    "lint:fix": "eslint --fix --max-warnings 0 --config ../../../../../../.eslintrc --ignore-path ../../../../../../.eslintignore ."
+  },
+  "dependencies": {
+    "@asyncapi/generator-helpers": "1.0.0",
+    "@asyncapi/generator-react-sdk": "^1.1.2"
+  },
+  "devDependencies": {
+    "@asyncapi/generator": "*",
+    "@asyncapi/modelina": "^5.2.5",
+    "@asyncapi/parser": "^3.0.14",
+    "@babel/cli": "^7.25.9",
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
+    "@babel/preset-react": "^7.25.9",
+    "eslint": "^6.8.0",
+    "eslint-plugin-jest": "^23.8.2",
+    "eslint-plugin-react": "^7.34.1",
+    "eslint-plugin-sonarjs": "^0.5.0",
+    "jest-esm-transformer": "^1.0.0"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "jsx"
+    ],
+    "transform": {
+      "^.+\\.jsx?$": "babel-jest"
+    },
+    "moduleNameMapper": {
+      "^nimma/legacy$": "<rootDir>/../../../../../node_modules/nimma/dist/legacy/cjs/index.js",
+      "^nimma/(.*)": "<rootDir>/../../../../../node_modules/nimma/dist/cjs/$1"
+    }
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env",
+      [
+        "@babel/preset-react",
+        {
+          "runtime": "automatic"
+        }
+      ]
+    ]
+  }
+}

@@ -2,7 +2,7 @@ import { DependencyProvider } from '@asyncapi/generator-components';
 
 export function ClientDependencies({ queryParams }) {
   const additionalDependencies = [];
-  if (queryParams) {
+  if (queryParams && queryParams.length > 0) {
     additionalDependencies.push('import java.util.HashMap;');
   }
   return (

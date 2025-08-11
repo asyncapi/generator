@@ -7,7 +7,7 @@ You can test this template (for now modifications are coming):
 3. Navigate to `packages/templates/clients/websocket/java/quarkus`
 4. Install dependencies with `npm install` 
 5. Navigate to the generated clients in the folder with `cd test/temp/snapshotTestResult`
-6. Pick a generated client inside one of the folders and navigate to source code with `cd` ex: `cd /client_postman`
+6. Pick a generated client inside one of the folders and navigate to its source code. Example: `cd client_postman`
 7. Run the templated client with `mvn quarkus:dev`
 8. See the output in the terminal
 

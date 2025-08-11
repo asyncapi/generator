@@ -1,6 +1,6 @@
 const path = require('path');
 const { Parser, fromFile } = require('@asyncapi/parser');
-const { getClientName, getInfo, getTitle, toSnakeCase, toCamelCase } = require('@asyncapi/generator-helpers');
+const { getClientName, getInfo, getTitle, toSnakeCase } = require('@asyncapi/generator-helpers');
 
 const parser = new Parser();
 const asyncapi_v3_path = path.resolve(__dirname, './__fixtures__/asyncapi-websocket-query.yml');
@@ -150,47 +150,6 @@ describe('toSnakeCase integration test with AsyncAPI', () => {
 
   it('should return empty string', () => {
     const actualOperationId = toSnakeCase('');
-    const expectedOperationId = '';
-    expect(actualOperationId).toBe(expectedOperationId);
-  });
-});
-
-describe('toCamelCase integration test with AsyncAPI', () => {
-  let parsedAsyncAPIDocument, operations;
-
-  beforeAll(async () => {
-    try {
-      const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
-      parsedAsyncAPIDocument = parseResult.document;
-      operations = parsedAsyncAPIDocument.operations();
-    } catch (error) {
-      throw new Error(`Error parsing AsyncAPI document: ${error.message}`); 
-    }
-  });
-
-  it('should convert snake_case operation names to camelCase format', () => {
-    const operation = operations.get('operation_with_snake_case');
-    const actualOperationId = toCamelCase(operation.id());
-    const expectedOperationId = 'operationWithSnakeCase';
-    expect(actualOperationId).toBe(expectedOperationId);
-  });
-
-  it('should leave already camelCase operation names unchanged', () => {
-    const operation = operations.get('noSummaryNoDescriptionOperations');
-    const actualOperationId = toCamelCase(operation.id());
-    const expectedOperationId = 'noSummaryNoDescriptionOperations';
-    expect(actualOperationId).toBe(expectedOperationId);
-  });
-
-  it('should convert PascalCase operation names to camelCase format', () => {
-    const operation = operations.get('PascalCaseOperation');
-    const actualOperationId = toCamelCase(operation.id());
-    const expectedOperationId = 'pascalCaseOperation';
-    expect(actualOperationId).toBe(expectedOperationId);
-  });
-
-  it('should return empty string when operation ID is empty', () => {
-    const actualOperationId = toCamelCase('');
     const expectedOperationId = '';
     expect(actualOperationId).toBe(expectedOperationId);
   });

@@ -75,21 +75,9 @@ const toSnakeCase = (inputStr) => {
     .join('_');
 };
 
-/** * Convert a snake_case or kebab-case string to camelCase.
- * If the string is already in camelCase, it will be returned unchanged.
- * 
- * @param {string} inputStr - The string to convert to camelCase
- * @returns {string} The converted camelCase string
- */
-const toCamelCase = (inputStr) => {
-  return inputStr.replace(/[^a-zA-Z0-9]+(.)?/g, (match, chr) => chr ? chr.toUpperCase() : '')
-    .replace(/^./, (match) => match.toLowerCase());
-};
-
 module.exports = {
   getClientName,
   getTitle,
   getInfo,
-  toSnakeCase,
-  toCamelCase
+  toSnakeCase
 };

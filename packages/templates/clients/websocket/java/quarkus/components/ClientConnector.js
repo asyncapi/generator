@@ -9,7 +9,7 @@ export default function ClientConnector({ clientName, query, pathName }) {
   }
   
   return (
-    <Text newLines={2} indent={2}>
+    <Text newLines={2}>
       <Text newLines={2}>
         {`
 @Startup

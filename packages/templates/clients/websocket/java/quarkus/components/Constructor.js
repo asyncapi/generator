@@ -18,8 +18,8 @@ export function Constructor({clientName, query}) {
         }
       </Text>
       <QueryParamsVariables queryParams={queryParamsArray} />
-      <Text indent={2}>
-        {'}\n'}
+      <Text indent={2} newLines={2}>
+        {'}'}
       </Text>
     </>
   );

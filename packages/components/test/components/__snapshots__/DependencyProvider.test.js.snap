@@ -5,6 +5,48 @@ exports[`Testing of DependencyProvider function render dart websockets file depe
 import 'package:web_socket_channel/web_socket_channel.dart';"
 `;
 
+exports[`Testing of DependencyProvider function render java quarkus client dependencies with additionalDependencies 1`] = `
+"package com.asyncapi;
+
+import io.quarkus.websockets.next.WebSocketClient;
+import io.quarkus.websockets.next.WebSocketClientConnection;
+import io.quarkus.websockets.next.OnOpen;
+import io.quarkus.websockets.next.OnClose;
+import io.quarkus.websockets.next.OnError;
+import io.quarkus.websockets.next.OnTextMessage;
+import io.quarkus.websockets.next.CloseReason;
+import jakarta.inject.Inject;
+import io.quarkus.logging.Log;
+import java.util.concurrent.CompletableFuture;
+import java.time.Duration;"
+`;
+
+exports[`Testing of DependencyProvider function render java quarkus client websockets file dependencies correctly 1`] = `
+"package com.asyncapi;
+
+import io.quarkus.websockets.next.WebSocketClient;
+import io.quarkus.websockets.next.WebSocketClientConnection;
+import io.quarkus.websockets.next.OnOpen;
+import io.quarkus.websockets.next.OnClose;
+import io.quarkus.websockets.next.OnError;
+import io.quarkus.websockets.next.OnTextMessage;
+import io.quarkus.websockets.next.CloseReason;
+import jakarta.inject.Inject;
+import io.quarkus.logging.Log;"
+`;
+
+exports[`Testing of DependencyProvider function render java quarkus connector websockets file dependencies correctly 1`] = `
+"package com.asyncapi;
+
+import io.quarkus.websockets.next.WebSocketConnector;
+import io.quarkus.websockets.next.WebSocketClientConnection;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
+import jakarta.annotation.PostConstruct;
+import io.quarkus.logging.Log;
+import io.quarkus.runtime.Startup;"
+`;
+
 exports[`Testing of DependencyProvider function render js websockets file dependecies correctly 1`] = `"const WebSocket = require('ws');"`;
 
 exports[`Testing of DependencyProvider function render python websockets file dependecies correctly 1`] = `

@@ -11,7 +11,6 @@ exports[`WebSocket Clients Integration Tests Dart Client Common Integration test
 
 import 'dart:convert';
 import 'package:web_socket_channel/web_socket_channel.dart';
-
 class HoppscotchClient {
 
   final String _url;
@@ -125,7 +124,6 @@ exports[`WebSocket Clients Integration Tests Dart Client Common Integration test
 
 import 'dart:convert';
 import 'package:web_socket_channel/web_socket_channel.dart';
-
 class HoppscotchEchoWebSocketClient {
 
   final String _url;
@@ -240,7 +238,6 @@ exports[`WebSocket Clients Integration Tests Dart Client Common Integration test
 
 import 'dart:convert';
 import 'package:web_socket_channel/web_socket_channel.dart';
-
 class PostmanEchoWebSocketClientClient {
 
   final String _url;
@@ -1524,7 +1521,6 @@ exports[`WebSocket Clients Integration Tests Java Quarkus Client Additional test
 //
 //////////////////////////////////////////////////
 
-
 package com.asyncapi;
 
 import io.quarkus.websockets.next.WebSocketClient;
@@ -1558,12 +1554,10 @@ public class SlackWebsocketAPIClient{
       if (this.ticket != null){
         params.put(\\"ticket\\", this.ticket);
       }
-
       this.appId = (appId != null && !appId.isEmpty()) ? appId : System.getenv(\\"APPID\\");
       if (this.appId != null){
         params.put(\\"appId\\", this.appId);
       }
-
   }
 
   @OnOpen
@@ -1583,22 +1577,19 @@ public class SlackWebsocketAPIClient{
       Log.error(\\"Websocket connection error: \\" + throwable.getMessage());
   }
 
-
-
   @OnClose
-   public void onClose(CloseReason reason, WebSocketClientConnection connection) {
-      int code = reason.getCode();
-      Log.info(\\"Websocket disconnected from Slack Websocket API Client with Close code: \\" + code);
+     public void onClose(CloseReason reason, WebSocketClientConnection connection) {
+        int code = reason.getCode();
+        Log.info(\\"Websocket disconnected from Slack Websocket API Client with Close code: \\" + code);
+    }
   }
-}
 
 
 "
 `;
 
 exports[`WebSocket Clients Integration Tests Java Quarkus Client Additional tests for Java client generate client for slack: SlackWebsocketAPIClientConnector.java 1`] = `
-"
-package com.asyncapi;
+"package com.asyncapi;
 
 import io.quarkus.websockets.next.WebSocketConnector;
 import io.quarkus.websockets.next.WebSocketClientConnection;
@@ -1607,63 +1598,62 @@ import jakarta.inject.Singleton;
 import jakarta.annotation.PostConstruct;
 import io.quarkus.logging.Log;
 import io.quarkus.runtime.Startup;
-
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import java.net.URI;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
-  @Startup
-  @Singleton  
-  public class SlackWebsocketAPIClientConnector{
+@Startup
+@Singleton  
+public class SlackWebsocketAPIClientConnector{
 
-    @Inject
-    WebSocketConnector<SlackWebsocketAPIClient> connector;
-
-
-    @Inject
-    @ConfigProperty(name = \\"com.asyncapi.SlackWebsocketAPIClient.base-uri\\")
-    String baseURI;
+  @Inject
+  WebSocketConnector<SlackWebsocketAPIClient> connector;
 
 
-    @PostConstruct
-    void openAndSendMessagesWithDelay() {
-        new Thread(() -> {
-            try {
-              Log.info(\\"Starting WebSocket connection attempt...\\");
-              // URI parameters
-              String query = \\"\\";
+  @Inject
+  @ConfigProperty(name = \\"com.asyncapi.SlackWebsocketAPIClient.base-uri\\")
+  String baseURI;
+
+
+  @PostConstruct
+  void openAndSendMessagesWithDelay() {
+      new Thread(() -> {
+          try {
+            Log.info(\\"Starting WebSocket connection attempt...\\");
+            // URI parameters
+            String query = \\"\\";
             
-              String ticket = System.getenv(\\"TICKET\\");
-              if(ticket == null || ticket.isEmpty()){
-                 throw new IllegalArgumentException(\\"Required environment variable TICKET is missing or empty\\");
-              }
-              query += \\"ticket=\\" + URLEncoder.encode(ticket, StandardCharsets.UTF_8);
+            String ticket = System.getenv(\\"TICKET\\");
+            if(ticket == null || ticket.isEmpty()){
+               throw new IllegalArgumentException(\\"Required environment variable TICKET is missing or empty\\");
+            }
+            query += \\"ticket=\\" + URLEncoder.encode(ticket, StandardCharsets.UTF_8);
 
-              String appId = System.getenv(\\"APPID\\");
-              if(appId == null || appId.isEmpty()){
-                 throw new IllegalArgumentException(\\"Required environment variable APPID is missing or empty\\");
-              }
-              query += \\"&app_id=\\" + URLEncoder.encode(appId, StandardCharsets.UTF_8);
+            String appId = System.getenv(\\"APPID\\");
+            if(appId == null || appId.isEmpty()){
+               throw new IllegalArgumentException(\\"Required environment variable APPID is missing or empty\\");
+            }
+            query += \\"&app_id=\\" + URLEncoder.encode(appId, StandardCharsets.UTF_8);
 
 
-              String queryUri = baseURI + \\"/link\\" + \\"?\\" + query;
-              WebSocketClientConnection connection = connector.baseUri(queryUri).connectAndAwait();
-              Thread.sleep(120000); // Keep the connection open for 2 minutes
+            String queryUri = baseURI + \\"/link\\" + \\"?\\" + query;
+            WebSocketClientConnection connection = connector.baseUri(queryUri).connectAndAwait();
+            Thread.sleep(120000); // Keep the connection open for 2 minutes
             
 
-              // Close the connection gracefully
-              connection.closeAndAwait();
-              Log.info(\\"Connection closed gracefully.\\");
-              Thread.sleep(1000); // Wait for a second before exiting
-              System.exit(0);
-          } catch (Exception e) {
-                Log.error(\\"Error during WebSocket communication\\", e);
-                System.exit(1);
-          }
-      }).start();
-    }
+            // Close the connection gracefully
+            connection.closeAndAwait();
+            Log.info(\\"Connection closed gracefully.\\");
+            Thread.sleep(1000); // Wait for a second before exiting
+            System.exit(0);
+        } catch (Exception e) {
+              Log.error(\\"Error during WebSocket communication\\", e);
+              System.exit(1);
+        }
+    }).start();
   }
+}
 
 
 
@@ -2549,7 +2539,6 @@ exports[`WebSocket Clients Integration Tests Java Quarkus Client Common Integrat
 //
 //////////////////////////////////////////////////
 
-
 package com.asyncapi;
 
 import io.quarkus.websockets.next.WebSocketClient;
@@ -2561,7 +2550,6 @@ import io.quarkus.websockets.next.OnTextMessage;
 import io.quarkus.websockets.next.CloseReason;
 import jakarta.inject.Inject;
 import io.quarkus.logging.Log;
-
 
 @WebSocketClient(path = \\"/\\")  
 public class HoppscotchClient{
@@ -2587,22 +2575,19 @@ public class HoppscotchClient{
       Log.error(\\"Websocket connection error: \\" + throwable.getMessage());
   }
 
-
-
   @OnClose
-   public void onClose(CloseReason reason, WebSocketClientConnection connection) {
-      int code = reason.getCode();
-      Log.info(\\"Websocket disconnected from Hoppscotch Echo WebSocket Client with Close code: \\" + code);
+     public void onClose(CloseReason reason, WebSocketClientConnection connection) {
+        int code = reason.getCode();
+        Log.info(\\"Websocket disconnected from Hoppscotch Echo WebSocket Client with Close code: \\" + code);
+    }
   }
-}
 
 
 "
 `;
 
 exports[`WebSocket Clients Integration Tests Java Quarkus Client Common Integration tests for Java client generation generate simple client for hoppscotch echo with custom client name: HoppscotchClientConnector.java 1`] = `
-"
-package com.asyncapi;
+"package com.asyncapi;
 
 import io.quarkus.websockets.next.WebSocketConnector;
 import io.quarkus.websockets.next.WebSocketClientConnection;
@@ -2612,52 +2597,51 @@ import jakarta.annotation.PostConstruct;
 import io.quarkus.logging.Log;
 import io.quarkus.runtime.Startup;
 
+@Startup
+@Singleton  
+public class HoppscotchClientConnector{
 
-  @Startup
-  @Singleton  
-  public class HoppscotchClientConnector{
-
-    @Inject
-    WebSocketConnector<HoppscotchClient> connector;
-
+  @Inject
+  WebSocketConnector<HoppscotchClient> connector;
 
 
 
-    @PostConstruct
-    void openAndSendMessagesWithDelay() {
-        new Thread(() -> {
-            try {
-              Log.info(\\"Starting WebSocket connection attempt...\\");
-              WebSocketClientConnection connection = connector.connectAndAwait();
 
-              // Wait 2 seconds before first message
-              Thread.sleep(2000);
+  @PostConstruct
+  void openAndSendMessagesWithDelay() {
+      new Thread(() -> {
+          try {
+            Log.info(\\"Starting WebSocket connection attempt...\\");
+            WebSocketClientConnection connection = connector.connectAndAwait();
 
-              // Send 5 messages
-              for (int i = 1; i <= 5; i++) {
-                  String msg = \\"Message #\\" + i + \\" from Quarkus\\";
-                  connection.sendTextAndAwait(msg);
-                  Log.info(\\"Sent: \\" + msg);
-                  Thread.sleep(5000); // Wait 5 seconds between messages
-              }
+            // Wait 2 seconds before first message
+            Thread.sleep(2000);
 
-              // Wait 10 seconds after final message
-              Log.info(\\"All messages sent. Waiting 10 seconds before closing...\\");
-              Thread.sleep(10000);
+            // Send 5 messages
+            for (int i = 1; i <= 5; i++) {
+                String msg = \\"Message #\\" + i + \\" from Quarkus\\";
+                connection.sendTextAndAwait(msg);
+                Log.info(\\"Sent: \\" + msg);
+                Thread.sleep(5000); // Wait 5 seconds between messages
+            }
+
+            // Wait 10 seconds after final message
+            Log.info(\\"All messages sent. Waiting 10 seconds before closing...\\");
+            Thread.sleep(10000);
 
 
-              // Close the connection gracefully
-              connection.closeAndAwait();
-              Log.info(\\"Connection closed gracefully.\\");
-              Thread.sleep(1000); // Wait for a second before exiting
-              System.exit(0);
-          } catch (Exception e) {
-                Log.error(\\"Error during WebSocket communication\\", e);
-                System.exit(1);
-          }
-      }).start();
-    }
+            // Close the connection gracefully
+            connection.closeAndAwait();
+            Log.info(\\"Connection closed gracefully.\\");
+            Thread.sleep(1000); // Wait for a second before exiting
+            System.exit(0);
+        } catch (Exception e) {
+              Log.error(\\"Error during WebSocket communication\\", e);
+              System.exit(1);
+        }
+    }).start();
   }
+}
 
 
 
@@ -3702,7 +3686,6 @@ exports[`WebSocket Clients Integration Tests Java Quarkus Client Common Integrat
 //
 //////////////////////////////////////////////////
 
-
 package com.asyncapi;
 
 import io.quarkus.websockets.next.WebSocketClient;
@@ -3714,7 +3697,6 @@ import io.quarkus.websockets.next.OnTextMessage;
 import io.quarkus.websockets.next.CloseReason;
 import jakarta.inject.Inject;
 import io.quarkus.logging.Log;
-
 
 @WebSocketClient(path = \\"/\\")  
 public class HoppscotchEchoWebSocketClient{
@@ -3740,22 +3722,19 @@ public class HoppscotchEchoWebSocketClient{
       Log.error(\\"Websocket connection error: \\" + throwable.getMessage());
   }
 
-
-
   @OnClose
-   public void onClose(CloseReason reason, WebSocketClientConnection connection) {
-      int code = reason.getCode();
-      Log.info(\\"Websocket disconnected from Hoppscotch Echo WebSocket Client with Close code: \\" + code);
+     public void onClose(CloseReason reason, WebSocketClientConnection connection) {
+        int code = reason.getCode();
+        Log.info(\\"Websocket disconnected from Hoppscotch Echo WebSocket Client with Close code: \\" + code);
+    }
   }
-}
 
 
 "
 `;
 
 exports[`WebSocket Clients Integration Tests Java Quarkus Client Common Integration tests for Java client generation generate simple client for hoppscotch echo: HoppscotchEchoWebSocketClientConnector.java 1`] = `
-"
-package com.asyncapi;
+"package com.asyncapi;
 
 import io.quarkus.websockets.next.WebSocketConnector;
 import io.quarkus.websockets.next.WebSocketClientConnection;
@@ -3765,52 +3744,51 @@ import jakarta.annotation.PostConstruct;
 import io.quarkus.logging.Log;
 import io.quarkus.runtime.Startup;
 
+@Startup
+@Singleton  
+public class HoppscotchEchoWebSocketClientConnector{
 
-  @Startup
-  @Singleton  
-  public class HoppscotchEchoWebSocketClientConnector{
-
-    @Inject
-    WebSocketConnector<HoppscotchEchoWebSocketClient> connector;
-
+  @Inject
+  WebSocketConnector<HoppscotchEchoWebSocketClient> connector;
 
 
 
-    @PostConstruct
-    void openAndSendMessagesWithDelay() {
-        new Thread(() -> {
-            try {
-              Log.info(\\"Starting WebSocket connection attempt...\\");
-              WebSocketClientConnection connection = connector.connectAndAwait();
 
-              // Wait 2 seconds before first message
-              Thread.sleep(2000);
+  @PostConstruct
+  void openAndSendMessagesWithDelay() {
+      new Thread(() -> {
+          try {
+            Log.info(\\"Starting WebSocket connection attempt...\\");
+            WebSocketClientConnection connection = connector.connectAndAwait();
 
-              // Send 5 messages
-              for (int i = 1; i <= 5; i++) {
-                  String msg = \\"Message #\\" + i + \\" from Quarkus\\";
-                  connection.sendTextAndAwait(msg);
-                  Log.info(\\"Sent: \\" + msg);
-                  Thread.sleep(5000); // Wait 5 seconds between messages
-              }
+            // Wait 2 seconds before first message
+            Thread.sleep(2000);
 
-              // Wait 10 seconds after final message
-              Log.info(\\"All messages sent. Waiting 10 seconds before closing...\\");
-              Thread.sleep(10000);
+            // Send 5 messages
+            for (int i = 1; i <= 5; i++) {
+                String msg = \\"Message #\\" + i + \\" from Quarkus\\";
+                connection.sendTextAndAwait(msg);
+                Log.info(\\"Sent: \\" + msg);
+                Thread.sleep(5000); // Wait 5 seconds between messages
+            }
+
+            // Wait 10 seconds after final message
+            Log.info(\\"All messages sent. Waiting 10 seconds before closing...\\");
+            Thread.sleep(10000);
 
 
-              // Close the connection gracefully
-              connection.closeAndAwait();
-              Log.info(\\"Connection closed gracefully.\\");
-              Thread.sleep(1000); // Wait for a second before exiting
-              System.exit(0);
-          } catch (Exception e) {
-                Log.error(\\"Error during WebSocket communication\\", e);
-                System.exit(1);
-          }
-      }).start();
-    }
+            // Close the connection gracefully
+            connection.closeAndAwait();
+            Log.info(\\"Connection closed gracefully.\\");
+            Thread.sleep(1000); // Wait for a second before exiting
+            System.exit(0);
+        } catch (Exception e) {
+              Log.error(\\"Error during WebSocket communication\\", e);
+              System.exit(1);
+        }
+    }).start();
   }
+}
 
 
 
@@ -4953,7 +4931,6 @@ exports[`WebSocket Clients Integration Tests Java Quarkus Client Common Integrat
 //
 //////////////////////////////////////////////////
 
-
 package com.asyncapi;
 
 import io.quarkus.websockets.next.WebSocketClient;
@@ -4965,7 +4942,6 @@ import io.quarkus.websockets.next.OnTextMessage;
 import io.quarkus.websockets.next.CloseReason;
 import jakarta.inject.Inject;
 import io.quarkus.logging.Log;
-
 
 @WebSocketClient(path = \\"/raw\\")  
 public class PostmanEchoWebSocketClientClient{
@@ -4991,22 +4967,19 @@ public class PostmanEchoWebSocketClientClient{
       Log.error(\\"Websocket connection error: \\" + throwable.getMessage());
   }
 
-
-
   @OnClose
-   public void onClose(CloseReason reason, WebSocketClientConnection connection) {
-      int code = reason.getCode();
-      Log.info(\\"Websocket disconnected from Postman Echo WebSocket Client with Close code: \\" + code);
+     public void onClose(CloseReason reason, WebSocketClientConnection connection) {
+        int code = reason.getCode();
+        Log.info(\\"Websocket disconnected from Postman Echo WebSocket Client with Close code: \\" + code);
+    }
   }
-}
 
 
 "
 `;
 
 exports[`WebSocket Clients Integration Tests Java Quarkus Client Common Integration tests for Java client generation generate simple client for postman echo: PostmanEchoWebSocketClientClientConnector.java 1`] = `
-"
-package com.asyncapi;
+"package com.asyncapi;
 
 import io.quarkus.websockets.next.WebSocketConnector;
 import io.quarkus.websockets.next.WebSocketClientConnection;
@@ -5016,52 +4989,51 @@ import jakarta.annotation.PostConstruct;
 import io.quarkus.logging.Log;
 import io.quarkus.runtime.Startup;
 
+@Startup
+@Singleton  
+public class PostmanEchoWebSocketClientClientConnector{
 
-  @Startup
-  @Singleton  
-  public class PostmanEchoWebSocketClientClientConnector{
-
-    @Inject
-    WebSocketConnector<PostmanEchoWebSocketClientClient> connector;
-
+  @Inject
+  WebSocketConnector<PostmanEchoWebSocketClientClient> connector;
 
 
 
-    @PostConstruct
-    void openAndSendMessagesWithDelay() {
-        new Thread(() -> {
-            try {
-              Log.info(\\"Starting WebSocket connection attempt...\\");
-              WebSocketClientConnection connection = connector.connectAndAwait();
 
-              // Wait 2 seconds before first message
-              Thread.sleep(2000);
+  @PostConstruct
+  void openAndSendMessagesWithDelay() {
+      new Thread(() -> {
+          try {
+            Log.info(\\"Starting WebSocket connection attempt...\\");
+            WebSocketClientConnection connection = connector.connectAndAwait();
 
-              // Send 5 messages
-              for (int i = 1; i <= 5; i++) {
-                  String msg = \\"Message #\\" + i + \\" from Quarkus\\";
-                  connection.sendTextAndAwait(msg);
-                  Log.info(\\"Sent: \\" + msg);
-                  Thread.sleep(5000); // Wait 5 seconds between messages
-              }
+            // Wait 2 seconds before first message
+            Thread.sleep(2000);
 
-              // Wait 10 seconds after final message
-              Log.info(\\"All messages sent. Waiting 10 seconds before closing...\\");
-              Thread.sleep(10000);
+            // Send 5 messages
+            for (int i = 1; i <= 5; i++) {
+                String msg = \\"Message #\\" + i + \\" from Quarkus\\";
+                connection.sendTextAndAwait(msg);
+                Log.info(\\"Sent: \\" + msg);
+                Thread.sleep(5000); // Wait 5 seconds between messages
+            }
+
+            // Wait 10 seconds after final message
+            Log.info(\\"All messages sent. Waiting 10 seconds before closing...\\");
+            Thread.sleep(10000);
 
 
-              // Close the connection gracefully
-              connection.closeAndAwait();
-              Log.info(\\"Connection closed gracefully.\\");
-              Thread.sleep(1000); // Wait for a second before exiting
-              System.exit(0);
-          } catch (Exception e) {
-                Log.error(\\"Error during WebSocket communication\\", e);
-                System.exit(1);
-          }
-      }).start();
-    }
+            // Close the connection gracefully
+            connection.closeAndAwait();
+            Log.info(\\"Connection closed gracefully.\\");
+            Thread.sleep(1000); // Wait for a second before exiting
+            System.exit(0);
+        } catch (Exception e) {
+              Log.error(\\"Error during WebSocket communication\\", e);
+              System.exit(1);
+        }
+    }).start();
   }
+}
 
 
 
@@ -5982,7 +5954,6 @@ exports[`WebSocket Clients Integration Tests JavaScript Client Common Integratio
 //////////////////////////////////////////////////
 
 const WebSocket = require('ws');
-
 class HoppscotchClient {
 
   /*
@@ -6251,7 +6222,6 @@ exports[`WebSocket Clients Integration Tests JavaScript Client Common Integratio
 //////////////////////////////////////////////////
 
 const WebSocket = require('ws');
-
 class HoppscotchEchoWebSocketClient {
 
   /*
@@ -6496,7 +6466,6 @@ exports[`WebSocket Clients Integration Tests JavaScript Client Common Integratio
 //////////////////////////////////////////////////
 
 const WebSocket = require('ws');
-
 class PostmanEchoWebSocketClientClient {
 
   /*
@@ -7230,7 +7199,6 @@ import threading
 import websocket
 import os
 from urllib.parse import urlencode
-
 class SlackWebsocketAPIClient:
 
   def __init__(self, url: str = \\"wss://wss-primary.slack.com/link\\", ticket: str = None, app_id: str = None):
@@ -7373,7 +7341,6 @@ import json
 import certifi
 import threading
 import websocket
-
 class HoppscotchClient:
 
   def __init__(self, url: str = \\"wss://echo-websocket.hoppscotch.io\\"):
@@ -7554,7 +7521,6 @@ import json
 import certifi
 import threading
 import websocket
-
 class HoppscotchEchoWebSocketClient:
 
   def __init__(self, url: str = \\"wss://echo-websocket.hoppscotch.io\\"):
@@ -7736,7 +7702,6 @@ import json
 import certifi
 import threading
 import websocket
-
 class PostmanEchoWebSocketClientClient:
 
   def __init__(self, url: str = \\"wss://ws.postman-echo.com/raw\\"):

@@ -1,4 +1,4 @@
-import { toCamelCase } from '@asyncapi/generator-helpers/src/utils';
+import { FormatHelpers } from '@asyncapi/modelina';
 import { Text } from '@asyncapi/generator-react-sdk';
 
 export function ConstructorSignature({ clientName, queryParams }) {
@@ -7,7 +7,7 @@ export function ConstructorSignature({ clientName, queryParams }) {
   }
   
   const queryParamsArguments = queryParams?.map((param) => {
-    const paramName = toCamelCase(param[0]);
+    const paramName = FormatHelpers.toCamelCase(param[0]);
     return `String ${paramName}`;      // assuming the default values of the parameters are strings
   }).join(', ');
   

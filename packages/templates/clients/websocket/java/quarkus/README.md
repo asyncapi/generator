@@ -18,7 +18,7 @@ To run the Slack CLient example, follow the steps above but with the following e
 - Navigate to the slack generated client via `cd test/temp/snapshotTestResult/client_slack`
 - You need to pass environment variables with proper authorization details. Your command must look like this: `TICKET={provide secret info} APP_ID={provide id of the slack app} mvn quarkus:dev`. For example: `TICKET=6b150bb1-82b4-457f-a09d-6ff0af1fd2d1 APP_ID=00dfdcccb53a2645dd3f1773fcb10fa7b0a598cf333a990a9db12375ef1865dd mvn quarkus:dev`.
 
-> Instructions on how to create the Slack app and also obtain authorization is described in details in the [Slack AsyncAPI document](../test/__fixtures__/asyncapi-slack-client.yml).
+> Instructions on how to create the Slack app and also obtain authorization is described in details in the [Slack AsyncAPI document](../../test/__fixtures__/asyncapi-slack-client.yml).
 
 You can use our AsyncAPI's credentials to access different set of events produced in AsyncAPI Slack workspace, in the `#generator` channel.
 
@@ -50,7 +50,7 @@ You can use our AsyncAPI's credentials to access different set of events produce
     websocat "wss://wss-primary.slack.com/link/?ticket=5ad694c1-2a81-4cfc-a503-057b8e798120&app_id=00dfdcccb53a2645dd3f1773fcb10fa7b0a598cf333a990a9db12375ef1865dd"
     ```
 
-    But that is just for testing. The point is to use the generated Python client.
+    But that is just for testing. The point is to use the generated Java Quarkus slack client.
 
 1. Start the example that uses generated client. Examine events, and modify example as you want:
     

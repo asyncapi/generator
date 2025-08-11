@@ -15,7 +15,8 @@ export function EchoWebSocket({ clientName, pathName, title, queryParams, operat
   return (
     <Text>
       <Text newLines={2}>
-        {`@WebSocketClient(path = "${pathName}")  
+        {`
+@WebSocketClient(path = "${pathName}")  
 public class ${clientName}{`}
       </Text>
       <ClientFields queryParams={queryParams} />

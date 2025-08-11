@@ -1,4 +1,4 @@
-import { toCamelCase } from '@asyncapi/generator-helpers/src/utils';
+import { FormatHelpers } from '@asyncapi/modelina';
 import { Text } from '@asyncapi/generator-react-sdk';
 
 export function QueryParamsVariables({ queryParams }) {
@@ -6,12 +6,12 @@ export function QueryParamsVariables({ queryParams }) {
     return null;
   }
 
-  return queryParams.map((param) => {
-    const paramName = toCamelCase(param[0]);
+  return queryParams.map((param, index) => {
+    const paramName = FormatHelpers.toCamelCase(param[0]);
     const variableDefinition = `this.${paramName} = (${paramName} != null && !${paramName}.isEmpty()) ? ${paramName} : System.getenv("${paramName.toUpperCase()}");`;
     const ifQueryProvided = `if (this.${paramName} != null){`;
     const assignment = `params.put("${paramName}", this.${paramName});`;
-    const closingTag = '}\n';
+    const closingTag = '}';
     return (
       <>
         <Text indent={6}>
@@ -23,7 +23,7 @@ export function QueryParamsVariables({ queryParams }) {
         <Text indent={8}>
           {assignment}
         </Text>
-        <Text indent={6}>
+        <Text indent={6} newLines={1}>
           {closingTag}
         </Text>
       </>

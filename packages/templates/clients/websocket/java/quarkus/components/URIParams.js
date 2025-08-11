@@ -1,5 +1,5 @@
 import { Text } from '@asyncapi/generator-react-sdk';
-import { toCamelCase } from '@asyncapi/generator-helpers/src/utils';
+import { FormatHelpers } from '@asyncapi/modelina';
 
 export default function URIParams({ queryParamsArray, pathName }) {
   if (!queryParamsArray || queryParamsArray.length === 0) {
@@ -15,7 +15,7 @@ export default function URIParams({ queryParamsArray, pathName }) {
             `}
       </Text>
       {queryParamsArray.map((param, idx) => {
-        const paramName = toCamelCase(param[0]);
+        const paramName = FormatHelpers.toCamelCase(param[0]);
         const variableDefinition = `String ${paramName} = System.getenv("${paramName.toUpperCase()}");`;
         const errorCheck = `if(${paramName} == null || ${paramName}.isEmpty()){`;
         const errorMessage = ` throw new IllegalArgumentException("Required environment variable ${paramName.toUpperCase()} is missing or empty");`;

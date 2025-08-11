@@ -16,7 +16,7 @@ You can test this template (for now modifications are coming):
 To run the Slack CLient example, follow the steps above but with the following exceptions:
 
 - Navigate to the slack generated client via `cd test/temp/snapshotTestResult/client_slack`
-- You need to pass environment variables with proper authorization details. Your command must look like this: `TICKET={provide secret info} APP_ID={provide id of the slack app} mvn quarkus:dev`. For example: `TICKET=1d967f38-ccff-44f6-adec-9616eec9c4b7 APP_ID=00dfdcccb53a2645dd3f1773fcb10fa7b0a598cf333a990a9db12375ef1865dd mvn quarkus:dev`.
+- You need to pass environment variables with proper authorization details. Your command must look like this: `TICKET={provide secret info} APP_ID={provide id of the slack app} mvn quarkus:dev`. For example: `TICKET=6b150bb1-82b4-457f-a09d-6ff0af1fd2d1 APP_ID=00dfdcccb53a2645dd3f1773fcb10fa7b0a598cf333a990a9db12375ef1865dd mvn quarkus:dev`.
 
 > Instructions on how to create the Slack app and also obtain authorization is described in details in the [Slack AsyncAPI document](../test/__fixtures__/asyncapi-slack-client.yml).
 
@@ -61,7 +61,7 @@ You can use our AsyncAPI's credentials to access different set of events produce
 
     Windows
     ```powershell
-    $env:TICKET="92decefe-5cfa-43fc-8bea-c3554a432191"; $env:APPID="00dfdcccb53a2645dd3f1773fcb10fa7b0a598cf333a990a9db12375ef1865dd"; mvn quarkus:dev
+    $env:TICKET="6b150bb1-82b4-457f-a09d-6ff0af1fd2d1"; $env:APPID="00dfdcccb53a2645dd3f1773fcb10fa7b0a598cf333a990a9db12375ef1865dd"; mvn quarkus:dev
     ```
     
     Successfully established connection will welcome you with below event:

@@ -41,7 +41,7 @@ export default async function({ asyncapi }) {
       preset: JAVA_COMMON_PRESET,
       options: {
         equal: true,
-        hashCode: false,
+        hashCode: true,
         classToString: true,
         marshalling: false
       }

@@ -1,9 +1,10 @@
 const path = require('path');
 const { Parser, fromFile } = require('@asyncapi/parser');
-const { getServerUrl, getServer, getServerHost } = require('@asyncapi/generator-helpers');
+const { getServerUrl, getServer, getServerHost, getServerProtocol } = require('@asyncapi/generator-helpers');
 
 const parser = new Parser();
 const asyncapi_v3_path = path.resolve(__dirname, './__fixtures__/asyncapi-websocket-query.yml');
+const GEMINI_HOST = 'api.gemini.com';
 
 describe('getServerUrl integration test with AsyncAPI', () => {
   let parsedAsyncAPIDocument;
@@ -94,9 +95,9 @@ describe('getServerHost integration test with AsyncAPI', () => {
     const server = parsedAsyncAPIDocument.servers().get('withPathname');
     
     const serverHost = getServerHost(server);
+    const expectedHost = server.host();
 
-    // Example assertion: Ensure the correct host is returned
-    expect(serverHost).toBe('api.gemini.com');
+    expect(serverHost).toBe(expectedHost);
   });
 
   it('should handle server with duplicate protocol in host', () => {
@@ -104,7 +105,7 @@ describe('getServerHost integration test with AsyncAPI', () => {
     const serverHost = getServerHost(server);
 
     // Should strip the duplicate protocol prefix
-    expect(serverHost).toBe('api.gemini.com');
+    expect(serverHost).toBe(GEMINI_HOST);
   });
 
   it('should throw error when server has no host', () => {
@@ -125,5 +126,63 @@ describe('getServerHost integration test with AsyncAPI', () => {
     };
   
     expect(() => getServerHost(mockServer)).toThrow('Host not found in the server configuration.');
+  });
+});
+
+describe('getServerProtocol integration test with AsyncAPI', () => {
+  let parsedAsyncAPIDocument;
+
+  beforeAll(async () => {
+    const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
+    parsedAsyncAPIDocument = parseResult.document;
+  });
+
+  it('should return correct server protocol when protocol is provided', () => {
+    const server = parsedAsyncAPIDocument.servers().get('withPathname');
+    
+    const serverProtocol = getServerProtocol(server);
+    const expectedProtocol = server.protocol();
+
+    expect(serverProtocol).toBe(expectedProtocol);
+  });
+
+  it('should handle different protocol types', () => {
+    const server = parsedAsyncAPIDocument.servers().get('withHostDuplicatingProtocol');    
+    const serverProtocol = getServerProtocol(server);
+    const expectedProtocol = server.protocol();
+
+    expect(serverProtocol).toBe(expectedProtocol);
+  });
+
+  it('should throw error when server has no protocol', () => {
+    const mockServer = {
+      host: () => GEMINI_HOST,
+      protocol: () => null
+    };
+    
+    expect(() => getServerProtocol(mockServer)).toThrow('Protocol is not defined in server configuration.');
+  });
+
+  it('should throw error when server has empty protocol', () => {
+    const mockServer = {
+      host: () => GEMINI_HOST,
+      protocol: () => ''
+    };
+  
+    expect(() => getServerProtocol(mockServer)).toThrow('Protocol is not defined in server configuration.');
+  });
+
+  it('should return valid protocols like ws, wss, http, https, etc.', () => {
+    const protocols = ['ws', 'wss', 'http', 'https', 'mqtt', 'amqp'];
+    
+    protocols.forEach(protocolValue => {
+      const mockServer = {
+        host: () => GEMINI_HOST,
+        protocol: () => protocolValue
+      };
+      
+      const result = getServerProtocol(mockServer);
+      expect(result).toBe(protocolValue);
+    });
   });
 });

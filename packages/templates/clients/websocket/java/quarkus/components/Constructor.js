@@ -3,7 +3,7 @@ import { ConstructorSignature } from './ConstructorSignature';
 import { DefaultConstructorSignature } from './DefaultConstructorSignature';
 import { QueryParamsVariables } from './QueryParamsVariables';
 
-export function Constructor({clientName, query}) {
+export function Constructor({ clientName, query }) {
   const queryParamsArray = query && Array.from(query.entries());
   if (!queryParamsArray || queryParamsArray.length === 0) {
     return;

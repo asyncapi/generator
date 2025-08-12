@@ -1,5 +1,5 @@
 const { getMessageExamples, getOperationMessages } = require('./operations');
-const { getServerUrl, getServer, getServerHost }  = require('./servers');
+const { getServerUrl, getServer, getServerHost, getServerProtocol }  = require('./servers');
 const { getClientName, getInfo, toSnakeCase, getTitle} = require('./utils');
 const { getQueryParams } = require('./bindings');
 const { cleanTestResultPaths, verifyDirectoryStructure, getDirElementsRecursive, buildParams, listFiles} = require('./testing');
@@ -9,6 +9,7 @@ module.exports = {
   getClientName,
   getServer,
   getServerHost,
+  getServerProtocol,
   listFiles,
   getQueryParams,
   getOperationMessages,

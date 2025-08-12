@@ -15,10 +15,19 @@ Ask lukasz about the approach
 **Todo**
 - Add producer
 - try to use dependencyprovider component
+- Be sure to check out the kafka dev UI that quarkus has
 
-Be sure to check out the kafka dev UI that quarkus has
+What should we be exchange?!?!?
+It should be the send and receive payloads??!!?!
+    - how can I make sure I get the right one?
+Need to make sure we listen on consisten channel and topic (know if they are different)
+Make sure you use right serializer and desirializer
+Make sure you use the right group-Id and topic for each event you are dealing with 
 
+Of course start simmple then work up !!
+    - should I do both consumer and producer or just producer
 
+`NOTE:` assuming for now that CostingRequest is the producer. Double check with lukasz !!!! ask !!!!!!
 
 
 we send and receive records 
@@ -44,4 +53,4 @@ Note: quarkus-messaging-kafka  should do the trick though, renamed it
 Ask best place to put the share modesl preset
 Ask why I am getting these anonymous things
 Ask which server should I be using
-Ask baout the repalce maven thing
+Ask about the repalce maven thing

@@ -1,18 +1,18 @@
-import { Text } from "@asyncapi/generator-components";
+import { Text } from "@asyncapi/generator-react-sdk";
 import { FormatHelpers } from "@asyncapi/modelina";
 
 
-export function ProduceEvent({ receiveOperations }) {
 
+export function ProduceEvent({ receiveOperations }) {
     return receiveOperations.map((operation) => {
         const topicName = FormatHelpers.toCamelCase(operation._json.channel['x-parser-unique-object-id']);
         const producerName = FormatHelpers.upperFirst(topicName) + "Producer";
 
         return (
         <Text newLines={1}>
-            {`
+                {`
     @POST
-    public Response produceEvent(String requestId, String replyTopic, String requesterId, Integer requesterCode) {
+    public Response produceEvent(String requestId, String replyTopic, String requesterId, String requesterCode) {
         // Logic to produce an event to Kafka
 
         // static for now
@@ -26,8 +26,7 @@ export function ProduceEvent({ receiveOperations }) {
     }
 }`}
         </Text>
-    );
+        );
 
-    })
-    
-}
+        })
+    }

@@ -7,7 +7,7 @@ export function ProducerFields({ clientName }) {
 
 @Inject 
 @Channel("costing-request-out") // is this the right channel name
-Emitter<Record<String, String>> ${clientName}Emitter;`}
+Emitter<String> ${clientName}Emitter;`}
     </Text>
   );
 }

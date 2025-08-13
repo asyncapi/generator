@@ -38,7 +38,7 @@ export default function SendEvent({ headers, eventName }){
     const senderSignature = headerInfo.map(header => {
         return FormatHelpers.upperFirst(FormatHelpers.toCamelCase(header.type)) + " " + FormatHelpers.toCamelCase(header.schemaId);
     });
-    console.log("Sender Signature: ", senderSignature);
+    // console.log("Sender Signature: ", senderSignature);
     const replyTopic = (senderSignature.includes("String replyTopic")) ? "replyTopic" : "";
     const requestId = (senderSignature.includes("String requestId")) ? "" : "String requestId = UUID.randomUUID().toString();";
 
@@ -54,8 +54,13 @@ export default function SendEvent({ headers, eventName }){
                 <BuildEvent headerInfo={headerInfo}/>
                 <Text indent={2}>
                     {`
-    ${eventName}Emitter.send();
-    logger.infof("Sent costing request with ID: %s to topic with reply-to: %s", requestId, ${replyTopic});
+          ${eventName}Emitter.send(message);
+          logger.infof("Sent costing request with ID: %s to topic with reply-to: %s", requestId, ${replyTopic});
+    }catch (com.fasterxml.jackson.core.JsonProcessingException e) {
+          logger.errorf("Failed to serialize payload: %s", e.getMessage());
+          throw new RuntimeException("Failed to serialize costing request", e);
+    }
+
 
     return requestId;`}
     </Text>

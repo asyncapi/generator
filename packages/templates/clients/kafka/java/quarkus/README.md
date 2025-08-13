@@ -13,7 +13,8 @@ Ask lukasz about the approach
 
 
 **Todo**
-- Add producer
+- Add endpoint to test the producer and consumer then try them out !!!!
+Aug 13th
 - try to use dependencyprovider component
 - Be sure to check out the kafka dev UI that quarkus has
 
@@ -54,3 +55,4 @@ Ask best place to put the share modesl preset
 Ask why I am getting these anonymous things
 Ask which server should I be using
 Ask about the repalce maven thing
+Ask how can I extract the message payload, only got the headers

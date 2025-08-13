@@ -6,7 +6,7 @@ function generateAddMethodCalls(headerInfo) {
   return headerInfo.map((header, index) => {
     // Convert header name to camelCase (or whatever format you prefer for variable names)
     const variableName = FormatHelpers.toCamelCase(header.schemaId);
-    const indentLevel = index === 0 ? '' : '\t\t\t\t\t\t\t  ';
+    const indentLevel = index === 0 ? '' : '\t\t\t\t\t\t\t\t\t\t\t  ';
 
     
     // Return the formatted .add() method call
@@ -23,16 +23,19 @@ export default function BuildEvent({ headerInfo }){
     return (
         <Text indent={2} newLines={2}>
             {`
-    // Create Kafka headers based on AsyncAPI spec
-    io.smallrye.reactive.messaging.kafka.api.OutgoingKafkaRecordMetadata<String> metadata = 
-        io.smallrye.reactive.messaging.kafka.api.OutgoingKafkaRecordMetadata.<String>builder()
-            .withHeaders(io.smallrye.reactive.messaging.kafka.api.KafkaHeaders.of()
-                ${addMethodCalls})
-            .build();
+    try{
+            String payloadJson = new ObjectMapper().writeValueAsString(payload);
 
-    Record<String, String> record = Record.of(requestId, payload).addMetadata(metadata); // not sure about this payload thing !!! ask lukasz
+            // Create metadata with headers
+            OutgoingKafkaRecordMetadata<String> metadata = OutgoingKafkaRecordMetadata.<String>builder()
+                .withHeaders(new RecordHeaders()
+                        ${addMethodCalls})
+                .build();
 
-            `}
+            org.eclipse.microprofile.reactive.messaging.Message<String> message = KafkaRecord.of(requestId, payloadJson)
+                .addMetadata(metadata); // not sure about this payload thing !!! ask lukasz
+
+                `}
         </Text>
     );
 

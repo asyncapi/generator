@@ -1,7 +1,7 @@
 import { File } from "@asyncapi/generator-react-sdk";
 import { ProducerDependencies } from "../../../../../../components/dependencies/ProducerDependencies";
 import ClientProducer from "../../../../../../components/ClientProducer";
-import { getMessageExamples, getOperationMessages, getServer } from "@asyncapi/generator-helpers";
+import { getOperationMessages, getServer } from "@asyncapi/generator-helpers";
 import { FormatHelpers } from "@asyncapi/modelina";
 
 
@@ -11,10 +11,6 @@ export default async function ({ asyncapi, params }) {
     const server = getServer(asyncapi.servers(), params.server);
     const operations = asyncapi.operations();
     const channels = asyncapi.channels();
-    // console.log("\n",channels);
-    // console.log("\n");
-    // console.log(operations);
-    // console.log("\n");
     
 
     const receiveOperations = operations.filterByReceive();
@@ -28,7 +24,6 @@ export default async function ({ asyncapi, params }) {
         const producerName = FormatHelpers.upperFirst(topicName) + "Producer";
         const producerFileName = FormatHelpers.upperFirst(`${producerName}.java`);
         const messages = getOperationMessages(operation);
-        // console.log("Message: ", getMessageExamples(message[0]));
         const messageHeader = messages[0].headers()._json.properties
         console.log("Message headers ", messageHeader);
 

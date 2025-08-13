@@ -1,7 +1,7 @@
 import { FileHeaderInfo } from "@asyncapi/generator-components";
 import { getInfo, getServer } from "@asyncapi/generator-helpers"
-import ClientEndpoint from "../../../../../../components/ClientEndpoint";
 import { EndpointDependencies } from "../../../../../../components/dependencies/EndpointDependencies";
+import ClientEndpoint from "../../../../../../components/ClientEndpoint";
 
     /*
     
@@ -12,11 +12,12 @@ import { EndpointDependencies } from "../../../../../../components/dependencies/
 export default async function ({ asyncapi, params }) {
     const info = getInfo(asyncapi);
     const server = getServer(asyncapi.servers(), params.server);
-    const name = "CostingResource.java";
+    const name = "CostingResource";
+    const fileName = `${name}.java`;
     const operations = asyncapi.operations();
 
     return (
-    <File name={name}>
+    <File name={fileName}>
         <FileHeaderInfo
             info={info}
             server={server}

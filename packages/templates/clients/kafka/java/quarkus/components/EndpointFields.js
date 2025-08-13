@@ -9,8 +9,9 @@ export function EndpointFields({ receiveOperations }) {
 
         return (
             <Text newLines={2}>
-                {`@Inject
-                ${producerName} producer;`}
+                {`
+    @Inject
+    ${producerName} producer;`}
             </Text>
         );
     });

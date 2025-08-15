@@ -1,13 +1,15 @@
 import { Text } from "@asyncapi/generator-react-sdk";
 import { EndpointFields } from "./EndpointFields";
 import { ProduceEvent } from "./ProduceEvent";
+import { MiddleService } from "./MiddleService";
 
 
 
-export default function ClientEndpoint({ correctPath, className, operations }) {
+export default function ClientEndpoint({ className, operations, channels, correctPath }) {
     if(!correctPath) {
         correctPath = "/";
     }
+    
     const receiveOperations = operations.filterByReceive();
 
     return (
@@ -19,8 +21,13 @@ export default function ClientEndpoint({ correctPath, className, operations }) {
 @Produces(MediaType.APPLICATION_JSON)
 public class ${className}{`}
         </Text>
-        <EndpointFields receiveOperations={receiveOperations} />
+        <EndpointFields receiveOperations={receiveOperations} channels={channels} />
         <ProduceEvent receiveOperations={receiveOperations}/>
+        <MiddleService channels={channels} />
+        <Text newLines={2}>
+            {`
+}`}
+        </Text>
         
         </Text>
     );

@@ -8,16 +8,9 @@ import { FormatHelpers } from "@asyncapi/modelina";
 
 export default async function ({ asyncapi, params }) {
 
-    const server = getServer(asyncapi.servers(), params.server);
-    const operations = asyncapi.operations();
-    const channels = asyncapi.channels();
-    
+    const operations = asyncapi.operations();    
 
-    const receiveOperations = operations.filterByReceive();
-    
-
-    console.log("Receive Operations: ", receiveOperations);
-    
+    const receiveOperations = operations.filterByReceive();    
     
     return receiveOperations.map((operation) => {
         const topicName = FormatHelpers.toCamelCase(operation._json.channel['x-parser-unique-object-id']);
@@ -25,10 +18,6 @@ export default async function ({ asyncapi, params }) {
         const producerFileName = FormatHelpers.upperFirst(`${producerName}.java`);
         const messages = getOperationMessages(operation);
         const messageHeader = messages[0].headers()._json.properties
-        console.log("Message headers ", messageHeader);
-
-        console.log("Producer Name: ", producerFileName);
-        console.log(operation.id());
         
         return (
         <File name={producerFileName}>

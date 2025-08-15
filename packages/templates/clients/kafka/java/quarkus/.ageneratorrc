@@ -12,6 +12,14 @@ parameters:
   customClientName:
     description: The custom name for the generated client class
     required: false
+  env:
+    description: The environment for the generated client, e.g., dev, prod
+    required: false
+    default: dev
+  version:
+    description: The version for the generated client, e.g., V1, V2
+    required: false
+    default: V1
 
 nonRenderableFiles:
   - .dockerignore

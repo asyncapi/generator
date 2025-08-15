@@ -12,6 +12,7 @@ import ClientEndpoint from "../../../../../../components/ClientEndpoint";
 export default async function ({ asyncapi, params }) {
     const info = getInfo(asyncapi);
     const server = getServer(asyncapi.servers(), params.server);
+    const channels = asyncapi.channels();
     const name = "CostingResource";
     const fileName = `${name}.java`;
     const operations = asyncapi.operations();
@@ -24,7 +25,7 @@ export default async function ({ asyncapi, params }) {
             language="java"
         />
         <EndpointDependencies />
-        <ClientEndpoint className={name} operations={operations} />
+        <ClientEndpoint className={name} operations={operations} channels={channels} />
     </File>
     );
 

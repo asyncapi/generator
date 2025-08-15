@@ -58,7 +58,6 @@ mp.messaging.incoming.consumer-channel.value.deserializer=org.apache.kafka.commo
 # Incoming: read from producer's topic
 mp.messaging.incoming.middle-in.connector=smallrye-kafka
 mp.messaging.incoming.middle-in.topic=${producerActualTopic}
-mp.messaging.incoming.middle-in.group.id=middle-group
 mp.messaging.incoming.middle-in.value.deserializer=org.apache.kafka.common.serialization.StringDeserializer
 mp.messaging.incoming.middle-in.key.deserializer=org.apache.kafka.common.serialization.StringDeserializer
 

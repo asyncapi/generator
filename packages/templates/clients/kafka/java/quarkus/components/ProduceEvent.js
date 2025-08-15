@@ -12,8 +12,7 @@ export function ProduceEvent({ receiveOperations }) {
         <Text newLines={1}>
                 {`
     /**
-     *  Simple rest endpoint to help simulate the event production
-     *  Normally would be done by a real life business event
+     *  Simple rest endpoint to simulate the event production
      * */
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -29,7 +28,7 @@ export function ProduceEvent({ receiveOperations }) {
         String returnedID = (request.id != null) ? request.id : "";
         String returnedValue = (request.value != null) ? request.value : "";
 
-        System.out.printf("Sending request: id=%s, value=%s%n", request.id, request.value);
+        System.out.printf("Sending request: id=%s, value=%s%n", returnedID, returnedValue);
 
         producer.send${producerName}(returnedID, returnedValue);
         

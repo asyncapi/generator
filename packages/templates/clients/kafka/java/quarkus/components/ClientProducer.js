@@ -5,7 +5,7 @@ import { FormatHelpers } from '@asyncapi/modelina';
 
 
 
-export default function ClientProducer({ className, operations, headers }) {
+export default function ClientProducer({ className }) {
     const clientName = FormatHelpers.lowerFirst(className);
 
     return (
@@ -16,7 +16,7 @@ export default function ClientProducer({ className, operations, headers }) {
 public class ${className}{`}
       </Text>
       <ProducerFields clientName={clientName} />
-      <SendEvent headers={headers} eventName={clientName}/>
+      <SendEvent eventName={clientName}/>
       
     </Text>
   );

@@ -1,4 +1,5 @@
 import { FormatHelpers } from "@asyncapi/modelina";
+import { File } from "@asyncapi/generator-react-sdk";
 import { ConsumerDependencies } from "../../../../../../components/dependencies/ConsumerDependencies";
 import ClientConsumer from "../../../../../../components/ClientConsumer";
 
@@ -7,10 +8,7 @@ import ClientConsumer from "../../../../../../components/ClientConsumer";
 
 export default async function ({ asyncapi, params }) {
 
-
     const operations = asyncapi.operations();
-
-
     const sendOperations = operations.filterBySend();
 
      return sendOperations.map((operation) => {

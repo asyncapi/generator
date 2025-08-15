@@ -10,7 +10,7 @@ export function ProducerFields({ clientName }) {
     private static final Logger logger = Logger.getLogger(${className}.class);
 
     @Inject 
-    @Channel("producer-channel") // is this the right channel name
+    @Channel("producer-channel")
     Emitter<String> ${clientName}Emitter;`}
     </Text>
   );

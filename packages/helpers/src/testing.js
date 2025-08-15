@@ -1,3 +1,4 @@
+const Generator = require('@asyncapi/generator');
 const { readFile, rm, readdir} = require('fs/promises');
 const path = require('path');
 
@@ -108,6 +109,23 @@ async function verifyDirectoryStructure(expectedElements, dirPath) {
   }
 }
 
+/**
+ * Helper function to generate client and verify snapshots
+ */
+async function generateAndVerifyClient(template, outputPath, asyncapiPath, params) {
+  const generator = new Generator(template, outputPath, {
+    forceWrite: true,
+    templateParams: params
+  });
+
+  await generator.generateFromFile(asyncapiPath);
+
+  // List the files & folders in the output directory
+  const directoryElements = await getDirElementsRecursive(outputPath);
+
+  await verifyDirectoryStructure(directoryElements, outputPath);
+}
+
 /*
  * Get the list of files in a directory
  *
@@ -128,6 +146,7 @@ module.exports = {
   cleanTestResultPaths,
   getDirElementsRecursive,
   verifyDirectoryStructure,
+  generateAndVerifyClient,
   buildParams,
   listFiles
 };

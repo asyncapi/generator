@@ -1,26 +1,9 @@
-const { verifyDirectoryStructure, getDirElementsRecursive, buildParams } = require('@asyncapi/generator-helpers');
+const { buildParams, generateAndVerifyClient } = require('@asyncapi/generator-helpers');
 const path = require('path');
-const Generator = require('@asyncapi/generator');
 const asyncapi_v3_path_postman = path.resolve(__dirname, '../__fixtures__/asyncapi-postman-echo.yml');
 const asyncapi_v3_path_hoppscotch = path.resolve(__dirname, '../__fixtures__/asyncapi-hoppscotch-client.yml');
 const asyncapi_v3_path_slack = path.resolve(__dirname, '../__fixtures__/asyncapi-slack-client.yml');
 
-/**
- * Helper function to generate client and verify snapshots
- */
-async function generateAndVerifyClient(template, outputPath, asyncapiPath, params) {
-  const generator = new Generator(template, outputPath, {
-    forceWrite: true,
-    templateParams: params
-  });
-
-  await generator.generateFromFile(asyncapiPath);
-
-  // List the files & folders in the output directory
-  const directoryElements = await getDirElementsRecursive(outputPath);
-
-  await verifyDirectoryStructure(directoryElements, outputPath);
-}
 
 /**
  * Run snapshot tests for code generation across multiple AsyncAPI specifications.

@@ -2,7 +2,7 @@ const { getMessageExamples, getOperationMessages } = require('./operations');
 const { getServerUrl, getServer, getServerHost }  = require('./servers');
 const { getClientName, getInfo, toSnakeCase, toCamelCase, getTitle} = require('./utils');
 const { getQueryParams } = require('./bindings');
-const { cleanTestResultPaths, verifyDirectoryStructure, getDirElementsRecursive, buildParams, listFiles} = require('./testing');
+const { cleanTestResultPaths, verifyDirectoryStructure, getDirElementsRecursive, generateAndVerifyClient, buildParams, listFiles} = require('./testing');
 
 module.exports = {
   getServerUrl,
@@ -20,5 +20,6 @@ module.exports = {
   cleanTestResultPaths,
   verifyDirectoryStructure,
   getDirElementsRecursive,
+  generateAndVerifyClient,
   buildParams
 };

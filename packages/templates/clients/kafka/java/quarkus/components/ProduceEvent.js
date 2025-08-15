@@ -11,20 +11,31 @@ export function ProduceEvent({ receiveOperations }) {
         return (
         <Text newLines={1}>
                 {`
+    /**
+     *  Simple rest endpoint to help simulate the event production
+     *  Normally would be done by a real life business event
+     * */
     @POST
-    public Response produceEvent(String requestId, String replyTopic, String requesterId, String requesterCode) {
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response produceEvent(DTO request) {
         // Logic to produce an event to Kafka
+        System.out.println(">>> Raw body: " + request);
 
-        // static for now
-        ComDotAdeoDotCasestudyDotCostingrequestDotCostingRequestPayload payload = new ComDotAdeoDotCasestudyDotCostingrequestDotCostingRequestPayload();
-        payload.setProductId("10");
+        if (request == null) {
+            System.out.println("Request is null - no body provided");
+            return Response.status(Response.Status.BAD_REQUEST).entity("Request body is required").build();
+        }
 
-        producer.send${producerName}(payload, requestId, replyTopic, requesterId, requesterCode);
+        String returnedID = (request.id != null) ? request.id : "";
+        String returnedValue = (request.value != null) ? request.value : "";
+
+        System.out.printf("Sending request: id=%s, value=%s%n", request.id, request.value);
+
+        producer.send${producerName}(returnedID, returnedValue);
         
 
         return Response.accepted().build();
-    }
-}`}
+    }`}
         </Text>
         );
 

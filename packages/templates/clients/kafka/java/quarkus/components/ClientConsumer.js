@@ -14,8 +14,6 @@ public class ${className}{`}
       <ConsumerFields clientName={className}/>
       <ConsumeEvent/>
       
-      
-      
     </Text>
   );
 }

@@ -1,9 +1,50 @@
 import { Text } from "@asyncapi/generator-react-sdk";
 import { FormatHelpers } from "@asyncapi/modelina";
-import BuildEvent from "./BuildEvent";
+
+export default function SendEvent({ eventName }){
+  const className = FormatHelpers.upperFirst(eventName);
+    
+    return (
+            <Text newLines={2}>
+            {`
+    public String send${className}(String requestId, String value) {
+      try{
+          // Generate requestId if null
+          if (requestId == null || requestId.trim().isEmpty()) {
+              requestId = UUID.randomUUID().toString();
+          }     
+          
+          if(value == null || value.trim().isEmpty()) {
+              value = "ASYNCAPI - TEST";
+          }
+          Message<String> message = KafkaRecord.of(requestId, value);
+          ${eventName}Emitter.send(message);
+          logger.infof("Sent costing request with ID: %s to topic with reply-to: %s", requestId, value);
+      }catch (Exception e) {
+          throw new RuntimeException(String.format("Failed to produce event: %s", e.getMessage()));
+      }
 
 
+      return requestId;
+    }
+}`}
+            </Text>
+    );
+}
 
+
+/**
+ * 
+ * 
+ * 
+ * // keeping it simple with just sending key,value later will send something more to specs
+// don't forget about json serialization if I end up using a real object, becasue current its string serialized for send into kafka log
+
+ * logger.info("Sending event: " + ${eventName}.class.getSimpleName());
+           
+           ${eventName}Emitter.send(new Record<>(Map.of(${senderSignature.map(name => `"${FormatHelpers.toCamelCase(name)}"`, name).join(', ')})));
+           logger.info("Event sent successfully.");
+           
 function extractHeaderInfo(headers) {
   const headerInfo = [];
 
@@ -30,9 +71,9 @@ function extractHeaderInfo(headers) {
   return headerInfo;
 }
 
-export default function SendEvent({ headers, eventName }){
-    
-    const headerInfo = extractHeaderInfo(headers);
+
+
+const headerInfo = extractHeaderInfo(headers);
     console.log("Header Info: ", headerInfo);
 
     const senderSignature = headerInfo.map(header => {
@@ -43,44 +84,26 @@ export default function SendEvent({ headers, eventName }){
     const requestId = (senderSignature.includes("String requestId")) ? "" : "String requestId = UUID.randomUUID().toString();";
 
 
-    return (
-        <>
-            <Text indent={2} newLines={2}>
-            {`public String send${eventName}(ComDotAdeoDotCasestudyDotCostingrequestDotCostingRequestPayload payload, 
-                                             ${senderSignature.join(', ')}) {
-
     ${requestId}`}
                 </Text>
                 <BuildEvent headerInfo={headerInfo}/>
                 <Text indent={2}>
                     {`
-          ${eventName}Emitter.send(message);
-          logger.infof("Sent costing request with ID: %s to topic with reply-to: %s", requestId, ${replyTopic});
-    }catch (com.fasterxml.jackson.core.JsonProcessingException e) {
-          logger.errorf("Failed to serialize payload: %s", e.getMessage());
-          throw new RuntimeException("Failed to serialize costing request", e);
-    }
 
 
-    return requestId;`}
-    </Text>
-    <Text>
-    {`
-    }
-}`}
-            </Text>
-        </>
-    );
+                    /**
+ * // Create metadata with headers
+              OutgoingKafkaRecordMetadata<String> metadata = OutgoingKafkaRecordMetadata.<String>builder()
+                  .withHeaders(new RecordHeaders()
+                          .add("REQUEST_ID", requestId.getBytes())
+  											  .add("REPLY_TOPIC", replyTopic.getBytes())
+  											  .add("REQUESTER_ID", requesterId.getBytes())
+  											  .add("REQUESTER_CODE", requesterCode.getBytes()))
+                  .build();
 
-
-
-}
-
-
-/**
- * 
- * logger.info("Sending event: " + ${eventName}.class.getSimpleName());
-           
-           ${eventName}Emitter.send(new Record<>(Map.of(${senderSignature.map(name => `"${FormatHelpers.toCamelCase(name)}"`, name).join(', ')})));
-           logger.info("Event sent successfully.");
+catch (com.fasterxml.jackson.core.JsonProcessingException e) {
+            logger.errorf("Failed to serialize payload: %s", e.getMessage());
+            throw new RuntimeException("Failed to serialize costing request", e);
+      }
  */
+

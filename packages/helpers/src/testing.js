@@ -94,8 +94,10 @@ async function verifyDirectoryStructure(expectedElements, dirPath) {
     const filePath = path.join(dirPath, element.name);
 
     if (element.type === 'directory') {
-      // Recurse into the subdirectory
-      await verifyDirectoryStructure(element.children, filePath);
+      // Recurse into the subdirectory if children exist
+      if (element.children && element.children.length > 0) {
+        await verifyDirectoryStructure(element.children, filePath);
+      }
     } else if (element.type === 'file') {
       // Verifying a file
       try {

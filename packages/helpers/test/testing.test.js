@@ -1,7 +1,8 @@
-const { listFiles } = require('@asyncapi/generator-helpers');
+const { listFiles, buildParams } = require('@asyncapi/generator-helpers');
 const fs = require('fs/promises');
 
 jest.mock('fs/promises');
+
 describe('listFiles', () => {
   afterEach(() => {
     jest.clearAllMocks();
@@ -29,5 +30,35 @@ describe('listFiles', () => {
     const mockPath = '/mock/path';
     const result = await listFiles(mockPath);
     expect(result).toEqual([]);
+  });
+});
+
+describe('buildParams', () => {
+  it('should include clientFileName when language is not java', () => {
+    const config = { clientFileName: 'myClient.js' };
+    const result = buildParams('javascript', config);
+    expect(result).toEqual({
+      server: 'echoServer',
+      clientFileName: 'myClient.js',
+    });
+  });
+
+  it('should not include clientFileName when language is java', () => {
+    const config = { clientFileName: 'MyClient.java' };
+    const result = buildParams('java', config);
+    expect(result).toEqual({
+      server: 'echoServer',
+    });
+  });
+
+  it('should merge with baseParams correctly', () => {
+    const config = { clientFileName: 'client.js' };
+    const baseParams = { customParam: 'customValue' };
+    const result = buildParams('javascript', config, baseParams);
+    expect(result).toEqual({
+      server: 'echoServer',
+      clientFileName: 'client.js',
+      customParam: 'customValue',
+    });
   });
 });

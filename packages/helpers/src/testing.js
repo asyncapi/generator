@@ -1,5 +1,7 @@
-const { readFile, rm, readdir} = require('fs/promises');
+const { readFile, rm, readdir } = require('fs/promises');
 const path = require('path');
+
+const FILE_ENCODING = 'utf8';
 
 /**
  * Helper function to clean up test result paths recursively.
@@ -37,9 +39,9 @@ function hasNestedConfig(obj) {
  */
 async function getDirElementsRecursive(dir) {
   const elements = [];
-  
+
   const items = await readdir(dir, { withFileTypes: true });
-  
+
   for (const item of items) {
     const fullPath = path.join(dir, item.name);
     if (item.isDirectory()) {
@@ -101,7 +103,7 @@ async function verifyDirectoryStructure(expectedElements, dirPath) {
     } else if (element.type === 'file') {
       // Verifying a file
       try {
-        const content = await readFile(filePath, 'utf8');
+        const content = await readFile(filePath, FILE_ENCODING);
         expect(content).toMatchSnapshot(element.name);
       } catch (err) {
         throw new Error(`File ${filePath} not found or couldn't be read. Original error: ${err.message}`);

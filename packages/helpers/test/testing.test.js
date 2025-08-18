@@ -2,6 +2,8 @@ const { listFiles, verifyDirectoryStructure } = require('@asyncapi/generator-hel
 const fs = require('fs/promises');
 const path = require('path');
 
+const FILE_ENCODING = 'utf8';
+
 jest.mock('fs/promises');
 describe('listFiles', () => {
   afterEach(() => {
@@ -55,7 +57,7 @@ describe('verifyDirectoryStructure', () => {
 
     expect(fs.readFile).toHaveBeenCalledWith(
       path.join(dirPath, 'test.txt'),
-      'utf8'
+      FILE_ENCODING
     );
     expect(fs.readFile).toHaveBeenCalledTimes(1);
   });
@@ -74,9 +76,9 @@ describe('verifyDirectoryStructure', () => {
     await verifyDirectoryStructure(expectedElements, dirPath);
 
     expect(fs.readFile).toHaveBeenCalledTimes(3);
-    expect(fs.readFile).toHaveBeenCalledWith('/mock/dir/file1.txt', 'utf8');
-    expect(fs.readFile).toHaveBeenCalledWith('/mock/dir/file2.js', 'utf8');
-    expect(fs.readFile).toHaveBeenCalledWith('/mock/dir/file3.md', 'utf8');
+    expect(fs.readFile).toHaveBeenCalledWith(path.join(dirPath, 'file1.txt'), FILE_ENCODING);
+    expect(fs.readFile).toHaveBeenCalledWith(path.join(dirPath, 'file2.js'), FILE_ENCODING);
+    expect(fs.readFile).toHaveBeenCalledWith(path.join(dirPath, 'file3.md'), FILE_ENCODING);
   });
 
   it('should verify nested directory structure recursively', async () => {
@@ -105,9 +107,9 @@ describe('verifyDirectoryStructure', () => {
     await verifyDirectoryStructure(expectedElements, dirPath);
 
     expect(fs.readFile).toHaveBeenCalledTimes(3);
-    expect(fs.readFile).toHaveBeenCalledWith('/mock/dir/subdir/nested.txt', 'utf8');
-    expect(fs.readFile).toHaveBeenCalledWith('/mock/dir/subdir/deepdir/deep.js', 'utf8');
-    expect(fs.readFile).toHaveBeenCalledWith('/mock/dir/root.txt', 'utf8');
+    expect(fs.readFile).toHaveBeenCalledWith(path.join(dirPath, 'subdir', 'nested.txt'), FILE_ENCODING);
+    expect(fs.readFile).toHaveBeenCalledWith(path.join(dirPath, 'subdir', 'deepdir', 'deep.js'), FILE_ENCODING);
+    expect(fs.readFile).toHaveBeenCalledWith(path.join(dirPath, 'root.txt'), FILE_ENCODING);
   });
 
   it('should handle empty directory structure', async () => {
@@ -130,7 +132,7 @@ describe('verifyDirectoryStructure', () => {
     const dirPath = '/mock/dir';
 
     await expect(verifyDirectoryStructure(expectedElements, dirPath))
-      .rejects.toThrow('File /mock/dir/missing.txt not found or couldn\'t be read. Original error: File not found');
+      .rejects.toThrow(`File ${path.join(dirPath, 'missing.txt')} not found or couldn't be read. Original error: File not found`);
   });
 
   it('should throw error with proper file path when nested file cannot be read', async () => {
@@ -150,7 +152,7 @@ describe('verifyDirectoryStructure', () => {
     const dirPath = '/mock/dir';
 
     await expect(verifyDirectoryStructure(expectedElements, dirPath))
-      .rejects.toThrow('File /mock/dir/subdir/protected.txt not found or couldn\'t be read. Original error: Permission denied');
+      .rejects.toThrow(`File ${path.join(dirPath, 'subdir', 'protected.txt')} not found or couldn't be read. Original error: Permission denied`);
   });
 
   it('should verify mixed structure with files and directories', async () => {
@@ -181,11 +183,11 @@ describe('verifyDirectoryStructure', () => {
     await verifyDirectoryStructure(expectedElements, dirPath);
 
     expect(fs.readFile).toHaveBeenCalledTimes(5);
-    expect(fs.readFile).toHaveBeenCalledWith('/project/readme.md', 'utf8');
-    expect(fs.readFile).toHaveBeenCalledWith('/project/src/index.js', 'utf8');
-    expect(fs.readFile).toHaveBeenCalledWith('/project/src/utils.js', 'utf8');
-    expect(fs.readFile).toHaveBeenCalledWith('/project/test/index.test.js', 'utf8');
-    expect(fs.readFile).toHaveBeenCalledWith('/project/package.json', 'utf8');
+    expect(fs.readFile).toHaveBeenCalledWith(path.join(dirPath, 'readme.md'), FILE_ENCODING);
+    expect(fs.readFile).toHaveBeenCalledWith(path.join(dirPath, 'src', 'index.js'), FILE_ENCODING);
+    expect(fs.readFile).toHaveBeenCalledWith(path.join(dirPath, 'src', 'utils.js'), FILE_ENCODING);
+    expect(fs.readFile).toHaveBeenCalledWith(path.join(dirPath, 'test', 'index.test.js'), FILE_ENCODING);
+    expect(fs.readFile).toHaveBeenCalledWith(path.join(dirPath, 'package.json'), FILE_ENCODING);
   });
 
   it('should handle directory with no children array', async () => {
@@ -253,9 +255,9 @@ describe('verifyDirectoryStructure', () => {
     await verifyDirectoryStructure(expectedElements, dirPath);
 
     expect(fs.readFile).toHaveBeenCalledTimes(3);
-    expect(fs.readFile).toHaveBeenCalledWith('/mock/dir/level1/level2/level3/deep-file.txt', 'utf8');
-    expect(fs.readFile).toHaveBeenCalledWith('/mock/dir/level1/level2/level2-file.js', 'utf8');
-    expect(fs.readFile).toHaveBeenCalledWith('/mock/dir/level1/level1-file.md', 'utf8');
+    expect(fs.readFile).toHaveBeenCalledWith(path.join(dirPath, 'level1', 'level2', 'level3', 'deep-file.txt'), FILE_ENCODING);
+    expect(fs.readFile).toHaveBeenCalledWith(path.join(dirPath, 'level1', 'level2', 'level2-file.js'), FILE_ENCODING);
+    expect(fs.readFile).toHaveBeenCalledWith(path.join(dirPath, 'level1', 'level1-file.md'), FILE_ENCODING);
   });
 
   it('should handle elements with unknown type gracefully', async () => {
@@ -277,6 +279,6 @@ describe('verifyDirectoryStructure', () => {
 
     // Should only process the file, not the unknown type
     expect(fs.readFile).toHaveBeenCalledTimes(1);
-    expect(fs.readFile).toHaveBeenCalledWith('/mock/dir/normal-file.txt', 'utf8');
+    expect(fs.readFile).toHaveBeenCalledWith(path.join(dirPath, 'normal-file.txt'), FILE_ENCODING);
   });
 });

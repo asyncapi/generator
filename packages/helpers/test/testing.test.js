@@ -61,4 +61,28 @@ describe('buildParams', () => {
       customParam: 'customValue',
     });
   });
+
+  it('should handle uppercase JAVA correctly', () => {
+    const config = { clientFileName: 'MyClient.java' };
+    const result = buildParams('JAVA', config);
+    expect(result).toEqual({ server: 'echoServer' });
+  });
+
+  it('should handle missing config.clientFileName gracefully', () => {
+    const config = {};
+    const result = buildParams('javascript', config);
+    expect(result).toEqual({
+      server: 'echoServer',
+      clientFileName: undefined,
+    });
+  });
+
+  it('should allow baseParams to override server', () => {
+    const config = { clientFileName: 'client.js' };
+    const result = buildParams('javascript', config, { server: 'customServer' });
+    expect(result).toEqual({
+      server: 'customServer',
+      clientFileName: 'client.js',
+    });
+  });
 });

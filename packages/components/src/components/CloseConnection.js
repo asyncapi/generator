@@ -1,19 +1,9 @@
-import { Text } from '@asyncapi/generator-react-sdk';
+import { MethodGenerator } from './MethodGenerator';
 
 /**
  * @typedef {'python' | 'javascript' | 'dart'} Language
  * Supported programming languages.
  */
-
-/**
- * Configuration for method syntax based on programming language.
- * @type {Record<Language, { returnType?: string, openingTag?: string, closingTag?: string, indentSize?: number }>}
- */
-const methodConfig = {
-  python: { returnType: 'def', openingTag: ':', indentSize: 2 },
-  javascript: { openingTag: '{', closingTag: '}', indentSize: 2 },
-  dart: { returnType: 'void', openingTag: '{', closingTag: '}', indentSize: 2 }
-};
 
 /**
  * Configuration for WebSocket close method logic per language.
@@ -54,39 +44,20 @@ print('WebSocket connection closed.');`
  */
 export function CloseConnection({ language, methodName = 'close', methodParams = [], preExecutionCode = '', postExecutionCode = '' }) {
   const { 
-    returnType = '', 
-    openingTag = '', 
-    closingTag = '' ,
-    indentSize = 2
-  } = methodConfig[language];
-  const { 
     methodDocs = '', 
     methodLogic = '' 
   } = websocketCloseConfig[language];
-  const params = methodParams.join(', ');
-
-  let completeCode = methodLogic;
-
-  if (preExecutionCode) {
-    completeCode = `${preExecutionCode}\n${completeCode}`;
-  }
-  if (postExecutionCode) {
-    completeCode = `${completeCode}\n${postExecutionCode}`;
-  }
-
-  const innerIndent = (' ').repeat(indentSize);
-  const indentedLogic = completeCode.split('\n')
-    .map(line => line ? `${innerIndent}${line}` : '')
-    .join('\n');
-
-  const methodCode = `${methodDocs}
-${returnType} ${methodName}(${params}) ${openingTag}
-${indentedLogic}
-${closingTag}`;
-
+  
   return (
-    <Text indent={2}>
-      {methodCode}
-    </Text>
+    <MethodGenerator
+      language={language}
+      methodName={methodName}
+      methodParams = {methodParams}
+      methodDocs = {methodDocs}
+      methodLogic = {methodLogic}
+      preExecutionCode = {preExecutionCode}
+      postExecutionCode = {postExecutionCode}
+      indent = {2}
+    />
   );
 }

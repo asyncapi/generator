@@ -1,4 +1,4 @@
-const { listFiles,hasNestedConfig } = require('@asyncapi/generator-helpers');
+const { listFiles, hasNestedConfig } = require('@asyncapi/generator-helpers');
 const fs = require('fs/promises');
 
 jest.mock('fs/promises');

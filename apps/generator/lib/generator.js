@@ -286,7 +286,8 @@ class Generator {
     this.templateName = templatePkgName;
     this.templateContentDir = path.resolve(this.templateDir, TEMPLATE_CONTENT_DIRNAME);
 
-    this.templateConfig = await loadTemplateConfig(this.templateDir, this.templateParams);
+    this.templateConfig = await loadTemplateConfig(this.templateDir);
+    loadDefaultValues(this.templateConfig, this.templateParams);
 
     return { templatePkgName, templatePkgPath };
   }

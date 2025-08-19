@@ -66,7 +66,7 @@ describe('hasNestedConfig', () => {
     expect(hasNestedConfig(config)).toBe(false);
   });
 
-  it('should handle mixed values correctly (object + primitive)', () => {
+  it('should returns true when config contains both nested objects and primitive values', () => {
     const config = {
       host: 'localhost',
       db: { name: 'testdb' },

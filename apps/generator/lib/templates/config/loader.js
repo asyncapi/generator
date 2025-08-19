@@ -54,12 +54,9 @@ function loadDefaultValues(templateConfig, templateParams) {
     defaultValues.filter(dv => templateParams[dv] === undefined).forEach(dv =>
         Object.defineProperty(templateParams, dv, {
             enumerable: true,
-            get: (() => {
-                const key = dv;
-                return function () {
-                    return parameters[key].default;
-                };
-            })()
+            get() {
+                return parameters[dv].default;
+            }
         })
     );
 }

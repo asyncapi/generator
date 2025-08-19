@@ -1,7 +1,6 @@
+const { verifyDirectoryStructure, getDirElementsRecursive, buildParams } = require('@asyncapi/generator-helpers');
 const path = require('path');
-const { readFile } = require('fs').promises;
 const Generator = require('@asyncapi/generator');
-const { listFiles } = require('@asyncapi/generator-helpers');
 const asyncapi_v3_path_postman = path.resolve(__dirname, '../__fixtures__/asyncapi-postman-echo.yml');
 const asyncapi_v3_path_hoppscotch = path.resolve(__dirname, '../__fixtures__/asyncapi-hoppscotch-client.yml');
 
@@ -16,13 +15,10 @@ async function generateAndVerifyClient(template, outputPath, asyncapiPath, param
 
   await generator.generateFromFile(asyncapiPath);
 
-  const testOutputFiles = await listFiles(outputPath);
-  
-  for (const testOutputFile of testOutputFiles) {
-    const filePath = path.join(outputPath, testOutputFile);
-    const content = await readFile(filePath, 'utf8');
-    expect(content).toMatchSnapshot(testOutputFile);
-  }
+  // List the files & folders in the output directory
+  const directoryElements = await getDirElementsRecursive(outputPath);
+
+  await verifyDirectoryStructure(directoryElements, outputPath);
 }
 
 /**
@@ -44,30 +40,19 @@ function runCommonTests(language, config) {
         'postman echo',
         testResultPathPostman,
         asyncapi_v3_path_postman,
-        {
-          server: 'echoServer',
-          clientFileName: config.clientFileName,
-          appendClientSuffix: true
-        }
+        buildParams(language, config, { appendClientSuffix: true })
       ],
       [
         'hoppscotch echo',
         testResultPathHoppscotch,
         asyncapi_v3_path_hoppscotch,
-        {
-          server: 'echoServer',
-          clientFileName: config.clientFileName
-        }
+        buildParams(language, config)
       ],
       [
         'hoppscotch echo with custom client name',
         testResultPathCustomHoppscotch,
         asyncapi_v3_path_hoppscotch,
-        {
-          server: 'echoServer',
-          clientFileName: config.clientFileName,
-          customClientName: 'HoppscotchClient'
-        }
+        buildParams(language, config, { customClientName: 'HoppscotchClient' })
       ]
     ])('generate simple client for %s', async (_, outputPath, asyncapiPath, params) => {
       await generateAndVerifyClient(config.template, outputPath, asyncapiPath, params);

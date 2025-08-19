@@ -7,7 +7,6 @@ jest.mock('fs/promises', () => ({
   readdir: jest.fn(),
 }));
 
-jest.mock('fs/promises');
 describe('listFiles', () => {
   afterEach(() => {
     jest.clearAllMocks();

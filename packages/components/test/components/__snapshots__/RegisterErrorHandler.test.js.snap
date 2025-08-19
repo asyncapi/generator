@@ -9,7 +9,7 @@ exports[`Testing of RegisterErrorHandler function render dart method with parame
 
 exports[`Testing of RegisterErrorHandler function render dart websocket register error handler method 1`] = `
 "/// Method to register custom error handlers
-  void registerErrorHandler() {
+  void registerErrorHandler(void Function(Object) handler) {
     _errorHandlers.add(handler);
   }"
 `;
@@ -25,7 +25,7 @@ exports[`Testing of RegisterErrorHandler function render dart with all the props
 
 exports[`Testing of RegisterErrorHandler function render javascript method with custom name 1`] = `
 "// Method to register custom error handlers
-   addHandler() {
+   addHandler(handler) {
     if (typeof handler === 'function') {
       this.errorHandlers.push(handler);
     } else {
@@ -36,7 +36,7 @@ exports[`Testing of RegisterErrorHandler function render javascript method with 
 
 exports[`Testing of RegisterErrorHandler function render javascript websocket register error handler method 1`] = `
 "// Method to register custom error handlers
-   registerErrorHandler() {
+   registerErrorHandler(handler) {
     if (typeof handler === 'function') {
       this.errorHandlers.push(handler);
     } else {
@@ -47,7 +47,7 @@ exports[`Testing of RegisterErrorHandler function render javascript websocket re
 
 exports[`Testing of RegisterErrorHandler function render python websocket register error handler method 1`] = `
 "def registerErrorHandler(self, handler) :
-    \\"\\"\\"Register a callable as a message handler.\\"\\"\\"
+    \\"\\"\\"Register a callable as a error handler.\\"\\"\\"
     if callable(handler):
       self.error_handlers.append(handler)
     else:

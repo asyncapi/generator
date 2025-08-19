@@ -4,7 +4,7 @@ import { RegisterErrorHandler } from '../../src/index';
 describe('Testing of RegisterErrorHandler function', () => {
   test('render javascript websocket register error handler method', () => {
     const result = render(
-      <RegisterErrorHandler language='javascript' />
+      <RegisterErrorHandler language='javascript' methodParams={['handler']} />
     );
     const actual = result.trim();
     expect(actual).toMatchSnapshot();
@@ -15,7 +15,7 @@ describe('Testing of RegisterErrorHandler function', () => {
       <RegisterErrorHandler 
         language='python'
         methodParams={['self', 'handler']}
-        preExecutionCode='"""Register a callable as a message handler."""'
+        preExecutionCode='"""Register a callable as a error handler."""'
       />
     );
     const actual = result.trim();
@@ -26,6 +26,7 @@ describe('Testing of RegisterErrorHandler function', () => {
     const result = render(
       <RegisterErrorHandler 
         language='dart'
+        methodParams={['void Function(Object) handler']}
       />
     );
     const actual = result.trim();
@@ -37,6 +38,7 @@ describe('Testing of RegisterErrorHandler function', () => {
       <RegisterErrorHandler 
         language='javascript'
         methodName='addHandler'
+        methodParams={['handler']}
       />
     );
     const actual = result.trim();

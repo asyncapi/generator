@@ -35,7 +35,7 @@ else:
  *
  * @param {Object} props - Component props.
  * @param {Language} props.language - Programming language used for method formatting.
- * @param {string} props.methodName='registerMessageHandler' - Name of the method to generate.
+ * @param {string} props.methodName='registerErrorHandler' - Name of the method to generate.
  * @param {string[]} props.methodParams=[] - List of parameters for the method.
  * @param {string} props.preExecutionCode - Code to insert before the main function logic.
  * @param {string} props.postExecutionCode - Code to insert after the main function logic.

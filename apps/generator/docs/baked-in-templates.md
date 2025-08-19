@@ -3,7 +3,7 @@ title: "Baked-in Templates"
 weight: 55
 ---
 
-> This is a new concept introduced in generator version 2.8. The number of templates is limited and solution is still in experimental phase
+> This is a new concept introduced in generator version 2.8. The number of templates is limited and solution is still in experimental phase. It is not recommended to use them in production. Instead join us to help to improve them with your use cases and your AsyncAPI documents.
 
 Baked-in templates are official AsyncAPI templates that are **developed, versioned, and shipped directly inside the `generator` repository and exposed with `@asyncapi/generator` library**.
 
@@ -92,3 +92,7 @@ Resulting entry in `apps/generator/lib/templates/BakedInTemplatesList.json`:
    - `.ageneratorrc` (do not add `generator` config key as it is not needed)
    - `package.json`
 1. Run generator's build command: `npm run build`
+
+## Templates exposed through generator
+
+Templates that are exposed as part of the generator are transpiled with the `react-sdk` and located in published library under `/lib/templates/bakedInTemplates`. This means that in case of baked-in templates, they are not picked by the generator from `node_modules`. This way the process of generation is faster and more efficient.

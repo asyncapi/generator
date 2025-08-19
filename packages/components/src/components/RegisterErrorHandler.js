@@ -1,0 +1,64 @@
+import { MethodGenerator } from './MethodGenerator';
+
+/**
+ * @typedef {'python' | 'javascript' | 'dart'} Language
+ * Supported programming languages.
+ */
+
+/**
+ * Configuration for WebSocket message handler registration method logic per language.
+ * @type {Record<Language, { methodDocs?: string, methodLogic: string }>}
+ */
+const websocketErrorRegisterConfig = {
+  python: {
+    methodLogic: `if callable(handler):
+  self.error_handlers.append(handler)
+else:
+    print("Error handler must be callable")`
+  },
+  javascript: {
+    methodDocs: '// Method to register custom error handlers',
+    methodLogic: `if (typeof handler === 'function') {
+  this.errorHandlers.push(handler);
+} else {
+  console.warn('Error handler must be a function');
+}`
+  },
+  dart: {
+    methodDocs: '/// Method to register custom error handlers',
+    methodLogic: '_errorHandlers.add(handler);'
+  }
+};
+
+/**
+ * Renders a WebSocket message handler registration method with optional pre and post execution logic.
+ *
+ * @param {Object} props - Component props.
+ * @param {Language} props.language - Programming language used for method formatting.
+ * @param {string} props.methodName='registerMessageHandler' - Name of the method to generate.
+ * @param {string[]} props.methodParams=[] - List of parameters for the method.
+ * @param {string} props.preExecutionCode - Code to insert before the main function logic.
+ * @param {string} props.postExecutionCode - Code to insert after the main function logic.
+ * @returns {JSX.Element} Rendered method block with appropriate formatting.
+ */
+export function RegisterErrorHandler({ language, methodName = 'registerErrorHandler', methodParams = [], preExecutionCode = '', postExecutionCode = '', customMethodConfig }) {
+  const {
+    methodDocs = '',
+    methodLogic = ''
+  } = websocketErrorRegisterConfig[language];
+
+  return (
+    <MethodGenerator
+      language={language}
+      methodName={methodName}
+      methodParams={methodParams}
+      methodDocs={methodDocs}
+      methodLogic={methodLogic}
+      preExecutionCode={preExecutionCode}
+      postExecutionCode={postExecutionCode}
+      indent={2}
+      newLines={2}
+      customMethodConfig={customMethodConfig}
+    />
+  );
+}

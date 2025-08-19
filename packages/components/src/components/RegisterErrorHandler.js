@@ -6,7 +6,7 @@ import { MethodGenerator } from './MethodGenerator';
  */
 
 /**
- * Configuration for WebSocket message handler registration method logic per language.
+ * Configuration for WebSocket error handler registration method logic per language.
  * @type {Record<Language, { methodDocs?: string, methodLogic: string }>}
  */
 const websocketErrorRegisterConfig = {
@@ -31,7 +31,7 @@ else:
 };
 
 /**
- * Renders a WebSocket message handler registration method with optional pre and post execution logic.
+ * Renders a WebSocket error handler registration method with optional pre and post execution logic.
  *
  * @param {Object} props - Component props.
  * @param {Language} props.language - Programming language used for method formatting.
@@ -39,6 +39,7 @@ else:
  * @param {string[]} props.methodParams=[] - List of parameters for the method.
  * @param {string} props.preExecutionCode - Code to insert before the main function logic.
  * @param {string} props.postExecutionCode - Code to insert after the main function logic.
+ * @param {Object} [props.customMethodConfig] - Optional overrides for default method configuration.
  * @returns {JSX.Element} Rendered method block with appropriate formatting.
  */
 export function RegisterErrorHandler({ language, methodName = 'registerErrorHandler', methodParams = [], preExecutionCode = '', postExecutionCode = '', customMethodConfig }) {

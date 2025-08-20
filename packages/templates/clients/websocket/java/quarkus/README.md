@@ -1,7 +1,7 @@
 
 ## Java Quarkus WebSocket Client
 
-You can test this template (for now modifications are coming):
+You can test this template:
 1. Clone the project and run `npm install`
 2. Navigate to `packages/templates/clients/websocket/test/integration-test` and run the tests with `npm run test` to generate WebSocket clients
 3. Navigate to `packages/templates/clients/websocket/java/quarkus`

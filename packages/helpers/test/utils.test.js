@@ -156,30 +156,30 @@ describe('toSnakeCase integration test with AsyncAPI', () => {
 });
 
 describe('toCamelCase integration test with AsyncAPI', () => {
-  let parsedAsyncAPIDocument, operations;
+  let parsedAsyncAPIDocument, ops;
 
   beforeAll(async () => {
     const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
     parsedAsyncAPIDocument = parseResult.document;
-    operations = parsedAsyncAPIDocument.operations();
+    ops = parsedAsyncAPIDocument.operations();
   });
 
   it('should convert snake_case operation names to camelCase format', () => {
-    const operation = operations.get('operation_with_snake_case');
+    const operation = ops.get('operation_with_snake_case');
     const actualOperationId = toCamelCase(operation.id());
     const expectedOperationId = 'operationWithSnakeCase';
     expect(actualOperationId).toBe(expectedOperationId);
   });
 
   it('should leave already camelCase operation names unchanged', () => {
-    const operation = operations.get('noSummaryNoDescriptionOperations');
+    const operation = ops.get('noSummaryNoDescriptionOperations');
     const actualOperationId = toCamelCase(operation.id());
     const expectedOperationId = 'noSummaryNoDescriptionOperations';
     expect(actualOperationId).toBe(expectedOperationId);
   });
 
   it('should convert PascalCase operation names to camelCase format', () => {
-    const operation = operations.get('PascalCaseOperation');
+    const operation = ops.get('PascalCaseOperation');
     const actualOperationId = toCamelCase(operation.id());
     const expectedOperationId = 'pascalCaseOperation';
     expect(actualOperationId).toBe(expectedOperationId);

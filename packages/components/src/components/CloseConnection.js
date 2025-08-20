@@ -13,8 +13,8 @@ const delayExit = 1000;
  */
 const websocketCloseConfig = {
   python: {
-    default:{
-    methodLogic: `self._stop_event.set()
+    default: {
+      methodLogic: `self._stop_event.set()
 if self.ws_app:
     self.ws_app.close()
     print("WebSocket connection closed.")`
@@ -22,8 +22,8 @@ if self.ws_app:
   },
   javascript: {
     default: {
-    methodDocs: '// Method to close the WebSocket connection',
-    methodLogic: `if (this.websocket) {
+      methodDocs: '// Method to close the WebSocket connection',
+      methodLogic: `if (this.websocket) {
     this.websocket.close();
     console.log('WebSocket connection closed.');
 }`
@@ -31,17 +31,17 @@ if self.ws_app:
   },
   dart: {
     default: {
-    methodDocs: '/// Method to close the WebSocket connection',
-    methodLogic: `_channel?.sink.close();
+      methodDocs: '/// Method to close the WebSocket connection',
+      methodLogic: `_channel?.sink.close();
 _channel = null;
 print('WebSocket connection closed.');`
     }
   },
   java: {
-    quarkus:{
-    methodDocs: `
+    quarkus: {
+      methodDocs: `
             // Calling to close the WebSocket connection`,
-    methodLogic: `
+      methodLogic: `
             connection.closeAndAwait();
             Log.info("Connection closed gracefully.");
             Thread.sleep(${delayExit}); // Wait for a second before exiting

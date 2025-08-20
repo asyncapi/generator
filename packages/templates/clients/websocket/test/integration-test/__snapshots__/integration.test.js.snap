@@ -1642,7 +1642,9 @@ public class SlackWebsocketAPIClientConnector{
             Thread.sleep(120000); // Keep the connection open for 2 minutes
             
 
-            // Close the connection gracefully
+            // Calling to close the WebSocket connection
+  
+
             connection.closeAndAwait();
             Log.info(\\"Connection closed gracefully.\\");
             Thread.sleep(1000); // Wait for a second before exiting
@@ -1654,6 +1656,7 @@ public class SlackWebsocketAPIClientConnector{
     }).start();
   }
 }
+
 
 
 
@@ -2630,7 +2633,9 @@ public class HoppscotchClientConnector{
             Thread.sleep(10000);
 
 
-            // Close the connection gracefully
+            // Calling to close the WebSocket connection
+  
+
             connection.closeAndAwait();
             Log.info(\\"Connection closed gracefully.\\");
             Thread.sleep(1000); // Wait for a second before exiting
@@ -2642,6 +2647,7 @@ public class HoppscotchClientConnector{
     }).start();
   }
 }
+
 
 
 
@@ -3777,7 +3783,9 @@ public class HoppscotchEchoWebSocketClientConnector{
             Thread.sleep(10000);
 
 
-            // Close the connection gracefully
+            // Calling to close the WebSocket connection
+  
+
             connection.closeAndAwait();
             Log.info(\\"Connection closed gracefully.\\");
             Thread.sleep(1000); // Wait for a second before exiting
@@ -3789,6 +3797,7 @@ public class HoppscotchEchoWebSocketClientConnector{
     }).start();
   }
 }
+
 
 
 
@@ -5022,7 +5031,9 @@ public class PostmanEchoWebSocketClientClientConnector{
             Thread.sleep(10000);
 
 
-            // Close the connection gracefully
+            // Calling to close the WebSocket connection
+  
+
             connection.closeAndAwait();
             Log.info(\\"Connection closed gracefully.\\");
             Thread.sleep(1000); // Wait for a second before exiting
@@ -5034,6 +5045,7 @@ public class PostmanEchoWebSocketClientClientConnector{
     }).start();
   }
 }
+
 
 
 

@@ -1,4 +1,3 @@
-
 import { Text } from '@asyncapi/generator-react-sdk';
 
 export default function CloseConnector() {

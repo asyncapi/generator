@@ -2,6 +2,7 @@ import { Text } from '@asyncapi/generator-react-sdk';
 import TimedConnection from './TimedConnection';
 import CloseConnector from './CloseConnector';
 import URIParams from './URIParams';
+import { CloseConnection } from '@asyncapi/generator-components';
 
 export default function InitConnector({ queryParamsArray, pathName }) {
   return (
@@ -18,7 +19,7 @@ export default function InitConnector({ queryParamsArray, pathName }) {
         )
       }
       <URIParams queryParamsArray={queryParamsArray} pathName={pathName} />
-      <CloseConnector />
+      <CloseConnection language="java" framework="quarkus" methodName="" indent={0} />
     </Text>
   );
 }

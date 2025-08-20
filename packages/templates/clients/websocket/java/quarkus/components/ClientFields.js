@@ -1,4 +1,4 @@
-import { FormatHelpers } from '@asyncapi/modelina';
+import { toCamelCase } from '@asyncapi/generator-helpers';
 import { Text } from '@asyncapi/generator-react-sdk';
 
 export function ClientFields({ queryParams }) {
@@ -8,7 +8,7 @@ export function ClientFields({ queryParams }) {
   if (queryParamsArray) {
     queryParamsVariables = '\nprivate HashMap<String, String> params;\n';
     queryParamsVariables += queryParamsArray.map((param) => {
-      const paramName = FormatHelpers.toCamelCase(param[0]);
+      const paramName = toCamelCase(param[0]);
       return `private String ${paramName};`;                               
     }).join('\n');
   }

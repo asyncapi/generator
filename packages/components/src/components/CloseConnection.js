@@ -1,9 +1,11 @@
 import { MethodGenerator } from './MethodGenerator';
 
 /**
- * @typedef {'python' | 'javascript' | 'dart'} Language
+ * @typedef {'python' | 'javascript' | 'dart' | 'java'} Language
  * Supported programming languages.
  */
+
+const delayExit = 1000;
 
 /**
  * Configuration for WebSocket close method logic per language.
@@ -11,25 +13,64 @@ import { MethodGenerator } from './MethodGenerator';
  */
 const websocketCloseConfig = {
   python: {
+    default:{
     methodLogic: `self._stop_event.set()
 if self.ws_app:
     self.ws_app.close()
     print("WebSocket connection closed.")`
+    }
   },
   javascript: {
+    default: {
     methodDocs: '// Method to close the WebSocket connection',
     methodLogic: `if (this.websocket) {
     this.websocket.close();
     console.log('WebSocket connection closed.');
 }`
+    }
   },
   dart: {
+    default: {
     methodDocs: '/// Method to close the WebSocket connection',
     methodLogic: `_channel?.sink.close();
 _channel = null;
 print('WebSocket connection closed.');`
+    }
+  },
+  java: {
+    quarkus:{
+    methodDocs: `
+            // Calling to close the WebSocket connection`,
+    methodLogic: `
+            connection.closeAndAwait();
+            Log.info("Connection closed gracefully.");
+            Thread.sleep(${delayExit}); // Wait for a second before exiting
+            System.exit(0);
+        } catch (Exception e) {
+              Log.error("Error during WebSocket communication", e);
+              System.exit(1);
+        }
+    }).start();
+  }
+}`
+    }
   }
 };
+
+/**
+ * Helper function to resolve config
+ * @param {language} language 
+ * @param {framework} framework 
+ * @returns 
+ */
+function resolveCloseConfig(language, framework = 'default') {
+  const languageConfig = websocketCloseConfig[language];
+  if (!languageConfig) return { methodDocs: '', methodLogic: '' };
+
+  // Try to get framework-specific config, fallback to default
+  const config = languageConfig[framework] || languageConfig.default;
+  return config || { methodDocs: '', methodLogic: '' };
+}
 
 /**
  * Renders a WebSocket close connection method with optional pre and post execution logic.
@@ -42,11 +83,8 @@ print('WebSocket connection closed.');`
  * @param {string} props.postExecutionCode - Code to insert after the main function logic.
  * @returns {JSX.Element} Rendered method block with appropriate formatting.
  */
-export function CloseConnection({ language, methodName = 'close', methodParams = [], preExecutionCode = '', postExecutionCode = '' }) {
-  const { 
-    methodDocs = '', 
-    methodLogic = '' 
-  } = websocketCloseConfig[language];
+export function CloseConnection({ language, framework = 'default', methodName = 'close', methodParams = [], preExecutionCode = '', postExecutionCode = '', indent = 2 }) {
+  const { methodDocs, methodLogic } = resolveCloseConfig(language, framework);
   
   return (
     <MethodGenerator
@@ -57,7 +95,7 @@ export function CloseConnection({ language, methodName = 'close', methodParams =
       methodLogic = {methodLogic}
       preExecutionCode = {preExecutionCode}
       postExecutionCode = {postExecutionCode}
-      indent = {2}
+      indent = {indent}
     />
   );
 }

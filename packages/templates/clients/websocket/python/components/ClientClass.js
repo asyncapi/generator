@@ -2,12 +2,11 @@ import { Text } from '@asyncapi/generator-react-sdk';
 import { getClientName, getServerUrl, getServer, getQueryParams, getTitle } from '@asyncapi/generator-helpers';
 import { Constructor } from './Constructor';
 import { Connect } from './Connect';
-import { RegisterMessageHandler } from './RegisterMessageHandler';
 import { RegisterErrorHandler } from './RegisterErrorHandler';
 import { HandleMessage } from './HandleMessage';
 import { SendOperation } from './SendOperation';
 import { Send } from './Send';
-import { CloseConnection } from '@asyncapi/generator-components';
+import { CloseConnection, RegisterMessageHandler } from '@asyncapi/generator-components';
 import { RegisterOutgoingProcessor } from './RegisterOutgoingProcessor';
 import { HandleError } from './HandleError';
 
@@ -26,7 +25,12 @@ export function ClientClass({ asyncapi, params }) {
       </Text>
       <Constructor serverUrl={serverUrl} query={queryParams} />
       <Connect title={title} />
-      <RegisterMessageHandler />
+      <RegisterMessageHandler
+        language="python"
+        methodName='register_message_handler'
+        methodParams={['self', 'handler']}
+        preExecutionCode='"""Register a callable to process incoming messages."""'
+      />
       <RegisterErrorHandler />
       <RegisterOutgoingProcessor />
       <HandleMessage />

@@ -29,7 +29,7 @@
 5. Generate the template client with `node .\apps\generator\cli.js <path-to-custom-document> .\packages\templates\clients\kafka\java\quarkus\ -o outputClient --force-write --param server=<custom-server>`
 6. Navigate to `outputClient` or any other name you gave the output folder
 7. Navigate to the docker folder with `cd src/main/docker` and find the `docker-compose.yaml` file. 
-8. Start the kafka broker by runnning `docker-compose up -d`. 
+8. Start the kafka broker by runnning `docker-compose up -d`. Make sure you have docker desktop up and running.
 9. In another terminal, run the templated client with `mvn quarkus:dev`. You will see the logged events in this one.
 10. In another terminal, send request the REST endpoint to simulate event production.
 11. See the output in the terminal
@@ -43,7 +43,18 @@
 
 
 
-
+Take note of a bundle issue
+make sure it matches the payload
+fix the send and recevei operations
+look at parser .md
+focus sperately on send and receive and use it without reply
+use handler that will subscribe to you and one then will send message to channel
+Don't worry about the **message** header for now
+Look out for messages
+Ask ahmed
+try to use .id() more often
+Ask lukasz about the skill of schemas
+I think its better to leave as String , String and they put their BL, I will later ask him about iut, the payload is hard becasue how do I get the models class
 **Plan**
 Make sure that you have a proper producer and consumer
 The new version does that different diagram, try to just get producer and consumer working proeprly,
@@ -54,7 +65,71 @@ Ask lukasz about the approach
 
 
 
+Just use a crd.yaml, the operator doesn't seem to work, but able to back it up later on
+put a crd input parameter, if they want, by default it is false
+    - ask lukasx if I should put it 
+
+Ask about the link payload 
+
+
+before using docker file do `mvn clean package`, make sure naming of quarkus-kafka and other are correct
+    - for running the dockerfile of the kafka, it need to run the docker-compose file first before being able to run the docker image
+
+need to make sure have proper image naming 
+
+So I deployed it but the operator is not working, I may make it so that no operator is even there idk?
+Also need to double check with the whole docker file and how to build image and deploy on k8s
+    - image for kafka must work, currently needs not working
+Fixed the getIMage name function, make so just checks locally, and remove my docker hub pull
+
+Todo:
+Seems that the crd works (some review)
+    - fix the operator or even if I need it 
+    - fix the docker file, current image is wrong
+    - so I may not need a controller
+    - Also determine oif I am building an operator or controller
+            Controllers: are processes that watch for changes to resources (including custom resources) and reconcile the cluster's actual state with the desired state defined in those resources.
+            Operators: are a specific type of controller that encapsulate operational knowledge for managing complex applications or services, often involving multiple Kubernetes resources and external systems.
+
+
+
 **Todo**
+
+Aug 18th
+Review to make sure this is as simple as possible, so far looks good
+    - So review crd, then review operators
+    - once that is done, build image and try to make a apiconfig resource (for the image tell the user in the steps that they must build the image to deploy it to k8s)
+    - then template it 
+    - REALLY JUST WANT A SIMPLE OPERATOR
+
+
+Also need to make sure that all these small like custer-ip things are in the right place for things to work
+
+After CRD is done,
+Review kafka for NO HARD CODING PLEASE!!!!
+THE CRD MAY BE SLIGTLY HARD CODED BUT PLEASE MAKE IT SO THAT IT WOKRS FOR BOTH TEMPLATES\
+
+
+
+Aug 16th
+Might put reusable componetns in templates/client/components/java
+- get the crd to wokr
+- controller will most liely be written in java using quakrus api
+
+Aug17th
+1. Containerizing and Deploying via Quarkus on Kubernetes
+    - need to give them a way to deploy the containerize app with quarkus to k8s. Then can make a instance of new resource
+    - important to have this 
+2. Custom Resource Definitions (CRDs) + Operators in Java
+    - Ideas
+        - whenever the document is done we, rebuild the tempalte and build teh container again from sratch?
+        - Might use the appconfig resource
+
+I also need to know how to deploy the applcation as a contianer using quarkus then making the the customer resoruce and checking that it got setup properly
+    - probably will test with kubernetes on docker desktop since I only need to test with one cluster
+
+**NOTE**: i think quakurs might make the manifest for me. Double check if that is the case
+
 - Add endpoint to test the producer and consumer then try them out !!!!
 Aug 13
     - test out the endpoint I made, make sure right topic names are consisten if need be 

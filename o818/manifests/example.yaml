@@ -1,0 +1,11 @@
+apiVersion: asyncapi.com/v1
+kind: APIConfig
+metadata:
+  name: kafka-secure-service
+  namespace: default
+spec:
+  protocol: kafka-secure
+  topic: costing
+  templateType: kafka-secure-template
+  config:
+    replicas: 1

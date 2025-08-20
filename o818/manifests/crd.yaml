@@ -1,0 +1,62 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: apiconfigs.asyncapi.com
+spec:
+  group: asyncapi.com
+  scope: Namespaced
+  names:
+    plural: apiconfigs
+    singular: apiconfig
+    kind: APIConfig
+  versions:
+    - name: v1
+      served: true
+      storage: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              required:
+                - protocol
+                - templateType
+              properties:
+                protocol:
+                  type: string
+                  enum: ["kafka-secure"]
+                  description: "Message protocol used by the API, e.g., kafka, mqtt, etc."
+                path:
+                  type: string
+                  description: "Path to the API endpoint." # this is for websockets
+                topic:
+                  type: string
+                  description: "Kafka/MQTT topic name for the API."
+                templateType:
+                  type: string
+                  enum: ["kafka-secure-template"] # might need to make sure its for asyncapi templates
+                config:
+                  type: object
+                  properties:
+                    replicas:
+                      type: integer
+                      minimum: 1
+                      default: 1
+            status:
+              type: object
+              properties:
+                deployed:
+                  type: boolean
+                phase:
+                  type: string
+                  enum: ["Pending", "Creating", "Running", "Failed", "Deleting"]
+                  description: "Current lifecycle phase of the APIConfig."
+                message:
+                  type: string
+                url:
+                  type: string
+                  description: "Service endpoint URL"
+                lastReconciled:
+                  type: string
+                  format: date-time

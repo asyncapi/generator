@@ -3,9 +3,9 @@ import { FormatHelpers } from "@asyncapi/modelina";
 
 
 
-export function ProduceEvent({ receiveOperations }) {
-    return receiveOperations.map((operation) => {
-        const topicName = FormatHelpers.toCamelCase(operation._json.channel['x-parser-unique-object-id']);
+export function ProduceEvent({ sendOperations }) {
+    return sendOperations.map((operation, index) => {
+        const topicName = FormatHelpers.toCamelCase(operation.channels()[index].id());
         const producerName = FormatHelpers.upperFirst(topicName) + "Producer";
 
         return (

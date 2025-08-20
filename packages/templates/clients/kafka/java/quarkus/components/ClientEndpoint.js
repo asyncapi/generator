@@ -10,7 +10,7 @@ export default function ClientEndpoint({ className, operations, channels, correc
         correctPath = "/";
     }
     
-    const receiveOperations = operations.filterByReceive();
+    const sendOperations = operations.filterBySend();
 
     return (
         <Text newLines={2}>
@@ -21,8 +21,8 @@ export default function ClientEndpoint({ className, operations, channels, correc
 @Produces(MediaType.APPLICATION_JSON)
 public class ${className}{`}
         </Text>
-        <EndpointFields receiveOperations={receiveOperations} channels={channels} />
-        <ProduceEvent receiveOperations={receiveOperations}/>
+        <EndpointFields sendOperations={sendOperations} channels={channels} />
+        <ProduceEvent sendOperations={sendOperations}/>
         <MiddleService channels={channels} />
         <Text newLines={2}>
             {`

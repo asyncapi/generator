@@ -5,6 +5,10 @@ export default function AppProperties({ asyncapi, params }) {
   const operations = asyncapi.operations();
   const receiveOperations = operations.filterByReceive();
   const sendOperations = operations.filterBySend();
+  if(!sendOperations || !receiveOperations){
+    return null;
+  }
+  
   const version = params.version;
   const env = params.env;
 
@@ -12,7 +16,7 @@ export default function AppProperties({ asyncapi, params }) {
   let consumerActualTopic = '';
 
 
-
+// try to add a consumer group id
   return (
       <File name="application.properties">
         <Text>
@@ -22,9 +26,9 @@ export default function AppProperties({ asyncapi, params }) {
 # Kafka broker configuration
 kafka.bootstrap.servers=localhost:9092`}
         </Text>
-        {receiveOperations.length > 0 && 
-          ( receiveOperations.map((operation) => {
-            const address = operation._json.channel.address;
+        {sendOperations.length > 0 && 
+          ( sendOperations.map((operation, index) => {
+            const address = operation.channels()[index].address();
             producerActualTopic = address.replace("{env}", env).replace("{version}", version);
             return (
               <Text newLines={2}>
@@ -37,9 +41,9 @@ mp.messaging.outgoing.producer-channel.value.serializer=org.apache.kafka.common.
               </Text>
             );
           }))}
-        {sendOperations.length > 0 && 
-          ( sendOperations.map((operation) => {
-            const address = operation._json.channel.address;
+        {receiveOperations.length > 0 && 
+          ( receiveOperations.map((operation, index) => {
+            const address = operation.channels()[index].address();
             consumerActualTopic = address.replace("{env}", env).replace("{version}", version);
             return (
               <Text newLines={2}>

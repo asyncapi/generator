@@ -9,10 +9,10 @@ export default async function ({ asyncapi, params }) {
 
     const operations = asyncapi.operations();    
 
-    const receiveOperations = operations.filterByReceive();    
+    const sendOperations = operations.filterBySend();    
     
-    return receiveOperations.map((operation) => {
-        const topicName = FormatHelpers.toCamelCase(operation._json.channel['x-parser-unique-object-id']);
+    return sendOperations.map((operation, index) => {
+        const topicName = FormatHelpers.toCamelCase(operation.channels()[index].id());
         const producerName = FormatHelpers.upperFirst(topicName) + "Producer";
         const producerFileName = FormatHelpers.upperFirst(`${producerName}.java`);
         

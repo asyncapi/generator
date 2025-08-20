@@ -62,6 +62,109 @@ exports[`WebSocket Clients Integration Tests Java Quarkus Client Common Integrat
 "
 `;
 
+exports[`WebSocket Clients Integration Tests Java Quarkus Client Common Integration tests for Java client generation generate simple client for adeo case study: AdeoAsyncAPICaseStudyResource.java 1`] = `
+"//////////////////////////////////////////////////
+//
+// Adeo AsyncAPI Case Study - %REPLACED_BY_MAVEN%
+// Protocol: kafka-secure
+// Host: prod.url:9092
+//
+//////////////////////////////////////////////////
+
+
+package com.asyncapi;
+
+import jakarta.inject.Inject;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+import org.eclipse.microprofile.reactive.messaging.Channel;
+import org.eclipse.microprofile.reactive.messaging.Emitter;
+import org.eclipse.microprofile.reactive.messaging.Incoming;
+import org.eclipse.microprofile.reactive.messaging.Message;
+import io.smallrye.reactive.messaging.kafka.Record;
+import io.smallrye.reactive.messaging.kafka.KafkaRecord;
+
+
+@Path(\\"/\\")  
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
+public class AdeoAsyncAPICaseStudyResource{
+
+
+    @Inject
+    CostingResponseProducer producer;
+
+
+    @Inject
+    @Channel(\\"middle-out\\")
+    Emitter<String> middleEmitter;
+
+    // Modify DTO for BL
+    public static class DTO{
+        public String id;
+        public String value;
+    }
+
+
+    /**
+     *  Simple rest endpoint to simulate the event production
+     * */
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response produceEvent(DTO request) {
+        // Logic to produce an event to Kafka
+        System.out.println(\\">>> Raw body: \\" + request);
+
+        if (request == null) {
+            System.out.println(\\"Request is null - no body provided\\");
+            return Response.status(Response.Status.BAD_REQUEST).entity(\\"Request body is required\\").build();
+        }
+
+        String returnedID = (request.id != null) ? request.id : \\"\\";
+        String returnedValue = (request.value != null) ? request.value : \\"\\";
+
+        System.out.printf(\\"Sending request: id=%s, value=%s%n\\", returnedID, returnedValue);
+
+        producer.sendCostingResponseProducer(returnedID, returnedValue);
+        
+
+        return Response.accepted().build();
+    }
+
+    @Incoming(\\"middle-in\\")
+    public String relayEvent(Record<String, String> record) {
+        String key = null;
+        try {
+            Thread.sleep(1000); // simulate some work
+        
+            key = record.key();
+            String value = record.value();
+            System.out.printf(\\"Middle service received: key=%s, value=%s%n\\", key, value);
+
+            value = value + \\" - processed by middle service\\";
+
+            Message<String> message = KafkaRecord.of(key, value);
+            middleEmitter.send(message);
+
+            return key;
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            System.out.println(\\"Thread was interrupted: \\" + e.getMessage());
+        }
+
+        return key;
+        
+    }
+
+
+}
+
+
+
+"
+`;
+
 exports[`WebSocket Clients Integration Tests Java Quarkus Client Common Integration tests for Java client generation generate simple client for adeo case study: AnonymousSchema_18.java 1`] = `
 "package com.asyncapi.models;
 
@@ -655,7 +758,37 @@ public class ComDotAdeoDotCasestudyDotCostingresponseDotCostingResultItem implem
 }"
 `;
 
-exports[`WebSocket Clients Integration Tests Java Quarkus Client Common Integration tests for Java client generation generate simple client for adeo case study: CostingRequestProducer.java 1`] = `
+exports[`WebSocket Clients Integration Tests Java Quarkus Client Common Integration tests for Java client generation generate simple client for adeo case study: CostingRequestConsumer.java 1`] = `
+"
+package com.asyncapi;
+
+import io.smallrye.reactive.messaging.kafka.Record;
+import org.eclipse.microprofile.reactive.messaging.Incoming;
+import org.jboss.logging.Logger;
+
+import jakarta.enterprise.context.ApplicationScoped;
+
+
+@ApplicationScoped  
+public class CostingRequestConsumer{
+
+  private static final Logger logger = Logger.getLogger(CostingRequestConsumer.class);
+
+      @Incoming(\\"consumer-channel\\") 
+      public void consumeundefined(Record<String, String> record) {
+        logger.infof(\\"Got an event, id: %s value: %s\\", record.key(), record.value());
+            
+        // TODO: Add your business logic here for events
+        // - Parse the response payload using your generated models
+      }
+  }
+
+
+
+"
+`;
+
+exports[`WebSocket Clients Integration Tests Java Quarkus Client Common Integration tests for Java client generation generate simple client for adeo case study: CostingResponseProducer.java 1`] = `
 "
 package com.asyncapi;
 
@@ -670,17 +803,17 @@ import java.util.UUID;
 
 
 @ApplicationScoped  
-public class CostingRequestProducer{
+public class CostingResponseProducer{
 
 
-    private static final Logger logger = Logger.getLogger(CostingRequestProducer.class);
+    private static final Logger logger = Logger.getLogger(CostingResponseProducer.class);
 
     @Inject 
     @Channel(\\"producer-channel\\")
-    Emitter<String> costingRequestProducerEmitter;
+    Emitter<String> costingResponseProducerEmitter;
 
 
-    public String sendCostingRequestProducer(String requestId, String value) {
+    public String sendCostingResponseProducer(String requestId, String value) {
       try{
           // Generate requestId if null
           if (requestId == null || requestId.trim().isEmpty()) {
@@ -691,7 +824,7 @@ public class CostingRequestProducer{
               value = \\"ASYNCAPI - TEST\\";
           }
           Message<String> message = KafkaRecord.of(requestId, value);
-          costingRequestProducerEmitter.send(message);
+          costingResponseProducerEmitter.send(message);
           logger.infof(\\"Sent costing request with ID: %s and value: %s\\", requestId, value);
       }catch (Exception e) {
           throw new RuntimeException(String.format(\\"Failed to produce event: %s\\", e.getMessage()));
@@ -701,139 +834,6 @@ public class CostingRequestProducer{
       return requestId;
     }
 }
-
-
-
-"
-`;
-
-exports[`WebSocket Clients Integration Tests Java Quarkus Client Common Integration tests for Java client generation generate simple client for adeo case study: CostingResource.java 1`] = `
-"//////////////////////////////////////////////////
-//
-// Adeo AsyncAPI Case Study - %REPLACED_BY_MAVEN%
-// Protocol: kafka-secure
-// Host: prod.url:9092
-//
-//////////////////////////////////////////////////
-
-
-package com.asyncapi;
-
-import jakarta.inject.Inject;
-import jakarta.ws.rs.*;
-import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response;
-import org.eclipse.microprofile.reactive.messaging.Channel;
-import org.eclipse.microprofile.reactive.messaging.Emitter;
-import org.eclipse.microprofile.reactive.messaging.Incoming;
-import org.eclipse.microprofile.reactive.messaging.Message;
-import io.smallrye.reactive.messaging.kafka.Record;
-import io.smallrye.reactive.messaging.kafka.KafkaRecord;
-
-
-@Path(\\"/\\")  
-@Consumes(MediaType.APPLICATION_JSON)
-@Produces(MediaType.APPLICATION_JSON)
-public class CostingResource{
-
-
-    @Inject
-    CostingRequestProducer producer;
-
-
-    @Inject
-    @Channel(\\"middle-out\\")
-    Emitter<String> middleEmitter;
-
-    // Modify DTO for BL
-    public static class DTO{
-        public String id;
-        public String value;
-    }
-
-
-    /**
-     *  Simple rest endpoint to simulate the event production
-     * */
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response produceEvent(DTO request) {
-        // Logic to produce an event to Kafka
-        System.out.println(\\">>> Raw body: \\" + request);
-
-        if (request == null) {
-            System.out.println(\\"Request is null - no body provided\\");
-            return Response.status(Response.Status.BAD_REQUEST).entity(\\"Request body is required\\").build();
-        }
-
-        String returnedID = (request.id != null) ? request.id : \\"\\";
-        String returnedValue = (request.value != null) ? request.value : \\"\\";
-
-        System.out.printf(\\"Sending request: id=%s, value=%s%n\\", returnedID, returnedValue);
-
-        producer.sendCostingRequestProducer(returnedID, returnedValue);
-        
-
-        return Response.accepted().build();
-    }
-
-    @Incoming(\\"middle-in\\")
-    public String relayEvent(Record<String, String> record) {
-        String key = null;
-        try {
-            Thread.sleep(1000); // simulate some work
-        
-            key = record.key();
-            String value = record.value();
-            System.out.printf(\\"Middle service received: key=%s, value=%s%n\\", key, value);
-
-            value = value + \\" - processed by middle service\\";
-
-            Message<String> message = KafkaRecord.of(key, value);
-            middleEmitter.send(message);
-
-            return key;
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-            System.out.println(\\"Thread was interrupted: \\" + e.getMessage());
-        }
-
-        return key;
-        
-    }
-
-
-}
-
-
-
-"
-`;
-
-exports[`WebSocket Clients Integration Tests Java Quarkus Client Common Integration tests for Java client generation generate simple client for adeo case study: CostingResponseConsumer.java 1`] = `
-"
-package com.asyncapi;
-
-import io.smallrye.reactive.messaging.kafka.Record;
-import org.eclipse.microprofile.reactive.messaging.Incoming;
-import org.jboss.logging.Logger;
-
-import jakarta.enterprise.context.ApplicationScoped;
-
-
-@ApplicationScoped  
-public class CostingResponseConsumer{
-
-  private static final Logger logger = Logger.getLogger(CostingResponseConsumer.class);
-
-      @Incoming(\\"consumer-channel\\") 
-      public void consumeundefined(Record<String, String> record) {
-        logger.infof(\\"Got an event, id: %s value: %s\\", record.key(), record.value());
-            
-        // TODO: Add your business logic here for events
-        // - Parse the response payload using your generated models
-      }
-  }
 
 
 
@@ -1111,30 +1111,92 @@ kafka.bootstrap.servers=localhost:9092
 
 # Configure outgoing channel for costing requests  (writing to Kafka) - producer
 mp.messaging.outgoing.producer-channel.connector=smallrye-kafka
-mp.messaging.outgoing.producer-channel.topic=adeo-dev-case-study-COSTING-REQUEST-V1
+mp.messaging.outgoing.producer-channel.topic=adeo-dev-case-study-COSTING-RESPONSE-V1
 mp.messaging.outgoing.producer-channel.key.serializer=org.apache.kafka.common.serialization.StringSerializer
 mp.messaging.outgoing.producer-channel.value.serializer=org.apache.kafka.common.serialization.StringSerializer
 
 
 # Configure incoming channel for costing responses (reading from Kafka) - consumer
 mp.messaging.incoming.consumer-channel.connector=smallrye-kafka
-mp.messaging.incoming.consumer-channel.topic=adeo-dev-case-study-COSTING-RESPONSE-V1
+mp.messaging.incoming.consumer-channel.topic=adeo-dev-case-study-COSTING-REQUEST-V1
 mp.messaging.incoming.consumer-channel.key.deserializer=org.apache.kafka.common.serialization.StringDeserializer
 mp.messaging.incoming.consumer-channel.value.deserializer=org.apache.kafka.common.serialization.StringDeserializer
 
 
 # Incoming: read from producer's topic
 mp.messaging.incoming.middle-in.connector=smallrye-kafka
-mp.messaging.incoming.middle-in.topic=adeo-dev-case-study-COSTING-REQUEST-V1
+mp.messaging.incoming.middle-in.topic=adeo-dev-case-study-COSTING-RESPONSE-V1
 mp.messaging.incoming.middle-in.value.deserializer=org.apache.kafka.common.serialization.StringDeserializer
 mp.messaging.incoming.middle-in.key.deserializer=org.apache.kafka.common.serialization.StringDeserializer
 
 # Outgoing: write to consumer's topic
 mp.messaging.outgoing.middle-out.connector=smallrye-kafka
-mp.messaging.outgoing.middle-out.topic=adeo-dev-case-study-COSTING-RESPONSE-V1
+mp.messaging.outgoing.middle-out.topic=adeo-dev-case-study-COSTING-REQUEST-V1
 mp.messaging.outgoing.middle-out.value.serializer=org.apache.kafka.common.serialization.StringSerializer
 mp.messaging.outgoing.middle-out.key.serializer=org.apache.kafka.common.serialization.StringSerializer
 
+"
+`;
+
+exports[`WebSocket Clients Integration Tests Java Quarkus Client Common Integration tests for Java client generation generate simple client for adeo case study: crd.yaml 1`] = `
+"
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: apiconfigs.asyncapi.com
+spec:
+  group: asyncapi.com
+  scope: Namespaced
+  names:
+    plural: apiconfigs
+    singular: apiconfig
+    kind: APIConfig
+  versions:
+    - name: v1
+      served: true
+      storage: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              required:
+                - protocol
+                - templateType
+              properties:
+                protocol:
+                  type: string
+                  enum: [\\"kafka-secure\\"]
+                  description: \\"Message protocol used by the API, e.g., kafka, mqtt, etc.\\"
+                undefined
+                templateType:
+                  type: string
+                  enum: [\\"kafka-secure-template\\"]
+                config:
+                  type: object
+                  properties:
+                    replicas:
+                      type: integer
+                      minimum: 1
+                      default: 1
+            status:
+              type: object
+              properties:
+                deployed:
+                  type: boolean
+                phase:
+                  type: string
+                  enum: [\\"Pending\\", \\"Creating\\", \\"Running\\", \\"Failed\\", \\"Deleting\\"]
+                  description: \\"Current lifecycle phase of the APIConfig.\\"
+                message:
+                  type: string
+                url:
+                  type: string
+                  description: \\"Service endpoint URL\\"
+                lastReconciled:
+                  type: string
+                  format: date-time
 "
 `;
 
@@ -1167,6 +1229,22 @@ services:
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
       KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181"
+`;
+
+exports[`WebSocket Clients Integration Tests Java Quarkus Client Common Integration tests for Java client generation generate simple client for adeo case study: example.yaml 1`] = `
+"
+apiVersion: asyncapi.com/v1
+kind: APIConfig
+metadata:
+  name: kafka-secure-service
+  namespace: default
+spec:
+  protocol: kafka-secure
+  undefined
+  templateType: kafka-secure-template
+  config:
+    replicas: 1
+"
 `;
 
 exports[`WebSocket Clients Integration Tests Java Quarkus Client Common Integration tests for Java client generation generate simple client for adeo case study: maven-wrapper.properties 1`] = `

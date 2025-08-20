@@ -32,7 +32,6 @@ describe('listFiles', () => {
   });
 });
 
-
 describe('hasNestedConfig', () => {
   it('should return false for an empty object', () => {
     expect(hasNestedConfig({})).toBe(false);

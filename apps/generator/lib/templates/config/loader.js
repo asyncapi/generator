@@ -36,10 +36,7 @@ async function loadTemplateConfig(templateDir, templateParams) {
         }
     }
     
-    // Apply default values only once, after determining the final config
-    if (templateParams) {
-        loadDefaultValues(templateConfig, templateParams);
-    }
+    loadDefaultValues(templateConfig, templateParams);
     
     return templateConfig;
 }

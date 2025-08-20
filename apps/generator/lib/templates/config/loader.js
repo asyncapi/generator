@@ -51,7 +51,7 @@ function loadDefaultValues(templateConfig, templateParams) {
     const parameters = templateConfig.parameters;
     const defaultValues = Object.keys(parameters || {}).filter(key => parameters[key].default);
 
-    defaultValues.filter(dv => templateParams[dv] === undefined).forEach(dv =>
+    defaultValues.filter(dv => !Object.prototype.hasOwnProperty.call(templateParams, dv)).forEach(dv =>
         Object.defineProperty(templateParams, dv, {
             enumerable: true,
             get() {

@@ -6013,7 +6013,7 @@ class HoppscotchClient {
   }
 
   // Method to register custom message handlers
-  registerMessageHandler(handler) {
+   registerMessageHandler(handler) {
     if (typeof handler === 'function') {
       this.messageHandlers.push(handler);
     } else {
@@ -6281,7 +6281,7 @@ class HoppscotchEchoWebSocketClient {
   }
 
   // Method to register custom message handlers
-  registerMessageHandler(handler) {
+   registerMessageHandler(handler) {
     if (typeof handler === 'function') {
       this.messageHandlers.push(handler);
     } else {
@@ -6525,7 +6525,7 @@ class PostmanEchoWebSocketClientClient {
   }
 
   // Method to register custom message handlers
-  registerMessageHandler(handler) {
+   registerMessageHandler(handler) {
     if (typeof handler === 'function') {
       this.messageHandlers.push(handler);
     } else {
@@ -7269,12 +7269,13 @@ class SlackWebsocketAPIClient:
       thread = threading.Thread(target=run, daemon=True)
       thread.start()
 
-  def register_message_handler(self, handler):
-      \\"\\"\\"Register a callable to process incoming messages.\\"\\"\\"
-      if callable(handler):
-          self.message_handlers.append(handler)
-      else:
-          print(\\"Message handler must be callable\\")
+  def register_message_handler(self, handler) :
+    \\"\\"\\"Register a callable to process incoming messages.\\"\\"\\"
+    if callable(handler):
+      self.message_handlers.append(handler)
+    else:
+        print(\\"Message handler must be callable\\")
+
 
   def register_error_handler(self, handler):
       \\"\\"\\"Register a callable to process errors.\\"\\"\\"
@@ -7403,12 +7404,13 @@ class HoppscotchClient:
       thread = threading.Thread(target=run, daemon=True)
       thread.start()
 
-  def register_message_handler(self, handler):
-      \\"\\"\\"Register a callable to process incoming messages.\\"\\"\\"
-      if callable(handler):
-          self.message_handlers.append(handler)
-      else:
-          print(\\"Message handler must be callable\\")
+  def register_message_handler(self, handler) :
+    \\"\\"\\"Register a callable to process incoming messages.\\"\\"\\"
+    if callable(handler):
+      self.message_handlers.append(handler)
+    else:
+        print(\\"Message handler must be callable\\")
+
 
   def register_error_handler(self, handler):
       \\"\\"\\"Register a callable to process errors.\\"\\"\\"
@@ -7583,12 +7585,13 @@ class HoppscotchEchoWebSocketClient:
       thread = threading.Thread(target=run, daemon=True)
       thread.start()
 
-  def register_message_handler(self, handler):
-      \\"\\"\\"Register a callable to process incoming messages.\\"\\"\\"
-      if callable(handler):
-          self.message_handlers.append(handler)
-      else:
-          print(\\"Message handler must be callable\\")
+  def register_message_handler(self, handler) :
+    \\"\\"\\"Register a callable to process incoming messages.\\"\\"\\"
+    if callable(handler):
+      self.message_handlers.append(handler)
+    else:
+        print(\\"Message handler must be callable\\")
+
 
   def register_error_handler(self, handler):
       \\"\\"\\"Register a callable to process errors.\\"\\"\\"
@@ -7764,12 +7767,13 @@ class PostmanEchoWebSocketClientClient:
       thread = threading.Thread(target=run, daemon=True)
       thread.start()
 
-  def register_message_handler(self, handler):
-      \\"\\"\\"Register a callable to process incoming messages.\\"\\"\\"
-      if callable(handler):
-          self.message_handlers.append(handler)
-      else:
-          print(\\"Message handler must be callable\\")
+  def register_message_handler(self, handler) :
+    \\"\\"\\"Register a callable to process incoming messages.\\"\\"\\"
+    if callable(handler):
+      self.message_handlers.append(handler)
+    else:
+        print(\\"Message handler must be callable\\")
+
 
   def register_error_handler(self, handler):
       \\"\\"\\"Register a callable to process errors.\\"\\"\\"

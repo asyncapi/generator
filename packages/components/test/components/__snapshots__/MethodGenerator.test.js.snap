@@ -1,0 +1,56 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MethodGenerator renders default dart method 1`] = `
+"void connect(String url) {
+    print('Connecting...');
+  }"
+`;
+
+exports[`MethodGenerator renders default javascript method 1`] = `
+"connect(url) {
+    console.log('Connecting...');
+  }"
+`;
+
+exports[`MethodGenerator renders default python method 1`] = `
+"def connect(self, url) :
+    print('Connecting...')"
+`;
+
+exports[`MethodGenerator renders method with multiline logic 1`] = `
+"multiLineLogic() {
+    console.log('Line 1');
+    console.log('Line 2');
+  }"
+`;
+
+exports[`MethodGenerator renders method with no logic 1`] = `
+"void emptyMethod() {
+
+  }"
+`;
+
+exports[`MethodGenerator renders with custom indentation 1`] = `
+"customIndent() {
+        console.log('Indented');
+  }"
+`;
+
+exports[`MethodGenerator renders with customMethodConfig override 1`] = `
+"async function fetchData() {
+      await getData();
+  }"
+`;
+
+exports[`MethodGenerator renders with methodDocs 1`] = `
+"\\"\\"\\"Process the input data.\\"\\"\\"
+  def processData() :
+    pass"
+`;
+
+exports[`MethodGenerator renders with preExecutionCode and postExecutionCode 1`] = `
+"def registerHandler(self, handler) :
+    # Before handler registration
+    self.handlers.append(handler)
+    # After handler registration"
+`;

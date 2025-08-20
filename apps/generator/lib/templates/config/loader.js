@@ -7,12 +7,13 @@ const PRIMARY_CONFIG_FILE = '.ageneratorrc';
 const SECONDARY_CONFIG_FILE = 'package.json';
 
 /** 
- * Loads the template configuration.
+ * Loads the template configuration and applies default values to template parameters.
  * @async
  * @param {string} templateDir - Path to the template directory
+ * @param {Object} templateParams - Template parameters object to populate with defaults
  * @returns {Promise<Object>} Resolves with the loaded template configuration object
 */
-async function loadTemplateConfig(templateDir) {
+async function loadTemplateConfig(templateDir, templateParams) {
     let templateConfig = {};
 
     // Try to load config from .ageneratorrc
@@ -21,23 +22,25 @@ async function loadTemplateConfig(templateDir) {
         const rcContent = await readFile(rcConfigPath, { encoding: 'utf8' });
         const yamlConfig = yaml.load(rcContent);
         templateConfig = yamlConfig || {};
-        return templateConfig;
     } catch (rcError) {
-        // console.error('Could not load .ageneratorrc file:', rcError);
         log.debug('Could not load .ageneratorrc file:', rcError);
-        // Continue to try package.json if .ageneratorrc fails
+        
+        // Try to load config from package.json
+        try {
+            const configPath = path.resolve(templateDir, SECONDARY_CONFIG_FILE);
+            const json = await readFile(configPath, { encoding: 'utf8' });
+            const generatorProp = JSON.parse(json).generator;
+            templateConfig = generatorProp || {};
+        } catch (packageError) {
+            log.debug('Could not load generator config from package.json:', packageError);
+        }
     }
-
-    // Try to load config from package.json
-    try {
-        const configPath = path.resolve(templateDir, SECONDARY_CONFIG_FILE);
-        const json = await readFile(configPath, { encoding: 'utf8' });
-        const generatorProp = JSON.parse(json).generator;
-        templateConfig = generatorProp || {};
-    } catch (packageError) {
-        // console.error('Could not load generator config from package.json:', packageError);
-        log.debug('Could not load generator config from package.json:', packageError);
+    
+    // Apply default values only once, after determining the final config
+    if (templateParams) {
+        loadDefaultValues(templateConfig, templateParams);
     }
+    
     return templateConfig;
 }
 

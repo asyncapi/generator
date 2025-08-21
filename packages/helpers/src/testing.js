@@ -129,5 +129,6 @@ module.exports = {
   getDirElementsRecursive,
   verifyDirectoryStructure,
   buildParams,
-  listFiles
+  listFiles,
+  hasNestedConfig
 };

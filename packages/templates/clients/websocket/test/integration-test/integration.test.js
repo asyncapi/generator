@@ -1,7 +1,7 @@
 const path = require('path');
-const { readFile, stat, rm } = require('fs').promises;
+const { readFile, stat } = require('fs').promises;
 const Generator = require('@asyncapi/generator');
-const { listFiles } = require('@asyncapi/generator-helpers');
+const { listFiles, cleanTestResultPaths } = require('@asyncapi/generator-helpers');
 const { runCommonTests } = require('./common-test.js');
 const asyncapi_v3_path_slack = path.resolve(__dirname, '../__fixtures__/asyncapi-slack-client.yml');
 const asyncapi_v3_path_hoppscotch = path.resolve(__dirname, '../__fixtures__/asyncapi-hoppscotch-client.yml');
@@ -25,14 +25,20 @@ const languageConfig = {
     clientFileName: 'client.dart',
     testResultPath: path.resolve(__dirname, '../../dart/test/temp/snapshotTestResult'),
     template: path.resolve(__dirname, '../../dart')
+  },
+  java: {
+    quarkus: {
+      testResultPath: path.resolve(__dirname, '../../java/quarkus/test/temp/snapshotTestResult'),
+      template: path.resolve(__dirname, '../../java/quarkus')
+    }
   }
 };
 
 describe('WebSocket Clients Integration Tests', () => {
   beforeAll(async () => {
     await Promise.all(
-      Object.values(languageConfig).map(config => 
-        rm(config.testResultPath, { recursive: true, force: true })
+      Object.values(languageConfig).map(async (config) => 
+        await cleanTestResultPaths(config)
       )
     );
   });
@@ -41,6 +47,12 @@ describe('WebSocket Clients Integration Tests', () => {
     const config = languageConfig.dart;
 
     runCommonTests('Dart', config);
+  });
+
+  describe('Java Quarkus Client', () => {
+    const config = languageConfig.java.quarkus;
+
+    runCommonTests('Java', config);
   });
 
   describe('Python Client', () => {

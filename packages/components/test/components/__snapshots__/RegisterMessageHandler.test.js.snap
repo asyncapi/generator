@@ -1,0 +1,65 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing of RegisterMessageHandler function render dart method with parameters 1`] = `
+"/// Method to register custom message handlers
+  void registerMessageHandler(handler) {
+    _messageHandlers.add(handler);
+  }"
+`;
+
+exports[`Testing of RegisterMessageHandler function render dart websocket register message handler method 1`] = `
+"/// Method to register custom message handlers
+  void registerMessageHandler() {
+    _messageHandlers.add(handler);
+  }"
+`;
+
+exports[`Testing of RegisterMessageHandler function render dart with all the props 1`] = `
+"/// Method to register custom message handlers
+  void bindHandler(handler) {
+    // Preparing to bind handler
+    _messageHandlers.add(handler);
+    // Handler bound successfully
+  }"
+`;
+
+exports[`Testing of RegisterMessageHandler function render javascript method with custom name 1`] = `
+"// Method to register custom message handlers
+   addHandler() {
+    if (typeof handler === 'function') {
+      this.messageHandlers.push(handler);
+    } else {
+      console.warn('Message handler must be a function');
+    }
+  }"
+`;
+
+exports[`Testing of RegisterMessageHandler function render javascript websocket register message handler method 1`] = `
+"// Method to register custom message handlers
+   registerMessageHandler() {
+    if (typeof handler === 'function') {
+      this.messageHandlers.push(handler);
+    } else {
+      console.warn('Message handler must be a function');
+    }
+  }"
+`;
+
+exports[`Testing of RegisterMessageHandler function render python websocket register message handler method 1`] = `
+"def registerMessageHandler(self, handler) :
+    \\"\\"\\"Register a callable as a message handler.\\"\\"\\"
+    if callable(handler):
+      self.message_handlers.append(handler)
+    else:
+        print(\\"Message handler must be callable\\")"
+`;
+
+exports[`Testing of RegisterMessageHandler function render python with pre and post execution code 1`] = `
+"def registerMessageHandler(self, handler) :
+    # Pre-register operations
+    if callable(handler):
+      self.message_handlers.append(handler)
+    else:
+        print(\\"Message handler must be callable\\")
+    # Post-register cleanup"
+`;

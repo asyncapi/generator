@@ -1,6 +1,5 @@
 const { listFiles, buildParams, hasNestedConfig, cleanTestResultPaths } = require('@asyncapi/generator-helpers');
-const fs = require('fs/promises');
-const { rm } = require('fs/promises');
+const { rm, readdir } = require('fs/promises');
 
 jest.mock('fs/promises', () => ({
   rm: jest.fn(),
@@ -19,16 +18,16 @@ describe('listFiles', () => {
       { name: 'subdir', isFile: () => false },
     ];
 
-    fs.readdir.mockResolvedValue(mockDirents);
+    readdir.mockResolvedValue(mockDirents);
     const mockPath = '/mock/path';
 
     const result = await listFiles(mockPath);
-    expect(fs.readdir).toHaveBeenCalledWith(mockPath, { withFileTypes: true });
+    expect(readdir).toHaveBeenCalledWith(mockPath, { withFileTypes: true });
     expect(result).toEqual(['file1.txt', 'file2.js']);
   });
 
   it('should return an empty array if no files exist', async () => {
-    fs.readdir.mockResolvedValue([
+    readdir.mockResolvedValue([
       { name: 'folder', isFile: () => false },
     ]);
     const mockPath = '/mock/path';
@@ -203,4 +202,4 @@ describe('buildParams', () => {
       clientFileName: 'client.js',
     });
   });
-}); 
+});

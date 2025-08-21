@@ -6,7 +6,13 @@
 
 # The default owners are automatically added as reviewers when you open a pull request unless different owners are specified in the file.
 
+# Core Maintainers
 * @derberg @magicmatatjahu @jonaslagoni @asyncapi-bot-eve
 
+# Packages directory
+# @Adi-204 is Templates Champion
+packages/ @Adi-204
+
 # All .md files
+# @Florence-Njeri is Docs Champion
 *.md @Florence-Njeri @derberg @asyncapi-bot-eve

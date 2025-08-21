@@ -1,8 +1,17 @@
-import { Text } from "@asyncapi/generator-react-sdk";
+import { DependencyProvider } from '@asyncapi/generator-components';
 
 export function EndpointDependencies() {
 
-    return (
+  return (
+      <DependencyProvider
+        language="java"
+        framework="quarkus"
+        role="kafkaEndpoint"
+      />
+  );
+}   
+
+/**return (
     <Text>
       <Text>
         {`
@@ -20,5 +29,4 @@ import io.smallrye.reactive.messaging.kafka.Record;
 import io.smallrye.reactive.messaging.kafka.KafkaRecord;`}
       </Text>
     </Text>
-  );
-}   
+  ); */

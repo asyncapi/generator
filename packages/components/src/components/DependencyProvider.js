@@ -34,6 +34,23 @@ const dependenciesConfig = {
           'import io.quarkus.websockets.next.WebSocketClientConnection;','import jakarta.inject.Inject;',
           'import jakarta.inject.Singleton;','import jakarta.annotation.PostConstruct;',
           'import io.quarkus.logging.Log;','import io.quarkus.runtime.Startup;']
+      },
+      producer: {
+        dependencies: ['package com.asyncapi;\n','import io.smallrye.reactive.messaging.kafka.KafkaRecord;',
+          'import org.eclipse.microprofile.reactive.messaging.Channel;','import org.eclipse.microprofile.reactive.messaging.Emitter;',
+          'import org.jboss.logging.Logger;','import org.eclipse.microprofile.reactive.messaging.Message;',
+          'import jakarta.enterprise.context.ApplicationScoped;','import jakarta.inject.Inject;','import java.util.UUID;']
+      },
+      consumer: {
+        dependencies: ['package com.asyncapi;\n','import io.smallrye.reactive.messaging.kafka.Record;',
+          'import org.eclipse.microprofile.reactive.messaging.Incoming;','import org.jboss.logging.Logger;',
+          'import jakarta.enterprise.context.ApplicationScoped;']
+      },
+      kafkaEndpoint: {
+        dependencies: ['package com.asyncapi;\n','import jakarta.inject.Inject;','import jakarta.ws.rs.*;','import jakarta.ws.rs.core.MediaType;',
+          'import jakarta.ws.rs.core.Response;','import org.eclipse.microprofile.reactive.messaging.Channel;','import org.eclipse.microprofile.reactive.messaging.Emitter;',
+          'import org.eclipse.microprofile.reactive.messaging.Incoming;','import org.eclipse.microprofile.reactive.messaging.Message;',
+          'import io.smallrye.reactive.messaging.kafka.Record;','import io.smallrye.reactive.messaging.kafka.KafkaRecord;']
       }
     }
   }

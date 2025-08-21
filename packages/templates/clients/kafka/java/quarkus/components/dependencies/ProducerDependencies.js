@@ -1,9 +1,19 @@
-import { Text } from "@asyncapi/generator-react-sdk";
+import { DependencyProvider } from '@asyncapi/generator-components';
 
 
 export function ProducerDependencies() {
+  return (
+      <DependencyProvider
+        language="java"
+        framework="quarkus"
+        role="producer"
+      />
+  );
+}    
 
-    return (
+
+/**
+ * return (
     <Text>
       <Text>
         {`
@@ -20,4 +30,4 @@ import java.util.UUID;`}
       </Text>
     </Text>
   );
-}    
+ */

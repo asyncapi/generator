@@ -71,7 +71,6 @@ exports[`WebSocket Clients Integration Tests Java Quarkus Client Common Integrat
 //
 //////////////////////////////////////////////////
 
-
 package com.asyncapi;
 
 import jakarta.inject.Inject;
@@ -84,7 +83,6 @@ import org.eclipse.microprofile.reactive.messaging.Incoming;
 import org.eclipse.microprofile.reactive.messaging.Message;
 import io.smallrye.reactive.messaging.kafka.Record;
 import io.smallrye.reactive.messaging.kafka.KafkaRecord;
-
 
 @Path(\\"/\\")  
 @Consumes(MediaType.APPLICATION_JSON)
@@ -759,15 +757,12 @@ public class ComDotAdeoDotCasestudyDotCostingresponseDotCostingResultItem implem
 `;
 
 exports[`WebSocket Clients Integration Tests Java Quarkus Client Common Integration tests for Java client generation generate simple client for adeo case study: CostingRequestConsumer.java 1`] = `
-"
-package com.asyncapi;
+"package com.asyncapi;
 
 import io.smallrye.reactive.messaging.kafka.Record;
 import org.eclipse.microprofile.reactive.messaging.Incoming;
 import org.jboss.logging.Logger;
-
 import jakarta.enterprise.context.ApplicationScoped;
-
 
 @ApplicationScoped  
 public class CostingRequestConsumer{
@@ -789,8 +784,7 @@ public class CostingRequestConsumer{
 `;
 
 exports[`WebSocket Clients Integration Tests Java Quarkus Client Common Integration tests for Java client generation generate simple client for adeo case study: CostingResponseProducer.java 1`] = `
-"
-package com.asyncapi;
+"package com.asyncapi;
 
 import io.smallrye.reactive.messaging.kafka.KafkaRecord;
 import org.eclipse.microprofile.reactive.messaging.Channel;
@@ -800,7 +794,6 @@ import org.eclipse.microprofile.reactive.messaging.Message;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import java.util.UUID;
-
 
 @ApplicationScoped  
 public class CostingResponseProducer{
@@ -1138,68 +1131,6 @@ mp.messaging.outgoing.middle-out.key.serializer=org.apache.kafka.common.serializ
 "
 `;
 
-exports[`WebSocket Clients Integration Tests Java Quarkus Client Common Integration tests for Java client generation generate simple client for adeo case study: crd.yaml 1`] = `
-"
-apiVersion: apiextensions.k8s.io/v1
-kind: CustomResourceDefinition
-metadata:
-  name: apiconfigs.asyncapi.com
-spec:
-  group: asyncapi.com
-  scope: Namespaced
-  names:
-    plural: apiconfigs
-    singular: apiconfig
-    kind: APIConfig
-  versions:
-    - name: v1
-      served: true
-      storage: true
-      schema:
-        openAPIV3Schema:
-          type: object
-          properties:
-            spec:
-              type: object
-              required:
-                - protocol
-                - templateType
-              properties:
-                protocol:
-                  type: string
-                  enum: [\\"kafka-secure\\"]
-                  description: \\"Message protocol used by the API, e.g., kafka, mqtt, etc.\\"
-                undefined
-                templateType:
-                  type: string
-                  enum: [\\"kafka-secure-template\\"]
-                config:
-                  type: object
-                  properties:
-                    replicas:
-                      type: integer
-                      minimum: 1
-                      default: 1
-            status:
-              type: object
-              properties:
-                deployed:
-                  type: boolean
-                phase:
-                  type: string
-                  enum: [\\"Pending\\", \\"Creating\\", \\"Running\\", \\"Failed\\", \\"Deleting\\"]
-                  description: \\"Current lifecycle phase of the APIConfig.\\"
-                message:
-                  type: string
-                url:
-                  type: string
-                  description: \\"Service endpoint URL\\"
-                lastReconciled:
-                  type: string
-                  format: date-time
-"
-`;
-
 exports[`WebSocket Clients Integration Tests Java Quarkus Client Common Integration tests for Java client generation generate simple client for adeo case study: docker-compose.yaml 1`] = `
 "version: '3'
 services:
@@ -1229,22 +1160,6 @@ services:
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
       KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181"
-`;
-
-exports[`WebSocket Clients Integration Tests Java Quarkus Client Common Integration tests for Java client generation generate simple client for adeo case study: example.yaml 1`] = `
-"
-apiVersion: asyncapi.com/v1
-kind: APIConfig
-metadata:
-  name: kafka-secure-service
-  namespace: default
-spec:
-  protocol: kafka-secure
-  undefined
-  templateType: kafka-secure-template
-  config:
-    replicas: 1
-"
 `;
 
 exports[`WebSocket Clients Integration Tests Java Quarkus Client Common Integration tests for Java client generation generate simple client for adeo case study: maven-wrapper.properties 1`] = `

@@ -7,7 +7,7 @@
     "lint": "eslint --max-warnings 0 --config ../../.eslintrc --ignore-path ../../.eslintignore .",
     "lint:fix": "eslint --max-warnings 0 --config ../../.eslintrc --ignore-path ../../.eslintignore . --fix"
   },
-  "main": "src/index.js", 
+  "main": "src/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/asyncapi/generator/packages/helpers"
@@ -22,5 +22,8 @@
       "^nimma/legacy$": "<rootDir>/../../node_modules/nimma/dist/legacy/cjs/index.js",
       "^nimma/(.*)": "<rootDir>/../../node_modules/nimma/dist/cjs/$1"
     }
+  },
+  "dependencies": {
+    "@asyncapi/generator-helpers": "^1.0.0"
   }
 }

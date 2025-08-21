@@ -139,9 +139,9 @@ describe('buildParams', () => {
       clientFileName: 'client.js',
     });
   });
-}); 
+});
 const { getDirElementsRecursive } = require('../src/testing');
-const fs = require('fs/promises');
+
 const path = require('path');
 
 jest.mock('fs/promises');

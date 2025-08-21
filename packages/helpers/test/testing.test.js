@@ -1,4 +1,4 @@
-const { listFiles, buildParams, hasNestedConfig, cleanTestResultPaths} = require('@asyncapi/generator-helpers');
+const { listFiles, buildParams, hasNestedConfig, cleanTestResultPaths } = require('@asyncapi/generator-helpers');
 const fs = require('fs/promises');
 const { rm } = require('fs/promises');
 
@@ -96,6 +96,9 @@ describe('cleanTestResultPaths', () => {
     );
 
     consoleSpy.mockRestore();
+  });
+});
+
 describe('hasNestedConfig', () => {
   it('should return false for an empty object', () => {
     expect(hasNestedConfig({})).toBe(false);
@@ -147,6 +150,7 @@ describe('hasNestedConfig', () => {
     expect(hasNestedConfig(config)).toBe(true);
   });
 });
+
 describe('buildParams', () => {
   it('should include clientFileName when language is not java', () => {
     const config = { clientFileName: 'myClient.js' };
@@ -199,4 +203,4 @@ describe('buildParams', () => {
       clientFileName: 'client.js',
     });
   });
-});
+}); 

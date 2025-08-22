@@ -233,10 +233,8 @@ describe("getDirElementsRecursive", () => {
   });
 
   it("should return a directory with children when directory contains a subdirectory", async () => {
-    // First call -> parent dir contents
     readdir
       .mockResolvedValueOnce([{ name: "subdir", isDirectory: () => true }])
-      // Second call -> subdir contents
       .mockResolvedValueOnce([
         { name: "nested.txt", isDirectory: () => false },
       ]);

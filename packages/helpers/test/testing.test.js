@@ -1,6 +1,6 @@
 const { listFiles, buildParams, hasNestedConfig, cleanTestResultPaths ,getDirElementsRecursive} = require('@asyncapi/generator-helpers');
 const { rm, readdir } = require('fs/promises');
-const path = require("path");
+const path = require('path');
 
 jest.mock('fs/promises', () => ({
   rm: jest.fn(),

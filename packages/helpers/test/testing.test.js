@@ -205,85 +205,88 @@ describe('buildParams', () => {
   });
 });
 
-describe("getDirElementsRecursive", () => {
+const ROOT_DIR = '/test';
+const FILE1 = 'file1.txt';
+const FILE2 = 'file2.txt';
+const SUBDIR = 'subdir';
+const DIR1 = 'dir1';
+const NESTED_FILE = 'nested.txt';
+
+describe('getDirElementsRecursive', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it("should return an empty array for an empty directory", async () => {
+  it('should return an empty array for an empty directory', async () => {
     readdir.mockResolvedValueOnce([]);
-    const result = await getDirElementsRecursive("/test");
+
+    const result = await getDirElementsRecursive(ROOT_DIR);
+
     expect(result).toEqual([]);
   });
 
-  it("should return a file when directory contains only a file", async () => {
-    readdir.mockResolvedValueOnce([
-      { name: "file1.txt", isDirectory: () => false },
-    ]);
+  it('should return a file when directory contains only a file', async () => {
+    readdir.mockResolvedValueOnce([{ name: FILE1, isDirectory: () => false }]);
 
-    const result = await getDirElementsRecursive("/test");
+    const result = await getDirElementsRecursive(ROOT_DIR);
 
     expect(result).toEqual([
       {
-        type: "file",
-        name: "file1.txt",
-        path: path.join("/test", "file1.txt"),
+        type: 'file',
+        name: FILE1,
+        path: path.join(ROOT_DIR, FILE1),
       },
     ]);
   });
 
-  it("should return a directory with children when directory contains a subdirectory", async () => {
+  it('should return a directory with children when directory contains a subdirectory', async () => {
     readdir
-      .mockResolvedValueOnce([{ name: "subdir", isDirectory: () => true }])
-      .mockResolvedValueOnce([
-        { name: "nested.txt", isDirectory: () => false },
-      ]);
+      .mockResolvedValueOnce([{ name: SUBDIR, isDirectory: () => true }])
+      .mockResolvedValueOnce([{ name: NESTED_FILE, isDirectory: () => false }]);
 
-    const result = await getDirElementsRecursive("/test");
+    const result = await getDirElementsRecursive(ROOT_DIR);
 
     expect(result).toEqual([
       {
-        type: "directory",
-        name: "subdir",
-        path: path.join("/test", "subdir"),
+        type: 'directory',
+        name: SUBDIR,
+        path: path.join(ROOT_DIR, SUBDIR),
         children: [
           {
-            type: "file",
-            name: "nested.txt",
-            path: path.join("/test", "subdir", "nested.txt"),
+            type: 'file',
+            name: NESTED_FILE,
+            path: path.join(ROOT_DIR, SUBDIR, NESTED_FILE),
           },
         ],
       },
     ]);
   });
 
-  it("should handle mixed files and directories", async () => {
+  it('should handle mixed files and directories', async () => {
     readdir
       .mockResolvedValueOnce([
-        { name: "file1.txt", isDirectory: () => false },
-        { name: "dir1", isDirectory: () => true },
+        { name: FILE1, isDirectory: () => false },
+        { name: DIR1, isDirectory: () => true },
       ])
-      .mockResolvedValueOnce([
-        { name: "file2.txt", isDirectory: () => false },
-      ]);
+      .mockResolvedValueOnce([{ name: FILE2, isDirectory: () => false }]);
 
-    const result = await getDirElementsRecursive("/test");
+    const result = await getDirElementsRecursive(ROOT_DIR);
 
     expect(result).toEqual([
       {
-        type: "file",
-        name: "file1.txt",
-        path: path.join("/test", "file1.txt"),
+        type: 'file',
+        name: FILE1,
+        path: path.join(ROOT_DIR, FILE1),
       },
       {
-        type: "directory",
-        name: "dir1",
-        path: path.join("/test", "dir1"),
+        type: 'directory',
+        name: DIR1,
+        path: path.join(ROOT_DIR, DIR1),
         children: [
           {
-            type: "file",
-            name: "file2.txt",
-            path: path.join("/test", "dir1", "file2.txt"),
+            type: 'file',
+            name: FILE2,
+            path: path.join(ROOT_DIR, DIR1, FILE2),
           },
         ],
       },

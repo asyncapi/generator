@@ -6,8 +6,12 @@ jest.mock('../lib/utils', () => ({
   readFile: jest.fn(),
 }));
 
+jest.mock('loglevel', () => ({
+  debug: jest.fn(),
+}));
+
 describe('#loadDefaultValues', () => {
-  it('default value of parameter is set', async () => {
+  it('default value of parameter is set', () => {
     const templateParams = {
       test: true
     };
@@ -35,7 +39,7 @@ describe('#loadDefaultValues', () => {
     });
   });
 
-  it('default value of parameter is not override user value', async () => {
+  it('default value of parameter is not override user value', () => {
     const templateParams = {
       test: true
     };
@@ -54,7 +58,7 @@ describe('#loadDefaultValues', () => {
     });
   });
 
-  it('no default values', async () => {
+  it('no default values', () => {
     const templateParams = {
       test: true
     };
@@ -106,7 +110,6 @@ describe('#loadTemplateConfig', () => {
   });
 
   it('loads config from package.json successfully when .ageneratorrc is missing', async () => {
-    log.debug = jest.fn();
     const jsonContent = JSON.stringify({
       generator: {
         parameters: {
@@ -132,7 +135,6 @@ describe('#loadTemplateConfig', () => {
   });
 
   it('returns empty config if no config files found', async () => {
-    log.debug = jest.fn();
     readFile.mockRejectedValue(new Error('File not found')); 
     const templateParams = {};
     const templateConfig = await loadTemplateConfig(templateDir, templateParams);

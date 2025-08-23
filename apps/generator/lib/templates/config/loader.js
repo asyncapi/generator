@@ -59,5 +59,6 @@ function loadDefaultValues(templateConfig, templateParams) {
 }
 
 module.exports = {
-    loadTemplateConfig
+    loadTemplateConfig,
+    loadDefaultValues
 };

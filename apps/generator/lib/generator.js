@@ -13,7 +13,8 @@ const { isAsyncAPIDocument } = require('@asyncapi/parser/cjs/document');
 
 const { configureReact, renderReact, saveRenderedReactContent } = require('./renderer/react');
 const { configureNunjucks, renderNunjucks } = require('./renderer/nunjucks');
-const { validateTemplateConfig } = require('./templateConfigValidator');
+const { validateTemplateConfig } = require('./templates/config/validator');
+const { loadTemplateConfig } = require('./templates/config/loader');
 const { isGenerationConditionMet } = require('./conditionalGeneration');
 const {
   convertMapToObject,
@@ -36,7 +37,6 @@ const { definitions, flatten, shorthands } = require('@npmcli/config/lib/definit
 
 const FILTERS_DIRNAME = 'filters';
 const HOOKS_DIRNAME = 'hooks';
-const CONFIG_FILENAME = 'package.json';
 const PACKAGE_JSON_FILENAME = 'package.json';
 const GIT_IGNORE_FILENAME = '{.gitignore}';
 const NPM_IGNORE_FILENAME = '{.npmignore}';
@@ -286,7 +286,7 @@ class Generator {
     this.templateName = templatePkgName;
     this.templateContentDir = path.resolve(this.templateDir, TEMPLATE_CONTENT_DIRNAME);
 
-    await this.loadTemplateConfig();
+    this.templateConfig = await loadTemplateConfig(this.templateDir, this.templateParams);
 
     return { templatePkgName, templatePkgPath };
   }
@@ -999,61 +999,6 @@ class Generator {
     if (!fileExists) return true;
 
     return !this.noOverwriteGlobs.some(globExp => minimatch(filePath, globExp));
-  }
-
-  /**
-   * Loads the template configuration.
-   * @private
-   */
-  async loadTemplateConfig() {
-    this.templateConfig = {};
-    
-    // Try to load config from .ageneratorrc
-    try {
-      const rcConfigPath = path.resolve(this.templateDir, '.ageneratorrc');
-      const yaml = await readFile(rcConfigPath, { encoding: 'utf8' });
-      const yamlConfig = require('js-yaml').load(yaml);
-      this.templateConfig = yamlConfig || {};
-      
-      await this.loadDefaultValues();
-      return;
-    } catch (rcError) {
-      // console.error('Could not load .ageneratorrc file:', rcError);
-      log.debug('Could not load .ageneratorrc file:', rcError);
-      // Continue to try package.json if .ageneratorrc fails
-    }
-    
-    // Try to load config from package.json
-    try {
-      const configPath = path.resolve(this.templateDir, CONFIG_FILENAME);
-      const json = await readFile(configPath, { encoding: 'utf8' });
-      const generatorProp = JSON.parse(json).generator;
-      this.templateConfig = generatorProp || {};
-    } catch (packageError) {
-      // console.error('Could not load generator config from package.json:', packageError);
-      log.debug('Could not load generator config from package.json:', packageError);
-    }
-    
-    await this.loadDefaultValues();
-  }
-
-  /**
-   * Loads default values of parameters from template config. If value was already set as parameter it will not be
-   * overriden.
-   * @private
-   */
-  async loadDefaultValues() {
-    const parameters = this.templateConfig.parameters;
-    const defaultValues = Object.keys(parameters || {}).filter(key => parameters[key].default);
-
-    defaultValues.filter(dv => this.templateParams[dv] === undefined).forEach(dv =>
-      Object.defineProperty(this.templateParams, dv, {
-        enumerable: true,
-        get() {
-          return parameters[dv].default;
-        }
-      })
-    );
   }
 
   /**

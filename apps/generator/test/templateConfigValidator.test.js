@@ -1,6 +1,6 @@
 /* eslint-disable sonarjs/no-identical-functions */
 /* eslint-disable sonarjs/no-duplicate-string */
-const { validateTemplateConfig } = require('../lib/templateConfigValidator');
+const { validateTemplateConfig } = require('../lib/templates/config/validator');
 const fs = require('fs');
 const path = require('path');
 const { parse } = require('../lib/parser');

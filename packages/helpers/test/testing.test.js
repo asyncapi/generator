@@ -1,5 +1,6 @@
-const { listFiles, buildParams, hasNestedConfig, cleanTestResultPaths } = require('@asyncapi/generator-helpers');
+const { listFiles, buildParams, hasNestedConfig, cleanTestResultPaths ,getDirElementsRecursive} = require('@asyncapi/generator-helpers');
 const { rm, readdir } = require('fs/promises');
+const path = require('path');
 
 jest.mock('fs/promises', () => ({
   rm: jest.fn(),
@@ -201,5 +202,94 @@ describe('buildParams', () => {
       server: 'customServer',
       clientFileName: 'client.js',
     });
+  });
+});
+
+const ROOT_DIR = '/test';
+const FILE1 = 'file1.txt';
+const FILE2 = 'file2.txt';
+const SUBDIR = 'subdir';
+const DIR1 = 'dir1';
+const NESTED_FILE = 'nested.txt';
+
+describe('getDirElementsRecursive', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('should return an empty array for an empty directory', async () => {
+    readdir.mockResolvedValueOnce([]);
+
+    const result = await getDirElementsRecursive(ROOT_DIR);
+
+    expect(result).toEqual([]);
+  });
+
+  it('should return a file when directory contains only a file', async () => {
+    readdir.mockResolvedValueOnce([{ name: FILE1, isDirectory: () => false }]);
+
+    const result = await getDirElementsRecursive(ROOT_DIR);
+
+    expect(result).toEqual([
+      {
+        type: 'file',
+        name: FILE1,
+        path: path.join(ROOT_DIR, FILE1),
+      },
+    ]);
+  });
+
+  it('should return a directory with children when directory contains a subdirectory', async () => {
+    readdir
+      .mockResolvedValueOnce([{ name: SUBDIR, isDirectory: () => true }])
+      .mockResolvedValueOnce([{ name: NESTED_FILE, isDirectory: () => false }]);
+
+    const result = await getDirElementsRecursive(ROOT_DIR);
+
+    expect(result).toEqual([
+      {
+        type: 'directory',
+        name: SUBDIR,
+        path: path.join(ROOT_DIR, SUBDIR),
+        children: [
+          {
+            type: 'file',
+            name: NESTED_FILE,
+            path: path.join(ROOT_DIR, SUBDIR, NESTED_FILE),
+          },
+        ],
+      },
+    ]);
+  });
+
+  it('should handle mixed files and directories', async () => {
+    readdir
+      .mockResolvedValueOnce([
+        { name: FILE1, isDirectory: () => false },
+        { name: DIR1, isDirectory: () => true },
+      ])
+      .mockResolvedValueOnce([{ name: FILE2, isDirectory: () => false }]);
+
+    const result = await getDirElementsRecursive(ROOT_DIR);
+
+    expect(result).toEqual([
+      {
+        type: 'file',
+        name: FILE1,
+        path: path.join(ROOT_DIR, FILE1),
+      },
+      {
+        type: 'directory',
+        name: DIR1,
+        path: path.join(ROOT_DIR, DIR1),
+        children: [
+          {
+            type: 'file',
+            name: FILE2,
+            path: path.join(ROOT_DIR, DIR1, FILE2),
+          },
+        ],
+      },
+    ]);
   });
 });

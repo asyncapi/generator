@@ -1,7 +1,7 @@
 import { Text } from '@asyncapi/generator-react-sdk';
 
 /**
- * @typedef {'python' | 'javascript' | 'dart'} Language
+ * @typedef {'python' | 'javascript' | 'dart' | 'java'} Language
  * Supported programming languages.
  */
 
@@ -10,9 +10,10 @@ import { Text } from '@asyncapi/generator-react-sdk';
  * @type {Record<Language, { returnType?: string, openingTag?: string, closingTag?: string, indentSize?: number }>}
  */
 const defaultMethodConfig = {
-  python: { returnType: 'def', openingTag: ':', indentSize: 2 },
-  javascript: { openingTag: '{', closingTag: '}', indentSize: 2 },
-  dart: { returnType: 'void', openingTag: '{', closingTag: '}', indentSize: 2 }
+  python: { returnType: 'def', openingTag: ':', indentSize: 2, parameterWrap: true },
+  javascript: { openingTag: '{', closingTag: '}', indentSize: 2, parameterWrap: true },
+  dart: { returnType: 'void', openingTag: '{', closingTag: '}', indentSize: 2, parameterWrap: true },
+  java: { returnType: '', openingTag: '', closingTag: '', indentSize: 0, parameterWrap: false }
 };
 
 /**
@@ -46,10 +47,12 @@ export function MethodGenerator({
     returnType = '',
     openingTag = '',
     closingTag = '',
-    indentSize = 2
+    indentSize = 2,
+    parameterWrap = true
   } = customMethodConfig || defaultMethodConfig[language];
 
   const params = methodParams.join(', ');
+  const parameterBlock = parameterWrap ? `(${params})` : `${params}`;
 
   let completeCode = methodLogic;
 
@@ -67,7 +70,7 @@ export function MethodGenerator({
     .join('\n');
 
   const methodCode = `${methodDocs}
-${returnType} ${methodName}(${params}) ${openingTag}
+${returnType} ${methodName}${parameterBlock} ${openingTag}
 ${indentedLogic}
 ${closingTag}`;
 

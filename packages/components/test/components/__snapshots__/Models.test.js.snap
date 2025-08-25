@@ -27,6 +27,23 @@ exports[`Integration Tests for models function renders Csharp models 1`] = `
 }"
 `;
 
+exports[`Integration Tests for models function renders Java models 1`] = `
+"public class UserSignedUp {
+  private String displayName;
+  private String email;
+  private Map<String, Object> additionalProperties;
+
+  public String getDisplayName() { return this.displayName; }
+  public void setDisplayName(String displayName) { this.displayName = displayName; }
+
+  public String getEmail() { return this.email; }
+  public void setEmail(String email) { this.email = email; }
+
+  public Map<String, Object> getAdditionalProperties() { return this.additionalProperties; }
+  public void setAdditionalProperties(Map<String, Object> additionalProperties) { this.additionalProperties = additionalProperties; }
+}"
+`;
+
 exports[`Integration Tests for models function renders default as Python models 1`] = `
 "class UserSignedUp: 
   def __init__(self, input: Dict):

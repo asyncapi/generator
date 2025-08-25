@@ -27,4 +27,11 @@ describe('Integration Tests for models function', () => {
     const actual = result.trim();
     expect(actual).toMatchSnapshot();
   });
+  
+  test('renders Java models', async () => {
+    const component = await Models({ asyncapi: parsedAsyncAPIDocument, language: 'java' });
+    const result = render(component);
+    const actual = result.trim();
+    expect(actual).toMatchSnapshot();
+  });
 });

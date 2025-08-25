@@ -1,9 +1,8 @@
 const path = require('path');
-const { readFile, stat } = require('fs').promises;
+const { stat } = require('fs').promises;
 const Generator = require('@asyncapi/generator');
-const { listFiles, cleanTestResultPaths } = require('@asyncapi/generator-helpers');
-const { runCommonTests } = require('./common-test.js');
-const asyncapi_v3_path_slack = path.resolve(__dirname, '../__fixtures__/asyncapi-slack-client.yml');
+const { cleanTestResultPaths } = require('@asyncapi/generator-helpers');
+const { runCommonTests, runCommonSlackTests } = require('./common-test.js');
 const asyncapi_v3_path_hoppscotch = path.resolve(__dirname, '../__fixtures__/asyncapi-hoppscotch-client.yml');
 
 /**
@@ -53,32 +52,14 @@ describe('WebSocket Clients Integration Tests', () => {
     const config = languageConfig.java.quarkus;
 
     runCommonTests('Java', config);
+    runCommonSlackTests('Java', config);
   });
 
   describe('Python Client', () => {
     const config = languageConfig.python;
 
     runCommonTests('Python', config);
-
-    describe('Additional tests for Python client', () => {
-      it('generate client for slack', async () => {
-        const testResultPathSlack = path.join(config.testResultPath, 'client_slack');
-        const generator = new Generator(config.template, testResultPathSlack, {
-          forceWrite: true,
-          templateParams: {
-            server: 'production',
-            clientFileName: config.clientFileName
-          }
-        });
-        await generator.generateFromFile(asyncapi_v3_path_slack);
-        const testOutputFiles = await listFiles(testResultPathSlack);
-        for (const testOutputFile of testOutputFiles) {
-          const filePath = path.join(testResultPathSlack, testOutputFile);
-          const content = await readFile(filePath, 'utf8');
-          expect(content).toMatchSnapshot(testOutputFile);
-        }
-      });
-    });
+    runCommonSlackTests('Python', config);
   });
 
   describe('JavaScript Client', () => {

@@ -3,6 +3,7 @@ const path = require('path');
 const Generator = require('@asyncapi/generator');
 const asyncapi_v3_path_postman = path.resolve(__dirname, '../__fixtures__/asyncapi-postman-echo.yml');
 const asyncapi_v3_path_hoppscotch = path.resolve(__dirname, '../__fixtures__/asyncapi-hoppscotch-client.yml');
+const asyncapi_v3_path_slack = path.resolve(__dirname, '../__fixtures__/asyncapi-slack-client.yml');
 
 /**
  * Helper function to generate client and verify snapshots
@@ -40,19 +41,19 @@ function runCommonTests(language, config) {
         'postman echo',
         testResultPathPostman,
         asyncapi_v3_path_postman,
-        buildParams(language, config, { appendClientSuffix: true })
+        buildParams(language, config, 'echoServer', { appendClientSuffix: true })
       ],
       [
         'hoppscotch echo',
         testResultPathHoppscotch,
         asyncapi_v3_path_hoppscotch,
-        buildParams(language, config)
+        buildParams(language, config, 'echoServer')
       ],
       [
         'hoppscotch echo with custom client name',
         testResultPathCustomHoppscotch,
         asyncapi_v3_path_hoppscotch,
-        buildParams(language, config, { customClientName: 'HoppscotchClient' })
+        buildParams(language, config, 'echoServer', { customClientName: 'HoppscotchClient' })
       ]
     ])('generate simple client for %s', async (_, outputPath, asyncapiPath, params) => {
       await generateAndVerifyClient(config.template, outputPath, asyncapiPath, params);
@@ -60,4 +61,20 @@ function runCommonTests(language, config) {
   });
 }
 
-module.exports = { runCommonTests };
+function runCommonSlackTests(language, config) {
+  const testResultPathSlack = path.join(config.testResultPath, 'client_slack');
+
+  describe(`Additional tests for ${language} client`, () => {
+    jest.setTimeout(100000);
+    it('generate client for slack', async () => {
+      await generateAndVerifyClient(
+        config.template,
+        testResultPathSlack,
+        asyncapi_v3_path_slack,
+        buildParams(language, config, 'production')
+      );
+    });
+  });
+}
+
+module.exports = { runCommonTests, runCommonSlackTests };

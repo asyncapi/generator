@@ -1,0 +1,6 @@
+coverage/
+test/
+node_modules/
+.turbo/
+scripts/
+turbo.json

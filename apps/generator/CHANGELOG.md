@@ -1,5 +1,11 @@
 # @asyncapi/generator
 
+## 2.8.1
+
+### Patch Changes
+
+- 190ebc9: Ensure transpiled baked-in templates are published to npm.
+
 ## 2.8.0
 
 ### Minor Changes

@@ -27,7 +27,7 @@
     "bump:version": "npm --no-git-tag-version --allow-same-version version $VERSION",
     "build": "node scripts/build-templates.js",
     "pretest": "npm run build",
-    "prepublish": "npm run build"
+    "prepublishOnly": "npm run build"
   },
   "preferGlobal": true,
   "bugs": {

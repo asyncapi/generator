@@ -16,3 +16,6 @@ packages/ @Adi-204 @derberg @magicmatatjahu
 # All .md files
 # @Florence-Njeri is Docs Champion
 *.md @Florence-Njeri @derberg @asyncapi-bot-eve
+
+# Changeset markdown files — override so Docs Champions aren't requested
+.changeset/**/*.md @derberg @magicmatatjahu @asyncapi-bot-eve

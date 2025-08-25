@@ -26,8 +26,9 @@
     "generate:assets": "npm run docs && npm run generate:readme:toc",
     "bump:version": "npm --no-git-tag-version --allow-same-version version $VERSION",
     "build": "node scripts/build-templates.js",
-    "pretest": "npm run build",
-    "prepublishOnly": "npm run build"
+    "build:reactsdk": "cd ../react-sdk && npm run build",
+    "pretest": "npm run build:reactsdk && npm run build",
+    "prepublishOnly": "npm run pretest"
   },
   "preferGlobal": true,
   "bugs": {

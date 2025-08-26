@@ -1,5 +1,17 @@
 # @asyncapi/generator
 
+## 2.8.2
+
+### Patch Changes
+
+- 4394d90: Ensure transpiled baked-in templates are published to npm. Fixing missing `react-sdk` build.
+
+## 2.8.1
+
+### Patch Changes
+
+- 190ebc9: Ensure transpiled baked-in templates are published to npm.
+
 ## 2.8.0
 
 ### Minor Changes

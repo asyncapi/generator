@@ -1,6 +1,6 @@
 {
   "name": "@asyncapi/generator",
-  "version": "2.8.0",
+  "version": "2.8.2",
   "description": "The AsyncAPI generator. It can generate documentation, code, anything!",
   "main": "./lib/generator.js",
   "bin": {
@@ -26,8 +26,9 @@
     "generate:assets": "npm run docs && npm run generate:readme:toc",
     "bump:version": "npm --no-git-tag-version --allow-same-version version $VERSION",
     "build": "node scripts/build-templates.js",
-    "pretest": "npm run build",
-    "prepublish": "npm run build"
+    "build:reactsdk": "cd ../react-sdk && npm run build",
+    "pretest": "npm run build:reactsdk && npm run build",
+    "prepublishOnly": "npm run pretest"
   },
   "preferGlobal": true,
   "bugs": {

@@ -1,5 +1,5 @@
 {
-  "name": "@asyncapi/template-java-websocket-quarkus",
+  "name": "core-template-client-websocket-java-quarkus",
   "version": "0.0.1",
   "description": "This is a template generating a Java Quarkus websocket client",
   "keywords": [

@@ -1,6 +1,6 @@
 {
     "name": "@asyncapi/template-integration-test",
-    "version": "0.0.2",
+    "private": true,
     "description": "This is a integration tests for all the websocket clients",
     "scripts": {
         "test": "jest --coverage",

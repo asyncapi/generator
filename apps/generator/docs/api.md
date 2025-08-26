@@ -4,6 +4,21 @@ weight: 75
 ---
 
 Reference API documentation for AsyncAPI Generator library.
+## Classes
+
+<dl>
+<dt><a href="#Generator">Generator</a></dt>
+<dd></dd>
+</dl>
+
+## Members
+
+<dl>
+<dt><a href="#listBakedInTemplates">listBakedInTemplates</a> ⇒ <code>Array.&lt;Object&gt;</code></dt>
+<dd><p>List core templates, optionally filter by type, stack, protocol, or target.
+Use name of returned templates as input for the <code>generate</code> method for template generation. Such core templates code is part of the @asyncapi/generator package.</p></dd>
+</dl>
+
 
 <a name="Generator"></a>
 
@@ -494,3 +509,20 @@ const content = await Generator.getTemplateFile('@asyncapi/html-template', 'part
 const Generator = require('@asyncapi/generator');
 const content = await Generator.getTemplateFile('@asyncapi/html-template', 'partials/content.html', '~/my-templates');
 ```
+
+<a name="listBakedInTemplates"></a>
+
+## listBakedInTemplates
+List core templates, optionally filter by type, stack, protocol, or target.
+Use name of returned templates as input for the `generate` method for template generation. Such core templates code is part of the @asyncapi/generator package.
+
+**Kind**: global variable  
+**Returns**: `Array.<Object>` - Array of template objects matching the filter.  
+**Params**
+
+- [filter] `Object` - Optional filter object.
+    - [.type] `string` - Filter by template type (e.g., 'client', 'docs').
+    - [.stack] `string` - Filter by stack (e.g., 'quarkus', 'express').
+    - [.protocol] `string` - Filter by protocol (e.g., 'websocket', 'http').
+    - [.target] `string` - Filter by target language or format (e.g., 'javascript', 'html').
+

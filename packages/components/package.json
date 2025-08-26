@@ -1,6 +1,6 @@
 {
   "name": "@asyncapi/generator-components",
-  "version": "1.0.0",
+  "version": "0.2.0",
   "description": "Package with reusable components for generation using React render engine",
   "scripts": {
     "test": "npm run build && jest --coverage",
@@ -11,6 +11,11 @@
     "lint:fix": "eslint --max-warnings 0 --config ../../.eslintrc --ignore-path ../../.eslintignore . --fix",
     "generate:assets": "npm run prepublishOnly"
   },
+  "files": [
+    "lib/**",
+    "README.md",
+    "LICENSE"
+  ],
   "main": "lib/index.js",
   "repository": {
     "type": "git",
@@ -18,6 +23,9 @@
   },
   "author": "Lukasz Gornicki",
   "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "@asyncapi/generator-react-sdk": "*",
     "@asyncapi/modelina": "^5.3.5"

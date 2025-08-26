@@ -57,6 +57,7 @@ echo "##########
 Running installation in root
 ##########"
 npm install
+npm run build
 cd apps/generator/test/test-project
 
 echo "##########

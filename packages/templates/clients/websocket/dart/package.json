@@ -1,6 +1,6 @@
 {
-  "name": "@asyncapi/template-dart-websocket-client",
-  "version": "0.0.1",
+  "name": "core-template-client-websocket-dart",
+  "private": true,
   "description": "This is a template generating Dart websocket client",
   "scripts": {
     "test": "jest --coverage --passWithNoTests",
@@ -21,7 +21,6 @@
     "@babel/preset-env": "^7.26.0",
     "@babel/preset-react": "^7.25.9",
     "jest-esm-transformer": "^1.0.0",
-    "@asyncapi/generator": "*",
     "eslint": "^6.8.0",
     "eslint-plugin-jest": "^23.8.2",
     "eslint-plugin-react": "^7.34.1",

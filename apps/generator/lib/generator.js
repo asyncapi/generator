@@ -16,6 +16,7 @@ const { configureNunjucks, renderNunjucks } = require('./renderer/nunjucks');
 const { validateTemplateConfig } = require('./templates/config/validator');
 const { loadTemplateConfig } = require('./templates/config/loader');
 const { isGenerationConditionMet } = require('./conditionalGeneration');
+const { listBakedInTemplates, isCoreTemplate, getTemplate } = require('./templates/bakedInTemplates');
 const {
   convertMapToObject,
   isFileSystemPath,
@@ -281,7 +282,22 @@ class Generator {
    *   A promise that resolves to an object containing the name and path of the installed template.
    */
   async installAndSetupTemplate() {
-    const { name: templatePkgName, path: templatePkgPath } = await this.installTemplate(this.install);
+    const shouldSkipInstall = isCoreTemplate(this.templateName);
+
+    let templatePkgName, templatePkgPath;
+
+    if (shouldSkipInstall) {
+      // Use core template info from local registry
+      const template = await getTemplate(this.templateName);
+      templatePkgName = template.name;
+      templatePkgPath = template.path;
+    } else {
+      // Download and install external template
+      const installResult = await this.installTemplate(this.install);
+      templatePkgName = installResult.name;
+      templatePkgPath = installResult.path;
+    }
+
     this.templateDir = templatePkgPath;
     this.templateName = templatePkgName;
     this.templateContentDir = path.resolve(this.templateDir, TEMPLATE_CONTENT_DIRNAME);
@@ -1084,3 +1100,15 @@ Generator.DEFAULT_TEMPLATES_DIR = DEFAULT_TEMPLATES_DIR;
 Generator.TRANSPILED_TEMPLATE_LOCATION = TRANSPILED_TEMPLATE_LOCATION;
 
 module.exports = Generator;
+/**
+ * List core templates, optionally filter by type, stack, protocol, or target.
+ * Use name of returned templates as input for the `generate` method for template generation. Such core templates code is part of the @asyncapi/generator package.
+ * 
+ * @param {Object} [filter] - Optional filter object.
+ * @param {string} [filter.type] - Filter by template type (e.g., 'client', 'docs').
+ * @param {string} [filter.stack] - Filter by stack (e.g., 'quarkus', 'express').
+ * @param {string} [filter.protocol] - Filter by protocol (e.g., 'websocket', 'http').
+ * @param {string} [filter.target] - Filter by target language or format (e.g., 'javascript', 'html').
+ * @returns {Array<Object>} Array of template objects matching the filter.
+ */
+module.exports.listBakedInTemplates = listBakedInTemplates;

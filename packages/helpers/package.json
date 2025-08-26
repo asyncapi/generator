@@ -1,13 +1,13 @@
 {
   "name": "@asyncapi/generator-helpers",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Package with reusable helpers that make it easier to work with AsyncAPI structures.",
   "scripts": {
     "test": "jest --coverage",
     "lint": "eslint --max-warnings 0 --config ../../.eslintrc --ignore-path ../../.eslintignore .",
     "lint:fix": "eslint --max-warnings 0 --config ../../.eslintrc --ignore-path ../../.eslintignore . --fix"
   },
-  "main": "src/index.js", 
+  "main": "src/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/asyncapi/generator/packages/helpers"

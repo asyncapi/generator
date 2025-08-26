@@ -1,6 +1,6 @@
 {
   "name": "core-template-client-websocket-java-quarkus",
-  "version": "0.0.2",
+  "private": true,
   "description": "This is a template generating a Java Quarkus websocket client",
   "keywords": [
     "asyncapi",

@@ -1,6 +1,6 @@
 {
   "name": "core-template-client-websocket-java-quarkus",
-  "version": "0.0.1",
+  "private": true,
   "description": "This is a template generating a Java Quarkus websocket client",
   "keywords": [
     "asyncapi",
@@ -18,7 +18,8 @@
     "lint:fix": "eslint --fix --max-warnings 0 --config ../../../../../../.eslintrc --ignore-path ../../../../../../.eslintignore ."
   },
   "dependencies": {
-    "@asyncapi/generator-helpers": "1.0.0",
+    "@asyncapi/generator-helpers": "0.2.0",
+    "@asyncapi/generator-components": "0.2.0",
     "@asyncapi/generator-react-sdk": "^1.1.2"
   },
   "devDependencies": {

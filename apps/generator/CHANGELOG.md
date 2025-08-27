@@ -1,5 +1,11 @@
 # @asyncapi/generator
 
+## 2.8.3
+
+### Patch Changes
+
+- d84e110: First release of the generator including `@asyncapi/generator-components` and `@asyncapi/generator-helpers` packages.
+
 ## 2.8.2
 
 ### Patch Changes

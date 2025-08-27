@@ -205,7 +205,6 @@ describe('buildParams', () => {
   });
 });
 
-
 describe('getDirElementsRecursive', () => {
   beforeEach(() => {
     jest.clearAllMocks();

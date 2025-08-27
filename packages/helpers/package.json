@@ -10,7 +10,8 @@
   "main": "src/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/asyncapi/generator/packages/helpers"
+    "url": "https://github.com/asyncapi/generator.git",
+    "directory": "packages/helpers"
   },
   "author": "Lukasz Gornicki",
   "license": "Apache-2.0",

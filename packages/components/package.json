@@ -19,7 +19,8 @@
   "main": "lib/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/asyncapi/generator/packages/components"
+    "url": "https://github.com/asyncapi/generator.git",
+    "directory": "packages/components"
   },
   "author": "Lukasz Gornicki",
   "license": "Apache-2.0",

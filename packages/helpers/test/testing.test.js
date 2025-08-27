@@ -1,4 +1,6 @@
 const { listFiles, buildParams, hasNestedConfig, cleanTestResultPaths } = require('@asyncapi/generator-helpers');
+const { getDirElementsRecursive } = require('../src/testing');
+const path = require('path');
 const { rm, readdir } = require('fs/promises');
 
 jest.mock('fs/promises', () => ({
@@ -203,32 +205,26 @@ describe('buildParams', () => {
     });
   });
 });
-const { getDirElementsRecursive } = require('../src/testing');
 
-const path = require('path');
-
-jest.mock('fs/promises');
 
 describe('getDirElementsRecursive', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
   afterEach(() => {
     jest.clearAllMocks();
   });
 
   it('should return files and directories recursively', async () => {
     // Mock directory structure
-    fs.readdir.mockImplementation(async (dir, opts) => {
-      if (dir === '/root') {
-        return [
-          { name: 'file1.txt', isDirectory: () => false, isFile: () => true },
-          { name: 'subdir', isDirectory: () => true, isFile: () => false }
-        ];
-      } else if (dir === path.join('/root', 'subdir')) {
-        return [
-          { name: 'file2.js', isDirectory: () => false, isFile: () => true }
-        ];
-      }
-      return [];
-    });
+    readdir
+      .mockResolvedValueOnce([
+        { name: 'file1.txt', isDirectory: () => false, isFile: () => true },
+        { name: 'subdir', isDirectory: () => true, isFile: () => false }
+      ])
+      .mockResolvedValueOnce([
+        { name: 'file2.js', isDirectory: () => false, isFile: () => true }
+      ]);
 
     const result = await getDirElementsRecursive('/root');
     expect(result).toEqual([
@@ -253,28 +249,22 @@ describe('getDirElementsRecursive', () => {
   });
 
   it('should return empty array for empty directory', async () => {
-    fs.readdir.mockResolvedValue([]);
+    readdir.mockResolvedValue([]);
     const result = await getDirElementsRecursive('/empty');
     expect(result).toEqual([]);
   });
 
   it('should handle deeply nested directories', async () => {
-    fs.readdir.mockImplementation(async (dir, opts) => {
-      if (dir === '/a') {
-        return [
-          { name: 'b', isDirectory: () => true, isFile: () => false }
-        ];
-      } else if (dir === path.join('/a', 'b')) {
-        return [
-          { name: 'c', isDirectory: () => true, isFile: () => false }
-        ];
-      } else if (dir === path.join('/a', 'b', 'c')) {
-        return [
-          { name: 'file.txt', isDirectory: () => false, isFile: () => true }
-        ];
-      }
-      return [];
-    });
+    readdir
+      .mockResolvedValueOnce([
+        { name: 'b', isDirectory: () => true, isFile: () => false }
+      ])
+      .mockResolvedValueOnce([
+        { name: 'c', isDirectory: () => true, isFile: () => false }
+      ])
+      .mockResolvedValueOnce([
+        { name: 'file.txt', isDirectory: () => false, isFile: () => true }
+      ]);
     const result = await getDirElementsRecursive('/a');
     expect(result).toEqual([
       {

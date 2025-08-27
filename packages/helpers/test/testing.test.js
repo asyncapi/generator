@@ -1,5 +1,4 @@
-const { listFiles, buildParams, hasNestedConfig, cleanTestResultPaths } = require('@asyncapi/generator-helpers');
-const { getDirElementsRecursive } = require('../src/testing');
+const { listFiles, buildParams, hasNestedConfig, cleanTestResultPaths, getDirElementsRecursive } = require('@asyncapi/generator-helpers');
 const path = require('path');
 const { rm, readdir } = require('fs/promises');
 
@@ -211,9 +210,6 @@ describe('getDirElementsRecursive', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
 
   it('should return files and directories recursively', async () => {
     // Mock directory structure
@@ -289,3 +285,4 @@ describe('getDirElementsRecursive', () => {
     ]);
   });
 });
+

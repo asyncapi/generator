@@ -1,4 +1,5 @@
-const { listFiles, buildParams, hasNestedConfig, cleanTestResultPaths } = require('@asyncapi/generator-helpers');
+const { listFiles, buildParams, hasNestedConfig, cleanTestResultPaths, getDirElementsRecursive } = require('@asyncapi/generator-helpers');
+const path = require('path');
 const { rm, readdir } = require('fs/promises');
 
 jest.mock('fs/promises', () => ({
@@ -203,3 +204,84 @@ describe('buildParams', () => {
     });
   });
 });
+
+describe('getDirElementsRecursive', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('should return files and directories recursively', async () => {
+    // Mock directory structure
+    readdir
+      .mockResolvedValueOnce([
+        { name: 'file1.txt', isDirectory: () => false, isFile: () => true },
+        { name: 'subdir', isDirectory: () => true, isFile: () => false }
+      ])
+      .mockResolvedValueOnce([
+        { name: 'file2.js', isDirectory: () => false, isFile: () => true }
+      ]);
+
+    const result = await getDirElementsRecursive('/root');
+    expect(result).toEqual([
+      {
+        type: 'file',
+        name: 'file1.txt',
+        path: path.join('/root', 'file1.txt')
+      },
+      {
+        type: 'directory',
+        name: 'subdir',
+        path: path.join('/root', 'subdir'),
+        children: [
+          {
+            type: 'file',
+            name: 'file2.js',
+            path: path.join('/root', 'subdir', 'file2.js')
+          }
+        ]
+      }
+    ]);
+  });
+
+  it('should return empty array for empty directory', async () => {
+    readdir.mockResolvedValue([]);
+    const result = await getDirElementsRecursive('/empty');
+    expect(result).toEqual([]);
+  });
+
+  it('should handle deeply nested directories', async () => {
+    readdir
+      .mockResolvedValueOnce([
+        { name: 'b', isDirectory: () => true, isFile: () => false }
+      ])
+      .mockResolvedValueOnce([
+        { name: 'c', isDirectory: () => true, isFile: () => false }
+      ])
+      .mockResolvedValueOnce([
+        { name: 'file.txt', isDirectory: () => false, isFile: () => true }
+      ]);
+    const result = await getDirElementsRecursive('/a');
+    expect(result).toEqual([
+      {
+        type: 'directory',
+        name: 'b',
+        path: path.join('/a', 'b'),
+        children: [
+          {
+            type: 'directory',
+            name: 'c',
+            path: path.join('/a', 'b', 'c'),
+            children: [
+              {
+                type: 'file',
+                name: 'file.txt',
+                path: path.join('/a', 'b', 'c', 'file.txt')
+              }
+            ]
+          }
+        ]
+      }
+    ]);
+  });
+});
+

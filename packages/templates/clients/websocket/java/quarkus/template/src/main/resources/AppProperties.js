@@ -1,4 +1,4 @@
-import { getClientName, getServer, getServerHost, getServerProtocol} from '@asyncapi/generator-helpers';
+import { getClientName, getServer, getServerHost, getServerProtocol } from '@asyncapi/generator-helpers';
 import { Text, File } from '@asyncapi/generator-react-sdk';
 
 export default function AppProperties({ asyncapi, params }) {

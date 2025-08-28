@@ -5,6 +5,12 @@ import { MethodGenerator } from './MethodGenerator';
  * Supported programming languages.
  */
 
+/**
+ * Delay in milliseconds before exiting the application after closing WebSocket connection.
+ * This ensures there's enough time for cleanup operations and connection closure to complete.
+ * Currently used in Java/Quarkus implementation.
+ * @constant {number}
+ */
 const delayExit = 1000;
 
 /**
@@ -13,29 +19,23 @@ const delayExit = 1000;
  */
 const websocketCloseConfig = {
   python: {
-    default: {
-      methodLogic: `self._stop_event.set()
+    methodLogic: `self._stop_event.set()
 if self.ws_app:
     self.ws_app.close()
     print("WebSocket connection closed.")`
-    }
   },
   javascript: {
-    default: {
-      methodDocs: '// Method to close the WebSocket connection',
-      methodLogic: `if (this.websocket) {
+    methodDocs: '// Method to close the WebSocket connection',
+    methodLogic: `if (this.websocket) {
     this.websocket.close();
     console.log('WebSocket connection closed.');
 }`
-    }
   },
   dart: {
-    default: {
-      methodDocs: '/// Method to close the WebSocket connection',
-      methodLogic: `_channel?.sink.close();
+    methodDocs: '/// Method to close the WebSocket connection',
+    methodLogic: `_channel?.sink.close();
 _channel = null;
 print('WebSocket connection closed.');`
-    }
   },
   java: {
     quarkus: {
@@ -63,13 +63,31 @@ print('WebSocket connection closed.');`
  * @param {framework} framework 
  * @returns 
  */
-function resolveCloseConfig(language, framework = 'default') {
-  const languageConfig = websocketCloseConfig[language];
-  if (!languageConfig) return { methodDocs: '', methodLogic: '' };
-
-  // Try to get framework-specific config, fallback to default
-  const config = languageConfig[framework] || languageConfig.default;
-  return config || { methodDocs: '', methodLogic: '' };
+function resolveCloseConfig(language, framework = '') {
+  const config = websocketCloseConfig[language];
+  
+  if (!config) {
+    return { methodDocs: '', methodLogic: '' };
+  }
+  
+  // Handle flat structure (python, javascript, dart)
+  if (config.methodLogic || config.methodDocs) {
+    return {
+      methodDocs: config.methodDocs || '',
+      methodLogic: config.methodLogic || ''
+    };
+  }
+  
+  // Handle nested structure (java with framework)
+  if (framework && config[framework]) {
+    const frameworkConfig = config[framework];
+    return {
+      methodDocs: frameworkConfig.methodDocs || '',
+      methodLogic: frameworkConfig.methodLogic || ''
+    };
+  }
+  
+  return { methodDocs: '', methodLogic: '' };
 }
 
 /**
@@ -77,13 +95,15 @@ function resolveCloseConfig(language, framework = 'default') {
  *
  * @param {Object} props - Component props.
  * @param {Language} props.language - Programming language used for method formatting.
+ * @param {string} props.framework - Framework used, if any (e.g., 'quarkus' for Java).
  * @param {string} props.methodName='close' - Name of the method to generate.
  * @param {string[]} props.methodParams=[] - List of parameters for the method.
  * @param {string} props.preExecutionCode - Code to insert before the main function logic.
  * @param {string} props.postExecutionCode - Code to insert after the main function logic.
+ * @param {number} props.indent=2 - Indentation level for the method block.
  * @returns {JSX.Element} Rendered method block with appropriate formatting.
  */
-export function CloseConnection({ language, framework = 'default', methodName = 'close', methodParams = [], preExecutionCode = '', postExecutionCode = '', indent = 2 }) {
+export function CloseConnection({ language, framework = '', methodName = 'close', methodParams = [], preExecutionCode = '', postExecutionCode = '', indent = 2 }) {
   const { methodDocs, methodLogic } = resolveCloseConfig(language, framework);
   
   return (

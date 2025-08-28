@@ -6034,7 +6034,7 @@ class HoppscotchClient {
   }
 
   // Method to register custom error handlers
-  registerErrorHandler(handler) {
+   registerErrorHandler(handler) {
     if (typeof handler === 'function') {
       this.errorHandlers.push(handler);
     } else {
@@ -6302,7 +6302,7 @@ class HoppscotchEchoWebSocketClient {
   }
 
   // Method to register custom error handlers
-  registerErrorHandler(handler) {
+   registerErrorHandler(handler) {
     if (typeof handler === 'function') {
       this.errorHandlers.push(handler);
     } else {
@@ -6546,7 +6546,7 @@ class PostmanEchoWebSocketClientClient {
   }
 
   // Method to register custom error handlers
-  registerErrorHandler(handler) {
+   registerErrorHandler(handler) {
     if (typeof handler === 'function') {
       this.errorHandlers.push(handler);
     } else {
@@ -7289,12 +7289,13 @@ class SlackWebsocketAPIClient:
         print(\\"Message handler must be callable\\")
 
 
-  def register_error_handler(self, handler):
-      \\"\\"\\"Register a callable to process errors.\\"\\"\\"
-      if callable(handler):
-          self.error_handlers.append(handler)
-      else:
-          print(\\"Error handler must be callable\\")
+  def register_error_handler(self, handler) :
+    \\"\\"\\"Register a callable to process errors.\\"\\"\\"
+    if callable(handler):
+      self.error_handlers.append(handler)
+    else:
+        print(\\"Error handler must be callable\\")
+
 
   def register_outgoing_processor(self, processor):
       \\"\\"\\"
@@ -7424,12 +7425,13 @@ class HoppscotchClient:
         print(\\"Message handler must be callable\\")
 
 
-  def register_error_handler(self, handler):
-      \\"\\"\\"Register a callable to process errors.\\"\\"\\"
-      if callable(handler):
-          self.error_handlers.append(handler)
-      else:
-          print(\\"Error handler must be callable\\")
+  def register_error_handler(self, handler) :
+    \\"\\"\\"Register a callable to process errors.\\"\\"\\"
+    if callable(handler):
+      self.error_handlers.append(handler)
+    else:
+        print(\\"Error handler must be callable\\")
+
 
   def register_outgoing_processor(self, processor):
       \\"\\"\\"
@@ -7605,12 +7607,13 @@ class HoppscotchEchoWebSocketClient:
         print(\\"Message handler must be callable\\")
 
 
-  def register_error_handler(self, handler):
-      \\"\\"\\"Register a callable to process errors.\\"\\"\\"
-      if callable(handler):
-          self.error_handlers.append(handler)
-      else:
-          print(\\"Error handler must be callable\\")
+  def register_error_handler(self, handler) :
+    \\"\\"\\"Register a callable to process errors.\\"\\"\\"
+    if callable(handler):
+      self.error_handlers.append(handler)
+    else:
+        print(\\"Error handler must be callable\\")
+
 
   def register_outgoing_processor(self, processor):
       \\"\\"\\"
@@ -7787,12 +7790,13 @@ class PostmanEchoWebSocketClientClient:
         print(\\"Message handler must be callable\\")
 
 
-  def register_error_handler(self, handler):
-      \\"\\"\\"Register a callable to process errors.\\"\\"\\"
-      if callable(handler):
-          self.error_handlers.append(handler)
-      else:
-          print(\\"Error handler must be callable\\")
+  def register_error_handler(self, handler) :
+    \\"\\"\\"Register a callable to process errors.\\"\\"\\"
+    if callable(handler):
+      self.error_handlers.append(handler)
+    else:
+        print(\\"Error handler must be callable\\")
+
 
   def register_outgoing_processor(self, processor):
       \\"\\"\\"

@@ -1,0 +1,65 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing of RegisterErrorHandler function render dart method with parameters 1`] = `
+"/// Method to register custom error handlers
+  void registerErrorHandler(handler) {
+    _errorHandlers.add(handler);
+  }"
+`;
+
+exports[`Testing of RegisterErrorHandler function render dart websocket register error handler method 1`] = `
+"/// Method to register custom error handlers
+  void registerErrorHandler(void Function(Object) handler) {
+    _errorHandlers.add(handler);
+  }"
+`;
+
+exports[`Testing of RegisterErrorHandler function render dart with all the props 1`] = `
+"/// Method to register custom error handlers
+  int bindHandler(handler) {
+    // Preparing to bind handler
+    _errorHandlers.add(handler);
+    // Handler bound successfully
+  }"
+`;
+
+exports[`Testing of RegisterErrorHandler function render javascript method with custom name 1`] = `
+"// Method to register custom error handlers
+   addHandler(handler) {
+    if (typeof handler === 'function') {
+      this.errorHandlers.push(handler);
+    } else {
+      console.warn('Error handler must be a function');
+    }
+  }"
+`;
+
+exports[`Testing of RegisterErrorHandler function render javascript websocket register error handler method 1`] = `
+"// Method to register custom error handlers
+   registerErrorHandler(handler) {
+    if (typeof handler === 'function') {
+      this.errorHandlers.push(handler);
+    } else {
+      console.warn('Error handler must be a function');
+    }
+  }"
+`;
+
+exports[`Testing of RegisterErrorHandler function render python websocket register error handler method 1`] = `
+"def registerErrorHandler(self, handler) :
+    \\"\\"\\"Register a callable as a error handler.\\"\\"\\"
+    if callable(handler):
+      self.error_handlers.append(handler)
+    else:
+        print(\\"Error handler must be callable\\")"
+`;
+
+exports[`Testing of RegisterErrorHandler function render python with pre and post execution code 1`] = `
+"def registerErrorHandler(self, handler) :
+    # Pre-register operations
+    if callable(handler):
+      self.error_handlers.append(handler)
+    else:
+        print(\\"Error handler must be callable\\")
+    # Post-register cleanup"
+`;

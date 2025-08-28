@@ -11,7 +11,8 @@ const logMessage = require('./../lib/logMessages.js');
 jest.mock('../lib/utils');
 jest.mock('../lib/filtersRegistry');
 jest.mock('../lib/hooksRegistry');
-jest.mock('../lib/templateConfigValidator');
+jest.mock('../lib/templates/config/validator');
+jest.mock('../lib/templates/config/loader');
 
 describe('Generator', () => {
   describe('constructor', () => {
@@ -112,12 +113,12 @@ describe('Generator', () => {
     let filtersRegistry;
     let hooksRegistry;
     let templateConfigValidator;
+    let templateConfigLoader;
 
     const mockMethods = (gen) => {
       gen.verifyTargetDir = jest.fn();
       gen.installTemplate = jest.fn().mockResolvedValue({ name: 'nameOfTestTemplate', path: '/path/to/template/nameOfTestTemplate' });
       gen.configureTemplate = jest.fn();
-      gen.loadTemplateConfig = jest.fn();
       gen.registerHooks = jest.fn();
       gen.registerFilters = jest.fn();
       gen.validateTemplateConfig = jest.fn();
@@ -131,7 +132,8 @@ describe('Generator', () => {
       util = require('../lib/utils');
       filtersRegistry = require('../lib/filtersRegistry');
       hooksRegistry = require('../lib/hooksRegistry');
-      templateConfigValidator = require('../lib/templateConfigValidator');
+      templateConfigValidator = require('../lib/templates/config/validator');
+      templateConfigLoader = require('../lib/templates/config/loader');
       xfsMock = require('fs.extra');
       const { AsyncAPIDocument } = require('@asyncapi/parser/cjs/models/v2/asyncapi');
       asyncApiDocumentMock = new AsyncAPIDocument({ 'x-parser-api-version': 0 });
@@ -145,7 +147,7 @@ describe('Generator', () => {
       expect(xfsMock.mkdirpSync).toHaveBeenCalledWith(__dirname);
       expect(gen.verifyTargetDir).toHaveBeenCalledWith(__dirname);
       expect(gen.installTemplate).toHaveBeenCalledWith(false);
-      expect(gen.loadTemplateConfig).toHaveBeenCalled();
+      expect(templateConfigLoader.loadTemplateConfig).toHaveBeenCalled();
       expect(gen.configureTemplate).toHaveBeenCalled();
       expect(hooksRegistry.registerHooks).toHaveBeenCalled();
       expect(filtersRegistry.registerFilters).toHaveBeenCalled();
@@ -167,7 +169,7 @@ describe('Generator', () => {
       expect(xfsMock.mkdirpSync).toHaveBeenCalledWith(__dirname);
       expect(gen.verifyTargetDir).toHaveBeenCalledWith(__dirname);
       expect(gen.installTemplate).toHaveBeenCalledWith(true);
-      expect(gen.loadTemplateConfig).toHaveBeenCalled();
+      expect(templateConfigLoader.loadTemplateConfig).toHaveBeenCalled();
       expect(gen.configureTemplate).toHaveBeenCalled();
       expect(hooksRegistry.registerHooks).toHaveBeenCalled();
       expect(filtersRegistry.registerFilters).toHaveBeenCalled();
@@ -209,8 +211,7 @@ describe('Generator', () => {
 
       expect(xfsMock.mkdirpSync).toHaveBeenCalledWith(__dirname);
       expect(gen.installTemplate).toHaveBeenCalledWith(true);
-      expect(gen.loadTemplateConfig).toHaveBeenCalled();
-      expect(gen.loadTemplateConfig).toHaveBeenCalled();
+      expect(templateConfigLoader.loadTemplateConfig).toHaveBeenCalled();
       expect(hooksRegistry.registerHooks).toHaveBeenCalled();
       expect(filtersRegistry.registerFilters).toHaveBeenCalled();
       expect(templateConfigValidator.validateTemplateConfig).toHaveBeenCalled();
@@ -233,8 +234,7 @@ describe('Generator', () => {
       expect(xfsMock.mkdirpSync).toHaveBeenCalledWith(__dirname);
       expect(gen.verifyTargetDir).toHaveBeenCalledWith(__dirname);
       expect(gen.installTemplate).toHaveBeenCalledWith(false);
-      expect(gen.loadTemplateConfig).toHaveBeenCalled();
-      expect(gen.loadTemplateConfig).toHaveBeenCalled();
+      expect(templateConfigLoader.loadTemplateConfig).toHaveBeenCalled();
       expect(hooksRegistry.registerHooks).toHaveBeenCalled();
       expect(filtersRegistry.registerFilters).toHaveBeenCalled();
       expect(templateConfigValidator.validateTemplateConfig).toHaveBeenCalled();
@@ -250,7 +250,7 @@ describe('Generator', () => {
 
     it('should be able to generate with string inputs', async () => {
       const gen = new Generator('testTemplate', __dirname);
-
+      templateConfigLoader.loadTemplateConfig.mockReturnValue({});
       mockMethods(gen);
       await gen.generate(dummyYAML);
 
@@ -472,89 +472,6 @@ describe('Generator', () => {
       expect(utils.readFile).toHaveBeenCalled();
       expect(utils.readFile.mock.calls[0][0]).toBe(filePath);
       expect(content).toBe(utils.__files[filePath]);
-    });
-  });
-
-  describe('#loadDefaultValues', () => {
-    it('default value of parameter is set', async () => {
-      const gen = new Generator('testTemplate', __dirname, {
-        templateParams: {
-          test: true
-        }
-      });
-      gen.templateConfig  = {
-        parameters: {
-          paramWithDefault: {
-            description: 'Parameter with default value',
-            default: 'default',
-            required: false
-          },
-          paramWithoutDefault: {
-            description: 'Parameter without default value',
-            required: false
-          },
-          test: {
-            description: 'test',
-            required: false
-          }
-        }
-      };
-
-      await gen.loadDefaultValues();
-
-      expect(gen.templateParams).toStrictEqual({
-        test: true,
-        paramWithDefault: 'default'
-      });
-    });
-
-    it('default value of parameter is not override user value', async () => {
-      const gen = new Generator('testTemplate', __dirname, {
-        templateParams: {
-          test: true
-        }
-      });
-      gen.templateConfig = {
-        parameters: {
-          test: {
-            description: 'Parameter with default value',
-            default: false,
-            required: false
-          }
-        }
-      };
-
-      await gen.loadDefaultValues();
-
-      expect(gen.templateParams).toStrictEqual({
-        test: true
-      });
-    });
-
-    it('no default values', async () => {
-      const gen = new Generator('testTemplate', __dirname, {
-        templateParams: {
-          test: true
-        }
-      });
-      gen.templateConfig = {
-        parameters: {
-          test: {
-            description: 'Parameter with default value',
-            required: false
-          },
-          anotherParam: {
-            description: 'Yeat another param',
-            required: false
-          }
-        }
-      };
-
-      await gen.loadDefaultValues();
-
-      expect(gen.templateParams).toStrictEqual({
-        test: true
-      });
     });
   });
 

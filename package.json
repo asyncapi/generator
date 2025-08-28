@@ -47,6 +47,7 @@
   "packageManager": "npm@9.5.0",
   "workspaces": [
     "apps/*",
-    "packages/**"
+    "packages/**",
+    "!apps/generator/templates/bakedInTemplates/**"
   ]
 }

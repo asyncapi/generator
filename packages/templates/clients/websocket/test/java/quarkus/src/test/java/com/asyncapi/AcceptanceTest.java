@@ -41,7 +41,6 @@ public class AcceptanceTest {
     public void testHoppscotchClientReceivesMessage() throws Exception {
         String expectedMessage = "GMT+0000 (Coordinated Universal Time)";
 
-        
         // Connect to the Microcks mock server
         WebSocketClientConnection connection = receiveConnector
             .baseUri(URI.create("ws://microcks-async-minion:8081"))

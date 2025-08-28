@@ -203,7 +203,7 @@ See [Security Policy](./SECURITY.md) (if present) for details and reporting inst
 > [!TIP]
 > These AI tools are here to help you contribute more efficiently and maintain high code quality. If you have questions or encounter issues with CodeRabbit or Dosu, ask in the PR/issue or reach out on [AsyncAPI Slack](https://asyncapi.slack.com/).
 
-If problems persist, please open an issue on the repository: https://github.com/asyncapi/generator/issues/new/choose
+If problems persist, please open an issue on the repository: [Create new issue](https://github.com/asyncapi/generator/issues/new/choose).
 
 If you encounter any issues during development or testing, please check the following:
 

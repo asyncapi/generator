@@ -154,7 +154,7 @@ describe('hasNestedConfig', () => {
 describe('buildParams', () => {
   it('should include clientFileName when language is not java', () => {
     const config = { clientFileName: 'myClient.js' };
-    const result = buildParams('javascript', config);
+    const result = buildParams('javascript', config, 'echoServer');
     expect(result).toEqual({
       server: 'echoServer',
       clientFileName: 'myClient.js',
@@ -163,7 +163,7 @@ describe('buildParams', () => {
 
   it('should not include clientFileName when language is java', () => {
     const config = { clientFileName: 'MyClient.java' };
-    const result = buildParams('java', config);
+    const result = buildParams('java', config, 'echoServer');
     expect(result).toEqual({
       server: 'echoServer',
     });
@@ -172,7 +172,7 @@ describe('buildParams', () => {
   it('should merge with baseParams correctly', () => {
     const config = { clientFileName: 'client.js' };
     const baseParams = { customParam: 'customValue' };
-    const result = buildParams('javascript', config, baseParams);
+    const result = buildParams('javascript', config, 'echoServer', baseParams);
     expect(result).toEqual({
       server: 'echoServer',
       clientFileName: 'client.js',
@@ -182,13 +182,13 @@ describe('buildParams', () => {
 
   it('should handle uppercase JAVA correctly', () => {
     const config = { clientFileName: 'MyClient.java' };
-    const result = buildParams('JAVA', config);
+    const result = buildParams('JAVA', config, 'echoServer');
     expect(result).toEqual({ server: 'echoServer' });
   });
 
   it('should handle missing config.clientFileName gracefully', () => {
     const config = {};
-    const result = buildParams('javascript', config);
+    const result = buildParams('javascript', config, 'echoServer');
     expect(result).toEqual({
       server: 'echoServer',
       clientFileName: undefined,
@@ -197,7 +197,7 @@ describe('buildParams', () => {
 
   it('should allow baseParams to override server', () => {
     const config = { clientFileName: 'client.js' };
-    const result = buildParams('javascript', config, { server: 'customServer' });
+    const result = buildParams('javascript', config, 'customServer', { server: 'customServer' });
     expect(result).toEqual({
       server: 'customServer',
       clientFileName: 'client.js',

@@ -1,20 +1,20 @@
-import { Text } from '@asyncapi/generator-react-sdk';
+import { DependencyProvider } from '@asyncapi/generator-components';
 
-export function ConnectorDependencies() {
+export function ConnectorDependencies({ queryParams }) {
+  const additionalDependencies = [];
+  if (queryParams) {
+    additionalDependencies.push('import org.eclipse.microprofile.config.inject.ConfigProperty;');
+    additionalDependencies.push('import java.net.URI;');
+    additionalDependencies.push('import java.net.URLEncoder;');
+    additionalDependencies.push('import java.nio.charset.StandardCharsets;');
+  }
+
   return (
-    <Text>
-      <Text>
-        {`
-package com.asyncapi;
-
-import io.quarkus.websockets.next.WebSocketConnector;
-import io.quarkus.websockets.next.WebSocketClientConnection;
-import jakarta.inject.Inject;
-import jakarta.inject.Singleton;
-import jakarta.annotation.PostConstruct;
-import io.quarkus.logging.Log;
-import io.quarkus.runtime.Startup;`}
-      </Text>
-    </Text>
+    <DependencyProvider
+      language="java"
+      framework="quarkus"
+      role="connector"
+      additionalDependencies={additionalDependencies}
+    />
   );
 }

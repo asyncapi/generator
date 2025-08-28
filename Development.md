@@ -178,8 +178,8 @@ For the PR titles you can refer to [this guide](CONTRIBUTING.md?plain=1#L60)
 
 This project uses AI-powered tools to assist contributors and maintainers:
 
- [!IMPORTANT]
- Do not paste secrets (API keys, passwords, access tokens) into PR descriptions, comments, or logs. These AI tools process PR content via their respective cloud services to generate feedback.
+> [!IMPORTANT]
+> Do not paste secrets (API keys, passwords, access tokens) into PR descriptions, comments, or logs. These AI tools process PR content via their respective cloud services to generate feedback.
 
 ### CodeRabbit
 
@@ -198,12 +198,12 @@ This project uses AI-powered tools to assist contributors and maintainers:
 #### Privacy and data handling
 - PR/issue content may be transmitted to third‑party AI services (CodeRabbit, Dosu) to generate feedback.
 - Do not include secrets in any contribution artifacts (descriptions, comments, logs).
-- Refer to this repository’s security policy for details (if present).
+See [Security Policy](./SECURITY.md) (if present) for details and reporting instructions.
 
 > [!TIP]
 > These AI tools are here to help you contribute more efficiently and maintain high code quality. If you have questions or encounter issues with CodeRabbit or Dosu, ask in the PR/issue or reach out on [AsyncAPI Slack](https://asyncapi.slack.com/).
 
-## Troubleshooting
+If problems persist, please open an issue on the repository: https://github.com/asyncapi/generator/issues/new/choose
 
 If you encounter any issues during development or testing, please check the following:
 
@@ -212,4 +212,5 @@ If you encounter any issues during development or testing, please check the foll
 3. For Docker-related issues, make sure Docker is running and you have sufficient permissions.
 
 If problems persist, please open an issue on the GitHub repository.
+
 

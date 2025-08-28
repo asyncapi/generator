@@ -173,6 +173,28 @@ For the PR titles you can refer to [this guide](CONTRIBUTING.md?plain=1#L60)
 - Generate documentation: `npm run docs`
 - Build Docker image: `npm run docker:build`
 
+
+## AI Tools in Development
+
+This project uses AI-powered tools to assist contributors and maintainers:
+
+### Coderabbit
+
+- **Purpose:** Coderabbit is an AI assistant integrated into the development workflow. It helps automate code reviews, provides suggestions, and answers contributor questions directly in pull requests and issues.
+- **How to use:** When you open a pull request or issue, Coderabbit may automatically provide feedback, suggestions, or code review comments. You do not need to install anything locally; it works via GitHub integration.
+- **Tips:** Engage with Coderabbit's comments and suggestions as you would with any reviewer. If you have questions about its feedback, reply in the PR or issue thread.
+- **More info:** See [Coderabbit documentation](https://docs.coderabbit.ai/) for details.
+
+### Dosu
+
+- **Purpose:** Dosu is an AI tool used for automated code analysis, security checks, and best practice enforcement. It helps maintain code quality and security standards across the repository.
+- **How to use:** Dosu runs automatically on pull requests and pushes. If issues are detected, Dosu will comment with details and remediation steps. No local setup is required.
+- **Tips:** Review Dosu's comments and address any flagged issues before merging. Dosu helps ensure your contributions meet project standards.
+- **More info:** See [Dosu documentation](https://dosu.dev/docs) for usage and troubleshooting.
+
+> [!TIP]
+> These AI tools are here to help you contribute more efficiently and maintain high code quality. If you have questions or encounter issues with Coderabbit or Dosu, ask in the PR/issue or reach out on AsyncAPI Slack.
+
 ## Troubleshooting
 
 If you encounter any issues during development or testing, please check the following:
@@ -182,3 +204,4 @@ If you encounter any issues during development or testing, please check the foll
 3. For Docker-related issues, make sure Docker is running and you have sufficient permissions.
 
 If problems persist, please open an issue on the GitHub repository.
+

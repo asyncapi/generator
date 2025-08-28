@@ -178,13 +178,13 @@ For the PR titles you can refer to [this guide](CONTRIBUTING.md?plain=1#L60)
 
 This project uses AI-powered tools to assist contributors and maintainers:
 
-[!IMPORTANT]
-Do not paste secrets (API keys, passwords, access tokens) into PR descriptions, comments, or logs. These AI tools process PR content via their respective cloud services to generate feedback.
+ [!IMPORTANT]
+ Do not paste secrets (API keys, passwords, access tokens) into PR descriptions, comments, or logs. These AI tools process PR content via their respective cloud services to generate feedback.
 
 ### CodeRabbit
 
 - **Purpose:** CodeRabbit is an AI assistant integrated into the development workflow. It helps automate code reviews, provides suggestions, and answers contributor questions directly in pull requests and issues.
-- **How to use:** When you open a pull request or issue, Coderabbit may automatically provide feedback, suggestions, or code review comments. You do not need to install anything locally; it works via GitHub integration.
+- **How to use:** When you open a pull request or issue, CodeRabbit may automatically provide feedback, suggestions, or code review comments. You do not need to install anything locally; it works via GitHub integration.
 - **Tips:** Engage with CodeRabbit's comments and suggestions as you would with any reviewer. If you have questions about its feedback, reply in the PR or issue thread.
 - **More info:** See [CodeRabbit documentation](https://docs.coderabbit.ai/) for details.
 
@@ -194,6 +194,11 @@ Do not paste secrets (API keys, passwords, access tokens) into PR descriptions, 
 - **How to use:** Dosu runs automatically on pull requests and pushes. If issues are detected, Dosu will comment with details and remediation steps (and, if applicable in this repo, may set PR checks to failing). No local setup is required.
 - **Tips:** Review Dosu's comments and address any flagged issues before merging. Dosu helps ensure your contributions meet project standards.
 - **More info:** See [Dosu documentation](https://dosu.dev/docs) for usage and troubleshooting.
+
+#### Privacy and data handling
+- PR/issue content may be transmitted to third‑party AI services (CodeRabbit, Dosu) to generate feedback.
+- Do not include secrets in any contribution artifacts (descriptions, comments, logs).
+- Refer to this repository’s security policy for details (if present).
 
 > [!TIP]
 > These AI tools are here to help you contribute more efficiently and maintain high code quality. If you have questions or encounter issues with CodeRabbit or Dosu, ask in the PR/issue or reach out on [AsyncAPI Slack](https://asyncapi.slack.com/).

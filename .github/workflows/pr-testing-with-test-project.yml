@@ -106,3 +106,7 @@ jobs:
         name: Run PY acceptance tests
         run: docker compose -f ./microcks-setup/microcks-podman.yml --profile test-py up  --abort-on-container-exit --force-recreate
         working-directory: ./packages/templates/clients/websocket/test
+      - if: needs.changes.outputs.should_test == 'true'
+        name: Run JAVA acceptance tests
+        run: docker compose -f ./microcks-setup/microcks-podman.yml --profile test-java up  --abort-on-container-exit --force-recreate
+        working-directory: ./packages/templates/clients/websocket/test

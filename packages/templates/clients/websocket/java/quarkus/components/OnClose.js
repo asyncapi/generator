@@ -6,7 +6,7 @@ export default function OnClose({ title }) {
       {`@OnClose
    public void onClose(CloseReason reason, WebSocketClientConnection connection) {
       int code = reason.getCode();
-      Log.info("Websocket disconnected from ${title} with Close code: " + code);
+      LOG.info("Websocket disconnected from ${title} with Close code: " + code);
   }
 }
 `}

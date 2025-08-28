@@ -24,7 +24,7 @@ To run tests:
 
     > You need to remember about `--profile infra` to run whole setup with tests. This way you ensure that the `asyncapi-bundler` service produces `__fixtures__/bundled.yml`, which the importer container will import into Microcks.
 
-1. Run tests for given client, for example `podman compose -f microcks-podman.yml --profile test-js up --abort-on-container-exit` to run JS client tests. Use `test-py` profile for Python client tests.
+1. Run tests for given client, for example `podman compose -f microcks-podman.yml --profile test-js up --abort-on-container-exit` to run JS client tests. Use `test-py` profile for Python client tests and `test-java` for Java client tests.
 
 ## Testing Clients with Microcks
 

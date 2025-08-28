@@ -6,8 +6,8 @@ export default function OnOpen({ title }) {
       {`@OnOpen
 public void onOpen() {
     String broadcastMessage = "Echo called from ${title} server";
-    Log.info("Connected to ${title} server");
-    Log.info(broadcastMessage);
+    LOG.info("Connected to ${title} server");
+    LOG.info(broadcastMessage);
 }
 `}
     </Text>

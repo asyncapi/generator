@@ -5,7 +5,7 @@ export default function HandleError() {
     <Text indent={2}>
       {`@OnError
 public void onError(Throwable throwable) {
-    Log.error("Websocket connection error: " + throwable.getMessage());
+    LOG.error("Websocket connection error: " + throwable.getMessage());
 }
 `}
     </Text>

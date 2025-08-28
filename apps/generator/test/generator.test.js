@@ -212,7 +212,6 @@ describe('Generator', () => {
       expect(xfsMock.mkdirpSync).toHaveBeenCalledWith(__dirname);
       expect(gen.installTemplate).toHaveBeenCalledWith(true);
       expect(templateConfigLoader.loadTemplateConfig).toHaveBeenCalled();
-      expect(templateConfigLoader.loadTemplateConfig).toHaveBeenCalled();
       expect(hooksRegistry.registerHooks).toHaveBeenCalled();
       expect(filtersRegistry.registerFilters).toHaveBeenCalled();
       expect(templateConfigValidator.validateTemplateConfig).toHaveBeenCalled();
@@ -235,7 +234,6 @@ describe('Generator', () => {
       expect(xfsMock.mkdirpSync).toHaveBeenCalledWith(__dirname);
       expect(gen.verifyTargetDir).toHaveBeenCalledWith(__dirname);
       expect(gen.installTemplate).toHaveBeenCalledWith(false);
-      expect(templateConfigLoader.loadTemplateConfig).toHaveBeenCalled();
       expect(templateConfigLoader.loadTemplateConfig).toHaveBeenCalled();
       expect(hooksRegistry.registerHooks).toHaveBeenCalled();
       expect(filtersRegistry.registerFilters).toHaveBeenCalled();

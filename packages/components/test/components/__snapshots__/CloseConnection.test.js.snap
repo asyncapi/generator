@@ -31,6 +31,40 @@ exports[`Testing of CloseConnection function render dart with all the props 1`] 
 "
 `;
 
+exports[`Testing of CloseConnection function render java method with zero indent 1`] = `
+"// Calling to close the WebSocket connection
+ close 
+
+            connection.closeAndAwait();
+            Log.info(\\"Connection closed gracefully.\\");
+            Thread.sleep(1000); // Wait for a second before exiting
+            System.exit(0);
+        } catch (Exception e) {
+              Log.error(\\"Error during WebSocket communication\\", e);
+              System.exit(1);
+        }
+    }).start();
+  }
+}"
+`;
+
+exports[`Testing of CloseConnection function render java websocket close connection method 1`] = `
+"// Calling to close the WebSocket connection
+   close 
+
+              connection.closeAndAwait();
+              Log.info(\\"Connection closed gracefully.\\");
+              Thread.sleep(1000); // Wait for a second before exiting
+              System.exit(0);
+          } catch (Exception e) {
+                Log.error(\\"Error during WebSocket communication\\", e);
+                System.exit(1);
+          }
+      }).start();
+    }
+  }"
+`;
+
 exports[`Testing of CloseConnection function render javascript method with custom name 1`] = `
 "  // Method to close the WebSocket connection
    disconnect() {

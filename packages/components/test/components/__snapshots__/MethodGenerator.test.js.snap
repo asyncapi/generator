@@ -48,6 +48,12 @@ exports[`MethodGenerator renders with methodDocs 1`] = `
     pass"
 `;
 
+exports[`MethodGenerator renders with parameterWrap false 1`] = `
+"public void testMethodString param1, int param2 {
+      System.out.println('Testing parameterWrap');
+  }"
+`;
+
 exports[`MethodGenerator renders with preExecutionCode and postExecutionCode 1`] = `
 "def registerHandler(self, handler) :
     # Before handler registration

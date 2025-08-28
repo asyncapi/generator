@@ -1,23 +1,17 @@
-import { Text } from '@asyncapi/generator-react-sdk';
+import { DependencyProvider } from '@asyncapi/generator-components';
 
-export function ClientDependencies() {
+export function ClientDependencies({ queryParams }) {
+  const additionalDependencies = [];
+  if (queryParams) {
+    additionalDependencies.push('import java.util.HashMap;');
+  }
   return (
-    <Text>
-      <Text>
-        {`
-package com.asyncapi;
-
-import io.quarkus.websockets.next.WebSocketClient;
-import io.quarkus.websockets.next.WebSocketClientConnection;
-import io.quarkus.websockets.next.OnOpen;
-import io.quarkus.websockets.next.OnClose;
-import io.quarkus.websockets.next.OnError;
-import io.quarkus.websockets.next.OnTextMessage;
-import io.quarkus.websockets.next.CloseReason;
-import jakarta.inject.Inject;
-import io.quarkus.logging.Log;`}
-      </Text>
-    </Text>
+    <DependencyProvider
+      language="java"
+      framework="quarkus"
+      role="client"
+      additionalDependencies={additionalDependencies}
+    />
   );
 }
 

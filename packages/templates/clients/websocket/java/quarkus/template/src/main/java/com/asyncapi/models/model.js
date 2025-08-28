@@ -1,23 +1,40 @@
 import { JAVA_COMMON_PRESET } from '@asyncapi/modelina';
 import { Models } from '@asyncapi/generator-components';
 
+// Helper function to add package declaration
+function addPackage(content) {
+  return `package com.asyncapi.models;\n\n${content}`;
+}
+
 export default async function({ asyncapi }) {
   const websocketJavaPreset = {
     class: {
-      self({ content, dependencyManager }) {
-        return `package com.asyncapi.models;\n\n${content}`;
-      },
-      property({ content, property }) {
-        if (property.property && property.property.type === 'Integer') {
-          return `@Service\n${content}`;
-        }
-        return content;
-      },
-      additionalContent({ content }) {
-        return content;
+      self({ content, model }) {
+        // Solution to handle imports dynamically
+        const requiredImports = new Set();
+        requiredImports.add('import java.util.Objects;');
+        Object.values(model.properties).forEach(property => {
+          const type = property.property.type;
+
+          if (type === 'Map<String, Object>') {
+            requiredImports.add('import java.util.Map;');
+          }
+          // Add other type checks and imports as needed
+        });
+        const imports = Array.from(requiredImports).join('\n');
+        return `package com.asyncapi.models;\n\n${imports}\n\n${content}`;
       }
     }
   };
+
+  const otherModelTypes = ['enum', 'union'];
+  otherModelTypes.forEach(type => {
+    websocketJavaPreset[type] = {
+      self({ content }) {
+        return addPackage(content);
+      }
+    };
+  });
 
   const combinedPresets = [
     {

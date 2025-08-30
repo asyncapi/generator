@@ -1,30 +1,29 @@
 import { Text } from '@asyncapi/generator-react-sdk';
 import { FormatHelpers } from '@asyncapi/modelina';
 
-
 export function EndpointFields({ sendOperations, channels }) {
-    if (!sendOperations || sendOperations.length === 0) {
-        return null;
-    }
+  if (!sendOperations || sendOperations.length === 0) {
+    return null;
+  }
 
-    return (
-        <>
-            {sendOperations.map((operation, index) => {
-                const topicName = FormatHelpers.toCamelCase(operation.channels()[index].id());
-                const producerName = FormatHelpers.upperFirst(topicName) + "Producer";
+  return (
+    <>
+      {sendOperations.map((operation, index) => {
+        const topicName = FormatHelpers.toCamelCase(operation.channels()[index].id());
+        const producerName = `${FormatHelpers.upperFirst(topicName)  }Producer`;
 
-                return (
-                    <Text key={producerName} newLines={2}>
-                        {`
+        return (
+          <Text key={producerName} newLines={2}>
+            {`
     @Inject
     ${producerName} producer;`}
-                    </Text>
-                );
-            })}
+          </Text>
+        );
+      })}
      
-     {channels.length > 1 && (
+      {channels.length > 1 && (
         <Text newLines={2}>
-            {`
+          {`
     @Inject
     @Channel("middle-out")
     Emitter<String> middleEmitter;
@@ -35,7 +34,7 @@ export function EndpointFields({ sendOperations, channels }) {
         public String value;
     }`}
         </Text>
-            )}
-        </>
-    );
+      )}
+    </>
+  );
 }

@@ -1,14 +1,13 @@
-import { Text } from "@asyncapi/generator-react-sdk";
-
+import { Text } from '@asyncapi/generator-react-sdk';
 
 export function MiddleService({ channels }) {
-    if (!channels || channels.length < 2) {
-        return null;
-    }
+  if (!channels || channels.length < 2) {
+    return null;
+  }
 
-    return (
-        <Text newLines={2}>
-            {`
+  return (
+    <Text newLines={2}>
+      {`
     @Incoming("middle-in")
     public String relayEvent(Record<String, String> record) {
         String key = null;
@@ -33,7 +32,6 @@ export function MiddleService({ channels }) {
         return key;
         
     }`}
-        </Text>
-    );
-
+    </Text>
+  );
 }

@@ -1,10 +1,9 @@
-import ConsumeEvent from "./ConsumeEvent";
-import { ConsumerFields } from "./ConsumerFields";
+import ConsumeEvent from './ConsumeEvent';
+import { ConsumerFields } from './ConsumerFields';
 import { Text } from '@asyncapi/generator-react-sdk';
 
-
 export default function ClientConsumer({ className }) {
-    return (
+  return (
     <Text newLines={2}>
       <Text newLines={2}>
         {`

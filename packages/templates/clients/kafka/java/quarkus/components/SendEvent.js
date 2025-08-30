@@ -1,12 +1,12 @@
-import { Text } from "@asyncapi/generator-react-sdk";
-import { FormatHelpers } from "@asyncapi/modelina";
+import { Text } from '@asyncapi/generator-react-sdk';
+import { FormatHelpers } from '@asyncapi/modelina';
 
-export default function SendEvent({ eventName }){
+export default function SendEvent({ eventName }) {
   const className = FormatHelpers.upperFirst(eventName);
     
-    return (
-            <Text newLines={2}>
-            {`
+  return (
+    <Text newLines={2}>
+      {`
     public String send${className}(String requestId, String value) {
       try{
           // Generate requestId if null
@@ -28,6 +28,6 @@ export default function SendEvent({ eventName }){
       return requestId;
     }
 }`}
-            </Text>
-    );
+    </Text>
+  );
 }

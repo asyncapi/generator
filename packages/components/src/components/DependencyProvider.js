@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-duplicate-string */
 import { Text } from '@asyncapi/generator-react-sdk';
 
 /**

@@ -5,7 +5,7 @@ export default function AppProperties({ asyncapi, params }) {
   const operations = asyncapi.operations();
   const receiveOperations = operations.filterByReceive();
   const sendOperations = operations.filterBySend();
-  if(!sendOperations || !receiveOperations){
+  if (!sendOperations || !receiveOperations) {
     return null;
   }
   
@@ -15,21 +15,19 @@ export default function AppProperties({ asyncapi, params }) {
   let producerActualTopic = '';
   let consumerActualTopic = '';
 
-
-// try to add a consumer group id
   return (
-      <File name="application.properties">
-        <Text>
-          {`
+    <File name="application.properties">
+      <Text>
+        {`
 # application.properties
 
 # Kafka broker configuration
 kafka.bootstrap.servers=localhost:9092`}
-        </Text>
-        {sendOperations.length > 0 && 
-          ( sendOperations.map((operation, index) => {
+      </Text>
+      {sendOperations.length > 0 && 
+          (sendOperations.map((operation, index) => {
             const address = operation.channels()[index].address();
-            producerActualTopic = address.replace("{env}", env).replace("{version}", version);
+            producerActualTopic = address.replace('{env}', env).replace('{version}', version);
             return (
               <Text newLines={2}>
                 {`
@@ -41,10 +39,10 @@ mp.messaging.outgoing.producer-channel.value.serializer=org.apache.kafka.common.
               </Text>
             );
           }))}
-        {receiveOperations.length > 0 && 
-          ( receiveOperations.map((operation, index) => {
+      {receiveOperations.length > 0 && 
+          (receiveOperations.map((operation, index) => {
             const address = operation.channels()[index].address();
-            consumerActualTopic = address.replace("{env}", env).replace("{version}", version);
+            consumerActualTopic = address.replace('{env}', env).replace('{version}', version);
             return (
               <Text newLines={2}>
                 {`
@@ -56,9 +54,9 @@ mp.messaging.incoming.consumer-channel.value.deserializer=org.apache.kafka.commo
               </Text>
             );
           }))}
-        {channels.length > 1 && (
-          <Text newLines={2}>
-              {`
+      {channels.length > 1 && (
+        <Text newLines={2}>
+          {`
 # Incoming: read from producer's topic
 mp.messaging.incoming.middle-in.connector=smallrye-kafka
 mp.messaging.incoming.middle-in.topic=${producerActualTopic}
@@ -70,8 +68,8 @@ mp.messaging.outgoing.middle-out.connector=smallrye-kafka
 mp.messaging.outgoing.middle-out.topic=${consumerActualTopic}
 mp.messaging.outgoing.middle-out.value.serializer=org.apache.kafka.common.serialization.StringSerializer
 mp.messaging.outgoing.middle-out.key.serializer=org.apache.kafka.common.serialization.StringSerializer`}
-          </Text>
-        )}
-      </File>
+        </Text>
+      )}
+    </File>
   );
 }

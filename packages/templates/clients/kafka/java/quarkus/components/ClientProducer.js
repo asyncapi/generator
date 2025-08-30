@@ -1,14 +1,12 @@
-import { ProducerFields } from "./ProducerFields";
+import { ProducerFields } from './ProducerFields';
 import { Text } from '@asyncapi/generator-react-sdk';
-import SendEvent from "./SendEvent";
+import SendEvent from './SendEvent';
 import { FormatHelpers } from '@asyncapi/modelina';
 
-
-
 export default function ClientProducer({ className }) {
-    const clientName = FormatHelpers.lowerFirst(className);
+  const clientName = FormatHelpers.lowerFirst(className);
 
-    return (
+  return (
     <Text newLines={2}>
       <Text newLines={2}>
         {`

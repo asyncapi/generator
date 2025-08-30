@@ -1,5 +1,5 @@
 {
-  "name": "@asyncapi/template-java-kafka-quarkus",
+  "name": "core-template-client-kafka-java-quarkus",
   "version": "0.0.1",
   "description": "This is a template generating a Java Quarkus kafka client",
   "keywords": [

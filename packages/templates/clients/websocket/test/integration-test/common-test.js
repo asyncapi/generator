@@ -4,7 +4,6 @@ const asyncapi_v3_path_postman = path.resolve(__dirname, '../__fixtures__/asynca
 const asyncapi_v3_path_hoppscotch = path.resolve(__dirname, '../__fixtures__/asyncapi-hoppscotch-client.yml');
 const asyncapi_v3_path_slack = path.resolve(__dirname, '../__fixtures__/asyncapi-slack-client.yml');
 
-
 /**
  * Run snapshot tests for code generation across multiple AsyncAPI specifications.
  * Tests generation of standard client, and client with a custom client name.

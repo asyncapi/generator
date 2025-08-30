@@ -11,7 +11,7 @@
     "author": "Shuaib Salad <sh.salat@gmail.com>",
     "license": "Apache-2.0",
     "dependencies": {
-        "@asyncapi/generator-helpers": "1.0.0"
+        "@asyncapi/generator-helpers": "0.2.0"
     },
     "devDependencies": {
         "@babel/cli": "^7.25.9",

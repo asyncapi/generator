@@ -1,16 +1,14 @@
-import { Text } from "@asyncapi/generator-react-sdk";
-import { FormatHelpers } from "@asyncapi/modelina";
-
-
+import { Text } from '@asyncapi/generator-react-sdk';
+import { FormatHelpers } from '@asyncapi/modelina';
 
 export function ProduceEvent({ sendOperations }) {
-    return sendOperations.map((operation, index) => {
-        const topicName = FormatHelpers.toCamelCase(operation.channels()[index].id());
-        const producerName = FormatHelpers.upperFirst(topicName) + "Producer";
+  return sendOperations.map((operation, index) => {
+    const topicName = FormatHelpers.toCamelCase(operation.channels()[index].id());
+    const producerName = `${FormatHelpers.upperFirst(topicName)  }Producer`;
 
-        return (
-        <Text newLines={1}>
-                {`
+    return (
+      <Text newLines={1}>
+        {`
     /**
      *  Simple rest endpoint to simulate the event production
      * */
@@ -35,8 +33,7 @@ export function ProduceEvent({ sendOperations }) {
 
         return Response.accepted().build();
     }`}
-        </Text>
-        );
-
-        })
-    }
+      </Text>
+    );
+  });
+}

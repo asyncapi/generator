@@ -1,6 +1,7 @@
 {
     "name": "@asyncapi/template-kafka-integration-test",
     "version": "0.0.1",
+    "private": true,
     "description": "This is a integration tests for all the kafka clients",
     "scripts": {
         "test": "jest --coverage",

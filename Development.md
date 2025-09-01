@@ -198,10 +198,10 @@ This project uses AI-powered tools to assist contributors and maintainers:
 #### Privacy and data handling
 - PR/issue content may be transmitted to third‑party AI services (CodeRabbit, Dosu) to generate feedback.
 - Do not include secrets in any contribution artifacts (descriptions, comments, logs).
-See ![Security Policy](https://github.com/asyncapi/generator/security/policy) (if present) for details and reporting instructions.
+See [Security Policy](https://github.com/asyncapi/generator/security/policy) for details and reporting instructions.
 
 > [!TIP]
-> These AI tools are here to help you contribute more efficiently and maintain high code quality. If you have questions or encounter issues with CodeRabbit or Dosu, ask in the PR/issue or reach out on ![AsyncAPI Slack](http://asyncapi.com/slack-invite).
+> These AI tools are here to help you contribute more efficiently and maintain high code quality. If you have questions or encounter issues with CodeRabbit or Dosu, ask in the PR/issue or reach out on [AsyncAPI Slack](http://asyncapi.com/slack-invite).
 
 If problems persist, please open an issue on the repository: [Create new issue](https://github.com/asyncapi/generator/issues/new/choose).
 

@@ -1,6 +1,6 @@
 {
     "name": "@asyncapi/template-integration-test",
-    "version": "0.0.1",
+    "private": true,
     "description": "This is a integration tests for all the websocket clients",
     "scripts": {
         "test": "jest --coverage",
@@ -11,7 +11,7 @@
     "author": "Adi Boghawala <boghawalaadi@gmail.com>",
     "license": "Apache-2.0",
     "dependencies": {
-        "@asyncapi/generator-helpers": "1.0.0"
+        "@asyncapi/generator-helpers": "0.2.0"
     },
     "devDependencies": {
         "@babel/cli": "^7.25.9",

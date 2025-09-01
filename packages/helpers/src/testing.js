@@ -73,12 +73,12 @@ async function getDirElementsRecursive(dir) {
  * @param {Object} [baseParams={}] - Additional parameters to merge into the final set.
  * @returns {Object} - The final parameters object for use in the test case.
  */
-function buildParams(language, config, baseParams = {}) {
+function buildParams(language, config, serverName, baseParams = {}) {
   // Note: This function is currently hardcoded to treat 'java' differently by excluding the 'clientFileName' parameter.
   const isJava = language.toLowerCase() === 'java';
 
   return {
-    server: 'echoServer',
+    server: serverName,
     ...(isJava ? {} : { clientFileName: config.clientFileName }),
     ...baseParams,
   };
@@ -129,5 +129,6 @@ module.exports = {
   getDirElementsRecursive,
   verifyDirectoryStructure,
   buildParams,
-  listFiles
+  listFiles,
+  hasNestedConfig
 };

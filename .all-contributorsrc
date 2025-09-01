@@ -266,7 +266,8 @@
         "infra",
         "review",
         "test",
-        "doc"
+        "doc",
+        "maintenance"
       ]
     },
     {

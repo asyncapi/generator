@@ -108,4 +108,23 @@ describe('MethodGenerator', () => {
     );
     expect(result.trim()).toMatchSnapshot();
   });
+
+  test('renders with parameterWrap false', () => {
+    const result = render(
+      <MethodGenerator
+        language="java"
+        methodName="testMethod"
+        methodParams={['String param1', 'int param2']}
+        customMethodConfig={{ 
+          returnType: 'public void', 
+          openingTag: '{', 
+          closingTag: '}', 
+          indentSize: 4, 
+          parameterWrap: false 
+        }}
+        methodLogic="System.out.println('Testing parameterWrap');"
+      />
+    );
+    expect(result.trim()).toMatchSnapshot();
+  });
 });

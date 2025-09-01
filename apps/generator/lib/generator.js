@@ -13,8 +13,10 @@ const { isAsyncAPIDocument } = require('@asyncapi/parser/cjs/document');
 
 const { configureReact, renderReact, saveRenderedReactContent } = require('./renderer/react');
 const { configureNunjucks, renderNunjucks } = require('./renderer/nunjucks');
-const { validateTemplateConfig } = require('./templateConfigValidator');
+const { validateTemplateConfig } = require('./templates/config/validator');
+const { loadTemplateConfig } = require('./templates/config/loader');
 const { isGenerationConditionMet } = require('./conditionalGeneration');
+const { listBakedInTemplates, isCoreTemplate, getTemplate } = require('./templates/bakedInTemplates');
 const {
   convertMapToObject,
   isFileSystemPath,
@@ -36,7 +38,6 @@ const { definitions, flatten, shorthands } = require('@npmcli/config/lib/definit
 
 const FILTERS_DIRNAME = 'filters';
 const HOOKS_DIRNAME = 'hooks';
-const CONFIG_FILENAME = 'package.json';
 const PACKAGE_JSON_FILENAME = 'package.json';
 const GIT_IGNORE_FILENAME = '{.gitignore}';
 const NPM_IGNORE_FILENAME = '{.npmignore}';
@@ -281,12 +282,27 @@ class Generator {
    *   A promise that resolves to an object containing the name and path of the installed template.
    */
   async installAndSetupTemplate() {
-    const { name: templatePkgName, path: templatePkgPath } = await this.installTemplate(this.install);
+    const shouldSkipInstall = isCoreTemplate(this.templateName);
+
+    let templatePkgName, templatePkgPath;
+
+    if (shouldSkipInstall) {
+      // Use core template info from local registry
+      const template = await getTemplate(this.templateName);
+      templatePkgName = template.name;
+      templatePkgPath = template.path;
+    } else {
+      // Download and install external template
+      const installResult = await this.installTemplate(this.install);
+      templatePkgName = installResult.name;
+      templatePkgPath = installResult.path;
+    }
+
     this.templateDir = templatePkgPath;
     this.templateName = templatePkgName;
     this.templateContentDir = path.resolve(this.templateDir, TEMPLATE_CONTENT_DIRNAME);
 
-    await this.loadTemplateConfig();
+    this.templateConfig = await loadTemplateConfig(this.templateDir, this.templateParams);
 
     return { templatePkgName, templatePkgPath };
   }
@@ -1002,61 +1018,6 @@ class Generator {
   }
 
   /**
-   * Loads the template configuration.
-   * @private
-   */
-  async loadTemplateConfig() {
-    this.templateConfig = {};
-    
-    // Try to load config from .ageneratorrc
-    try {
-      const rcConfigPath = path.resolve(this.templateDir, '.ageneratorrc');
-      const yaml = await readFile(rcConfigPath, { encoding: 'utf8' });
-      const yamlConfig = require('js-yaml').load(yaml);
-      this.templateConfig = yamlConfig || {};
-      
-      await this.loadDefaultValues();
-      return;
-    } catch (rcError) {
-      // console.error('Could not load .ageneratorrc file:', rcError);
-      log.debug('Could not load .ageneratorrc file:', rcError);
-      // Continue to try package.json if .ageneratorrc fails
-    }
-    
-    // Try to load config from package.json
-    try {
-      const configPath = path.resolve(this.templateDir, CONFIG_FILENAME);
-      const json = await readFile(configPath, { encoding: 'utf8' });
-      const generatorProp = JSON.parse(json).generator;
-      this.templateConfig = generatorProp || {};
-    } catch (packageError) {
-      // console.error('Could not load generator config from package.json:', packageError);
-      log.debug('Could not load generator config from package.json:', packageError);
-    }
-    
-    await this.loadDefaultValues();
-  }
-
-  /**
-   * Loads default values of parameters from template config. If value was already set as parameter it will not be
-   * overriden.
-   * @private
-   */
-  async loadDefaultValues() {
-    const parameters = this.templateConfig.parameters;
-    const defaultValues = Object.keys(parameters || {}).filter(key => parameters[key].default);
-
-    defaultValues.filter(dv => this.templateParams[dv] === undefined).forEach(dv =>
-      Object.defineProperty(this.templateParams, dv, {
-        enumerable: true,
-        get() {
-          return parameters[dv].default;
-        }
-      })
-    );
-  }
-
-  /**
    * Launches all the hooks registered at a given hook point/name.
    *
    * @param {string} hookName
@@ -1139,3 +1100,15 @@ Generator.DEFAULT_TEMPLATES_DIR = DEFAULT_TEMPLATES_DIR;
 Generator.TRANSPILED_TEMPLATE_LOCATION = TRANSPILED_TEMPLATE_LOCATION;
 
 module.exports = Generator;
+/**
+ * List core templates, optionally filter by type, stack, protocol, or target.
+ * Use name of returned templates as input for the `generate` method for template generation. Such core templates code is part of the @asyncapi/generator package.
+ * 
+ * @param {Object} [filter] - Optional filter object.
+ * @param {string} [filter.type] - Filter by template type (e.g., 'client', 'docs').
+ * @param {string} [filter.stack] - Filter by stack (e.g., 'quarkus', 'express').
+ * @param {string} [filter.protocol] - Filter by protocol (e.g., 'websocket', 'http').
+ * @param {string} [filter.target] - Filter by target language or format (e.g., 'javascript', 'html').
+ * @returns {Array<Object>} Array of template objects matching the filter.
+ */
+module.exports.listBakedInTemplates = listBakedInTemplates;

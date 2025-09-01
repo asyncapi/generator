@@ -76,4 +76,27 @@ describe('Testing of CloseConnection function', () => {
     );
     expect(result).toMatchSnapshot();
   });
+  
+  test('render java websocket close connection method', () => {
+    const result = render(
+      <CloseConnection 
+        language='java'
+        framework='quarkus'
+      />
+    );
+    const actual = result.trim();
+    expect(actual).toMatchSnapshot();
+  });
+
+  test('render java method with zero indent', () => {
+    const result = render(
+      <CloseConnection 
+        language='java'
+        framework='quarkus'
+        indent={0}
+      />
+    );
+    const actual = result.trim();
+    expect(actual).toMatchSnapshot();
+  });
 });

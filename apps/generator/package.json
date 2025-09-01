@@ -1,6 +1,6 @@
 {
   "name": "@asyncapi/generator",
-  "version": "2.7.1",
+  "version": "2.8.3",
   "description": "The AsyncAPI generator. It can generate documentation, code, anything!",
   "main": "./lib/generator.js",
   "bin": {
@@ -13,7 +13,7 @@
   },
   "scripts": {
     "test": "npm run test:unit && npm run test:integration",
-    "test:unit": "jest --coverage --testPathIgnorePatterns=integration --testPathIgnorePatterns=test-project",
+    "test:unit": "jest --coverage --testPathIgnorePatterns=bakedInTemplates --testPathIgnorePatterns=integration --testPathIgnorePatterns=test-project",
     "test:dev": "npm run test:unit -- --watchAll",
     "test:integration": "npm run test:cleanup && jest --testPathPattern=integration --modulePathIgnorePatterns='./__mocks__(?!\\/loglevel\\.js$)'",
     "test:integration:update": "npm run test:integration -- -u",
@@ -21,9 +21,14 @@
     "docs": "jsdoc2md --partial docs/jsdoc2md-handlebars/custom-sig-name.hbs docs/jsdoc2md-handlebars/main.hbs docs/jsdoc2md-handlebars/docs.hbs docs/jsdoc2md-handlebars/header.hbs docs/jsdoc2md-handlebars/defaultvalue.hbs docs/jsdoc2md-handlebars/link.hbs docs/jsdoc2md-handlebars/params-table.hbs --files lib/generator.js > docs/api.md",
     "docker:build": "docker build -t asyncapi/generator:latest .",
     "lint": "eslint --max-warnings 0 --config ../../.eslintrc --ignore-path ../../.eslintignore .",
+    "lint:fix": "npm run lint -- --fix",
     "generate:readme:toc": "markdown-toc -i README.md",
     "generate:assets": "npm run docs && npm run generate:readme:toc",
-    "bump:version": "npm --no-git-tag-version --allow-same-version version $VERSION"
+    "bump:version": "npm --no-git-tag-version --allow-same-version version $VERSION",
+    "build": "node scripts/build-templates.js",
+    "build:reactsdk": "cd ../react-sdk && npm run build",
+    "pretest": "npm run build:reactsdk && npm run build",
+    "prepublishOnly": "npm run pretest"
   },
   "preferGlobal": true,
   "bugs": {
@@ -47,6 +52,8 @@
   "license": "Apache-2.0",
   "homepage": "https://github.com/asyncapi/generator",
   "dependencies": {
+    "@asyncapi/generator-components": "*",
+    "@asyncapi/generator-helpers": "*",
     "@asyncapi/generator-hooks": "*",
     "@asyncapi/generator-react-sdk": "*",
     "@asyncapi/multi-parser": "^2.1.1",

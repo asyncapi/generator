@@ -11,7 +11,6 @@ exports[`WebSocket Clients Integration Tests Dart Client Common Integration test
 
 import 'dart:convert';
 import 'package:web_socket_channel/web_socket_channel.dart';
-
 class HoppscotchClient {
 
   final String _url;
@@ -125,7 +124,6 @@ exports[`WebSocket Clients Integration Tests Dart Client Common Integration test
 
 import 'dart:convert';
 import 'package:web_socket_channel/web_socket_channel.dart';
-
 class HoppscotchEchoWebSocketClient {
 
   final String _url;
@@ -240,7 +238,6 @@ exports[`WebSocket Clients Integration Tests Dart Client Common Integration test
 
 import 'dart:convert';
 import 'package:web_socket_channel/web_socket_channel.dart';
-
 class PostmanEchoWebSocketClientClient {
 
   final String _url;
@@ -340,6 +337,2035 @@ environment:
   sdk: '>=3.0.0 <4.0.0'
 dependencies:
   web_socket_channel: ^3.0.2
+"
+`;
+
+exports[`WebSocket Clients Integration Tests Java Quarkus Client Additional tests for Java client generate client for slack: .dockerignore 1`] = `
+"*
+!target/*-runner
+!target/*-runner.jar
+!target/lib/*
+!target/quarkus-app/*"
+`;
+
+exports[`WebSocket Clients Integration Tests Java Quarkus Client Additional tests for Java client generate client for slack: .gitignore 1`] = `
+"#Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+release.properties
+.flattened-pom.xml
+
+# Eclipse
+.project
+.classpath
+.settings/
+bin/
+
+# IntelliJ
+.idea
+*.ipr
+*.iml
+*.iws
+
+# NetBeans
+nb-configuration.xml
+
+# Visual Studio Code
+.vscode
+.factorypath
+
+# OSX
+.DS_Store
+
+# Vim
+*.swp
+*.swo
+
+# patch
+*.orig
+*.rej
+
+# Local environment
+.env
+
+# Plugin directory
+/.quarkus/cli/plugins/
+# TLS Certificates
+.certs/
+"
+`;
+
+exports[`WebSocket Clients Integration Tests Java Quarkus Client Additional tests for Java client generate client for slack: .gitignore 2`] = `
+"maven-wrapper.jar
+"
+`;
+
+exports[`WebSocket Clients Integration Tests Java Quarkus Client Additional tests for Java client generate client for slack: Acknowledge.java 1`] = `
+"package com.asyncapi.models;
+
+import java.util.Objects;
+import java.util.Map;
+
+public class Acknowledge {
+  private String envelopeId;
+  private Map<String, Object> payload;
+  private Map<String, Object> additionalProperties;
+
+  public String getEnvelopeId() { return this.envelopeId; }
+  public void setEnvelopeId(String envelopeId) { this.envelopeId = envelopeId; }
+
+  public Map<String, Object> getPayload() { return this.payload; }
+  public void setPayload(Map<String, Object> payload) { this.payload = payload; }
+
+  public Map<String, Object> getAdditionalProperties() { return this.additionalProperties; }
+  public void setAdditionalProperties(Map<String, Object> additionalProperties) { this.additionalProperties = additionalProperties; }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Acknowledge self = (Acknowledge) o;
+      return 
+        Objects.equals(this.envelopeId, self.envelopeId) &&
+        Objects.equals(this.payload, self.payload) &&
+        Objects.equals(this.additionalProperties, self.additionalProperties);
+  }
+
+  @Override
+  public String toString() {
+    return \\"class Acknowledge {\\\\n\\" +   
+      \\"    envelopeId: \\" + toIndentedString(envelopeId) + \\"\\\\n\\" +
+      \\"    payload: \\" + toIndentedString(payload) + \\"\\\\n\\" +
+      \\"    additionalProperties: \\" + toIndentedString(additionalProperties) + \\"\\\\n\\" +
+    \\"}\\";
+  }
+
+  /**
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
+   */
+  private String toIndentedString(Object o) {
+    if (o == null) {
+      return \\"null\\";
+    }
+    return o.toString().replace(\\"\\\\n\\", \\"\\\\n    \\");
+  }
+}"
+`;
+
+exports[`WebSocket Clients Integration Tests Java Quarkus Client Additional tests for Java client generate client for slack: Authorization.java 1`] = `
+"package com.asyncapi.models;
+
+import java.util.Objects;
+import java.util.Map;
+
+public class Authorization {
+  private String enterpriseId;
+  private String teamId;
+  private String userId;
+  private Boolean isBot;
+  private Boolean isEnterpriseInstall;
+  private Map<String, Object> additionalProperties;
+
+  public String getEnterpriseId() { return this.enterpriseId; }
+  public void setEnterpriseId(String enterpriseId) { this.enterpriseId = enterpriseId; }
+
+  public String getTeamId() { return this.teamId; }
+  public void setTeamId(String teamId) { this.teamId = teamId; }
+
+  public String getUserId() { return this.userId; }
+  public void setUserId(String userId) { this.userId = userId; }
+
+  public Boolean getIsBot() { return this.isBot; }
+  public void setIsBot(Boolean isBot) { this.isBot = isBot; }
+
+  public Boolean getIsEnterpriseInstall() { return this.isEnterpriseInstall; }
+  public void setIsEnterpriseInstall(Boolean isEnterpriseInstall) { this.isEnterpriseInstall = isEnterpriseInstall; }
+
+  public Map<String, Object> getAdditionalProperties() { return this.additionalProperties; }
+  public void setAdditionalProperties(Map<String, Object> additionalProperties) { this.additionalProperties = additionalProperties; }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Authorization self = (Authorization) o;
+      return 
+        Objects.equals(this.enterpriseId, self.enterpriseId) &&
+        Objects.equals(this.teamId, self.teamId) &&
+        Objects.equals(this.userId, self.userId) &&
+        Objects.equals(this.isBot, self.isBot) &&
+        Objects.equals(this.isEnterpriseInstall, self.isEnterpriseInstall) &&
+        Objects.equals(this.additionalProperties, self.additionalProperties);
+  }
+
+  @Override
+  public String toString() {
+    return \\"class Authorization {\\\\n\\" +   
+      \\"    enterpriseId: \\" + toIndentedString(enterpriseId) + \\"\\\\n\\" +
+      \\"    teamId: \\" + toIndentedString(teamId) + \\"\\\\n\\" +
+      \\"    userId: \\" + toIndentedString(userId) + \\"\\\\n\\" +
+      \\"    isBot: \\" + toIndentedString(isBot) + \\"\\\\n\\" +
+      \\"    isEnterpriseInstall: \\" + toIndentedString(isEnterpriseInstall) + \\"\\\\n\\" +
+      \\"    additionalProperties: \\" + toIndentedString(additionalProperties) + \\"\\\\n\\" +
+    \\"}\\";
+  }
+
+  /**
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
+   */
+  private String toIndentedString(Object o) {
+    if (o == null) {
+      return \\"null\\";
+    }
+    return o.toString().replace(\\"\\\\n\\", \\"\\\\n    \\");
+  }
+}"
+`;
+
+exports[`WebSocket Clients Integration Tests Java Quarkus Client Additional tests for Java client generate client for slack: ChannelJoin.java 1`] = `
+"package com.asyncapi.models;
+
+import java.util.Objects;
+import java.util.Map;
+
+public class ChannelJoin implements EventData {
+  private final String type = \\"message\\";
+  private String eventTs;
+  private final String subtype = \\"message\\";
+  private final String inviter = \\"message\\";
+  private final String text = \\"message\\";
+  private final String user = \\"message\\";
+  private final String ts = \\"message\\";
+  private final String channelType = \\"message\\";
+  private Map<String, Object> additionalProperties;
+
+  public String getType() { return this.type; }
+
+  public String getEventTs() { return this.eventTs; }
+  public void setEventTs(String eventTs) { this.eventTs = eventTs; }
+
+  public String getSubtype() { return this.subtype; }
+
+  public String getInviter() { return this.inviter; }
+
+  public String getText() { return this.text; }
+
+  public String getUser() { return this.user; }
+
+  public String getTs() { return this.ts; }
+
+  public String getChannelType() { return this.channelType; }
+
+  public Map<String, Object> getAdditionalProperties() { return this.additionalProperties; }
+  public void setAdditionalProperties(Map<String, Object> additionalProperties) { this.additionalProperties = additionalProperties; }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    ChannelJoin self = (ChannelJoin) o;
+      return 
+        Objects.equals(this.type, self.type) &&
+        Objects.equals(this.eventTs, self.eventTs) &&
+        Objects.equals(this.subtype, self.subtype) &&
+        Objects.equals(this.inviter, self.inviter) &&
+        Objects.equals(this.text, self.text) &&
+        Objects.equals(this.user, self.user) &&
+        Objects.equals(this.ts, self.ts) &&
+        Objects.equals(this.channelType, self.channelType) &&
+        Objects.equals(this.additionalProperties, self.additionalProperties);
+  }
+
+  @Override
+  public String toString() {
+    return \\"class ChannelJoin {\\\\n\\" +   
+      \\"    type: \\" + toIndentedString(type) + \\"\\\\n\\" +
+      \\"    eventTs: \\" + toIndentedString(eventTs) + \\"\\\\n\\" +
+      \\"    subtype: \\" + toIndentedString(subtype) + \\"\\\\n\\" +
+      \\"    inviter: \\" + toIndentedString(inviter) + \\"\\\\n\\" +
+      \\"    text: \\" + toIndentedString(text) + \\"\\\\n\\" +
+      \\"    user: \\" + toIndentedString(user) + \\"\\\\n\\" +
+      \\"    ts: \\" + toIndentedString(ts) + \\"\\\\n\\" +
+      \\"    channelType: \\" + toIndentedString(channelType) + \\"\\\\n\\" +
+      \\"    additionalProperties: \\" + toIndentedString(additionalProperties) + \\"\\\\n\\" +
+    \\"}\\";
+  }
+
+  /**
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
+   */
+  private String toIndentedString(Object o) {
+    if (o == null) {
+      return \\"null\\";
+    }
+    return o.toString().replace(\\"\\\\n\\", \\"\\\\n    \\");
+  }
+}"
+`;
+
+exports[`WebSocket Clients Integration Tests Java Quarkus Client Additional tests for Java client generate client for slack: ConnectionInfo.java 1`] = `
+"package com.asyncapi.models;
+
+import java.util.Objects;
+import java.util.Map;
+
+public class ConnectionInfo {
+  private String appId;
+  private Map<String, Object> additionalProperties;
+
+  public String getAppId() { return this.appId; }
+  public void setAppId(String appId) { this.appId = appId; }
+
+  public Map<String, Object> getAdditionalProperties() { return this.additionalProperties; }
+  public void setAdditionalProperties(Map<String, Object> additionalProperties) { this.additionalProperties = additionalProperties; }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    ConnectionInfo self = (ConnectionInfo) o;
+      return 
+        Objects.equals(this.appId, self.appId) &&
+        Objects.equals(this.additionalProperties, self.additionalProperties);
+  }
+
+  @Override
+  public String toString() {
+    return \\"class ConnectionInfo {\\\\n\\" +   
+      \\"    appId: \\" + toIndentedString(appId) + \\"\\\\n\\" +
+      \\"    additionalProperties: \\" + toIndentedString(additionalProperties) + \\"\\\\n\\" +
+    \\"}\\";
+  }
+
+  /**
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
+   */
+  private String toIndentedString(Object o) {
+    if (o == null) {
+      return \\"null\\";
+    }
+    return o.toString().replace(\\"\\\\n\\", \\"\\\\n    \\");
+  }
+}"
+`;
+
+exports[`WebSocket Clients Integration Tests Java Quarkus Client Additional tests for Java client generate client for slack: DebugInfo.java 1`] = `
+"package com.asyncapi.models;
+
+import java.util.Objects;
+import java.util.Map;
+
+public class DebugInfo {
+  private String host;
+  private String started;
+  private Integer buildNumber;
+  private Integer approximateConnectionTime;
+  private Map<String, Object> additionalProperties;
+
+  public String getHost() { return this.host; }
+  public void setHost(String host) { this.host = host; }
+
+  public String getStarted() { return this.started; }
+  public void setStarted(String started) { this.started = started; }
+
+  public Integer getBuildNumber() { return this.buildNumber; }
+  public void setBuildNumber(Integer buildNumber) { this.buildNumber = buildNumber; }
+
+  public Integer getApproximateConnectionTime() { return this.approximateConnectionTime; }
+  public void setApproximateConnectionTime(Integer approximateConnectionTime) { this.approximateConnectionTime = approximateConnectionTime; }
+
+  public Map<String, Object> getAdditionalProperties() { return this.additionalProperties; }
+  public void setAdditionalProperties(Map<String, Object> additionalProperties) { this.additionalProperties = additionalProperties; }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    DebugInfo self = (DebugInfo) o;
+      return 
+        Objects.equals(this.host, self.host) &&
+        Objects.equals(this.started, self.started) &&
+        Objects.equals(this.buildNumber, self.buildNumber) &&
+        Objects.equals(this.approximateConnectionTime, self.approximateConnectionTime) &&
+        Objects.equals(this.additionalProperties, self.additionalProperties);
+  }
+
+  @Override
+  public String toString() {
+    return \\"class DebugInfo {\\\\n\\" +   
+      \\"    host: \\" + toIndentedString(host) + \\"\\\\n\\" +
+      \\"    started: \\" + toIndentedString(started) + \\"\\\\n\\" +
+      \\"    buildNumber: \\" + toIndentedString(buildNumber) + \\"\\\\n\\" +
+      \\"    approximateConnectionTime: \\" + toIndentedString(approximateConnectionTime) + \\"\\\\n\\" +
+      \\"    additionalProperties: \\" + toIndentedString(additionalProperties) + \\"\\\\n\\" +
+    \\"}\\";
+  }
+
+  /**
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
+   */
+  private String toIndentedString(Object o) {
+    if (o == null) {
+      return \\"null\\";
+    }
+    return o.toString().replace(\\"\\\\n\\", \\"\\\\n    \\");
+  }
+}"
+`;
+
+exports[`WebSocket Clients Integration Tests Java Quarkus Client Additional tests for Java client generate client for slack: Disconnect.java 1`] = `
+"package com.asyncapi.models;
+
+import java.util.Objects;
+import java.util.Map;
+
+public class Disconnect {
+  private String type;
+  private DisconnectReasonEnum reason;
+  private DebugInfo debugInfo;
+  private Map<String, Object> additionalProperties;
+
+  public String getType() { return this.type; }
+  public void setType(String type) { this.type = type; }
+
+  public DisconnectReasonEnum getReason() { return this.reason; }
+  public void setReason(DisconnectReasonEnum reason) { this.reason = reason; }
+
+  public DebugInfo getDebugInfo() { return this.debugInfo; }
+  public void setDebugInfo(DebugInfo debugInfo) { this.debugInfo = debugInfo; }
+
+  public Map<String, Object> getAdditionalProperties() { return this.additionalProperties; }
+  public void setAdditionalProperties(Map<String, Object> additionalProperties) { this.additionalProperties = additionalProperties; }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Disconnect self = (Disconnect) o;
+      return 
+        Objects.equals(this.type, self.type) &&
+        Objects.equals(this.reason, self.reason) &&
+        Objects.equals(this.debugInfo, self.debugInfo) &&
+        Objects.equals(this.additionalProperties, self.additionalProperties);
+  }
+
+  @Override
+  public String toString() {
+    return \\"class Disconnect {\\\\n\\" +   
+      \\"    type: \\" + toIndentedString(type) + \\"\\\\n\\" +
+      \\"    reason: \\" + toIndentedString(reason) + \\"\\\\n\\" +
+      \\"    debugInfo: \\" + toIndentedString(debugInfo) + \\"\\\\n\\" +
+      \\"    additionalProperties: \\" + toIndentedString(additionalProperties) + \\"\\\\n\\" +
+    \\"}\\";
+  }
+
+  /**
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
+   */
+  private String toIndentedString(Object o) {
+    if (o == null) {
+      return \\"null\\";
+    }
+    return o.toString().replace(\\"\\\\n\\", \\"\\\\n    \\");
+  }
+}"
+`;
+
+exports[`WebSocket Clients Integration Tests Java Quarkus Client Additional tests for Java client generate client for slack: DisconnectReasonEnum.java 1`] = `
+"package com.asyncapi.models;
+
+public enum DisconnectReasonEnum {
+  LINK_DISABLED((String)\\"link_disabled\\"), WARNING((String)\\"warning\\"), REFRESH_REQUESTED((String)\\"refresh_requested\\");
+
+  private final String value;
+
+  DisconnectReasonEnum(String value) {
+    this.value = value;
+  }
+
+  public String getValue() {
+    return value;
+  }
+
+  public static DisconnectReasonEnum fromValue(String value) {
+    for (DisconnectReasonEnum e : DisconnectReasonEnum.values()) {
+      if (e.value.equals(value)) {
+        return e;
+      }
+    }
+    throw new IllegalArgumentException(\\"Unexpected value '\\" + value + \\"'\\");
+  }
+
+  @Override
+  public String toString() {
+    return String.valueOf(value);
+  }
+}"
+`;
+
+exports[`WebSocket Clients Integration Tests Java Quarkus Client Additional tests for Java client generate client for slack: Dockerfile.jvm 1`] = `
+"####
+# This Dockerfile is used in order to build a container that runs the Quarkus application in JVM mode
+#
+# Before building the container image run:
+#
+# ./mvnw package
+#
+# Then, build the image with:
+#
+# docker build -f src/main/docker/Dockerfile.jvm -t quarkus/quarkus-websocket-jvm .
+#
+# Then run the container using:
+#
+# docker run -i --rm -p 8080:8080 quarkus/quarkus-websocket-jvm
+#
+# If you want to include the debug port into your docker image
+# you will have to expose the debug port (default 5005 being the default) like this :  EXPOSE 8080 5005.
+# Additionally you will have to set -e JAVA_DEBUG=true and -e JAVA_DEBUG_PORT=*:5005
+# when running the container
+#
+# Then run the container using :
+#
+# docker run -i --rm -p 8080:8080 quarkus/quarkus-websocket-jvm
+#
+# This image uses the \`run-java.sh\` script to run the application.
+# This scripts computes the command line to execute your Java application, and
+# includes memory/GC tuning.
+# You can configure the behavior using the following environment properties:
+# - JAVA_OPTS: JVM options passed to the \`java\` command (example: \\"-verbose:class\\") - Be aware that this will override
+# the default JVM options, use \`JAVA_OPTS_APPEND\` to append options
+# - JAVA_OPTS_APPEND: User specified Java options to be appended to generated options
+#   in JAVA_OPTS (example: \\"-Dsome.property=foo\\")
+# - JAVA_MAX_MEM_RATIO: Is used when no \`-Xmx\` option is given in JAVA_OPTS. This is
+#   used to calculate a default maximal heap memory based on a containers restriction.
+#   If used in a container without any memory constraints for the container then this
+#   option has no effect. If there is a memory constraint then \`-Xmx\` is set to a ratio
+#   of the container available memory as set here. The default is \`50\` which means 50%
+#   of the available memory is used as an upper boundary. You can skip this mechanism by
+#   setting this value to \`0\` in which case no \`-Xmx\` option is added.
+# - JAVA_INITIAL_MEM_RATIO: Is used when no \`-Xms\` option is given in JAVA_OPTS. This
+#   is used to calculate a default initial heap memory based on the maximum heap memory.
+#   If used in a container without any memory constraints for the container then this
+#   option has no effect. If there is a memory constraint then \`-Xms\` is set to a ratio
+#   of the \`-Xmx\` memory as set here. The default is \`25\` which means 25% of the \`-Xmx\`
+#   is used as the initial heap size. You can skip this mechanism by setting this value
+#   to \`0\` in which case no \`-Xms\` option is added (example: \\"25\\")
+# - JAVA_MAX_INITIAL_MEM: Is used when no \`-Xms\` option is given in JAVA_OPTS.
+#   This is used to calculate the maximum value of the initial heap memory. If used in
+#   a container without any memory constraints for the container then this option has
+#   no effect. If there is a memory constraint then \`-Xms\` is limited to the value set
+#   here. The default is 4096MB which means the calculated value of \`-Xms\` never will
+#   be greater than 4096MB. The value of this variable is expressed in MB (example: \\"4096\\")
+# - JAVA_DIAGNOSTICS: Set this to get some diagnostics information to standard output
+#   when things are happening. This option, if set to true, will set
+#  \`-XX:+UnlockDiagnosticVMOptions\`. Disabled by default (example: \\"true\\").
+# - JAVA_DEBUG: If set remote debugging will be switched on. Disabled by default (example:
+#    true\\").
+# - JAVA_DEBUG_PORT: Port used for remote debugging. Defaults to 5005 (example: \\"8787\\").
+# - CONTAINER_CORE_LIMIT: A calculated core limit as described in
+#   https://www.kernel.org/doc/Documentation/scheduler/sched-bwc.txt. (example: \\"2\\")
+# - CONTAINER_MAX_MEMORY: Memory limit given to the container (example: \\"1024\\").
+# - GC_MIN_HEAP_FREE_RATIO: Minimum percentage of heap free after GC to avoid expansion.
+#   (example: \\"20\\")
+# - GC_MAX_HEAP_FREE_RATIO: Maximum percentage of heap free after GC to avoid shrinking.
+#   (example: \\"40\\")
+# - GC_TIME_RATIO: Specifies the ratio of the time spent outside the garbage collection.
+#   (example: \\"4\\")
+# - GC_ADAPTIVE_SIZE_POLICY_WEIGHT: The weighting given to the current GC time versus
+#   previous GC times. (example: \\"90\\")
+# - GC_METASPACE_SIZE: The initial metaspace size. (example: \\"20\\")
+# - GC_MAX_METASPACE_SIZE: The maximum metaspace size. (example: \\"100\\")
+# - GC_CONTAINER_OPTIONS: Specify Java GC to use. The value of this variable should
+#   contain the necessary JRE command-line options to specify the required GC, which
+#   will override the default of \`-XX:+UseParallelGC\` (example: -XX:+UseG1GC).
+# - HTTPS_PROXY: The location of the https proxy. (example: \\"myuser@127.0.0.1:8080\\")
+# - HTTP_PROXY: The location of the http proxy. (example: \\"myuser@127.0.0.1:8080\\")
+# - NO_PROXY: A comma separated lists of hosts, IP addresses or domains that can be
+#   accessed directly. (example: \\"foo.example.com,bar.example.com\\")
+#
+###
+FROM registry.access.redhat.com/ubi9/openjdk-21:1.21
+
+ENV LANGUAGE='en_US:en'
+
+
+# We make four distinct layers so if there are application changes the library layers can be re-used
+COPY --chown=185 target/quarkus-app/lib/ /deployments/lib/
+COPY --chown=185 target/quarkus-app/*.jar /deployments/
+COPY --chown=185 target/quarkus-app/app/ /deployments/app/
+COPY --chown=185 target/quarkus-app/quarkus/ /deployments/quarkus/
+
+EXPOSE 8080
+USER 185
+ENV JAVA_OPTS_APPEND=\\"-Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jboss.logmanager.LogManager\\"
+ENV JAVA_APP_JAR=\\"/deployments/quarkus-run.jar\\"
+
+ENTRYPOINT [ \\"/opt/jboss/container/java/run/run-java.sh\\" ]
+
+"
+`;
+
+exports[`WebSocket Clients Integration Tests Java Quarkus Client Additional tests for Java client generate client for slack: Event.java 1`] = `
+"package com.asyncapi.models;
+
+import java.util.Objects;
+
+public class Event {
+  private String envelopeId;
+  private EventPayload payload;
+  private String type;
+  private Boolean acceptsResponsePayload;
+  private Integer retryAttempt;
+  private String retryReason;
+
+  public String getEnvelopeId() { return this.envelopeId; }
+  public void setEnvelopeId(String envelopeId) { this.envelopeId = envelopeId; }
+
+  public EventPayload getPayload() { return this.payload; }
+  public void setPayload(EventPayload payload) { this.payload = payload; }
+
+  public String getType() { return this.type; }
+  public void setType(String type) { this.type = type; }
+
+  public Boolean getAcceptsResponsePayload() { return this.acceptsResponsePayload; }
+  public void setAcceptsResponsePayload(Boolean acceptsResponsePayload) { this.acceptsResponsePayload = acceptsResponsePayload; }
+
+  public Integer getRetryAttempt() { return this.retryAttempt; }
+  public void setRetryAttempt(Integer retryAttempt) { this.retryAttempt = retryAttempt; }
+
+  public String getRetryReason() { return this.retryReason; }
+  public void setRetryReason(String retryReason) { this.retryReason = retryReason; }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Event self = (Event) o;
+      return 
+        Objects.equals(this.envelopeId, self.envelopeId) &&
+        Objects.equals(this.payload, self.payload) &&
+        Objects.equals(this.type, self.type) &&
+        Objects.equals(this.acceptsResponsePayload, self.acceptsResponsePayload) &&
+        Objects.equals(this.retryAttempt, self.retryAttempt) &&
+        Objects.equals(this.retryReason, self.retryReason);
+  }
+
+  @Override
+  public String toString() {
+    return \\"class Event {\\\\n\\" +   
+      \\"    envelopeId: \\" + toIndentedString(envelopeId) + \\"\\\\n\\" +
+      \\"    payload: \\" + toIndentedString(payload) + \\"\\\\n\\" +
+      \\"    type: \\" + toIndentedString(type) + \\"\\\\n\\" +
+      \\"    acceptsResponsePayload: \\" + toIndentedString(acceptsResponsePayload) + \\"\\\\n\\" +
+      \\"    retryAttempt: \\" + toIndentedString(retryAttempt) + \\"\\\\n\\" +
+      \\"    retryReason: \\" + toIndentedString(retryReason) + \\"\\\\n\\" +
+    \\"}\\";
+  }
+
+  /**
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
+   */
+  private String toIndentedString(Object o) {
+    if (o == null) {
+      return \\"null\\";
+    }
+    return o.toString().replace(\\"\\\\n\\", \\"\\\\n    \\");
+  }
+}"
+`;
+
+exports[`WebSocket Clients Integration Tests Java Quarkus Client Additional tests for Java client generate client for slack: EventData.java 1`] = `
+"package com.asyncapi.models;
+
+/**
+ * EventData represents a union of types: ChannelJoin, ReactionAdded, MessageDeleted
+ */
+public interface EventData {
+  
+}"
+`;
+
+exports[`WebSocket Clients Integration Tests Java Quarkus Client Additional tests for Java client generate client for slack: EventPayload.java 1`] = `
+"package com.asyncapi.models;
+
+import java.util.Objects;
+
+public class EventPayload {
+  private String token;
+  private String teamId;
+  private String contextTeamId;
+  private String contextEnterpriseId;
+  private String apiAppId;
+  private EventData event;
+  private String type;
+  private String eventId;
+  private Integer eventTime;
+  private String eventContext;
+  private Authorization[] authorizations;
+
+  public String getToken() { return this.token; }
+  public void setToken(String token) { this.token = token; }
+
+  public String getTeamId() { return this.teamId; }
+  public void setTeamId(String teamId) { this.teamId = teamId; }
+
+  public String getContextTeamId() { return this.contextTeamId; }
+  public void setContextTeamId(String contextTeamId) { this.contextTeamId = contextTeamId; }
+
+  public String getContextEnterpriseId() { return this.contextEnterpriseId; }
+  public void setContextEnterpriseId(String contextEnterpriseId) { this.contextEnterpriseId = contextEnterpriseId; }
+
+  public String getApiAppId() { return this.apiAppId; }
+  public void setApiAppId(String apiAppId) { this.apiAppId = apiAppId; }
+
+  public EventData getEvent() { return this.event; }
+  public void setEvent(EventData event) { this.event = event; }
+
+  public String getType() { return this.type; }
+  public void setType(String type) { this.type = type; }
+
+  public String getEventId() { return this.eventId; }
+  public void setEventId(String eventId) { this.eventId = eventId; }
+
+  public Integer getEventTime() { return this.eventTime; }
+  public void setEventTime(Integer eventTime) { this.eventTime = eventTime; }
+
+  public String getEventContext() { return this.eventContext; }
+  public void setEventContext(String eventContext) { this.eventContext = eventContext; }
+
+  public Authorization[] getAuthorizations() { return this.authorizations; }
+  public void setAuthorizations(Authorization[] authorizations) { this.authorizations = authorizations; }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    EventPayload self = (EventPayload) o;
+      return 
+        Objects.equals(this.token, self.token) &&
+        Objects.equals(this.teamId, self.teamId) &&
+        Objects.equals(this.contextTeamId, self.contextTeamId) &&
+        Objects.equals(this.contextEnterpriseId, self.contextEnterpriseId) &&
+        Objects.equals(this.apiAppId, self.apiAppId) &&
+        Objects.equals(this.event, self.event) &&
+        Objects.equals(this.type, self.type) &&
+        Objects.equals(this.eventId, self.eventId) &&
+        Objects.equals(this.eventTime, self.eventTime) &&
+        Objects.equals(this.eventContext, self.eventContext) &&
+        Objects.equals(this.authorizations, self.authorizations);
+  }
+
+  @Override
+  public String toString() {
+    return \\"class EventPayload {\\\\n\\" +   
+      \\"    token: \\" + toIndentedString(token) + \\"\\\\n\\" +
+      \\"    teamId: \\" + toIndentedString(teamId) + \\"\\\\n\\" +
+      \\"    contextTeamId: \\" + toIndentedString(contextTeamId) + \\"\\\\n\\" +
+      \\"    contextEnterpriseId: \\" + toIndentedString(contextEnterpriseId) + \\"\\\\n\\" +
+      \\"    apiAppId: \\" + toIndentedString(apiAppId) + \\"\\\\n\\" +
+      \\"    event: \\" + toIndentedString(event) + \\"\\\\n\\" +
+      \\"    type: \\" + toIndentedString(type) + \\"\\\\n\\" +
+      \\"    eventId: \\" + toIndentedString(eventId) + \\"\\\\n\\" +
+      \\"    eventTime: \\" + toIndentedString(eventTime) + \\"\\\\n\\" +
+      \\"    eventContext: \\" + toIndentedString(eventContext) + \\"\\\\n\\" +
+      \\"    authorizations: \\" + toIndentedString(authorizations) + \\"\\\\n\\" +
+    \\"}\\";
+  }
+
+  /**
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
+   */
+  private String toIndentedString(Object o) {
+    if (o == null) {
+      return \\"null\\";
+    }
+    return o.toString().replace(\\"\\\\n\\", \\"\\\\n    \\");
+  }
+}"
+`;
+
+exports[`WebSocket Clients Integration Tests Java Quarkus Client Additional tests for Java client generate client for slack: Hello.java 1`] = `
+"package com.asyncapi.models;
+
+import java.util.Objects;
+import java.util.Map;
+
+public class Hello {
+  private String type;
+  private ConnectionInfo connectionInfo;
+  private Integer numConnections;
+  private DebugInfo debugInfo;
+  private Map<String, Object> additionalProperties;
+
+  public String getType() { return this.type; }
+  public void setType(String type) { this.type = type; }
+
+  public ConnectionInfo getConnectionInfo() { return this.connectionInfo; }
+  public void setConnectionInfo(ConnectionInfo connectionInfo) { this.connectionInfo = connectionInfo; }
+
+  public Integer getNumConnections() { return this.numConnections; }
+  public void setNumConnections(Integer numConnections) { this.numConnections = numConnections; }
+
+  public DebugInfo getDebugInfo() { return this.debugInfo; }
+  public void setDebugInfo(DebugInfo debugInfo) { this.debugInfo = debugInfo; }
+
+  public Map<String, Object> getAdditionalProperties() { return this.additionalProperties; }
+  public void setAdditionalProperties(Map<String, Object> additionalProperties) { this.additionalProperties = additionalProperties; }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Hello self = (Hello) o;
+      return 
+        Objects.equals(this.type, self.type) &&
+        Objects.equals(this.connectionInfo, self.connectionInfo) &&
+        Objects.equals(this.numConnections, self.numConnections) &&
+        Objects.equals(this.debugInfo, self.debugInfo) &&
+        Objects.equals(this.additionalProperties, self.additionalProperties);
+  }
+
+  @Override
+  public String toString() {
+    return \\"class Hello {\\\\n\\" +   
+      \\"    type: \\" + toIndentedString(type) + \\"\\\\n\\" +
+      \\"    connectionInfo: \\" + toIndentedString(connectionInfo) + \\"\\\\n\\" +
+      \\"    numConnections: \\" + toIndentedString(numConnections) + \\"\\\\n\\" +
+      \\"    debugInfo: \\" + toIndentedString(debugInfo) + \\"\\\\n\\" +
+      \\"    additionalProperties: \\" + toIndentedString(additionalProperties) + \\"\\\\n\\" +
+    \\"}\\";
+  }
+
+  /**
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
+   */
+  private String toIndentedString(Object o) {
+    if (o == null) {
+      return \\"null\\";
+    }
+    return o.toString().replace(\\"\\\\n\\", \\"\\\\n    \\");
+  }
+}"
+`;
+
+exports[`WebSocket Clients Integration Tests Java Quarkus Client Additional tests for Java client generate client for slack: MavenWrapperDownloader.java 1`] = `
+"/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * \\"License\\"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * \\"AS IS\\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.Authenticator;
+import java.net.PasswordAuthentication;
+import java.net.URI;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.concurrent.ThreadLocalRandom;
+
+public final class MavenWrapperDownloader {
+    private static final String WRAPPER_VERSION = \\"3.3.2\\";
+
+    private static final boolean VERBOSE = Boolean.parseBoolean(System.getenv(\\"MVNW_VERBOSE\\"));
+
+    public static void main(String[] args) {
+        log(\\"Apache Maven Wrapper Downloader \\" + WRAPPER_VERSION);
+
+        if (args.length != 2) {
+            System.err.println(\\" - ERROR wrapperUrl or wrapperJarPath parameter missing\\");
+            System.exit(1);
+        }
+
+        try {
+            log(\\" - Downloader started\\");
+            final URL wrapperUrl = URI.create(args[0]).toURL();
+            final String jarPath = args[1].replace(\\"..\\", \\"\\"); // Sanitize path
+            final Path wrapperJarPath = Paths.get(jarPath).toAbsolutePath().normalize();
+            downloadFileFromURL(wrapperUrl, wrapperJarPath);
+            log(\\"Done\\");
+        } catch (IOException e) {
+            System.err.println(\\"- Error downloading: \\" + e.getMessage());
+            if (VERBOSE) {
+                e.printStackTrace();
+            }
+            System.exit(1);
+        }
+    }
+
+    private static void downloadFileFromURL(URL wrapperUrl, Path wrapperJarPath)
+            throws IOException {
+        log(\\" - Downloading to: \\" + wrapperJarPath);
+        if (System.getenv(\\"MVNW_USERNAME\\") != null && System.getenv(\\"MVNW_PASSWORD\\") != null) {
+            final String username = System.getenv(\\"MVNW_USERNAME\\");
+            final char[] password = System.getenv(\\"MVNW_PASSWORD\\").toCharArray();
+            Authenticator.setDefault(new Authenticator() {
+                @Override
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(username, password);
+                }
+            });
+        }
+        Path temp = wrapperJarPath
+                .getParent()
+                .resolve(wrapperJarPath.getFileName() + \\".\\"
+                        + Long.toUnsignedString(ThreadLocalRandom.current().nextLong()) + \\".tmp\\");
+        try (InputStream inStream = wrapperUrl.openStream()) {
+            Files.copy(inStream, temp, StandardCopyOption.REPLACE_EXISTING);
+            Files.move(temp, wrapperJarPath, StandardCopyOption.REPLACE_EXISTING);
+        } finally {
+            Files.deleteIfExists(temp);
+        }
+        log(\\" - Downloader complete\\");
+    }
+
+    private static void log(String msg) {
+        if (VERBOSE) {
+            System.out.println(msg);
+        }
+    }
+
+}
+"
+`;
+
+exports[`WebSocket Clients Integration Tests Java Quarkus Client Additional tests for Java client generate client for slack: MessageDeleted.java 1`] = `
+"package com.asyncapi.models;
+
+import java.util.Objects;
+import java.util.Map;
+
+public class MessageDeleted implements EventData {
+  private final String type = \\"message\\";
+  private String eventTs;
+  private final String subtype = \\"message\\";
+  private final String deletedTs = \\"message\\";
+  private final String channel = \\"message\\";
+  private final String ts = \\"message\\";
+  private final String channelType = \\"message\\";
+  private final String previousMessage = \\"message\\";
+  private Map<String, Object> additionalProperties;
+
+  public String getType() { return this.type; }
+
+  public String getEventTs() { return this.eventTs; }
+  public void setEventTs(String eventTs) { this.eventTs = eventTs; }
+
+  public String getSubtype() { return this.subtype; }
+
+  public String getDeletedTs() { return this.deletedTs; }
+
+  public String getChannel() { return this.channel; }
+
+  public String getTs() { return this.ts; }
+
+  public String getChannelType() { return this.channelType; }
+
+  public String getPreviousMessage() { return this.previousMessage; }
+
+  public Map<String, Object> getAdditionalProperties() { return this.additionalProperties; }
+  public void setAdditionalProperties(Map<String, Object> additionalProperties) { this.additionalProperties = additionalProperties; }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    MessageDeleted self = (MessageDeleted) o;
+      return 
+        Objects.equals(this.type, self.type) &&
+        Objects.equals(this.eventTs, self.eventTs) &&
+        Objects.equals(this.subtype, self.subtype) &&
+        Objects.equals(this.deletedTs, self.deletedTs) &&
+        Objects.equals(this.channel, self.channel) &&
+        Objects.equals(this.ts, self.ts) &&
+        Objects.equals(this.channelType, self.channelType) &&
+        Objects.equals(this.previousMessage, self.previousMessage) &&
+        Objects.equals(this.additionalProperties, self.additionalProperties);
+  }
+
+  @Override
+  public String toString() {
+    return \\"class MessageDeleted {\\\\n\\" +   
+      \\"    type: \\" + toIndentedString(type) + \\"\\\\n\\" +
+      \\"    eventTs: \\" + toIndentedString(eventTs) + \\"\\\\n\\" +
+      \\"    subtype: \\" + toIndentedString(subtype) + \\"\\\\n\\" +
+      \\"    deletedTs: \\" + toIndentedString(deletedTs) + \\"\\\\n\\" +
+      \\"    channel: \\" + toIndentedString(channel) + \\"\\\\n\\" +
+      \\"    ts: \\" + toIndentedString(ts) + \\"\\\\n\\" +
+      \\"    channelType: \\" + toIndentedString(channelType) + \\"\\\\n\\" +
+      \\"    previousMessage: \\" + toIndentedString(previousMessage) + \\"\\\\n\\" +
+      \\"    additionalProperties: \\" + toIndentedString(additionalProperties) + \\"\\\\n\\" +
+    \\"}\\";
+  }
+
+  /**
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
+   */
+  private String toIndentedString(Object o) {
+    if (o == null) {
+      return \\"null\\";
+    }
+    return o.toString().replace(\\"\\\\n\\", \\"\\\\n    \\");
+  }
+}"
+`;
+
+exports[`WebSocket Clients Integration Tests Java Quarkus Client Additional tests for Java client generate client for slack: README.md 1`] = `
+"# quarkus-websocket
+
+This project uses Quarkus, the Supersonic Subatomic Java Framework.
+
+If you want to learn more about Quarkus, please visit its website: <https://quarkus.io/>.
+
+## Running the application in dev mode
+
+You can run your application in dev mode that enables live coding using:
+
+\`\`\`shell script
+./mvnw quarkus:dev
+\`\`\`
+
+> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at <http://localhost:8080/q/dev/>.
+
+## Packaging and running the application
+
+The application can be packaged using:
+
+\`\`\`shell script
+./mvnw package
+\`\`\`
+
+It produces the \`quarkus-run.jar\` file in the \`target/quarkus-app/\` directory.
+Be aware that it’s not an _über-jar_ as the dependencies are copied into the \`target/quarkus-app/lib/\` directory.
+
+The application is now runnable using \`java -jar target/quarkus-app/quarkus-run.jar\`.
+
+If you want to build an _über-jar_, execute the following command:
+
+\`\`\`shell script
+./mvnw package -Dquarkus.package.jar.type=uber-jar
+\`\`\`
+
+The application, packaged as an _über-jar_, is now runnable using \`java -jar target/*-runner.jar\`.
+
+## Creating a native executable
+
+You can create a native executable using:
+
+\`\`\`shell script
+./mvnw package -Dnative
+\`\`\`
+
+Or, if you don't have GraalVM installed, you can run the native executable build in a container using:
+
+\`\`\`shell script
+./mvnw package -Dnative -Dquarkus.native.container-build=true
+\`\`\`
+
+ You can then execute your native executable with: \`./target/quarkus-websocket-1.0.0-SNAPSHOT-runner\`
+
+If you want to learn more about building native executables, please consult <https://quarkus.io/guides/maven-tooling>.
+
+## Related Guides
+
+- WebSockets Next ([guide](https://quarkus.io/guides/websockets-next-reference)): Implementation of the WebSocket API with enhanced efficiency and usability
+"
+`;
+
+exports[`WebSocket Clients Integration Tests Java Quarkus Client Additional tests for Java client generate client for slack: ReactionAdded.java 1`] = `
+"package com.asyncapi.models;
+
+import java.util.Objects;
+import java.util.Map;
+
+public class ReactionAdded implements EventData {
+  private final String type = \\"message\\";
+  private String eventTs;
+  private final String reaction = \\"message\\";
+  private final String user = \\"message\\";
+  private final String item = \\"message\\";
+  private Map<String, Object> additionalProperties;
+
+  public String getType() { return this.type; }
+
+  public String getEventTs() { return this.eventTs; }
+  public void setEventTs(String eventTs) { this.eventTs = eventTs; }
+
+  public String getReaction() { return this.reaction; }
+
+  public String getUser() { return this.user; }
+
+  public String getItem() { return this.item; }
+
+  public Map<String, Object> getAdditionalProperties() { return this.additionalProperties; }
+  public void setAdditionalProperties(Map<String, Object> additionalProperties) { this.additionalProperties = additionalProperties; }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    ReactionAdded self = (ReactionAdded) o;
+      return 
+        Objects.equals(this.type, self.type) &&
+        Objects.equals(this.eventTs, self.eventTs) &&
+        Objects.equals(this.reaction, self.reaction) &&
+        Objects.equals(this.user, self.user) &&
+        Objects.equals(this.item, self.item) &&
+        Objects.equals(this.additionalProperties, self.additionalProperties);
+  }
+
+  @Override
+  public String toString() {
+    return \\"class ReactionAdded {\\\\n\\" +   
+      \\"    type: \\" + toIndentedString(type) + \\"\\\\n\\" +
+      \\"    eventTs: \\" + toIndentedString(eventTs) + \\"\\\\n\\" +
+      \\"    reaction: \\" + toIndentedString(reaction) + \\"\\\\n\\" +
+      \\"    user: \\" + toIndentedString(user) + \\"\\\\n\\" +
+      \\"    item: \\" + toIndentedString(item) + \\"\\\\n\\" +
+      \\"    additionalProperties: \\" + toIndentedString(additionalProperties) + \\"\\\\n\\" +
+    \\"}\\";
+  }
+
+  /**
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
+   */
+  private String toIndentedString(Object o) {
+    if (o == null) {
+      return \\"null\\";
+    }
+    return o.toString().replace(\\"\\\\n\\", \\"\\\\n    \\");
+  }
+}"
+`;
+
+exports[`WebSocket Clients Integration Tests Java Quarkus Client Additional tests for Java client generate client for slack: SlackWebsocketAPIClient.java 1`] = `
+"//////////////////////////////////////////////////
+//
+// Slack Websocket API Client - 1.0.0
+// Protocol: wss
+// Host: wss-primary.slack.com
+// Path: /link
+//
+//////////////////////////////////////////////////
+
+package com.asyncapi;
+
+import io.quarkus.websockets.next.WebSocketClient;
+import io.quarkus.websockets.next.WebSocketClientConnection;
+import io.quarkus.websockets.next.OnOpen;
+import io.quarkus.websockets.next.OnClose;
+import io.quarkus.websockets.next.OnError;
+import io.quarkus.websockets.next.OnTextMessage;
+import io.quarkus.websockets.next.CloseReason;
+import jakarta.inject.Inject;
+import io.quarkus.logging.Log;
+import java.util.HashMap;
+
+@WebSocketClient(path = \\"/link\\")  
+public class SlackWebsocketAPIClient{
+
+  @Inject
+  WebSocketClientConnection connection;
+
+  private HashMap<String, String> params;
+  private String ticket;
+  private String appId;
+
+  public SlackWebsocketAPIClient(){
+      this(null, null);
+  }
+
+  public SlackWebsocketAPIClient(String ticket, String appId){
+      params = new HashMap<>(); 
+      this.ticket = (ticket != null && !ticket.isEmpty()) ? ticket : System.getenv(\\"TICKET\\");
+      if (this.ticket != null){
+        params.put(\\"ticket\\", this.ticket);
+      }
+      this.appId = (appId != null && !appId.isEmpty()) ? appId : System.getenv(\\"APPID\\");
+      if (this.appId != null){
+        params.put(\\"appId\\", this.appId);
+      }
+  }
+
+  @OnOpen
+  public void onOpen() {
+      String broadcastMessage = \\"Echo called from Slack Websocket API Client server\\";
+      Log.info(\\"Connected to Slack Websocket API Client server\\");
+      Log.info(broadcastMessage);
+  }
+
+  @OnTextMessage
+  public void processTextMessage(String message, WebSocketClientConnection connection) {
+      Log.info(\\"Received text message: \\" + message);
+  }
+
+  @OnError
+  public void onError(Throwable throwable) {
+      Log.error(\\"Websocket connection error: \\" + throwable.getMessage());
+  }
+
+  @OnClose
+     public void onClose(CloseReason reason, WebSocketClientConnection connection) {
+        int code = reason.getCode();
+        Log.info(\\"Websocket disconnected from Slack Websocket API Client with Close code: \\" + code);
+    }
+  }
+
+
+"
+`;
+
+exports[`WebSocket Clients Integration Tests Java Quarkus Client Additional tests for Java client generate client for slack: SlackWebsocketAPIClientConnector.java 1`] = `
+"package com.asyncapi;
+
+import io.quarkus.websockets.next.WebSocketConnector;
+import io.quarkus.websockets.next.WebSocketClientConnection;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
+import jakarta.annotation.PostConstruct;
+import io.quarkus.logging.Log;
+import io.quarkus.runtime.Startup;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
+import java.net.URI;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+
+@Startup
+@Singleton  
+public class SlackWebsocketAPIClientConnector{
+
+  @Inject
+  WebSocketConnector<SlackWebsocketAPIClient> connector;
+
+
+  @Inject
+  @ConfigProperty(name = \\"com.asyncapi.SlackWebsocketAPIClient.base-uri\\")
+  String baseURI;
+
+
+  @PostConstruct
+  void openAndSendMessagesWithDelay() {
+      new Thread(() -> {
+          try {
+            Log.info(\\"Starting WebSocket connection attempt...\\");
+            // URI parameters
+            String query = \\"\\";
+            
+            String ticket = System.getenv(\\"TICKET\\");
+            if(ticket == null || ticket.isEmpty()){
+               throw new IllegalArgumentException(\\"Required environment variable TICKET is missing or empty\\");
+            }
+            query += \\"ticket=\\" + URLEncoder.encode(ticket, StandardCharsets.UTF_8);
+
+            String appId = System.getenv(\\"APPID\\");
+            if(appId == null || appId.isEmpty()){
+               throw new IllegalArgumentException(\\"Required environment variable APPID is missing or empty\\");
+            }
+            query += \\"&app_id=\\" + URLEncoder.encode(appId, StandardCharsets.UTF_8);
+
+
+            String queryUri = baseURI + \\"/link\\" + \\"?\\" + query;
+            WebSocketClientConnection connection = connector.baseUri(queryUri).connectAndAwait();
+            Thread.sleep(120000); // Keep the connection open for 2 minutes
+            
+
+            // Calling to close the WebSocket connection
+  
+
+            connection.closeAndAwait();
+            Log.info(\\"Connection closed gracefully.\\");
+            Thread.sleep(1000); // Wait for a second before exiting
+            System.exit(0);
+        } catch (Exception e) {
+              Log.error(\\"Error during WebSocket communication\\", e);
+              System.exit(1);
+        }
+    }).start();
+  }
+}
+
+
+
+
+"
+`;
+
+exports[`WebSocket Clients Integration Tests Java Quarkus Client Additional tests for Java client generate client for slack: application.properties 1`] = `
+"# application.properties
+
+# Define a named base-uri for SlackWebsocketAPIClient
+com.asyncapi.SlackWebsocketAPIClient.base-uri=wss://wss-primary.slack.com
+"
+`;
+
+exports[`WebSocket Clients Integration Tests Java Quarkus Client Additional tests for Java client generate client for slack: maven-wrapper.properties 1`] = `
+"# Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# \\"License\\"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# \\"AS IS\\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
+wrapperVersion=3.3.2
+distributionType=source
+distributionUrl=https://repo.maven.apache.org/maven2/org/apache/maven/apache-maven/3.9.9/apache-maven-3.9.9-bin.zip
+wrapperUrl=https://repo.maven.apache.org/maven2/org/apache/maven/wrapper/maven-wrapper/3.3.2/maven-wrapper-3.3.2.jar"
+`;
+
+exports[`WebSocket Clients Integration Tests Java Quarkus Client Additional tests for Java client generate client for slack: mvnw 1`] = `
+"#!/bin/sh
+# ----------------------------------------------------------------------------
+# Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# \\"License\\"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# \\"AS IS\\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
+# ----------------------------------------------------------------------------
+
+# ----------------------------------------------------------------------------
+# Apache Maven Wrapper startup batch script, version 3.3.2
+#
+# Required ENV vars:
+# ------------------
+#   JAVA_HOME - location of a JDK home dir
+#
+# Optional ENV vars
+# -----------------
+#   MAVEN_OPTS - parameters passed to the Java VM when running Maven
+#     e.g. to debug Maven itself, use
+#       set MAVEN_OPTS=-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000
+#   MAVEN_SKIP_RC - flag to disable loading of mavenrc files
+# ----------------------------------------------------------------------------
+
+if [ -z \\"$MAVEN_SKIP_RC\\" ]; then
+
+  if [ -f /usr/local/etc/mavenrc ]; then
+    . /usr/local/etc/mavenrc
+  fi
+
+  if [ -f /etc/mavenrc ]; then
+    . /etc/mavenrc
+  fi
+
+  if [ -f \\"$HOME/.mavenrc\\" ]; then
+    . \\"$HOME/.mavenrc\\"
+  fi
+
+fi
+
+# OS specific support.  $var _must_ be set to either true or false.
+cygwin=false
+darwin=false
+mingw=false
+case \\"$(uname)\\" in
+CYGWIN*) cygwin=true ;;
+MINGW*) mingw=true ;;
+Darwin*)
+  darwin=true
+  # Use /usr/libexec/java_home if available, otherwise fall back to /Library/Java/Home
+  # See https://developer.apple.com/library/mac/qa/qa1170/_index.html
+  if [ -z \\"$JAVA_HOME\\" ]; then
+    if [ -x \\"/usr/libexec/java_home\\" ]; then
+      JAVA_HOME=\\"$(/usr/libexec/java_home)\\"
+      export JAVA_HOME
+    else
+      JAVA_HOME=\\"/Library/Java/Home\\"
+      export JAVA_HOME
+    fi
+  fi
+  ;;
+esac
+
+if [ -z \\"$JAVA_HOME\\" ]; then
+  if [ -r /etc/gentoo-release ]; then
+    JAVA_HOME=$(java-config --jre-home)
+  fi
+fi
+
+# For Cygwin, ensure paths are in UNIX format before anything is touched
+if $cygwin; then
+  [ -n \\"$JAVA_HOME\\" ] \\\\
+    && JAVA_HOME=$(cygpath --unix \\"$JAVA_HOME\\")
+  [ -n \\"$CLASSPATH\\" ] \\\\
+    && CLASSPATH=$(cygpath --path --unix \\"$CLASSPATH\\")
+fi
+
+# For Mingw, ensure paths are in UNIX format before anything is touched
+if $mingw; then
+  [ -n \\"$JAVA_HOME\\" ] && [ -d \\"$JAVA_HOME\\" ] \\\\
+    && JAVA_HOME=\\"$(
+      cd \\"$JAVA_HOME\\" || (
+        echo \\"cannot cd into $JAVA_HOME.\\" >&2
+        exit 1
+      )
+      pwd
+    )\\"
+fi
+
+if [ -z \\"$JAVA_HOME\\" ]; then
+  javaExecutable=\\"$(which javac)\\"
+  if [ -n \\"$javaExecutable\\" ] && ! [ \\"$(expr \\"$javaExecutable\\" : '\\\\([^ ]*\\\\)')\\" = \\"no\\" ]; then
+    # readlink(1) is not available as standard on Solaris 10.
+    readLink=$(which readlink)
+    if [ ! \\"$(expr \\"$readLink\\" : '\\\\([^ ]*\\\\)')\\" = \\"no\\" ]; then
+      if $darwin; then
+        javaHome=\\"$(dirname \\"$javaExecutable\\")\\"
+        javaExecutable=\\"$(cd \\"$javaHome\\" && pwd -P)/javac\\"
+      else
+        javaExecutable=\\"$(readlink -f \\"$javaExecutable\\")\\"
+      fi
+      javaHome=\\"$(dirname \\"$javaExecutable\\")\\"
+      javaHome=$(expr \\"$javaHome\\" : '\\\\(.*\\\\)/bin')
+      JAVA_HOME=\\"$javaHome\\"
+      export JAVA_HOME
+    fi
+  fi
+fi
+
+if [ -z \\"$JAVACMD\\" ]; then
+  if [ -n \\"$JAVA_HOME\\" ]; then
+    if [ -x \\"$JAVA_HOME/jre/sh/java\\" ]; then
+      # IBM's JDK on AIX uses strange locations for the executables
+      JAVACMD=\\"$JAVA_HOME/jre/sh/java\\"
+    else
+      JAVACMD=\\"$JAVA_HOME/bin/java\\"
+    fi
+  else
+    JAVACMD=\\"$(
+      \\\\unset -f command 2>/dev/null
+      \\\\command -v java
+    )\\"
+  fi
+fi
+
+if [ ! -x \\"$JAVACMD\\" ]; then
+  echo \\"Error: JAVA_HOME is not defined correctly.\\" >&2
+  echo \\"  We cannot execute $JAVACMD\\" >&2
+  exit 1
+fi
+
+if [ -z \\"$JAVA_HOME\\" ]; then
+  echo \\"Warning: JAVA_HOME environment variable is not set.\\" >&2
+fi
+
+# traverses directory structure from process work directory to filesystem root
+# first directory with .mvn subdirectory is considered project base directory
+find_maven_basedir() {
+  if [ -z \\"$1\\" ]; then
+    echo \\"Path not specified to find_maven_basedir\\" >&2
+    return 1
+  fi
+
+  basedir=\\"$1\\"
+  wdir=\\"$1\\"
+  while [ \\"$wdir\\" != '/' ]; do
+    if [ -d \\"$wdir\\"/.mvn ]; then
+      basedir=$wdir
+      break
+    fi
+    # workaround for JBEAP-8937 (on Solaris 10/Sparc)
+    if [ -d \\"\${wdir}\\" ]; then
+      wdir=$(
+        cd \\"$wdir/..\\" || exit 1
+        pwd
+      )
+    fi
+    # end of workaround
+  done
+  printf '%s' \\"$(
+    cd \\"$basedir\\" || exit 1
+    pwd
+  )\\"
+}
+
+# concatenates all lines of a file
+concat_lines() {
+  if [ -f \\"$1\\" ]; then
+    # Remove \\\\r in case we run on Windows within Git Bash
+    # and check out the repository with auto CRLF management
+    # enabled. Otherwise, we may read lines that are delimited with
+    # \\\\r\\\\n and produce $'-Xarg\\\\r' rather than -Xarg due to word
+    # splitting rules.
+    tr -s '\\\\r\\\\n' ' ' <\\"$1\\"
+  fi
+}
+
+log() {
+  if [ \\"$MVNW_VERBOSE\\" = true ]; then
+    printf '%s\\\\n' \\"$1\\"
+  fi
+}
+
+BASE_DIR=$(find_maven_basedir \\"$(dirname \\"$0\\")\\")
+if [ -z \\"$BASE_DIR\\" ]; then
+  exit 1
+fi
+
+MAVEN_PROJECTBASEDIR=\${MAVEN_BASEDIR:-\\"$BASE_DIR\\"}
+export MAVEN_PROJECTBASEDIR
+log \\"$MAVEN_PROJECTBASEDIR\\"
+
+##########################################################################################
+# Extension to allow automatically downloading the maven-wrapper.jar from Maven-central
+# This allows using the maven wrapper in projects that prohibit checking in binary data.
+##########################################################################################
+wrapperJarPath=\\"$MAVEN_PROJECTBASEDIR/.mvn/wrapper/maven-wrapper.jar\\"
+if [ -r \\"$wrapperJarPath\\" ]; then
+  log \\"Found $wrapperJarPath\\"
+else
+  log \\"Couldn't find $wrapperJarPath, downloading it ...\\"
+
+  if [ -n \\"$MVNW_REPOURL\\" ]; then
+    wrapperUrl=\\"$MVNW_REPOURL/org/apache/maven/wrapper/maven-wrapper/3.3.2/maven-wrapper-3.3.2.jar\\"
+  else
+    wrapperUrl=\\"https://repo.maven.apache.org/maven2/org/apache/maven/wrapper/maven-wrapper/3.3.2/maven-wrapper-3.3.2.jar\\"
+  fi
+  while IFS=\\"=\\" read -r key value; do
+    # Remove '\\\\r' from value to allow usage on windows as IFS does not consider '\\\\r' as a separator ( considers space, tab, new line ('\\\\n'), and custom '=' )
+    safeValue=$(echo \\"$value\\" | tr -d '\\\\r')
+    case \\"$key\\" in wrapperUrl)
+      wrapperUrl=\\"$safeValue\\"
+      break
+      ;;
+    esac
+  done <\\"$MAVEN_PROJECTBASEDIR/.mvn/wrapper/maven-wrapper.properties\\"
+  log \\"Downloading from: $wrapperUrl\\"
+
+  if $cygwin; then
+    wrapperJarPath=$(cygpath --path --windows \\"$wrapperJarPath\\")
+  fi
+
+  if command -v wget >/dev/null; then
+    log \\"Found wget ... using wget\\"
+    [ \\"$MVNW_VERBOSE\\" = true ] && QUIET=\\"\\" || QUIET=\\"--quiet\\"
+    if [ -z \\"$MVNW_USERNAME\\" ] || [ -z \\"$MVNW_PASSWORD\\" ]; then
+      wget $QUIET \\"$wrapperUrl\\" -O \\"$wrapperJarPath\\" || rm -f \\"$wrapperJarPath\\"
+    else
+      wget $QUIET --http-user=\\"$MVNW_USERNAME\\" --http-password=\\"$MVNW_PASSWORD\\" \\"$wrapperUrl\\" -O \\"$wrapperJarPath\\" || rm -f \\"$wrapperJarPath\\"
+    fi
+  elif command -v curl >/dev/null; then
+    log \\"Found curl ... using curl\\"
+    [ \\"$MVNW_VERBOSE\\" = true ] && QUIET=\\"\\" || QUIET=\\"--silent\\"
+    if [ -z \\"$MVNW_USERNAME\\" ] || [ -z \\"$MVNW_PASSWORD\\" ]; then
+      curl $QUIET -o \\"$wrapperJarPath\\" \\"$wrapperUrl\\" -f -L || rm -f \\"$wrapperJarPath\\"
+    else
+      curl $QUIET --user \\"$MVNW_USERNAME:$MVNW_PASSWORD\\" -o \\"$wrapperJarPath\\" \\"$wrapperUrl\\" -f -L || rm -f \\"$wrapperJarPath\\"
+    fi
+  else
+    log \\"Falling back to using Java to download\\"
+    javaSource=\\"$MAVEN_PROJECTBASEDIR/.mvn/wrapper/MavenWrapperDownloader.java\\"
+    javaClass=\\"$MAVEN_PROJECTBASEDIR/.mvn/wrapper/MavenWrapperDownloader.class\\"
+    # For Cygwin, switch paths to Windows format before running javac
+    if $cygwin; then
+      javaSource=$(cygpath --path --windows \\"$javaSource\\")
+      javaClass=$(cygpath --path --windows \\"$javaClass\\")
+    fi
+    if [ -e \\"$javaSource\\" ]; then
+      if [ ! -e \\"$javaClass\\" ]; then
+        log \\" - Compiling MavenWrapperDownloader.java ...\\"
+        (\\"$JAVA_HOME/bin/javac\\" \\"$javaSource\\")
+      fi
+      if [ -e \\"$javaClass\\" ]; then
+        log \\" - Running MavenWrapperDownloader.java ...\\"
+        (\\"$JAVA_HOME/bin/java\\" -cp .mvn/wrapper MavenWrapperDownloader \\"$wrapperUrl\\" \\"$wrapperJarPath\\") || rm -f \\"$wrapperJarPath\\"
+      fi
+    fi
+  fi
+fi
+##########################################################################################
+# End of extension
+##########################################################################################
+
+# If specified, validate the SHA-256 sum of the Maven wrapper jar file
+wrapperSha256Sum=\\"\\"
+while IFS=\\"=\\" read -r key value; do
+  case \\"$key\\" in wrapperSha256Sum)
+    wrapperSha256Sum=$value
+    break
+    ;;
+  esac
+done <\\"$MAVEN_PROJECTBASEDIR/.mvn/wrapper/maven-wrapper.properties\\"
+if [ -n \\"$wrapperSha256Sum\\" ]; then
+  wrapperSha256Result=false
+  if command -v sha256sum >/dev/null; then
+    if echo \\"$wrapperSha256Sum  $wrapperJarPath\\" | sha256sum -c >/dev/null 2>&1; then
+      wrapperSha256Result=true
+    fi
+  elif command -v shasum >/dev/null; then
+    if echo \\"$wrapperSha256Sum  $wrapperJarPath\\" | shasum -a 256 -c >/dev/null 2>&1; then
+      wrapperSha256Result=true
+    fi
+  else
+    echo \\"Checksum validation was requested but neither 'sha256sum' or 'shasum' are available.\\" >&2
+    echo \\"Please install either command, or disable validation by removing 'wrapperSha256Sum' from your maven-wrapper.properties.\\" >&2
+    exit 1
+  fi
+  if [ $wrapperSha256Result = false ]; then
+    echo \\"Error: Failed to validate Maven wrapper SHA-256, your Maven wrapper might be compromised.\\" >&2
+    echo \\"Investigate or delete $wrapperJarPath to attempt a clean download.\\" >&2
+    echo \\"If you updated your Maven version, you need to update the specified wrapperSha256Sum property.\\" >&2
+    exit 1
+  fi
+fi
+
+MAVEN_OPTS=\\"$(concat_lines \\"$MAVEN_PROJECTBASEDIR/.mvn/jvm.config\\") $MAVEN_OPTS\\"
+
+# For Cygwin, switch paths to Windows format before running java
+if $cygwin; then
+  [ -n \\"$JAVA_HOME\\" ] \\\\
+    && JAVA_HOME=$(cygpath --path --windows \\"$JAVA_HOME\\")
+  [ -n \\"$CLASSPATH\\" ] \\\\
+    && CLASSPATH=$(cygpath --path --windows \\"$CLASSPATH\\")
+  [ -n \\"$MAVEN_PROJECTBASEDIR\\" ] \\\\
+    && MAVEN_PROJECTBASEDIR=$(cygpath --path --windows \\"$MAVEN_PROJECTBASEDIR\\")
+fi
+
+# Provide a \\"standardized\\" way to retrieve the CLI args that will
+# work with both Windows and non-Windows executions.
+MAVEN_CMD_LINE_ARGS=\\"$MAVEN_CONFIG $*\\"
+export MAVEN_CMD_LINE_ARGS
+
+WRAPPER_LAUNCHER=org.apache.maven.wrapper.MavenWrapperMain
+
+# shellcheck disable=SC2086 # safe args
+exec \\"$JAVACMD\\" \\\\
+  $MAVEN_OPTS \\\\
+  $MAVEN_DEBUG_OPTS \\\\
+  -classpath \\"$MAVEN_PROJECTBASEDIR/.mvn/wrapper/maven-wrapper.jar\\" \\\\
+  \\"-Dmaven.multiModuleProjectDirectory=\${MAVEN_PROJECTBASEDIR}\\" \\\\
+  \${WRAPPER_LAUNCHER} $MAVEN_CONFIG \\"$@\\"
+"
+`;
+
+exports[`WebSocket Clients Integration Tests Java Quarkus Client Additional tests for Java client generate client for slack: mvnw.cmd 1`] = `
+"@REM ----------------------------------------------------------------------------
+@REM Licensed to the Apache Software Foundation (ASF) under one
+@REM or more contributor license agreements.  See the NOTICE file
+@REM distributed with this work for additional information
+@REM regarding copyright ownership.  The ASF licenses this file
+@REM to you under the Apache License, Version 2.0 (the
+@REM \\"License\\"); you may not use this file except in compliance
+@REM with the License.  You may obtain a copy of the License at
+@REM
+@REM    http://www.apache.org/licenses/LICENSE-2.0
+@REM
+@REM Unless required by applicable law or agreed to in writing,
+@REM software distributed under the License is distributed on an
+@REM \\"AS IS\\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+@REM KIND, either express or implied.  See the License for the
+@REM specific language governing permissions and limitations
+@REM under the License.
+@REM ----------------------------------------------------------------------------
+
+@REM ----------------------------------------------------------------------------
+@REM Apache Maven Wrapper startup batch script, version 3.3.2
+@REM
+@REM Required ENV vars:
+@REM JAVA_HOME - location of a JDK home dir
+@REM
+@REM Optional ENV vars
+@REM MAVEN_BATCH_ECHO - set to 'on' to enable the echoing of the batch commands
+@REM MAVEN_BATCH_PAUSE - set to 'on' to wait for a keystroke before ending
+@REM MAVEN_OPTS - parameters passed to the Java VM when running Maven
+@REM     e.g. to debug Maven itself, use
+@REM set MAVEN_OPTS=-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000
+@REM MAVEN_SKIP_RC - flag to disable loading of mavenrc files
+@REM ----------------------------------------------------------------------------
+
+@REM Begin all REM lines with '@' in case MAVEN_BATCH_ECHO is 'on'
+@echo off
+@REM set title of command window
+title %0
+@REM enable echoing by setting MAVEN_BATCH_ECHO to 'on'
+@if \\"%MAVEN_BATCH_ECHO%\\" == \\"on\\"  echo %MAVEN_BATCH_ECHO%
+
+@REM set %HOME% to equivalent of $HOME
+if \\"%HOME%\\" == \\"\\" (set \\"HOME=%HOMEDRIVE%%HOMEPATH%\\")
+
+@REM Execute a user defined script before this one
+if not \\"%MAVEN_SKIP_RC%\\" == \\"\\" goto skipRcPre
+@REM check for pre script, once with legacy .bat ending and once with .cmd ending
+if exist \\"%USERPROFILE%\\\\mavenrc_pre.bat\\" call \\"%USERPROFILE%\\\\mavenrc_pre.bat\\" %*
+if exist \\"%USERPROFILE%\\\\mavenrc_pre.cmd\\" call \\"%USERPROFILE%\\\\mavenrc_pre.cmd\\" %*
+:skipRcPre
+
+@setlocal
+
+set ERROR_CODE=0
+
+@REM To isolate internal variables from possible post scripts, we use another setlocal
+@setlocal
+
+@REM ==== START VALIDATION ====
+if not \\"%JAVA_HOME%\\" == \\"\\" goto OkJHome
+
+echo. >&2
+echo Error: JAVA_HOME not found in your environment. >&2
+echo Please set the JAVA_HOME variable in your environment to match the >&2
+echo location of your Java installation. >&2
+echo. >&2
+goto error
+
+:OkJHome
+if exist \\"%JAVA_HOME%\\\\bin\\\\java.exe\\" goto init
+
+echo. >&2
+echo Error: JAVA_HOME is set to an invalid directory. >&2
+echo JAVA_HOME = \\"%JAVA_HOME%\\" >&2
+echo Please set the JAVA_HOME variable in your environment to match the >&2
+echo location of your Java installation. >&2
+echo. >&2
+goto error
+
+@REM ==== END VALIDATION ====
+
+:init
+
+@REM Find the project base dir, i.e. the directory that contains the folder \\".mvn\\".
+@REM Fallback to current working directory if not found.
+
+set MAVEN_PROJECTBASEDIR=%MAVEN_BASEDIR%
+IF NOT \\"%MAVEN_PROJECTBASEDIR%\\"==\\"\\" goto endDetectBaseDir
+
+set EXEC_DIR=%CD%
+set WDIR=%EXEC_DIR%
+:findBaseDir
+IF EXIST \\"%WDIR%\\"\\\\.mvn goto baseDirFound
+cd ..
+IF \\"%WDIR%\\"==\\"%CD%\\" goto baseDirNotFound
+set WDIR=%CD%
+goto findBaseDir
+
+:baseDirFound
+set MAVEN_PROJECTBASEDIR=%WDIR%
+cd \\"%EXEC_DIR%\\"
+goto endDetectBaseDir
+
+:baseDirNotFound
+set MAVEN_PROJECTBASEDIR=%EXEC_DIR%
+cd \\"%EXEC_DIR%\\"
+
+:endDetectBaseDir
+
+IF NOT EXIST \\"%MAVEN_PROJECTBASEDIR%\\\\.mvn\\\\jvm.config\\" goto endReadAdditionalConfig
+
+@setlocal EnableExtensions EnableDelayedExpansion
+for /F \\"usebackq delims=\\" %%a in (\\"%MAVEN_PROJECTBASEDIR%\\\\.mvn\\\\jvm.config\\") do set JVM_CONFIG_MAVEN_PROPS=!JVM_CONFIG_MAVEN_PROPS! %%a
+@endlocal & set JVM_CONFIG_MAVEN_PROPS=%JVM_CONFIG_MAVEN_PROPS%
+
+:endReadAdditionalConfig
+
+SET MAVEN_JAVA_EXE=\\"%JAVA_HOME%\\\\bin\\\\java.exe\\"
+set WRAPPER_JAR=\\"%MAVEN_PROJECTBASEDIR%\\\\.mvn\\\\wrapper\\\\maven-wrapper.jar\\"
+set WRAPPER_LAUNCHER=org.apache.maven.wrapper.MavenWrapperMain
+
+set WRAPPER_URL=\\"https://repo.maven.apache.org/maven2/org/apache/maven/wrapper/maven-wrapper/3.3.2/maven-wrapper-3.3.2.jar\\"
+
+FOR /F \\"usebackq tokens=1,2 delims==\\" %%A IN (\\"%MAVEN_PROJECTBASEDIR%\\\\.mvn\\\\wrapper\\\\maven-wrapper.properties\\") DO (
+    IF \\"%%A\\"==\\"wrapperUrl\\" SET WRAPPER_URL=%%B
+)
+
+@REM Extension to allow automatically downloading the maven-wrapper.jar from Maven-central
+@REM This allows using the maven wrapper in projects that prohibit checking in binary data.
+if exist %WRAPPER_JAR% (
+    if \\"%MVNW_VERBOSE%\\" == \\"true\\" (
+        echo Found %WRAPPER_JAR%
+    )
+) else (
+    if not \\"%MVNW_REPOURL%\\" == \\"\\" (
+        SET WRAPPER_URL=\\"%MVNW_REPOURL%/org/apache/maven/wrapper/maven-wrapper/3.3.2/maven-wrapper-3.3.2.jar\\"
+    )
+    if \\"%MVNW_VERBOSE%\\" == \\"true\\" (
+        echo Couldn't find %WRAPPER_JAR%, downloading it ...
+        echo Downloading from: %WRAPPER_URL%
+    )
+
+    powershell -Command \\"&{\\"^
+		\\"$webclient = new-object System.Net.WebClient;\\"^
+		\\"if (-not ([string]::IsNullOrEmpty('%MVNW_USERNAME%') -and [string]::IsNullOrEmpty('%MVNW_PASSWORD%'))) {\\"^
+		\\"$webclient.Credentials = new-object System.Net.NetworkCredential('%MVNW_USERNAME%', '%MVNW_PASSWORD%');\\"^
+		\\"}\\"^
+		\\"[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $webclient.DownloadFile('%WRAPPER_URL%', '%WRAPPER_JAR%')\\"^
+		\\"}\\"
+    if \\"%MVNW_VERBOSE%\\" == \\"true\\" (
+        echo Finished downloading %WRAPPER_JAR%
+    )
+)
+@REM End of extension
+
+@REM If specified, validate the SHA-256 sum of the Maven wrapper jar file
+SET WRAPPER_SHA_256_SUM=\\"\\"
+FOR /F \\"usebackq tokens=1,2 delims==\\" %%A IN (\\"%MAVEN_PROJECTBASEDIR%\\\\.mvn\\\\wrapper\\\\maven-wrapper.properties\\") DO (
+    IF \\"%%A\\"==\\"wrapperSha256Sum\\" SET WRAPPER_SHA_256_SUM=%%B
+)
+IF NOT %WRAPPER_SHA_256_SUM%==\\"\\" (
+    powershell -Command \\"&{\\"^
+       \\"Import-Module $PSHOME\\\\Modules\\\\Microsoft.PowerShell.Utility -Function Get-FileHash;\\"^
+       \\"$hash = (Get-FileHash \\\\\\"%WRAPPER_JAR%\\\\\\" -Algorithm SHA256).Hash.ToLower();\\"^
+       \\"If('%WRAPPER_SHA_256_SUM%' -ne $hash){\\"^
+       \\"  Write-Error 'Error: Failed to validate Maven wrapper SHA-256, your Maven wrapper might be compromised.';\\"^
+       \\"  Write-Error 'Investigate or delete %WRAPPER_JAR% to attempt a clean download.';\\"^
+       \\"  Write-Error 'If you updated your Maven version, you need to update the specified wrapperSha256Sum property.';\\"^
+       \\"  exit 1;\\"^
+       \\"}\\"^
+       \\"}\\"
+    if ERRORLEVEL 1 goto error
+)
+
+@REM Provide a \\"standardized\\" way to retrieve the CLI args that will
+@REM work with both Windows and non-Windows executions.
+set MAVEN_CMD_LINE_ARGS=%*
+
+%MAVEN_JAVA_EXE% ^
+  %JVM_CONFIG_MAVEN_PROPS% ^
+  %MAVEN_OPTS% ^
+  %MAVEN_DEBUG_OPTS% ^
+  -classpath %WRAPPER_JAR% ^
+  \\"-Dmaven.multiModuleProjectDirectory=%MAVEN_PROJECTBASEDIR%\\" ^
+  %WRAPPER_LAUNCHER% %MAVEN_CONFIG% %*
+if ERRORLEVEL 1 goto error
+goto end
+
+:error
+set ERROR_CODE=1
+
+:end
+@endlocal & set ERROR_CODE=%ERROR_CODE%
+
+if not \\"%MAVEN_SKIP_RC%\\"==\\"\\" goto skipRcPost
+@REM check for post script, once with legacy .bat ending and once with .cmd ending
+if exist \\"%USERPROFILE%\\\\mavenrc_post.bat\\" call \\"%USERPROFILE%\\\\mavenrc_post.bat\\"
+if exist \\"%USERPROFILE%\\\\mavenrc_post.cmd\\" call \\"%USERPROFILE%\\\\mavenrc_post.cmd\\"
+:skipRcPost
+
+@REM pause the script if MAVEN_BATCH_PAUSE is set to 'on'
+if \\"%MAVEN_BATCH_PAUSE%\\"==\\"on\\" pause
+
+if \\"%MAVEN_TERMINATE_CMD%\\"==\\"on\\" exit %ERROR_CODE%
+
+cmd /C exit /B %ERROR_CODE%
+"
+`;
+
+exports[`WebSocket Clients Integration Tests Java Quarkus Client Additional tests for Java client generate client for slack: pom.xml 1`] = `
+"<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+<project xmlns=\\"http://maven.apache.org/POM/4.0.0\\" xmlns:xsi=\\"http://www.w3.org/2001/XMLSchema-instance\\" xsi:schemaLocation=\\"http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd\\">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.asyncapi</groupId>
+    <artifactId>quarkus-websocket</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+
+    <properties>
+        <compiler-plugin.version>3.14.0</compiler-plugin.version>
+        <maven.compiler.release>21</maven.compiler.release>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
+        <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
+        <quarkus.platform.version>3.23.0</quarkus.platform.version>
+        <skipITs>true</skipITs>
+        <surefire-plugin.version>3.5.2</surefire-plugin.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>\${quarkus.platform.group-id}</groupId>
+                <artifactId>\${quarkus.platform.artifact-id}</artifactId>
+                <version>\${quarkus.platform.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-websockets-next</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.ws.rs</groupId>
+            <artifactId>jakarta.ws.rs-api</artifactId>
+            <version>3.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-arc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-junit5</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>\${quarkus.platform.group-id}</groupId>
+                <artifactId>quarkus-maven-plugin</artifactId>
+                <version>\${quarkus.platform.version}</version>
+                <extensions>true</extensions>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>build</goal>
+                            <goal>generate-code</goal>
+                            <goal>generate-code-tests</goal>
+                            <goal>native-image-agent</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>\${compiler-plugin.version}</version>
+                <configuration>
+                    <parameters>true</parameters>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>\${surefire-plugin.version}</version>
+                <configuration>
+                    <systemPropertyVariables>
+                        <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
+                        <maven.home>\${maven.home}</maven.home>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>\${surefire-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <systemPropertyVariables>
+                        <native.image.path>\${project.build.directory}/\${project.build.finalName}-runner</native.image.path>
+                        <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
+                        <maven.home>\${maven.home}</maven.home>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>native</id>
+            <activation>
+                <property>
+                    <name>native</name>
+                </property>
+            </activation>
+            <properties>
+                <skipITs>false</skipITs>
+                <quarkus.native.enabled>true</quarkus.native.enabled>
+            </properties>
+        </profile>
+    </profiles>
+</project>
 "
 `;
 
@@ -516,7 +2542,6 @@ exports[`WebSocket Clients Integration Tests Java Quarkus Client Common Integrat
 //
 //////////////////////////////////////////////////
 
-
 package com.asyncapi;
 
 import io.quarkus.websockets.next.WebSocketClient;
@@ -535,6 +2560,7 @@ public class HoppscotchClient{
   @Inject
   WebSocketClientConnection connection;
 
+
   @OnOpen
   public void onOpen() {
       String broadcastMessage = \\"Echo called from Hoppscotch Echo WebSocket Client server\\";
@@ -552,22 +2578,19 @@ public class HoppscotchClient{
       Log.error(\\"Websocket connection error: \\" + throwable.getMessage());
   }
 
-
-
   @OnClose
-   public void onClose(CloseReason reason, WebSocketClientConnection connection) {
-      int code = reason.getCode();
-      Log.info(\\"Websocket disconnected from Hoppscotch Echo WebSocket Client with Close code: \\" + code);
+     public void onClose(CloseReason reason, WebSocketClientConnection connection) {
+        int code = reason.getCode();
+        Log.info(\\"Websocket disconnected from Hoppscotch Echo WebSocket Client with Close code: \\" + code);
+    }
   }
-}
 
 
 "
 `;
 
 exports[`WebSocket Clients Integration Tests Java Quarkus Client Common Integration tests for Java client generation generate simple client for hoppscotch echo with custom client name: HoppscotchClientConnector.java 1`] = `
-"
-package com.asyncapi;
+"package com.asyncapi;
 
 import io.quarkus.websockets.next.WebSocketConnector;
 import io.quarkus.websockets.next.WebSocketClientConnection;
@@ -577,46 +2600,54 @@ import jakarta.annotation.PostConstruct;
 import io.quarkus.logging.Log;
 import io.quarkus.runtime.Startup;
 
-  @Startup
-  @Singleton  
-  public class HoppscotchClientConnector{
+@Startup
+@Singleton  
+public class HoppscotchClientConnector{
 
-    @Inject
-    WebSocketConnector<HoppscotchClient> connector;
+  @Inject
+  WebSocketConnector<HoppscotchClient> connector;
 
 
 
-    @PostConstruct
-    void openAndSendMessagesWithDelay() {
-        new Thread(() -> {
-            try {
-                Log.info(\\"Starting WebSocket connection attempt...\\");
-                WebSocketClientConnection connection = connector.connectAndAwait();
 
-                // Wait 2 seconds before first message
-                Thread.sleep(2000);
+  @PostConstruct
+  void openAndSendMessagesWithDelay() {
+      new Thread(() -> {
+          try {
+            Log.info(\\"Starting WebSocket connection attempt...\\");
+            WebSocketClientConnection connection = connector.connectAndAwait();
 
-                // Send 5 messages
-                for (int i = 1; i <= 5; i++) {
-                    String msg = \\"Message #\\" + i + \\" from Quarkus\\";
-                    connection.sendTextAndAwait(msg);
-                    Log.info(\\"Sent: \\" + msg);
-                    Thread.sleep(5000);
-                }
+            // Wait 2 seconds before first message
+            Thread.sleep(2000);
 
-                // Wait 10 seconds after final message
-                Log.info(\\"All messages sent. Waiting 10 seconds before closing...\\");
-                Thread.sleep(10000);
-
-                connection.closeAndAwait();
-                Log.info(\\"Connection closed gracefully.\\");
-
-            } catch (Exception e) {
-                Log.error(\\"Error during WebSocket communication\\", e);
+            // Send 5 messages
+            for (int i = 1; i <= 5; i++) {
+                String msg = \\"Message #\\" + i + \\" from Quarkus\\";
+                connection.sendTextAndAwait(msg);
+                Log.info(\\"Sent: \\" + msg);
+                Thread.sleep(5000); // Wait 5 seconds between messages
             }
-        }).start();
-    }
+
+            // Wait 10 seconds after final message
+            Log.info(\\"All messages sent. Waiting 10 seconds before closing...\\");
+            Thread.sleep(10000);
+
+
+            // Calling to close the WebSocket connection
+  
+
+            connection.closeAndAwait();
+            Log.info(\\"Connection closed gracefully.\\");
+            Thread.sleep(1000); // Wait for a second before exiting
+            System.exit(0);
+        } catch (Exception e) {
+              Log.error(\\"Error during WebSocket communication\\", e);
+              System.exit(1);
+        }
+    }).start();
   }
+}
+
 
 
 
@@ -1661,7 +3692,6 @@ exports[`WebSocket Clients Integration Tests Java Quarkus Client Common Integrat
 //
 //////////////////////////////////////////////////
 
-
 package com.asyncapi;
 
 import io.quarkus.websockets.next.WebSocketClient;
@@ -1680,6 +3710,7 @@ public class HoppscotchEchoWebSocketClient{
   @Inject
   WebSocketClientConnection connection;
 
+
   @OnOpen
   public void onOpen() {
       String broadcastMessage = \\"Echo called from Hoppscotch Echo WebSocket Client server\\";
@@ -1697,22 +3728,19 @@ public class HoppscotchEchoWebSocketClient{
       Log.error(\\"Websocket connection error: \\" + throwable.getMessage());
   }
 
-
-
   @OnClose
-   public void onClose(CloseReason reason, WebSocketClientConnection connection) {
-      int code = reason.getCode();
-      Log.info(\\"Websocket disconnected from Hoppscotch Echo WebSocket Client with Close code: \\" + code);
+     public void onClose(CloseReason reason, WebSocketClientConnection connection) {
+        int code = reason.getCode();
+        Log.info(\\"Websocket disconnected from Hoppscotch Echo WebSocket Client with Close code: \\" + code);
+    }
   }
-}
 
 
 "
 `;
 
 exports[`WebSocket Clients Integration Tests Java Quarkus Client Common Integration tests for Java client generation generate simple client for hoppscotch echo: HoppscotchEchoWebSocketClientConnector.java 1`] = `
-"
-package com.asyncapi;
+"package com.asyncapi;
 
 import io.quarkus.websockets.next.WebSocketConnector;
 import io.quarkus.websockets.next.WebSocketClientConnection;
@@ -1722,46 +3750,54 @@ import jakarta.annotation.PostConstruct;
 import io.quarkus.logging.Log;
 import io.quarkus.runtime.Startup;
 
-  @Startup
-  @Singleton  
-  public class HoppscotchEchoWebSocketClientConnector{
+@Startup
+@Singleton  
+public class HoppscotchEchoWebSocketClientConnector{
 
-    @Inject
-    WebSocketConnector<HoppscotchEchoWebSocketClient> connector;
+  @Inject
+  WebSocketConnector<HoppscotchEchoWebSocketClient> connector;
 
 
 
-    @PostConstruct
-    void openAndSendMessagesWithDelay() {
-        new Thread(() -> {
-            try {
-                Log.info(\\"Starting WebSocket connection attempt...\\");
-                WebSocketClientConnection connection = connector.connectAndAwait();
 
-                // Wait 2 seconds before first message
-                Thread.sleep(2000);
+  @PostConstruct
+  void openAndSendMessagesWithDelay() {
+      new Thread(() -> {
+          try {
+            Log.info(\\"Starting WebSocket connection attempt...\\");
+            WebSocketClientConnection connection = connector.connectAndAwait();
 
-                // Send 5 messages
-                for (int i = 1; i <= 5; i++) {
-                    String msg = \\"Message #\\" + i + \\" from Quarkus\\";
-                    connection.sendTextAndAwait(msg);
-                    Log.info(\\"Sent: \\" + msg);
-                    Thread.sleep(5000);
-                }
+            // Wait 2 seconds before first message
+            Thread.sleep(2000);
 
-                // Wait 10 seconds after final message
-                Log.info(\\"All messages sent. Waiting 10 seconds before closing...\\");
-                Thread.sleep(10000);
-
-                connection.closeAndAwait();
-                Log.info(\\"Connection closed gracefully.\\");
-
-            } catch (Exception e) {
-                Log.error(\\"Error during WebSocket communication\\", e);
+            // Send 5 messages
+            for (int i = 1; i <= 5; i++) {
+                String msg = \\"Message #\\" + i + \\" from Quarkus\\";
+                connection.sendTextAndAwait(msg);
+                Log.info(\\"Sent: \\" + msg);
+                Thread.sleep(5000); // Wait 5 seconds between messages
             }
-        }).start();
-    }
+
+            // Wait 10 seconds after final message
+            Log.info(\\"All messages sent. Waiting 10 seconds before closing...\\");
+            Thread.sleep(10000);
+
+
+            // Calling to close the WebSocket connection
+  
+
+            connection.closeAndAwait();
+            Log.info(\\"Connection closed gracefully.\\");
+            Thread.sleep(1000); // Wait for a second before exiting
+            System.exit(0);
+        } catch (Exception e) {
+              Log.error(\\"Error during WebSocket communication\\", e);
+              System.exit(1);
+        }
+    }).start();
   }
+}
+
 
 
 
@@ -2904,7 +4940,6 @@ exports[`WebSocket Clients Integration Tests Java Quarkus Client Common Integrat
 //
 //////////////////////////////////////////////////
 
-
 package com.asyncapi;
 
 import io.quarkus.websockets.next.WebSocketClient;
@@ -2923,6 +4958,7 @@ public class PostmanEchoWebSocketClientClient{
   @Inject
   WebSocketClientConnection connection;
 
+
   @OnOpen
   public void onOpen() {
       String broadcastMessage = \\"Echo called from Postman Echo WebSocket Client server\\";
@@ -2940,22 +4976,19 @@ public class PostmanEchoWebSocketClientClient{
       Log.error(\\"Websocket connection error: \\" + throwable.getMessage());
   }
 
-
-
   @OnClose
-   public void onClose(CloseReason reason, WebSocketClientConnection connection) {
-      int code = reason.getCode();
-      Log.info(\\"Websocket disconnected from Postman Echo WebSocket Client with Close code: \\" + code);
+     public void onClose(CloseReason reason, WebSocketClientConnection connection) {
+        int code = reason.getCode();
+        Log.info(\\"Websocket disconnected from Postman Echo WebSocket Client with Close code: \\" + code);
+    }
   }
-}
 
 
 "
 `;
 
 exports[`WebSocket Clients Integration Tests Java Quarkus Client Common Integration tests for Java client generation generate simple client for postman echo: PostmanEchoWebSocketClientClientConnector.java 1`] = `
-"
-package com.asyncapi;
+"package com.asyncapi;
 
 import io.quarkus.websockets.next.WebSocketConnector;
 import io.quarkus.websockets.next.WebSocketClientConnection;
@@ -2965,46 +4998,54 @@ import jakarta.annotation.PostConstruct;
 import io.quarkus.logging.Log;
 import io.quarkus.runtime.Startup;
 
-  @Startup
-  @Singleton  
-  public class PostmanEchoWebSocketClientClientConnector{
+@Startup
+@Singleton  
+public class PostmanEchoWebSocketClientClientConnector{
 
-    @Inject
-    WebSocketConnector<PostmanEchoWebSocketClientClient> connector;
+  @Inject
+  WebSocketConnector<PostmanEchoWebSocketClientClient> connector;
 
 
 
-    @PostConstruct
-    void openAndSendMessagesWithDelay() {
-        new Thread(() -> {
-            try {
-                Log.info(\\"Starting WebSocket connection attempt...\\");
-                WebSocketClientConnection connection = connector.connectAndAwait();
 
-                // Wait 2 seconds before first message
-                Thread.sleep(2000);
+  @PostConstruct
+  void openAndSendMessagesWithDelay() {
+      new Thread(() -> {
+          try {
+            Log.info(\\"Starting WebSocket connection attempt...\\");
+            WebSocketClientConnection connection = connector.connectAndAwait();
 
-                // Send 5 messages
-                for (int i = 1; i <= 5; i++) {
-                    String msg = \\"Message #\\" + i + \\" from Quarkus\\";
-                    connection.sendTextAndAwait(msg);
-                    Log.info(\\"Sent: \\" + msg);
-                    Thread.sleep(5000);
-                }
+            // Wait 2 seconds before first message
+            Thread.sleep(2000);
 
-                // Wait 10 seconds after final message
-                Log.info(\\"All messages sent. Waiting 10 seconds before closing...\\");
-                Thread.sleep(10000);
-
-                connection.closeAndAwait();
-                Log.info(\\"Connection closed gracefully.\\");
-
-            } catch (Exception e) {
-                Log.error(\\"Error during WebSocket communication\\", e);
+            // Send 5 messages
+            for (int i = 1; i <= 5; i++) {
+                String msg = \\"Message #\\" + i + \\" from Quarkus\\";
+                connection.sendTextAndAwait(msg);
+                Log.info(\\"Sent: \\" + msg);
+                Thread.sleep(5000); // Wait 5 seconds between messages
             }
-        }).start();
-    }
+
+            // Wait 10 seconds after final message
+            Log.info(\\"All messages sent. Waiting 10 seconds before closing...\\");
+            Thread.sleep(10000);
+
+
+            // Calling to close the WebSocket connection
+  
+
+            connection.closeAndAwait();
+            Log.info(\\"Connection closed gracefully.\\");
+            Thread.sleep(1000); // Wait for a second before exiting
+            System.exit(0);
+        } catch (Exception e) {
+              Log.error(\\"Error during WebSocket communication\\", e);
+              System.exit(1);
+        }
+    }).start();
   }
+}
+
 
 
 
@@ -3925,7 +5966,6 @@ exports[`WebSocket Clients Integration Tests JavaScript Client Common Integratio
 //////////////////////////////////////////////////
 
 const WebSocket = require('ws');
-
 class HoppscotchClient {
 
   /*
@@ -4194,7 +6234,6 @@ exports[`WebSocket Clients Integration Tests JavaScript Client Common Integratio
 //////////////////////////////////////////////////
 
 const WebSocket = require('ws');
-
 class HoppscotchEchoWebSocketClient {
 
   /*
@@ -4439,7 +6478,6 @@ exports[`WebSocket Clients Integration Tests JavaScript Client Common Integratio
 //////////////////////////////////////////////////
 
 const WebSocket = require('ws');
-
 class PostmanEchoWebSocketClientClient {
 
   /*
@@ -5173,7 +7211,6 @@ import threading
 import websocket
 import os
 from urllib.parse import urlencode
-
 class SlackWebsocketAPIClient:
 
   def __init__(self, url: str = \\"wss://wss-primary.slack.com/link\\", ticket: str = None, app_id: str = None):
@@ -5318,7 +7355,6 @@ import json
 import certifi
 import threading
 import websocket
-
 class HoppscotchClient:
 
   def __init__(self, url: str = \\"wss://echo-websocket.hoppscotch.io\\"):
@@ -5501,7 +7537,6 @@ import json
 import certifi
 import threading
 import websocket
-
 class HoppscotchEchoWebSocketClient:
 
   def __init__(self, url: str = \\"wss://echo-websocket.hoppscotch.io\\"):
@@ -5685,7 +7720,6 @@ import json
 import certifi
 import threading
 import websocket
-
 class PostmanEchoWebSocketClientClient:
 
   def __init__(self, url: str = \\"wss://ws.postman-echo.com/raw\\"):

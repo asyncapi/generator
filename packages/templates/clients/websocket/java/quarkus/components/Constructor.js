@@ -1,7 +1,7 @@
 import { Text } from '@asyncapi/generator-react-sdk';
 import { ConstructorSignature } from './ConstructorSignature';
 import { DefaultConstructorSignature } from './DefaultConstructorSignature';
-import { QueryParamsVariables } from './QueryParamsVariables';
+import { QueryParamsVariables } from '@asyncapi/generator-components';
 
 export function Constructor({ clientName, query }) {
   const queryParamsArray = query && Array.from(query.entries());
@@ -17,7 +17,11 @@ export function Constructor({ clientName, query }) {
         {`${ queryParamsArray && queryParamsArray.length > 0 ? 'params = new HashMap<>(); ' : ''}`
         }
       </Text>
-      <QueryParamsVariables queryParams={queryParamsArray} />
+      <QueryParamsVariables 
+        language="java"
+        framework="quarkus"
+        queryParams={queryParamsArray} 
+      />
       <Text indent={2} newLines={2}>
         {'}'}
       </Text>

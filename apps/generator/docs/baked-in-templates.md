@@ -9,7 +9,7 @@ Baked-in templates are official AsyncAPI templates that are **developed, version
 
 AsyncAPI Generator supports a variety of baked-in template types for generating code, documentation, configs, and SDKs. All templates are managed under the `packages/templates` directory and follow a strict, opinionated directory structure for consistency and ease of maintenance.
 
-> List of baked-in templates: https://github.com/asyncapi/generator/blob/master/apps/generator/lib/templates/BakedInTemplatesList.json
+> Check out the [list of baked-in templates](https://github.com/asyncapi/generator/blob/master/apps/generator/lib/templates/BakedInTemplatesList.json)
 
 ## Supported template types
 

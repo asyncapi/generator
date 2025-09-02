@@ -4,9 +4,8 @@ import { Constructor } from './Constructor';
 import { Connect } from './Connect';
 import { RegisterErrorHandler } from './RegisterErrorHandler';
 import { HandleMessage } from './HandleMessage';
-import { SendOperation } from './SendOperation';
 import { Send } from './Send';
-import { CloseConnection, RegisterMessageHandler } from '@asyncapi/generator-components';
+import { CloseConnection, RegisterMessageHandler, SendOperations } from '@asyncapi/generator-components';
 import { RegisterOutgoingProcessor } from './RegisterOutgoingProcessor';
 import { HandleError } from './HandleError';
 
@@ -35,7 +34,11 @@ export function ClientClass({ asyncapi, params }) {
       <RegisterOutgoingProcessor />
       <HandleMessage />
       <HandleError />
-      <SendOperation sendOperations={sendOperations} clientName={clientName} />
+      <SendOperations 
+        language="python"
+        sendOperations={sendOperations} 
+        clientName={clientName} 
+      />
       <Send sendOperations={sendOperations} />
       <CloseConnection 
         language="python" 

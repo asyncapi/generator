@@ -4,7 +4,7 @@ import { HandleMessage } from '../../src/index';
 describe('Testing of HandleMessage function', () => {
   test('render javascript websocket message handler method', () => {
     const result = render(
-      <HandleMessage language='javascript' />
+      <HandleMessage language='javascript' methodParams={['message','cb']} />
     );
     const actual = result.trim();
     expect(actual).toMatchSnapshot();
@@ -12,8 +12,9 @@ describe('Testing of HandleMessage function', () => {
 
   test('render python websocket message handler method', () => {
     const result = render(
-      <HandleMessage 
-        language='python'
+      <HandleMessage
+        language="python"
+        methodName='handle_message'
         methodParams={['self', 'message']}
         preExecutionCode='"""Pass the incoming message to all registered message handlers. """'
       />
@@ -26,6 +27,7 @@ describe('Testing of HandleMessage function', () => {
     const result = render(
       <HandleMessage
         language="dart" 
+        methodName="_handleMessage"
         methodParams={['dynamic message', 'void Function(String) cb']}
       />
     );

@@ -2,20 +2,20 @@
 
 exports[`Testing of HandleMessage function render dart websocket message handler method 1`] = `
 "/// Method to handle message with callback
-  void handleMessage(dynamic message, void Function(String) cb) {
+  void _handleMessage(dynamic message, void Function(String) cb) {
     cb(message is String ? message : message.toString());
   }"
 `;
 
 exports[`Testing of HandleMessage function render javascript websocket message handler method 1`] = `
 "// Method to handle message with callback
-   handleMessage() {
+   handleMessage(message, cb) {
     if (cb) cb(message);
   }"
 `;
 
 exports[`Testing of HandleMessage function render python websocket message handler method 1`] = `
-"def handleMessage(self, message) :
+"def handle_message(self, message) :
     \\"\\"\\"Pass the incoming message to all registered message handlers. \\"\\"\\"
     if len(self.message_handlers) == 0:
       print(\\"\\\\033[94mReceived raw message:\\\\033[0m\\", message)

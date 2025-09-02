@@ -3,10 +3,9 @@ import { getClientName, getServerUrl, getServer, getQueryParams, getTitle } from
 import { Constructor } from './Constructor';
 import { Connect } from './Connect';
 import { RegisterErrorHandler } from './RegisterErrorHandler';
-import { HandleMessage } from './HandleMessage';
 import { SendOperation } from './SendOperation';
 import { Send } from './Send';
-import { CloseConnection, RegisterMessageHandler } from '@asyncapi/generator-components';
+import { CloseConnection, RegisterMessageHandler, HandleMessage } from '@asyncapi/generator-components';
 import { RegisterOutgoingProcessor } from './RegisterOutgoingProcessor';
 import { HandleError } from './HandleError';
 
@@ -33,7 +32,12 @@ export function ClientClass({ asyncapi, params }) {
       />
       <RegisterErrorHandler />
       <RegisterOutgoingProcessor />
-      <HandleMessage />
+      <HandleMessage
+        language="python"
+        methodName='handle_message'
+        methodParams={['self', 'message']}
+        preExecutionCode='"""Pass the incoming message to all registered message handlers. """'
+      />
       <HandleError />
       <SendOperation sendOperations={sendOperations} clientName={clientName} />
       <Send sendOperations={sendOperations} />

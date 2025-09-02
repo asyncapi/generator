@@ -2,7 +2,7 @@ import { Text } from '@asyncapi/generator-react-sdk';
 import { toCamelCase } from '@asyncapi/generator-helpers';
 
 /**
- * @typedef {'python' | 'java'} SupportedLanguage
+ * @typedef {'python' | 'java' | 'javascript'} SupportedLanguage
  * Supported programming languages for query parameter generation.
  */
 
@@ -39,7 +39,6 @@ const queryParamLogicConfig = {
       closing: null,
     };
   },
-
   java: {
     quarkus: (param) => {
       const paramName = toCamelCase(param[0]);
@@ -63,6 +62,28 @@ const queryParamLogicConfig = {
         },
       };
     },
+  },
+  javascript: (param) => {
+    const paramName = param[0];
+    return {
+      variableDefinition: {
+        text: `const ${paramName} = ${paramName} || process.env.${paramName.toUpperCase()};`,
+        indent: 8,
+      },
+      ifCondition: {
+        text: `if (${paramName}) {`,
+        indent: 8,
+      },
+      assignment: {
+        text: `params["${paramName}"] = ${paramName};`,
+        indent: 10,
+      },
+      closing: {
+        text: '}',
+        indent: 8,
+        newLines: 1,
+      },
+    };
   },
 };
 

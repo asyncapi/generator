@@ -21,6 +21,25 @@ exports[`Testing of QueryParamsVariables component renders java quarkus query pa
       }"
 `;
 
+exports[`Testing of QueryParamsVariables component renders js query params correctly with query parameters 1`] = `
+"const heartbeat = heartbeat || process.env.HEARTBEAT;
+        if (heartbeat) {
+          params[\\"heartbeat\\"] = heartbeat;
+        }
+        const top_of_book = top_of_book || process.env.TOP_OF_BOOK;
+        if (top_of_book) {
+          params[\\"top_of_book\\"] = top_of_book;
+        }
+        const bids = bids || process.env.BIDS;
+        if (bids) {
+          params[\\"bids\\"] = bids;
+        }
+        const offers = offers || process.env.OFFERS;
+        if (offers) {
+          params[\\"offers\\"] = offers;
+        }"
+`;
+
 exports[`Testing of QueryParamsVariables component renders python nothing when queryParams is null 1`] = `""`;
 
 exports[`Testing of QueryParamsVariables component renders python nothing when queryParams is undefined 1`] = `""`;

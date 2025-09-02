@@ -28,6 +28,19 @@ describe('Testing of QueryParamsVariables component', () => {
     expect(result.trim()).toMatchSnapshot();
   });
 
+  test('renders js query params correctly with query parameters', () => {
+    const channels = parsedAsyncAPIDocument.channels();
+    const queryParamsObject = getQueryParams(channels);
+    const queryParamsArray = queryParamsObject ? Array.from(queryParamsObject.entries()) : [];
+    const result = render(
+      <QueryParamsVariables 
+        language='javascript' 
+        queryParams={queryParamsArray} 
+      />
+    );
+    expect(result.trim()).toMatchSnapshot();
+  });
+
   test('renders java quarkus query params correctly with query parameters', () => {
     const channels = parsedAsyncAPIDocument.channels();
     const queryParamsObject = getQueryParams(channels);

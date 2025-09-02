@@ -184,14 +184,14 @@ This project uses AI-powered tools to assist contributors and maintainers:
 ### CodeRabbit
 
 - **Purpose:** CodeRabbit is an AI assistant integrated into the development workflow. It helps automate code reviews, provides suggestions, and answers contributor questions directly in pull requests and issues.
-- **How to use:** When you open a pull request or issue, CodeRabbit may automatically provide feedback, suggestions, or code review comments. You do not need to install anything locally; it works via GitHub integration.
+- **How to use:** When you open a pull request or issue, CodeRabbit may automatically provide feedback, suggestions, or code review comments. For interactive responses to your questions or comments, explicitly tag @coderabbit in your comment. You do not need to install anything locally; it works via GitHub integration.
 - **Tips:** Engage with CodeRabbit's comments and suggestions as you would with any reviewer. If you have questions about its feedback, reply in the PR or issue thread.
 - **More info:** See [CodeRabbit documentation](https://docs.coderabbit.ai/) for details.
 
 ### Dosu
 
 - **Purpose:** Dosu is an AI tool used for automated code analysis (e.g., security, dependency, and best‑practice checks). It helps maintain code quality and security standards across the repository.
-- **How to use:** Dosu runs automatically on pull requests and pushes. If issues are detected, Dosu will comment with details and remediation steps (and, if applicable in this repo, may set PR checks to failing). No local setup is required.
+- **How to use:** Dosu currently works only in issues and must be explicitly tagged to run. It does not run automatically on pull requests or pushes.
 - **Tips:** Review Dosu's comments and address any flagged issues before merging. Dosu helps ensure your contributions meet project standards.
 - **More info:** See [Dosu documentation](https://dosu.dev/docs) for usage and troubleshooting.
 
@@ -205,6 +205,8 @@ See [Security Policy](https://github.com/asyncapi/generator/security/policy) for
 
 If problems persist, please open an issue on the repository: [Create new issue](https://github.com/asyncapi/generator/issues/new/choose).
 
+## Troubleshooting
+
 If you encounter any issues during development or testing, please check the following:
 
 1. Ensure you're using the correct Node.js version (18.20.8 or higher) and npm version (10.8.2 or higher).
@@ -212,5 +214,3 @@ If you encounter any issues during development or testing, please check the foll
 3. For Docker-related issues, make sure Docker is running and you have sufficient permissions.
 
 If problems persist, please open an issue on the GitHub repository.
-
-

@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing of OnMessage function render dart OnMessage method 1`] = `
+"(message) {
+        if (_messageHandlers.isNotEmpty) {
+          for (var handler in _messageHandlers) {
+            _handleMessage(message, handler);
+          }
+        } else {
+          print('Message received: $message');
+        }
+      },"
+`;
+
+exports[`Testing of OnMessage function render javascript OnMessage method 1`] = `
+"// On receiving a message
+    this.websocket.onmessage = (event) => {
+      if (this.messageHandlers.length > 0) {
+        // Call custom message handlers
+        this.messageHandlers.forEach(handler => {
+          if (typeof handler === 'function') {
+            this.handleMessage(event.data, handler);
+          }
+        });
+      } else {
+        // Default message logging
+        console.log('Message received:', event.data);
+      }
+    };"
+`;
+
+exports[`Testing of OnMessage function render python OnMessage method 1`] = `
+"def on_message(self, ws, message):
+  self.handle_message(message)"
+`;

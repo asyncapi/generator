@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing of OnOpen function render javascript OnOpen method 1`] = `
+"// On successful connection
+      this.websocket.onopen = () => {
+      console.log('Connected to HoppscotchEchoWebSocketClient server');
+      resolve();
+    };"
+`;
+
+exports[`Testing of OnOpen function render python OnOpen method 1`] = `
+"def on_open(self, ws):
+  print(\\"Connected to HoppscotchEchoWebSocketClient server\\")"
+`;

@@ -2,7 +2,7 @@ import { Text } from '@asyncapi/generator-react-sdk';
 
 /**
  * @typedef {'python' | 'javascript' | 'dart'} SupportedLanguage
- * Supported programming languages for WebSocket send operation generation.
+ * Supported programming languages for WebSocket onMessage handler generation.
  */
 
 /**

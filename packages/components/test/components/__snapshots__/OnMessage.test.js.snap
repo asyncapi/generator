@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Testing of OnMessage function render dart OnMessage method 1`] = `
+exports[`OnMessage renders per language renders dart OnMessage method 1`] = `
 "(message) {
         if (_messageHandlers.isNotEmpty) {
           for (var handler in _messageHandlers) {
@@ -12,7 +12,7 @@ exports[`Testing of OnMessage function render dart OnMessage method 1`] = `
       },"
 `;
 
-exports[`Testing of OnMessage function render javascript OnMessage method 1`] = `
+exports[`OnMessage renders per language renders javascript OnMessage method 1`] = `
 "// On receiving a message
     this.websocket.onmessage = (event) => {
       if (this.messageHandlers.length > 0) {
@@ -29,7 +29,7 @@ exports[`Testing of OnMessage function render javascript OnMessage method 1`] = 
     };"
 `;
 
-exports[`Testing of OnMessage function render python OnMessage method 1`] = `
+exports[`OnMessage renders per language renders python OnMessage method 1`] = `
 "def on_message(self, ws, message):
   self.handle_message(message)"
 `;

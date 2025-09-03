@@ -1,5 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Testing of OnClose function render dart OnClose method 1`] = `
+"onDone: () {
+        _channel = null;
+        print('Disconnected from HoppscotchEchoWebSocketClient server');
+      },"
+`;
+
 exports[`Testing of OnClose function render javascript OnClose method 1`] = `
 "// On connection close
     this.websocket.onclose = () => {
@@ -10,11 +17,4 @@ exports[`Testing of OnClose function render javascript OnClose method 1`] = `
 exports[`Testing of OnClose function render python OnClose method 1`] = `
 "def on_close(self, ws, close_status_code, close_msg):
   print(\\"Disconnected from HoppscotchEchoWebSocketClient\\", close_status_code, close_msg)"
-`;
-
-exports[`Testing of OnClose function render python OnClose method 2`] = `
-"onDone: () {
-        _channel = null;
-        print('Disconnected from HoppscotchEchoWebSocketClient server');
-      },"
 `;

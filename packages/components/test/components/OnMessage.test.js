@@ -1,32 +1,10 @@
 import { render } from '@asyncapi/generator-react-sdk';
 import { OnMessage } from '../../src/index';
 
-describe('Testing of OnMessage function', () => {
-  test('render javascript OnMessage method', () => {
-    const result = render(
-      <OnMessage language='javascript' />
-    );
-    const actual = result.trim();
-    expect(actual).toMatchSnapshot();
-  });
-
-  test('render python OnMessage method', () => {
-    const result = render(
-      <OnMessage 
-        language='python'
-      />
-    );
-    const actual = result.trim();
-    expect(actual).toMatchSnapshot();
-  });
-  
-  test('render dart OnMessage method', () => {
-    const result = render(
-      <OnMessage 
-        language='dart'
-      />
-    );
-    const actual = result.trim();
-    expect(actual).toMatchSnapshot();
+describe('OnMessage renders per language', () => {
+  const languages = ['javascript', 'python', 'dart'];
+  it.each(languages)('renders %s OnMessage method', (language) => {
+    const result = render(<OnMessage language={language} />);
+    expect(result.trim()).toMatchSnapshot();
   });
 });

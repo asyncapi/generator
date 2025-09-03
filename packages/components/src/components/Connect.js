@@ -6,7 +6,7 @@ import { OnClose } from './OnClose';
 
 /**
  * @typedef {'python' | 'javascript' | 'dart'} SupportedLanguage
- * Supported programming languages for WebSocket send operation generation.
+ * Supported programming languages for WebSocket connection method generation.
  */
 
 /**

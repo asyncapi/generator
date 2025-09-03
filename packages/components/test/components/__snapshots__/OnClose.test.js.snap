@@ -7,6 +7,15 @@ exports[`Testing of OnClose function render dart OnClose method 1`] = `
       },"
 `;
 
+exports[`Testing of OnClose function render java quarkas OnClose method 1`] = `
+"@OnClose
+     public void onClose(CloseReason reason, WebSocketClientConnection connection) {
+        int code = reason.getCode();
+        Log.info(\\"Websocket disconnected from HoppscotchEchoWebSocketClient with Close code: \\" + code);
+    }
+  }"
+`;
+
 exports[`Testing of OnClose function render javascript OnClose method 1`] = `
 "// On connection close
     this.websocket.onclose = () => {

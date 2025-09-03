@@ -1,7 +1,7 @@
 import { Text } from '@asyncapi/generator-react-sdk';
 
 /**
- * @typedef {'python' | 'javascript'} SupportedLanguage
+ * @typedef {'python' | 'javascript' | 'java'} SupportedLanguage
  * Supported programming languages for WebSocket onOpen handler generation.
  */
 
@@ -25,6 +25,27 @@ const websocketOnOpenMethod = {
       onOpenMethod: `def on_open(self, ws):
   print("Connected to ${title} server")`
     };
+  },
+  java: {
+    quarkus: (title) => {
+      const onOpenMethod = `@OnOpen
+public void onOpen() {
+    String broadcastMessage = "Echo called from ${title} server";
+    Log.info("Connected to ${title} server");
+    Log.info(broadcastMessage);
+}`;
+      return { onOpenMethod, indent: 2 };
+    }
+  }
+};
+
+const resolveOpenConfig = (language, framework = '') => {
+  const config = websocketOnOpenMethod[language];
+  if (typeof config === 'function') {
+    return config;
+  }
+  if (framework && typeof config[framework] === 'function') {
+    return config[framework];
   }
 };
 
@@ -35,17 +56,19 @@ const websocketOnOpenMethod = {
  * @param {SupportedLanguage} props.language - The programming language for which to generate onOpen handler code.
  * @param {string} props.title - The title of the WebSocket server.
  */
-export function OnOpen({ language, title }) {
+export function OnOpen({ language, framework='', title }) {
   let onOpenMethod = '';
+  let indent = 0;
   
   if (websocketOnOpenMethod[language]) {
-    const generateOnOpenCode = websocketOnOpenMethod[language];
+    const generateOnOpenCode = resolveOpenConfig(language, framework);
     const openResult = generateOnOpenCode(title);
     onOpenMethod = openResult.onOpenMethod;
+    indent = openResult.indent ?? 0;
   }
 
   return (
-    <Text>
+    <Text indent={indent}>
       {onOpenMethod}
     </Text>
   );

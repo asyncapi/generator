@@ -1,5 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Testing of OnOpen function render java quarkas OnOpen method 1`] = `
+"@OnOpen
+  public void onOpen() {
+      String broadcastMessage = \\"Echo called from HoppscotchEchoWebSocketClient server\\";
+      Log.info(\\"Connected to HoppscotchEchoWebSocketClient server\\");
+      Log.info(broadcastMessage);
+  }"
+`;
+
 exports[`Testing of OnOpen function render javascript OnOpen method 1`] = `
 "// On successful connection
       this.websocket.onopen = () => {

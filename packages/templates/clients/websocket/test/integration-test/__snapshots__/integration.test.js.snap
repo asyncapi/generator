@@ -1572,7 +1572,6 @@ public class SlackWebsocketAPIClient{
       Log.info(\\"Connected to Slack Websocket API Client server\\");
       Log.info(broadcastMessage);
   }
-
   @OnTextMessage
   public void processTextMessage(String message, WebSocketClientConnection connection) {
       Log.info(\\"Received text message: \\" + message);
@@ -1589,7 +1588,6 @@ public class SlackWebsocketAPIClient{
         Log.info(\\"Websocket disconnected from Slack Websocket API Client with Close code: \\" + code);
     }
   }
-
 
 "
 `;
@@ -2573,7 +2571,6 @@ public class HoppscotchClient{
       Log.info(\\"Connected to Hoppscotch Echo WebSocket Client server\\");
       Log.info(broadcastMessage);
   }
-
   @OnTextMessage
   public void sendEchoMessage(String message, WebSocketClientConnection connection) {
       Log.info(\\"Received text message: \\" + message);
@@ -2590,7 +2587,6 @@ public class HoppscotchClient{
         Log.info(\\"Websocket disconnected from Hoppscotch Echo WebSocket Client with Close code: \\" + code);
     }
   }
-
 
 "
 `;
@@ -3723,7 +3719,6 @@ public class HoppscotchEchoWebSocketClient{
       Log.info(\\"Connected to Hoppscotch Echo WebSocket Client server\\");
       Log.info(broadcastMessage);
   }
-
   @OnTextMessage
   public void sendEchoMessage(String message, WebSocketClientConnection connection) {
       Log.info(\\"Received text message: \\" + message);
@@ -3740,7 +3735,6 @@ public class HoppscotchEchoWebSocketClient{
         Log.info(\\"Websocket disconnected from Hoppscotch Echo WebSocket Client with Close code: \\" + code);
     }
   }
-
 
 "
 `;
@@ -4971,7 +4965,6 @@ public class PostmanEchoWebSocketClientClient{
       Log.info(\\"Connected to Postman Echo WebSocket Client server\\");
       Log.info(broadcastMessage);
   }
-
   @OnTextMessage
   public void sendEchoMessage(String message, WebSocketClientConnection connection) {
       Log.info(\\"Received text message: \\" + message);
@@ -4988,7 +4981,6 @@ public class PostmanEchoWebSocketClientClient{
         Log.info(\\"Websocket disconnected from Postman Echo WebSocket Client with Close code: \\" + code);
     }
   }
-
 
 "
 `;

@@ -1,7 +1,7 @@
 import { Text } from '@asyncapi/generator-react-sdk';
 
 /**
- * @typedef {'python' | 'javascript' | 'dart'} SupportedLanguage
+ * @typedef {'python' | 'javascript' | 'dart' | 'java' } SupportedLanguage
  * Supported programming languages for WebSocket onClose handler generation.
  */
 
@@ -32,6 +32,27 @@ const websocketOnCloseMethod = {
         print('Disconnected from ${title} server');
       },`
     };
+  },
+  java: {
+    quarkus: (title) => {
+      const onCloseMethod = `@OnClose
+   public void onClose(CloseReason reason, WebSocketClientConnection connection) {
+      int code = reason.getCode();
+      Log.info("Websocket disconnected from ${title} with Close code: " + code);
+  }
+}`;
+      return { onCloseMethod, indent: 2 };
+    }
+  }
+};
+
+const resolveCloseConfig = (language, framework = '') => {
+  const config = websocketOnCloseMethod[language];
+  if (typeof config === 'function') {
+    return config;
+  }
+  if (framework && typeof config[framework] === 'function') {
+    return config[framework];
   }
 };
 
@@ -42,17 +63,19 @@ const websocketOnCloseMethod = {
  * @param {SupportedLanguage} props.language - The programming language for which to generate onClose handler code.
  * @param {string} props.title - The title of the WebSocket server.
  */
-export function OnClose({ language, title }) {
+export function OnClose({ language, framework = '', title }) {
   let onCloseMethod = '';
-  
+  let indent = 0;
+
   if (websocketOnCloseMethod[language]) {
-    const generateOnCloseCode = websocketOnCloseMethod[language];
+    const generateOnCloseCode = resolveCloseConfig(language, framework);
     const closeResult = generateOnCloseCode(title);
     onCloseMethod = closeResult.onCloseMethod;
+    indent = closeResult.indent ?? 0;
   }
 
   return (
-    <Text>
+    <Text indent={indent}>
       {onCloseMethod}
     </Text>
   );

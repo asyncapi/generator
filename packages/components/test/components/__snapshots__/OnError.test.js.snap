@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing of OnError function render dart OnError method 1`] = `
+"onError: (error) {
+        if (_errorHandlers.isNotEmpty) {
+          for (var handler in _errorHandlers) {
+            handler(error);
+          }
+        } else {
+          print('WebSocket Error: $error');
+        }
+      },"
+`;
+
+exports[`Testing of OnError function render javascript OnError method 1`] = `
+"// On error first call custom error handlers, then default error behavior
+    this.websocket.onerror = (error) => {
+      if (this.errorHandlers.length > 0) {
+        // Call custom error handlers
+        this.errorHandlers.forEach(handler => handler(error));
+      } else {
+        // Default error behavior
+        console.error('WebSocket Error:', error);
+      }
+      reject(error);
+    };"
+`;
+
+exports[`Testing of OnError function render python OnError method 1`] = `
+"def on_error(self, ws, error):
+  print(\\"WebSocket Error:\\", error)
+  self.handle_error(error)"
+`;

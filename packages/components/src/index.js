@@ -4,3 +4,8 @@ export { CloseConnection } from './components/CloseConnection';
 export { DependencyProvider } from './components/DependencyProvider';
 export { RegisterMessageHandler } from './components/RegisterMessageHandler';
 export { MethodGenerator } from './components/MethodGenerator';
+export { Connect } from './components/Connect';
+export { OnOpen } from './components/OnOpen';
+export { OnMessage } from './components/OnMessage';
+export { OnError } from './components/OnError';
+export { OnClose } from './components/OnClose';

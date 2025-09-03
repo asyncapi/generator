@@ -6,7 +6,7 @@ import { Text } from '@asyncapi/generator-react-sdk';
  */
 
 /**
- * Mapping of supported programming languages to their WebSocket onMessage event handler implementations.
+ * Mapping of supported programming languages to their WebSocket onOpen event handler implementations.
  * 
  * @type {Object.<SupportedLanguage, Function>}
  */
@@ -54,6 +54,7 @@ const resolveOpenConfig = (language, framework = '') => {
  * 
  * @param {Object} props - Component properties.
  * @param {SupportedLanguage} props.language - The programming language for which to generate onOpen handler code.
+ * @param {string} [props.framework=''] - Optional framework variant (e.g., 'quarkus' for java).
  * @param {string} props.title - The title of the WebSocket server.
  */
 export function OnOpen({ language, framework='', title }) {

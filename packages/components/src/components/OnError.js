@@ -59,8 +59,8 @@ export function OnError({ language }) {
   
   if (websocketOnErrorMethod[language]) {
     const generateErrorCode = websocketOnErrorMethod[language];
-    const messageResult = generateErrorCode();
-    onErrorMethod = messageResult.onErrorMethod;
+    const errorResult = generateErrorCode();
+    onErrorMethod = errorResult.onErrorMethod;
   }
 
   return (

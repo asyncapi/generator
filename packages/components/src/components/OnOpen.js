@@ -40,8 +40,8 @@ export function OnOpen({ language, title }) {
   
   if (websocketOnOpenMethod[language]) {
     const generateOnOpenCode = websocketOnOpenMethod[language];
-    const result = generateOnOpenCode(title);
-    onOpenMethod = result.onOpenMethod;
+    const openResult = generateOnOpenCode(title);
+    onOpenMethod = openResult.onOpenMethod;
   }
 
   return (

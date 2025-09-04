@@ -6074,6 +6074,7 @@ class HoppscotchClient {
       console.error('Error sending sendEchoMessage message:', error);
     }
   }
+
   /**
    * Instance method version of sendEchoMessage that uses the client's own WebSocket connection.
    * @param {Object} message - The message payload to send
@@ -6085,7 +6086,6 @@ class HoppscotchClient {
     }
     HoppscotchClient.sendEchoMessage(message, this.websocket);
   }
-  
 
   // Method to close the WebSocket connection
    close() {
@@ -6342,6 +6342,7 @@ class HoppscotchEchoWebSocketClient {
       console.error('Error sending sendEchoMessage message:', error);
     }
   }
+
   /**
    * Instance method version of sendEchoMessage that uses the client's own WebSocket connection.
    * @param {Object} message - The message payload to send
@@ -6353,7 +6354,6 @@ class HoppscotchEchoWebSocketClient {
     }
     HoppscotchEchoWebSocketClient.sendEchoMessage(message, this.websocket);
   }
-  
 
   // Method to close the WebSocket connection
    close() {
@@ -6586,6 +6586,7 @@ class PostmanEchoWebSocketClientClient {
       console.error('Error sending sendEchoMessage message:', error);
     }
   }
+
   /**
    * Instance method version of sendEchoMessage that uses the client's own WebSocket connection.
    * @param {Object} message - The message payload to send
@@ -6597,7 +6598,6 @@ class PostmanEchoWebSocketClientClient {
     }
     PostmanEchoWebSocketClientClient.sendEchoMessage(message, this.websocket);
   }
-  
 
   // Method to close the WebSocket connection
    close() {
@@ -7470,18 +7470,6 @@ class HoppscotchClient:
         for handler in self.error_handlers:
           handler(error)
 
-  async def send_echo_message(self, message):
-      \\"\\"\\"
-      Send a send_echo_message message using the WebSocket connection attached to this instance.
-
-      Args:
-          message (dict or str): The message to send. Will be serialized to JSON if it's a dictionary.
-
-      Raises:
-          Exception: If sending fails or the socket is not connected.
-      \\"\\"\\"
-      await self._send(message, self.ws_app)
-
   @staticmethod
   async def send_echo_message_static(message, socket):
       \\"\\"\\"
@@ -7496,6 +7484,17 @@ class HoppscotchClient:
       \\"\\"\\"
       await HoppscotchClient._send(message, socket)
 
+  async def send_echo_message(self, message):
+      \\"\\"\\"
+      Send a send_echo_message message using the WebSocket connection attached to this instance.
+
+      Args:
+          message (dict or str): The message to send. Will be serialized to JSON if it's a dictionary.
+
+      Raises:
+          Exception: If sending fails or the socket is not connected.
+      \\"\\"\\"
+      await self._send(message, self.ws_app)
 
   @staticmethod
   async def _send(message, socket):
@@ -7651,18 +7650,6 @@ class HoppscotchEchoWebSocketClient:
         for handler in self.error_handlers:
           handler(error)
 
-  async def send_echo_message(self, message):
-      \\"\\"\\"
-      Send a send_echo_message message using the WebSocket connection attached to this instance.
-
-      Args:
-          message (dict or str): The message to send. Will be serialized to JSON if it's a dictionary.
-
-      Raises:
-          Exception: If sending fails or the socket is not connected.
-      \\"\\"\\"
-      await self._send(message, self.ws_app)
-
   @staticmethod
   async def send_echo_message_static(message, socket):
       \\"\\"\\"
@@ -7677,6 +7664,17 @@ class HoppscotchEchoWebSocketClient:
       \\"\\"\\"
       await HoppscotchEchoWebSocketClient._send(message, socket)
 
+  async def send_echo_message(self, message):
+      \\"\\"\\"
+      Send a send_echo_message message using the WebSocket connection attached to this instance.
+
+      Args:
+          message (dict or str): The message to send. Will be serialized to JSON if it's a dictionary.
+
+      Raises:
+          Exception: If sending fails or the socket is not connected.
+      \\"\\"\\"
+      await self._send(message, self.ws_app)
 
   @staticmethod
   async def _send(message, socket):
@@ -7833,18 +7831,6 @@ class PostmanEchoWebSocketClientClient:
         for handler in self.error_handlers:
           handler(error)
 
-  async def send_echo_message(self, message):
-      \\"\\"\\"
-      Send a send_echo_message message using the WebSocket connection attached to this instance.
-
-      Args:
-          message (dict or str): The message to send. Will be serialized to JSON if it's a dictionary.
-
-      Raises:
-          Exception: If sending fails or the socket is not connected.
-      \\"\\"\\"
-      await self._send(message, self.ws_app)
-
   @staticmethod
   async def send_echo_message_static(message, socket):
       \\"\\"\\"
@@ -7859,6 +7845,17 @@ class PostmanEchoWebSocketClientClient:
       \\"\\"\\"
       await PostmanEchoWebSocketClientClient._send(message, socket)
 
+  async def send_echo_message(self, message):
+      \\"\\"\\"
+      Send a send_echo_message message using the WebSocket connection attached to this instance.
+
+      Args:
+          message (dict or str): The message to send. Will be serialized to JSON if it's a dictionary.
+
+      Raises:
+          Exception: If sending fails or the socket is not connected.
+      \\"\\"\\"
+      await self._send(message, self.ws_app)
 
   @staticmethod
   async def _send(message, socket):

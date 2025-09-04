@@ -4,7 +4,7 @@
     "build": {
       "outputs": ["dist/**", "lib/**"],
       "cache": false,
-      "dependsOn": ["^build", "@asyncapi/generator-react-sdk#build"] 
+      "dependsOn": ["^build"]
     },
     "test:dev": {
       "interactive": true,
@@ -12,7 +12,7 @@
       "persistent": true
     },
     "test": { 
-      "dependsOn": ["^test", "build"],
+      "dependsOn": ["^test", "build", "@asyncapi/generator-react-sdk#build"],
       "cache": false 
     },
     "test:update": { "cache": false },

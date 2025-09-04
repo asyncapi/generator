@@ -438,6 +438,11 @@ public class Acknowledge {
   }
 
   @Override
+  public int hashCode() {
+    return Objects.hash((Object)envelopeId, (Object)payload, (Object)additionalProperties);
+  }
+
+  @Override
   public String toString() {
     return \\"class Acknowledge {\\\\n\\" +   
       \\"    envelopeId: \\" + toIndentedString(envelopeId) + \\"\\\\n\\" +
@@ -507,6 +512,11 @@ public class Authorization {
         Objects.equals(this.isBot, self.isBot) &&
         Objects.equals(this.isEnterpriseInstall, self.isEnterpriseInstall) &&
         Objects.equals(this.additionalProperties, self.additionalProperties);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash((Object)enterpriseId, (Object)teamId, (Object)userId, (Object)isBot, (Object)isEnterpriseInstall, (Object)additionalProperties);
   }
 
   @Override
@@ -593,6 +603,11 @@ public class ChannelJoin implements EventData {
   }
 
   @Override
+  public int hashCode() {
+    return Objects.hash((Object)type, (Object)eventTs, (Object)subtype, (Object)inviter, (Object)text, (Object)user, (Object)ts, (Object)channelType, (Object)additionalProperties);
+  }
+
+  @Override
   public String toString() {
     return \\"class ChannelJoin {\\\\n\\" +   
       \\"    type: \\" + toIndentedString(type) + \\"\\\\n\\" +
@@ -648,6 +663,11 @@ public class ConnectionInfo {
       return 
         Objects.equals(this.appId, self.appId) &&
         Objects.equals(this.additionalProperties, self.additionalProperties);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash((Object)appId, (Object)additionalProperties);
   }
 
   @Override
@@ -717,6 +737,11 @@ public class DebugInfo {
   }
 
   @Override
+  public int hashCode() {
+    return Objects.hash((Object)host, (Object)started, (Object)buildNumber, (Object)approximateConnectionTime, (Object)additionalProperties);
+  }
+
+  @Override
   public String toString() {
     return \\"class DebugInfo {\\\\n\\" +   
       \\"    host: \\" + toIndentedString(host) + \\"\\\\n\\" +
@@ -778,6 +803,11 @@ public class Disconnect {
         Objects.equals(this.reason, self.reason) &&
         Objects.equals(this.debugInfo, self.debugInfo) &&
         Objects.equals(this.additionalProperties, self.additionalProperties);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash((Object)type, (Object)reason, (Object)debugInfo, (Object)additionalProperties);
   }
 
   @Override
@@ -987,6 +1017,11 @@ public class Event {
   }
 
   @Override
+  public int hashCode() {
+    return Objects.hash((Object)envelopeId, (Object)payload, (Object)type, (Object)acceptsResponsePayload, (Object)retryAttempt, (Object)retryReason);
+  }
+
+  @Override
   public String toString() {
     return \\"class Event {\\\\n\\" +   
       \\"    envelopeId: \\" + toIndentedString(envelopeId) + \\"\\\\n\\" +
@@ -1097,6 +1132,11 @@ public class EventPayload {
   }
 
   @Override
+  public int hashCode() {
+    return Objects.hash((Object)token, (Object)teamId, (Object)contextTeamId, (Object)contextEnterpriseId, (Object)apiAppId, (Object)event, (Object)type, (Object)eventId, (Object)eventTime, (Object)eventContext, (Object)authorizations);
+  }
+
+  @Override
   public String toString() {
     return \\"class EventPayload {\\\\n\\" +   
       \\"    token: \\" + toIndentedString(token) + \\"\\\\n\\" +
@@ -1169,6 +1209,11 @@ public class Hello {
         Objects.equals(this.numConnections, self.numConnections) &&
         Objects.equals(this.debugInfo, self.debugInfo) &&
         Objects.equals(this.additionalProperties, self.additionalProperties);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash((Object)type, (Object)connectionInfo, (Object)numConnections, (Object)debugInfo, (Object)additionalProperties);
   }
 
   @Override
@@ -1351,6 +1396,11 @@ public class MessageDeleted implements EventData {
   }
 
   @Override
+  public int hashCode() {
+    return Objects.hash((Object)type, (Object)eventTs, (Object)subtype, (Object)deletedTs, (Object)channel, (Object)ts, (Object)channelType, (Object)previousMessage, (Object)additionalProperties);
+  }
+
+  @Override
   public String toString() {
     return \\"class MessageDeleted {\\\\n\\" +   
       \\"    type: \\" + toIndentedString(type) + \\"\\\\n\\" +
@@ -1484,6 +1534,11 @@ public class ReactionAdded implements EventData {
         Objects.equals(this.user, self.user) &&
         Objects.equals(this.item, self.item) &&
         Objects.equals(this.additionalProperties, self.additionalProperties);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash((Object)type, (Object)eventTs, (Object)reaction, (Object)user, (Object)item, (Object)additionalProperties);
   }
 
   @Override

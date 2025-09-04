@@ -1,0 +1,33 @@
+renderer: react
+apiVersion: v3
+generator: '>=1.3.0 <3.0.0'
+parameters:
+  server:
+    description: The name of the server described in AsyncAPI document
+    required: false
+  appendClientSuffix:
+    description: Add 'Client' suffix at the end of the class name. This option has no effect if 'customClientName' is specified.
+    required: false
+    default: false
+  customClientName:
+    description: The custom name for the generated client class
+    required: false
+  env:
+    description: 'The environment for the generated client, e.g., dev, prod'
+    required: false
+    default: dev
+  version:
+    description: 'The version for the generated client, e.g., V1, V2'
+    required: false
+    default: V1
+nonRenderableFiles:
+  - .dockerignore
+  - .gitignore
+  - .mvn/**
+  - mvnw
+  - mvnw.cmd
+metadata:
+  type: client
+  protocol: kafka
+  target: java
+  stack: quarkus

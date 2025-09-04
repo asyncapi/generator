@@ -1,0 +1,9 @@
+{
+  "extends": ["//"],
+  "$schema": "https://turbo.build/schema.v1.json",
+  "pipeline": {
+    "build": {
+      "dependsOn": ["^build", "@asyncapi/generator-react-sdk#build"]
+    }
+  }
+}

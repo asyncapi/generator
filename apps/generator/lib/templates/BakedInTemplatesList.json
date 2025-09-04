@@ -1,5 +1,12 @@
 [
   {
+    "name": "core-template-client-kafka-java-quarkus",
+    "type": "client",
+    "protocol": "kafka",
+    "target": "java",
+    "stack": "quarkus"
+  },
+  {
     "name": "core-template-client-websocket-dart",
     "type": "client",
     "protocol": "websocket",

@@ -16,7 +16,7 @@ import io.quarkus.websockets.next.OnError;
 import io.quarkus.websockets.next.OnTextMessage;
 import io.quarkus.websockets.next.CloseReason;
 import jakarta.inject.Inject;
-import io.quarkus.logging.Log;
+import org.jboss.logging.Logger;
 import java.util.concurrent.CompletableFuture;
 import java.time.Duration;"
 `;
@@ -32,7 +32,7 @@ import io.quarkus.websockets.next.OnError;
 import io.quarkus.websockets.next.OnTextMessage;
 import io.quarkus.websockets.next.CloseReason;
 import jakarta.inject.Inject;
-import io.quarkus.logging.Log;"
+import org.jboss.logging.Logger;"
 `;
 
 exports[`Testing of DependencyProvider function render java quarkus connector websockets file dependencies correctly 1`] = `

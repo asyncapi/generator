@@ -1,5 +1,5 @@
 import { Text } from '@asyncapi/generator-react-sdk';
-import { QueryParamsVariables } from './QueryParamsVariables';
+import { QueryParamsVariables } from '@asyncapi/generator-components';
 import { QueryParamsArgumentsDocs } from './QueryParamsArgumentsDocs';
 import { InitSignature } from './InitSignature';
 
@@ -31,7 +31,10 @@ export function Constructor({ serverUrl, query}) {
       ${ query ? 'params = {}' : ''}`
         }
       </Text>
-      <QueryParamsVariables queryParams={queryParamsArray} />
+      <QueryParamsVariables
+        language="python"
+        queryParams={queryParamsArray} 
+      />
       <Text newLines={2}>
         {`
         ${query ? 'qs = urlencode(params) if params else ""' : ''}

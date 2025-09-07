@@ -9,6 +9,23 @@ channels:
     messages:
       UserSignedUp:
         $ref: '#/components/messages/UserSignedUp'
+    bindings:
+      ws:
+        bindingVersion: 0.1.0
+        query:
+          type: object
+          properties:
+            heartbeat:
+              type: boolean
+              default: false
+            top_of_book:
+              type: boolean
+              default: false
+            bids:
+              type: boolean
+              default: true
+            offers:
+              type: string
 operations:
   sendUserSignedup:
     action: send

@@ -11,7 +11,7 @@ export default function OnTextMessage({ sendOperations }) {
               <Text newLines={2} indent={2}>
                 {`@OnTextMessage
 public void ${methodName}(String message, WebSocketClientConnection connection) {
-    Log.info("Received text message: " + message);
+    LOG.info("Received text message: " + message);
 }`}
               </Text>
             );
@@ -19,11 +19,12 @@ public void ${methodName}(String message, WebSocketClientConnection connection) 
         )}
 
       {
+        // need a default handler
         (!sendOperations || sendOperations.length === 0) && (
           <Text newLines={2} indent={2}>
             {`@OnTextMessage
 public void processTextMessage(String message, WebSocketClientConnection connection) {
-    Log.info("Received text message: " + message);
+    LOG.info("Received text message: " + message);
 }`}
           </Text>
 

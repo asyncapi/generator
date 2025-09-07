@@ -38,7 +38,7 @@ const websocketOnCloseMethod = {
       const onCloseMethod = `@OnClose
    public void onClose(CloseReason reason, WebSocketClientConnection connection) {
       int code = reason.getCode();
-      Log.info("Websocket disconnected from ${title} with Close code: " + code);
+      LOG.info("Websocket disconnected from ${title} with Close code: " + code);
   }
 }`;
       return { onCloseMethod, indent: 2 };

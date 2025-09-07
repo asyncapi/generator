@@ -17,6 +17,7 @@ coverage
 /.idea
 temp
 __pycache__
+**/target/
 
 microcks-data
 packages/templates/clients/websocket/test/__fixtures__/bundled.yml

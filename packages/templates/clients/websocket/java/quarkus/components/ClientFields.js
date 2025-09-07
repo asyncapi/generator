@@ -1,7 +1,7 @@
 import { toCamelCase } from '@asyncapi/generator-helpers';
 import { Text } from '@asyncapi/generator-react-sdk';
 
-export function ClientFields({ queryParams }) {
+export function ClientFields({ queryParams, clientName }) {
   let queryParamsVariables = '';
   const queryParamsArray = queryParams && Array.from(queryParams.entries());
   
@@ -16,7 +16,10 @@ export function ClientFields({ queryParams }) {
   return (
     <Text indent={2} newLines={2}>
       {`@Inject
-WebSocketClientConnection connection;
+public WebSocketClientConnection connection;
+
+private static final Logger LOG = Logger.getLogger(${clientName}.class);
+
 ${queryParamsVariables}`}
     </Text>
   );

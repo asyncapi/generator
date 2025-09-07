@@ -4,8 +4,8 @@ exports[`Testing of OnOpen function render java quarkas OnOpen method 1`] = `
 "@OnOpen
   public void onOpen() {
       String broadcastMessage = \\"Echo called from HoppscotchEchoWebSocketClient server\\";
-      Log.info(\\"Connected to HoppscotchEchoWebSocketClient server\\");
-      Log.info(broadcastMessage);
+      LOG.info(\\"Connected to HoppscotchEchoWebSocketClient server\\");
+      LOG.info(broadcastMessage);
   }"
 `;
 

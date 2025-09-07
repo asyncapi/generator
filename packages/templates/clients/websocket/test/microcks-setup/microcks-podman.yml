@@ -173,6 +173,18 @@ services:
       - ../../../../../../:/usr/src/app
     command: ["sh", "-c", "cd packages/templates/clients/websocket/python/test/temp/snapshotTestResult/client_hoppscotch && pip install -r requirements.txt && cd ../../../../../test/python && pip install -r requirements.txt && pytest"]
 
+  tester-java:
+    profiles:
+      - test-java
+    image: maven:3.9-eclipse-temurin-21
+    container_name: websocket-acceptance-tester-java
+    ports:
+      - "8084:8084"
+    working_dir: /usr/src/app
+    volumes:
+      - ../../../../../../:/usr/src/app
+    command: ["sh", "-c", "cd packages/templates/clients/websocket/java/quarkus/test/temp/snapshotTestResult/client_hoppscotch && mvn clean install && cd ../../../../../../test/java/quarkus && mvn clean test"]
+    
   # Below for debugging purposes. 
   # Just uncomment below and after starting environment you can enter the constainer with "podman exec -it net-debug sh" and use websocat to test the websocket connection
 

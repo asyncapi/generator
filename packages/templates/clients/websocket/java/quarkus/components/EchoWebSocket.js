@@ -19,7 +19,7 @@ export function EchoWebSocket({ clientName, pathName, title, queryParams, operat
 @WebSocketClient(path = "${pathName}")  
 public class ${clientName}{`}
       </Text>
-      <ClientFields queryParams={queryParams} />
+      <ClientFields queryParams={queryParams} clientName={clientName}/>
       <Constructor clientName={clientName} query={queryParams} />
       <OnOpen title={title}/>
       <OnTextMessageHandler sendOperations={sendOperations}/>

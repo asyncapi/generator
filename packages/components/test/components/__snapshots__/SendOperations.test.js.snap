@@ -1,0 +1,63 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing of SendOperation function render js websockets with null send operations 1`] = `""`;
+
+exports[`Testing of SendOperation function render js websockets with send operations and client name 1`] = `
+"/**
+   * Sends a sendUserSignedup message over the WebSocket connection.
+   * 
+   * @param {Object} message - The message payload to send. Should match the schema defined in the AsyncAPI document.
+   * @param {WebSocket} [socket] - The WebSocket connection to use. If not provided, the client's own connection will be used.
+   * @throws {TypeError} If message cannot be stringified to JSON
+   * @throws {Error} If WebSocket connection is not in OPEN state
+   */
+  static sendUserSignedup(message, socket) {
+    try {
+      socket.send(JSON.stringify(message));
+    } catch (error) {
+      console.error('Error sending sendUserSignedup message:', error);
+    }
+  }
+
+  /**
+   * Instance method version of sendUserSignedup that uses the client's own WebSocket connection.
+   * @param {Object} message - The message payload to send
+   * @throws {Error} If WebSocket connection is not established
+   */
+  sendUserSignedup(message){
+    if(!this.websocket){
+      throw new Error('WebSocket connection not established. Call connect() first.');
+    }
+    AccountServiceAPI.sendUserSignedup(message, this.websocket);
+  }"
+`;
+
+exports[`Testing of SendOperation function render js websockets without send operations 1`] = `""`;
+
+exports[`Testing of SendOperation function render websockets without send operations 1`] = `
+"@staticmethod
+  async def send_user_signedup_static(message, socket):
+      \\"\\"\\"
+      Send a send_user_signedup message using a provided WebSocket connection, without needing an instance.
+
+      Args:
+          message (dict or str): The message to send.
+          socket (websockets.WebSocketCommonProtocol): The WebSocket to send through.
+
+      Raises:
+          Exception: If sending fails or the socket is not connected.
+      \\"\\"\\"
+      await AccountServiceAPI._send(message, socket)
+
+  async def send_user_signedup(self, message):
+      \\"\\"\\"
+      Send a send_user_signedup message using the WebSocket connection attached to this instance.
+
+      Args:
+          message (dict or str): The message to send. Will be serialized to JSON if it's a dictionary.
+
+      Raises:
+          Exception: If sending fails or the socket is not connected.
+      \\"\\"\\"
+      await self._send(message, self.ws_app)"
+`;

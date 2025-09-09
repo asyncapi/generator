@@ -1,6 +1,24 @@
-const { buildParams, generateAndVerifyClient } = require('@asyncapi/generator-helpers');
+const { verifyDirectoryStructure, getDirElementsRecursive, buildParams } = require('@asyncapi/generator-helpers');
 const path = require('path');
+const Generator = require('@asyncapi/generator');
 const asyncapi_v3_path_adeo = path.resolve(__dirname, '../__fixtures__/asyncapi-adeo.yml');
+
+/**
+ * Helper function to generate client and verify snapshots
+ */
+async function generateAndVerifyClient(template, outputPath, asyncapiPath, params) {
+  const generator = new Generator(template, outputPath, {
+    forceWrite: true,
+    templateParams: params
+  });
+
+  await generator.generateFromFile(asyncapiPath);
+
+  // List the files & folders in the output directory
+  const directoryElements = await getDirElementsRecursive(outputPath);
+
+  await verifyDirectoryStructure(directoryElements, outputPath);
+}
 
 /**
  * Run snapshot tests for code generation across multiple AsyncAPI specifications.

@@ -770,7 +770,7 @@ public class CostingRequestConsumer{
   private static final Logger logger = Logger.getLogger(CostingRequestConsumer.class);
 
       @Incoming(\\"consumer-channel\\") 
-      public void consumeundefined(Record<String, String> record) {
+      public void consumeCostingRequest(Record<String, String> record) {
         logger.infof(\\"Got an event, id: %s value: %s\\", record.key(), record.value());
             
         // TODO: Add your business logic here for events

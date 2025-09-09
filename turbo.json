@@ -3,8 +3,7 @@
   "pipeline": {
     "build": {
       "outputs": ["dist/**", "lib/**"],
-      "cache": false,
-      "dependsOn": ["^build"]
+      "cache": false 
     },
     "test:dev": {
       "interactive": true,
@@ -12,7 +11,7 @@
       "persistent": true
     },
     "test": { 
-      "dependsOn": ["^test", "build", "@asyncapi/generator-react-sdk#build"],
+      "dependsOn": ["^test", "build"],
       "cache": false 
     },
     "test:update": { "cache": false },

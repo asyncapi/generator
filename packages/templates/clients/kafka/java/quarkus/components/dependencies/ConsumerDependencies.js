@@ -9,14 +9,3 @@ export function ConsumerDependencies() {
     />
   );
 }   
-
-/**
- * {`
-package com.asyncapi;
-
-import io.smallrye.reactive.messaging.kafka.Record;
-import org.eclipse.microprofile.reactive.messaging.Incoming;
-import org.jboss.logging.Logger;
-
-import jakarta.enterprise.context.ApplicationScoped;`}
- */

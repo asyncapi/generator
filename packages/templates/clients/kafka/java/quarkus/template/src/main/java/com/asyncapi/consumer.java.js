@@ -15,36 +15,8 @@ export default async function ({ asyncapi, params }) {
     return (
       <File name={consumerFileName}>
         <ConsumerDependencies />
-        <ClientConsumer className={consumerName}/>
+        <ClientConsumer className={consumerName} eventName={topicName}/>
       </File>
     );
   });
 }
-/**
- * Could just use the model
- * 
- * function mapToJavaType(schema, name) {
-  // JSON Schema type → Java type mapping
-  const jsonType = schema.type();
-
-  if (jsonType === 'string') return 'String';
-  if (jsonType === 'integer') return 'Integer';
-  if (jsonType === 'number') return 'Double';
-  if (jsonType === 'boolean') return 'Boolean';
-
-  if (jsonType === 'array') {
-    const items = schema.items();
-    if (items && items.type()) {
-      return `List<${mapToJavaType(items, name)}>`;
-    }
-    return "List<Object>";
-  }
-
-  if (jsonType === 'object' || schema.oneOf()?.length) {
-    // Complex type → class name = capitalize property name
-    return FormatHelpers.upperFirst(name);
-  }
-
-  return "Object"; // fallback
-}
- */

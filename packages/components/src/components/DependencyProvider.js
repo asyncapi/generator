@@ -28,7 +28,7 @@ const dependenciesConfig = {
           'import io.quarkus.websockets.next.WebSocketClientConnection;','import io.quarkus.websockets.next.OnOpen;',
           'import io.quarkus.websockets.next.OnClose;','import io.quarkus.websockets.next.OnError;',
           'import io.quarkus.websockets.next.OnTextMessage;','import io.quarkus.websockets.next.CloseReason;',
-          'import jakarta.inject.Inject;','import io.quarkus.logging.Log;']
+          'import jakarta.inject.Inject;','import org.jboss.logging.Logger;']
       },
       connector: {
         dependencies: ['package com.asyncapi;\n','import io.quarkus.websockets.next.WebSocketConnector;',

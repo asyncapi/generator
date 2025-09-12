@@ -1586,14 +1586,17 @@ import io.quarkus.websockets.next.OnError;
 import io.quarkus.websockets.next.OnTextMessage;
 import io.quarkus.websockets.next.CloseReason;
 import jakarta.inject.Inject;
-import io.quarkus.logging.Log;
+import org.jboss.logging.Logger;
 import java.util.HashMap;
 
 @WebSocketClient(path = \\"/link\\")  
 public class SlackWebsocketAPIClient{
 
   @Inject
-  WebSocketClientConnection connection;
+  public WebSocketClientConnection connection;
+
+  private static final Logger LOG = Logger.getLogger(SlackWebsocketAPIClient.class);
+
 
   private HashMap<String, String> params;
   private String ticket;
@@ -1618,24 +1621,24 @@ public class SlackWebsocketAPIClient{
   @OnOpen
   public void onOpen() {
       String broadcastMessage = \\"Echo called from Slack Websocket API Client server\\";
-      Log.info(\\"Connected to Slack Websocket API Client server\\");
-      Log.info(broadcastMessage);
+      LOG.info(\\"Connected to Slack Websocket API Client server\\");
+      LOG.info(broadcastMessage);
   }
 
   @OnTextMessage
   public void processTextMessage(String message, WebSocketClientConnection connection) {
-      Log.info(\\"Received text message: \\" + message);
+      LOG.info(\\"Received text message: \\" + message);
   }
 
   @OnError
   public void onError(Throwable throwable) {
-      Log.error(\\"Websocket connection error: \\" + throwable.getMessage());
+      LOG.error(\\"Websocket connection error: \\" + throwable.getMessage());
   }
 
   @OnClose
      public void onClose(CloseReason reason, WebSocketClientConnection connection) {
         int code = reason.getCode();
-        Log.info(\\"Websocket disconnected from Slack Websocket API Client with Close code: \\" + code);
+        LOG.info(\\"Websocket disconnected from Slack Websocket API Client with Close code: \\" + code);
     }
   }
 
@@ -2607,36 +2610,39 @@ import io.quarkus.websockets.next.OnError;
 import io.quarkus.websockets.next.OnTextMessage;
 import io.quarkus.websockets.next.CloseReason;
 import jakarta.inject.Inject;
-import io.quarkus.logging.Log;
+import org.jboss.logging.Logger;
 
 @WebSocketClient(path = \\"/\\")  
 public class HoppscotchClient{
 
   @Inject
-  WebSocketClientConnection connection;
+  public WebSocketClientConnection connection;
+
+  private static final Logger LOG = Logger.getLogger(HoppscotchClient.class);
+
 
 
   @OnOpen
   public void onOpen() {
       String broadcastMessage = \\"Echo called from Hoppscotch Echo WebSocket Client server\\";
-      Log.info(\\"Connected to Hoppscotch Echo WebSocket Client server\\");
-      Log.info(broadcastMessage);
+      LOG.info(\\"Connected to Hoppscotch Echo WebSocket Client server\\");
+      LOG.info(broadcastMessage);
   }
 
   @OnTextMessage
   public void sendEchoMessage(String message, WebSocketClientConnection connection) {
-      Log.info(\\"Received text message: \\" + message);
+      LOG.info(\\"Received text message: \\" + message);
   }
 
   @OnError
   public void onError(Throwable throwable) {
-      Log.error(\\"Websocket connection error: \\" + throwable.getMessage());
+      LOG.error(\\"Websocket connection error: \\" + throwable.getMessage());
   }
 
   @OnClose
      public void onClose(CloseReason reason, WebSocketClientConnection connection) {
         int code = reason.getCode();
-        Log.info(\\"Websocket disconnected from Hoppscotch Echo WebSocket Client with Close code: \\" + code);
+        LOG.info(\\"Websocket disconnected from Hoppscotch Echo WebSocket Client with Close code: \\" + code);
     }
   }
 
@@ -3757,36 +3763,39 @@ import io.quarkus.websockets.next.OnError;
 import io.quarkus.websockets.next.OnTextMessage;
 import io.quarkus.websockets.next.CloseReason;
 import jakarta.inject.Inject;
-import io.quarkus.logging.Log;
+import org.jboss.logging.Logger;
 
 @WebSocketClient(path = \\"/\\")  
 public class HoppscotchEchoWebSocketClient{
 
   @Inject
-  WebSocketClientConnection connection;
+  public WebSocketClientConnection connection;
+
+  private static final Logger LOG = Logger.getLogger(HoppscotchEchoWebSocketClient.class);
+
 
 
   @OnOpen
   public void onOpen() {
       String broadcastMessage = \\"Echo called from Hoppscotch Echo WebSocket Client server\\";
-      Log.info(\\"Connected to Hoppscotch Echo WebSocket Client server\\");
-      Log.info(broadcastMessage);
+      LOG.info(\\"Connected to Hoppscotch Echo WebSocket Client server\\");
+      LOG.info(broadcastMessage);
   }
 
   @OnTextMessage
   public void sendEchoMessage(String message, WebSocketClientConnection connection) {
-      Log.info(\\"Received text message: \\" + message);
+      LOG.info(\\"Received text message: \\" + message);
   }
 
   @OnError
   public void onError(Throwable throwable) {
-      Log.error(\\"Websocket connection error: \\" + throwable.getMessage());
+      LOG.error(\\"Websocket connection error: \\" + throwable.getMessage());
   }
 
   @OnClose
      public void onClose(CloseReason reason, WebSocketClientConnection connection) {
         int code = reason.getCode();
-        Log.info(\\"Websocket disconnected from Hoppscotch Echo WebSocket Client with Close code: \\" + code);
+        LOG.info(\\"Websocket disconnected from Hoppscotch Echo WebSocket Client with Close code: \\" + code);
     }
   }
 
@@ -5005,36 +5014,39 @@ import io.quarkus.websockets.next.OnError;
 import io.quarkus.websockets.next.OnTextMessage;
 import io.quarkus.websockets.next.CloseReason;
 import jakarta.inject.Inject;
-import io.quarkus.logging.Log;
+import org.jboss.logging.Logger;
 
 @WebSocketClient(path = \\"/raw\\")  
 public class PostmanEchoWebSocketClientClient{
 
   @Inject
-  WebSocketClientConnection connection;
+  public WebSocketClientConnection connection;
+
+  private static final Logger LOG = Logger.getLogger(PostmanEchoWebSocketClientClient.class);
+
 
 
   @OnOpen
   public void onOpen() {
       String broadcastMessage = \\"Echo called from Postman Echo WebSocket Client server\\";
-      Log.info(\\"Connected to Postman Echo WebSocket Client server\\");
-      Log.info(broadcastMessage);
+      LOG.info(\\"Connected to Postman Echo WebSocket Client server\\");
+      LOG.info(broadcastMessage);
   }
 
   @OnTextMessage
   public void sendEchoMessage(String message, WebSocketClientConnection connection) {
-      Log.info(\\"Received text message: \\" + message);
+      LOG.info(\\"Received text message: \\" + message);
   }
 
   @OnError
   public void onError(Throwable throwable) {
-      Log.error(\\"Websocket connection error: \\" + throwable.getMessage());
+      LOG.error(\\"Websocket connection error: \\" + throwable.getMessage());
   }
 
   @OnClose
      public void onClose(CloseReason reason, WebSocketClientConnection connection) {
         int code = reason.getCode();
-        Log.info(\\"Websocket disconnected from Postman Echo WebSocket Client with Close code: \\" + code);
+        LOG.info(\\"Websocket disconnected from Postman Echo WebSocket Client with Close code: \\" + code);
     }
   }
 

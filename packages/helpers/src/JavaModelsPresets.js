@@ -1,4 +1,4 @@
-import { JAVA_COMMON_PRESET } from '@asyncapi/modelina';
+const { JAVA_COMMON_PRESET } = require('@asyncapi/modelina');
 
 // Helper function to add package declaration
 function addPackage(content) {
@@ -34,7 +34,7 @@ otherModelTypes.forEach(type => {
   };
 });
 
-export const JavaPresets = [
+const JavaModelsPresets = [
   {
     preset: JAVA_COMMON_PRESET,
     options: {
@@ -46,3 +46,5 @@ export const JavaPresets = [
   },
   websocketJavaPreset
 ];
+
+module.exports = { JavaModelsPresets };

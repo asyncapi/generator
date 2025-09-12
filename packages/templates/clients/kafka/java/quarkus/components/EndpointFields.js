@@ -1,5 +1,5 @@
 import { Text } from '@asyncapi/generator-react-sdk';
-import { FormatHelpers } from '@asyncapi/modelina';
+import { toCamelCase, upperFirst } from '@asyncapi/generator-helpers';
 
 export function EndpointFields({ sendOperations, channels }) {
   if (!sendOperations || sendOperations.length === 0) {
@@ -9,8 +9,8 @@ export function EndpointFields({ sendOperations, channels }) {
   return (
     <>
       {sendOperations.map((operation, index) => {
-        const topicName = FormatHelpers.toCamelCase(operation.channels()[index].id());
-        const producerName = `${FormatHelpers.upperFirst(topicName)  }Producer`;
+        const topicName = toCamelCase(operation.channels()[index].id());
+        const producerName = `${upperFirst(topicName)  }Producer`;
 
         return (
           <Text key={producerName} newLines={2}>

@@ -1,6 +1,6 @@
 import { Models } from '@asyncapi/generator-components';
-import { JavaPresets } from '@asyncapi/generator-components';
+import { JavaModelsPresets } from '@asyncapi/generator-helpers';
 
 export default async function({ asyncapi }) {
-  return await Models({ asyncapi, language: 'java', format: 'toPascalCase', presets: JavaPresets });
+  return await Models({ asyncapi, language: 'java', format: 'toPascalCase', presets: JavaModelsPresets });
 }

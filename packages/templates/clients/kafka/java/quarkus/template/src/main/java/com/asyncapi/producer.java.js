@@ -1,7 +1,7 @@
 import { File } from '@asyncapi/generator-react-sdk';
 import { ProducerDependencies } from '../../../../../../components/dependencies/ProducerDependencies';
 import ClientProducer from '../../../../../../components/ClientProducer';
-import { FormatHelpers } from '@asyncapi/modelina';
+import { toCamelCase, upperFirst } from '@asyncapi/generator-helpers';
 
 export default async function ({ asyncapi, params }) {
   const operations = asyncapi.operations();    
@@ -9,9 +9,9 @@ export default async function ({ asyncapi, params }) {
   const sendOperations = operations.filterBySend();    
     
   return sendOperations.map((operation, index) => {
-    const topicName = FormatHelpers.toCamelCase(operation.channels()[index].id());
-    const producerName = `${FormatHelpers.upperFirst(topicName)  }Producer`;
-    const producerFileName = FormatHelpers.upperFirst(`${producerName}.java`);
+    const topicName = toCamelCase(operation.channels()[index].id());
+    const producerName = `${upperFirst(topicName)  }Producer`;
+    const producerFileName = upperFirst(`${producerName}.java`);
         
     return (
       <File name={producerFileName}>

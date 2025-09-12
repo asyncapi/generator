@@ -1,8 +1,8 @@
 import { Text } from '@asyncapi/generator-react-sdk';
-import { FormatHelpers } from '@asyncapi/modelina';
+import { upperFirst } from '@asyncapi/generator-helpers';
 
 export function ProducerFields({ clientName }) {
-  const className = FormatHelpers.upperFirst(clientName);
+  const className = upperFirst(clientName);
   return (
     <Text newLines={2}>
       {`

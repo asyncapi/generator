@@ -1,8 +1,8 @@
 import { Text } from '@asyncapi/generator-react-sdk';
-import { FormatHelpers } from '@asyncapi/modelina';
+import { upperFirst } from '@asyncapi/generator-helpers';
 
 export default function SendEvent({ eventName }) {
-  const className = FormatHelpers.upperFirst(eventName);
+  const className = upperFirst(eventName);
     
   return (
     <Text newLines={2}>

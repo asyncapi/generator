@@ -4,8 +4,7 @@ import { File } from '@asyncapi/generator-react-sdk';
 import { EndpointDependencies } from '../../../../../../components/dependencies/EndpointDependencies';
 import ClientEndpoint from '../../../../../../components/ClientEndpoint';
 
-/* this is where I will call the rest api to create a message from the produce */
-export default async function ({ asyncapi, params }) {
+export default function ({ asyncapi, params }) {
   const server = getServer(asyncapi.servers(), params.server);
   const info = getInfo(asyncapi);
   const channels = asyncapi.channels();

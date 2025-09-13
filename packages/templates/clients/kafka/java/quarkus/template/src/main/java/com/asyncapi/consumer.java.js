@@ -3,7 +3,7 @@ import { File } from '@asyncapi/generator-react-sdk';
 import { ConsumerDependencies } from '../../../../../../components/dependencies/ConsumerDependencies';
 import ClientConsumer from '../../../../../../components/ClientConsumer';
 
-export default async function ({ asyncapi, params }) {
+export default function ({ asyncapi, params }) {
   const operations = asyncapi.operations();
   const receiveOperations = operations.filterByReceive();
 

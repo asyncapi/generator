@@ -3,7 +3,7 @@ const { getServerUrl, getServer, getServerHost, getServerProtocol }  = require('
 const { getClientName, getInfo, toSnakeCase, toCamelCase, getTitle, lowerFirst, upperFirst} = require('./utils');
 const { getQueryParams } = require('./bindings');
 const { cleanTestResultPaths, verifyDirectoryStructure, getDirElementsRecursive, buildParams, listFiles, hasNestedConfig} = require('./testing');
-const { JavaModelsPresets } = require('./JavaModelsPresets');
+const { JavaModelsPresets } = require('./ModelsPresets');
 
 module.exports = {
   getServerUrl,

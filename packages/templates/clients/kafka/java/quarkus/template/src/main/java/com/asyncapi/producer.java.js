@@ -3,7 +3,7 @@ import { ProducerDependencies } from '../../../../../../components/dependencies/
 import ClientProducer from '../../../../../../components/ClientProducer';
 import { toCamelCase, upperFirst } from '@asyncapi/generator-helpers';
 
-export default async function ({ asyncapi, params }) {
+export default function ({ asyncapi, params }) {
   const operations = asyncapi.operations();    
 
   const sendOperations = operations.filterBySend();    

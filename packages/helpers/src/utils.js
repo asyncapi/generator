@@ -81,10 +81,20 @@ const toCamelCase = (inputStr) => {
     .replace(/^./, (match) => match.toLowerCase());
 };
 
+const lowerFirst = (inputStr) => {
+  return inputStr.charAt(0).toLowerCase() + inputStr.slice(1);
+};
+
+const upperFirst = (inputStr) => {
+  return inputStr.charAt(0).toUpperCase() + inputStr.slice(1);
+};
+
 module.exports = {
   getClientName,
   getTitle,
   getInfo,
   toSnakeCase,
-  toCamelCase
+  toCamelCase,
+  lowerFirst,
+  upperFirst
 };

@@ -1,6 +1,6 @@
 const path = require('path');
 const { Parser, fromFile } = require('@asyncapi/parser');
-const { getClientName, getInfo, getTitle, toSnakeCase, toCamelCase } = require('@asyncapi/generator-helpers');
+const { getClientName, getInfo, getTitle, toSnakeCase, toCamelCase, lowerFirst, upperFirst } = require('@asyncapi/generator-helpers');
 
 const parser = new Parser();
 const asyncapi_v3_path = path.resolve(__dirname, './__fixtures__/asyncapi-websocket-query.yml');
@@ -189,5 +189,63 @@ describe('toCamelCase integration test with AsyncAPI', () => {
     const actualOperationId = toCamelCase('');
     const expectedOperationId = '';
     expect(actualOperationId).toBe(expectedOperationId);
+  });
+});
+
+describe('lowerFirst', () => {
+  let parsedAsyncAPIDocument, operations;
+
+  beforeAll(async () => {
+    const parseRes = await fromFile(parser, asyncapi_v3_path).parse();
+    parsedAsyncAPIDocument = parseRes.document;
+    operations = parsedAsyncAPIDocument.operations();
+  });
+
+  it('should convert PascalCase operation names to lowerFirst format', () => {
+    const operation = operations.get('PascalCaseOperation');
+    const actualOperationId = lowerFirst(operation.id());
+    const expectedOperationId = 'pascalCaseOperation';
+    expect(actualOperationId).toBe(expectedOperationId);
+  });
+
+  it('should convert first letter to lowercase for PascalCase strings', () => {
+    const actualResult = lowerFirst('HelloWorld');
+    const expectedResult = 'helloWorld';
+    expect(actualResult).toBe(expectedResult);
+  });
+
+  it('should return empty string when input is empty', () => {
+    const actualResult = lowerFirst('A');
+    const expectedResult = 'a';
+    expect(actualResult).toBe(expectedResult);
+  });
+});
+
+describe('upperFirst', () => {
+  let parsedAsyncAPIDocument, operations;
+
+  beforeAll(async () => {
+    const parsedResult = await fromFile(parser, asyncapi_v3_path).parse();
+    parsedAsyncAPIDocument = parsedResult.document;
+    operations = parsedAsyncAPIDocument.operations();
+  });
+
+  it('should convert camelCase operation names to PascalCase format', () => {
+    const operation = operations.get('noSummaryNoDescriptionOperations');
+    const actualOperationId = upperFirst(operation.id());
+    const expectedOperationId = 'NoSummaryNoDescriptionOperations';
+    expect(actualOperationId).toBe(expectedOperationId);
+  });
+
+  it('should convert first letter to uppercase for camelCase strings', () => {
+    const actualResult = upperFirst('helloWorld');
+    const expectedResult = 'HelloWorld';
+    expect(actualResult).toBe(expectedResult);
+  });
+
+  it('should handle single character strings', () => {
+    const actualResult = upperFirst('a');
+    const expectedResult = 'A';
+    expect(actualResult).toBe(expectedResult);
   });
 });

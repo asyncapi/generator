@@ -42,24 +42,15 @@ else:
  * @param {Object} [props.customMethodConfig] - Optional overrides for default method configuration.
  * @returns {JSX.Element} Rendered method block with appropriate formatting.
  */
-export function RegisterErrorHandler({ language, methodName = 'registerErrorHandler', methodParams = [], preExecutionCode = '', postExecutionCode = '', customMethodConfig }) {
-  const {
-    methodDocs = '',
-    methodLogic = ''
-  } = websocketErrorRegisterConfig[language];
-
+export function RegisterErrorHandler({ methodName = 'registerErrorHandler', methodParams = [], ...props }) {
   return (
     <MethodGenerator
-      language={language}
+      methodConfig={websocketErrorRegisterConfig}
       methodName={methodName}
       methodParams={methodParams}
-      methodDocs={methodDocs}
-      methodLogic={methodLogic}
-      preExecutionCode={preExecutionCode}
-      postExecutionCode={postExecutionCode}
       indent={2}
       newLines={2}
-      customMethodConfig={customMethodConfig}
+      {...props}
     />
   );
 }

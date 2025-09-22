@@ -30,6 +30,8 @@ const defaultMethodConfig = {
  * @param {number} [props.indent=2] - Indentation for the method block.
  * @param {number} [props.newLines=1] - Number of new lines after method.
  * @param {{ returnType?: string, openingTag?: string, closingTag?: string, indentSize?: number }} [props.customMethodConfig]  - Optional custom syntax configuration for the current language.
+ * @param {Record<Language, { methodDocs?: string, methodLogic?: string }>} [props.methodConfig] - Configuration object mapping languages to their method docs and logic.
+ * @param {string} [props.framework] - Framework name for nested configurations (e.g., 'quarkus' for Java).
  */
 export function MethodGenerator({
   language,
@@ -41,8 +43,29 @@ export function MethodGenerator({
   postExecutionCode = '',
   indent = 2,
   newLines = 1,
-  customMethodConfig
+  customMethodConfig,
+  methodConfig,
+  framework
 }) {
+  // Resolve methodDocs and methodLogic from methodConfig if provided
+  let resolvedMethodDocs = methodDocs;
+  let resolvedMethodLogic = methodLogic;
+  
+  if (methodConfig && methodConfig[language]) {
+    const config = methodConfig[language];
+    
+    // Handle nested structure (framework-specific configs)
+    if (framework && config[framework]) {
+      const frameworkConfig = config[framework];
+      resolvedMethodDocs = methodDocs || frameworkConfig.methodDocs || '';
+      resolvedMethodLogic = methodLogic || frameworkConfig.methodLogic || '';
+    } else if (config.methodLogic || config.methodDocs) {
+      // Handle flat structure (direct methodLogic/methodDocs)
+      resolvedMethodDocs = methodDocs || config.methodDocs || '';
+      resolvedMethodLogic = methodLogic || config.methodLogic || '';
+    }
+  }
+
   const {
     returnType = '',
     openingTag = '',
@@ -54,7 +77,7 @@ export function MethodGenerator({
   const params = methodParams.join(', ');
   const parameterBlock = parameterWrap ? `(${params})` : `${params}`;
 
-  let completeCode = methodLogic;
+  let completeCode = resolvedMethodLogic;
 
   if (preExecutionCode) {
     completeCode = `${preExecutionCode}\n${completeCode}`;
@@ -69,7 +92,7 @@ export function MethodGenerator({
     .map(line => (line ? `${innerIndent}${line}` : ''))
     .join('\n');
 
-  const methodCode = `${methodDocs}
+  const methodCode = `${resolvedMethodDocs}
 ${returnType} ${methodName}${parameterBlock} ${openingTag}
 ${indentedLogic}
 ${closingTag}`;

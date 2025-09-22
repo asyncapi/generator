@@ -73,10 +73,10 @@ print('WebSocket connection closed.');`
 export function CloseConnection({ methodName = 'close', indent = 2, ...props }) {
   return (
     <MethodGenerator
+      {...props}
       methodConfig={websocketCloseConfig}
       methodName={methodName}
       indent={indent}
-      {...props}
     />
   );
 }

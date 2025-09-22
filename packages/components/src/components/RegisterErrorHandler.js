@@ -45,11 +45,11 @@ else:
 export function RegisterErrorHandler({ methodName = 'registerErrorHandler', ...props }) {
   return (
     <MethodGenerator
+      {...props}
       methodConfig={websocketErrorRegisterConfig}
       methodName={methodName}
       indent={2}
       newLines={2}
-      {...props}
     />
   );
 }

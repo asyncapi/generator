@@ -44,11 +44,11 @@ else:
 export function RegisterMessageHandler({ methodName = 'registerMessageHandler', ...props }) {
   return (
     <MethodGenerator
+      {...props}
       methodConfig={websocketMessageRegisterConfig}
       methodName={methodName}
       indent={2}
       newLines={2}
-      {...props}
     />
   );
 }

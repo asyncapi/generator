@@ -17,6 +17,44 @@ const defaultMethodConfig = {
 };
 
 /**
+ * Resolve docs and logic for the given language + framework config.
+ */
+const resolveDocsAndLogic = ({ language, methodDocs, methodLogic, methodConfig, framework }) => {
+  let docs = methodDocs;
+  let logic = methodLogic;
+
+  if (methodConfig && methodConfig[language]) {
+    const config = methodConfig[language];
+
+    if (framework && config[framework]) {
+      const frameworkConfig = config[framework];
+      docs = frameworkConfig.methodDocs || methodDocs || '';
+      logic = frameworkConfig.methodLogic || methodLogic || '';
+    } else if (config.methodLogic || config.methodDocs) {
+      docs = config.methodDocs || methodDocs || '';
+      logic = config.methodLogic || methodLogic || '';
+    }
+  }
+
+  return { docs, logic };
+};
+
+/**
+ * Build indented method body.
+ */
+const buildIndentedLogic = (logic, preExecutionCode, postExecutionCode, indentSize) => {
+  let completeCode = logic;
+  if (preExecutionCode) completeCode = `${preExecutionCode}\n${completeCode}`;
+  if (postExecutionCode) completeCode = `${completeCode}\n${postExecutionCode}`;
+
+  const innerIndent = ' '.repeat(indentSize);
+  return completeCode
+    .split('\n')
+    .map(line => (line ? `${innerIndent}${line}` : ''))
+    .join('\n');
+};
+
+/**
  * Generic Method rendering component.
  *
  * @param {Object} props - Component props.
@@ -47,24 +85,13 @@ export function MethodGenerator({
   methodConfig,
   framework
 }) {
-  // Resolve methodDocs and methodLogic from methodConfig if provided
-  let resolvedMethodDocs = methodDocs;
-  let resolvedMethodLogic = methodLogic;
-  
-  if (methodConfig && methodConfig[language]) {
-    const config = methodConfig[language];
-    
-    // Handle nested structure (framework-specific configs)
-    if (framework && config[framework]) {
-      const frameworkConfig = config[framework];
-      resolvedMethodDocs = methodDocs || frameworkConfig.methodDocs || '';
-      resolvedMethodLogic = methodLogic || frameworkConfig.methodLogic || '';
-    } else if (config.methodLogic || config.methodDocs) {
-      // Handle flat structure (direct methodLogic/methodDocs)
-      resolvedMethodDocs = methodDocs || config.methodDocs || '';
-      resolvedMethodLogic = methodLogic || config.methodLogic || '';
-    }
-  }
+  const { docs: resolvedMethodDocs, logic: resolvedMethodLogic } = resolveDocsAndLogic({
+    language,
+    methodDocs,
+    methodLogic,
+    methodConfig,
+    framework
+  });
 
   const {
     returnType = '',
@@ -77,20 +104,12 @@ export function MethodGenerator({
   const params = methodParams.join(', ');
   const parameterBlock = parameterWrap ? `(${params})` : `${params}`;
 
-  let completeCode = resolvedMethodLogic;
-
-  if (preExecutionCode) {
-    completeCode = `${preExecutionCode}\n${completeCode}`;
-  }
-  if (postExecutionCode) {
-    completeCode = `${completeCode}\n${postExecutionCode}`;
-  }
-
-  const innerIndent = ' '.repeat(indentSize);
-  const indentedLogic = completeCode
-    .split('\n')
-    .map(line => (line ? `${innerIndent}${line}` : ''))
-    .join('\n');
+  const indentedLogic = buildIndentedLogic(
+    resolvedMethodLogic,
+    preExecutionCode,
+    postExecutionCode,
+    indentSize
+  );
 
   const methodCode = `${resolvedMethodDocs}
 ${returnType} ${methodName}${parameterBlock} ${openingTag}

@@ -70,12 +70,11 @@ print('WebSocket connection closed.');`
  * @param {number} props.indent=2 - Indentation level for the method block.
  * @returns {JSX.Element} Rendered method block with appropriate formatting.
  */
-export function CloseConnection({ methodName = 'close', methodParams = [], indent = 2, ...props }) {
+export function CloseConnection({ methodName = 'close', indent = 2, ...props }) {
   return (
     <MethodGenerator
       methodConfig={websocketCloseConfig}
       methodName={methodName}
-      methodParams={methodParams}
       indent={indent}
       {...props}
     />

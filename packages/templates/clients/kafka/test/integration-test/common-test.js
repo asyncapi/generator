@@ -3,6 +3,7 @@ const path = require('path');
 const Generator = require('@asyncapi/generator');
 const asyncapi_v3_path_adeo = path.resolve(__dirname, '../__fixtures__/asyncapi-adeo.yml');
 
+jest.setTimeout(100000);
 /**
  * Helper function to generate client and verify snapshots
  */
@@ -31,7 +32,6 @@ function runCommonTests(language, config) {
   const testResultPathAdeo = path.join(config.testResultPath, 'client_adeo');
 
   describe(`Common Integration tests for ${language} client generation`, () => {
-    jest.setTimeout(100000);
     test.each([
       [
         'adeo case study',

@@ -28,11 +28,11 @@ const resolveDocsAndLogic = ({ language, methodDocs, methodLogic, methodConfig, 
 
     if (framework && config[framework]) {
       const frameworkConfig = config[framework];
-      docs = frameworkConfig.methodDocs || methodDocs || '';
-      logic = frameworkConfig.methodLogic || methodLogic || '';
+      docs = frameworkConfig.methodDocs ?? methodDocs ?? '';
+      logic = frameworkConfig.methodLogic ?? methodLogic ?? '';
     } else if (config.methodLogic || config.methodDocs) {
-      docs = config.methodDocs || methodDocs || '';
-      logic = config.methodLogic || methodLogic || '';
+      docs = config.methodDocs ?? methodDocs ?? '';
+      logic = config.methodLogic ?? methodLogic ?? '';
     }
   }
 
@@ -67,8 +67,8 @@ const buildIndentedLogic = (logic, preExecutionCode, postExecutionCode, indentSi
  * @param {string} [props.postExecutionCode=''] - Code after main logic.
  * @param {number} [props.indent=2] - Indentation for the method block.
  * @param {number} [props.newLines=1] - Number of new lines after method.
- * @param {{ returnType?: string, openingTag?: string, closingTag?: string, indentSize?: number }} [props.customMethodConfig]  - Optional custom syntax configuration for the current language.
- * @param {Record<Language, { methodDocs?: string, methodLogic?: string }>} [props.methodConfig] - Configuration object mapping languages to their method docs and logic.
+ * @param {{ returnType?: string, openingTag?: string, closingTag?: string, indentSize?: number, parameterWrap?: boolean }} [props.customMethodConfig]  - Optional custom syntax configuration for the current language.
+ * @param {Record<Language, ({ methodDocs?: string, methodLogic?: string } | Record<string, { methodDocs?: string, methodLogic?: string }>)} [props.methodConfig] - Language-level or framework-level configuration.
  * @param {string} [props.framework] - Framework name for nested configurations (e.g., 'quarkus' for Java).
  */
 export function MethodGenerator({

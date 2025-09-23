@@ -9,3 +9,6 @@ export { OnOpen } from './components/OnOpen';
 export { OnMessage } from './components/OnMessage';
 export { OnError } from './components/OnError';
 export { OnClose } from './components/OnClose';
+export { SendOperations } from './components/SendOperations';
+export { QueryParamsVariables } from './components/QueryParamsVariables';
+export { RegisterErrorHandler } from './components/RegisterErrorHandler';

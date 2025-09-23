@@ -1,6 +1,8 @@
 import { Text } from '@asyncapi/generator-react-sdk';
 import { getClientName, getServerUrl, getServer, getQueryParams, getTitle } from '@asyncapi/generator-helpers';
+import { Send } from './Send';
 import { Constructor } from './Constructor';
+import { HandleMessage } from './HandleMessage';
 import { CloseConnection, RegisterMessageHandler, RegisterErrorHandler, SendOperations, Connect } from '@asyncapi/generator-components';
 import { RegisterOutgoingProcessor } from './RegisterOutgoingProcessor';
 import { HandleError } from './HandleError';

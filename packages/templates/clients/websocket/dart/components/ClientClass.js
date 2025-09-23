@@ -1,5 +1,7 @@
 import { Text } from '@asyncapi/generator-react-sdk';
 import { Constructor } from './Constructor';
+import { HandleMessage } from './HandleMessage';
+import { SendEchoMessage } from './SendEchoMessage';
 import { CloseConnection, RegisterMessageHandler, RegisterErrorHandler, Connect } from '@asyncapi/generator-components';
 import { ClientFields } from './ClientFields';
 

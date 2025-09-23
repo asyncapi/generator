@@ -58,39 +58,6 @@ print('WebSocket connection closed.');`
 };
 
 /**
- * Helper function to resolve config
- * @param {language} language 
- * @param {framework} framework 
- * @returns 
- */
-function resolveCloseConfig(language, framework = '') {
-  const config = websocketCloseConfig[language];
-  
-  if (!config) {
-    return { methodDocs: '', methodLogic: '' };
-  }
-  
-  // Handle flat structure (python, javascript, dart)
-  if (config.methodLogic || config.methodDocs) {
-    return {
-      methodDocs: config.methodDocs || '',
-      methodLogic: config.methodLogic || ''
-    };
-  }
-  
-  // Handle nested structure (java with framework)
-  if (framework && config[framework]) {
-    const frameworkConfig = config[framework];
-    return {
-      methodDocs: frameworkConfig.methodDocs || '',
-      methodLogic: frameworkConfig.methodLogic || ''
-    };
-  }
-  
-  return { methodDocs: '', methodLogic: '' };
-}
-
-/**
  * Renders a WebSocket close connection method with optional pre and post execution logic.
  *
  * @param {Object} props - Component props.
@@ -103,19 +70,13 @@ function resolveCloseConfig(language, framework = '') {
  * @param {number} props.indent=2 - Indentation level for the method block.
  * @returns {JSX.Element} Rendered method block with appropriate formatting.
  */
-export function CloseConnection({ language, framework = '', methodName = 'close', methodParams = [], preExecutionCode = '', postExecutionCode = '', indent = 2 }) {
-  const { methodDocs, methodLogic } = resolveCloseConfig(language, framework);
-  
+export function CloseConnection({ methodName = 'close', indent = 2, ...props }) {
   return (
     <MethodGenerator
-      language={language}
+      {...props}
+      methodConfig={websocketCloseConfig}
       methodName={methodName}
-      methodParams = {methodParams}
-      methodDocs = {methodDocs}
-      methodLogic = {methodLogic}
-      preExecutionCode = {preExecutionCode}
-      postExecutionCode = {postExecutionCode}
-      indent = {indent}
+      indent={indent}
     />
   );
 }

@@ -11,7 +11,7 @@ export default function({ asyncapi, params }) {
   return (
     <File name="README.md">
       <Text newLines={2}>
-{`# ${title}
+        {`# ${title}
 
 ## Overview
 

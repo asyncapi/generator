@@ -41,21 +41,12 @@ else:
  * @param {string} props.postExecutionCode - Code to insert after the main function logic.
  * @returns {JSX.Element} Rendered method block with appropriate formatting.
  */
-export function RegisterMessageHandler({ language, methodName = 'registerMessageHandler', methodParams = [], preExecutionCode = '', postExecutionCode = '' }) {
-  const {
-    methodDocs = '',
-    methodLogic = ''
-  } = websocketMessageRegisterConfig[language];
-
+export function RegisterMessageHandler({ methodName = 'registerMessageHandler', ...props }) {
   return (
     <MethodGenerator
-      language={language}
+      {...props}
+      methodConfig={websocketMessageRegisterConfig}
       methodName={methodName}
-      methodParams={methodParams}
-      methodDocs={methodDocs}
-      methodLogic={methodLogic}
-      preExecutionCode={preExecutionCode}
-      postExecutionCode={postExecutionCode}
       indent={2}
       newLines={2}
     />

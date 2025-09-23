@@ -1,0 +1,60 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing of QueryParamsVariables component renders java quarkus nothing when queryParams is an empty array 1`] = `""`;
+
+exports[`Testing of QueryParamsVariables component renders java quarkus query params correctly with query parameters 1`] = `
+"this.heartbeat = (heartbeat != null && !heartbeat.isEmpty()) ? heartbeat : System.getenv(\\"HEARTBEAT\\");
+      if (this.heartbeat != null){
+        params.put(\\"heartbeat\\", this.heartbeat);
+      }
+      this.topOfBook = (topOfBook != null && !topOfBook.isEmpty()) ? topOfBook : System.getenv(\\"TOPOFBOOK\\");
+      if (this.topOfBook != null){
+        params.put(\\"topOfBook\\", this.topOfBook);
+      }
+      this.bids = (bids != null && !bids.isEmpty()) ? bids : System.getenv(\\"BIDS\\");
+      if (this.bids != null){
+        params.put(\\"bids\\", this.bids);
+      }
+      this.offers = (offers != null && !offers.isEmpty()) ? offers : System.getenv(\\"OFFERS\\");
+      if (this.offers != null){
+        params.put(\\"offers\\", this.offers);
+      }"
+`;
+
+exports[`Testing of QueryParamsVariables component renders js query params correctly with query parameters 1`] = `
+"const heartbeat = heartbeat || process.env.HEARTBEAT;
+        if (heartbeat) {
+          params[\\"heartbeat\\"] = heartbeat;
+        }
+        const top_of_book = top_of_book || process.env.TOP_OF_BOOK;
+        if (top_of_book) {
+          params[\\"top_of_book\\"] = top_of_book;
+        }
+        const bids = bids || process.env.BIDS;
+        if (bids) {
+          params[\\"bids\\"] = bids;
+        }
+        const offers = offers || process.env.OFFERS;
+        if (offers) {
+          params[\\"offers\\"] = offers;
+        }"
+`;
+
+exports[`Testing of QueryParamsVariables component renders python nothing when queryParams is null 1`] = `""`;
+
+exports[`Testing of QueryParamsVariables component renders python nothing when queryParams is undefined 1`] = `""`;
+
+exports[`Testing of QueryParamsVariables component renders python query params correctly with query parameters 1`] = `
+"heartbeat = heartbeat or os.getenv(\\"HEARTBEAT\\")
+        if heartbeat is not None:
+          params[\\"heartbeat\\"] = heartbeat
+        top_of_book = top_of_book or os.getenv(\\"TOP_OF_BOOK\\")
+        if top_of_book is not None:
+          params[\\"top_of_book\\"] = top_of_book
+        bids = bids or os.getenv(\\"BIDS\\")
+        if bids is not None:
+          params[\\"bids\\"] = bids
+        offers = offers or os.getenv(\\"OFFERS\\")
+        if offers is not None:
+          params[\\"offers\\"] = offers"
+`;

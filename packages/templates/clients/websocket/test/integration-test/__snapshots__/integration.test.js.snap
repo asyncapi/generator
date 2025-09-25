@@ -27,18 +27,17 @@ class HoppscotchClient {
 
   /// Method to establish a WebSocket connection
   Future<void> connect() async {
-    if (_channel != null) {
-      print('Already connected to Hoppscotch Echo WebSocket Client server');
-      return;
-    }
-    try {
-      final wsUrl = Uri.parse(_url);
-      _channel = WebSocketChannel.connect(wsUrl);
-      print('Connected to Hoppscotch Echo WebSocket Client server');
-
-        /// Listen to the incoming message stream
-      _channel?.stream.listen(
-        (message) {
+      if (_channel != null) {
+          print('Already connected to Hoppscotch Echo WebSocket Client server');
+          return;
+      }
+      try {
+          final wsUrl = Uri.parse(_url);
+          _channel = WebSocketChannel.connect(wsUrl);
+          print('Connected to Hoppscotch Echo WebSocket Client server');
+          /// Listen to the incoming message stream
+          _channel?.stream.listen(
+          (message) {
           if (_messageHandlers.isNotEmpty) {
             for (var handler in _messageHandlers) {
               _handleMessage(message, handler);
@@ -47,7 +46,8 @@ class HoppscotchClient {
             print('Message received: $message');
           }
         },
-        onError: (error) {
+
+          onError: (error) {
           if (_errorHandlers.isNotEmpty) {
             for (var handler in _errorHandlers) {
               handler(error);
@@ -56,11 +56,13 @@ class HoppscotchClient {
             print('WebSocket Error: $error');
           }
         },
-        onDone: () {
+
+          onDone: () {
           _channel = null;
           print('Disconnected from Hoppscotch Echo WebSocket Client server');
         },
-      );
+
+      );   
     } catch (error) {
       print('Connection failed: $error');
       rethrow;
@@ -140,18 +142,17 @@ class HoppscotchEchoWebSocketClient {
 
   /// Method to establish a WebSocket connection
   Future<void> connect() async {
-    if (_channel != null) {
-      print('Already connected to Hoppscotch Echo WebSocket Client server');
-      return;
-    }
-    try {
-      final wsUrl = Uri.parse(_url);
-      _channel = WebSocketChannel.connect(wsUrl);
-      print('Connected to Hoppscotch Echo WebSocket Client server');
-
-        /// Listen to the incoming message stream
-      _channel?.stream.listen(
-        (message) {
+      if (_channel != null) {
+          print('Already connected to Hoppscotch Echo WebSocket Client server');
+          return;
+      }
+      try {
+          final wsUrl = Uri.parse(_url);
+          _channel = WebSocketChannel.connect(wsUrl);
+          print('Connected to Hoppscotch Echo WebSocket Client server');
+          /// Listen to the incoming message stream
+          _channel?.stream.listen(
+          (message) {
           if (_messageHandlers.isNotEmpty) {
             for (var handler in _messageHandlers) {
               _handleMessage(message, handler);
@@ -160,7 +161,8 @@ class HoppscotchEchoWebSocketClient {
             print('Message received: $message');
           }
         },
-        onError: (error) {
+
+          onError: (error) {
           if (_errorHandlers.isNotEmpty) {
             for (var handler in _errorHandlers) {
               handler(error);
@@ -169,11 +171,13 @@ class HoppscotchEchoWebSocketClient {
             print('WebSocket Error: $error');
           }
         },
-        onDone: () {
+
+          onDone: () {
           _channel = null;
           print('Disconnected from Hoppscotch Echo WebSocket Client server');
         },
-      );
+
+      );   
     } catch (error) {
       print('Connection failed: $error');
       rethrow;
@@ -254,18 +258,17 @@ class PostmanEchoWebSocketClientClient {
 
   /// Method to establish a WebSocket connection
   Future<void> connect() async {
-    if (_channel != null) {
-      print('Already connected to Postman Echo WebSocket Client server');
-      return;
-    }
-    try {
-      final wsUrl = Uri.parse(_url);
-      _channel = WebSocketChannel.connect(wsUrl);
-      print('Connected to Postman Echo WebSocket Client server');
-
-        /// Listen to the incoming message stream
-      _channel?.stream.listen(
-        (message) {
+      if (_channel != null) {
+          print('Already connected to Postman Echo WebSocket Client server');
+          return;
+      }
+      try {
+          final wsUrl = Uri.parse(_url);
+          _channel = WebSocketChannel.connect(wsUrl);
+          print('Connected to Postman Echo WebSocket Client server');
+          /// Listen to the incoming message stream
+          _channel?.stream.listen(
+          (message) {
           if (_messageHandlers.isNotEmpty) {
             for (var handler in _messageHandlers) {
               _handleMessage(message, handler);
@@ -274,7 +277,8 @@ class PostmanEchoWebSocketClientClient {
             print('Message received: $message');
           }
         },
-        onError: (error) {
+
+          onError: (error) {
           if (_errorHandlers.isNotEmpty) {
             for (var handler in _errorHandlers) {
               handler(error);
@@ -283,11 +287,13 @@ class PostmanEchoWebSocketClientClient {
             print('WebSocket Error: $error');
           }
         },
-        onDone: () {
+
+          onDone: () {
           _channel = null;
           print('Disconnected from Postman Echo WebSocket Client server');
         },
-      );
+
+      );   
     } catch (error) {
       print('Connection failed: $error');
       rethrow;
@@ -1624,7 +1630,6 @@ public class SlackWebsocketAPIClient{
       LOG.info(\\"Connected to Slack Websocket API Client server\\");
       LOG.info(broadcastMessage);
   }
-
   @OnTextMessage
   public void processTextMessage(String message, WebSocketClientConnection connection) {
       LOG.info(\\"Received text message: \\" + message);
@@ -1641,7 +1646,6 @@ public class SlackWebsocketAPIClient{
         LOG.info(\\"Websocket disconnected from Slack Websocket API Client with Close code: \\" + code);
     }
   }
-
 
 "
 `;
@@ -2628,7 +2632,6 @@ public class HoppscotchClient{
       LOG.info(\\"Connected to Hoppscotch Echo WebSocket Client server\\");
       LOG.info(broadcastMessage);
   }
-
   @OnTextMessage
   public void sendEchoMessage(String message, WebSocketClientConnection connection) {
       LOG.info(\\"Received text message: \\" + message);
@@ -2645,7 +2648,6 @@ public class HoppscotchClient{
         LOG.info(\\"Websocket disconnected from Hoppscotch Echo WebSocket Client with Close code: \\" + code);
     }
   }
-
 
 "
 `;
@@ -3781,7 +3783,6 @@ public class HoppscotchEchoWebSocketClient{
       LOG.info(\\"Connected to Hoppscotch Echo WebSocket Client server\\");
       LOG.info(broadcastMessage);
   }
-
   @OnTextMessage
   public void sendEchoMessage(String message, WebSocketClientConnection connection) {
       LOG.info(\\"Received text message: \\" + message);
@@ -3798,7 +3799,6 @@ public class HoppscotchEchoWebSocketClient{
         LOG.info(\\"Websocket disconnected from Hoppscotch Echo WebSocket Client with Close code: \\" + code);
     }
   }
-
 
 "
 `;
@@ -5032,7 +5032,6 @@ public class PostmanEchoWebSocketClientClient{
       LOG.info(\\"Connected to Postman Echo WebSocket Client server\\");
       LOG.info(broadcastMessage);
   }
-
   @OnTextMessage
   public void sendEchoMessage(String message, WebSocketClientConnection connection) {
       LOG.info(\\"Received text message: \\" + message);
@@ -5049,7 +5048,6 @@ public class PostmanEchoWebSocketClientClient{
         LOG.info(\\"Websocket disconnected from Postman Echo WebSocket Client with Close code: \\" + code);
     }
   }
-
 
 "
 `;
@@ -6048,16 +6046,15 @@ class HoppscotchClient {
 
   // Method to establish a WebSocket connection
   connect() {
-    return new Promise((resolve, reject) => {
-      this.websocket = new WebSocket(this.url);
-
-      // On successful connection
-      this.websocket.onopen = () => {
+      return new Promise((resolve, reject) => {
+          this.websocket = new WebSocket(this.url);
+          // On successful connection
+        this.websocket.onopen = () => {
         console.log('Connected to Hoppscotch Echo WebSocket Client server');
         resolve();
       };
 
-      // On receiving a message
+          // On receiving a message
       this.websocket.onmessage = (event) => {
         if (this.messageHandlers.length > 0) {
           // Call custom message handlers
@@ -6072,7 +6069,7 @@ class HoppscotchClient {
         }
       };
 
-      // On error first call custom error handlers, then default error behavior
+          // On error first call custom error handlers, then default error behavior
       this.websocket.onerror = (error) => {
         if (this.errorHandlers.length > 0) {
           // Call custom error handlers
@@ -6084,11 +6081,12 @@ class HoppscotchClient {
         reject(error);
       };
 
-      // On connection close
+          // On connection close
       this.websocket.onclose = () => {
         console.log('Disconnected from Hoppscotch Echo WebSocket Client server');
       };
-    });
+
+      });
   }
 
   // Method to register custom message handlers
@@ -6316,16 +6314,15 @@ class HoppscotchEchoWebSocketClient {
 
   // Method to establish a WebSocket connection
   connect() {
-    return new Promise((resolve, reject) => {
-      this.websocket = new WebSocket(this.url);
-
-      // On successful connection
-      this.websocket.onopen = () => {
+      return new Promise((resolve, reject) => {
+          this.websocket = new WebSocket(this.url);
+          // On successful connection
+        this.websocket.onopen = () => {
         console.log('Connected to Hoppscotch Echo WebSocket Client server');
         resolve();
       };
 
-      // On receiving a message
+          // On receiving a message
       this.websocket.onmessage = (event) => {
         if (this.messageHandlers.length > 0) {
           // Call custom message handlers
@@ -6340,7 +6337,7 @@ class HoppscotchEchoWebSocketClient {
         }
       };
 
-      // On error first call custom error handlers, then default error behavior
+          // On error first call custom error handlers, then default error behavior
       this.websocket.onerror = (error) => {
         if (this.errorHandlers.length > 0) {
           // Call custom error handlers
@@ -6352,11 +6349,12 @@ class HoppscotchEchoWebSocketClient {
         reject(error);
       };
 
-      // On connection close
+          // On connection close
       this.websocket.onclose = () => {
         console.log('Disconnected from Hoppscotch Echo WebSocket Client server');
       };
-    });
+
+      });
   }
 
   // Method to register custom message handlers
@@ -6560,16 +6558,15 @@ class PostmanEchoWebSocketClientClient {
 
   // Method to establish a WebSocket connection
   connect() {
-    return new Promise((resolve, reject) => {
-      this.websocket = new WebSocket(this.url);
-
-      // On successful connection
-      this.websocket.onopen = () => {
+      return new Promise((resolve, reject) => {
+          this.websocket = new WebSocket(this.url);
+          // On successful connection
+        this.websocket.onopen = () => {
         console.log('Connected to Postman Echo WebSocket Client server');
         resolve();
       };
 
-      // On receiving a message
+          // On receiving a message
       this.websocket.onmessage = (event) => {
         if (this.messageHandlers.length > 0) {
           // Call custom message handlers
@@ -6584,7 +6581,7 @@ class PostmanEchoWebSocketClientClient {
         }
       };
 
-      // On error first call custom error handlers, then default error behavior
+          // On error first call custom error handlers, then default error behavior
       this.websocket.onerror = (error) => {
         if (this.errorHandlers.length > 0) {
           // Call custom error handlers
@@ -6596,11 +6593,12 @@ class PostmanEchoWebSocketClientClient {
         reject(error);
       };
 
-      // On connection close
+          // On connection close
       this.websocket.onclose = () => {
         console.log('Disconnected from Postman Echo WebSocket Client server');
       };
-    });
+
+      });
   }
 
   // Method to register custom message handlers
@@ -7372,17 +7370,17 @@ class SlackWebsocketAPIClient:
         self.url = f\\"{url}{f'?{qs}' if qs else ''}\\"
 
   def on_open(self, ws):
-      print(\\"Connected to Slack Websocket API Client server\\")
+    print(\\"Connected to Slack Websocket API Client server\\")
 
   def on_message(self, ws, message):
-      self.handle_message(message)
+    self.handle_message(message)
 
   def on_error(self, ws, error):
-      print(\\"WebSocket Error:\\", error)
-      self.handle_error(error)
+    print(\\"WebSocket Error:\\", error)
+    self.handle_error(error)
 
   def on_close(self, ws, close_status_code, close_msg):
-      print(\\"Disconnected from Slack Websocket API Client\\", close_status_code, close_msg)
+    print(\\"Disconnected from Slack Websocket API Client\\", close_status_code, close_msg)
 
   def connect(self):
       \\"\\"\\"Establish the connection and start the run_forever loop in a background thread.\\"\\"\\"
@@ -7558,17 +7556,17 @@ class HoppscotchClient:
         self.url = url
 
   def on_open(self, ws):
-      print(\\"Connected to Hoppscotch Echo WebSocket Client server\\")
+    print(\\"Connected to Hoppscotch Echo WebSocket Client server\\")
 
   def on_message(self, ws, message):
-      self.handle_message(message)
+    self.handle_message(message)
 
   def on_error(self, ws, error):
-      print(\\"WebSocket Error:\\", error)
-      self.handle_error(error)
+    print(\\"WebSocket Error:\\", error)
+    self.handle_error(error)
 
   def on_close(self, ws, close_status_code, close_msg):
-      print(\\"Disconnected from Hoppscotch Echo WebSocket Client\\", close_status_code, close_msg)
+    print(\\"Disconnected from Hoppscotch Echo WebSocket Client\\", close_status_code, close_msg)
 
   def connect(self):
       \\"\\"\\"Establish the connection and start the run_forever loop in a background thread.\\"\\"\\"
@@ -7789,17 +7787,17 @@ class HoppscotchEchoWebSocketClient:
         self.url = url
 
   def on_open(self, ws):
-      print(\\"Connected to Hoppscotch Echo WebSocket Client server\\")
+    print(\\"Connected to Hoppscotch Echo WebSocket Client server\\")
 
   def on_message(self, ws, message):
-      self.handle_message(message)
+    self.handle_message(message)
 
   def on_error(self, ws, error):
-      print(\\"WebSocket Error:\\", error)
-      self.handle_error(error)
+    print(\\"WebSocket Error:\\", error)
+    self.handle_error(error)
 
   def on_close(self, ws, close_status_code, close_msg):
-      print(\\"Disconnected from Hoppscotch Echo WebSocket Client\\", close_status_code, close_msg)
+    print(\\"Disconnected from Hoppscotch Echo WebSocket Client\\", close_status_code, close_msg)
 
   def connect(self):
       \\"\\"\\"Establish the connection and start the run_forever loop in a background thread.\\"\\"\\"
@@ -8020,17 +8018,17 @@ class PostmanEchoWebSocketClientClient:
         self.url = url
 
   def on_open(self, ws):
-      print(\\"Connected to Postman Echo WebSocket Client server\\")
+    print(\\"Connected to Postman Echo WebSocket Client server\\")
 
   def on_message(self, ws, message):
-      self.handle_message(message)
+    self.handle_message(message)
 
   def on_error(self, ws, error):
-      print(\\"WebSocket Error:\\", error)
-      self.handle_error(error)
+    print(\\"WebSocket Error:\\", error)
+    self.handle_error(error)
 
   def on_close(self, ws, close_status_code, close_msg):
-      print(\\"Disconnected from Postman Echo WebSocket Client\\", close_status_code, close_msg)
+    print(\\"Disconnected from Postman Echo WebSocket Client\\", close_status_code, close_msg)
 
   def connect(self):
       \\"\\"\\"Establish the connection and start the run_forever loop in a background thread.\\"\\"\\"

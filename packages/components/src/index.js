@@ -4,6 +4,7 @@ export { CloseConnection } from './components/CloseConnection';
 export { DependencyProvider } from './components/DependencyProvider';
 export { RegisterMessageHandler } from './components/RegisterMessageHandler';
 export { MethodGenerator } from './components/MethodGenerator';
+export { HandleMessage } from './components/HandleMessage';
 export { Connect } from './components/Connect';
 export { OnOpen } from './components/OnOpen';
 export { OnMessage } from './components/OnMessage';

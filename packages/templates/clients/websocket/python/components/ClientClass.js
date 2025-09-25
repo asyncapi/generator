@@ -1,10 +1,9 @@
 import { Text } from '@asyncapi/generator-react-sdk';
 import { getClientName, getServerUrl, getServer, getQueryParams, getTitle } from '@asyncapi/generator-helpers';
-import { Constructor } from './Constructor';
-import { Connect } from './Connect';
-import { HandleMessage } from './HandleMessage';
 import { Send } from './Send';
-import { CloseConnection, RegisterMessageHandler, RegisterErrorHandler, SendOperations } from '@asyncapi/generator-components';
+import { Constructor } from './Constructor';
+import { HandleMessage } from './HandleMessage';
+import { CloseConnection, RegisterMessageHandler, RegisterErrorHandler, SendOperations, Connect } from '@asyncapi/generator-components';
 import { RegisterOutgoingProcessor } from './RegisterOutgoingProcessor';
 import { HandleError } from './HandleError';
 
@@ -22,7 +21,7 @@ export function ClientClass({ asyncapi, params }) {
         {`class ${clientName}:`}
       </Text>
       <Constructor serverUrl={serverUrl} query={queryParams} />
-      <Connect title={title} />
+      <Connect language="python" title={title} />
       <RegisterMessageHandler
         language="python"
         methodName='register_message_handler'

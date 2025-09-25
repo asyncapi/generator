@@ -5886,7 +5886,8 @@ exports[`WebSocket Clients Integration Tests Java Quarkus Client Common Integrat
 `;
 
 exports[`WebSocket Clients Integration Tests JavaScript Client Common Integration tests for JavaScript client generation generate simple client for hoppscotch echo with custom client name: README.md 1`] = `
-"# Hoppscotch Echo WebSocket Client 
+"# Hoppscotch Echo WebSocket Client
+
 
 ## Overview
 
@@ -5894,32 +5895,43 @@ Undestand how to use Hoppscotch Echo WebSocket as a client. Hoppscotch Echo WebS
 
 
 - **Version:** 1.0.0
-- **URL:** wss://echo-websocket.hoppscotch.io
+- **Server URL:** wss://echo-websocket.hoppscotch.io
 
 
-## Client API Reference
+## Usage
 
 \`\`\`javascript
 const HoppscotchClient = require('./client');
 const wsClient = new HoppscotchClient();
+
+async function main() {
+  try {
+    await wsClient.connect();
+    // use wsClient to send/receive messages
+    await wsClient.close();
+  } catch (error) {
+    console.error('Failed to connect:', error);
+  }
+}
+
+main();
 \`\`\`
 
-Here the wsClient is an instance of the \`HoppscotchClient\` class.
-### Core Methods
 
-#### \`connect()\`
-Establishes a WebSocket connection to the server.
+## API
 
-#### \`registerMessageHandler(handlerFunction)\`
-Registers a callback to handle incoming messages.
-- **Parameter:** \`handlerFunction\` - This Function takes a parameter \`message\` which is a string. 
+### \`connect()\`
+Establishes a WebSocket connection.
 
-#### \`registerErrorHandler(handlerFunction)\`
-Registers a callback to handle WebSocket errors.
-- **Parameter:** \`handlerFunction\` - This Function takes a parameter \`error\` which is an object
+### \`registerMessageHandler(handlerFunction)\`
+Registers a callback for incoming messages.
 
-#### \`close()\`
+### \`registerErrorHandler(handlerFunction)\`
+Registers a callback for connection errors.
+
+### \`close()\`
 Closes the WebSocket connection.
+
 
 ### Available Operations
 
@@ -5963,57 +5975,6 @@ Receive the timestamp message sent from server every second.
 **Example:**
 \`\`\`javascript
 client.handleTimeStampMessage(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\\");
-\`\`\`
-
-
-
-## Testing the client
-
-\`\`\`javascript
-const HoppscotchClient = require('./client');
-const wsClient = new HoppscotchClient();
-
-
-// Example of how custom message handler that operates on incoming messages can look like
-
-function myHandler(message) {
-  console.log('====================');
-  console.log('Just proving I got the message in myHandler:', message);
-  console.log('====================');  
-}
-
-// Example of custom error handler
-
-function myErrorHandler(error) {
-  console.error('Errors from Websocket:', error.message);
-}
-
-async function main() {
-  wsClient.registerMessageHandler(myHandler);
-  wsClient.registerErrorHandler(myErrorHandler);
-
-  try {
-    await wsClient.connect();
-
-    // Loop to send messages every 5 seconds
-    const interval = 5000; // 5 seconds
-    const message = 'Hello, Echo!';
-
-    while (true) {
-      try {
-        await wsClient.sendEchoMessage(message);
-      } catch (error) {
-        console.error('Error while sending message:', error);
-      }
-      // Wait for the interval before sending the next message
-      await new Promise(resolve => setTimeout(resolve, interval));
-    }
-  } catch (error) {
-    console.error('Failed to connect to WebSocket:', error.message);
-  }
-}
-
-main();
 \`\`\`
 
 
@@ -6154,7 +6115,8 @@ module.exports = HoppscotchClient;
 `;
 
 exports[`WebSocket Clients Integration Tests JavaScript Client Common Integration tests for JavaScript client generation generate simple client for hoppscotch echo: README.md 1`] = `
-"# Hoppscotch Echo WebSocket Client 
+"# Hoppscotch Echo WebSocket Client
+
 
 ## Overview
 
@@ -6162,32 +6124,43 @@ Undestand how to use Hoppscotch Echo WebSocket as a client. Hoppscotch Echo WebS
 
 
 - **Version:** 1.0.0
-- **URL:** wss://echo-websocket.hoppscotch.io
+- **Server URL:** wss://echo-websocket.hoppscotch.io
 
 
-## Client API Reference
+## Usage
 
 \`\`\`javascript
 const HoppscotchEchoWebSocketClient = require('./client');
 const wsClient = new HoppscotchEchoWebSocketClient();
+
+async function main() {
+  try {
+    await wsClient.connect();
+    // use wsClient to send/receive messages
+    await wsClient.close();
+  } catch (error) {
+    console.error('Failed to connect:', error);
+  }
+}
+
+main();
 \`\`\`
 
-Here the wsClient is an instance of the \`HoppscotchEchoWebSocketClient\` class.
-### Core Methods
 
-#### \`connect()\`
-Establishes a WebSocket connection to the server.
+## API
 
-#### \`registerMessageHandler(handlerFunction)\`
-Registers a callback to handle incoming messages.
-- **Parameter:** \`handlerFunction\` - This Function takes a parameter \`message\` which is a string. 
+### \`connect()\`
+Establishes a WebSocket connection.
 
-#### \`registerErrorHandler(handlerFunction)\`
-Registers a callback to handle WebSocket errors.
-- **Parameter:** \`handlerFunction\` - This Function takes a parameter \`error\` which is an object
+### \`registerMessageHandler(handlerFunction)\`
+Registers a callback for incoming messages.
 
-#### \`close()\`
+### \`registerErrorHandler(handlerFunction)\`
+Registers a callback for connection errors.
+
+### \`close()\`
 Closes the WebSocket connection.
+
 
 ### Available Operations
 
@@ -6231,57 +6204,6 @@ Receive the timestamp message sent from server every second.
 **Example:**
 \`\`\`javascript
 client.handleTimeStampMessage(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\\");
-\`\`\`
-
-
-
-## Testing the client
-
-\`\`\`javascript
-const HoppscotchEchoWebSocketClient = require('./client');
-const wsClient = new HoppscotchEchoWebSocketClient();
-
-
-// Example of how custom message handler that operates on incoming messages can look like
-
-function myHandler(message) {
-  console.log('====================');
-  console.log('Just proving I got the message in myHandler:', message);
-  console.log('====================');  
-}
-
-// Example of custom error handler
-
-function myErrorHandler(error) {
-  console.error('Errors from Websocket:', error.message);
-}
-
-async function main() {
-  wsClient.registerMessageHandler(myHandler);
-  wsClient.registerErrorHandler(myErrorHandler);
-
-  try {
-    await wsClient.connect();
-
-    // Loop to send messages every 5 seconds
-    const interval = 5000; // 5 seconds
-    const message = 'Hello, Echo!';
-
-    while (true) {
-      try {
-        await wsClient.sendEchoMessage(message);
-      } catch (error) {
-        console.error('Error while sending message:', error);
-      }
-      // Wait for the interval before sending the next message
-      await new Promise(resolve => setTimeout(resolve, interval));
-    }
-  } catch (error) {
-    console.error('Failed to connect to WebSocket:', error.message);
-  }
-}
-
-main();
 \`\`\`
 
 
@@ -6422,39 +6344,51 @@ module.exports = HoppscotchEchoWebSocketClient;
 `;
 
 exports[`WebSocket Clients Integration Tests JavaScript Client Common Integration tests for JavaScript client generation generate simple client for postman echo: README.md 1`] = `
-"# Postman Echo WebSocket Client 
+"# Postman Echo WebSocket Client
+
 
 ## Overview
 
 Understand how to use the Postman Echo WebSocket as a client. The Postman Echo WebSocket server echoes back any messages sent to it.
 
 - **Version:** 1.0.0
-- **URL:** wss://ws.postman-echo.com/raw
+- **Server URL:** wss://ws.postman-echo.com/raw
 
 
-## Client API Reference
+## Usage
 
 \`\`\`javascript
 const PostmanEchoWebSocketClientClient = require('./client');
 const wsClient = new PostmanEchoWebSocketClientClient();
+
+async function main() {
+  try {
+    await wsClient.connect();
+    // use wsClient to send/receive messages
+    await wsClient.close();
+  } catch (error) {
+    console.error('Failed to connect:', error);
+  }
+}
+
+main();
 \`\`\`
 
-Here the wsClient is an instance of the \`PostmanEchoWebSocketClientClient\` class.
-### Core Methods
 
-#### \`connect()\`
-Establishes a WebSocket connection to the server.
+## API
 
-#### \`registerMessageHandler(handlerFunction)\`
-Registers a callback to handle incoming messages.
-- **Parameter:** \`handlerFunction\` - This Function takes a parameter \`message\` which is a string. 
+### \`connect()\`
+Establishes a WebSocket connection.
 
-#### \`registerErrorHandler(handlerFunction)\`
-Registers a callback to handle WebSocket errors.
-- **Parameter:** \`handlerFunction\` - This Function takes a parameter \`error\` which is an object
+### \`registerMessageHandler(handlerFunction)\`
+Registers a callback for incoming messages.
 
-#### \`close()\`
+### \`registerErrorHandler(handlerFunction)\`
+Registers a callback for connection errors.
+
+### \`close()\`
 Closes the WebSocket connection.
+
 
 ### Available Operations
 
@@ -6474,57 +6408,6 @@ client.sendEchoMessage(\\"test\\");
 client.sendEchoMessage({
   \\"test\\": \\"test text\\"
 });
-\`\`\`
-
-
-
-## Testing the client
-
-\`\`\`javascript
-const PostmanEchoWebSocketClientClient = require('./client');
-const wsClient = new PostmanEchoWebSocketClientClient();
-
-
-// Example of how custom message handler that operates on incoming messages can look like
-
-function myHandler(message) {
-  console.log('====================');
-  console.log('Just proving I got the message in myHandler:', message);
-  console.log('====================');  
-}
-
-// Example of custom error handler
-
-function myErrorHandler(error) {
-  console.error('Errors from Websocket:', error.message);
-}
-
-async function main() {
-  wsClient.registerMessageHandler(myHandler);
-  wsClient.registerErrorHandler(myErrorHandler);
-
-  try {
-    await wsClient.connect();
-
-    // Loop to send messages every 5 seconds
-    const interval = 5000; // 5 seconds
-    const message = 'Hello, Echo!';
-
-    while (true) {
-      try {
-        await wsClient.sendEchoMessage(message);
-      } catch (error) {
-        console.error('Error while sending message:', error);
-      }
-      // Wait for the interval before sending the next message
-      await new Promise(resolve => setTimeout(resolve, interval));
-    }
-  } catch (error) {
-    console.error('Failed to connect to WebSocket:', error.message);
-  }
-}
-
-main();
 \`\`\`
 
 
@@ -7240,6 +7123,7 @@ AsyncAPI document that represent the API of the application that is a client of 
 - **Version:** 1.0.0
 - **Server URL:** wss://wss-primary.slack.com/link
 
+
 ## Installation
 
 Install dependencies:
@@ -7247,6 +7131,7 @@ Install dependencies:
 \`\`\`bash
 pip install -r requirements.txt
 \`\`\`
+
 
 ## Usage
 
@@ -7260,6 +7145,7 @@ async def main():
     # use ws_client to send/receive messages
     await ws_client.close()
 \`\`\`
+
 
 ## API
 
@@ -7481,6 +7367,7 @@ Undestand how to use Hoppscotch Echo WebSocket as a client. Hoppscotch Echo WebS
 - **Version:** 1.0.0
 - **Server URL:** wss://echo-websocket.hoppscotch.io
 
+
 ## Installation
 
 Install dependencies:
@@ -7488,6 +7375,7 @@ Install dependencies:
 \`\`\`bash
 pip install -r requirements.txt
 \`\`\`
+
 
 ## Usage
 
@@ -7501,6 +7389,7 @@ async def main():
     # use ws_client to send/receive messages
     await ws_client.close()
 \`\`\`
+
 
 ## API
 
@@ -7712,6 +7601,7 @@ Undestand how to use Hoppscotch Echo WebSocket as a client. Hoppscotch Echo WebS
 - **Version:** 1.0.0
 - **Server URL:** wss://echo-websocket.hoppscotch.io
 
+
 ## Installation
 
 Install dependencies:
@@ -7719,6 +7609,7 @@ Install dependencies:
 \`\`\`bash
 pip install -r requirements.txt
 \`\`\`
+
 
 ## Usage
 
@@ -7732,6 +7623,7 @@ async def main():
     # use ws_client to send/receive messages
     await ws_client.close()
 \`\`\`
+
 
 ## API
 
@@ -7942,6 +7834,7 @@ Understand how to use the Postman Echo WebSocket as a client. The Postman Echo W
 - **Version:** 1.0.0
 - **Server URL:** wss://ws.postman-echo.com/raw
 
+
 ## Installation
 
 Install dependencies:
@@ -7949,6 +7842,7 @@ Install dependencies:
 \`\`\`bash
 pip install -r requirements.txt
 \`\`\`
+
 
 ## Usage
 
@@ -7962,6 +7856,7 @@ async def main():
     # use ws_client to send/receive messages
     await ws_client.close()
 \`\`\`
+
 
 ## API
 

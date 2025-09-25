@@ -1,61 +1,20 @@
 import { File, Text } from '@asyncapi/generator-react-sdk';
-import { getClientName, getServer, getServerUrl, getInfo, getTitle } from '@asyncapi/generator-helpers';
+import { Info } from '../../../../../components/Info';
+import { Overview } from '../../../../../components/Overview';
+import { Installation } from '../../../../../components/Installation';
+import { Usage } from '../../../../../components/Usage';
+import { CoreMethods} from '../../../../../components/CoreMethods';
 
 export default function({ asyncapi, params }) {
-  const server = getServer(asyncapi.servers(), params.server);
-  const info = getInfo(asyncapi);
-  const clientName = getClientName(asyncapi, params.appendClientSuffix, params.customClientName);
-  const title = getTitle(asyncapi);
-  const serverUrl = getServerUrl(server);
+  const { info, clientName, title, serverUrl } = Info(asyncapi, params);
 
   return (
     <File name="README.md">
-      <Text newLines={2}>
-        {`# ${title}
-
-## Overview
-
-${info.description() || `A WebSocket client for ${title}.`}
-
-- **Version:** ${info.version()}
-- **Server URL:** ${serverUrl}
-
-## Installation
-
-Install dependencies:
-
-\`\`\`bash
-pip install -r requirements.txt
-\`\`\`
-
-## Usage
-
-\`\`\`python
-from ${params.clientFileName.replace('.py', '')} import ${clientName}
-
-ws_client = ${clientName}()
-
-async def main():
-    await ws_client.connect()
-    # use ws_client to send/receive messages
-    await ws_client.close()
-\`\`\`
-
-## API
-
-### \`connect()\`
-Establishes a WebSocket connection.
-
-### \`register_message_handler(handler_function)\`
-Registers a callback for incoming messages.
-
-### \`register_error_handler(handler_function)\`
-Registers a callback for connection errors.
-
-### \`close()\`
-Closes the WebSocket connection.
-`}
-      </Text>
+      <Text newLines={2}>{`# ${title}`}</Text>
+      <Overview info={info} title={title} serverUrl={serverUrl} />
+      <Installation />
+      <Usage clientName={clientName} clientFileName={params.clientFileName} language="python" />
+      <CoreMethods language="python" />
     </File>
   );
 }

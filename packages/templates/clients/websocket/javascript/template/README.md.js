@@ -1,12 +1,12 @@
 import { File, Text } from '@asyncapi/generator-react-sdk';
-import { Info } from '../../../../../components/Info';
+import { BaseInfo } from '../../../../../components/Info';
 import { Overview } from '../../../../../components/Overview';
 import { CoreMethods} from '../../../../../components/CoreMethods';
 import { Usage } from '../../../../../components/Usage';
 import { AvailableOperations } from '../components/AvailableOperations';
 
 export default function({ asyncapi, params }) {
-  const { info, clientName, title, serverUrl } = Info(asyncapi, params);
+  const { info, clientName, title, serverUrl } = BaseInfo(asyncapi, params);
 
 
   const operations = asyncapi.operations().all();

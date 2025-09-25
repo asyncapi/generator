@@ -1,14 +1,13 @@
-import { Text } from '@asyncapi/generator-react-sdk';
+import { File, Text } from '@asyncapi/generator-react-sdk';
 
-export function OverviewSection({ title, description, version, serverUrl }) {
+export function Overview({ info, title, serverUrl }) {
   return (
     <Text newLines={2}>
-      {`# ${title}
+      {`## Overview
 
-## Overview
+${info.description() || `A WebSocket client for ${title}.`}
 
-${description || `A WebSocket client for ${title}.`}
-- **Version:** ${version}
+- **Version:** ${info.version()}
 - **Server URL:** ${serverUrl}
 `}
     </Text>

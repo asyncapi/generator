@@ -1,12 +1,12 @@
 import { File, Text } from '@asyncapi/generator-react-sdk';
-import { Info } from '../../../../../components/Info';
+import { BaseInfo } from '../../../../../components/Info';
 import { Overview } from '../../../../../components/Overview';
 import { Installation } from '../../../../../components/Installation';
 import { Usage } from '../../../../../components/Usage';
 import { CoreMethods} from '../../../../../components/CoreMethods';
 
 export default function({ asyncapi, params }) {
-  const { info, clientName, title, serverUrl } = Info(asyncapi, params);
+  const { info, clientName, title, serverUrl } = BaseInfo(asyncapi, params);
 
   return (
     <File name="README.md">

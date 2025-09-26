@@ -32,27 +32,19 @@ else:
  *
  * @param {Object} props - Component props.
  * @param {Language} props.language - Programming language used for method formatting.
- * @param {string} props.methodName='handleMessage' - Name of the method to generate.
- * @param {string[]} props.methodParams=[] - List of parameters for the method.
- * @param {string} props.preExecutionCode - Code to insert before the main function logic.
- * @param {string} props.postExecutionCode - Code to insert after the main function logic.
+ * @param {string} [props.methodName='handleMessage'] - Name of the method to generate.
+ * @param {string[]} [props.methodParams=[]] - List of parameters for the method.
+ * @param {string} [props.preExecutionCode] - Code to insert before the main function logic.
+ * @param {string} [props.postExecutionCode] - Code to insert after the main function logic.
+ * @param {Object} [props.customMethodConfig] - Optional overrides for default method configuration.
  * @returns {JSX.Element} Rendered method block with appropriate formatting.
  */
-export function HandleMessage({ language, methodName = 'handleMessage', methodParams = [], preExecutionCode = '', postExecutionCode = '' }) {
-  const {
-    methodDocs = '',
-    methodLogic = ''
-  } = websocketHandleMessageConfig[language];
-
+export function HandleMessage({ methodName = 'handleMessage', ...props }) {
   return (
     <MethodGenerator
-      language={language}
+      {...props}
+      methodConfig={websocketHandleMessageConfig}
       methodName={methodName}
-      methodParams={methodParams}
-      methodDocs={methodDocs}
-      methodLogic={methodLogic}
-      preExecutionCode={preExecutionCode}
-      postExecutionCode={postExecutionCode}
       indent={2}
       newLines={2}
     />

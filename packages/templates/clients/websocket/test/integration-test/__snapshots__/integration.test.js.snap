@@ -6069,7 +6069,7 @@ class HoppscotchClient {
   }
 
   // Method to handle message with callback
-  handleMessage(message, cb) {
+   handleMessage(message, cb) {
     if (cb) cb(message);
   }
 
@@ -6298,7 +6298,7 @@ class HoppscotchEchoWebSocketClient {
   }
 
   // Method to handle message with callback
-  handleMessage(message, cb) {
+   handleMessage(message, cb) {
     if (cb) cb(message);
   }
 
@@ -6503,7 +6503,7 @@ class PostmanEchoWebSocketClientClient {
   }
 
   // Method to handle message with callback
-  handleMessage(message, cb) {
+   handleMessage(message, cb) {
     if (cb) cb(message);
   }
 
@@ -7321,13 +7321,14 @@ class SlackWebsocketAPIClient:
       else:
           print(\\"Outgoing processor must be callable\\")
 
-  def handle_message(self, message):
-      \\"\\"\\"Pass the incoming message to all registered message handlers. \\"\\"\\"
-      if len(self.message_handlers) == 0:
-        print(\\"\\\\033[94mReceived raw message:\\\\033[0m\\", message)
-      else:
+  def handle_message(self, message) :
+    \\"\\"\\"Pass the incoming message to all registered message handlers. \\"\\"\\"
+    if len(self.message_handlers) == 0:
+      print(\\"\\\\033[94mReceived raw message:\\\\033[0m\\", message)
+    else:
         for handler in self.message_handlers:
           handler(message)
+
 
   def handle_error(self, error):
       \\"\\"\\"Pass the error to all registered error handlers. Generic log message is printed if no handlers are registered.\\"\\"\\"
@@ -7510,13 +7511,14 @@ class HoppscotchClient:
       else:
           print(\\"Outgoing processor must be callable\\")
 
-  def handle_message(self, message):
-      \\"\\"\\"Pass the incoming message to all registered message handlers. \\"\\"\\"
-      if len(self.message_handlers) == 0:
-        print(\\"\\\\033[94mReceived raw message:\\\\033[0m\\", message)
-      else:
+  def handle_message(self, message) :
+    \\"\\"\\"Pass the incoming message to all registered message handlers. \\"\\"\\"
+    if len(self.message_handlers) == 0:
+      print(\\"\\\\033[94mReceived raw message:\\\\033[0m\\", message)
+    else:
         for handler in self.message_handlers:
           handler(message)
+
 
   def handle_error(self, error):
       \\"\\"\\"Pass the error to all registered error handlers. Generic log message is printed if no handlers are registered.\\"\\"\\"
@@ -7744,13 +7746,14 @@ class HoppscotchEchoWebSocketClient:
       else:
           print(\\"Outgoing processor must be callable\\")
 
-  def handle_message(self, message):
-      \\"\\"\\"Pass the incoming message to all registered message handlers. \\"\\"\\"
-      if len(self.message_handlers) == 0:
-        print(\\"\\\\033[94mReceived raw message:\\\\033[0m\\", message)
-      else:
+  def handle_message(self, message) :
+    \\"\\"\\"Pass the incoming message to all registered message handlers. \\"\\"\\"
+    if len(self.message_handlers) == 0:
+      print(\\"\\\\033[94mReceived raw message:\\\\033[0m\\", message)
+    else:
         for handler in self.message_handlers:
           handler(message)
+
 
   def handle_error(self, error):
       \\"\\"\\"Pass the error to all registered error handlers. Generic log message is printed if no handlers are registered.\\"\\"\\"
@@ -7978,13 +7981,14 @@ class PostmanEchoWebSocketClientClient:
       else:
           print(\\"Outgoing processor must be callable\\")
 
-  def handle_message(self, message):
-      \\"\\"\\"Pass the incoming message to all registered message handlers. \\"\\"\\"
-      if len(self.message_handlers) == 0:
-        print(\\"\\\\033[94mReceived raw message:\\\\033[0m\\", message)
-      else:
+  def handle_message(self, message) :
+    \\"\\"\\"Pass the incoming message to all registered message handlers. \\"\\"\\"
+    if len(self.message_handlers) == 0:
+      print(\\"\\\\033[94mReceived raw message:\\\\033[0m\\", message)
+    else:
         for handler in self.message_handlers:
           handler(message)
+
 
   def handle_error(self, error):
       \\"\\"\\"Pass the error to all registered error handlers. Generic log message is printed if no handlers are registered.\\"\\"\\"

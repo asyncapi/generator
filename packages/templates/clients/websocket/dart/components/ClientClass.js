@@ -1,8 +1,7 @@
 import { Text } from '@asyncapi/generator-react-sdk';
 import { Constructor } from './Constructor';
-import { HandleMessage } from './HandleMessage';
 import { SendEchoMessage } from './SendEchoMessage';
-import { CloseConnection, RegisterMessageHandler, RegisterErrorHandler, Connect } from '@asyncapi/generator-components';
+import { CloseConnection, RegisterMessageHandler, RegisterErrorHandler, Connect, HandleMessage } from '@asyncapi/generator-components';
 import { ClientFields } from './ClientFields';
 
 export function ClientClass({ clientName, serverUrl, title }) {
@@ -22,7 +21,11 @@ export function ClientClass({ clientName, serverUrl, title }) {
         language="dart"
         methodParams={['void Function(Object) handler']}
       />
-      <HandleMessage />
+      <HandleMessage
+        language="dart" 
+        methodName="_handleMessage"
+        methodParams={['dynamic message', 'void Function(String) cb']}
+      />
       <SendEchoMessage />
       <CloseConnection language="dart" />
       <Text>

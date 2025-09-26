@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing of HandleMessage function render dart websocket message handler method 1`] = `
+"/// Method to handle message with callback
+  void _handleMessage(dynamic message, void Function(String) cb) {
+    cb(message is String ? message : message.toString());
+  }"
+`;
+
+exports[`Testing of HandleMessage function render javascript websocket message handler method 1`] = `
+"// Method to handle message with callback
+   handleMessage(message, cb) {
+    if (cb) cb(message);
+  }"
+`;
+
+exports[`Testing of HandleMessage function render python websocket message handler method 1`] = `
+"def handle_message(self, message) :
+    \\"\\"\\"Pass the incoming message to all registered message handlers. \\"\\"\\"
+    if len(self.message_handlers) == 0:
+      print(\\"\\\\033[94mReceived raw message:\\\\033[0m\\", message)
+    else:
+        for handler in self.message_handlers:
+          handler(message)"
+`;

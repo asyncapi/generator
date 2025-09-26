@@ -1,6 +1,5 @@
 import { getClientName, getServer, getServerUrl, getInfo, getTitle } from '@asyncapi/generator-helpers';
 
-
 export function BaseInfo(asyncapi, params) {
   const server = getServer(asyncapi.servers(), params.server);
   const info = getInfo(asyncapi);

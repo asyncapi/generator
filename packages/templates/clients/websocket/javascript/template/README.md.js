@@ -14,7 +14,7 @@ export default function({ asyncapi, params }) {
     <File name="README.md">
       <>
         <Text newLines={2}>
-          {`# ${title}\n`}
+          {`# ${title}`}
         </Text>
         <Overview info={info} title={title} serverUrl={serverUrl} />
         <Usage

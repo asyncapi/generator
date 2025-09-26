@@ -5888,7 +5888,6 @@ exports[`WebSocket Clients Integration Tests Java Quarkus Client Common Integrat
 exports[`WebSocket Clients Integration Tests JavaScript Client Common Integration tests for JavaScript client generation generate simple client for hoppscotch echo with custom client name: README.md 1`] = `
 "# Hoppscotch Echo WebSocket Client
 
-
 ## Overview
 
 Undestand how to use Hoppscotch Echo WebSocket as a client. Hoppscotch Echo WebSocket server echoes back any messages sent to it. You can use this to test WebSocket connections and message flows.
@@ -6117,7 +6116,6 @@ module.exports = HoppscotchClient;
 exports[`WebSocket Clients Integration Tests JavaScript Client Common Integration tests for JavaScript client generation generate simple client for hoppscotch echo: README.md 1`] = `
 "# Hoppscotch Echo WebSocket Client
 
-
 ## Overview
 
 Undestand how to use Hoppscotch Echo WebSocket as a client. Hoppscotch Echo WebSocket server echoes back any messages sent to it. You can use this to test WebSocket connections and message flows.
@@ -6345,7 +6343,6 @@ module.exports = HoppscotchEchoWebSocketClient;
 
 exports[`WebSocket Clients Integration Tests JavaScript Client Common Integration tests for JavaScript client generation generate simple client for postman echo: README.md 1`] = `
 "# Postman Echo WebSocket Client
-
 
 ## Overview
 

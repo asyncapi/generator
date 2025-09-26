@@ -1,4 +1,4 @@
-import { File, Text } from '@asyncapi/generator-react-sdk';
+import { Text } from '@asyncapi/generator-react-sdk';
 
 export function Overview({ info, title, serverUrl }) {
   return (

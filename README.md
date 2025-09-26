@@ -12,6 +12,10 @@ This is a Monorepo managed using [Turborepo](https://turbo.build/) and contains 
 
 1. [React-sdk](apps/react-sdk): AsyncAPI React SDK is a set of components/functions to use React as render engine for the generator. This is the library that undestand components from Generator's templates that are configured to use `react` render engine. 
 
+1. [Generator-helper](apps/generator-helper): A utility library that provides helper functions and utilities to simplify template development for baked-in templates. It reduces boilerplate and speeds up template creation.
+
+1. [Generator-component](apps/generator-component): A library of reusable components that can be shared across different baked-in templates, helping to avoid duplication and accelerate template development.
+
 > [!IMPORTANT]
 > **Deprecation Notice:** The Nunjucks renderer engine is deprecated and will be removed in future releases. We strongly recommend using the React renderer engine instead. You can find how to migrate from Nunjucks to React in the [migration guide](apps/generator/docs/nunjucks-depreciate.md)
 

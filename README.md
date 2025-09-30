@@ -65,6 +65,14 @@ There is a large number of templates that are ready to use and are officially su
 
 You can find above templates and the ones provided by the community in **[this list](https://github.com/search?q=topic%3Aasyncapi+topic%3Agenerator+topic%3Atemplate)**
 
+> [!NOTE]
+
+AsyncAPI Generator also comes with **baked-in templates** - official templates shipped directly inside the Generator (`@asyncapi/generator`). These provide visibility into ongoing experimental work and offer a streamlined way to generate clients, documentation, and other artifacts.
+
+⚠️ This feature is experimental and not recommended for production use.
+
+For those who want to try them out or learn more, see the [Baked-in templates documentation](https://www.asyncapi.com/docs/tools/generator/baked-in-templates).
+
 ## Filters
 
  `apps/nunjucks-filters` library contains generator filters that can be reused across multiple templates, helping to avoid redundant work. These filters are designed specifically for Nunjucks templates and are included by default with the generator, so there's no need to add them to dependencies separately.

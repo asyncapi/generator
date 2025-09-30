@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "@asyncapi/generator-react-sdk": "*",
+    "@asyncapi/generator-helpers": "*",
     "@asyncapi/modelina": "^5.3.5"
   },
   "devDependencies": {

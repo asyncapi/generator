@@ -1,6 +1,6 @@
 {
   "name": "@asyncapi/generator-components",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Package with reusable components for generation using React render engine",
   "scripts": {
     "test": "npm run build && jest --coverage",
@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "@asyncapi/generator-react-sdk": "*",
+    "@asyncapi/generator-helpers": "*",
     "@asyncapi/modelina": "^5.3.5"
   },
   "devDependencies": {

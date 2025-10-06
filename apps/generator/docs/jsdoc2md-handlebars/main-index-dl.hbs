@@ -1,0 +1,11 @@
+{{#modules~}}
+{{#if @first~}}{{>heading-indent}}Modules
+
+<dl>
+{{/if~}}
+<dt>{{>sig-link-html}}</dt>
+{{#if description}}<dd>{{{md (inlineLinks description)}}}</dd>{{/if}}
+{{#if @last~}}</dl>
+
+{{/if~}}
+{{/modules~}}

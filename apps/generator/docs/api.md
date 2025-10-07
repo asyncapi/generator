@@ -8,15 +8,15 @@ Reference API documentation for AsyncAPI Generator library.
 
 <dl>
 <dt><a href="#Generator">Generator</a></dt>
-<dd></dd>
+
 </dl>
 
 ## Members
 
 <dl>
 <dt><a href="#listBakedInTemplates">listBakedInTemplates</a> ⇒ <code>Array.&lt;Object&gt;</code></dt>
-<dd><p>List core templates, optionally filter by type, stack, protocol, or target.
-Use name of returned templates as input for the <code>generate</code> method for template generation. Such core templates code is part of the @asyncapi/generator package.</p></dd>
+<dd>List core templates, optionally filter by type, stack, protocol, or target.
+Use name of returned templates as input for the `generate` method for template generation. Such core templates code is part of the @asyncapi/generator package.</dd>
 </dl>
 
 

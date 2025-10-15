@@ -26,3 +26,6 @@ There is a large number of templates that are ready to use and are officially su
 <!-- TEMPLATES-LIST:END -->
 
 You can find above templates and the ones provided by the community in **[this list](https://github.com/search?q=topic%3Aasyncapi+topic%3Agenerator+topic%3Atemplate)**
+
+> [!IMPORTANT]
+> **Experimental Feature:** AsyncAPI Generator also comes with **baked-in templates** - official templates shipped directly inside the Generator (`@asyncapi/generator`). They cover code, docs, configs, and SDKs, and are maintained under [/packages/templates](packages/templates) directory, following a strict, opinionated structure for consistency and ease of maintenance. This feature is not recommended for production use. For those who want to try them out or learn more, see the [Baked-in templates documentation](https://www.asyncapi.com/docs/tools/generator/baked-in-templates).

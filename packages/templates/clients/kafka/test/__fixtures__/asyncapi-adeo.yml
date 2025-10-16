@@ -207,7 +207,89 @@ components:
       payload:
         schemaFormat: application/vnd.apache.avro;version=1.9.0
         schema:
-          $ref: "https://www.asyncapi.com/resources/casestudies/adeo/CostingRequestPayload.avsc"
+          # $ref: "https://www.asyncapi.com/resources/casestudies/adeo/CostingRequestPayload.avsc"
+          namespace: com.adeo.casestudy.costingrequest
+          type: record
+          name: CostingRequestPayload
+          version: 1.1.0
+          fields:
+            - name: ProductId
+              type:
+                type: string
+                avro.java.string: String
+              doc: Product identifier.
+            - name: ShortProductDescription
+              type:
+                - 'null'
+                - type: string
+                  avro.java.string: String
+              doc: A short product description.
+              example: BOTTLE RACK, STACKABLE, 2 TIER, 10 BOTTLES
+            - name: SupplierCode
+              type:
+                type: string
+                avro.java.string: String
+              doc: Supplier code, used to get parameter values that depend on the supplier.
+              example: '12345678'
+            - name: SupplierPrice
+              type: float
+              doc: Product price (purchasing price).
+            - name: Unit
+              doc: Unit characteristics
+              type:
+                name: UnitItem
+                namespace: com.adeo.casestudy.costingrequest
+                type: record
+                fields:
+                  - name: Length
+                    type: float
+                    example: 1.11
+                    exclusiveMinimum: 0
+                  - name: Width
+                    type: float
+                    example: 1.11
+                    exclusiveMinimum: 0
+                  - name: Height
+                    type: float
+                    example: 1.11
+                    exclusiveMinimum: 0
+                  - name: WeightGross
+                    type: float
+                    example: 6.68
+                    exclusiveMinimum: 0
+                  - name: WeightNet
+                    type: float
+                    example: 6.68
+                    exclusiveMinimum: 0
+                    doc: The unit of net weight is the kilogram
+            - name: BusInputs
+              type:
+                type: array
+                doc: Business units specific data required to deduce the right BU context.
+                minItems: 1
+                items:
+                  name: CostingRequestBUItem
+                  namespace: com.adeo.casestudy.costingrequest
+                  type: record
+                  fields:
+                    - name: ClientCode
+                      type:
+                        type: string
+                        avro.java.string: String
+                      doc: The client (Business Unit) code.
+                      example: '1'
+                    - name: ContainerType
+                      type:
+                        - 'null'
+                        - type: enum
+                          namespace: com.adeo.casestudy.model
+                          name: ContainerTypeItems
+                          doc: Container selected for transportation. Required to determinate parameter values that rely on transportation. **Will be deleted (because deduced) in future versions**
+                          symbols:
+                            - FT20
+                            - FT40
+                            - FT40HC
+                            - TRUCK
     costingResponse:
       name: CostingResponse
       title: Costing Response
@@ -242,7 +324,99 @@ components:
       payload:
         schemaFormat: application/vnd.apache.avro;version=1.9.0
         schema: 
-          $ref: "https://deploy-preview-921--asyncapi-website.netlify.app/resources/casestudies/adeo/CostingResponsePayload.avsc"
+          # $ref: "https://deploy-preview-921--asyncapi-website.netlify.app/resources/casestudies/adeo/CostingResponsePayload.avsc"
+          namespace: com.adeo.casestudy.costingresponse
+          type: record
+          name: CostingResponsePayload
+          version: 1
+          fields:
+            - name: CostingResult
+              type:
+                - 'null'
+                - name: CostingResultItem
+                  namespace: com.adeo.casestudy.costingresponse
+                  type: record
+                  doc: Costing result data
+                  fields:
+                    - name: CalculationPrice
+                      type: float
+                      doc: The calculated price.
+                      example: 1.136
+                    - name: CalculationCurrency
+                      doc: The currency for the calculation price.
+                      type:
+                        name: CalculationCurrencyItems
+                        namespace: com.adeo.casestudy.costingresponse
+                        type: enum
+                        symbols:
+                          - USD
+                          - EUR
+                          - CNY
+                        default: EUR
+                    - name: CalculationDetails
+                      type:
+                        name: CostingResultDetailsItems
+                        namespace: com.adeo.casestudy.costingresponse
+                        type: array
+                        items:
+                          name: CostingResultDetailsItem
+                          namespace: com.adeo.casestudy.costingresponse
+                          type: record
+                          doc: Cost Component used during the calculation
+                          fields:
+                            - name: Code
+                              type:
+                                type: string
+                                avro.java.string: String
+                              doc: The Cost Component Code.
+                              example: CODE1
+                            - name: Formula
+                              type:
+                                type: string
+                                avro.java.string: String
+                              doc: The Cost Component Formula.
+                              example: PARAM1 / PARAM2
+                            - name: Value
+                              type: float
+                              doc: Cost component calculated value.
+                              example: 1.145
+            - name: CostingErrors
+              doc: Technical or functional errors occurred during calculation
+              type:
+                - 'null'
+                - type: array
+                  name: CostingErrorItems
+                  namespace: com.adeo.casestudy.costingresponse
+                  items:
+                    name: CostingErrorItem
+                    namespace: com.adeo.casestudy.costingresponse
+                    type: record
+                    doc: Costing errors data
+                    fields:
+                      - name: Type
+                        type:
+                          name: CostingErrorTypeItems
+                          namespace: com.adeo.casestudy.costingresponse
+                          type: enum
+                          symbols:
+                            - TECHNICAL
+                            - FUNCTIONAL
+                          default: FUNCTIONAL
+                      - name: Code
+                        type:
+                          type: string
+                          avro.java.string: String
+                        doc: Error codification
+                      - name: Step
+                        type:
+                          type: string
+                          avro.java.string: String
+                        doc: Costing step where the error occurred
+                      - name: Description
+                        type:
+                          type: string
+                          avro.java.string: String
+                        doc: Error description
   schemas:
     RequesterId:
       type: string

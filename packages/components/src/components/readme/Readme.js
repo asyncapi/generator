@@ -5,7 +5,7 @@ import { Installation } from './Installation';
 import { Usage } from './Usage';
 import { CoreMethods } from './CoreMethods';
 
-export function GenerateReadMe({ asyncapi, params, language }) {
+export function GenerateReadMe({ asyncapi, params, language, AvailableOperations }) {
   const server = getServer(asyncapi.servers(), params.server);
   const info = getInfo(asyncapi);
   const clientName = getClientName(asyncapi, params.appendClientSuffix, params.customClientName);
@@ -13,14 +13,22 @@ export function GenerateReadMe({ asyncapi, params, language }) {
   const serverUrl = getServerUrl(server);
 
   const includeInstallation = language === 'python';
+  const includeAvailableOps = language === 'javascript' && AvailableOperations;
+  const operations = includeAvailableOps ? asyncapi.operations().all() : [];
 
   return (
     <File name="README.md">
       <Text newLines={2}>{`# ${title}`}</Text>
       <Overview info={info} title={title} serverUrl={serverUrl} />
       {includeInstallation && <Installation />}
-      <Usage clientName={clientName} clientFileName={params.clientFileName} language={language} />
+      <Usage
+        clientName={clientName}
+        clientFileName={params.clientFileName}
+        language={language}
+      />
       <CoreMethods language={language} />
+      {includeAvailableOps && <AvailableOperations operations={operations} />}
     </File>
   );
 }
+

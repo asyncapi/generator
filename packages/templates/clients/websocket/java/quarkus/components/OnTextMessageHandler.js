@@ -1,16 +1,19 @@
 import { Text } from '@asyncapi/generator-react-sdk';
+import { toCamelCase } from '@asyncapi/generator-helpers';
 
 export default function OnTextMessage({ sendOperations }) {
   return (
     <>
       {
         (sendOperations && sendOperations.length !== 0) && (
-          sendOperations.map((operation) => {
-            const methodName = operation.id();          
+          sendOperations.map((operation, idx) => {
+            const methodName = operation.id(); 
+            const annotation = idx === 0 ? '@OnTextMessage' : '';
+            const javaMethodName = toCamelCase(methodName);
             return (
               <Text newLines={2} indent={2}>
-                {`@OnTextMessage
-public void ${methodName}(String message, WebSocketClientConnection connection) {
+                {`${annotation}
+public void ${javaMethodName}(String message, WebSocketClientConnection connection) {
     LOG.info("Received text message: " + message);
 }`}
               </Text>

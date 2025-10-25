@@ -1630,6 +1630,7 @@ public class SlackWebsocketAPIClient{
       LOG.info(\\"Connected to Slack Websocket API Client server\\");
       LOG.info(broadcastMessage);
   }
+
   @OnTextMessage
   public void processTextMessage(String message, WebSocketClientConnection connection) {
       LOG.info(\\"Received text message: \\" + message);
@@ -1640,12 +1641,13 @@ public class SlackWebsocketAPIClient{
       LOG.error(\\"Websocket connection error: \\" + throwable.getMessage());
   }
 
+
   @OnClose
-     public void onClose(CloseReason reason, WebSocketClientConnection connection) {
-        int code = reason.getCode();
-        LOG.info(\\"Websocket disconnected from Slack Websocket API Client with Close code: \\" + code);
-    }
+  public void onClose(CloseReason reason, WebSocketClientConnection connection) {
+    int code = reason.getCode();
+    LOG.info(\\"Websocket disconnected from Slack Websocket API Client with Close code: \\" + code);
   }
+}
 
 "
 `;
@@ -1688,13 +1690,13 @@ public class SlackWebsocketAPIClientConnector{
             
             String ticket = System.getenv(\\"TICKET\\");
             if(ticket == null || ticket.isEmpty()){
-               throw new IllegalArgumentException(\\"Required environment variable TICKET is missing or empty\\");
+              throw new IllegalArgumentException(\\"Required environment variable TICKET is missing or empty\\");
             }
             query += \\"ticket=\\" + URLEncoder.encode(ticket, StandardCharsets.UTF_8);
 
             String appId = System.getenv(\\"APPID\\");
             if(appId == null || appId.isEmpty()){
-               throw new IllegalArgumentException(\\"Required environment variable APPID is missing or empty\\");
+              throw new IllegalArgumentException(\\"Required environment variable APPID is missing or empty\\");
             }
             query += \\"&app_id=\\" + URLEncoder.encode(appId, StandardCharsets.UTF_8);
 
@@ -2317,7 +2319,7 @@ exports[`WebSocket Clients Integration Tests Java Quarkus Client Additional test
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
         <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
-        <quarkus.platform.version>3.23.0</quarkus.platform.version>
+        <quarkus.platform.version>3.25.2</quarkus.platform.version>
         <skipITs>true</skipITs>
         <surefire-plugin.version>3.5.2</surefire-plugin.version>
     </properties>
@@ -2353,6 +2355,20 @@ exports[`WebSocket Clients Integration Tests Java Quarkus Client Additional test
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-junit5</artifactId>
             <scope>test</scope>
+        </dependency>
+        
+        <!-- K8s additions -->
+         <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-kubernetes</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-kubernetes-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-container-image-jib</artifactId>
         </dependency>
     </dependencies>
 
@@ -2632,9 +2648,21 @@ public class HoppscotchClient{
       LOG.info(\\"Connected to Hoppscotch Echo WebSocket Client server\\");
       LOG.info(broadcastMessage);
   }
+
   @OnTextMessage
-  public void sendEchoMessage(String message, WebSocketClientConnection connection) {
-      LOG.info(\\"Received text message: \\" + message);
+  public void handleTextMessage(String message, WebSocketClientConnection connection) {
+      LOG.info(\\"Handler received text message: \\" + message);
+      if (message != null && message.contains(\\"sendEchoMessage\\")) {
+          sendEchoMessage(message, connection);
+      }
+      else {
+          LOG.warn(\\"Handler received unrecognized message type.\\");
+      }
+  }
+
+  private void sendEchoMessage(String message, WebSocketClientConnection connection) {
+      LOG.info(\\"Processing sendEchoMessage type message: \\" + message);
+      // TODO: implement processing logic for sendEchoMessage
   }
 
   @OnError
@@ -2642,12 +2670,13 @@ public class HoppscotchClient{
       LOG.error(\\"Websocket connection error: \\" + throwable.getMessage());
   }
 
+
   @OnClose
-     public void onClose(CloseReason reason, WebSocketClientConnection connection) {
-        int code = reason.getCode();
-        LOG.info(\\"Websocket disconnected from Hoppscotch Echo WebSocket Client with Close code: \\" + code);
-    }
+  public void onClose(CloseReason reason, WebSocketClientConnection connection) {
+    int code = reason.getCode();
+    LOG.info(\\"Websocket disconnected from Hoppscotch Echo WebSocket Client with Close code: \\" + code);
   }
+}
 
 "
 `;
@@ -2685,7 +2714,8 @@ public class HoppscotchClientConnector{
 
             // Send 5 messages
             for (int i = 1; i <= 5; i++) {
-                String msg = \\"Message #\\" + i + \\" from Quarkus\\";
+                // Send a message to any available operation by including its operation ID (i.e. \\"sendEchoMessage\\")
+                String msg = \\"Message #\\" + i + \\" from Quarkus for sendEchoMessage\\";
                 connection.sendTextAndAwait(msg);
                 Log.info(\\"Sent: \\" + msg);
                 Thread.sleep(5000); // Wait 5 seconds between messages
@@ -3468,7 +3498,7 @@ exports[`WebSocket Clients Integration Tests Java Quarkus Client Common Integrat
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
         <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
-        <quarkus.platform.version>3.23.0</quarkus.platform.version>
+        <quarkus.platform.version>3.25.2</quarkus.platform.version>
         <skipITs>true</skipITs>
         <surefire-plugin.version>3.5.2</surefire-plugin.version>
     </properties>
@@ -3504,6 +3534,20 @@ exports[`WebSocket Clients Integration Tests Java Quarkus Client Common Integrat
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-junit5</artifactId>
             <scope>test</scope>
+        </dependency>
+        
+        <!-- K8s additions -->
+         <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-kubernetes</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-kubernetes-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-container-image-jib</artifactId>
         </dependency>
     </dependencies>
 
@@ -3783,9 +3827,21 @@ public class HoppscotchEchoWebSocketClient{
       LOG.info(\\"Connected to Hoppscotch Echo WebSocket Client server\\");
       LOG.info(broadcastMessage);
   }
+
   @OnTextMessage
-  public void sendEchoMessage(String message, WebSocketClientConnection connection) {
-      LOG.info(\\"Received text message: \\" + message);
+  public void handleTextMessage(String message, WebSocketClientConnection connection) {
+      LOG.info(\\"Handler received text message: \\" + message);
+      if (message != null && message.contains(\\"sendEchoMessage\\")) {
+          sendEchoMessage(message, connection);
+      }
+      else {
+          LOG.warn(\\"Handler received unrecognized message type.\\");
+      }
+  }
+
+  private void sendEchoMessage(String message, WebSocketClientConnection connection) {
+      LOG.info(\\"Processing sendEchoMessage type message: \\" + message);
+      // TODO: implement processing logic for sendEchoMessage
   }
 
   @OnError
@@ -3793,12 +3849,13 @@ public class HoppscotchEchoWebSocketClient{
       LOG.error(\\"Websocket connection error: \\" + throwable.getMessage());
   }
 
+
   @OnClose
-     public void onClose(CloseReason reason, WebSocketClientConnection connection) {
-        int code = reason.getCode();
-        LOG.info(\\"Websocket disconnected from Hoppscotch Echo WebSocket Client with Close code: \\" + code);
-    }
+  public void onClose(CloseReason reason, WebSocketClientConnection connection) {
+    int code = reason.getCode();
+    LOG.info(\\"Websocket disconnected from Hoppscotch Echo WebSocket Client with Close code: \\" + code);
   }
+}
 
 "
 `;
@@ -3836,7 +3893,8 @@ public class HoppscotchEchoWebSocketClientConnector{
 
             // Send 5 messages
             for (int i = 1; i <= 5; i++) {
-                String msg = \\"Message #\\" + i + \\" from Quarkus\\";
+                // Send a message to any available operation by including its operation ID (i.e. \\"sendEchoMessage\\")
+                String msg = \\"Message #\\" + i + \\" from Quarkus for sendEchoMessage\\";
                 connection.sendTextAndAwait(msg);
                 Log.info(\\"Sent: \\" + msg);
                 Thread.sleep(5000); // Wait 5 seconds between messages
@@ -4619,7 +4677,7 @@ exports[`WebSocket Clients Integration Tests Java Quarkus Client Common Integrat
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
         <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
-        <quarkus.platform.version>3.23.0</quarkus.platform.version>
+        <quarkus.platform.version>3.25.2</quarkus.platform.version>
         <skipITs>true</skipITs>
         <surefire-plugin.version>3.5.2</surefire-plugin.version>
     </properties>
@@ -4655,6 +4713,20 @@ exports[`WebSocket Clients Integration Tests Java Quarkus Client Common Integrat
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-junit5</artifactId>
             <scope>test</scope>
+        </dependency>
+        
+        <!-- K8s additions -->
+         <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-kubernetes</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-kubernetes-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-container-image-jib</artifactId>
         </dependency>
     </dependencies>
 
@@ -5032,9 +5104,21 @@ public class PostmanEchoWebSocketClientClient{
       LOG.info(\\"Connected to Postman Echo WebSocket Client server\\");
       LOG.info(broadcastMessage);
   }
+
   @OnTextMessage
-  public void sendEchoMessage(String message, WebSocketClientConnection connection) {
-      LOG.info(\\"Received text message: \\" + message);
+  public void handleTextMessage(String message, WebSocketClientConnection connection) {
+      LOG.info(\\"Handler received text message: \\" + message);
+      if (message != null && message.contains(\\"sendEchoMessage\\")) {
+          sendEchoMessage(message, connection);
+      }
+      else {
+          LOG.warn(\\"Handler received unrecognized message type.\\");
+      }
+  }
+
+  private void sendEchoMessage(String message, WebSocketClientConnection connection) {
+      LOG.info(\\"Processing sendEchoMessage type message: \\" + message);
+      // TODO: implement processing logic for sendEchoMessage
   }
 
   @OnError
@@ -5042,12 +5126,13 @@ public class PostmanEchoWebSocketClientClient{
       LOG.error(\\"Websocket connection error: \\" + throwable.getMessage());
   }
 
+
   @OnClose
-     public void onClose(CloseReason reason, WebSocketClientConnection connection) {
-        int code = reason.getCode();
-        LOG.info(\\"Websocket disconnected from Postman Echo WebSocket Client with Close code: \\" + code);
-    }
+  public void onClose(CloseReason reason, WebSocketClientConnection connection) {
+    int code = reason.getCode();
+    LOG.info(\\"Websocket disconnected from Postman Echo WebSocket Client with Close code: \\" + code);
   }
+}
 
 "
 `;
@@ -5085,7 +5170,8 @@ public class PostmanEchoWebSocketClientClientConnector{
 
             // Send 5 messages
             for (int i = 1; i <= 5; i++) {
-                String msg = \\"Message #\\" + i + \\" from Quarkus\\";
+                // Send a message to any available operation by including its operation ID (i.e. \\"sendEchoMessage\\")
+                String msg = \\"Message #\\" + i + \\" from Quarkus for sendEchoMessage\\";
                 connection.sendTextAndAwait(msg);
                 Log.info(\\"Sent: \\" + msg);
                 Thread.sleep(5000); // Wait 5 seconds between messages
@@ -5771,7 +5857,7 @@ exports[`WebSocket Clients Integration Tests Java Quarkus Client Common Integrat
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
         <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
-        <quarkus.platform.version>3.23.0</quarkus.platform.version>
+        <quarkus.platform.version>3.25.2</quarkus.platform.version>
         <skipITs>true</skipITs>
         <surefire-plugin.version>3.5.2</surefire-plugin.version>
     </properties>
@@ -5807,6 +5893,20 @@ exports[`WebSocket Clients Integration Tests Java Quarkus Client Common Integrat
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-junit5</artifactId>
             <scope>test</scope>
+        </dependency>
+        
+        <!-- K8s additions -->
+         <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-kubernetes</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-kubernetes-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-container-image-jib</artifactId>
         </dependency>
     </dependencies>
 
@@ -6053,7 +6153,6 @@ class HoppscotchClient {
         console.log('Connected to Hoppscotch Echo WebSocket Client server');
         resolve();
       };
-
           // On receiving a message
       this.websocket.onmessage = (event) => {
         if (this.messageHandlers.length > 0) {
@@ -6321,7 +6420,6 @@ class HoppscotchEchoWebSocketClient {
         console.log('Connected to Hoppscotch Echo WebSocket Client server');
         resolve();
       };
-
           // On receiving a message
       this.websocket.onmessage = (event) => {
         if (this.messageHandlers.length > 0) {
@@ -6565,7 +6663,6 @@ class PostmanEchoWebSocketClientClient {
         console.log('Connected to Postman Echo WebSocket Client server');
         resolve();
       };
-
           // On receiving a message
       this.websocket.onmessage = (event) => {
         if (this.messageHandlers.length > 0) {
@@ -7308,7 +7405,6 @@ class SlackWebsocketAPIClient:
 
   def on_open(self, ws):
     print(\\"Connected to Slack Websocket API Client server\\")
-
   def on_message(self, ws, message):
     self.handle_message(message)
 
@@ -7445,7 +7541,6 @@ class HoppscotchClient:
 
   def on_open(self, ws):
     print(\\"Connected to Hoppscotch Echo WebSocket Client server\\")
-
   def on_message(self, ws, message):
     self.handle_message(message)
 
@@ -7627,7 +7722,6 @@ class HoppscotchEchoWebSocketClient:
 
   def on_open(self, ws):
     print(\\"Connected to Hoppscotch Echo WebSocket Client server\\")
-
   def on_message(self, ws, message):
     self.handle_message(message)
 
@@ -7810,7 +7904,6 @@ class PostmanEchoWebSocketClientClient:
 
   def on_open(self, ws):
     print(\\"Connected to Postman Echo WebSocket Client server\\")
-
   def on_message(self, ws, message):
     self.handle_message(message)
 

@@ -34,7 +34,7 @@ public void onOpen() {
     LOG.info("Connected to ${title} server");
     LOG.info(broadcastMessage);
 }`;
-      return { onOpenMethod, indent: 2 };
+      return { onOpenMethod, indent: 2, newLines: 2 };
     }
   }
 };
@@ -60,16 +60,18 @@ const resolveOpenConfig = (language, framework = '') => {
 export function OnOpen({ language, framework='', title }) {
   let onOpenMethod = '';
   let indent = 0;
+  let newLines = 0;
   
   if (websocketOnOpenMethod[language]) {
     const generateOnOpenCode = resolveOpenConfig(language, framework);
     const openResult = generateOnOpenCode(title);
     onOpenMethod = openResult.onOpenMethod;
     indent = openResult.indent ?? 0;
+    newLines = openResult.newLines ?? 0;
   }
 
   return (
-    <Text indent={indent}>
+    <Text newLines={newLines} indent={indent}>
       {onOpenMethod}
     </Text>
   );

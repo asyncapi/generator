@@ -100,7 +100,7 @@ kubectl apply -f target/kubernetes/kubernetes.yml
 > The generated deployment uses an image like `yourDockerUsername/quarkus-websocket:1.0.0-SNAPSHOT` by default.  
 > You can customize the image name in `application.properties`:
 >
-> ```
+> ```properties
 > quarkus.container-image.group=quarkus
 > quarkus.container-image.name=demo-app
 > quarkus.container-image.tag=1.0

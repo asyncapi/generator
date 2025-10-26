@@ -2358,7 +2358,7 @@ exports[`WebSocket Clients Integration Tests Java Quarkus Client Additional test
         </dependency>
         
         <!-- K8s additions -->
-         <dependency>
+        <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-kubernetes</artifactId>
         </dependency>
@@ -3537,7 +3537,7 @@ exports[`WebSocket Clients Integration Tests Java Quarkus Client Common Integrat
         </dependency>
         
         <!-- K8s additions -->
-         <dependency>
+        <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-kubernetes</artifactId>
         </dependency>
@@ -4716,7 +4716,7 @@ exports[`WebSocket Clients Integration Tests Java Quarkus Client Common Integrat
         </dependency>
         
         <!-- K8s additions -->
-         <dependency>
+        <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-kubernetes</artifactId>
         </dependency>
@@ -5896,7 +5896,7 @@ exports[`WebSocket Clients Integration Tests Java Quarkus Client Common Integrat
         </dependency>
         
         <!-- K8s additions -->
-         <dependency>
+        <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-kubernetes</artifactId>
         </dependency>
@@ -6153,6 +6153,7 @@ class HoppscotchClient {
         console.log('Connected to Hoppscotch Echo WebSocket Client server');
         resolve();
       };
+
           // On receiving a message
       this.websocket.onmessage = (event) => {
         if (this.messageHandlers.length > 0) {
@@ -6420,6 +6421,7 @@ class HoppscotchEchoWebSocketClient {
         console.log('Connected to Hoppscotch Echo WebSocket Client server');
         resolve();
       };
+
           // On receiving a message
       this.websocket.onmessage = (event) => {
         if (this.messageHandlers.length > 0) {
@@ -6663,6 +6665,7 @@ class PostmanEchoWebSocketClientClient {
         console.log('Connected to Postman Echo WebSocket Client server');
         resolve();
       };
+
           // On receiving a message
       this.websocket.onmessage = (event) => {
         if (this.messageHandlers.length > 0) {
@@ -7405,6 +7408,7 @@ class SlackWebsocketAPIClient:
 
   def on_open(self, ws):
     print(\\"Connected to Slack Websocket API Client server\\")
+
   def on_message(self, ws, message):
     self.handle_message(message)
 
@@ -7541,6 +7545,7 @@ class HoppscotchClient:
 
   def on_open(self, ws):
     print(\\"Connected to Hoppscotch Echo WebSocket Client server\\")
+
   def on_message(self, ws, message):
     self.handle_message(message)
 
@@ -7722,6 +7727,7 @@ class HoppscotchEchoWebSocketClient:
 
   def on_open(self, ws):
     print(\\"Connected to Hoppscotch Echo WebSocket Client server\\")
+
   def on_message(self, ws, message):
     self.handle_message(message)
 
@@ -7904,6 +7910,7 @@ class PostmanEchoWebSocketClientClient:
 
   def on_open(self, ws):
     print(\\"Connected to Postman Echo WebSocket Client server\\")
+
   def on_message(self, ws, message):
     self.handle_message(message)
 

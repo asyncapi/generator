@@ -67,7 +67,7 @@ export function OnOpen({ language, framework='', title }) {
     const openResult = generateOnOpenCode(title);
     onOpenMethod = openResult.onOpenMethod;
     indent = openResult.indent ?? 0;
-    newLines = openResult.newLines ?? 0;
+    newLines = openResult.newLines ?? 1;
   }
 
   return (

@@ -51,7 +51,7 @@
         </dependency>
         
         <!-- K8s additions -->
-         <dependency>
+        <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-kubernetes</artifactId>
         </dependency>

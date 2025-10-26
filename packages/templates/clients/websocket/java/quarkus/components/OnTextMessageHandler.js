@@ -28,14 +28,14 @@ ${sendOperations.map((operation, idx) => {
       }
 
       {
-        // Generate private handlers for each operation so dispatch calls resolve
+        // Generate protected handlers for each operation so dispatch calls resolve
         (sendOperations && sendOperations.length !== 0) && (
           sendOperations.map((operation) => {
             const methodName = operation.id();
             const javaMethodName = toCamelCase(methodName);
             return (
               <Text newLines={2} indent={2}>
-                {`private void ${javaMethodName}(String message, WebSocketClientConnection connection) {
+                {`protected void ${javaMethodName}(String message, WebSocketClientConnection connection) {
     LOG.info("Processing ${methodName} type message: " + message);
     // TODO: implement processing logic for ${methodName}
 }`}

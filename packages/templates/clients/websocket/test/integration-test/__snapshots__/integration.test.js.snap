@@ -2660,7 +2660,7 @@ public class HoppscotchClient{
       }
   }
 
-  protected void sendEchoMessage(String message, WebSocketClientConnection connection) {
+  public void sendEchoMessage(String message, WebSocketClientConnection connection) {
       LOG.info(\\"Processing sendEchoMessage type message: \\" + message);
       // TODO: implement processing logic for sendEchoMessage
   }
@@ -3839,7 +3839,7 @@ public class HoppscotchEchoWebSocketClient{
       }
   }
 
-  protected void sendEchoMessage(String message, WebSocketClientConnection connection) {
+  public void sendEchoMessage(String message, WebSocketClientConnection connection) {
       LOG.info(\\"Processing sendEchoMessage type message: \\" + message);
       // TODO: implement processing logic for sendEchoMessage
   }
@@ -5116,7 +5116,7 @@ public class PostmanEchoWebSocketClientClient{
       }
   }
 
-  protected void sendEchoMessage(String message, WebSocketClientConnection connection) {
+  public void sendEchoMessage(String message, WebSocketClientConnection connection) {
       LOG.info(\\"Processing sendEchoMessage type message: \\" + message);
       // TODO: implement processing logic for sendEchoMessage
   }

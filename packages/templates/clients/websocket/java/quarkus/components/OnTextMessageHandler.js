@@ -20,7 +20,10 @@ ${sendOperations.map((operation, idx) => {
     }`;
           }).join('\n')}
     else {
-        LOG.warn("Handler received unrecognized message type.");
+        LOG.warn("Handler received unrecognized message type. Falling back to default handler.");
+        // Note: By default, we route unrecognized messages to the first operation handler.
+        // Depending on your business logic, you may want to change this behavior.
+        ${toCamelCase(sendOperations[0].id())}(message, connection);
     }
 }`}
           </Text>

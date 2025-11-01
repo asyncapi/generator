@@ -2656,7 +2656,10 @@ public class HoppscotchClient{
           sendEchoMessage(message, connection);
       }
       else {
-          LOG.warn(\\"Handler received unrecognized message type.\\");
+          LOG.warn(\\"Handler received unrecognized message type. Falling back to default handler.\\");
+          // Note: By default, we route unrecognized messages to the first operation handler.
+          // Depending on your business logic, you may want to change this behavior.
+          sendEchoMessage(message, connection);
       }
   }
 
@@ -3835,7 +3838,10 @@ public class HoppscotchEchoWebSocketClient{
           sendEchoMessage(message, connection);
       }
       else {
-          LOG.warn(\\"Handler received unrecognized message type.\\");
+          LOG.warn(\\"Handler received unrecognized message type. Falling back to default handler.\\");
+          // Note: By default, we route unrecognized messages to the first operation handler.
+          // Depending on your business logic, you may want to change this behavior.
+          sendEchoMessage(message, connection);
       }
   }
 
@@ -5112,7 +5118,10 @@ public class PostmanEchoWebSocketClientClient{
           sendEchoMessage(message, connection);
       }
       else {
-          LOG.warn(\\"Handler received unrecognized message type.\\");
+          LOG.warn(\\"Handler received unrecognized message type. Falling back to default handler.\\");
+          // Note: By default, we route unrecognized messages to the first operation handler.
+          // Depending on your business logic, you may want to change this behavior.
+          sendEchoMessage(message, connection);
       }
   }
 

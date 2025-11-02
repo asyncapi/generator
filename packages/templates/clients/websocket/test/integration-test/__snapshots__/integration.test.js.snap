@@ -6215,7 +6215,7 @@ class HoppscotchClient {
    * @throws {Error} If WebSocket connection is not in OPEN state
    * @throws {Error} If message validation fails against all schemas
    */
-  static async sendEchoMessage(message, socket, schemas) {
+  static sendEchoMessage(message, socket, schemas) {
     try {
       if (!schemas || schemas.length === 0) {
         return { isValid: true }; 
@@ -6541,7 +6541,7 @@ class HoppscotchEchoWebSocketClient {
    * @throws {Error} If WebSocket connection is not in OPEN state
    * @throws {Error} If message validation fails against all schemas
    */
-  static async sendEchoMessage(message, socket, schemas) {
+  static sendEchoMessage(message, socket, schemas) {
     try {
       if (!schemas || schemas.length === 0) {
         return { isValid: true }; 
@@ -6829,7 +6829,7 @@ class PostmanEchoWebSocketClientClient {
    * @throws {Error} If WebSocket connection is not in OPEN state
    * @throws {Error} If message validation fails against all schemas
    */
-  static async sendEchoMessage(message, socket, schemas) {
+  static sendEchoMessage(message, socket, schemas) {
     try {
       if (!schemas || schemas.length === 0) {
         return { isValid: true }; 

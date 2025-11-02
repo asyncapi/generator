@@ -13,7 +13,7 @@ exports[`Testing of SendOperation function render js websockets with send operat
    * @throws {Error} If WebSocket connection is not in OPEN state
    * @throws {Error} If message validation fails against all schemas
    */
-  static async sendUserSignedup(message, socket, schemas) {
+  static sendUserSignedup(message, socket, schemas) {
     try {
       if (!schemas || schemas.length === 0) {
         return { isValid: true }; 

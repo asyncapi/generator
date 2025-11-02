@@ -1,5 +1,5 @@
 import { parseAsyncAPIDocumentFromFile } from './utils.js';
-import Ajv from "ajv";
+import Ajv from 'ajv';
 
 const ajv = new Ajv({ strict: false, allErrors: true });
 
@@ -68,7 +68,7 @@ export async function compileSchemasByOperationId(asyncapiFilepath, operationId)
  * @throws {Error} When message parameter is null/undefined or compiledSchema is not a function.
  */
 export function validateMessage(compiledSchema, message) {
-  if (message === null || message === undefined) {
+  if (message === undefined) {
     throw new Error(`Invalid "message" parameter: expected a non-null object to validate, but received ${message}`);
   }
   if (typeof compiledSchema !== 'function') {

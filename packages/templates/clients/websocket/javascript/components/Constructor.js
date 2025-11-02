@@ -1,7 +1,6 @@
 import { Text } from '@asyncapi/generator-react-sdk';
 
 export function Constructor({ serverUrl, sendOperations }) {
-
   const sendOperationsId = sendOperations.map((operation) => operation.id());
   const sendOperationsArray = JSON.stringify(sendOperationsId);
 

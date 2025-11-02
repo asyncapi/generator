@@ -71,7 +71,7 @@ async ${methodName}(message){
  * @throws {Error} If WebSocket connection is not in OPEN state
  * @throws {Error} If message validation fails against all schemas
  */
-static async ${methodName}(message, socket, schemas) {
+static ${methodName}(message, socket, schemas) {
   try {
     if (!schemas || schemas.length === 0) {
       return { isValid: true }; 

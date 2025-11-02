@@ -25,7 +25,7 @@ async function main() {
     const interval = 5000; // 5 seconds
     const message = {
       content: 'Hello!'
-    }
+    };
 
     while (true) {
       try {

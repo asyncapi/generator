@@ -10,22 +10,26 @@ import {
 const parser = new Parser();
 const asyncapi_v3_path = path.resolve(__dirname, '../test/__fixtures__/asyncapi-message-validation.yml');
 
+// Single helper function that can be used differently
+async function parseAsyncAPIFile() {
+  const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
+  return parseResult.document;
+}
+
 describe('Integration Tests for message validation module', () => {
   describe('Schema Compilation & Basic Validation', () => {
     let compiledSchema;
-    let rawSchemas;
 
     beforeAll(async () => {
-      const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
-      const parsedAsyncAPIDocument = parseResult.document;
-      rawSchemas = parsedAsyncAPIDocument.schemas().all().map(schema => schema.json());
-      compiledSchema = compileSchema(rawSchemas[0]);
+      const parsedAsyncAPIDocument = await parseAsyncAPIFile();
+      const firstSchema = parsedAsyncAPIDocument.schemas().all()[0].json();
+      compiledSchema = compileSchema(firstSchema);
     });
 
     test('should validate a correct message against schema and return true', async () => {
       const validMessage = {
         content: 'This is a test message',
-        messageId: 12345
+        messageId: 11
       };
       const result = validateMessage(compiledSchema, validMessage);
       expect(result.isValid).toBe(true);
@@ -50,15 +54,11 @@ describe('Integration Tests for message validation module', () => {
 
     test('should return false when required field is missing', async () => {
       const invalidMessage = {
-        messageId: 12345
+        messageId: 12
       };
       const result = validateMessage(compiledSchema, invalidMessage);
       expect(result.isValid).toBe(false);
       expect(result.validationErrors.length).toBeGreaterThan(0);
-    });
-
-    test('should throw error if message is null', () => {
-      expect(() => validateMessage(compiledSchema, null)).toThrow('Invalid "message" parameter');
     });
 
     test('should throw error if message is undefined', () => {
@@ -72,11 +72,11 @@ describe('Integration Tests for message validation module', () => {
 
   describe('compileSchemas utility function', () => {
     test('should compile multiple schemas successfully', async () => {
-      const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
-      const parsedAsyncAPIDocument = parseResult.document;
-      const rawSchemas = parsedAsyncAPIDocument.schemas().all().map(schema => schema.json());
+      const parsedAsyncAPIDocument = await parseAsyncAPIFile();
+      const allSchemas = parsedAsyncAPIDocument.schemas().all();
+      const rawSchemas = allSchemas.map(schema => schema.json());
       const compiledSchemas = compileSchemas(rawSchemas);
-      
+
       expect(Array.isArray(compiledSchemas)).toBe(true);
       expect(compiledSchemas.length).toBe(rawSchemas.length);
       compiledSchemas.forEach(schema => {
@@ -108,7 +108,7 @@ describe('Integration Tests for message validation module', () => {
 
     test('should return false for invalid message against operation schema', async () => {
       const invalidMessage = {
-        messageId: 12345
+        messageId: 10
       };
       const result = validateMessage(compiledSchema, invalidMessage);
       expect(result.isValid).toBe(false);

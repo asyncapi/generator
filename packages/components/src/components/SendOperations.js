@@ -74,6 +74,7 @@ async ${methodName}(message){
 static ${methodName}(message, socket, schemas) {
   try {
     if (!schemas || schemas.length === 0) {
+      socket.send(JSON.stringify(message));
       return { isValid: true }; 
     }
     const allValidationErrors = [];

@@ -6218,6 +6218,7 @@ class HoppscotchClient {
   static sendEchoMessage(message, socket, schemas) {
     try {
       if (!schemas || schemas.length === 0) {
+        socket.send(JSON.stringify(message));
         return { isValid: true }; 
       }
       const allValidationErrors = [];
@@ -6544,6 +6545,7 @@ class HoppscotchEchoWebSocketClient {
   static sendEchoMessage(message, socket, schemas) {
     try {
       if (!schemas || schemas.length === 0) {
+        socket.send(JSON.stringify(message));
         return { isValid: true }; 
       }
       const allValidationErrors = [];
@@ -6832,6 +6834,7 @@ class PostmanEchoWebSocketClientClient {
   static sendEchoMessage(message, socket, schemas) {
     try {
       if (!schemas || schemas.length === 0) {
+        socket.send(JSON.stringify(message));
         return { isValid: true }; 
       }
       const allValidationErrors = [];

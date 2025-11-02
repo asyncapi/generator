@@ -69,7 +69,7 @@ export async function compileSchemasByOperationId(asyncapiFilepath, operationId)
  */
 export function validateMessage(compiledSchema, message) {
   if (message === undefined) {
-    throw new Error(`Invalid "message" parameter: expected a non-null object to validate, but received ${message}`);
+    throw new Error(`Invalid "message" parameter: expected a value to validate, but received ${message}`);
   }
   if (typeof compiledSchema !== 'function') {
     throw new Error(`Invalid "compiledSchema" parameter: expected a validator function, received ${typeof compiledSchema}`);

@@ -16,6 +16,7 @@ exports[`Testing of SendOperation function render js websockets with send operat
   static sendUserSignedup(message, socket, schemas) {
     try {
       if (!schemas || schemas.length === 0) {
+        socket.send(JSON.stringify(message));
         return { isValid: true }; 
       }
       const allValidationErrors = [];

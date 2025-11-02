@@ -17,7 +17,10 @@ export default function ({ asyncapi, params }) {
         server={server}
         language="javascript"
       />
-      <DependencyProvider language="javascript"/>
+      <DependencyProvider
+        language="javascript"
+        additionalDependencies={['const path = require(\'path\');', 'const asyncapiFilepath = path.resolve(__dirname, \'../../../../../test/__fixtures__/asyncapi-postman-echo.yml\');']}
+      />
       <ClientClass clientName={clientName} serverUrl={serverUrl} title={title} sendOperations={sendOperations} />
     </File>
   );

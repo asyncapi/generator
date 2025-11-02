@@ -1,38 +1,33 @@
 import path from 'path';
 import { Parser, fromFile } from '@asyncapi/parser';
 import {
+  compileSchema,
   compileSchemas,
   validateMessage,
-  compileSchemasByOperationId,
-  removeCompiledSchemas
+  compileSchemasByOperationId
 } from '../src/index.js';
 
 const parser = new Parser();
 const asyncapi_v3_path = path.resolve(__dirname, '../test/__fixtures__/asyncapi-message-validation.yml');
 
 describe('Integration Tests for message validation module', () => {
-  // Cleanup: Remove all compiled schemas from the local registry after all tests complete
-  afterAll(() => {
-    removeCompiledSchemas();
-  });
-
   describe('Schema Compilation & Basic Validation', () => {
-    let compiledSchemas;
+    let compiledSchema;
     let rawSchemas;
 
     beforeAll(async () => {
       const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
       const parsedAsyncAPIDocument = parseResult.document;
       rawSchemas = parsedAsyncAPIDocument.schemas().all().map(schema => schema.json());
-      compiledSchemas = await compileSchemas(rawSchemas);
+      compiledSchema = compileSchema(rawSchemas[0]);
     });
 
-    test('should validate a correct message against schemas and return true', async () => {
+    test('should validate a correct message against schema and return true', async () => {
       const validMessage = {
         content: 'This is a test message',
-        timestamp: new Date().toISOString()
+        messageId: 12345
       };
-      const result = validateMessage(compiledSchemas, validMessage);
+      const result = validateMessage(compiledSchema, validMessage);
       expect(result.isValid).toBe(true);
       expect(result.validationErrors).toBeUndefined();
     });
@@ -41,58 +36,95 @@ describe('Integration Tests for message validation module', () => {
       const invalidMessage = {
         content: 42
       };
-      const result = validateMessage(compiledSchemas, invalidMessage);
+      const result = validateMessage(compiledSchema, invalidMessage);
       expect(result.isValid).toBe(false);
       expect(result.validationErrors.length).toBeGreaterThan(0);
     });
 
-    test('should return false when message cannot match any schema', async () => {
+    test('should return false when message cannot match schema', async () => {
       const invalidMessage = 42;
-      const result = validateMessage(compiledSchemas, invalidMessage);
+      const result = validateMessage(compiledSchema, invalidMessage);
       expect(result.isValid).toBe(false);
       expect(result.validationErrors.length).toBeGreaterThan(0);
     });
 
     test('should return false when required field is missing', async () => {
       const invalidMessage = {
-        timestamp: new Date().toISOString()
+        messageId: 12345
       };
-      const result = validateMessage(compiledSchemas, invalidMessage);
+      const result = validateMessage(compiledSchema, invalidMessage);
       expect(result.isValid).toBe(false);
       expect(result.validationErrors.length).toBeGreaterThan(0);
     });
 
     test('should throw error if message is null', () => {
-      expect(() => validateMessage(compiledSchemas, null)).toThrow('Invalid "message" parameter');
+      expect(() => validateMessage(compiledSchema, null)).toThrow('Invalid "message" parameter');
     });
 
     test('should throw error if message is undefined', () => {
-      expect(() => validateMessage(compiledSchemas, undefined)).toThrow('Invalid "message" parameter');
+      expect(() => validateMessage(compiledSchema, undefined)).toThrow('Invalid "message" parameter');
+    });
+
+    test('should throw error if compiledSchema is not a function', () => {
+      expect(() => validateMessage({}, { content: 'test' })).toThrow('Invalid "compiledSchema" parameter');
+    });
+  });
+
+  describe('compileSchemas utility function', () => {
+    test('should compile multiple schemas successfully', async () => {
+      const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
+      const parsedAsyncAPIDocument = parseResult.document;
+      const rawSchemas = parsedAsyncAPIDocument.schemas().all().map(schema => schema.json());
+      const compiledSchemas = compileSchemas(rawSchemas);
+      
+      expect(Array.isArray(compiledSchemas)).toBe(true);
+      expect(compiledSchemas.length).toBe(rawSchemas.length);
+      compiledSchemas.forEach(schema => {
+        expect(typeof schema).toBe('function');
+      });
+    });
+
+    test('should throw error if schemas parameter is not an array', () => {
+      expect(() => compileSchemas({})).toThrow('Invalid "schemas" parameter');
     });
   });
 
   describe('Operation-Specific Validation', () => {
     let compiledSchemas;
+    let compiledSchema;
 
     beforeAll(async () => {
       compiledSchemas = await compileSchemasByOperationId(asyncapi_v3_path, 'sendHelloMessage');
+      compiledSchema = compiledSchemas[0];
     });
 
-    test('should validate a correct message against operation schemas and return true', async () => {
+    test('should validate a correct message against operation schema and return true', async () => {
       const validMessage = {
         content: 'This is a operation test message'
       };
-      const result = validateMessage(compiledSchemas, validMessage);
+      const result = validateMessage(compiledSchema, validMessage);
       expect(result.isValid).toBe(true);
     });
 
-    test('should return false for invalid message against operation schemas', async () => {
+    test('should return false for invalid message against operation schema', async () => {
       const invalidMessage = {
-        time: new Date().toISOString()
+        messageId: 12345
       };
-      const result = validateMessage(compiledSchemas, invalidMessage);
+      const result = validateMessage(compiledSchema, invalidMessage);
       expect(result.isValid).toBe(false);
       expect(result.validationErrors.length).toBeGreaterThan(0);
+    });
+
+    test('should throw error for invalid operationId', async () => {
+      await expect(
+        compileSchemasByOperationId(asyncapi_v3_path, 'nonExistentOperation')
+      ).rejects.toThrow('Operation with ID "nonExistentOperation" not found');
+    });
+
+    test('should throw error for empty operationId', async () => {
+      await expect(
+        compileSchemasByOperationId(asyncapi_v3_path, '')
+      ).rejects.toThrow('Invalid "operationId" parameter');
     });
   });
 });

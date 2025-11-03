@@ -1,3 +1,8 @@
 # Ensure script files have LF line endings
 *.sh text eol=lf
 *.bash text eol=lf
+
+# Normalize documentation and templates
+*.md text eol=lf
+*.hbs text eol=lf
+*.js text eol=lf

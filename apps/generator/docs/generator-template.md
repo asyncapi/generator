@@ -98,7 +98,7 @@ components:
       properties:
         temperatureId:
           type: string
-
+---
 ## Overview of steps
 
 1. Create a new directory for your template named **python-mqtt-client-template**.
@@ -415,7 +415,7 @@ Update your `test:generate` script in **package.json** to include the server par
 "test:generate": "asyncapi generate fromTemplate test/fixtures/asyncapi.yml ./ --output test/project --force-write --param server=dev"
 ```
 
-You can now replace the static broker from `mqttBroker = 'test.mosquitto.org'` to `mqttBroker = "${asyncapi.servers().get(params.server).host()()}"` in **index.js**.
+You can now replace the static broker from `mqttBroker = 'test.mosquitto.org'` to `mqttBroker = "${asyncapi.servers().get(params.server).host()}"` in **index.js**.
 
 Now the template code looks like this:
 
@@ -498,10 +498,10 @@ class TemperatureServiceClient:
               self.client = mqtt.Client()
               self.client.connect(mqttBroker)
 
-  def receiveTemperatureDrop(self, id):
+  def sendTemperatureDrop(self, id):
           topic = "temperature/dropped"
           self.client.publish(topic, id)
-  def receiveTemperatureRise(self, id):
+  def sendTemperatureRise(self, id):
           topic = "temperature/risen"
           self.client.publish(topic, id)
 
@@ -566,8 +566,8 @@ function getTopics(operations) {
 }
 
 
-`{ channels }`: the `TopicFunction` component accepts a custom prop called channels and in your template code
-`getTopics(channels)`: Returns a list of objects, one for each channel with two properties; name and topic. The **name** holds information about the `operationId` provided in the AsyncAPI document while the **topic** holds information about the address of the topic.
+`{ operations }`: the `TopicFunction` component accepts a custom prop called operations and in your template code
++`getTopics(operations)`: Returns a list of objects, one for each operation with two properties; name and topic. The **name** holds information about the `operationId` provided in the AsyncAPI document while the **topic** holds information about the address of the topic.
 
 Import the `TopicFunction` component in your template code in **index.js** and add the template code to generate the functions to topics that the `Temperature Service` application is subscribed to. In your case, the final version of your template code should look like this:
 
@@ -581,7 +581,7 @@ export default function ({ asyncapi, params }) {
       <Text newLines={2}>import paho.mqtt.client as mqtt</Text>
 
       <Text newLines={2}>
-        mqttBroker = "{asyncapi.servers().get(params.server).url()}"
+        mqttBroker = "{asyncapi.servers().get(params.server).host()}"
       </Text>
 
       <Text newLines={2}>

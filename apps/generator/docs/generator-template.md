@@ -567,7 +567,7 @@ function getTopics(operations) {
 
 
 `{ operations }`: the `TopicFunction` component accepts a custom prop called operations and in your template code
-+`getTopics(operations)`: Returns a list of objects, one for each operation with two properties; name and topic. The **name** holds information about the `operationId` provided in the AsyncAPI document while the **topic** holds information about the address of the topic.
+`getTopics(operations)`: Returns a list of objects, one for each operation with two properties; name and topic. The **name** holds information about the `operationId` provided in the AsyncAPI document while the **topic** holds information about the address of the topic.
 
 Import the `TopicFunction` component in your template code in **index.js** and add the template code to generate the functions to topics that the `Temperature Service` application is subscribed to. In your case, the final version of your template code should look like this:
 
@@ -581,7 +581,7 @@ export default function ({ asyncapi, params }) {
       <Text newLines={2}>import paho.mqtt.client as mqtt</Text>
 
       <Text newLines={2}>
-        mqttBroker = "{asyncapi.servers().get(params.server).host()}"
+      {`mqttBroker = "${asyncapi.servers().get(params.server).host()}"`}
       </Text>
 
       <Text newLines={2}>

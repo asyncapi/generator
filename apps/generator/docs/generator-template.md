@@ -53,7 +53,7 @@ info:
 
 servers:
   dev:
-    host: test.mosquitto.org
+    host: test.mosquitto.org #in case you're using local mosquitto instance, change this value to localhost.
     protocol: mqtt
 
 channels:
@@ -71,13 +71,13 @@ channels:
 
 operations:
   temperatureDrop:
-    action: send
+    action: receive
     channel:
       $ref: '#/channels/temperatureDroppedChannel'
     messages:
       - $ref: '#/channels/temperatureDroppedChannel/messages/temperatureDropMessage'
   temperatureRise:
-    action: send
+    action: receive
     channel:
       $ref: '#/channels/temperatureRisenChannel'
     messages:
@@ -120,7 +120,6 @@ python-mqtt-client-template
 │ └── asyncapi.yml
 └── package.json
 
-````
 
 Lets break it down:
 
@@ -146,7 +145,7 @@ The **package.json** file is used to define the dependencies for your template. 
     "rimraf": "^5.0.0"
   }
 }
-````
+
 
 Here's what is contained in the code snippet above:
 
@@ -416,7 +415,7 @@ Update your `test:generate` script in **package.json** to include the server par
 "test:generate": "asyncapi generate fromTemplate test/fixtures/asyncapi.yml ./ --output test/project --force-write --param server=dev"
 ```
 
-You can now replace the static broker from `mqttBroker = 'test.mosquitto.org'` to `mqttBroker = "${asyncapi.servers().get(params.server).url()}"` in **index.js**.
+You can now replace the static broker from `mqttBroker = 'test.mosquitto.org'` to `mqttBroker = "${asyncapi.servers().get(params.server).host()()}"` in **index.js**.
 
 Now the template code looks like this:
 
@@ -429,7 +428,7 @@ export default function ({ asyncapi, params }) {
     <File name="client.py">
       {`import paho.mqtt.client as mqtt
 
-mqttBroker = "${asyncapi.servers().get(params.server).url()}"
+mqttBroker = "${asyncapi.servers().get(params.server).host()}"
 
 class TemperatureServiceClient:
     def __init__(self):
@@ -459,7 +458,7 @@ export default function ({ asyncapi, params }) {
     <File name="client.py">
       // 2<Text newLines={2}>import paho.mqtt.client as mqtt</Text>
       // 3<Text newLines={2}>
-        mqttBroker = "{asyncapi.servers().get(params.server).url()}"
+        mqttBroker = "{asyncapi.servers().get(params.server).host()}"
       </Text>
       // 4
       <Text newLines={2}>
@@ -499,10 +498,10 @@ class TemperatureServiceClient:
               self.client = mqtt.Client()
               self.client.connect(mqttBroker)
 
-  def sendTemperatureDrop(self, id):
+  def receiveTemperatureDrop(self, id):
           topic = "temperature/dropped"
           self.client.publish(topic, id)
-  def sendTemperatureRise(self, id):
+  def receiveTemperatureRise(self, id):
           topic = "temperature/risen"
           self.client.publish(topic, id)
 
@@ -565,7 +564,7 @@ function getTopics(operations) {
 
   return topicsDetails;
 }
-```
+
 
 `{ channels }`: the `TopicFunction` component accepts a custom prop called channels and in your template code
 `getTopics(channels)`: Returns a list of objects, one for each channel with two properties; name and topic. The **name** holds information about the `operationId` provided in the AsyncAPI document while the **topic** holds information about the address of the topic.
@@ -597,7 +596,7 @@ export default function ({ asyncapi, params }) {
       <Text indent={2} newLines={2}>
                {" "}
         <TopicFunction
-          operations={asyncapi.operations().filterByAction("send")}
+          operations={asyncapi.operations().filterByAction("receive")}
         />
              {" "}
       </Text>

@@ -39,7 +39,7 @@ Before you begin, make sure you have the following set up:
 
 ## Background context
 
-There is a list of [community maintained templates](https://www.asyncapi.com/docs/tools/generator/template#generator-templates-list), but what if you do not find what you need? In that case, you'll create a user-defined template that generates custom output from the generator.
+There is a list of [community-maintained templates](https://www.asyncapi.com/docs/tools/generator/template#generator-templates-list), but what if you do not find what you need? In that case, you'll create a user-defined template that generates custom output from the generator.
 Before you create the template, you'll need to have an [AsyncAPI document](https://www.asyncapi.com/docs/tools/generator/asyncapi-document) that defines the properties you want to use in your template to test against. In this tutorial, you'll use the following template saved in the **test/fixtures/asyncapi.yml** file in your template project directory.
 
 ```yml
@@ -110,7 +110,7 @@ components:
 
 Now your directory should look like this:
 
-```
+```text
 
 python-mqtt-client-template
 ├── template

@@ -57,11 +57,11 @@ servers:
     protocol: mqtt
 
 channels:
-  temperatureDroppedChannel:
-    address: temperature/dropped
+  temperatureChangedChannel:
+    address: temperature/changed
     messages:
-      temperatureDropMessage:
-        $ref: '#/components/messages/temperatureDropMessage'
+      temperatureMessage:
+        $ref: '#/components/messages/temperatureMessage'
 
   temperatureRisenChannel:
     address: temperature/risen
@@ -73,19 +73,19 @@ operations:
   temperatureDrop:
     action: receive
     channel:
-      $ref: '#/channels/temperatureDroppedChannel'
+      $ref: '#/channels/temperatureChangedChannel'
     messages:
       - $ref: '#/channels/temperatureDroppedChannel/messages/temperatureDropMessage'
   temperatureRise:
     action: receive
     channel:
-      $ref: '#/channels/temperatureRisenChannel'
+      $ref: '#/channels/temperatureChangedChannel'
     messages:
       - $ref: '#/channels/temperatureRisenChannel/messages/temperatureRiseMessage'
 
 components:
   messages:
-    temperatureDropMessage:
+    temperatureMessage:
       payload:
         $ref: '#/components/schemas/temperatureId'
     temperatureRiseMessage:

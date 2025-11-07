@@ -63,34 +63,26 @@ channels:
       temperatureMessage:
         $ref: '#/components/messages/temperatureMessage'
 
-  temperatureRisenChannel:
-    address: temperature/risen
-    messages:
-      temperatureRiseMessage:
-        $ref: '#/components/messages/temperatureRiseMessage'
-
 operations:
   temperatureDrop:
     action: receive
     channel:
       $ref: '#/channels/temperatureChangedChannel'
     messages:
-      - $ref: '#/channels/temperatureDroppedChannel/messages/temperatureDropMessage'
-  temperatureRise:
+      - $ref: '#/channels/temperatureChangedChannel/messages/temperatureMessage'
+  temperatureRise: 
     action: receive
     channel:
-      $ref: '#/channels/temperatureChangedChannel'
+      $ref: '#/channels/temperatureChangedChannel' 
     messages:
-      - $ref: '#/channels/temperatureRisenChannel/messages/temperatureRiseMessage'
-
+      - $ref: '#/channels/temperatureChangedChannel/messages/temperatureMessage'
+  
 components:
   messages:
     temperatureMessage:
       payload:
         $ref: '#/components/schemas/temperatureId'
-    temperatureRiseMessage:
-      payload:
-        $ref: '#/components/schemas/temperatureId'
+
   schemas:
     temperatureId:
       type: object

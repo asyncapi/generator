@@ -64,16 +64,10 @@ channels:
         $ref: '#/components/messages/temperatureMessage'
 
 operations:
-  temperatureDrop:
+  temperatureChange:
     action: receive
     channel:
       $ref: '#/channels/temperatureChangedChannel'
-    messages:
-      - $ref: '#/channels/temperatureChangedChannel/messages/temperatureMessage'
-  temperatureRise: 
-    action: receive
-    channel:
-      $ref: '#/channels/temperatureChangedChannel' 
     messages:
       - $ref: '#/channels/temperatureChangedChannel/messages/temperatureMessage'
   

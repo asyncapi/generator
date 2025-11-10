@@ -105,7 +105,7 @@ python-mqtt-client-template
 │ └── fixtures
 │ └── asyncapi.yml
 └── package.json
-
+```
 
 Lets break it down:
 

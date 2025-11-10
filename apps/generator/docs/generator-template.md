@@ -616,13 +616,22 @@ In the next section, you'll add another channel to **asyncapi.yml** file called 
 Update the AsyncAPI document to use two channels:
 
 ```yml
+asyncapi: 3.0.0
+info:
+  title: Temperature Service
+  version: 1.0.0
+  description: This service is in charge of processing all the events related to temperature.
+
+servers:
+  dev:
+    host: test.mosquitto.org
+    protocol: mqtt
+
 channels:
-  temperature/dropped:
-    description: Notifies the user when the temperature drops past a certain point.
-    publish:
-      operationId: temperatureDrop
-      message:
-        description: Message that is being sent when the temperature drops past a certain point.
+  temperatureDroppedChannel:
+    address: temperature/dropped
+    messages:
+      temperatureDropMessage:
         payload:
           type: object
           additionalProperties: false
@@ -630,18 +639,31 @@ channels:
             temperatureId:
               type: string
 
-  temperature/risen:
-    description: Notifies the user when the temperature rises past a certain point.
-    publish:
-      operationId: temperatureRise
-      message:
-        description: Message that is being sent when the temperature rises past a certain point.
+  temperatureRisenChannel:
+    address: temperature/risen
+    messages:
+      temperatureRiseMessage:
         payload:
           type: object
           additionalProperties: false
           properties:
             temperatureId:
               type: string
+
+operations:
+  temperatureDrop:
+    action: receive
+    channel:
+      $ref: '#/channels/temperatureDroppedChannel'
+    messages:
+      - $ref: '#/channels/temperatureDroppedChannel/messages/temperatureDropMessage'
+  
+  temperatureRise:
+    action: receive
+    channel:
+      $ref: '#/channels/temperatureRisenChannel'
+    messages:
+      - $ref: '#/channels/temperatureRisenChannel/messages/temperatureRiseMessage'
 ```
 
 And update your test script in test.py to test the two functions as below:

@@ -444,7 +444,7 @@ export default function ({ asyncapi, params }) {
     <File name="client.py">
       // 2<Text newLines={2}>import paho.mqtt.client as mqtt</Text>
       // 3<Text newLines={2}>
-        mqttBroker = "{asyncapi.servers().get(params.server).host()}"
+       {`mqttBroker = "${asyncapi.servers().get(params.server).host()}"`}
       </Text>
       // 4
       <Text newLines={2}>

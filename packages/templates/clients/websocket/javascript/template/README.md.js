@@ -1,5 +1,5 @@
 import { GenerateReadMe } from '@asyncapi/generator-components';
-import { AvailableOperations } from '../components/AvailableOperations';
+import { AvailableOperations } from '../../../../../components/src/components/readme/AvailableOperations';
 
 export default function({ asyncapi, params }) {
   return (  

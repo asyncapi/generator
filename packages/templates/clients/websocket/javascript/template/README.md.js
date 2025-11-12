@@ -1,4 +1,4 @@
-import { GenerateReadMe } from '../../../../../components/src/components/readme/Readme';
+import { GenerateReadMe } from '@asyncapi/generator-components';
 import { AvailableOperations } from '../components/AvailableOperations';
 
 export default function({ asyncapi, params }) {

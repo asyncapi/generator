@@ -2,5 +2,12 @@ import { GenerateReadMe } from '../../../../../components/src/components/readme/
 import { AvailableOperations } from '../components/AvailableOperations';
 
 export default function({ asyncapi, params }) {
-  return GenerateReadMe({asyncapi, params, language: 'javascript', AvailableOperations });
+  return (  
+    <GenerateReadMe  
+      asyncapi={asyncapi} 
+      params={params} 
+      language="javascript" 
+      AvailableOperations={AvailableOperations}
+    />  
+  );  
 }

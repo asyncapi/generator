@@ -1,15 +1,19 @@
 import { Text } from '@asyncapi/generator-react-sdk';
 
-export function CoreMethods({ language }) {
-  const msgHandler =
-    language === 'python'
-      ? 'register_message_handler(handler_function)'
-      : 'registerMessageHandler(handlerFunction)';
+const methodConfig = {
+  python: {
+    msgHandler: 'register_message_handler(handler_function)',
+    errHandler: 'register_error_handler(handler_function)',
+  },
+  default: {
+    msgHandler: 'registerMessageHandler(handlerFunction)',
+    errHandler: 'registerErrorHandler(handlerFunction)',
+  },
+};
 
-  const errHandler =
-    language === 'python'
-      ? 'register_error_handler(handler_function)'
-      : 'registerErrorHandler(handlerFunction)';
+export function CoreMethods({ language }) {
+  const config = methodConfig[language] || methodConfig.default;
+  const { msgHandler, errHandler } = config;
 
   return (
     <Text newLines={2}>

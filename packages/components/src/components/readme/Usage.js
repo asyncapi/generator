@@ -1,10 +1,7 @@
 import { Text } from '@asyncapi/generator-react-sdk';
 
-export function Usage({ clientName, clientFileName, language }) {
-  let snippet = '';
-
-  if (language === 'python') {
-    snippet = `
+const usageConfig = {
+  python: (clientName, clientFileName) => `
 from ${clientFileName.replace('.py', '')} import ${clientName}
 
 ws_client = ${clientName}()
@@ -13,9 +10,9 @@ async def main():
     await ws_client.connect()
     # use ws_client to send/receive messages
     await ws_client.close()
-`;
-  } else if (language === 'javascript') {
-    snippet = `
+`,
+
+  javascript: (clientName, clientFileName) => `
 const ${clientName} = require('./${clientFileName.replace('.js', '')}');
 const wsClient = new ${clientName}();
 
@@ -30,8 +27,18 @@ async function main() {
 }
 
 main();
-`;
-  }
+`,
+
+  default: (clientName, clientFileName) => `
+const ${clientName} = require('./${clientFileName}');
+const wsClient = new ${clientName}();
+await wsClient.connect();
+`,
+};
+
+export function Usage({ clientName, clientFileName, language }) {
+  const snippetFn = usageConfig[language] || usageConfig.default;
+  const snippet = snippetFn(clientName, clientFileName);
 
   return (
     <Text newLines={2}>

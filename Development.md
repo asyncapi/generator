@@ -2,6 +2,27 @@
 
 This guide will help you set up the `generator` locally, run tests, and use Docker for isolated testing.
 
+## Before You Begin - New Contributor Onboarding
+
+New to AsyncAPI Generator? We strongly recommend watching our comprehensive onboarding webinar first (~45 minutes):
+
+**Watch: [AsyncAPI Generator - One-to-One Flow: AsyncAPI's New Take on Docs and Config Generation](https://www.youtube.com/watch?v=Mkd7FgKOMNE)**
+
+### What you'll learn:
+
+- What AsyncAPI is and the challenges it solves
+- The origins and evolution of the Generator (legacy vs. future architecture)
+- Understanding event-driven architectures and protocol complexity
+- How the Generator works: templates, render engines, and the generation process
+- The shift from Nunjucks to React render engine
+- Component-based template development for better reusability
+- Baked-in templates and the monorepo structure
+- Live demonstrations of code generation from AsyncAPI documents
+
+This webinar provides essential context about the Generator's architecture, design decisions, and development workflow. Watching it will make the rest of this development guide much clearer and help you contribute more effectively.
+
+---
+
 ## Getting started
 
 1. Fork & Clone the repository:

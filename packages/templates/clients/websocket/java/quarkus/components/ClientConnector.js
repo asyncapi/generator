@@ -2,8 +2,9 @@ import { Text } from '@asyncapi/generator-react-sdk';
 import InitConnector from './InitConnector';
 import { ConnectorFields } from './ConnectorFields';
 
-export default function ClientConnector({ clientName, query, pathName }) {
+export default function ClientConnector({ clientName, query, pathName, operations }) {
   const queryParamsArray = query && Array.from(query.entries());
+  const sendOperations = operations.filterBySend();
   if (!pathName) {
     pathName = '/';
   }
@@ -17,7 +18,7 @@ export default function ClientConnector({ clientName, query, pathName }) {
 public class ${clientName}Connector{`}
       </Text>
       <ConnectorFields clientName={clientName} queryParamsArray={queryParamsArray} />
-      <InitConnector queryParamsArray={queryParamsArray} pathName={pathName}/>
+      <InitConnector queryParamsArray={queryParamsArray} pathName={pathName} sendOperations={sendOperations} />
     </Text>
   );
 }

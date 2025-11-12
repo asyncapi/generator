@@ -35,13 +35,14 @@ const websocketOnCloseMethod = {
   },
   java: {
     quarkus: (title) => {
-      const onCloseMethod = `@OnClose
-   public void onClose(CloseReason reason, WebSocketClientConnection connection) {
-      int code = reason.getCode();
-      LOG.info("Websocket disconnected from ${title} with Close code: " + code);
+      const onCloseMethod = `
+  @OnClose
+  public void onClose(CloseReason reason, WebSocketClientConnection connection) {
+    int code = reason.getCode();
+    LOG.info("Websocket disconnected from ${title} with Close code: " + code);
   }
 }`;
-      return { onCloseMethod, indent: 2 };
+      return { onCloseMethod, indent: 0 };
     }
   }
 };

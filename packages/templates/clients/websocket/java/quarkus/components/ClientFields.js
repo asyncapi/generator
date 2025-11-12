@@ -5,7 +5,7 @@ export function ClientFields({ queryParams, clientName }) {
   let queryParamsVariables = '';
   const queryParamsArray = queryParams && Array.from(queryParams.entries());
   
-  if (queryParamsArray) {
+  if (queryParamsArray && queryParamsArray.length > 0) {
     queryParamsVariables = '\nprivate HashMap<String, String> params;\n';
     queryParamsVariables += queryParamsArray.map((param) => {
       const paramName = toCamelCase(param[0]);

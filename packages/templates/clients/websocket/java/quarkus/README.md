@@ -79,3 +79,32 @@ You can use our AsyncAPI's credentials to access different set of events produce
 6. Navigate to `outputClient` or any other name you gave the output folder
 7. Run `mvn quarkus:dev`
 8. See the output in the terminal
+
+### Deploying with Kubernetes
+
+Quarkus can automatically generate Kubernetes manifests and container images using the Kubernetes extensions added in your template.
+
+Build your project with:
+
+```bash
+mvn clean package
+```
+
+This will generate Kubernetes manifests in `target/kubernetes/`. Deploy your app to a cluster with:
+
+```bash
+kubectl apply -f target/kubernetes/kubernetes.yml
+```
+
+> **Note:**  
+> The generated deployment uses an image like `username/quarkus-websocket:1.0.0-SNAPSHOT` by default.  
+> You can customize the image name in `application.properties`:
+>
+> ```properties
+> quarkus.container-image.group=quarkus
+> quarkus.container-image.name=demo-app
+> quarkus.container-image.tag=1.0
+> ```
+> The resulting image will be `quarkus/demo-app:1.0`.
+
+For more details, see the [Quarkus Kubernetes guide](https://quarkus.io/guides/deploying-to-kubernetes).

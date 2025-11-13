@@ -50,7 +50,7 @@ We use [All Contributors](https://allcontributors.org/docs/en/specification) spe
 7. Keep **PRs small and focused** – A small PR with a well-defined scope is easier to review and merge. Avoid bundling multiple changes into one PR.
 8. Collaborate with Other Contributors – If someone else has already raised an issue and you are interested in contributing to it, please communicate with them and collaborate instead of raising a separate PR independently. Working together leads to better contributions and avoids duplication of efforts. Open source is driven by **collaboration, not competition**.
 9. **Respond to Maintainer Reviews Promptly** - If a maintainer requests changes or provides feedback on your PR, please try to address them within **7 days**. If you're unable to respond by then, the PR may be closed. Contributors are always welcome to open a new PR once they're ready to continue.
-10. **Check the Development Guide** - Before you start contributing, make sure to read the [Development Guide](Development.md) to learn how to set up the project locally and understand the development workflow.
+10. **Watch the Onboarding Webinar** - Before diving into code, watch our [Generator onboarding webinar](https://www.youtube.com/watch?v=Mkd7FgKOMNE) to understand the architecture and design decisions. See the [Development Guide](Development.md#before-you-begin---new-contributor-onboarding) for more details on what you'll learn.
 
 ## Summary of the Contribution Flow
 

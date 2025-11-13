@@ -4,7 +4,7 @@ This guide will help you set up the `generator` locally, run tests, and use Dock
 
 ## Before You Begin - New Contributor Onboarding
 
-New to AsyncAPI Generator? We strongly recommend watching our comprehensive onboarding webinar first (~45 minutes):
+New to AsyncAPI Generator? We strongly recommend watching our comprehensive onboarding webinar first:
 
 **Watch: [AsyncAPI Generator - One-to-One Flow: AsyncAPI's New Take on Docs and Config Generation](https://www.youtube.com/watch?v=Mkd7FgKOMNE)**
 
@@ -18,8 +18,6 @@ New to AsyncAPI Generator? We strongly recommend watching our comprehensive onbo
 - Component-based template development for better reusability
 - Baked-in templates and the monorepo structure
 - Live demonstrations of code generation from AsyncAPI documents
-
-This webinar provides essential context about the Generator's architecture, design decisions, and development workflow. Watching it will make the rest of this development guide much clearer and help you contribute more effectively.
 
 ---
 

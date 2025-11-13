@@ -1,7 +1,7 @@
 import path from 'path';
 import { render } from '@asyncapi/generator-react-sdk';
 import { Parser, fromFile } from '@asyncapi/parser';
-import MessageExamples from '../../components/MessageExamples';
+import MessageExamples from '../../../../../../components/src/components/readme/MessageExamples';
 
 const parser = new Parser();
 const asyncapi_websocket_query = path.resolve(__dirname, '../../../../../../helpers/test/__fixtures__/asyncapi-websocket-query.yml');

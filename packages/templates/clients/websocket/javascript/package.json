@@ -13,7 +13,7 @@
   "dependencies": {
     "@asyncapi/generator-react-sdk": "*",
     "@asyncapi/generator-helpers": "0.2.0",
-    "@asyncapi/generator-components": "0.3.0"
+    "@asyncapi/generator-components": "0.3.1"
   },
   "devDependencies": {
     "@asyncapi/parser": "^3.0.14",

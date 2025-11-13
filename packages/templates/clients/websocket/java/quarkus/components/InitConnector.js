@@ -3,7 +3,7 @@ import TimedConnection from './TimedConnection';
 import URIParams from './URIParams';
 import { CloseConnection } from '@asyncapi/generator-components';
 
-export default function InitConnector({ queryParamsArray, pathName }) {
+export default function InitConnector({ queryParamsArray, pathName, sendOperations }) {
   return (
     <Text>
       {`
@@ -14,7 +14,7 @@ export default function InitConnector({ queryParamsArray, pathName }) {
             Log.info("Starting WebSocket connection attempt...");`}
       {
         (!queryParamsArray || queryParamsArray.length === 0) && (
-          <TimedConnection />
+          <TimedConnection sendOperations={sendOperations} />
         )
       }
       <URIParams queryParamsArray={queryParamsArray} pathName={pathName} />

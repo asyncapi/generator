@@ -1,0 +1,75 @@
+name: Docs Preview (Netlify)
+
+on:
+  pull_request_target:
+    paths:
+      - 'apps/generator/docs/**'
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout generator PR
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Checkout website repo
+        uses: actions/checkout@v5
+        with:
+          repository: asyncapi/website
+          path: website
+          fetch-depth: 1
+
+      - name: Sync docs into website
+        run: |
+          rm -rf website/markdown/docs/tools/generator/*
+          cp -R apps/generator/docs/* website/markdown/docs/tools/generator/
+          rm website/markdown/docs/tools/generator/README.md
+          rm -r website/markdown/docs/tools/generator/jsdoc2md-handlebars
+          printf "%s\ntitle: Generator\nweight: 3\n%s" "---" "---"> website/markdown/docs/tools/generator/_section.md
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+
+      - name: Install jq
+        run: |
+          sudo apt-get update && sudo apt-get install -y jq
+
+      - name: Install Netlify CLI
+        run: npm i -g netlify-cli@23.9.5
+
+      - name: Install deps
+        working-directory: website
+        run: |
+          npm ci
+
+      - name: Build and deploy draft preview to Netlify
+        id: deploy
+        working-directory: website
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        run: |
+          set -e
+          # Build and deploy built files to Netlify
+          DEPLOY_JSON=$(netlify deploy \
+            --auth "$NETLIFY_AUTH_TOKEN" \
+            --site "$NETLIFY_SITE_ID" \
+            --message "generator repo PR #${{ github.event.number }}" \
+            --draft \
+            --json)
+
+          echo "$DEPLOY_JSON"
+          echo "url=$(echo "$DEPLOY_JSON" | jq -r '.deploy_url')" >> "$GITHUB_OUTPUT"
+
+      - name: Comment preview URL on PR
+        if: success()
+        uses: thollander/actions-comment-pull-request@24bffb9b452ba05a4f3f77933840a6a841d1b32b #v3.0.1 release https://github.com/thollander/actions-comment-pull-request/releases/tag/v3.0.1
+        with:
+          github-token: ${{ secrets.GH_TOKEN }}
+          message: |
+            🚀 **Docs preview deployed**
+            Below link points directly to the generator docs preview. May the force be with you!
+            → ${{ steps.deploy.outputs.url }}/docs/tools/generator

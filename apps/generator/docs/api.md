@@ -14,7 +14,8 @@ Reference API documentation for AsyncAPI Generator library.
 
 <dl>
 <dt><a href="#listBakedInTemplates">listBakedInTemplates</a> ⇒ <code>Array.&lt;Object&gt;</code></dt>
-<dd><p>List core templates, optionally filter by type, stack, protocol, or target.Use name of returned templates as input for the `generate` method for template generation. Such core templates code is part of the @asyncapi/generator package.</p></dd></dl>
+<dd><p>List core templates, optionally filter by type, stack, protocol, or target.
+Use name of returned templates as input for the `generate` method for template generation. Such core templates code is part of the @asyncapi/generator package.</p></dd></dl>
 
 
 <a name="Generator"></a>
@@ -86,7 +87,8 @@ Instantiates a new Generator object.
 
 **Example**  
 ```js
-const path = require('path');const generator = new Generator('@asyncapi/html-template', path.resolve(__dirname, 'example'));
+const path = require('path');
+const generator = new Generator('@asyncapi/html-template', path.resolve(__dirname, 'example'));
 ```
 **Example** *(Passing custom params to the template)*  
 ```js
@@ -213,15 +215,23 @@ Generates files from a given template and an AsyncAPIDocument object.
 **Params**
 
 - asyncapiDocument `AsyncAPIDocument` | `string` - AsyncAPIDocument object to use as source.
-- [parseOptions] `Object` ` = {}` - AsyncAPI Parser parse options.  Check out [@asyncapi/parser](https://www.github.com/asyncapi/parser-js) for more information.  Remember to use the right options for the right parser depending on the template you are using.
+- [parseOptions] `Object` ` = {}` - AsyncAPI Parser parse options.
+  Check out [@asyncapi/parser](https://www.github.com/asyncapi/parser-js) for more information.
+  Remember to use the right options for the right parser depending on the template you are using.
 
 **Example**  
 ```js
-await generator.generate(myAsyncAPIdocument);console.log('Done!');
+await generator.generate(myAsyncAPIdocument);
+console.log('Done!');
 ```
 **Example**  
 ```js
-generator  .generate(myAsyncAPIdocument)  .then(() => {    console.log('Done!');  })  .catch(console.error);
+generator
+  .generate(myAsyncAPIdocument)
+  .then(() => {
+    console.log('Done!');
+  })
+  .catch(console.error);
 ```
 **Example** *(Using async/await)*  
 ```js
@@ -261,13 +271,17 @@ Sets up the output configuration based on the specified output type.
 
 **Example**  
 ```js
-const generator = new Generator();await generator.setupOutput();
+const generator = new Generator();
+await generator.setupOutput();
 ```
 
 <a name="Generator+setupFSOutput"></a>
 
 * generator.setupFSOutput() ⇒ `Promise.<void>`** :
-Sets up the file system (FS) output configuration.This function creates the target directory if it does not exist and verifiesthe target directory if forceWrite is not enabled.
+Sets up the file system (FS) output configuration.
+
+This function creates the target directory if it does not exist and verifies
+the target directory if forceWrite is not enabled.
 
 **Kind**: instance method of [`Generator`](#Generator)  
 **Returns**: `Promise.<void>` - A promise that fulfills when the setup is complete.  
@@ -279,14 +293,20 @@ Sets up the file system (FS) output configuration.This function creates the ta
 <a name="Generator+setLogLevel"></a>
 
 * generator.setLogLevel() ⇒ `void`** :
-Sets the log level based on the debug option.If the debug option is enabled, the log level is set to 'debug'.
+Sets the log level based on the debug option.
+
+If the debug option is enabled, the log level is set to 'debug'.
 
 **Kind**: instance method of [`Generator`](#Generator)  
 
 <a name="Generator+installAndSetupTemplate"></a>
 
 * generator.installAndSetupTemplate() ⇒ `Promise.<{templatePkgName: string, templatePkgPath: string}>`** :
-Installs and sets up the template for code generation.This function installs the specified template using the provided installation option,sets up the necessary directory paths, loads the template configuration, and returnsinformation about the installed template.
+Installs and sets up the template for code generation.
+
+This function installs the specified template using the provided installation option,
+sets up the necessary directory paths, loads the template configuration, and returns
+information about the installed template.
 
 **Kind**: instance method of [`Generator`](#Generator)  
 **Returns**: `Promise.<{templatePkgName: string, templatePkgPath: string}>` - A promise that resolves to an object containing the name and path of the installed template.  
@@ -294,7 +314,13 @@ Installs and sets up the template for code generation.This function installs t
 <a name="Generator+configureTemplateWorkflow"></a>
 
 ### generator.configureTemplateWorkflow
-Configures the template workflow based on provided parsing options.This function performs the following steps:1. Parses the input AsyncAPI document using the specified parse options.2. Validates the template configuration and parameters.3. Configures the template based on the parsed AsyncAPI document.4. Registers filters, hooks, and launches the 'generate:before' hook if applicable.
+Configures the template workflow based on provided parsing options.
+
+This function performs the following steps:
+1. Parses the input AsyncAPI document using the specified parse options.
+2. Validates the template configuration and parameters.
+3. Configures the template based on the parsed AsyncAPI document.
+4. Registers filters, hooks, and launches the 'generate:before' hook if applicable.
 
 **Kind**: instance method of [`Generator`](#Generator)  
 **Returns**: `Promise.<void>` - A promise that resolves when the configuration is completed.  
@@ -306,7 +332,15 @@ Configures the template workflow based on provided parsing options.This functi
 <a name="Generator+handleEntrypoint"></a>
 
 * generator.handleEntrypoint() ⇒ `Promise.<void>`** :
-Handles the logic for the template entrypoint.If an entrypoint is specified:- Resolves the absolute path of the entrypoint file.- Throws an error if the entrypoint file doesn't exist.- Generates a file or renders content based on the output type.- Launches the 'generate:after' hook if the output is 'fs'.If no entrypoint is specified, generates the directory structure.
+Handles the logic for the template entrypoint.
+
+If an entrypoint is specified:
+- Resolves the absolute path of the entrypoint file.
+- Throws an error if the entrypoint file doesn't exist.
+- Generates a file or renders content based on the output type.
+- Launches the 'generate:after' hook if the output is 'fs'.
+
+If no entrypoint is specified, generates the directory structure.
 
 **Kind**: instance method of [`Generator`](#Generator)  
 **Returns**: `Promise.<void>` - A promise that resolves when the entrypoint logic is completed.  
@@ -314,7 +348,9 @@ Handles the logic for the template entrypoint.If an entrypoint is specified:-
 <a name="Generator+executeAfterHook"></a>
 
 * generator.executeAfterHook() ⇒ `Promise.<void>`** :
-Executes the 'generate:after' hook.Launches the after-hook to perform additional actions after code generation.
+Executes the 'generate:after' hook.
+
+Launches the after-hook to perform additional actions after code generation.
 
 **Kind**: instance method of [`Generator`](#Generator)  
 **Returns**: `Promise.<void>` - A promise that resolves when the after-hook execution is completed.  
@@ -348,7 +384,19 @@ Generates files from a given template and AsyncAPI string.
 
 **Example**  
 ```js
-const asyncapiString = `asyncapi: '2.0.0'info:  title: Example  version: 1.0.0...`;generator  .generateFromString(asyncapiString)  .then(() => {    console.log('Done!');  })  .catch(console.error);
+const asyncapiString = `
+asyncapi: '2.0.0'
+info:
+  title: Example
+  version: 1.0.0
+...
+`;
+generator
+  .generateFromString(asyncapiString)
+  .then(() => {
+    console.log('Done!');
+  })
+  .catch(console.error);
 ```
 **Example** *(Using async/await)*  
 ```js
@@ -380,7 +428,12 @@ Generates files from a given template and AsyncAPI file stored on external serve
 
 **Example**  
 ```js
-generator  .generateFromURL('https://example.com/asyncapi.yaml')  .then(() => {    console.log('Done!');  })  .catch(console.error);
+generator
+  .generateFromURL('https://example.com/asyncapi.yaml')
+  .then(() => {
+    console.log('Done!');
+  })
+  .catch(console.error);
 ```
 **Example** *(Using async/await)*  
 ```js
@@ -404,7 +457,12 @@ Generates files from a given template and AsyncAPI file.
 
 **Example**  
 ```js
-generator  .generateFromFile('asyncapi.yaml')  .then(() => {    console.log('Done!');  })  .catch(console.error);
+generator
+  .generateFromFile('asyncapi.yaml')
+  .then(() => {
+    console.log('Done!');
+  })
+  .catch(console.error);
 ```
 **Example** *(Using async/await)*  
 ```js
@@ -441,7 +499,8 @@ Returns the content of a given template file.
 
 **Example**  
 ```js
-const Generator = require('@asyncapi/generator');const content = await Generator.getTemplateFile('@asyncapi/html-template', 'partials/content.html');
+const Generator = require('@asyncapi/generator');
+const content = await Generator.getTemplateFile('@asyncapi/html-template', 'partials/content.html');
 ```
 **Example** *(Using a custom &#x60;templatesDir&#x60;)*  
 ```js
@@ -452,7 +511,8 @@ const content = await Generator.getTemplateFile('@asyncapi/html-template', 'part
 <a name="listBakedInTemplates"></a>
 
 ## listBakedInTemplates
-List core templates, optionally filter by type, stack, protocol, or target.Use name of returned templates as input for the `generate` method for template generation. Such core templates code is part of the @asyncapi/generator package.
+List core templates, optionally filter by type, stack, protocol, or target.
+Use name of returned templates as input for the `generate` method for template generation. Such core templates code is part of the @asyncapi/generator package.
 
 **Kind**: global variable  
 **Returns**: `Array.<Object>` - Array of template objects matching the filter.  

@@ -47,7 +47,10 @@ import io.quarkus.logging.Log;
 import io.quarkus.runtime.Startup;"
 `;
 
-exports[`Testing of DependencyProvider function render js websockets file dependecies correctly 1`] = `"const WebSocket = require('ws');"`;
+exports[`Testing of DependencyProvider function render js websockets file dependecies correctly 1`] = `
+"const WebSocket = require('ws');
+const { compileSchemasByOperationId, validateMessage } = require('@asyncapi/keeper');"
+`;
 
 exports[`Testing of DependencyProvider function render python websockets file dependecies correctly 1`] = `
 "import json

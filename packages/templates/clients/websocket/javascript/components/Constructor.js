@@ -1,6 +1,9 @@
 import { Text } from '@asyncapi/generator-react-sdk';
 
-export function Constructor({ serverUrl }) {
+export function Constructor({ serverUrl, sendOperations }) {
+  const sendOperationsId = sendOperations.map((operation) => operation.id());
+  const sendOperationsArray = JSON.stringify(sendOperationsId);
+
   return (
     <Text indent={2}>
       {
@@ -13,6 +16,9 @@ constructor(url) {
   this.websocket = null;
   this.messageHandlers = [];
   this.errorHandlers = [];
+  this.compiledSchemas = {};
+  this.schemasCompiled = false;
+  this.sendOperationsId = ${sendOperationsArray};
 }
 `
       }

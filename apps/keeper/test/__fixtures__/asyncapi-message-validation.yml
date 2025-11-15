@@ -31,9 +31,8 @@ components:
             type: string
             description: The content to be echoed back
             example: "test message"
-          timestamp:
-            type: string
-            format: date-time
-            description: When the message was sent
+          messageId:
+            type: number
+            description: Unique identifier for the message
         required:
           - content

@@ -10,6 +10,7 @@ export default function ({ asyncapi, params }) {
   const clientName = getClientName(asyncapi, params.appendClientSuffix, params.customClientName);
   const serverUrl = getServerUrl(server);
   const sendOperations = asyncapi.operations().filterBySend();
+  const asyncapiFilepath = `${params.asyncapiFileDir}/asyncapi.yaml`;
   return (
     <File name={params.clientFileName}>
       <FileHeaderInfo
@@ -19,7 +20,7 @@ export default function ({ asyncapi, params }) {
       />
       <DependencyProvider
         language="javascript"
-        additionalDependencies={['const path = require(\'path\');', 'const asyncapiFilepath = path.resolve(__dirname, \'../../../../../test/__fixtures__/asyncapi-postman-echo.yml\');']}
+        additionalDependencies={['const path = require(\'path\');', `const asyncapiFilepath = path.resolve(__dirname, '${asyncapiFilepath}');`]}
       />
       <ClientClass clientName={clientName} serverUrl={serverUrl} title={title} sendOperations={sendOperations} />
     </File>

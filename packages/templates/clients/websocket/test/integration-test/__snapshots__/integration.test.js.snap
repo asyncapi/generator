@@ -6192,6 +6192,42 @@ main();
 "
 `;
 
+exports[`WebSocket Clients Integration Tests JavaScript Client Common Integration tests for JavaScript client generation generate simple client for hoppscotch echo with custom client name: asyncapi.yaml 1`] = `
+"asyncapi: 3.0.0
+info:
+  title: Hoppscotch Echo WebSocket Client
+  version: 1.0.0
+  description: >
+    Undestand how to use Hoppscotch Echo WebSocket as a client.
+    Hoppscotch Echo WebSocket server echoes back any messages sent to it. You can use this to test WebSocket connections and message flows.
+
+servers:
+  echoServer:
+    $ref: './commons/servers.yml#/servers/echoServer'
+
+channels:
+  echo:
+    $ref: './commons/channels.yml#/channels/echo'
+
+operations:
+  sendEchoMessage:
+    action: send
+    channel:
+      $ref: '#/channels/echo'
+    summary: Send a message to the echo server.
+    messages:
+      - $ref: '#/channels/echo/messages/echo'  
+
+  handleTimeStampMessage:
+    action: receive
+    channel:
+      $ref: '#/channels/echo'
+    summary: Receive the timestamp message sent from server every second.
+    messages:
+      - $ref: '#/channels/echo/messages/timestamp' 
+"
+`;
+
 exports[`WebSocket Clients Integration Tests JavaScript Client Common Integration tests for JavaScript client generation generate simple client for hoppscotch echo with custom client name: client.js 1`] = `
 "//////////////////////////////////////////////////
 //
@@ -6204,7 +6240,7 @@ exports[`WebSocket Clients Integration Tests JavaScript Client Common Integratio
 const WebSocket = require('ws');
 const { compileSchemasByOperationId, validateMessage } = require('@asyncapi/keeper');
 const path = require('path');
-const asyncapiFilepath = path.resolve(__dirname, '../../../../../test/__fixtures__/asyncapi-postman-echo.yml');
+const asyncapiFilepath = path.resolve(__dirname, './asyncapi.yaml');
 class HoppscotchClient {
 
   /*
@@ -6519,6 +6555,42 @@ main();
 "
 `;
 
+exports[`WebSocket Clients Integration Tests JavaScript Client Common Integration tests for JavaScript client generation generate simple client for hoppscotch echo: asyncapi.yaml 1`] = `
+"asyncapi: 3.0.0
+info:
+  title: Hoppscotch Echo WebSocket Client
+  version: 1.0.0
+  description: >
+    Undestand how to use Hoppscotch Echo WebSocket as a client.
+    Hoppscotch Echo WebSocket server echoes back any messages sent to it. You can use this to test WebSocket connections and message flows.
+
+servers:
+  echoServer:
+    $ref: './commons/servers.yml#/servers/echoServer'
+
+channels:
+  echo:
+    $ref: './commons/channels.yml#/channels/echo'
+
+operations:
+  sendEchoMessage:
+    action: send
+    channel:
+      $ref: '#/channels/echo'
+    summary: Send a message to the echo server.
+    messages:
+      - $ref: '#/channels/echo/messages/echo'  
+
+  handleTimeStampMessage:
+    action: receive
+    channel:
+      $ref: '#/channels/echo'
+    summary: Receive the timestamp message sent from server every second.
+    messages:
+      - $ref: '#/channels/echo/messages/timestamp' 
+"
+`;
+
 exports[`WebSocket Clients Integration Tests JavaScript Client Common Integration tests for JavaScript client generation generate simple client for hoppscotch echo: client.js 1`] = `
 "//////////////////////////////////////////////////
 //
@@ -6531,7 +6603,7 @@ exports[`WebSocket Clients Integration Tests JavaScript Client Common Integratio
 const WebSocket = require('ws');
 const { compileSchemasByOperationId, validateMessage } = require('@asyncapi/keeper');
 const path = require('path');
-const asyncapiFilepath = path.resolve(__dirname, '../../../../../test/__fixtures__/asyncapi-postman-echo.yml');
+const asyncapiFilepath = path.resolve(__dirname, './asyncapi.yaml');
 class HoppscotchEchoWebSocketClient {
 
   /*
@@ -6807,6 +6879,59 @@ main();
 "
 `;
 
+exports[`WebSocket Clients Integration Tests JavaScript Client Common Integration tests for JavaScript client generation generate simple client for postman echo: asyncapi.yaml 1`] = `
+"asyncapi: 3.0.0
+
+info:
+  title: Postman Echo WebSocket Client
+  version: 1.0.0
+  description: Understand how to use the Postman Echo WebSocket as a client.
+    The Postman Echo WebSocket server echoes back any messages sent to it.
+
+servers:
+  echoServer:
+    host: ws.postman-echo.com
+    pathname: /raw
+    protocol: wss
+
+channels:
+  echo:
+    description: The main channel where messages are sent and echoed back by the Postman Echo WebSocket server.
+    address: /
+    messages:
+      echo:
+        $ref: '#/components/messages/echo'
+
+operations:
+  sendEchoMessage:
+    summary: Send a message to the Postman Echo server.
+    action: send
+    channel: 
+      $ref: '#/channels/echo'
+    messages:
+      - $ref: '#/channels/echo/messages/echo'
+    reply:
+      channel: 
+        $ref: '#/channels/echo'
+
+components:
+  messages:
+    echo:
+      summary: A message exchanged with the echo server.
+      payload:
+        type: object
+        properties:
+          content:
+            type: string
+            description: The content to be echoed back
+            example: \\"test message\\"
+          messageId:
+            type: number
+            description: Unique identifier for the message
+        required:
+          - content"
+`;
+
 exports[`WebSocket Clients Integration Tests JavaScript Client Common Integration tests for JavaScript client generation generate simple client for postman echo: client.js 1`] = `
 "//////////////////////////////////////////////////
 //
@@ -6820,7 +6945,7 @@ exports[`WebSocket Clients Integration Tests JavaScript Client Common Integratio
 const WebSocket = require('ws');
 const { compileSchemasByOperationId, validateMessage } = require('@asyncapi/keeper');
 const path = require('path');
-const asyncapiFilepath = path.resolve(__dirname, '../../../../../test/__fixtures__/asyncapi-postman-echo.yml');
+const asyncapiFilepath = path.resolve(__dirname, './asyncapi.yaml');
 class PostmanEchoWebSocketClientClient {
 
   /*

@@ -18,7 +18,7 @@ export default function URIParams({ queryParamsArray, pathName }) {
         const paramName = toCamelCase(param[0]);
         const variableDefinition = `String ${paramName} = System.getenv("${paramName.toUpperCase()}");`;
         const errorCheck = `if(${paramName} == null || ${paramName}.isEmpty()){`;
-        const errorMessage = ` throw new IllegalArgumentException("Required environment variable ${paramName.toUpperCase()} is missing or empty");`;
+        const errorMessage = `throw new IllegalArgumentException("Required environment variable ${paramName.toUpperCase()} is missing or empty");`;
         const closingTag = '}';
 
         let additionalQuery = '';

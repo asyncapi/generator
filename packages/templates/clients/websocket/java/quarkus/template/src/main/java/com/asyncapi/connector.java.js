@@ -9,11 +9,12 @@ export default async function ({ asyncapi, params }) {
   const queryParams = getQueryParams(asyncapi.channels());
   const clientConnectorName = `${clientName}Connector.java`;
   const pathName = server.pathname();
+  const operations = asyncapi.operations();
   
   return (
     <File name={clientConnectorName}>
       <ConnectorDependencies queryParams={queryParams}/>
-      <ClientConnector clientName={clientName} query={queryParams} pathName={pathName}/>
+      <ClientConnector clientName={clientName} query={queryParams} pathName={pathName} operations={operations} />
     </File>
   );
 }

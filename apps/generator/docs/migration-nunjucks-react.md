@@ -14,8 +14,8 @@ Change your template configuration in `package.json`:
 ```json
 {
 "generator": {
-"renderer": "react"
-}
+    "renderer": "react"
+  }
 }
 ```
 

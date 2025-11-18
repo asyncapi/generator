@@ -56,6 +56,7 @@
     "@asyncapi/generator-helpers": "*",
     "@asyncapi/generator-hooks": "*",
     "@asyncapi/generator-react-sdk": "*",
+    "@asyncapi/keeper": "*",
     "@asyncapi/multi-parser": "^2.1.1",
     "@asyncapi/nunjucks-filters": "*",
     "@asyncapi/parser": "^3.0.14",

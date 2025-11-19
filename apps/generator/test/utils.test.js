@@ -62,6 +62,44 @@ describe('Utils', () => {
     });
   });
 
+  describe('#isGitSpecifier', () => {
+    it('returns true for git+https url', () => {
+      expect(utils.isGitSpecifier('git+https://github.com/org/repo.git')).toBeTruthy();
+    });
+
+    it('returns true for git+ssh url', () => {
+      expect(utils.isGitSpecifier('git+ssh://git@github.com/org/repo.git')).toBeTruthy();
+    });
+
+    it('returns true for ssh url', () => {
+      expect(utils.isGitSpecifier('ssh://git@gitlab.com/org/repo.git')).toBeTruthy();
+    });
+
+    it('returns true for ssh-style git@host:path', () => {
+      expect(utils.isGitSpecifier('git@github.com:org/repo.git')).toBeTruthy();
+    });
+
+    it('returns true for github shorthand', () => {
+      expect(utils.isGitSpecifier('github:org/repo')).toBeTruthy();
+    });
+
+    it('returns true for gitlab shorthand', () => {
+      expect(utils.isGitSpecifier('gitlab:org/repo')).toBeTruthy();
+    });
+
+    it('returns false for plain https url', () => {
+      expect(utils.isGitSpecifier('https://example.com/template.tgz')).toBeFalsy();
+    });
+
+    it('returns false for npm package name', () => {
+      expect(utils.isGitSpecifier('@asyncapi/html-template')).toBeFalsy();
+    });
+
+    it('returns false for file system path', () => {
+      expect(utils.isGitSpecifier('./my-template')).toBeFalsy();
+    });
+  });
+
   describe('#exists', () => {
     it('should return true if file exist', async () => {
       const exists = await utils.exists(`${process.cwd()}/package.json`);

@@ -39,3 +39,42 @@ const generator = new Generator('@asyncapi/html-template', 'output',
       });
 ```
 Assuming you host `@asyncapi/html-template` in a private package registry like Verdaccio. To pull this template, you need to provide `registry.url` option that points to the registry URL and `registry.auth` as a base64 encoded value that represents the username and password. Instead of username and password, you can also pass `registry.token`.
+
+## Using templates from private Git repositories
+
+Generator can also use templates hosted in Git repositories, including private repositories on providers such as GitHub and GitLab.  
+In this case the template is referenced using a git-compatible specifier, and authentication is handled by your existing Git configuration (SSH keys, HTTPS with personal access tokens, etc.).
+
+### CLI example
+
+```bash
+asyncapi generate fromTemplate asyncapi.yaml \
+  git+ssh://git@github.com/your-org/your-private-template.git \
+  -o output
+```
+
+You can use any git specifier supported by npm, for example:
+
+- `git+https://github.com/your-org/your-private-template.git#v1.0.0`
+- `git+ssh://git@github.com/your-org/your-private-template.git#main`
+- `git@gitlab.com:your-org/your-private-template.git`
+- `github:your-org/your-private-template`
+
+Make sure your Git credentials are configured so the underlying git client can access the repository. For example:
+
+- Configure SSH keys that have access to the private repository.
+- Use HTTPS URLs with a personal access token (PAT), following your Git provider’s documentation.
+
+### Library example
+
+```javascript
+const generator = new Generator(
+  'git+https://github.com/your-org/your-private-template.git#v1.0.0',
+  'output',
+  {
+    debug: true
+  }
+);
+```
+
+In both CLI and library usage, AsyncAPI Generator delegates cloning and authentication to npm and git; no additional generator-specific configuration is required beyond providing a valid git specifier and having your Git credentials set up correctly.

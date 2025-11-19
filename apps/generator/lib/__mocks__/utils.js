@@ -22,4 +22,24 @@ utils.getGeneratorVersion = jest.fn(() => utils.__generatorVersion);
 utils.__getTemplateDetails = {};
 utils.getTemplateDetails = jest.fn(() => utils.__getTemplateDetails);
 
+utils.__isGitSpecifierValue = false;
+utils.isGitSpecifier = jest.fn((str) => {
+  if (utils.__isGitSpecifierValue !== false) {
+    return utils.__isGitSpecifierValue;
+  }
+  if (typeof str !== 'string') return false;
+  const trimmed = str.trim();
+  if (!trimmed) return false;
+  if (trimmed.startsWith('git+ssh://') || trimmed.startsWith('git+https://') || trimmed.startsWith('ssh://')) {
+    return true;
+  }
+  if (/^git@[^:]+:[^/]+\/.+/.test(trimmed)) {
+    return true;
+  }
+  if (trimmed.startsWith('github:') || trimmed.startsWith('gitlab:')) {
+    return true;
+  }
+  return false;
+});
+
 module.exports = utils;

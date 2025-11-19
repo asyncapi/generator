@@ -105,6 +105,42 @@ utils.isFilePath = (str) => {
 };
 
 /**
+ * Checks if given string is a Git URL or npm git specifier.
+ *
+ * It recognizes common git forms supported by npm, including:
+ * - git+https://host/owner/repo.git[#ref]
+ * - git+ssh://git@host/owner/repo.git[#ref]
+ * - ssh://git@host/owner/repo.git[#ref]
+ * - git@host:owner/repo.git[#ref]
+ * - github:owner/repo[#ref], gitlab:owner/repo[#ref]
+ *
+ * @param {String} str information representing template specifier
+ * @returns {Boolean}
+ */
+utils.isGitSpecifier = (str) => {
+  if (typeof str !== 'string') return false;
+
+  const trimmed = str.trim();
+  if (!trimmed) return false;
+
+  if (trimmed.startsWith('git+ssh://')
+    || trimmed.startsWith('git+https://')
+    || trimmed.startsWith('ssh://')) {
+    return true;
+  }
+
+  if (/^git@[^:]+:[^/]+\/.+/.test(trimmed)) {
+    return true;
+  }
+
+  if (trimmed.startsWith('github:') || trimmed.startsWith('gitlab:')) {
+    return true;
+  }
+
+  return false;
+};
+
+/**
  * Checks if given file path is JS file
  *
  * @param {String} filename information representing file path

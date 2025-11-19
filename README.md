@@ -8,16 +8,11 @@ This is a Monorepo managed using [Turborepo](https://turbo.build/) and contains 
 
 1. [Hooks](apps/hooks): This library contains generator filters that can be reused across multiple templates, helping to avoid redundant work. Hooks are designed to let template developers hook into the template generation process. For example, one can create a hook code that will be automatically invoked right after the template generation process has ended.
 
-1. [Nunjucks-filters](apps/nunjucks-filters): This library contains generator filters that can be reused across multiple templates helping to avoid redundant work. These filters are designed specifically for Nunjucks templates and are included by default with the generator, so there's no need to add them to dependencies separately.
-
 1. [React-sdk](apps/react-sdk): AsyncAPI React SDK is a set of components/functions to use React as render engine for the generator. This is the library that undestand components from Generator's templates that are configured to use `react` render engine. 
 
 1. [Generator-helpers](packages/helpers): A utility library that provides helper functions and utilities to simplify template development. It reduces boilerplate and speeds up template creation.
 
 1. [Generator-components](packages/components): A library of reusable components that can be shared across different templates, helping to avoid duplication and accelerate template development.
-
-> [!IMPORTANT]
-> **Deprecation Notice:** The Nunjucks renderer engine is deprecated and will be removed in future releases. We strongly recommend using the React renderer engine instead. You can find how to migrate from Nunjucks to React in the [migration guide](apps/generator/docs/nunjucks-depreciate.md)
 
 ![npm](https://img.shields.io/npm/v/@asyncapi/generator?style=for-the-badge) ![npm](https://img.shields.io/npm/dt/@asyncapi/generator?style=for-the-badge)
 
@@ -67,15 +62,6 @@ You can find above templates and the ones provided by the community in **[this l
 
 > [!IMPORTANT]
 > **Experimental Feature:** AsyncAPI Generator also comes with **baked-in templates** - official templates shipped directly inside the Generator (`@asyncapi/generator`). They cover code, docs, configs, and SDKs, and are maintained under [/packages/templates](packages/templates) directory, following a strict, opinionated structure for consistency and ease of maintenance. This feature is not recommended for production use. For those who want to try them out or learn more, see the [Baked-in templates documentation](https://www.asyncapi.com/docs/tools/generator/baked-in-templates).
-
-## Filters
-
- `apps/nunjucks-filters` library contains generator filters that can be reused across multiple templates, helping to avoid redundant work. These filters are designed specifically for Nunjucks templates and are included by default with the generator, so there's no need to add them to dependencies separately.
-
-This library consists of:
-
-- Custom filters. Check out [API docs](apps/nunjucks-filters/docs/api.md) for complete list
-- Lodash-powered filters. For the list of all available filters check [official docs](https://lodash.com/docs/)
 
 ## Hooks
 

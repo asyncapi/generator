@@ -12,7 +12,6 @@ const npmPath = requireg.resolve('npm').replace('index.js','');
 const { isAsyncAPIDocument } = require('@asyncapi/parser/cjs/document');
 
 const { configureReact, renderReact, saveRenderedReactContent } = require('./renderer/react');
-const { configureNunjucks, renderNunjucks } = require('./renderer/nunjucks');
 const { validateTemplateConfig } = require('./templates/config/validator');
 const { loadTemplateConfig } = require('./templates/config/loader');
 const { isGenerationConditionMet } = require('./conditionalGeneration');
@@ -26,17 +25,14 @@ const {
   copyFile,
   exists,
   fetchSpec,
-  isReactTemplate,
   isJsFile,
   getTemplateDetails,
   convertCollectionToObject,
 } = require('./utils');
 const { parse, usesNewAPI, getProperApiDocument } = require('./parser');
-const { registerFilters } = require('./filtersRegistry');
 const { registerHooks } = require('./hooksRegistry');
 const { definitions, flatten, shorthands } = require('@npmcli/config/lib/definitions');
 
-const FILTERS_DIRNAME = 'filters';
 const HOOKS_DIRNAME = 'hooks';
 const PACKAGE_JSON_FILENAME = 'package.json';
 const GIT_IGNORE_FILENAME = '{.gitignore}';
@@ -325,9 +321,6 @@ class Generator {
     await this.parseInput(this.asyncapi, parseOptions);
     validateTemplateConfig(this.templateConfig, this.templateParams, this.asyncapi);
     await this.configureTemplate();
-    if (!isReactTemplate(this.templateConfig)) {
-      await registerFilters(this.nunjucks, this.templateConfig, this.templateDir, FILTERS_DIRNAME);
-    }
     await registerHooks(this.hooks, this.templateConfig, this.templateDir, HOOKS_DIRNAME);
     await this.launchHook('generate:before');
   }
@@ -407,10 +400,8 @@ class Generator {
    * Configure the templates based the desired renderer.
    */
   async configureTemplate() {
-    if (isReactTemplate(this.templateConfig) && this.compile) {
+    if (this.compile) {
       await configureReact(this.templateDir, this.templateContentDir, TRANSPILED_TEMPLATE_LOCATION);
-    } else {
-      this.nunjucks = configureNunjucks(this.debug, this.templateDir);
     }
   }
 
@@ -876,11 +867,8 @@ class Generator {
     const renderContent = await this.renderFile(asyncapiDocument, templateFilePath, extraTemplateData);
     if (renderContent === undefined) {
       return;
-    } else if (isReactTemplate(this.templateConfig)) {
-      await saveRenderedReactContent(renderContent, outputpath, this.noOverwriteGlobs);
-    } else {
-      await writeFile(outputpath, renderContent);
     }
+    await saveRenderedReactContent(renderContent, outputpath, this.noOverwriteGlobs);
   }
   
   /**
@@ -981,11 +969,7 @@ class Generator {
    * @return {Promise<string|TemplateRenderResult|Array<TemplateRenderResult>|undefined>}
    */
   async renderFile(asyncapiDocument, filePath, extraTemplateData = {}) {
-    if (isReactTemplate(this.templateConfig)) {
-      return await renderReact(asyncapiDocument, filePath, extraTemplateData, this.templateDir, this.templateContentDir, TRANSPILED_TEMPLATE_LOCATION, this.templateParams, this.debug, this.originalAsyncAPI);
-    }
-    const templateString = await readFile(filePath, 'utf8');
-    return renderNunjucks(asyncapiDocument, templateString, filePath, extraTemplateData, this.templateParams, this.originalAsyncAPI, this.nunjucks);
+    return await renderReact(asyncapiDocument, filePath, extraTemplateData, this.templateDir, this.templateContentDir, TRANSPILED_TEMPLATE_LOCATION, this.templateParams, this.debug, this.originalAsyncAPI);
   }
 
   /**
@@ -999,7 +983,7 @@ class Generator {
     const nonRenderableFiles = this.templateConfig.nonRenderableFiles || [];
     return Array.isArray(nonRenderableFiles) &&
     (nonRenderableFiles.some(globExp => minimatch(fileName, globExp)) ||
-    (isReactTemplate(this.templateConfig) && !isJsFile(fileName)));
+    !isJsFile(fileName));
   }
 
   /**

@@ -71,16 +71,6 @@ utils.isLocalTemplate = async (templatePath) => {
 };
 
 /**
- * Returns whether or not the template is a react template
- *
- * @param {object} templateConfig
- * @returns {boolean} Whether the template is a React template or not.
- */
-utils.isReactTemplate = (templateConfig) => {
-  return templateConfig !== undefined && templateConfig.renderer === 'react';
-};
-
-/**
  * Fetches an AsyncAPI document from the given URL and return its content as string
  *
  * @param {String} link URL where the AsyncAPI document is located.

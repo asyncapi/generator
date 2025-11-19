@@ -6,7 +6,7 @@ This guide will help you set up the `generator` locally, run tests, and use Dock
 
 New to AsyncAPI Generator? We strongly recommend watching our comprehensive onboarding webinar first:
 
-**Watch: [AsyncAPI Generator - One-to-One Flow: AsyncAPI's New Take on Docs and Config Generation](https://www.youtube.com/watch?v=Mkd7FgKOMNE)**
+**Watch: [One Tool, One Flow: AsyncAPI's New Take on Code/Docs/Config Generation](https://www.youtube.com/watch?v=Mkd7FgKOMNE)**
 
 ### What you'll learn:
 

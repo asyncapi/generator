@@ -57,8 +57,11 @@ You can use any git specifier supported by npm, for example:
 
 - `git+https://github.com/your-org/your-private-template.git#v1.0.0`
 - `git+ssh://git@github.com/your-org/your-private-template.git#main`
+- `git://github.com/your-org/your-private-template.git`
 - `git@gitlab.com:your-org/your-private-template.git`
 - `github:your-org/your-private-template`
+- `gitlab:your-org/your-private-template`
+- `bitbucket:your-org/your-private-template`
 
 Make sure your Git credentials are configured so the underlying git client can access the repository. For example:
 

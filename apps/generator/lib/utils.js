@@ -125,6 +125,7 @@ utils.isGitSpecifier = (str) => {
 
   if (trimmed.startsWith('git+ssh://')
     || trimmed.startsWith('git+https://')
+    || trimmed.startsWith('git://')
     || trimmed.startsWith('ssh://')) {
     return true;
   }
@@ -133,7 +134,9 @@ utils.isGitSpecifier = (str) => {
     return true;
   }
 
-  if (trimmed.startsWith('github:') || trimmed.startsWith('gitlab:')) {
+  if (trimmed.startsWith('github:')
+    || trimmed.startsWith('gitlab:')
+    || trimmed.startsWith('bitbucket:')) {
     return true;
   }
 

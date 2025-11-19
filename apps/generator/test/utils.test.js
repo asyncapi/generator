@@ -87,6 +87,14 @@ describe('Utils', () => {
       expect(utils.isGitSpecifier('gitlab:org/repo')).toBeTruthy();
     });
 
+    it('returns true for git:// protocol', () => {
+      expect(utils.isGitSpecifier('git://github.com/org/repo.git')).toBeTruthy();
+    });
+
+    it('returns true for bitbucket shorthand', () => {
+      expect(utils.isGitSpecifier('bitbucket:org/repo')).toBeTruthy();
+    });
+
     it('returns false for plain https url', () => {
       expect(utils.isGitSpecifier('https://example.com/template.tgz')).toBeFalsy();
     });

@@ -30,13 +30,13 @@ utils.isGitSpecifier = jest.fn((str) => {
   if (typeof str !== 'string') return false;
   const trimmed = str.trim();
   if (!trimmed) return false;
-  if (trimmed.startsWith('git+ssh://') || trimmed.startsWith('git+https://') || trimmed.startsWith('ssh://')) {
+  if (trimmed.startsWith('git+ssh://') || trimmed.startsWith('git+https://') || trimmed.startsWith('git://') || trimmed.startsWith('ssh://')) {
     return true;
   }
   if (/^git@[^:]+:[^/]+\/.+/.test(trimmed)) {
     return true;
   }
-  if (trimmed.startsWith('github:') || trimmed.startsWith('gitlab:')) {
+  if (trimmed.startsWith('github:') || trimmed.startsWith('gitlab:') || trimmed.startsWith('bitbucket:')) {
     return true;
   }
   return false;

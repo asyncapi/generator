@@ -8,7 +8,6 @@ Reference API documentation for AsyncAPI Generator library.
 
 <dl>
 <dt><a href="#Generator">Generator</a></dt>
-<dd></dd>
 </dl>
 
 ## Members
@@ -16,7 +15,7 @@ Reference API documentation for AsyncAPI Generator library.
 <dl>
 <dt><a href="#listBakedInTemplates">listBakedInTemplates</a> ⇒ <code>Array.&lt;Object&gt;</code></dt>
 <dd><p>List core templates, optionally filter by type, stack, protocol, or target.
-Use name of returned templates as input for the <code>generate</code> method for template generation. Such core templates code is part of the @asyncapi/generator package.</p></dd>
+Use name of returned templates as input for the `generate` method for template generation. Such core templates code is part of the @asyncapi/generator package.</p></dd>
 </dl>
 
 
@@ -54,7 +53,6 @@ Use name of returned templates as input for the <code>generate</code> method for
         * [.executeAfterHook()](#Generator+executeAfterHook) ⇒ `Promise.<void>`
         * [.parseInput()](#Generator+parseInput)
         * [.configureTemplate()](#Generator+configureTemplate)
-        * ~~[.generateFromString(asyncapiString, [parseOptions])](#Generator+generateFromString) ⇒ `Promise.<(TemplateRenderResult|undefined)>`~~
         * [.generateFromURL(asyncapiURL)](#Generator+generateFromURL) ⇒ `Promise.<(TemplateRenderResult|undefined)>`
         * [.generateFromFile(asyncapiFile)](#Generator+generateFromFile) ⇒ `Promise.<(TemplateRenderResult|undefined)>`
         * [.installTemplate([force])](#Generator+installTemplate)
@@ -370,53 +368,6 @@ Parse the generator input based on the template `templateConfig.apiVersion` valu
 Configure the templates based the desired renderer.
 
 **Kind**: instance method of [`Generator`](#Generator)  
-
-<a name="Generator+generateFromString"></a>
-
-### ~~generator.generateFromString~~
-***Deprecated***
-
-Generates files from a given template and AsyncAPI string.
-
-**Kind**: instance method of [`Generator`](#Generator)  
-**Params**
-
-- asyncapiString `String` - AsyncAPI string to use as source.
-- [parseOptions] `Object` ` = {}` - AsyncAPI Parser parse options. Check out [@asyncapi/parser](https://www.github.com/asyncapi/parser-js) for more information.
-
-**Example**  
-```js
-const asyncapiString = `
-asyncapi: '2.0.0'
-info:
-  title: Example
-  version: 1.0.0
-...
-`;
-generator
-  .generateFromString(asyncapiString)
-  .then(() => {
-    console.log('Done!');
-  })
-  .catch(console.error);
-```
-**Example** *(Using async/await)*  
-```js
-const asyncapiString = `
-asyncapi: '2.0.0'
-info:
-  title: Example
-  version: 1.0.0
-...
-`;
-
-try {
-  await generator.generateFromString(asyncapiString);
-  console.log('Done!');
-} catch (e) {
-  console.error(e);
-}
-```
 
 <a name="Generator+generateFromURL"></a>
 

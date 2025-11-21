@@ -1,7 +1,6 @@
 {
     "name": "react-template",
     "version": "0.0.1",
-    "private": true,
     "description": "Simple react-based template that showcases different generator features that we can test in integration tests",
     "scripts": {
        "test": "echo \"Error: no test specified\" && exit 1"

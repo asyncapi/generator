@@ -3,7 +3,7 @@ title: "TypeScript support"
 weight: 150
 ---
 
-The AsyncAPI generator has TypeScript support for [hooks](#hooks). Assumptions:
+The AsyncAPI generator has TypeScript support for [hooks](hooks). Assumptions:
 
 - Installing the `typescript` package and creating the `tsconfig.json` file isn't necessary.
 - Source code of the hook/filter must have `.ts` extension.

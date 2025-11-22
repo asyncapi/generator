@@ -3,10 +3,6 @@
   "version": "2.8.4",
   "description": "The AsyncAPI generator. It can generate documentation, code, anything!",
   "main": "./lib/generator.js",
-  "bin": {
-    "asyncapi-generator": "./cli.js",
-    "ag": "./cli.js"
-  },
   "engines": {
     "node": ">=18.12.0",
     "npm": ">=8.19.0"

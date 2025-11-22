@@ -70,7 +70,7 @@ cd apps/generator
 3. Run the generator with the react-template:
 
 ```bash
-node ./cli  ./test/docs/dummy.yml ./test/test-templates/react-template -o ./test/output --force-write
+node ./test/cli  ./test/docs/dummy.yml ./test/test-templates/react-template -o ./test/output --force-write
 ```
 
 4. Check the output in the `./test/output` directory to verify the output that you desired.

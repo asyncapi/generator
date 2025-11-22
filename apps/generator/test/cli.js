@@ -1,5 +1,13 @@
 #!/usr/bin/env node
 
+/**
+ * DEPRECATED CLI - FOR TESTING PURPOSES ONLY
+ *
+ * This CLI is deprecated and should NOT be used in production.
+ * It is kept in the test folder solely for testing the generator functionality during development.
+ * Use the AsyncAPI CLI instead for production use cases: https://github.com/asyncapi/cli/
+ */
+
 const path = require('path');
 const os = require('os');
 const program = require('commander');

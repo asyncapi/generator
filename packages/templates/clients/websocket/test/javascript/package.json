@@ -1,6 +1,7 @@
 {
     "name": "@asyncapi/template-acceptance-test-js",
     "version": "0.0.1",
+    "private": true,
     "description": "This is an acceptance test for the JavaScript websocket client template",
     "scripts": {
         "test:acceptance": "jest --coverage",

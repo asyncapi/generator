@@ -60,17 +60,6 @@ utils.convertMapToObject = (map) => {
 };
 
 /**
- * Checks if template is local or not (i.e., it's remote).
- * @private
- * @param {String} templatePath The path to the template.
- * @returns {Promise<Boolean>}
- */
-utils.isLocalTemplate = async (templatePath) => {
-  const stats = await utils.lstat(templatePath);
-  return stats.isSymbolicLink();
-};
-
-/**
  * Fetches an AsyncAPI document from the given URL and return its content as string
  *
  * @param {String} link URL where the AsyncAPI document is located.

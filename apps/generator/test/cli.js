@@ -15,7 +15,7 @@ const xfs = require('fs.extra');
 const { DiagnosticSeverity } = require('@asyncapi/parser/cjs');
 const packageInfo = require('../package.json');
 const Generator = require('../lib/generator');
-const { isLocalTemplate, isFilePath } = require('../lib/utils');
+const { isFilePath } = require('../lib/utils');
 
 const red = text => `\x1b[31m${text}\x1b[0m`;
 const magenta = text => `\x1b[35m${text}\x1b[0m`;

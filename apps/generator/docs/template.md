@@ -45,8 +45,8 @@ You can store template projects on a local drive or as a `git` repository during
 2. **asyncapi** (which is an instance of AsyncAPIDocument) is injected into your template file by default.
 3. **params** are the parameters you pass to the AsyncAPI CLI. Later, you can also pass these **params** further to other components. 
 4. The generator passes both the **asyncapi**, the **originalAsyncAPI**, and the **params** to the **Template Context**.
-5. Concurrently, the generator passes **Template files** to the **Render engine** as well. AsyncAPI uses two render engines — _react_ and _nunjucks_.
-6. Once the Render Engine receives both the Template Files and the Template Context, it injects all the dynamic values into your react or nunjucks engine, based on the Template Files using the Template Context.
+5. Concurrently, the generator passes **Template files** to the **Render engine** as well. AsyncAPI uses the _react_ render engine.
+6. Once the Render Engine receives both the Template Files and the Template Context, it injects all the dynamic values into your react based Template Files using the Template Context.
 7. The render engine generates whatever output you may have specified in your template. (i.e. code, documentation, diagrams, pdfs, applications, etc.)
 
 ```mermaid

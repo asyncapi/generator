@@ -60,27 +60,6 @@ utils.convertMapToObject = (map) => {
 };
 
 /**
- * Checks if template is local or not (i.e., it's remote).
- * @private
- * @param {String} templatePath The path to the template.
- * @returns {Promise<Boolean>}
- */
-utils.isLocalTemplate = async (templatePath) => {
-  const stats = await utils.lstat(templatePath);
-  return stats.isSymbolicLink();
-};
-
-/**
- * Returns whether or not the template is a react template
- *
- * @param {object} templateConfig
- * @returns {boolean} Whether the template is a React template or not.
- */
-utils.isReactTemplate = (templateConfig) => {
-  return templateConfig !== undefined && templateConfig.renderer === 'react';
-};
-
-/**
  * Fetches an AsyncAPI document from the given URL and return its content as string
  *
  * @param {String} link URL where the AsyncAPI document is located.

@@ -58,7 +58,7 @@ You can also opt in to run the lint checks after the tests, by setting an enviro
 
 ### Manually testing with test templates
 
-To test template features manually we have `react-template` and `nunjucks-template` in `apps/generator/test/templates`, you can use this templates to manually test your changes like this:
+To test template features manually we have `react-template` in `apps/generator/test/test-templates`, you can use this template to manually test your changes like this:
 
 1. Navigate to the generator directory:
 
@@ -70,7 +70,7 @@ cd apps/generator
 3. Run the generator with the react-template:
 
 ```bash
-node ./cli  ./test/docs/dummy.yml ./test/test-templates/react-template -o ./test/output --force-write
+node ./test/cli  ./test/docs/dummy.yml ./test/test-templates/react-template -o ./test/output --force-write
 ```
 
 4. Check the output in the `./test/output` directory to verify the output that you desired.

@@ -21,7 +21,7 @@ In the following sections, you'll learn about the inner working of the generator
 3. The **Parser** validates the **AsyncAPI Document** using additional schema-related plugins, either the OpenAPI schema, RAML data types, or Avro schema.
 4. If the **Parser** determines that the **AsyncAPI Document** is valid, it manipulates the original JSON/YAML document and provides a set of helper functions in return, bundling them together into an **asyncapi** variable that is an instance of [**AsyncAPIDocument**](https://github.com/asyncapi/parser-api/blob/master/docs/api.md#asyncapidocument).
 5. At this point, the **Generator** passes the **originalAsyncAPI** and the **asyncapi** which make up part of the **[Template Context](template-context)** to the **Render Engine**.
-6. The **Template Context** is accessible to the template files that are passed to either the [react](react-render-engine) or [nunjucks](nunjucks-render-engine) **Render Engines**.
+6. The **Template Context** is accessible to the template files that are passed to the [react](react-render-engine) **Render Engine**.
 
 ```mermaid
 graph LR

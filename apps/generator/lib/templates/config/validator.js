@@ -130,17 +130,17 @@ function isServerProtocolSupported(server, supportedProtocols, paramsServerName)
 }
 
 /**
- * Checks if the the provided renderer are supported (no renderer are also supported, defaults to nunjucks)
+ * Checks if the provided renderer is supported (no renderer is also supported, defaults to react)
  *
  * @param  {Object} templateConfig Template configuration.
  */
 function isProvidedTemplateRendererSupported(templateConfig) {
-  const supportedRenderers = [undefined, 'react', 'nunjucks'];
+  const supportedRenderers = [undefined, 'react'];
   if (supportedRenderers.includes(templateConfig.renderer)) {
     return;
   }
 
-  throw new Error(`We do not support '${templateConfig.renderer}' as a renderer for a template. Only 'react' or 'nunjucks' are supported.`);
+  throw new Error(`We do not support '${templateConfig.renderer}' as a renderer for a template. Only 'react' is supported.`);
 }
 
 /**

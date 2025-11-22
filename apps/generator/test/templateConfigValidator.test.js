@@ -33,20 +33,12 @@ describe('Template Configuration Validator', () => {
     const isValid = validateTemplateConfig(templateConfig, templateParams, asyncapiDocument);
     expect(isValid).toStrictEqual(true);
   });
-  it('Validation doesn\'t throw errors for correct nunjucks renderer', () => {
-    const templateParams = {};
-    const templateConfig  = {
-      renderer: 'nunjucks'
-    };
-    const isValid = validateTemplateConfig(templateConfig, templateParams, asyncapiDocument);
-    expect(isValid).toStrictEqual(true);
-  });
   it('Validation throw error if renderer not supported', () => {
     const templateParams = {};
     const templateConfig  = {
       renderer: 'non_existing'
     };
-    expect(() => validateTemplateConfig(templateConfig, templateParams)).toThrow('We do not support \'non_existing\' as a renderer for a template. Only \'react\' or \'nunjucks\' are supported.');
+    expect(() => validateTemplateConfig(templateConfig, templateParams)).toThrow('We do not support \'non_existing\' as a renderer for a template. Only \'react\' is supported.');
   });
 
   it('Validation throw error if template is not compatible because of generator version', () => {

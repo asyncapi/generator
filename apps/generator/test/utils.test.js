@@ -96,34 +96,4 @@ describe('Utils', () => {
       expect(isJsFile).toBeFalsy();
     });
   });
-
-  describe('#isReactTemplate', () => {
-    it('should return true if it is a react template', () => {
-      const templateConfig  = {
-        renderer: 'react'
-      };
-      const isReactTemplate = utils.isReactTemplate(templateConfig);
-      expect(isReactTemplate).toBeTruthy();
-    });
-
-    it('should return false if it is not a react template', () => {
-      const templateConfig  = {
-        renderer: 'nunjucks'
-      };
-      const isReactTemplate = utils.isReactTemplate(templateConfig);
-      expect(isReactTemplate).toBeFalsy();
-    });
-    
-    it('should return false if template config is not specified', () => {
-      const templateConfig  = {};
-      const isReactTemplate = utils.isReactTemplate(templateConfig);
-      expect(isReactTemplate).toBeFalsy();
-    });
-
-    it('should return false if template config is undefined', () => {
-      const templateConfig  = undefined;
-      const isReactTemplate = utils.isReactTemplate(templateConfig);
-      expect(isReactTemplate).toBeFalsy();
-    });
-  });
 });

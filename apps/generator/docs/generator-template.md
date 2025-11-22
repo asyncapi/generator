@@ -112,7 +112,6 @@ The **package.json** file is used to define the dependencies for your template. 
   "version": "0.0.1",
   "description": "A template that generates a Python MQTT client using MQTT.",
   "generator": {
-    "renderer": "react",
     "apiVersion": "v1",
     "generator": ">=1.10.0 <2.0.0",
     "supportedProtocols": ["mqtt"]
@@ -132,7 +131,6 @@ Here's what is contained in the code snippet above:
 - **version** - the current version of your template.
 - **description** - a description of what your template does.
 - **generator** - specify generator [specific configuration](https://www.asyncapi.com/docs/tools/generator/configuration-file).
-  - **renderer** - can either be [`react`](https://www.asyncapi.com/docs/tools/generator/react-render-engine) or [`nunjucks`](https://www.asyncapi.com/docs/tools/generator/nunjucks-render-engine). In this case the generator will pass your template to the react render engine to generate the output.
   - **apiVersion** - specifies which major version of the [Parser-API](https://github.com/asyncapi/parser-api) your template will use.
   - **generator** - a string representing the generator version-range your template is compatible with.
   - **supportedProtocols** - A list that specifies which protocols are supported by your template.
@@ -328,7 +326,6 @@ In **package.json** you can have the scripts property that you invoke by calling
         "test": "npm run test:clean && npm run test:generate && npm run test:start"
       },
       "generator": {
-        "renderer": "react",
         "apiVersion": "v1",
         "generator": ">=1.10.0 <2.0.0",
         "supportedProtocols": ["mqtt"]
@@ -459,7 +456,7 @@ export default function ({ asyncapi, params }) {
 4. Dynamically get the class name **TemperatureServiceClient** from the AsyncAPI document from the **info** object using the Parser API using the code: `asyncapi.info().title()` . It will return `Temperature Service`, then remove the spaces and add `Client` as a suffix.
 5. There is no templating needed in the `__init__` function, there is only hardcoded information.
 
-> If you're on the fence about which templating engine you should use in your template, check out the [React render engine](https://www.asyncapi.com/docs/tools/generator/react-render-engine) and [nunjucks render engine](https://www.asyncapi.com/docs/tools/generator/nunjucks-render-engine) documentation.
+> If you're on the fence about which templating engine you should use in your template, check out the [React render engine](https://www.asyncapi.com/docs/tools/generator/react-render-engine) documentation.
 In the next section, you'll refactor your template to use React.
 
 #### 5c. Creating a reusable component

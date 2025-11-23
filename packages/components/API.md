@@ -55,6 +55,8 @@
 
 ### Returns
 - **JSX.Element** - Rendered file header.
+### **ownKeys** - Configuration for WebSocket message handler method logic per language.
+
 ### **HandleMessage** - Renders a WebSocket message handler method with optional pre- and post-execution logic.
 ### Parameters
 | Name | Type | Description |
@@ -154,6 +156,8 @@
 | props.framework | string | Optional framework for the language. |
 | props.queryParams | Array.&lt;Array.&lt;string&gt;&gt; | Array of query parameters, each represented as [paramName, paramType?]. |
 
+### **ownKeys** - Configuration for WebSocket error handler registration method logic per language.
+
 ### **RegisterErrorHandler** - Renders a WebSocket error handler registration method with optional pre- and post-execution logic.
 ### Parameters
 | Name | Type | Description |
@@ -168,6 +172,8 @@
 
 ### Returns
 - **JSX.Element** - Rendered method block with appropriate formatting.
+### **ownKeys** - Configuration for WebSocket message handler registration method logic per language.
+
 ### **RegisterMessageHandler** - Renders a WebSocket message handler registration method with optional pre- and post-execution logic.
 ### Parameters
 | Name | Type | Description |

@@ -1,0 +1,16 @@
+## Functions
+{{#functions}}
+### **{{name}}** - {{description}}
+{{#if params.length}}
+### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+{{#each params}}
+| {{name}} | {{type.names.[0]}} | {{description}} |
+{{/each}}
+{{/if}}
+
+{{#each returns}}
+@returns {{type.names.[0]}}
+{{/each}}
+{{/functions}}

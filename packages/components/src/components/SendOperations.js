@@ -7,8 +7,21 @@ import { toSnakeCase } from '@asyncapi/generator-helpers';
  */
 
 /**
+ * @typedef {Object} SendOperationMethods
+ * @property {string} nonStaticMethod
+ * @property {string} staticMethod
+ */
+
+/**
+ * @callback SendOperationGenerator
+ * @param {Object} operation
+ * @param {string} clientName
+ * @returns {SendOperationMethods}
+ */
+
+/**
  * Configuration object for generating WebSocket send operations for different languages.
- * @type {Object.<string, function(operation: Object, clientName: string): {nonStaticMethod: string, staticMethod: string}>}
+ * @type {Object.<string, SendOperationGenerator>}
  */
 const websocketSendOperationConfig = {
   python: (operation, clientName) => {

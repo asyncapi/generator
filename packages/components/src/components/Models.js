@@ -20,8 +20,14 @@ import {
  */
 
 /**
+ * @class ModelinaGenerator
+ * @classdesc Represents a Modelina generator class.
+ * @param {object} [options] - Optional generator options.
+ */
+
+/**
  * Mapping of language strings to Modelina generator classes and file extensions.
- * @type {Record<string, { generator: new (options?: object) => any; extension: string }>}
+ * @type {Record<string, { generator: ModelinaGenerator, extension: string }>}
  */
 const generatorConfig = {
   python: { generator: PythonGenerator, extension: 'py' },

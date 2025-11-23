@@ -8,10 +8,10 @@ import { toCamelCase } from '@asyncapi/generator-helpers';
 
 /**
  * @typedef {Object} QueryParamCodeBlock
- * @property {{ text: string, indent?: number, newLines?: number }} variableDefinition - Code block for variable initialization.
- * @property {{ text: string, indent?: number, newLines?: number }} ifCondition - Conditional statement block.
- * @property {{ text: string, indent?: number, newLines?: number }} assignment - Code block assigning query param.
- * @property {{ text: string, indent?: number, newLines?: number } | null} [closing] - Optional closing block (for braces, etc.).
+ * @property {{ text: string, indent=: number, newLines=: number }} variableDefinition - Code block for variable initialization.
+ * @property {{ text: string, indent=: number, newLines=: number }} ifCondition - Conditional statement block.
+ * @property {{ text: string, indent=: number, newLines=: number }} assignment - Code block assigning query param.
+ * @property {{ text: string, indent=: number, newLines=: number } | null} [closing] - Optional closing block (for braces, etc.).
  */
 
 /**

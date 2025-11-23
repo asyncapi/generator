@@ -7,7 +7,7 @@ import { MethodGenerator } from './MethodGenerator';
 
 /**
  * Configuration for WebSocket message handler registration method logic per language.
- * @type {Record<Language, { methodDocs?: string, methodLogic: string }>}
+ * @type {Record<Language, { methodDocs=: string, methodLogic: string }>}
  */
 const websocketMessageRegisterConfig = {
   python: {

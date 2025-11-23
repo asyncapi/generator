@@ -7,7 +7,7 @@ import { Text } from '@asyncapi/generator-react-sdk';
 
 /**
  * Configuration for method syntax based on programming language.
- * @type {Record<Language, { returnType?: string, openingTag?: string, closingTag?: string, indentSize?: number }>}
+ * @type {Record<Language, { returnType=: string, openingTag=: string, closingTag=: string, indentSize=: number }>}
  */
 const defaultMethodConfig = {
   python: { returnType: 'def', openingTag: ':', indentSize: 2, parameterWrap: true },
@@ -67,8 +67,8 @@ const buildIndentedLogic = (logic, preExecutionCode, postExecutionCode, indentSi
  * @param {string} [props.postExecutionCode=''] - Code after main logic.
  * @param {number} [props.indent=2] - Indentation for the method block.
  * @param {number} [props.newLines=1] - Number of new lines after method.
- * @param {{ returnType?: string, openingTag?: string, closingTag?: string, indentSize?: number, parameterWrap?: boolean }} [props.customMethodConfig]  - Optional custom syntax configuration for the current language.
- * @param {Record<Language, ({ methodDocs?: string, methodLogic?: string } | Record<string, { methodDocs?: string, methodLogic?: string }>)} [props.methodConfig] - Language-level or framework-level configuration.
+ * @param {{ returnType: string, openingTag: string, closingTag: string, indentSize: number, parameterWrap: boolean }} [props.customMethodConfig]  - Optional custom syntax configuration for the current language.
+ * @param {Record<Language, { methodDocs: string, methodLogic: string } | Record<string, { methodDocs: string, methodLogic: string }>>} [props.methodConfig] - Language-level or framework-level configuration.
  * @param {string} [props.framework] - Framework name for nested configurations (e.g., 'quarkus' for Java).
  */
 export function MethodGenerator({

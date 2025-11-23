@@ -20,9 +20,8 @@ import {
  */
 
 /**
- * @class ModelinaGenerator
- * @classdesc Represents a Modelina generator class.
- * @param {object} [options] - Optional generator options.
+ * @typedef {object} ModelinaGenerator
+ * Represents any Modelina generator instance.
  */
 
 /**

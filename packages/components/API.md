@@ -172,7 +172,8 @@
 | props.postExecutionCode | string | Code to insert after the main function logic. |
 
 @returns JSX.Element
-### **SendOperations** - Component for rendering WebSocket send operation methods.Generates both static and instance methods for sending messages through WebSocket connections.
+### **SendOperations** - Component for rendering WebSocket send operation methods.
+Generates both static and instance methods for sending messages through WebSocket connections.
 ### Parameters
 | Name | Type | Description |
 |------|------|-------------|

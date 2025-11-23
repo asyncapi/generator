@@ -10,7 +10,10 @@
 {{/each}}
 {{/if}}
 
+{{#if returns.length}}
+### Returns
 {{#each returns}}
-@returns {{type.names.[0]}}
+- **{{type.names.[0]}}**{{#if description}} - {{description}}{{/if}}
 {{/each}}
+{{/if}}
 {{/functions}}

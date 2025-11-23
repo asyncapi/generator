@@ -12,7 +12,8 @@
 | props.postExecutionCode | string | Code to insert after the main function logic. |
 | props.indent | number | Indentation level for the method block. |
 
-@returns JSX.Element
+### Returns
+- **JSX.Element** - Rendered method block with appropriate formatting.
 ### **Connect** - Component that renders WebSocket connection method for the specified programming language.
 ### Parameters
 | Name | Type | Description |
@@ -29,7 +30,8 @@
 | framework | string | The framework (e.g., &#x27;quarkus&#x27; for Java). |
 | role | string | The role (e.g., &#x27;client&#x27;, &#x27;connector&#x27; for Java). |
 
-@returns Array.&lt;string&gt;
+### Returns
+- **Array.&lt;string&gt;** - Array of dependency strings.
 ### **DependencyProvider** - Renders the top-of-file dependency statements for the selected programming language.
 ### Parameters
 | Name | Type | Description |
@@ -40,7 +42,8 @@
 | props.role | string | The role (e.g., &#x27;client&#x27;, &#x27;connector&#x27; for Java). |
 | props.additionalDependencies | Array.&lt;string&gt; | Optional additional dependencies to include. |
 
-@returns JSX.Element
+### Returns
+- **JSX.Element** - Rendered list of import/require statements.
 ### **FileHeaderInfo** - Renders a file header with metadata information such as title, version, protocol, host, and path.
 ### Parameters
 | Name | Type | Description |
@@ -50,7 +53,8 @@
 | props.server | object | Server object from the AsyncAPI document. |
 | props.language | Language | Programming language used for comment formatting. |
 
-@returns JSX.Element
+### Returns
+- **JSX.Element** - Rendered file header.
 ### **HandleMessage** - Renders a WebSocket message handler method with optional pre and post execution logic.
 ### Parameters
 | Name | Type | Description |
@@ -63,7 +67,8 @@
 | props.postExecutionCode | string | Code to insert after the main function logic. |
 | props.customMethodConfig | Object | Optional overrides for default method configuration. |
 
-@returns JSX.Element
+### Returns
+- **JSX.Element** - Rendered method block with appropriate formatting.
 ### **resolveDocsAndLogic** - Resolve docs and logic for the given language + framework config.
 
 ### **buildIndentedLogic** - Build indented method body.
@@ -97,7 +102,8 @@
 | params.presets | object | Custom presets for the generator instance. |
 | params.constraints | object | Custom constraints for the generator instance. |
 
-@returns Array.&lt;File&gt;
+### Returns
+- **Array.&lt;File&gt;** - Array of File components with generated model content.
 ### **OnClose** - Component that renders WebSocket onClose event handler for the specified programming language.
 ### Parameters
 | Name | Type | Description |
@@ -137,7 +143,8 @@
 | language | SupportedLanguage | The target programming language. |
 | framework | string | Optional framework (e.g., &#x27;quarkus&#x27; for Java). |
 
-@returns function
+### Returns
+- **function** - The configuration function for generating query parameter code.
 ### **QueryParamsVariables** - Component for rendering query parameter variables code.
 ### Parameters
 | Name | Type | Description |
@@ -159,7 +166,8 @@
 | props.postExecutionCode | string | Code to insert after the main function logic. |
 | props.customMethodConfig | Object | Optional overrides for default method configuration. |
 
-@returns JSX.Element
+### Returns
+- **JSX.Element** - Rendered method block with appropriate formatting.
 ### **RegisterMessageHandler** - Renders a WebSocket message handler registration method with optional pre and post execution logic.
 ### Parameters
 | Name | Type | Description |
@@ -171,7 +179,8 @@
 | props.preExecutionCode | string | Code to insert before the main function logic. |
 | props.postExecutionCode | string | Code to insert after the main function logic. |
 
-@returns JSX.Element
+### Returns
+- **JSX.Element** - Rendered method block with appropriate formatting.
 ### **SendOperations** - Component for rendering WebSocket send operation methods.
 Generates both static and instance methods for sending messages through WebSocket connections.
 ### Parameters

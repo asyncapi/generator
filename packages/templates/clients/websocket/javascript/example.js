@@ -1,4 +1,4 @@
-const WSClient = require('./test/temp/snapshotTestResult/client_postman/client.js');
+const WSClient = require('./test/temp/snapshotTestResult/custom_client_hoppscotch/client.js');
 // Example usage
 const wsClient = new WSClient();
 
@@ -23,9 +23,7 @@ async function main() {
 
     // Loop to send messages every 5 seconds
     const interval = 5000; // 5 seconds
-    const message = {
-      content: 'Hello!'
-    };
+    const message = 'Hello, Echo!';
 
     while (true) {
       try {

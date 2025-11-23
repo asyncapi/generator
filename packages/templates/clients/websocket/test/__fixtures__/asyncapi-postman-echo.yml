@@ -36,15 +36,10 @@ components:
   messages:
     echo:
       summary: A message exchanged with the echo server.
-      payload:
-        type: object
-        properties:
-          content:
-            type: string
-            description: The content to be echoed back
-            example: "test message"
-          messageId:
-            type: number
-            description: Unique identifier for the message
-        required:
-          - content
+      payload: {}
+      examples:
+        - name: string
+          payload: test
+        - name: object
+          payload: 
+            test: test text

@@ -1,5 +1,5 @@
 ## Functions
-### **CloseConnection** - Renders a WebSocket close connection method with optional pre and post execution logic.
+### **CloseConnection** - Renders a WebSocket close connection method with optional pre- and post-execution logic.
 ### Parameters
 | Name | Type | Description |
 |------|------|-------------|
@@ -55,7 +55,7 @@
 
 ### Returns
 - **JSX.Element** - Rendered file header.
-### **HandleMessage** - Renders a WebSocket message handler method with optional pre and post execution logic.
+### **HandleMessage** - Renders a WebSocket message handler method with optional pre- and post-execution logic.
 ### Parameters
 | Name | Type | Description |
 |------|------|-------------|
@@ -154,7 +154,7 @@
 | props.framework | string | Optional framework for the language. |
 | props.queryParams | Array.&lt;Array.&lt;string&gt;&gt; | Array of query parameters, each represented as [paramName, paramType?]. |
 
-### **RegisterErrorHandler** - Renders a WebSocket error handler registration method with optional pre and post execution logic.
+### **RegisterErrorHandler** - Renders a WebSocket error handler registration method with optional pre- and post-execution logic.
 ### Parameters
 | Name | Type | Description |
 |------|------|-------------|
@@ -168,7 +168,7 @@
 
 ### Returns
 - **JSX.Element** - Rendered method block with appropriate formatting.
-### **RegisterMessageHandler** - Renders a WebSocket message handler registration method with optional pre and post execution logic.
+### **RegisterMessageHandler** - Renders a WebSocket message handler registration method with optional pre- and post-execution logic.
 ### Parameters
 | Name | Type | Description |
 |------|------|-------------|

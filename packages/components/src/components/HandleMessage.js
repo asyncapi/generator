@@ -28,7 +28,7 @@ else:
 };
 
 /**
- * Renders a WebSocket message handler method with optional pre and post execution logic.
+ * Renders a WebSocket message handler method with optional pre- and post-execution logic.
  *
  * @param {Object} props - Component props.
  * @param {Language} props.language - Programming language used for method formatting.

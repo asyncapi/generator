@@ -31,7 +31,7 @@ else:
 };
 
 /**
- * Renders a WebSocket error handler registration method with optional pre and post execution logic.
+ * Renders a WebSocket error handler registration method with optional pre- and post-execution logic.
  *
  * @param {Object} props - Component props.
  * @param {Language} props.language - Programming language used for method formatting.

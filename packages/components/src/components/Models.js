@@ -15,8 +15,9 @@ import {
  */
 
 /**
- * @typedef {import('../types').Language} Language
- * Represents the available programming languages for model generation.
+ * @typedef {'python' | 'java' | 'typescript' | 'rust' | 'csharp' | 'js'} Language
+ * Programming languages supported by the Models component.
+ * note: uses 'js' for javaScript (not 'javascript')
  */
 
 /**

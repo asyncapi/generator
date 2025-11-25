@@ -2,7 +2,7 @@ import { Text } from '@asyncapi/generator-react-sdk';
 import { toSnakeCase } from '@asyncapi/generator-helpers';
 
 /**
- * @typedef {'python' | 'javascript'} SupportedLanguage
+ * @typedef {import('../types').SupportedLanguage} SupportedLanguage
  * Supported programming languages for WebSocket send operation generation.
  */
 

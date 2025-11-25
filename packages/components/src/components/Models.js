@@ -10,12 +10,12 @@ import {
 } from '@asyncapi/modelina';
 
 /**
- * @typedef {'toPascalCase' | 'toCamelCase' | 'toKebabCase' | 'toSnakeCase'} Format
+ * @typedef {import('../types').Format} Format
  * Represents the available format helpers for naming files.
  */
 
 /**
- * @typedef {'python' | 'java' | 'typescript' | 'rust' | 'csharp'} Language
+ * @typedef {import('../types').Language} Language
  * Represents the available programming languages for model generation.
  */
 

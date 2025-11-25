@@ -2,7 +2,7 @@
 import { Text } from '@asyncapi/generator-react-sdk';
 
 /**
- * @typedef {'python' | 'javascript' | 'dart' | 'java'} Language
+ * @typedef {import('../types').Language} Language
  * Supported programming languages.
  */
 

@@ -1,7 +1,7 @@
 import { MethodGenerator } from './MethodGenerator';
 
 /**
- * @typedef {'python' | 'javascript' | 'dart' | 'java'} Language
+ * @typedef {import('../types').Language} Language
  * Supported programming languages.
  */
 

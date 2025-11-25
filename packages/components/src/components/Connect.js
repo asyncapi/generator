@@ -5,7 +5,7 @@ import { OnError } from './OnError';
 import { OnClose } from './OnClose';
 
 /**
- * @typedef {'python' | 'javascript' | 'dart'} SupportedLanguage
+ * @typedef {import('../types').SupportedLanguage} SupportedLanguage
  * Supported programming languages for WebSocket connection method generation.
  */
 

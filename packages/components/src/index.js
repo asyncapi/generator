@@ -13,3 +13,5 @@ export { OnClose } from './components/OnClose';
 export { SendOperations } from './components/SendOperations';
 export { QueryParamsVariables } from './components/QueryParamsVariables';
 export { RegisterErrorHandler } from './components/RegisterErrorHandler';
+
+export * from './types.js';

@@ -2,16 +2,12 @@ import { Text } from '@asyncapi/generator-react-sdk';
 import { toCamelCase } from '@asyncapi/generator-helpers';
 
 /**
- * @typedef {'python' | 'java' | 'javascript'} SupportedLanguage
+ * @typedef {import('../types').SupportedLanguage} SupportedLanguage
  * Supported programming languages for query parameter generation.
  */
 
 /**
- * @typedef {Object} QueryParamCodeBlock
- * @property {{ text: string, indent?: number, newLines?: number }} variableDefinition - Code block for variable initialization.
- * @property {{ text: string, indent?: number, newLines?: number }} ifCondition - Conditional statement block.
- * @property {{ text: string, indent?: number, newLines?: number }} assignment - Code block assigning query param.
- * @property {{ text: string, indent?: number, newLines?: number } | null} [closing] - Optional closing block (for braces, etc.).
+ * @typedef {import('../types').QueryParamCodeBlock} QueryParamCodeBlock
  */
 
 /**

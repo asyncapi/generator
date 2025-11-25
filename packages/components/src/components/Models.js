@@ -15,9 +15,8 @@ import {
  */
 
 /**
- * @typedef {'python' | 'java' | 'typescript' | 'rust' | 'csharp' | 'js'} Language
+ * @typedef {import('../types').ModelLanguage} Language
  * Programming languages supported by the Models component.
- * note: uses 'js' for javaScript (not 'javascript')
  */
 
 /**

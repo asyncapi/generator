@@ -9,6 +9,11 @@
  */
 
 /**
+ * @typedef {'python' | 'java' | 'typescript' | 'rust' | 'csharp' | 'js'} ModelLanguage
+ * Languages supported by the Models component.
+ */
+
+/**
  * @typedef {'toPascalCase' | 'toCamelCase' | 'toKebabCase' | 'toSnakeCase'} Format
  * Available format helpers for transforming naming conventions.
  */

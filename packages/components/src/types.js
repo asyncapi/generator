@@ -22,5 +22,3 @@
  * @property {{ text: string, indent?: number, newLines?: number }} assignment
  * @property {{ text: string, indent?: number, newLines?: number } | null} [closing]
  */
-
-export {};

@@ -1,6 +1,6 @@
 {
   "name": "@asyncapi/keeper",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "AsyncAPI message payload validation library that validates messages against JSON Schema (Draft-07)",
   "scripts": {
     "build": "babel src --out-dir lib",
@@ -13,9 +13,17 @@
     "type": "git",
     "url": "https://github.com/asyncapi/generator.git"
   },
+  "files": [
+    "lib/**",
+    "README.md",
+    "LICENSE"
+  ],
   "main": "lib/index.js",
   "author": "Adi Boghawala <boghawalaadi@gmail.com>",
   "license": "Apache-2.0",
+   "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "@asyncapi/parser": "^3.4.0",
     "ajv": "^8.17.1"

@@ -39,8 +39,7 @@ We use [All Contributors](https://allcontributors.org/docs/en/specification) spe
 7. You can then try to add tests for those uncovered lines (e.g., a function within a file might not be covered). For reference, you can check out this [PR](https://github.com/asyncapi/generator/pull/1379).
 8. Instead of creating entirely new tests, consider enhancing existing ones by adding more edge cases to include additional test scenarios.
 9. We encourage contributors to help improve code quality by reviewing reported issues on [SonarCloud](https://sonarcloud.io/project/issues?issueStatuses=OPEN%2CCONFIRMED&id=asyncapi_generator) and suggesting improvements, identifying false reported issues that may need to be removed, and proposing fixes for valid issues.
-10. **Respond to Maintainer Reviews Promptly** - If a maintainer requests changes or provides feedback on your PR, please try to address them within **7 days**. If you're unable to respond by then, the PR may be closed. Contributors are always welcome to open a new PR once they're ready to continue.
-11. See the [Development Guide](Development.md#before-you-begin---new-contributor-onboarding) for more details on what you'll learn during onboarding.
+10. See the [Development Guide](Development.md#before-you-begin---new-contributor-onboarding) for more details on what you'll learn during onboarding.
 
 ## Few Tips for Effective Contributions
 

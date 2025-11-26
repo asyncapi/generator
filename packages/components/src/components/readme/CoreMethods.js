@@ -5,14 +5,14 @@ const methodConfig = {
     msgHandler: 'register_message_handler(handler_function)',
     errHandler: 'register_error_handler(handler_function)',
   },
-  default: {
+  javascript: {
     msgHandler: 'registerMessageHandler(handlerFunction)',
     errHandler: 'registerErrorHandler(handlerFunction)',
   },
 };
 
 export function CoreMethods({ language }) {
-  const config = methodConfig[language] || methodConfig.default;
+  const config = methodConfig[language];
   const { msgHandler, errHandler } = config;
 
   return (

@@ -2,13 +2,12 @@ import { GenerateReadMe } from '@asyncapi/generator-components';
 import { File } from '@asyncapi/generator-react-sdk';
 
 export default function({ asyncapi, params }) {
-  return(
+  return (
     <File name="README.md">
       <GenerateReadMe
-      asyncapi={asyncapi}
-      params={params}
-      language="python"
-      />
-      </File>
+        asyncapi={asyncapi}
+        params={params}
+        language="python"/>
+    </File>
   );  
 }

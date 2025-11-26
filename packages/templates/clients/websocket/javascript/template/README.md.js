@@ -1,5 +1,14 @@
 import { GenerateReadMe } from '@asyncapi/generator-components';
+import { File } from '@asyncapi/generator-react-sdk';
 
 export default function({ asyncapi, params }) {
-  return GenerateReadMe({asyncapi, params, language: 'javascript'});  
+  return(
+    <File name="README.md">
+      <GenerateReadMe
+      asyncapi={asyncapi}
+      params={params}
+      language="javascript"
+      />
+      </File>
+  );  
 }

@@ -16,7 +16,8 @@ const ROOT_DIR = Path.resolve(__dirname, '../..');
  * @param options any extra options that should be passed.
  */
 export async function transpileFiles(directory: string, outputDir: string, options?: TranspileFilesOptions) {
-    const { files, dirs } = await getStatsInDir(directory);
+    let { files, dirs } = await getStatsInDir(directory);
+    files = files.filter(f => !f.endsWith("asyncapi-ui.min.js"));
     if (files.length) {
         /**
          * WHEN ADDING PLUGINS to transform the input keep in mind that 

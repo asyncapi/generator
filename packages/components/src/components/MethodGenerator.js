@@ -7,7 +7,7 @@ import { Text } from '@asyncapi/generator-react-sdk';
 
 /**
  * Configuration for method syntax based on programming language.
- * @type {Record<Language, { returnType=: string, openingTag=: string, closingTag=: string, indentSize=: number }>}
+ * @type {Record<Language, { returnType: string | undefined, openingTag: string | undefined, closingTag: string | undefined, indentSize: number | undefined }>}
  */
 const defaultMethodConfig = {
   python: { returnType: 'def', openingTag: ':', indentSize: 2, parameterWrap: true },

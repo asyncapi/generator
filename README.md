@@ -17,7 +17,7 @@ This is a Monorepo managed using [Turborepo](https://turbo.build/) and contains 
 1. [Generator-components](packages/components): A library of reusable components that can be shared across different templates, helping to avoid duplication and accelerate template development.
 
 > [!IMPORTANT]
-> **Deprecation Notice:** The Nunjucks renderer engine is deprecated and will be removed in future releases. We strongly recommend using the React renderer engine instead. You can find how to migrate from Nunjucks to React in the [migration guide](apps/generator/docs/nunjucks-depreciate.md)
+> **Deprecation Notice:** The Nunjucks renderer engine is deprecated and will be removed in future releases. We strongly recommend using the React renderer engine instead. You can find how to migrate from Nunjucks to React in the [migration guide](apps/generator/docs/migration-nunjucks-react.md)
 
 ![npm](https://img.shields.io/npm/v/@asyncapi/generator?style=for-the-badge) ![npm](https://img.shields.io/npm/dt/@asyncapi/generator?style=for-the-badge)
 

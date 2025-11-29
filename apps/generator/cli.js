@@ -19,6 +19,7 @@ let asyncapiDocPath;
 let template;
 const params = {};
 const noOverwriteGlobs = [];
+const generateOnly = [];
 const disabledHooks = {};
 const mapBaseUrlToFolder = {};
 
@@ -32,6 +33,8 @@ const paramParser = v => {
 };
 
 const noOverwriteParser = v => noOverwriteGlobs.push(v);
+
+const generateOnlyParser = v => generateOnly.push(v);
 
 const disableHooksParser = v => {
   const [hookType, hookNames] = v.split(/=/);
@@ -86,6 +89,7 @@ program
   .option('--debug', 'enable more specific errors in the console')
   .option('-i, --install', 'installs the template and its dependencies (defaults to false)')
   .option('-n, --no-overwrite <glob>', 'glob or path of the file(s) to skip when regenerating', noOverwriteParser)
+  .option('-g, --generate-only <glob>', 'glob or path of the file(s) to generate. Only files matching patterns will be generated', generateOnlyParser)
   .option('-o, --output <outputDir>', 'directory where to put the generated files (defaults to current directory)', parseOutput, process.cwd())
   .option('-p, --param <name=value>', 'additional param to pass to templates', paramParser)
   .option('--force-write', 'force writing of the generated files to given directory even if it is a git repo with unstaged files or not empty dir (defaults to false)')
@@ -153,6 +157,7 @@ function generate(targetDir) {
       const generator = new Generator(template, targetDir || path.resolve(os.tmpdir(), 'asyncapi-generator'), {
         templateParams: params,
         noOverwriteGlobs,
+        generateOnly,
         disabledHooks,
         forceWrite: program.forceWrite,
         install: program.install,

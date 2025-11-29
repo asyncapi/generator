@@ -154,6 +154,74 @@ describe('Integration testing generateFromFile() to make sure the result of the 
      */
   });
 
+  it('should generate only specified files with generateOnly', async () => {
+    const outputDir = generateFolderName();
+    const cleanReactTemplate = await getCleanReactTemplate();
+
+    const generator = new Generator(cleanReactTemplate, outputDir, {
+      forceWrite: true,
+      generateOnly: ['package.json'],
+      debug: true,
+    });
+
+    await generator.generateFromFile(dummySpecPath);
+
+    const packageJsonPath = path.join(outputDir, 'package.json');
+    const packageJsonExists = await access(packageJsonPath).then(() => true).catch(() => false);
+    expect(packageJsonExists).toBe(true);
+
+    const testFilePath = path.normalize(path.resolve(outputDir, testOutputFile));
+    const testFileExists = await access(testFilePath).then(() => true).catch(() => false);
+    expect(testFileExists).toBe(false);
+  });
+
+  it('should generate only files matching glob patterns with generateOnly', async () => {
+    const outputDir = generateFolderName();
+    const cleanReactTemplate = await getCleanReactTemplate();
+
+    const generator = new Generator(cleanReactTemplate, outputDir, {
+      forceWrite: true,
+      generateOnly: ['*.json'],
+      debug: true,
+    });
+
+    await generator.generateFromFile(dummySpecPath);
+
+    const packageJsonPath = path.join(outputDir, 'package.json');
+    const packageJsonExists = await access(packageJsonPath).then(() => true).catch(() => false);
+    expect(packageJsonExists).toBe(true);
+
+    const testFilePath = path.normalize(path.resolve(outputDir, testOutputFile));
+    const testFileExists = await access(testFilePath).then(() => true).catch(() => false);
+    expect(testFileExists).toBe(false);
+  });
+
+  it('should work with both generateOnly and noOverwriteGlobs', async () => {
+    const outputDir = generateFolderName();
+    const cleanReactTemplate = await getCleanReactTemplate();
+
+    await mkdir(outputDir, { recursive: true });
+    const customPackageContent = '{"custom": "content"}';
+    const packageJsonPath = path.join(outputDir, 'package.json');
+    await writeFile(packageJsonPath, customPackageContent);
+
+    const generator = new Generator(cleanReactTemplate, outputDir, {
+      forceWrite: true,
+      generateOnly: ['*.json'],
+      noOverwriteGlobs: ['package.json'],
+      debug: true,
+    });
+
+    await generator.generateFromFile(dummySpecPath);
+
+    const packageContent = await readFile(packageJsonPath, 'utf8');
+    expect(packageContent).toBe(customPackageContent);
+
+    const testFilePath = path.normalize(path.resolve(outputDir, testOutputFile));
+    const testFileExists = await access(testFilePath).then(() => true).catch(() => false);
+    expect(testFileExists).toBe(false);
+  });
+
   it('should not generate the conditionalFolder if the singleFolder parameter is set true', async () => {
     const outputDir = generateFolderName();
     const generator = new Generator(reactTemplate, outputDir, {

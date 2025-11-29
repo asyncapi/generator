@@ -41,6 +41,14 @@ function skipOverwrite(testFilePath) {
   return `Skipping overwrite for: ${testFilePath}`;
 }
 
+function skipGenerateOnly(filePath) {
+  return `Skipping file "${filePath}" because it does not match any generateOnly patterns.`;
+}
+
+function generateOnlyNoMatches(patterns) {
+  return `No files matched the generateOnly patterns: ${patterns.join(', ')}`;
+}
+
 function conditionalGenerationMatched(conditionalPath) {
   return `${conditionalPath} was not generated because condition specified for this location in template configuration in conditionalGeneration matched.`;
 }
@@ -69,5 +77,7 @@ module.exports = {
   conditionalGenerationMatched,
   conditionalFilesMatched,
   compileEnabled,
-  skipOverwrite
+  skipOverwrite,
+  skipGenerateOnly,
+  generateOnlyNoMatches
 };

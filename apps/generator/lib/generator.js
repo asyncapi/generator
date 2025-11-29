@@ -23,7 +23,9 @@ const {
   readFile,
   readDir,
   writeFile,
+  writeFileWithFiltering,
   copyFile,
+  copyFileWithFiltering,
   exists,
   fetchSpec,
   isReactTemplate,
@@ -46,7 +48,7 @@ const DEFAULT_TEMPLATES_DIR = path.resolve(ROOT_DIR, 'node_modules');
 
 const TRANSPILED_TEMPLATE_LOCATION = '__transpiled';
 const TEMPLATE_CONTENT_DIRNAME = 'template';
-const GENERATOR_OPTIONS = ['debug', 'disabledHooks', 'entrypoint', 'forceWrite', 'install', 'noOverwriteGlobs', 'output', 'templateParams', 'mapBaseUrlToFolder', 'url', 'auth', 'token', 'registry', 'compile'];
+const GENERATOR_OPTIONS = ['debug', 'disabledHooks', 'entrypoint', 'forceWrite', 'install', 'noOverwriteGlobs', 'generateOnly', 'output', 'templateParams', 'mapBaseUrlToFolder', 'url', 'auth', 'token', 'registry', 'compile'];
 const logMessage = require('./logMessages');
 
 const shouldIgnoreFile = filePath =>
@@ -78,6 +80,7 @@ class Generator {
    * @param {Object<string, string>} [options.templateParams]   Optional parameters to pass to the template. Each template define their own params.
    * @param {String} [options.entrypoint]       Name of the file to use as the entry point for the rendering process. Use in case you want to use only a specific template file. Note: this potentially avoids rendering every file in the template.
    * @param {String[]} [options.noOverwriteGlobs] List of globs to skip when regenerating the template.
+   * @param {String[]} [options.generateOnly] List of globs to specify which files should be generated. Only files matching these patterns will be generated.
    * @param {Object<String, Boolean | String | String[]>} [options.disabledHooks] Object with hooks to disable. The key is a hook type. If key has "true" value, then the generator skips all hooks from the given type. If the value associated with a key is a string with the name of a single hook, then the generator skips only this single hook name. If the value associated with a key is an array of strings, then the generator skips only hooks from the array.
    * @param {String} [options.output='fs'] Type of output. Can be either 'fs' (default) or 'string'. Only available when entrypoint is set.
    * @param {Boolean} [options.forceWrite=false] Force writing of the generated files to given directory even if it is a git repo with unstaged files or not empty dir. Default is set to false.
@@ -91,7 +94,7 @@ class Generator {
    * @param {String} [options.registry.token]     Optional parameter to pass npm registry auth token that you can grab from .npmrc file
    */
 
-  constructor(templateName, targetDir, { templateParams = {}, entrypoint, noOverwriteGlobs, disabledHooks, output = 'fs', forceWrite = false, install = false, debug = false, mapBaseUrlToFolder = {}, registry = {}, compile = true } = {}) {
+  constructor(templateName, targetDir, { templateParams = {}, entrypoint, noOverwriteGlobs, generateOnly, disabledHooks, output = 'fs', forceWrite = false, install = false, debug = false, mapBaseUrlToFolder = {}, registry = {}, compile = true } = {}) {
     const options = arguments[arguments.length - 1];
     this.verifyoptions(options);
     if (!templateName) throw new Error('No template name has been specified.');
@@ -109,6 +112,8 @@ class Generator {
     this.entrypoint = entrypoint;
     /** @type {String[]} List of globs to skip when regenerating the template. */
     this.noOverwriteGlobs = noOverwriteGlobs || [];
+    /** @type {String[]} List of globs to specify which files should be generated. */
+    this.generateOnly = generateOnly || [];
     /** @type {Object<String, Boolean | String | String[]>} Object with hooks to disable. The key is a hook type. If key has "true" value, then the generator skips all hooks from the given type. If the value associated with a key is a string with the name of a single hook, then the generator skips only this single hook name. If the value associated with a key is an array of strings, then the generator skips only hooks from the array. */
     this.disabledHooks = disabledHooks || {};
     /** @type {String} Type of output. Can be either 'fs' (default) or 'string'. Only available when entrypoint is set. */
@@ -125,6 +130,8 @@ class Generator {
     this.hooks = {};
     /** @type {Object} Maps schema URL to folder. */
     this.mapBaseUrlToFolder = mapBaseUrlToFolder;
+    /** @type {number} Counter for successfully generated files. */
+    this.generatedFilesCount = 0;
 
     // Load template configuration
     /** @type {Object} The template parameters. The structure for this object is based on each individual template. */
@@ -192,6 +199,7 @@ class Generator {
    */
   async generate(asyncapiDocument, parseOptions = {}) {
     this.validateAsyncAPIDocument(asyncapiDocument);
+    this.generatedFilesCount = 0;
     await this.setupOutput();
     this.setLogLevel();
 
@@ -199,6 +207,7 @@ class Generator {
     await this.configureTemplateWorkflow(parseOptions);
     await this.handleEntrypoint();
     await this.executeAfterHook();
+    this.warnIfNoGenerateOnlyMatches();
   }
 
   /**
@@ -877,9 +886,13 @@ class Generator {
     if (renderContent === undefined) {
       return;
     } else if (isReactTemplate(this.templateConfig)) {
-      await saveRenderedReactContent(renderContent, outputpath, this.noOverwriteGlobs);
+      const writtenCount = await saveRenderedReactContent(renderContent, outputpath, this.noOverwriteGlobs, this.generateOnly, this.targetDir);
+      this.generatedFilesCount += writtenCount;
     } else {
-      await writeFile(outputpath, renderContent);
+      const written = await writeFileWithFiltering(outputpath, renderContent, {}, this.targetDir, this.noOverwriteGlobs, this.generateOnly);
+      if (written) {
+        this.generatedFilesCount += 1;
+      }
     }
   }
   
@@ -946,8 +959,14 @@ class Generator {
       
       return log.debug(logMessage.conditionalGenerationMatched(conditionalPath));
     }
-    
-    if (this.isNonRenderableFile(relativeSourceFile)) return await copyFile(sourceFile, targetFile);
+
+    if (this.isNonRenderableFile(relativeSourceFile)) {
+      const copied = await copyFileWithFiltering(sourceFile, targetFile, this.targetDir, this.noOverwriteGlobs, this.generateOnly);
+      if (copied) {
+        this.generatedFilesCount += 1;
+      }
+      return;
+    }
     await this.renderAndWriteToFile(asyncapiDocument, sourceFile, targetFile);
     log.debug(`Successfully rendered template and wrote file ${relativeSourceFile} to location: ${targetFile}`);
   }
@@ -1015,6 +1034,18 @@ class Generator {
     if (!fileExists) return true;
 
     return !this.noOverwriteGlobs.some(globExp => minimatch(filePath, globExp));
+  }
+
+  /**
+   * warn when generateOnly is set but no files were generated.
+   *
+   * @private
+   */
+  warnIfNoGenerateOnlyMatches() {
+    if (this.output !== 'fs') return;
+    if (Array.isArray(this.generateOnly) && this.generateOnly.length > 0 && this.generatedFilesCount === 0) {
+      log.warn(logMessage.generateOnlyNoMatches(this.generateOnly));
+    }
   }
 
   /**

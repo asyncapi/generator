@@ -1,10 +1,9 @@
 const path = require('path');
 const AsyncReactSDK = require('@asyncapi/generator-react-sdk');
-const minimatch = require('minimatch');
 const logMessage = require('../logMessages.js');
 const log = require('loglevel');
 const {
-  writeFile
+  writeFileWithFiltering
 } = require('../utils');
 
 const reactExport = module.exports;
@@ -62,8 +61,9 @@ reactExport.renderReact = async (asyncapiDocument, filePath, extraTemplateData, 
  * @private
  * @param {TemplateRenderResult} renderedContent the react content rendered
  * @param {String} outputPath Path to the file being rendered.
+ * @param {String} targetDir Target directory for relative path calculations.
  */
-const saveContentToFile = async (renderedContent, outputPath, noOverwriteGlobs = []) => {
+const saveContentToFile = async (renderedContent, outputPath, noOverwriteGlobs = [], generateOnly = [], targetDir = process.cwd()) => {
   let filePath = outputPath;
   // Might be the same as in the `fs` package, but is an active choice for our default file permission for any rendered files.
   let permissions = 0o666;
@@ -83,19 +83,16 @@ const saveContentToFile = async (renderedContent, outputPath, noOverwriteGlobs =
     }
   }
 
-  // get the final file name of the file
-  const finalFileName = path.basename(filePath);
-  // check whether the filename should be ignored based on user's inputs
-  const shouldOverwrite = !noOverwriteGlobs.some(globExp => minimatch(finalFileName, globExp));
+  const written = await writeFileWithFiltering(
+    filePath,
+    content,
+    { mode: permissions },
+    targetDir,
+    noOverwriteGlobs,
+    generateOnly
+  );
 
-  // Write the file only if it should not be skipped
-  if (shouldOverwrite) {
-    await writeFile(filePath, content, {
-      mode: permissions
-    });
-  } else {
-    await log.debug(logMessage.skipOverwrite(filePath));
-  }
+  return written ? 1 : 0;
 };
 
 /**
@@ -105,10 +102,13 @@ const saveContentToFile = async (renderedContent, outputPath, noOverwriteGlobs =
  * @param {TemplateRenderResult[] | TemplateRenderResult} renderedContent the react content rendered
  * @param {String} outputPath Path to the file being rendered.
  * @param noOverwriteGlobs Array of globs to skip overwriting files.
+ * @param generateOnly array of globs to specify which files should be generated.
+ * @param targetDir target directory for relative path calculations.
  */
-reactExport.saveRenderedReactContent = async (renderedContent, outputPath, noOverwriteGlobs = []) => {
+reactExport.saveRenderedReactContent = async (renderedContent, outputPath, noOverwriteGlobs = [], generateOnly = [], targetDir = process.cwd()) => {
   if (Array.isArray(renderedContent)) {
-    return Promise.all(renderedContent.map(content => saveContentToFile(content, outputPath, noOverwriteGlobs)));
+    const results = await Promise.all(renderedContent.map(content => saveContentToFile(content, outputPath, noOverwriteGlobs, generateOnly, targetDir)));
+    return results.reduce((acc, val) => acc + (val || 0), 0);
   }
-  return await saveContentToFile(renderedContent, outputPath, noOverwriteGlobs);
+  return await saveContentToFile(renderedContent, outputPath, noOverwriteGlobs, generateOnly, targetDir);
 };

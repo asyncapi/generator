@@ -126,4 +126,167 @@ describe('Utils', () => {
       expect(isReactTemplate).toBeFalsy();
     });
   });
+
+  describe('#writeFileWithFiltering', () => {
+    const targetDir = '/tmp/test-target';
+    const testFilePath = path.join(targetDir, 'test.txt');
+    const testContent = 'test content';
+
+    beforeEach(() => {
+      utils.writeFile = jest.fn().mockResolvedValue(undefined);
+      utils.exists = jest.fn().mockResolvedValue(false);
+      log.debug = jest.fn();
+    });
+
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
+
+    describe('generateOnly filtering (whitelist)', () => {
+      it('writes file when generateOnly is not set', async () => {
+        const result = await utils.writeFileWithFiltering(testFilePath, testContent, {}, targetDir, [], []);
+        expect(result).toBe(true);
+        expect(utils.writeFile).toHaveBeenCalledWith(testFilePath, testContent, {});
+      });
+
+      it('writes file when generateOnly is empty array', async () => {
+        const result = await utils.writeFileWithFiltering(testFilePath, testContent, {}, targetDir, [], []);
+        expect(result).toBe(true);
+        expect(utils.writeFile).toHaveBeenCalledWith(testFilePath, testContent, {});
+      });
+
+      it('writes file when it matches single pattern', async () => {
+        const jsonFilePath = path.join(targetDir, 'package.json');
+        const result = await utils.writeFileWithFiltering(jsonFilePath, testContent, {}, targetDir, [], ['*.json']);
+        expect(result).toBe(true);
+        expect(utils.writeFile).toHaveBeenCalledWith(jsonFilePath, testContent, {});
+      });
+
+      it('skips file when it does not match pattern', async () => {
+        const jsFilePath = path.join(targetDir, 'index.js');
+        const result = await utils.writeFileWithFiltering(jsFilePath, testContent, {}, targetDir, [], ['*.json']);
+        expect(result).toBe(false);
+        expect(utils.writeFile).not.toHaveBeenCalled();
+        expect(log.debug).toHaveBeenCalledWith(logMessage.skipGenerateOnly(jsFilePath));
+      });
+
+      it('writes file when it matches any pattern from multiple patterns', async () => {
+        const jsonFilePath = path.join(targetDir, 'package.json');
+        const jsFilePath = path.join(targetDir, 'src/models/User.js');
+
+        const result1 = await utils.writeFileWithFiltering(jsonFilePath, testContent, {}, targetDir, [], ['*.json', 'src/**/*.js']);
+        const result2 = await utils.writeFileWithFiltering(jsFilePath, testContent, {}, targetDir, [], ['*.json', 'src/**/*.js']);
+
+        expect(result1).toBe(true);
+        expect(result2).toBe(true);
+        expect(utils.writeFile).toHaveBeenCalledTimes(2);
+      });
+
+      it('skips file when it does not match any pattern from multiple patterns', async () => {
+        const mdFilePath = path.join(targetDir, 'README.md');
+        const result = await utils.writeFileWithFiltering(mdFilePath, testContent, {}, targetDir, [], ['*.json', 'src/**/*.js']);
+        expect(result).toBe(false);
+        expect(utils.writeFile).not.toHaveBeenCalled();
+      });
+
+      it('works with complex glob patterns', async () => {
+        const userFilePath = path.join(targetDir, 'src/models/User.java');
+        const daoFilePath = path.join(targetDir, 'src/models/dao/UserDao.java');
+
+        const result1 = await utils.writeFileWithFiltering(userFilePath, testContent, {}, targetDir, [], ['src/models/**/*.java', '!src/models/**/Test*.java']);
+        const result2 = await utils.writeFileWithFiltering(daoFilePath, testContent, {}, targetDir, [], ['src/models/**/*.java', '!src/models/**/Test*.java']);
+
+        expect(result1).toBe(true);
+        expect(result2).toBe(true);
+      });
+
+      it('excludes files when negated patterns match', async () => {
+        const chatFilePath = path.join(targetDir, 'src/api/routes/chat.js');
+        const testRouteFilePath = path.join(targetDir, 'src/api/routes/testRoute.js');
+
+        const result1 = await utils.writeFileWithFiltering(chatFilePath, testContent, {}, targetDir, [], ['src/**/*.js', '!src/**/test*.js']);
+        const result2 = await utils.writeFileWithFiltering(testRouteFilePath, testContent, {}, targetDir, [], ['src/**/*.js', '!src/**/test*.js']);
+
+        expect(result1).toBe(true);
+        expect(result2).toBe(false);
+        expect(log.debug).toHaveBeenCalledWith(logMessage.skipGenerateOnly(testRouteFilePath));
+      });
+    });
+
+    describe('noOverwriteGlobs filtering (blacklist)', () => {
+      it('skips overwriting existing file that matches noOverwriteGlobs', async () => {
+        const existingFilePath = path.join(targetDir, 'package.json');
+        utils.exists = jest.fn().mockResolvedValue(true);
+
+        const result = await utils.writeFileWithFiltering(existingFilePath, testContent, {}, targetDir, ['*.json'], []);
+
+        expect(result).toBe(false);
+        expect(utils.writeFile).not.toHaveBeenCalled();
+        expect(log.debug).toHaveBeenCalledWith(logMessage.skipOverwrite(existingFilePath));
+      });
+
+      it('writes new file even if it matches noOverwriteGlobs', async () => {
+        const newFilePath = path.join(targetDir, 'package.json');
+        utils.exists = jest.fn().mockResolvedValue(false);
+
+        const result = await utils.writeFileWithFiltering(newFilePath, testContent, {}, targetDir, ['*.json'], []);
+
+        expect(result).toBe(true);
+        expect(utils.writeFile).toHaveBeenCalledWith(newFilePath, testContent, {});
+      });
+
+      it('overwrites existing file that does not match noOverwriteGlobs', async () => {
+        const existingFilePath = path.join(targetDir, 'index.js');
+        utils.exists = jest.fn().mockResolvedValue(true);
+
+        const result = await utils.writeFileWithFiltering(existingFilePath, testContent, {}, targetDir, ['*.json'], []);
+
+        expect(result).toBe(true);
+        expect(utils.writeFile).toHaveBeenCalledWith(existingFilePath, testContent, {});
+      });
+    });
+
+    describe('combined filtering (generateOnly + noOverwriteGlobs)', () => {
+      it('applies generateOnly filter first, then noOverwriteGlobs', async () => {
+        const jsonFilePath = path.join(targetDir, 'package.json');
+        utils.exists = jest.fn().mockResolvedValue(true);
+
+        const result = await utils.writeFileWithFiltering(jsonFilePath, testContent, {}, targetDir, ['*.json'], ['*.json']);
+
+        expect(result).toBe(false);
+        expect(utils.writeFile).not.toHaveBeenCalled();
+        expect(log.debug).toHaveBeenCalledWith(logMessage.skipOverwrite(jsonFilePath));
+      });
+
+      it('skips file that does not match generateOnly, ignoring noOverwriteGlobs', async () => {
+        const jsFilePath = path.join(targetDir, 'index.js');
+
+        const result = await utils.writeFileWithFiltering(jsFilePath, testContent, {}, targetDir, ['package.json'], ['*.json']);
+
+        expect(result).toBe(false);
+        expect(utils.writeFile).not.toHaveBeenCalled();
+        expect(log.debug).toHaveBeenCalledWith(logMessage.skipGenerateOnly(jsFilePath));
+      });
+
+      it('writes file that matches generateOnly and does not match noOverwriteGlobs', async () => {
+        const jsonFilePath = path.join(targetDir, 'tsconfig.json');
+        utils.exists = jest.fn().mockResolvedValue(true);
+
+        const result = await utils.writeFileWithFiltering(jsonFilePath, testContent, {}, targetDir, ['package.json'], ['*.json']);
+
+        expect(result).toBe(true);
+        expect(utils.writeFile).toHaveBeenCalledWith(jsonFilePath, testContent, {});
+      });
+    });
+
+    describe('file options', () => {
+      it('passes file options to writeFile', async () => {
+        const options = { mode: 0o755 };
+        const result = await utils.writeFileWithFiltering(testFilePath, testContent, options, targetDir, [], []);
+
+        expect(result).toBe(true);
+        expect(utils.writeFile).toHaveBeenCalledWith(testFilePath, testContent, options);
+      });
+    });
+  });
 });

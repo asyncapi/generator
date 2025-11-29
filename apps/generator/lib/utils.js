@@ -7,6 +7,7 @@ const resolvePkg = require('resolve-pkg');
 const resolveFrom = require('resolve-from');
 const globalDirs = require('global-dirs');
 const log = require('loglevel');
+const minimatch = require('minimatch');
 
 const packageJson = require('../package.json');
 
@@ -33,6 +34,45 @@ utils.exists = async (path) => {
 };
 
 /**
+ * determine if a file should be generated based on generateOnly globs.
+ * @param {String} relativeFilePath Target-relative file path.
+ * @param {String[]} generateOnly Globs whitelist.
+ * @returns {Boolean} True if generation is allowed.
+ */
+function isAllowedByGenerateOnly(relativeFilePath, generateOnly = []) {
+  if (!Array.isArray(generateOnly) || generateOnly.length === 0) return true;
+
+  let allowed = false;
+  let excluded = false;
+
+  for (const globExp of generateOnly) {
+    if (typeof globExp !== 'string') continue;
+    const isNegation = globExp.startsWith('!');
+    const pattern = isNegation ? globExp.slice(1) : globExp;
+
+    if (minimatch(relativeFilePath, pattern)) {
+      if (isNegation) excluded = true;
+      else allowed = true;
+    }
+  }
+
+  return allowed && !excluded;
+}
+
+/**
+ * determine if an existing file should be skipped based on noOverwriteGlobs.
+ * @param {String} relativeFilePath Target-relative file path.
+ * @param {Boolean} fileExists Whether the target file already exists.
+ * @param {String[]} noOverwriteGlobs Globs blacklist for overwriting.
+ * @returns {Boolean} True if overwrite should be skipped.
+ */
+function shouldSkipOverwrite(relativeFilePath, fileExists, noOverwriteGlobs = []) {
+  if (!fileExists) return false;
+  if (!Array.isArray(noOverwriteGlobs) || noOverwriteGlobs.length === 0) return false;
+  return noOverwriteGlobs.some(globExp => minimatch(relativeFilePath, globExp));
+}
+
+/**
  * writes a file with generateOnly and noOverwriteGlobs filtering
  *
  * @param {String} filePath Absolute path to the file to write.
@@ -44,39 +84,17 @@ utils.exists = async (path) => {
  * @returns {Promise<Boolean>} True if file was written, false if skipped.
  */
 utils.writeFileWithFiltering = async (filePath, content, options, targetDir, noOverwriteGlobs = [], generateOnly = []) => {
-  const minimatch = require('minimatch');
   const relativeFilePath = path.relative(targetDir, filePath);
 
-  if (Array.isArray(generateOnly) && generateOnly.length > 0) {
-    let allowed = false;
-    let excluded = false;
-
-    for (const globExp of generateOnly) {
-      if (typeof globExp !== 'string') continue;
-      const isNegation = globExp.startsWith('!');
-      const pattern = isNegation ? globExp.slice(1) : globExp;
-
-      if (minimatch(relativeFilePath, pattern)) {
-        if (isNegation) {
-          excluded = true;
-        } else {
-          allowed = true;
-        }
-      }
-    }
-
-    if (!allowed || excluded) {
-      log.debug(logMessage.skipGenerateOnly(filePath));
-      return false;
-    }
+  if (!isAllowedByGenerateOnly(relativeFilePath, generateOnly)) {
+    log.debug(logMessage.skipGenerateOnly(filePath));
+    return false;
   }
 
-  if (Array.isArray(noOverwriteGlobs) && noOverwriteGlobs.length > 0) {
-    const fileExists = await utils.exists(filePath);
-    if (fileExists && noOverwriteGlobs.some(globExp => minimatch(relativeFilePath, globExp))) {
-      log.debug(logMessage.skipOverwrite(filePath));
-      return false;
-    }
+  const fileExists = await utils.exists(filePath);
+  if (shouldSkipOverwrite(relativeFilePath, fileExists, noOverwriteGlobs)) {
+    log.debug(logMessage.skipOverwrite(filePath));
+    return false;
   }
 
   await utils.writeFile(filePath, content, options);
@@ -94,39 +112,17 @@ utils.writeFileWithFiltering = async (filePath, content, options, targetDir, noO
  * @returns {Promise<Boolean>} True if file was copied, false if skipped.
  */
 utils.copyFileWithFiltering = async (sourcePath, targetPath, targetDir, noOverwriteGlobs = [], generateOnly = []) => {
-  const minimatch = require('minimatch');
   const relativeFilePath = path.relative(targetDir, targetPath);
 
-  if (Array.isArray(generateOnly) && generateOnly.length > 0) {
-    let allowed = false;
-    let excluded = false;
-
-    for (const globExp of generateOnly) {
-      if (typeof globExp !== 'string') continue;
-      const isNegation = globExp.startsWith('!');
-      const pattern = isNegation ? globExp.slice(1) : globExp;
-
-      if (minimatch(relativeFilePath, pattern)) {
-        if (isNegation) {
-          excluded = true;
-        } else {
-          allowed = true;
-        }
-      }
-    }
-
-    if (!allowed || excluded) {
-      log.debug(logMessage.skipGenerateOnly(targetPath));
-      return false;
-    }
+  if (!isAllowedByGenerateOnly(relativeFilePath, generateOnly)) {
+    log.debug(logMessage.skipGenerateOnly(targetPath));
+    return false;
   }
 
-  if (Array.isArray(noOverwriteGlobs) && noOverwriteGlobs.length > 0) {
-    const fileExists = await utils.exists(targetPath);
-    if (fileExists && noOverwriteGlobs.some(globExp => minimatch(relativeFilePath, globExp))) {
-      log.debug(logMessage.skipOverwrite(targetPath));
-      return false;
-    }
+  const fileExists = await utils.exists(targetPath);
+  if (shouldSkipOverwrite(relativeFilePath, fileExists, noOverwriteGlobs)) {
+    log.debug(logMessage.skipOverwrite(targetPath));
+    return false;
   }
 
   await utils.copyFile(sourcePath, targetPath);

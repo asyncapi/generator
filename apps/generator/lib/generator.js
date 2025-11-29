@@ -48,7 +48,7 @@ const DEFAULT_TEMPLATES_DIR = path.resolve(ROOT_DIR, 'node_modules');
 
 const TRANSPILED_TEMPLATE_LOCATION = '__transpiled';
 const TEMPLATE_CONTENT_DIRNAME = 'template';
-const GENERATOR_OPTIONS = ['debug', 'disabledHooks', 'entrypoint', 'forceWrite', 'install', 'noOverwriteGlobs', 'generateOnly', 'output', 'templateParams', 'mapBaseUrlToFolder', 'url', 'auth', 'token', 'registry', 'compile'];
+const GENERATOR_OPTIONS = new Set(['debug', 'disabledHooks', 'entrypoint', 'forceWrite', 'install', 'noOverwriteGlobs', 'generateOnly', 'output', 'templateParams', 'mapBaseUrlToFolder', 'url', 'auth', 'token', 'registry', 'compile']);
 const logMessage = require('./logMessages');
 
 const shouldIgnoreFile = filePath =>
@@ -160,7 +160,7 @@ class Generator {
 
   verifyoptions(Options) {
     if (typeof Options !== 'object') return [];
-    const invalidOptions = Object.keys(Options).filter(param => !GENERATOR_OPTIONS.includes(param));
+    const invalidOptions = Object.keys(Options).filter(param => !GENERATOR_OPTIONS.has(param));
 
     if (invalidOptions.length > 0) {
       throw new Error(`These options are not supported by the generator: ${invalidOptions.join(', ')}`);

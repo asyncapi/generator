@@ -40,20 +40,6 @@
     "jest": "^27.3.1",
     "jest-esm-transformer": "^1.0.0"
   },
-  "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "jsx"
-    ],
-    "transform": {
-      "^.+\\.jsx?$": "babel-jest"
-    },
-    "moduleNameMapper": {
-      "^nimma/legacy$": "<rootDir>/../../node_modules/nimma/dist/legacy/cjs/index.js",
-      "^nimma/(.*)": "<rootDir>/../../node_modules/nimma/dist/cjs/$1"
-    }
-  },
   "babel": {
     "presets": [
       "@babel/preset-env",

@@ -15,7 +15,7 @@ const delayExit = 1000;
 
 /**
  * Configuration for WebSocket close method logic per language.
- * @type {Record<Language, { methodDocs?: string, methodLogic: string }>}
+ * @type {Record<Language, { methodDocs: string | undefined, methodLogic: string }>}
  */
 const websocketCloseConfig = {
   python: {
@@ -58,7 +58,7 @@ print('WebSocket connection closed.');`
 };
 
 /**
- * Renders a WebSocket close connection method with optional pre and post execution logic.
+ * Renders a WebSocket close connection method with optional pre- and post-execution logic.
  *
  * @param {Object} props - Component props.
  * @param {Language} props.language - Programming language used for method formatting.

@@ -1,0 +1,3 @@
+---
+"@asyncapi/generator-components": minor
+---

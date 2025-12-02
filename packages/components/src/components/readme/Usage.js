@@ -28,16 +28,10 @@ async function main() {
 
 main();
 `,
-
-  default: (clientName, clientFileName) => `
-const ${clientName} = require('./${clientFileName}');
-const wsClient = new ${clientName}();
-await wsClient.connect();
-`,
 };
 
 export function Usage({ clientName, clientFileName, language }) {
-  const snippetFn = usageConfig[language] || usageConfig.default;
+  const snippetFn = usageConfig[language];
   const snippet = snippetFn(clientName, clientFileName);
 
   return (

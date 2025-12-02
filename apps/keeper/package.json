@@ -1,6 +1,6 @@
 {
   "name": "@asyncapi/keeper",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "AsyncAPI message payload validation library that validates messages against JSON Schema (Draft-07)",
   "scripts": {
     "build": "babel src --out-dir lib",
@@ -21,7 +21,7 @@
   "main": "lib/index.js",
   "author": "Adi Boghawala <boghawalaadi@gmail.com>",
   "license": "Apache-2.0",
-   "publishConfig": {
+  "publishConfig": {
     "access": "public"
   },
   "dependencies": {

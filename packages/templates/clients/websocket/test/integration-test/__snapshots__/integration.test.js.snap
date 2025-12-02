@@ -6090,6 +6090,42 @@ client.handleTimeStampMessage(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\
 "
 `;
 
+exports[`WebSocket Clients Integration Tests JavaScript Client Common Integration tests for JavaScript client generation generate simple client for hoppscotch echo with custom client name: asyncapi.yaml 1`] = `
+"asyncapi: 3.0.0
+info:
+  title: Hoppscotch Echo WebSocket Client
+  version: 1.0.0
+  description: >
+    Undestand how to use Hoppscotch Echo WebSocket as a client.
+    Hoppscotch Echo WebSocket server echoes back any messages sent to it. You can use this to test WebSocket connections and message flows.
+
+servers:
+  echoServer:
+    $ref: './commons/servers.yml#/servers/echoServer'
+
+channels:
+  echo:
+    $ref: './commons/channels.yml#/channels/echo'
+
+operations:
+  sendEchoMessage:
+    action: send
+    channel:
+      $ref: '#/channels/echo'
+    summary: Send a message to the echo server.
+    messages:
+      - $ref: '#/channels/echo/messages/echo'  
+
+  handleTimeStampMessage:
+    action: receive
+    channel:
+      $ref: '#/channels/echo'
+    summary: Receive the timestamp message sent from server every second.
+    messages:
+      - $ref: '#/channels/echo/messages/timestamp' 
+"
+`;
+
 exports[`WebSocket Clients Integration Tests JavaScript Client Common Integration tests for JavaScript client generation generate simple client for hoppscotch echo with custom client name: client.js 1`] = `
 "//////////////////////////////////////////////////
 //
@@ -6100,6 +6136,9 @@ exports[`WebSocket Clients Integration Tests JavaScript Client Common Integratio
 //////////////////////////////////////////////////
 
 const WebSocket = require('ws');
+const { compileSchemasByOperationId, validateMessage } = require('@asyncapi/keeper');
+const path = require('path');
+const asyncapiFilepath = path.resolve(__dirname, './asyncapi.yaml');
 class HoppscotchClient {
 
   /*
@@ -6111,6 +6150,9 @@ class HoppscotchClient {
     this.websocket = null;
     this.messageHandlers = [];
     this.errorHandlers = [];
+    this.compiledSchemas = {};
+    this.schemasCompiled = false;
+    this.sendOperationsId = [\\"sendEchoMessage\\"];
   }
 
   // Method to establish a WebSocket connection
@@ -6182,16 +6224,63 @@ class HoppscotchClient {
   }
 
   /**
+   * Initialize and compile all schemas for operations defined.
+   * This should be called once after creating the client instance.
+   * Subsequent calls will be ignored if schemas are already compiled.
+   * 
+   * @returns {Promise<void>}
+   * @throws {Error} If schema compilation fails for any operation
+   */
+  async compileOperationSchemas() {
+    if (this.schemasCompiled) {
+      return;
+    }
+
+    try {
+      // Compile schemas for all send operations
+      for (const operationId of this.sendOperationsId) {
+        this.compiledSchemas[operationId] = await compileSchemasByOperationId(asyncapiFilepath, operationId);
+      }
+      this.schemasCompiled = true;
+      console.log('Schemas initialized successfully for operations:', this.sendOperationsId.join(', '));
+    } catch (error) {
+      console.error('Error initializing schemas:', error);
+    }
+  }
+
+  /**
    * Sends a sendEchoMessage message over the WebSocket connection.
    * 
    * @param {Object} message - The message payload to send. Should match the schema defined in the AsyncAPI document.
-   * @param {WebSocket} [socket] - The WebSocket connection to use. If not provided, the client's own connection will be used.
+   * @param {WebSocket} socket - The WebSocket connection to use.
+   * @param {Array<function>} schemas - Array of compiled schema validator functions for this operation.
    * @throws {TypeError} If message cannot be stringified to JSON
    * @throws {Error} If WebSocket connection is not in OPEN state
+   * @throws {Error} If message validation fails against all schemas
    */
-  static sendEchoMessage(message, socket) {
+  static sendEchoMessage(message, socket, schemas) {
     try {
-      socket.send(JSON.stringify(message));
+      if (!schemas || schemas.length === 0) {
+        socket.send(JSON.stringify(message));
+        return { isValid: true }; 
+      }
+      const allValidationErrors = [];
+      let isValid = false;
+      for(const compiledSchema of schemas){
+        const validationResult = validateMessage(compiledSchema, message);
+        if (validationResult.isValid) {
+          isValid = true;
+          socket.send(JSON.stringify(message));
+          break;
+        } else {
+          if (validationResult.validationErrors) {
+            allValidationErrors.push(...validationResult.validationErrors);
+          }
+        }
+        if (!isValid) {
+          console.error('Validation errors:', JSON.stringify(allValidationErrors, null, 2));
+        }
+      }
     } catch (error) {
       console.error('Error sending sendEchoMessage message:', error);
     }
@@ -6199,14 +6288,20 @@ class HoppscotchClient {
 
   /**
    * Instance method version of sendEchoMessage that uses the client's own WebSocket connection.
+   * Automatically compiles schemas if not already compiled.
+   * 
    * @param {Object} message - The message payload to send
    * @throws {Error} If WebSocket connection is not established
+   * @throws {Error} If schema compilation fails
+   * @throws {Error} If message validation fails against all schemas
    */
-  sendEchoMessage(message){
+  async sendEchoMessage(message){
     if(!this.websocket){
       throw new Error('WebSocket connection not established. Call connect() first.');
     }
-    HoppscotchClient.sendEchoMessage(message, this.websocket);
+    await this.compileOperationSchemas();
+    const schemas = this.compiledSchemas['sendEchoMessage'];
+    HoppscotchClient.sendEchoMessage(message, this.websocket, schemas);
   }
 
   // Method to close the WebSocket connection
@@ -6318,6 +6413,42 @@ client.handleTimeStampMessage(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\
 "
 `;
 
+exports[`WebSocket Clients Integration Tests JavaScript Client Common Integration tests for JavaScript client generation generate simple client for hoppscotch echo: asyncapi.yaml 1`] = `
+"asyncapi: 3.0.0
+info:
+  title: Hoppscotch Echo WebSocket Client
+  version: 1.0.0
+  description: >
+    Undestand how to use Hoppscotch Echo WebSocket as a client.
+    Hoppscotch Echo WebSocket server echoes back any messages sent to it. You can use this to test WebSocket connections and message flows.
+
+servers:
+  echoServer:
+    $ref: './commons/servers.yml#/servers/echoServer'
+
+channels:
+  echo:
+    $ref: './commons/channels.yml#/channels/echo'
+
+operations:
+  sendEchoMessage:
+    action: send
+    channel:
+      $ref: '#/channels/echo'
+    summary: Send a message to the echo server.
+    messages:
+      - $ref: '#/channels/echo/messages/echo'  
+
+  handleTimeStampMessage:
+    action: receive
+    channel:
+      $ref: '#/channels/echo'
+    summary: Receive the timestamp message sent from server every second.
+    messages:
+      - $ref: '#/channels/echo/messages/timestamp' 
+"
+`;
+
 exports[`WebSocket Clients Integration Tests JavaScript Client Common Integration tests for JavaScript client generation generate simple client for hoppscotch echo: client.js 1`] = `
 "//////////////////////////////////////////////////
 //
@@ -6328,6 +6459,9 @@ exports[`WebSocket Clients Integration Tests JavaScript Client Common Integratio
 //////////////////////////////////////////////////
 
 const WebSocket = require('ws');
+const { compileSchemasByOperationId, validateMessage } = require('@asyncapi/keeper');
+const path = require('path');
+const asyncapiFilepath = path.resolve(__dirname, './asyncapi.yaml');
 class HoppscotchEchoWebSocketClient {
 
   /*
@@ -6339,6 +6473,9 @@ class HoppscotchEchoWebSocketClient {
     this.websocket = null;
     this.messageHandlers = [];
     this.errorHandlers = [];
+    this.compiledSchemas = {};
+    this.schemasCompiled = false;
+    this.sendOperationsId = [\\"sendEchoMessage\\"];
   }
 
   // Method to establish a WebSocket connection
@@ -6410,16 +6547,63 @@ class HoppscotchEchoWebSocketClient {
   }
 
   /**
+   * Initialize and compile all schemas for operations defined.
+   * This should be called once after creating the client instance.
+   * Subsequent calls will be ignored if schemas are already compiled.
+   * 
+   * @returns {Promise<void>}
+   * @throws {Error} If schema compilation fails for any operation
+   */
+  async compileOperationSchemas() {
+    if (this.schemasCompiled) {
+      return;
+    }
+
+    try {
+      // Compile schemas for all send operations
+      for (const operationId of this.sendOperationsId) {
+        this.compiledSchemas[operationId] = await compileSchemasByOperationId(asyncapiFilepath, operationId);
+      }
+      this.schemasCompiled = true;
+      console.log('Schemas initialized successfully for operations:', this.sendOperationsId.join(', '));
+    } catch (error) {
+      console.error('Error initializing schemas:', error);
+    }
+  }
+
+  /**
    * Sends a sendEchoMessage message over the WebSocket connection.
    * 
    * @param {Object} message - The message payload to send. Should match the schema defined in the AsyncAPI document.
-   * @param {WebSocket} [socket] - The WebSocket connection to use. If not provided, the client's own connection will be used.
+   * @param {WebSocket} socket - The WebSocket connection to use.
+   * @param {Array<function>} schemas - Array of compiled schema validator functions for this operation.
    * @throws {TypeError} If message cannot be stringified to JSON
    * @throws {Error} If WebSocket connection is not in OPEN state
+   * @throws {Error} If message validation fails against all schemas
    */
-  static sendEchoMessage(message, socket) {
+  static sendEchoMessage(message, socket, schemas) {
     try {
-      socket.send(JSON.stringify(message));
+      if (!schemas || schemas.length === 0) {
+        socket.send(JSON.stringify(message));
+        return { isValid: true }; 
+      }
+      const allValidationErrors = [];
+      let isValid = false;
+      for(const compiledSchema of schemas){
+        const validationResult = validateMessage(compiledSchema, message);
+        if (validationResult.isValid) {
+          isValid = true;
+          socket.send(JSON.stringify(message));
+          break;
+        } else {
+          if (validationResult.validationErrors) {
+            allValidationErrors.push(...validationResult.validationErrors);
+          }
+        }
+        if (!isValid) {
+          console.error('Validation errors:', JSON.stringify(allValidationErrors, null, 2));
+        }
+      }
     } catch (error) {
       console.error('Error sending sendEchoMessage message:', error);
     }
@@ -6427,14 +6611,20 @@ class HoppscotchEchoWebSocketClient {
 
   /**
    * Instance method version of sendEchoMessage that uses the client's own WebSocket connection.
+   * Automatically compiles schemas if not already compiled.
+   * 
    * @param {Object} message - The message payload to send
    * @throws {Error} If WebSocket connection is not established
+   * @throws {Error} If schema compilation fails
+   * @throws {Error} If message validation fails against all schemas
    */
-  sendEchoMessage(message){
+  async sendEchoMessage(message){
     if(!this.websocket){
       throw new Error('WebSocket connection not established. Call connect() first.');
     }
-    HoppscotchEchoWebSocketClient.sendEchoMessage(message, this.websocket);
+    await this.compileOperationSchemas();
+    const schemas = this.compiledSchemas['sendEchoMessage'];
+    HoppscotchEchoWebSocketClient.sendEchoMessage(message, this.websocket, schemas);
   }
 
   // Method to close the WebSocket connection
@@ -6521,6 +6711,54 @@ client.sendEchoMessage({
 "
 `;
 
+exports[`WebSocket Clients Integration Tests JavaScript Client Common Integration tests for JavaScript client generation generate simple client for postman echo: asyncapi.yaml 1`] = `
+"asyncapi: 3.0.0
+
+info:
+  title: Postman Echo WebSocket Client
+  version: 1.0.0
+  description: Understand how to use the Postman Echo WebSocket as a client.
+    The Postman Echo WebSocket server echoes back any messages sent to it.
+
+servers:
+  echoServer:
+    host: ws.postman-echo.com
+    pathname: /raw
+    protocol: wss
+
+channels:
+  echo:
+    description: The main channel where messages are sent and echoed back by the Postman Echo WebSocket server.
+    address: /
+    messages:
+      echo:
+        $ref: '#/components/messages/echo'
+
+operations:
+  sendEchoMessage:
+    summary: Send a message to the Postman Echo server.
+    action: send
+    channel: 
+      $ref: '#/channels/echo'
+    messages:
+      - $ref: '#/channels/echo/messages/echo'
+    reply:
+      channel: 
+        $ref: '#/channels/echo'
+
+components:
+  messages:
+    echo:
+      summary: A message exchanged with the echo server.
+      payload: {}
+      examples:
+        - name: string
+          payload: test
+        - name: object
+          payload: 
+            test: test text"
+`;
+
 exports[`WebSocket Clients Integration Tests JavaScript Client Common Integration tests for JavaScript client generation generate simple client for postman echo: client.js 1`] = `
 "//////////////////////////////////////////////////
 //
@@ -6532,6 +6770,9 @@ exports[`WebSocket Clients Integration Tests JavaScript Client Common Integratio
 //////////////////////////////////////////////////
 
 const WebSocket = require('ws');
+const { compileSchemasByOperationId, validateMessage } = require('@asyncapi/keeper');
+const path = require('path');
+const asyncapiFilepath = path.resolve(__dirname, './asyncapi.yaml');
 class PostmanEchoWebSocketClientClient {
 
   /*
@@ -6543,6 +6784,9 @@ class PostmanEchoWebSocketClientClient {
     this.websocket = null;
     this.messageHandlers = [];
     this.errorHandlers = [];
+    this.compiledSchemas = {};
+    this.schemasCompiled = false;
+    this.sendOperationsId = [\\"sendEchoMessage\\"];
   }
 
   // Method to establish a WebSocket connection
@@ -6614,16 +6858,63 @@ class PostmanEchoWebSocketClientClient {
   }
 
   /**
+   * Initialize and compile all schemas for operations defined.
+   * This should be called once after creating the client instance.
+   * Subsequent calls will be ignored if schemas are already compiled.
+   * 
+   * @returns {Promise<void>}
+   * @throws {Error} If schema compilation fails for any operation
+   */
+  async compileOperationSchemas() {
+    if (this.schemasCompiled) {
+      return;
+    }
+
+    try {
+      // Compile schemas for all send operations
+      for (const operationId of this.sendOperationsId) {
+        this.compiledSchemas[operationId] = await compileSchemasByOperationId(asyncapiFilepath, operationId);
+      }
+      this.schemasCompiled = true;
+      console.log('Schemas initialized successfully for operations:', this.sendOperationsId.join(', '));
+    } catch (error) {
+      console.error('Error initializing schemas:', error);
+    }
+  }
+
+  /**
    * Sends a sendEchoMessage message over the WebSocket connection.
    * 
    * @param {Object} message - The message payload to send. Should match the schema defined in the AsyncAPI document.
-   * @param {WebSocket} [socket] - The WebSocket connection to use. If not provided, the client's own connection will be used.
+   * @param {WebSocket} socket - The WebSocket connection to use.
+   * @param {Array<function>} schemas - Array of compiled schema validator functions for this operation.
    * @throws {TypeError} If message cannot be stringified to JSON
    * @throws {Error} If WebSocket connection is not in OPEN state
+   * @throws {Error} If message validation fails against all schemas
    */
-  static sendEchoMessage(message, socket) {
+  static sendEchoMessage(message, socket, schemas) {
     try {
-      socket.send(JSON.stringify(message));
+      if (!schemas || schemas.length === 0) {
+        socket.send(JSON.stringify(message));
+        return { isValid: true }; 
+      }
+      const allValidationErrors = [];
+      let isValid = false;
+      for(const compiledSchema of schemas){
+        const validationResult = validateMessage(compiledSchema, message);
+        if (validationResult.isValid) {
+          isValid = true;
+          socket.send(JSON.stringify(message));
+          break;
+        } else {
+          if (validationResult.validationErrors) {
+            allValidationErrors.push(...validationResult.validationErrors);
+          }
+        }
+        if (!isValid) {
+          console.error('Validation errors:', JSON.stringify(allValidationErrors, null, 2));
+        }
+      }
     } catch (error) {
       console.error('Error sending sendEchoMessage message:', error);
     }
@@ -6631,14 +6922,20 @@ class PostmanEchoWebSocketClientClient {
 
   /**
    * Instance method version of sendEchoMessage that uses the client's own WebSocket connection.
+   * Automatically compiles schemas if not already compiled.
+   * 
    * @param {Object} message - The message payload to send
    * @throws {Error} If WebSocket connection is not established
+   * @throws {Error} If schema compilation fails
+   * @throws {Error} If message validation fails against all schemas
    */
-  sendEchoMessage(message){
+  async sendEchoMessage(message){
     if(!this.websocket){
       throw new Error('WebSocket connection not established. Call connect() first.');
     }
-    PostmanEchoWebSocketClientClient.sendEchoMessage(message, this.websocket);
+    await this.compileOperationSchemas();
+    const schemas = this.compiledSchemas['sendEchoMessage'];
+    PostmanEchoWebSocketClientClient.sendEchoMessage(message, this.websocket, schemas);
   }
 
   // Method to close the WebSocket connection

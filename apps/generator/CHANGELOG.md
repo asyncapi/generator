@@ -1,5 +1,11 @@
 # @asyncapi/generator
 
+## 2.10.0
+
+### Minor Changes
+
+- aee45ba: Pushing of release https://github.com/asyncapi/generator/pull/1747 that failed due to pipeline issues.
+
 ## 2.9.0
 
 ### Minor Changes

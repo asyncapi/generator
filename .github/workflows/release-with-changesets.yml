@@ -78,6 +78,10 @@ jobs:
     needs: [test-nodejs]
     name: Publish to any of NPM, GitHub, or Docker Hub
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+      pull-requests: write
     steps:
       - name: Set git to use LF # To once and for all finish the never-ending fight between Unix and Windows
         run: |

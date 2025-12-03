@@ -51,6 +51,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "${{ steps.lockversion.outputs.version }}"
+          registry-url: "https://registry.npmjs.org"
       - if: steps.lockversion.outputs.version == '18' && matrix.os == 'windows-latest'
         name: Install npm cli 8
         shell: bash

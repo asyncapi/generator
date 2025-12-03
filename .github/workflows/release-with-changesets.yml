@@ -95,7 +95,7 @@ jobs:
         shell: bash
       - if: steps.packagejson.outputs.exists == 'true'
         name: Check package-lock version
-        uses: asyncapi/.github/.github/actions/get-node-version-from-package-lock@master
+        uses: derberg/.github-asyncapi/.github/actions/get-node-version-from-package-lock@fixnodereelase
         id: lockversion
       - if: steps.packagejson.outputs.exists == 'true'
         name: Setup Node.js

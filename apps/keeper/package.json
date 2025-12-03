@@ -1,6 +1,6 @@
 {
   "name": "@asyncapi/keeper",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "AsyncAPI message payload validation library that validates messages against JSON Schema (Draft-07)",
   "scripts": {
     "build": "babel src --out-dir lib",

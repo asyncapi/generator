@@ -51,6 +51,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "${{ steps.lockversion.outputs.version }}"
+          registry-url: "https://registry.npmjs.org"
       - if: steps.lockversion.outputs.version == '18' && matrix.os == 'windows-latest'
         name: Install npm cli 8
         shell: bash
@@ -77,6 +78,10 @@ jobs:
     needs: [test-nodejs]
     name: Publish to any of NPM, GitHub, or Docker Hub
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+      pull-requests: write
     steps:
       - name: Set git to use LF # To once and for all finish the never-ending fight between Unix and Windows
         run: |
@@ -90,7 +95,9 @@ jobs:
         shell: bash
       - if: steps.packagejson.outputs.exists == 'true'
         name: Check package-lock version
-        uses: asyncapi/.github/.github/actions/get-node-version-from-package-lock@master
+        uses: derberg/.github-asyncapi/.github/actions/get-node-version-from-package-lock@fixnodereelase
+        with:
+          node-version: ${{ vars.NODE_VERSION }}
         id: lockversion
       - if: steps.packagejson.outputs.exists == 'true'
         name: Setup Node.js

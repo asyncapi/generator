@@ -7,6 +7,7 @@ const resolvePkg = require('resolve-pkg');
 const resolveFrom = require('resolve-from');
 const globalDirs = require('global-dirs');
 const log = require('loglevel');
+const minimatch = require('minimatch');
 
 const packageJson = require('../package.json');
 
@@ -30,6 +31,102 @@ utils.exists = async (path) => {
     log.debug(`File ${path} couldn't be found. Error: ${error.message}`);
     return false;
   }
+};
+
+/**
+ * determine if a file should be generated based on generateOnly globs.
+ * @param {String} relativeFilePath Target-relative file path.
+ * @param {String[]} generateOnly Globs whitelist.
+ * @returns {Boolean} True if generation is allowed.
+ */
+function isAllowedByGenerateOnly(relativeFilePath, generateOnly = []) {
+  if (!Array.isArray(generateOnly) || generateOnly.length === 0) return true;
+
+  let allowed = false;
+  let excluded = false;
+
+  for (const globExp of generateOnly) {
+    if (typeof globExp !== 'string') continue;
+    const isNegation = globExp.startsWith('!');
+    const pattern = isNegation ? globExp.slice(1) : globExp;
+
+    if (minimatch(relativeFilePath, pattern)) {
+      if (isNegation) excluded = true;
+      else allowed = true;
+    }
+  }
+
+  return allowed && !excluded;
+}
+
+/**
+ * determine if an existing file should be skipped based on noOverwriteGlobs.
+ * @param {String} relativeFilePath Target-relative file path.
+ * @param {Boolean} fileExists Whether the target file already exists.
+ * @param {String[]} noOverwriteGlobs Globs blacklist for overwriting.
+ * @returns {Boolean} True if overwrite should be skipped.
+ */
+function shouldSkipOverwrite(relativeFilePath, fileExists, noOverwriteGlobs = []) {
+  if (!fileExists) return false;
+  if (!Array.isArray(noOverwriteGlobs) || noOverwriteGlobs.length === 0) return false;
+  return noOverwriteGlobs.some(globExp => minimatch(relativeFilePath, globExp));
+}
+
+/**
+ * writes a file with generateOnly and noOverwriteGlobs filtering
+ *
+ * @param {String} filePath Absolute path to the file to write.
+ * @param {String|Buffer} content Content to write.
+ * @param {Object} options Options to pass to fs.writeFile (e.g., { mode: 0o666 }).
+ * @param {String} targetDir Target directory for calculating relative paths.
+ * @param {String[]} noOverwriteGlobs Array of glob patterns for files to skip overwriting.
+ * @param {String[]} generateOnly Array of glob patterns for files to generate (whitelist).
+ * @returns {Promise<Boolean>} True if file was written, false if skipped.
+ */
+utils.writeFileWithFiltering = async (filePath, content, options, targetDir, noOverwriteGlobs = [], generateOnly = []) => {
+  const relativeFilePath = path.relative(targetDir, filePath);
+
+  if (!isAllowedByGenerateOnly(relativeFilePath, generateOnly)) {
+    log.debug(logMessage.skipGenerateOnly(filePath));
+    return false;
+  }
+
+  const fileExists = await utils.exists(filePath);
+  if (shouldSkipOverwrite(relativeFilePath, fileExists, noOverwriteGlobs)) {
+    log.debug(logMessage.skipOverwrite(filePath));
+    return false;
+  }
+
+  await utils.writeFile(filePath, content, options);
+  return true;
+};
+
+/**
+ * copies a file with generateOnly and noOverwriteGlobs filtering.
+ *
+ * @param {String} sourcePath Absolute path to the source file.
+ * @param {String} targetPath Absolute path to the destination file.
+ * @param {String} targetDir Target directory for calculating relative paths.
+ * @param {String[]} noOverwriteGlobs Array of glob patterns for files to skip overwriting.
+ * @param {String[]} generateOnly Array of glob patterns for files to generate (whitelist).
+ * @returns {Promise<Boolean>} True if file was copied, false if skipped.
+ */
+utils.copyFileWithFiltering = async (sourcePath, targetPath, targetDir, noOverwriteGlobs = [], generateOnly = []) => {
+  const relativeFilePath = path.relative(targetDir, targetPath);
+
+  if (!isAllowedByGenerateOnly(relativeFilePath, generateOnly)) {
+    log.debug(logMessage.skipGenerateOnly(targetPath));
+    return false;
+  }
+
+  const fileExists = await utils.exists(targetPath);
+  if (shouldSkipOverwrite(relativeFilePath, fileExists, noOverwriteGlobs)) {
+    log.debug(logMessage.skipOverwrite(targetPath));
+    return false;
+  }
+
+  await utils.copyFile(sourcePath, targetPath);
+  return true;
 };
 
 /**

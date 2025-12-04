@@ -1,12 +1,15 @@
 /* eslint-disable sonarjs/no-duplicate-string */
-const { 
+
+jest.mock('../lib/utils', () => ({
+  writeFileWithFiltering: jest.fn().mockResolvedValue(true),
+}));
+jest.mock('@asyncapi/generator-react-sdk');
+
+const {
   configureReact,
   renderReact,
   saveRenderedReactContent,
 } = require('../lib/renderer/react');
-
-jest.mock('../lib/utils');
-jest.mock('@asyncapi/generator-react-sdk');
 
 describe('React renderer', () => {
   describe('saveRenderedReactContent', () => {
@@ -35,8 +38,9 @@ describe('React renderer', () => {
         }
       };
 
-      await saveRenderedReactContent(content, '../some/path');
-      expect(util.writeFile).toHaveBeenCalledTimes(1);
+      const written = await saveRenderedReactContent(content, '../some/path');
+      expect(util.writeFileWithFiltering).toHaveBeenCalledTimes(1);
+      expect(written).toBe(1);
     });
 
     it('works saving multiple rendered contents', async () => {
@@ -55,8 +59,9 @@ describe('React renderer', () => {
         },
       ];
 
-      await saveRenderedReactContent(content, '../some/path');
-      expect(util.writeFile).toHaveBeenCalledTimes(2);
+      const written = await saveRenderedReactContent(content, '../some/path');
+      expect(util.writeFileWithFiltering).toHaveBeenCalledTimes(2);
+      expect(written).toBe(2);
     });
   });
 });

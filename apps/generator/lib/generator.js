@@ -20,6 +20,7 @@ const { listBakedInTemplates, isCoreTemplate, getTemplate } = require('./templat
 const {
   convertMapToObject,
   isFileSystemPath,
+  isGitSpecifier,
   readFile,
   readDir,
   writeFile,
@@ -570,7 +571,9 @@ class Generator {
    * @param {Boolean} [force=false] Whether to force installation (and skip cache) or not.
    */
   async installTemplate(force = false) {
-    if (!force) {
+    const isGitTemplate = isGitSpecifier(this.templateName);
+
+    if (!force && !isGitTemplate) {
       let pkgPath;
       let installedPkg;
       let packageVersion;
@@ -594,6 +597,10 @@ class Generator {
 
     const debugMessage = force ? logMessage.TEMPLATE_INSTALL_FLAG_MSG : logMessage.TEMPLATE_INSTALL_DISK_MSG;
     log.debug(logMessage.installationDebugMessage(debugMessage));
+
+    if (isGitTemplate) {
+      log.debug(`Installing template from git source "${this.templateName}". Authentication is handled by your git configuration.`);
+    }
 
     if (isFileSystemPath(this.templateName)) log.debug(logMessage.NPM_INSTALL_TRIGGER);
 

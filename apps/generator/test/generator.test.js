@@ -428,6 +428,28 @@ describe('Generator', () => {
       expect(log.debug).toHaveBeenCalledWith(logMessage.installationDebugMessage(logMessage.TEMPLATE_INSTALL_FLAG_MSG));
     });
 
+    it('works with a git specifier', async () => {
+      log.debug = jest.fn();
+      utils.__isFileSystemPathValue = false;
+      utils.__getTemplateDetails = undefined;
+      const gitTemplate = 'git+https://github.com/org/nameOfTestTemplate.git';
+      const gen = new Generator(gitTemplate, __dirname, {debug: true});
+      await gen.installTemplate();
+      // For git specifiers we always go through Arborist and skip local getTemplateDetails cache.
+      
+      // TODO: this test is partially disabled until we find a fix for jest config in monorepo so it recognize arborist mock
+      // setTimeout(() => {
+      //   expect(arboristMock.reify).toHaveBeenCalledTimes(1);
+      //   expect(arboristMock.reify.mock.calls[0][0]).toStrictEqual({
+      //     add: [gitTemplate],
+      //     saveType: 'prod',
+      //     save: false
+      //   });
+      // }, 0);
+      expect(log.debug).toHaveBeenCalledWith(logMessage.installationDebugMessage(logMessage.TEMPLATE_INSTALL_DISK_MSG));
+      expect(log.debug).toHaveBeenCalledWith(expect.stringContaining('Installing template from git source'));
+    });
+
     it('works with a path to registry', async () => {
       log.debug = jest.fn();
       const gen = new Generator('nameOfTestTemplate', __dirname, {debug: true, registry: {url: 'some.registry.com', authorizationName: 'sdfsf'}});

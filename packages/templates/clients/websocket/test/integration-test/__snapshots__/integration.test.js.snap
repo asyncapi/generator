@@ -5995,7 +5995,7 @@ exports[`WebSocket Clients Integration Tests Java Quarkus Client Common Integrat
 `;
 
 exports[`WebSocket Clients Integration Tests JavaScript Client Common Integration tests for JavaScript client generation generate simple client for hoppscotch echo with custom client name: README.md 1`] = `
-"# Hoppscotch Echo WebSocket Client 
+"# Hoppscotch Echo WebSocket Client
 
 ## Overview
 
@@ -6003,38 +6003,48 @@ Undestand how to use Hoppscotch Echo WebSocket as a client. Hoppscotch Echo WebS
 
 
 - **Version:** 1.0.0
-- **URL:** wss://echo-websocket.hoppscotch.io
+- **Server URL:** wss://echo-websocket.hoppscotch.io
 
 
-## Client API Reference
+## Usage
 
 \`\`\`javascript
 const HoppscotchClient = require('./client');
 const wsClient = new HoppscotchClient();
+
+async function main() {
+  try {
+    await wsClient.connect();
+    // use wsClient to send/receive messages
+    await wsClient.close();
+  } catch (error) {
+    console.error('Failed to connect:', error);
+  }
+}
+
+main();
 \`\`\`
 
-Here the wsClient is an instance of the \`HoppscotchClient\` class.
-### Core Methods
 
-#### \`connect()\`
-Establishes a WebSocket connection to the server.
+## API
 
-#### \`registerMessageHandler(handlerFunction)\`
-Registers a callback to handle incoming messages.
-- **Parameter:** \`handlerFunction\` - This Function takes a parameter \`message\` which is a string. 
+### \`connect()\`
+Establishes a WebSocket connection.
 
-#### \`registerErrorHandler(handlerFunction)\`
-Registers a callback to handle WebSocket errors.
-- **Parameter:** \`handlerFunction\` - This Function takes a parameter \`error\` which is an object
+### \`registerMessageHandler(handlerFunction)\`
+Registers a callback for incoming messages.
 
-#### \`close()\`
+### \`registerErrorHandler(handlerFunction)\`
+Registers a callback for connection errors.
+
+### \`close()\`
 Closes the WebSocket connection.
+
 
 ### Available Operations
 
 #### \`sendEchoMessage(payload)\`
 Send a message to the echo server.
-
 
 
 **Example:**
@@ -6064,9 +6074,9 @@ client.sendEchoMessage({
 
 
 
+
 #### \`handleTimeStampMessage(payload)\`
 Receive the timestamp message sent from server every second.
-
 
 
 **Example:**
@@ -6074,56 +6084,6 @@ Receive the timestamp message sent from server every second.
 client.handleTimeStampMessage(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\\");
 \`\`\`
 
-
-
-## Testing the client
-
-\`\`\`javascript
-const HoppscotchClient = require('./client');
-const wsClient = new HoppscotchClient();
-
-
-// Example of how custom message handler that operates on incoming messages can look like
-
-function myHandler(message) {
-  console.log('====================');
-  console.log('Just proving I got the message in myHandler:', message);
-  console.log('====================');  
-}
-
-// Example of custom error handler
-
-function myErrorHandler(error) {
-  console.error('Errors from Websocket:', error.message);
-}
-
-async function main() {
-  wsClient.registerMessageHandler(myHandler);
-  wsClient.registerErrorHandler(myErrorHandler);
-
-  try {
-    await wsClient.connect();
-
-    // Loop to send messages every 5 seconds
-    const interval = 5000; // 5 seconds
-    const message = 'Hello, Echo!';
-
-    while (true) {
-      try {
-        await wsClient.sendEchoMessage(message);
-      } catch (error) {
-        console.error('Error while sending message:', error);
-      }
-      // Wait for the interval before sending the next message
-      await new Promise(resolve => setTimeout(resolve, interval));
-    }
-  } catch (error) {
-    console.error('Failed to connect to WebSocket:', error.message);
-  }
-}
-
-main();
-\`\`\`
 
 
 
@@ -6358,7 +6318,7 @@ module.exports = HoppscotchClient;
 `;
 
 exports[`WebSocket Clients Integration Tests JavaScript Client Common Integration tests for JavaScript client generation generate simple client for hoppscotch echo: README.md 1`] = `
-"# Hoppscotch Echo WebSocket Client 
+"# Hoppscotch Echo WebSocket Client
 
 ## Overview
 
@@ -6366,38 +6326,48 @@ Undestand how to use Hoppscotch Echo WebSocket as a client. Hoppscotch Echo WebS
 
 
 - **Version:** 1.0.0
-- **URL:** wss://echo-websocket.hoppscotch.io
+- **Server URL:** wss://echo-websocket.hoppscotch.io
 
 
-## Client API Reference
+## Usage
 
 \`\`\`javascript
 const HoppscotchEchoWebSocketClient = require('./client');
 const wsClient = new HoppscotchEchoWebSocketClient();
+
+async function main() {
+  try {
+    await wsClient.connect();
+    // use wsClient to send/receive messages
+    await wsClient.close();
+  } catch (error) {
+    console.error('Failed to connect:', error);
+  }
+}
+
+main();
 \`\`\`
 
-Here the wsClient is an instance of the \`HoppscotchEchoWebSocketClient\` class.
-### Core Methods
 
-#### \`connect()\`
-Establishes a WebSocket connection to the server.
+## API
 
-#### \`registerMessageHandler(handlerFunction)\`
-Registers a callback to handle incoming messages.
-- **Parameter:** \`handlerFunction\` - This Function takes a parameter \`message\` which is a string. 
+### \`connect()\`
+Establishes a WebSocket connection.
 
-#### \`registerErrorHandler(handlerFunction)\`
-Registers a callback to handle WebSocket errors.
-- **Parameter:** \`handlerFunction\` - This Function takes a parameter \`error\` which is an object
+### \`registerMessageHandler(handlerFunction)\`
+Registers a callback for incoming messages.
 
-#### \`close()\`
+### \`registerErrorHandler(handlerFunction)\`
+Registers a callback for connection errors.
+
+### \`close()\`
 Closes the WebSocket connection.
+
 
 ### Available Operations
 
 #### \`sendEchoMessage(payload)\`
 Send a message to the echo server.
-
 
 
 **Example:**
@@ -6427,9 +6397,9 @@ client.sendEchoMessage({
 
 
 
+
 #### \`handleTimeStampMessage(payload)\`
 Receive the timestamp message sent from server every second.
-
 
 
 **Example:**
@@ -6437,56 +6407,6 @@ Receive the timestamp message sent from server every second.
 client.handleTimeStampMessage(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\\");
 \`\`\`
 
-
-
-## Testing the client
-
-\`\`\`javascript
-const HoppscotchEchoWebSocketClient = require('./client');
-const wsClient = new HoppscotchEchoWebSocketClient();
-
-
-// Example of how custom message handler that operates on incoming messages can look like
-
-function myHandler(message) {
-  console.log('====================');
-  console.log('Just proving I got the message in myHandler:', message);
-  console.log('====================');  
-}
-
-// Example of custom error handler
-
-function myErrorHandler(error) {
-  console.error('Errors from Websocket:', error.message);
-}
-
-async function main() {
-  wsClient.registerMessageHandler(myHandler);
-  wsClient.registerErrorHandler(myErrorHandler);
-
-  try {
-    await wsClient.connect();
-
-    // Loop to send messages every 5 seconds
-    const interval = 5000; // 5 seconds
-    const message = 'Hello, Echo!';
-
-    while (true) {
-      try {
-        await wsClient.sendEchoMessage(message);
-      } catch (error) {
-        console.error('Error while sending message:', error);
-      }
-      // Wait for the interval before sending the next message
-      await new Promise(resolve => setTimeout(resolve, interval));
-    }
-  } catch (error) {
-    console.error('Failed to connect to WebSocket:', error.message);
-  }
-}
-
-main();
-\`\`\`
 
 
 
@@ -6721,45 +6641,55 @@ module.exports = HoppscotchEchoWebSocketClient;
 `;
 
 exports[`WebSocket Clients Integration Tests JavaScript Client Common Integration tests for JavaScript client generation generate simple client for postman echo: README.md 1`] = `
-"# Postman Echo WebSocket Client 
+"# Postman Echo WebSocket Client
 
 ## Overview
 
 Understand how to use the Postman Echo WebSocket as a client. The Postman Echo WebSocket server echoes back any messages sent to it.
 
 - **Version:** 1.0.0
-- **URL:** wss://ws.postman-echo.com/raw
+- **Server URL:** wss://ws.postman-echo.com/raw
 
 
-## Client API Reference
+## Usage
 
 \`\`\`javascript
 const PostmanEchoWebSocketClientClient = require('./client');
 const wsClient = new PostmanEchoWebSocketClientClient();
+
+async function main() {
+  try {
+    await wsClient.connect();
+    // use wsClient to send/receive messages
+    await wsClient.close();
+  } catch (error) {
+    console.error('Failed to connect:', error);
+  }
+}
+
+main();
 \`\`\`
 
-Here the wsClient is an instance of the \`PostmanEchoWebSocketClientClient\` class.
-### Core Methods
 
-#### \`connect()\`
-Establishes a WebSocket connection to the server.
+## API
 
-#### \`registerMessageHandler(handlerFunction)\`
-Registers a callback to handle incoming messages.
-- **Parameter:** \`handlerFunction\` - This Function takes a parameter \`message\` which is a string. 
+### \`connect()\`
+Establishes a WebSocket connection.
 
-#### \`registerErrorHandler(handlerFunction)\`
-Registers a callback to handle WebSocket errors.
-- **Parameter:** \`handlerFunction\` - This Function takes a parameter \`error\` which is an object
+### \`registerMessageHandler(handlerFunction)\`
+Registers a callback for incoming messages.
 
-#### \`close()\`
+### \`registerErrorHandler(handlerFunction)\`
+Registers a callback for connection errors.
+
+### \`close()\`
 Closes the WebSocket connection.
+
 
 ### Available Operations
 
 #### \`sendEchoMessage(payload)\`
 Send a message to the Postman Echo server.
-
 
 
 **Example:**
@@ -6775,56 +6705,6 @@ client.sendEchoMessage({
 });
 \`\`\`
 
-
-
-## Testing the client
-
-\`\`\`javascript
-const PostmanEchoWebSocketClientClient = require('./client');
-const wsClient = new PostmanEchoWebSocketClientClient();
-
-
-// Example of how custom message handler that operates on incoming messages can look like
-
-function myHandler(message) {
-  console.log('====================');
-  console.log('Just proving I got the message in myHandler:', message);
-  console.log('====================');  
-}
-
-// Example of custom error handler
-
-function myErrorHandler(error) {
-  console.error('Errors from Websocket:', error.message);
-}
-
-async function main() {
-  wsClient.registerMessageHandler(myHandler);
-  wsClient.registerErrorHandler(myErrorHandler);
-
-  try {
-    await wsClient.connect();
-
-    // Loop to send messages every 5 seconds
-    const interval = 5000; // 5 seconds
-    const message = 'Hello, Echo!';
-
-    while (true) {
-      try {
-        await wsClient.sendEchoMessage(message);
-      } catch (error) {
-        console.error('Error while sending message:', error);
-      }
-      // Wait for the interval before sending the next message
-      await new Promise(resolve => setTimeout(resolve, interval));
-    }
-  } catch (error) {
-    console.error('Failed to connect to WebSocket:', error.message);
-  }
-}
-
-main();
-\`\`\`
 
 
 
@@ -7622,6 +7502,72 @@ exports[`WebSocket Clients Integration Tests Python Client Additional tests for 
 "
 `;
 
+exports[`WebSocket Clients Integration Tests Python Client Additional tests for Python client generate client for slack: README.md 1`] = `
+"# Slack Websocket API Client
+
+## Overview
+
+AsyncAPI document that represent the API of the application that is a client of the official Slack Websocket API To start using the Slack Websocket API, you need to create a Slack app and install it in your workspace. Make sure that the app is approved by the admin of the workspace.
+1. Create app in Slack: https://api.slack.com/apps. Do it by selecting option to create from scratch. Provide a name and select the workspace where the app will be used.
+1. Enable Socket Mode: Go to the \\"Socket Mode\\" section and enable the API. Follow all steps and save generated token for later. By default you are not yet subscribed to any events.
+1. Subscribe to events: Go to the \\"Event Subscriptions\\" section and enable the API. Subscribe to the bot events you want to receive. For example, you can subscribe to the \`reaction_added\` event. Remember to save changes.
+1. Install the app: Go to the \\"Install App\\" section and install the app in your workspace. After that make sure admin approved it for the workspace.
+1. Generate WebSocket URL: Make a REST call to the endpoint that will generate the WebSocket URL.  Use the \`apps.connections.open\` path from Slack's API. The response will contain a \`url\` field with the WebSocket URL. Use this URL to connect to the WebSocket API.
+    \`\`\`
+    curl --location --request POST 'https://slack.com/api/apps.connections.open' \\\\
+  --header 'Authorization: Bearer USE_TOKEN_GENERATED_DURING_SOCKET_MODE_ENABLEMENT' \\\\
+    \`\`\`
+
+1. Generated URL is the WebSocket URL you need to use to connect to the Slack WebSocket API. The URL will look like this:
+    \`\`\`
+    wss://wss-primary.slack.com/link?app_id=YOUR_APP_ID&ticket=YOUR_TICKET
+
+
+- **Version:** 1.0.0
+- **Server URL:** wss://wss-primary.slack.com/link
+
+
+## Installation
+
+Install dependencies:
+
+\`\`\`bash
+pip install -r requirements.txt
+\`\`\`
+
+
+## Usage
+
+\`\`\`python
+from client import SlackWebsocketAPIClient
+
+ws_client = SlackWebsocketAPIClient()
+
+async def main():
+    await ws_client.connect()
+    # use ws_client to send/receive messages
+    await ws_client.close()
+\`\`\`
+
+
+## API
+
+### \`connect()\`
+Establishes a WebSocket connection.
+
+### \`register_message_handler(handler_function)\`
+Registers a callback for incoming messages.
+
+### \`register_error_handler(handler_function)\`
+Registers a callback for connection errors.
+
+### \`close()\`
+Closes the WebSocket connection.
+
+
+"
+`;
+
 exports[`WebSocket Clients Integration Tests Python Client Additional tests for Python client generate client for slack: ReactionAdded.py 1`] = `
 "class ReactionAdded: 
   def __init__(self, input: Dict):
@@ -7814,6 +7760,59 @@ requests==2.32.3
 "
 `;
 
+exports[`WebSocket Clients Integration Tests Python Client Common Integration tests for Python client generation generate simple client for hoppscotch echo with custom client name: README.md 1`] = `
+"# Hoppscotch Echo WebSocket Client
+
+## Overview
+
+Undestand how to use Hoppscotch Echo WebSocket as a client. Hoppscotch Echo WebSocket server echoes back any messages sent to it. You can use this to test WebSocket connections and message flows.
+
+
+- **Version:** 1.0.0
+- **Server URL:** wss://echo-websocket.hoppscotch.io
+
+
+## Installation
+
+Install dependencies:
+
+\`\`\`bash
+pip install -r requirements.txt
+\`\`\`
+
+
+## Usage
+
+\`\`\`python
+from client import HoppscotchClient
+
+ws_client = HoppscotchClient()
+
+async def main():
+    await ws_client.connect()
+    # use ws_client to send/receive messages
+    await ws_client.close()
+\`\`\`
+
+
+## API
+
+### \`connect()\`
+Establishes a WebSocket connection.
+
+### \`register_message_handler(handler_function)\`
+Registers a callback for incoming messages.
+
+### \`register_error_handler(handler_function)\`
+Registers a callback for connection errors.
+
+### \`close()\`
+Closes the WebSocket connection.
+
+
+"
+`;
+
 exports[`WebSocket Clients Integration Tests Python Client Common Integration tests for Python client generation generate simple client for hoppscotch echo with custom client name: client.py 1`] = `
 "##################################################
 #
@@ -7996,6 +7995,59 @@ requests==2.32.3
 "
 `;
 
+exports[`WebSocket Clients Integration Tests Python Client Common Integration tests for Python client generation generate simple client for hoppscotch echo: README.md 1`] = `
+"# Hoppscotch Echo WebSocket Client
+
+## Overview
+
+Undestand how to use Hoppscotch Echo WebSocket as a client. Hoppscotch Echo WebSocket server echoes back any messages sent to it. You can use this to test WebSocket connections and message flows.
+
+
+- **Version:** 1.0.0
+- **Server URL:** wss://echo-websocket.hoppscotch.io
+
+
+## Installation
+
+Install dependencies:
+
+\`\`\`bash
+pip install -r requirements.txt
+\`\`\`
+
+
+## Usage
+
+\`\`\`python
+from client import HoppscotchEchoWebSocketClient
+
+ws_client = HoppscotchEchoWebSocketClient()
+
+async def main():
+    await ws_client.connect()
+    # use ws_client to send/receive messages
+    await ws_client.close()
+\`\`\`
+
+
+## API
+
+### \`connect()\`
+Establishes a WebSocket connection.
+
+### \`register_message_handler(handler_function)\`
+Registers a callback for incoming messages.
+
+### \`register_error_handler(handler_function)\`
+Registers a callback for connection errors.
+
+### \`close()\`
+Closes the WebSocket connection.
+
+
+"
+`;
+
 exports[`WebSocket Clients Integration Tests Python Client Common Integration tests for Python client generation generate simple client for hoppscotch echo: client.py 1`] = `
 "##################################################
 #
@@ -8175,6 +8227,58 @@ exports[`WebSocket Clients Integration Tests Python Client Common Integration te
 "websocket-client==1.8.0
 certifi==2025.1.31
 requests==2.32.3
+"
+`;
+
+exports[`WebSocket Clients Integration Tests Python Client Common Integration tests for Python client generation generate simple client for postman echo: README.md 1`] = `
+"# Postman Echo WebSocket Client
+
+## Overview
+
+Understand how to use the Postman Echo WebSocket as a client. The Postman Echo WebSocket server echoes back any messages sent to it.
+
+- **Version:** 1.0.0
+- **Server URL:** wss://ws.postman-echo.com/raw
+
+
+## Installation
+
+Install dependencies:
+
+\`\`\`bash
+pip install -r requirements.txt
+\`\`\`
+
+
+## Usage
+
+\`\`\`python
+from client import PostmanEchoWebSocketClientClient
+
+ws_client = PostmanEchoWebSocketClientClient()
+
+async def main():
+    await ws_client.connect()
+    # use ws_client to send/receive messages
+    await ws_client.close()
+\`\`\`
+
+
+## API
+
+### \`connect()\`
+Establishes a WebSocket connection.
+
+### \`register_message_handler(handler_function)\`
+Registers a callback for incoming messages.
+
+### \`register_error_handler(handler_function)\`
+Registers a callback for connection errors.
+
+### \`close()\`
+Closes the WebSocket connection.
+
+
 "
 `;
 

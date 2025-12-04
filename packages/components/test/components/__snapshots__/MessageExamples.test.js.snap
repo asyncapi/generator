@@ -1,0 +1,56 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing MessageExamples component Test operation with multiple examples 1`] = `
+"**Example:**
+\`\`\`javascript
+client.multipleExamples(\\"test\\");
+\`\`\`
+
+
+**Example:**
+\`\`\`javascript
+client.multipleExamples(false);
+\`\`\`
+
+
+**Example:**
+\`\`\`javascript
+client.multipleExamples(123);
+\`\`\`"
+`;
+
+exports[`Testing MessageExamples component Test operation with multiple messages and multiple examples 1`] = `
+"**Example:**
+\`\`\`javascript
+client.mixedMessageExamples(\\"test\\");
+\`\`\`
+
+
+**Example:**
+\`\`\`javascript
+client.mixedMessageExamples(\\"test\\");
+\`\`\`
+
+
+**Example:**
+\`\`\`javascript
+client.mixedMessageExamples(false);
+\`\`\`
+
+
+**Example:**
+\`\`\`javascript
+client.mixedMessageExamples(123);
+\`\`\`"
+`;
+
+exports[`Testing MessageExamples component Test operation with no message examples 1`] = `""`;
+
+exports[`Testing MessageExamples component Test operation with no messages 1`] = `""`;
+
+exports[`Testing MessageExamples component Test operation with one example 1`] = `
+"**Example:**
+\`\`\`javascript
+client.oneMessageExample(\\"test\\");
+\`\`\`"
+`;

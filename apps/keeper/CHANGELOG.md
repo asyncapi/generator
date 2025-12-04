@@ -1,5 +1,11 @@
 # @asyncapi/keeper
 
+## 0.5.0
+
+### Minor Changes
+
+- ced1404: Pushing of release https://github.com/asyncapi/generator/pull/1747 that failed due to pipeline issues.
+
 ## 0.4.0
 
 ### Minor Changes

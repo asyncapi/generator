@@ -1,9 +1,11 @@
 const path = require('path');
+const baseConfig = require('../../jest.config.base');
+
 module.exports = {
+  ...baseConfig(__dirname, {
+    moduleNameMapper: {
+      '^@asyncapi/nunjucks-filters$': path.resolve(__dirname, '../nunjucks-filters'),
+    },
+  }),
   clearMocks: true,
-  moduleNameMapper: {
-    '^nimma/legacy$': '<rootDir>../../node_modules/nimma/dist/legacy/cjs/index.js',
-    '^nimma/(.*)': '<rootDir>../../node_modules/nimma/dist/cjs/$1',
-    '^@asyncapi/nunjucks-filters$': path.resolve(__dirname, '../nunjucks-filters'),
-  },
 };

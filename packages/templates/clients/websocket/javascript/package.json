@@ -11,9 +11,10 @@
   "author": "Lukasz Gornicki <lpgornicki@gmail.com>",
   "license": "Apache-2.0",
   "dependencies": {
-    "@asyncapi/generator-react-sdk": "*",
     "@asyncapi/generator-helpers": "0.2.0",
-    "@asyncapi/generator-components": "0.3.1"
+    "@asyncapi/generator-react-sdk": "*",
+    "@asyncapi/generator-components": "0.3.1",
+    "@asyncapi/keeper": "0.5.0"
   },
   "devDependencies": {
     "@asyncapi/parser": "^3.0.14",
@@ -21,25 +22,11 @@
     "@babel/core": "^7.26.0",
     "@babel/preset-env": "^7.26.0",
     "@babel/preset-react": "^7.25.9",
-    "jest-esm-transformer": "^1.0.0",
     "eslint": "^6.8.0",
     "eslint-plugin-jest": "^23.8.2",
     "eslint-plugin-react": "^7.34.1",
-    "eslint-plugin-sonarjs": "^0.5.0"
-  },
-  "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "jsx"
-    ],
-    "transform": {
-      "^.+\\.jsx?$": "babel-jest"
-    },
-    "moduleNameMapper": {
-      "^nimma/legacy$": "<rootDir>/../../../../../node_modules/nimma/dist/legacy/cjs/index.js",
-      "^nimma/(.*)": "<rootDir>/../../../../../node_modules/nimma/dist/cjs/$1"
-    }
+    "eslint-plugin-sonarjs": "^0.5.0",
+    "jest-esm-transformer": "^1.0.0"
   },
   "babel": {
     "presets": [

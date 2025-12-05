@@ -16,7 +16,7 @@ const dependenciesConfig = {
     dependencies: ['import json', 'import certifi', 'import threading', 'import websocket']
   },
   javascript: {
-    dependencies: ['const WebSocket = require(\'ws\');']
+    dependencies: ['const WebSocket = require(\'ws\');', 'const { compileSchemasByOperationId, validateMessage } = require(\'@asyncapi/keeper\');']
   },
   dart: {
     dependencies: ['import \'dart:convert\';', 'import \'package:web_socket_channel/web_socket_channel.dart\';']

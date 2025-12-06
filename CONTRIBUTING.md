@@ -30,14 +30,16 @@ We use [All Contributors](https://allcontributors.org/docs/en/specification) spe
 
 ## Guidelines for New Contributors
 
-1. Read the [generator docs](https://www.asyncapi.com/docs/tools/generator) to get an overview of what the project is about.
-2. While reading through the docs one might identify issues (e.g., broken links, text formatting issues, etc.).
-3. Some concepts in the documentation might not be presented clearly, so contributors can suggest improvements (e.g., adding more examples or code snippets to make the documentation easy to understand).
-4. Familiarize yourself with the project's structure by reviewing the source code and understanding the roles of different files and components.
-5. Testing is one of the areas where new contributors can contribute, as running tests reveals uncovered lines in a particular file (e.g., a **test coverage report**).
-6. You can then try to add tests for those uncovered lines (e.g., a function within a file might not be covered). For reference, you can check out this [PR](https://github.com/asyncapi/generator/pull/1379).
-7. Instead of creating entirely new tests, consider enhancing existing ones by adding more edge cases to include additional test scenarios.
-8. We encourage contributors to help improve code quality by reviewing reported issues on [SonarCloud](https://sonarcloud.io/project/issues?issueStatuses=OPEN%2CCONFIRMED&id=asyncapi_generator) and suggesting improvements, identifying false reported issues that may need to be removed, and proposing fixes for valid issues.
+1. **Watch the Onboarding Webinar** - Before diving into code, watch our [Generator onboarding webinar](https://www.youtube.com/watch?v=Mkd7FgKOMNE) to understand the architecture and design decisions.
+2. Read the [generator docs](https://www.asyncapi.com/docs/tools/generator) to get an overview of what the project is about.
+3. While reading through the docs one might identify issues (e.g., broken links, text formatting issues, etc.).
+4. Some concepts in the documentation might not be presented clearly, so contributors can suggest improvements (e.g., adding more examples or code snippets to make the documentation easy to understand).
+5. Familiarize yourself with the project's structure by reviewing the source code and understanding the roles of different files and components.
+6. Testing is one of the areas where new contributors can contribute, as running tests reveals uncovered lines in a particular file (e.g., a **test coverage report**).
+7. You can then try to add tests for those uncovered lines (e.g., a function within a file might not be covered). For reference, you can check out this [PR](https://github.com/asyncapi/generator/pull/1379).
+8. Instead of creating entirely new tests, consider enhancing existing ones by adding more edge cases to include additional test scenarios.
+9. We encourage contributors to help improve code quality by reviewing reported issues on [SonarCloud](https://sonarcloud.io/project/issues?issueStatuses=OPEN%2CCONFIRMED&id=asyncapi_generator) and suggesting improvements, identifying false reported issues that may need to be removed, and proposing fixes for valid issues.
+10. See the [Development Guide](Development.md#before-you-begin---new-contributor-onboarding) for more details on what you'll learn during onboarding.
 
 ## Few Tips for Effective Contributions
 
@@ -46,10 +48,10 @@ We use [All Contributors](https://allcontributors.org/docs/en/specification) spe
 3. **PATIENCE** is crucial. Focus on creating meaningful contributions rather than rushing to submit a PR that adds little or no value to the project.
 4. Adding entirely new features might be challenging because most features are already well-established. You may need to spend more time understanding the repository to identify areas for improvement.
 5. You should research on Google regarding the @asyncapi/generator and related repositories (e.g., @asyncapi/parser or any of the template repositories) to identify potential improvements. AI can be a helpful assistant, but always double-check the information it provides with Google or StackOverflow.
-6. Follow **Issue First, PR Later** - Always check if there’s an existing issue before creating a new one, and raise your PR once the issue is confirmed/approved by any of the maintainers.
+6. Follow **Issue First, PR Later** - Always check if there's an existing issue before creating a new one, and raise your PR once the issue is confirmed/approved by any of the maintainers.
 7. Keep **PRs small and focused** – A small PR with a well-defined scope is easier to review and merge. Avoid bundling multiple changes into one PR.
 8. Collaborate with Other Contributors – If someone else has already raised an issue and you are interested in contributing to it, please communicate with them and collaborate instead of raising a separate PR independently. Working together leads to better contributions and avoids duplication of efforts. Open source is driven by **collaboration, not competition**.
-9. **Respond to Maintainer Reviews Promptly** - If a maintainer requests changes or provides feedback on your PR, please try to address them within **7 days**. If you’re unable to respond by then, the PR may be closed. Contributors are always welcome to open a new PR once they’re ready to continue.
+9. **Respond to Maintainer Reviews Promptly** - If a maintainer requests changes or provides feedback on your PR, please try to address them within **7 days**. If you're unable to respond by then, the PR may be closed. Contributors are always welcome to open a new PR once they're ready to continue.
 
 ## Summary of the Contribution Flow
 

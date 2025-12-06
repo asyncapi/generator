@@ -22,8 +22,11 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-      - name: Check package-lock version
-        uses: asyncapi/.github/.github/actions/get-node-version-from-package-lock@master
+      - name: Determine what node version to use
+        # This workflow is from our own org repo and safe to reference by 'master'.
+        uses: asyncapi/.github/.github/actions/get-node-version-from-package-lock@master # //NOSONAR
+        with:
+          node-version: ${{ vars.NODE_VERSION }}
         id: lockversion
       - name: Use Node.js
         uses: actions/setup-node@v4

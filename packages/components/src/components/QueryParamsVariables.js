@@ -94,15 +94,43 @@ const queryParamLogicConfig = {
  * @param {string} [framework=''] - Optional framework (e.g., 'quarkus' for Java).
  * @returns {function} The configuration function for generating query parameter code.
  */
+/**
+ * Resolve the appropriate query parameter configuration function based on language and framework.
+ *
+ * @param {SupportedLanguage} language - The target programming language.
+ * @param {string} [framework=''] - Optional framework (e.g., 'quarkus' for Java).
+ * @returns {function} The configuration function for generating query parameter code.
+ */
 function resolveQueryParamLogic(language, framework = '') {
   const config = queryParamLogicConfig[language];
+
+  // Language is not supported at all
+  if (!config) {
+    const supported = Object.keys(queryParamLogicConfig).join(', ');
+    throw new Error(
+      `Unsupported language "${language}". Supported languages are: ${supported}.`
+    );
+  }
+
+  // Simple language: python / javascript
   if (typeof config === 'function') {
     return config;
   }
-  if (framework && config[framework]) {
+
+  // Language with framework variants: java
+  if (framework && typeof config[framework] === 'function') {
     return config[framework];
   }
+
+  const supportedFrameworks = Object.keys(config).join(', ');
+
+  throw new Error(
+    framework
+      ? `Unsupported framework "${framework}" for language "${language}". Supported frameworks are: ${supportedFrameworks}.`
+      : `Framework is required for language "${language}". Supported frameworks are: ${supportedFrameworks}.`
+  );
 }
+
 
 /**
  * Component for rendering query parameter variables code.

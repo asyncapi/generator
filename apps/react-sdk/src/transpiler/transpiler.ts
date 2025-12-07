@@ -1,4 +1,5 @@
 import Path from 'path';
+import log from 'loglevel';
 
 import { rollup } from 'rollup';
 import babel from '@rollup/plugin-babel';
@@ -16,9 +17,26 @@ const ROOT_DIR = Path.resolve(__dirname, '../..');
  * @param options any extra options that should be passed.
  */
 export async function transpileFiles(directory: string, outputDir: string, options?: TranspileFilesOptions) {
-    let { files, dirs } = await getStatsInDir(directory);
-    files = files.filter(f => !f.endsWith("asyncapi-ui.min.js"));
-    if (files.length) {
+    const { files, dirs } = await getStatsInDir(directory);
+    const warnings: any[] = [];
+    const debug = process.argv.includes('--debug');
+    const originalStderr = process.stderr.write;
+
+    process.stderr.write = ((chunk: any, enc?: any, cb?: any): boolean => {
+        const msg = chunk.toString();
+
+        if (msg.includes('[BABEL]')) {
+            if (debug) {
+                return originalStderr.call(process.stderr, chunk, enc, cb);
+            }
+            if (typeof cb === 'function') cb();
+            return true;
+        }
+        return originalStderr.call(process.stderr, chunk, enc, cb);
+    }) as any;
+
+    try {
+        if (files.length) {
         /**
          * WHEN ADDING PLUGINS to transform the input keep in mind that 
          * IF any of these changes the actual original content in some way
@@ -26,40 +44,48 @@ export async function transpileFiles(directory: string, outputDir: string, optio
          * 
          * An example of this is using the `sourceMaps: 'inline'` configuration for the babel plugin.
          */
-        const bundles = await rollup({
-            input: files,
-            onwarn: () => {},
-            plugins: [
-                babel({
-                    cwd: ROOT_DIR,
-                    babelHelpers: "bundled",
-                    plugins: [
-                        "source-map-support",
-                    ],
-                    presets: [
-                        ["@babel/preset-env", {
-                            targets: { node: "12.16" },
-                        }],
-                        ["@babel/preset-react", {
-                            runtime: "automatic",
-                        }],
-                    ],
-                })
-            ],
-        })
-        await bundles.write({
-            format: "commonjs",
-            sourcemap: true,
-            dir: outputDir,
-            exports: "auto",
-            paths: {
-              'react/jsx-runtime': require.resolve('react/cjs/react-jsx-runtime.production.min').replace(/\\/g, '/'),
-            },
-            sanitizeFileName: false,
-        })
+            const bundles = await rollup({
+                input: files,
+                onwarn: (warning) =>{
+                    warnings.push(warning);
+                },
+                plugins: [
+                    babel({
+                        cwd: ROOT_DIR,
+                        babelHelpers: "bundled",
+                        plugins: [
+                            "source-map-support",
+                        ],
+                        presets: [
+                            ["@babel/preset-env", {
+                                 targets: { node: "12.16" },
+                            }],
+                            ["@babel/preset-react", {
+                                 runtime: "automatic",
+                            }],
+                        ],
+                    })
+                ],
+            })
+            await bundles.write({
+                format: "commonjs",
+                sourcemap: true,
+                dir: outputDir,
+                exports: "auto",
+                paths: {
+                    'react/jsx-runtime': require.resolve('react/cjs/react-jsx-runtime.production.min').replace(/\\/g, '/'),
+                },
+                sanitizeFileName: false,
+            });
+        }
+    } finally {
+        process.stderr.write = originalStderr;
     }
 
-    // Check if we should transpile all subdirs
+    if (debug && warnings.length > 0) {
+        warnings.forEach(w => log.debug(w.message));
+    }
+
     if (options?.recursive === true && dirs.length > 0) {
         for (const subdir of dirs) {
             const subdirPath = Path.parse(subdir);

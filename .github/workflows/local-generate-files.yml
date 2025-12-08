@@ -21,8 +21,10 @@ jobs:
       - name: Check package-lock version
         uses: asyncapi/.github/.github/actions/get-node-version-from-package-lock@master
         id: lockversion
+        with:
+          node-version: ${{ vars.NODE_VERSION }}
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v6
         with:
           node-version: "${{ steps.lockversion.outputs.version }}"
       - name: Install dependencies

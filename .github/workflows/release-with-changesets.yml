@@ -46,6 +46,8 @@ jobs:
         name: Check package-lock version
         uses: asyncapi/.github/.github/actions/get-node-version-from-package-lock@master
         id: lockversion
+        with:
+          node-version: ${{ vars.NODE_VERSION }}
       - if: steps.packagejson.outputs.exists == 'true'
         name: Setup Node.js
         uses: actions/setup-node@v4

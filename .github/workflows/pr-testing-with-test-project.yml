@@ -51,11 +51,8 @@ jobs:
   #this test job is responsible for running dedicated complex integration tests for the generator
   test:
     needs: changes
-    name: Test generator as dependency with Node ${{ matrix.node }}
+    name: Test generator as dependency with Node 24
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node: ["18", "20"]
     steps:
       - name: Checkout repository
         uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744
@@ -64,7 +61,7 @@ jobs:
           echo "should_test value: ${{ needs.changes.outputs.should_test }}"
       - if: needs.changes.outputs.should_test == 'true'
         name: Run test
-        run: NODE_VERSION=${{ matrix.node }} docker compose up --abort-on-container-exit --force-recreate
+        run: NODE_VERSION=24 docker compose up --abort-on-container-exit --force-recreate
         working-directory: ./apps/generator/test/test-project
 
   #this test job runs acceptance tests that use microcks and check generated code against the asyncapi contract
@@ -79,10 +76,16 @@ jobs:
         run: |
           echo "should_test value: ${{ needs.changes.outputs.should_test }}"
       - if: needs.changes.outputs.should_test == 'true'
-        name: Use Node.js 20
+        name: Check package-lock version
+        uses: asyncapi/.github/.github/actions/get-node-version-from-package-lock@master
+        id: lockversion
+        with:
+          node-version: ${{ vars.NODE_VERSION }}
+      - if: needs.changes.outputs.should_test == 'true'
+        name: Use Node.js
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
-          node-version: 20
+          node-version: "${{ steps.lockversion.outputs.version }}"
       - if: needs.changes.outputs.should_test == 'true'
         name: Install dependencies
         run: npm ci

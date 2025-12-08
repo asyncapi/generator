@@ -14,7 +14,6 @@ New to AsyncAPI Generator? We strongly recommend watching our comprehensive onbo
 - The origins and evolution of the Generator (legacy vs. future architecture)
 - Understanding event-driven architectures and protocol complexity
 - How the Generator works: templates, render engines, and the generation process
-- The shift from Nunjucks to React render engine
 - Component-based template development for better reusability
 - Baked-in templates and the monorepo structure
 - Live demonstrations of code generation from AsyncAPI documents

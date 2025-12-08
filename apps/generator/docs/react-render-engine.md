@@ -3,7 +3,7 @@ title: "React render engine"
 weight: 110
 ---
 
-[React](https://reactjs.org) is the render engine that we strongly suggest you should use for any new templates. The only reason it is not the default render engine is to stay backward compatible.
+[React](https://reactjs.org) is the render engine and sole rendering engine used by the AsyncAPI generator.
 
 * It enables the possibility of [debugging](#debugging-react-template) your template.
 * It provides better error stack traces.

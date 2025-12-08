@@ -36,7 +36,7 @@ After cloning the repository, you should setup the fork properly and configure t
 2. Install dependencies:
 
 ```bash
-npm install
+npm install --workspaces
 ```
 
 ## Running tests

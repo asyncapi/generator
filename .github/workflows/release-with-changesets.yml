@@ -79,7 +79,7 @@ jobs:
 
   release:
     needs: [test-nodejs]
-    name: Publish to any of NPM, GitHub, or Docker Hub
+    name: Publish to any of NPM and GitHub
     runs-on: ubuntu-latest
     permissions:
       contents: write

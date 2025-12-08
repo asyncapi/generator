@@ -96,15 +96,8 @@ program
   .option('-o, --output <outputDir>', 'directory where to put the generated files (defaults to current directory)', parseOutput, process.cwd())
   .option('-p, --param <name=value>', 'additional param to pass to templates', paramParser)
   .option('--force-write', 'force writing of the generated files to given directory even if it is a git repo with unstaged files or not empty dir (defaults to false)')
-  .option('--disable-warning', 'disable "ag" deprecation warning (defaults to false)')
   .option('--map-base-url <url:folder>','maps all schema references from base url to local folder',mapBaseUrlParser)
   .parse(process.argv);
-
-if (!program.disableWarning) {
-  console.warn(yellow(
-    'Warning: The "ag" CLI is deprecated and will be removed in a future release. Please use the AsyncAPI CLI instead. See release notes for details: https://github.com/asyncapi/generator/releases/tag/%40asyncapi%2Fgenerator%402.6.0. You can hide this working using --disable-warning flag.')
-  );
-}
 
 if (!asyncapiDocPath) {
   console.error(red('> Path or URL to AsyncAPI file not provided.'));

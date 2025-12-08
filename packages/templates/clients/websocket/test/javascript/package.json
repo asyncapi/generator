@@ -1,6 +1,7 @@
 {
     "name": "@asyncapi/template-acceptance-test-js",
     "version": "0.0.1",
+    "private": true,
     "description": "This is an acceptance test for the JavaScript websocket client template",
     "scripts": {
         "test:acceptance": "jest --coverage",
@@ -17,19 +18,5 @@
         "eslint-plugin-react": "^7.34.1",
         "eslint-plugin-sonarjs": "^0.5.0",
         "jest-esm-transformer": "^1.0.0"
-    },
-    "jest": {
-        "moduleFileExtensions": [
-            "js",
-            "json",
-            "jsx"
-        ],
-        "transform": {
-            "^.+\\.jsx?$": "babel-jest"
-        },
-        "moduleNameMapper": {
-            "^nimma/legacy$": "<rootDir>/../../../../../node_modules/nimma/dist/legacy/cjs/index.js",
-            "^nimma/(.*)": "<rootDir>/../../../../../node_modules/nimma/dist/cjs/$1"
-        }
     }
 }

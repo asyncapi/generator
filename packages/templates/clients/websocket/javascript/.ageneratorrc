@@ -14,7 +14,15 @@ parameters:
   customClientName:
     description: The custom name for the generated client class
     required: false
+  asyncapiFileDir:
+    description: >-
+      Custom location of the AsyncAPI file that you provided as an input in generation. By default it is located in the
+      root of the output directory
+    required: false
+    default: .
 metadata:
   type: client
   protocol: websocket
   target: javascript
+hooks:
+  '@asyncapi/generator-hooks': createAsyncapiFile

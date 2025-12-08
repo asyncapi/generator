@@ -38,7 +38,8 @@
     "turbo": "1.13.3"
   },
   "engines": {
-    "node": ">=24.11"
+    "node": ">=24.11",
+    "npm": ">=11.5.1"
   },
   "packageManager": "npm@9.5.0",
   "workspaces": [

@@ -5,7 +5,7 @@ weight: 110
 
 [React](https://reactjs.org) is the render engine and sole rendering engine used by the AsyncAPI generator.
 
-* It enables the possibility of [debugging](#debugging-react-template) your template.
+* It enables the possibility of debugging your template.
 * It provides better error stack traces.
 * Provides better support for separating code into more manageable chunks/components.
 * The readability of the template is much better.

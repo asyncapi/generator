@@ -3,7 +3,7 @@
 ---
 
 ### Breaking Changes
-* You must use Node.js 24.11 or higner, and NPM 11.5.1 or higher
+* You must use Node.js 24.11 or higher, and NPM 11.5.1 or higher
 * Nunjucks renderer removed — React is now the sole rendering engine. No need to specify render engine in config anymore
 * Nunjucks filters package and its public filters removed; filter-based template APIs no longer available.
 * `ag` CLI is no longer available. Long time ago it was already announced that it will be removed and people should move to [AsyncAPI CLI](https://github.com/asyncapi/cli/)

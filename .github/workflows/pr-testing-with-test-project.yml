@@ -77,6 +77,7 @@ jobs:
           echo "should_test value: ${{ needs.changes.outputs.should_test }}"
       - if: needs.changes.outputs.should_test == 'true'
         name: Check package-lock version
+        # This workflow is from our own org repo and safe to reference by 'master'.
         uses: asyncapi/.github/.github/actions/get-node-version-from-package-lock@master
         id: lockversion
         with:

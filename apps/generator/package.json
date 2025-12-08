@@ -4,8 +4,8 @@
   "description": "The AsyncAPI generator. It can generate documentation, code, anything!",
   "main": "./lib/generator.js",
   "engines": {
-    "node": ">=18.12.0",
-    "npm": ">=8.19.0"
+    "node": ">=24.11",
+    "npm": ">=11.5.1"
   },
   "scripts": {
     "test": "npm run test:unit && npm run test:integration",

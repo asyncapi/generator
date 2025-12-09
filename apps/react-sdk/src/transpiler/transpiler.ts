@@ -1,7 +1,7 @@
 import Path from 'path';
 import log from 'loglevel';
 
-import { rollup } from 'rollup';
+import { rollup, RollupWarning } from 'rollup';
 import babel from '@rollup/plugin-babel';
 
 import { getStatsInDir } from '../utils';
@@ -18,7 +18,7 @@ const ROOT_DIR = Path.resolve(__dirname, '../..');
  */
 export async function transpileFiles(directory: string, outputDir: string, options?: TranspileFilesOptions) {
     const { files, dirs } = await getStatsInDir(directory);
-    const warnings: any[] = [];
+    const warnings: RollupWarning[] = [];
     const debug = process.argv.includes('--debug');
     const originalStderr = process.stderr.write;
 
@@ -27,7 +27,7 @@ export async function transpileFiles(directory: string, outputDir: string, optio
 
         if (msg.includes('[BABEL]')) {
             if (debug) {
-                return originalStderr.call(process.stderr, chunk, enc, cb);
+                log.debug(msg.trim());
             }
             if (typeof cb === 'function') cb();
             return true;
@@ -46,7 +46,7 @@ export async function transpileFiles(directory: string, outputDir: string, optio
          */
             const bundles = await rollup({
                 input: files,
-                onwarn: (warning) =>{
+                onwarn: (warning: RollupWarning) =>{
                     warnings.push(warning);
                 },
                 plugins: [

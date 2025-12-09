@@ -6,7 +6,7 @@ import { Usage } from './Usage';
 import { CoreMethods } from './CoreMethods';
 import { AvailableOperations } from './AvailableOperations';
 
-export function GenerateReadMe({ asyncapi, params, language }) {
+export function Readme({ asyncapi, params, language }) {
   const server = getServer(asyncapi.servers(), params.server);
   const info = getInfo(asyncapi);
   const clientName = getClientName(asyncapi, params.appendClientSuffix, params.customClientName);

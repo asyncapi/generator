@@ -17,4 +17,4 @@ export { CoreMethods } from './components/readme/CoreMethods';
 export { Installation } from './components/readme/Installation';
 export { Usage } from './components/readme/Usage';
 export { Overview } from './components/readme/Overview';
-export { GenerateReadMe } from './components/readme/GenerateReadme';
+export { Readme } from './components/readme/Readme';

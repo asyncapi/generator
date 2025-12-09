@@ -77,6 +77,7 @@ export async function transpileFiles(directory: string, outputDir: string, optio
                 },
                 sanitizeFileName: false,
             });
+            await bundles.close();
         }
     } finally {
         process.stderr.write = originalStderr;

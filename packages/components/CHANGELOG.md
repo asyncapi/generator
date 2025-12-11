@@ -1,5 +1,11 @@
 # @asyncapi/generator-components
 
+## 0.4.0
+
+### Minor Changes
+
+- 715c1d2: Centralize reusable README components for consistent template rendering across languages
+
 ## 0.3.1
 
 ### Patch Changes

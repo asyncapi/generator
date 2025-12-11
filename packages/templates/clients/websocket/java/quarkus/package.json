@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@asyncapi/generator-helpers": "0.2.0",
-    "@asyncapi/generator-components": "0.3.1",
+    "@asyncapi/generator-components": "0.4.0",
     "@asyncapi/generator-react-sdk": "^1.1.2"
   },
   "devDependencies": {

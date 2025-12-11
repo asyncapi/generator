@@ -98,7 +98,7 @@ jobs:
         shell: bash
       - if: steps.packagejson.outputs.exists == 'true'
         name: Check package-lock version
-        uses: derberg/.github-asyncapi/.github/actions/get-node-version-from-package-lock@fixnodereelase
+        uses: asyncapi/.github/.github/actions/get-node-version-from-package-lock@master
         with:
           node-version: ${{ vars.NODE_VERSION }}
         id: lockversion

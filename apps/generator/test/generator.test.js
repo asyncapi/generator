@@ -22,6 +22,7 @@ describe('Generator', () => {
       expect(gen.targetDir).toStrictEqual(__dirname);
       expect(gen.entrypoint).toStrictEqual(undefined);
       expect(gen.noOverwriteGlobs).toStrictEqual([]);
+      expect(gen.generateOnly).toStrictEqual([]);
       expect(gen.disabledHooks).toStrictEqual({});
       expect(gen.output).toStrictEqual('fs');
       expect(gen.forceWrite).toStrictEqual(false);
@@ -34,6 +35,7 @@ describe('Generator', () => {
       const gen = new Generator('testTemplate', __dirname, {
         entrypoint: 'test-entrypoint',
         noOverwriteGlobs: ['test-globs'],
+        generateOnly: ['test-generate-globs'],
         disabledHooks: { 'test-hooks': true, 'generate:after': ['foo', 'bar'], foo: 'bar' },
         output: 'string',
         forceWrite: true,
@@ -47,6 +49,7 @@ describe('Generator', () => {
       expect(gen.targetDir).toStrictEqual(__dirname);
       expect(gen.entrypoint).toStrictEqual('test-entrypoint');
       expect(gen.noOverwriteGlobs).toStrictEqual(['test-globs']);
+      expect(gen.generateOnly).toStrictEqual(['test-generate-globs']);
       expect(gen.disabledHooks).toStrictEqual({ 'test-hooks': true, 'generate:after': ['foo', 'bar'], foo: 'bar' });
       expect(gen.output).toStrictEqual('string');
       expect(gen.forceWrite).toStrictEqual(true);
@@ -103,6 +106,30 @@ describe('Generator', () => {
     it('fails if output is given and is different than "fs" and "string"', () => {
       const t = () => new Generator('testTemplate', __dirname, { output: 'fail' });
       expect(t).toThrow('Invalid output type fail. Valid values are \'fs\' and \'string\'.');
+    });
+  });
+
+  describe('#warnIfNoGenerateOnlyMatches', () => {
+    it('warns when generateOnly is set and no files were generated', () => {
+      const gen = new Generator('testTemplate', __dirname, { generateOnly: ['*.json'] });
+      const warnSpy = jest.spyOn(require('loglevel'), 'warn').mockImplementation(() => {});
+
+      gen.generatedFilesCount = 0;
+      gen.warnIfNoGenerateOnlyMatches();
+
+      expect(warnSpy).toHaveBeenCalled();
+      warnSpy.mockRestore();
+    });
+
+    it('does not warn when files were generated', () => {
+      const gen = new Generator('testTemplate', __dirname, { generateOnly: ['*.json'] });
+      const warnSpy = jest.spyOn(require('loglevel'), 'warn').mockImplementation(() => {});
+
+      gen.generatedFilesCount = 2;
+      gen.warnIfNoGenerateOnlyMatches();
+
+      expect(warnSpy).not.toHaveBeenCalled();
+      warnSpy.mockRestore();
     });
   });
 

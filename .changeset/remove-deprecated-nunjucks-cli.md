@@ -1,5 +1,6 @@
 ---
 "@asyncapi/generator": major
+"@asyncapi/generator-helpers": major
 ---
 
 ### Breaking Changes

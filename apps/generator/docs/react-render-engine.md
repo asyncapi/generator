@@ -3,7 +3,7 @@ title: "React render engine"
 weight: 110
 ---
 
-[React](https://reactjs.org) is the render engine and sole rendering engine used by the AsyncAPI generator.
+[React](https://reactjs.org) is the only  render engine supported by the AsyncAPI generator.
 
 * It enables the possibility of debugging your template.
 * It provides better error stack traces.

@@ -76,7 +76,7 @@ You can also opt in to run the lint checks after the tests, by setting an enviro
 
 ### Manually testing with test templates
 
-To test template features manually we have `react-template` in `apps/generator/test/test-templates`, you can use this template to manually test your changes like this:
+To test template features, use the `react-template` in `apps/generator/test/test-templates`. You can run your changes against this template as follows:
 
 1. Navigate to the generator directory:
 

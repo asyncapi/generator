@@ -6,7 +6,7 @@ const installCommands = {
 };
 
 export function Installation({ language }) {
-    const command = installCommands[language] || installCommands['python']; // default to python command
+  const command = installCommands[language] || installCommands['python']; // default to python command
   return (
     <Text newLines={2}>
       {`## Installation

@@ -95,7 +95,7 @@ static ${methodName}(message, socket, schemas) {
       }
     }
   } catch (error) {
-    console.error('Error sending ${methodName} message:', error);
+    console.error(\`Error sending ${methodName} message:\`, error);
   }
 }`
     };

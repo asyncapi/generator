@@ -12,7 +12,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@asyncapi/generator-react-sdk": "*",
-    "@asyncapi/generator-helpers": "0.2.0",
+    "@asyncapi/generator-helpers": "1.0.0",
     "@asyncapi/generator-components": "0.4.0"
   },
   "devDependencies": {

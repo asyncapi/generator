@@ -1,0 +1,14 @@
+---
+"@asyncapi/generator": major
+"@asyncapi/generator-helpers": major
+---
+
+### Breaking Changes
+* You must use Node.js 24.11 or higher, and NPM 11.5.1 or higher
+* Nunjucks renderer removed — React is now the sole rendering engine. No need to specify render engine in config anymore
+* Nunjucks filters package and its public filters removed; filter-based template APIs no longer available.
+* `ag` CLI is no longer available. It was announced some time ago that it would be deprecated, and users are encouraged to switch to the [AsyncAPI CLI](https://github.com/asyncapi/cli/)
+
+### Migration Guides
+- [Migrating from Nunjucks to React render engine](https://github.com/asyncapi/generator/blob/%40asyncapi/generator%402.8.4/apps/generator/docs/migration-nunjucks-react.md)
+- [Migrating from `ag` CLI to AsyncAPI CLI](https://github.com/asyncapi/generator/blob/%40asyncapi/generator%402.8.4/apps/generator/docs/migration-cli.md)

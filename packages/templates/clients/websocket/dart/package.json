@@ -16,7 +16,7 @@
     "@asyncapi/generator-components": "0.4.0"
   },
   "devDependencies": {
-    "@asyncapi/parser": "^3.0.14",
+    "@asyncapi/parser": "^3.4.0",
     "@babel/cli": "^7.25.9",
     "@babel/core": "^7.26.0",
     "@babel/preset-env": "^7.26.0",

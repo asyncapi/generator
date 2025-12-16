@@ -20,7 +20,6 @@ This is a Monorepo managed using [Turborepo](https://turbo.build/) and contains 
 
 - [Overview](#overview)
 - [List of official generator templates](#list-of-official-generator-templates)
-- [Filters](#filters)
 - [Hooks](#hooks)
 - [Contributing](#contributing)
 - [Contributors ✨](#contributors-%E2%9C%A8)

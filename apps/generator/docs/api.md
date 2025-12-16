@@ -365,7 +365,7 @@ Parse the generator input based on the template `templateConfig.apiVersion` valu
 <a name="Generator+configureTemplate"></a>
 
 * generator.configureTemplate()** :
-Configure the templates.
+Configure the templates based the desired renderer.
 
 **Kind**: instance method of [`Generator`](#Generator)  
 

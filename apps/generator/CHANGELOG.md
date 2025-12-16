@@ -1,5 +1,14 @@
 # @asyncapi/generator
 
+## 3.0.1
+
+### Patch Changes
+
+- c5be81a: Enforce new helpers and components release to use latest versions in generator. Required because of the recent misconfiguration of releases and Trusted Publishing.
+- Updated dependencies [c5be81a]
+  - @asyncapi/generator-helpers@1.0.1
+  - @asyncapi/generator-components@0.4.1
+
 ## 3.0.0
 
 ### Major Changes

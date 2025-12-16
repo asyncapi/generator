@@ -1,6 +1,6 @@
 {
   "name": "@asyncapi/generator-components",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Package with reusable components for generation using React render engine",
   "scripts": {
     "test": "npm run build && jest --coverage",

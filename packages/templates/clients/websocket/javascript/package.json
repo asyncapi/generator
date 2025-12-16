@@ -11,9 +11,9 @@
   "author": "Lukasz Gornicki <lpgornicki@gmail.com>",
   "license": "Apache-2.0",
   "dependencies": {
-    "@asyncapi/generator-helpers": "1.0.0",
+    "@asyncapi/generator-helpers": "1.0.1",
     "@asyncapi/generator-react-sdk": "*",
-    "@asyncapi/generator-components": "0.4.0",
+    "@asyncapi/generator-components": "0.4.1",
     "@asyncapi/keeper": "0.5.0"
   },
   "devDependencies": {

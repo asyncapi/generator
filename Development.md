@@ -38,6 +38,66 @@ After cloning the repository, you should setup the fork properly and configure t
 ```bash
 npm install --workspaces
 ```
+## Scripts for Individual Packages
+
+This is a **Turborepo monorepo**. While most npm scripts run across all packages, you can target specific ones:
+
+**Generator package (most common):**
+- `npm run generator:test:unit` – Unit tests
+- `npm run generator:test:integration` – Integration tests  
+- `npm run generator:lint` – Lint code
+- `npm run generator:docs` – Generate API docs
+
+**Other packages:**
+- `npm run nunjucks-filters:test` – Test Nunjucks filters
+- `npm run hooks:test` – Test hooks
+- `npm run keeper:test` – Test keeper
+
+For the full monorepo structure and package purposes, see the [README.md](./README.md#list-of-official-generator-templates).
+
+## Developing with Watch Mode
+
+During active development, use watch mode to automatically rebuild on file changes:
+
+```bash
+npm run dev
+```
+
+## How the Generator Works
+
+To understand what happens behind the scenes when you run the generator, here's the flow:
+```
+GENERATION FLOW (ASCII):
+
+User Input (AsyncAPI Spec + Template + Output)
+        │
+        ▼
+Generator Engine (generator.js)
+├─ Parse & validate AsyncAPI spec
+├─ Load template (npm or local disk)
+├─ Register filters & hooks
+└─ Run generate:before hook
+        │
+        ▼
+For Each Template File
+├─ Check generation conditions
+├─ Optionally call setFileTemplateName hook (for file templates)
+├─ Render with React or Nunjucks
+└─ Write to output directory
+        │
+        ▼
+Final Steps
+├─ Run generate:after hook
+└─ Complete ✅
+```
+
+This flow shows:
+- How AsyncAPI specs are parsed and validated
+- How templates are loaded and filters registered
+- When hooks execute during the generation process
+- How files are generated and written
+
+Understanding this helps when debugging issues or extending the generator.
 
 ## Running tests
 
@@ -55,6 +115,34 @@ To run all tests locally:
 2. Follow the existing test patterns.
 
 3. Run your new tests using the commands mentioned above.
+
+### Understanding Hook Execution
+
+When you write tests or extend templates, knowing when hooks execute is crucial:
+```
+HOOK LIFECYCLE:
+
+   generate:before hook
+         │
+         v
+   Process each template file
+   ├─ Check conditions
+   ├─ Call setFileTemplateName hook (if renaming file templates)
+   └─ Render and write file
+         │
+         v
+   generate:after hook
+         │
+         v
+   Generation complete
+```
+
+**Available hooks:**
+- `generate:before` – Runs once at start (setup, validate AsyncAPI spec, register custom filters)
+- `setFileTemplateName` – Runs when processing file templates (customize output filenames)
+- `generate:after` – Runs once at end (cleanup, post-processing, notifications)
+
+Refer to the [Hooks documentation](apps/generator/docs/hooks.md) for detailed examples and the official hooks library.
 
 ## Docker isolated testing
 
@@ -92,6 +180,8 @@ node ./test/cli  ./test/docs/dummy.yml ./test/test-templates/react-template -o .
 ```
 
 4. Check the output in the `./test/output` directory to verify the output that you desired.
+
+> **Note:** [Turborepo](https://turbo.build/repo/docs) orchestrates all scripts. Use scoped commands like `npm run generator:test:unit` to target specific packages.
 
 ## Release process
 

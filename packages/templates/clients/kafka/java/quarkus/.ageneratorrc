@@ -1,6 +1,4 @@
-renderer: react
 apiVersion: v3
-generator: '>=1.3.0 <3.0.0'
 parameters:
   server:
     description: The name of the server described in AsyncAPI document
@@ -13,11 +11,11 @@ parameters:
     description: The custom name for the generated client class
     required: false
   env:
-    description: The environment for the generated client, e.g., dev, prod
+    description: 'The environment for the generated client, e.g., dev, prod'
     required: false
     default: dev
   version:
-    description: The version for the generated client, e.g., V1, V2
+    description: 'The version for the generated client, e.g., V1, V2'
     required: false
     default: V1
 nonRenderableFiles:

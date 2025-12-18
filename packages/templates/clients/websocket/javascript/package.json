@@ -3,7 +3,7 @@
   "private": true,
   "description": "This is a template generating JavaScript websocket client",
   "scripts": {
-    "test": "jest --coverage",
+    "test": "jest --coverage --passWithNoTests",
     "test:update": "npm run test -- -u",
     "lint": "eslint --max-warnings 0 --config ../../../../../.eslintrc --ignore-path ../../../../../.eslintignore .",
     "lint:fix": "eslint --fix --max-warnings 0 --config ../../../../../.eslintrc --ignore-path ../../../../../.eslintignore ."
@@ -11,13 +11,13 @@
   "author": "Lukasz Gornicki <lpgornicki@gmail.com>",
   "license": "Apache-2.0",
   "dependencies": {
-    "@asyncapi/generator-helpers": "0.2.0",
+    "@asyncapi/generator-helpers": "1.0.1",
     "@asyncapi/generator-react-sdk": "*",
-    "@asyncapi/generator-components": "0.3.1",
+    "@asyncapi/generator-components": "0.4.1",
     "@asyncapi/keeper": "0.5.0"
   },
   "devDependencies": {
-    "@asyncapi/parser": "^3.0.14",
+    "@asyncapi/parser": "^3.4.0",
     "@babel/cli": "^7.25.9",
     "@babel/core": "^7.26.0",
     "@babel/preset-env": "^7.26.0",

@@ -1,14 +1,21 @@
 #!/usr/bin/env node
 
+/**
+ * DEPRECATED CLI - FOR TESTING PURPOSES ONLY
+ *
+ * This CLI is deprecated and should NOT be used in production.
+ * It is kept in the test folder solely for testing the generator functionality during development.
+ * Use the AsyncAPI CLI instead for production use cases: https://github.com/asyncapi/cli/
+ */
+
 const path = require('path');
 const os = require('os');
 const program = require('commander');
 const xfs = require('fs.extra');
 const { DiagnosticSeverity } = require('@asyncapi/parser/cjs');
-const packageInfo = require('./package.json');
-const Generator = require('./lib/generator');
-const Watcher = require('./lib/watcher');
-const { isLocalTemplate, isFilePath } = require('./lib/utils');
+const packageInfo = require('../package.json');
+const Generator = require('../lib/generator');
+const { isFilePath } = require('../lib/utils');
 
 const red = text => `\x1b[31m${text}\x1b[0m`;
 const magenta = text => `\x1b[35m${text}\x1b[0m`;
@@ -89,16 +96,8 @@ program
   .option('-o, --output <outputDir>', 'directory where to put the generated files (defaults to current directory)', parseOutput, process.cwd())
   .option('-p, --param <name=value>', 'additional param to pass to templates', paramParser)
   .option('--force-write', 'force writing of the generated files to given directory even if it is a git repo with unstaged files or not empty dir (defaults to false)')
-  .option('--disable-warning', 'disable "ag" deprecation warning (defaults to false)')
-  .option('--watch-template', 'watches the template directory and the AsyncAPI document, and re-generate the files when changes occur. Ignores the output directory. This flag should be used only for template development.')
   .option('--map-base-url <url:folder>','maps all schema references from base url to local folder',mapBaseUrlParser)
   .parse(process.argv);
-
-if (!program.disableWarning) {
-  console.warn(yellow(
-    'Warning: The "ag" CLI is deprecated and will be removed in a future release. Please use the AsyncAPI CLI instead. See release notes for details: https://github.com/asyncapi/generator/releases/tag/%40asyncapi%2Fgenerator%402.6.0. You can hide this working using --disable-warning flag.')
-  );
-}
 
 if (!asyncapiDocPath) {
   console.error(red('> Path or URL to AsyncAPI file not provided.'));
@@ -112,34 +111,6 @@ xfs.mkdirp(program.output, async err => {
     await generate(program.output);
   } catch (e) {
     return showErrorAndExit(e);
-  }
-
-  // If we want to watch for changes do that
-  if (program.watchTemplate) {
-    let watcher;
-    const watchDir = path.resolve(template);
-    const outputPath = path.resolve(watchDir, program.output);
-    const transpiledTemplatePath = path.resolve(watchDir, Generator.TRANSPILED_TEMPLATE_LOCATION);
-    const ignorePaths = [outputPath, transpiledTemplatePath];
-    // Template name is needed as it is not always a part of the cli commad
-    // There is a use case that you run generator from a root of the template with `./` path
-    const templateName = require(path.resolve(watchDir,'package.json')).name;
-
-    if (isAsyncapiDocLocal) {
-      console.log(`[WATCHER] Watching for changes in the template directory ${magenta(watchDir)} and in the AsyncAPI file ${magenta(asyncapiDocPath)}`);
-      watcher = new Watcher([asyncapiDocPath, watchDir], ignorePaths);
-    } else {
-      console.log(`[WATCHER] Watching for changes in the template directory ${magenta(watchDir)}`);
-      watcher = new Watcher(watchDir, ignorePaths);
-    }
-    // Must check template in its installation path in generator to use isLocalTemplate function
-    if (!await isLocalTemplate(path.resolve(Generator.DEFAULT_TEMPLATES_DIR, templateName))) {
-      console.warn(`WARNING: ${template} is a remote template. Changes may be lost on subsequent installations.`);
-    }
-
-    await watcher.watch(watcherHandler, (paths) => {
-      showErrorAndExit({ message: `[WATCHER] Could not find the file path ${paths}, are you sure it still exists? If it has been deleted or moved please rerun the generator.` });
-    });
   }
 });
 
@@ -172,34 +143,6 @@ function generate(targetDir) {
       reject(e);
     }
   });
-}
-
-async function watcherHandler(changedFiles) {
-  console.clear();
-  console.log('[WATCHER] Change detected');
-  for (const [, value] of Object.entries(changedFiles)) {
-    let eventText;
-    switch (value.eventType) {
-    case 'changed':
-      eventText = green(value.eventType);
-      break;
-    case 'removed':
-      eventText = red(value.eventType);
-      break;
-    case 'renamed':
-      eventText = yellow(value.eventType);
-      break;
-    default:
-      eventText = yellow(value.eventType);
-    }
-    console.log(`\t${magenta(value.path)} was ${eventText}`);
-  }
-  console.log('Generating files');
-  try {
-    await generate(program.output);
-  } catch (e) {
-    showError(e);
-  }
 }
 
 process.on('unhandledRejection', showErrorAndExit);

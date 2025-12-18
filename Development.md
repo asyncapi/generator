@@ -14,7 +14,6 @@ New to AsyncAPI Generator? We strongly recommend watching our comprehensive onbo
 - The origins and evolution of the Generator (legacy vs. future architecture)
 - Understanding event-driven architectures and protocol complexity
 - How the Generator works: templates, render engines, and the generation process
-- The shift from Nunjucks to React render engine
 - Component-based template development for better reusability
 - Baked-in templates and the monorepo structure
 - Live demonstrations of code generation from AsyncAPI documents
@@ -37,7 +36,7 @@ After cloning the repository, you should setup the fork properly and configure t
 2. Install dependencies:
 
 ```bash
-npm install
+npm install --workspaces
 ```
 ## Scripts for Individual Packages
 
@@ -165,7 +164,7 @@ You can also opt in to run the lint checks after the tests, by setting an enviro
 
 ### Manually testing with test templates
 
-To test template features manually we have `react-template` and `nunjucks-template` in `apps/generator/test/templates`, you can use this templates to manually test your changes like this:
+To test template features, use the `react-template` in `apps/generator/test/test-templates`. You can run your changes against this template as follows:
 
 1. Navigate to the generator directory:
 
@@ -177,7 +176,7 @@ cd apps/generator
 3. Run the generator with the react-template:
 
 ```bash
-node ./cli  ./test/docs/dummy.yml ./test/test-templates/react-template -o ./test/output --force-write
+node ./test/cli  ./test/docs/dummy.yml ./test/test-templates/react-template -o ./test/output --force-write
 ```
 
 4. Check the output in the `./test/output` directory to verify the output that you desired.

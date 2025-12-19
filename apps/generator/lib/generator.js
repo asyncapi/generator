@@ -44,6 +44,8 @@ const TRANSPILED_TEMPLATE_LOCATION = '__transpiled';
 const TEMPLATE_CONTENT_DIRNAME = 'template';
 const GENERATOR_OPTIONS = ['debug', 'disabledHooks', 'entrypoint', 'forceWrite', 'install', 'noOverwriteGlobs', 'output', 'templateParams', 'mapBaseUrlToFolder', 'url', 'auth', 'token', 'registry', 'compile'];
 const logMessage = require('./logMessages');
+const pacote = require('pacote');
+const semver = require('semver');
 
 const shouldIgnoreFile = filePath =>
   filePath.startsWith(`.git${path.sep}`);
@@ -561,7 +563,7 @@ class Generator {
    * @param {Boolean} [force=false] Whether to force installation (and skip cache) or not.
    */
   async installTemplate(force = false) {
-    if (!force) {
+    if (!force && !isFileSystemPath(this.templateName)) {
       let pkgPath;
       let installedPkg;
       let packageVersion;
@@ -570,6 +572,21 @@ class Generator {
         installedPkg = getTemplateDetails(this.templateName, PACKAGE_JSON_FILENAME);
         pkgPath = installedPkg?.pkgPath;
         packageVersion = installedPkg?.version;
+       const pacoteOpts = {};
+if (this.registry.url) pacoteOpts.registry = this.registry.url;
+if (this.registry.token) pacoteOpts.token = this.registry.token;
+
+const manifest = await pacote.manifest(this.templateName, pacoteOpts);
+const latestVersion = manifest?.version;
+
+if(packageVersion && latestVersion && semver.lt(packageVersion, latestVersion)) {
+  log.info(
+    `This template has a newer version and you can safely update.\n` +
+    `Use \`${this.templateName}@latest\` as your template name to install the latest version.\n\n` +
+    `Example:\n` +
+    `ag asyncapi.yml ${this.templateName}@latest -o output`
+  );
+}
         log.debug(logMessage.templateSource(pkgPath));
         if (packageVersion) log.debug(logMessage.templateVersion(packageVersion));
 

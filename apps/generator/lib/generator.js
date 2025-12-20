@@ -8,7 +8,8 @@ const log = require('loglevel');
 const Arborist = require('@npmcli/arborist');
 const Config = require('@npmcli/config');
 const requireg = require('requireg');
-const npmPath = requireg.resolve('npm').replace('index.js','');
+const resolvedNpm = requireg.resolve('npm');
+const npmPath = resolvedNpm ? resolvedNpm.replace('index.js','') : undefined;
 const { isAsyncAPIDocument } = require('@asyncapi/parser/cjs/document');
 
 const { configureReact, renderReact, saveRenderedReactContent } = require('./renderer/react');

@@ -196,3 +196,38 @@ utils.convertCollectionToObject = (array, idFunction) => {
   }
   return tempObject;
 };
+
+/**
+ * Validates that a file path stays within a base directory to prevent path traversal attacks.
+ * 
+ * @param {string} filePath - The file path to validate (can be relative or absolute)
+ * @param {string} baseDir - The base directory that the file path must stay within
+ * @param {string} [operation='access'] - The operation being performed (for error messages)
+ * @returns {string} The normalized, validated absolute path
+ * @throws {Error} If the path attempts to escape the base directory
+ */
+utils.validatePathWithinBase = (filePath, baseDir, operation = 'access') => {
+  // Resolve and normalize both paths
+  const resolvedBaseDir = path.resolve(baseDir);
+  const resolvedFilePath = path.isAbsolute(filePath) 
+    ? path.resolve(filePath)
+    : path.resolve(resolvedBaseDir, filePath);
+  
+  const normalizedBase = path.normalize(resolvedBaseDir);
+  const normalizedFilePath = path.normalize(resolvedFilePath);
+  
+  // Check if the file path is within the base directory
+  // Allow the base directory itself or files within it
+  const isWithinBase = normalizedFilePath === normalizedBase ||
+    normalizedFilePath.startsWith(normalizedBase + path.sep);
+  
+  if (!isWithinBase) {
+    throw new Error(
+      `Path traversal detected: attempted to ${operation} "${filePath}" ` +
+      `which resolves to "${normalizedFilePath}" outside base directory "${normalizedBase}". ` +
+      `This is a security violation and has been blocked.`
+    );
+  }
+  
+  return normalizedFilePath;
+};

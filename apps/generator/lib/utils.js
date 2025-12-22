@@ -65,12 +65,36 @@ utils.convertMapToObject = (map) => {
  * @param {String} link URL where the AsyncAPI document is located.
  * @returns {Promise<String>} Content of fetched file.
  */
-utils.fetchSpec = (link) => {
-  return new Promise((resolve, reject) => {
-    fetch(link)
-      .then(res => resolve(res.text()))
-      .catch(reject);
-  });
+utils.fetchSpec = async (link) => {
+  try {
+    const res = await fetch(link);
+    
+    if (!res.ok) {
+      throw new Error(
+        `Failed to fetch AsyncAPI document from ${link}: ` +
+        `HTTP ${res.status} ${res.statusText}`
+      );
+    }
+    
+    return await res.text();
+  } catch (error) {
+    // Re-throw if it's already our custom HTTP error
+    if (error.message && error.message.includes('Failed to fetch AsyncAPI document')) {
+      throw error;
+    }
+    
+    // Handle network errors, timeouts, etc.
+    if (error instanceof TypeError && error.message.includes('fetch')) {
+      throw new Error(`Network error while fetching ${link}: ${error.message}. Please check your internet connection and the URL.`);
+    }
+    
+    if (error.name === 'AbortError') {
+      throw new Error(`Request timeout while fetching ${link}. The server may be slow or unresponsive.`);
+    }
+    
+    // Generic network error
+    throw new Error(`Network error while fetching ${link}: ${error.message}`);
+  }
 };
 
 /**

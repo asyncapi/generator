@@ -6,6 +6,10 @@ const utils = jest.requireActual('../lib/utils');
 
 const logMessage = require('./../lib/logMessages.js');
 
+// Mock node-fetch for fetchSpec tests
+jest.mock('node-fetch');
+const fetch = require('node-fetch');
+
 describe('Utils', () => {
   describe('#getTemplateDetails', () => {
     let resolvePkg, resolveFrom;
@@ -94,6 +98,113 @@ describe('Utils', () => {
     it('should return false if it is not a JS file', () => {
       const isJsFile = utils.isJsFile('./invalid-file');
       expect(isJsFile).toBeFalsy();
+    });
+  });
+
+  describe('#fetchSpec', () => {
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
+
+    it('should resolve with content for successful requests (200 OK)', async () => {
+      const testUrl = 'https://example.com/asyncapi.yaml';
+      const testContent = 'asyncapi: 2.0.0\ninfo:\n  title: Test API';
+      
+      fetch.mockResolvedValue({
+        ok: true,
+        status: 200,
+        statusText: 'OK',
+        text: jest.fn().mockResolvedValue(testContent)
+      });
+
+      const result = await utils.fetchSpec(testUrl);
+      expect(result).toBe(testContent);
+      expect(fetch).toHaveBeenCalledWith(testUrl);
+    });
+
+    it('should reject with error for 404 responses', async () => {
+      const testUrl = 'https://example.com/nonexistent.yaml';
+      
+      fetch.mockResolvedValue({
+        ok: false,
+        status: 404,
+        statusText: 'Not Found',
+        text: jest.fn().mockResolvedValue('<html>404 Not Found</html>')
+      });
+
+      await expect(utils.fetchSpec(testUrl)).rejects.toThrow(
+        `Failed to fetch AsyncAPI document from ${testUrl}: HTTP 404 Not Found`
+      );
+      expect(fetch).toHaveBeenCalledWith(testUrl);
+    });
+
+    it('should reject with error for 500 responses', async () => {
+      const testUrl = 'https://example.com/server-error.yaml';
+      
+      fetch.mockResolvedValue({
+        ok: false,
+        status: 500,
+        statusText: 'Internal Server Error',
+        text: jest.fn().mockResolvedValue('<html>500 Error</html>')
+      });
+
+      await expect(utils.fetchSpec(testUrl)).rejects.toThrow(
+        `Failed to fetch AsyncAPI document from ${testUrl}: HTTP 500 Internal Server Error`
+      );
+      expect(fetch).toHaveBeenCalledWith(testUrl);
+    });
+
+    it('should reject with error for 403 Forbidden responses', async () => {
+      const testUrl = 'https://example.com/forbidden.yaml';
+      
+      fetch.mockResolvedValue({
+        ok: false,
+        status: 403,
+        statusText: 'Forbidden',
+        text: jest.fn().mockResolvedValue('<html>403 Forbidden</html>')
+      });
+
+      await expect(utils.fetchSpec(testUrl)).rejects.toThrow(
+        `Failed to fetch AsyncAPI document from ${testUrl}: HTTP 403 Forbidden`
+      );
+      expect(fetch).toHaveBeenCalledWith(testUrl);
+    });
+
+    it('should reject with error for network failures', async () => {
+      const testUrl = 'https://example.com/asyncapi.yaml';
+      const networkError = new TypeError('Failed to fetch');
+      
+      fetch.mockRejectedValue(networkError);
+
+      await expect(utils.fetchSpec(testUrl)).rejects.toThrow(
+        `Network error while fetching ${testUrl}: ${networkError.message}. Please check your internet connection and the URL.`
+      );
+      expect(fetch).toHaveBeenCalledWith(testUrl);
+    });
+
+    it('should reject with error for timeout errors', async () => {
+      const testUrl = 'https://example.com/slow.yaml';
+      const timeoutError = new Error('Request timeout');
+      timeoutError.name = 'AbortError';
+      
+      fetch.mockRejectedValue(timeoutError);
+
+      await expect(utils.fetchSpec(testUrl)).rejects.toThrow(
+        `Request timeout while fetching ${testUrl}. The server may be slow or unresponsive.`
+      );
+      expect(fetch).toHaveBeenCalledWith(testUrl);
+    });
+
+    it('should reject with error for other network errors', async () => {
+      const testUrl = 'https://example.com/asyncapi.yaml';
+      const otherError = new Error('Connection refused');
+      
+      fetch.mockRejectedValue(otherError);
+
+      await expect(utils.fetchSpec(testUrl)).rejects.toThrow(
+        `Network error while fetching ${testUrl}: ${otherError.message}`
+      );
+      expect(fetch).toHaveBeenCalledWith(testUrl);
     });
   });
 });

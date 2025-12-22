@@ -1,6 +1,8 @@
 const fs = require('fs');
+const path = require('path');
 const { convertToOldAPI } = require('@asyncapi/parser');
 const { ConvertDocumentParserAPIVersion, NewParser } = require('@asyncapi/multi-parser');
+const { validatePathWithinBase } = require('./utils');
 
 const parser = module.exports;
 
@@ -102,18 +104,23 @@ function getMapBaseUrlToFolderResolvers({ url: baseUrl, folder: baseDir }) {
     canRead: true,
     read(uri) {
       return new Promise(((resolve, reject) => {
-        const path = uri.toString();
-        const localpath = path.replace(baseUrl, baseDir);
+        const uriPath = uri.toString();
+        const localpath = uriPath.replace(baseUrl, baseDir);
+        
         try {
-          fs.readFile(localpath, (err, data) => {
+          // Validate path stays within base directory to prevent path traversal attacks
+          const validatedPath = validatePathWithinBase(localpath, baseDir, 'read schema file');
+          
+          fs.readFile(validatedPath, (err, data) => {
             if (err) {
-              reject(`Error opening file "${localpath}"`);
+              reject(new Error(`Error opening file "${validatedPath}": ${err.message}`));
             } else {
               resolve(data.toString());
             }
           });
-        } catch (err) {
-          reject(`Error opening file "${localpath}"`);
+        } catch (validationError) {
+          // Path traversal detected or other validation error
+          reject(validationError);
         }
       }));
     }

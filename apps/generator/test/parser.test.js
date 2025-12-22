@@ -1,5 +1,7 @@
 const fs = require('fs');
 const path = require('path');
+const os = require('os');
+const { mkdir, writeFile, rm } = require('fs').promises;
 const { sanitizeTemplateApiVersion, usesNewAPI, parse, convertOldOptionsToNew } = require('../lib/parser');
 const dummyV2Document = fs.readFileSync(path.resolve(__dirname, './docs/dummy.yml'), 'utf8');
 const dummyV3Document = fs.readFileSync(path.resolve(__dirname, './docs/dummyV3.yml'), 'utf8');
@@ -200,6 +202,199 @@ describe('Parser', () => {
       const newOptions = convertOldOptionsToNew(undefined, {});
 
       expect(newOptions).toBeUndefined();
+    });
+  });
+
+  describe('getMapBaseUrlToFolderResolvers - Path Traversal Prevention', () => {
+
+    let tempDir;
+    let testBaseDir;
+    let testFile;
+
+    beforeEach(async () => {
+      // Create a temporary directory structure for testing
+      tempDir = await fs.promises.mkdtemp(path.join(os.tmpdir(), 'asyncapi-test-'));
+      testBaseDir = path.join(tempDir, 'test-docs');
+      await mkdir(testBaseDir, { recursive: true });
+      
+      // Create a test file within the base directory
+      testFile = path.join(testBaseDir, 'schema.json');
+      await writeFile(testFile, JSON.stringify({ test: 'data' }), 'utf8');
+    });
+
+    afterEach(async () => {
+      // Clean up temporary directory
+      if (tempDir) {
+        await rm(tempDir, { recursive: true, force: true });
+      }
+    });
+
+    it('should allow reading files within base directory', async () => {
+      const generator = {
+        mapBaseUrlToFolder: {
+          url: 'https://schema.example.com/crm/',
+          folder: testBaseDir
+        }
+      };
+      const oldOptions = {};
+      const newOptions = convertOldOptionsToNew(oldOptions, generator);
+
+      expect(newOptions).toBeDefined();
+      expect(newOptions.__unstable).toBeDefined();
+      expect(newOptions.__unstable.resolver.resolvers.length).toBeGreaterThan(0);
+
+      // Test that a valid file can be read
+      const resolver = newOptions.__unstable.resolver.resolvers[0];
+      const testUri = {
+        toString: () => 'https://schema.example.com/crm/schema.json',
+        valueOf: () => 'https://schema.example.com/crm/schema.json'
+      };
+
+      const content = await resolver.read(testUri);
+      expect(content).toBeDefined();
+      expect(JSON.parse(content).test).toEqual('data');
+    });
+
+    it('should reject path traversal attempts with ../', async () => {
+      const generator = {
+        mapBaseUrlToFolder: {
+          url: 'https://schema.example.com/crm/',
+          folder: testBaseDir
+        }
+      };
+      const oldOptions = {};
+      const newOptions = convertOldOptionsToNew(oldOptions, generator);
+      const resolver = newOptions.__unstable.resolver.resolvers[0];
+
+      // Attempt to access file outside base directory using ../
+      const maliciousUri = {
+        toString: () => 'https://schema.example.com/crm/../../../etc/passwd',
+        valueOf: () => 'https://schema.example.com/crm/../../../etc/passwd'
+      };
+
+      await expect(resolver.read(maliciousUri)).rejects.toThrow('Path traversal detected');
+    });
+
+    it('should reject path traversal attempts with ..\\', async () => {
+      const generator = {
+        mapBaseUrlToFolder: {
+          url: 'https://schema.example.com/crm/',
+          folder: testBaseDir
+        }
+      };
+      const oldOptions = {};
+      const newOptions = convertOldOptionsToNew(oldOptions, generator);
+      const resolver = newOptions.__unstable.resolver.resolvers[0];
+
+      // Attempt to access file outside base directory using Windows-style ..\\
+      const maliciousUri = {
+        toString: () => 'https://schema.example.com/crm/..\\..\\..\\etc\\passwd',
+        valueOf: () => 'https://schema.example.com/crm/..\\..\\..\\etc\\passwd'
+      };
+
+      await expect(resolver.read(maliciousUri)).rejects.toThrow('Path traversal detected');
+    });
+
+    it('should reject absolute paths outside base directory', async () => {
+      const generator = {
+        mapBaseUrlToFolder: {
+          url: 'https://schema.example.com/crm/',
+          folder: testBaseDir
+        }
+      };
+      const oldOptions = {};
+      const newOptions = convertOldOptionsToNew(oldOptions, generator);
+      const resolver = newOptions.__unstable.resolver.resolvers[0];
+
+      // Create a file outside the base directory
+      const outsideFile = path.join(tempDir, 'outside-file.json');
+      await writeFile(outsideFile, JSON.stringify({ secret: 'data' }), 'utf8');
+
+      // Attempt to access it using absolute path manipulation
+      const maliciousUri = {
+        toString: () => `https://schema.example.com/crm/${path.relative(testBaseDir, outsideFile)}`,
+        valueOf: () => `https://schema.example.com/crm/${path.relative(testBaseDir, outsideFile)}`
+      };
+
+      // If the relative path doesn't work, try direct absolute path
+      if (!maliciousUri.toString().includes('..')) {
+        // Try with a path that would resolve outside
+        const anotherMaliciousUri = {
+          toString: () => `https://schema.example.com/crm/../../${path.basename(outsideFile)}`,
+          valueOf: () => `https://schema.example.com/crm/../../${path.basename(outsideFile)}`
+        };
+        await expect(resolver.read(anotherMaliciousUri)).rejects.toThrow('Path traversal detected');
+      } else {
+        await expect(resolver.read(maliciousUri)).rejects.toThrow('Path traversal detected');
+      }
+    });
+
+    it('should handle edge case of base directory itself', async () => {
+      const generator = {
+        mapBaseUrlToFolder: {
+          url: 'https://schema.example.com/crm/',
+          folder: testBaseDir
+        }
+      };
+      const oldOptions = {};
+      const newOptions = convertOldOptionsToNew(oldOptions, generator);
+      const resolver = newOptions.__unstable.resolver.resolvers[0];
+
+      // Attempt to access the base directory itself (should be allowed or handled gracefully)
+      const baseDirUri = {
+        toString: () => 'https://schema.example.com/crm/',
+        valueOf: () => 'https://schema.example.com/crm/'
+      };
+
+      // This should either succeed (if baseDir is a file) or fail with a clear error
+      await expect(resolver.read(baseDirUri)).rejects.toThrow();
+    });
+
+    it('should provide clear error messages when path traversal is detected', async () => {
+      const generator = {
+        mapBaseUrlToFolder: {
+          url: 'https://schema.example.com/crm/',
+          folder: testBaseDir
+        }
+      };
+      const oldOptions = {};
+      const newOptions = convertOldOptionsToNew(oldOptions, generator);
+      const resolver = newOptions.__unstable.resolver.resolvers[0];
+
+      const maliciousUri = {
+        toString: () => 'https://schema.example.com/crm/../../../etc/passwd',
+        valueOf: () => 'https://schema.example.com/crm/../../../etc/passwd'
+      };
+
+      try {
+        await resolver.read(maliciousUri);
+        // If we reach here, the test should fail
+        expect(true).toBe(false); // Force test failure
+      } catch (error) {
+        expect(error.message).toContain('Path traversal detected');
+        expect(error.message).toContain('security violation');
+        expect(error.message).toContain('blocked');
+      }
+    });
+
+    it('should handle multiple path traversal sequences', async () => {
+      const generator = {
+        mapBaseUrlToFolder: {
+          url: 'https://schema.example.com/crm/',
+          folder: testBaseDir
+        }
+      };
+      const oldOptions = {};
+      const newOptions = convertOldOptionsToNew(oldOptions, generator);
+      const resolver = newOptions.__unstable.resolver.resolvers[0];
+
+      // Attempt with multiple ../ sequences
+      const maliciousUri = {
+        toString: () => 'https://schema.example.com/crm/../../../../etc/passwd',
+        valueOf: () => 'https://schema.example.com/crm/../../../../etc/passwd'
+      };
+
+      await expect(resolver.read(maliciousUri)).rejects.toThrow('Path traversal detected');
     });
   });
 });

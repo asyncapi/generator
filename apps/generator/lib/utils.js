@@ -196,3 +196,73 @@ utils.convertCollectionToObject = (array, idFunction) => {
   }
   return tempObject;
 };
+
+/**
+ * Validates that a file path stays within a base directory to prevent path traversal attacks.
+ * 
+ * @param {string} filePath - The file path to validate (can be relative or absolute)
+ * @param {string} baseDir - The base directory that the file path must stay within
+ * @param {string} [operation='access'] - The operation being performed (for error messages)
+ * @returns {string} The normalized, validated absolute path
+ * @throws {Error} If the path attempts to escape the base directory or if inputs are invalid
+ * @throws {TypeError} If filePath or baseDir are not non-empty strings
+ * 
+ * @note This function uses fs.realpathSync() for the base directory when it exists to resolve
+ *       symlinks and get filesystem-canonical paths for better security. On Windows, path
+ *       comparisons are case-insensitive to match the case-insensitive filesystem behavior.
+ *       Root directory edge cases (e.g., / or C:\) are handled correctly.
+ */
+utils.validatePathWithinBase = (filePath, baseDir, operation = 'access') => {
+  // Input validation: ensure both parameters are non-empty strings
+  if (typeof filePath !== 'string' || filePath.trim().length === 0) {
+    throw new TypeError(`Invalid filePath: expected non-empty string, got ${typeof filePath}`);
+  }
+  
+  if (typeof baseDir !== 'string' || baseDir.trim().length === 0) {
+    throw new TypeError(`Invalid baseDir: expected non-empty string, got ${typeof baseDir}`);
+  }
+  
+  // Resolve and normalize both paths
+  const resolvedBaseDir = path.resolve(baseDir);
+  const resolvedFilePath = path.isAbsolute(filePath) 
+    ? path.resolve(filePath)
+    : path.resolve(resolvedBaseDir, filePath);
+  
+  // Get canonical path for base directory (should exist, resolves symlinks and gets filesystem case)
+  // For filePath, we can't use realpath if it doesn't exist yet (validation before access)
+  let canonicalBase = resolvedBaseDir;
+  try {
+    canonicalBase = fs.realpathSync(resolvedBaseDir);
+  } catch (err) {
+    // Base directory may not exist, use resolved path
+    canonicalBase = resolvedBaseDir;
+  }
+  
+  const normalizedBase = path.normalize(canonicalBase);
+  const normalizedFilePath = path.normalize(resolvedFilePath);
+  
+  // Ensure base has trailing separator for the check, unless it already has one
+  // This handles root directory edge case (e.g., / or C:\)
+  const baseWithSep = normalizedBase.endsWith(path.sep) 
+    ? normalizedBase 
+    : normalizedBase + path.sep;
+  
+  // Check if the file path is within the base directory
+  // Allow the base directory itself or files within it
+  // Use case-insensitive comparison on Windows due to case-insensitive filesystem
+  const isWithinBase = process.platform === 'win32'
+    ? (normalizedFilePath.toLowerCase() === normalizedBase.toLowerCase() ||
+       normalizedFilePath.toLowerCase().startsWith(baseWithSep.toLowerCase()))
+    : (normalizedFilePath === normalizedBase ||
+       normalizedFilePath.startsWith(baseWithSep));
+  
+  if (!isWithinBase) {
+    throw new Error(
+      `Path traversal detected: attempted to ${operation} "${filePath}" ` +
+      `which resolves to "${normalizedFilePath}" outside base directory "${normalizedBase}". ` +
+      `This is a security violation and has been blocked.`
+    );
+  }
+  
+  return normalizedFilePath;
+};

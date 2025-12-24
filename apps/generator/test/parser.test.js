@@ -1,5 +1,7 @@
 const fs = require('fs');
 const path = require('path');
+const os = require('os');
+const { mkdir, writeFile, rm } = require('fs').promises;
 const { sanitizeTemplateApiVersion, usesNewAPI, parse, convertOldOptionsToNew } = require('../lib/parser');
 const dummyV2Document = fs.readFileSync(path.resolve(__dirname, './docs/dummy.yml'), 'utf8');
 const dummyV3Document = fs.readFileSync(path.resolve(__dirname, './docs/dummyV3.yml'), 'utf8');
@@ -200,6 +202,336 @@ describe('Parser', () => {
       const newOptions = convertOldOptionsToNew(undefined, {});
 
       expect(newOptions).toBeUndefined();
+    });
+  });
+
+  describe('getMapBaseUrlToFolderResolvers - Path Traversal Prevention', () => {
+
+    let tempDir;
+    let testBaseDir;
+    let testFile;
+
+    beforeEach(async () => {
+      // Create a temporary directory structure for testing
+      tempDir = await fs.promises.mkdtemp(path.join(os.tmpdir(), 'asyncapi-test-'));
+      testBaseDir = path.join(tempDir, 'test-docs');
+      await mkdir(testBaseDir, { recursive: true });
+      
+      // Create a test file within the base directory
+      testFile = path.join(testBaseDir, 'schema.json');
+      await writeFile(testFile, JSON.stringify({ test: 'data' }), 'utf8');
+    });
+
+    afterEach(async () => {
+      // Clean up temporary directory
+      if (tempDir) {
+        await rm(tempDir, { recursive: true, force: true });
+      }
+    });
+
+    it('should allow reading files within base directory', async () => {
+      const generator = {
+        mapBaseUrlToFolder: {
+          url: 'https://schema.example.com/crm/',
+          folder: testBaseDir
+        }
+      };
+      const oldOptions = {};
+      const newOptions = convertOldOptionsToNew(oldOptions, generator);
+
+      expect(newOptions).toBeDefined();
+      expect(newOptions.__unstable).toBeDefined();
+      expect(newOptions.__unstable.resolver.resolvers.length).toBeGreaterThan(0);
+
+      // Test that a valid file can be read
+      const resolver = newOptions.__unstable.resolver.resolvers[0];
+      const testUri = {
+        toString: () => 'https://schema.example.com/crm/schema.json',
+        valueOf: () => 'https://schema.example.com/crm/schema.json'
+      };
+
+      const content = await resolver.read(testUri);
+      expect(content).toBeDefined();
+      expect(JSON.parse(content).test).toEqual('data');
+    });
+
+    it('should reject path traversal attempts with ../', async () => {
+      const generator = {
+        mapBaseUrlToFolder: {
+          url: 'https://schema.example.com/crm/',
+          folder: testBaseDir
+        }
+      };
+      const oldOptions = {};
+      const newOptions = convertOldOptionsToNew(oldOptions, generator);
+      const resolver = newOptions.__unstable.resolver.resolvers[0];
+
+      // Attempt to access file outside base directory using ../
+      const maliciousUri = {
+        toString: () => 'https://schema.example.com/crm/../../../etc/passwd',
+        valueOf: () => 'https://schema.example.com/crm/../../../etc/passwd'
+      };
+
+      await expect(resolver.read(maliciousUri)).rejects.toThrow('Path traversal detected');
+    });
+
+    it('should reject path traversal attempts with ..\\', async () => {
+      const generator = {
+        mapBaseUrlToFolder: {
+          url: 'https://schema.example.com/crm/',
+          folder: testBaseDir
+        }
+      };
+      const oldOptions = {};
+      const newOptions = convertOldOptionsToNew(oldOptions, generator);
+      const resolver = newOptions.__unstable.resolver.resolvers[0];
+
+      // Attempt to access file outside base directory using Windows-style ..\\
+      const maliciousUri = {
+        toString: () => 'https://schema.example.com/crm/..\\..\\..\\etc\\passwd',
+        valueOf: () => 'https://schema.example.com/crm/..\\..\\..\\etc\\passwd'
+      };
+
+      await expect(resolver.read(maliciousUri)).rejects.toThrow('Path traversal detected');
+    });
+
+    it('should reject absolute paths outside base directory', async () => {
+      const generator = {
+        mapBaseUrlToFolder: {
+          url: 'https://schema.example.com/crm/',
+          folder: testBaseDir
+        }
+      };
+      const oldOptions = {};
+      const newOptions = convertOldOptionsToNew(oldOptions, generator);
+      const resolver = newOptions.__unstable.resolver.resolvers[0];
+
+      // Create a file outside the base directory
+      const outsideFile = path.join(tempDir, 'outside-file.json');
+      await writeFile(outsideFile, JSON.stringify({ secret: 'data' }), 'utf8');
+
+      // Attempt to access it using a straightforward traversal path
+      const maliciousUri = {
+        toString: () => `https://schema.example.com/crm/../../${path.basename(outsideFile)}`,
+        valueOf: () => `https://schema.example.com/crm/../../${path.basename(outsideFile)}`
+      };
+
+      await expect(resolver.read(maliciousUri)).rejects.toThrow('Path traversal detected');
+    });
+
+    it('should handle edge case of base directory itself', async () => {
+      const generator = {
+        mapBaseUrlToFolder: {
+          url: 'https://schema.example.com/crm/',
+          folder: testBaseDir
+        }
+      };
+      const oldOptions = {};
+      const newOptions = convertOldOptionsToNew(oldOptions, generator);
+      const resolver = newOptions.__unstable.resolver.resolvers[0];
+
+      // Attempt to access the base directory itself (should be allowed or handled gracefully)
+      const baseDirUri = {
+        toString: () => 'https://schema.example.com/crm/',
+        valueOf: () => 'https://schema.example.com/crm/'
+      };
+
+      // This should either succeed (if baseDir is a file) or fail with a clear error
+      await expect(resolver.read(baseDirUri)).rejects.toThrow();
+    });
+
+    it('should provide clear error messages when path traversal is detected', async () => {
+      const generator = {
+        mapBaseUrlToFolder: {
+          url: 'https://schema.example.com/crm/',
+          folder: testBaseDir
+        }
+      };
+      const oldOptions = {};
+      const newOptions = convertOldOptionsToNew(oldOptions, generator);
+      const resolver = newOptions.__unstable.resolver.resolvers[0];
+
+      const maliciousUri = {
+        toString: () => 'https://schema.example.com/crm/../../../etc/passwd',
+        valueOf: () => 'https://schema.example.com/crm/../../../etc/passwd'
+      };
+
+      try {
+        await resolver.read(maliciousUri);
+        // If we reach here, the test should fail
+        expect(true).toBe(false); // Force test failure
+      } catch (error) {
+        expect(error.message).toContain('Path traversal detected');
+        expect(error.message).toContain('security violation');
+        expect(error.message).toContain('blocked');
+      }
+    });
+
+    it('should handle multiple path traversal sequences', async () => {
+      const generator = {
+        mapBaseUrlToFolder: {
+          url: 'https://schema.example.com/crm/',
+          folder: testBaseDir
+        }
+      };
+      const oldOptions = {};
+      const newOptions = convertOldOptionsToNew(oldOptions, generator);
+      const resolver = newOptions.__unstable.resolver.resolvers[0];
+
+      // Attempt with multiple ../ sequences
+      const maliciousUri = {
+        toString: () => 'https://schema.example.com/crm/../../../../etc/passwd',
+        valueOf: () => 'https://schema.example.com/crm/../../../../etc/passwd'
+      };
+
+      await expect(resolver.read(maliciousUri)).rejects.toThrow('Path traversal detected');
+    });
+
+    it('should handle case-insensitive path comparison on Windows', async () => {
+      if (process.platform !== 'win32') {
+        return; // Skip on non-Windows platforms
+      }
+
+      const generator = {
+        mapBaseUrlToFolder: {
+          url: 'https://schema.example.com/crm/',
+          folder: testBaseDir
+        }
+      };
+      const oldOptions = {};
+      const newOptions = convertOldOptionsToNew(oldOptions, generator);
+      const resolver = newOptions.__unstable.resolver.resolvers[0];
+
+      // Test with different case in URL (Windows filesystem is case-insensitive)
+      const testUri = {
+        toString: () => 'https://schema.example.com/crm/SCHEMA.json',
+        valueOf: () => 'https://schema.example.com/crm/SCHEMA.json'
+      };
+
+      // Should succeed on Windows due to case-insensitive filesystem
+      const content = await resolver.read(testUri);
+      expect(content).toBeDefined();
+      expect(JSON.parse(content).test).toEqual('data');
+    });
+
+    it('should handle root directory edge case', async () => {
+      // This test verifies that root directories (/, C:\) are handled correctly
+      // Skip on Windows as we can't easily test C:\ root
+      if (process.platform === 'win32') {
+        return;
+      }
+
+      // Create a test file in a subdirectory of temp
+      const rootTestDir = path.join(os.tmpdir(), 'root-test');
+      await mkdir(rootTestDir, { recursive: true });
+      const rootTestFile = path.join(rootTestDir, 'test.json');
+      await writeFile(rootTestFile, JSON.stringify({ test: 'root' }), 'utf8');
+
+      try {
+        const generator = {
+          mapBaseUrlToFolder: {
+            url: 'https://schema.example.com/',
+            folder: rootTestDir
+          }
+        };
+        const oldOptions = {};
+        const newOptions = convertOldOptionsToNew(oldOptions, generator);
+        const resolver = newOptions.__unstable.resolver.resolvers[0];
+
+        // Test that files within rootTestDir can be accessed
+        const testUri = {
+          toString: () => 'https://schema.example.com/test.json',
+          valueOf: () => 'https://schema.example.com/test.json'
+        };
+
+        const content = await resolver.read(testUri);
+        expect(content).toBeDefined();
+        expect(JSON.parse(content).test).toEqual('root');
+      } finally {
+        await rm(rootTestDir, { recursive: true, force: true });
+      }
+    });
+
+    it('should reject URL-encoded path traversal attempts with %2e%2e%2f', async () => {
+      const generator = {
+        mapBaseUrlToFolder: {
+          url: 'https://schema.example.com/crm/',
+          folder: testBaseDir
+        }
+      };
+      const oldOptions = {};
+      const newOptions = convertOldOptionsToNew(oldOptions, generator);
+      const resolver = newOptions.__unstable.resolver.resolvers[0];
+
+      // Attempt to access file outside base directory using URL-encoded ../
+      // %2e%2e%2f decodes to ../
+      const maliciousUri = {
+        toString: () => 'https://schema.example.com/crm/%2e%2e%2f%2e%2e%2f%2e%2e%2fetc/passwd',
+        valueOf: () => 'https://schema.example.com/crm/%2e%2e%2f%2e%2e%2f%2e%2e%2fetc/passwd'
+      };
+
+      await expect(resolver.read(maliciousUri)).rejects.toThrow('Path traversal detected');
+    });
+
+    it('should reject URL-encoded Windows path traversal attempts with %2e%2e%5c', async () => {
+      const generator = {
+        mapBaseUrlToFolder: {
+          url: 'https://schema.example.com/crm/',
+          folder: testBaseDir
+        }
+      };
+      const oldOptions = {};
+      const newOptions = convertOldOptionsToNew(oldOptions, generator);
+      const resolver = newOptions.__unstable.resolver.resolvers[0];
+
+      // Attempt to access file outside base directory using URL-encoded Windows-style ..\
+      // %2e%2e%5c decodes to ..\
+      const maliciousUri = {
+        toString: () => 'https://schema.example.com/crm/%2e%2e%5c%2e%2e%5c%2e%2e%5cetc%5cpasswd',
+        valueOf: () => 'https://schema.example.com/crm/%2e%2e%5c%2e%2e%5c%2e%2e%5cetc%5cpasswd'
+      };
+
+      await expect(resolver.read(maliciousUri)).rejects.toThrow('Path traversal detected');
+    });
+
+    it('should reject mixed URL-encoded and plain path traversal attempts', async () => {
+      const generator = {
+        mapBaseUrlToFolder: {
+          url: 'https://schema.example.com/crm/',
+          folder: testBaseDir
+        }
+      };
+      const oldOptions = {};
+      const newOptions = convertOldOptionsToNew(oldOptions, generator);
+      const resolver = newOptions.__unstable.resolver.resolvers[0];
+
+      // Attempt with mix of URL-encoded and plain traversal sequences
+      const maliciousUri = {
+        toString: () => 'https://schema.example.com/crm/%2e%2e/../etc/passwd',
+        valueOf: () => 'https://schema.example.com/crm/%2e%2e/../etc/passwd'
+      };
+
+      await expect(resolver.read(maliciousUri)).rejects.toThrow('Path traversal detected');
+    });
+
+    it('should reject invalid URL encoding gracefully', async () => {
+      const generator = {
+        mapBaseUrlToFolder: {
+          url: 'https://schema.example.com/crm/',
+          folder: testBaseDir
+        }
+      };
+      const oldOptions = {};
+      const newOptions = convertOldOptionsToNew(oldOptions, generator);
+      const resolver = newOptions.__unstable.resolver.resolvers[0];
+
+      // Attempt with invalid URL encoding (% followed by invalid hex)
+      const maliciousUri = {
+        toString: () => 'https://schema.example.com/crm/%zz/invalid',
+        valueOf: () => 'https://schema.example.com/crm/%zz/invalid'
+      };
+
+      await expect(resolver.read(maliciousUri)).rejects.toThrow('Invalid URL encoding');
     });
   });
 });

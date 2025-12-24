@@ -1,6 +1,8 @@
 const fs = require('fs');
+const path = require('node:path');
 const { convertToOldAPI } = require('@asyncapi/parser');
 const { ConvertDocumentParserAPIVersion, NewParser } = require('@asyncapi/multi-parser');
+const { validatePathWithinBase } = require('./utils');
 
 const parser = module.exports;
 
@@ -102,18 +104,33 @@ function getMapBaseUrlToFolderResolvers({ url: baseUrl, folder: baseDir }) {
     canRead: true,
     read(uri) {
       return new Promise(((resolve, reject) => {
-        const path = uri.toString();
-        const localpath = path.replace(baseUrl, baseDir);
+        const uriPath = uri.toString();
+        // Decode URL-encoded characters to prevent bypassing path traversal checks
+        // e.g., %2e%2e%2f (../) or %2e%2e%5c (..\) must be decoded before validation
+        let decodedPath;
         try {
-          fs.readFile(localpath, (err, data) => {
+          decodedPath = decodeURIComponent(uriPath);
+        } catch (decodeError) {
+          // Invalid URL encoding, reject the request with clear error message
+          reject(new Error(`Invalid URL encoding in path "${uriPath}": ${decodeError.message}`));
+          return;
+        }
+        const localpath = decodedPath.replace(baseUrl, baseDir);
+        
+        try {
+          // Validate path stays within base directory to prevent path traversal attacks
+          const validatedPath = validatePathWithinBase(localpath, baseDir, 'read schema file');
+          
+          fs.readFile(validatedPath, (err, data) => {
             if (err) {
-              reject(`Error opening file "${localpath}"`);
+              reject(new Error(`Error opening file "${validatedPath}": ${err.message}`));
             } else {
               resolve(data.toString());
             }
           });
-        } catch (err) {
-          reject(`Error opening file "${localpath}"`);
+        } catch (validationError) {
+          // Path traversal detected or other validation error
+          reject(validationError);
         }
       }));
     }

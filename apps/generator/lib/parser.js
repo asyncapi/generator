@@ -1,5 +1,5 @@
 const fs = require('fs');
-const path = require('path');
+const path = require('node:path');
 const { convertToOldAPI } = require('@asyncapi/parser');
 const { ConvertDocumentParserAPIVersion, NewParser } = require('@asyncapi/multi-parser');
 const { validatePathWithinBase } = require('./utils');
@@ -105,7 +105,17 @@ function getMapBaseUrlToFolderResolvers({ url: baseUrl, folder: baseDir }) {
     read(uri) {
       return new Promise(((resolve, reject) => {
         const uriPath = uri.toString();
-        const localpath = uriPath.replace(baseUrl, baseDir);
+        // Decode URL-encoded characters to prevent bypassing path traversal checks
+        // e.g., %2e%2e%2f (../) or %2e%2e%5c (..\) must be decoded before validation
+        let decodedPath;
+        try {
+          decodedPath = decodeURIComponent(uriPath);
+        } catch (decodeError) {
+          // Invalid URL encoding, reject the request with clear error message
+          reject(new Error(`Invalid URL encoding in path "${uriPath}": ${decodeError.message}`));
+          return;
+        }
+        const localpath = decodedPath.replace(baseUrl, baseDir);
         
         try {
           // Validate path stays within base directory to prevent path traversal attacks

@@ -451,5 +451,87 @@ describe('Parser', () => {
         await rm(rootTestDir, { recursive: true, force: true });
       }
     });
+
+    it('should reject URL-encoded path traversal attempts with %2e%2e%2f', async () => {
+      const generator = {
+        mapBaseUrlToFolder: {
+          url: 'https://schema.example.com/crm/',
+          folder: testBaseDir
+        }
+      };
+      const oldOptions = {};
+      const newOptions = convertOldOptionsToNew(oldOptions, generator);
+      const resolver = newOptions.__unstable.resolver.resolvers[0];
+
+      // Attempt to access file outside base directory using URL-encoded ../
+      // %2e%2e%2f decodes to ../
+      const maliciousUri = {
+        toString: () => 'https://schema.example.com/crm/%2e%2e%2f%2e%2e%2f%2e%2e%2fetc/passwd',
+        valueOf: () => 'https://schema.example.com/crm/%2e%2e%2f%2e%2e%2f%2e%2e%2fetc/passwd'
+      };
+
+      await expect(resolver.read(maliciousUri)).rejects.toThrow('Path traversal detected');
+    });
+
+    it('should reject URL-encoded Windows path traversal attempts with %2e%2e%5c', async () => {
+      const generator = {
+        mapBaseUrlToFolder: {
+          url: 'https://schema.example.com/crm/',
+          folder: testBaseDir
+        }
+      };
+      const oldOptions = {};
+      const newOptions = convertOldOptionsToNew(oldOptions, generator);
+      const resolver = newOptions.__unstable.resolver.resolvers[0];
+
+      // Attempt to access file outside base directory using URL-encoded Windows-style ..\
+      // %2e%2e%5c decodes to ..\
+      const maliciousUri = {
+        toString: () => 'https://schema.example.com/crm/%2e%2e%5c%2e%2e%5c%2e%2e%5cetc%5cpasswd',
+        valueOf: () => 'https://schema.example.com/crm/%2e%2e%5c%2e%2e%5c%2e%2e%5cetc%5cpasswd'
+      };
+
+      await expect(resolver.read(maliciousUri)).rejects.toThrow('Path traversal detected');
+    });
+
+    it('should reject mixed URL-encoded and plain path traversal attempts', async () => {
+      const generator = {
+        mapBaseUrlToFolder: {
+          url: 'https://schema.example.com/crm/',
+          folder: testBaseDir
+        }
+      };
+      const oldOptions = {};
+      const newOptions = convertOldOptionsToNew(oldOptions, generator);
+      const resolver = newOptions.__unstable.resolver.resolvers[0];
+
+      // Attempt with mix of URL-encoded and plain traversal sequences
+      const maliciousUri = {
+        toString: () => 'https://schema.example.com/crm/%2e%2e/../etc/passwd',
+        valueOf: () => 'https://schema.example.com/crm/%2e%2e/../etc/passwd'
+      };
+
+      await expect(resolver.read(maliciousUri)).rejects.toThrow('Path traversal detected');
+    });
+
+    it('should reject invalid URL encoding gracefully', async () => {
+      const generator = {
+        mapBaseUrlToFolder: {
+          url: 'https://schema.example.com/crm/',
+          folder: testBaseDir
+        }
+      };
+      const oldOptions = {};
+      const newOptions = convertOldOptionsToNew(oldOptions, generator);
+      const resolver = newOptions.__unstable.resolver.resolvers[0];
+
+      // Attempt with invalid URL encoding (% followed by invalid hex)
+      const maliciousUri = {
+        toString: () => 'https://schema.example.com/crm/%zz/invalid',
+        valueOf: () => 'https://schema.example.com/crm/%zz/invalid'
+      };
+
+      await expect(resolver.read(maliciousUri)).rejects.toThrow('Invalid URL encoding');
+    });
   });
 });

@@ -204,9 +204,23 @@ utils.convertCollectionToObject = (array, idFunction) => {
  * @param {string} baseDir - The base directory that the file path must stay within
  * @param {string} [operation='access'] - The operation being performed (for error messages)
  * @returns {string} The normalized, validated absolute path
- * @throws {Error} If the path attempts to escape the base directory
+ * @throws {Error} If the path attempts to escape the base directory or if inputs are invalid
+ * @throws {TypeError} If filePath or baseDir are not non-empty strings
+ * 
+ * @note This function does not resolve symlinks. Path validation is performed on the normalized
+ *       path structure without following symbolic links. If symlink resolution is required for
+ *       your use case, resolve symlinks before calling this function.
  */
 utils.validatePathWithinBase = (filePath, baseDir, operation = 'access') => {
+  // Input validation: ensure both parameters are non-empty strings
+  if (typeof filePath !== 'string' || filePath.trim().length === 0) {
+    throw new TypeError(`Invalid filePath: expected non-empty string, got ${typeof filePath}`);
+  }
+  
+  if (typeof baseDir !== 'string' || baseDir.trim().length === 0) {
+    throw new TypeError(`Invalid baseDir: expected non-empty string, got ${typeof baseDir}`);
+  }
+  
   // Resolve and normalize both paths
   const resolvedBaseDir = path.resolve(baseDir);
   const resolvedFilePath = path.isAbsolute(filePath) 

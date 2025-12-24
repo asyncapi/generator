@@ -310,23 +310,13 @@ describe('Parser', () => {
       const outsideFile = path.join(tempDir, 'outside-file.json');
       await writeFile(outsideFile, JSON.stringify({ secret: 'data' }), 'utf8');
 
-      // Attempt to access it using absolute path manipulation
+      // Attempt to access it using a straightforward traversal path
       const maliciousUri = {
-        toString: () => `https://schema.example.com/crm/${path.relative(testBaseDir, outsideFile)}`,
-        valueOf: () => `https://schema.example.com/crm/${path.relative(testBaseDir, outsideFile)}`
+        toString: () => `https://schema.example.com/crm/../../${path.basename(outsideFile)}`,
+        valueOf: () => `https://schema.example.com/crm/../../${path.basename(outsideFile)}`
       };
 
-      // If the relative path doesn't work, try direct absolute path
-      if (!maliciousUri.toString().includes('..')) {
-        // Try with a path that would resolve outside
-        const anotherMaliciousUri = {
-          toString: () => `https://schema.example.com/crm/../../${path.basename(outsideFile)}`,
-          valueOf: () => `https://schema.example.com/crm/../../${path.basename(outsideFile)}`
-        };
-        await expect(resolver.read(anotherMaliciousUri)).rejects.toThrow('Path traversal detected');
-      } else {
-        await expect(resolver.read(maliciousUri)).rejects.toThrow('Path traversal detected');
-      }
+      await expect(resolver.read(maliciousUri)).rejects.toThrow('Path traversal detected');
     });
 
     it('should handle edge case of base directory itself', async () => {

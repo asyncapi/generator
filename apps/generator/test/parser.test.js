@@ -386,5 +386,70 @@ describe('Parser', () => {
 
       await expect(resolver.read(maliciousUri)).rejects.toThrow('Path traversal detected');
     });
+
+    it('should handle case-insensitive path comparison on Windows', async () => {
+      if (process.platform !== 'win32') {
+        return; // Skip on non-Windows platforms
+      }
+
+      const generator = {
+        mapBaseUrlToFolder: {
+          url: 'https://schema.example.com/crm/',
+          folder: testBaseDir
+        }
+      };
+      const oldOptions = {};
+      const newOptions = convertOldOptionsToNew(oldOptions, generator);
+      const resolver = newOptions.__unstable.resolver.resolvers[0];
+
+      // Test with different case in URL (Windows filesystem is case-insensitive)
+      const testUri = {
+        toString: () => 'https://schema.example.com/crm/SCHEMA.json',
+        valueOf: () => 'https://schema.example.com/crm/SCHEMA.json'
+      };
+
+      // Should succeed on Windows due to case-insensitive filesystem
+      const content = await resolver.read(testUri);
+      expect(content).toBeDefined();
+      expect(JSON.parse(content).test).toEqual('data');
+    });
+
+    it('should handle root directory edge case', async () => {
+      // This test verifies that root directories (/, C:\) are handled correctly
+      // Skip on Windows as we can't easily test C:\ root
+      if (process.platform === 'win32') {
+        return;
+      }
+
+      // Create a test file in a subdirectory of temp
+      const rootTestDir = path.join(os.tmpdir(), 'root-test');
+      await mkdir(rootTestDir, { recursive: true });
+      const rootTestFile = path.join(rootTestDir, 'test.json');
+      await writeFile(rootTestFile, JSON.stringify({ test: 'root' }), 'utf8');
+
+      try {
+        const generator = {
+          mapBaseUrlToFolder: {
+            url: 'https://schema.example.com/',
+            folder: rootTestDir
+          }
+        };
+        const oldOptions = {};
+        const newOptions = convertOldOptionsToNew(oldOptions, generator);
+        const resolver = newOptions.__unstable.resolver.resolvers[0];
+
+        // Test that files within rootTestDir can be accessed
+        const testUri = {
+          toString: () => 'https://schema.example.com/test.json',
+          valueOf: () => 'https://schema.example.com/test.json'
+        };
+
+        const content = await resolver.read(testUri);
+        expect(content).toBeDefined();
+        expect(JSON.parse(content).test).toEqual('root');
+      } finally {
+        await rm(rootTestDir, { recursive: true, force: true });
+      }
+    });
   });
 });

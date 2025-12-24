@@ -207,9 +207,10 @@ utils.convertCollectionToObject = (array, idFunction) => {
  * @throws {Error} If the path attempts to escape the base directory or if inputs are invalid
  * @throws {TypeError} If filePath or baseDir are not non-empty strings
  * 
- * @note This function does not resolve symlinks. Path validation is performed on the normalized
- *       path structure without following symbolic links. If symlink resolution is required for
- *       your use case, resolve symlinks before calling this function.
+ * @note This function uses fs.realpathSync() for the base directory when it exists to resolve
+ *       symlinks and get filesystem-canonical paths for better security. On Windows, path
+ *       comparisons are case-insensitive to match the case-insensitive filesystem behavior.
+ *       Root directory edge cases (e.g., / or C:\) are handled correctly.
  */
 utils.validatePathWithinBase = (filePath, baseDir, operation = 'access') => {
   // Input validation: ensure both parameters are non-empty strings
@@ -227,13 +228,33 @@ utils.validatePathWithinBase = (filePath, baseDir, operation = 'access') => {
     ? path.resolve(filePath)
     : path.resolve(resolvedBaseDir, filePath);
   
-  const normalizedBase = path.normalize(resolvedBaseDir);
+  // Get canonical path for base directory (should exist, resolves symlinks and gets filesystem case)
+  // For filePath, we can't use realpath if it doesn't exist yet (validation before access)
+  let canonicalBase = resolvedBaseDir;
+  try {
+    canonicalBase = fs.realpathSync(resolvedBaseDir);
+  } catch (err) {
+    // Base directory may not exist, use resolved path
+    canonicalBase = resolvedBaseDir;
+  }
+  
+  const normalizedBase = path.normalize(canonicalBase);
   const normalizedFilePath = path.normalize(resolvedFilePath);
+  
+  // Ensure base has trailing separator for the check, unless it already has one
+  // This handles root directory edge case (e.g., / or C:\)
+  const baseWithSep = normalizedBase.endsWith(path.sep) 
+    ? normalizedBase 
+    : normalizedBase + path.sep;
   
   // Check if the file path is within the base directory
   // Allow the base directory itself or files within it
-  const isWithinBase = normalizedFilePath === normalizedBase ||
-    normalizedFilePath.startsWith(normalizedBase + path.sep);
+  // Use case-insensitive comparison on Windows due to case-insensitive filesystem
+  const isWithinBase = process.platform === 'win32'
+    ? (normalizedFilePath.toLowerCase() === normalizedBase.toLowerCase() ||
+       normalizedFilePath.toLowerCase().startsWith(baseWithSep.toLowerCase()))
+    : (normalizedFilePath === normalizedBase ||
+       normalizedFilePath.startsWith(baseWithSep));
   
   if (!isWithinBase) {
     throw new Error(

@@ -7648,6 +7648,9 @@ class SlackWebsocketAPIClient:
         self._stop_event = threading.Event()
       
         params = {}
+
+        self.receive_operation_handlers = {}
+        self.receive_operation_discriminators = {}
         ticket = ticket or os.getenv(\\"TICKET\\")
         if ticket is not None:
           params[\\"ticket\\"] = ticket
@@ -7662,7 +7665,18 @@ class SlackWebsocketAPIClient:
     print(\\"Connected to Slack Websocket API Client server\\")
 
   def on_message(self, ws, message):
-    self.handle_message(message)
+    # Parse message for routing
+    try:
+        parsed_message = json.loads(message)
+    except:
+        parsed_message = message
+
+    # Try automatic routing to operation-specific handlers
+    handled = self._route_message(parsed_message, message)
+
+    # Fallback to generic handlers if not handled
+    if not handled:
+        self.handle_message(message)
 
   def on_error(self, ws, error):
     print(\\"WebSocket Error:\\", error)
@@ -7741,6 +7755,133 @@ class SlackWebsocketAPIClient:
         # Call custom error handlers
         for handler in self.error_handlers:
           handler(error)
+
+  def _route_message(self, parsed_message, raw_message):
+      \\"\\"\\"
+      Route incoming message to appropriate handler based on discriminators.
+
+      Args:
+          parsed_message: Parsed message object
+          raw_message: Raw message string
+
+      Returns:
+          bool: True if message was handled, False otherwise
+      \\"\\"\\"
+      if not isinstance(parsed_message, dict):
+          return False
+
+      # Check each operation's discriminator
+      for operation_id, discriminator in self.receive_operation_discriminators.items():
+          key = discriminator.get(\\"key\\")
+          value = discriminator.get(\\"value\\")
+
+          # Check if message matches this discriminator
+          if key and parsed_message.get(key) == value:
+              handler = self.receive_operation_handlers.get(operation_id)
+              if handler:
+                  try:
+                      handler(raw_message)
+                      return True
+                  except Exception as error:
+                      print(f\\"Error in {operation_id} handler: {error}\\")
+                      import traceback
+                      traceback.print_exc()
+                      return True
+
+      return False
+
+  def register_on_hello_message_handler(self, handler, discriminator_key, discriminator_value):
+      \\"\\"\\"
+      Register a handler for onHelloMessage operation.
+      One time operation. You receive one message once you connect to the API
+
+      Args:
+          handler (callable): Handler function that receives parsed_message as argument
+          discriminator_key (str): Message field to use for routing (e.g., 'type', 'event_type')
+          discriminator_value (str): Expected value for routing (e.g., 'hello', 'user_joined')
+
+      Example:
+          def my_handler(message):
+              print(f\\"Received: {message}\\")
+
+          client.register_on_hello_message_handler(my_handler, discriminator_key=\\"type\\", discriminator_value=\\"hello\\")
+      \\"\\"\\"
+      if not callable(handler):
+          print(\\"Handler must be callable\\")
+          return
+
+      # Register handler
+      self.receive_operation_handlers[\\"onHelloMessage\\"] = handler
+
+      # Register discriminator
+      self.receive_operation_discriminators[\\"onHelloMessage\\"] = {
+          \\"key\\": discriminator_key,
+          \\"value\\": discriminator_value
+      }
+
+      print(f\\"Registered handler for operation: onHelloMessage\\")
+
+  def register_on_event_handler(self, handler, discriminator_key, discriminator_value):
+      \\"\\"\\"
+      Register a handler for onEvent operation.
+      Handler for onEvent messages
+
+      Args:
+          handler (callable): Handler function that receives parsed_message as argument
+          discriminator_key (str): Message field to use for routing (e.g., 'type', 'event_type')
+          discriminator_value (str): Expected value for routing (e.g., 'hello', 'user_joined')
+
+      Example:
+          def my_handler(message):
+              print(f\\"Received: {message}\\")
+
+          client.register_on_event_handler(my_handler, discriminator_key=\\"type\\", discriminator_value=\\"hello\\")
+      \\"\\"\\"
+      if not callable(handler):
+          print(\\"Handler must be callable\\")
+          return
+
+      # Register handler
+      self.receive_operation_handlers[\\"onEvent\\"] = handler
+
+      # Register discriminator
+      self.receive_operation_discriminators[\\"onEvent\\"] = {
+          \\"key\\": discriminator_key,
+          \\"value\\": discriminator_value
+      }
+
+      print(f\\"Registered handler for operation: onEvent\\")
+
+  def register_on_disconnect_message_handler(self, handler, discriminator_key, discriminator_value):
+      \\"\\"\\"
+      Register a handler for onDisconnectMessage operation.
+      Handler for onDisconnectMessage messages
+
+      Args:
+          handler (callable): Handler function that receives parsed_message as argument
+          discriminator_key (str): Message field to use for routing (e.g., 'type', 'event_type')
+          discriminator_value (str): Expected value for routing (e.g., 'hello', 'user_joined')
+
+      Example:
+          def my_handler(message):
+              print(f\\"Received: {message}\\")
+
+          client.register_on_disconnect_message_handler(my_handler, discriminator_key=\\"type\\", discriminator_value=\\"hello\\")
+      \\"\\"\\"
+      if not callable(handler):
+          print(\\"Handler must be callable\\")
+          return
+
+      # Register handler
+      self.receive_operation_handlers[\\"onDisconnectMessage\\"] = handler
+
+      # Register discriminator
+      self.receive_operation_discriminators[\\"onDisconnectMessage\\"] = {
+          \\"key\\": discriminator_key,
+          \\"value\\": discriminator_value
+      }
+
+      print(f\\"Registered handler for operation: onDisconnectMessage\\")
 
   def close(self) :
     \\"\\"\\"Cleanly close the WebSocket connection.\\"\\"\\"
@@ -7845,6 +7986,9 @@ class HoppscotchClient:
       
       
 
+        self.receive_operation_handlers = {}
+        self.receive_operation_discriminators = {}
+
         
         self.url = url
 
@@ -7852,7 +7996,18 @@ class HoppscotchClient:
     print(\\"Connected to Hoppscotch Echo WebSocket Client server\\")
 
   def on_message(self, ws, message):
-    self.handle_message(message)
+    # Parse message for routing
+    try:
+        parsed_message = json.loads(message)
+    except:
+        parsed_message = message
+
+    # Try automatic routing to operation-specific handlers
+    handled = self._route_message(parsed_message, message)
+
+    # Fallback to generic handlers if not handled
+    if not handled:
+        self.handle_message(message)
 
   def on_error(self, ws, error):
     print(\\"WebSocket Error:\\", error)
@@ -7931,6 +8086,71 @@ class HoppscotchClient:
         # Call custom error handlers
         for handler in self.error_handlers:
           handler(error)
+
+  def _route_message(self, parsed_message, raw_message):
+      \\"\\"\\"
+      Route incoming message to appropriate handler based on discriminators.
+
+      Args:
+          parsed_message: Parsed message object
+          raw_message: Raw message string
+
+      Returns:
+          bool: True if message was handled, False otherwise
+      \\"\\"\\"
+      if not isinstance(parsed_message, dict):
+          return False
+
+      # Check each operation's discriminator
+      for operation_id, discriminator in self.receive_operation_discriminators.items():
+          key = discriminator.get(\\"key\\")
+          value = discriminator.get(\\"value\\")
+
+          # Check if message matches this discriminator
+          if key and parsed_message.get(key) == value:
+              handler = self.receive_operation_handlers.get(operation_id)
+              if handler:
+                  try:
+                      handler(raw_message)
+                      return True
+                  except Exception as error:
+                      print(f\\"Error in {operation_id} handler: {error}\\")
+                      import traceback
+                      traceback.print_exc()
+                      return True
+
+      return False
+
+  def register_handle_time_stamp_message_handler(self, handler, discriminator_key, discriminator_value):
+      \\"\\"\\"
+      Register a handler for handleTimeStampMessage operation.
+      Receive the timestamp message sent from server every second.
+
+      Args:
+          handler (callable): Handler function that receives parsed_message as argument
+          discriminator_key (str): Message field to use for routing (e.g., 'type', 'event_type')
+          discriminator_value (str): Expected value for routing (e.g., 'hello', 'user_joined')
+
+      Example:
+          def my_handler(message):
+              print(f\\"Received: {message}\\")
+
+          client.register_handle_time_stamp_message_handler(my_handler, discriminator_key=\\"type\\", discriminator_value=\\"hello\\")
+      \\"\\"\\"
+      if not callable(handler):
+          print(\\"Handler must be callable\\")
+          return
+
+      # Register handler
+      self.receive_operation_handlers[\\"handleTimeStampMessage\\"] = handler
+
+      # Register discriminator
+      self.receive_operation_discriminators[\\"handleTimeStampMessage\\"] = {
+          \\"key\\": discriminator_key,
+          \\"value\\": discriminator_value
+      }
+
+      print(f\\"Registered handler for operation: handleTimeStampMessage\\")
 
   @staticmethod
   async def send_echo_message_static(message, socket):
@@ -8080,6 +8300,9 @@ class HoppscotchEchoWebSocketClient:
       
       
 
+        self.receive_operation_handlers = {}
+        self.receive_operation_discriminators = {}
+
         
         self.url = url
 
@@ -8087,7 +8310,18 @@ class HoppscotchEchoWebSocketClient:
     print(\\"Connected to Hoppscotch Echo WebSocket Client server\\")
 
   def on_message(self, ws, message):
-    self.handle_message(message)
+    # Parse message for routing
+    try:
+        parsed_message = json.loads(message)
+    except:
+        parsed_message = message
+
+    # Try automatic routing to operation-specific handlers
+    handled = self._route_message(parsed_message, message)
+
+    # Fallback to generic handlers if not handled
+    if not handled:
+        self.handle_message(message)
 
   def on_error(self, ws, error):
     print(\\"WebSocket Error:\\", error)
@@ -8166,6 +8400,71 @@ class HoppscotchEchoWebSocketClient:
         # Call custom error handlers
         for handler in self.error_handlers:
           handler(error)
+
+  def _route_message(self, parsed_message, raw_message):
+      \\"\\"\\"
+      Route incoming message to appropriate handler based on discriminators.
+
+      Args:
+          parsed_message: Parsed message object
+          raw_message: Raw message string
+
+      Returns:
+          bool: True if message was handled, False otherwise
+      \\"\\"\\"
+      if not isinstance(parsed_message, dict):
+          return False
+
+      # Check each operation's discriminator
+      for operation_id, discriminator in self.receive_operation_discriminators.items():
+          key = discriminator.get(\\"key\\")
+          value = discriminator.get(\\"value\\")
+
+          # Check if message matches this discriminator
+          if key and parsed_message.get(key) == value:
+              handler = self.receive_operation_handlers.get(operation_id)
+              if handler:
+                  try:
+                      handler(raw_message)
+                      return True
+                  except Exception as error:
+                      print(f\\"Error in {operation_id} handler: {error}\\")
+                      import traceback
+                      traceback.print_exc()
+                      return True
+
+      return False
+
+  def register_handle_time_stamp_message_handler(self, handler, discriminator_key, discriminator_value):
+      \\"\\"\\"
+      Register a handler for handleTimeStampMessage operation.
+      Receive the timestamp message sent from server every second.
+
+      Args:
+          handler (callable): Handler function that receives parsed_message as argument
+          discriminator_key (str): Message field to use for routing (e.g., 'type', 'event_type')
+          discriminator_value (str): Expected value for routing (e.g., 'hello', 'user_joined')
+
+      Example:
+          def my_handler(message):
+              print(f\\"Received: {message}\\")
+
+          client.register_handle_time_stamp_message_handler(my_handler, discriminator_key=\\"type\\", discriminator_value=\\"hello\\")
+      \\"\\"\\"
+      if not callable(handler):
+          print(\\"Handler must be callable\\")
+          return
+
+      # Register handler
+      self.receive_operation_handlers[\\"handleTimeStampMessage\\"] = handler
+
+      # Register discriminator
+      self.receive_operation_discriminators[\\"handleTimeStampMessage\\"] = {
+          \\"key\\": discriminator_key,
+          \\"value\\": discriminator_value
+      }
+
+      print(f\\"Registered handler for operation: handleTimeStampMessage\\")
 
   @staticmethod
   async def send_echo_message_static(message, socket):
@@ -8315,6 +8614,8 @@ class PostmanEchoWebSocketClientClient:
       
       
 
+      
+
         
         self.url = url
 
@@ -8322,7 +8623,18 @@ class PostmanEchoWebSocketClientClient:
     print(\\"Connected to Postman Echo WebSocket Client server\\")
 
   def on_message(self, ws, message):
-    self.handle_message(message)
+    # Parse message for routing
+    try:
+        parsed_message = json.loads(message)
+    except:
+        parsed_message = message
+
+    # Try automatic routing to operation-specific handlers
+    handled = self._route_message(parsed_message, message)
+
+    # Fallback to generic handlers if not handled
+    if not handled:
+        self.handle_message(message)
 
   def on_error(self, ws, error):
     print(\\"WebSocket Error:\\", error)
@@ -8401,6 +8713,40 @@ class PostmanEchoWebSocketClientClient:
         # Call custom error handlers
         for handler in self.error_handlers:
           handler(error)
+
+  def _route_message(self, parsed_message, raw_message):
+      \\"\\"\\"
+      Route incoming message to appropriate handler based on discriminators.
+
+      Args:
+          parsed_message: Parsed message object
+          raw_message: Raw message string
+
+      Returns:
+          bool: True if message was handled, False otherwise
+      \\"\\"\\"
+      if not isinstance(parsed_message, dict):
+          return False
+
+      # Check each operation's discriminator
+      for operation_id, discriminator in self.receive_operation_discriminators.items():
+          key = discriminator.get(\\"key\\")
+          value = discriminator.get(\\"value\\")
+
+          # Check if message matches this discriminator
+          if key and parsed_message.get(key) == value:
+              handler = self.receive_operation_handlers.get(operation_id)
+              if handler:
+                  try:
+                      handler(raw_message)
+                      return True
+                  except Exception as error:
+                      print(f\\"Error in {operation_id} handler: {error}\\")
+                      import traceback
+                      traceback.print_exc()
+                      return True
+
+      return False
 
   @staticmethod
   async def send_echo_message_static(message, socket):

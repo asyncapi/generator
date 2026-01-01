@@ -445,7 +445,7 @@ components:
       properties:
         type:
           type: string
-          cont: disconnect
+          const: disconnect
         reason:
           title: disconnectReasonEnum
           type: string

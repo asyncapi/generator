@@ -32,7 +32,18 @@ const websocketOnMessageMethod = {
   python: () => {
     return {
       onMessageMethod: `def on_message(self, ws, message):
-  self.handle_message(message)`
+  # Parse message for routing
+  try:
+      parsed_message = json.loads(message)
+  except:
+      parsed_message = message
+
+  # Try automatic routing to operation-specific handlers
+  handled = self._route_message(parsed_message, message)
+
+  # Fallback to generic handlers if not handled
+  if not handled:
+      self.handle_message(message)`
     };
   },
   dart: () => {

@@ -5,6 +5,8 @@ import { Constructor } from './Constructor';
 import { CloseConnection, RegisterMessageHandler, RegisterErrorHandler, SendOperations, Connect, HandleMessage } from '@asyncapi/generator-components';
 import { RegisterOutgoingProcessor } from './RegisterOutgoingProcessor';
 import { HandleError } from './HandleError';
+import { AutoRouteMessages } from './AutoRouteMessages';
+import { RegisterReceiveOperations } from './RegisterReceiveOperations';
 
 export function ClientClass({ asyncapi, params }) {
   const server = getServer(asyncapi.servers(), params.server);
@@ -14,12 +16,14 @@ export function ClientClass({ asyncapi, params }) {
   const serverUrl = getServerUrl(server);
   const operations = asyncapi.operations();
   const sendOperations = operations.filterBySend();
+  const receiveOperations = operations.filterByReceive();
+
   return (
     <Text>
       <Text newLines={2}>
         {`class ${clientName}:`}
       </Text>
-      <Constructor serverUrl={serverUrl} query={queryParams} />
+      <Constructor serverUrl={serverUrl} query={queryParams} receiveOperations={receiveOperations} />
       <Connect language="python" title={title} />
       <RegisterMessageHandler
         language="python"
@@ -41,6 +45,8 @@ export function ClientClass({ asyncapi, params }) {
         preExecutionCode='"""Pass the incoming message to all registered message handlers. """'
       />
       <HandleError />
+      <AutoRouteMessages />
+      <RegisterReceiveOperations receiveOperations={receiveOperations} />
       <SendOperations 
         language="python"
         sendOperations={sendOperations} 

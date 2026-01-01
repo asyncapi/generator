@@ -4,7 +4,6 @@ import { Text } from '@asyncapi/generator-react-sdk';
  * Generates generic message routing logic using user-registered discriminators
  */
 export function AutoRouteMessages() {
-
   return (
     <Text indent={2} newLines={2}>
       {`def _route_message(self, parsed_message, raw_message):

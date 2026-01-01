@@ -778,13 +778,12 @@ import java.util.Objects;
 import java.util.Map;
 
 public class Disconnect {
-  private String type;
+  private final String type = \\"disconnect\\";
   private DisconnectReasonEnum reason;
   private DebugInfo debugInfo;
   private Map<String, Object> additionalProperties;
 
   public String getType() { return this.type; }
-  public void setType(String type) { this.type = type; }
 
   public DisconnectReasonEnum getReason() { return this.reason; }
   public void setReason(DisconnectReasonEnum reason) { this.reason = reason; }
@@ -7181,8 +7180,7 @@ exports[`WebSocket Clients Integration Tests Python Client Additional tests for 
 exports[`WebSocket Clients Integration Tests Python Client Additional tests for Python client generate client for slack: Disconnect.py 1`] = `
 "class Disconnect: 
   def __init__(self, input: Dict):
-    if 'type' in input:
-      self._type: str = input['type']
+    self._type: str = 'disconnect'
     if 'reason' in input:
       self._reason: DisconnectReasonEnum = DisconnectReasonEnum(input['reason'])
     if 'debug_info' in input:
@@ -7193,9 +7191,6 @@ exports[`WebSocket Clients Integration Tests Python Client Additional tests for 
   @property
   def type(self) -> str:
     return self._type
-  @type.setter
-  def type(self, type: str):
-    self._type = type
 
   @property
   def reason(self) -> DisconnectReasonEnum:

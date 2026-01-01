@@ -1,45 +1,87 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Testing MessageExamples component Test operation with multiple examples 1`] = `
-"**Example:**
+"**Example (JavaScript):**
 \`\`\`javascript
 client.multipleExamples(\\"test\\");
 \`\`\`
 
 
-**Example:**
+**Example (Python):**
+\`\`\`python
+client.multipleExamples(\\"test\\");
+\`\`\`
+
+
+**Example (JavaScript):**
 \`\`\`javascript
 client.multipleExamples(false);
 \`\`\`
 
 
-**Example:**
+**Example (Python):**
+\`\`\`python
+client.multipleExamples(false);
+\`\`\`
+
+
+**Example (JavaScript):**
 \`\`\`javascript
+client.multipleExamples(123);
+\`\`\`
+
+
+**Example (Python):**
+\`\`\`python
 client.multipleExamples(123);
 \`\`\`"
 `;
 
 exports[`Testing MessageExamples component Test operation with multiple messages and multiple examples 1`] = `
-"**Example:**
+"**Example (JavaScript):**
 \`\`\`javascript
 client.mixedMessageExamples(\\"test\\");
 \`\`\`
 
 
-**Example:**
+**Example (Python):**
+\`\`\`python
+client.mixedMessageExamples(\\"test\\");
+\`\`\`
+
+
+**Example (JavaScript):**
 \`\`\`javascript
 client.mixedMessageExamples(\\"test\\");
 \`\`\`
 
 
-**Example:**
+**Example (Python):**
+\`\`\`python
+client.mixedMessageExamples(\\"test\\");
+\`\`\`
+
+
+**Example (JavaScript):**
 \`\`\`javascript
 client.mixedMessageExamples(false);
 \`\`\`
 
 
-**Example:**
+**Example (Python):**
+\`\`\`python
+client.mixedMessageExamples(false);
+\`\`\`
+
+
+**Example (JavaScript):**
 \`\`\`javascript
+client.mixedMessageExamples(123);
+\`\`\`
+
+
+**Example (Python):**
+\`\`\`python
 client.mixedMessageExamples(123);
 \`\`\`"
 `;
@@ -49,8 +91,14 @@ exports[`Testing MessageExamples component Test operation with no message exampl
 exports[`Testing MessageExamples component Test operation with no messages 1`] = `""`;
 
 exports[`Testing MessageExamples component Test operation with one example 1`] = `
-"**Example:**
+"**Example (JavaScript):**
 \`\`\`javascript
+client.oneMessageExample(\\"test\\");
+\`\`\`
+
+
+**Example (Python):**
+\`\`\`python
 client.oneMessageExample(\\"test\\");
 \`\`\`"
 `;

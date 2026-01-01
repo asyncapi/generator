@@ -1,12 +1,28 @@
 import { getMessageExamples, getOperationMessages } from '@asyncapi/generator-helpers';
 import { Text } from '@asyncapi/generator-react-sdk';
 
-const exampleTemplate = (operationId, payload) => `
-**Example:**
+const languageConfig = {
+  javascript: {
+    label: 'JavaScript',
+    codeBlock: 'javascript',
+    render: (operationId, payload) => `
+**Example (JavaScript):**
 \`\`\`javascript
 client.${operationId}(${JSON.stringify(payload, null, 2)});
 \`\`\`
-`;
+`
+  },
+  python: {
+    label: 'Python',
+    codeBlock: 'python',
+    render: (operationId, payload) => `
+**Example (Python):**
+\`\`\`python
+client.${operationId}(${JSON.stringify(payload, null, 2)});
+\`\`\`
+`
+  }
+};
 
 export default function MessageExamples({ operation }) {
   const operationId = operation.id();
@@ -17,7 +33,9 @@ export default function MessageExamples({ operation }) {
     const examples = getMessageExamples(message) || [];
     examples.forEach((example) => {
       const payload = example.payload();
-      messageExamples.push(exampleTemplate(operationId, payload));
+      Object.values(languageConfig).forEach(({ render }) => {
+        messageExamples.push(render(operationId, payload));
+      });
     });
   });
 

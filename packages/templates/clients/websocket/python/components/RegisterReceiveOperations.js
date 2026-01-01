@@ -13,14 +13,12 @@ export function RegisterReceiveOperations({ receiveOperations }) {
   return receiveOperations.map((operation) => {
     const operationId = operation.id();
     const methodName = `register_${toSnakeCase(operationId)}_handler`;
-    const summary = operation.summary() || `Handler for ${operationId} messages`;
 
     return (
       <Text indent={2} newLines={2} key={operationId}>
         {`def ${methodName}(self, handler, discriminator_key, discriminator_value):
     """
     Register a handler for ${operationId} operation.
-    ${summary}
 
     Args:
         handler (callable): Handler function that receives parsed_message as argument

@@ -7779,8 +7779,6 @@ class SlackWebsocketAPIClient:
                       return True
                   except Exception as error:
                       print(f\\"Error in {operation_id} handler: {error}\\")
-                      import traceback
-                      traceback.print_exc()
                       return True
 
       return False
@@ -7788,7 +7786,6 @@ class SlackWebsocketAPIClient:
   def register_on_hello_message_handler(self, handler, discriminator_key, discriminator_value):
       \\"\\"\\"
       Register a handler for onHelloMessage operation.
-      One time operation. You receive one message once you connect to the API
 
       Args:
           handler (callable): Handler function that receives parsed_message as argument
@@ -7819,7 +7816,6 @@ class SlackWebsocketAPIClient:
   def register_on_event_handler(self, handler, discriminator_key, discriminator_value):
       \\"\\"\\"
       Register a handler for onEvent operation.
-      Handler for onEvent messages
 
       Args:
           handler (callable): Handler function that receives parsed_message as argument
@@ -7850,7 +7846,6 @@ class SlackWebsocketAPIClient:
   def register_on_disconnect_message_handler(self, handler, discriminator_key, discriminator_value):
       \\"\\"\\"
       Register a handler for onDisconnectMessage operation.
-      Handler for onDisconnectMessage messages
 
       Args:
           handler (callable): Handler function that receives parsed_message as argument
@@ -8110,8 +8105,6 @@ class HoppscotchClient:
                       return True
                   except Exception as error:
                       print(f\\"Error in {operation_id} handler: {error}\\")
-                      import traceback
-                      traceback.print_exc()
                       return True
 
       return False
@@ -8119,7 +8112,6 @@ class HoppscotchClient:
   def register_handle_time_stamp_message_handler(self, handler, discriminator_key, discriminator_value):
       \\"\\"\\"
       Register a handler for handleTimeStampMessage operation.
-      Receive the timestamp message sent from server every second.
 
       Args:
           handler (callable): Handler function that receives parsed_message as argument
@@ -8424,8 +8416,6 @@ class HoppscotchEchoWebSocketClient:
                       return True
                   except Exception as error:
                       print(f\\"Error in {operation_id} handler: {error}\\")
-                      import traceback
-                      traceback.print_exc()
                       return True
 
       return False
@@ -8433,7 +8423,6 @@ class HoppscotchEchoWebSocketClient:
   def register_handle_time_stamp_message_handler(self, handler, discriminator_key, discriminator_value):
       \\"\\"\\"
       Register a handler for handleTimeStampMessage operation.
-      Receive the timestamp message sent from server every second.
 
       Args:
           handler (callable): Handler function that receives parsed_message as argument
@@ -8737,8 +8726,6 @@ class PostmanEchoWebSocketClientClient:
                       return True
                   except Exception as error:
                       print(f\\"Error in {operation_id} handler: {error}\\")
-                      import traceback
-                      traceback.print_exc()
                       return True
 
       return False

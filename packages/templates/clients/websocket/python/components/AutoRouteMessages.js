@@ -34,8 +34,6 @@ export function AutoRouteMessages() {
                     return True
                 except Exception as error:
                     print(f"Error in {operation_id} handler: {error}")
-                    import traceback
-                    traceback.print_exc()
                     return True
 
     return False`}

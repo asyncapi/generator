@@ -15,12 +15,22 @@ client.${operationId}(${JSON.stringify(payload, null, 2)});
   python: {
     label: 'Python',
     codeBlock: 'python',
-    render: (operationId, payload) => `
+    render: (operationId, payload) => {
+      const pythonPayload = JSON.stringify(payload, null, 2)
+        .replace(/"([^"]+)":/g, '$1:')
+        .replace(/true/g, 'True')
+        .replace(/false/g, 'False')
+        .replace(/null/g, 'None');
+
+      return `
 **Example (Python):**
 \`\`\`python
-client.${operationId}(${JSON.stringify(payload, null, 2)});
+client.${operationId}(
+${pythonPayload}
+)
 \`\`\`
-`
+`;
+    }
   }
 };
 

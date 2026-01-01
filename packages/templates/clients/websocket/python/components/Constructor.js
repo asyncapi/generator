@@ -3,9 +3,10 @@ import { QueryParamsVariables } from '@asyncapi/generator-components';
 import { QueryParamsArgumentsDocs } from './QueryParamsArgumentsDocs';
 import { InitSignature } from './InitSignature';
 
-export function Constructor({ serverUrl, query}) {
+export function Constructor({ serverUrl, query, receiveOperations }) {
   const queryParamsArray = query && Array.from(query.entries());
-  
+  const hasReceiveOperations = receiveOperations && receiveOperations.length > 0;
+
   return (
     <>
       <InitSignature queryParams={queryParamsArray} serverUrl={serverUrl} />
@@ -28,7 +29,9 @@ export function Constructor({ serverUrl, query}) {
       self.outgoing_processors = []   # Callables to process outgoing messages
       self._stop_event = threading.Event()
       
-      ${ query ? 'params = {}' : ''}`
+      ${ query ? 'params = {}' : ''}
+
+      ${hasReceiveOperations ? 'self.receive_operation_handlers = {}\n      self.receive_operation_discriminators = {}' : ''}`
         }
       </Text>
       <QueryParamsVariables

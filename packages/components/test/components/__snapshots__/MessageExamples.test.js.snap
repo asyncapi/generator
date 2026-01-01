@@ -9,7 +9,7 @@ client.multipleExamples(\\"test\\");
 
 **Example (Python):**
 \`\`\`python
-client.multipleExamples(value=\\"test\\")
+client.multipleExamples(\\"test\\")
 \`\`\`
 
 
@@ -21,7 +21,7 @@ client.multipleExamples(false);
 
 **Example (Python):**
 \`\`\`python
-client.multipleExamples(value=False)
+client.multipleExamples(false)
 \`\`\`
 
 
@@ -33,7 +33,7 @@ client.multipleExamples(123);
 
 **Example (Python):**
 \`\`\`python
-client.multipleExamples(value=123)
+client.multipleExamples(123)
 \`\`\`"
 `;
 
@@ -46,7 +46,7 @@ client.mixedMessageExamples(\\"test\\");
 
 **Example (Python):**
 \`\`\`python
-client.mixedMessageExamples(value=\\"test\\")
+client.mixedMessageExamples(\\"test\\")
 \`\`\`
 
 
@@ -58,7 +58,7 @@ client.mixedMessageExamples(\\"test\\");
 
 **Example (Python):**
 \`\`\`python
-client.mixedMessageExamples(value=\\"test\\")
+client.mixedMessageExamples(\\"test\\")
 \`\`\`
 
 
@@ -70,7 +70,7 @@ client.mixedMessageExamples(false);
 
 **Example (Python):**
 \`\`\`python
-client.mixedMessageExamples(value=False)
+client.mixedMessageExamples(false)
 \`\`\`
 
 
@@ -82,7 +82,7 @@ client.mixedMessageExamples(123);
 
 **Example (Python):**
 \`\`\`python
-client.mixedMessageExamples(value=123)
+client.mixedMessageExamples(123)
 \`\`\`"
 `;
 
@@ -99,6 +99,6 @@ client.oneMessageExample(\\"test\\");
 
 **Example (Python):**
 \`\`\`python
-client.oneMessageExample(value=\\"test\\")
+client.oneMessageExample(\\"test\\")
 \`\`\`"
 `;

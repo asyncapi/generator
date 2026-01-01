@@ -6064,7 +6064,7 @@ client.sendEchoMessage(\\"test\\");
 
 **Example (Python):**
 \`\`\`python
-client.sendEchoMessage(\\"test\\");
+client.sendEchoMessage(\\"test\\")
 \`\`\`
 
 
@@ -6076,7 +6076,7 @@ client.sendEchoMessage(true);
 
 **Example (Python):**
 \`\`\`python
-client.sendEchoMessage(true);
+client.sendEchoMessage(true)
 \`\`\`
 
 
@@ -6088,7 +6088,7 @@ client.sendEchoMessage(123);
 
 **Example (Python):**
 \`\`\`python
-client.sendEchoMessage(123);
+client.sendEchoMessage(123)
 \`\`\`
 
 
@@ -6104,7 +6104,7 @@ client.sendEchoMessage({
 \`\`\`python
 client.sendEchoMessage({
   \\"test\\": \\"test text\\"
-});
+})
 \`\`\`
 
 
@@ -6122,7 +6122,7 @@ client.handleTimeStampMessage(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\
 
 **Example (Python):**
 \`\`\`python
-client.handleTimeStampMessage(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\\");
+client.handleTimeStampMessage(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\\")
 \`\`\`
 
 
@@ -6428,7 +6428,7 @@ client.sendEchoMessage(\\"test\\");
 
 **Example (Python):**
 \`\`\`python
-client.sendEchoMessage(\\"test\\");
+client.sendEchoMessage(\\"test\\")
 \`\`\`
 
 
@@ -6440,7 +6440,7 @@ client.sendEchoMessage(true);
 
 **Example (Python):**
 \`\`\`python
-client.sendEchoMessage(true);
+client.sendEchoMessage(true)
 \`\`\`
 
 
@@ -6452,7 +6452,7 @@ client.sendEchoMessage(123);
 
 **Example (Python):**
 \`\`\`python
-client.sendEchoMessage(123);
+client.sendEchoMessage(123)
 \`\`\`
 
 
@@ -6468,7 +6468,7 @@ client.sendEchoMessage({
 \`\`\`python
 client.sendEchoMessage({
   \\"test\\": \\"test text\\"
-});
+})
 \`\`\`
 
 
@@ -6486,7 +6486,7 @@ client.handleTimeStampMessage(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\
 
 **Example (Python):**
 \`\`\`python
-client.handleTimeStampMessage(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\\");
+client.handleTimeStampMessage(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\\")
 \`\`\`
 
 
@@ -6791,7 +6791,7 @@ client.sendEchoMessage(\\"test\\");
 
 **Example (Python):**
 \`\`\`python
-client.sendEchoMessage(\\"test\\");
+client.sendEchoMessage(\\"test\\")
 \`\`\`
 
 
@@ -6807,7 +6807,7 @@ client.sendEchoMessage({
 \`\`\`python
 client.sendEchoMessage({
   \\"test\\": \\"test text\\"
-});
+})
 \`\`\`
 
 
@@ -7706,7 +7706,7 @@ client.onHelloMessage({
   \\"connection_info\\": {
     \\"app_id\\": \\"A08NKKBFGBD\\"
   }
-});
+})
 \`\`\`
 
 
@@ -7800,7 +7800,7 @@ client.onEvent({
   \\"accepts_response_payload\\": false,
   \\"retry_attempt\\": 0,
   \\"retry_reason\\": \\"\\"
-});
+})
 \`\`\`
 
 
@@ -7888,7 +7888,7 @@ client.onEvent({
   \\"accepts_response_payload\\": false,
   \\"retry_attempt\\": 3,
   \\"retry_reason\\": \\"timeout\\"
-});
+})
 \`\`\`
 
 
@@ -8024,7 +8024,7 @@ client.onEvent({
   \\"accepts_response_payload\\": false,
   \\"retry_attempt\\": 3,
   \\"retry_reason\\": \\"timeout\\"
-});
+})
 \`\`\`
 
 
@@ -8054,7 +8054,7 @@ client.onDisconnectMessage({
   \\"debug_info\\": {
     \\"host\\": \\"applink-0\\"
   }
-});
+})
 \`\`\`
 
 
@@ -8078,7 +8078,7 @@ client.onDisconnectMessage({
   \\"debug_info\\": {
     \\"host\\": \\"applink-0\\"
   }
-});
+})
 \`\`\`
 
 
@@ -8343,7 +8343,7 @@ client.sendEchoMessage(\\"test\\");
 
 **Example (Python):**
 \`\`\`python
-client.sendEchoMessage(\\"test\\");
+client.sendEchoMessage(\\"test\\")
 \`\`\`
 
 
@@ -8355,7 +8355,7 @@ client.sendEchoMessage(true);
 
 **Example (Python):**
 \`\`\`python
-client.sendEchoMessage(true);
+client.sendEchoMessage(true)
 \`\`\`
 
 
@@ -8367,7 +8367,7 @@ client.sendEchoMessage(123);
 
 **Example (Python):**
 \`\`\`python
-client.sendEchoMessage(123);
+client.sendEchoMessage(123)
 \`\`\`
 
 
@@ -8383,7 +8383,7 @@ client.sendEchoMessage({
 \`\`\`python
 client.sendEchoMessage({
   \\"test\\": \\"test text\\"
-});
+})
 \`\`\`
 
 
@@ -8401,7 +8401,7 @@ client.handleTimeStampMessage(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\
 
 **Example (Python):**
 \`\`\`python
-client.handleTimeStampMessage(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\\");
+client.handleTimeStampMessage(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\\")
 \`\`\`
 
 
@@ -8656,7 +8656,7 @@ client.sendEchoMessage(\\"test\\");
 
 **Example (Python):**
 \`\`\`python
-client.sendEchoMessage(\\"test\\");
+client.sendEchoMessage(\\"test\\")
 \`\`\`
 
 
@@ -8668,7 +8668,7 @@ client.sendEchoMessage(true);
 
 **Example (Python):**
 \`\`\`python
-client.sendEchoMessage(true);
+client.sendEchoMessage(true)
 \`\`\`
 
 
@@ -8680,7 +8680,7 @@ client.sendEchoMessage(123);
 
 **Example (Python):**
 \`\`\`python
-client.sendEchoMessage(123);
+client.sendEchoMessage(123)
 \`\`\`
 
 
@@ -8696,7 +8696,7 @@ client.sendEchoMessage({
 \`\`\`python
 client.sendEchoMessage({
   \\"test\\": \\"test text\\"
-});
+})
 \`\`\`
 
 
@@ -8714,7 +8714,7 @@ client.handleTimeStampMessage(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\
 
 **Example (Python):**
 \`\`\`python
-client.handleTimeStampMessage(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\\");
+client.handleTimeStampMessage(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\\")
 \`\`\`
 
 
@@ -8968,7 +8968,7 @@ client.sendEchoMessage(\\"test\\");
 
 **Example (Python):**
 \`\`\`python
-client.sendEchoMessage(\\"test\\");
+client.sendEchoMessage(\\"test\\")
 \`\`\`
 
 
@@ -8984,7 +8984,7 @@ client.sendEchoMessage({
 \`\`\`python
 client.sendEchoMessage({
   \\"test\\": \\"test text\\"
-});
+})
 \`\`\`
 
 

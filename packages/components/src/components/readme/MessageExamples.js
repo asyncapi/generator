@@ -15,36 +15,12 @@ client.${operationId}(${JSON.stringify(payload, null, 2)});
   python: {
     label: 'Python',
     codeBlock: 'python',
-    render: (operationId, payload) => {
-      const isObject =
-        payload !== null &&
-        typeof payload === 'object' &&
-        !Array.isArray(payload);
-
-      let pythonPayload;
-
-      if (isObject) {
-        pythonPayload = JSON.stringify(payload, null, 2)
-          .replace(/"([^"]+)":/g, '$1:')
-          .replace(/true/g, 'True')
-          .replace(/false/g, 'False')
-          .replace(/null/g, 'None');
-      } else {
-        // Wrap primitive values safely
-        const value = JSON.stringify(payload)
-          .replace(/true/g, 'True')
-          .replace(/false/g, 'False')
-          .replace(/null/g, 'None');
-
-        pythonPayload = `value=${value}`;
-      }
-    return `
+    render: (operationId, payload) => `
 **Example (Python):**
 \`\`\`python
-client.${operationId}(${pythonPayload})
+client.${operationId}(${JSON.stringify(payload, null, 2)})
 \`\`\`
 `
-    }
   }
 };
 

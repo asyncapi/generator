@@ -7328,7 +7328,7 @@ exports[`WebSocket Clients Integration Tests Python Client Additional tests for 
     if 'api_app_id' in input:
       self._api_app_id: str = input['api_app_id']
     if 'event' in input:
-      self._event: ChannelJoin | ReactionAdded | MessageDeleted = input['event']
+      self._event: Union[ChannelJoin, ReactionAdded, MessageDeleted] = input['event']
     if 'type' in input:
       self._type: str = input['type']
     if 'event_id' in input:
@@ -7376,10 +7376,10 @@ exports[`WebSocket Clients Integration Tests Python Client Additional tests for 
     self._api_app_id = api_app_id
 
   @property
-  def event(self) -> ChannelJoin | ReactionAdded | MessageDeleted:
+  def event(self) -> Union[ChannelJoin, ReactionAdded, MessageDeleted]:
     return self._event
   @event.setter
-  def event(self, event: ChannelJoin | ReactionAdded | MessageDeleted):
+  def event(self, event: Union[ChannelJoin, ReactionAdded, MessageDeleted]):
     self._event = event
 
   @property

@@ -6,7 +6,7 @@ const installCommands = {
 };
 
 export function Installation({ language }) {
-  const command = installCommands[language]
+  const command = installCommands[language];
   return (
     <Text newLines={2}>
       {`## Installation

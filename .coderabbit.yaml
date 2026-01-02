@@ -22,9 +22,24 @@ chat:
   auto_reply: false
 
 knowledge_base:
+  # Don't opt out - this enables all learning features
+  opt_out: false
+  # Enable web search for up-to-date information
+  web_search:
+    enabled: true
+  # Code Guidelines - automatically detects team standards
+  code_guidelines:
+    enabled: true
+    filePatterns:
+      # Add custom patterns here if you have other guideline files:
+      - "apps/generator/docs/*"
+      - ".Development.md"
+      - "CONTRIBUTING.md"
   learnings:
     scope: auto
   issues:
     scope: auto
   pull_requests:
     scope: auto
+  mcp:
+    usage: auto

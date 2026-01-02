@@ -35,6 +35,7 @@ knowledge_base:
       - "apps/generator/docs/*"
       - "Development.md"
       - "CONTRIBUTING.md"
+      - "apps/react-sdk/API.md"
   learnings:
     scope: auto
   issues:

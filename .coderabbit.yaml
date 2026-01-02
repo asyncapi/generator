@@ -33,7 +33,7 @@ knowledge_base:
     filePatterns:
       # Add custom patterns here if you have other guideline files:
       - "apps/generator/docs/*"
-      - ".Development.md"
+      - "Development.md"
       - "CONTRIBUTING.md"
   learnings:
     scope: auto

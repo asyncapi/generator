@@ -1,4 +1,4 @@
-ARG NODE_VERSION=18
+ARG NODE_VERSION=24
 FROM node:${NODE_VERSION}-alpine AS base
 
 WORKDIR /app
@@ -35,6 +35,11 @@ RUN npm ci --ignore-scripts
 
 # Copy the rest of the source code
 COPY --from=installer /out/full/ .
+
+# Copy Root jest.config.base.js jest.config.base.js
+COPY jest.config.base.js ./jest.config.base.js
+# Copy packages/templates needed in Runtime
+COPY packages/templates ./packages/templates
 
 # Change ownership of the /app directory to the node user
 RUN chown -R node:node /app

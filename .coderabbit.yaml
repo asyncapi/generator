@@ -43,11 +43,9 @@ knowledge_base:
     enabled: true
     filePatterns:
       # Add custom patterns here if you have other guideline files:
-      - "apps/generator/docs/*"
       - ".github/pr-review-checklist.md"
       - "Development.md"
       - "CONTRIBUTING.md"
-      - "apps/react-sdk/API.md"
   learnings:
     scope: auto
   issues:

@@ -1,4 +1,5 @@
 import { Text } from '@asyncapi/generator-react-sdk';
+import { resolveLanguageConfig } from '../utils/resolveLanguageConfig';
 
 /**
  * @typedef {'python' | 'javascript' | 'dart' | 'java'} Language
@@ -16,28 +17,6 @@ const defaultMethodConfig = {
   java: { returnType: '', openingTag: '', closingTag: '', indentSize: 0, parameterWrap: false }
 };
 
-/**
- * Resolve docs and logic for the given language + framework config.
- */
-const resolveDocsAndLogic = ({ language, methodDocs, methodLogic, methodConfig, framework }) => {
-  let docs = methodDocs;
-  let logic = methodLogic;
-
-  if (methodConfig && methodConfig[language]) {
-    const config = methodConfig[language];
-
-    if (framework && config[framework]) {
-      const frameworkConfig = config[framework];
-      docs = frameworkConfig.methodDocs ?? methodDocs ?? '';
-      logic = frameworkConfig.methodLogic ?? methodLogic ?? '';
-    } else if (config.methodLogic || config.methodDocs) {
-      docs = config.methodDocs ?? methodDocs ?? '';
-      logic = config.methodLogic ?? methodLogic ?? '';
-    }
-  }
-
-  return { docs, logic };
-};
 
 /**
  * Build indented method body.
@@ -85,13 +64,26 @@ export function MethodGenerator({
   methodConfig,
   framework
 }) {
-  const { docs: resolvedMethodDocs, logic: resolvedMethodLogic } = resolveDocsAndLogic({
+
+  
+/**
+ * Resolve docs and logic for the given language + framework config.
+ */
+let resolvedMethodDocs = methodDocs;
+let resolvedMethodLogic = methodLogic; 
+
+if (methodConfig) {
+  const resolvedConfig = resolveLanguageConfig({
+    config: methodConfig,
     language,
-    methodDocs,
-    methodLogic,
-    methodConfig,
-    framework
+    framework,
+    context: `method "${methodName}"`
   });
+
+  resolvedMethodDocs = resolvedConfig.methodDocs ?? methodDocs;
+  resolvedMethodLogic = resolvedConfig.methodLogic ?? methodLogic;
+}
+
 
   const {
     returnType = '',

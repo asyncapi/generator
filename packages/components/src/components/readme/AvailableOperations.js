@@ -6,11 +6,13 @@ export function AvailableOperations({ operations }) {
   if (!operations || operations.length === 0) {
     return null;
   }
+
   return (
     <>
       <Text newLines={2}>### Available Operations</Text>
-      {operations.map((operation) => (
-        <Text newLines={2}>
+
+      {operations.map((operation, index) => (
+        <Text key={index} newLines={2}>
           <OperationHeader operation={operation} />
           <MessageExamples operation={operation} />
         </Text>

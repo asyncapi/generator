@@ -1,0 +1,2 @@
+root: C:\Users\visha\generator\nvm
+path: C:\nvm4w\nodejs

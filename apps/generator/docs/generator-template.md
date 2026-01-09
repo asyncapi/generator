@@ -44,7 +44,7 @@ Before you create the template, you'll need to have an [AsyncAPI document](https
 
 ``` yml
 
-asyncapi: 2.6.0
+asyncapi: 3.0.0
 
 info:
   title: Temperature Service
@@ -53,22 +53,27 @@ info:
 
 servers:
   dev:
-    url: test.mosquitto.org #in case you're using local mosquitto instance, change this value to localhost.
+    host: test.mosquitto.org #in case you're using local mosquitto instance, change this value to localhost.
     protocol: mqtt
 
 channels:
-  temperature/changed:
+  temperatureChangedChannel:
+    address: temperature/changed
     description: Updates the bedroom temperature in the database when the temperatures drops or goes up.
-    publish:
-      operationId: temperatureChange
-      message:
+    messages:
+      temperatureMessage:
         description: Message that is being sent when the temperature in the bedroom changes.
         payload:
-          type: object
-          additionalProperties: false
-          properties:
-            temperatureId:
-              type: string
+          $ref: '#/components/schemas/temperatureId'
+
+operations:
+  temperatureChange:
+    action: receive
+    channel:
+      $ref: '#/channels/temperatureChangedChannel'
+    messages:
+      - $ref: '#/channels/temperatureChangedChannel/messages/temperatureMessage'        
+
 components:
   schemas:
     temperatureId:
@@ -357,7 +362,7 @@ You often have different runtime environments in programming, e.g., development 
 ```yml
 servers:
   dev:
-    url: test.mosquitto.org
+    host: test.mosquitto.org
     protocol: mqtt
 ```
 

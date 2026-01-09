@@ -16,33 +16,37 @@ export function RegisterReceiveOperations({ receiveOperations }) {
 
     return (
       <Text indent={2} newLines={2} key={operationId}>
-        {`def ${methodName}(self, handler, discriminator_key, discriminator_value):
+        {`def ${methodName}(self, handler, discriminator_key=None, discriminator_value=None):
     """
     Register a handler for ${operationId} operation.
 
     Args:
-        handler (callable): Handler function that receives parsed_message as argument
+        handler (callable): Handler function that receives raw_message as argument
         discriminator_key (str): Message field to use for routing (e.g., 'type', 'event_type')
         discriminator_value (str): Expected value for routing (e.g., 'hello', 'user_joined')
-
-    Example:
-        def my_handler(message):
-            print(f"Received: {message}")
-
-        client.${methodName}(my_handler, discriminator_key="type", discriminator_value="hello")
     """
     if not callable(handler):
         print("Handler must be callable")
         return
 
+    # Validate that either both discriminator_key and discriminator_value are provided or neither
+    if (discriminator_key is not None and discriminator_value is None) or (discriminator_key is None and discriminator_value is not None):
+        print("Error: Both discriminator_key and discriminator_value must be provided together")
+        return
+
     # Register handler
     self.receive_operation_handlers["${operationId}"] = handler
 
-    # Register discriminator
-    self.receive_operation_discriminators["${operationId}"] = {
-        "key": discriminator_key,
-        "value": discriminator_value
-    }
+   # Add discriminator entry to the list if both key and value are provided
+    if discriminator_key is not None and discriminator_value is not None:
+        discriminator_entry = {
+            "key": discriminator_key,
+            "value": discriminator_value,
+            "operation_id": "${operationId}"
+        }
+        
+        # Add the new discriminator (no checks needed as per requirements)
+        self.receive_operation_discriminators.append(discriminator_entry)
 
     print(f"Registered handler for operation: ${operationId}")`}
       </Text>

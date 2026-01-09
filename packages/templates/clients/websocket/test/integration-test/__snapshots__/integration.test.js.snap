@@ -980,7 +980,7 @@ import java.util.Objects;
 public class Event {
   private String envelopeId;
   private EventPayload payload;
-  private String type;
+  private final String type = \\"events_api\\";
   private Boolean acceptsResponsePayload;
   private Integer retryAttempt;
   private String retryReason;
@@ -992,7 +992,6 @@ public class Event {
   public void setPayload(EventPayload payload) { this.payload = payload; }
 
   public String getType() { return this.type; }
-  public void setType(String type) { this.type = type; }
 
   public Boolean getAcceptsResponsePayload() { return this.acceptsResponsePayload; }
   public void setAcceptsResponsePayload(Boolean acceptsResponsePayload) { this.acceptsResponsePayload = acceptsResponsePayload; }
@@ -1178,14 +1177,13 @@ import java.util.Objects;
 import java.util.Map;
 
 public class Hello {
-  private String type;
+  private final String type = \\"hello\\";
   private ConnectionInfo connectionInfo;
   private Integer numConnections;
   private DebugInfo debugInfo;
   private Map<String, Object> additionalProperties;
 
   public String getType() { return this.type; }
-  public void setType(String type) { this.type = type; }
 
   public ConnectionInfo getConnectionInfo() { return this.connectionInfo; }
   public void setConnectionInfo(ConnectionInfo connectionInfo) { this.connectionInfo = connectionInfo; }
@@ -7229,8 +7227,7 @@ exports[`WebSocket Clients Integration Tests Python Client Additional tests for 
       self._envelope_id: str = input['envelope_id']
     if 'payload' in input:
       self._payload: EventPayload = EventPayload(input['payload'])
-    if 'type' in input:
-      self._type: str = input['type']
+    self._type: str = 'events_api'
     if 'accepts_response_payload' in input:
       self._accepts_response_payload: bool = input['accepts_response_payload']
     if 'retry_attempt' in input:
@@ -7255,9 +7252,6 @@ exports[`WebSocket Clients Integration Tests Python Client Additional tests for 
   @property
   def type(self) -> str:
     return self._type
-  @type.setter
-  def type(self, type: str):
-    self._type = type
 
   @property
   def accepts_response_payload(self) -> bool:
@@ -7390,8 +7384,7 @@ exports[`WebSocket Clients Integration Tests Python Client Additional tests for 
 exports[`WebSocket Clients Integration Tests Python Client Additional tests for Python client generate client for slack: Hello.py 1`] = `
 "class Hello: 
   def __init__(self, input: Dict):
-    if 'type' in input:
-      self._type: str = input['type']
+    self._type: str = 'hello'
     if 'connection_info' in input:
       self._connection_info: ConnectionInfo = ConnectionInfo(input['connection_info'])
     if 'num_connections' in input:
@@ -7404,9 +7397,6 @@ exports[`WebSocket Clients Integration Tests Python Client Additional tests for 
   @property
   def type(self) -> str:
     return self._type
-  @type.setter
-  def type(self, type: str):
-    self._type = type
 
   @property
   def connection_info(self) -> ConnectionInfo:
@@ -7643,9 +7633,10 @@ class SlackWebsocketAPIClient:
         self._stop_event = threading.Event()
       
         params = {}
-
         self.receive_operation_handlers = {}
-        self.receive_operation_discriminators = {}
+        self.receive_operation_discriminators = [{\\"key\\":\\"type\\",\\"value\\":\\"hello\\",\\"operation_id\\":\\"onHelloMessage\\"},{\\"key\\":\\"type\\",\\"value\\":\\"events_api\\",\\"operation_id\\":\\"onEvent\\"},{\\"key\\":\\"type\\",\\"value\\":\\"disconnect\\",\\"operation_id\\":\\"onDisconnectMessage\\"}]
+      
+
         ticket = ticket or os.getenv(\\"TICKET\\")
         if ticket is not None:
           params[\\"ticket\\"] = ticket
@@ -7759,16 +7750,16 @@ class SlackWebsocketAPIClient:
           parsed_message: Parsed message object
           raw_message: Raw message string
 
-      Returns:
-          bool: True if message was handled, False otherwise
+      bool: Always returns False as handlers are called directly without indicating if they succeeded
       \\"\\"\\"
       if not isinstance(parsed_message, dict):
           return False
 
       # Check each operation's discriminator
-      for operation_id, discriminator in self.receive_operation_discriminators.items():
+      for discriminator in self.receive_operation_discriminators:
           key = discriminator.get(\\"key\\")
           value = discriminator.get(\\"value\\")
+          operation_id = discriminator.get(\\"operation_id\\")
 
           # Check if message matches this discriminator
           if key and parsed_message.get(key) == value:
@@ -7776,100 +7767,110 @@ class SlackWebsocketAPIClient:
               if handler:
                   try:
                       handler(raw_message)
-                      return True
                   except Exception as error:
                       print(f\\"Error in {operation_id} handler: {error}\\")
-                      return True
 
       return False
 
-  def register_on_hello_message_handler(self, handler, discriminator_key, discriminator_value):
+  def register_on_hello_message_handler(self, handler, discriminator_key=None, discriminator_value=None):
       \\"\\"\\"
       Register a handler for onHelloMessage operation.
 
       Args:
-          handler (callable): Handler function that receives parsed_message as argument
+          handler (callable): Handler function that receives raw_message as argument
           discriminator_key (str): Message field to use for routing (e.g., 'type', 'event_type')
           discriminator_value (str): Expected value for routing (e.g., 'hello', 'user_joined')
-
-      Example:
-          def my_handler(message):
-              print(f\\"Received: {message}\\")
-
-          client.register_on_hello_message_handler(my_handler, discriminator_key=\\"type\\", discriminator_value=\\"hello\\")
       \\"\\"\\"
       if not callable(handler):
           print(\\"Handler must be callable\\")
+          return
+
+      # Validate that either both discriminator_key and discriminator_value are provided or neither
+      if (discriminator_key is not None and discriminator_value is None) or (discriminator_key is None and discriminator_value is not None):
+          print(\\"Error: Both discriminator_key and discriminator_value must be provided together\\")
           return
 
       # Register handler
       self.receive_operation_handlers[\\"onHelloMessage\\"] = handler
 
-      # Register discriminator
-      self.receive_operation_discriminators[\\"onHelloMessage\\"] = {
-          \\"key\\": discriminator_key,
-          \\"value\\": discriminator_value
-      }
+     # Add discriminator entry to the list if both key and value are provided
+      if discriminator_key is not None and discriminator_value is not None:
+          discriminator_entry = {
+              \\"key\\": discriminator_key,
+              \\"value\\": discriminator_value,
+              \\"operation_id\\": \\"onHelloMessage\\"
+          }
+        
+          # Add the new discriminator (no checks needed as per requirements)
+          self.receive_operation_discriminators.append(discriminator_entry)
 
       print(f\\"Registered handler for operation: onHelloMessage\\")
 
-  def register_on_event_handler(self, handler, discriminator_key, discriminator_value):
+  def register_on_event_handler(self, handler, discriminator_key=None, discriminator_value=None):
       \\"\\"\\"
       Register a handler for onEvent operation.
 
       Args:
-          handler (callable): Handler function that receives parsed_message as argument
+          handler (callable): Handler function that receives raw_message as argument
           discriminator_key (str): Message field to use for routing (e.g., 'type', 'event_type')
           discriminator_value (str): Expected value for routing (e.g., 'hello', 'user_joined')
-
-      Example:
-          def my_handler(message):
-              print(f\\"Received: {message}\\")
-
-          client.register_on_event_handler(my_handler, discriminator_key=\\"type\\", discriminator_value=\\"hello\\")
       \\"\\"\\"
       if not callable(handler):
           print(\\"Handler must be callable\\")
+          return
+
+      # Validate that either both discriminator_key and discriminator_value are provided or neither
+      if (discriminator_key is not None and discriminator_value is None) or (discriminator_key is None and discriminator_value is not None):
+          print(\\"Error: Both discriminator_key and discriminator_value must be provided together\\")
           return
 
       # Register handler
       self.receive_operation_handlers[\\"onEvent\\"] = handler
 
-      # Register discriminator
-      self.receive_operation_discriminators[\\"onEvent\\"] = {
-          \\"key\\": discriminator_key,
-          \\"value\\": discriminator_value
-      }
+     # Add discriminator entry to the list if both key and value are provided
+      if discriminator_key is not None and discriminator_value is not None:
+          discriminator_entry = {
+              \\"key\\": discriminator_key,
+              \\"value\\": discriminator_value,
+              \\"operation_id\\": \\"onEvent\\"
+          }
+        
+          # Add the new discriminator (no checks needed as per requirements)
+          self.receive_operation_discriminators.append(discriminator_entry)
 
       print(f\\"Registered handler for operation: onEvent\\")
 
-  def register_on_disconnect_message_handler(self, handler, discriminator_key, discriminator_value):
+  def register_on_disconnect_message_handler(self, handler, discriminator_key=None, discriminator_value=None):
       \\"\\"\\"
       Register a handler for onDisconnectMessage operation.
 
       Args:
-          handler (callable): Handler function that receives parsed_message as argument
+          handler (callable): Handler function that receives raw_message as argument
           discriminator_key (str): Message field to use for routing (e.g., 'type', 'event_type')
           discriminator_value (str): Expected value for routing (e.g., 'hello', 'user_joined')
-
-      Example:
-          def my_handler(message):
-              print(f\\"Received: {message}\\")
-
-          client.register_on_disconnect_message_handler(my_handler, discriminator_key=\\"type\\", discriminator_value=\\"hello\\")
       \\"\\"\\"
       if not callable(handler):
           print(\\"Handler must be callable\\")
           return
 
+      # Validate that either both discriminator_key and discriminator_value are provided or neither
+      if (discriminator_key is not None and discriminator_value is None) or (discriminator_key is None and discriminator_value is not None):
+          print(\\"Error: Both discriminator_key and discriminator_value must be provided together\\")
+          return
+
       # Register handler
       self.receive_operation_handlers[\\"onDisconnectMessage\\"] = handler
 
-      # Register discriminator
-      self.receive_operation_discriminators[\\"onDisconnectMessage\\"] = {
-          \\"key\\": discriminator_key,
-          \\"value\\": discriminator_value
-      }
+     # Add discriminator entry to the list if both key and value are provided
+      if discriminator_key is not None and discriminator_value is not None:
+          discriminator_entry = {
+              \\"key\\": discriminator_key,
+              \\"value\\": discriminator_value,
+              \\"operation_id\\": \\"onDisconnectMessage\\"
+          }
+        
+          # Add the new discriminator (no checks needed as per requirements)
+          self.receive_operation_discriminators.append(discriminator_entry)
 
       print(f\\"Registered handler for operation: onDisconnectMessage\\")
 
@@ -7975,9 +7976,10 @@ class HoppscotchClient:
         self._stop_event = threading.Event()
       
       
-
         self.receive_operation_handlers = {}
-        self.receive_operation_discriminators = {}
+        self.receive_operation_discriminators = []
+      
+
 
         
         self.url = url
@@ -8085,16 +8087,16 @@ class HoppscotchClient:
           parsed_message: Parsed message object
           raw_message: Raw message string
 
-      Returns:
-          bool: True if message was handled, False otherwise
+      bool: Always returns False as handlers are called directly without indicating if they succeeded
       \\"\\"\\"
       if not isinstance(parsed_message, dict):
           return False
 
       # Check each operation's discriminator
-      for operation_id, discriminator in self.receive_operation_discriminators.items():
+      for discriminator in self.receive_operation_discriminators:
           key = discriminator.get(\\"key\\")
           value = discriminator.get(\\"value\\")
+          operation_id = discriminator.get(\\"operation_id\\")
 
           # Check if message matches this discriminator
           if key and parsed_message.get(key) == value:
@@ -8102,40 +8104,42 @@ class HoppscotchClient:
               if handler:
                   try:
                       handler(raw_message)
-                      return True
                   except Exception as error:
                       print(f\\"Error in {operation_id} handler: {error}\\")
-                      return True
 
       return False
 
-  def register_handle_time_stamp_message_handler(self, handler, discriminator_key, discriminator_value):
+  def register_handle_time_stamp_message_handler(self, handler, discriminator_key=None, discriminator_value=None):
       \\"\\"\\"
       Register a handler for handleTimeStampMessage operation.
 
       Args:
-          handler (callable): Handler function that receives parsed_message as argument
+          handler (callable): Handler function that receives raw_message as argument
           discriminator_key (str): Message field to use for routing (e.g., 'type', 'event_type')
           discriminator_value (str): Expected value for routing (e.g., 'hello', 'user_joined')
-
-      Example:
-          def my_handler(message):
-              print(f\\"Received: {message}\\")
-
-          client.register_handle_time_stamp_message_handler(my_handler, discriminator_key=\\"type\\", discriminator_value=\\"hello\\")
       \\"\\"\\"
       if not callable(handler):
           print(\\"Handler must be callable\\")
           return
 
+      # Validate that either both discriminator_key and discriminator_value are provided or neither
+      if (discriminator_key is not None and discriminator_value is None) or (discriminator_key is None and discriminator_value is not None):
+          print(\\"Error: Both discriminator_key and discriminator_value must be provided together\\")
+          return
+
       # Register handler
       self.receive_operation_handlers[\\"handleTimeStampMessage\\"] = handler
 
-      # Register discriminator
-      self.receive_operation_discriminators[\\"handleTimeStampMessage\\"] = {
-          \\"key\\": discriminator_key,
-          \\"value\\": discriminator_value
-      }
+     # Add discriminator entry to the list if both key and value are provided
+      if discriminator_key is not None and discriminator_value is not None:
+          discriminator_entry = {
+              \\"key\\": discriminator_key,
+              \\"value\\": discriminator_value,
+              \\"operation_id\\": \\"handleTimeStampMessage\\"
+          }
+        
+          # Add the new discriminator (no checks needed as per requirements)
+          self.receive_operation_discriminators.append(discriminator_entry)
 
       print(f\\"Registered handler for operation: handleTimeStampMessage\\")
 
@@ -8286,9 +8290,10 @@ class HoppscotchEchoWebSocketClient:
         self._stop_event = threading.Event()
       
       
-
         self.receive_operation_handlers = {}
-        self.receive_operation_discriminators = {}
+        self.receive_operation_discriminators = []
+      
+
 
         
         self.url = url
@@ -8396,16 +8401,16 @@ class HoppscotchEchoWebSocketClient:
           parsed_message: Parsed message object
           raw_message: Raw message string
 
-      Returns:
-          bool: True if message was handled, False otherwise
+      bool: Always returns False as handlers are called directly without indicating if they succeeded
       \\"\\"\\"
       if not isinstance(parsed_message, dict):
           return False
 
       # Check each operation's discriminator
-      for operation_id, discriminator in self.receive_operation_discriminators.items():
+      for discriminator in self.receive_operation_discriminators:
           key = discriminator.get(\\"key\\")
           value = discriminator.get(\\"value\\")
+          operation_id = discriminator.get(\\"operation_id\\")
 
           # Check if message matches this discriminator
           if key and parsed_message.get(key) == value:
@@ -8413,40 +8418,42 @@ class HoppscotchEchoWebSocketClient:
               if handler:
                   try:
                       handler(raw_message)
-                      return True
                   except Exception as error:
                       print(f\\"Error in {operation_id} handler: {error}\\")
-                      return True
 
       return False
 
-  def register_handle_time_stamp_message_handler(self, handler, discriminator_key, discriminator_value):
+  def register_handle_time_stamp_message_handler(self, handler, discriminator_key=None, discriminator_value=None):
       \\"\\"\\"
       Register a handler for handleTimeStampMessage operation.
 
       Args:
-          handler (callable): Handler function that receives parsed_message as argument
+          handler (callable): Handler function that receives raw_message as argument
           discriminator_key (str): Message field to use for routing (e.g., 'type', 'event_type')
           discriminator_value (str): Expected value for routing (e.g., 'hello', 'user_joined')
-
-      Example:
-          def my_handler(message):
-              print(f\\"Received: {message}\\")
-
-          client.register_handle_time_stamp_message_handler(my_handler, discriminator_key=\\"type\\", discriminator_value=\\"hello\\")
       \\"\\"\\"
       if not callable(handler):
           print(\\"Handler must be callable\\")
           return
 
+      # Validate that either both discriminator_key and discriminator_value are provided or neither
+      if (discriminator_key is not None and discriminator_value is None) or (discriminator_key is None and discriminator_value is not None):
+          print(\\"Error: Both discriminator_key and discriminator_value must be provided together\\")
+          return
+
       # Register handler
       self.receive_operation_handlers[\\"handleTimeStampMessage\\"] = handler
 
-      # Register discriminator
-      self.receive_operation_discriminators[\\"handleTimeStampMessage\\"] = {
-          \\"key\\": discriminator_key,
-          \\"value\\": discriminator_value
-      }
+     # Add discriminator entry to the list if both key and value are provided
+      if discriminator_key is not None and discriminator_value is not None:
+          discriminator_entry = {
+              \\"key\\": discriminator_key,
+              \\"value\\": discriminator_value,
+              \\"operation_id\\": \\"handleTimeStampMessage\\"
+          }
+        
+          # Add the new discriminator (no checks needed as per requirements)
+          self.receive_operation_discriminators.append(discriminator_entry)
 
       print(f\\"Registered handler for operation: handleTimeStampMessage\\")
 
@@ -8598,8 +8605,6 @@ class PostmanEchoWebSocketClientClient:
       
       
 
-      
-
         
         self.url = url
 
@@ -8706,16 +8711,16 @@ class PostmanEchoWebSocketClientClient:
           parsed_message: Parsed message object
           raw_message: Raw message string
 
-      Returns:
-          bool: True if message was handled, False otherwise
+      bool: Always returns False as handlers are called directly without indicating if they succeeded
       \\"\\"\\"
       if not isinstance(parsed_message, dict):
           return False
 
       # Check each operation's discriminator
-      for operation_id, discriminator in self.receive_operation_discriminators.items():
+      for discriminator in self.receive_operation_discriminators:
           key = discriminator.get(\\"key\\")
           value = discriminator.get(\\"value\\")
+          operation_id = discriminator.get(\\"operation_id\\")
 
           # Check if message matches this discriminator
           if key and parsed_message.get(key) == value:
@@ -8723,10 +8728,8 @@ class PostmanEchoWebSocketClientClient:
               if handler:
                   try:
                       handler(raw_message)
-                      return True
                   except Exception as error:
                       print(f\\"Error in {operation_id} handler: {error}\\")
-                      return True
 
       return False
 

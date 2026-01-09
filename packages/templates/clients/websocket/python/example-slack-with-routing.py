@@ -26,23 +26,11 @@ def handle_unrecognized_message(raw_message):
 def main():
     client = SlackWebsocketAPIClient()
 
-    client.register_on_hello_message_handler(
-        handle_hello_message,
-        discriminator_key="type",
-        discriminator_value="hello"
-    )
+    client.register_on_hello_message_handler(handle_hello_message)
     
-    client.register_on_event_handler(
-        handle_event_message,
-        discriminator_key="type",
-        discriminator_value="events_api" 
-    )
+    client.register_on_event_handler(handle_event_message)
     
-    client.register_on_disconnect_message_handler(
-        handle_disconnect_message,
-        discriminator_key="type",
-        discriminator_value="disconnect"
-    )
+    client.register_on_disconnect_message_handler(handle_disconnect_message)
 
     client.connect()
 

@@ -14,16 +14,16 @@ export function AutoRouteMessages() {
         parsed_message: Parsed message object
         raw_message: Raw message string
 
-    Returns:
-        bool: True if message was handled, False otherwise
+    bool: Always returns False as handlers are called directly without indicating if they succeeded
     """
     if not isinstance(parsed_message, dict):
         return False
 
     # Check each operation's discriminator
-    for operation_id, discriminator in self.receive_operation_discriminators.items():
+    for discriminator in self.receive_operation_discriminators:
         key = discriminator.get("key")
         value = discriminator.get("value")
+        operation_id = discriminator.get("operation_id")
 
         # Check if message matches this discriminator
         if key and parsed_message.get(key) == value:
@@ -31,10 +31,8 @@ export function AutoRouteMessages() {
             if handler:
                 try:
                     handler(raw_message)
-                    return True
                 except Exception as error:
                     print(f"Error in {operation_id} handler: {error}")
-                    return True
 
     return False`}
     </Text>

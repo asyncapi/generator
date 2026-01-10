@@ -116,8 +116,8 @@ The **package.json** file is used to define the dependencies for your template. 
   "version": "0.0.1",
   "description": "A template that generates a Python MQTT client using MQTT.",
   "generator": {
-    "apiVersion": "v1",
-    "generator": ">=1.10.0 <2.0.0",
+    "apiVersion": "v3",
+    "generator": ">=1.10.0 <=3.0.1",
     "supportedProtocols": ["mqtt"]
   },
   "dependencies": {
@@ -330,8 +330,8 @@ In **package.json** you can have the scripts property that you invoke by calling
         "test": "npm run test:clean && npm run test:generate && npm run test:start"
       },
       "generator": {
-        "apiVersion": "v1",
-        "generator": ">=1.10.0 <2.0.0",
+        "apiVersion": "v3",
+        "generator": ">=1.10.0 <=3.0.1",
         "supportedProtocols": ["mqtt"]
       },
       "dependencies": {
@@ -395,7 +395,7 @@ Update your `test:generate` script in **package.json** to include the server par
 "test:generate": "asyncapi generate fromTemplate test/fixtures/asyncapi.yml ./ --output test/project --force-write --param server=dev"
 ```
 
-You can now replace the static broker from `mqttBroker = 'test.mosquitto.org'` to `mqttBroker = "${asyncapi.servers().get(params.server).url()}"` in **index.js**.
+You can now replace the static broker from `mqttBroker = 'test.mosquitto.org'` to `mqttBroker = "${asyncapi.servers().get(params.server).host()}"` in **index.js**.
 
 Now the template code looks like this:
 
@@ -409,7 +409,7 @@ export default function ({ asyncapi, params }) {
     <File name="client.py">
       {`import paho.mqtt.client as mqtt
 
-mqttBroker = "${asyncapi.servers().get(params.server).url()}"
+mqttBroker = "${asyncapi.servers().get(params.server).host()}"
 
 class TemperatureServiceClient:
     def __init__(self):
@@ -440,7 +440,7 @@ export default function ({ asyncapi, params }) {
     // 2
       <Text newLines={2}>import paho.mqtt.client as mqtt</Text>
     // 3
-      <Text newLines={2}>mqttBroker = "{asyncapi.servers().get(params.server).url()}"</Text>
+      <Text newLines={2}>mqttBroker = "{asyncapi.servers().get(params.server).host()}"</Text>
     // 4
       <Text newLines={2}>class {asyncapi.info().title().replaceAll(' ', '')}Client:</Text>
     // 5
@@ -487,23 +487,23 @@ class TemperatureServiceClient:
 
 ```
 
-You'll then need to template to dynamically generate `sendTemperatureDrop` and `sendTemperatureRise` functions in the generated code based off the AsyncAPI document content. The goal is to write template code that returns functions for channels that the Temperature Service application is subscribed to. The template code to generate these functions will look like this:
+You'll then need a template to dynamically generate `sendTemperatureDrop` and `sendTemperatureRise` functions in the generated code based off the AsyncAPI document content. The goal is to write template code that returns functions for channels that the Temperature Service application is subscribed to. The template code to generate these functions will look like this:
 
 ```js
 <Text indent={2} newLines={2}>
-  <TopicFunction channels={asyncapi.channels().filterByReceive()} />
+  <TopicFunction channels={asyncapi.operations().filterByReceive()} />
 </Text>
 ```
 
-It's recommended to put reusable components outside the template directory in a new directory called components. You'll create a component that will dynamically generate functions in the output for as many channels as there are in your AsyncAPI document that contains a `publish` operation. Add the following code in the **python-mqtt-client-template/components/TopicFunction.js** file, after creating the **python-mqtt-client-template/components/** directory:
+It's recommended to put reusable components outside the template directory in a new directory called components. You'll create a component that will dynamically generate functions in the output for as many operations as there are in your AsyncAPI document that are marked with `action: receive`. Add the following code in the **python-mqtt-client-template/components/TopicFunction.js** file, after creating the **python-mqtt-client-template/components/** directory:
 
 ```js
 /*
  * This component returns a block of functions that user can use to send messages to specific topic.
  * As input it requires a list of Channel models from the parsed AsyncAPI document
  */
-export function TopicFunction({ channels }) {
-  const topicsDetails = getTopics(channels);
+export function TopicFunction({ operations }) {
+  const topicsDetails = getTopics(operations);
   let functions = '';
 
   topicsDetails.forEach((t) => {
@@ -522,25 +522,28 @@ export function TopicFunction({ channels }) {
  *
  * As input it requires a list of Channel models from the parsed AsyncAPI document
  */
-function getTopics(channels) {
-  const channelsCanSendTo = channels;
+function getTopics(operations) {
   let topicsDetails = [];
 
-  channelsCanSendTo.forEach((ch) => {
-    const topic = {};
-    const operationId = ch.operations().filterByReceive()[0].id();
-    topic.name = operationId.charAt(0).toUpperCase() + operationId.slice(1);
-    topic.topic = ch.address();
+  operations.forEach((op) => {
+    const channels = op.channels().all();
+    if (!channels.length) return;
 
-    topicsDetails.push(topic);
-  })
-
+    const channel = channels[0];
+    const operationId = op.operationId() || op.id();
+    
+    topicsDetails.push({
+      name: operationId.charAt(0).toUpperCase() + operationId.slice(1),
+      topic: channel.address()
+    });
+  });
+  
   return topicsDetails;
 }
 ```
 
-`{ channels }`: the `TopicFunction` component accepts a custom prop called channels and in your template code
-`getTopics(channels)`: Returns a list of objects, one for each channel with two properties; name and topic. The **name** holds information about the `operationId` provided in the AsyncAPI document while the **topic** holds information about the address of the topic.
+`{ operations }`: the `TopicFunction` component accepts a custom prop called operations and in your template code 
+`getTopics(operations)`: Returns a list of objects, one for each operation with two properties; name and topic. The **name** holds information about the `operationId` provided in the AsyncAPI document (or a generated ID if operationId is not set) while the **topic** holds information about the address of the topic from the operation's associated channel.
 
 Import the `TopicFunction` component in your template code in **index.js** and add the template code to generate the functions to topics that the `Temperature Service` application is subscribed to. In your case, the final version of your template code should look like this:
 
@@ -553,7 +556,7 @@ export default function ({ asyncapi, params }) {
     <File name="client.py">
       <Text newLines={2}>import paho.mqtt.client as mqtt</Text>
 
-      <Text newLines={2}>mqttBroker = "{asyncapi.servers().get(params.server).url()}"</Text>
+      <Text newLines={2}>mqttBroker = "{asyncapi.servers().get(params.server).host()}"</Text>
 
       <Text newLines={2}>class {asyncapi.info().title().replaceAll(' ', '')}Client:</Text>
 
@@ -564,7 +567,7 @@ export default function ({ asyncapi, params }) {
       </Text>
 
       <Text indent={2} newLines={2}>
-        <TopicFunction channels={asyncapi.channels().filterByReceive()} />
+        <TopicFunction channels={asyncapi.operations().filterByReceive()} />
       </Text>
     </File>
   )
@@ -591,7 +594,7 @@ python-mqtt-client-template
 
 Run `npm test` on your terminal to ensure everything works as expected.
 
-In the next section, you'll add another channel to **asyncapi.yml** file called `temperature/dropped` and `temperature/risen` then run the template again to make sure it still works as expected.
+In the next section, you'll add another channel to **asyncapi.yml** file called `temperatureDropped` and `temperatureRisen` then run the template again to make sure it still works as expected.
 
 #### 5d. Update AsyncAPI document
 

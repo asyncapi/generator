@@ -1,4 +1,4 @@
-import { getMessageExamples, getOperationMessages,toSnakeCase } from '@asyncapi/generator-helpers';
+import { getMessageExamples, getOperationMessages, toSnakeCase } from '@asyncapi/generator-helpers';
 import { Text } from '@asyncapi/generator-react-sdk';
 
 const languageConfig = {
@@ -11,7 +11,15 @@ const languageConfig = {
     codeBlock: 'python'
   }
 };
-
+/**
+ * Renders a code example for a specific language.
+ * @param {Object} languageConfig - Language configuration object containing label and codeBlock properties.
+ * @param {string} languageConfig.label - Display label for the language (e.g., 'JavaScript', 'Python').
+ * @param {string} languageConfig.codeBlock - Code block identifier for syntax highlighting.
+ * @param {string} operationId - The operation identifier.
+ * @param {Object} payload - The example payload to be stringified.
+ * @returns {string} Formatted markdown string containing the language-specific code example.
+*/
 function renderExample({ label, codeBlock }, operationId, payload) {
   const opId =
     codeBlock === 'python'

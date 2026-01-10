@@ -1,7 +1,10 @@
 import { Text } from '@asyncapi/generator-react-sdk';
 
 /**
- * Generates generic message routing logic using user-registered discriminators
+ * Generates the _route_message method for the WebSocket client.
+ * This method routes incoming messages to appropriate handlers based on discriminators.
+ * 
+ * @returns {JSX.Element} Text component containing the _route_message method implementation
  */
 export function AutoRouteMessages() {
   return (

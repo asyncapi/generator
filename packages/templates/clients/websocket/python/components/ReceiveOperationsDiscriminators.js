@@ -1,5 +1,12 @@
 import { Text } from '@asyncapi/generator-react-sdk';
 
+/**
+* Extracts discriminator metadata from a message for operation routing.
+* 
+* @param {object} message - The AsyncAPI message object containing payload and discriminator info.
+* @param {string} operationId - The operation ID associated with this message.
+* @returns {object|null} An object with key, value, and operation_id if discriminator is valid; otherwise null.
+*/
 const getDiscriminatorData = (message, operationId) => {
   const payload = message.payload();
   const discriminator = payload.discriminator();
@@ -18,7 +25,7 @@ const getDiscriminatorData = (message, operationId) => {
   const discriminatorProperty = properties[discriminator_key];
   const discriminator_value = discriminatorProperty.const();
 
-  if (!discriminator_key || !discriminator_value) {
+  if (!discriminator_value) {
     return null;
   }
 
@@ -29,6 +36,13 @@ const getDiscriminatorData = (message, operationId) => {
   };
 };
 
+/**
+* Generates Python initialization code for receive operation discriminators.
+* 
+* @param {object} props - Component props.
+* @param {Array} props.receiveOperations - Array of receive operations from AsyncAPI document.
+* @returns {React.Element|null} A Text component rendering Python code, or null if no operations.
+*/
 export function ReceiveOperationsDiscriminators({ receiveOperations }) {
   const hasReceiveOperations = receiveOperations && receiveOperations.length > 0;
   if (!hasReceiveOperations) {

@@ -7793,7 +7793,7 @@ class SlackWebsocketAPIClient:
       # Register handler
       self.receive_operation_handlers[\\"onHelloMessage\\"] = handler
 
-     # Add discriminator entry to the list if both key and value are provided
+      # Add discriminator entry to the list if both key and value are provided
       if discriminator_key is not None and discriminator_value is not None:
           discriminator_entry = {
               \\"key\\": discriminator_key,
@@ -7801,10 +7801,16 @@ class SlackWebsocketAPIClient:
               \\"operation_id\\": \\"onHelloMessage\\"
           }
         
-          # Add the new discriminator (no checks needed as per requirements)
-          self.receive_operation_discriminators.append(discriminator_entry)
+          # Check if this discriminator already exists
+          exists = any(
+              d.get(\\"key\\") == discriminator_key and 
+              d.get(\\"value\\") == discriminator_value and 
+              d.get(\\"operation_id\\") == \\"onHelloMessage\\" 
+              for d in self.receive_operation_discriminators
+          )
 
-      print(f\\"Registered handler for operation: onHelloMessage\\")
+          if not exists:
+            self.receive_operation_discriminators.append(discriminator_entry)
 
   def register_on_event_handler(self, handler, discriminator_key=None, discriminator_value=None):
       \\"\\"\\"
@@ -7827,7 +7833,7 @@ class SlackWebsocketAPIClient:
       # Register handler
       self.receive_operation_handlers[\\"onEvent\\"] = handler
 
-     # Add discriminator entry to the list if both key and value are provided
+      # Add discriminator entry to the list if both key and value are provided
       if discriminator_key is not None and discriminator_value is not None:
           discriminator_entry = {
               \\"key\\": discriminator_key,
@@ -7835,10 +7841,16 @@ class SlackWebsocketAPIClient:
               \\"operation_id\\": \\"onEvent\\"
           }
         
-          # Add the new discriminator (no checks needed as per requirements)
-          self.receive_operation_discriminators.append(discriminator_entry)
+          # Check if this discriminator already exists
+          exists = any(
+              d.get(\\"key\\") == discriminator_key and 
+              d.get(\\"value\\") == discriminator_value and 
+              d.get(\\"operation_id\\") == \\"onEvent\\" 
+              for d in self.receive_operation_discriminators
+          )
 
-      print(f\\"Registered handler for operation: onEvent\\")
+          if not exists:
+            self.receive_operation_discriminators.append(discriminator_entry)
 
   def register_on_disconnect_message_handler(self, handler, discriminator_key=None, discriminator_value=None):
       \\"\\"\\"
@@ -7861,7 +7873,7 @@ class SlackWebsocketAPIClient:
       # Register handler
       self.receive_operation_handlers[\\"onDisconnectMessage\\"] = handler
 
-     # Add discriminator entry to the list if both key and value are provided
+      # Add discriminator entry to the list if both key and value are provided
       if discriminator_key is not None and discriminator_value is not None:
           discriminator_entry = {
               \\"key\\": discriminator_key,
@@ -7869,10 +7881,16 @@ class SlackWebsocketAPIClient:
               \\"operation_id\\": \\"onDisconnectMessage\\"
           }
         
-          # Add the new discriminator (no checks needed as per requirements)
-          self.receive_operation_discriminators.append(discriminator_entry)
+          # Check if this discriminator already exists
+          exists = any(
+              d.get(\\"key\\") == discriminator_key and 
+              d.get(\\"value\\") == discriminator_value and 
+              d.get(\\"operation_id\\") == \\"onDisconnectMessage\\" 
+              for d in self.receive_operation_discriminators
+          )
 
-      print(f\\"Registered handler for operation: onDisconnectMessage\\")
+          if not exists:
+            self.receive_operation_discriminators.append(discriminator_entry)
 
   def close(self) :
     \\"\\"\\"Cleanly close the WebSocket connection.\\"\\"\\"
@@ -8130,7 +8148,7 @@ class HoppscotchClient:
       # Register handler
       self.receive_operation_handlers[\\"handleTimeStampMessage\\"] = handler
 
-     # Add discriminator entry to the list if both key and value are provided
+      # Add discriminator entry to the list if both key and value are provided
       if discriminator_key is not None and discriminator_value is not None:
           discriminator_entry = {
               \\"key\\": discriminator_key,
@@ -8138,10 +8156,16 @@ class HoppscotchClient:
               \\"operation_id\\": \\"handleTimeStampMessage\\"
           }
         
-          # Add the new discriminator (no checks needed as per requirements)
-          self.receive_operation_discriminators.append(discriminator_entry)
+          # Check if this discriminator already exists
+          exists = any(
+              d.get(\\"key\\") == discriminator_key and 
+              d.get(\\"value\\") == discriminator_value and 
+              d.get(\\"operation_id\\") == \\"handleTimeStampMessage\\" 
+              for d in self.receive_operation_discriminators
+          )
 
-      print(f\\"Registered handler for operation: handleTimeStampMessage\\")
+          if not exists:
+            self.receive_operation_discriminators.append(discriminator_entry)
 
   @staticmethod
   async def send_echo_message_static(message, socket):
@@ -8444,7 +8468,7 @@ class HoppscotchEchoWebSocketClient:
       # Register handler
       self.receive_operation_handlers[\\"handleTimeStampMessage\\"] = handler
 
-     # Add discriminator entry to the list if both key and value are provided
+      # Add discriminator entry to the list if both key and value are provided
       if discriminator_key is not None and discriminator_value is not None:
           discriminator_entry = {
               \\"key\\": discriminator_key,
@@ -8452,10 +8476,16 @@ class HoppscotchEchoWebSocketClient:
               \\"operation_id\\": \\"handleTimeStampMessage\\"
           }
         
-          # Add the new discriminator (no checks needed as per requirements)
-          self.receive_operation_discriminators.append(discriminator_entry)
+          # Check if this discriminator already exists
+          exists = any(
+              d.get(\\"key\\") == discriminator_key and 
+              d.get(\\"value\\") == discriminator_value and 
+              d.get(\\"operation_id\\") == \\"handleTimeStampMessage\\" 
+              for d in self.receive_operation_discriminators
+          )
 
-      print(f\\"Registered handler for operation: handleTimeStampMessage\\")
+          if not exists:
+            self.receive_operation_discriminators.append(discriminator_entry)
 
   @staticmethod
   async def send_echo_message_static(message, socket):

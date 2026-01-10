@@ -6058,37 +6058,37 @@ Send a message to the echo server.
 
 **Example (JavaScript):**
 \`\`\`javascript
-client.sendEchoMessage(\\"test\\");
-\`\`\`
-
-
-**Example (Python):**
-\`\`\`python
 client.sendEchoMessage(\\"test\\")
 \`\`\`
 
 
-**Example (JavaScript):**
-\`\`\`javascript
-client.sendEchoMessage(true);
+**Example (Python):**
+\`\`\`python
+client.send_echo_message(\\"test\\")
 \`\`\`
 
 
-**Example (Python):**
-\`\`\`python
+**Example (JavaScript):**
+\`\`\`javascript
 client.sendEchoMessage(true)
 \`\`\`
 
 
+**Example (Python):**
+\`\`\`python
+client.send_echo_message(true)
+\`\`\`
+
+
 **Example (JavaScript):**
 \`\`\`javascript
-client.sendEchoMessage(123);
+client.sendEchoMessage(123)
 \`\`\`
 
 
 **Example (Python):**
 \`\`\`python
-client.sendEchoMessage(123)
+client.send_echo_message(123)
 \`\`\`
 
 
@@ -6096,13 +6096,13 @@ client.sendEchoMessage(123)
 \`\`\`javascript
 client.sendEchoMessage({
   \\"test\\": \\"test text\\"
-});
+})
 \`\`\`
 
 
 **Example (Python):**
 \`\`\`python
-client.sendEchoMessage({
+client.send_echo_message({
   \\"test\\": \\"test text\\"
 })
 \`\`\`
@@ -6116,13 +6116,13 @@ Receive the timestamp message sent from server every second.
 
 **Example (JavaScript):**
 \`\`\`javascript
-client.handleTimeStampMessage(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\\");
+client.handleTimeStampMessage(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\\")
 \`\`\`
 
 
 **Example (Python):**
 \`\`\`python
-client.handleTimeStampMessage(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\\")
+client.handle_time_stamp_message(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\\")
 \`\`\`
 
 
@@ -6422,37 +6422,37 @@ Send a message to the echo server.
 
 **Example (JavaScript):**
 \`\`\`javascript
-client.sendEchoMessage(\\"test\\");
-\`\`\`
-
-
-**Example (Python):**
-\`\`\`python
 client.sendEchoMessage(\\"test\\")
 \`\`\`
 
 
-**Example (JavaScript):**
-\`\`\`javascript
-client.sendEchoMessage(true);
+**Example (Python):**
+\`\`\`python
+client.send_echo_message(\\"test\\")
 \`\`\`
 
 
-**Example (Python):**
-\`\`\`python
+**Example (JavaScript):**
+\`\`\`javascript
 client.sendEchoMessage(true)
 \`\`\`
 
 
+**Example (Python):**
+\`\`\`python
+client.send_echo_message(true)
+\`\`\`
+
+
 **Example (JavaScript):**
 \`\`\`javascript
-client.sendEchoMessage(123);
+client.sendEchoMessage(123)
 \`\`\`
 
 
 **Example (Python):**
 \`\`\`python
-client.sendEchoMessage(123)
+client.send_echo_message(123)
 \`\`\`
 
 
@@ -6460,13 +6460,13 @@ client.sendEchoMessage(123)
 \`\`\`javascript
 client.sendEchoMessage({
   \\"test\\": \\"test text\\"
-});
+})
 \`\`\`
 
 
 **Example (Python):**
 \`\`\`python
-client.sendEchoMessage({
+client.send_echo_message({
   \\"test\\": \\"test text\\"
 })
 \`\`\`
@@ -6480,13 +6480,13 @@ Receive the timestamp message sent from server every second.
 
 **Example (JavaScript):**
 \`\`\`javascript
-client.handleTimeStampMessage(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\\");
+client.handleTimeStampMessage(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\\")
 \`\`\`
 
 
 **Example (Python):**
 \`\`\`python
-client.handleTimeStampMessage(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\\")
+client.handle_time_stamp_message(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\\")
 \`\`\`
 
 
@@ -6785,13 +6785,13 @@ Send a message to the Postman Echo server.
 
 **Example (JavaScript):**
 \`\`\`javascript
-client.sendEchoMessage(\\"test\\");
+client.sendEchoMessage(\\"test\\")
 \`\`\`
 
 
 **Example (Python):**
 \`\`\`python
-client.sendEchoMessage(\\"test\\")
+client.send_echo_message(\\"test\\")
 \`\`\`
 
 
@@ -6799,13 +6799,13 @@ client.sendEchoMessage(\\"test\\")
 \`\`\`javascript
 client.sendEchoMessage({
   \\"test\\": \\"test text\\"
-});
+})
 \`\`\`
 
 
 **Example (Python):**
 \`\`\`python
-client.sendEchoMessage({
+client.send_echo_message({
   \\"test\\": \\"test text\\"
 })
 \`\`\`
@@ -7689,13 +7689,13 @@ client.onHelloMessage({
   \\"connection_info\\": {
     \\"app_id\\": \\"A08NKKBFGBD\\"
   }
-});
+})
 \`\`\`
 
 
 **Example (Python):**
 \`\`\`python
-client.onHelloMessage({
+client.on_hello_message({
   \\"type\\": \\"hello\\",
   \\"num_connections\\": 1,
   \\"debug_info\\": {
@@ -7756,13 +7756,13 @@ client.onEvent({
   \\"accepts_response_payload\\": false,
   \\"retry_attempt\\": 0,
   \\"retry_reason\\": \\"\\"
-});
+})
 \`\`\`
 
 
 **Example (Python):**
 \`\`\`python
-client.onEvent({
+client.on_event({
   \\"envelope_id\\": \\"c044c358-d17e-4f6d-94aa-3ddadb82ef59\\",
   \\"payload\\": {
     \\"token\\": \\"el8A2aGi0yIJ2so0ENvWcAfX\\",
@@ -7844,13 +7844,13 @@ client.onEvent({
   \\"accepts_response_payload\\": false,
   \\"retry_attempt\\": 3,
   \\"retry_reason\\": \\"timeout\\"
-});
+})
 \`\`\`
 
 
 **Example (Python):**
 \`\`\`python
-client.onEvent({
+client.on_event({
   \\"envelope_id\\": \\"6d0b4caf-95d3-410c-b85d-ce592e622aea\\",
   \\"payload\\": {
     \\"token\\": \\"el8A2aGi0yIJ2so0ENvWcAfX\\",
@@ -7956,13 +7956,13 @@ client.onEvent({
   \\"accepts_response_payload\\": false,
   \\"retry_attempt\\": 3,
   \\"retry_reason\\": \\"timeout\\"
-});
+})
 \`\`\`
 
 
 **Example (Python):**
 \`\`\`python
-client.onEvent({
+client.on_event({
   \\"envelope_id\\": \\"aefc571f-0d8f-4f2a-a5e7-6acc7f986816\\",
   \\"payload\\": {
     \\"token\\": \\"el8A2aGi0yIJ2so0ENvWcAfX\\",
@@ -8042,13 +8042,13 @@ client.onDisconnectMessage({
   \\"debug_info\\": {
     \\"host\\": \\"applink-0\\"
   }
-});
+})
 \`\`\`
 
 
 **Example (Python):**
 \`\`\`python
-client.onDisconnectMessage({
+client.on_disconnect_message({
   \\"type\\": \\"disconnect\\",
   \\"reason\\": \\"warning\\",
   \\"debug_info\\": {
@@ -8066,13 +8066,13 @@ client.onDisconnectMessage({
   \\"debug_info\\": {
     \\"host\\": \\"applink-0\\"
   }
-});
+})
 \`\`\`
 
 
 **Example (Python):**
 \`\`\`python
-client.onDisconnectMessage({
+client.on_disconnect_message({
   \\"type\\": \\"disconnect\\",
   \\"reason\\": \\"refresh_requested\\",
   \\"debug_info\\": {
@@ -8337,37 +8337,37 @@ Send a message to the echo server.
 
 **Example (JavaScript):**
 \`\`\`javascript
-client.sendEchoMessage(\\"test\\");
-\`\`\`
-
-
-**Example (Python):**
-\`\`\`python
 client.sendEchoMessage(\\"test\\")
 \`\`\`
 
 
-**Example (JavaScript):**
-\`\`\`javascript
-client.sendEchoMessage(true);
+**Example (Python):**
+\`\`\`python
+client.send_echo_message(\\"test\\")
 \`\`\`
 
 
-**Example (Python):**
-\`\`\`python
+**Example (JavaScript):**
+\`\`\`javascript
 client.sendEchoMessage(true)
 \`\`\`
 
 
+**Example (Python):**
+\`\`\`python
+client.send_echo_message(true)
+\`\`\`
+
+
 **Example (JavaScript):**
 \`\`\`javascript
-client.sendEchoMessage(123);
+client.sendEchoMessage(123)
 \`\`\`
 
 
 **Example (Python):**
 \`\`\`python
-client.sendEchoMessage(123)
+client.send_echo_message(123)
 \`\`\`
 
 
@@ -8375,13 +8375,13 @@ client.sendEchoMessage(123)
 \`\`\`javascript
 client.sendEchoMessage({
   \\"test\\": \\"test text\\"
-});
+})
 \`\`\`
 
 
 **Example (Python):**
 \`\`\`python
-client.sendEchoMessage({
+client.send_echo_message({
   \\"test\\": \\"test text\\"
 })
 \`\`\`
@@ -8395,13 +8395,13 @@ Receive the timestamp message sent from server every second.
 
 **Example (JavaScript):**
 \`\`\`javascript
-client.handleTimeStampMessage(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\\");
+client.handleTimeStampMessage(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\\")
 \`\`\`
 
 
 **Example (Python):**
 \`\`\`python
-client.handleTimeStampMessage(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\\")
+client.handle_time_stamp_message(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\\")
 \`\`\`
 
 
@@ -8650,37 +8650,37 @@ Send a message to the echo server.
 
 **Example (JavaScript):**
 \`\`\`javascript
-client.sendEchoMessage(\\"test\\");
-\`\`\`
-
-
-**Example (Python):**
-\`\`\`python
 client.sendEchoMessage(\\"test\\")
 \`\`\`
 
 
-**Example (JavaScript):**
-\`\`\`javascript
-client.sendEchoMessage(true);
+**Example (Python):**
+\`\`\`python
+client.send_echo_message(\\"test\\")
 \`\`\`
 
 
-**Example (Python):**
-\`\`\`python
+**Example (JavaScript):**
+\`\`\`javascript
 client.sendEchoMessage(true)
 \`\`\`
 
 
+**Example (Python):**
+\`\`\`python
+client.send_echo_message(true)
+\`\`\`
+
+
 **Example (JavaScript):**
 \`\`\`javascript
-client.sendEchoMessage(123);
+client.sendEchoMessage(123)
 \`\`\`
 
 
 **Example (Python):**
 \`\`\`python
-client.sendEchoMessage(123)
+client.send_echo_message(123)
 \`\`\`
 
 
@@ -8688,13 +8688,13 @@ client.sendEchoMessage(123)
 \`\`\`javascript
 client.sendEchoMessage({
   \\"test\\": \\"test text\\"
-});
+})
 \`\`\`
 
 
 **Example (Python):**
 \`\`\`python
-client.sendEchoMessage({
+client.send_echo_message({
   \\"test\\": \\"test text\\"
 })
 \`\`\`
@@ -8708,13 +8708,13 @@ Receive the timestamp message sent from server every second.
 
 **Example (JavaScript):**
 \`\`\`javascript
-client.handleTimeStampMessage(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\\");
+client.handleTimeStampMessage(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\\")
 \`\`\`
 
 
 **Example (Python):**
 \`\`\`python
-client.handleTimeStampMessage(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\\")
+client.handle_time_stamp_message(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\\")
 \`\`\`
 
 
@@ -8962,13 +8962,13 @@ Send a message to the Postman Echo server.
 
 **Example (JavaScript):**
 \`\`\`javascript
-client.sendEchoMessage(\\"test\\");
+client.sendEchoMessage(\\"test\\")
 \`\`\`
 
 
 **Example (Python):**
 \`\`\`python
-client.sendEchoMessage(\\"test\\")
+client.send_echo_message(\\"test\\")
 \`\`\`
 
 
@@ -8976,13 +8976,13 @@ client.sendEchoMessage(\\"test\\")
 \`\`\`javascript
 client.sendEchoMessage({
   \\"test\\": \\"test text\\"
-});
+})
 \`\`\`
 
 
 **Example (Python):**
 \`\`\`python
-client.sendEchoMessage({
+client.send_echo_message({
   \\"test\\": \\"test text\\"
 })
 \`\`\`

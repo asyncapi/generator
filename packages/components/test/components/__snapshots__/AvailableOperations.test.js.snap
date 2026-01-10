@@ -25,13 +25,13 @@ One message with one example
 
 **Example (JavaScript):**
 \`\`\`javascript
-client.oneMessageExample(\\"test\\");
+client.oneMessageExample(\\"test\\")
 \`\`\`
 
 
 **Example (Python):**
 \`\`\`python
-client.oneMessageExample(\\"test\\")
+client.one_message_example(\\"test\\")
 \`\`\`
 
 
@@ -43,13 +43,13 @@ client.oneMessageExample(\\"test\\")
 
 **Example (JavaScript):**
 \`\`\`javascript
-client.noSummaryNoDescriptionOperations(\\"test\\");
+client.noSummaryNoDescriptionOperations(\\"test\\")
 \`\`\`
 
 
 **Example (Python):**
 \`\`\`python
-client.noSummaryNoDescriptionOperations(\\"test\\")
+client.no_summary_no_description_operations(\\"test\\")
 \`\`\`
 
 
@@ -61,37 +61,37 @@ Multiple messages with examples
 
 **Example (JavaScript):**
 \`\`\`javascript
-client.multipleExamples(\\"test\\");
-\`\`\`
-
-
-**Example (Python):**
-\`\`\`python
 client.multipleExamples(\\"test\\")
 \`\`\`
 
 
-**Example (JavaScript):**
-\`\`\`javascript
-client.multipleExamples(false);
+**Example (Python):**
+\`\`\`python
+client.multiple_examples(\\"test\\")
 \`\`\`
 
 
-**Example (Python):**
-\`\`\`python
+**Example (JavaScript):**
+\`\`\`javascript
 client.multipleExamples(false)
 \`\`\`
 
 
+**Example (Python):**
+\`\`\`python
+client.multiple_examples(false)
+\`\`\`
+
+
 **Example (JavaScript):**
 \`\`\`javascript
-client.multipleExamples(123);
+client.multipleExamples(123)
 \`\`\`
 
 
 **Example (Python):**
 \`\`\`python
-client.multipleExamples(123)
+client.multiple_examples(123)
 \`\`\`
 
 
@@ -104,49 +104,49 @@ An example of a send operation with multiple message with examples
 
 **Example (JavaScript):**
 \`\`\`javascript
-client.mixedMessageExamples(\\"test\\");
+client.mixedMessageExamples(\\"test\\")
 \`\`\`
 
 
 **Example (Python):**
 \`\`\`python
-client.mixedMessageExamples(\\"test\\")
+client.mixed_message_examples(\\"test\\")
 \`\`\`
 
 
 **Example (JavaScript):**
 \`\`\`javascript
-client.mixedMessageExamples(\\"test\\");
+client.mixedMessageExamples(\\"test\\")
 \`\`\`
 
 
 **Example (Python):**
 \`\`\`python
-client.mixedMessageExamples(\\"test\\")
+client.mixed_message_examples(\\"test\\")
 \`\`\`
 
 
 **Example (JavaScript):**
 \`\`\`javascript
-client.mixedMessageExamples(false);
-\`\`\`
-
-
-**Example (Python):**
-\`\`\`python
 client.mixedMessageExamples(false)
 \`\`\`
 
 
+**Example (Python):**
+\`\`\`python
+client.mixed_message_examples(false)
+\`\`\`
+
+
 **Example (JavaScript):**
 \`\`\`javascript
-client.mixedMessageExamples(123);
+client.mixedMessageExamples(123)
 \`\`\`
 
 
 **Example (Python):**
 \`\`\`python
-client.mixedMessageExamples(123)
+client.mixed_message_examples(123)
 \`\`\`
 
 

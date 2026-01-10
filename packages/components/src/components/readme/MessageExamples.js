@@ -1,28 +1,30 @@
-import { getMessageExamples, getOperationMessages } from '@asyncapi/generator-helpers';
+import { getMessageExamples, getOperationMessages,toSnakeCase } from '@asyncapi/generator-helpers';
 import { Text } from '@asyncapi/generator-react-sdk';
 
 const languageConfig = {
   javascript: {
     label: 'JavaScript',
-    codeBlock: 'javascript',
-    render: (operationId, payload) => `
-**Example (JavaScript):**
-\`\`\`javascript
-client.${operationId}(${JSON.stringify(payload, null, 2)});
-\`\`\`
-`
+    codeBlock: 'javascript'
   },
   python: {
     label: 'Python',
-    codeBlock: 'python',
-    render: (operationId, payload) => `
-**Example (Python):**
-\`\`\`python
-client.${operationId}(${JSON.stringify(payload, null, 2)})
-\`\`\`
-`
+    codeBlock: 'python'
   }
 };
+
+function renderExample({ label, codeBlock }, operationId, payload) {
+  const opId =
+    codeBlock === 'python'
+      ? toSnakeCase(operationId)
+      : operationId;
+
+  return `
+**Example (${label}):**
+\`\`\`${codeBlock}
+client.${opId}(${JSON.stringify(payload, null, 2)})
+\`\`\`
+`;
+}
 
 export default function MessageExamples({ operation }) {
   const operationId = operation.id();
@@ -33,8 +35,8 @@ export default function MessageExamples({ operation }) {
     const examples = getMessageExamples(message) || [];
     examples.forEach((example) => {
       const payload = example.payload();
-      Object.values(languageConfig).forEach(({ render }) => {
-        messageExamples.push(render(operationId, payload));
+      Object.values(languageConfig).forEach((language) => {
+        messageExamples.push(renderExample(language, operationId, payload));
       });
     });
   });

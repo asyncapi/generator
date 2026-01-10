@@ -9,7 +9,7 @@ Suppose you can only sleep when the AC in your bedroom is set to 22 °C, and you
 
 In this tutorial:
 
-- You'll use the [Eclipse Mosquito](https://test.mosquitto.org) **MQTT broker**, which you'll connect to subscribe and publish messages using an MQTT client.
+- You'll use the [Eclipse Mosquitto](https://test.mosquitto.org) **MQTT broker**, which you'll connect to subscribe and publish messages using an MQTT client.
 - You'll use [Python Paho-MQTT](https://pypi.org/project/paho-mqtt/) as the **MQTT client** in this project.
 - You'll create a React template that will use the MQTT broker to allow you to monitor your bedroom's temperature and notify you when the temperature drops or rises above 22 °C.
 - Lastly, create a reusable component for the output code's `sendTemperatureDrop` and `sendTemperatureRise` functions.
@@ -487,11 +487,11 @@ class TemperatureServiceClient:
 
 ```
 
-You'll then need a template to dynamically generate `sendTemperatureDrop` and `sendTemperatureRise` functions in the generated code based off the AsyncAPI document content. The goal is to write template code that returns functions for channels that the Temperature Service application is subscribed to. The template code to generate these functions will look like this:
+You'll then need a template to dynamically generate `sendTemperatureDrop` and `sendTemperatureRise` functions in the generated code based off the AsyncAPI document content. The goal is to write template code that returns functions for operations marked with `action: receive`, using their associated channels. The template code to generate these functions will look like this:
 
 ```js
 <Text indent={2} newLines={2}>
-  <TopicFunction channels={asyncapi.operations().filterByReceive()} />
+  <TopicFunction operations={asyncapi.operations().filterByReceive()} />
 </Text>
 ```
 

@@ -29,7 +29,7 @@
     "./README.md"
   ],
   "dependencies": {
-    "@asyncapi/parser": "^3.1.0",
+    "@asyncapi/parser": "^3.4.0",
     "@babel/core": "7.12.9",
     "@babel/preset-env": "^7.12.7",
     "@babel/preset-react": "^7.12.7",

@@ -44,7 +44,7 @@ Before you create the template, you'll need to have an [AsyncAPI document](https
 
 ``` yml
 
-asyncapi: 2.6.0
+asyncapi: 3.0.0
 
 info:
   title: Temperature Service
@@ -53,22 +53,26 @@ info:
 
 servers:
   dev:
-    url: test.mosquitto.org #in case you're using local mosquitto instance, change this value to localhost.
+    host: test.mosquitto.org #in case you're using local mosquitto instance, change this value to localhost.
     protocol: mqtt
 
 channels:
-  temperature/changed:
-    description: Updates the bedroom temperature in the database when the temperatures drops or goes up.
-    publish:
-      operationId: temperatureChange
-      message:
+  temperatureChanged:
+    address: temperature/changed
+    messages:
+      temperatureChange:
         description: Message that is being sent when the temperature in the bedroom changes.
         payload:
-          type: object
-          additionalProperties: false
-          properties:
-            temperatureId:
-              type: string
+          $ref: '#/components/schemas/temperatureId'
+    description: Updates the bedroom temperature in the database when the temperatures drops or goes up.
+
+operations:
+  temperatureChange:
+    action: receive
+    summary: Message sent to the broker when the temperature is changed.
+    channel:
+      $ref: '#/channels/temperatureChanged'
+
 components:
   schemas:
     temperatureId:
@@ -357,7 +361,7 @@ You often have different runtime environments in programming, e.g., development 
 ```yml
 servers:
   dev:
-    url: test.mosquitto.org
+    host: test.mosquitto.org
     protocol: mqtt
 ```
 
@@ -595,31 +599,34 @@ Update the AsyncAPI document to use two channels:
 
 ```yml
 channels:
-  temperature/dropped:
-    description:  Notifies the user when the temperature drops past a certain point.
-    publish:
-      operationId: temperatureDrop
-      message:
+  temperatureDropped:
+    address: temperature/dropped
+    messages:
+      temperatureDrop:
         description: Message that is being sent when the temperature drops past a certain point.
         payload:
-          type: object
-          additionalProperties: false
-          properties:
-            temperatureId:
-              type: string
-
-  temperature/risen:
-    description: Notifies the user when the temperature rises past a certain point.
-    publish:
-      operationId: temperatureRise
-      message:
+          $ref: '#/components/schemas/temperatureId'
+    description: Notifies the user when the temperature drops past a certain point.
+  temperatureRisen:
+    address: temperature/risen
+    messages:
+      temperatureRise:
         description: Message that is being sent when the temperature rises past a certain point.
         payload:
-          type: object
-          additionalProperties: false
-          properties:
-            temperatureId:
-              type: string
+          $ref: '#/components/schemas/temperatureId'
+    description: Notifies the user when the temperature rises past a certain point.
+
+operations:
+  temperatureDrop:
+    action: receive
+    summary: Message sent to the broker when the temperature is dropped.
+    channel:
+      $ref: '#/channels/temperatureDropped'
+  temperatureRise:
+    action: receive
+    summary: Message sent to the broker when the temperature is risen.
+    channel:
+      $ref: '#/channels/temperatureRisen'
 ```
 
 And update your test script in test.py to test the two functions as below:

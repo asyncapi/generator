@@ -11,39 +11,63 @@ If cmd = "" Or app = "" Then
   WScript.Quit 1
 End If
 
-' Normalize case (Windows is case-insensitive)
-cmdL = LCase(Trim(cmd))
+cmdT = Trim(cmd)
 appL = LCase(Trim(app))
 
-' Validate command format and extract arguments safely
-If cmdL = appL Then
-  args = ""
-ElseIf Left(cmdL, Len(appL) + 1) = appL & " " Then
-  args = Mid(cmd, Len(app) + 2)
+' Extract executable and arguments from CMD (quote-safe)
+If Left(cmdT, 1) = """" Then
+  exeEnd = InStr(2, cmdT, """")
+  If exeEnd = 0 Then
+    WScript.Echo "Error: Malformed quoted CMD"
+    WScript.Quit 1
+  End If
+  exe = Mid(cmdT, 2, exeEnd - 2)
+  args = Trim(Mid(cmdT, exeEnd + 1))
 Else
-  WScript.Echo "Error: CMD does not match APP executable"
+  exeEnd = InStr(cmdT, " ")
+  If exeEnd = 0 Then
+    exe = cmdT
+    args = ""
+  Else
+    exe = Left(cmdT, exeEnd - 1)
+    args = Trim(Mid(cmdT, exeEnd + 1))
+  End If
+End If
+
+' Validate executable match
+If LCase(exe) <> appL Then
+  WScript.Echo "Error: CMD executable does not match APP"
   WScript.Quit 1
 End If
 
-' Whitelist trusted executables
-Select Case appL
-  Case "node.exe", "npm.exe", "cmd.exe"
-    ' allowed
+' Secure whitelist (basename-based)
+exeName = LCase(Mid(exe, InStrRev(exe, "\") + 1))
+Set FSO = CreateObject("Scripting.FileSystemObject")
+
+Select Case exeName
+  Case "node.exe", "npm.exe"
+    ' Require full path and existence (prevents PATH hijack)
+    If InStr(exe, "\") = 0 Or Not FSO.FileExists(exe) Then
+      WScript.Echo "Error: APP must be a full path to a trusted executable"
+      WScript.Quit 1
+    End If
+
+  Case "cmd.exe"
+    ' Allowed (system-resolved)
+
   Case Else
-    WScript.Echo "Error: Untrusted APP executable"
+    WScript.Echo "Error: Untrusted executable"
     WScript.Quit 1
 End Select
 
-' Execute with elevation and error handling
-If WScript.Arguments.Count > 0 Then
-  On Error Resume Next
+' Execute with elevation and error handling (no WScript.Arguments gate)
+On Error Resume Next
+Shell.ShellExecute exe, args, "", "runas", 0
 
-  Shell.ShellExecute app, args, "", "runas", 0
-
-  If Err.Number <> 0 Then
-    WScript.Echo "Error: Elevation failed (" & Err.Description & ")"
-    WScript.Quit 1
-  End If
-
-  On Error GoTo 0
+If Err.Number <> 0 Then
+  WScript.Echo "Error: Elevation failed (" & Err.Description & ")"
+  WScript.Quit 1
 End If
+
+On Error GoTo 0
+WScript.Quit 0

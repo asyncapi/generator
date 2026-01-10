@@ -6006,6 +6006,15 @@ Undestand how to use Hoppscotch Echo WebSocket as a client. Hoppscotch Echo WebS
 - **Server URL:** wss://echo-websocket.hoppscotch.io
 
 
+## Installation
+
+Install dependencies:
+
+\`\`\`bash
+npm install
+\`\`\`
+
+
 ## Usage
 
 \`\`\`javascript
@@ -6047,29 +6056,55 @@ Closes the WebSocket connection.
 Send a message to the echo server.
 
 
-**Example:**
+**Example (JavaScript):**
 \`\`\`javascript
-client.sendEchoMessage(\\"test\\");
+client.sendEchoMessage(\\"test\\")
 \`\`\`
 
 
-**Example:**
-\`\`\`javascript
-client.sendEchoMessage(true);
+**Example (Python):**
+\`\`\`python
+client.send_echo_message(\\"test\\")
 \`\`\`
 
 
-**Example:**
+**Example (JavaScript):**
 \`\`\`javascript
-client.sendEchoMessage(123);
+client.sendEchoMessage(true)
 \`\`\`
 
 
-**Example:**
+**Example (Python):**
+\`\`\`python
+client.send_echo_message(true)
+\`\`\`
+
+
+**Example (JavaScript):**
+\`\`\`javascript
+client.sendEchoMessage(123)
+\`\`\`
+
+
+**Example (Python):**
+\`\`\`python
+client.send_echo_message(123)
+\`\`\`
+
+
+**Example (JavaScript):**
 \`\`\`javascript
 client.sendEchoMessage({
   \\"test\\": \\"test text\\"
-});
+})
+\`\`\`
+
+
+**Example (Python):**
+\`\`\`python
+client.send_echo_message({
+  \\"test\\": \\"test text\\"
+})
 \`\`\`
 
 
@@ -6079,9 +6114,15 @@ client.sendEchoMessage({
 Receive the timestamp message sent from server every second.
 
 
-**Example:**
+**Example (JavaScript):**
 \`\`\`javascript
-client.handleTimeStampMessage(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\\");
+client.handleTimeStampMessage(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\\")
+\`\`\`
+
+
+**Example (Python):**
+\`\`\`python
+client.handle_time_stamp_message(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\\")
 \`\`\`
 
 
@@ -6329,6 +6370,15 @@ Undestand how to use Hoppscotch Echo WebSocket as a client. Hoppscotch Echo WebS
 - **Server URL:** wss://echo-websocket.hoppscotch.io
 
 
+## Installation
+
+Install dependencies:
+
+\`\`\`bash
+npm install
+\`\`\`
+
+
 ## Usage
 
 \`\`\`javascript
@@ -6370,29 +6420,55 @@ Closes the WebSocket connection.
 Send a message to the echo server.
 
 
-**Example:**
+**Example (JavaScript):**
 \`\`\`javascript
-client.sendEchoMessage(\\"test\\");
+client.sendEchoMessage(\\"test\\")
 \`\`\`
 
 
-**Example:**
-\`\`\`javascript
-client.sendEchoMessage(true);
+**Example (Python):**
+\`\`\`python
+client.send_echo_message(\\"test\\")
 \`\`\`
 
 
-**Example:**
+**Example (JavaScript):**
 \`\`\`javascript
-client.sendEchoMessage(123);
+client.sendEchoMessage(true)
 \`\`\`
 
 
-**Example:**
+**Example (Python):**
+\`\`\`python
+client.send_echo_message(true)
+\`\`\`
+
+
+**Example (JavaScript):**
+\`\`\`javascript
+client.sendEchoMessage(123)
+\`\`\`
+
+
+**Example (Python):**
+\`\`\`python
+client.send_echo_message(123)
+\`\`\`
+
+
+**Example (JavaScript):**
 \`\`\`javascript
 client.sendEchoMessage({
   \\"test\\": \\"test text\\"
-});
+})
+\`\`\`
+
+
+**Example (Python):**
+\`\`\`python
+client.send_echo_message({
+  \\"test\\": \\"test text\\"
+})
 \`\`\`
 
 
@@ -6402,9 +6478,15 @@ client.sendEchoMessage({
 Receive the timestamp message sent from server every second.
 
 
-**Example:**
+**Example (JavaScript):**
 \`\`\`javascript
-client.handleTimeStampMessage(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\\");
+client.handleTimeStampMessage(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\\")
+\`\`\`
+
+
+**Example (Python):**
+\`\`\`python
+client.handle_time_stamp_message(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\\")
 \`\`\`
 
 
@@ -6651,6 +6733,15 @@ Understand how to use the Postman Echo WebSocket as a client. The Postman Echo W
 - **Server URL:** wss://ws.postman-echo.com/raw
 
 
+## Installation
+
+Install dependencies:
+
+\`\`\`bash
+npm install
+\`\`\`
+
+
 ## Usage
 
 \`\`\`javascript
@@ -6692,17 +6783,31 @@ Closes the WebSocket connection.
 Send a message to the Postman Echo server.
 
 
-**Example:**
+**Example (JavaScript):**
 \`\`\`javascript
-client.sendEchoMessage(\\"test\\");
+client.sendEchoMessage(\\"test\\")
 \`\`\`
 
 
-**Example:**
+**Example (Python):**
+\`\`\`python
+client.send_echo_message(\\"test\\")
+\`\`\`
+
+
+**Example (JavaScript):**
 \`\`\`javascript
 client.sendEchoMessage({
   \\"test\\": \\"test text\\"
-});
+})
+\`\`\`
+
+
+**Example (Python):**
+\`\`\`python
+client.send_echo_message({
+  \\"test\\": \\"test text\\"
+})
 \`\`\`
 
 
@@ -7565,6 +7670,420 @@ Registers a callback for connection errors.
 Closes the WebSocket connection.
 
 
+### Available Operations
+
+#### \`onHelloMessage(payload)\`
+One time operation. You receive one message once you connect to the API
+
+
+**Example (JavaScript):**
+\`\`\`javascript
+client.onHelloMessage({
+  \\"type\\": \\"hello\\",
+  \\"num_connections\\": 1,
+  \\"debug_info\\": {
+    \\"host\\": \\"applink-8\\",
+    \\"build_number\\": 105,
+    \\"approximate_connection_time\\": 18060
+  },
+  \\"connection_info\\": {
+    \\"app_id\\": \\"A08NKKBFGBD\\"
+  }
+})
+\`\`\`
+
+
+**Example (Python):**
+\`\`\`python
+client.on_hello_message({
+  \\"type\\": \\"hello\\",
+  \\"num_connections\\": 1,
+  \\"debug_info\\": {
+    \\"host\\": \\"applink-8\\",
+    \\"build_number\\": 105,
+    \\"approximate_connection_time\\": 18060
+  },
+  \\"connection_info\\": {
+    \\"app_id\\": \\"A08NKKBFGBD\\"
+  }
+})
+\`\`\`
+
+
+
+
+#### \`onEvent(payload)\`
+
+
+
+**Example (JavaScript):**
+\`\`\`javascript
+client.onEvent({
+  \\"envelope_id\\": \\"c044c358-d17e-4f6d-94aa-3ddadb82ef59\\",
+  \\"payload\\": {
+    \\"token\\": \\"el8A2aGi0yIJ2so0ENvWcAfX\\",
+    \\"team_id\\": \\"T34F2JRQU\\",
+    \\"context_team_id\\": \\"T34F2JRQU\\",
+    \\"context_enterprise_id\\": null,
+    \\"api_app_id\\": \\"A08NKKBFGBD\\",
+    \\"event\\": {
+      \\"subtype\\": \\"channel_join\\",
+      \\"user\\": \\"U08NR6C69R8\\",
+      \\"text\\": \\"<@U08NR6C69R8> has joined the channel\\",
+      \\"inviter\\": \\"UD698Q5LM\\",
+      \\"type\\": \\"message\\",
+      \\"ts\\": \\"1744903248.779009\\",
+      \\"channel\\": \\"C072JMTJ85Q\\",
+      \\"event_ts\\": \\"1744903248.779009\\",
+      \\"channel_type\\": \\"channel\\"
+    },
+    \\"type\\": \\"event_callback\\",
+    \\"event_id\\": \\"Ev08NDP302UE\\",
+    \\"event_time\\": 1744903248,
+    \\"authorizations\\": [
+      {
+        \\"enterprise_id\\": null,
+        \\"team_id\\": \\"T34F2JRQU\\",
+        \\"user_id\\": \\"U08NR6C69R8\\",
+        \\"is_bot\\": true,
+        \\"is_enterprise_install\\": false
+      }
+    ],
+    \\"is_ext_shared_channel\\": false,
+    \\"event_context\\": \\"4-eyJldCI6Im1lc3NhZ2UiLCJ0aWQiOiJUMzRGMkpSUVUiLCJhaWQiOiJBMDhOS0tCRkdCRCIsImNpZCI6IkMwNzJKTVRKODVRIn0\\"
+  },
+  \\"type\\": \\"events_api\\",
+  \\"accepts_response_payload\\": false,
+  \\"retry_attempt\\": 0,
+  \\"retry_reason\\": \\"\\"
+})
+\`\`\`
+
+
+**Example (Python):**
+\`\`\`python
+client.on_event({
+  \\"envelope_id\\": \\"c044c358-d17e-4f6d-94aa-3ddadb82ef59\\",
+  \\"payload\\": {
+    \\"token\\": \\"el8A2aGi0yIJ2so0ENvWcAfX\\",
+    \\"team_id\\": \\"T34F2JRQU\\",
+    \\"context_team_id\\": \\"T34F2JRQU\\",
+    \\"context_enterprise_id\\": null,
+    \\"api_app_id\\": \\"A08NKKBFGBD\\",
+    \\"event\\": {
+      \\"subtype\\": \\"channel_join\\",
+      \\"user\\": \\"U08NR6C69R8\\",
+      \\"text\\": \\"<@U08NR6C69R8> has joined the channel\\",
+      \\"inviter\\": \\"UD698Q5LM\\",
+      \\"type\\": \\"message\\",
+      \\"ts\\": \\"1744903248.779009\\",
+      \\"channel\\": \\"C072JMTJ85Q\\",
+      \\"event_ts\\": \\"1744903248.779009\\",
+      \\"channel_type\\": \\"channel\\"
+    },
+    \\"type\\": \\"event_callback\\",
+    \\"event_id\\": \\"Ev08NDP302UE\\",
+    \\"event_time\\": 1744903248,
+    \\"authorizations\\": [
+      {
+        \\"enterprise_id\\": null,
+        \\"team_id\\": \\"T34F2JRQU\\",
+        \\"user_id\\": \\"U08NR6C69R8\\",
+        \\"is_bot\\": true,
+        \\"is_enterprise_install\\": false
+      }
+    ],
+    \\"is_ext_shared_channel\\": false,
+    \\"event_context\\": \\"4-eyJldCI6Im1lc3NhZ2UiLCJ0aWQiOiJUMzRGMkpSUVUiLCJhaWQiOiJBMDhOS0tCRkdCRCIsImNpZCI6IkMwNzJKTVRKODVRIn0\\"
+  },
+  \\"type\\": \\"events_api\\",
+  \\"accepts_response_payload\\": false,
+  \\"retry_attempt\\": 0,
+  \\"retry_reason\\": \\"\\"
+})
+\`\`\`
+
+
+**Example (JavaScript):**
+\`\`\`javascript
+client.onEvent({
+  \\"envelope_id\\": \\"6d0b4caf-95d3-410c-b85d-ce592e622aea\\",
+  \\"payload\\": {
+    \\"token\\": \\"el8A2aGi0yIJ2so0ENvWcAfX\\",
+    \\"team_id\\": \\"T34F2JRQU\\",
+    \\"context_team_id\\": \\"T34F2JRQU\\",
+    \\"context_enterprise_id\\": null,
+    \\"api_app_id\\": \\"A08NKKBFGBD\\",
+    \\"event\\": {
+      \\"type\\": \\"reaction_added\\",
+      \\"user\\": \\"UD698Q5LM\\",
+      \\"reaction\\": \\"beers\\",
+      \\"item\\": {
+        \\"type\\": \\"message\\",
+        \\"channel\\": \\"C072JMTJ85Q\\",
+        \\"ts\\": \\"1744903248.779009\\"
+      },
+      \\"event_ts\\": \\"1744903279.021400\\"
+    },
+    \\"type\\": \\"event_callback\\",
+    \\"event_id\\": \\"Ev08NRBU37QB\\",
+    \\"event_time\\": 1744903279,
+    \\"authorizations\\": [
+      {
+        \\"enterprise_id\\": null,
+        \\"team_id\\": \\"T34F2JRQU\\",
+        \\"user_id\\": \\"U08NR6C69R8\\",
+        \\"is_bot\\": true,
+        \\"is_enterprise_install\\": false
+      }
+    ],
+    \\"is_ext_shared_channel\\": false,
+    \\"event_context\\": \\"4-eyJldCI6InJlYWN0aW9uX2FkZGVkIiwidGlkIjoiVDM0RjJKUlFVIiwiYWlkIjoiQTA4TktLQkZHQkQiLCJjaWQiOiJDMDcySk1USjg1USJ9\\"
+  },
+  \\"type\\": \\"events_api\\",
+  \\"accepts_response_payload\\": false,
+  \\"retry_attempt\\": 3,
+  \\"retry_reason\\": \\"timeout\\"
+})
+\`\`\`
+
+
+**Example (Python):**
+\`\`\`python
+client.on_event({
+  \\"envelope_id\\": \\"6d0b4caf-95d3-410c-b85d-ce592e622aea\\",
+  \\"payload\\": {
+    \\"token\\": \\"el8A2aGi0yIJ2so0ENvWcAfX\\",
+    \\"team_id\\": \\"T34F2JRQU\\",
+    \\"context_team_id\\": \\"T34F2JRQU\\",
+    \\"context_enterprise_id\\": null,
+    \\"api_app_id\\": \\"A08NKKBFGBD\\",
+    \\"event\\": {
+      \\"type\\": \\"reaction_added\\",
+      \\"user\\": \\"UD698Q5LM\\",
+      \\"reaction\\": \\"beers\\",
+      \\"item\\": {
+        \\"type\\": \\"message\\",
+        \\"channel\\": \\"C072JMTJ85Q\\",
+        \\"ts\\": \\"1744903248.779009\\"
+      },
+      \\"event_ts\\": \\"1744903279.021400\\"
+    },
+    \\"type\\": \\"event_callback\\",
+    \\"event_id\\": \\"Ev08NRBU37QB\\",
+    \\"event_time\\": 1744903279,
+    \\"authorizations\\": [
+      {
+        \\"enterprise_id\\": null,
+        \\"team_id\\": \\"T34F2JRQU\\",
+        \\"user_id\\": \\"U08NR6C69R8\\",
+        \\"is_bot\\": true,
+        \\"is_enterprise_install\\": false
+      }
+    ],
+    \\"is_ext_shared_channel\\": false,
+    \\"event_context\\": \\"4-eyJldCI6InJlYWN0aW9uX2FkZGVkIiwidGlkIjoiVDM0RjJKUlFVIiwiYWlkIjoiQTA4TktLQkZHQkQiLCJjaWQiOiJDMDcySk1USjg1USJ9\\"
+  },
+  \\"type\\": \\"events_api\\",
+  \\"accepts_response_payload\\": false,
+  \\"retry_attempt\\": 3,
+  \\"retry_reason\\": \\"timeout\\"
+})
+\`\`\`
+
+
+**Example (JavaScript):**
+\`\`\`javascript
+client.onEvent({
+  \\"envelope_id\\": \\"aefc571f-0d8f-4f2a-a5e7-6acc7f986816\\",
+  \\"payload\\": {
+    \\"token\\": \\"el8A2aGi0yIJ2so0ENvWcAfX\\",
+    \\"team_id\\": \\"T34F2JRQU\\",
+    \\"context_team_id\\": \\"T34F2JRQU\\",
+    \\"context_enterprise_id\\": null,
+    \\"api_app_id\\": \\"A08NKKBFGBD\\",
+    \\"event\\": {
+      \\"type\\": \\"message\\",
+      \\"subtype\\": \\"message_deleted\\",
+      \\"previous_message\\": {
+        \\"user\\": \\"U08KSJS9Z4N\\",
+        \\"type\\": \\"message\\",
+        \\"ts\\": \\"1744904504.505559\\",
+        \\"client_msg_id\\": \\"c6d9111e-f9df-4b52-ba17-7bbb04255243\\",
+        \\"text\\": \\"Hi can we connect on linkedin\\",
+        \\"team\\": \\"T34F2JRQU\\",
+        \\"blocks\\": [
+          {
+            \\"type\\": \\"rich_text\\",
+            \\"block_id\\": \\"gCBVb\\",
+            \\"elements\\": [
+              {
+                \\"type\\": \\"rich_text_section\\",
+                \\"elements\\": [
+                  {
+                    \\"type\\": \\"text\\",
+                    \\"text\\": \\"Hi can we connect on linkedin\\"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      \\"channel\\": \\"C072JMTJ85Q\\",
+      \\"hidden\\": true,
+      \\"deleted_ts\\": \\"1744904504.505559\\",
+      \\"event_ts\\": \\"1744904513.021500\\",
+      \\"ts\\": \\"1744904513.021500\\",
+      \\"channel_type\\": \\"channel\\"
+    },
+    \\"type\\": \\"event_callback\\",
+    \\"event_id\\": \\"Ev08N76U6JHM\\",
+    \\"event_time\\": 1744904513,
+    \\"authorizations\\": [
+      {
+        \\"enterprise_id\\": null,
+        \\"team_id\\": \\"T34F2JRQU\\",
+        \\"user_id\\": \\"U08NR6C69R8\\",
+        \\"is_bot\\": true,
+        \\"is_enterprise_install\\": false
+      }
+    ],
+    \\"is_ext_shared_channel\\": false,
+    \\"event_context\\": \\"4-eyJldCI6Im1lc3NhZ2UiLCJ0aWQiOiJUMzRGMkpSUVUiLCJhaWQiOiJBMDhOS0tCRkdCRCIsImNpZCI6IkMwNzJKTVRKODVRIn0\\"
+  },
+  \\"type\\": \\"events_api\\",
+  \\"accepts_response_payload\\": false,
+  \\"retry_attempt\\": 3,
+  \\"retry_reason\\": \\"timeout\\"
+})
+\`\`\`
+
+
+**Example (Python):**
+\`\`\`python
+client.on_event({
+  \\"envelope_id\\": \\"aefc571f-0d8f-4f2a-a5e7-6acc7f986816\\",
+  \\"payload\\": {
+    \\"token\\": \\"el8A2aGi0yIJ2so0ENvWcAfX\\",
+    \\"team_id\\": \\"T34F2JRQU\\",
+    \\"context_team_id\\": \\"T34F2JRQU\\",
+    \\"context_enterprise_id\\": null,
+    \\"api_app_id\\": \\"A08NKKBFGBD\\",
+    \\"event\\": {
+      \\"type\\": \\"message\\",
+      \\"subtype\\": \\"message_deleted\\",
+      \\"previous_message\\": {
+        \\"user\\": \\"U08KSJS9Z4N\\",
+        \\"type\\": \\"message\\",
+        \\"ts\\": \\"1744904504.505559\\",
+        \\"client_msg_id\\": \\"c6d9111e-f9df-4b52-ba17-7bbb04255243\\",
+        \\"text\\": \\"Hi can we connect on linkedin\\",
+        \\"team\\": \\"T34F2JRQU\\",
+        \\"blocks\\": [
+          {
+            \\"type\\": \\"rich_text\\",
+            \\"block_id\\": \\"gCBVb\\",
+            \\"elements\\": [
+              {
+                \\"type\\": \\"rich_text_section\\",
+                \\"elements\\": [
+                  {
+                    \\"type\\": \\"text\\",
+                    \\"text\\": \\"Hi can we connect on linkedin\\"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      \\"channel\\": \\"C072JMTJ85Q\\",
+      \\"hidden\\": true,
+      \\"deleted_ts\\": \\"1744904504.505559\\",
+      \\"event_ts\\": \\"1744904513.021500\\",
+      \\"ts\\": \\"1744904513.021500\\",
+      \\"channel_type\\": \\"channel\\"
+    },
+    \\"type\\": \\"event_callback\\",
+    \\"event_id\\": \\"Ev08N76U6JHM\\",
+    \\"event_time\\": 1744904513,
+    \\"authorizations\\": [
+      {
+        \\"enterprise_id\\": null,
+        \\"team_id\\": \\"T34F2JRQU\\",
+        \\"user_id\\": \\"U08NR6C69R8\\",
+        \\"is_bot\\": true,
+        \\"is_enterprise_install\\": false
+      }
+    ],
+    \\"is_ext_shared_channel\\": false,
+    \\"event_context\\": \\"4-eyJldCI6Im1lc3NhZ2UiLCJ0aWQiOiJUMzRGMkpSUVUiLCJhaWQiOiJBMDhOS0tCRkdCRCIsImNpZCI6IkMwNzJKTVRKODVRIn0\\"
+  },
+  \\"type\\": \\"events_api\\",
+  \\"accepts_response_payload\\": false,
+  \\"retry_attempt\\": 3,
+  \\"retry_reason\\": \\"timeout\\"
+})
+\`\`\`
+
+
+
+
+#### \`onDisconnectMessage(payload)\`
+
+
+
+**Example (JavaScript):**
+\`\`\`javascript
+client.onDisconnectMessage({
+  \\"type\\": \\"disconnect\\",
+  \\"reason\\": \\"warning\\",
+  \\"debug_info\\": {
+    \\"host\\": \\"applink-0\\"
+  }
+})
+\`\`\`
+
+
+**Example (Python):**
+\`\`\`python
+client.on_disconnect_message({
+  \\"type\\": \\"disconnect\\",
+  \\"reason\\": \\"warning\\",
+  \\"debug_info\\": {
+    \\"host\\": \\"applink-0\\"
+  }
+})
+\`\`\`
+
+
+**Example (JavaScript):**
+\`\`\`javascript
+client.onDisconnectMessage({
+  \\"type\\": \\"disconnect\\",
+  \\"reason\\": \\"refresh_requested\\",
+  \\"debug_info\\": {
+    \\"host\\": \\"applink-0\\"
+  }
+})
+\`\`\`
+
+
+**Example (Python):**
+\`\`\`python
+client.on_disconnect_message({
+  \\"type\\": \\"disconnect\\",
+  \\"reason\\": \\"refresh_requested\\",
+  \\"debug_info\\": {
+    \\"host\\": \\"applink-0\\"
+  }
+})
+\`\`\`
+
+
+
+
 "
 `;
 
@@ -7810,6 +8329,84 @@ Registers a callback for connection errors.
 Closes the WebSocket connection.
 
 
+### Available Operations
+
+#### \`sendEchoMessage(payload)\`
+Send a message to the echo server.
+
+
+**Example (JavaScript):**
+\`\`\`javascript
+client.sendEchoMessage(\\"test\\")
+\`\`\`
+
+
+**Example (Python):**
+\`\`\`python
+client.send_echo_message(\\"test\\")
+\`\`\`
+
+
+**Example (JavaScript):**
+\`\`\`javascript
+client.sendEchoMessage(true)
+\`\`\`
+
+
+**Example (Python):**
+\`\`\`python
+client.send_echo_message(true)
+\`\`\`
+
+
+**Example (JavaScript):**
+\`\`\`javascript
+client.sendEchoMessage(123)
+\`\`\`
+
+
+**Example (Python):**
+\`\`\`python
+client.send_echo_message(123)
+\`\`\`
+
+
+**Example (JavaScript):**
+\`\`\`javascript
+client.sendEchoMessage({
+  \\"test\\": \\"test text\\"
+})
+\`\`\`
+
+
+**Example (Python):**
+\`\`\`python
+client.send_echo_message({
+  \\"test\\": \\"test text\\"
+})
+\`\`\`
+
+
+
+
+#### \`handleTimeStampMessage(payload)\`
+Receive the timestamp message sent from server every second.
+
+
+**Example (JavaScript):**
+\`\`\`javascript
+client.handleTimeStampMessage(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\\")
+\`\`\`
+
+
+**Example (Python):**
+\`\`\`python
+client.handle_time_stamp_message(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\\")
+\`\`\`
+
+
+
+
 "
 `;
 
@@ -8045,6 +8642,84 @@ Registers a callback for connection errors.
 Closes the WebSocket connection.
 
 
+### Available Operations
+
+#### \`sendEchoMessage(payload)\`
+Send a message to the echo server.
+
+
+**Example (JavaScript):**
+\`\`\`javascript
+client.sendEchoMessage(\\"test\\")
+\`\`\`
+
+
+**Example (Python):**
+\`\`\`python
+client.send_echo_message(\\"test\\")
+\`\`\`
+
+
+**Example (JavaScript):**
+\`\`\`javascript
+client.sendEchoMessage(true)
+\`\`\`
+
+
+**Example (Python):**
+\`\`\`python
+client.send_echo_message(true)
+\`\`\`
+
+
+**Example (JavaScript):**
+\`\`\`javascript
+client.sendEchoMessage(123)
+\`\`\`
+
+
+**Example (Python):**
+\`\`\`python
+client.send_echo_message(123)
+\`\`\`
+
+
+**Example (JavaScript):**
+\`\`\`javascript
+client.sendEchoMessage({
+  \\"test\\": \\"test text\\"
+})
+\`\`\`
+
+
+**Example (Python):**
+\`\`\`python
+client.send_echo_message({
+  \\"test\\": \\"test text\\"
+})
+\`\`\`
+
+
+
+
+#### \`handleTimeStampMessage(payload)\`
+Receive the timestamp message sent from server every second.
+
+
+**Example (JavaScript):**
+\`\`\`javascript
+client.handleTimeStampMessage(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\\")
+\`\`\`
+
+
+**Example (Python):**
+\`\`\`python
+client.handle_time_stamp_message(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\\")
+\`\`\`
+
+
+
+
 "
 `;
 
@@ -8277,6 +8952,42 @@ Registers a callback for connection errors.
 
 ### \`close()\`
 Closes the WebSocket connection.
+
+
+### Available Operations
+
+#### \`sendEchoMessage(payload)\`
+Send a message to the Postman Echo server.
+
+
+**Example (JavaScript):**
+\`\`\`javascript
+client.sendEchoMessage(\\"test\\")
+\`\`\`
+
+
+**Example (Python):**
+\`\`\`python
+client.send_echo_message(\\"test\\")
+\`\`\`
+
+
+**Example (JavaScript):**
+\`\`\`javascript
+client.sendEchoMessage({
+  \\"test\\": \\"test text\\"
+})
+\`\`\`
+
+
+**Example (Python):**
+\`\`\`python
+client.send_echo_message({
+  \\"test\\": \\"test text\\"
+})
+\`\`\`
+
+
 
 
 "

@@ -567,7 +567,7 @@ export default function ({ asyncapi, params }) {
       </Text>
 
       <Text indent={2} newLines={2}>
-        <TopicFunction channels={asyncapi.operations().filterByReceive()} />
+        <TopicFunction operations={asyncapi.operations().filterByReceive()} />
       </Text>
     </File>
   )

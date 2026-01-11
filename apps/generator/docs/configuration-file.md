@@ -21,7 +21,6 @@ metadata:
   target: javascript
   stack: express
 
-renderer: react
 apiVersion: v3
 supportedProtocols:
   - amqp
@@ -86,7 +85,6 @@ Alternatively, you can include your configuration in the `generator` property of
     "target": "javascript",
     "stack": "express"
   },
-  "renderer": "react",
   "apiVersion": "v3",
   "supportedProtocols": ["amqp", "mqtt"],
   "parameters": {
@@ -150,7 +148,6 @@ The `generator` property from `package.json` file must contain a JSON object and
 | `metadata.protocol` | String | **Required for `client`/`sdk`**. The protocol this template targets (e.g., `websocket`, `kafka`). Not used for `docs`/`config`. |
 | `metadata.target` | String | **Required**. The output language or format (e.g., `javascript`, `html`, `yaml`). |
 | `metadata.stack` | String | Optional. The stack or framework (e.g., `express`, `quarkus`). Only for `client`/`sdk`. |
-| `renderer` | String | Its value can be either `react` or `nunjucks` (default). |
 | `apiVersion` | String | Determines which **major** version of the [Parser-API](https://github.com/asyncapi/parser-api) the template uses. For example, `v2` for `v2.x.x`. If not specified, the Generator assumes the template is not compatible with the Parser-API so it will use the [Parser-JS v1 API](https://github.com/asyncapi/parser-js/tree/v1.18.1#api-documentation). For templates that need to support AsyncAPI specification v3 make sure to use `v3` [Parser-API](https://github.com/asyncapi/parser-api). If the template uses a version of the Parser-API that is not supported by the Generator, the Generator will throw an error. |
 | `supportedProtocols` | [String] | A list with all the protocols this template supports. |
 | `parameters` | Object[String, Object] | An object with all the parameters that can be passed when generating the template. When using the command line, it's done by indicating `--param name=value` or `-p name=value`. |
@@ -166,7 +163,6 @@ The `generator` property from `package.json` file must contain a JSON object and
 | `conditionalGeneration[filePath/directoryName].validation` | Object (JSON Schema fragment) | The validation defines the condition under which the file or directory will be generated. It must be a valid JSON Schema fragment that validates the value of the parameter. For example, if you want to include a folder only when includeDocs is true, use "validation": `{ "const": true }`. You can also use more complex validation logic, like "enum": ["yes", "true"] or "type": "string" with a "pattern" constraint. If the parameter fails validation, the file or folder will not be included in the generated output. This allows for powerful and flexible control over template generation based on user input. |
 | `nonRenderableFiles` | [String] | A list of file paths or [globs](https://en.wikipedia.org/wiki/Glob_(programming)) that must be copied "as-is" to the target directory, i.e., without performing any rendering process. This is useful when you want to copy binary files. |
 | `generator` | [String] | A string representing the generator version-range the template is compatible with. This value must follow the [semver](https://nodejs.dev/learn/semantic-versioning-using-npm) syntax. E.g., `>=1.0.0`, `>=1.0.0 <=2.0.0`, `~1.0.0`, `^1.0.0`, `1.0.0`, etc. [Read more about semver](https://docs.npmjs.com/about-semantic-versioning). |
-| `filters` | [String] | A list of modules containing functions that can be used as Nunjucks filters. In case of external modules, remember they need to be added as a dependency in `package.json` of your template. |
 | `hooks` | Object[String, String] or Object[String, Array[String]] | A list of modules containing hooks, except for the ones you keep locally in your template in the default location. For each module you must specify the exact name of the hook that should be used in the template. For a single hook, you can specify it as a string; for more hooks, you must pass an array of strings. In the case of external modules, remember they need to be added as a dependency in `package.json` of your template. There is also [an official hooks library](hooks#official-library) always included in the generator. As this is a library of multiple hooks, you still need to explicitly specify in the configuration which one you want to use. Use `@asyncapi/generator-hooks` as the library name. |
 
 ## Special parameters

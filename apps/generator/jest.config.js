@@ -1,11 +1,6 @@
-const path = require('path');
 const baseConfig = require('../../jest.config.base');
 
 module.exports = {
-  ...baseConfig(__dirname, {
-    moduleNameMapper: {
-      '^@asyncapi/nunjucks-filters$': path.resolve(__dirname, '../nunjucks-filters'),
-    },
-  }),
+  ...baseConfig(__dirname),
   clearMocks: true,
 };

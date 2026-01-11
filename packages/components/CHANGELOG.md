@@ -1,5 +1,19 @@
 # @asyncapi/generator-components
 
+## 0.4.1
+
+### Patch Changes
+
+- c5be81a: Enforce new helpers and components release to use latest versions in generator. Required because of the recent misconfiguration of releases and Trusted Publishing.
+- Updated dependencies [c5be81a]
+  - @asyncapi/generator-helpers@1.0.1
+
+## 0.4.0
+
+### Minor Changes
+
+- 715c1d2: Centralize reusable README components for consistent template rendering across languages
+
 ## 0.3.1
 
 ### Patch Changes

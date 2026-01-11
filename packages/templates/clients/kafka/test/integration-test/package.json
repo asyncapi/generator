@@ -1,6 +1,5 @@
 {
-    "name": "@asyncapi/template-kafka-integration-test",
-    "version": "0.0.1",
+    "name": "template-kafka-integration-test",
     "private": true,
     "description": "This is a integration tests for all the kafka clients",
     "scripts": {
@@ -11,10 +10,8 @@
     },
     "author": "Shuaib Salad <sh.salat@gmail.com>",
     "license": "Apache-2.0",
-    "dependencies": {
-        "@asyncapi/generator-helpers": "0.2.0"
-    },
     "devDependencies": {
+        "@asyncapi/generator-helpers": "*",
         "@babel/cli": "^7.25.9",
         "@babel/core": "^7.26.0",
         "@babel/preset-env": "^7.26.0",

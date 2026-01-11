@@ -28,6 +28,7 @@ FROM base AS final
 
 # Copy package.json files extracted by turbo prune
 COPY --from=installer /out/json/ .
+COPY jest.config.base.js ./jest.config.base.js
 COPY --from=installer /out/package-lock.json ./package-lock.json
 
 # Install dependencies only with package.json files to make use of cache
@@ -35,6 +36,9 @@ RUN npm ci --ignore-scripts
 
 # Copy the rest of the source code
 COPY --from=installer /out/full/ .
+
+# turbo prune excludes runtime template assets
+COPY packages/templates ./packages/templates
 
 # Change ownership of the /app directory to the node user
 RUN chown -R node:node /app

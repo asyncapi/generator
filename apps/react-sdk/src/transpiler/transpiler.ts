@@ -1,11 +1,11 @@
 import Path from 'path';
-import log from 'loglevel';
 
-import { rollup, RollupWarning } from 'rollup';
+import { rollup } from 'rollup';
 import babel from '@rollup/plugin-babel';
 
 import { getStatsInDir } from '../utils';
 import { TranspileFilesOptions } from '../types';
+import { createStderrFilter, getSilencedWarnings } from './stderrFilter';
 
 const ROOT_DIR = Path.resolve(__dirname, '../..');
 
@@ -18,22 +18,8 @@ const ROOT_DIR = Path.resolve(__dirname, '../..');
  */
 export async function transpileFiles(directory: string, outputDir: string, options?: TranspileFilesOptions) {
     const { files, dirs } = await getStatsInDir(directory);
-    const warnings: RollupWarning[] = [];
-    const debug = process.argv.includes('--debug');
-    const originalStderr = process.stderr.write;
-
-    process.stderr.write = ((chunk: any, enc?: any, cb?: any): boolean => {
-        const msg = chunk.toString();
-
-        if (msg.includes('[BABEL]')) {
-            if (debug) {
-                log.debug(msg.trim());
-            }
-            if (typeof cb === 'function') cb();
-            return true;
-        }
-        return originalStderr.call(process.stderr, chunk, enc, cb);
-    }) as any;
+    const stderrFilter = createStderrFilter(getSilencedWarnings());
+    stderrFilter.apply();
 
     try {
         if (files.length) {
@@ -46,9 +32,6 @@ export async function transpileFiles(directory: string, outputDir: string, optio
          */
             const bundles = await rollup({
                 input: files,
-                onwarn: (warning: RollupWarning) =>{
-                    warnings.push(warning);
-                },
                 plugins: [
                     babel({
                         cwd: ROOT_DIR,
@@ -80,11 +63,7 @@ export async function transpileFiles(directory: string, outputDir: string, optio
             await bundles.close();
         }
     } finally {
-        process.stderr.write = originalStderr;
-    }
-
-    if (debug && warnings.length > 0) {
-        warnings.forEach(w => log.debug(w.message));
+        stderrFilter.restore();
     }
 
     if (options?.recursive === true && dirs.length > 0) {

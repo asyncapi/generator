@@ -156,6 +156,18 @@
 | props.framework | string | Optional framework for the language. |
 | props.queryParams | Array.&lt;Array.&lt;string&gt;&gt; | Array of query parameters, each represented as [paramName, paramType?]. |
 
+### **renderExample** - Renders a code example for a specific language.
+### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| languageConfig | Object | Language configuration object containing label and codeBlock properties. |
+| languageConfig.label | string | Display label for the language (e.g., &#x27;JavaScript&#x27;, &#x27;Python&#x27;). |
+| languageConfig.codeBlock | string | Code block identifier for syntax highlighting. |
+| operationId | string | The operation identifier. |
+| payload | Object | The example payload to be stringified. |
+
+### Returns
+- **string** - Formatted markdown string containing the language-specific code example.
 ### **ownKeys** - Configuration for WebSocket error handler registration method logic per language.
 
 ### **RegisterErrorHandler** - Renders a WebSocket error handler registration method with optional pre- and post-execution logic.

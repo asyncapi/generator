@@ -65,13 +65,16 @@ utils.convertMapToObject = (map) => {
  * @param {String} link URL where the AsyncAPI document is located.
  * @returns {Promise<String>} Content of fetched file.
  */
-utils.fetchSpec = (link) => {
-  return new Promise((resolve, reject) => {
-    fetch(link)
-      .then(res => resolve(res.text()))
-      .catch(reject);
-  });
+utils.fetchSpec = async (link) => {
+  const res = await fetch(link);
+  if (!res.ok) {
+    throw new Error(
+      `Failed to fetch AsyncAPI document from ${link}: HTTP ${res.status} ${res.statusText}`
+    );
+  }
+  return res.text();
 };
+
 
 /**
  * Checks if given string is URL and if not, we assume it is file path
@@ -120,11 +123,11 @@ utils.isAsyncFunction = (fn) => {
  */
 utils.registerTypeScript = (filePath) => {
   const isTypescriptFile = filePath.endsWith('.ts');
-  
+
   if (!isTypescriptFile) {
     return;
   }
-  
+
   const { REGISTER_INSTANCE, register } = require('ts-node');
   // if the ts-node has already been registered before, do not register it again.
   // Check the env. TS_NODE_ENV if ts-node started via ts-node-dev package

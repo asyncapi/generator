@@ -500,7 +500,7 @@ It's recommended to put reusable components outside the template directory in a 
 ```js
 /*
  * This component returns a block of functions that user can use to send messages to specific topic.
- * As input it requires a list of Channel models from the parsed AsyncAPI document
+ * As input it requires a list of Operation models from the parsed AsyncAPI document marked with `action: receive`.
  */
 export function TopicFunction({ operations }) {
   const topicsDetails = getTopics(operations);

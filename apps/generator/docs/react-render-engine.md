@@ -3,14 +3,14 @@ title: "React render engine"
 weight: 110
 ---
 
-[React](https://reactjs.org) is the render engine that we strongly suggest you should use for any new templates. The only reason it is not the default render engine is to stay backward compatible.
+[React](https://reactjs.org) is the only  render engine supported by the AsyncAPI generator.
 
-* It enables the possibility of [debugging](#debugging-react-template) your template (this is not possible with Nunjucks).
+* It enables the possibility of debugging your template.
 * It provides better error stack traces.
 * Provides better support for separating code into more manageable chunks/components.
-* The readability of the template is much better compared to Nunjucks syntax.
+* The readability of the template is much better.
 * Better tool support for development.
-* Introduces testability of components which is not possible with Nunjucks.
+* Introduces testability of components.
 
 When writing React templates you decide whether to use CommonJS, ES5, or ES6 modules since everything is bundled together before the rendering process takes over. We use our own React renderer which can be found in the [Generator React SDK](https://github.com/asyncapi/generator-react-sdk). 
 There you can find information about how the renderer works or how we transpile your template files.
@@ -46,35 +46,3 @@ For further information about components, props, etc, see the [Generator React S
    - `originalAsyncAPI` which is an original spec file before it is parsed. 
    - `params` that contain the parameters provided when generating.
 1. All the file templates are supported where the variables are provided after the default props as listed above. 
-
-### Debugging React template in VSCode
-
-With React, it enables you to debug your templates. For Visual Studio Code, we have created a boilerplate [launch configuration](https://code.visualstudio.com/docs/editor/debugging#_launch-configurations) to enable debugging in your template. Add the following launch configuration:
-
-```json
-{
-  "version": "0.2.0",
-  "configurations": [
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "Debug template",
-      "timeout": 10000,
-      "sourceMaps": true,
-      "args": [
-        "./asyncapi.yml",
-        "./template",
-        "--output",
-        "./output",
-        "--install",
-        "--force-write"
-      ],
-      "program": "ag"
-    }
-  ]
-}
-```
-
-Now replace `./asyncapi.yml` with your document of choice. Replace `./template` with the path to your React template. You can now debug your template by adding any breakpoints you want and inspecting your code.
-
-

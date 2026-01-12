@@ -1,0 +1,161 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing AvailableOperations component Must render all available operations 1`] = `
+"### Available Operations
+
+#### \`noMessage(payload)\`
+Operation with no messages
+
+
+
+#### \`noMessageExamples(payload)\`
+Message without any examples
+
+
+
+#### \`noSummaryOperations(payload)\`
+
+This is a description without a summary
+
+
+
+#### \`oneMessageExample(payload)\`
+One message with one example
+
+
+**Example (JavaScript):**
+\`\`\`javascript
+client.oneMessageExample(\\"test\\")
+\`\`\`
+
+
+**Example (Python):**
+\`\`\`python
+client.one_message_example(\\"test\\")
+\`\`\`
+
+
+
+
+#### \`noSummaryNoDescriptionOperations(payload)\`
+
+
+
+**Example (JavaScript):**
+\`\`\`javascript
+client.noSummaryNoDescriptionOperations(\\"test\\")
+\`\`\`
+
+
+**Example (Python):**
+\`\`\`python
+client.no_summary_no_description_operations(\\"test\\")
+\`\`\`
+
+
+
+
+#### \`multipleExamples(payload)\`
+Multiple messages with examples
+
+
+**Example (JavaScript):**
+\`\`\`javascript
+client.multipleExamples(\\"test\\")
+\`\`\`
+
+
+**Example (Python):**
+\`\`\`python
+client.multiple_examples(\\"test\\")
+\`\`\`
+
+
+**Example (JavaScript):**
+\`\`\`javascript
+client.multipleExamples(false)
+\`\`\`
+
+
+**Example (Python):**
+\`\`\`python
+client.multiple_examples(false)
+\`\`\`
+
+
+**Example (JavaScript):**
+\`\`\`javascript
+client.multipleExamples(123)
+\`\`\`
+
+
+**Example (Python):**
+\`\`\`python
+client.multiple_examples(123)
+\`\`\`
+
+
+
+
+#### \`mixedMessageExamples(payload)\`
+Mixed message example coverage
+An example of a send operation with multiple message with examples
+
+
+**Example (JavaScript):**
+\`\`\`javascript
+client.mixedMessageExamples(\\"test\\")
+\`\`\`
+
+
+**Example (Python):**
+\`\`\`python
+client.mixed_message_examples(\\"test\\")
+\`\`\`
+
+
+**Example (JavaScript):**
+\`\`\`javascript
+client.mixedMessageExamples(\\"test\\")
+\`\`\`
+
+
+**Example (Python):**
+\`\`\`python
+client.mixed_message_examples(\\"test\\")
+\`\`\`
+
+
+**Example (JavaScript):**
+\`\`\`javascript
+client.mixedMessageExamples(false)
+\`\`\`
+
+
+**Example (Python):**
+\`\`\`python
+client.mixed_message_examples(false)
+\`\`\`
+
+
+**Example (JavaScript):**
+\`\`\`javascript
+client.mixedMessageExamples(123)
+\`\`\`
+
+
+**Example (Python):**
+\`\`\`python
+client.mixed_message_examples(123)
+\`\`\`
+
+
+
+
+#### \`PascalCaseOperation(payload)\`
+
+
+
+
+#### \`operation_with_snake_case(payload)\`"
+`;

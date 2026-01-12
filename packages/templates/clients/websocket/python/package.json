@@ -12,11 +12,11 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@asyncapi/generator-react-sdk": "*",
-    "@asyncapi/generator-helpers": "0.2.0",
-    "@asyncapi/generator-components": "0.3.1"
+    "@asyncapi/generator-helpers": "1.0.1",
+    "@asyncapi/generator-components": "0.4.1"
   },
   "devDependencies": {
-    "@asyncapi/parser": "^3.0.14",
+    "@asyncapi/parser": "^3.4.0",
     "@babel/cli": "^7.25.9",
     "@babel/core": "^7.26.0",
     "@babel/preset-env": "^7.26.0",
@@ -26,20 +26,6 @@
     "eslint-plugin-jest": "^23.8.2",
     "eslint-plugin-react": "^7.34.1",
     "eslint-plugin-sonarjs": "^0.5.0"
-  },
-  "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "jsx"
-    ],
-    "transform": {
-      "^.+\\.jsx?$": "babel-jest"
-    },
-    "moduleNameMapper": {
-      "^nimma/legacy$": "<rootDir>/../../../../../node_modules/nimma/dist/legacy/cjs/index.js",
-      "^nimma/(.*)": "<rootDir>/../../../../../node_modules/nimma/dist/cjs/$1"
-    }
   },
   "babel": {
     "presets": [

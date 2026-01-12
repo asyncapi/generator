@@ -59,26 +59,54 @@ async def ${staticMethodName}(message, socket):
     return {
       nonStaticMethod: `/**
  * Instance method version of ${methodName} that uses the client's own WebSocket connection.
+ * Automatically compiles schemas if not already compiled.
+ * 
  * @param {Object} message - The message payload to send
  * @throws {Error} If WebSocket connection is not established
+ * @throws {Error} If schema compilation fails
+ * @throws {Error} If message validation fails against all schemas
  */
-${methodName}(message){
+async ${methodName}(message){
   if(!this.websocket){
     throw new Error('WebSocket connection not established. Call connect() first.');
   }
-  ${clientName}.${methodName}(message, this.websocket);
+  await this.compileOperationSchemas();
+  const schemas = this.compiledSchemas['${methodName}'];
+  ${clientName}.${methodName}(message, this.websocket, schemas);
 }`,
       staticMethod: `/**
  * Sends a ${methodName} message over the WebSocket connection.
  * 
  * @param {Object} message - The message payload to send. Should match the schema defined in the AsyncAPI document.
- * @param {WebSocket} [socket] - The WebSocket connection to use. If not provided, the client's own connection will be used.
+ * @param {WebSocket} socket - The WebSocket connection to use.
+ * @param {Array<function>} schemas - Array of compiled schema validator functions for this operation.
  * @throws {TypeError} If message cannot be stringified to JSON
  * @throws {Error} If WebSocket connection is not in OPEN state
+ * @throws {Error} If message validation fails against all schemas
  */
-static ${methodName}(message, socket) {
+static ${methodName}(message, socket, schemas) {
   try {
-    socket.send(JSON.stringify(message));
+    if (!schemas || schemas.length === 0) {
+      socket.send(JSON.stringify(message));
+      return { isValid: true }; 
+    }
+    const allValidationErrors = [];
+    let isValid = false;
+    for(const compiledSchema of schemas){
+      const validationResult = validateMessage(compiledSchema, message);
+      if (validationResult.isValid) {
+        isValid = true;
+        socket.send(JSON.stringify(message));
+        break;
+      } else {
+        if (validationResult.validationErrors) {
+          allValidationErrors.push(...validationResult.validationErrors);
+        }
+      }
+      if (!isValid) {
+        console.error('Validation errors:', JSON.stringify(allValidationErrors, null, 2));
+      }
+    }
   } catch (error) {
     console.error('Error sending ${methodName} message:', error);
   }

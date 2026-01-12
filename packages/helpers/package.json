@@ -1,6 +1,6 @@
 {
   "name": "@asyncapi/generator-helpers",
-  "version": "0.2.0",
+  "version": "1.0.1",
   "description": "Package with reusable helpers that make it easier to work with AsyncAPI structures.",
   "scripts": {
     "test": "jest --coverage",
@@ -20,11 +20,5 @@
   },
   "devDependencies": {
     "jest": "^27.3.1"
-  },
-  "jest": {
-    "moduleNameMapper": {
-      "^nimma/legacy$": "<rootDir>/../../node_modules/nimma/dist/legacy/cjs/index.js",
-      "^nimma/(.*)": "<rootDir>/../../node_modules/nimma/dist/cjs/$1"
-    }
   }
 }

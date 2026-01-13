@@ -117,7 +117,7 @@ The **package.json** file is used to define the dependencies for your template. 
   "description": "A template that generates a Python MQTT client using MQTT.",
   "generator": {
     "apiVersion": "v3",
-    "generator": ">=1.10.0 <=3.0.1",
+    "generator": ">=2.0.0 <4.0.0",
     "supportedProtocols": ["mqtt"]
   },
   "dependencies": {
@@ -331,7 +331,7 @@ In **package.json** you can have the scripts property that you invoke by calling
       },
       "generator": {
         "apiVersion": "v3",
-        "generator": ">=1.10.0 <=3.0.1",
+        "generator": ">=2.0.0 <4.0.0",
         "supportedProtocols": ["mqtt"]
       },
       "dependencies": {

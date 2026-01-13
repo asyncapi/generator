@@ -7,6 +7,9 @@
 */
 const getMessageDiscriminatorData = (message, operationId) => {
   const payload = message.payload();
+  if (!payload) {
+    return null;
+  }
   const discriminator = payload.discriminator();
 
   if (!discriminator) {

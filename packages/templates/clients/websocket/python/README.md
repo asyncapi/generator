@@ -73,7 +73,7 @@ To run the Slack Client example with auto-routing, follow steps 1-3 for the basi
 - Use `example-slack-with-routing.py` instead of `example-slack.py`.
 - This example demonstrates auto-routing of messages to registered handlers for different event types (hello, event, disconnect, and unrecognized messages). The client automatically dispatches incoming messages based on their type without manual parsing.
 
-4. Start the example that uses generated client with auto-routing. Examine events, and modify example as you want:
+1. Start the example that uses generated client with auto-routing. Examine events, and modify example as you want:
     
     Linux/MacOs
     ```bash

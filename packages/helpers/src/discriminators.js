@@ -41,7 +41,7 @@ const getMessageDiscriminatorData = (message, operationId) => {
  * Get discriminator metadata from all messages across a list of AsyncAPI operations.
  *
  * @param {Array<object>} operations - List of AsyncAPI Operation objects.
- * @returns {string} JSON stringified array of discriminator metadata.
+ * @returns {Array<object>} Array of discriminator metadata objects with key, value, and operation_id.
  */
 const getMessageDiscriminatorsFromOperations = (operations) => {
   const operationDiscriminators = [];

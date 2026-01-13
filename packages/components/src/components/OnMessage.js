@@ -47,7 +47,7 @@ const websocketOnMessageMethod = {
     operation_id = discriminator.get("operation_id")
 
     # Check if message matches this discriminator
-    if key and parsed_message.get(key) == value:
+    if key and isinstance(parsed_message, dict) and parsed_message.get(key) == value:
       handler = self.receive_operation_handlers.get(operation_id)
       if handler:
         try:

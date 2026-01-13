@@ -66,3 +66,22 @@ You can use our AsyncAPI's credentials to access different set of events produce
     {"type":"hello","num_connections":1,"debug_info":{"host":"applink-3","build_number":118,"approximate_connection_time":18060},"connection_info":{"app_id":"A08NKKBFGBD"}}
     ```
     If you did not receive it, you probably connect with wrong credentials. Remember that generated `ticket` can be used only once to establish a websocket connection.
+
+## Client for Slack with Auto-Routing
+
+To run the Slack Client example with auto-routing, follow the steps for the basic Slack client above but with 2 exceptions:
+- Use `example-slack-with-routing.py` instead of `example-slack.py`.
+- This example demonstrates auto-routing of messages to registered handlers for different event types (hello, event, disconnect, and unrecognized messages). The client automatically dispatches incoming messages based on their type without manual parsing.
+
+1. Start the example that uses generated client with auto-routing. Examine events, and modify example as you want:
+    
+    Linux/MacOs
+    ```bash
+    TICKET=6b150bb1-82b4-457f-a09d-6ff0af1fd2d1 APP_ID=00dfdcccb53a2645dd3f1773fcb10fa7b0a598cf333a990a9db12375ef1865dd python example-slack-with-routing.py
+    ```
+    Windows
+    ```powershell
+    $env:TICKET="dcaa9dc7-b728-40dd-ac40-16dd5f2f8710"; $env:APP_ID="00dfdcccb53a2645dd3f1773fcb10fa7b0a598cf333a990a9db12375ef1865dd"; python example-slack-with-routing.py
+    ```
+
+1. By default, `discriminator_key` is derived from the discriminator field, and `discriminator_value` from the corresponding `const` in the AsyncAPI document. For non-default cases, users must provide both `discriminator_key` and `discriminator_value` explicitly in register_handlers. Partial inputs are not supported to avoid ambiguity in message routing.

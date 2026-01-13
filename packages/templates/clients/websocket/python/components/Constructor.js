@@ -1,8 +1,7 @@
 import { Text } from '@asyncapi/generator-react-sdk';
-import { QueryParamsVariables } from '@asyncapi/generator-components';
+import { QueryParamsVariables, OperationsDiscriminators } from '@asyncapi/generator-components';
 import { QueryParamsArgumentsDocs } from './QueryParamsArgumentsDocs';
 import { InitSignature } from './InitSignature';
-import { ReceiveOperationsDiscriminators } from './ReceiveOperationsDiscriminators';
 
 export function Constructor({ serverUrl, query, receiveOperations }) {
   const queryParamsArray = query && Array.from(query.entries());
@@ -28,11 +27,14 @@ export function Constructor({ serverUrl, query, receiveOperations }) {
       self.error_handlers = []        # Callables for errors
       self.outgoing_processors = []   # Callables to process outgoing messages
       self._stop_event = threading.Event()
-      
-      ${ query ? 'params = {}' : ''}`
+      ${ query ? 'params = {}' : ''}
+      ${ (receiveOperations && receiveOperations.length > 0) ? 'self.receive_operation_handlers = {}' : ''}`
         }
       </Text>
-      <ReceiveOperationsDiscriminators receiveOperations={receiveOperations} />
+      <OperationsDiscriminators
+        language="python"
+        operations={receiveOperations} 
+      />
       <QueryParamsVariables
         language="python"
         queryParams={queryParamsArray} 

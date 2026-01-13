@@ -1,5 +1,3 @@
-import { Text } from '@asyncapi/generator-react-sdk';
-
 /**
 * Extracts discriminator metadata from a message for operation routing.
 * 
@@ -7,17 +5,17 @@ import { Text } from '@asyncapi/generator-react-sdk';
 * @param {string} operationId - The operation ID associated with this message.
 * @returns {object|null} An object with key, value, and operation_id if discriminator is valid; otherwise null.
 */
-const getDiscriminatorData = (message, operationId) => {
+const getMessageDiscriminatorData = (message, operationId) => {
   const payload = message.payload();
   const discriminator = payload.discriminator();
-  
+
   if (!discriminator) {
     return null;
   }
 
   const discriminator_key = discriminator;
   const properties = payload.properties();
-  
+
   if (!properties || !properties[discriminator_key]) {
     return null;
   }
@@ -37,42 +35,32 @@ const getDiscriminatorData = (message, operationId) => {
 };
 
 /**
-* Generates Python initialization code for receive operation discriminators.
-* 
-* @param {object} props - Component props.
-* @param {Array} props.receiveOperations - Array of receive operations from AsyncAPI document.
-* @returns {React.Element|null} A Text component rendering Python code, or null if no operations.
-*/
-export function ReceiveOperationsDiscriminators({ receiveOperations }) {
-  const hasReceiveOperations = receiveOperations && receiveOperations.length > 0;
-  if (!hasReceiveOperations) {
-    return null;
-  }
+ * Get discriminator metadata from all messages across a list of AsyncAPI operations.
+ *
+ * @param {Array<object>} operations - List of AsyncAPI Operation objects.
+ * @returns {string} JSON stringified array of discriminator metadata.
+ */
+const getMessageDiscriminatorsFromOperations = (operations) => {
+  const operationDiscriminators = [];
 
-  const receiveOperationDiscriminators = [];
-
-  receiveOperations.forEach((operation) => {
+  operations.forEach((operation) => {
     const operationId = operation.id();
     const messages = operation.messages().all();
 
     messages
       .filter(message => message.hasPayload())
       .forEach(message => {
-        const discriminatorData = getDiscriminatorData(message, operationId);
+        const discriminatorData = getMessageDiscriminatorData(message, operationId);
         if (discriminatorData) {
-          receiveOperationDiscriminators.push(discriminatorData);
+          operationDiscriminators.push(discriminatorData);
         }
       });
   });
 
-  const formattedDiscriminators = JSON.stringify(receiveOperationDiscriminators);
+  return operationDiscriminators;
+};
 
-  return (
-    <Text indent={2} newLines={2}>
-      {`
-      self.receive_operation_handlers = {}
-      self.receive_operation_discriminators = ${formattedDiscriminators}
-      `}
-    </Text>
-  );
-}
+module.exports = {
+  getMessageDiscriminatorData,
+  getMessageDiscriminatorsFromOperations
+};

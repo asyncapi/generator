@@ -18,3 +18,4 @@ export { Installation } from './components/readme/Installation';
 export { Usage } from './components/readme/Usage';
 export { Overview } from './components/readme/Overview';
 export { Readme } from './components/readme/Readme';
+export { OperationsDiscriminators } from './components/OperationsDiscriminators';

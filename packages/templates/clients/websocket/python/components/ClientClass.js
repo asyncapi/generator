@@ -5,7 +5,6 @@ import { Constructor } from './Constructor';
 import { CloseConnection, RegisterMessageHandler, RegisterErrorHandler, SendOperations, Connect, HandleMessage } from '@asyncapi/generator-components';
 import { RegisterOutgoingProcessor } from './RegisterOutgoingProcessor';
 import { HandleError } from './HandleError';
-import { AutoRouteMessages } from './AutoRouteMessages';
 import { RegisterReceiveOperations } from './RegisterReceiveOperations';
 
 export function ClientClass({ asyncapi, params }) {
@@ -45,7 +44,6 @@ export function ClientClass({ asyncapi, params }) {
         preExecutionCode='"""Pass the incoming message to all registered message handlers. """'
       />
       <HandleError />
-      <AutoRouteMessages />
       <RegisterReceiveOperations receiveOperations={receiveOperations} />
       <SendOperations 
         language="python"

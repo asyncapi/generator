@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing of OperationsDiscriminators function render python websocket operation discrimination 1`] = `"self.receive_operation_discriminators = [{\\"key\\":\\"messageType\\",\\"value\\":\\"marketUpdate\\",\\"operation_id\\":\\"receiveMarketUpdate\\"}]"`;

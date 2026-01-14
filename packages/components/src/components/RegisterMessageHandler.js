@@ -7,7 +7,7 @@ import { MethodGenerator } from './MethodGenerator';
 
 /**
  * Configuration for WebSocket message handler registration method logic per language.
- * @type {Record<Language, { methodDocs?: string, methodLogic: string }>}
+ * @type {Record<Language, { methodDocs: string | undefined, methodLogic: string }>}
  */
 const websocketMessageRegisterConfig = {
   python: {
@@ -31,7 +31,7 @@ else:
 };
 
 /**
- * Renders a WebSocket message handler registration method with optional pre and post execution logic.
+ * Renders a WebSocket message handler registration method with optional pre- and post-execution logic.
  *
  * @param {Object} props - Component props.
  * @param {Language} props.language - Programming language used for method formatting.

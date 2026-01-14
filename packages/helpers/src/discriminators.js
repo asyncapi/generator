@@ -44,6 +44,9 @@ const getMessageDiscriminatorData = (message, operationId) => {
  * @returns {Array<object>} Array of discriminator metadata objects with key, value, and operation_id.
  */
 const getMessageDiscriminatorsFromOperations = (operations) => {
+  if (!operations || !Array.isArray(operations)) {
+    return [];
+  }
   const operationDiscriminators = [];
 
   operations.forEach((operation) => {

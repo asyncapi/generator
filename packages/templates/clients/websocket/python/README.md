@@ -69,7 +69,7 @@ You can use our AsyncAPI's credentials to access different set of events produce
 
 ## Client for Slack with Auto-Routing
 
-To run the Slack Client example with auto-routing, follow steps 1-3 for the basic Slack client above, then:
+To run the Slack Client example with auto-routing, first follow the "Client for Slack" setup above (generate credentials and install dependencies), then:
 - Use `example-slack-with-routing.py` instead of `example-slack.py`.
 - This example demonstrates auto-routing of messages to registered handlers for different event types (hello, event, disconnect, and unrecognized messages). The client automatically dispatches incoming messages based on their type without manual parsing.
 

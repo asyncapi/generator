@@ -37,7 +37,6 @@ client.register_on_hello_message_handler(
 )
 ```
 
-- **New Component**: `OperationsDiscriminators` - Generates language-specific initialization code for receive operation discriminators, enabling automatic message routing based on message type
 - **Updated Component**: `OnMessage` (Python) - Added discriminator-based routing logic that automatically dispatches messages to operation-specific handlers before falling back to generic handlers
 - **New Helpers**: 
   - `getMessageDiscriminatorData` - Extracts discriminator key and value from individual messages

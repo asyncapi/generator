@@ -1,6 +1,6 @@
 {
   "name": "@asyncapi/generator-helpers",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Package with reusable helpers that make it easier to work with AsyncAPI structures.",
   "scripts": {
     "test": "jest --coverage",

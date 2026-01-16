@@ -32,7 +32,33 @@ const websocketOnMessageMethod = {
   python: () => {
     return {
       onMessageMethod: `def on_message(self, ws, message):
-  self.handle_message(message)`
+  # Parse message for routing
+  try:
+      parsed_message = json.loads(message)
+  except:
+      parsed_message = message
+
+  handled = False
+
+  # Check each operation's discriminator
+  for discriminator in self.receive_operation_discriminators:
+    key = discriminator.get("key")
+    value = discriminator.get("value")
+    operation_id = discriminator.get("operation_id")
+
+    # Check if message matches this discriminator
+    if key and isinstance(parsed_message, dict) and parsed_message.get(key) == value:
+      handler = self.receive_operation_handlers.get(operation_id)
+      if handler:
+        try:
+          handler(message)
+          handled = True
+        except Exception as error:
+          print(f"Error in {operation_id} handler: {error}")
+
+  # Fallback to generic handlers if not handled
+  if not handled:
+      self.handle_message(message)`
     };
   },
   dart: () => {

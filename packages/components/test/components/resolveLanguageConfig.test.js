@@ -1,5 +1,5 @@
 import { resolveLanguageConfig } from '../../src/utils/resolveLanguageConfig';
-import { GeneratorError } from '../../src/errors/GeneratorError';
+import { GeneratorError } from '../../src/utils/resolveLanguageConfig';
 
 describe('resolveLanguageConfig', () => {
   const context = 'test method';

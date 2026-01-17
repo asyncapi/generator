@@ -2,18 +2,24 @@
 {{#functions}}
 ### **{{name}}** - {{description}}
 {{#if params.length}}
+
 ### Parameters
+
 | Name | Type | Description |
 |------|------|-------------|
 {{#each params}}
 | {{name}} | {{type.names.[0]}} | {{description}} |
 {{/each}}
+
 {{/if}}
 
 {{#if returns.length}}
+
 ### Returns
+
 {{#each returns}}
 - **{{type.names.[0]}}**{{#if description}} - {{description}}{{/if}}
 {{/each}}
+
 {{/if}}
 {{/functions}}

@@ -1,6 +1,6 @@
 {
   "name": "@asyncapi/generator-components",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "description": "Package with reusable components for generation using React render engine",
   "scripts": {
     "test": "npm run build && jest --coverage",
@@ -9,13 +9,11 @@
     "prepublishOnly": "npm run build",
     "lint": "eslint --max-warnings 0 --config ../../.eslintrc --ignore-path ../../.eslintignore .",
     "lint:fix": "eslint --max-warnings 0 --config ../../.eslintrc --ignore-path ../../.eslintignore . --fix",
-    "generate:assets": "npm run prepublishOnly && npm run docs",
-    "docs": "jsdoc2md --template api.hbs \"./lib/**/*.js\" > API.md"
+    "generate:assets": "npm run prepublishOnly"
   },
   "files": [
     "lib/**",
     "README.md",
-    "API.md",
     "LICENSE"
   ],
   "main": "lib/index.js",
@@ -40,8 +38,7 @@
     "@babel/preset-env": "^7.26.0",
     "@babel/preset-react": "^7.25.9",
     "jest": "^27.3.1",
-    "jest-esm-transformer": "^1.0.0",
-    "jsdoc-to-markdown": "^7.1.1"
+    "jest-esm-transformer": "^1.0.0"
   },
   "babel": {
     "presets": [

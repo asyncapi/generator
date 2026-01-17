@@ -3,26 +3,44 @@
   "pipeline": {
     "build": {
       "outputs": ["dist/**", "lib/**"],
-      "cache": false 
+      "cache": false
     },
+
     "test:dev": {
       "interactive": true,
       "cache": false,
       "persistent": true
     },
-    "test": { 
+
+    "test": {
       "dependsOn": ["^test", "build"],
-      "cache": false 
+      "outputs": []
     },
-    "test:update": { "cache": false },
-    "test:unit": { "cache": false },
-    "test:integration": { "cache": false },
+
+    "test:unit": {
+      "outputs": []
+    },
+
+    "test:integration": {
+      "outputs": []
+    },
+
+    "test:update": {
+      "cache": false
+    },
+
+    "test:integration:update": {
+      "cache": false
+    },
+
     "test:cleanup": {},
     "docs": {},
     "docker:build": {},
     "lint": {},
-    "lint:fix": { "cache": false },
-    "test:integration:update": { "cache": false },
+    "lint:fix": {
+      "cache": false
+    },
+
     "generate:assets": {
       "dependsOn": [],
       "outputs": ["assets/**"]

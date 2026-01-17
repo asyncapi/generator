@@ -90,6 +90,7 @@ const queryParamLogicConfig = {
 /**
  * Resolve the appropriate query parameter configuration function based on language and framework.
  *
+ * @private
  * @param {SupportedLanguage} language - The target programming language.
  * @param {string} [framework=''] - Optional framework (e.g., 'quarkus' for Java).
  * @returns {function} The configuration function for generating query parameter code.

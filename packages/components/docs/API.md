@@ -22,16 +22,6 @@
 | props.language | SupportedLanguage | The programming language for which to generate connection code. |
 | props.title | string | The title of the WebSocket server. |
 
-### **resolveDependencies** - Helper function to resolve dependencies based on language, framework, and role.
-### Parameters
-| Name | Type | Description |
-|------|------|-------------|
-| language | Language | The programming language. |
-| framework | string | The framework (e.g., &#x27;quarkus&#x27; for Java). |
-| role | string | The role (e.g., &#x27;client&#x27;, &#x27;connector&#x27; for Java). |
-
-### Returns
-- **Array.&lt;string&gt;** - Array of dependency strings.
 ### **DependencyProvider** - Renders the top-of-file dependency statements for the selected programming language.
 ### Parameters
 | Name | Type | Description |
@@ -55,8 +45,6 @@
 
 ### Returns
 - **JSX.Element** - Rendered file header.
-### **ownKeys** - Configuration for WebSocket message handler method logic per language.
-
 ### **HandleMessage** - Renders a WebSocket message handler method with optional pre- and post-execution logic.
 ### Parameters
 | Name | Type | Description |
@@ -71,10 +59,6 @@
 
 ### Returns
 - **JSX.Element** - Rendered method block with appropriate formatting.
-### **resolveDocsAndLogic** - Resolve docs and logic for the given language + framework config.
-
-### **buildIndentedLogic** - Build indented method body.
-
 ### **MethodGenerator** - Generic Method rendering component.
 ### Parameters
 | Name | Type | Description |
@@ -138,15 +122,6 @@
 | props.framework | string | Optional framework variant (e.g., &#x27;quarkus&#x27; for java). |
 | props.title | string | The title of the WebSocket server. |
 
-### **resolveQueryParamLogic** - Resolve the appropriate query parameter configuration function based on language and framework.
-### Parameters
-| Name | Type | Description |
-|------|------|-------------|
-| language | SupportedLanguage | The target programming language. |
-| framework | string | Optional framework (e.g., &#x27;quarkus&#x27; for Java). |
-
-### Returns
-- **function** - The configuration function for generating query parameter code.
 ### **QueryParamsVariables** - Component for rendering query parameter variables code.
 ### Parameters
 | Name | Type | Description |
@@ -155,20 +130,6 @@
 | props.language | SupportedLanguage | The target programming language. |
 | props.framework | string | Optional framework for the language. |
 | props.queryParams | Array.&lt;Array.&lt;string&gt;&gt; | Array of query parameters, each represented as [paramName, paramType?]. |
-
-### **renderExample** - Renders a code example for a specific language.
-### Parameters
-| Name | Type | Description |
-|------|------|-------------|
-| languageConfig | Object | Language configuration object containing label and codeBlock properties. |
-| languageConfig.label | string | Display label for the language (e.g., &#x27;JavaScript&#x27;, &#x27;Python&#x27;). |
-| languageConfig.codeBlock | string | Code block identifier for syntax highlighting. |
-| operationId | string | The operation identifier. |
-| payload | Object | The example payload to be stringified. |
-
-### Returns
-- **string** - Formatted markdown string containing the language-specific code example.
-### **ownKeys** - Configuration for WebSocket error handler registration method logic per language.
 
 ### **RegisterErrorHandler** - Renders a WebSocket error handler registration method with optional pre- and post-execution logic.
 ### Parameters
@@ -184,8 +145,6 @@
 
 ### Returns
 - **JSX.Element** - Rendered method block with appropriate formatting.
-### **ownKeys** - Configuration for WebSocket message handler registration method logic per language.
-
 ### **RegisterMessageHandler** - Renders a WebSocket message handler registration method with optional pre- and post-execution logic.
 ### Parameters
 | Name | Type | Description |

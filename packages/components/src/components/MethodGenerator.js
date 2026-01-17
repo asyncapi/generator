@@ -18,6 +18,8 @@ const defaultMethodConfig = {
 
 /**
  * Resolve docs and logic for the given language + framework config.
+ * 
+ * @private
  */
 const resolveDocsAndLogic = ({ language, methodDocs, methodLogic, methodConfig, framework }) => {
   let docs = methodDocs;
@@ -41,6 +43,8 @@ const resolveDocsAndLogic = ({ language, methodDocs, methodLogic, methodConfig, 
 
 /**
  * Build indented method body.
+ * 
+ * @private
  */
 const buildIndentedLogic = (logic, preExecutionCode, postExecutionCode, indentSize) => {
   let completeCode = logic;

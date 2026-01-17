@@ -60,6 +60,7 @@ const dependenciesConfig = {
 /**
  * Helper function to resolve dependencies based on language, framework, and role.
  *
+ * @private
  * @param {Language} language - The programming language.
  * @param {string} framework - The framework (e.g., 'quarkus' for Java).
  * @param {string} role - The role (e.g., 'client', 'connector' for Java).

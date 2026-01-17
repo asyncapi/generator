@@ -13,6 +13,8 @@ const languageConfig = {
 };
 /**
  * Renders a code example for a specific language.
+ * 
+ * @private
  * @param {Object} languageConfig - Language configuration object containing label and codeBlock properties.
  * @param {string} languageConfig.label - Display label for the language (e.g., 'JavaScript', 'Python').
  * @param {string} languageConfig.codeBlock - Code block identifier for syntax highlighting.

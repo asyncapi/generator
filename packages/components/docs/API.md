@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD024 -->
 ## Functions
 ### **CloseConnection** - Renders a WebSocket close connection method with optional pre- and post-execution logic.
 

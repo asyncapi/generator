@@ -131,6 +131,8 @@
 | props.framework | string | Optional framework for the language. |
 | props.queryParams | Array.&lt;Array.&lt;string&gt;&gt; | Array of query parameters, each represented as [paramName, paramType?]. |
 
+### Returns
+- **Array.&lt;React.ReactNode&gt;** - Array of Text components for each query parameter, or null if queryParams is invalid.
 ### **RegisterErrorHandler** - Renders a WebSocket error handler registration method with optional pre- and post-execution logic.
 ### Parameters
 | Name | Type | Description |

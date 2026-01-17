@@ -112,6 +112,7 @@ function resolveQueryParamLogic(language, framework = '') {
  * @param {SupportedLanguage} props.language - The target programming language.
  * @param {string} [props.framework=''] - Optional framework for the language.
  * @param {string[][]} props.queryParams - Array of query parameters, each represented as [paramName, paramType?].
+ * @returns {React.ReactNode[]|null} Array of Text components for each query parameter, or null if queryParams is invalid.
  */
 export function QueryParamsVariables({ language, framework = '', queryParams }) {
   if (!queryParams || !Array.isArray(queryParams)) {

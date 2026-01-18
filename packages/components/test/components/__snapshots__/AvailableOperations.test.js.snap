@@ -157,5 +157,11 @@ client.mixed_message_examples(123)
 
 
 
-#### \`operation_with_snake_case(payload)\`"
+#### \`operation_with_snake_case(payload)\`
+
+
+
+
+#### \`receiveMarketUpdate(payload)\`
+Receive market update message"
 `;

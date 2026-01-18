@@ -37,5 +37,8 @@ Thumbs.db
 test-results
 
 **/Dockerfile
-!**/template/**/docker-compose*.yaml
+**/docker-compose*.yml
+**/docker-compose*.yaml
 !**/template/**/docker-compose*.yml
+!**/template/**/docker-compose*.yaml
+

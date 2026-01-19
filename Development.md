@@ -31,7 +31,7 @@ git clone https://github.com/{your_username}/generator.git
 cd generator
 ```
 
-After cloning the repository, you should setup the fork properly and configure the `remote` repository as described [here](https://github.com/asyncapi/community/blob/master/docs/010-contribution-guidelines/git-workflow.md)
+After cloning the repository, you should setup the fork properly and configure the `remote` repository as described in the [AsyncAPI git workflow guidelines](https://github.com/asyncapi/community/blob/master/docs/010-contribution-guidelines/git-workflow.md)
 
 2. Install dependencies:
 

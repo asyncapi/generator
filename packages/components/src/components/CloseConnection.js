@@ -69,7 +69,22 @@ print('WebSocket connection closed.');`
  * @param {string} props.postExecutionCode - Code to insert after the main function logic.
  * @param {number} props.indent=2 - Indentation level for the method block.
  * @returns {JSX.Element} Rendered method block with appropriate formatting.
+ * 
+ * @example
+ * const language = "java"
+ * const framework = "quarkus"
+ * const methodName = "terminateConnection"
+ * const methodParams = ["self"]
+ * const preExecutionCode = "// About to terminate connection"
+ * const postExecutionCode = "// Connection terminated"
+ * const indent = 2
+ *
+ * return (
+ *   <CloseConnection language={language} framework={framework} methodName={methodName} methodParams={methodParams} preExecutionCode={preExecutionCode} postExecutionCode={postExecutionCode} indent={indent} />
+ * );
+ * 
  */
+
 export function CloseConnection({ methodName = 'close', indent = 2, ...props }) {
   return (
     <MethodGenerator

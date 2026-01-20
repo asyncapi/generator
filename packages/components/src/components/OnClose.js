@@ -64,6 +64,15 @@ const resolveCloseConfig = (language, framework = '') => {
  * @param {SupportedLanguage} props.language - The programming language for which to generate onClose handler code.
  * @param {string} [props.framework=''] - Optional framework variant (e.g., 'quarkus' for java).
  * @param {string} props.title - The title of the WebSocket server.
+ * 
+ * @example
+ * const language = "java"
+ * const framework = "quarkus"
+ * const title = "HoppscotchEchoWebSocketClient"
+ * 
+ * return (
+ *   <OnClose language={language} framework={framework} title={title}  />
+ * )
  */
 export function OnClose({ language, framework = '', title }) {
   let onCloseMethod = '';

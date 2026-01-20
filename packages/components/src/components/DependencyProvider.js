@@ -103,6 +103,16 @@ function resolveDependencies(language, framework = '', role = '') {
  * @param {string} [props.role=''] - The role (e.g., 'client', 'connector' for Java).
  * @param {string[]} [props.additionalDependencies=[]] - Optional additional dependencies to include.
  * @returns {JSX.Element} Rendered list of import/require statements.
+ * 
+ * @example
+ * const language = "java"
+ * const framework = "quarkus"
+ * const role = "client"
+ * const additionalDependencies = ["import java.util.concurrent.CompletableFuture;", "import java.time.Duration;"]
+ * 
+ * return (
+ *   <DependencyProvider language={language} framework={framework} role={role} additionalDependencies={additionalDependencies} />
+ * )
  */
 export function DependencyProvider({ language, framework = '', role = '', additionalDependencies = [] }) {
   const dependencies = resolveDependencies(language, framework, role);

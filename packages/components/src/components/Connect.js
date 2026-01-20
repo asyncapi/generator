@@ -97,6 +97,14 @@ Future<void> connect() async {
  * @param {Object} props - Component properties.
  * @param {SupportedLanguage} props.language - The programming language for which to generate connection code.
  * @param {string} props.title - The title of the WebSocket server.
+ * 
+ * @example
+ * const language = "python"
+ * const title = "HoppscotchEchoWebSocketClient"
+ * 
+ * return(
+ *  <Connect language={language} title={title} />
+ * )
  */
 export function Connect({ language, title }) {
   const onOpenMethod = render(<OnOpen language={language} title={title} />);

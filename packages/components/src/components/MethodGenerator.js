@@ -74,6 +74,23 @@ const buildIndentedLogic = (logic, preExecutionCode, postExecutionCode, indentSi
  * @param {{ returnType: string, openingTag: string, closingTag: string, indentSize: number, parameterWrap: boolean }} [props.customMethodConfig]  - Optional custom syntax configuration for the current language.
  * @param {Record<Language, { methodDocs: string, methodLogic: string } | Record<string, { methodDocs: string, methodLogic: string }>>} [props.methodConfig] - Language-level or framework-level configuration.
  * @param {string} [props.framework] - Framework name for nested configurations (e.g., 'quarkus' for Java).
+ * 
+ * @example
+ * const language = "java"
+ * const methodName = "registerHandler"
+ * const methodParams = ["self", "handler"]
+ * const methodDocs = "# Process the input data."
+ * const methodLogic = "pass"
+ * const preExecutionCode = "# Before handler registration"
+ * const postExecutionCode = "# After handler registration"
+ * const customMethodConfig={{ openingTag: "{", closingTag: "}", indentSize: 6 }}
+ * const methodConfig = {"java" : {methodDocs : methodDocs, methodLogic: methodLogic }}
+ * const framework = "quarkus"
+ * 
+ * return (
+ *   <MethodGenerator language={language} methodName={methodName} methodParams={methodParams} methodDocs={methodDocs} methodLogic={methodLogic} preExecutionCode={preExecutionCode} postExecutionCode={postExecutionCode} customMethodConfig={customMethodConfig} framework={framework} />
+ * )
+ * 
  */
 export function MethodGenerator({
   language,

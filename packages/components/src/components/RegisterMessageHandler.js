@@ -40,6 +40,17 @@ else:
  * @param {string} props.preExecutionCode - Code to insert before the main function logic.
  * @param {string} props.postExecutionCode - Code to insert after the main function logic.
  * @returns {JSX.Element} Rendered method block with appropriate formatting.
+ * 
+ * @example
+ * const language = "python"
+ * const methodName = "registerErrorHandler"
+ * const methodParams = ["self", "handler"]
+ * const preExecutionCode = "# Pre-register operations"
+ * const postExecutionCode = "# Post-register operations"
+ * 
+ * return (
+ *    <RegisterMessageHandler language={language} methodName={methodName} methodParams={methodParams} preExecutionCode={preExecutionCode} postExecutionCode={postExecutionCode} />
+ * )
  */
 export function RegisterMessageHandler({ methodName = 'registerMessageHandler', ...props }) {
   return (

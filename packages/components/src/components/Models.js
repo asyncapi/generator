@@ -59,6 +59,25 @@ const formatHelpers = {
  * @param {object} [params.constraints={}] - Custom constraints for the generator instance.
  * 
  * @returns {Array<File>} Array of File components with generated model content.
+ * 
+ * @example
+ * import path from "path";
+ * import { Parser, fromFile } from "@asyncapi/parser";
+ * 
+ * const parser = new Parser();
+ * const asyncapi_v3_path = path.resolve(__dirname, "../__fixtures__/asyncapi-v3.yml");
+ * async () => {
+ *    const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
+ *    parsedAsyncAPIDocument = parseResult.document;
+ * }
+ * 
+ * const language = "java"
+ * 
+ * return (
+ *   <Models asyncapi={parsedAsyncAPIDocument} language={language} />
+ * )
+ * 
+ * 
  */
 export async function Models({ asyncapi, language = 'python', format = 'toPascalCase', presets, constraints }) {
   // Get the selected generator and file extension, defaulting to Python if unknown

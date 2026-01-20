@@ -27,6 +27,24 @@ const commentConfig = {
  * @param {object} props.server - Server object from the AsyncAPI document.
  * @param {Language} props.language - Programming language used for comment formatting.
  * @returns {JSX.Element} Rendered file header.
+ * 
+ * @example
+ * import path from "path";
+ * import { Parser, fromFile } from "@asyncapi/parser";
+ * 
+ * const parser = new Parser();
+ * const asyncapi_websocket_query = path.resolve(__dirname, "../../../helpers/test/__fixtures__/asyncapi-websocket-query.yml");
+ * const language = "javascript"
+ * let parsedAsyncAPIDocument;
+ * 
+ * async () => {
+ *     const parseResult = await fromFile(parser, asyncapi_websocket_query).parse();
+ *     parsedAsyncAPIDocument = parseResult.document;
+ * }
+ * 
+ * return (
+ *   <FileHeaderInfo info={parsedAsyncAPIDocument.info()} server={parsedAsyncAPIDocument.servers().get("withPathname")} language={javascript} />
+ * )
  */
 export function FileHeaderInfo({ info, server, language }) {
   const { commentChar, lineStyle } = commentConfig[language] || { 

@@ -123,6 +123,27 @@ static ${methodName}(message, socket, schemas) {
  * @param {SupportedLanguage} props.language - The target programming language.
  * @param {Array<Object>} props.sendOperations - Array of send operations from AsyncAPI document.
  * @param {string} props.clientName - The name of the client class.
+ * 
+ * @example
+ * import path from "path";
+ * import { Parser, fromFile } from "@asyncapi/parser";
+ * 
+ * const parser = new Parser();
+ * const asyncapi_v3_path = path.resolve(__dirname, '../__fixtures__/asyncapi-v3.yml');
+ * let parsedAsyncAPIDocument = parsedAsyncAPIDocument;
+ * 
+ * async () => {
+ *    const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
+ *    parsedAsyncAPIDocument = parseResult.document;
+ * }
+ * 
+ * const language = "javascript"
+ * const clientName = "AccountServiceAPI"
+ * const sendOperations = parsedAsyncAPIDocument.operations().filterBySend()
+ * 
+ * return (
+ *    <SendOperations language={language} clientName={clientName} sendOperations={sendOperations} />
+ * )
  */
 export function SendOperations({ language, sendOperations, clientName }) {
   if (!sendOperations || sendOperations.length === 0) {

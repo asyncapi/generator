@@ -41,6 +41,18 @@ else:
  * @param {string} props.postExecutionCode - Code to insert after the main function logic.
  * @param {Object} [props.customMethodConfig] - Optional overrides for default method configuration.
  * @returns {JSX.Element} Rendered method block with appropriate formatting.
+ * 
+ * @example
+ * const language = "python"
+ * const methodName = "registerErrorHandler"
+ * const methodParams = ["self", "handler"]
+ * const preExecutionCode = "# Pre-register operations"
+ * const postExecutionCode = "# Post-register operations"
+ * const customMethodConfig = { returnType: "int", openingTag: "{", closingTag: "}", indentSize: 2};
+ * 
+ * return (
+ *   <RegisterErrorHandler language={language} methodName={methodName} methodParams={methodParams} preExecutionCode={preExecutionCode} postExecutionCode={postExecutionCode} customMethodConfig={customMethodConfig} />
+ * )
  */
 export function RegisterErrorHandler({ methodName = 'registerErrorHandler', ...props }) {
   return (

@@ -38,6 +38,19 @@ else:
  * @param {string} [props.postExecutionCode] - Code to insert after the main function logic.
  * @param {Object} [props.customMethodConfig] - Optional overrides for default method configuration.
  * @returns {JSX.Element} Rendered method block with appropriate formatting.
+ * 
+ * @example
+ * const language = "javascript"
+ * const methodName = "handleMessage"
+ * const methodParams = ["self", "message"]
+ * const preExecutionCode = "# Pass the incoming message to all registered message handlers."
+ * const postExecutionCode = "# Passed the incoming message to all registered message handlers."
+ * const methodConfig = {{javascript: {methodDocs: "// Method to handle message with callback", methodLogic: "if (cb) cb(message);"}}
+ * 
+ * return (
+ *   <HandleMessage language={language} methodName={methodName} methodParams={methodParams} preExecutionCode={preExecutionCode} postExecutionCode = {postExecutionCode} methodConfig={methodConfig} />
+ * )
+ * 
  */
 export function HandleMessage({ methodName = 'handleMessage', ...props }) {
   return (

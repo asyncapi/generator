@@ -113,6 +113,30 @@ function resolveQueryParamLogic(language, framework = '') {
  * @param {string} [props.framework=''] - Optional framework for the language.
  * @param {string[][]} props.queryParams - Array of query parameters, each represented as [paramName, paramType?].
  * @returns {React.ReactNode[]|null} Array of Text components for each query parameter, or null if queryParams is invalid.
+ * 
+ * @example
+ * import path from "path"
+ * import { Parser, fromFile } from "@asyncapi/parser";
+ * 
+ * const parser = new Parser();
+ * const asyncapi_v3_path = path.resolve(__dirname, "../__fixtures__/asyncapi-v3.yml");
+ * let parsedAsyncAPIDocument = parsedAsyncAPIDocument;
+ * 
+ * async () => {
+ *    const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
+ *    parsedAsyncAPIDocument = parseResult.document;
+ * }
+ * 
+ * const channels = parsedAsyncAPIDocument.channels();
+ * const queryParamsObject = getQueryParams(channels);
+ * const queryParamsArray = queryParamsObject ? Array.from(queryParamsObject.entries()) : [];
+ * 
+ * const language = "java"
+ * const framework = "quarkus"
+ * 
+ * return (
+ *   <queryParams language={language} framework={framework} queryParams={queryParamsArray} />
+ * )
  */
 export function QueryParamsVariables({ language, framework = '', queryParams }) {
   if (!queryParams || !Array.isArray(queryParams)) {

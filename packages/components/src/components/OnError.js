@@ -53,6 +53,12 @@ const websocketOnErrorMethod = {
  * 
  * @param {Object} props - Component properties.
  * @param {SupportedLanguage} props.language - The programming language for which to generate onError handler code.
+ * 
+ * @example
+ * const language = "java"
+ * return (
+ *   <OnError language={language} />
+ * )
  */
 export function OnError({ language }) {
   let onErrorMethod = '';

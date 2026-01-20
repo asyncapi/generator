@@ -120,7 +120,7 @@ function resolveQueryParamLogic(language, framework = '') {
  * 
  * const parser = new Parser();
  * const asyncapi_v3_path = path.resolve(__dirname, "../__fixtures__/asyncapi-v3.yml");
- * let parsedAsyncAPIDocument = parsedAsyncAPIDocument;
+ * let parsedAsyncAPIDocument
  * 
  * async () => {
  *    const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
@@ -135,7 +135,7 @@ function resolveQueryParamLogic(language, framework = '') {
  * const framework = "quarkus"
  * 
  * return (
- *   <queryParams language={language} framework={framework} queryParams={queryParamsArray} />
+ *   <QueryParamsVariables language={language} framework={framework} queryParams={queryParamsArray} />
  * )
  */
 export function QueryParamsVariables({ language, framework = '', queryParams }) {

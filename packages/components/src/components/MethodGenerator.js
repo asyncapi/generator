@@ -83,12 +83,12 @@ const buildIndentedLogic = (logic, preExecutionCode, postExecutionCode, indentSi
  * const methodLogic = "pass"
  * const preExecutionCode = "# Before handler registration"
  * const postExecutionCode = "# After handler registration"
- * const customMethodConfig={{ openingTag: "{", closingTag: "}", indentSize: 6 }}
+ * const customMethodConfig={ openingTag: "{", closingTag: "}", indentSize: 6 }
  * const methodConfig = {"java" : {methodDocs : methodDocs, methodLogic: methodLogic }}
  * const framework = "quarkus"
  * 
  * return (
- *   <MethodGenerator language={language} methodName={methodName} methodParams={methodParams} methodDocs={methodDocs} methodLogic={methodLogic} preExecutionCode={preExecutionCode} postExecutionCode={postExecutionCode} customMethodConfig={customMethodConfig} framework={framework} />
+ *   <MethodGenerator language={language} methodName={methodName} methodParams={methodParams} methodDocs={methodDocs} methodLogic={methodLogic} preExecutionCode={preExecutionCode} postExecutionCode={postExecutionCode} customMethodConfig={customMethodConfig} methodConfig={methodConfig} framework={framework} />
  * )
  * 
  */

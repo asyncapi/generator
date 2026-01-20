@@ -191,12 +191,12 @@ const methodDocs = "# Process the input data."
 const methodLogic = "pass"
 const preExecutionCode = "# Before handler registration"
 const postExecutionCode = "# After handler registration"
-const customMethodConfig={{ openingTag: "{", closingTag: "}", indentSize: 6 }}
+const customMethodConfig={ openingTag: "{", closingTag: "}", indentSize: 6 }
 const methodConfig = {"java" : {methodDocs : methodDocs, methodLogic: methodLogic }}
 const framework = "quarkus"
 
 return (
-  <MethodGenerator language={language} methodName={methodName} methodParams={methodParams} methodDocs={methodDocs} methodLogic={methodLogic} preExecutionCode={preExecutionCode} postExecutionCode={postExecutionCode} customMethodConfig={customMethodConfig} framework={framework} />
+  <MethodGenerator language={language} methodName={methodName} methodParams={methodParams} methodDocs={methodDocs} methodLogic={methodLogic} preExecutionCode={preExecutionCode} postExecutionCode={postExecutionCode} customMethodConfig={customMethodConfig} methodConfig={methodConfig} framework={framework} />
 )
 ```
 
@@ -368,7 +368,7 @@ import { Parser, fromFile } from "@asyncapi/parser";
 
 const parser = new Parser();
 const asyncapi_v3_path = path.resolve(__dirname, "../__fixtures__/asyncapi-v3.yml");
-let parsedAsyncAPIDocument = parsedAsyncAPIDocument;
+let parsedAsyncAPIDocument
 
 async () => {
    const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
@@ -383,7 +383,7 @@ const language = "java"
 const framework = "quarkus"
 
 return (
-  <queryParams language={language} framework={framework} queryParams={queryParamsArray} />
+  <QueryParamsVariables language={language} framework={framework} queryParams={queryParamsArray} />
 )
 ```
 

@@ -9,8 +9,8 @@ export function AvailableOperations({ operations }) {
   return (
     <>
       <Text newLines={2}>### Available Operations</Text>
-      {operations.map((operation) => (
-        <Text newLines={2}>
+      {operations.map((operation,index) => (
+        <Text newLines={2} key={operation.id ?? index}>
           <OperationHeader operation={operation} />
           <MessageExamples operation={operation} />
         </Text>

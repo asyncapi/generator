@@ -1,7 +1,7 @@
-export class GeneratorError extends Error {
+export class ComponentConfigError extends Error {
   constructor(code, message, meta = {}) {
     super(message);
-    this.name = 'GeneratorComponentError';
+    this.name = 'ComponentConfigError';
     this.code = code;
     this.meta = meta;
   }
@@ -16,7 +16,7 @@ export function resolveLanguageConfig({
   const langConfig = config[language];
 
   if (!langConfig) {
-    throw new GeneratorError(
+    throw new ComponentConfigError(
       'UNSUPPORTED_LANGUAGE',
       `Language "${language}" is not supported for ${context}.`,
       { supportedLanguages: Object.keys(config) }
@@ -43,21 +43,21 @@ export function resolveLanguageConfig({
     }
 
     if (framework) {
-      throw new GeneratorError(
+      throw new ComponentConfigError(
         'UNSUPPORTED_FRAMEWORK',
         `Framework "${framework}" is not supported for ${context} in ${language}.`,
         { supportedFrameworks: Object.keys(langConfig) }
       );
     }
 
-    throw new GeneratorError(
+    throw new ComponentConfigError(
       'MISSING_FRAMEWORK',
       `Framework must be specified for ${context} in ${language}.`,
       { supportedFrameworks: Object.keys(langConfig) }
     );
   }
 
-  throw new GeneratorError(
+  throw new ComponentConfigError(
     'INVALID_LANGUAGE_CONFIG',
     `Invalid configuration for ${context} in ${language}.`
   );

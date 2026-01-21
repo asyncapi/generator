@@ -16,7 +16,7 @@ describe('resolveLanguageConfig', () => {
           language: 'python',
           context
         })
-      ).toThrow(GeneratorError);
+      ).toThrow(ComponentConfigError);
 
       expect(() =>
         resolveLanguageConfig({
@@ -91,7 +91,7 @@ describe('resolveLanguageConfig', () => {
           language: 'java',
           context
         })
-      ).toThrow(GeneratorError);
+      ).toThrow(ComponentConfigError);
 
       expect(() =>
         resolveLanguageConfig({
@@ -110,7 +110,7 @@ describe('resolveLanguageConfig', () => {
           framework: 'spring',
           context
         })
-      ).toThrow(GeneratorError);
+      ).toThrow(ComponentConfigError);
 
       expect(() =>
         resolveLanguageConfig({
@@ -135,7 +135,7 @@ describe('resolveLanguageConfig', () => {
           language: 'javascript',
           context
         })
-      ).toThrow(GeneratorError);
+      ).toThrow(ComponentConfigError);
 
       expect(() =>
         resolveLanguageConfig({

@@ -1,0 +1,1 @@
+// This file will be the predicatable output of the Kafka JavaScript client template

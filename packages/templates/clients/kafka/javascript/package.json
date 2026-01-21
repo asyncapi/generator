@@ -1,0 +1,42 @@
+{
+  "name": "core-template-client-kafka-javascript",
+  "private": true,
+  "description": "This is a template generating JavaScript Kafka client",
+  "scripts": {
+    "test": "jest --coverage --passWithNoTests",
+    "test:update": "npm run test -- -u",
+    "lint": "eslint --max-warnings 0 --config ../../../../../.eslintrc --ignore-path ../../../../../.eslintignore .",
+    "lint:fix": "eslint --fix --max-warnings 0 --config ../../../../../.eslintrc --ignore-path ../../../../../.eslintignore ."
+  },
+  "author": "Lukasz Gornicki <lpgornicki@gmail.com>",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@asyncapi/generator-helpers": "1.1.0",
+    "@asyncapi/generator-react-sdk": "*",
+    "@asyncapi/generator-components": "0.5.0",
+    "@asyncapi/keeper": "0.5.0"
+  },
+  "devDependencies": {
+    "@asyncapi/parser": "^3.4.0",
+    "@babel/cli": "^7.25.9",
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
+    "@babel/preset-react": "^7.25.9",
+    "eslint": "^6.8.0",
+    "eslint-plugin-jest": "^23.8.2",
+    "eslint-plugin-react": "^7.34.1",
+    "eslint-plugin-sonarjs": "^0.5.0",
+    "jest-esm-transformer": "^1.0.0"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env",
+      [
+        "@babel/preset-react",
+        {
+          "runtime": "automatic"
+        }
+      ]
+    ]
+  }
+}

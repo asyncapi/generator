@@ -1,7 +1,26 @@
 <!-- markdownlint-disable MD024 -->
-## Functions
+## Components
+
+<dl>
 {{#functions}}
-### **{{name}}** - {{description}}
+  <dt>
+    <a href="#{{name}}">{{name}}</a>
+    {{#if returns.length}}
+      ⇒ <code>{{returns.[0].type.names.[0]}}</code>
+    {{/if}}
+  </dt>
+  <dd>
+    <p>{{description}}</p>
+  </dd> 
+{{/functions}}
+</dl>
+
+{{#functions}}
+
+<a name="{{name}}"></a>
+## **{{name}}** 
+{{description}}
+
 {{#if params.length}}
 
 ### Parameters

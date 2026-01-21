@@ -1,6 +1,113 @@
 <!-- markdownlint-disable MD024 -->
-## Functions
-### **CloseConnection** - Renders a WebSocket close connection method with optional pre- and post-execution logic.
+## Components
+
+<dl>
+  <dt>
+    <a href="#CloseConnection">CloseConnection</a>
+      ⇒ <code>JSX.Element</code>
+  </dt>
+  <dd>
+    <p>Renders a WebSocket close connection method with optional pre- and post-execution logic.</p>
+  </dd> 
+  <dt>
+    <a href="#Connect">Connect</a>
+  </dt>
+  <dd>
+    <p>Component that renders WebSocket connection method for the specified programming language.</p>
+  </dd> 
+  <dt>
+    <a href="#DependencyProvider">DependencyProvider</a>
+      ⇒ <code>JSX.Element</code>
+  </dt>
+  <dd>
+    <p>Renders the top-of-file dependency statements for the selected programming language.</p>
+  </dd> 
+  <dt>
+    <a href="#FileHeaderInfo">FileHeaderInfo</a>
+      ⇒ <code>JSX.Element</code>
+  </dt>
+  <dd>
+    <p>Renders a file header with metadata information such as title, version, protocol, host, and path.</p>
+  </dd> 
+  <dt>
+    <a href="#HandleMessage">HandleMessage</a>
+      ⇒ <code>JSX.Element</code>
+  </dt>
+  <dd>
+    <p>Renders a WebSocket message handler method with optional pre- and post-execution logic.</p>
+  </dd> 
+  <dt>
+    <a href="#MethodGenerator">MethodGenerator</a>
+  </dt>
+  <dd>
+    <p>Generic Method rendering component.</p>
+  </dd> 
+  <dt>
+    <a href="#Models">Models</a>
+      ⇒ <code>Array.&lt;File&gt;</code>
+  </dt>
+  <dd>
+    <p>Generates and returns an array of model files based on the AsyncAPI document.</p>
+  </dd> 
+  <dt>
+    <a href="#OnClose">OnClose</a>
+  </dt>
+  <dd>
+    <p>Component that renders WebSocket onClose event handler for the specified programming language.</p>
+  </dd> 
+  <dt>
+    <a href="#OnError">OnError</a>
+  </dt>
+  <dd>
+    <p>Component that renders WebSocket onError event handler for the specified programming language.</p>
+  </dd> 
+  <dt>
+    <a href="#OnMessage">OnMessage</a>
+  </dt>
+  <dd>
+    <p>Component that renders WebSocket onMessage event handler for the specified programming language.</p>
+  </dd> 
+  <dt>
+    <a href="#OnOpen">OnOpen</a>
+  </dt>
+  <dd>
+    <p>Component that renders WebSocket onOpen event handler for the specified programming language.</p>
+  </dd> 
+  <dt>
+    <a href="#QueryParamsVariables">QueryParamsVariables</a>
+      ⇒ <code>Array.&lt;React.ReactNode&gt;</code>
+  </dt>
+  <dd>
+    <p>Component for rendering query parameter variables code.</p>
+  </dd> 
+  <dt>
+    <a href="#RegisterErrorHandler">RegisterErrorHandler</a>
+      ⇒ <code>JSX.Element</code>
+  </dt>
+  <dd>
+    <p>Renders a WebSocket error handler registration method with optional pre- and post-execution logic.</p>
+  </dd> 
+  <dt>
+    <a href="#RegisterMessageHandler">RegisterMessageHandler</a>
+      ⇒ <code>JSX.Element</code>
+  </dt>
+  <dd>
+    <p>Renders a WebSocket message handler registration method with optional pre- and post-execution logic.</p>
+  </dd> 
+  <dt>
+    <a href="#SendOperations">SendOperations</a>
+  </dt>
+  <dd>
+    <p>Component for rendering WebSocket send operation methods.
+Generates both static and instance methods for sending messages through WebSocket connections.</p>
+  </dd> 
+</dl>
+
+
+<a name="CloseConnection"></a>
+## **CloseConnection** 
+Renders a WebSocket close connection method with optional pre- and post-execution logic.
+
 
 ### Parameters
 
@@ -40,7 +147,11 @@ return (
 ```
 
 
-### **Connect** - Component that renders WebSocket connection method for the specified programming language.
+
+<a name="Connect"></a>
+## **Connect** 
+Component that renders WebSocket connection method for the specified programming language.
+
 
 ### Parameters
 
@@ -60,7 +171,11 @@ const language = "python"const title = "HoppscotchEchoWebSocketClient"return(
 ```
 
 
-### **DependencyProvider** - Renders the top-of-file dependency statements for the selected programming language.
+
+<a name="DependencyProvider"></a>
+## **DependencyProvider** 
+Renders the top-of-file dependency statements for the selected programming language.
+
 
 ### Parameters
 
@@ -94,7 +209,11 @@ return (
 ```
 
 
-### **FileHeaderInfo** - Renders a file header with metadata information such as title, version, protocol, host, and path.
+
+<a name="FileHeaderInfo"></a>
+## **FileHeaderInfo** 
+Renders a file header with metadata information such as title, version, protocol, host, and path.
+
 
 ### Parameters
 
@@ -120,7 +239,11 @@ import path from "path";import { Parser, fromFile } from "@asyncapi/parser";c
 ```
 
 
-### **HandleMessage** - Renders a WebSocket message handler method with optional pre- and post-execution logic.
+
+<a name="HandleMessage"></a>
+## **HandleMessage** 
+Renders a WebSocket message handler method with optional pre- and post-execution logic.
+
 
 ### Parameters
 
@@ -158,7 +281,11 @@ return (
 ```
 
 
-### **MethodGenerator** - Generic Method rendering component.
+
+<a name="MethodGenerator"></a>
+## **MethodGenerator** 
+Generic Method rendering component.
+
 
 ### Parameters
 
@@ -201,7 +328,11 @@ return (
 ```
 
 
-### **Models** - Generates and returns an array of model files based on the AsyncAPI document.
+
+<a name="Models"></a>
+## **Models** 
+Generates and returns an array of model files based on the AsyncAPI document.
+
 
 ### Parameters
 
@@ -243,7 +374,11 @@ return (
 ```
 
 
-### **OnClose** - Component that renders WebSocket onClose event handler for the specified programming language.
+
+<a name="OnClose"></a>
+## **OnClose** 
+Component that renders WebSocket onClose event handler for the specified programming language.
+
 
 ### Parameters
 
@@ -270,7 +405,11 @@ return (
 ```
 
 
-### **OnError** - Component that renders WebSocket onError event handler for the specified programming language.
+
+<a name="OnError"></a>
+## **OnError** 
+Component that renders WebSocket onError event handler for the specified programming language.
+
 
 ### Parameters
 
@@ -292,7 +431,11 @@ return (
 ```
 
 
-### **OnMessage** - Component that renders WebSocket onMessage event handler for the specified programming language.
+
+<a name="OnMessage"></a>
+## **OnMessage** 
+Component that renders WebSocket onMessage event handler for the specified programming language.
+
 
 ### Parameters
 
@@ -314,7 +457,11 @@ return (
 ```
 
 
-### **OnOpen** - Component that renders WebSocket onOpen event handler for the specified programming language.
+
+<a name="OnOpen"></a>
+## **OnOpen** 
+Component that renders WebSocket onOpen event handler for the specified programming language.
+
 
 ### Parameters
 
@@ -341,7 +488,11 @@ return (
 ```
 
 
-### **QueryParamsVariables** - Component for rendering query parameter variables code.
+
+<a name="QueryParamsVariables"></a>
+## **QueryParamsVariables** 
+Component for rendering query parameter variables code.
+
 
 ### Parameters
 
@@ -388,7 +539,11 @@ return (
 ```
 
 
-### **RegisterErrorHandler** - Renders a WebSocket error handler registration method with optional pre- and post-execution logic.
+
+<a name="RegisterErrorHandler"></a>
+## **RegisterErrorHandler** 
+Renders a WebSocket error handler registration method with optional pre- and post-execution logic.
+
 
 ### Parameters
 
@@ -426,7 +581,11 @@ return (
 ```
 
 
-### **RegisterMessageHandler** - Renders a WebSocket message handler registration method with optional pre- and post-execution logic.
+
+<a name="RegisterMessageHandler"></a>
+## **RegisterMessageHandler** 
+Renders a WebSocket message handler registration method with optional pre- and post-execution logic.
+
 
 ### Parameters
 
@@ -462,8 +621,12 @@ return (
 ```
 
 
-### **SendOperations** - Component for rendering WebSocket send operation methods.
+
+<a name="SendOperations"></a>
+## **SendOperations** 
+Component for rendering WebSocket send operation methods.
 Generates both static and instance methods for sending messages through WebSocket connections.
+
 
 ### Parameters
 

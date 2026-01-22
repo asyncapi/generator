@@ -1,5 +1,11 @@
 # @asyncapi/generator
 
+## 3.1.1
+
+### Patch Changes
+
+- 2bfad27: Fix generator handling of template parameters with `false` default values, ensuring defaults are correctly injected and conditional generation works as expected.
+
 ## 3.1.0
 
 ### Minor Changes

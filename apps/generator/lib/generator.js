@@ -250,7 +250,7 @@ class Generator {
   try {
     xfs.mkdirpSync(this.targetDir);
   } catch (err) {
-    if (err.code === 'EACCES') {
+    if (['EACCES', 'EPERM', 'EROFS'].includes(err.code)) {
       throw new Error(
         `Permission denied: cannot write to output directory "${this.targetDir}". ` +
         `Please choose a directory you have write access to, or adjust the permissions for the target directory.`

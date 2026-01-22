@@ -29,7 +29,7 @@ Baked-in templates benefit from:
 
 In contrast, **standalone templates** (described below) are maintained as independent Node.js packages, may live in separate repositories, and can be managed or installed separately from the core generator.
 
-Learn more from document [Baked-in Templates](#baked-in-templates).
+Learn more from document [Baked-in Templates](baked-in-templates).
 
 ### Standalone templates
 

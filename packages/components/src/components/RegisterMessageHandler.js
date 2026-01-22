@@ -43,7 +43,7 @@ else:
  * 
  * @example
  * const language = "python"
- * const methodName = "registerErrorHandler"
+ * const methodName = "registerMessageHandler"
  * const methodParams = ["self", "handler"]
  * const preExecutionCode = "# Pre-register operations"
  * const postExecutionCode = "# Post-register operations"

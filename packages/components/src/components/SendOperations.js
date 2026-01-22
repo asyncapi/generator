@@ -130,7 +130,7 @@ static ${methodName}(message, socket, schemas) {
  * 
  * const parser = new Parser();
  * const asyncapi_v3_path = path.resolve(__dirname, '../__fixtures__/asyncapi-v3.yml');
- * let parsedAsyncAPIDocument = parsedAsyncAPIDocument;
+ * let parsedAsyncAPIDocument;
  * 
  * async () => {
  *    const parseResult = await fromFile(parser, asyncapi_v3_path).parse();

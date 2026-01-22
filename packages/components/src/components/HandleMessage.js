@@ -45,10 +45,14 @@ else:
  * const methodParams = ["self", "message"]
  * const preExecutionCode = "# Pass the incoming message to all registered message handlers."
  * const postExecutionCode = "# Passed the incoming message to all registered message handlers."
- * const methodConfig = {{javascript: {methodDocs: "// Method to handle message with callback", methodLogic: "if (cb) cb(message);"}}
- * 
+ * const customMethodConfig = {
+ *   javascript: {
+ *     methodDocs: "// Method to handle message with callback",
+ *     methodLogic: "if (cb) cb(message);"
+ *   }
+ * };
  * return (
- *   <HandleMessage language={language} methodName={methodName} methodParams={methodParams} preExecutionCode={preExecutionCode} postExecutionCode = {postExecutionCode} methodConfig={methodConfig} />
+ *   <HandleMessage language={language} methodName={methodName} methodParams={methodParams} preExecutionCode={preExecutionCode} postExecutionCode={postExecutionCode} customMethodConfig={customMethodConfig} />
  * )
  * 
  */

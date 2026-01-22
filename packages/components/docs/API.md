@@ -167,7 +167,12 @@ Component that renders WebSocket connection method for the specified programming
 ### Example
 
 ```js
-const language = "python"const title = "HoppscotchEchoWebSocketClient"return( <Connect language={language} title={title} />)
+const language = "python"
+const title = "HoppscotchEchoWebSocketClient"
+
+return(
+ <Connect language={language} title={title} />
+)
 ```
 
 
@@ -235,7 +240,22 @@ Renders a file header with metadata information such as title, version, protocol
 ### Example
 
 ```js
-import path from "path";import { Parser, fromFile } from "@asyncapi/parser";const parser = new Parser();const asyncapi_websocket_query = path.resolve(__dirname, "../../../helpers/test/__fixtures__/asyncapi-websocket-query.yml");const language = "javascript"let parsedAsyncAPIDocument;async () => {    const parseResult = await fromFile(parser, asyncapi_websocket_query).parse();    parsedAsyncAPIDocument = parseResult.document;}return (  <FileHeaderInfo info={parsedAsyncAPIDocument.info()} server={parsedAsyncAPIDocument.servers().get("withPathname")} language={javascript} />)
+import path from "path";
+import { Parser, fromFile } from "@asyncapi/parser";
+
+const parser = new Parser();
+const asyncapi_websocket_query = path.resolve(__dirname, "../../../helpers/test/__fixtures__/asyncapi-websocket-query.yml");
+const language = "javascript"
+let parsedAsyncAPIDocument;
+
+async () => {
+    const parseResult = await fromFile(parser, asyncapi_websocket_query).parse();
+    parsedAsyncAPIDocument = parseResult.document;
+}
+
+return (
+  <FileHeaderInfo info={parsedAsyncAPIDocument.info()} server={parsedAsyncAPIDocument.servers().get("withPathname")} language={javascript} />
+)
 ```
 
 
@@ -273,10 +293,14 @@ const methodName = "handleMessage"
 const methodParams = ["self", "message"]
 const preExecutionCode = "# Pass the incoming message to all registered message handlers."
 const postExecutionCode = "# Passed the incoming message to all registered message handlers."
-const methodConfig = {{javascript: {methodDocs: "// Method to handle message with callback", methodLogic: "if (cb) cb(message);"}}
-
+const customMethodConfig = {
+  javascript: {
+    methodDocs: "// Method to handle message with callback",
+    methodLogic: "if (cb) cb(message);"
+  }
+};
 return (
-  <HandleMessage language={language} methodName={methodName} methodParams={methodParams} preExecutionCode={preExecutionCode} postExecutionCode = {postExecutionCode} methodConfig={methodConfig} />
+  <HandleMessage language={language} methodName={methodName} methodParams={methodParams} preExecutionCode={preExecutionCode} postExecutionCode = {postExecutionCode} customMethodConfig={customMethodConfig} />
 )
 ```
 
@@ -610,7 +634,7 @@ Renders a WebSocket message handler registration method with optional pre- and p
 
 ```js
 const language = "python"
-const methodName = "registerErrorHandler"
+const methodName = "registerMessageHandler"
 const methodParams = ["self", "handler"]
 const preExecutionCode = "# Pre-register operations"
 const postExecutionCode = "# Post-register operations"
@@ -648,7 +672,7 @@ import { Parser, fromFile } from "@asyncapi/parser";
 
 const parser = new Parser();
 const asyncapi_v3_path = path.resolve(__dirname, '../__fixtures__/asyncapi-v3.yml');
-let parsedAsyncAPIDocument = parsedAsyncAPIDocument;
+let parsedAsyncAPIDocument;
 
 async () => {
    const parseResult = await fromFile(parser, asyncapi_v3_path).parse();

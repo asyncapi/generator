@@ -246,14 +246,25 @@ class Generator {
    * @throws {Error} If verification of the target directory fails and forceWrite is not enabled.
    */
   async setupFSOutput() {
-    // Create directory if not exists
+  // Create directory if not exists
+  try {
     xfs.mkdirpSync(this.targetDir);
-
-    // Verify target directory if forceWrite is not enabled
-    if (!this.forceWrite) {
-      await this.verifyTargetDir(this.targetDir);
+  } catch (err) {
+    if (err.code === 'EACCES') {
+      throw new Error(
+        `Permission denied: cannot write to output directory "${this.targetDir}". ` +
+        `Please choose a directory you have write access to, or adjust the permissions for the target directory.`
+      );
     }
+    throw err;
   }
+
+  // Verify target directory if forceWrite is not enabled
+  if (!this.forceWrite) {
+    await this.verifyTargetDir(this.targetDir);
+  }
+}
+
 
   /**
    * Sets the log level based on the debug option.

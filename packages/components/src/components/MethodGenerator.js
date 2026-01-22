@@ -71,18 +71,18 @@ const buildIndentedLogic = (logic, preExecutionCode, postExecutionCode, indentSi
  * @param {string} [props.postExecutionCode=''] - Code after main logic.
  * @param {number} [props.indent=2] - Indentation for the method block.
  * @param {number} [props.newLines=1] - Number of new lines after method.
- * @param {{ returnType: string, openingTag: string, closingTag: string, indentSize: number, parameterWrap: boolean }} [props.customMethodConfig]  - Optional custom syntax configuration for the current language.
- * @param {Record<Language, { methodDocs: string, methodLogic: string } | Record<string, { methodDocs: string, methodLogic: string }>>} [props.methodConfig] - Language-level or framework-level configuration.
+ * @param {{ returnType: string | undefined, openingTag: string | undefined, closingTag: string | undefined, indentSize: number | undefined, parameterWrap: boolean | undefined }} [props.customMethodConfig]  - Optional custom syntax configuration for the current language.
+ * @param {Record<Language, { methodDocs: string | undefined, methodLogic: string | undefined } | Record<string, { methodDocs: string | undefined, methodLogic: string | undefined }>>} [props.methodConfig] - Language-level or framework-level configuration.
  * @param {string} [props.framework] - Framework name for nested configurations (e.g., 'quarkus' for Java).
  * 
  * @example
  * const language = "java"
  * const methodName = "registerHandler"
  * const methodParams = ["self", "handler"]
- * const methodDocs = "# Process the input data."
- * const methodLogic = "pass"
- * const preExecutionCode = "# Before handler registration"
- * const postExecutionCode = "# After handler registration"
+ * const methodDocs = "// Process the input data."
+ * const methodLogic = "// TODO: implement"
+ * const preExecutionCode = "// Before handler registration"
+ * const postExecutionCode = "// After handler registration"
  * const customMethodConfig={ openingTag: "{", closingTag: "}", indentSize: 6 }
  * const methodConfig = {"java" : {methodDocs : methodDocs, methodLogic: methodLogic }}
  * const framework = "quarkus"

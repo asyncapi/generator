@@ -2,7 +2,7 @@ import { Text } from '@asyncapi/generator-react-sdk';
 import { toCamelCase } from '@asyncapi/generator-helpers';
 
 /**
- * @typedef {'python' | 'java' | 'javascript'} SupportedLanguage
+ * @typedef {'python' | 'java' | 'javascript'} Language
  * Supported programming languages for query parameter generation.
  */
 
@@ -18,7 +18,7 @@ import { toCamelCase } from '@asyncapi/generator-helpers';
  * Language and framework specific logic for generating query parameter code.
  * Each entry returns a {@link QueryParamCodeBlock}.
  *
- * @type {Record<SupportedLanguage, Record<string, function>|function>}
+ * @type {Record<Language, Record<string, function>|function>}
  */
 const queryParamLogicConfig = {
   python: (param) => {
@@ -91,7 +91,7 @@ const queryParamLogicConfig = {
  * Resolve the appropriate query parameter configuration function based on language and framework.
  *
  * @private
- * @param {SupportedLanguage} language - The target programming language.
+ * @param {Language} language - The target programming language.
  * @param {string} [framework=''] - Optional framework (e.g., 'quarkus' for Java).
  * @returns {function} The configuration function for generating query parameter code.
  */
@@ -109,7 +109,7 @@ function resolveQueryParamLogic(language, framework = '') {
  * Component for rendering query parameter variables code.
  *
  * @param {Object} props - Component props.
- * @param {SupportedLanguage} props.language - The target programming language.
+ * @param {Language} props.language - The target programming language.
  * @param {string} [props.framework=''] - Optional framework for the language.
  * @param {string[][]} props.queryParams - Array of query parameters, each represented as [paramName, paramType?].
  * @returns {React.ReactNode[]|null} Array of Text components for each query parameter, or null if queryParams is invalid.

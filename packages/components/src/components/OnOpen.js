@@ -1,14 +1,14 @@
 import { Text } from '@asyncapi/generator-react-sdk';
 
 /**
- * @typedef {'python' | 'javascript' | 'java'} SupportedLanguage
+ * @typedef {'python' | 'javascript' | 'java'} Language
  * Supported programming languages for WebSocket onOpen handler generation.
  */
 
 /**
  * Mapping of supported programming languages to their WebSocket onOpen event handler implementations.
  * 
- * @type {Object.<SupportedLanguage, Function>}
+ * @type {Object.<Language, Function>}
  */
 const websocketOnOpenMethod = {
   javascript: (title) => {
@@ -53,7 +53,7 @@ const resolveOpenConfig = (language, framework = '') => {
  * Component that renders WebSocket onOpen event handler for the specified programming language.
  * 
  * @param {Object} props - Component properties.
- * @param {SupportedLanguage} props.language - The programming language for which to generate onOpen handler code.
+ * @param {Language} props.language - The programming language for which to generate onOpen handler code.
  * @param {string} [props.framework=''] - Optional framework variant (e.g., 'quarkus' for java).
  * @param {string} props.title - The title of the WebSocket server.
  * 

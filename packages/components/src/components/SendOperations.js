@@ -2,7 +2,7 @@ import { Text } from '@asyncapi/generator-react-sdk';
 import { toSnakeCase } from '@asyncapi/generator-helpers';
 
 /**
- * @typedef {'python' | 'javascript'} SupportedLanguage
+ * @typedef {'python' | 'javascript'} Language
  * Supported programming languages for WebSocket send operation generation.
  */
 
@@ -21,7 +21,7 @@ import { toSnakeCase } from '@asyncapi/generator-helpers';
 
 /**
  * Configuration object for generating WebSocket send operations for different languages.
- * @type {Object.<string, SendOperationGenerator>}
+ * @type {Object.<Language, SendOperationGenerator>}
  */
 const websocketSendOperationConfig = {
   python: (operation, clientName) => {
@@ -120,7 +120,7 @@ static ${methodName}(message, socket, schemas) {
  * Generates both static and instance methods for sending messages through WebSocket connections.
  *
  * @param {Object} props - Component props.
- * @param {SupportedLanguage} props.language - The target programming language.
+ * @param {Language} props.language - The target programming language.
  * @param {Array<Object>} props.sendOperations - Array of send operations from AsyncAPI document.
  * @param {string} props.clientName - The name of the client class.
  * 

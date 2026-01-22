@@ -1,14 +1,14 @@
 import { Text } from '@asyncapi/generator-react-sdk';
 
 /**
- * @typedef {'python' | 'javascript' | 'dart'} SupportedLanguage
+ * @typedef {'python' | 'javascript' | 'dart'} Language
  * Supported programming languages for WebSocket onError handler generation.
  */
 
 /**
  * Mapping of supported programming languages to their WebSocket onError event handler implementations.
  * 
- * @type {Object.<SupportedLanguage, Function>}
+ * @type {Object.<Language, Function>}
  */
 const websocketOnErrorMethod = {
   javascript: () => {
@@ -52,10 +52,10 @@ const websocketOnErrorMethod = {
  * Component that renders WebSocket onError event handler for the specified programming language.
  * 
  * @param {Object} props - Component properties.
- * @param {SupportedLanguage} props.language - The programming language for which to generate onError handler code.
+ * @param {Language} props.language - The programming language for which to generate onError handler code.
  * 
  * @example
- * const language = "java"
+ * const language = "javascript"
  * return (
  *   <OnError language={language} />
  * )

@@ -1,14 +1,14 @@
 import { Text } from '@asyncapi/generator-react-sdk';
 
 /**
- * @typedef {'python' | 'javascript' | 'dart' | 'java' } SupportedLanguage
+ * @typedef {'python' | 'javascript' | 'dart' | 'java' } Language
  * Supported programming languages for WebSocket onClose handler generation.
  */
 
 /**
  * Mapping of supported programming languages to their WebSocket onClose event handler implementations.
  * 
- * @type {Object.<SupportedLanguage, Function>}
+ * @type {Object.<Language, Function>}
  */
 const websocketOnCloseMethod = {
   javascript: (title) => {
@@ -61,9 +61,11 @@ const resolveCloseConfig = (language, framework = '') => {
  * Component that renders WebSocket onClose event handler for the specified programming language.
  * 
  * @param {Object} props - Component properties.
- * @param {SupportedLanguage} props.language - The programming language for which to generate onClose handler code.
+ * @param {Language} props.language - The programming language for which to generate onClose handler code.
  * @param {string} [props.framework=''] - Optional framework variant (e.g., 'quarkus' for java).
  * @param {string} props.title - The title of the WebSocket server.
+ * 
+ * @returns {JSX.Element} A Text component containing the onClose handler code for the specified language.
  * 
  * @example
  * const language = "java"

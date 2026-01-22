@@ -538,10 +538,10 @@ Component for rendering query parameter variables code.
 ```js
 import path from "path"
 import { Parser, fromFile } from "@asyncapi/parser";
+import { getQueryParams } from "@asyncapi/generator-helpers";
 
 const parser = new Parser();
 const asyncapi_v3_path = path.resolve(__dirname, "../__fixtures__/asyncapi-v3.yml");
-let parsedAsyncAPIDocument;
 
 // Parse the AsyncAPI document (async operation)
 const parseResult = await fromFile(parser, asyncapi_v3_path).parse();

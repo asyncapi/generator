@@ -20,13 +20,13 @@ import {
  */
 
 /**
- * @typedef {PythonGenerator | JavaGenerator | TypeScriptGenerator | CSharpGenerator | RustGenerator | JavaScriptGenerator} ModelinaGenerator
+ * @typedef {PythonGenerator | JavaGenerator | TypeScriptGenerator | CSharpGenerator | RustGenerator | JavaScriptGenerator} ModelinaGeneratorClass
  * Represents any Modelina generator instance.
  */
 
 /**
  * Mapping of language strings to Modelina generator classes and file extensions.
- * @type {Record<string, { generator: ModelinaGenerator, extension: string }>}
+ * @type {Record<string, { generator: ModelinaGeneratorClass, extension: string }>}
  */
 const generatorConfig = {
   python: { generator: PythonGenerator, extension: 'py' },

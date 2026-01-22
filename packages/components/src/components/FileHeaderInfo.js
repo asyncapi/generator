@@ -35,15 +35,13 @@ const commentConfig = {
  * const parser = new Parser();
  * const asyncapi_websocket_query = path.resolve(__dirname, "../../../helpers/test/__fixtures__/asyncapi-websocket-query.yml");
  * const language = "javascript"
- * let parsedAsyncAPIDocument;
  * 
- * async () => {
- *     const parseResult = await fromFile(parser, asyncapi_websocket_query).parse();
- *     parsedAsyncAPIDocument = parseResult.document;
- * }
+ * // Parse the AsyncAPI document (async operation)
+ * const parseResult = await fromFile(parser, asyncapi_websocket_query).parse();
+ * const parsedAsyncAPIDocument = parseResult.document;
  * 
  * return (
- *   <FileHeaderInfo info={parsedAsyncAPIDocument.info()} server={parsedAsyncAPIDocument.servers().get("withPathname")} language={javascript} />
+ *   <FileHeaderInfo info={parsedAsyncAPIDocument.info()} server={parsedAsyncAPIDocument.servers().get("withPathname")} language={language} />
  * )
  */
 export function FileHeaderInfo({ info, server, language }) {

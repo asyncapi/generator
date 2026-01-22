@@ -246,15 +246,13 @@ import { Parser, fromFile } from "@asyncapi/parser";
 const parser = new Parser();
 const asyncapi_websocket_query = path.resolve(__dirname, "../../../helpers/test/__fixtures__/asyncapi-websocket-query.yml");
 const language = "javascript"
-let parsedAsyncAPIDocument;
 
-async () => {
-    const parseResult = await fromFile(parser, asyncapi_websocket_query).parse();
-    parsedAsyncAPIDocument = parseResult.document;
-}
+// Parse the AsyncAPI document (async operation)
+const parseResult = await fromFile(parser, asyncapi_websocket_query).parse();
+const parsedAsyncAPIDocument = parseResult.document;
 
 return (
-  <FileHeaderInfo info={parsedAsyncAPIDocument.info()} server={parsedAsyncAPIDocument.servers().get("withPathname")} language={javascript} />
+  <FileHeaderInfo info={parsedAsyncAPIDocument.info()} server={parsedAsyncAPIDocument.servers().get("withPathname")} language={language} />
 )
 ```
 
@@ -291,8 +289,8 @@ Renders a WebSocket message handler method with optional pre- and post-execution
 const language = "javascript"
 const methodName = "handleMessage"
 const methodParams = ["self", "message"]
-const preExecutionCode = "# Pass the incoming message to all registered message handlers."
-const postExecutionCode = "# Passed the incoming message to all registered message handlers."
+const preExecutionCode = "// Pass the incoming message to all registered message handlers."
+const postExecutionCode = "// Passed the incoming message to all registered message handlers."
 const customMethodConfig = {
   javascript: {
     methodDocs: "// Method to handle message with callback",
@@ -300,7 +298,7 @@ const customMethodConfig = {
   }
 };
 return (
-  <HandleMessage language={language} methodName={methodName} methodParams={methodParams} preExecutionCode={preExecutionCode} postExecutionCode = {postExecutionCode} customMethodConfig={customMethodConfig} />
+  <HandleMessage language={language} methodName={methodName} methodParams={methodParams} preExecutionCode={preExecutionCode} postExecutionCode={postExecutionCode} customMethodConfig={customMethodConfig} />
 )
 ```
 
@@ -385,10 +383,10 @@ import { Parser, fromFile } from "@asyncapi/parser";
 
 const parser = new Parser();
 const asyncapi_v3_path = path.resolve(__dirname, "../__fixtures__/asyncapi-v3.yml");
-async () => {
-   const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
-   parsedAsyncAPIDocument = parseResult.document;
-}
+
+// Parse the AsyncAPI document (async operation)
+const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
+const parsedAsyncAPIDocument = parseResult.document;
 
 const language = "java"
 
@@ -543,12 +541,11 @@ import { Parser, fromFile } from "@asyncapi/parser";
 
 const parser = new Parser();
 const asyncapi_v3_path = path.resolve(__dirname, "../__fixtures__/asyncapi-v3.yml");
-let parsedAsyncAPIDocument
+let parsedAsyncAPIDocument;
 
-async () => {
-   const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
-   parsedAsyncAPIDocument = parseResult.document;
-}
+// Parse the AsyncAPI document (async operation)
+const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
+const parsedAsyncAPIDocument = parseResult.document;
 
 const channels = parsedAsyncAPIDocument.channels();
 const queryParamsObject = getQueryParams(channels);
@@ -672,12 +669,10 @@ import { Parser, fromFile } from "@asyncapi/parser";
 
 const parser = new Parser();
 const asyncapi_v3_path = path.resolve(__dirname, '../__fixtures__/asyncapi-v3.yml');
-let parsedAsyncAPIDocument;
 
-async () => {
-   const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
-   parsedAsyncAPIDocument = parseResult.document;
-}
+// Parse the AsyncAPI document (async operation)
+const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
+const parsedAsyncAPIDocument = parseResult.document;
 
 const language = "javascript"
 const clientName = "AccountServiceAPI"

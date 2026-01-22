@@ -43,8 +43,8 @@ else:
  * const language = "javascript"
  * const methodName = "handleMessage"
  * const methodParams = ["self", "message"]
- * const preExecutionCode = "# Pass the incoming message to all registered message handlers."
- * const postExecutionCode = "# Passed the incoming message to all registered message handlers."
+ * const preExecutionCode = "// Pass the incoming message to all registered message handlers."
+ * const postExecutionCode = "// Passed the incoming message to all registered message handlers."
  * const customMethodConfig = {
  *   javascript: {
  *     methodDocs: "// Method to handle message with callback",

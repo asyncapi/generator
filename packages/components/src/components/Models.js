@@ -15,12 +15,12 @@ import {
  */
 
 /**
- * @typedef {'python' | 'java' | 'typescript' | 'rust' | 'csharp'} Language
+ * @typedef {'python' | 'java' | 'typescript' | 'rust' | 'csharp' | 'js'} Language
  * Represents the available programming languages for model generation.
  */
 
 /**
- * @typedef {object} ModelinaGenerator
+ * @typedef {PythonGenerator | JavaGenerator | TypeScriptGenerator | CSharpGenerator | RustGenerator | JavaScriptGenerator} ModelinaGenerator
  * Represents any Modelina generator instance.
  */
 
@@ -66,10 +66,10 @@ const formatHelpers = {
  * 
  * const parser = new Parser();
  * const asyncapi_v3_path = path.resolve(__dirname, "../__fixtures__/asyncapi-v3.yml");
- * async () => {
- *    const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
- *    parsedAsyncAPIDocument = parseResult.document;
- * }
+ * 
+ * // Parse the AsyncAPI document (async operation)
+ * const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
+ * const parsedAsyncAPIDocument = parseResult.document;
  * 
  * const language = "java"
  * 

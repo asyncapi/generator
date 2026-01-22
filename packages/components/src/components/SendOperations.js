@@ -14,7 +14,7 @@ import { toSnakeCase } from '@asyncapi/generator-helpers';
 
 /**
  * @callback SendOperationGenerator
- * @param {Object} operation
+ * @param {Object} operation - An AsyncAPI operation object with an id() method.
  * @param {string} clientName
  * @returns {SendOperationMethods}
  */
@@ -130,12 +130,10 @@ static ${methodName}(message, socket, schemas) {
  * 
  * const parser = new Parser();
  * const asyncapi_v3_path = path.resolve(__dirname, '../__fixtures__/asyncapi-v3.yml');
- * let parsedAsyncAPIDocument;
  * 
- * async () => {
- *    const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
- *    parsedAsyncAPIDocument = parseResult.document;
- * }
+ * // Parse the AsyncAPI document (async operation)
+ * const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
+ * const parsedAsyncAPIDocument = parseResult.document;
  * 
  * const language = "javascript"
  * const clientName = "AccountServiceAPI"

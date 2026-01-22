@@ -120,12 +120,11 @@ function resolveQueryParamLogic(language, framework = '') {
  * 
  * const parser = new Parser();
  * const asyncapi_v3_path = path.resolve(__dirname, "../__fixtures__/asyncapi-v3.yml");
- * let parsedAsyncAPIDocument
+ * let parsedAsyncAPIDocument;
  * 
- * async () => {
- *    const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
- *    parsedAsyncAPIDocument = parseResult.document;
- * }
+ * // Parse the AsyncAPI document (async operation)
+ * const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
+ * const parsedAsyncAPIDocument = parseResult.document;
  * 
  * const channels = parsedAsyncAPIDocument.channels();
  * const queryParamsObject = getQueryParams(channels);

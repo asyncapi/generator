@@ -127,6 +127,7 @@ static ${methodName}(message, socket, schemas) {
  * @example
  * import path from "path";
  * import { Parser, fromFile } from "@asyncapi/parser";
+ * import { SendOperations } from "@asyncapi/generator-components";
  * 
  * async function renderSendOperations(){
  *    const parser = new Parser();
@@ -136,9 +137,9 @@ static ${methodName}(message, socket, schemas) {
  *    const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
  *    const parsedAsyncAPIDocument = parseResult.document;
  *    
- *    const language = "javascript"
- *    const clientName = "AccountServiceAPI"
- *    const sendOperations = parsedAsyncAPIDocument.operations().filterBySend()
+ *    const language = "javascript";
+ *    const clientName = "AccountServiceAPI";
+ *    const sendOperations = parsedAsyncAPIDocument.operations().filterBySend();
  *    
  *    return (
  *       <SendOperations 

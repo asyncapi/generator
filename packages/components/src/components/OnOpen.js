@@ -58,9 +58,9 @@ const resolveOpenConfig = (language, framework = '') => {
  * @param {string} props.title - The title of the WebSocket server.
  * 
  * @example
- * const language = "java"
- * const framework = "quarkus"
- * const title = "HoppscotchEchoWebSocketClient"
+ * const language = "java";
+ * const framework = "quarkus";
+ * const title = "HoppscotchEchoWebSocketClient";
  * 
  * return (
  *   <OnOpen 

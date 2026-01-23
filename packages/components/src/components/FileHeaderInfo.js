@@ -31,11 +31,12 @@ const commentConfig = {
  * @example
  * import path from "path";
  * import { Parser, fromFile } from "@asyncapi/parser";
+ * import { FileHeaderInfo } from "@asyncapi/generator-components";
  * 
  * async function renderFileHeader() {
  *   const parser = new Parser();
  *   const asyncapi_websocket_query = path.resolve(__dirname, "../../../helpers/test/__fixtures__/asyncapi-websocket-query.yml");
- *   const language = "javascript"
+ *   const language = "javascript";
  *   
  *   // Parse the AsyncAPI document 
  *   const parseResult = await fromFile(parser, asyncapi_websocket_query).parse();

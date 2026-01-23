@@ -99,8 +99,8 @@ Future<void> connect() async {
  * @param {string} props.title - The title of the WebSocket server.
  * 
  * @example
- * const language = "python"
- * const title = "HoppscotchEchoWebSocketClient"
+ * const language = "python";
+ * const title = "HoppscotchEchoWebSocketClient";
  * 
  * return(
  *  <Connect 

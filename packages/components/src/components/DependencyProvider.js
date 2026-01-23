@@ -105,10 +105,10 @@ function resolveDependencies(language, framework = '', role = '') {
  * @returns {JSX.Element} Rendered list of import/require statements.
  * 
  * @example
- * const language = "java"
- * const framework = "quarkus"
- * const role = "client"
- * const additionalDependencies = ["import java.util.concurrent.CompletableFuture;", "import java.time.Duration;"]
+ * const language = "java";
+ * const framework = "quarkus";
+ * const role = "client";
+ * const additionalDependencies = ["import java.util.concurrent.CompletableFuture;", "import java.time.Duration;"];
  * 
  * return (
  *   <DependencyProvider 

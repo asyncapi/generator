@@ -6,7 +6,7 @@
   <dt>
     <a href="#{{name}}">{{name}}</a>
     {{#if returns.length}}
-      ⇒ <code>{{returns.[0].type.names.[0]}}</code>
+      ⇒ <code>{{{escapeType returns.[0].type.names.[0]}}}</code>
     {{/if}}
   </dt>
   <dd>

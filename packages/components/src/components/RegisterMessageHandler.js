@@ -42,11 +42,11 @@ else:
  * @returns {JSX.Element} Rendered method block with appropriate formatting.
  * 
  * @example
- * const language = "python"
- * const methodName = "registerMessageHandler"
- * const methodParams = ["self", "handler"]
- * const preExecutionCode = "# Pre-register operations"
- * const postExecutionCode = "# Post-register operations"
+ * const language = "python";
+ * const methodName = "registerMessageHandler";
+ * const methodParams = ["self", "handler"];
+ * const preExecutionCode = "# Pre-register operations";
+ * const postExecutionCode = "# Post-register operations";
  * 
  * return (
  *    <RegisterMessageHandler 

@@ -71,13 +71,13 @@ print('WebSocket connection closed.');`
  * @returns {JSX.Element} Rendered method block with appropriate formatting.
  * 
  * @example
- * const language = "java"
- * const framework = "quarkus"
- * const methodName = "terminateConnection"
- * const methodParams = ["self"]
- * const preExecutionCode = "// About to terminate connection"
- * const postExecutionCode = "// Connection terminated"
- * const indent = 2
+ * const language = "java";
+ * const framework = "quarkus";
+ * const methodName = "terminateConnection";
+ * const methodParams = ["self"];
+ * const preExecutionCode = "// About to terminate connection";
+ * const postExecutionCode = "// Connection terminated";
+ * const indent = 2;
  *
  * return (
  *   <CloseConnection 

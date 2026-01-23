@@ -76,16 +76,16 @@ const buildIndentedLogic = (logic, preExecutionCode, postExecutionCode, indentSi
  * @param {string} [props.framework] - Framework name for nested configurations (e.g., 'quarkus' for Java).
  * 
  * @example
- * const language = "java"
- * const methodName = "registerHandler"
- * const methodParams = ["self", "handler"]
- * const methodDocs = "// Process the input data."
- * const methodLogic = "// TODO: implement"
- * const preExecutionCode = "// Before handler registration"
- * const postExecutionCode = "// After handler registration"
- * const customMethodConfig={ openingTag: "{", closingTag: "}", indentSize: 6 }
- * const methodConfig = {"java" : {methodDocs : methodDocs, methodLogic: methodLogic }}
- * const framework = "quarkus"
+ * const language = "java";
+ * const methodName = "registerHandler";
+ * const methodParams = ["self", "handler"];
+ * const methodDocs = "// Process the input data.";
+ * const methodLogic = "// TODO: implement";
+ * const preExecutionCode = "// Before handler registration";
+ * const postExecutionCode = "// After handler registration";
+ * const customMethodConfig={ openingTag: "{", closingTag: "}", indentSize: 6 };
+ * const methodConfig = {"java" : {methodDocs : methodDocs, methodLogic: methodLogic }};
+ * const framework = "quarkus";
  * 
  * return (
  *   <MethodGenerator 

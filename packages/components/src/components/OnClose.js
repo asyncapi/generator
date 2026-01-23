@@ -8,7 +8,7 @@ import { Text } from '@asyncapi/generator-react-sdk';
 /**
  * Mapping of supported programming languages to their WebSocket onClose event handler implementations.
  * 
- * @type {Object.<Language, Function>}
+ * @type {Object.<Language, Function|Object.<string, Function>>}
  */
 const websocketOnCloseMethod = {
   javascript: (title) => {
@@ -68,9 +68,9 @@ const resolveCloseConfig = (language, framework = '') => {
  * @returns {JSX.Element} A Text component containing the onClose handler code for the specified language.
  * 
  * @example
- * const language = "java"
- * const framework = "quarkus"
- * const title = "HoppscotchEchoWebSocketClient"
+ * const language = "java";
+ * const framework = "quarkus";
+ * const title = "HoppscotchEchoWebSocketClient";
  * 
  * return (
  *   <OnClose 

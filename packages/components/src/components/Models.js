@@ -63,8 +63,7 @@ const formatHelpers = {
  * @example
  * import path from "path";
  * import { Parser, fromFile } from "@asyncapi/parser";
- * 
-
+ * import { Models } from "@asyncapi/generator-components";
  * 
  * async function renderModel() {
  *    const parser = new Parser();
@@ -74,7 +73,7 @@ const formatHelpers = {
  *    const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
  *    const parsedAsyncAPIDocument = parseResult.document;
  *    
- *    const language = "java"
+ *    const language = "java";
  *    
  *    return (
  *      <Models 

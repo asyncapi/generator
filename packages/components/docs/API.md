@@ -134,13 +134,13 @@ Renders a WebSocket close connection method with optional pre- and post-executio
 ### Example
 
 ```js
-const language = "java"
-const framework = "quarkus"
-const methodName = "terminateConnection"
-const methodParams = ["self"]
-const preExecutionCode = "// About to terminate connection"
-const postExecutionCode = "// Connection terminated"
-const indent = 2
+const language = "java";
+const framework = "quarkus";
+const methodName = "terminateConnection";
+const methodParams = ["self"];
+const preExecutionCode = "// About to terminate connection";
+const postExecutionCode = "// Connection terminated";
+const indent = 2;
 
 return (
   <CloseConnection 
@@ -176,8 +176,8 @@ Component that renders WebSocket connection method for the specified programming
 ### Example
 
 ```js
-const language = "python"
-const title = "HoppscotchEchoWebSocketClient"
+const language = "python";
+const title = "HoppscotchEchoWebSocketClient";
 
 return(
  <Connect 
@@ -215,10 +215,10 @@ Renders the top-of-file dependency statements for the selected programming langu
 ### Example
 
 ```js
-const language = "java"
-const framework = "quarkus"
-const role = "client"
-const additionalDependencies = ["import java.util.concurrent.CompletableFuture;", "import java.time.Duration;"]
+const language = "java";
+const framework = "quarkus";
+const role = "client";
+const additionalDependencies = ["import java.util.concurrent.CompletableFuture;", "import java.time.Duration;"];
 
 return (
   <DependencyProvider 
@@ -259,11 +259,12 @@ Renders a file header with metadata information such as title, version, protocol
 ```js
 import path from "path";
 import { Parser, fromFile } from "@asyncapi/parser";
+import { FileHeaderInfo } from "@asyncapi/generator-components";
 
 async function renderFileHeader() {
   const parser = new Parser();
   const asyncapi_websocket_query = path.resolve(__dirname, "../../../helpers/test/__fixtures__/asyncapi-websocket-query.yml");
-  const language = "javascript"
+  const language = "javascript";
   
   // Parse the AsyncAPI document 
   const parseResult = await fromFile(parser, asyncapi_websocket_query).parse();
@@ -309,11 +310,11 @@ Renders a WebSocket message handler method with optional pre- and post-execution
 ### Example
 
 ```js
-const language = "javascript"
-const methodName = "handleMessage"
-const methodParams = ["self", "message"]
-const preExecutionCode = "// Pass the incoming message to all registered message handlers."
-const postExecutionCode = "// Passed the incoming message to all registered message handlers."
+const language = "javascript";
+const methodName = "handleMessage";
+const methodParams = ["self", "message"];
+const preExecutionCode = "// Pass the incoming message to all registered message handlers.";
+const postExecutionCode = "// Passed the incoming message to all registered message handlers.";
 const customMethodConfig = {
   javascript: {
     methodDocs: "// Method to handle message with callback",
@@ -363,16 +364,16 @@ Generic Method rendering component.
 ### Example
 
 ```js
-const language = "java"
-const methodName = "registerHandler"
-const methodParams = ["self", "handler"]
-const methodDocs = "// Process the input data."
-const methodLogic = "// TODO: implement"
-const preExecutionCode = "// Before handler registration"
-const postExecutionCode = "// After handler registration"
-const customMethodConfig={ openingTag: "{", closingTag: "}", indentSize: 6 }
-const methodConfig = {"java" : {methodDocs : methodDocs, methodLogic: methodLogic }}
-const framework = "quarkus"
+const language = "java";
+const methodName = "registerHandler";
+const methodParams = ["self", "handler"];
+const methodDocs = "// Process the input data.";
+const methodLogic = "// TODO: implement";
+const preExecutionCode = "// Before handler registration";
+const postExecutionCode = "// After handler registration";
+const customMethodConfig={ openingTag: "{", closingTag: "}", indentSize: 6 };
+const methodConfig = {"java" : {methodDocs : methodDocs, methodLogic: methodLogic }};
+const framework = "quarkus";
 
 return (
   <MethodGenerator 
@@ -421,7 +422,7 @@ Generates and returns an array of model files based on the AsyncAPI document.
 ```js
 import path from "path";
 import { Parser, fromFile } from "@asyncapi/parser";
-
+import { Models } from "@asyncapi/generator-components";
 
 async function renderModel() {
    const parser = new Parser();
@@ -431,7 +432,7 @@ async function renderModel() {
    const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
    const parsedAsyncAPIDocument = parseResult.document;
    
-   const language = "java"
+   const language = "java";
    
    return (
      <Models 
@@ -469,9 +470,9 @@ Component that renders WebSocket onClose event handler for the specified program
 ### Example
 
 ```js
-const language = "java"
-const framework = "quarkus"
-const title = "HoppscotchEchoWebSocketClient"
+const language = "java";
+const framework = "quarkus";
+const title = "HoppscotchEchoWebSocketClient";
 
 return (
   <OnClose 
@@ -502,7 +503,7 @@ Component that renders WebSocket onError event handler for the specified program
 ### Example
 
 ```js
-const language = "javascript"
+const language = "javascript";
 return (
   <OnError language={language} />
 )
@@ -528,7 +529,7 @@ Component that renders WebSocket onMessage event handler for the specified progr
 ### Example
 
 ```js
-const language = "javascript"
+const language = "javascript";
 return (
   <OnMessage language={language} />
 )
@@ -556,9 +557,9 @@ Component that renders WebSocket onOpen event handler for the specified programm
 ### Example
 
 ```js
-const language = "java"
-const framework = "quarkus"
-const title = "HoppscotchEchoWebSocketClient"
+const language = "java";
+const framework = "quarkus";
+const title = "HoppscotchEchoWebSocketClient";
 
 return (
   <OnOpen 
@@ -596,9 +597,10 @@ Component for rendering query parameter variables code.
 ### Example
 
 ```js
-import path from "path"
+import path from "path";
 import { Parser, fromFile } from "@asyncapi/parser";
 import { getQueryParams } from "@asyncapi/generator-helpers";
+import { QueryParamsVariables } from "@asyncapi/generator-components";
 
 
 async function renderQueryParamsVariable(){
@@ -613,8 +615,8 @@ async function renderQueryParamsVariable(){
    const queryParamsObject = getQueryParams(channels);
    const queryParamsArray = queryParamsObject ? Array.from(queryParamsObject.entries()) : [];
    
-   const language = "java"
-   const framework = "quarkus"
+   const language = "java";
+   const framework = "quarkus";
    
    return (
      <QueryParamsVariables 
@@ -656,11 +658,11 @@ Renders a WebSocket error handler registration method with optional pre- and pos
 ### Example
 
 ```js
-const language = "python"
-const methodName = "registerErrorHandler"
-const methodParams = ["self", "handler"]
-const preExecutionCode = "# Pre-register operations"
-const postExecutionCode = "# Post-register operations"
+const language = "python";
+const methodName = "registerErrorHandler";
+const methodParams = ["self", "handler"];
+const preExecutionCode = "# Pre-register operations";
+const postExecutionCode = "# Post-register operations";
 const customMethodConfig = { returnType: "int", openingTag: "{", closingTag: "}", indentSize: 2};
 
 return (
@@ -704,11 +706,11 @@ Renders a WebSocket message handler registration method with optional pre- and p
 ### Example
 
 ```js
-const language = "python"
-const methodName = "registerMessageHandler"
-const methodParams = ["self", "handler"]
-const preExecutionCode = "# Pre-register operations"
-const postExecutionCode = "# Post-register operations"
+const language = "python";
+const methodName = "registerMessageHandler";
+const methodParams = ["self", "handler"];
+const preExecutionCode = "# Pre-register operations";
+const postExecutionCode = "# Post-register operations";
 
 return (
    <RegisterMessageHandler 
@@ -746,6 +748,7 @@ Generates both static and instance methods for sending messages through WebSocke
 ```js
 import path from "path";
 import { Parser, fromFile } from "@asyncapi/parser";
+import { SendOperations } from "@asyncapi/generator-components";
 
 async function renderSendOperations(){
    const parser = new Parser();
@@ -755,9 +758,9 @@ async function renderSendOperations(){
    const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
    const parsedAsyncAPIDocument = parseResult.document;
    
-   const language = "javascript"
-   const clientName = "AccountServiceAPI"
-   const sendOperations = parsedAsyncAPIDocument.operations().filterBySend()
+   const language = "javascript";
+   const clientName = "AccountServiceAPI";
+   const sendOperations = parsedAsyncAPIDocument.operations().filterBySend();
    
    return (
       <SendOperations 

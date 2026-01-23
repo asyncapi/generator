@@ -40,11 +40,11 @@ else:
  * @returns {JSX.Element} Rendered method block with appropriate formatting.
  * 
  * @example
- * const language = "javascript"
- * const methodName = "handleMessage"
- * const methodParams = ["self", "message"]
- * const preExecutionCode = "// Pass the incoming message to all registered message handlers."
- * const postExecutionCode = "// Passed the incoming message to all registered message handlers."
+ * const language = "javascript";
+ * const methodName = "handleMessage";
+ * const methodParams = ["self", "message"];
+ * const preExecutionCode = "// Pass the incoming message to all registered message handlers.";
+ * const postExecutionCode = "// Passed the incoming message to all registered message handlers.";
  * const customMethodConfig = {
  *   javascript: {
  *     methodDocs: "// Method to handle message with callback",

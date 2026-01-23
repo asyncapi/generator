@@ -93,7 +93,7 @@ const queryParamLogicConfig = {
  * @private
  * @param {Language} language - The target programming language.
  * @param {string} [framework=''] - Optional framework (e.g., 'quarkus' for Java).
- * @returns {function} The configuration function for generating query parameter code.
+ * @returns {function | undefined} The configuration function for generating query parameter code.
  */
 function resolveQueryParamLogic(language, framework = '') {
   const config = queryParamLogicConfig[language];
@@ -115,9 +115,10 @@ function resolveQueryParamLogic(language, framework = '') {
  * @returns {React.ReactNode[]|null} Array of Text components for each query parameter, or null if queryParams is invalid.
  * 
  * @example
- * import path from "path"
+ * import path from "path";
  * import { Parser, fromFile } from "@asyncapi/parser";
  * import { getQueryParams } from "@asyncapi/generator-helpers";
+ * import { QueryParamsVariables } from "@asyncapi/generator-components";
  * 
  * 
  * async function renderQueryParamsVariable(){
@@ -132,8 +133,8 @@ function resolveQueryParamLogic(language, framework = '') {
  *    const queryParamsObject = getQueryParams(channels);
  *    const queryParamsArray = queryParamsObject ? Array.from(queryParamsObject.entries()) : [];
  *    
- *    const language = "java"
- *    const framework = "quarkus"
+ *    const language = "java";
+ *    const framework = "quarkus";
  *    
  *    return (
  *      <QueryParamsVariables 

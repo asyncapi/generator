@@ -106,7 +106,7 @@ Generates both static and instance methods for sending messages through WebSocke
 
 
 <a name="CloseConnection"></a>
-## **CloseConnection** 
+## **CloseConnection()** 
 Renders a WebSocket close connection method with optional pre- and post-execution logic.
 
 
@@ -114,14 +114,14 @@ Renders a WebSocket close connection method with optional pre- and post-executio
 
 | Name | Type | Description |
 |------|------|-------------|
-| props | Object | Component props. |
-| props.language | Language | Programming language used for method formatting. |
-| props.framework | string | Framework used, if any (e.g., &#x27;quarkus&#x27; for Java). |
-| props.methodName | string | Name of the method to generate. |
-| props.methodParams | Array.<string> | List of parameters for the method. |
-| props.preExecutionCode | string | Code to insert before the main function logic. |
-| props.postExecutionCode | string | Code to insert after the main function logic. |
-| props.indent | number | Indentation level for the method block. |
+| props | <code>Object</code> | Component props. |
+| props.language | <code>Language</code> | Programming language used for method formatting. |
+| props.framework | <code>string</code> | Framework used, if any (e.g., &#x27;quarkus&#x27; for Java). |
+| props.methodName | <code>string</code> | Name of the method to generate. |
+| props.methodParams | <code>Array.&lt;string&gt;</code> | List of parameters for the method. |
+| props.preExecutionCode | <code>string</code> | Code to insert before the main function logic. |
+| props.postExecutionCode | <code>string</code> | Code to insert after the main function logic. |
+| props.indent | <code>number</code> | Indentation level for the method block. |
 
 
 
@@ -150,7 +150,7 @@ return (
 
 
 <a name="Connect"></a>
-## **Connect** 
+## **Connect()** 
 Component that renders WebSocket connection method for the specified programming language.
 
 
@@ -158,9 +158,9 @@ Component that renders WebSocket connection method for the specified programming
 
 | Name | Type | Description |
 |------|------|-------------|
-| props | Object | Component properties. |
-| props.language | Language | The programming language for which to generate connection code. |
-| props.title | string | The title of the WebSocket server. |
+| props | <code>Object</code> | Component properties. |
+| props.language | <code>Language</code> | The programming language for which to generate connection code. |
+| props.title | <code>string</code> | The title of the WebSocket server. |
 
 
 
@@ -179,7 +179,7 @@ return(
 
 
 <a name="DependencyProvider"></a>
-## **DependencyProvider** 
+## **DependencyProvider()** 
 Renders the top-of-file dependency statements for the selected programming language.
 
 
@@ -187,11 +187,11 @@ Renders the top-of-file dependency statements for the selected programming langu
 
 | Name | Type | Description |
 |------|------|-------------|
-| props | Object | Component props. |
-| props.language | Language | The programming language for which to render dependency statements. |
-| props.framework | string | The framework (e.g., &#x27;quarkus&#x27; for Java). |
-| props.role | string | The role (e.g., &#x27;client&#x27;, &#x27;connector&#x27; for Java). |
-| props.additionalDependencies | Array.<string> | Optional additional dependencies to include. |
+| props | <code>Object</code> | Component props. |
+| props.language | <code>Language</code> | The programming language for which to render dependency statements. |
+| props.framework | <code>string</code> | The framework (e.g., &#x27;quarkus&#x27; for Java). |
+| props.role | <code>string</code> | The role (e.g., &#x27;client&#x27;, &#x27;connector&#x27; for Java). |
+| props.additionalDependencies | <code>Array.&lt;string&gt;</code> | Optional additional dependencies to include. |
 
 
 
@@ -217,7 +217,7 @@ return (
 
 
 <a name="FileHeaderInfo"></a>
-## **FileHeaderInfo** 
+## **FileHeaderInfo()** 
 Renders a file header with metadata information such as title, version, protocol, host, and path.
 
 
@@ -225,10 +225,10 @@ Renders a file header with metadata information such as title, version, protocol
 
 | Name | Type | Description |
 |------|------|-------------|
-| props | Object | Component props. |
-| props.info | object | Info object from the AsyncAPI document. |
-| props.server | object | Server object from the AsyncAPI document. |
-| props.language | Language | Programming language used for comment formatting. |
+| props | <code>Object</code> | Component props. |
+| props.info | <code>object</code> | Info object from the AsyncAPI document. |
+| props.server | <code>object</code> | Server object from the AsyncAPI document. |
+| props.language | <code>Language</code> | Programming language used for comment formatting. |
 
 
 
@@ -260,7 +260,7 @@ return (
 
 
 <a name="HandleMessage"></a>
-## **HandleMessage** 
+## **HandleMessage()** 
 Renders a WebSocket message handler method with optional pre- and post-execution logic.
 
 
@@ -268,13 +268,13 @@ Renders a WebSocket message handler method with optional pre- and post-execution
 
 | Name | Type | Description |
 |------|------|-------------|
-| props | Object | Component props. |
-| props.language | Language | Programming language used for method formatting. |
-| props.methodName | string | Name of the method to generate. |
-| props.methodParams | Array.<string> | List of parameters for the method. |
-| props.preExecutionCode | string | Code to insert before the main function logic. |
-| props.postExecutionCode | string | Code to insert after the main function logic. |
-| props.customMethodConfig | Object | Optional overrides for default method configuration. |
+| props | <code>Object</code> | Component props. |
+| props.language | <code>Language</code> | Programming language used for method formatting. |
+| props.methodName | <code>string</code> | Name of the method to generate. |
+| props.methodParams | <code>Array.&lt;string&gt;</code> | List of parameters for the method. |
+| props.preExecutionCode | <code>string</code> | Code to insert before the main function logic. |
+| props.postExecutionCode | <code>string</code> | Code to insert after the main function logic. |
+| props.customMethodConfig | <code>Object</code> | Optional overrides for default method configuration. |
 
 
 
@@ -306,7 +306,7 @@ return (
 
 
 <a name="MethodGenerator"></a>
-## **MethodGenerator** 
+## **MethodGenerator()** 
 Generic Method rendering component.
 
 
@@ -314,19 +314,19 @@ Generic Method rendering component.
 
 | Name | Type | Description |
 |------|------|-------------|
-| props | Object | Component props. |
-| props.language | Language | Programming language used for method formatting. |
-| props.methodName | string | Name of the method. |
-| props.methodParams | Array.<string> | Method parameters. |
-| props.methodDocs | string | Optional documentation string. |
-| props.methodLogic | string | Core method logic. |
-| props.preExecutionCode | string | Code before main logic. |
-| props.postExecutionCode | string | Code after main logic. |
-| props.indent | number | Indentation for the method block. |
-| props.newLines | number | Number of new lines after method. |
-| props.customMethodConfig | Object | Optional custom syntax configuration for the current language. |
-| props.methodConfig | Record.<Language, ({methodDocs: (string&#124;undefined), methodLogic: (string&#124;undefined)}&#124;Record.<string, {methodDocs: (string&#124;undefined), methodLogic: (string&#124;undefined)}>)> | Language-level or framework-level configuration. |
-| props.framework | string | Framework name for nested configurations (e.g., &#x27;quarkus&#x27; for Java). |
+| props | <code>Object</code> | Component props. |
+| props.language | <code>Language</code> | Programming language used for method formatting. |
+| props.methodName | <code>string</code> | Name of the method. |
+| props.methodParams | <code>Array.&lt;string&gt;</code> | Method parameters. |
+| props.methodDocs | <code>string</code> | Optional documentation string. |
+| props.methodLogic | <code>string</code> | Core method logic. |
+| props.preExecutionCode | <code>string</code> | Code before main logic. |
+| props.postExecutionCode | <code>string</code> | Code after main logic. |
+| props.indent | <code>number</code> | Indentation for the method block. |
+| props.newLines | <code>number</code> | Number of new lines after method. |
+| props.customMethodConfig | <code>Object</code> | Optional custom syntax configuration for the current language. |
+| props.methodConfig | <code>Record.&lt;Language, ({methodDocs: (string&#124;undefined), methodLogic: (string&#124;undefined)}&#124;Record.&lt;string, {methodDocs: (string&#124;undefined), methodLogic: (string&#124;undefined)}&gt;)&gt;</code> | Language-level or framework-level configuration. |
+| props.framework | <code>string</code> | Framework name for nested configurations (e.g., &#x27;quarkus&#x27; for Java). |
 
 
 
@@ -353,7 +353,7 @@ return (
 
 
 <a name="Models"></a>
-## **Models** 
+## **Models()** 
 Generates and returns an array of model files based on the AsyncAPI document.
 
 
@@ -361,12 +361,12 @@ Generates and returns an array of model files based on the AsyncAPI document.
 
 | Name | Type | Description |
 |------|------|-------------|
-| params | Object | The parameters for the function. |
-| params.asyncapi | AsyncAPIDocumentInterface | Parsed AsyncAPI document object. |
-| params.language | Language | Target programming language for the generated models. |
-| params.format | Format | Naming format for generated files. |
-| params.presets | object | Custom presets for the generator instance. |
-| params.constraints | object | Custom constraints for the generator instance. |
+| params | <code>Object</code> | The parameters for the function. |
+| params.asyncapi | <code>AsyncAPIDocumentInterface</code> | Parsed AsyncAPI document object. |
+| params.language | <code>Language</code> | Target programming language for the generated models. |
+| params.format | <code>Format</code> | Naming format for generated files. |
+| params.presets | <code>object</code> | Custom presets for the generator instance. |
+| params.constraints | <code>object</code> | Custom constraints for the generator instance. |
 
 
 
@@ -399,7 +399,7 @@ return (
 
 
 <a name="OnClose"></a>
-## **OnClose** 
+## **OnClose()** 
 Component that renders WebSocket onClose event handler for the specified programming language.
 
 
@@ -407,10 +407,10 @@ Component that renders WebSocket onClose event handler for the specified program
 
 | Name | Type | Description |
 |------|------|-------------|
-| props | Object | Component properties. |
-| props.language | Language | The programming language for which to generate onClose handler code. |
-| props.framework | string | Optional framework variant (e.g., &#x27;quarkus&#x27; for java). |
-| props.title | string | The title of the WebSocket server. |
+| props | <code>Object</code> | Component properties. |
+| props.language | <code>Language</code> | The programming language for which to generate onClose handler code. |
+| props.framework | <code>string</code> | Optional framework variant (e.g., &#x27;quarkus&#x27; for java). |
+| props.title | <code>string</code> | The title of the WebSocket server. |
 
 
 
@@ -435,7 +435,7 @@ return (
 
 
 <a name="OnError"></a>
-## **OnError** 
+## **OnError()** 
 Component that renders WebSocket onError event handler for the specified programming language.
 
 
@@ -443,8 +443,8 @@ Component that renders WebSocket onError event handler for the specified program
 
 | Name | Type | Description |
 |------|------|-------------|
-| props | Object | Component properties. |
-| props.language | Language | The programming language for which to generate onError handler code. |
+| props | <code>Object</code> | Component properties. |
+| props.language | <code>Language</code> | The programming language for which to generate onError handler code. |
 
 
 
@@ -461,7 +461,7 @@ return (
 
 
 <a name="OnMessage"></a>
-## **OnMessage** 
+## **OnMessage()** 
 Component that renders WebSocket onMessage event handler for the specified programming language.
 
 
@@ -469,8 +469,8 @@ Component that renders WebSocket onMessage event handler for the specified progr
 
 | Name | Type | Description |
 |------|------|-------------|
-| props | Object | Component properties. |
-| props.language | Language | The programming language for which to generate onMessage handler code. |
+| props | <code>Object</code> | Component properties. |
+| props.language | <code>Language</code> | The programming language for which to generate onMessage handler code. |
 
 
 
@@ -487,7 +487,7 @@ return (
 
 
 <a name="OnOpen"></a>
-## **OnOpen** 
+## **OnOpen()** 
 Component that renders WebSocket onOpen event handler for the specified programming language.
 
 
@@ -495,10 +495,10 @@ Component that renders WebSocket onOpen event handler for the specified programm
 
 | Name | Type | Description |
 |------|------|-------------|
-| props | Object | Component properties. |
-| props.language | Language | The programming language for which to generate onOpen handler code. |
-| props.framework | string | Optional framework variant (e.g., &#x27;quarkus&#x27; for java). |
-| props.title | string | The title of the WebSocket server. |
+| props | <code>Object</code> | Component properties. |
+| props.language | <code>Language</code> | The programming language for which to generate onOpen handler code. |
+| props.framework | <code>string</code> | Optional framework variant (e.g., &#x27;quarkus&#x27; for java). |
+| props.title | <code>string</code> | The title of the WebSocket server. |
 
 
 
@@ -518,7 +518,7 @@ return (
 
 
 <a name="QueryParamsVariables"></a>
-## **QueryParamsVariables** 
+## **QueryParamsVariables()** 
 Component for rendering query parameter variables code.
 
 
@@ -526,10 +526,10 @@ Component for rendering query parameter variables code.
 
 | Name | Type | Description |
 |------|------|-------------|
-| props | Object | Component props. |
-| props.language | Language | The target programming language. |
-| props.framework | string | Optional framework for the language. |
-| props.queryParams | Array.<Array.<string>> | Array of query parameters, each represented as [paramName, paramType?]. |
+| props | <code>Object</code> | Component props. |
+| props.language | <code>Language</code> | The target programming language. |
+| props.framework | <code>string</code> | Optional framework for the language. |
+| props.queryParams | <code>Array.&lt;Array.&lt;string&gt;&gt;</code> | Array of query parameters, each represented as [paramName, paramType?]. |
 
 
 
@@ -568,7 +568,7 @@ return (
 
 
 <a name="RegisterErrorHandler"></a>
-## **RegisterErrorHandler** 
+## **RegisterErrorHandler()** 
 Renders a WebSocket error handler registration method with optional pre- and post-execution logic.
 
 
@@ -576,13 +576,13 @@ Renders a WebSocket error handler registration method with optional pre- and pos
 
 | Name | Type | Description |
 |------|------|-------------|
-| props | Object | Component props. |
-| props.language | Language | Programming language used for method formatting. |
-| props.methodName | string | Name of the method to generate. |
-| props.methodParams | Array.<string> | List of parameters for the method. |
-| props.preExecutionCode | string | Code to insert before the main function logic. |
-| props.postExecutionCode | string | Code to insert after the main function logic. |
-| props.customMethodConfig | Object | Optional overrides for default method configuration. |
+| props | <code>Object</code> | Component props. |
+| props.language | <code>Language</code> | Programming language used for method formatting. |
+| props.methodName | <code>string</code> | Name of the method to generate. |
+| props.methodParams | <code>Array.&lt;string&gt;</code> | List of parameters for the method. |
+| props.preExecutionCode | <code>string</code> | Code to insert before the main function logic. |
+| props.postExecutionCode | <code>string</code> | Code to insert after the main function logic. |
+| props.customMethodConfig | <code>Object</code> | Optional overrides for default method configuration. |
 
 
 
@@ -610,7 +610,7 @@ return (
 
 
 <a name="RegisterMessageHandler"></a>
-## **RegisterMessageHandler** 
+## **RegisterMessageHandler()** 
 Renders a WebSocket message handler registration method with optional pre- and post-execution logic.
 
 
@@ -618,12 +618,12 @@ Renders a WebSocket message handler registration method with optional pre- and p
 
 | Name | Type | Description |
 |------|------|-------------|
-| props | Object | Component props. |
-| props.language | Language | Programming language used for method formatting. |
-| props.methodName | string | Name of the method to generate. |
-| props.methodParams | Array.<string> | List of parameters for the method. |
-| props.preExecutionCode | string | Code to insert before the main function logic. |
-| props.postExecutionCode | string | Code to insert after the main function logic. |
+| props | <code>Object</code> | Component props. |
+| props.language | <code>Language</code> | Programming language used for method formatting. |
+| props.methodName | <code>string</code> | Name of the method to generate. |
+| props.methodParams | <code>Array.&lt;string&gt;</code> | List of parameters for the method. |
+| props.preExecutionCode | <code>string</code> | Code to insert before the main function logic. |
+| props.postExecutionCode | <code>string</code> | Code to insert after the main function logic. |
 
 
 
@@ -650,7 +650,7 @@ return (
 
 
 <a name="SendOperations"></a>
-## **SendOperations** 
+## **SendOperations()** 
 Component for rendering WebSocket send operation methods.
 Generates both static and instance methods for sending messages through WebSocket connections.
 
@@ -659,10 +659,10 @@ Generates both static and instance methods for sending messages through WebSocke
 
 | Name | Type | Description |
 |------|------|-------------|
-| props | Object | Component props. |
-| props.language | Language | The target programming language. |
-| props.sendOperations | Array.<Object> | Array of send operations from AsyncAPI document. |
-| props.clientName | string | The name of the client class. |
+| props | <code>Object</code> | Component props. |
+| props.language | <code>Language</code> | The target programming language. |
+| props.sendOperations | <code>Array.&lt;Object&gt;</code> | Array of send operations from AsyncAPI document. |
+| props.clientName | <code>string</code> | The name of the client class. |
 
 
 

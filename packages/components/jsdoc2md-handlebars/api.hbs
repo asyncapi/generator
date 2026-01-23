@@ -18,7 +18,7 @@
 {{#functions}}
 
 <a name="{{name}}"></a>
-## **{{name}}** 
+## **{{name}}()** 
 {{description}}
 
 {{#if params.length}}
@@ -28,7 +28,7 @@
 | Name | Type | Description |
 |------|------|-------------|
 {{#each params}}
-| {{name}} | {{{escapeType type.names.[0]}}} | {{description}} |
+| {{name}} | <code>{{{escapeType type.names.[0]}}}</code> | {{description}} |
 {{/each}}
 
 {{/if}}
@@ -38,7 +38,7 @@
 ### Returns
 
 {{#each returns}}
-- **{{escapeType type.names.[0]}}**{{#if description}} - {{description}}{{/if}}
+- **{{{escapeType type.names.[0]}}}**{{#if description}} - {{description}}{{/if}}
 {{/each}}
 
 {{/if}}

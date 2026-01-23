@@ -103,7 +103,10 @@ Future<void> connect() async {
  * const title = "HoppscotchEchoWebSocketClient"
  * 
  * return(
- *  <Connect language={language} title={title} />
+ *  <Connect 
+ *      language={language} 
+ *      title={title} 
+ *  />
  * )
  */
 export function Connect({ language, title }) {

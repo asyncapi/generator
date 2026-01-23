@@ -32,17 +32,23 @@ const commentConfig = {
  * import path from "path";
  * import { Parser, fromFile } from "@asyncapi/parser";
  * 
- * const parser = new Parser();
- * const asyncapi_websocket_query = path.resolve(__dirname, "../../../helpers/test/__fixtures__/asyncapi-websocket-query.yml");
- * const language = "javascript"
- * 
- * // Parse the AsyncAPI document (async operation)
- * const parseResult = await fromFile(parser, asyncapi_websocket_query).parse();
- * const parsedAsyncAPIDocument = parseResult.document;
- * 
- * return (
- *   <FileHeaderInfo info={parsedAsyncAPIDocument.info()} server={parsedAsyncAPIDocument.servers().get("withPathname")} language={language} />
- * )
+ * async function renderFileHeader() {
+ *   const parser = new Parser();
+ *   const asyncapi_websocket_query = path.resolve(__dirname, "../../../helpers/test/__fixtures__/asyncapi-websocket-query.yml");
+ *   const language = "javascript"
+ *   
+ *   // Parse the AsyncAPI document 
+ *   const parseResult = await fromFile(parser, asyncapi_websocket_query).parse();
+ *   const parsedAsyncAPIDocument = parseResult.document;
+ *   
+ *   return (
+ *     <FileHeaderInfo 
+ *       info={parsedAsyncAPIDocument.info()} 
+ *       server={parsedAsyncAPIDocument.servers().get("withPathname")} 
+ *       language={language} 
+ *     />
+ *   )
+ * }
  */
 export function FileHeaderInfo({ info, server, language }) {
   const { commentChar, lineStyle } = commentConfig[language] || { 

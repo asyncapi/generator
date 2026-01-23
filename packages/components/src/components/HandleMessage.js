@@ -52,7 +52,14 @@ else:
  *   }
  * };
  * return (
- *   <HandleMessage language={language} methodName={methodName} methodParams={methodParams} preExecutionCode={preExecutionCode} postExecutionCode={postExecutionCode} customMethodConfig={customMethodConfig} />
+ *   <HandleMessage 
+ *      language={language} 
+ *      methodName={methodName} 
+ *      methodParams={methodParams} 
+ *      preExecutionCode={preExecutionCode} 
+ *      postExecutionCode={postExecutionCode} 
+ *      customMethodConfig={customMethodConfig} 
+ *   />
  * )
  * 
  */

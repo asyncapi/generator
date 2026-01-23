@@ -80,7 +80,15 @@ print('WebSocket connection closed.');`
  * const indent = 2
  *
  * return (
- *   <CloseConnection language={language} framework={framework} methodName={methodName} methodParams={methodParams} preExecutionCode={preExecutionCode} postExecutionCode={postExecutionCode} indent={indent} />
+ *   <CloseConnection 
+ *      language={language}
+ *      framework={framework}
+ *      methodName={methodName}
+ *      methodParams={methodParams}
+ *      preExecutionCode={preExecutionCode} 
+ *      postExecutionCode={postExecutionCode} 
+ *      indent={indent} 
+ *    />
  * );
  * 
  */

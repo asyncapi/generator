@@ -119,23 +119,30 @@ function resolveQueryParamLogic(language, framework = '') {
  * import { Parser, fromFile } from "@asyncapi/parser";
  * import { getQueryParams } from "@asyncapi/generator-helpers";
  * 
- * const parser = new Parser();
- * const asyncapi_v3_path = path.resolve(__dirname, "../__fixtures__/asyncapi-v3.yml");
  * 
- * // Parse the AsyncAPI document (async operation)
- * const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
- * const parsedAsyncAPIDocument = parseResult.document;
- * 
- * const channels = parsedAsyncAPIDocument.channels();
- * const queryParamsObject = getQueryParams(channels);
- * const queryParamsArray = queryParamsObject ? Array.from(queryParamsObject.entries()) : [];
- * 
- * const language = "java"
- * const framework = "quarkus"
- * 
- * return (
- *   <QueryParamsVariables language={language} framework={framework} queryParams={queryParamsArray} />
- * )
+ * async function renderQueryParamsVariable(){
+ *    const parser = new Parser();
+ *    const asyncapi_v3_path = path.resolve(__dirname, "../__fixtures__/asyncapi-v3.yml");
+ *    
+ *    // Parse the AsyncAPI document
+ *    const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
+ *    const parsedAsyncAPIDocument = parseResult.document;
+ *    
+ *    const channels = parsedAsyncAPIDocument.channels();
+ *    const queryParamsObject = getQueryParams(channels);
+ *    const queryParamsArray = queryParamsObject ? Array.from(queryParamsObject.entries()) : [];
+ *    
+ *    const language = "java"
+ *    const framework = "quarkus"
+ *    
+ *    return (
+ *      <QueryParamsVariables 
+ *          language={language} 
+ *          framework={framework}   
+ *          queryParams={queryParamsArray} 
+ *      />
+ *    )
+ * }
  */
 export function QueryParamsVariables({ language, framework = '', queryParams }) {
   if (!queryParams || !Array.isArray(queryParams)) {

@@ -73,7 +73,11 @@ const resolveCloseConfig = (language, framework = '') => {
  * const title = "HoppscotchEchoWebSocketClient"
  * 
  * return (
- *   <OnClose language={language} framework={framework} title={title}  />
+ *   <OnClose 
+ *      language={language} 
+ *      framework={framework} 
+ *      title={title}  
+ *   />
  * )
  */
 export function OnClose({ language, framework = '', title }) {

@@ -64,19 +64,25 @@ const formatHelpers = {
  * import path from "path";
  * import { Parser, fromFile } from "@asyncapi/parser";
  * 
- * const parser = new Parser();
- * const asyncapi_v3_path = path.resolve(__dirname, "../__fixtures__/asyncapi-v3.yml");
+
  * 
- * // Parse the AsyncAPI document (async operation)
- * const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
- * const parsedAsyncAPIDocument = parseResult.document;
+ * async function renderModel() {
+ *    const parser = new Parser();
+ *    const asyncapi_v3_path = path.resolve(__dirname, "../__fixtures__/asyncapi-v3.yml");
  * 
- * const language = "java"
- * 
- * return (
- *   <Models asyncapi={parsedAsyncAPIDocument} language={language} />
- * )
- * 
+ *     // Parse the AsyncAPI document
+ *    const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
+ *    const parsedAsyncAPIDocument = parseResult.document;
+ *    
+ *    const language = "java"
+ *    
+ *    return (
+ *      <Models 
+ *         asyncapi={parsedAsyncAPIDocument} 
+ *         language={language}
+ *      />
+ *    )
+ * }
  * 
  */
 export async function Models({ asyncapi, language = 'python', format = 'toPascalCase', presets, constraints }) {

@@ -128,20 +128,26 @@ static ${methodName}(message, socket, schemas) {
  * import path from "path";
  * import { Parser, fromFile } from "@asyncapi/parser";
  * 
- * const parser = new Parser();
- * const asyncapi_v3_path = path.resolve(__dirname, '../__fixtures__/asyncapi-v3.yml');
- * 
- * // Parse the AsyncAPI document (async operation)
- * const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
- * const parsedAsyncAPIDocument = parseResult.document;
- * 
- * const language = "javascript"
- * const clientName = "AccountServiceAPI"
- * const sendOperations = parsedAsyncAPIDocument.operations().filterBySend()
- * 
- * return (
- *    <SendOperations language={language} clientName={clientName} sendOperations={sendOperations} />
- * )
+ * async function renderSendOperations(){
+ *    const parser = new Parser();
+ *    const asyncapi_v3_path = path.resolve(__dirname, '../__fixtures__/asyncapi-v3.yml');
+ *    
+ *    // Parse the AsyncAPI document
+ *    const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
+ *    const parsedAsyncAPIDocument = parseResult.document;
+ *    
+ *    const language = "javascript"
+ *    const clientName = "AccountServiceAPI"
+ *    const sendOperations = parsedAsyncAPIDocument.operations().filterBySend()
+ *    
+ *    return (
+ *       <SendOperations 
+ *          language={language} 
+ *          clientName={clientName} 
+ *          sendOperations={sendOperations} 
+ *       />
+ *    )
+ * }
  */
 export function SendOperations({ language, sendOperations, clientName }) {
   if (!sendOperations || sendOperations.length === 0) {

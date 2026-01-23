@@ -63,7 +63,11 @@ const resolveOpenConfig = (language, framework = '') => {
  * const title = "HoppscotchEchoWebSocketClient"
  * 
  * return (
- *   <OnOpen language={language} framework={framework} title={title} />
+ *   <OnOpen 
+ *      language={language} 
+ *      framework={framework} 
+ *      title={title} 
+ *   />
  * )
  */
 export function OnOpen({ language, framework='', title }) {

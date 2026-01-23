@@ -51,7 +51,14 @@ else:
  * const customMethodConfig = { returnType: "int", openingTag: "{", closingTag: "}", indentSize: 2};
  * 
  * return (
- *   <RegisterErrorHandler language={language} methodName={methodName} methodParams={methodParams} preExecutionCode={preExecutionCode} postExecutionCode={postExecutionCode} customMethodConfig={customMethodConfig} />
+ *   <RegisterErrorHandler 
+ *      language={language} 
+ *      methodName={methodName} 
+ *      methodParams={methodParams} 
+ *      preExecutionCode={preExecutionCode} 
+ *      postExecutionCode={postExecutionCode} 
+ *      customMethodConfig={customMethodConfig}   
+ *   />
  * )
  */
 export function RegisterErrorHandler({ methodName = 'registerErrorHandler', ...props }) {

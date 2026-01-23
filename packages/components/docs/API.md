@@ -143,7 +143,15 @@ const postExecutionCode = "// Connection terminated"
 const indent = 2
 
 return (
-  <CloseConnection language={language} framework={framework} methodName={methodName} methodParams={methodParams} preExecutionCode={preExecutionCode} postExecutionCode={postExecutionCode} indent={indent} />
+  <CloseConnection 
+     language={language}
+     framework={framework}
+     methodName={methodName}
+     methodParams={methodParams}
+     preExecutionCode={preExecutionCode} 
+     postExecutionCode={postExecutionCode} 
+     indent={indent} 
+   />
 );
 ```
 
@@ -172,7 +180,10 @@ const language = "python"
 const title = "HoppscotchEchoWebSocketClient"
 
 return(
- <Connect language={language} title={title} />
+ <Connect 
+     language={language} 
+     title={title} 
+ />
 )
 ```
 
@@ -210,7 +221,12 @@ const role = "client"
 const additionalDependencies = ["import java.util.concurrent.CompletableFuture;", "import java.time.Duration;"]
 
 return (
-  <DependencyProvider language={language} framework={framework} role={role} additionalDependencies={additionalDependencies} />
+  <DependencyProvider 
+     language={language} 
+     framework={framework} 
+     role={role} 
+     additionalDependencies={additionalDependencies} 
+  />
 )
 ```
 
@@ -244,17 +260,23 @@ Renders a file header with metadata information such as title, version, protocol
 import path from "path";
 import { Parser, fromFile } from "@asyncapi/parser";
 
-const parser = new Parser();
-const asyncapi_websocket_query = path.resolve(__dirname, "../../../helpers/test/__fixtures__/asyncapi-websocket-query.yml");
-const language = "javascript"
-
-// Parse the AsyncAPI document (async operation)
-const parseResult = await fromFile(parser, asyncapi_websocket_query).parse();
-const parsedAsyncAPIDocument = parseResult.document;
-
-return (
-  <FileHeaderInfo info={parsedAsyncAPIDocument.info()} server={parsedAsyncAPIDocument.servers().get("withPathname")} language={language} />
-)
+async function renderFileHeader() {
+  const parser = new Parser();
+  const asyncapi_websocket_query = path.resolve(__dirname, "../../../helpers/test/__fixtures__/asyncapi-websocket-query.yml");
+  const language = "javascript"
+  
+  // Parse the AsyncAPI document 
+  const parseResult = await fromFile(parser, asyncapi_websocket_query).parse();
+  const parsedAsyncAPIDocument = parseResult.document;
+  
+  return (
+    <FileHeaderInfo 
+      info={parsedAsyncAPIDocument.info()} 
+      server={parsedAsyncAPIDocument.servers().get("withPathname")} 
+      language={language} 
+    />
+  )
+}
 ```
 
 
@@ -299,7 +321,14 @@ const customMethodConfig = {
   }
 };
 return (
-  <HandleMessage language={language} methodName={methodName} methodParams={methodParams} preExecutionCode={preExecutionCode} postExecutionCode={postExecutionCode} customMethodConfig={customMethodConfig} />
+  <HandleMessage 
+     language={language} 
+     methodName={methodName} 
+     methodParams={methodParams} 
+     preExecutionCode={preExecutionCode} 
+     postExecutionCode={postExecutionCode} 
+     customMethodConfig={customMethodConfig} 
+  />
 )
 ```
 
@@ -346,7 +375,18 @@ const methodConfig = {"java" : {methodDocs : methodDocs, methodLogic: methodLogi
 const framework = "quarkus"
 
 return (
-  <MethodGenerator language={language} methodName={methodName} methodParams={methodParams} methodDocs={methodDocs} methodLogic={methodLogic} preExecutionCode={preExecutionCode} postExecutionCode={postExecutionCode} customMethodConfig={customMethodConfig} methodConfig={methodConfig} framework={framework} />
+  <MethodGenerator 
+     language={language}
+     methodName={methodName} 
+     methodParams={methodParams} 
+     methodDocs={methodDocs} 
+     methodLogic={methodLogic} 
+     preExecutionCode={preExecutionCode} 
+     postExecutionCode={postExecutionCode} 
+     customMethodConfig={customMethodConfig} 
+     methodConfig={methodConfig} 
+     framework={framework} 
+  />
 )
 ```
 
@@ -382,18 +422,24 @@ Generates and returns an array of model files based on the AsyncAPI document.
 import path from "path";
 import { Parser, fromFile } from "@asyncapi/parser";
 
-const parser = new Parser();
-const asyncapi_v3_path = path.resolve(__dirname, "../__fixtures__/asyncapi-v3.yml");
 
-// Parse the AsyncAPI document (async operation)
-const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
-const parsedAsyncAPIDocument = parseResult.document;
+async function renderModel() {
+   const parser = new Parser();
+   const asyncapi_v3_path = path.resolve(__dirname, "../__fixtures__/asyncapi-v3.yml");
 
-const language = "java"
-
-return (
-  <Models asyncapi={parsedAsyncAPIDocument} language={language} />
-)
+    // Parse the AsyncAPI document
+   const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
+   const parsedAsyncAPIDocument = parseResult.document;
+   
+   const language = "java"
+   
+   return (
+     <Models 
+        asyncapi={parsedAsyncAPIDocument} 
+        language={language}
+     />
+   )
+}
 ```
 
 
@@ -428,7 +474,11 @@ const framework = "quarkus"
 const title = "HoppscotchEchoWebSocketClient"
 
 return (
-  <OnClose language={language} framework={framework} title={title}  />
+  <OnClose 
+     language={language} 
+     framework={framework} 
+     title={title}  
+  />
 )
 ```
 
@@ -511,7 +561,11 @@ const framework = "quarkus"
 const title = "HoppscotchEchoWebSocketClient"
 
 return (
-  <OnOpen language={language} framework={framework} title={title} />
+  <OnOpen 
+     language={language} 
+     framework={framework} 
+     title={title} 
+  />
 )
 ```
 
@@ -546,23 +600,30 @@ import path from "path"
 import { Parser, fromFile } from "@asyncapi/parser";
 import { getQueryParams } from "@asyncapi/generator-helpers";
 
-const parser = new Parser();
-const asyncapi_v3_path = path.resolve(__dirname, "../__fixtures__/asyncapi-v3.yml");
 
-// Parse the AsyncAPI document (async operation)
-const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
-const parsedAsyncAPIDocument = parseResult.document;
-
-const channels = parsedAsyncAPIDocument.channels();
-const queryParamsObject = getQueryParams(channels);
-const queryParamsArray = queryParamsObject ? Array.from(queryParamsObject.entries()) : [];
-
-const language = "java"
-const framework = "quarkus"
-
-return (
-  <QueryParamsVariables language={language} framework={framework} queryParams={queryParamsArray} />
-)
+async function renderQueryParamsVariable(){
+   const parser = new Parser();
+   const asyncapi_v3_path = path.resolve(__dirname, "../__fixtures__/asyncapi-v3.yml");
+   
+   // Parse the AsyncAPI document
+   const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
+   const parsedAsyncAPIDocument = parseResult.document;
+   
+   const channels = parsedAsyncAPIDocument.channels();
+   const queryParamsObject = getQueryParams(channels);
+   const queryParamsArray = queryParamsObject ? Array.from(queryParamsObject.entries()) : [];
+   
+   const language = "java"
+   const framework = "quarkus"
+   
+   return (
+     <QueryParamsVariables 
+         language={language} 
+         framework={framework}   
+         queryParams={queryParamsArray} 
+     />
+   )
+}
 ```
 
 
@@ -603,7 +664,14 @@ const postExecutionCode = "# Post-register operations"
 const customMethodConfig = { returnType: "int", openingTag: "{", closingTag: "}", indentSize: 2};
 
 return (
-  <RegisterErrorHandler language={language} methodName={methodName} methodParams={methodParams} preExecutionCode={preExecutionCode} postExecutionCode={postExecutionCode} customMethodConfig={customMethodConfig} />
+  <RegisterErrorHandler 
+     language={language} 
+     methodName={methodName} 
+     methodParams={methodParams} 
+     preExecutionCode={preExecutionCode} 
+     postExecutionCode={postExecutionCode} 
+     customMethodConfig={customMethodConfig}   
+  />
 )
 ```
 
@@ -643,7 +711,13 @@ const preExecutionCode = "# Pre-register operations"
 const postExecutionCode = "# Post-register operations"
 
 return (
-   <RegisterMessageHandler language={language} methodName={methodName} methodParams={methodParams} preExecutionCode={preExecutionCode} postExecutionCode={postExecutionCode} />
+   <RegisterMessageHandler 
+     language={language} 
+     methodName={methodName} 
+     methodParams={methodParams} 
+     preExecutionCode={preExecutionCode} 
+     postExecutionCode={postExecutionCode} 
+   />
 )
 ```
 
@@ -673,20 +747,26 @@ Generates both static and instance methods for sending messages through WebSocke
 import path from "path";
 import { Parser, fromFile } from "@asyncapi/parser";
 
-const parser = new Parser();
-const asyncapi_v3_path = path.resolve(__dirname, '../__fixtures__/asyncapi-v3.yml');
-
-// Parse the AsyncAPI document (async operation)
-const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
-const parsedAsyncAPIDocument = parseResult.document;
-
-const language = "javascript"
-const clientName = "AccountServiceAPI"
-const sendOperations = parsedAsyncAPIDocument.operations().filterBySend()
-
-return (
-   <SendOperations language={language} clientName={clientName} sendOperations={sendOperations} />
-)
+async function renderSendOperations(){
+   const parser = new Parser();
+   const asyncapi_v3_path = path.resolve(__dirname, '../__fixtures__/asyncapi-v3.yml');
+   
+   // Parse the AsyncAPI document
+   const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
+   const parsedAsyncAPIDocument = parseResult.document;
+   
+   const language = "javascript"
+   const clientName = "AccountServiceAPI"
+   const sendOperations = parsedAsyncAPIDocument.operations().filterBySend()
+   
+   return (
+      <SendOperations 
+         language={language} 
+         clientName={clientName} 
+         sendOperations={sendOperations} 
+      />
+   )
+}
 ```
 
 

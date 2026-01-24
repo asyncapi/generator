@@ -1,6 +1,6 @@
 import { Text } from '@asyncapi/generator-react-sdk';
-import OperationHeader from './OperationHeader';
-import MessageExamples from './MessageExamples';
+import { OperationHeader } from './OperationHeader';
+import { MessageExamples } from './MessageExamples';
 
 /**
  * Renders a list of AsyncAPI operations with their headers and message examples.

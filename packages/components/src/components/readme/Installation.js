@@ -5,6 +5,19 @@ const installCommands = {
   javascript: 'npm install',
 };
 
+/**
+ * Renders the Installation Command for a given language.
+ * @param {Object} props - Component Props 
+ * @param {string} props.language - The programming language for which to generate Installation Command.
+ * @returns {JSX.Element} A Text Component that contains Installation Command.
+ * 
+ * @example
+ * const language = "javascript";
+ * return (
+ *   <Installation language={language} />
+ * )
+ */
+
 export function Installation({ language }) {
   const command = installCommands[language];
   return (

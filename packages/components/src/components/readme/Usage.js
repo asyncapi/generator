@@ -30,6 +30,29 @@ main();
 `,
 };
 
+/**
+ * Renders a usage example snippet for a generated client in a given language.
+ * @param {Object} props - Component props
+ * @param {string} props.clientName - The Exported name of the client.
+ * @param {string} props.clientFileName -  The file name where the client is defined.
+ * @param {string} props.language - The target language for which to render the usage snippet
+ * @returns {JSX.Element} A Text component containing a formatted usage example snippet.
+ * 
+ * @example
+ * const clientName = "MyClient";
+ * const clientFileName = "myClient.js";
+ * const language = "javascript";
+ * 
+ * return (
+ *   <Usage 
+ *      clientName={clientName} 
+ *      clientFileName={clientFileName} 
+ *      language={language}
+ *   />
+ * )
+ * 
+ * 
+ */
 export function Usage({ clientName, clientFileName, language }) {
   const snippetFn = usageConfig[language];
   const snippet = snippetFn(clientName, clientFileName);

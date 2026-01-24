@@ -6,7 +6,7 @@ import { MessageExamples } from './MessageExamples';
  * Renders a list of AsyncAPI operations with their headers and message examples.
  * @param {Object} props - Component Props
  * @param {Array.<object>} props.operations - Array of AsyncAPI Operation objects.
- * @returns {JSX.Element} A Component containing rendered operations, or null if no operations are provided
+ * @returns {React.ReactNode} A Component containing rendered operations, or null if no operations are provided
  * 
  * @example
  * import path from "path";

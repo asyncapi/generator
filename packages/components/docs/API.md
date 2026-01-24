@@ -88,7 +88,7 @@
   </dd> 
   <dt>
     <a href="#AvailableOperations">AvailableOperations</a>
-      ⇒ <code>JSX.Element</code>
+      ⇒ <code>React.ReactNode</code>
   </dt>
   <dd>
     <p>Renders a list of AsyncAPI operations with their headers and message examples.</p>
@@ -109,7 +109,7 @@
   </dd> 
   <dt>
     <a href="#MessageExamples">MessageExamples</a>
-      ⇒ <code>JSX.Element</code>
+      ⇒ <code>React.ReactNode</code>
   </dt>
   <dd>
     <p>Renders Message Examples of a given AsyncAPI operation.</p>
@@ -738,7 +738,7 @@ Renders a list of AsyncAPI operations with their headers and message examples.
 
 ### Returns
 
-- **JSX.Element** - A Component containing rendered operations, or null if no operations are provided
+- **React.ReactNode** - A Component containing rendered operations, or null if no operations are provided
 
 
 
@@ -842,7 +842,7 @@ Renders Message Examples of a given AsyncAPI operation.
 
 ### Returns
 
-- **JSX.Element** - A Text Component that contains message examples. or null when no examples exist.
+- **React.ReactNode** - A Text Component that contains message examples. or null when no examples exist.
 
 
 
@@ -960,7 +960,11 @@ async function renderOverview(){
   const serverUrl = getServerUrl(server);
 
   return (
-     <Overview info={info} title={title} serverUrl={serverUrl} />
+     <Overview 
+       info={info} 
+       title={title} 
+       serverUrl={serverUrl} 
+     />
   )
 }
 ```

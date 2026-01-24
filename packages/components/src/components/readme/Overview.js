@@ -30,7 +30,11 @@ import { Text } from '@asyncapi/generator-react-sdk';
  *   const serverUrl = getServerUrl(server);
  * 
  *   return (
- *      <Overview info={info} title={title} serverUrl={serverUrl} />
+ *      <Overview 
+ *        info={info} 
+ *        title={title} 
+ *        serverUrl={serverUrl} 
+ *      />
  *   )
  * }
  * 

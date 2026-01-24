@@ -123,6 +123,7 @@ static ${methodName}(message, socket, schemas) {
  * @param {Language} props.language - The target programming language.
  * @param {Array<Object>} props.sendOperations - Array of send operations from AsyncAPI document.
  * @param {string} props.clientName - The name of the client class.
+ * @returns {React.ReactNode[]|null} Array of Text components for static and non-static WebSocket send operation methods, or null if no send operations are provided.
  * 
  * @example
  * import path from "path";

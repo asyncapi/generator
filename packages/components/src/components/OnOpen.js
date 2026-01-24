@@ -56,6 +56,7 @@ const resolveOpenConfig = (language, framework = '') => {
  * @param {Language} props.language - The programming language for which to generate onOpen handler code.
  * @param {string} [props.framework=''] - Optional framework variant (e.g., 'quarkus' for java).
  * @param {string} props.title - The title of the WebSocket server.
+ * @returns {JSX.Element} A Text component containing the onOpen handler code for the specified language.
  * 
  * @example
  * const language = "java";

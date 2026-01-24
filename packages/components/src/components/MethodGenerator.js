@@ -74,6 +74,7 @@ const buildIndentedLogic = (logic, preExecutionCode, postExecutionCode, indentSi
  * @param {{ returnType: string | undefined, openingTag: string | undefined, closingTag: string | undefined, indentSize: number | undefined, parameterWrap: boolean | undefined }} [props.customMethodConfig]  - Optional custom syntax configuration for the current language.
  * @param {Record<Language, { methodDocs: string | undefined, methodLogic: string | undefined } | Record<string, { methodDocs: string | undefined, methodLogic: string | undefined }>>} [props.methodConfig] - Language-level or framework-level configuration.
  * @param {string} [props.framework] - Framework name for nested configurations (e.g., 'quarkus' for Java).
+ * @returns {JSX.Element} Rendered method block with appropriate formatting.
  * 
  * @example
  * const language = "java";

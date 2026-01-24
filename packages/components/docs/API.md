@@ -11,6 +11,7 @@
   </dd> 
   <dt>
     <a href="#Connect">Connect</a>
+      ⇒ <code>JSX.Element</code>
   </dt>
   <dd>
     <p>Component that renders WebSocket connection method for the specified programming language.</p>
@@ -38,6 +39,7 @@
   </dd> 
   <dt>
     <a href="#MethodGenerator">MethodGenerator</a>
+      ⇒ <code>JSX.Element</code>
   </dt>
   <dd>
     <p>Generic Method rendering component.</p>
@@ -58,18 +60,21 @@
   </dd> 
   <dt>
     <a href="#OnError">OnError</a>
+      ⇒ <code>JSX.Element</code>
   </dt>
   <dd>
     <p>Component that renders WebSocket onError event handler for the specified programming language.</p>
   </dd> 
   <dt>
     <a href="#OnMessage">OnMessage</a>
+      ⇒ <code>JSX.Element</code>
   </dt>
   <dd>
     <p>Component that renders WebSocket onMessage event handler for the specified programming language.</p>
   </dd> 
   <dt>
     <a href="#OnOpen">OnOpen</a>
+      ⇒ <code>JSX.Element</code>
   </dt>
   <dd>
     <p>Component that renders WebSocket onOpen event handler for the specified programming language.</p>
@@ -97,6 +102,7 @@
   </dd> 
   <dt>
     <a href="#SendOperations">SendOperations</a>
+      ⇒ <code>Array.&lt;React.ReactNode&gt;</code>
   </dt>
   <dd>
     <p>Component for rendering WebSocket send operation methods.
@@ -170,6 +176,11 @@ Component that renders WebSocket connection method for the specified programming
 | props.language | <code>Language</code> | The programming language for which to generate connection code. |
 | props.title | <code>string</code> | The title of the WebSocket server. |
 
+
+
+### Returns
+
+- **JSX.Element** - A Text component containing the generated WebSocket connection code for the specified language.
 
 
 
@@ -360,6 +371,11 @@ Generic Method rendering component.
 
 
 
+### Returns
+
+- **JSX.Element** - Rendered method block with appropriate formatting.
+
+
 
 ### Example
 
@@ -374,6 +390,7 @@ const postExecutionCode = "// After handler registration";
 const customMethodConfig={ openingTag: "{", closingTag: "}", indentSize: 6 };
 const methodConfig = {"java" : {methodDocs : methodDocs, methodLogic: methodLogic }};
 const framework = "quarkus";
+
 
 return (
   <MethodGenerator 
@@ -499,6 +516,11 @@ Component that renders WebSocket onError event handler for the specified program
 
 
 
+### Returns
+
+- **JSX.Element** - A Text component containing the onError handler code for the specified language.
+
+
 
 ### Example
 
@@ -523,6 +545,11 @@ Component that renders WebSocket onMessage event handler for the specified progr
 | props | <code>Object</code> | Component properties. |
 | props.language | <code>Language</code> | The programming language for which to generate onMessage handler code. |
 
+
+
+### Returns
+
+- **JSX.Element** - A Text component containing the onMessage handler code for the specified language.
 
 
 
@@ -551,6 +578,11 @@ Component that renders WebSocket onOpen event handler for the specified programm
 | props.framework | <code>string</code> | Optional framework variant (e.g., &#x27;quarkus&#x27; for java). |
 | props.title | <code>string</code> | The title of the WebSocket server. |
 
+
+
+### Returns
+
+- **JSX.Element** - A Text component containing the onOpen handler code for the specified language.
 
 
 
@@ -740,6 +772,11 @@ Generates both static and instance methods for sending messages through WebSocke
 | props.sendOperations | <code>Array.&lt;Object&gt;</code> | Array of send operations from AsyncAPI document. |
 | props.clientName | <code>string</code> | The name of the client class. |
 
+
+
+### Returns
+
+- **Array.&lt;React.ReactNode&gt;** - Array of Text components for static and non-static WebSocket send operation methods, or null if no send operations are provided.
 
 
 

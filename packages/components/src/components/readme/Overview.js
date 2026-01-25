@@ -8,7 +8,7 @@ import { Text } from '@asyncapi/generator-react-sdk';
  * @param {object} props.info - Info object from the AsyncAPI document.
  * @param {string} props.title - Title from the AsyncAPI document.
  * @param {string} props.serverUrl - ServerUrl from a specific server from the AsyncAPI document.
- * @returns {JSX.Element} A Text Component that contains the Overview of a Websocket client.
+ * @returns {JSX.Element} A Text component that contains the Overview of a Websocket client.
  * 
  * @example
  *  

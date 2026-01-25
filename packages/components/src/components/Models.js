@@ -49,7 +49,7 @@ const formatHelpers = {
 };
 
 /**
- * Generates and returns an array of model files based on the AsyncAPI document.
+ * Renders an array of model files based on the AsyncAPI document.
  * 
  * @param {Object} params - The parameters for the function.
  * @param {AsyncAPIDocumentInterface} params.asyncapi - Parsed AsyncAPI document object.

@@ -39,7 +39,7 @@ else:
  * @param {string[]} props.methodParams=[] - List of parameters for the method.
  * @param {string} props.preExecutionCode - Code to insert before the main function logic.
  * @param {string} props.postExecutionCode - Code to insert after the main function logic.
- * @returns {JSX.Element} Rendered method block with appropriate formatting.
+ * @returns {JSX.Element} A Text component that contains method block with appropriate formatting.
  * 
  * @example
  * const language = "python";

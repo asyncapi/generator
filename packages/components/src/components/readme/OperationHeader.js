@@ -4,7 +4,7 @@ import { Text } from '@asyncapi/generator-react-sdk';
  * Renders a header section for a single AsyncAPI operation.
  * @param {Object} props - Component properties.
  * @param {object} props.operation - An AsyncAPI Operation object.
- * @returns {JSX.Element} A Text Component that contains formatted operation header.
+ * @returns {JSX.Element} A Text component that contains formatted operation header.
  * 
  * @example
  * import path from "path";

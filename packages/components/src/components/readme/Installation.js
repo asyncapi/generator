@@ -14,7 +14,7 @@ const installCommands = {
  * Renders the Installation Command for a given language.
  * @param {Object} props - Component props 
  * @param {Language} props.language - The programming language for which to generate Installation Command.
- * @returns {JSX.Element} A Text Component that contains Installation Command.
+ * @returns {JSX.Element} A Text component that contains Installation Command.
  * 
  * @example
  * const language = "javascript";

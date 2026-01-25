@@ -58,7 +58,7 @@ const resolveCloseConfig = (language, framework = '') => {
 };
 
 /**
- * Component that renders WebSocket onClose event handler for the specified programming language.
+ * Renders a WebSocket onClose event handler for the specified programming language.
  * 
  * @param {Object} props - Component properties.
  * @param {Language} props.language - The programming language for which to generate onClose handler code.

@@ -20,7 +20,7 @@ const methodConfig = {
  * Renders a list of core WebSocket client methods for a given target language.
  * @param {Object} props - Component props 
  * @param {Language} props.language - Target language used to select method names.
- * @returns {JSX.Element} A Text Component that contains a list of core client methods.
+ * @returns {JSX.Element} A Text component that contains a list of core client methods.
  * 
  * @example
  * const language = "javascript";

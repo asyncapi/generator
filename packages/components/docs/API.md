@@ -14,7 +14,7 @@
       ⇒ <code>JSX.Element</code>
   </dt>
   <dd>
-    <p>Component that renders WebSocket connection method for the specified programming language.</p>
+    <p>Renders a WebSocket connection method for the specified programming language.</p>
   </dd> 
   <dt>
     <a href="#DependencyProvider">DependencyProvider</a>
@@ -42,53 +42,53 @@
       ⇒ <code>JSX.Element</code>
   </dt>
   <dd>
-    <p>Generic Method rendering component.</p>
+    <p>Renders a language-specific formatted method definition.</p>
   </dd> 
   <dt>
     <a href="#Models">Models</a>
       ⇒ <code>Array.&lt;File&gt;</code>
   </dt>
   <dd>
-    <p>Generates and returns an array of model files based on the AsyncAPI document.</p>
+    <p>Renders an array of model files based on the AsyncAPI document.</p>
   </dd> 
   <dt>
     <a href="#OnClose">OnClose</a>
       ⇒ <code>JSX.Element</code>
   </dt>
   <dd>
-    <p>Component that renders WebSocket onClose event handler for the specified programming language.</p>
+    <p>Renders a WebSocket onClose event handler for the specified programming language.</p>
   </dd> 
   <dt>
     <a href="#OnError">OnError</a>
       ⇒ <code>JSX.Element</code>
   </dt>
   <dd>
-    <p>Component that renders WebSocket onError event handler for the specified programming language.</p>
+    <p>Renders a WebSocket onError event handler for the specified programming language.</p>
   </dd> 
   <dt>
     <a href="#OnMessage">OnMessage</a>
       ⇒ <code>JSX.Element</code>
   </dt>
   <dd>
-    <p>Component that renders WebSocket onMessage event handler for the specified programming language.</p>
+    <p>Renders a WebSocket onMessage event handler for the specified programming language.</p>
   </dd> 
   <dt>
     <a href="#OnOpen">OnOpen</a>
       ⇒ <code>JSX.Element</code>
   </dt>
   <dd>
-    <p>Component that renders WebSocket onOpen event handler for the specified programming language.</p>
+    <p>Renders a WebSocket onOpen event handler for the specified programming language.</p>
   </dd> 
   <dt>
     <a href="#QueryParamsVariables">QueryParamsVariables</a>
-      ⇒ <code>Array.&lt;React.ReactNode&gt;</code>
+      ⇒ <code>Array.&lt;JSX.Element&gt;</code>
   </dt>
   <dd>
-    <p>Component for rendering query parameter variables code.</p>
+    <p>Renders a query parameter variables code blocks.</p>
   </dd> 
   <dt>
     <a href="#AvailableOperations">AvailableOperations</a>
-      ⇒ <code>React.ReactNode</code>
+      ⇒ <code>JSX.Element</code>
   </dt>
   <dd>
     <p>Renders a list of AsyncAPI operations with their headers and message examples.</p>
@@ -109,7 +109,7 @@
   </dd> 
   <dt>
     <a href="#MessageExamples">MessageExamples</a>
-      ⇒ <code>React.ReactNode</code>
+      ⇒ <code>JSX.Element</code>
   </dt>
   <dd>
     <p>Renders Message Examples of a given AsyncAPI operation.</p>
@@ -163,10 +163,10 @@ provided AsyncAPI document, generator parameters, and target language.</p>
   </dd> 
   <dt>
     <a href="#SendOperations">SendOperations</a>
-      ⇒ <code>Array.&lt;React.ReactNode&gt;</code>
+      ⇒ <code>Array.&lt;JSX.Element&gt;</code>
   </dt>
   <dd>
-    <p>Component for rendering WebSocket send operation methods.
+    <p>Renders WebSocket send operation methods.
 Generates both static and instance methods for sending messages through WebSocket connections.</p>
   </dd> 
 </dl>
@@ -194,7 +194,7 @@ Renders a WebSocket close connection method with optional pre- and post-executio
 
 ### Returns
 
-- **JSX.Element** - Rendered method block with appropriate formatting.
+- **JSX.Element** - A Text component that contains method block with appropriate formatting.
 
 
 
@@ -226,7 +226,7 @@ return (
 
 <a name="Connect"></a>
 ## **Connect()** 
-Component that renders WebSocket connection method for the specified programming language.
+Renders a WebSocket connection method for the specified programming language.
 
 
 ### Parameters
@@ -280,7 +280,7 @@ Renders the top-of-file dependency statements for the selected programming langu
 
 ### Returns
 
-- **JSX.Element** - Rendered list of import/require statements.
+- **JSX.Element** - A Text component that contains list of import/require statements.
 
 
 
@@ -322,7 +322,7 @@ Renders a file header with metadata information such as title, version, protocol
 
 ### Returns
 
-- **JSX.Element** - Rendered file header.
+- **JSX.Element** - A Text component that contains file header.
 
 
 
@@ -377,7 +377,7 @@ Renders a WebSocket message handler method with optional pre- and post-execution
 
 ### Returns
 
-- **JSX.Element** - Rendered method block with appropriate formatting.
+- **JSX.Element** - A Text component that contains method block with appropriate formatting.
 
 
 
@@ -411,7 +411,7 @@ return (
 
 <a name="MethodGenerator"></a>
 ## **MethodGenerator()** 
-Generic Method rendering component.
+Renders a language-specific formatted method definition.
 
 
 ### Parameters
@@ -436,7 +436,7 @@ Generic Method rendering component.
 
 ### Returns
 
-- **JSX.Element** - Rendered method block with appropriate formatting.
+- **JSX.Element** - A Text component that contains method block with appropriate formatting.
 
 
 
@@ -474,7 +474,7 @@ return (
 
 <a name="Models"></a>
 ## **Models()** 
-Generates and returns an array of model files based on the AsyncAPI document.
+Renders an array of model files based on the AsyncAPI document.
 
 
 ### Parameters
@@ -520,6 +520,7 @@ async function renderModel() {
      />
    )
 }
+
 renderModel().catch(console.error);
 ```
 
@@ -527,7 +528,7 @@ renderModel().catch(console.error);
 
 <a name="OnClose"></a>
 ## **OnClose()** 
-Component that renders WebSocket onClose event handler for the specified programming language.
+Renders a WebSocket onClose event handler for the specified programming language.
 
 
 ### Parameters
@@ -567,7 +568,7 @@ return (
 
 <a name="OnError"></a>
 ## **OnError()** 
-Component that renders WebSocket onError event handler for the specified programming language.
+Renders a WebSocket onError event handler for the specified programming language.
 
 
 ### Parameters
@@ -598,7 +599,7 @@ return (
 
 <a name="OnMessage"></a>
 ## **OnMessage()** 
-Component that renders WebSocket onMessage event handler for the specified programming language.
+Renders a WebSocket onMessage event handler for the specified programming language.
 
 
 ### Parameters
@@ -629,7 +630,7 @@ return (
 
 <a name="OnOpen"></a>
 ## **OnOpen()** 
-Component that renders WebSocket onOpen event handler for the specified programming language.
+Renders a WebSocket onOpen event handler for the specified programming language.
 
 
 ### Parameters
@@ -669,7 +670,7 @@ return (
 
 <a name="QueryParamsVariables"></a>
 ## **QueryParamsVariables()** 
-Component for rendering query parameter variables code.
+Renders a query parameter variables code blocks.
 
 
 ### Parameters
@@ -685,7 +686,7 @@ Component for rendering query parameter variables code.
 
 ### Returns
 
-- **Array.&lt;React.ReactNode&gt;** - Array of Text components for each query parameter, or null if queryParams is invalid.
+- **Array.&lt;JSX.Element&gt;** - Array of Text components for each query parameter, or null if queryParams is invalid.
 
 
 
@@ -696,7 +697,6 @@ import path from "path";
 import { Parser, fromFile } from "@asyncapi/parser";
 import { getQueryParams } from "@asyncapi/generator-helpers";
 import { QueryParamsVariables } from "@asyncapi/generator-components";
-
 
 async function renderQueryParamsVariable(){
    const parser = new Parser();
@@ -721,6 +721,7 @@ async function renderQueryParamsVariable(){
      />
    )
 }
+
 renderQueryParamsVariable().catch(console.error);
 ```
 
@@ -742,7 +743,7 @@ Renders a list of AsyncAPI operations with their headers and message examples.
 
 ### Returns
 
-- **React.ReactNode** - A Component containing rendered operations, or null if no operations are provided
+- **JSX.Element** - A Component containing rendered operations, or null if no operations are provided
 
 
 
@@ -764,6 +765,7 @@ async function renderAvailableOperations(){
    <AvailableOperations operations={parsedAsyncAPIDocument.operations().all()} />
   )    
 }
+
 renderAvailableOperations().catch(console.error);
 ```
 
@@ -785,7 +787,7 @@ Renders a list of core WebSocket client methods for a given target language.
 
 ### Returns
 
-- **JSX.Element** - A Text Component that contains a list of core client methods.
+- **JSX.Element** - A Text component that contains a list of core client methods.
 
 
 
@@ -816,7 +818,7 @@ Renders the Installation Command for a given language.
 
 ### Returns
 
-- **JSX.Element** - A Text Component that contains Installation Command.
+- **JSX.Element** - A Text component that contains Installation Command.
 
 
 
@@ -847,7 +849,7 @@ Renders Message Examples of a given AsyncAPI operation.
 
 ### Returns
 
-- **React.ReactNode** - A Text Component that contains message examples, or null when no examples exist.
+- **JSX.Element** - A Text component that contains message examples, or null when no examples exist.
 
 
 
@@ -872,6 +874,7 @@ async function renderMessageExamples(){
      )    
   });
 }
+
 renderMessageExamples().catch(console.error);
 ```
 
@@ -893,7 +896,7 @@ Renders a header section for a single AsyncAPI operation.
 
 ### Returns
 
-- **JSX.Element** - A Text Component that contains formatted operation header.
+- **JSX.Element** - A Text component that contains formatted operation header.
 
 
 
@@ -918,6 +921,7 @@ async function renderOperationHeader(){
      )    
   });
 }
+
 renderOperationHeader().catch(console.error);
 ```
 
@@ -942,7 +946,7 @@ Displays the API description, version, and server URL.
 
 ### Returns
 
-- **JSX.Element** - A Text Component that contains the Overview of a Websocket client.
+- **JSX.Element** - A Text component that contains the Overview of a Websocket client.
 
 
 
@@ -974,6 +978,7 @@ async function renderOverview(){
      />
   )
 }
+
 renderOverview().catch(console.error);
 ```
 
@@ -1031,6 +1036,7 @@ async function renderReadme(){
     />
   )
 }
+
 renderReadme().catch(console.error);
 ```
 
@@ -1097,7 +1103,7 @@ Renders a WebSocket error handler registration method with optional pre- and pos
 
 ### Returns
 
-- **JSX.Element** - Rendered method block with appropriate formatting.
+- **JSX.Element** - A Text component that contains method block with appropriate formatting.
 
 
 
@@ -1145,7 +1151,7 @@ Renders a WebSocket message handler registration method with optional pre- and p
 
 ### Returns
 
-- **JSX.Element** - Rendered method block with appropriate formatting.
+- **JSX.Element** - A Text component that contains method block with appropriate formatting.
 
 
 
@@ -1173,7 +1179,7 @@ return (
 
 <a name="SendOperations"></a>
 ## **SendOperations()** 
-Component for rendering WebSocket send operation methods.
+Renders WebSocket send operation methods.
 Generates both static and instance methods for sending messages through WebSocket connections.
 
 
@@ -1190,7 +1196,7 @@ Generates both static and instance methods for sending messages through WebSocke
 
 ### Returns
 
-- **Array.&lt;React.ReactNode&gt;** - Array of Text components for static and non-static WebSocket send operation methods, or null if no send operations are provided.
+- **Array.&lt;JSX.Element&gt;** - Array of Text components for static and non-static WebSocket send operation methods, or null if no send operations are provided.
 
 
 
@@ -1221,6 +1227,7 @@ async function renderSendOperations(){
       />
    )
 }
+
 renderSendOperations().catch(console.error);
 ```
 

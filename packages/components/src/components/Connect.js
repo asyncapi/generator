@@ -92,7 +92,7 @@ Future<void> connect() async {
 };
 
 /**
- * Component that renders WebSocket connection method for the specified programming language.
+ * Renders a WebSocket connection method for the specified programming language.
  * 
  * @param {Object} props - Component properties.
  * @param {Language} props.language - The programming language for which to generate connection code.

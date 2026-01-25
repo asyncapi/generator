@@ -26,7 +26,7 @@ const commentConfig = {
  * @param {object} props.info - Info object from the AsyncAPI document.
  * @param {object} props.server - Server object from the AsyncAPI document.
  * @param {Language} props.language - Programming language used for comment formatting.
- * @returns {JSX.Element} Rendered file header.
+ * @returns {JSX.Element} A Text component that contains file header.
  * 
  * @example
  * import path from "path";

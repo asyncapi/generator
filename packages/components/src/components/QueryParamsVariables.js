@@ -106,13 +106,13 @@ function resolveQueryParamLogic(language, framework = '') {
 }
 
 /**
- * Component for rendering query parameter variables code.
+ * Renders a query parameter variables code blocks.
  *
  * @param {Object} props - Component props.
  * @param {Language} props.language - The target programming language.
  * @param {string} [props.framework=''] - Optional framework for the language.
  * @param {string[][]} props.queryParams - Array of query parameters, each represented as [paramName, paramType?].
- * @returns {React.ReactNode[]|null} Array of Text components for each query parameter, or null if queryParams is invalid.
+ * @returns {JSX.Element[]|null} Array of Text components for each query parameter, or null if queryParams is invalid.
  * 
  * @example
  * import path from "path";

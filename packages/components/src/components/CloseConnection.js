@@ -68,7 +68,7 @@ print('WebSocket connection closed.');`
  * @param {string} props.preExecutionCode - Code to insert before the main function logic.
  * @param {string} props.postExecutionCode - Code to insert after the main function logic.
  * @param {number} props.indent=2 - Indentation level for the method block.
- * @returns {JSX.Element} Rendered method block with appropriate formatting.
+ * @returns {JSX.Element} A Text component that contains method block with appropriate formatting.
  * 
  * @example
  * const language = "java";

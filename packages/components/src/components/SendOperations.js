@@ -116,14 +116,14 @@ static ${methodName}(message, socket, schemas) {
 };
 
 /**
- * Component for rendering WebSocket send operation methods.
+ * Renders WebSocket send operation methods.
  * Generates both static and instance methods for sending messages through WebSocket connections.
  *
  * @param {Object} props - Component props.
  * @param {Language} props.language - The target programming language.
  * @param {Array<Object>} props.sendOperations - Array of send operations from AsyncAPI document.
  * @param {string} props.clientName - The name of the client class.
- * @returns {React.ReactNode[]|null} Array of Text components for static and non-static WebSocket send operation methods, or null if no send operations are provided.
+ * @returns {JSX.Element[]|null} Array of Text components for static and non-static WebSocket send operation methods, or null if no send operations are provided.
  * 
  * @example
  * import path from "path";

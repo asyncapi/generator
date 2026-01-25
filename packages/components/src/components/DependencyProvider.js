@@ -102,7 +102,7 @@ function resolveDependencies(language, framework = '', role = '') {
  * @param {string} [props.framework=''] - The framework (e.g., 'quarkus' for Java).
  * @param {string} [props.role=''] - The role (e.g., 'client', 'connector' for Java).
  * @param {string[]} [props.additionalDependencies=[]] - Optional additional dependencies to include.
- * @returns {JSX.Element} Rendered list of import/require statements.
+ * @returns {JSX.Element} A Text component that contains list of import/require statements.
  * 
  * @example
  * const language = "java";

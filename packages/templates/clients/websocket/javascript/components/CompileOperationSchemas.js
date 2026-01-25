@@ -32,7 +32,12 @@ async compileOperationSchemas() {
   } catch (error) {
     console.error('Error initializing schemas:', error);
     this.schemasCompiled = false;
-    throw new Error(\`Schema compilation failed: \${error.message}\`);
+    if (error instanceof Error) {
+      error.message = \`Schema compilation failed: \${error.message}\`;
+      throw error;
+    } else {
+      throw new Error(\`Schema compilation failed: \${String(error)}\`);
+    }
   }
 }`
         }

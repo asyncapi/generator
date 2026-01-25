@@ -11,7 +11,7 @@
     "author": "Adi Boghawala <boghawalaadi@gmail.com>",
     "license": "Apache-2.0",
     "dependencies": {
-        "@asyncapi/generator-helpers": "1.0.1"
+        "@asyncapi/generator-helpers": "1.1.0"
     },
     "devDependencies": {
         "@babel/cli": "^7.25.9",

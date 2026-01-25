@@ -153,6 +153,9 @@ export function QueryParamsVariables({ language, framework = '', queryParams }) 
   }
 
   const generateParamCode = resolveQueryParamLogic(language, framework);
+  if (!generateParamCode) {
+    return null;
+  }
 
   return queryParams.map((param) => {
     const { variableDefinition, ifCondition, assignment, closing } = generateParamCode(param);

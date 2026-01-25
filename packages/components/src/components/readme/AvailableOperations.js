@@ -24,6 +24,8 @@ import { MessageExamples } from './MessageExamples';
  *    <AvailableOperations operations={parsedAsyncAPIDocument.operations().all()} />
  *   )    
  * }
+ * 
+ * renderAvailableOperations().catch(console.error);
  */
 
 export function AvailableOperations({ operations }) {

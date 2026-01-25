@@ -120,7 +120,7 @@ function resolveQueryParamLogic(language, framework = '') {
  * import { getQueryParams } from "@asyncapi/generator-helpers";
  * import { QueryParamsVariables } from "@asyncapi/generator-components";
  * 
- * 
+
  * async function renderQueryParamsVariable(){
  *    const parser = new Parser();
  *    const asyncapi_v3_path = path.resolve(__dirname, "../__fixtures__/asyncapi-v3.yml");
@@ -144,6 +144,8 @@ function resolveQueryParamLogic(language, framework = '') {
  *      />
  *    )
  * }
+ * 
+ * renderQueryParamsVariable().catch(console.error);
  */
 export function QueryParamsVariables({ language, framework = '', queryParams }) {
   if (!queryParams || !Array.isArray(queryParams)) {

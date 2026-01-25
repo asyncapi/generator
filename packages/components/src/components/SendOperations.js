@@ -150,6 +150,8 @@ static ${methodName}(message, socket, schemas) {
  *       />
  *    )
  * }
+ * 
+ * renderSendOperations().catch(console.error);
  */
 export function SendOperations({ language, sendOperations, clientName }) {
   if (!sendOperations || sendOperations.length === 0) {

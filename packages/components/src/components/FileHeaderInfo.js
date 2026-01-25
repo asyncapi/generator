@@ -50,6 +50,8 @@ const commentConfig = {
  *     />
  *   )
  * }
+ * 
+ * renderFileHeader().catch(console.error);
  */
 export function FileHeaderInfo({ info, server, language }) {
   const { commentChar, lineStyle } = commentConfig[language] || { 

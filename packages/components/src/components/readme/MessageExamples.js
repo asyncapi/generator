@@ -61,6 +61,8 @@ client.${opId}(${JSON.stringify(payload, null, 2)})
  *      )    
  *   });
  * }
+ * 
+ * renderMessageExamples().catch(console.error);
  */
 
 export function MessageExamples({ operation }) {

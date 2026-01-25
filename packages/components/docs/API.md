@@ -350,6 +350,8 @@ async function renderFileHeader() {
     />
   )
 }
+
+renderFileHeader().catch(console.error);
 ```
 
 
@@ -518,6 +520,7 @@ async function renderModel() {
      />
    )
 }
+renderModel().catch(console.error);
 ```
 
 
@@ -718,6 +721,7 @@ async function renderQueryParamsVariable(){
      />
    )
 }
+renderQueryParamsVariable().catch(console.error);
 ```
 
 
@@ -760,6 +764,7 @@ async function renderAvailableOperations(){
    <AvailableOperations operations={parsedAsyncAPIDocument.operations().all()} />
   )    
 }
+renderAvailableOperations().catch(console.error);
 ```
 
 
@@ -804,7 +809,7 @@ Renders the Installation Command for a given language.
 
 | Name | Type | Description |
 |------|------|-------------|
-| props | <code>Object</code> | Component Props |
+| props | <code>Object</code> | Component props |
 | props.language | <code>Language</code> | The programming language for which to generate Installation Command. |
 
 
@@ -867,6 +872,7 @@ async function renderMessageExamples(){
      )    
   });
 }
+renderMessageExamples().catch(console.error);
 ```
 
 
@@ -912,6 +918,7 @@ async function renderOperationHeader(){
      )    
   });
 }
+renderOperationHeader().catch(console.error);
 ```
 
 
@@ -967,6 +974,7 @@ async function renderOverview(){
      />
   )
 }
+renderOverview().catch(console.error);
 ```
 
 
@@ -1003,6 +1011,7 @@ provided AsyncAPI document, generator parameters, and target language.
 import path from "path";
 import { Parser, fromFile } from "@asyncapi/parser";
 import { buildParams } from '@asyncapi/generator-helpers';
+
 async function renderReadme(){
   const parser = new Parser();
   const asyncapi_websocket_query = path.resolve(__dirname, '../../../helpers/test/__fixtures__/asyncapi-websocket-query.yml');
@@ -1022,6 +1031,7 @@ async function renderReadme(){
     />
   )
 }
+renderReadme().catch(console.error);
 ```
 
 
@@ -1211,6 +1221,7 @@ async function renderSendOperations(){
       />
    )
 }
+renderSendOperations().catch(console.error);
 ```
 
 

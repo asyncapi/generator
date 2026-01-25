@@ -27,6 +27,7 @@ import { AvailableOperations } from './AvailableOperations';
  * import path from "path";
  * import { Parser, fromFile } from "@asyncapi/parser";
  * import { buildParams } from '@asyncapi/generator-helpers';
+ * 
  * async function renderReadme(){
  *   const parser = new Parser();
  *   const asyncapi_websocket_query = path.resolve(__dirname, '../../../helpers/test/__fixtures__/asyncapi-websocket-query.yml');
@@ -46,6 +47,8 @@ import { AvailableOperations } from './AvailableOperations';
  *     />
  *   )
  * }
+ * 
+ * renderReadme().catch(console.error);
  * 
  */
 

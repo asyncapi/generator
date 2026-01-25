@@ -83,6 +83,8 @@ const formatHelpers = {
  *    )
  * }
  * 
+ * renderModel().catch(console.error);
+ * 
  */
 export async function Models({ asyncapi, language = 'python', format = 'toPascalCase', presets, constraints }) {
   // Get the selected generator and file extension, defaulting to Python if unknown

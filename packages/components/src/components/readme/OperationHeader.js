@@ -26,6 +26,8 @@ import { Text } from '@asyncapi/generator-react-sdk';
  *   });
  * }
  * 
+ * renderOperationHeader().catch(console.error);
+ * 
  */
 
 export function OperationHeader({ operation }) {

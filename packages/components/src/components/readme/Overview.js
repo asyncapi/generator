@@ -38,6 +38,8 @@ import { Text } from '@asyncapi/generator-react-sdk';
  *   )
  * }
  * 
+ * renderOverview().catch(console.error);
+ * 
  */
 
 export function Overview({ info, title, serverUrl }) {

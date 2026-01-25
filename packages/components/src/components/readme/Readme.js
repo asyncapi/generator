@@ -7,6 +7,11 @@ import { CoreMethods } from './CoreMethods';
 import { AvailableOperations } from './AvailableOperations';
 
 /**
+ * @typedef {'python' | 'javascript' } Language
+ * Supported programming languages.
+ */
+
+/**
  * Renders a README.md file for a given AsyncAPI document.
  * 
  * Composes multiple sections (overview, installation, usage, core methods,
@@ -15,7 +20,7 @@ import { AvailableOperations } from './AvailableOperations';
  * @param {Object} props - Component props
  * @param {AsyncAPIDocumentInterface} props.asyncapi - Parsed AsyncAPI document instance.
  * @param {object} props.params - Generator parameters used to customize output 
- * @param {string} props.language - Target language used to render language-specific sections.
+ * @param {Language} props.language - Target language used to render language-specific sections.
  * @returns {JSX.Element} A File component representing the generated README.md.
  * 
  * @example

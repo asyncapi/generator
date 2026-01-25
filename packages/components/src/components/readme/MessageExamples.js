@@ -40,7 +40,7 @@ client.${opId}(${JSON.stringify(payload, null, 2)})
  * 
  * @param {Object} props - Component Props
  * @param {object} props.operation - An AsyncAPI Operation object.
- * @returns {React.ReactNode} A Text Component that contains message examples. or null when no examples exist.
+ * @returns {React.ReactNode} A Text Component that contains message examples, or null when no examples exist.
  * 
  * @example
  * import path from "path";

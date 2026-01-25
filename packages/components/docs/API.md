@@ -774,7 +774,7 @@ Renders a list of core WebSocket client methods for a given target language.
 | Name | Type | Description |
 |------|------|-------------|
 | props | <code>Object</code> | Component props |
-| props.language | <code>string</code> | Target language used to select method names. |
+| props.language | <code>Language</code> | Target language used to select method names. |
 
 
 
@@ -805,7 +805,7 @@ Renders the Installation Command for a given language.
 | Name | Type | Description |
 |------|------|-------------|
 | props | <code>Object</code> | Component Props |
-| props.language | <code>string</code> | The programming language for which to generate Installation Command. |
+| props.language | <code>Language</code> | The programming language for which to generate Installation Command. |
 
 
 
@@ -842,7 +842,7 @@ Renders Message Examples of a given AsyncAPI operation.
 
 ### Returns
 
-- **React.ReactNode** - A Text Component that contains message examples. or null when no examples exist.
+- **React.ReactNode** - A Text Component that contains message examples, or null when no examples exist.
 
 
 
@@ -987,7 +987,7 @@ provided AsyncAPI document, generator parameters, and target language.
 | props | <code>Object</code> | Component props |
 | props.asyncapi | <code>AsyncAPIDocumentInterface</code> | Parsed AsyncAPI document instance. |
 | props.params | <code>object</code> | Generator parameters used to customize output |
-| props.language | <code>string</code> | Target language used to render language-specific sections. |
+| props.language | <code>Language</code> | Target language used to render language-specific sections. |
 
 
 
@@ -1038,7 +1038,7 @@ Renders a usage example snippet for a generated client in a given language.
 | props | <code>Object</code> | Component props |
 | props.clientName | <code>string</code> | The Exported name of the client. |
 | props.clientFileName | <code>string</code> | The file name where the client is defined. |
-| props.language | <code>string</code> | The target language for which to render the usage snippet |
+| props.language | <code>Language</code> | The target language for which to render the usage snippet |
 
 
 

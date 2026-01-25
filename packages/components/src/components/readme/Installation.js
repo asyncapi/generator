@@ -1,5 +1,10 @@
 import { Text } from '@asyncapi/generator-react-sdk';
 
+/**
+ * @typedef {'python' | 'javascript' } Language
+ * Supported programming languages.
+ */
+
 const installCommands = {
   python: 'pip install -r requirements.txt',
   javascript: 'npm install',
@@ -7,8 +12,8 @@ const installCommands = {
 
 /**
  * Renders the Installation Command for a given language.
- * @param {Object} props - Component Props 
- * @param {string} props.language - The programming language for which to generate Installation Command.
+ * @param {Object} props - Component props 
+ * @param {Language} props.language - The programming language for which to generate Installation Command.
  * @returns {JSX.Element} A Text Component that contains Installation Command.
  * 
  * @example

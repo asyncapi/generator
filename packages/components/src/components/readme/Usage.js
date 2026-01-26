@@ -38,8 +38,8 @@ main();
  * Renders a usage example snippet for a generated WebSocket client in a given language.
  * 
  * @param {Object} props - Component props
- * @param {string} props.clientName - The Exported name of the client.
- * @param {string} props.clientFileName -  The file name where the client is defined.
+ * @param {string} props.clientName - The exported name of the client.
+ * @param {string} props.clientFileName - The file name where the client is defined.
  * @param {Language} props.language - The target language for which to render the usage snippet
  * @returns {JSX.Element} A Text component containing a formatted usage example snippet.
  * 

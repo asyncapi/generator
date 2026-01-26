@@ -1057,7 +1057,7 @@ Renders a usage example snippet for a generated WebSocket client in a given lang
 | Name | Type | Description |
 |------|------|-------------|
 | props | <code>Object</code> | Component props |
-| props.clientName | <code>string</code> | The Exported name of the client. |
+| props.clientName | <code>string</code> | The exported name of the client. |
 | props.clientFileName | <code>string</code> | The file name where the client is defined. |
 | props.language | <code>Language</code> | The target language for which to render the usage snippet |
 

@@ -51,7 +51,7 @@ const websocketOnErrorMethod = {
 /**
  * Renders a WebSocket onError event handler for the specified programming language.
  * 
- * @param {Object} props - Component properties.
+ * @param {Object} props - Component props.
  * @param {Language} props.language - The programming language for which to generate onError handler code.
  * @returns {JSX.Element} A Text component containing the onError handler code for the specified language.
  * 

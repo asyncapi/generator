@@ -233,7 +233,7 @@ Renders a WebSocket connection method for the specified programming language.
 
 | Name | Type | Description |
 |------|------|-------------|
-| props | <code>Object</code> | Component properties. |
+| props | <code>Object</code> | Component props. |
 | props.language | <code>Language</code> | The programming language for which to generate connection code. |
 | props.title | <code>string</code> | The title of the WebSocket server. |
 
@@ -481,12 +481,12 @@ Renders an array of model files based on the AsyncAPI document.
 
 | Name | Type | Description |
 |------|------|-------------|
-| params | <code>Object</code> | The parameters for the function. |
-| params.asyncapi | <code>AsyncAPIDocumentInterface</code> | Parsed AsyncAPI document object. |
-| params.language | <code>Language</code> | Target programming language for the generated models. |
-| params.format | <code>Format</code> | Naming format for generated files. |
-| params.presets | <code>Object</code> | Custom presets for the generator instance. |
-| params.constraints | <code>Object</code> | Custom constraints for the generator instance. |
+| props | <code>Object</code> | Component props. |
+| props.asyncapi | <code>AsyncAPIDocumentInterface</code> | Parsed AsyncAPI document object. |
+| props.language | <code>Language</code> | Target programming language for the generated models. |
+| props.format | <code>Format</code> | Naming format for generated files. |
+| props.presets | <code>Object</code> | Custom presets for the generator instance. |
+| props.constraints | <code>Object</code> | Custom constraints for the generator instance. |
 
 
 
@@ -535,7 +535,7 @@ Renders a WebSocket onClose event handler for the specified programming language
 
 | Name | Type | Description |
 |------|------|-------------|
-| props | <code>Object</code> | Component properties. |
+| props | <code>Object</code> | Component props. |
 | props.language | <code>Language</code> | The programming language for which to generate onClose handler code. |
 | props.framework | <code>string</code> | Optional framework variant (e.g., &#x27;quarkus&#x27; for java). |
 | props.title | <code>string</code> | The title of the WebSocket server. |
@@ -575,7 +575,7 @@ Renders a WebSocket onError event handler for the specified programming language
 
 | Name | Type | Description |
 |------|------|-------------|
-| props | <code>Object</code> | Component properties. |
+| props | <code>Object</code> | Component props. |
 | props.language | <code>Language</code> | The programming language for which to generate onError handler code. |
 
 
@@ -606,7 +606,7 @@ Renders a WebSocket onMessage event handler for the specified programming langua
 
 | Name | Type | Description |
 |------|------|-------------|
-| props | <code>Object</code> | Component properties. |
+| props | <code>Object</code> | Component props. |
 | props.language | <code>Language</code> | The programming language for which to generate onMessage handler code. |
 
 
@@ -637,7 +637,7 @@ Renders a WebSocket onOpen event handler for the specified programming language.
 
 | Name | Type | Description |
 |------|------|-------------|
-| props | <code>Object</code> | Component properties. |
+| props | <code>Object</code> | Component props. |
 | props.language | <code>Language</code> | The programming language for which to generate onOpen handler code. |
 | props.framework | <code>string</code> | Optional framework variant (e.g., &#x27;quarkus&#x27; for java). |
 | props.title | <code>string</code> | The title of the WebSocket server. |

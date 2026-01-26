@@ -79,7 +79,7 @@ const websocketOnMessageMethod = {
 /**
  * Renders a WebSocket onMessage event handler for the specified programming language.
  * 
- * @param {Object} props - Component properties.
+ * @param {Object} props - Component props.
  * @param {Language} props.language - The programming language for which to generate onMessage handler code.
  * @returns {JSX.Element} A Text component containing the onMessage handler code for the specified language.
  * 

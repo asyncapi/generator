@@ -18,3 +18,6 @@ export { Installation } from './components/readme/Installation';
 export { Usage } from './components/readme/Usage';
 export { Overview } from './components/readme/Overview';
 export { Readme } from './components/readme/Readme';
+export { AvailableOperations } from "./components/readme/AvailableOperations";
+export { OperationHeader } from "./components/readme/OperationHeader";
+export { MessageExamples } from "./components/readme/MessageExamples";

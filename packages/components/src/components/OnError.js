@@ -57,9 +57,14 @@ const websocketOnErrorMethod = {
  * 
  * @example
  * const language = "javascript";
- * return (
- *   <OnError language={language} />
- * )
+ * 
+ * function renderOnError() {
+ *   return (
+ *     <OnError language={language} />
+ *   )
+ * }
+ * 
+ * renderOnError();
  */
 export function OnError({ language }) {
   let onErrorMethod = '';

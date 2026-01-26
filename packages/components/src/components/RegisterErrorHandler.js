@@ -50,16 +50,20 @@ else:
  * const postExecutionCode = "# Post-register operations";
  * const customMethodConfig = { returnType: "int", openingTag: "{", closingTag: "}", indentSize: 2};
  * 
- * return (
- *   <RegisterErrorHandler 
- *      language={language} 
- *      methodName={methodName} 
- *      methodParams={methodParams} 
- *      preExecutionCode={preExecutionCode} 
- *      postExecutionCode={postExecutionCode} 
- *      customMethodConfig={customMethodConfig}   
- *   />
- * )
+ * function renderRegisterErrorHandler() {
+ *  return (
+ *    <RegisterErrorHandler 
+ *       language={language} 
+ *       methodName={methodName} 
+ *       methodParams={methodParams} 
+ *       preExecutionCode={preExecutionCode} 
+ *       postExecutionCode={postExecutionCode} 
+ *       customMethodConfig={customMethodConfig}   
+ *    />
+ *  )
+ * }
+ * 
+ * renderRegisterErrorHandler();
  */
 export function RegisterErrorHandler({ methodName = 'registerErrorHandler', ...props }) {
   return (

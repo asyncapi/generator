@@ -110,14 +110,17 @@ function resolveDependencies(language, framework = '', role = '') {
  * const role = "client";
  * const additionalDependencies = ["import java.util.concurrent.CompletableFuture;", "import java.time.Duration;"];
  * 
- * return (
- *   <DependencyProvider 
- *      language={language} 
- *      framework={framework} 
- *      role={role} 
- *      additionalDependencies={additionalDependencies} 
- *   />
- * )
+ * function renderDependencyProvider() {
+ *   return (
+ *     <DependencyProvider 
+ *        language={language} 
+ *        framework={framework} 
+ *        role={role} 
+ *        additionalDependencies={additionalDependencies} 
+ *     />
+ *   )
+ * }
+ * renderDependencyProvider();
  */
 export function DependencyProvider({ language, framework = '', role = '', additionalDependencies = [] }) {
   const dependencies = resolveDependencies(language, framework, role);

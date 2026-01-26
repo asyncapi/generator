@@ -88,21 +88,24 @@ const buildIndentedLogic = (logic, preExecutionCode, postExecutionCode, indentSi
  * const methodConfig = {"java" : {methodDocs : methodDocs, methodLogic: methodLogic }};
  * const framework = "quarkus";
  * 
- * return (
- *   <MethodGenerator 
- *      language={language}
- *      methodName={methodName} 
- *      methodParams={methodParams} 
- *      methodDocs={methodDocs} 
- *      methodLogic={methodLogic} 
- *      preExecutionCode={preExecutionCode} 
- *      postExecutionCode={postExecutionCode} 
- *      customMethodConfig={customMethodConfig} 
- *      methodConfig={methodConfig} 
- *      framework={framework} 
- *   />
- * )
+ * function renderMethodGenerator() {
+ *   return (
+ *     <MethodGenerator 
+ *        language={language}
+ *        methodName={methodName} 
+ *        methodParams={methodParams} 
+ *        methodDocs={methodDocs} 
+ *        methodLogic={methodLogic} 
+ *        preExecutionCode={preExecutionCode} 
+ *        postExecutionCode={postExecutionCode} 
+ *        customMethodConfig={customMethodConfig} 
+ *        methodConfig={methodConfig} 
+ *        framework={framework} 
+ *     />
+ *   )
+ * }
  * 
+ * renderMethodGenerator();
  */
 export function MethodGenerator({
   language,

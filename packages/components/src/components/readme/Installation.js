@@ -1,7 +1,7 @@
 import { Text } from '@asyncapi/generator-react-sdk';
 
 /**
- * @typedef {'python' | 'javascript' } Language
+ * @typedef {'python' | 'javascript'} Language
  * Supported programming languages.
  */
 
@@ -18,9 +18,14 @@ const installCommands = {
  * 
  * @example
  * const language = "javascript";
- * return (
- *   <Installation language={language} />
- * )
+ * 
+ * function renderInstallation() {
+ *   return (
+ *     <Installation language={language} />
+ *   )
+ * }
+ * 
+ * renderInstallation()
  */
 
 export function Installation({ language }) {

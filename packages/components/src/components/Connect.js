@@ -103,12 +103,16 @@ Future<void> connect() async {
  * const language = "python";
  * const title = "HoppscotchEchoWebSocketClient";
  * 
- * return(
- *  <Connect 
- *      language={language} 
- *      title={title} 
- *  />
- * )
+ * function renderConnect() {
+ *   return(
+ *    <Connect 
+ *        language={language} 
+ *        title={title} 
+ *    />
+ *   )
+ * }
+ * 
+ * renderConnect();
  */
 export function Connect({ language, title }) {
   const onOpenMethod = render(<OnOpen language={language} title={title} />);

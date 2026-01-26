@@ -8,7 +8,7 @@ import { Text } from '@asyncapi/generator-react-sdk';
 /**
  * Mapping of supported programming languages to their WebSocket onOpen event handler implementations.
  * 
- * @type {Object.<Language, Function>}
+ * @type {Object.<Language, (Function|Object.<string, Function>)>}
  */
 const websocketOnOpenMethod = {
   javascript: (title) => {
@@ -47,6 +47,7 @@ const resolveOpenConfig = (language, framework = '') => {
   if (framework && typeof config[framework] === 'function') {
     return config[framework];
   }
+  return null;
 };
 
 /**
@@ -57,19 +58,24 @@ const resolveOpenConfig = (language, framework = '') => {
  * @param {string} [props.framework=''] - Optional framework variant (e.g., 'quarkus' for java).
  * @param {string} props.title - The title of the WebSocket server.
  * @returns {JSX.Element} A Text component containing the onOpen handler code for the specified language.
+ * @throws {Error} When the language/framework combination is unsupported.
  * 
  * @example
  * const language = "java";
  * const framework = "quarkus";
  * const title = "HoppscotchEchoWebSocketClient";
  * 
- * return (
- *   <OnOpen 
- *      language={language} 
- *      framework={framework} 
- *      title={title} 
- *   />
- * )
+ * function renderOnOpen() {
+ *   return (
+ *     <OnOpen 
+ *        language={language} 
+ *        framework={framework} 
+ *        title={title} 
+ *     />
+ *   )
+ * }
+ * 
+ * renderOnOpen();
  */
 export function OnOpen({ language, framework='', title }) {
   let onOpenMethod = '';
@@ -78,6 +84,9 @@ export function OnOpen({ language, framework='', title }) {
   
   if (websocketOnOpenMethod[language]) {
     const generateOnOpenCode = resolveOpenConfig(language, framework);
+    if (typeof generateOnOpenCode !== 'function') {
+      throw new Error(`Unsupported onOpen handler for language="${language}" framework="${framework}"`);
+    }
     const openResult = generateOnOpenCode(title);
     onOpenMethod = openResult.onOpenMethod;
     indent = openResult.indent ?? 0;

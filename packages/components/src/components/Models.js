@@ -55,8 +55,8 @@ const formatHelpers = {
  * @param {AsyncAPIDocumentInterface} props.asyncapi - Parsed AsyncAPI document object.
  * @param {Language} [props.language='python'] - Target programming language for the generated models.
  * @param {Format} [props.format='toPascalCase'] - Naming format for generated files.
- * @param {Object} [props.presets={}] - Custom presets for the generator instance.
- * @param {Object} [props.constraints={}] - Custom constraints for the generator instance.
+ * @param {Object} [props.presets] - Custom presets for the generator instance.
+ * @param {Object} [props.constraints] - Custom constraints for the generator instance.
  * 
  * @returns {Array<File>} Array of File components with generated model content.
  * 

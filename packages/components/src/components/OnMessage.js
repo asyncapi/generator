@@ -85,9 +85,14 @@ const websocketOnMessageMethod = {
  * 
  * @example
  * const language = "javascript";
- * return (
- *   <OnMessage language={language} />
- * )
+ * 
+ * function renderOnMessage() {
+ *   return (
+ *     <OnMessage language={language} />
+ *   )
+ * }
+ * 
+ * renderOnMessage();
  */
 export function OnMessage({ language }) {
   let onMessageMethod = '';

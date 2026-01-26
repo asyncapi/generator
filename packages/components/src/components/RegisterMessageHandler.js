@@ -48,15 +48,19 @@ else:
  * const preExecutionCode = "# Pre-register operations";
  * const postExecutionCode = "# Post-register operations";
  * 
- * return (
- *    <RegisterMessageHandler 
- *      language={language} 
- *      methodName={methodName} 
- *      methodParams={methodParams} 
- *      preExecutionCode={preExecutionCode} 
- *      postExecutionCode={postExecutionCode} 
- *    />
- * )
+ * function renderRegisterMessageHandler(){
+ *   return (
+ *      <RegisterMessageHandler 
+ *        language={language} 
+ *        methodName={methodName} 
+ *        methodParams={methodParams} 
+ *        preExecutionCode={preExecutionCode} 
+ *        postExecutionCode={postExecutionCode} 
+ *      />
+ *   )
+ * }
+ * 
+ * renderRegisterMessageHandler();
  */
 export function RegisterMessageHandler({ methodName = 'registerMessageHandler', ...props }) {
   return (

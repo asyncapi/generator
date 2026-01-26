@@ -48,15 +48,17 @@ main();
  * const clientFileName = "myClient.js";
  * const language = "javascript";
  * 
- * return (
- *   <Usage 
- *      clientName={clientName} 
- *      clientFileName={clientFileName} 
- *      language={language}
- *   />
- * )
+ * function renderUsage(){
+ *   return (
+ *     <Usage 
+ *        clientName={clientName} 
+ *        clientFileName={clientFileName} 
+ *        language={language}
+ *     />
+ *   )
+ * }
  * 
- * 
+ * renderUsage();
  */
 export function Usage({ clientName, clientFileName, language }) {
   const snippetFn = usageConfig[language];

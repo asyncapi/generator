@@ -51,17 +51,21 @@ else:
  *     methodLogic: "if (cb) cb(message);"
  *   }
  * };
- * return (
- *   <HandleMessage 
- *      language={language} 
- *      methodName={methodName} 
- *      methodParams={methodParams} 
- *      preExecutionCode={preExecutionCode} 
- *      postExecutionCode={postExecutionCode} 
- *      customMethodConfig={customMethodConfig} 
- *   />
- * )
  * 
+ * function renderHandleMessage() {
+ *   return (
+ *     <HandleMessage 
+ *        language={language} 
+ *        methodName={methodName} 
+ *        methodParams={methodParams} 
+ *        preExecutionCode={preExecutionCode} 
+ *        postExecutionCode={postExecutionCode} 
+ *        customMethodConfig={customMethodConfig} 
+ *     />
+ *   )
+ * }
+ * 
+ * renderHandleMessage();
  */
 export function HandleMessage({ methodName = 'handleMessage', ...props }) {
   return (

@@ -1,7 +1,7 @@
 import { Text } from '@asyncapi/generator-react-sdk';
 
 /**
- * @typedef {'python' | 'javascript' } Language
+ * @typedef {'python' | 'javascript'} Language
  * Supported programming languages.
  */
 
@@ -24,13 +24,21 @@ const methodConfig = {
  * 
  * @example
  * const language = "javascript";
- * return (
- *   <CoreMethods language={language} />
- * )
+ * 
+ * function renderCoreMethods() {
+ *   return (
+ *     <CoreMethods language={language} />
+ *   )
+ * }
+ * 
+ * renderCoreMethods();
  */
 
 export function CoreMethods({ language }) {
   const config = methodConfig[language];
+  if (!config) {
+    throw new Error(`Unsupported language: ${language}. Expected 'python' or 'javascript'.`);
+  }
   const { msgHandler, errHandler } = config;
 
   return (

@@ -72,13 +72,17 @@ const resolveCloseConfig = (language, framework = '') => {
  * const framework = "quarkus";
  * const title = "HoppscotchEchoWebSocketClient";
  * 
- * return (
- *   <OnClose 
- *      language={language} 
- *      framework={framework} 
- *      title={title}  
- *   />
- * )
+ * function renderOnClose() {
+ *  return (
+ *    <OnClose 
+ *       language={language} 
+ *       framework={framework} 
+ *       title={title}  
+ *    />
+ *  )
+ * }
+ * 
+ * renderOnClose();
  */
 export function OnClose({ language, framework = '', title }) {
   let onCloseMethod = '';

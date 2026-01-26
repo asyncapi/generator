@@ -209,17 +209,21 @@ const preExecutionCode = "// About to terminate connection";
 const postExecutionCode = "// Connection terminated";
 const indent = 2;
 
-return (
-  <CloseConnection 
-     language={language}
-     framework={framework}
-     methodName={methodName}
-     methodParams={methodParams}
-     preExecutionCode={preExecutionCode} 
-     postExecutionCode={postExecutionCode} 
-     indent={indent} 
-   />
-);
+function renderCloseConnection() {
+  return (
+    <CloseConnection 
+       language={language}
+       framework={framework}
+       methodName={methodName}
+       methodParams={methodParams}
+       preExecutionCode={preExecutionCode} 
+       postExecutionCode={postExecutionCode} 
+       indent={indent} 
+     />
+  );
+}
+
+renderCloseConnection();
 ```
 
 
@@ -251,12 +255,16 @@ Renders a WebSocket connection method for the specified programming language.
 const language = "python";
 const title = "HoppscotchEchoWebSocketClient";
 
-return(
- <Connect 
-     language={language} 
-     title={title} 
- />
-)
+function renderConnect() {
+  return(
+   <Connect 
+       language={language} 
+       title={title} 
+   />
+  )
+}
+
+renderConnect();
 ```
 
 
@@ -292,14 +300,17 @@ const framework = "quarkus";
 const role = "client";
 const additionalDependencies = ["import java.util.concurrent.CompletableFuture;", "import java.time.Duration;"];
 
-return (
-  <DependencyProvider 
-     language={language} 
-     framework={framework} 
-     role={role} 
-     additionalDependencies={additionalDependencies} 
-  />
-)
+function renderDependencyProvider() {
+  return (
+    <DependencyProvider 
+       language={language} 
+       framework={framework} 
+       role={role} 
+       additionalDependencies={additionalDependencies} 
+    />
+  )
+}
+renderDependencyProvider();
 ```
 
 
@@ -395,16 +406,21 @@ const customMethodConfig = {
     methodLogic: "if (cb) cb(message);"
   }
 };
-return (
-  <HandleMessage 
-     language={language} 
-     methodName={methodName} 
-     methodParams={methodParams} 
-     preExecutionCode={preExecutionCode} 
-     postExecutionCode={postExecutionCode} 
-     customMethodConfig={customMethodConfig} 
-  />
-)
+
+function renderHandleMessage() {
+  return (
+    <HandleMessage 
+       language={language} 
+       methodName={methodName} 
+       methodParams={methodParams} 
+       preExecutionCode={preExecutionCode} 
+       postExecutionCode={postExecutionCode} 
+       customMethodConfig={customMethodConfig} 
+    />
+  )
+}
+
+renderHandleMessage();
 ```
 
 
@@ -454,20 +470,24 @@ const customMethodConfig={ openingTag: "{", closingTag: "}", indentSize: 6 };
 const methodConfig = {"java" : {methodDocs : methodDocs, methodLogic: methodLogic }};
 const framework = "quarkus";
 
-return (
-  <MethodGenerator 
-     language={language}
-     methodName={methodName} 
-     methodParams={methodParams} 
-     methodDocs={methodDocs} 
-     methodLogic={methodLogic} 
-     preExecutionCode={preExecutionCode} 
-     postExecutionCode={postExecutionCode} 
-     customMethodConfig={customMethodConfig} 
-     methodConfig={methodConfig} 
-     framework={framework} 
-  />
-)
+function renderMethodGenerator() {
+  return (
+    <MethodGenerator 
+       language={language}
+       methodName={methodName} 
+       methodParams={methodParams} 
+       methodDocs={methodDocs} 
+       methodLogic={methodLogic} 
+       preExecutionCode={preExecutionCode} 
+       postExecutionCode={postExecutionCode} 
+       customMethodConfig={customMethodConfig} 
+       methodConfig={methodConfig} 
+       framework={framework} 
+    />
+  )
+}
+
+renderMethodGenerator();
 ```
 
 
@@ -555,13 +575,17 @@ const language = "java";
 const framework = "quarkus";
 const title = "HoppscotchEchoWebSocketClient";
 
-return (
-  <OnClose 
-     language={language} 
-     framework={framework} 
-     title={title}  
-  />
-)
+function renderOnClose() {
+ return (
+   <OnClose 
+      language={language} 
+      framework={framework} 
+      title={title}  
+   />
+ )
+}
+
+renderOnClose();
 ```
 
 
@@ -590,9 +614,14 @@ Renders a WebSocket onError event handler for the specified programming language
 
 ```js
 const language = "javascript";
-return (
-  <OnError language={language} />
-)
+
+function renderOnError() {
+  return (
+    <OnError language={language} />
+  )
+}
+
+renderOnError();
 ```
 
 
@@ -621,9 +650,14 @@ Renders a WebSocket onMessage event handler for the specified programming langua
 
 ```js
 const language = "javascript";
-return (
-  <OnMessage language={language} />
-)
+
+function renderOnMessage() {
+  return (
+    <OnMessage language={language} />
+  )
+}
+
+renderOnMessage();
 ```
 
 
@@ -657,13 +691,17 @@ const language = "java";
 const framework = "quarkus";
 const title = "HoppscotchEchoWebSocketClient";
 
-return (
-  <OnOpen 
-     language={language} 
-     framework={framework} 
-     title={title} 
-  />
-)
+function renderOnOpen() {
+  return (
+    <OnOpen 
+       language={language} 
+       framework={framework} 
+       title={title} 
+    />
+  )
+}
+
+renderOnOpen();
 ```
 
 
@@ -796,9 +834,14 @@ Renders a list of core WebSocket client methods for a given target language.
 
 ```js
 const language = "javascript";
-return (
-  <CoreMethods language={language} />
-)
+
+function renderCoreMethods() {
+  return (
+    <CoreMethods language={language} />
+  )
+}
+
+renderCoreMethods();
 ```
 
 
@@ -827,9 +870,14 @@ Renders the Installation Command for a given language.
 
 ```js
 const language = "javascript";
-return (
-  <Installation language={language} />
-)
+
+function renderInstallation() {
+  return (
+    <Installation language={language} />
+  )
+}
+
+renderInstallation()
 ```
 
 
@@ -1076,13 +1124,17 @@ const clientName = "MyClient";
 const clientFileName = "myClient.js";
 const language = "javascript";
 
-return (
-  <Usage 
-     clientName={clientName} 
-     clientFileName={clientFileName} 
-     language={language}
-  />
-)
+function renderUsage(){
+  return (
+    <Usage 
+       clientName={clientName} 
+       clientFileName={clientFileName} 
+       language={language}
+    />
+  )
+}
+
+renderUsage();
 ```
 
 
@@ -1122,16 +1174,20 @@ const preExecutionCode = "# Pre-register operations";
 const postExecutionCode = "# Post-register operations";
 const customMethodConfig = { returnType: "int", openingTag: "{", closingTag: "}", indentSize: 2};
 
-return (
-  <RegisterErrorHandler 
-     language={language} 
-     methodName={methodName} 
-     methodParams={methodParams} 
-     preExecutionCode={preExecutionCode} 
-     postExecutionCode={postExecutionCode} 
-     customMethodConfig={customMethodConfig}   
-  />
-)
+function renderRegisterErrorHandler() {
+ return (
+   <RegisterErrorHandler 
+      language={language} 
+      methodName={methodName} 
+      methodParams={methodParams} 
+      preExecutionCode={preExecutionCode} 
+      postExecutionCode={postExecutionCode} 
+      customMethodConfig={customMethodConfig}   
+   />
+ )
+}
+
+renderRegisterErrorHandler();
 ```
 
 
@@ -1169,15 +1225,19 @@ const methodParams = ["self", "handler"];
 const preExecutionCode = "# Pre-register operations";
 const postExecutionCode = "# Post-register operations";
 
-return (
-   <RegisterMessageHandler 
-     language={language} 
-     methodName={methodName} 
-     methodParams={methodParams} 
-     preExecutionCode={preExecutionCode} 
-     postExecutionCode={postExecutionCode} 
-   />
-)
+function renderRegisterMessageHandler(){
+  return (
+     <RegisterMessageHandler 
+       language={language} 
+       methodName={methodName} 
+       methodParams={methodParams} 
+       preExecutionCode={preExecutionCode} 
+       postExecutionCode={postExecutionCode} 
+     />
+  )
+}
+
+renderRegisterMessageHandler();
 ```
 
 

@@ -5,7 +5,7 @@ import { Text } from '@asyncapi/generator-react-sdk';
  * Displays the API description, version, and server URL.
  * 
  * @param {Object} props - Component props 
- * @param {object} props.info - Info object from the AsyncAPI document.
+ * @param {Object} props.info - Info object from the AsyncAPI document.
  * @param {string} props.title - Title from the AsyncAPI document.
  * @param {string} props.serverUrl - ServerUrl from a specific server from the AsyncAPI document.
  * @returns {JSX.Element} A Text component that contains the Overview of a Websocket client.
@@ -15,6 +15,7 @@ import { Text } from '@asyncapi/generator-react-sdk';
  * import path from "path";
  * import { Parser, fromFile } from "@asyncapi/parser";
  * import { getServer, getServerUrl } from '@asyncapi/generator-helpers';
+ * import { Overview } from "@asyncapi/generator-components";
  * 
  * async function renderOverview(){
  *   const parser = new Parser();

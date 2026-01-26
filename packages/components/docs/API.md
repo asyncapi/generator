@@ -84,7 +84,7 @@
       ⇒ <code>Array.&lt;JSX.Element&gt;</code>
   </dt>
   <dd>
-    <p>Renders a query parameter variables code blocks.</p>
+    <p>Renders query parameter variables code blocks.</p>
   </dd> 
   <dt>
     <a href="#AvailableOperations">AvailableOperations</a>
@@ -145,7 +145,7 @@ provided AsyncAPI document, generator parameters, and target language.</p>
       ⇒ <code>JSX.Element</code>
   </dt>
   <dd>
-    <p>Renders a usage example snippet for a generated client in a given language.</p>
+    <p>Renders a usage example snippet for a generated WebSocket client in a given language.</p>
   </dd> 
   <dt>
     <a href="#RegisterErrorHandler">RegisterErrorHandler</a>
@@ -204,7 +204,7 @@ Renders a WebSocket close connection method with optional pre- and post-executio
 const language = "java";
 const framework = "quarkus";
 const methodName = "terminateConnection";
-const methodParams = ["self"];
+const methodParams = ["String reason"];
 const preExecutionCode = "// About to terminate connection";
 const postExecutionCode = "// Connection terminated";
 const indent = 2;
@@ -314,8 +314,8 @@ Renders a file header with metadata information such as title, version, protocol
 | Name | Type | Description |
 |------|------|-------------|
 | props | <code>Object</code> | Component props. |
-| props.info | <code>object</code> | Info object from the AsyncAPI document. |
-| props.server | <code>object</code> | Server object from the AsyncAPI document. |
+| props.info | <code>Object</code> | Info object from the AsyncAPI document. |
+| props.server | <code>Object</code> | Server object from the AsyncAPI document. |
 | props.language | <code>Language</code> | Programming language used for comment formatting. |
 
 
@@ -386,7 +386,7 @@ Renders a WebSocket message handler method with optional pre- and post-execution
 ```js
 const language = "javascript";
 const methodName = "handleMessage";
-const methodParams = ["self", "message"];
+const methodParams = ["message","cb"];
 const preExecutionCode = "// Pass the incoming message to all registered message handlers.";
 const postExecutionCode = "// Passed the incoming message to all registered message handlers.";
 const customMethodConfig = {
@@ -445,7 +445,7 @@ Renders a language-specific formatted method definition.
 ```js
 const language = "java";
 const methodName = "registerHandler";
-const methodParams = ["self", "handler"];
+const methodParams = ["Handler handler"];
 const methodDocs = "// Process the input data.";
 const methodLogic = "// TODO: implement";
 const preExecutionCode = "// Before handler registration";
@@ -485,8 +485,8 @@ Renders an array of model files based on the AsyncAPI document.
 | params.asyncapi | <code>AsyncAPIDocumentInterface</code> | Parsed AsyncAPI document object. |
 | params.language | <code>Language</code> | Target programming language for the generated models. |
 | params.format | <code>Format</code> | Naming format for generated files. |
-| params.presets | <code>object</code> | Custom presets for the generator instance. |
-| params.constraints | <code>object</code> | Custom constraints for the generator instance. |
+| params.presets | <code>Object</code> | Custom presets for the generator instance. |
+| params.constraints | <code>Object</code> | Custom constraints for the generator instance. |
 
 
 
@@ -670,7 +670,7 @@ return (
 
 <a name="QueryParamsVariables"></a>
 ## **QueryParamsVariables()** 
-Renders a query parameter variables code blocks.
+Renders query parameter variables code blocks.
 
 
 ### Parameters
@@ -737,7 +737,7 @@ Renders a list of AsyncAPI operations with their headers and message examples.
 | Name | Type | Description |
 |------|------|-------------|
 | props | <code>Object</code> | Component Props |
-| props.operations | <code>Array.&lt;object&gt;</code> | Array of AsyncAPI Operation objects. |
+| props.operations | <code>Array.&lt;Object&gt;</code> | Array of AsyncAPI Operation objects. |
 
 
 
@@ -752,6 +752,7 @@ Renders a list of AsyncAPI operations with their headers and message examples.
 ```js
 import path from "path";
 import { Parser, fromFile } from "@asyncapi/parser";
+import { AvailableOperations } from "@asyncapi/generator-components";
 
 async function renderAvailableOperations(){
   const parser = new Parser();
@@ -843,7 +844,7 @@ Renders Message Examples of a given AsyncAPI operation.
 | Name | Type | Description |
 |------|------|-------------|
 | props | <code>Object</code> | Component Props |
-| props.operation | <code>object</code> | An AsyncAPI Operation object. |
+| props.operation | <code>Object</code> | An AsyncAPI Operation object. |
 
 
 
@@ -858,6 +859,7 @@ Renders Message Examples of a given AsyncAPI operation.
 ```js
 import path from "path";
 import { Parser, fromFile } from "@asyncapi/parser";
+import { MessageExamples } from "@asyncapi/generator-components";
 
 async function renderMessageExamples(){
   const parser = new Parser();
@@ -890,7 +892,7 @@ Renders a header section for a single AsyncAPI operation.
 | Name | Type | Description |
 |------|------|-------------|
 | props | <code>Object</code> | Component properties. |
-| props.operation | <code>object</code> | An AsyncAPI Operation object. |
+| props.operation | <code>Object</code> | An AsyncAPI Operation object. |
 
 
 
@@ -905,6 +907,7 @@ Renders a header section for a single AsyncAPI operation.
 ```js
 import path from "path";
 import { Parser, fromFile } from "@asyncapi/parser";
+import { OperationHeader } from "@asyncapi/generator-components";
 
 async function renderOperationHeader(){
   const parser = new Parser();
@@ -938,7 +941,7 @@ Displays the API description, version, and server URL.
 | Name | Type | Description |
 |------|------|-------------|
 | props | <code>Object</code> | Component props |
-| props.info | <code>object</code> | Info object from the AsyncAPI document. |
+| props.info | <code>Object</code> | Info object from the AsyncAPI document. |
 | props.title | <code>string</code> | Title from the AsyncAPI document. |
 | props.serverUrl | <code>string</code> | ServerUrl from a specific server from the AsyncAPI document. |
 
@@ -956,6 +959,7 @@ Displays the API description, version, and server URL.
 import path from "path";
 import { Parser, fromFile } from "@asyncapi/parser";
 import { getServer, getServerUrl } from '@asyncapi/generator-helpers';
+import { Overview } from "@asyncapi/generator-components";
 
 async function renderOverview(){
   const parser = new Parser();
@@ -999,7 +1003,7 @@ provided AsyncAPI document, generator parameters, and target language.
 |------|------|-------------|
 | props | <code>Object</code> | Component props |
 | props.asyncapi | <code>AsyncAPIDocumentInterface</code> | Parsed AsyncAPI document instance. |
-| props.params | <code>object</code> | Generator parameters used to customize output |
+| props.params | <code>Object</code> | Generator parameters used to customize output |
 | props.language | <code>Language</code> | Target language used to render language-specific sections. |
 
 
@@ -1016,6 +1020,7 @@ provided AsyncAPI document, generator parameters, and target language.
 import path from "path";
 import { Parser, fromFile } from "@asyncapi/parser";
 import { buildParams } from '@asyncapi/generator-helpers';
+import { Readme } from "@asyncapi/generator-components";
 
 async function renderReadme(){
   const parser = new Parser();
@@ -1044,7 +1049,7 @@ renderReadme().catch(console.error);
 
 <a name="Usage"></a>
 ## **Usage()** 
-Renders a usage example snippet for a generated client in a given language.
+Renders a usage example snippet for a generated WebSocket client in a given language.
 
 
 ### Parameters

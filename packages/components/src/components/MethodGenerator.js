@@ -79,7 +79,7 @@ const buildIndentedLogic = (logic, preExecutionCode, postExecutionCode, indentSi
  * @example
  * const language = "java";
  * const methodName = "registerHandler";
- * const methodParams = ["self", "handler"];
+ * const methodParams = ["Handler handler"];
  * const methodDocs = "// Process the input data.";
  * const methodLogic = "// TODO: implement";
  * const preExecutionCode = "// Before handler registration";

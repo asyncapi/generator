@@ -3,12 +3,13 @@ import { Text } from '@asyncapi/generator-react-sdk';
 /**
  * Renders a header section for a single AsyncAPI operation.
  * @param {Object} props - Component properties.
- * @param {object} props.operation - An AsyncAPI Operation object.
+ * @param {Object} props.operation - An AsyncAPI Operation object.
  * @returns {JSX.Element} A Text component that contains formatted operation header.
  * 
  * @example
  * import path from "path";
  * import { Parser, fromFile } from "@asyncapi/parser";
+ * import { OperationHeader } from "@asyncapi/generator-components";
  * 
  * async function renderOperationHeader(){
  *   const parser = new Parser();

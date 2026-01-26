@@ -19,7 +19,7 @@ import { AvailableOperations } from './AvailableOperations';
  * provided AsyncAPI document, generator parameters, and target language.
  * @param {Object} props - Component props
  * @param {AsyncAPIDocumentInterface} props.asyncapi - Parsed AsyncAPI document instance.
- * @param {object} props.params - Generator parameters used to customize output 
+ * @param {Object} props.params - Generator parameters used to customize output 
  * @param {Language} props.language - Target language used to render language-specific sections.
  * @returns {JSX.Element} A File component representing the generated README.md.
  * 
@@ -27,6 +27,7 @@ import { AvailableOperations } from './AvailableOperations';
  * import path from "path";
  * import { Parser, fromFile } from "@asyncapi/parser";
  * import { buildParams } from '@asyncapi/generator-helpers';
+ * import { Readme } from "@asyncapi/generator-components";
  * 
  * async function renderReadme(){
  *   const parser = new Parser();

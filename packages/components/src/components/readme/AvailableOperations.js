@@ -5,12 +5,13 @@ import { MessageExamples } from './MessageExamples';
 /**
  * Renders a list of AsyncAPI operations with their headers and message examples.
  * @param {Object} props - Component Props
- * @param {Array.<object>} props.operations - Array of AsyncAPI Operation objects.
+ * @param {Array.<Object>} props.operations - Array of AsyncAPI Operation objects.
  * @returns {JSX.Element | null} A Component containing rendered operations, or null if no operations are provided
  * 
  * @example
  * import path from "path";
  * import { Parser, fromFile } from "@asyncapi/parser";
+ * import { AvailableOperations } from "@asyncapi/generator-components";
  * 
  * async function renderAvailableOperations(){
  *   const parser = new Parser();

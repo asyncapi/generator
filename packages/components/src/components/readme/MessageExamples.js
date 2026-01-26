@@ -39,12 +39,13 @@ client.${opId}(${JSON.stringify(payload, null, 2)})
  * Renders Message Examples of a given AsyncAPI operation.
  * 
  * @param {Object} props - Component Props
- * @param {object} props.operation - An AsyncAPI Operation object.
+ * @param {Object} props.operation - An AsyncAPI Operation object.
  * @returns {JSX.Element|null} A Text component that contains message examples, or null when no examples exist.
  * 
  * @example
  * import path from "path";
  * import { Parser, fromFile } from "@asyncapi/parser";
+ * import { MessageExamples } from "@asyncapi/generator-components";
  * 
  * async function renderMessageExamples(){
  *   const parser = new Parser();

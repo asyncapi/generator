@@ -106,7 +106,7 @@ function resolveQueryParamLogic(language, framework = '') {
 }
 
 /**
- * Renders a query parameter variables code blocks.
+ * Renders query parameter variables code blocks.
  *
  * @param {Object} props - Component props.
  * @param {Language} props.language - The target programming language.

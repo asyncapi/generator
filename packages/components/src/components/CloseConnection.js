@@ -74,7 +74,7 @@ print('WebSocket connection closed.');`
  * const language = "java";
  * const framework = "quarkus";
  * const methodName = "terminateConnection";
- * const methodParams = ["self"];
+ * const methodParams = ["String reason"];
  * const preExecutionCode = "// About to terminate connection";
  * const postExecutionCode = "// Connection terminated";
  * const indent = 2;

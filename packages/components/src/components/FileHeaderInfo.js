@@ -23,8 +23,8 @@ const commentConfig = {
  * Renders a file header with metadata information such as title, version, protocol, host, and path.
  *
  * @param {Object} props - Component props.
- * @param {object} props.info - Info object from the AsyncAPI document.
- * @param {object} props.server - Server object from the AsyncAPI document.
+ * @param {Object} props.info - Info object from the AsyncAPI document.
+ * @param {Object} props.server - Server object from the AsyncAPI document.
  * @param {Language} props.language - Programming language used for comment formatting.
  * @returns {JSX.Element} A Text component that contains file header.
  * 

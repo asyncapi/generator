@@ -557,7 +557,7 @@ Renders a WebSocket onClose event handler for the specified programming language
 |------|------|-------------|
 | props | <code>Object</code> | Component props. |
 | props.language | <code>Language</code> | The programming language for which to generate onClose handler code. |
-| props.framework | <code>string</code> | Optional framework variant (e.g., &#x27;quarkus&#x27; for java). |
+| props.framework | <code>string</code> | Framework variant; required for framework-specific languages (e.g., &#x27;quarkus&#x27; for java). |
 | props.title | <code>string</code> | The title of the WebSocket server. |
 
 

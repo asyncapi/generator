@@ -70,7 +70,7 @@ const resolveCloseConfig = (language, framework = '') => {
  * 
  * @param {Object} props - Component props.
  * @param {Language} props.language - The programming language for which to generate onClose handler code.
- * @param {string} [props.framework=''] - Optional framework variant (e.g., 'quarkus' for java).
+ * @param {string} [props.framework=''] - Framework variant; required for framework-specific languages (e.g., 'quarkus' for java).
  * @param {string} props.title - The title of the WebSocket server.
  * 
  * @returns {JSX.Element} A Text component containing the onClose handler code for the specified language.

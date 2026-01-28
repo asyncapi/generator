@@ -4,7 +4,7 @@ module.exports = {
   * @param {string|null|undefined} type - Raw JSDoc type string.
   * @returns {string|null|undefined} Escaped string or original falsy value.
   */
-  escapeType: function(type) {
+  escapeType(type) {
     if (!type) return type;
 
     return type

@@ -75,7 +75,7 @@ You can use our AsyncAPI's credentials to access different set of events produce
 2. Navigate to `packages/templates/clients/websocket/java/quarkus`
 3. Install with `npm install`
 4. Navigate back to `./generator`
-5. Generate the template client with `node .\apps\generator\cli.js <path-to-custom-document> .\packages\templates\clients\websocket\java\quarkus\ -o outputClient --force-write --param server=<custom-server>`
+5. Generate the template client with `node .\apps\generator\test\cli.js <path-to-custom-document> .\packages\templates\clients\websocket\java\quarkus\ -o outputClient --force-write --param server=<custom-server>`
 6. Navigate to `outputClient` or any other name you gave the output folder
 7. Run `mvn quarkus:dev`
 8. See the output in the terminal

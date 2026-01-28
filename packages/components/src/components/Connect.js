@@ -5,14 +5,14 @@ import { OnError } from './OnError';
 import { OnClose } from './OnClose';
 
 /**
- * @typedef {'python' | 'javascript' | 'dart'} SupportedLanguage
+ * @typedef {'python' | 'javascript' | 'dart'} Language
  * Supported programming languages for WebSocket connection method generation.
  */
 
 /**
  * Mapping of supported programming languages to their WebSocket connection method implementations.
  * 
- * @type {Object.<SupportedLanguage, Function>}
+ * @type {Object.<Language, Function>}
  */
 const websocketConnectMethod = {
   javascript: (onOpenMethod, onMessageMethod, onErrorMethod, onCloseMethod) => {
@@ -92,11 +92,27 @@ Future<void> connect() async {
 };
 
 /**
- * Component that renders WebSocket connection method for the specified programming language.
+ * Renders a WebSocket connection method for the specified programming language.
  * 
- * @param {Object} props - Component properties.
- * @param {SupportedLanguage} props.language - The programming language for which to generate connection code.
+ * @param {Object} props - Component props.
+ * @param {Language} props.language - The programming language for which to generate connection code.
  * @param {string} props.title - The title of the WebSocket server.
+ * @return {JSX.Element} A Text component containing the generated WebSocket connection code for the specified language.
+ * 
+ * @example
+ * const language = "python";
+ * const title = "HoppscotchEchoWebSocketClient";
+ * 
+ * function renderConnect() {
+ *   return(
+ *    <Connect 
+ *        language={language} 
+ *        title={title} 
+ *    />
+ *   )
+ * }
+ * 
+ * renderConnect();
  */
 export function Connect({ language, title }) {
   const onOpenMethod = render(<OnOpen language={language} title={title} />);

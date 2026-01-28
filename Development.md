@@ -76,10 +76,7 @@ You can also opt in to run the lint checks after the tests, by setting an enviro
 
 ### Manually testing with test templates
 
-<<<<<<< Updated upstream
 To test template features, use the `react-template` in `apps/generator/test/test-templates`. You can run your changes against this template as follows:
-To test template features manually we have `react-template` and `nunjucks-template` in `apps/generator/test/test-templates`, you can use this templates to manually test your changes like this:
->>>>>>> Stashed changes
 
 1. Navigate to the generator directory:
 

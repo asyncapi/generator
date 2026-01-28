@@ -46,6 +46,14 @@ const websocketOnCloseMethod = {
     }
   }
 };
+/**
+ * Resolves the appropriate onClose code generator for the given language and optional framework.
+ *
+ * @private
+ * @param {Language} language - The target programming language.
+ * @param {string} [framework=''] - Optional framework variant (e.g., 'quarkus' for java).
+ * @returns {Function|undefined} The code generator function, or undefined if not found.
+ */
 
 const resolveCloseConfig = (language, framework = '') => {
   const config = websocketOnCloseMethod[language];
@@ -90,6 +98,9 @@ export function OnClose({ language, framework = '', title }) {
 
   if (websocketOnCloseMethod[language]) {
     const generateOnCloseCode = resolveCloseConfig(language, framework);
+    if (!generateOnCloseCode) {
+      return <Text indent={0}>{''}</Text>;
+    }
     const closeResult = generateOnCloseCode(title);
     onCloseMethod = closeResult.onCloseMethod;
     indent = closeResult.indent ?? 0;

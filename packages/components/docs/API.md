@@ -467,7 +467,7 @@ const methodLogic = "// TODO: implement";
 const preExecutionCode = "// Before handler registration";
 const postExecutionCode = "// After handler registration";
 const customMethodConfig={ openingTag: "{", closingTag: "}", indentSize: 6 };
-const methodConfig = {"java" : {methodDocs : methodDocs, methodLogic: methodLogic }};
+const methodConfig = {"java" : {"quarkus": {methodDocs : methodDocs, methodLogic: methodLogic }}};
 const framework = "quarkus";
 
 function renderMethodGenerator() {

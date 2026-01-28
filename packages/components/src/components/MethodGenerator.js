@@ -20,6 +20,13 @@ const defaultMethodConfig = {
  * Resolve docs and logic for the given language + framework config.
  * 
  * @private
+ * @param {Object} params
+ * @param {Language} params.language
+ * @param {string} [params.methodDocs]
+ * @param {string} [params.methodLogic]
+ * @param {Record<Language, { methodDocs: string | undefined, methodLogic: string | undefined } | Record<string, { methodDocs: string | undefined, methodLogic: string | undefined }>>} [params.methodConfig]
+ * @param {string} [params.framework]
+ * @returns {{ docs: string, logic: string }}
  */
 const resolveDocsAndLogic = ({ language, methodDocs, methodLogic, methodConfig, framework }) => {
   let docs = methodDocs;
@@ -45,6 +52,11 @@ const resolveDocsAndLogic = ({ language, methodDocs, methodLogic, methodConfig, 
  * Build indented method body.
  * 
  * @private
+ * @param {string} logic
+ * @param {string} [preExecutionCode]
+ * @param {string} [postExecutionCode]
+ * @param {number} indentSize
+ * @returns {string}
  */
 const buildIndentedLogic = (logic, preExecutionCode, postExecutionCode, indentSize) => {
   let completeCode = logic;
@@ -85,7 +97,7 @@ const buildIndentedLogic = (logic, preExecutionCode, postExecutionCode, indentSi
  * const preExecutionCode = "// Before handler registration";
  * const postExecutionCode = "// After handler registration";
  * const customMethodConfig={ openingTag: "{", closingTag: "}", indentSize: 6 };
- * const methodConfig = {"java" : {methodDocs : methodDocs, methodLogic: methodLogic }};
+ * const methodConfig = {"java" : {"quarkus": {methodDocs : methodDocs, methodLogic: methodLogic }}};
  * const framework = "quarkus";
  * 
  * function renderMethodGenerator() {

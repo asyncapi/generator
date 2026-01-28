@@ -21,6 +21,7 @@ const methodConfig = {
  * @param {Object} props - Component props 
  * @param {Language} props.language - Target language used to select method names.
  * @returns {JSX.Element} A Text component that contains a list of core client methods.
+ * @throws {Error} When an unsupported language is provided.
  * 
  * @example
  * const language = "javascript";

@@ -49,17 +49,11 @@ exports[`OnTextMessageHandler component (integration with AsyncAPI document) ren
       if (message != null && message.contains(\\"sendMessage\\")) {
           sendMessage(message, connection);
       }
-      else if (message != null && message.contains(\\"sendDataUpdate\\")) {
-          sendDataUpdate(message, connection);
-      }
       else if (message != null && message.contains(\\"SendNotification\\")) {
           sendNotification(message, connection);
       }
       else if (message != null && message.contains(\\"send_status_update\\")) {
           sendStatusUpdate(message, connection);
-      }
-      else if (message != null && message.contains(\\"sendWithoutSummary\\")) {
-          sendWithoutSummary(message, connection);
       }
       else {
           LOG.warn(\\"Handler received unrecognized message type. Falling back to default handler.\\");
@@ -74,11 +68,6 @@ exports[`OnTextMessageHandler component (integration with AsyncAPI document) ren
       // TODO: implement processing logic for sendMessage
   }
 
-  public void sendDataUpdate(String message, WebSocketClientConnection connection) {
-      LOG.info(\\"Processing sendDataUpdate type message: \\" + message);
-      // TODO: implement processing logic for sendDataUpdate
-  }
-
   public void sendNotification(String message, WebSocketClientConnection connection) {
       LOG.info(\\"Processing SendNotification type message: \\" + message);
       // TODO: implement processing logic for SendNotification
@@ -87,10 +76,5 @@ exports[`OnTextMessageHandler component (integration with AsyncAPI document) ren
   public void sendStatusUpdate(String message, WebSocketClientConnection connection) {
       LOG.info(\\"Processing send_status_update type message: \\" + message);
       // TODO: implement processing logic for send_status_update
-  }
-
-  public void sendWithoutSummary(String message, WebSocketClientConnection connection) {
-      LOG.info(\\"Processing sendWithoutSummary type message: \\" + message);
-      // TODO: implement processing logic for sendWithoutSummary
   }"
 `;

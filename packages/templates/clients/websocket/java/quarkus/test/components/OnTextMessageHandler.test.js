@@ -4,7 +4,7 @@ import { Parser, fromFile } from '@asyncapi/parser';
 import OnTextMessageHandler from '../../components/OnTextMessageHandler.js';
 
 const parser = new Parser();
-const asyncapiFilePath = path.resolve(__dirname, '../__fixtures__/asyncapi-java-quarkus-tests.yml');
+const asyncapiFilePath = path.resolve(__dirname, '../../../../test/__fixtures__/asyncapi-java-quarkus-operations.yml');
 
 describe('OnTextMessageHandler component (integration with AsyncAPI document)', () => {
   let parsedAsyncAPIDocument;
@@ -33,6 +33,7 @@ describe('OnTextMessageHandler component (integration with AsyncAPI document)', 
     const operations = parsedAsyncAPIDocument.operations();
     const allSendOps = operations.filterBySend();
     const sendOpsArray = Array.from(allSendOps);
+    expect(sendOpsArray.length).toBeGreaterThan(0);
     const singleOperation = [sendOpsArray[0]];    
     const result = render(<OnTextMessageHandler sendOperations={singleOperation} />);
     expect(result.trim()).toMatchSnapshot();
@@ -41,6 +42,8 @@ describe('OnTextMessageHandler component (integration with AsyncAPI document)', 
   test('renders handler with if-else-if chain for multiple send operations', () => {
     const operations = parsedAsyncAPIDocument.operations();
     const sendOperations = operations.filterBySend();    
+    const sendOpsArray = Array.from(sendOperations);
+    expect(sendOpsArray.length).toBeGreaterThan(1);
     const result = render(<OnTextMessageHandler sendOperations={sendOperations} />);
     expect(result.trim()).toMatchSnapshot();
   });

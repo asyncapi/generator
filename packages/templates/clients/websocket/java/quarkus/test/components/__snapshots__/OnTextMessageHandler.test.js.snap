@@ -25,20 +25,20 @@ exports[`OnTextMessageHandler component (integration with AsyncAPI document) ren
 "@OnTextMessage
   public void handleTextMessage(String message, WebSocketClientConnection connection) {
       LOG.info(\\"Handler received text message: \\" + message);
-      if (message != null && message.contains(\\"noMessage\\")) {
-          noMessage(message, connection);
+      if (message != null && message.contains(\\"sendMessage\\")) {
+          sendMessage(message, connection);
       }
       else {
           LOG.warn(\\"Handler received unrecognized message type. Falling back to default handler.\\");
           // Note: By default, we route unrecognized messages to the first operation handler.
           // Depending on your business logic, you may want to change this behavior.
-          noMessage(message, connection);
+          sendMessage(message, connection);
       }
   }
 
-  public void noMessage(String message, WebSocketClientConnection connection) {
-      LOG.info(\\"Processing noMessage type message: \\" + message);
-      // TODO: implement processing logic for noMessage
+  public void sendMessage(String message, WebSocketClientConnection connection) {
+      LOG.info(\\"Processing sendMessage type message: \\" + message);
+      // TODO: implement processing logic for sendMessage
   }"
 `;
 
@@ -46,51 +46,51 @@ exports[`OnTextMessageHandler component (integration with AsyncAPI document) ren
 "@OnTextMessage
   public void handleTextMessage(String message, WebSocketClientConnection connection) {
       LOG.info(\\"Handler received text message: \\" + message);
-      if (message != null && message.contains(\\"noMessage\\")) {
-          noMessage(message, connection);
+      if (message != null && message.contains(\\"sendMessage\\")) {
+          sendMessage(message, connection);
       }
-      else if (message != null && message.contains(\\"noSummaryOperations\\")) {
-          noSummaryOperations(message, connection);
+      else if (message != null && message.contains(\\"sendDataUpdate\\")) {
+          sendDataUpdate(message, connection);
       }
-      else if (message != null && message.contains(\\"noSummaryNoDescriptionOperations\\")) {
-          noSummaryNoDescriptionOperations(message, connection);
+      else if (message != null && message.contains(\\"SendNotification\\")) {
+          sendNotification(message, connection);
       }
-      else if (message != null && message.contains(\\"mixedMessageExamples\\")) {
-          mixedMessageExamples(message, connection);
+      else if (message != null && message.contains(\\"send_status_update\\")) {
+          sendStatusUpdate(message, connection);
       }
-      else if (message != null && message.contains(\\"operation_with_snake_case\\")) {
-          operationWithSnakeCase(message, connection);
+      else if (message != null && message.contains(\\"sendWithoutSummary\\")) {
+          sendWithoutSummary(message, connection);
       }
       else {
           LOG.warn(\\"Handler received unrecognized message type. Falling back to default handler.\\");
           // Note: By default, we route unrecognized messages to the first operation handler.
           // Depending on your business logic, you may want to change this behavior.
-          noMessage(message, connection);
+          sendMessage(message, connection);
       }
   }
 
-  public void noMessage(String message, WebSocketClientConnection connection) {
-      LOG.info(\\"Processing noMessage type message: \\" + message);
-      // TODO: implement processing logic for noMessage
+  public void sendMessage(String message, WebSocketClientConnection connection) {
+      LOG.info(\\"Processing sendMessage type message: \\" + message);
+      // TODO: implement processing logic for sendMessage
   }
 
-  public void noSummaryOperations(String message, WebSocketClientConnection connection) {
-      LOG.info(\\"Processing noSummaryOperations type message: \\" + message);
-      // TODO: implement processing logic for noSummaryOperations
+  public void sendDataUpdate(String message, WebSocketClientConnection connection) {
+      LOG.info(\\"Processing sendDataUpdate type message: \\" + message);
+      // TODO: implement processing logic for sendDataUpdate
   }
 
-  public void noSummaryNoDescriptionOperations(String message, WebSocketClientConnection connection) {
-      LOG.info(\\"Processing noSummaryNoDescriptionOperations type message: \\" + message);
-      // TODO: implement processing logic for noSummaryNoDescriptionOperations
+  public void sendNotification(String message, WebSocketClientConnection connection) {
+      LOG.info(\\"Processing SendNotification type message: \\" + message);
+      // TODO: implement processing logic for SendNotification
   }
 
-  public void mixedMessageExamples(String message, WebSocketClientConnection connection) {
-      LOG.info(\\"Processing mixedMessageExamples type message: \\" + message);
-      // TODO: implement processing logic for mixedMessageExamples
+  public void sendStatusUpdate(String message, WebSocketClientConnection connection) {
+      LOG.info(\\"Processing send_status_update type message: \\" + message);
+      // TODO: implement processing logic for send_status_update
   }
 
-  public void operationWithSnakeCase(String message, WebSocketClientConnection connection) {
-      LOG.info(\\"Processing operation_with_snake_case type message: \\" + message);
-      // TODO: implement processing logic for operation_with_snake_case
+  public void sendWithoutSummary(String message, WebSocketClientConnection connection) {
+      LOG.info(\\"Processing sendWithoutSummary type message: \\" + message);
+      // TODO: implement processing logic for sendWithoutSummary
   }"
 `;

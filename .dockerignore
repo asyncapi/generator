@@ -39,3 +39,5 @@ test-results
 **/Dockerfile
 **/docker-compose*.yml
 **/docker-compose*.yaml
+!**/template/**/docker-compose*.yml
+!**/template/**/docker-compose*.yaml

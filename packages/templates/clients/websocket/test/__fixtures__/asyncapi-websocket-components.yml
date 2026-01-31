@@ -2,8 +2,8 @@ asyncapi: 3.0.0
 info:
   title: WebSocket Components Test Fixture
   version: 1.0.0
-  description: Shared test fixture for WebSocket client template components.
-  
+  description: AsyncAPI document used as a test fixture for WebSocket client components.
+
 servers:
   testServer:
     host: test.example.com

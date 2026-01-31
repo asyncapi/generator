@@ -4,7 +4,7 @@ import { Parser, fromFile } from '@asyncapi/parser';
 import OnTextMessageHandler from '../../components/OnTextMessageHandler.js';
 
 const parser = new Parser();
-const asyncapiFilePath = path.resolve(__dirname, '../../../../test/__fixtures__/asyncapi-java-quarkus-operations.yml');
+const asyncapiFilePath = path.resolve(__dirname, '../../../../test/__fixtures__/asyncapi-websocket-components.yml');
 
 describe('OnTextMessageHandler component (integration with AsyncAPI document)', () => {
   let parsedAsyncAPIDocument;

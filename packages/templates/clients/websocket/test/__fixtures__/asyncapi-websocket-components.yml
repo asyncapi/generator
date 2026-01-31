@@ -1,9 +1,9 @@
 asyncapi: 3.0.0
 info:
-  title: Java Quarkus WebSocket Client Operations
+  title: WebSocket Components Test Fixture
   version: 1.0.0
-  description: AsyncAPI document for testing all Java Quarkus WebSocket client components
-
+  description: Shared test fixture for WebSocket client template components.
+  
 servers:
   testServer:
     host: test.example.com

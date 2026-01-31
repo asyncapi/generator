@@ -15,13 +15,18 @@ import {
  */
 
 /**
- * @typedef {'python' | 'java' | 'typescript' | 'rust' | 'csharp'} Language
+ * @typedef {'python' | 'java' | 'typescript' | 'rust' | 'csharp' | 'js'} Language
  * Represents the available programming languages for model generation.
  */
 
 /**
+ * @typedef {PythonGenerator | JavaGenerator | TypeScriptGenerator | CSharpGenerator | RustGenerator | JavaScriptGenerator} ModelinaGeneratorConstructor
+ * Represents any Modelina generator constructor.
+ */
+
+/**
  * Mapping of language strings to Modelina generator classes and file extensions.
- * @type {Record<string, { generator: new (options?: object) => any; extension: string }>}
+ * @type {Record<string, { generator: ModelinaGeneratorConstructor, extension: string }>}
  */
 const generatorConfig = {
   python: { generator: PythonGenerator, extension: 'py' },
@@ -44,16 +49,42 @@ const formatHelpers = {
 };
 
 /**
- * Generates and returns an array of model files based on the AsyncAPI document.
+ * Renders an array of model files based on the AsyncAPI document.
  * 
- * @param {Object} params - The parameters for the function.
- * @param {AsyncAPIDocumentInterface} params.asyncapi - Parsed AsyncAPI document object.
- * @param {Language} [params.language='python'] - Target programming language for the generated models.
- * @param {Format} [params.format='toPascalCase'] - Naming format for generated files.
- * @param {object} [params.presets={}] - Custom presets for the generator instance.
- * @param {object} [params.constraints={}] - Custom constraints for the generator instance.
+ * @param {Object} props - Component props.
+ * @param {AsyncAPIDocumentInterface} props.asyncapi - Parsed AsyncAPI document object.
+ * @param {Language} [props.language='python'] - Target programming language for the generated models.
+ * @param {Format} [props.format='toPascalCase'] - Naming format for generated files.
+ * @param {Object} [props.presets] - Custom presets for the generator instance.
+ * @param {Object} [props.constraints] - Custom constraints for the generator instance.
  * 
  * @returns {Array<File>} Array of File components with generated model content.
+ * 
+ * @example
+ * import path from "path";
+ * import { Parser, fromFile } from "@asyncapi/parser";
+ * import { Models } from "@asyncapi/generator-components";
+ * 
+ * async function renderModel() {
+ *    const parser = new Parser();
+ *    const asyncapi_v3_path = path.resolve(__dirname, "../__fixtures__/asyncapi-v3.yml");
+ * 
+ *     // Parse the AsyncAPI document
+ *    const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
+ *    const parsedAsyncAPIDocument = parseResult.document;
+ *    
+ *    const language = "java";
+ *    
+ *    return (
+ *      <Models 
+ *         asyncapi={parsedAsyncAPIDocument} 
+ *         language={language}
+ *      />
+ *    )
+ * }
+ * 
+ * renderModel().catch(console.error);
+ * 
  */
 export async function Models({ asyncapi, language = 'python', format = 'toPascalCase', presets, constraints }) {
   // Get the selected generator and file extension, defaulting to Python if unknown

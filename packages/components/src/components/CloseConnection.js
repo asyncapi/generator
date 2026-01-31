@@ -15,7 +15,7 @@ const delayExit = 1000;
 
 /**
  * Configuration for WebSocket close method logic per language.
- * @type {Record<Language, { methodDocs?: string, methodLogic: string }>}
+ * @type {Record<Language, { methodDocs: string | undefined, methodLogic: string }>}
  */
 const websocketCloseConfig = {
   python: {
@@ -58,7 +58,7 @@ print('WebSocket connection closed.');`
 };
 
 /**
- * Renders a WebSocket close connection method with optional pre and post execution logic.
+ * Renders a WebSocket close connection method with optional pre- and post-execution logic.
  *
  * @param {Object} props - Component props.
  * @param {Language} props.language - Programming language used for method formatting.
@@ -68,8 +68,34 @@ print('WebSocket connection closed.');`
  * @param {string} props.preExecutionCode - Code to insert before the main function logic.
  * @param {string} props.postExecutionCode - Code to insert after the main function logic.
  * @param {number} props.indent=2 - Indentation level for the method block.
- * @returns {JSX.Element} Rendered method block with appropriate formatting.
+ * @returns {JSX.Element} A Text component that contains method block with appropriate formatting.
+ * 
+ * @example
+ * const language = "java";
+ * const framework = "quarkus";
+ * const methodName = "terminateConnection";
+ * const methodParams = ["String reason"];
+ * const preExecutionCode = "// About to terminate connection";
+ * const postExecutionCode = "// Connection terminated";
+ * const indent = 2;
+ *
+ * function renderCloseConnection() {
+ *   return (
+ *     <CloseConnection 
+ *        language={language}
+ *        framework={framework}
+ *        methodName={methodName}
+ *        methodParams={methodParams}
+ *        preExecutionCode={preExecutionCode} 
+ *        postExecutionCode={postExecutionCode} 
+ *        indent={indent} 
+ *      />
+ *   );
+ * }
+ * 
+ * renderCloseConnection();
  */
+
 export function CloseConnection({ methodName = 'close', indent = 2, ...props }) {
   return (
     <MethodGenerator

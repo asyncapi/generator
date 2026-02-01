@@ -31,7 +31,18 @@ main();
 };
 
 export function Usage({ clientName, clientFileName, language }) {
+  if (!language || typeof language !== 'string') {
+    throw new Error(`Invalid "language" parameter: must be a non-empty string, received ${language}`);
+  }
+
   const snippetFn = usageConfig[language];
+
+  if (!snippetFn) {
+    throw new Error(
+      `Invalid "language" parameter: unsupported value "${language}"`
+    );
+  }
+
   const snippet = snippetFn(clientName, clientFileName);
 
   return (

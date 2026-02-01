@@ -29,18 +29,10 @@ operations:
     messages:
       - $ref: '#/channels/testChannel/messages/testMessage'
   
-  SendNotification:
+  sendNotification:
     action: send
     channel:
       $ref: '#/channels/testChannel'
     summary: Send notification
-    messages:
-      - $ref: '#/channels/testChannel/messages/testMessage'
-  
-  send_status_update:
-    action: send
-    channel:
-      $ref: '#/channels/testChannel'
-    summary: Send status update
     messages:
       - $ref: '#/channels/testChannel/messages/testMessage'

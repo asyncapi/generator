@@ -49,11 +49,8 @@ exports[`OnTextMessageHandler component (integration with AsyncAPI document) ren
       if (message != null && message.contains(\\"sendMessage\\")) {
           sendMessage(message, connection);
       }
-      else if (message != null && message.contains(\\"SendNotification\\")) {
+      else if (message != null && message.contains(\\"sendNotification\\")) {
           sendNotification(message, connection);
-      }
-      else if (message != null && message.contains(\\"send_status_update\\")) {
-          sendStatusUpdate(message, connection);
       }
       else {
           LOG.warn(\\"Handler received unrecognized message type. Falling back to default handler.\\");
@@ -69,12 +66,7 @@ exports[`OnTextMessageHandler component (integration with AsyncAPI document) ren
   }
 
   public void sendNotification(String message, WebSocketClientConnection connection) {
-      LOG.info(\\"Processing SendNotification type message: \\" + message);
-      // TODO: implement processing logic for SendNotification
-  }
-
-  public void sendStatusUpdate(String message, WebSocketClientConnection connection) {
-      LOG.info(\\"Processing send_status_update type message: \\" + message);
-      // TODO: implement processing logic for send_status_update
+      LOG.info(\\"Processing sendNotification type message: \\" + message);
+      // TODO: implement processing logic for sendNotification
   }"
 `;

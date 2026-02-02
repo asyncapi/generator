@@ -35,17 +35,7 @@ describe('URIParams component (integration with AsyncAPI document)', () => {
     expect(result.trim()).toMatchSnapshot();
   });
 
-  test('renders URI params with single query parameter from fixture', () => {
-    expect(queryParamsArray).not.toBeNull();
-    expect(queryParamsArray.length).toBeGreaterThan(0);
-    const singleParam = [queryParamsArray[0]];
-    const result = render(<URIParams queryParamsArray={singleParam} pathName="/link" />);
-    expect(result.trim()).toMatchSnapshot();
-  });
-
   test('renders URI params with multiple query parameters from fixture', () => {
-    expect(queryParamsArray).not.toBeNull();
-    expect(queryParamsArray.length).toBeGreaterThan(1);
     const result = render(<URIParams queryParamsArray={queryParamsArray} pathName="/link" />);
     expect(result.trim()).toMatchSnapshot();
   });

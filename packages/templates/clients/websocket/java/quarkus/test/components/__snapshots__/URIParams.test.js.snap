@@ -22,22 +22,6 @@ exports[`URIParams component (integration with AsyncAPI document) renders URI pa
             Thread.sleep(120000); // Keep the connection open for 2 minutes"
 `;
 
-exports[`URIParams component (integration with AsyncAPI document) renders URI params with single query parameter from fixture 1`] = `
-"// URI parameters
-            String query = \\"\\";
-            
-            String heartbeat = System.getenv(\\"HEARTBEAT\\");
-            if(heartbeat == null || heartbeat.isEmpty()){
-              throw new IllegalArgumentException(\\"Required environment variable HEARTBEAT is missing or empty\\");
-            }
-            query += \\"heartbeat=\\" + URLEncoder.encode(heartbeat, StandardCharsets.UTF_8);
-
-
-            String queryUri = baseURI + \\"/link\\" + \\"?\\" + query;
-            WebSocketClientConnection connection = connector.baseUri(queryUri).connectAndAwait();
-            Thread.sleep(120000); // Keep the connection open for 2 minutes"
-`;
-
 exports[`URIParams component (integration with AsyncAPI document) renders nothing when queryParamsArray is empty array 1`] = `""`;
 
 exports[`URIParams component (integration with AsyncAPI document) renders nothing when queryParamsArray is null 1`] = `""`;

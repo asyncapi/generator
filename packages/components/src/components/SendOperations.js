@@ -15,7 +15,7 @@ const websocketSendOperationConfig = {
     const methodName = toSnakeCase(operation.id());
     const staticMethodName = `${methodName}_static`;
     return {
-      nonStaticMethod: `async def ${methodName}(self, message):
+      nonStaticMethod: `def ${methodName}(self, message):
     """
     Send a ${methodName} message using the WebSocket connection attached to this instance.
 
@@ -25,9 +25,9 @@ const websocketSendOperationConfig = {
     Raises:
         Exception: If sending fails or the socket is not connected.
     """
-    await self._send(message, self.ws_app)`,
+    self._send(message, self.ws_app)`,
       staticMethod: `@staticmethod
-async def ${staticMethodName}(message, socket):
+def ${staticMethodName}(message, socket):
     """
     Send a ${methodName} message using a provided WebSocket connection, without needing an instance.
 
@@ -38,7 +38,7 @@ async def ${staticMethodName}(message, socket):
     Raises:
         Exception: If sending fails or the socket is not connected.
     """
-    await ${clientName}._send(message, socket)`
+    ${clientName}._send(message, socket)`
     };
   },
   javascript: (operation, clientName) => {

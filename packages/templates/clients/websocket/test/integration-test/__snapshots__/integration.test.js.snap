@@ -8752,7 +8752,7 @@ class HoppscotchClient:
             self.receive_operation_discriminators.append(discriminator_entry)
 
   @staticmethod
-  async def send_echo_message_static(message, socket):
+  def send_echo_message_static(message, socket):
       \\"\\"\\"
       Send a send_echo_message message using a provided WebSocket connection, without needing an instance.
 
@@ -8763,9 +8763,9 @@ class HoppscotchClient:
       Raises:
           Exception: If sending fails or the socket is not connected.
       \\"\\"\\"
-      await HoppscotchClient._send(message, socket)
+      HoppscotchClient._send(message, socket)
 
-  async def send_echo_message(self, message):
+  def send_echo_message(self, message):
       \\"\\"\\"
       Send a send_echo_message message using the WebSocket connection attached to this instance.
 
@@ -8775,10 +8775,10 @@ class HoppscotchClient:
       Raises:
           Exception: If sending fails or the socket is not connected.
       \\"\\"\\"
-      await self._send(message, self.ws_app)
+      self._send(message, self.ws_app)
 
   @staticmethod
-  async def _send(message, socket):
+  def _send(message, socket):
       \\"\\"\\"
       Internal helper to handle the actual sending logic.
 
@@ -8792,7 +8792,7 @@ class HoppscotchClient:
       try:
           if isinstance(message, dict):
               message = json.dumps(message)
-          await socket.send(message)
+          socket.send(message)
       except Exception as e:
           print(\\"Error sending:\\", e)
 
@@ -9133,7 +9133,7 @@ class HoppscotchEchoWebSocketClient:
             self.receive_operation_discriminators.append(discriminator_entry)
 
   @staticmethod
-  async def send_echo_message_static(message, socket):
+  def send_echo_message_static(message, socket):
       \\"\\"\\"
       Send a send_echo_message message using a provided WebSocket connection, without needing an instance.
 
@@ -9144,9 +9144,9 @@ class HoppscotchEchoWebSocketClient:
       Raises:
           Exception: If sending fails or the socket is not connected.
       \\"\\"\\"
-      await HoppscotchEchoWebSocketClient._send(message, socket)
+      HoppscotchEchoWebSocketClient._send(message, socket)
 
-  async def send_echo_message(self, message):
+  def send_echo_message(self, message):
       \\"\\"\\"
       Send a send_echo_message message using the WebSocket connection attached to this instance.
 
@@ -9156,10 +9156,10 @@ class HoppscotchEchoWebSocketClient:
       Raises:
           Exception: If sending fails or the socket is not connected.
       \\"\\"\\"
-      await self._send(message, self.ws_app)
+      self._send(message, self.ws_app)
 
   @staticmethod
-  async def _send(message, socket):
+  def _send(message, socket):
       \\"\\"\\"
       Internal helper to handle the actual sending logic.
 
@@ -9173,7 +9173,7 @@ class HoppscotchEchoWebSocketClient:
       try:
           if isinstance(message, dict):
               message = json.dumps(message)
-          await socket.send(message)
+          socket.send(message)
       except Exception as e:
           print(\\"Error sending:\\", e)
 
@@ -9429,7 +9429,7 @@ class PostmanEchoWebSocketClientClient:
           handler(error)
 
   @staticmethod
-  async def send_echo_message_static(message, socket):
+  def send_echo_message_static(message, socket):
       \\"\\"\\"
       Send a send_echo_message message using a provided WebSocket connection, without needing an instance.
 
@@ -9440,9 +9440,9 @@ class PostmanEchoWebSocketClientClient:
       Raises:
           Exception: If sending fails or the socket is not connected.
       \\"\\"\\"
-      await PostmanEchoWebSocketClientClient._send(message, socket)
+      PostmanEchoWebSocketClientClient._send(message, socket)
 
-  async def send_echo_message(self, message):
+  def send_echo_message(self, message):
       \\"\\"\\"
       Send a send_echo_message message using the WebSocket connection attached to this instance.
 
@@ -9452,10 +9452,10 @@ class PostmanEchoWebSocketClientClient:
       Raises:
           Exception: If sending fails or the socket is not connected.
       \\"\\"\\"
-      await self._send(message, self.ws_app)
+      self._send(message, self.ws_app)
 
   @staticmethod
-  async def _send(message, socket):
+  def _send(message, socket):
       \\"\\"\\"
       Internal helper to handle the actual sending logic.
 
@@ -9469,7 +9469,7 @@ class PostmanEchoWebSocketClientClient:
       try:
           if isinstance(message, dict):
               message = json.dumps(message)
-          await socket.send(message)
+          socket.send(message)
       except Exception as e:
           print(\\"Error sending:\\", e)
 

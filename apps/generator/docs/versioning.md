@@ -21,7 +21,6 @@ npm install -g @asyncapi/cli
 asyncapi generate fromTemplate asyncapi.yaml @asyncapi/html-template@3.0.0 
 ```
 
-> AsyncAPI CLI has multiple versions of the generator. For more details you can also check [asyncapi generate fromTemplate ASYNCAPI TEMPLATE](https://www.asyncapi.com/docs/tools/cli/usage#asyncapi-generate-fromtemplate-asyncapi-template)
 
 Generate HTML using a particular version of the AsyncAPI CLI using the html-template.
 

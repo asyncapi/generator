@@ -14,6 +14,18 @@ channels:
   testChannel:
     address: /test
     description: Test channel for operation routing
+    bindings:
+      ws:
+        bindingVersion: 0.1.0
+        query:
+          type: object
+          properties:
+            heartbeat:
+              type: boolean
+              default: false
+            bids:
+              type: boolean
+              default: true
     messages:
       testMessage:
         summary: Test message

@@ -1,5 +1,11 @@
 # @asyncapi/generator
 
+## 3.1.2
+
+### Patch Changes
+
+- 4a09f57: Bump @asyncapi/parser to 3.6.0 to support AsyncAPI 3.1.0
+
 ## 3.1.1
 
 ### Patch Changes

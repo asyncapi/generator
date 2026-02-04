@@ -1,14 +1,14 @@
 import { Text } from '@asyncapi/generator-react-sdk';
 
 /**
- * @typedef {'python' | 'javascript' | 'dart'} SupportedLanguage
+ * @typedef {'python' | 'javascript' | 'dart'} Language
  * Supported programming languages for WebSocket onMessage handler generation.
  */
 
 /**
  * Mapping of supported programming languages to their WebSocket onMessage event handler implementations.
  * 
- * @type {Object.<SupportedLanguage, Function>}
+ * @type {Object.<Language, Function>}
  */
 const websocketOnMessageMethod = {
   javascript: () => {
@@ -77,10 +77,22 @@ const websocketOnMessageMethod = {
 };
 
 /**
- * Component that renders WebSocket onMessage event handler for the specified programming language.
+ * Renders a WebSocket onMessage event handler for the specified programming language.
  * 
- * @param {Object} props - Component properties.
- * @param {SupportedLanguage} props.language - The programming language for which to generate onMessage handler code.
+ * @param {Object} props - Component props.
+ * @param {Language} props.language - The programming language for which to generate onMessage handler code.
+ * @returns {JSX.Element} A Text component containing the onMessage handler code for the specified language.
+ * 
+ * @example
+ * const language = "javascript";
+ * 
+ * function renderOnMessage() {
+ *   return (
+ *     <OnMessage language={language} />
+ *   )
+ * }
+ * 
+ * renderOnMessage();
  */
 export function OnMessage({ language }) {
   let onMessageMethod = '';

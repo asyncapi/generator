@@ -1,0 +1,50 @@
+asyncapi: 3.0.0
+info:
+  title: WebSocket Components Test Fixture
+  version: 1.0.0
+  description: AsyncAPI document used as a test fixture for WebSocket client components.
+
+servers:
+  testServer:
+    host: test.example.com
+    protocol: wss
+    description: Test WebSocket server
+
+channels:
+  testChannel:
+    address: /test
+    description: Test channel for operation routing
+    bindings:
+      ws:
+        bindingVersion: 0.1.0
+        query:
+          type: object
+          properties:
+            heartbeat:
+              type: boolean
+              default: false
+            bids:
+              type: boolean
+              default: true
+    messages:
+      testMessage:
+        summary: Test message
+        payload:
+          type: string
+
+operations:
+  sendMessage:
+    action: send
+    channel:
+      $ref: '#/channels/testChannel'
+    summary: Send a message
+    messages:
+      - $ref: '#/channels/testChannel/messages/testMessage'
+  
+  sendNotification:
+    action: send
+    channel:
+      $ref: '#/channels/testChannel'
+    summary: Send notification
+    messages:
+      - $ref: '#/channels/testChannel/messages/testMessage'

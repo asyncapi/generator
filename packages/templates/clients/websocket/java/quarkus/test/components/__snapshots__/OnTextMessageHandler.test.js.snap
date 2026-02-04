@@ -1,0 +1,72 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`OnTextMessageHandler component (integration with AsyncAPI document) renders default handler when sendOperations is empty array 1`] = `
+"@OnTextMessage
+  public void processTextMessage(String message, WebSocketClientConnection connection) {
+      LOG.info(\\"Received text message: \\" + message);
+  }"
+`;
+
+exports[`OnTextMessageHandler component (integration with AsyncAPI document) renders default handler when sendOperations is null 1`] = `
+"@OnTextMessage
+  public void processTextMessage(String message, WebSocketClientConnection connection) {
+      LOG.info(\\"Received text message: \\" + message);
+  }"
+`;
+
+exports[`OnTextMessageHandler component (integration with AsyncAPI document) renders default handler without sendOperations 1`] = `
+"@OnTextMessage
+  public void processTextMessage(String message, WebSocketClientConnection connection) {
+      LOG.info(\\"Received text message: \\" + message);
+  }"
+`;
+
+exports[`OnTextMessageHandler component (integration with AsyncAPI document) renders handler with if statement for single send operation 1`] = `
+"@OnTextMessage
+  public void handleTextMessage(String message, WebSocketClientConnection connection) {
+      LOG.info(\\"Handler received text message: \\" + message);
+      if (message != null && message.contains(\\"sendMessage\\")) {
+          sendMessage(message, connection);
+      }
+      else {
+          LOG.warn(\\"Handler received unrecognized message type. Falling back to default handler.\\");
+          // Note: By default, we route unrecognized messages to the first operation handler.
+          // Depending on your business logic, you may want to change this behavior.
+          sendMessage(message, connection);
+      }
+  }
+
+  public void sendMessage(String message, WebSocketClientConnection connection) {
+      LOG.info(\\"Processing sendMessage type message: \\" + message);
+      // TODO: implement processing logic for sendMessage
+  }"
+`;
+
+exports[`OnTextMessageHandler component (integration with AsyncAPI document) renders handler with if-else-if chain for multiple send operations 1`] = `
+"@OnTextMessage
+  public void handleTextMessage(String message, WebSocketClientConnection connection) {
+      LOG.info(\\"Handler received text message: \\" + message);
+      if (message != null && message.contains(\\"sendMessage\\")) {
+          sendMessage(message, connection);
+      }
+      else if (message != null && message.contains(\\"sendNotification\\")) {
+          sendNotification(message, connection);
+      }
+      else {
+          LOG.warn(\\"Handler received unrecognized message type. Falling back to default handler.\\");
+          // Note: By default, we route unrecognized messages to the first operation handler.
+          // Depending on your business logic, you may want to change this behavior.
+          sendMessage(message, connection);
+      }
+  }
+
+  public void sendMessage(String message, WebSocketClientConnection connection) {
+      LOG.info(\\"Processing sendMessage type message: \\" + message);
+      // TODO: implement processing logic for sendMessage
+  }
+
+  public void sendNotification(String message, WebSocketClientConnection connection) {
+      LOG.info(\\"Processing sendNotification type message: \\" + message);
+      // TODO: implement processing logic for sendNotification
+  }"
+`;

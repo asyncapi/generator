@@ -59,6 +59,15 @@ function runCommonTests(language, config) {
       await generateAndVerifyClient(config.template, outputPath, asyncapiPath, params);
     });
   });
+
+  describe('When required server param is missing', () => {
+    it('should throw an error when server param is missing during client generation', async () => {
+      const generator = new Generator(config.template, config.testResultPath, {
+        forceWrite: true,
+      });
+      await expect(generator.generateFromFile(asyncapi_v3_path_hoppscotch)).rejects.toThrow('This template requires the following missing params: server');
+    });
+  });
 }
 
 function runCommonSlackTests(language, config) {

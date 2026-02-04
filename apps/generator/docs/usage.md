@@ -40,29 +40,29 @@ asyncapi generate fromTemplate asyncapi.yaml @asyncapi/html-template
 
 **The shortest possible syntax:**
 ```bash
-asyncapi generate fromTemplate asyncapi.yaml @asyncapi/html-template@3.0.0 
+asyncapi generate fromTemplate asyncapi.yaml @asyncapi/html-template@3.5.4
 ```
 
 **Generating from a URL:**
 ```bash
-asyncapi generate fromTemplate https://bit.ly/asyncapi @asyncapi/html-template@3.0.0 
+asyncapi generate fromTemplate https://bit.ly/asyncapi @asyncapi/html-template@3.5.4 
 ```
 
 **Specify where to put the result:**
 ```bash
-asyncapi generate fromTemplate asyncapi.yaml @asyncapi/html-template@3.0.0 -o ./docs
+asyncapi generate fromTemplate asyncapi.yaml @asyncapi/html-template@3.5.4 -o ./docs
 ```
 
 **Passing parameters to templates:**
 ```bash
-asyncapi generate fromTemplate asyncapi.yaml @asyncapi/html-template@3.0.0  -o ./docs -p title='Hello from param'
+asyncapi generate fromTemplate asyncapi.yaml @asyncapi/html-template@3.5.4  -o ./docs -p title='Hello from param'
 ```
 
 In the template you can use it like this: ` {{ params.title }}`
 
 **Disabling the hooks:**
 ```bash
-asyncapi generate fromTemplate asyncapi.yaml @asyncapi/html-template@3.0.0 -o ./docs -d generate:before generate:after=foo,bar
+asyncapi generate fromTemplate asyncapi.yaml @asyncapi/html-template@3.5.4 -o ./docs -d generate:before generate:after=foo,bar
 ```
 
 The generator skips all hooks of the `generate:before` type and `foo`, `bar` hooks of the `generate:after` type.
@@ -104,7 +104,7 @@ docker run --rm -it \
    --user=root \
    -v ${PWD}/test/fixtures/asyncapi_v1.yml:/app/asyncapi.yml \
    -v ${PWD}/output:/app/output \
-   asyncapi/cli generate fromTemplate -o /app/output /app/asyncapi.yml @asyncapi/html-template@3.0.0 --force-write
+   asyncapi/cli generate fromTemplate -o /app/output /app/asyncapi.yml @asyncapi/html-template@3.5.4 --force-write
 ```
 Note: Use ``` ` ``` instead of `\` for Windows.
 
@@ -115,7 +115,7 @@ Note: Use ``` ` ``` instead of `\` for Windows.
 Use the following npx command on your terminal:
 
 ```bash
-npx -p @asyncapi/cli asyncapi generate fromTemplate ./asyncapi.yaml @asyncapi/html-template@3.0.0 
+npx -p @asyncapi/cli asyncapi generate fromTemplate ./asyncapi.yaml @asyncapi/html-template@3.5.4 
 ```
 
 ## Using as a module/package

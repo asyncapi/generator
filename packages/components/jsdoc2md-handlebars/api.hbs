@@ -3,7 +3,6 @@ title: Reusable Components API
 weight: 77
 ---
 
-<!-- markdownlint-disable MD024 -->
 ## Components
 
 <dl>
@@ -11,11 +10,13 @@ weight: 77
   <dt>
     <a href="#{{name}}">{{name}}</a>
     {{#if returns.length}}
-      ⇒ <code>{{{escapeType returns.[0].type.names.[0]}}}</code>
+      ⇒ `{{{escapeBracesOnly returns.[0].type.names.[0]}}}`
     {{/if}}
   </dt>
   <dd>
-    <p>{{description}}</p>
+
+{{{description}}}
+
   </dd> 
 {{/functions}}
 </dl>
@@ -33,7 +34,7 @@ weight: 77
 | Name | Type | Description |
 |------|------|-------------|
 {{#each params}}
-| {{name}} | <code>{{{escapeType type.names.[0]}}}</code> | {{description}} |
+| {{name}} | `{{{escapeBracesOnly type.names.[0]}}}` | {{description}} |
 {{/each}}
 
 {{/if}}
@@ -43,7 +44,7 @@ weight: 77
 ### Returns
 
 {{#each returns}}
-- **{{{escapeType type.names.[0]}}}**{{#if description}} - {{description}}{{/if}}
+- **`{{{escapeBracesOnly type.names.[0]}}}`**{{#if description}} - {{description}}{{/if}}
 {{/each}}
 
 {{/if}}

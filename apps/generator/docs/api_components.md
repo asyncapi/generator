@@ -3,176 +3,221 @@ title: Reusable Components API
 weight: 77
 ---
 
-<!-- markdownlint-disable MD024 -->
 ## Components
 
 <dl>
   <dt>
     <a href="#CloseConnection">CloseConnection</a>
-      ⇒ <code>JSX.Element</code>
+      ⇒ `JSX.Element`
   </dt>
   <dd>
-    <p>Renders a WebSocket close connection method with optional pre- and post-execution logic.</p>
+
+Renders a WebSocket close connection method with optional pre- and post-execution logic.
+
   </dd> 
   <dt>
     <a href="#Connect">Connect</a>
-      ⇒ <code>JSX.Element</code>
+      ⇒ `JSX.Element`
   </dt>
   <dd>
-    <p>Renders a WebSocket connection method for the specified programming language.</p>
+
+Renders a WebSocket connection method for the specified programming language.
+
   </dd> 
   <dt>
     <a href="#DependencyProvider">DependencyProvider</a>
-      ⇒ <code>JSX.Element</code>
+      ⇒ `JSX.Element`
   </dt>
   <dd>
-    <p>Renders the top-of-file dependency statements for the selected programming language.</p>
+
+Renders the top-of-file dependency statements for the selected programming language.
+
   </dd> 
   <dt>
     <a href="#FileHeaderInfo">FileHeaderInfo</a>
-      ⇒ <code>JSX.Element</code>
+      ⇒ `JSX.Element`
   </dt>
   <dd>
-    <p>Renders a file header with metadata information such as title, version, protocol, host, and path.</p>
+
+Renders a file header with metadata information such as title, version, protocol, host, and path.
+
   </dd> 
   <dt>
     <a href="#HandleMessage">HandleMessage</a>
-      ⇒ <code>JSX.Element</code>
+      ⇒ `JSX.Element`
   </dt>
   <dd>
-    <p>Renders a WebSocket message handler method with optional pre- and post-execution logic.</p>
+
+Renders a WebSocket message handler method with optional pre- and post-execution logic.
+
   </dd> 
   <dt>
     <a href="#MethodGenerator">MethodGenerator</a>
-      ⇒ <code>JSX.Element</code>
+      ⇒ `JSX.Element`
   </dt>
   <dd>
-    <p>Renders a language-specific formatted method definition.</p>
+
+Renders a language-specific formatted method definition.
+
   </dd> 
   <dt>
     <a href="#Models">Models</a>
-      ⇒ <code>Array.&lt;File&gt;</code>
+      ⇒ `Array.<File>`
   </dt>
   <dd>
-    <p>Renders an array of model files based on the AsyncAPI document.</p>
+
+Renders an array of model files based on the AsyncAPI document.
+
   </dd> 
   <dt>
     <a href="#OnClose">OnClose</a>
-      ⇒ <code>JSX.Element</code>
+      ⇒ `JSX.Element`
   </dt>
   <dd>
-    <p>Renders a WebSocket onClose event handler for the specified programming language.</p>
+
+Renders a WebSocket onClose event handler for the specified programming language.
+
   </dd> 
   <dt>
     <a href="#OnError">OnError</a>
-      ⇒ <code>JSX.Element</code>
+      ⇒ `JSX.Element`
   </dt>
   <dd>
-    <p>Renders a WebSocket onError event handler for the specified programming language.</p>
+
+Renders a WebSocket onError event handler for the specified programming language.
+
   </dd> 
   <dt>
     <a href="#OnMessage">OnMessage</a>
-      ⇒ <code>JSX.Element</code>
+      ⇒ `JSX.Element`
   </dt>
   <dd>
-    <p>Renders a WebSocket onMessage event handler for the specified programming language.</p>
+
+Renders a WebSocket onMessage event handler for the specified programming language.
+
   </dd> 
   <dt>
     <a href="#OnOpen">OnOpen</a>
-      ⇒ <code>JSX.Element</code>
+      ⇒ `JSX.Element`
   </dt>
   <dd>
-    <p>Renders a WebSocket onOpen event handler for the specified programming language.</p>
+
+Renders a WebSocket onOpen event handler for the specified programming language.
+
   </dd> 
   <dt>
     <a href="#QueryParamsVariables">QueryParamsVariables</a>
-      ⇒ <code>Array.&lt;JSX.Element&gt;</code>
+      ⇒ `Array.<JSX.Element>`
   </dt>
   <dd>
-    <p>Renders query parameter variables code blocks.</p>
+
+Renders query parameter variables code blocks.
+
   </dd> 
   <dt>
     <a href="#AvailableOperations">AvailableOperations</a>
-      ⇒ <code>JSX.Element</code>
+      ⇒ `JSX.Element`
   </dt>
   <dd>
-    <p>Renders a list of AsyncAPI operations with their headers and message examples.</p>
+
+Renders a list of AsyncAPI operations with their headers and message examples.
+
   </dd> 
   <dt>
     <a href="#CoreMethods">CoreMethods</a>
-      ⇒ <code>JSX.Element</code>
+      ⇒ `JSX.Element`
   </dt>
   <dd>
-    <p>Renders a list of core WebSocket client methods for a given target language.</p>
+
+Renders a list of core WebSocket client methods for a given target language.
+
   </dd> 
   <dt>
     <a href="#Installation">Installation</a>
-      ⇒ <code>JSX.Element</code>
+      ⇒ `JSX.Element`
   </dt>
   <dd>
-    <p>Renders the Installation Command for a given language.</p>
+
+Renders the Installation Command for a given language.
+
   </dd> 
   <dt>
     <a href="#MessageExamples">MessageExamples</a>
-      ⇒ <code>JSX.Element</code>
+      ⇒ `JSX.Element`
   </dt>
   <dd>
-    <p>Renders Message Examples of a given AsyncAPI operation.</p>
+
+Renders Message Examples of a given AsyncAPI operation.
+
   </dd> 
   <dt>
     <a href="#OperationHeader">OperationHeader</a>
-      ⇒ <code>JSX.Element</code>
+      ⇒ `JSX.Element`
   </dt>
   <dd>
-    <p>Renders a header section for a single AsyncAPI operation.</p>
+
+Renders a header section for a single AsyncAPI operation.
+
   </dd> 
   <dt>
     <a href="#Overview">Overview</a>
-      ⇒ <code>JSX.Element</code>
+      ⇒ `JSX.Element`
   </dt>
   <dd>
-    <p>Renders an overview section for a WebSocket client.
-Displays the API description, version, and server URL.</p>
+
+Renders an overview section for a WebSocket client.
+Displays the API description, version, and server URL.
+
   </dd> 
   <dt>
     <a href="#Readme">Readme</a>
-      ⇒ <code>JSX.Element</code>
+      ⇒ `JSX.Element`
   </dt>
   <dd>
-    <p>Renders a README.md file for a given AsyncAPI document.
+
+Renders a README.md file for a given AsyncAPI document.
 
 Composes multiple sections (overview, installation, usage, core methods,
 and available operations) into a single File component based on the
-provided AsyncAPI document, generator parameters, and target language.</p>
+provided AsyncAPI document, generator parameters, and target language.
+
   </dd> 
   <dt>
     <a href="#Usage">Usage</a>
-      ⇒ <code>JSX.Element</code>
+      ⇒ `JSX.Element`
   </dt>
   <dd>
-    <p>Renders a usage example snippet for a generated WebSocket client in a given language.</p>
+
+Renders a usage example snippet for a generated WebSocket client in a given language.
+
   </dd> 
   <dt>
     <a href="#RegisterErrorHandler">RegisterErrorHandler</a>
-      ⇒ <code>JSX.Element</code>
+      ⇒ `JSX.Element`
   </dt>
   <dd>
-    <p>Renders a WebSocket error handler registration method with optional pre- and post-execution logic.</p>
+
+Renders a WebSocket error handler registration method with optional pre- and post-execution logic.
+
   </dd> 
   <dt>
     <a href="#RegisterMessageHandler">RegisterMessageHandler</a>
-      ⇒ <code>JSX.Element</code>
+      ⇒ `JSX.Element`
   </dt>
   <dd>
-    <p>Renders a WebSocket message handler registration method with optional pre- and post-execution logic.</p>
+
+Renders a WebSocket message handler registration method with optional pre- and post-execution logic.
+
   </dd> 
   <dt>
     <a href="#SendOperations">SendOperations</a>
-      ⇒ <code>Array.&lt;JSX.Element&gt;</code>
+      ⇒ `Array.<JSX.Element>`
   </dt>
   <dd>
-    <p>Renders WebSocket send operation methods.
-Generates both static and instance methods for sending messages through WebSocket connections.</p>
+
+Renders WebSocket send operation methods.
+Generates both static and instance methods for sending messages through WebSocket connections.
+
   </dd> 
 </dl>
 
@@ -186,20 +231,20 @@ Renders a WebSocket close connection method with optional pre- and post-executio
 
 | Name | Type | Description |
 |------|------|-------------|
-| props | <code>Object</code> | Component props. |
-| props.language | <code>Language</code> | Programming language used for method formatting. |
-| props.framework | <code>string</code> | Framework used, if any (e.g., &#x27;quarkus&#x27; for Java). |
-| props.methodName | <code>string</code> | Name of the method to generate. |
-| props.methodParams | <code>Array.&lt;string&gt;</code> | List of parameters for the method. |
-| props.preExecutionCode | <code>string</code> | Code to insert before the main function logic. |
-| props.postExecutionCode | <code>string</code> | Code to insert after the main function logic. |
-| props.indent | <code>number</code> | Indentation level for the method block. |
+| props | `Object` | Component props. |
+| props.language | `Language` | Programming language used for method formatting. |
+| props.framework | `string` | Framework used, if any (e.g., &#x27;quarkus&#x27; for Java). |
+| props.methodName | `string` | Name of the method to generate. |
+| props.methodParams | `Array.<string>` | List of parameters for the method. |
+| props.preExecutionCode | `string` | Code to insert before the main function logic. |
+| props.postExecutionCode | `string` | Code to insert after the main function logic. |
+| props.indent | `number` | Indentation level for the method block. |
 
 
 
 ### Returns
 
-- **JSX.Element** - A Text component that contains method block with appropriate formatting.
+- **`JSX.Element`** - A Text component that contains method block with appropriate formatting.
 
 
 
@@ -242,15 +287,15 @@ Renders a WebSocket connection method for the specified programming language.
 
 | Name | Type | Description |
 |------|------|-------------|
-| props | <code>Object</code> | Component props. |
-| props.language | <code>Language</code> | The programming language for which to generate connection code. |
-| props.title | <code>string</code> | The title of the WebSocket server. |
+| props | `Object` | Component props. |
+| props.language | `Language` | The programming language for which to generate connection code. |
+| props.title | `string` | The title of the WebSocket server. |
 
 
 
 ### Returns
 
-- **JSX.Element** - A Text component containing the generated WebSocket connection code for the specified language.
+- **`JSX.Element`** - A Text component containing the generated WebSocket connection code for the specified language.
 
 
 
@@ -283,17 +328,17 @@ Renders the top-of-file dependency statements for the selected programming langu
 
 | Name | Type | Description |
 |------|------|-------------|
-| props | <code>Object</code> | Component props. |
-| props.language | <code>Language</code> | The programming language for which to render dependency statements. |
-| props.framework | <code>string</code> | The framework (e.g., &#x27;quarkus&#x27; for Java). |
-| props.role | <code>string</code> | The role (e.g., &#x27;client&#x27;, &#x27;connector&#x27; for Java). |
-| props.additionalDependencies | <code>Array.&lt;string&gt;</code> | Optional additional dependencies to include. |
+| props | `Object` | Component props. |
+| props.language | `Language` | The programming language for which to render dependency statements. |
+| props.framework | `string` | The framework (e.g., &#x27;quarkus&#x27; for Java). |
+| props.role | `string` | The role (e.g., &#x27;client&#x27;, &#x27;connector&#x27; for Java). |
+| props.additionalDependencies | `Array.<string>` | Optional additional dependencies to include. |
 
 
 
 ### Returns
 
-- **JSX.Element** - A Text component that contains list of import/require statements.
+- **`JSX.Element`** - A Text component that contains list of import/require statements.
 
 
 
@@ -329,16 +374,16 @@ Renders a file header with metadata information such as title, version, protocol
 
 | Name | Type | Description |
 |------|------|-------------|
-| props | <code>Object</code> | Component props. |
-| props.info | <code>Object</code> | Info object from the AsyncAPI document. |
-| props.server | <code>Object</code> | Server object from the AsyncAPI document. |
-| props.language | <code>Language</code> | Programming language used for comment formatting. |
+| props | `Object` | Component props. |
+| props.info | `Object` | Info object from the AsyncAPI document. |
+| props.server | `Object` | Server object from the AsyncAPI document. |
+| props.language | `Language` | Programming language used for comment formatting. |
 
 
 
 ### Returns
 
-- **JSX.Element** - A Text component that contains file header.
+- **`JSX.Element`** - A Text component that contains file header.
 
 
 
@@ -381,19 +426,19 @@ Renders a WebSocket message handler method with optional pre- and post-execution
 
 | Name | Type | Description |
 |------|------|-------------|
-| props | <code>Object</code> | Component props. |
-| props.language | <code>Language</code> | Programming language used for method formatting. |
-| props.methodName | <code>string</code> | Name of the method to generate. |
-| props.methodParams | <code>Array.&lt;string&gt;</code> | List of parameters for the method. |
-| props.preExecutionCode | <code>string</code> | Code to insert before the main function logic. |
-| props.postExecutionCode | <code>string</code> | Code to insert after the main function logic. |
-| props.customMethodConfig | <code>Object</code> | Optional overrides for default method configuration. |
+| props | `Object` | Component props. |
+| props.language | `Language` | Programming language used for method formatting. |
+| props.methodName | `string` | Name of the method to generate. |
+| props.methodParams | `Array.<string>` | List of parameters for the method. |
+| props.preExecutionCode | `string` | Code to insert before the main function logic. |
+| props.postExecutionCode | `string` | Code to insert after the main function logic. |
+| props.customMethodConfig | `Object` | Optional overrides for default method configuration. |
 
 
 
 ### Returns
 
-- **JSX.Element** - A Text component that contains method block with appropriate formatting.
+- **`JSX.Element`** - A Text component that contains method block with appropriate formatting.
 
 
 
@@ -439,25 +484,25 @@ Renders a language-specific formatted method definition.
 
 | Name | Type | Description |
 |------|------|-------------|
-| props | <code>Object</code> | Component props. |
-| props.language | <code>Language</code> | Programming language used for method formatting. |
-| props.methodName | <code>string</code> | Name of the method. |
-| props.methodParams | <code>Array.&lt;string&gt;</code> | Method parameters. |
-| props.methodDocs | <code>string</code> | Optional documentation string. |
-| props.methodLogic | <code>string</code> | Core method logic. |
-| props.preExecutionCode | <code>string</code> | Code before main logic. |
-| props.postExecutionCode | <code>string</code> | Code after main logic. |
-| props.indent | <code>number</code> | Indentation for the method block. |
-| props.newLines | <code>number</code> | Number of new lines after method. |
-| props.customMethodConfig | <code>Object</code> | Optional custom syntax configuration for the current language. |
-| props.methodConfig | <code>Record.&lt;Language, ({methodDocs: (string&#124;undefined), methodLogic: (string&#124;undefined)}&#124;Record.&lt;string, {methodDocs: (string&#124;undefined), methodLogic: (string&#124;undefined)}&gt;)&gt;</code> | Language-level or framework-level configuration. |
-| props.framework | <code>string</code> | Framework name for nested configurations (e.g., &#x27;quarkus&#x27; for Java). |
+| props | `Object` | Component props. |
+| props.language | `Language` | Programming language used for method formatting. |
+| props.methodName | `string` | Name of the method. |
+| props.methodParams | `Array.<string>` | Method parameters. |
+| props.methodDocs | `string` | Optional documentation string. |
+| props.methodLogic | `string` | Core method logic. |
+| props.preExecutionCode | `string` | Code before main logic. |
+| props.postExecutionCode | `string` | Code after main logic. |
+| props.indent | `number` | Indentation for the method block. |
+| props.newLines | `number` | Number of new lines after method. |
+| props.customMethodConfig | `Object` | Optional custom syntax configuration for the current language. |
+| props.methodConfig | `Record.<Language, (\{methodDocs: (string|undefined), methodLogic: (string|undefined)\}|Record.<string, \{methodDocs: (string|undefined), methodLogic: (string|undefined)\}>)>` | Language-level or framework-level configuration. |
+| props.framework | `string` | Framework name for nested configurations (e.g., &#x27;quarkus&#x27; for Java). |
 
 
 
 ### Returns
 
-- **JSX.Element** - A Text component that contains method block with appropriate formatting.
+- **`JSX.Element`** - A Text component that contains method block with appropriate formatting.
 
 
 
@@ -506,18 +551,18 @@ Renders an array of model files based on the AsyncAPI document.
 
 | Name | Type | Description |
 |------|------|-------------|
-| props | <code>Object</code> | Component props. |
-| props.asyncapi | <code>AsyncAPIDocumentInterface</code> | Parsed AsyncAPI document object. |
-| props.language | <code>Language</code> | Target programming language for the generated models. |
-| props.format | <code>Format</code> | Naming format for generated files. |
-| props.presets | <code>Object</code> | Custom presets for the generator instance. |
-| props.constraints | <code>Object</code> | Custom constraints for the generator instance. |
+| props | `Object` | Component props. |
+| props.asyncapi | `AsyncAPIDocumentInterface` | Parsed AsyncAPI document object. |
+| props.language | `Language` | Target programming language for the generated models. |
+| props.format | `Format` | Naming format for generated files. |
+| props.presets | `Object` | Custom presets for the generator instance. |
+| props.constraints | `Object` | Custom constraints for the generator instance. |
 
 
 
 ### Returns
 
-- **Array.&lt;File&gt;** - Array of File components with generated model content.
+- **`Array.<File>`** - Array of File components with generated model content.
 
 
 
@@ -560,16 +605,16 @@ Renders a WebSocket onClose event handler for the specified programming language
 
 | Name | Type | Description |
 |------|------|-------------|
-| props | <code>Object</code> | Component props. |
-| props.language | <code>Language</code> | The programming language for which to generate onClose handler code. |
-| props.framework | <code>string</code> | Framework variant; required for framework-specific languages (e.g., &#x27;quarkus&#x27; for java). |
-| props.title | <code>string</code> | The title of the WebSocket server. |
+| props | `Object` | Component props. |
+| props.language | `Language` | The programming language for which to generate onClose handler code. |
+| props.framework | `string` | Framework variant; required for framework-specific languages (e.g., &#x27;quarkus&#x27; for java). |
+| props.title | `string` | The title of the WebSocket server. |
 
 
 
 ### Returns
 
-- **JSX.Element** - A Text component containing the onClose handler code for the specified language.
+- **`JSX.Element`** - A Text component containing the onClose handler code for the specified language.
 
 
 
@@ -604,14 +649,14 @@ Renders a WebSocket onError event handler for the specified programming language
 
 | Name | Type | Description |
 |------|------|-------------|
-| props | <code>Object</code> | Component props. |
-| props.language | <code>Language</code> | The programming language for which to generate onError handler code. |
+| props | `Object` | Component props. |
+| props.language | `Language` | The programming language for which to generate onError handler code. |
 
 
 
 ### Returns
 
-- **JSX.Element** - A Text component containing the onError handler code for the specified language.
+- **`JSX.Element`** - A Text component containing the onError handler code for the specified language.
 
 
 
@@ -640,14 +685,14 @@ Renders a WebSocket onMessage event handler for the specified programming langua
 
 | Name | Type | Description |
 |------|------|-------------|
-| props | <code>Object</code> | Component props. |
-| props.language | <code>Language</code> | The programming language for which to generate onMessage handler code. |
+| props | `Object` | Component props. |
+| props.language | `Language` | The programming language for which to generate onMessage handler code. |
 
 
 
 ### Returns
 
-- **JSX.Element** - A Text component containing the onMessage handler code for the specified language.
+- **`JSX.Element`** - A Text component containing the onMessage handler code for the specified language.
 
 
 
@@ -676,16 +721,16 @@ Renders a WebSocket onOpen event handler for the specified programming language.
 
 | Name | Type | Description |
 |------|------|-------------|
-| props | <code>Object</code> | Component props. |
-| props.language | <code>Language</code> | The programming language for which to generate onOpen handler code. |
-| props.framework | <code>string</code> | Optional framework variant (e.g., &#x27;quarkus&#x27; for java). |
-| props.title | <code>string</code> | The title of the WebSocket server. |
+| props | `Object` | Component props. |
+| props.language | `Language` | The programming language for which to generate onOpen handler code. |
+| props.framework | `string` | Optional framework variant (e.g., &#x27;quarkus&#x27; for java). |
+| props.title | `string` | The title of the WebSocket server. |
 
 
 
 ### Returns
 
-- **JSX.Element** - A Text component containing the onOpen handler code for the specified language.
+- **`JSX.Element`** - A Text component containing the onOpen handler code for the specified language.
 
 
 
@@ -720,16 +765,16 @@ Renders query parameter variables code blocks.
 
 | Name | Type | Description |
 |------|------|-------------|
-| props | <code>Object</code> | Component props. |
-| props.language | <code>Language</code> | The target programming language. |
-| props.framework | <code>string</code> | Optional framework for the language. |
-| props.queryParams | <code>Array.&lt;Array.&lt;string&gt;&gt;</code> | Array of query parameters, each represented as [paramName, paramType?]. |
+| props | `Object` | Component props. |
+| props.language | `Language` | The target programming language. |
+| props.framework | `string` | Optional framework for the language. |
+| props.queryParams | `Array.<Array.<string>>` | Array of query parameters, each represented as [paramName, paramType?]. |
 
 
 
 ### Returns
 
-- **Array.&lt;JSX.Element&gt;** - Array of Text components for each query parameter, or null if queryParams is invalid.
+- **`Array.<JSX.Element>`** - Array of Text components for each query parameter, or null if queryParams is invalid.
 
 
 
@@ -779,14 +824,14 @@ Renders a list of AsyncAPI operations with their headers and message examples.
 
 | Name | Type | Description |
 |------|------|-------------|
-| props | <code>Object</code> | Component Props |
-| props.operations | <code>Array.&lt;Object&gt;</code> | Array of AsyncAPI Operation objects. |
+| props | `Object` | Component Props |
+| props.operations | `Array.<Object>` | Array of AsyncAPI Operation objects. |
 
 
 
 ### Returns
 
-- **JSX.Element** - A Component containing rendered operations, or null if no operations are provided
+- **`JSX.Element`** - A Component containing rendered operations, or null if no operations are provided
 
 
 
@@ -824,14 +869,14 @@ Renders a list of core WebSocket client methods for a given target language.
 
 | Name | Type | Description |
 |------|------|-------------|
-| props | <code>Object</code> | Component props |
-| props.language | <code>Language</code> | Target language used to select method names. |
+| props | `Object` | Component props |
+| props.language | `Language` | Target language used to select method names. |
 
 
 
 ### Returns
 
-- **JSX.Element** - A Text component that contains a list of core client methods.
+- **`JSX.Element`** - A Text component that contains a list of core client methods.
 
 
 
@@ -860,14 +905,14 @@ Renders the Installation Command for a given language.
 
 | Name | Type | Description |
 |------|------|-------------|
-| props | <code>Object</code> | Component props |
-| props.language | <code>Language</code> | The programming language for which to generate Installation Command. |
+| props | `Object` | Component props |
+| props.language | `Language` | The programming language for which to generate Installation Command. |
 
 
 
 ### Returns
 
-- **JSX.Element** - A Text component that contains Installation Command.
+- **`JSX.Element`** - A Text component that contains Installation Command.
 
 
 
@@ -896,14 +941,14 @@ Renders Message Examples of a given AsyncAPI operation.
 
 | Name | Type | Description |
 |------|------|-------------|
-| props | <code>Object</code> | Component Props |
-| props.operation | <code>Object</code> | An AsyncAPI Operation object. |
+| props | `Object` | Component Props |
+| props.operation | `Object` | An AsyncAPI Operation object. |
 
 
 
 ### Returns
 
-- **JSX.Element** - A Text component that contains message examples, or null when no examples exist.
+- **`JSX.Element`** - A Text component that contains message examples, or null when no examples exist.
 
 
 
@@ -944,14 +989,14 @@ Renders a header section for a single AsyncAPI operation.
 
 | Name | Type | Description |
 |------|------|-------------|
-| props | <code>Object</code> | Component properties. |
-| props.operation | <code>Object</code> | An AsyncAPI Operation object. |
+| props | `Object` | Component properties. |
+| props.operation | `Object` | An AsyncAPI Operation object. |
 
 
 
 ### Returns
 
-- **JSX.Element** - A Text component that contains formatted operation header.
+- **`JSX.Element`** - A Text component that contains formatted operation header.
 
 
 
@@ -993,16 +1038,16 @@ Displays the API description, version, and server URL.
 
 | Name | Type | Description |
 |------|------|-------------|
-| props | <code>Object</code> | Component props |
-| props.info | <code>Object</code> | Info object from the AsyncAPI document. |
-| props.title | <code>string</code> | Title from the AsyncAPI document. |
-| props.serverUrl | <code>string</code> | ServerUrl from a specific server from the AsyncAPI document. |
+| props | `Object` | Component props |
+| props.info | `Object` | Info object from the AsyncAPI document. |
+| props.title | `string` | Title from the AsyncAPI document. |
+| props.serverUrl | `string` | ServerUrl from a specific server from the AsyncAPI document. |
 
 
 
 ### Returns
 
-- **JSX.Element** - A Text component that contains the Overview of a Websocket client.
+- **`JSX.Element`** - A Text component that contains the Overview of a Websocket client.
 
 
 
@@ -1054,16 +1099,16 @@ provided AsyncAPI document, generator parameters, and target language.
 
 | Name | Type | Description |
 |------|------|-------------|
-| props | <code>Object</code> | Component props |
-| props.asyncapi | <code>AsyncAPIDocumentInterface</code> | Parsed AsyncAPI document instance. |
-| props.params | <code>Object</code> | Generator parameters used to customize output |
-| props.language | <code>Language</code> | Target language used to render language-specific sections. |
+| props | `Object` | Component props |
+| props.asyncapi | `AsyncAPIDocumentInterface` | Parsed AsyncAPI document instance. |
+| props.params | `Object` | Generator parameters used to customize output |
+| props.language | `Language` | Target language used to render language-specific sections. |
 
 
 
 ### Returns
 
-- **JSX.Element** - A File component representing the generated README.md.
+- **`JSX.Element`** - A File component representing the generated README.md.
 
 
 
@@ -1109,16 +1154,16 @@ Renders a usage example snippet for a generated WebSocket client in a given lang
 
 | Name | Type | Description |
 |------|------|-------------|
-| props | <code>Object</code> | Component props |
-| props.clientName | <code>string</code> | The exported name of the client. |
-| props.clientFileName | <code>string</code> | The file name where the client is defined. |
-| props.language | <code>Language</code> | The target language for which to render the usage snippet |
+| props | `Object` | Component props |
+| props.clientName | `string` | The exported name of the client. |
+| props.clientFileName | `string` | The file name where the client is defined. |
+| props.language | `Language` | The target language for which to render the usage snippet |
 
 
 
 ### Returns
 
-- **JSX.Element** - A Text component containing a formatted usage example snippet.
+- **`JSX.Element`** - A Text component containing a formatted usage example snippet.
 
 
 
@@ -1153,19 +1198,19 @@ Renders a WebSocket error handler registration method with optional pre- and pos
 
 | Name | Type | Description |
 |------|------|-------------|
-| props | <code>Object</code> | Component props. |
-| props.language | <code>Language</code> | Programming language used for method formatting. |
-| props.methodName | <code>string</code> | Name of the method to generate. |
-| props.methodParams | <code>Array.&lt;string&gt;</code> | List of parameters for the method. |
-| props.preExecutionCode | <code>string</code> | Code to insert before the main function logic. |
-| props.postExecutionCode | <code>string</code> | Code to insert after the main function logic. |
-| props.customMethodConfig | <code>Object</code> | Optional overrides for default method configuration. |
+| props | `Object` | Component props. |
+| props.language | `Language` | Programming language used for method formatting. |
+| props.methodName | `string` | Name of the method to generate. |
+| props.methodParams | `Array.<string>` | List of parameters for the method. |
+| props.preExecutionCode | `string` | Code to insert before the main function logic. |
+| props.postExecutionCode | `string` | Code to insert after the main function logic. |
+| props.customMethodConfig | `Object` | Optional overrides for default method configuration. |
 
 
 
 ### Returns
 
-- **JSX.Element** - A Text component that contains method block with appropriate formatting.
+- **`JSX.Element`** - A Text component that contains method block with appropriate formatting.
 
 
 
@@ -1206,18 +1251,18 @@ Renders a WebSocket message handler registration method with optional pre- and p
 
 | Name | Type | Description |
 |------|------|-------------|
-| props | <code>Object</code> | Component props. |
-| props.language | <code>Language</code> | Programming language used for method formatting. |
-| props.methodName | <code>string</code> | Name of the method to generate. |
-| props.methodParams | <code>Array.&lt;string&gt;</code> | List of parameters for the method. |
-| props.preExecutionCode | <code>string</code> | Code to insert before the main function logic. |
-| props.postExecutionCode | <code>string</code> | Code to insert after the main function logic. |
+| props | `Object` | Component props. |
+| props.language | `Language` | Programming language used for method formatting. |
+| props.methodName | `string` | Name of the method to generate. |
+| props.methodParams | `Array.<string>` | List of parameters for the method. |
+| props.preExecutionCode | `string` | Code to insert before the main function logic. |
+| props.postExecutionCode | `string` | Code to insert after the main function logic. |
 
 
 
 ### Returns
 
-- **JSX.Element** - A Text component that contains method block with appropriate formatting.
+- **`JSX.Element`** - A Text component that contains method block with appropriate formatting.
 
 
 
@@ -1257,16 +1302,16 @@ Generates both static and instance methods for sending messages through WebSocke
 
 | Name | Type | Description |
 |------|------|-------------|
-| props | <code>Object</code> | Component props. |
-| props.language | <code>Language</code> | The target programming language. |
-| props.sendOperations | <code>Array.&lt;Object&gt;</code> | Array of send operations from AsyncAPI document. |
-| props.clientName | <code>string</code> | The name of the client class. |
+| props | `Object` | Component props. |
+| props.language | `Language` | The target programming language. |
+| props.sendOperations | `Array.<Object>` | Array of send operations from AsyncAPI document. |
+| props.clientName | `string` | The name of the client class. |
 
 
 
 ### Returns
 
-- **Array.&lt;JSX.Element&gt;** - Array of Text components for static and non-static WebSocket send operation methods, or null if no send operations are provided.
+- **`Array.<JSX.Element>`** - Array of Text components for static and non-static WebSocket send operation methods, or null if no send operations are provided.
 
 
 

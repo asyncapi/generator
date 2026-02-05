@@ -1,3 +1,8 @@
+---
+title: Reusable Components API
+weight: 77
+---
+
 <!-- markdownlint-disable MD024 -->
 ## Components
 
@@ -29,12 +34,6 @@
   </dt>
   <dd>
     <p>Renders a file header with metadata information such as title, version, protocol, host, and path.</p>
-  </dd> 
-  <dt>
-    <a href="#ownKeys">ownKeys</a>
-  </dt>
-  <dd>
-    <p>Configuration for WebSocket message handler method logic per language.</p>
   </dd> 
   <dt>
     <a href="#HandleMessage">HandleMessage</a>
@@ -154,23 +153,11 @@ provided AsyncAPI document, generator parameters, and target language.</p>
     <p>Renders a usage example snippet for a generated WebSocket client in a given language.</p>
   </dd> 
   <dt>
-    <a href="#ownKeys">ownKeys</a>
-  </dt>
-  <dd>
-    <p>Configuration for WebSocket error handler registration method logic per language.</p>
-  </dd> 
-  <dt>
     <a href="#RegisterErrorHandler">RegisterErrorHandler</a>
       ⇒ <code>JSX.Element</code>
   </dt>
   <dd>
     <p>Renders a WebSocket error handler registration method with optional pre- and post-execution logic.</p>
-  </dd> 
-  <dt>
-    <a href="#ownKeys">ownKeys</a>
-  </dt>
-  <dd>
-    <p>Configuration for WebSocket message handler registration method logic per language.</p>
   </dd> 
   <dt>
     <a href="#RegisterMessageHandler">RegisterMessageHandler</a>
@@ -382,14 +369,6 @@ async function renderFileHeader() {
 
 renderFileHeader().catch(console.error);
 ```
-
-
-
-<a name="ownKeys"></a>
-## **ownKeys()** 
-Configuration for WebSocket message handler method logic per language.
-
-
 
 
 
@@ -1165,14 +1144,6 @@ renderUsage();
 
 
 
-<a name="ownKeys"></a>
-## **ownKeys()** 
-Configuration for WebSocket error handler registration method logic per language.
-
-
-
-
-
 <a name="RegisterErrorHandler"></a>
 ## **RegisterErrorHandler()** 
 Renders a WebSocket error handler registration method with optional pre- and post-execution logic.
@@ -1223,14 +1194,6 @@ function renderRegisterErrorHandler() {
 
 renderRegisterErrorHandler();
 ```
-
-
-
-<a name="ownKeys"></a>
-## **ownKeys()** 
-Configuration for WebSocket message handler registration method logic per language.
-
-
 
 
 

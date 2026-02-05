@@ -10,7 +10,7 @@ weight: 77
   <dt>
     <a href="#{{name}}">{{name}}</a>
     {{#if returns.length}}
-      ⇒ `{{{escapeBracesOnly returns.[0].type.names.[0]}}}`
+      ⇒ `{{{escapeType returns.[0].type.names.[0]}}}`
     {{/if}}
   </dt>
   <dd>
@@ -34,7 +34,7 @@ weight: 77
 | Name | Type | Description |
 |------|------|-------------|
 {{#each params}}
-| {{name}} | `{{{escapeBracesOnly type.names.[0]}}}` | {{description}} |
+| {{name}} | <code>{{{escapeType type.names.[0]}}}</code> | {{description}} |
 {{/each}}
 
 {{/if}}
@@ -44,7 +44,7 @@ weight: 77
 ### Returns
 
 {{#each returns}}
-- **`{{{escapeBracesOnly type.names.[0]}}}`**{{#if description}} - {{description}}{{/if}}
+- **`{{{escapeType type.names.[0]}}}`**{{#if description}} - {{description}}{{/if}}
 {{/each}}
 
 {{/if}}

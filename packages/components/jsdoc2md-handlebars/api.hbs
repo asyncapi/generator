@@ -7,10 +7,11 @@ weight: 77
 
 <dl>
 {{#functions}}
+  {{#unless (eq name "ownKeys")}}
   <dt>
     <a href="#{{name}}">{{name}}</a>
     {{#if returns.length}}
-      ⇒ `{{{escapeType returns.[0].type.names.[0]}}}`
+      ⇒ <code>{{{escapeType returns.[0].type.names.[0]}}}</code>
     {{/if}}
   </dt>
   <dd>
@@ -18,10 +19,12 @@ weight: 77
 {{{description}}}
 
   </dd> 
+  {{/unless}}
 {{/functions}}
 </dl>
 
 {{#functions}}
+{{#unless (eq name "ownKeys")}}
 
 <a name="{{name}}"></a>
 ## **{{name}}()** 
@@ -61,4 +64,5 @@ weight: 77
 
 {{/if}}
 
+{{/unless}}
 {{/functions}}

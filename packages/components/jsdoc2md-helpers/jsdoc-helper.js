@@ -15,4 +15,10 @@ module.exports = {
       .replace(/\{/g, '&#123;')
       .replace(/\}/g, '&#125;');
   },
+  /**
+  * Equality helper for Handlebars templates
+  */
+  eq(a, b) {
+    return a === b;
+  },
 };

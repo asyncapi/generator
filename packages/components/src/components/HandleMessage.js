@@ -1,15 +1,14 @@
 import { MethodGenerator } from './MethodGenerator';
 
 /**
- * Configuration for WebSocket message handler method logic per language.
- * @type {Record<Language, { methodDocs: string | undefined, methodLogic: string }>}
- */
-
-/**
  * @typedef {'python' | 'javascript' | 'dart'} Language
  * Supported programming languages.
  */
 
+/**
+ * Configuration for WebSocket message handler method logic per language.
+ * @type {Record<Language, { methodDocs: string | undefined, methodLogic: string }>}
+ */
 const websocketHandleMessageConfig = {
   python: {
     methodLogic: `if len(self.message_handlers) == 0:

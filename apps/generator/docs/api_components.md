@@ -6,173 +6,116 @@ weight: 77
 ## Components
 
 <dl>
-  <dt>
-    <a href="#CloseConnection">CloseConnection</a>
-      ⇒ <code>JSX.Element</code>
-  </dt>
+  <dt><a href="#CloseConnection">CloseConnection</a> ⇒ <code>JSX.Element</code></dt>
   <dd>
 
 Renders a WebSocket close connection method with optional pre- and post-execution logic.
 
   </dd> 
-  <dt>
-    <a href="#Connect">Connect</a>
-      ⇒ <code>JSX.Element</code>
-  </dt>
+  <dt><a href="#Connect">Connect</a> ⇒ <code>JSX.Element</code></dt>
   <dd>
 
 Renders a WebSocket connection method for the specified programming language.
 
   </dd> 
-  <dt>
-    <a href="#DependencyProvider">DependencyProvider</a>
-      ⇒ <code>JSX.Element</code>
-  </dt>
+  <dt><a href="#DependencyProvider">DependencyProvider</a> ⇒ <code>JSX.Element</code></dt>
   <dd>
 
 Renders the top-of-file dependency statements for the selected programming language.
 
   </dd> 
-  <dt>
-    <a href="#FileHeaderInfo">FileHeaderInfo</a>
-      ⇒ <code>JSX.Element</code>
-  </dt>
+  <dt><a href="#FileHeaderInfo">FileHeaderInfo</a> ⇒ <code>JSX.Element</code></dt>
   <dd>
 
 Renders a file header with metadata information such as title, version, protocol, host, and path.
 
   </dd> 
-  <dt>
-    <a href="#HandleMessage">HandleMessage</a>
-      ⇒ <code>JSX.Element</code>
-  </dt>
+  <dt><a href="#HandleMessage">HandleMessage</a> ⇒ <code>JSX.Element</code></dt>
   <dd>
 
 Renders a WebSocket message handler method with optional pre- and post-execution logic.
 
   </dd> 
-  <dt>
-    <a href="#MethodGenerator">MethodGenerator</a>
-      ⇒ <code>JSX.Element</code>
-  </dt>
+  <dt><a href="#MethodGenerator">MethodGenerator</a> ⇒ <code>JSX.Element</code></dt>
   <dd>
 
 Renders a language-specific formatted method definition.
 
   </dd> 
-  <dt>
-    <a href="#Models">Models</a>
-      ⇒ <code>Array.&lt;File&gt;</code>
-  </dt>
+  <dt><a href="#Models">Models</a> ⇒ <code>Array.&lt;File&gt;</code></dt>
   <dd>
 
 Renders an array of model files based on the AsyncAPI document.
 
   </dd> 
-  <dt>
-    <a href="#OnClose">OnClose</a>
-      ⇒ <code>JSX.Element</code>
-  </dt>
+  <dt><a href="#OnClose">OnClose</a> ⇒ <code>JSX.Element</code></dt>
   <dd>
 
 Renders a WebSocket onClose event handler for the specified programming language.
 
   </dd> 
-  <dt>
-    <a href="#OnError">OnError</a>
-      ⇒ <code>JSX.Element</code>
-  </dt>
+  <dt><a href="#OnError">OnError</a> ⇒ <code>JSX.Element</code></dt>
   <dd>
 
 Renders a WebSocket onError event handler for the specified programming language.
 
   </dd> 
-  <dt>
-    <a href="#OnMessage">OnMessage</a>
-      ⇒ <code>JSX.Element</code>
-  </dt>
+  <dt><a href="#OnMessage">OnMessage</a> ⇒ <code>JSX.Element</code></dt>
   <dd>
 
 Renders a WebSocket onMessage event handler for the specified programming language.
 
   </dd> 
-  <dt>
-    <a href="#OnOpen">OnOpen</a>
-      ⇒ <code>JSX.Element</code>
-  </dt>
+  <dt><a href="#OnOpen">OnOpen</a> ⇒ <code>JSX.Element</code></dt>
   <dd>
 
 Renders a WebSocket onOpen event handler for the specified programming language.
 
   </dd> 
-  <dt>
-    <a href="#QueryParamsVariables">QueryParamsVariables</a>
-      ⇒ <code>Array.&lt;JSX.Element&gt;</code>
-  </dt>
+  <dt><a href="#QueryParamsVariables">QueryParamsVariables</a> ⇒ <code>Array.&lt;JSX.Element&gt;</code></dt>
   <dd>
 
 Renders query parameter variables code blocks.
 
   </dd> 
-  <dt>
-    <a href="#AvailableOperations">AvailableOperations</a>
-      ⇒ <code>JSX.Element</code>
-  </dt>
+  <dt><a href="#AvailableOperations">AvailableOperations</a> ⇒ <code>JSX.Element</code></dt>
   <dd>
 
 Renders a list of AsyncAPI operations with their headers and message examples.
 
   </dd> 
-  <dt>
-    <a href="#CoreMethods">CoreMethods</a>
-      ⇒ <code>JSX.Element</code>
-  </dt>
+  <dt><a href="#CoreMethods">CoreMethods</a> ⇒ <code>JSX.Element</code></dt>
   <dd>
 
 Renders a list of core WebSocket client methods for a given target language.
 
   </dd> 
-  <dt>
-    <a href="#Installation">Installation</a>
-      ⇒ <code>JSX.Element</code>
-  </dt>
+  <dt><a href="#Installation">Installation</a> ⇒ <code>JSX.Element</code></dt>
   <dd>
 
 Renders the Installation Command for a given language.
 
   </dd> 
-  <dt>
-    <a href="#MessageExamples">MessageExamples</a>
-      ⇒ <code>JSX.Element</code>
-  </dt>
+  <dt><a href="#MessageExamples">MessageExamples</a> ⇒ <code>JSX.Element</code></dt>
   <dd>
 
 Renders Message Examples of a given AsyncAPI operation.
 
   </dd> 
-  <dt>
-    <a href="#OperationHeader">OperationHeader</a>
-      ⇒ <code>JSX.Element</code>
-  </dt>
+  <dt><a href="#OperationHeader">OperationHeader</a> ⇒ <code>JSX.Element</code></dt>
   <dd>
 
 Renders a header section for a single AsyncAPI operation.
 
   </dd> 
-  <dt>
-    <a href="#Overview">Overview</a>
-      ⇒ <code>JSX.Element</code>
-  </dt>
+  <dt><a href="#Overview">Overview</a> ⇒ <code>JSX.Element</code></dt>
   <dd>
 
 Renders an overview section for a WebSocket client.
 Displays the API description, version, and server URL.
 
   </dd> 
-  <dt>
-    <a href="#Readme">Readme</a>
-      ⇒ <code>JSX.Element</code>
-  </dt>
+  <dt><a href="#Readme">Readme</a> ⇒ <code>JSX.Element</code></dt>
   <dd>
 
 Renders a README.md file for a given AsyncAPI document.
@@ -182,37 +125,25 @@ and available operations) into a single File component based on the
 provided AsyncAPI document, generator parameters, and target language.
 
   </dd> 
-  <dt>
-    <a href="#Usage">Usage</a>
-      ⇒ <code>JSX.Element</code>
-  </dt>
+  <dt><a href="#Usage">Usage</a> ⇒ <code>JSX.Element</code></dt>
   <dd>
 
 Renders a usage example snippet for a generated WebSocket client in a given language.
 
   </dd> 
-  <dt>
-    <a href="#RegisterErrorHandler">RegisterErrorHandler</a>
-      ⇒ <code>JSX.Element</code>
-  </dt>
+  <dt><a href="#RegisterErrorHandler">RegisterErrorHandler</a> ⇒ <code>JSX.Element</code></dt>
   <dd>
 
 Renders a WebSocket error handler registration method with optional pre- and post-execution logic.
 
   </dd> 
-  <dt>
-    <a href="#RegisterMessageHandler">RegisterMessageHandler</a>
-      ⇒ <code>JSX.Element</code>
-  </dt>
+  <dt><a href="#RegisterMessageHandler">RegisterMessageHandler</a> ⇒ <code>JSX.Element</code></dt>
   <dd>
 
 Renders a WebSocket message handler registration method with optional pre- and post-execution logic.
 
   </dd> 
-  <dt>
-    <a href="#SendOperations">SendOperations</a>
-      ⇒ <code>Array.&lt;JSX.Element&gt;</code>
-  </dt>
+  <dt><a href="#SendOperations">SendOperations</a> ⇒ <code>Array.&lt;JSX.Element&gt;</code></dt>
   <dd>
 
 Renders WebSocket send operation methods.

@@ -1,6 +1,6 @@
 module.exports = {
 /**
-  * Escapes pipe characters in a JSDoc type string for Markdown output.
+  * Escapes HTML and Markdown-sensitive characters in a JSDoc type string for Markdown output.
   * @param {string|null|undefined} type - Raw JSDoc type string.
   * @returns {string|null|undefined} Escaped string or original falsy value.
   */
@@ -17,7 +17,11 @@ module.exports = {
   },
   /**
   * Equality helper for Handlebars templates
-  */
+  * Strict equality helper for Handlebars templates.
+  * @param {*} a - First value to compare.
+  * @param {*} b - Second value to compare.
+  * @returns {boolean} True if a === b.
+   */
   eq(a, b) {
     return a === b;
   },

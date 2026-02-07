@@ -22,22 +22,22 @@ describe('DefaultConstructorSignature component (integration with AsyncAPI docum
   });
 
   test('renders nothing when queryParams is null', () => {
-    const result = render(<DefaultConstructorSignature clientName="TestClient" queryParams={null} />);
+    const result = render(<DefaultConstructorSignature clientName="WebSocketClient" queryParams={null} />);
     expect(result.trim()).toMatchSnapshot();
   });
 
   test('renders nothing when queryParams is undefined', () => {
-    const result = render(<DefaultConstructorSignature clientName="TestClient" />);
+    const result = render(<DefaultConstructorSignature clientName="WebSocketClient" />);
     expect(result.trim()).toMatchSnapshot();
   });
 
   test('renders nothing when queryParams is empty array', () => {
-    const result = render(<DefaultConstructorSignature clientName="TestClient" queryParams={[]} />);
+    const result = render(<DefaultConstructorSignature clientName="WebSocketClient" queryParams={[]} />);
     expect(result.trim()).toMatchSnapshot();
   });
 
   test('renders default constructor with query parameters from fixture', () => {
-    const result = render(<DefaultConstructorSignature clientName="TestClient" queryParams={queryParamsArray} />);
+    const result = render(<DefaultConstructorSignature clientName="WebSocketClient" queryParams={queryParamsArray} />);
     expect(result.trim()).toMatchSnapshot();
   });
 });

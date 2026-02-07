@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing of Overview component render overview component when serverUrl is missing 1`] = `
+"## Overview
+
+Market data is a public API that streams all the market data on a given symbol.
+
+
+- **Version:** 1.0.0
+- **Server URL:** undefined"
+`;
+
+exports[`Testing of Overview component render overview component when title is missing 1`] = `
+"## Overview
+
+Market data is a public API that streams all the market data on a given symbol.
+
+
+- **Version:** 1.0.0
+- **Server URL:** wss://api.gemini.com"
+`;
+
+exports[`Testing of Overview component render overview component with all parameters 1`] = `
+"## Overview
+
+Market data is a public API that streams all the market data on a given symbol.
+
+
+- **Version:** 1.0.0
+- **Server URL:** wss://api.gemini.com"
+`;

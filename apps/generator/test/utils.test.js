@@ -1,8 +1,13 @@
 /* eslint-disable sonarjs/no-duplicate-string */
-jest.mock('fs/promises', () => ({
-  access: jest.fn(),
+jest.mock('fs', () => ({
+  promises: {
+    stat: jest.fn(),
+  },
+  constants: {
+    F_OK: 0
+  }
 }));
-const fs = require('fs/promises');
+const fs = require('fs');
 const path = require('path');
 const Generator = require('../lib/generator');
 const log = require('loglevel');
@@ -68,23 +73,23 @@ describe('Utils', () => {
 
   describe('#exists', () => {
     afterEach(() => {
-      fs.access.mockClear();
+      fs.promises.stat.mockClear();
     });
 
-    it('should return true when fs access succeeds', async () => {
-       fs.access.mockResolvedValueOnce(undefined);
+    it('should return true when fs promise.stat succeeds', async () => {
+       fs.promises.stat.mockResolvedValueOnce(undefined);
 
         const exists = await utils.exists('/some/file');
         expect(exists).toBe(true);
-        expect(fs.access).toHaveBeenCalledWith('/some/file');
+        expect(fs.promises.stat).toHaveBeenCalledWith('/some/file', fs.constants.F_OK);
     });
 
-    it('should return false when fs access throws', async () => {
-      fs.access.mockRejectedValueOnce(new Error('File not found'));
+    it('should return false when fs promise throws', async () => {
+      fs.promises.stat.mockRejectedValueOnce(new Error('File not found'));
       
        const exists = await utils.exists('/some/missing-file');
        expect(exists).toBe(false);
-       expect(fs.access).toHaveBeenCalledWith('/some/missing-file');
+       expect(fs.promises.stat).toHaveBeenCalledWith('/some/missing-file',fs.constants.F_OK);
     });
   });
 

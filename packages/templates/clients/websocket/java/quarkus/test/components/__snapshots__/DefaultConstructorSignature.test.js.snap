@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DefaultConstructorSignature component (integration with AsyncAPI document) renders default constructor with query parameters from fixture 1`] = `
+"public TestClient(){
+      this(\\"false\\", \\"true\\", null);
+  }"
+`;
+
+exports[`DefaultConstructorSignature component (integration with AsyncAPI document) renders nothing when queryParams is empty array 1`] = `
+"public TestClient(){
+      this();
+  }"
+`;
+
+exports[`DefaultConstructorSignature component (integration with AsyncAPI document) renders nothing when queryParams is null 1`] = `""`;
+
+exports[`DefaultConstructorSignature component (integration with AsyncAPI document) renders nothing when queryParams is undefined 1`] = `""`;

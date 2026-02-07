@@ -4,10 +4,8 @@ import { Parser, fromFile } from '@asyncapi/parser';
 import { getQueryParams } from '@asyncapi/generator-helpers';
 import { Constructor } from '../../components/Constructor';
 
-
 const parser = new Parser();
 const asyncapiFilePath = path.resolve(__dirname, '../../../../test/__fixtures__/asyncapi-websocket-components.yml');
-
 
 describe('Constructor component (integration with AsyncAPI document)', () => {
   let parsedAsyncAPIDocument;

@@ -1,4 +1,8 @@
 /* eslint-disable sonarjs/no-duplicate-string */
+jest.mock('fs/promises', () => ({
+  access: jest.fn(),
+}));
+const fs = require('fs/promises');
 const path = require('path');
 const Generator = require('../lib/generator');
 const log = require('loglevel');
@@ -63,14 +67,24 @@ describe('Utils', () => {
   });
 
   describe('#exists', () => {
-    it('should return true if file exist', async () => {
-      const exists = await utils.exists(`${process.cwd()}/package.json`);
-      expect(exists).toBeTruthy();
+    afterEach(() => {
+      fs.access.mockClear();
     });
 
-    it('should return false if file does not exist', async () => {
-      const exists = await utils.exists('./invalid-file');
-      expect(exists).toBeFalsy();
+    it('should return true when fs access succeeds', async () => {
+       fs.access.mockResolvedValueOnce(undefined);
+
+        const exists = await utils.exists('/some/file');
+        expect(exists).toBe(true);
+        expect(fs.access).toHaveBeenCalledWith('/some/file');
+    });
+
+    it('should return false when fs access throws', async () => {
+      fs.access.mockRejectedValueOnce(new Error('File not found'));
+      
+       const exists = await utils.exists('/some/missing-file');
+       expect(exists).toBe(false);
+       expect(fs.access).toHaveBeenCalledWith('/some/missing-file');
     });
   });
 

@@ -39,12 +39,12 @@ describe('Testing of Overview component', () => {
 
   test('throws error when info is missing', () => {
     expect(() => {
-        render(<Overview title={title} serverUrl={serverUrl}/>);
+      render(<Overview title={title} serverUrl={serverUrl}/>);
     }).toThrow(TypeError);
   });
 
   test('render overview component when title is missing', () => {
-     const result = render(
+    const result = render(
       <Overview
         info={info}
         serverUrl={serverUrl}

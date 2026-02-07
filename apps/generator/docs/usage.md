@@ -81,7 +81,7 @@ asyncapi generate fromTemplate asyncapi.yaml https://github.com/asyncapi/html-te
 
 **Map schema references from baseUrl to local folder:**
 ```bash
-asyncapi generate fromTemplate test/docs/apiwithref.json @asyncapi/html-template@3.0. -o ./build/ --force-write --map-base-url https://schema.example.com/crm/:./test/docs/
+asyncapi generate fromTemplate test/docs/apiwithref.json @asyncapi/html-template@3.5.4 -o ./build/ --force-write --map-base-url https://schema.example.com/crm/:./test/docs/
 ```
 
 The parameter `--map-base-url` maps external schema references to local folders.

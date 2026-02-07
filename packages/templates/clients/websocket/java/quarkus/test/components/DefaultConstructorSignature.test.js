@@ -31,7 +31,7 @@ describe('DefaultConstructorSignature component (integration with AsyncAPI docum
     expect(result.trim()).toMatchSnapshot();
   });
 
-  test('renders nothing when queryParams is empty array', () => {
+  test('renders default constructor with no arguments when queryParams is empty array', () => {
     const result = render(<DefaultConstructorSignature clientName="WebSocketClient" queryParams={[]} />);
     expect(result.trim()).toMatchSnapshot();
   });

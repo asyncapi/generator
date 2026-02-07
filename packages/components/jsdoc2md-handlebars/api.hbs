@@ -8,7 +8,7 @@ weight: 77
 <dl>
 {{#functions}}
   {{#unless (eq name "ownKeys")}}
-  <dt><a href="#{{name}}">{{name}}</a>{{#if returns.length}} ⇒ <code>{{{escapeType returns.[0].type.names.[0]}}}</code>{{/if}}</dt>
+  <dt><a href="#{{name}}">[{{name}}]</a>{{#if returns.length}} ⇒ <code>{{{escapeType returns.[0].type.names.[0]}}}</code>{{/if}}</dt>
   <dd>
 
 {{{description}}}
@@ -27,7 +27,7 @@ weight: 77
 
 {{#if params.length}}
 
-### Parameters
+**Parameters**
 
 | Name | Type | Description |
 |------|------|-------------|
@@ -39,7 +39,7 @@ weight: 77
 
 {{#if returns.length}}
 
-### Returns
+**Returns**
 
 {{#each returns}}
 - **`{{{escapeType type.names.[0]}}}`**{{#if description}} - {{description}}{{/if}}
@@ -49,7 +49,7 @@ weight: 77
 
 {{#if examples.length}}
 
-### Example
+**Example**
 
 {{#each examples}}
 ```js

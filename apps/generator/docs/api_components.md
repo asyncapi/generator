@@ -6,116 +6,116 @@ weight: 77
 ## Components
 
 <dl>
-  <dt><a href="#CloseConnection">CloseConnection</a> ⇒ <code>JSX.Element</code></dt>
+  <dt><a href="#CloseConnection">[CloseConnection]</a> ⇒ <code>JSX.Element</code></dt>
   <dd>
 
 Renders a WebSocket close connection method with optional pre- and post-execution logic.
 
   </dd> 
-  <dt><a href="#Connect">Connect</a> ⇒ <code>JSX.Element</code></dt>
+  <dt><a href="#Connect">[Connect]</a> ⇒ <code>JSX.Element</code></dt>
   <dd>
 
 Renders a WebSocket connection method for the specified programming language.
 
   </dd> 
-  <dt><a href="#DependencyProvider">DependencyProvider</a> ⇒ <code>JSX.Element</code></dt>
+  <dt><a href="#DependencyProvider">[DependencyProvider]</a> ⇒ <code>JSX.Element</code></dt>
   <dd>
 
 Renders the top-of-file dependency statements for the selected programming language.
 
   </dd> 
-  <dt><a href="#FileHeaderInfo">FileHeaderInfo</a> ⇒ <code>JSX.Element</code></dt>
+  <dt><a href="#FileHeaderInfo">[FileHeaderInfo]</a> ⇒ <code>JSX.Element</code></dt>
   <dd>
 
 Renders a file header with metadata information such as title, version, protocol, host, and path.
 
   </dd> 
-  <dt><a href="#HandleMessage">HandleMessage</a> ⇒ <code>JSX.Element</code></dt>
+  <dt><a href="#HandleMessage">[HandleMessage]</a> ⇒ <code>JSX.Element</code></dt>
   <dd>
 
 Renders a WebSocket message handler method with optional pre- and post-execution logic.
 
   </dd> 
-  <dt><a href="#MethodGenerator">MethodGenerator</a> ⇒ <code>JSX.Element</code></dt>
+  <dt><a href="#MethodGenerator">[MethodGenerator]</a> ⇒ <code>JSX.Element</code></dt>
   <dd>
 
 Renders a language-specific formatted method definition.
 
   </dd> 
-  <dt><a href="#Models">Models</a> ⇒ <code>Array.&lt;File&gt;</code></dt>
+  <dt><a href="#Models">[Models]</a> ⇒ <code>Array.&lt;File&gt;</code></dt>
   <dd>
 
 Renders an array of model files based on the AsyncAPI document.
 
   </dd> 
-  <dt><a href="#OnClose">OnClose</a> ⇒ <code>JSX.Element</code></dt>
+  <dt><a href="#OnClose">[OnClose]</a> ⇒ <code>JSX.Element</code></dt>
   <dd>
 
 Renders a WebSocket onClose event handler for the specified programming language.
 
   </dd> 
-  <dt><a href="#OnError">OnError</a> ⇒ <code>JSX.Element</code></dt>
+  <dt><a href="#OnError">[OnError]</a> ⇒ <code>JSX.Element</code></dt>
   <dd>
 
 Renders a WebSocket onError event handler for the specified programming language.
 
   </dd> 
-  <dt><a href="#OnMessage">OnMessage</a> ⇒ <code>JSX.Element</code></dt>
+  <dt><a href="#OnMessage">[OnMessage]</a> ⇒ <code>JSX.Element</code></dt>
   <dd>
 
 Renders a WebSocket onMessage event handler for the specified programming language.
 
   </dd> 
-  <dt><a href="#OnOpen">OnOpen</a> ⇒ <code>JSX.Element</code></dt>
+  <dt><a href="#OnOpen">[OnOpen]</a> ⇒ <code>JSX.Element</code></dt>
   <dd>
 
 Renders a WebSocket onOpen event handler for the specified programming language.
 
   </dd> 
-  <dt><a href="#QueryParamsVariables">QueryParamsVariables</a> ⇒ <code>Array.&lt;JSX.Element&gt;</code></dt>
+  <dt><a href="#QueryParamsVariables">[QueryParamsVariables]</a> ⇒ <code>Array.&lt;JSX.Element&gt;</code></dt>
   <dd>
 
 Renders query parameter variables code blocks.
 
   </dd> 
-  <dt><a href="#AvailableOperations">AvailableOperations</a> ⇒ <code>JSX.Element</code></dt>
+  <dt><a href="#AvailableOperations">[AvailableOperations]</a> ⇒ <code>JSX.Element</code></dt>
   <dd>
 
 Renders a list of AsyncAPI operations with their headers and message examples.
 
   </dd> 
-  <dt><a href="#CoreMethods">CoreMethods</a> ⇒ <code>JSX.Element</code></dt>
+  <dt><a href="#CoreMethods">[CoreMethods]</a> ⇒ <code>JSX.Element</code></dt>
   <dd>
 
 Renders a list of core WebSocket client methods for a given target language.
 
   </dd> 
-  <dt><a href="#Installation">Installation</a> ⇒ <code>JSX.Element</code></dt>
+  <dt><a href="#Installation">[Installation]</a> ⇒ <code>JSX.Element</code></dt>
   <dd>
 
 Renders the Installation Command for a given language.
 
   </dd> 
-  <dt><a href="#MessageExamples">MessageExamples</a> ⇒ <code>JSX.Element</code></dt>
+  <dt><a href="#MessageExamples">[MessageExamples]</a> ⇒ <code>JSX.Element</code></dt>
   <dd>
 
 Renders Message Examples of a given AsyncAPI operation.
 
   </dd> 
-  <dt><a href="#OperationHeader">OperationHeader</a> ⇒ <code>JSX.Element</code></dt>
+  <dt><a href="#OperationHeader">[OperationHeader]</a> ⇒ <code>JSX.Element</code></dt>
   <dd>
 
 Renders a header section for a single AsyncAPI operation.
 
   </dd> 
-  <dt><a href="#Overview">Overview</a> ⇒ <code>JSX.Element</code></dt>
+  <dt><a href="#Overview">[Overview]</a> ⇒ <code>JSX.Element</code></dt>
   <dd>
 
 Renders an overview section for a WebSocket client.
 Displays the API description, version, and server URL.
 
   </dd> 
-  <dt><a href="#Readme">Readme</a> ⇒ <code>JSX.Element</code></dt>
+  <dt><a href="#Readme">[Readme]</a> ⇒ <code>JSX.Element</code></dt>
   <dd>
 
 Renders a README.md file for a given AsyncAPI document.
@@ -125,25 +125,25 @@ and available operations) into a single File component based on the
 provided AsyncAPI document, generator parameters, and target language.
 
   </dd> 
-  <dt><a href="#Usage">Usage</a> ⇒ <code>JSX.Element</code></dt>
+  <dt><a href="#Usage">[Usage]</a> ⇒ <code>JSX.Element</code></dt>
   <dd>
 
 Renders a usage example snippet for a generated WebSocket client in a given language.
 
   </dd> 
-  <dt><a href="#RegisterErrorHandler">RegisterErrorHandler</a> ⇒ <code>JSX.Element</code></dt>
+  <dt><a href="#RegisterErrorHandler">[RegisterErrorHandler]</a> ⇒ <code>JSX.Element</code></dt>
   <dd>
 
 Renders a WebSocket error handler registration method with optional pre- and post-execution logic.
 
   </dd> 
-  <dt><a href="#RegisterMessageHandler">RegisterMessageHandler</a> ⇒ <code>JSX.Element</code></dt>
+  <dt><a href="#RegisterMessageHandler">[RegisterMessageHandler]</a> ⇒ <code>JSX.Element</code></dt>
   <dd>
 
 Renders a WebSocket message handler registration method with optional pre- and post-execution logic.
 
   </dd> 
-  <dt><a href="#SendOperations">SendOperations</a> ⇒ <code>Array.&lt;JSX.Element&gt;</code></dt>
+  <dt><a href="#SendOperations">[SendOperations]</a> ⇒ <code>Array.&lt;JSX.Element&gt;</code></dt>
   <dd>
 
 Renders WebSocket send operation methods.
@@ -158,7 +158,7 @@ Generates both static and instance methods for sending messages through WebSocke
 Renders a WebSocket close connection method with optional pre- and post-execution logic.
 
 
-### Parameters
+**Parameters**
 
 | Name | Type | Description |
 |------|------|-------------|
@@ -173,13 +173,13 @@ Renders a WebSocket close connection method with optional pre- and post-executio
 
 
 
-### Returns
+**Returns**
 
 - **`JSX.Element`** - A Text component that contains method block with appropriate formatting.
 
 
 
-### Example
+**Example**
 
 ```js
 const language = "java";
@@ -214,7 +214,7 @@ renderCloseConnection();
 Renders a WebSocket connection method for the specified programming language.
 
 
-### Parameters
+**Parameters**
 
 | Name | Type | Description |
 |------|------|-------------|
@@ -224,13 +224,13 @@ Renders a WebSocket connection method for the specified programming language.
 
 
 
-### Returns
+**Returns**
 
 - **`JSX.Element`** - A Text component containing the generated WebSocket connection code for the specified language.
 
 
 
-### Example
+**Example**
 
 ```js
 const language = "python";
@@ -255,7 +255,7 @@ renderConnect();
 Renders the top-of-file dependency statements for the selected programming language.
 
 
-### Parameters
+**Parameters**
 
 | Name | Type | Description |
 |------|------|-------------|
@@ -267,13 +267,13 @@ Renders the top-of-file dependency statements for the selected programming langu
 
 
 
-### Returns
+**Returns**
 
 - **`JSX.Element`** - A Text component that contains list of import/require statements.
 
 
 
-### Example
+**Example**
 
 ```js
 const language = "java";
@@ -301,7 +301,7 @@ renderDependencyProvider();
 Renders a file header with metadata information such as title, version, protocol, host, and path.
 
 
-### Parameters
+**Parameters**
 
 | Name | Type | Description |
 |------|------|-------------|
@@ -312,13 +312,13 @@ Renders a file header with metadata information such as title, version, protocol
 
 
 
-### Returns
+**Returns**
 
 - **`JSX.Element`** - A Text component that contains file header.
 
 
 
-### Example
+**Example**
 
 ```js
 import path from "path";
@@ -353,7 +353,7 @@ renderFileHeader().catch(console.error);
 Renders a WebSocket message handler method with optional pre- and post-execution logic.
 
 
-### Parameters
+**Parameters**
 
 | Name | Type | Description |
 |------|------|-------------|
@@ -367,13 +367,13 @@ Renders a WebSocket message handler method with optional pre- and post-execution
 
 
 
-### Returns
+**Returns**
 
 - **`JSX.Element`** - A Text component that contains method block with appropriate formatting.
 
 
 
-### Example
+**Example**
 
 ```js
 const language = "javascript";
@@ -411,7 +411,7 @@ renderHandleMessage();
 Renders a language-specific formatted method definition.
 
 
-### Parameters
+**Parameters**
 
 | Name | Type | Description |
 |------|------|-------------|
@@ -431,13 +431,13 @@ Renders a language-specific formatted method definition.
 
 
 
-### Returns
+**Returns**
 
 - **`JSX.Element`** - A Text component that contains method block with appropriate formatting.
 
 
 
-### Example
+**Example**
 
 ```js
 const language = "java";
@@ -478,7 +478,7 @@ renderMethodGenerator();
 Renders an array of model files based on the AsyncAPI document.
 
 
-### Parameters
+**Parameters**
 
 | Name | Type | Description |
 |------|------|-------------|
@@ -491,13 +491,13 @@ Renders an array of model files based on the AsyncAPI document.
 
 
 
-### Returns
+**Returns**
 
 - **`Array.&lt;File&gt;`** - Array of File components with generated model content.
 
 
 
-### Example
+**Example**
 
 ```js
 import path from "path";
@@ -532,7 +532,7 @@ renderModel().catch(console.error);
 Renders a WebSocket onClose event handler for the specified programming language.
 
 
-### Parameters
+**Parameters**
 
 | Name | Type | Description |
 |------|------|-------------|
@@ -543,13 +543,13 @@ Renders a WebSocket onClose event handler for the specified programming language
 
 
 
-### Returns
+**Returns**
 
 - **`JSX.Element`** - A Text component containing the onClose handler code for the specified language.
 
 
 
-### Example
+**Example**
 
 ```js
 const language = "java";
@@ -576,7 +576,7 @@ renderOnClose();
 Renders a WebSocket onError event handler for the specified programming language.
 
 
-### Parameters
+**Parameters**
 
 | Name | Type | Description |
 |------|------|-------------|
@@ -585,13 +585,13 @@ Renders a WebSocket onError event handler for the specified programming language
 
 
 
-### Returns
+**Returns**
 
 - **`JSX.Element`** - A Text component containing the onError handler code for the specified language.
 
 
 
-### Example
+**Example**
 
 ```js
 const language = "javascript";
@@ -612,7 +612,7 @@ renderOnError();
 Renders a WebSocket onMessage event handler for the specified programming language.
 
 
-### Parameters
+**Parameters**
 
 | Name | Type | Description |
 |------|------|-------------|
@@ -621,13 +621,13 @@ Renders a WebSocket onMessage event handler for the specified programming langua
 
 
 
-### Returns
+**Returns**
 
 - **`JSX.Element`** - A Text component containing the onMessage handler code for the specified language.
 
 
 
-### Example
+**Example**
 
 ```js
 const language = "javascript";
@@ -648,7 +648,7 @@ renderOnMessage();
 Renders a WebSocket onOpen event handler for the specified programming language.
 
 
-### Parameters
+**Parameters**
 
 | Name | Type | Description |
 |------|------|-------------|
@@ -659,13 +659,13 @@ Renders a WebSocket onOpen event handler for the specified programming language.
 
 
 
-### Returns
+**Returns**
 
 - **`JSX.Element`** - A Text component containing the onOpen handler code for the specified language.
 
 
 
-### Example
+**Example**
 
 ```js
 const language = "java";
@@ -692,7 +692,7 @@ renderOnOpen();
 Renders query parameter variables code blocks.
 
 
-### Parameters
+**Parameters**
 
 | Name | Type | Description |
 |------|------|-------------|
@@ -703,13 +703,13 @@ Renders query parameter variables code blocks.
 
 
 
-### Returns
+**Returns**
 
 - **`Array.&lt;JSX.Element&gt;`** - Array of Text components for each query parameter, or null if queryParams is invalid.
 
 
 
-### Example
+**Example**
 
 ```js
 import path from "path";
@@ -751,7 +751,7 @@ renderQueryParamsVariable().catch(console.error);
 Renders a list of AsyncAPI operations with their headers and message examples.
 
 
-### Parameters
+**Parameters**
 
 | Name | Type | Description |
 |------|------|-------------|
@@ -760,13 +760,13 @@ Renders a list of AsyncAPI operations with their headers and message examples.
 
 
 
-### Returns
+**Returns**
 
 - **`JSX.Element`** - A Component containing rendered operations, or null if no operations are provided
 
 
 
-### Example
+**Example**
 
 ```js
 import path from "path";
@@ -796,7 +796,7 @@ renderAvailableOperations().catch(console.error);
 Renders a list of core WebSocket client methods for a given target language.
 
 
-### Parameters
+**Parameters**
 
 | Name | Type | Description |
 |------|------|-------------|
@@ -805,13 +805,13 @@ Renders a list of core WebSocket client methods for a given target language.
 
 
 
-### Returns
+**Returns**
 
 - **`JSX.Element`** - A Text component that contains a list of core client methods.
 
 
 
-### Example
+**Example**
 
 ```js
 const language = "javascript";
@@ -832,7 +832,7 @@ renderCoreMethods();
 Renders the Installation Command for a given language.
 
 
-### Parameters
+**Parameters**
 
 | Name | Type | Description |
 |------|------|-------------|
@@ -841,13 +841,13 @@ Renders the Installation Command for a given language.
 
 
 
-### Returns
+**Returns**
 
 - **`JSX.Element`** - A Text component that contains Installation Command.
 
 
 
-### Example
+**Example**
 
 ```js
 const language = "javascript";
@@ -868,7 +868,7 @@ renderInstallation()
 Renders Message Examples of a given AsyncAPI operation.
 
 
-### Parameters
+**Parameters**
 
 | Name | Type | Description |
 |------|------|-------------|
@@ -877,13 +877,13 @@ Renders Message Examples of a given AsyncAPI operation.
 
 
 
-### Returns
+**Returns**
 
 - **`JSX.Element`** - A Text component that contains message examples, or null when no examples exist.
 
 
 
-### Example
+**Example**
 
 ```js
 import path from "path";
@@ -916,7 +916,7 @@ renderMessageExamples().catch(console.error);
 Renders a header section for a single AsyncAPI operation.
 
 
-### Parameters
+**Parameters**
 
 | Name | Type | Description |
 |------|------|-------------|
@@ -925,13 +925,13 @@ Renders a header section for a single AsyncAPI operation.
 
 
 
-### Returns
+**Returns**
 
 - **`JSX.Element`** - A Text component that contains formatted operation header.
 
 
 
-### Example
+**Example**
 
 ```js
 import path from "path";
@@ -965,7 +965,7 @@ Renders an overview section for a WebSocket client.
 Displays the API description, version, and server URL.
 
 
-### Parameters
+**Parameters**
 
 | Name | Type | Description |
 |------|------|-------------|
@@ -976,13 +976,13 @@ Displays the API description, version, and server URL.
 
 
 
-### Returns
+**Returns**
 
 - **`JSX.Element`** - A Text component that contains the Overview of a Websocket client.
 
 
 
-### Example
+**Example**
 
 ```js
 import path from "path";
@@ -1026,7 +1026,7 @@ and available operations) into a single File component based on the
 provided AsyncAPI document, generator parameters, and target language.
 
 
-### Parameters
+**Parameters**
 
 | Name | Type | Description |
 |------|------|-------------|
@@ -1037,13 +1037,13 @@ provided AsyncAPI document, generator parameters, and target language.
 
 
 
-### Returns
+**Returns**
 
 - **`JSX.Element`** - A File component representing the generated README.md.
 
 
 
-### Example
+**Example**
 
 ```js
 import path from "path";
@@ -1081,7 +1081,7 @@ renderReadme().catch(console.error);
 Renders a usage example snippet for a generated WebSocket client in a given language.
 
 
-### Parameters
+**Parameters**
 
 | Name | Type | Description |
 |------|------|-------------|
@@ -1092,13 +1092,13 @@ Renders a usage example snippet for a generated WebSocket client in a given lang
 
 
 
-### Returns
+**Returns**
 
 - **`JSX.Element`** - A Text component containing a formatted usage example snippet.
 
 
 
-### Example
+**Example**
 
 ```js
 const clientName = "MyClient";
@@ -1125,7 +1125,7 @@ renderUsage();
 Renders a WebSocket error handler registration method with optional pre- and post-execution logic.
 
 
-### Parameters
+**Parameters**
 
 | Name | Type | Description |
 |------|------|-------------|
@@ -1139,13 +1139,13 @@ Renders a WebSocket error handler registration method with optional pre- and pos
 
 
 
-### Returns
+**Returns**
 
 - **`JSX.Element`** - A Text component that contains method block with appropriate formatting.
 
 
 
-### Example
+**Example**
 
 ```js
 const language = "python";
@@ -1178,7 +1178,7 @@ renderRegisterErrorHandler();
 Renders a WebSocket message handler registration method with optional pre- and post-execution logic.
 
 
-### Parameters
+**Parameters**
 
 | Name | Type | Description |
 |------|------|-------------|
@@ -1191,13 +1191,13 @@ Renders a WebSocket message handler registration method with optional pre- and p
 
 
 
-### Returns
+**Returns**
 
 - **`JSX.Element`** - A Text component that contains method block with appropriate formatting.
 
 
 
-### Example
+**Example**
 
 ```js
 const language = "python";
@@ -1229,7 +1229,7 @@ Renders WebSocket send operation methods.
 Generates both static and instance methods for sending messages through WebSocket connections.
 
 
-### Parameters
+**Parameters**
 
 | Name | Type | Description |
 |------|------|-------------|
@@ -1240,13 +1240,13 @@ Generates both static and instance methods for sending messages through WebSocke
 
 
 
-### Returns
+**Returns**
 
 - **`Array.&lt;JSX.Element&gt;`** - Array of Text components for static and non-static WebSocket send operation methods, or null if no send operations are provided.
 
 
 
-### Example
+**Example**
 
 ```js
 import path from "path";

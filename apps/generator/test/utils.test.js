@@ -6,7 +6,7 @@ const fs = require('fs/promises');
 const path = require('path');
 const Generator = require('../lib/generator');
 const log = require('loglevel');
-const utils = jest.require('../lib/utils');
+const utils = require('../lib/utils');
 
 const logMessage = require('./../lib/logMessages.js');
 

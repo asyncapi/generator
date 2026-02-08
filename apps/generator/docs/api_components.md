@@ -75,8 +75,7 @@ weight: 77
 
 * [Overview](#Overview) ⇒ `JSX.Element`<br/>
   
-  Renders an overview section for a WebSocket client.
-Displays the API description, version, and server URL.
+  Renders an overview section for a WebSocket client. Displays the API description, version, and server URL.
 
 * [Readme](#Readme) ⇒ `JSX.Element`<br/>
   
@@ -96,12 +95,11 @@ Displays the API description, version, and server URL.
 
 * [SendOperations](#SendOperations) ⇒ `Array.&lt;JSX.Element&gt;`<br/>
   
-  Renders WebSocket send operation methods.
-Generates both static and instance methods for sending messages through WebSocket connections.
+  Renders WebSocket send operation methods. Generates both static and instance methods for sending messages through WebSocket connections.
 
 
 <a name="CloseConnection"></a>
-## CloseConnection() 
+## CloseConnection()
 Renders a WebSocket close connection method with optional pre- and post-execution logic.
 
 
@@ -157,7 +155,7 @@ renderCloseConnection();
 
 
 <a name="Connect"></a>
-## Connect() 
+## Connect()
 Renders a WebSocket connection method for the specified programming language.
 
 
@@ -198,7 +196,7 @@ renderConnect();
 
 
 <a name="DependencyProvider"></a>
-## DependencyProvider() 
+## DependencyProvider()
 Renders the top-of-file dependency statements for the selected programming language.
 
 
@@ -244,7 +242,7 @@ renderDependencyProvider();
 
 
 <a name="FileHeaderInfo"></a>
-## FileHeaderInfo() 
+## FileHeaderInfo()
 Renders a file header with metadata information such as title, version, protocol, host, and path.
 
 
@@ -296,7 +294,7 @@ renderFileHeader().catch(console.error);
 
 
 <a name="HandleMessage"></a>
-## HandleMessage() 
+## HandleMessage()
 Renders a WebSocket message handler method with optional pre- and post-execution logic.
 
 
@@ -354,7 +352,7 @@ renderHandleMessage();
 
 
 <a name="MethodGenerator"></a>
-## MethodGenerator() 
+## MethodGenerator()
 Renders a language-specific formatted method definition.
 
 
@@ -421,7 +419,7 @@ renderMethodGenerator();
 
 
 <a name="Models"></a>
-## Models() 
+## Models()
 Renders an array of model files based on the AsyncAPI document.
 
 
@@ -475,7 +473,7 @@ renderModel().catch(console.error);
 
 
 <a name="OnClose"></a>
-## OnClose() 
+## OnClose()
 Renders a WebSocket onClose event handler for the specified programming language.
 
 
@@ -519,7 +517,7 @@ renderOnClose();
 
 
 <a name="OnError"></a>
-## OnError() 
+## OnError()
 Renders a WebSocket onError event handler for the specified programming language.
 
 
@@ -555,7 +553,7 @@ renderOnError();
 
 
 <a name="OnMessage"></a>
-## OnMessage() 
+## OnMessage()
 Renders a WebSocket onMessage event handler for the specified programming language.
 
 
@@ -591,7 +589,7 @@ renderOnMessage();
 
 
 <a name="OnOpen"></a>
-## OnOpen() 
+## OnOpen()
 Renders a WebSocket onOpen event handler for the specified programming language.
 
 
@@ -635,7 +633,7 @@ renderOnOpen();
 
 
 <a name="QueryParamsVariables"></a>
-## QueryParamsVariables() 
+## QueryParamsVariables()
 Renders query parameter variables code blocks.
 
 
@@ -694,7 +692,7 @@ renderQueryParamsVariable().catch(console.error);
 
 
 <a name="AvailableOperations"></a>
-## AvailableOperations() 
+## AvailableOperations()
 Renders a list of AsyncAPI operations with their headers and message examples.
 
 
@@ -739,7 +737,7 @@ renderAvailableOperations().catch(console.error);
 
 
 <a name="CoreMethods"></a>
-## CoreMethods() 
+## CoreMethods()
 Renders a list of core WebSocket client methods for a given target language.
 
 
@@ -775,7 +773,7 @@ renderCoreMethods();
 
 
 <a name="Installation"></a>
-## Installation() 
+## Installation()
 Renders the Installation Command for a given language.
 
 
@@ -811,7 +809,7 @@ renderInstallation()
 
 
 <a name="MessageExamples"></a>
-## MessageExamples() 
+## MessageExamples()
 Renders Message Examples of a given AsyncAPI operation.
 
 
@@ -859,7 +857,7 @@ renderMessageExamples().catch(console.error);
 
 
 <a name="OperationHeader"></a>
-## OperationHeader() 
+## OperationHeader()
 Renders a header section for a single AsyncAPI operation.
 
 
@@ -907,9 +905,8 @@ renderOperationHeader().catch(console.error);
 
 
 <a name="Overview"></a>
-## Overview() 
-Renders an overview section for a WebSocket client.
-Displays the API description, version, and server URL.
+## Overview()
+Renders an overview section for a WebSocket client. Displays the API description, version, and server URL.
 
 
 **Parameters**
@@ -965,7 +962,7 @@ renderOverview().catch(console.error);
 
 
 <a name="Readme"></a>
-## Readme() 
+## Readme()
 Renders a README.md file for a given AsyncAPI document. Composes multiple sections (overview, installation, usage, core methods, and available operations) into a single File component based on the provided AsyncAPI document, generator parameters, and target language.
 
 
@@ -1020,7 +1017,7 @@ renderReadme().catch(console.error);
 
 
 <a name="Usage"></a>
-## Usage() 
+## Usage()
 Renders a usage example snippet for a generated WebSocket client in a given language.
 
 
@@ -1064,7 +1061,7 @@ renderUsage();
 
 
 <a name="RegisterErrorHandler"></a>
-## RegisterErrorHandler() 
+## RegisterErrorHandler()
 Renders a WebSocket error handler registration method with optional pre- and post-execution logic.
 
 
@@ -1117,7 +1114,7 @@ renderRegisterErrorHandler();
 
 
 <a name="RegisterMessageHandler"></a>
-## RegisterMessageHandler() 
+## RegisterMessageHandler()
 Renders a WebSocket message handler registration method with optional pre- and post-execution logic.
 
 
@@ -1167,9 +1164,8 @@ renderRegisterMessageHandler();
 
 
 <a name="SendOperations"></a>
-## SendOperations() 
-Renders WebSocket send operation methods.
-Generates both static and instance methods for sending messages through WebSocket connections.
+## SendOperations()
+Renders WebSocket send operation methods. Generates both static and instance methods for sending messages through WebSocket connections.
 
 
 **Parameters**

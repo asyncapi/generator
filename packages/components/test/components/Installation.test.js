@@ -16,7 +16,7 @@ describe('Installation component', () => {
     const result = render(<Installation />);
     const output = result.trim();
 
-  // Explicitly document current behavior
+    // Explicitly document current behavior
     expect(output).toContain('## Installation');
     expect(output).toContain('Install dependencies');
     expect(output).toContain('undefined');

@@ -7,8 +7,8 @@ weight: 77
 
 {{#functions}}
 {{#unless (eq name "ownKeys")}}
-* [{{name}}](#{{name}}){{#if returns.length}} ⇒ `{{{escapeType returns.[0].type.names.[0]}}}`{{/if}}
-
+* [{{name}}](#{{name}}){{#if returns.length}} ⇒ `{{{escapeType returns.[0].type.names.[0]}}}`{{/if}}<br/>
+  
   {{{description}}}
 
 {{/unless}}

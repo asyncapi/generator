@@ -5,97 +5,97 @@ weight: 77
 
 ## Components
 
-* [CloseConnection](#CloseConnection) ⇒ `JSX.Element`
-
+* [CloseConnection](#CloseConnection) ⇒ `JSX.Element`<br/>
+  
   Renders a WebSocket close connection method with optional pre- and post-execution logic.
 
-* [Connect](#Connect) ⇒ `JSX.Element`
-
+* [Connect](#Connect) ⇒ `JSX.Element`<br/>
+  
   Renders a WebSocket connection method for the specified programming language.
 
-* [DependencyProvider](#DependencyProvider) ⇒ `JSX.Element`
-
+* [DependencyProvider](#DependencyProvider) ⇒ `JSX.Element`<br/>
+  
   Renders the top-of-file dependency statements for the selected programming language.
 
-* [FileHeaderInfo](#FileHeaderInfo) ⇒ `JSX.Element`
-
+* [FileHeaderInfo](#FileHeaderInfo) ⇒ `JSX.Element`<br/>
+  
   Renders a file header with metadata information such as title, version, protocol, host, and path.
 
-* [HandleMessage](#HandleMessage) ⇒ `JSX.Element`
-
+* [HandleMessage](#HandleMessage) ⇒ `JSX.Element`<br/>
+  
   Renders a WebSocket message handler method with optional pre- and post-execution logic.
 
-* [MethodGenerator](#MethodGenerator) ⇒ `JSX.Element`
-
+* [MethodGenerator](#MethodGenerator) ⇒ `JSX.Element`<br/>
+  
   Renders a language-specific formatted method definition.
 
-* [Models](#Models) ⇒ `Array.&lt;File&gt;`
-
+* [Models](#Models) ⇒ `Array.&lt;File&gt;`<br/>
+  
   Renders an array of model files based on the AsyncAPI document.
 
-* [OnClose](#OnClose) ⇒ `JSX.Element`
-
+* [OnClose](#OnClose) ⇒ `JSX.Element`<br/>
+  
   Renders a WebSocket onClose event handler for the specified programming language.
 
-* [OnError](#OnError) ⇒ `JSX.Element`
-
+* [OnError](#OnError) ⇒ `JSX.Element`<br/>
+  
   Renders a WebSocket onError event handler for the specified programming language.
 
-* [OnMessage](#OnMessage) ⇒ `JSX.Element`
-
+* [OnMessage](#OnMessage) ⇒ `JSX.Element`<br/>
+  
   Renders a WebSocket onMessage event handler for the specified programming language.
 
-* [OnOpen](#OnOpen) ⇒ `JSX.Element`
-
+* [OnOpen](#OnOpen) ⇒ `JSX.Element`<br/>
+  
   Renders a WebSocket onOpen event handler for the specified programming language.
 
-* [QueryParamsVariables](#QueryParamsVariables) ⇒ `Array.&lt;JSX.Element&gt;`
-
+* [QueryParamsVariables](#QueryParamsVariables) ⇒ `Array.&lt;JSX.Element&gt;`<br/>
+  
   Renders query parameter variables code blocks.
 
-* [AvailableOperations](#AvailableOperations) ⇒ `JSX.Element`
-
+* [AvailableOperations](#AvailableOperations) ⇒ `JSX.Element`<br/>
+  
   Renders a list of AsyncAPI operations with their headers and message examples.
 
-* [CoreMethods](#CoreMethods) ⇒ `JSX.Element`
-
+* [CoreMethods](#CoreMethods) ⇒ `JSX.Element`<br/>
+  
   Renders a list of core WebSocket client methods for a given target language.
 
-* [Installation](#Installation) ⇒ `JSX.Element`
-
+* [Installation](#Installation) ⇒ `JSX.Element`<br/>
+  
   Renders the Installation Command for a given language.
 
-* [MessageExamples](#MessageExamples) ⇒ `JSX.Element`
-
+* [MessageExamples](#MessageExamples) ⇒ `JSX.Element`<br/>
+  
   Renders Message Examples of a given AsyncAPI operation.
 
-* [OperationHeader](#OperationHeader) ⇒ `JSX.Element`
-
+* [OperationHeader](#OperationHeader) ⇒ `JSX.Element`<br/>
+  
   Renders a header section for a single AsyncAPI operation.
 
-* [Overview](#Overview) ⇒ `JSX.Element`
-
+* [Overview](#Overview) ⇒ `JSX.Element`<br/>
+  
   Renders an overview section for a WebSocket client.
 Displays the API description, version, and server URL.
 
-* [Readme](#Readme) ⇒ `JSX.Element`
-
+* [Readme](#Readme) ⇒ `JSX.Element`<br/>
+  
   Renders a README.md file for a given AsyncAPI document. Composes multiple sections (overview, installation, usage, core methods, and available operations) into a single File component based on the provided AsyncAPI document, generator parameters, and target language.
 
-* [Usage](#Usage) ⇒ `JSX.Element`
-
+* [Usage](#Usage) ⇒ `JSX.Element`<br/>
+  
   Renders a usage example snippet for a generated WebSocket client in a given language.
 
-* [RegisterErrorHandler](#RegisterErrorHandler) ⇒ `JSX.Element`
-
+* [RegisterErrorHandler](#RegisterErrorHandler) ⇒ `JSX.Element`<br/>
+  
   Renders a WebSocket error handler registration method with optional pre- and post-execution logic.
 
-* [RegisterMessageHandler](#RegisterMessageHandler) ⇒ `JSX.Element`
-
+* [RegisterMessageHandler](#RegisterMessageHandler) ⇒ `JSX.Element`<br/>
+  
   Renders a WebSocket message handler registration method with optional pre- and post-execution logic.
 
-* [SendOperations](#SendOperations) ⇒ `Array.&lt;JSX.Element&gt;`
-
+* [SendOperations](#SendOperations) ⇒ `Array.&lt;JSX.Element&gt;`<br/>
+  
   Renders WebSocket send operation methods.
 Generates both static and instance methods for sending messages through WebSocket connections.
 

@@ -4,7 +4,6 @@ import { Parser, fromFile } from '@asyncapi/parser';
 import { getQueryParams } from '@asyncapi/generator-helpers';
 import { ClientDependencies } from '../../components/dependencies/ClientDependencies';
 
-
 const parser = new Parser();
 const asyncapiFilePath = path.resolve(__dirname, '../../../../test/__fixtures__/asyncapi-websocket-components.yml');
 

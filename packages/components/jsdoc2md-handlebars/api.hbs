@@ -5,19 +5,14 @@ weight: 77
 
 ## Components
 
-<dl>
 {{#functions}}
-  {{#unless (eq name "ownKeys")}}
-  <dt><a href="#{{name}}">[{{name}}]</a>{{#if returns.length}} ⇒ <code>{{{escapeType returns.[0].type.names.[0]}}}</code>{{/if}}</dt>
-  <dd>
+{{#unless (eq name "ownKeys")}}
+* [{{name}}](#{{name}}){{#if returns.length}} ⇒ `{{{escapeType returns.[0].type.names.[0]}}}`{{/if}}
 
-{{{description}}}
+  {{{description}}}
 
-  </dd> 
-  {{/unless}}
+{{/unless}}
 {{/functions}}
-</dl>
-
 {{#functions}}
 {{#unless (eq name "ownKeys")}}
 

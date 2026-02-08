@@ -5,152 +5,99 @@ weight: 77
 
 ## Components
 
-<dl>
-  <dt><a href="#CloseConnection">[CloseConnection]</a> ⇒ <code>JSX.Element</code></dt>
-  <dd>
+* [CloseConnection](#CloseConnection) ⇒ `JSX.Element`
 
-Renders a WebSocket close connection method with optional pre- and post-execution logic.
+  Renders a WebSocket close connection method with optional pre- and post-execution logic.
 
-  </dd> 
-  <dt><a href="#Connect">[Connect]</a> ⇒ <code>JSX.Element</code></dt>
-  <dd>
+* [Connect](#Connect) ⇒ `JSX.Element`
 
-Renders a WebSocket connection method for the specified programming language.
+  Renders a WebSocket connection method for the specified programming language.
 
-  </dd> 
-  <dt><a href="#DependencyProvider">[DependencyProvider]</a> ⇒ <code>JSX.Element</code></dt>
-  <dd>
+* [DependencyProvider](#DependencyProvider) ⇒ `JSX.Element`
 
-Renders the top-of-file dependency statements for the selected programming language.
+  Renders the top-of-file dependency statements for the selected programming language.
 
-  </dd> 
-  <dt><a href="#FileHeaderInfo">[FileHeaderInfo]</a> ⇒ <code>JSX.Element</code></dt>
-  <dd>
+* [FileHeaderInfo](#FileHeaderInfo) ⇒ `JSX.Element`
 
-Renders a file header with metadata information such as title, version, protocol, host, and path.
+  Renders a file header with metadata information such as title, version, protocol, host, and path.
 
-  </dd> 
-  <dt><a href="#HandleMessage">[HandleMessage]</a> ⇒ <code>JSX.Element</code></dt>
-  <dd>
+* [HandleMessage](#HandleMessage) ⇒ `JSX.Element`
 
-Renders a WebSocket message handler method with optional pre- and post-execution logic.
+  Renders a WebSocket message handler method with optional pre- and post-execution logic.
 
-  </dd> 
-  <dt><a href="#MethodGenerator">[MethodGenerator]</a> ⇒ <code>JSX.Element</code></dt>
-  <dd>
+* [MethodGenerator](#MethodGenerator) ⇒ `JSX.Element`
 
-Renders a language-specific formatted method definition.
+  Renders a language-specific formatted method definition.
 
-  </dd> 
-  <dt><a href="#Models">[Models]</a> ⇒ <code>Array.&lt;File&gt;</code></dt>
-  <dd>
+* [Models](#Models) ⇒ `Array.&lt;File&gt;`
 
-Renders an array of model files based on the AsyncAPI document.
+  Renders an array of model files based on the AsyncAPI document.
 
-  </dd> 
-  <dt><a href="#OnClose">[OnClose]</a> ⇒ <code>JSX.Element</code></dt>
-  <dd>
+* [OnClose](#OnClose) ⇒ `JSX.Element`
 
-Renders a WebSocket onClose event handler for the specified programming language.
+  Renders a WebSocket onClose event handler for the specified programming language.
 
-  </dd> 
-  <dt><a href="#OnError">[OnError]</a> ⇒ <code>JSX.Element</code></dt>
-  <dd>
+* [OnError](#OnError) ⇒ `JSX.Element`
 
-Renders a WebSocket onError event handler for the specified programming language.
+  Renders a WebSocket onError event handler for the specified programming language.
 
-  </dd> 
-  <dt><a href="#OnMessage">[OnMessage]</a> ⇒ <code>JSX.Element</code></dt>
-  <dd>
+* [OnMessage](#OnMessage) ⇒ `JSX.Element`
 
-Renders a WebSocket onMessage event handler for the specified programming language.
+  Renders a WebSocket onMessage event handler for the specified programming language.
 
-  </dd> 
-  <dt><a href="#OnOpen">[OnOpen]</a> ⇒ <code>JSX.Element</code></dt>
-  <dd>
+* [OnOpen](#OnOpen) ⇒ `JSX.Element`
 
-Renders a WebSocket onOpen event handler for the specified programming language.
+  Renders a WebSocket onOpen event handler for the specified programming language.
 
-  </dd> 
-  <dt><a href="#QueryParamsVariables">[QueryParamsVariables]</a> ⇒ <code>Array.&lt;JSX.Element&gt;</code></dt>
-  <dd>
+* [QueryParamsVariables](#QueryParamsVariables) ⇒ `Array.&lt;JSX.Element&gt;`
 
-Renders query parameter variables code blocks.
+  Renders query parameter variables code blocks.
 
-  </dd> 
-  <dt><a href="#AvailableOperations">[AvailableOperations]</a> ⇒ <code>JSX.Element</code></dt>
-  <dd>
+* [AvailableOperations](#AvailableOperations) ⇒ `JSX.Element`
 
-Renders a list of AsyncAPI operations with their headers and message examples.
+  Renders a list of AsyncAPI operations with their headers and message examples.
 
-  </dd> 
-  <dt><a href="#CoreMethods">[CoreMethods]</a> ⇒ <code>JSX.Element</code></dt>
-  <dd>
+* [CoreMethods](#CoreMethods) ⇒ `JSX.Element`
 
-Renders a list of core WebSocket client methods for a given target language.
+  Renders a list of core WebSocket client methods for a given target language.
 
-  </dd> 
-  <dt><a href="#Installation">[Installation]</a> ⇒ <code>JSX.Element</code></dt>
-  <dd>
+* [Installation](#Installation) ⇒ `JSX.Element`
 
-Renders the Installation Command for a given language.
+  Renders the Installation Command for a given language.
 
-  </dd> 
-  <dt><a href="#MessageExamples">[MessageExamples]</a> ⇒ <code>JSX.Element</code></dt>
-  <dd>
+* [MessageExamples](#MessageExamples) ⇒ `JSX.Element`
 
-Renders Message Examples of a given AsyncAPI operation.
+  Renders Message Examples of a given AsyncAPI operation.
 
-  </dd> 
-  <dt><a href="#OperationHeader">[OperationHeader]</a> ⇒ <code>JSX.Element</code></dt>
-  <dd>
+* [OperationHeader](#OperationHeader) ⇒ `JSX.Element`
 
-Renders a header section for a single AsyncAPI operation.
+  Renders a header section for a single AsyncAPI operation.
 
-  </dd> 
-  <dt><a href="#Overview">[Overview]</a> ⇒ <code>JSX.Element</code></dt>
-  <dd>
+* [Overview](#Overview) ⇒ `JSX.Element`
 
-Renders an overview section for a WebSocket client.
+  Renders an overview section for a WebSocket client.
 Displays the API description, version, and server URL.
 
-  </dd> 
-  <dt><a href="#Readme">[Readme]</a> ⇒ <code>JSX.Element</code></dt>
-  <dd>
+* [Readme](#Readme) ⇒ `JSX.Element`
 
-Renders a README.md file for a given AsyncAPI document.
+  Renders a README.md file for a given AsyncAPI document. Composes multiple sections (overview, installation, usage, core methods, and available operations) into a single File component based on the provided AsyncAPI document, generator parameters, and target language.
 
-Composes multiple sections (overview, installation, usage, core methods,
-and available operations) into a single File component based on the
-provided AsyncAPI document, generator parameters, and target language.
+* [Usage](#Usage) ⇒ `JSX.Element`
 
-  </dd> 
-  <dt><a href="#Usage">[Usage]</a> ⇒ <code>JSX.Element</code></dt>
-  <dd>
+  Renders a usage example snippet for a generated WebSocket client in a given language.
 
-Renders a usage example snippet for a generated WebSocket client in a given language.
+* [RegisterErrorHandler](#RegisterErrorHandler) ⇒ `JSX.Element`
 
-  </dd> 
-  <dt><a href="#RegisterErrorHandler">[RegisterErrorHandler]</a> ⇒ <code>JSX.Element</code></dt>
-  <dd>
+  Renders a WebSocket error handler registration method with optional pre- and post-execution logic.
 
-Renders a WebSocket error handler registration method with optional pre- and post-execution logic.
+* [RegisterMessageHandler](#RegisterMessageHandler) ⇒ `JSX.Element`
 
-  </dd> 
-  <dt><a href="#RegisterMessageHandler">[RegisterMessageHandler]</a> ⇒ <code>JSX.Element</code></dt>
-  <dd>
+  Renders a WebSocket message handler registration method with optional pre- and post-execution logic.
 
-Renders a WebSocket message handler registration method with optional pre- and post-execution logic.
+* [SendOperations](#SendOperations) ⇒ `Array.&lt;JSX.Element&gt;`
 
-  </dd> 
-  <dt><a href="#SendOperations">[SendOperations]</a> ⇒ <code>Array.&lt;JSX.Element&gt;</code></dt>
-  <dd>
-
-Renders WebSocket send operation methods.
+  Renders WebSocket send operation methods.
 Generates both static and instance methods for sending messages through WebSocket connections.
-
-  </dd> 
-</dl>
 
 
 <a name="CloseConnection"></a>
@@ -1019,11 +966,7 @@ renderOverview().catch(console.error);
 
 <a name="Readme"></a>
 ## Readme() 
-Renders a README.md file for a given AsyncAPI document.
-
-Composes multiple sections (overview, installation, usage, core methods,
-and available operations) into a single File component based on the
-provided AsyncAPI document, generator parameters, and target language.
+Renders a README.md file for a given AsyncAPI document. Composes multiple sections (overview, installation, usage, core methods, and available operations) into a single File component based on the provided AsyncAPI document, generator parameters, and target language.
 
 
 **Parameters**

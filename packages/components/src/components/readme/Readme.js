@@ -12,11 +12,7 @@ import { AvailableOperations } from './AvailableOperations';
  */
 
 /**
- * Renders a README.md file for a given AsyncAPI document.
- * 
- * Composes multiple sections (overview, installation, usage, core methods,
- * and available operations) into a single File component based on the
- * provided AsyncAPI document, generator parameters, and target language.
+ * Renders a README.md file for a given AsyncAPI document. Composes multiple sections (overview, installation, usage, core methods, and available operations) into a single File component based on the provided AsyncAPI document, generator parameters, and target language.
  * @param {Object} props - Component props
  * @param {AsyncAPIDocumentInterface} props.asyncapi - Parsed AsyncAPI document instance.
  * @param {Object} props.params - Generator parameters used to customize output 

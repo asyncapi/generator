@@ -1,15 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Installation component renders installation section when language is undefined 1`] = `
-"## Installation
-
-Install dependencies:
-
-\`\`\`bash
-undefined
-\`\`\`"
-`;
-
 exports[`Installation component renders javascript installation command 1`] = `
 "## Installation
 

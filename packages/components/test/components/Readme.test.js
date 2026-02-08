@@ -11,21 +11,23 @@ describe('Testing of Readme component', () => {
   let parsedAsyncAPIDocument;
   let params;
 
-  const languages = ['javascript', 'python'];
+  const languageConfigs = [
+    { language: 'javascript', clientFileName: 'myClient.js' },
+    { language: 'python', clientFileName: 'myClient.py' },
+  ];
 
   beforeAll(async () => {
     const parseResult = await fromFile(parser, asyncapi_websocket_query).parse();
     parsedAsyncAPIDocument = parseResult.document;
-
-    params = buildParams(
-      'javascript',
-      { clientFileName: 'myClient.js' },
-      'production'
-    );
   });
 
-  languages.forEach((language) => {
+  languageConfigs.forEach(({ language, clientFileName }) => {
     test(`render Readme with language = ${language}`, () => {
+      const params = buildParams(
+        language,
+        { clientFileName },
+        'production'
+      );
       const result = render(
         <Readme
           asyncapi={parsedAsyncAPIDocument}
@@ -39,104 +41,16 @@ describe('Testing of Readme component', () => {
     });
   });
 
-  test('render Readme component when asyncapi is missing', () => {
-    const renderReadme = () =>
-      render(
-        <Readme
-          params={params}
-          language="javascript"
-        />
-      );
-
-    expect(renderReadme).toThrow(TypeError);
-  });
-
-  test('render Readme component when params are missing', () => {
-    const renderReadme = () =>
-      render(
-        <Readme
-          asyncapi={parsedAsyncAPIDocument}
-          language="javascript"
-        />
-      );
-
-    expect(renderReadme).toThrow(TypeError);
-  });
-
-  test('render Readme component when language is missing', () => {
-    const renderReadme = () =>
-      render(
-        <Readme
-          asyncapi={parsedAsyncAPIDocument}
-          params={params}
-        />
-      );
-
-    expect(renderReadme).toThrow(TypeError);
-  });
-
-  test('render Readme with unsupported language', () => {
-    const renderReadme = () =>
-      render(
-        <Readme
-          asyncapi={parsedAsyncAPIDocument}
-          params={params}
-          language='dart'
-        />
-      );
-
-    expect(renderReadme).toThrow(TypeError);
-  });
-
-  test('render Readme when asyncapi is explicitly null', () => {
-    const renderReadme = () =>
-      render(
-        <Readme
-          asyncapi={null}
-          params={params}
-          language="javascript"
-        />
-      );
-
-    expect(renderReadme).toThrow(TypeError);
-  });
-
-  test('render Readme when params is explicitly null', () => {
-    const renderReadme = () =>
-      render(
-        <Readme
-          asyncapi={parsedAsyncAPIDocument}
-          params={null}
-          language="javascript"
-        />
-      );
-
-    expect(renderReadme).toThrow(TypeError);
-  });
-
-  test('render Readme when language is explicitly null', () => {
-    const renderReadme = () =>
-      render(
-        <Readme
-          asyncapi={parsedAsyncAPIDocument}
-          params={params}
-          language={null}
-        />
-      );
-
-    expect(renderReadme).toThrow(TypeError);
-  });
-
-  test('render Readme with empty string language', () => {
-    const renderReadme = () =>
-      render(
-        <Readme
-          asyncapi={parsedAsyncAPIDocument}
-          params={params}
-          language={''}
-        />
-      );
-
-    expect(renderReadme).toThrow(TypeError);
+  test.each([
+    ['asyncapi is missing',    { params, language: 'javascript' }],
+    ['params are missing',     { asyncapi: parsedAsyncAPIDocument, language: 'javascript' }],
+    ['language is missing',    { asyncapi: parsedAsyncAPIDocument, params }],
+    ['asyncapi is null',       { asyncapi: null, params, language: 'javascript' }],
+    ['params is null',         { asyncapi: parsedAsyncAPIDocument, params: null, language: 'javascript' }],
+    ['language is null',       { asyncapi: parsedAsyncAPIDocument, params, language: null }],
+    ['language is empty',      { asyncapi: parsedAsyncAPIDocument, params, language: '' }],
+    ['language is unsupported',{ asyncapi: parsedAsyncAPIDocument, params, language: 'dart' }],
+  ])('throws TypeError when %s', (_label, props) => {
+    expect(() => render(<Readme {...props} />)).toThrow(TypeError);
   });
 });

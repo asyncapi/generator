@@ -83,7 +83,7 @@ pip install -r requirements.txt
 ## Usage
 
 \`\`\`python
-from myClient.js import AccountService
+from myClient import AccountService
 
 ws_client = AccountService()
 

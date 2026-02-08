@@ -1,0 +1,115 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing of Readme component render Readme with language = javascript 1`] = `
+"# Account Service
+
+## Overview
+
+This service is in charge of processing user signups
+
+- **Version:** 1.0.0
+- **Server URL:** ws://api.example.com
+
+
+## Installation
+
+Install dependencies:
+
+\`\`\`bash
+npm install
+\`\`\`
+
+
+## Usage
+
+\`\`\`javascript
+const AccountService = require('./myClient');
+const wsClient = new AccountService();
+
+async function main() {
+  try {
+    await wsClient.connect();
+    // use wsClient to send/receive messages
+    await wsClient.close();
+  } catch (error) {
+    console.error('Failed to connect:', error);
+  }
+}
+
+main();
+\`\`\`
+
+
+## API
+
+### \`connect()\`
+Establishes a WebSocket connection.
+
+### \`registerMessageHandler(handlerFunction)\`
+Registers a callback for incoming messages.
+
+### \`registerErrorHandler(handlerFunction)\`
+Registers a callback for connection errors.
+
+### \`close()\`
+Closes the WebSocket connection.
+
+
+### Available Operations
+
+#### \`sendUserSignedup(payload)\`"
+`;
+
+exports[`Testing of Readme component render Readme with language = python 1`] = `
+"# Account Service
+
+## Overview
+
+This service is in charge of processing user signups
+
+- **Version:** 1.0.0
+- **Server URL:** ws://api.example.com
+
+
+## Installation
+
+Install dependencies:
+
+\`\`\`bash
+pip install -r requirements.txt
+\`\`\`
+
+
+## Usage
+
+\`\`\`python
+from myClient.js import AccountService
+
+ws_client = AccountService()
+
+async def main():
+    await ws_client.connect()
+    # use ws_client to send/receive messages
+    await ws_client.close()
+\`\`\`
+
+
+## API
+
+### \`connect()\`
+Establishes a WebSocket connection.
+
+### \`register_message_handler(handler_function)\`
+Registers a callback for incoming messages.
+
+### \`register_error_handler(handler_function)\`
+Registers a callback for connection errors.
+
+### \`close()\`
+Closes the WebSocket connection.
+
+
+### Available Operations
+
+#### \`sendUserSignedup(payload)\`"
+`;

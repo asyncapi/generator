@@ -91,6 +91,16 @@ describe('ModelsPresets', () => {
       expect(result).toContain(IMPORT_OBJECTS);
       expect(result).toContain('public class EmptyClass {}');
     });
+
+    it('should handle model with missing properties key', () => {
+      const mockModel = {};
+      const content = 'public class NoPropsClass {}';
+      const result = websocketPreset.class.self({ content, model: mockModel });
+
+      expect(result).toContain(PACKAGE_DECLARATION);
+      expect(result).toContain(IMPORT_OBJECTS);
+      expect(result).toContain('public class NoPropsClass {}');
+    });
   });
 
   describe('websocketJavaPreset enum.self', () => {

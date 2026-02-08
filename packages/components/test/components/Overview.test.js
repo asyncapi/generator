@@ -5,7 +5,7 @@ import { getServer, getServerUrl } from '@asyncapi/generator-helpers';
 import { Overview } from '../../src/components/readme/Overview';
 
 const parser = new Parser();
-const asyncapi_websocket_query = path.resolve(__dirname, '../../../helpers/test/__fixtures__/asyncapi-websocket-query.yml');
+const asyncapi_websocket_query = path.resolve(__dirname, '../__fixtures__/asyncapi-v3.yml');
 
 describe('Testing of Overview component', () => {
   let parsedAsyncAPIDocument;
@@ -20,7 +20,7 @@ describe('Testing of Overview component', () => {
     info = parsedAsyncAPIDocument.info();
     title = info.title();
 
-    const server = getServer(parsedAsyncAPIDocument.servers(), 'withHostDuplicatingProtocol');
+    const server = getServer(parsedAsyncAPIDocument.servers(), 'production');
     serverUrl = getServerUrl(server);
   });
 

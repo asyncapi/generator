@@ -6,15 +6,12 @@ weight: 77
 ## Components
 
 {{#functions}}
-{{#unless (eq name "ownKeys")}}
 * [{{name}}](#{{name}}){{#if returns.length}} ⇒ `{{{escapeType returns.[0].type.names.[0]}}}`{{/if}}<br/>
   
   {{{description}}}
 
-{{/unless}}
 {{/functions}}
 {{#functions}}
-{{#unless (eq name "ownKeys")}}
 
 <a name="{{name}}"></a>
 ## {{name}}()
@@ -54,5 +51,4 @@ weight: 77
 
 {{/if}}
 
-{{/unless}}
 {{/functions}}

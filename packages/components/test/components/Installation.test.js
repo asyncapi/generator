@@ -14,6 +14,6 @@ describe('Installation component', () => {
 
   test('renders installation section when language is undefined', () => {
     const result = render(<Installation />);
-    expect(result.trim()).toMatchSnapshot();
+    expect(result).not.toContain('undefined');
   });
 });

@@ -56,13 +56,12 @@ describe('parseAsyncAPIDocumentFromFile', () => {
             );
         });
 
-        test('should include file-related error details in wrapped message', async () => {
-            try {
-                await parseAsyncAPIDocumentFromFile(invalidAsyncapiPath);
-                fail('Expected parseAsyncAPIDocumentFromFile to throw');
-            } catch (error) {
-                expect(error.message).toContain('Failed to parse AsyncAPI document');
-            }
+        test('should include original error details in wrapped message', async () => {
+            await expect(parseAsyncAPIDocumentFromFile(invalidAsyncapiPath)).rejects.toThrow(
+                expect.objectContaining({
+                    message: expect.stringMatching(/Failed to parse AsyncAPI document/)
+                })
+            );
         });
     });
 

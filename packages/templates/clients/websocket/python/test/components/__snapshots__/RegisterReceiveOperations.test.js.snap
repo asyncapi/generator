@@ -1,0 +1,91 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing of RegisterReceiveOperations component render RegisterReceiveOperations component with receive operations 1`] = `
+"def register_receive_message_handler(self, handler, discriminator_key=None, discriminator_value=None):
+      \\"\\"\\"
+      Register a handler for receiveMessage operation.
+
+      Args:
+          handler (callable): Handler function that receives raw_message as argument
+          discriminator_key (str): Message field to use for routing (e.g., 'type', 'event_type')
+          discriminator_value (str): Expected value for routing (e.g., 'hello', 'user_joined')
+      \\"\\"\\"
+      if not callable(handler):
+          print(\\"Handler must be callable\\")
+          return
+
+      # Validate that either both discriminator_key and discriminator_value are provided or neither
+      if (discriminator_key is not None and discriminator_value is None) or (discriminator_key is None and discriminator_value is not None):
+          print(\\"Error: Both discriminator_key and discriminator_value must be provided together\\")
+          return
+
+      # Register handler
+      self.receive_operation_handlers[\\"receiveMessage\\"] = handler
+
+      # Add discriminator entry to the list if both key and value are provided
+      if discriminator_key is not None and discriminator_value is not None:
+          discriminator_entry = {
+              \\"key\\": discriminator_key,
+              \\"value\\": discriminator_value,
+              \\"operation_id\\": \\"receiveMessage\\"
+          }
+        
+          # Check if this discriminator already exists
+          exists = any(
+              d.get(\\"key\\") == discriminator_key and 
+              d.get(\\"value\\") == discriminator_value and 
+              d.get(\\"operation_id\\") == \\"receiveMessage\\" 
+              for d in self.receive_operation_discriminators
+          )
+
+          if not exists:
+            self.receive_operation_discriminators.append(discriminator_entry)
+
+  def register_receive_notification_handler(self, handler, discriminator_key=None, discriminator_value=None):
+      \\"\\"\\"
+      Register a handler for receiveNotification operation.
+
+      Args:
+          handler (callable): Handler function that receives raw_message as argument
+          discriminator_key (str): Message field to use for routing (e.g., 'type', 'event_type')
+          discriminator_value (str): Expected value for routing (e.g., 'hello', 'user_joined')
+      \\"\\"\\"
+      if not callable(handler):
+          print(\\"Handler must be callable\\")
+          return
+
+      # Validate that either both discriminator_key and discriminator_value are provided or neither
+      if (discriminator_key is not None and discriminator_value is None) or (discriminator_key is None and discriminator_value is not None):
+          print(\\"Error: Both discriminator_key and discriminator_value must be provided together\\")
+          return
+
+      # Register handler
+      self.receive_operation_handlers[\\"receiveNotification\\"] = handler
+
+      # Add discriminator entry to the list if both key and value are provided
+      if discriminator_key is not None and discriminator_value is not None:
+          discriminator_entry = {
+              \\"key\\": discriminator_key,
+              \\"value\\": discriminator_value,
+              \\"operation_id\\": \\"receiveNotification\\"
+          }
+        
+          # Check if this discriminator already exists
+          exists = any(
+              d.get(\\"key\\") == discriminator_key and 
+              d.get(\\"value\\") == discriminator_value and 
+              d.get(\\"operation_id\\") == \\"receiveNotification\\" 
+              for d in self.receive_operation_discriminators
+          )
+
+          if not exists:
+            self.receive_operation_discriminators.append(discriminator_entry)"
+`;
+
+exports[`Testing of RegisterReceiveOperations component renders nothing when receive operations is empty 1`] = `""`;
+
+exports[`Testing of RegisterReceiveOperations component renders nothing when receive operations is null 1`] = `""`;
+
+exports[`Testing of RegisterReceiveOperations component renders nothing when receiveOperations is undefined 1`] = `""`;
+
+exports[`Testing of RegisterReceiveOperations component renders nothing without receive operations 1`] = `""`;

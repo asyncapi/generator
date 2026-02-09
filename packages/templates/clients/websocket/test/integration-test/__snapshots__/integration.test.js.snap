@@ -9314,6 +9314,9 @@ class PostmanEchoWebSocketClientClient:
         self.outgoing_processors = []   # Callables to process outgoing messages
         self._stop_event = threading.Event()
       
+        self.receive_operation_handlers = {}
+        self.receive_operation_discriminators = []
+
 
         
         self.url = url

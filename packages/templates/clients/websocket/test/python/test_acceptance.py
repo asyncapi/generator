@@ -2,9 +2,10 @@ import time
 import sys
 import os
 import pytest
-import asyncio
-import websockets
 import requests
+import json
+import threading
+from websockets.sync.server import serve
 
 module_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../python/test/temp/snapshotTestResult/client_hoppscotch'))
 
@@ -43,8 +44,7 @@ def test_hoppscotch_client_receives_message():
         f"Expected message '{expected_message}' but got '{received_messages[0]}'"
     )
 
-@pytest.mark.asyncio
-async def test_hoppscotch_client_sends_message():
+def test_hoppscotch_client_sends_message():
     port = 8083
     expected_outgoing_message = "Sending acceptance test message to Microcks."
 
@@ -54,20 +54,33 @@ async def test_hoppscotch_client_sends_message():
         "testEndpoint": "ws://websocket-acceptance-tester-py:8083/ws",
         "runnerType": "ASYNC_API_SCHEMA",
         "timeout": 30000,
-        "filteredOperations": ["RECEIVE handleEchoMessage"]
+        "filteredOperations": ["SEND handleEchoMessage"]
     }
+    
+    server_ready = threading.Event()
+    test_complete = threading.Event()
+    
     # Create WebSocket server handler
-    async def handler(websocket):
+    def handler(websocket):
         ###############
         #
-        # Most improtant part of test where we test clients send message
+        # Most important part of test where we test clients send message
         #
         ###############
-        await HoppscotchEchoWebSocketClient.send_echo_message_static(expected_outgoing_message, websocket)
+        HoppscotchEchoWebSocketClient.send_echo_message_static(expected_outgoing_message, websocket)
+
+    def run_server():
+        server = serve(handler, "0.0.0.0", port)
+        server_ready.set()
+        while not test_complete.is_set():
+            time.sleep(0.1)
+        server.shutdown()
 
     # Start the WebSocket server
-    server = await websockets.serve(handler, port=port)
-    await asyncio.sleep(1)  # Give server time to start
+    server_thread = threading.Thread(target=run_server, daemon=True)
+    server_thread.start()
+    server_ready.wait(timeout=5)
+    time.sleep(1)  # Give server time to start
 
     # Start test in Microcks
     response = requests.post(microcks_test_endpoint, json=payload)
@@ -83,8 +96,9 @@ async def test_hoppscotch_client_sends_message():
         if result.get("success") is True:
             success = True
             break
-        await asyncio.sleep(2)
-    #await asyncio.sleep(1000)
-    server.close()
+        time.sleep(2)
+    
+    test_complete.set()
+    server_thread.join(timeout=5)
 
     assert success, f"Microcks test {test_id} did not succeed"

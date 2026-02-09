@@ -4,13 +4,13 @@ import { CloseConnection, RegisterMessageHandler, RegisterErrorHandler, SendOper
 import { ModuleExport } from './ModuleExport';
 import { CompileOperationSchemas } from './CompileOperationSchemas';
 
-export function ClientClass({ clientName, serverUrl, title, sendOperations }) {
+export function ClientClass({ clientName, serverUrl, title, sendOperations, query }) {
   return (
     <Text>
       <Text newLines={2}>
         {`class ${clientName} {`}
       </Text>
-      <Constructor serverUrl={serverUrl} sendOperations={sendOperations} />
+      <Constructor serverUrl={serverUrl} sendOperations={sendOperations} query={query} />
       <Connect language="javascript" title={title} />
       <RegisterMessageHandler 
         language="javascript" 

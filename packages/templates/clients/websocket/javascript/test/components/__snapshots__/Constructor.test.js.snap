@@ -1,0 +1,75 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Constructor component (integration with AsyncAPI document) renders with neither serverUrl nor query 1`] = `
+"/*
+    * Constructor to initialize the WebSocket client
+    * @param {string} url - The WebSocket server URL. Use it if the server URL is different from the default one taken from the AsyncAPI document.
+  */
+  constructor(url) {
+    this.url = url || 'null';
+    this.websocket = null;
+    this.messageHandlers = [];
+    this.errorHandlers = [];
+    this.compiledSchemas = {};
+    this.schemasCompiled = false;
+    this.sendOperationsId = [\\"noMessage\\",\\"noSummaryOperations\\",\\"noSummaryNoDescriptionOperations\\",\\"mixedMessageExamples\\",\\"operation_with_snake_case\\"];
+  }"
+`;
+
+exports[`Constructor component (integration with AsyncAPI document) renders with only serverUrl (withHostDuplicatingProtocol) 1`] = `
+"/*
+    * Constructor to initialize the WebSocket client
+    * @param {string} url - The WebSocket server URL. Use it if the server URL is different from the default one taken from the AsyncAPI document.
+  */
+  constructor(url) {
+    this.url = url || 'wss://api.gemini.com';
+    this.websocket = null;
+    this.messageHandlers = [];
+    this.errorHandlers = [];
+    this.compiledSchemas = {};
+    this.schemasCompiled = false;
+    this.sendOperationsId = [\\"noMessage\\",\\"noSummaryOperations\\",\\"noSummaryNoDescriptionOperations\\",\\"mixedMessageExamples\\",\\"operation_with_snake_case\\"];
+  }"
+`;
+
+exports[`Constructor component (integration with AsyncAPI document) renders with serverUrl and query parameters 1`] = `
+"/*
+    * Constructor to initialize the WebSocket client
+    * @param {string} url - The WebSocket server URL. Use it if the server URL is different from the default one taken from the AsyncAPI document.
+    * @param {string} heartbeat - Query parameter for the WebSocket URL
+    * @param {string} top_of_book - Query parameter for the WebSocket URL
+    * @param {string} bids - Query parameter for the WebSocket URL
+    * @param {string} offers - Query parameter for the WebSocket URL
+  */
+  constructor(url, heartbeat, top_of_book, bids, offers) {
+    const params = {};
+    if (heartbeat) params['heartbeat'] = heartbeat;
+    if (top_of_book) params['top_of_book'] = top_of_book;
+    if (bids) params['bids'] = bids;
+    if (offers) params['offers'] = offers;
+    const qs = new URLSearchParams(params).toString();
+    this.url = qs ? \`\${url || 'wss://api.gemini.com/v1/marketdata/{symbol}'}?\${qs}\` : (url || 'wss://api.gemini.com/v1/marketdata/{symbol}');
+    this.websocket = null;
+    this.messageHandlers = [];
+    this.errorHandlers = [];
+    this.compiledSchemas = {};
+    this.schemasCompiled = false;
+    this.sendOperationsId = [\\"noMessage\\",\\"noSummaryOperations\\",\\"noSummaryNoDescriptionOperations\\",\\"mixedMessageExamples\\",\\"operation_with_snake_case\\"];
+  }"
+`;
+
+exports[`Constructor component (integration with AsyncAPI document) renders with undefined query 1`] = `
+"/*
+    * Constructor to initialize the WebSocket client
+    * @param {string} url - The WebSocket server URL. Use it if the server URL is different from the default one taken from the AsyncAPI document.
+  */
+  constructor(url) {
+    this.url = url || 'wss://api.gemini.com/v1/marketdata/{symbol}';
+    this.websocket = null;
+    this.messageHandlers = [];
+    this.errorHandlers = [];
+    this.compiledSchemas = {};
+    this.schemasCompiled = false;
+    this.sendOperationsId = [\\"noMessage\\",\\"noSummaryOperations\\",\\"noSummaryNoDescriptionOperations\\",\\"mixedMessageExamples\\",\\"operation_with_snake_case\\"];
+  }"
+`;

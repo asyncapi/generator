@@ -1,5 +1,5 @@
 import { File } from '@asyncapi/generator-react-sdk';
-import { getClientName, getServerUrl, getServer, getInfo, getTitle } from '@asyncapi/generator-helpers';
+import { getClientName, getServerUrl, getServer, getInfo, getTitle, getQueryParams } from '@asyncapi/generator-helpers';
 import { FileHeaderInfo, DependencyProvider } from '@asyncapi/generator-components';
 import { ClientClass } from '../components/ClientClass';
 
@@ -10,6 +10,7 @@ export default function ({ asyncapi, params }) {
   const clientName = getClientName(asyncapi, params.appendClientSuffix, params.customClientName);
   const serverUrl = getServerUrl(server);
   const sendOperations = asyncapi.operations().filterBySend();
+  const queryParams = getQueryParams(asyncapi.channels());
   const asyncapiFilepath = `${params.asyncapiFileDir}/asyncapi.yaml`;
   return (
     <File name={params.clientFileName}>
@@ -22,7 +23,7 @@ export default function ({ asyncapi, params }) {
         language="javascript"
         additionalDependencies={['const path = require(\'path\');', `const asyncapiFilepath = path.resolve(__dirname, '${asyncapiFilepath}');`]}
       />
-      <ClientClass clientName={clientName} serverUrl={serverUrl} title={title} sendOperations={sendOperations} />
+      <ClientClass clientName={clientName} serverUrl={serverUrl} title={title} sendOperations={sendOperations} query={queryParams} />
     </File>
   );
 }

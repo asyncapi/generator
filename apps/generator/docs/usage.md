@@ -58,7 +58,7 @@ asyncapi generate fromTemplate asyncapi.yaml @asyncapi/html-template@3.5.4 -o ./
 asyncapi generate fromTemplate asyncapi.yaml @asyncapi/html-template@3.5.4  -o ./docs -p title='Hello from param'
 ```
 
-In the template you can use it like this: ` {{ params.title }}`
+In the template you can use it like this: `{{ params.title }}`
 
 **Disabling the hooks:**
 ```bash

@@ -3,7 +3,6 @@ import sys
 import os
 import pytest
 import requests
-import json
 import threading
 from websockets.sync.server import serve
 

@@ -57,7 +57,7 @@ def test_hoppscotch_client_sends_message():
     }
     
     server_ready = threading.Event()
-    test_complete = threading.Event()
+    server_instance = None  # Will hold reference to server for shutdown
     
     # Create WebSocket server handler
     def handler(websocket):
@@ -69,35 +69,40 @@ def test_hoppscotch_client_sends_message():
         HoppscotchEchoWebSocketClient.send_echo_message_static(expected_outgoing_message, websocket)
 
     def run_server():
-        server = serve(handler, "0.0.0.0", port)
-        server_ready.set()
-        while not test_complete.is_set():
-            time.sleep(0.1)
-        server.shutdown()
+        nonlocal server_instance
+        with serve(handler, "0.0.0.0", port) as server:
+            server_instance = server
+            server_ready.set()
+            # serve_forever() blocks until shutdown() is called from another thread
+            server.serve_forever()
 
-    # Start the WebSocket server
+    # Start the WebSocket server in background thread
     server_thread = threading.Thread(target=run_server, daemon=True)
     server_thread.start()
     server_ready.wait(timeout=5)
     time.sleep(1)  # Give server time to start
 
-    # Start test in Microcks
-    response = requests.post(microcks_test_endpoint, json=payload)
-    response.raise_for_status()
-    response_data = response.json()
-    test_id = response_data.get('id')
+    try:
+        # Start test in Microcks
+        response = requests.post(microcks_test_endpoint, json=payload)
+        response.raise_for_status()
+        response_data = response.json()
+        test_id = response_data.get('id')
 
-    # Poll Microcks for result
-    success = False
-    for _ in range(30):
-        result = requests.get(f"{microcks_test_endpoint}/{test_id}").json()
-        print("Polling Microcks:", result)
-        if result.get("success") is True:
-            success = True
-            break
-        time.sleep(2)
+        # Poll Microcks for result
+        success = False
+        for _ in range(30):
+            result = requests.get(f"{microcks_test_endpoint}/{test_id}").json()
+            print("Polling Microcks:", result)
+            if result.get("success") is True:
+                success = True
+                break
+            time.sleep(2)
+        
+        assert success, f"Microcks test {test_id} did not succeed"
     
-    test_complete.set()
-    server_thread.join(timeout=5)
-
-    assert success, f"Microcks test {test_id} did not succeed"
+    finally:
+        # Cleanup: shutdown server and wait for thread
+        if server_instance:
+            server_instance.shutdown()  # This stops serve_forever()
+        server_thread.join(timeout=5)

@@ -1,3 +1,5 @@
+'use strict';
+
 const log = require('loglevel');
 const logMessage = require('./logMessages');
 const jmespath = require('jmespath');
@@ -24,6 +26,11 @@ async function isGenerationConditionMet (
   const config = Object.keys(conditionFilesGeneration).length > 0 
     ? conditionFilesGeneration 
     : conditionalGeneration;
+    if (config.subject) {
+  return conditionalSubjectGeneration(asyncapiDocument, templateConfig, matchedConditionPath, templateParams);
+  } else if (config.parameter) {
+  return conditionalParameterGeneration(templateConfig,   matchedConditionPath, templateParams);
+  }
 
   const subject = config?.subject;
 
@@ -42,10 +49,11 @@ async function isGenerationConditionMet (
       return conditionalSubjectGeneration(
         asyncapiDocument,
         templateConfig,
-        matchedConditionPath
+        matchedConditionPath,
+        templateParams  // FIX: was missing in original, caused TypeError on templateParams.server
       );
     }
-    return conditionalParameterGeneration(templateConfig,matchedConditionPath,templateParams);
+    return conditionalParameterGeneration(templateConfig, matchedConditionPath, templateParams);
   }
 };
 
@@ -64,7 +72,11 @@ async function conditionalParameterGeneration(templateConfig, matchedConditionPa
   const conditionalGenerationConfig = templateConfig.conditionalGeneration?.[matchedConditionPath];
   const parameterName = conditionalGenerationConfig.parameter;
   const parameterValue = templateParams[parameterName];
-  return validateStatus(parameterValue, matchedConditionPath, templateConfig);
+  if (parameterValue == null) {
+    log.debug(logMessage.relativeSourceFileNotGenerated(matchedConditionPath, parameterName));
+    return false;
+  }
+  return true;
 }
 
 /**
@@ -77,15 +89,6 @@ async function conditionalParameterGeneration(templateConfig, matchedConditionPa
  * @param {Object} templateParams - The parameters passed to the generator, usually user input or default values.
  * @returns {Boolean} - Returns `true` if the file should be included; `false` if it should be skipped.
  */
-async function conditionalFilesGenerationDeprecatedVersion (
-  asyncapiDocument,
-  templateConfig,
-  matchedConditionPath,
-  templateParams
-) {
-  return conditionalSubjectGeneration(asyncapiDocument, templateConfig, matchedConditionPath, templateParams);
-};
-
 /**
  * Determines whether a file should be conditionally included based on the provided subject expression
  * and optional validation logic defined in the template configuration.
@@ -101,7 +104,6 @@ async function conditionalSubjectGeneration (
   templateConfig,
   matchedConditionPath,
   templateParams
-
 ) {
   const fileCondition = templateConfig.conditionalGeneration?.[matchedConditionPath] || templateConfig.conditionalFiles?.[matchedConditionPath];
   if (!fileCondition || !fileCondition.subject) {
@@ -115,8 +117,7 @@ async function conditionalSubjectGeneration (
       server: server ? server.json() : undefined,
     },
   }, subject);
-
-  if (!source) {
+  if (source == null) {
     log.debug(logMessage.relativeSourceFileNotGenerated(matchedConditionPath, subject));
     return false;
   } 

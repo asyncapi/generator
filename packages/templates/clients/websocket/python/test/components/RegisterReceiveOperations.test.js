@@ -4,14 +4,15 @@ import { Parser, fromFile } from '@asyncapi/parser';
 import { RegisterReceiveOperations } from '../../components/RegisterReceiveOperations';
 
 const parser = new Parser();
-const asyncapi_websocket_query = path.resolve(__dirname, '../../../test/__fixtures__/asyncapi-websocket-components.yml');
+const asyncapiWebsocketQuery = path.resolve(__dirname, '../../../test/__fixtures__/asyncapi-websocket-components.yml');
 
 describe('Testing of RegisterReceiveOperations component', () => {
   let parsedAsyncAPIDocument;
 
   beforeAll(async () => {
-    const parseResult = await fromFile(parser, asyncapi_websocket_query).parse();
+    const parseResult = await fromFile(parser, asyncapiWebsocketQuery).parse();
     parsedAsyncAPIDocument = parseResult.document;
+    expect(parsedAsyncAPIDocument).toBeDefined();
   });
 
   test('render RegisterReceiveOperations component with receive operations', () => {
@@ -24,24 +25,24 @@ describe('Testing of RegisterReceiveOperations component', () => {
   test('renders nothing when receive operations is empty', () => {
     const result = render(<RegisterReceiveOperations receiveOperations={[]} />);
     const actual = result.trim();
-    expect(actual).toMatchSnapshot();
+    expect(actual).toBe('');
   });
 
   test('renders nothing when receive operations is null', () => {
     const result = render(<RegisterReceiveOperations receiveOperations={null} />);
     const actual = result.trim();
-    expect(actual).toMatchSnapshot();
+    expect(actual).toBe('');
   });
 
   test('renders nothing without receive operations', () => {
     const result = render(<RegisterReceiveOperations />);
     const actual = result.trim();
-    expect(actual).toMatchSnapshot();
+    expect(actual).toBe('');
   });
 
   test('renders nothing when receiveOperations is undefined', () => {
     const result = render(<RegisterReceiveOperations receiveOperations={undefined} />);
     const actual = result.trim();
-    expect(actual).toMatchSnapshot();
+    expect(actual).toBe('');
   });
 });

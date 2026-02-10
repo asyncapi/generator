@@ -81,11 +81,3 @@ exports[`Testing of RegisterReceiveOperations component render RegisterReceiveOp
           if not exists:
             self.receive_operation_discriminators.append(discriminator_entry)"
 `;
-
-exports[`Testing of RegisterReceiveOperations component renders nothing when receive operations is empty 1`] = `""`;
-
-exports[`Testing of RegisterReceiveOperations component renders nothing when receive operations is null 1`] = `""`;
-
-exports[`Testing of RegisterReceiveOperations component renders nothing when receiveOperations is undefined 1`] = `""`;
-
-exports[`Testing of RegisterReceiveOperations component renders nothing without receive operations 1`] = `""`;

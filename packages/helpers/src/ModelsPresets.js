@@ -11,7 +11,7 @@ const websocketJavaPreset = {
       // Solution to handle imports dynamically
       const requiredImports = new Set();
       requiredImports.add('import java.util.Objects;');
-      Object.values(model.properties).forEach(property => {
+      Object.values(model.properties || {}).forEach(property => {
         const type = property.property.type;
 
         if (type === 'Map<String, Object>') {

@@ -29,7 +29,7 @@ weight: 77
   
   Renders a language-specific formatted method definition.
 
-* [Models](#Models) ⇒ `Array.&lt;File&gt;`<br/>
+* [Models](#Models) ⇒ `Array.<File>`<br/>
   
   Renders an array of model files based on the AsyncAPI document.
 
@@ -49,7 +49,7 @@ weight: 77
   
   Renders a WebSocket onOpen event handler for the specified programming language.
 
-* [QueryParamsVariables](#QueryParamsVariables) ⇒ `Array.&lt;JSX.Element&gt;`<br/>
+* [QueryParamsVariables](#QueryParamsVariables) ⇒ `Array.<JSX.Element>`<br/>
   
   Renders query parameter variables code blocks.
 
@@ -93,7 +93,7 @@ weight: 77
   
   Renders a WebSocket message handler registration method with optional pre- and post-execution logic.
 
-* [SendOperations](#SendOperations) ⇒ `Array.&lt;JSX.Element&gt;`<br/>
+* [SendOperations](#SendOperations) ⇒ `Array.<JSX.Element>`<br/>
   
   Renders WebSocket send operation methods. Generates both static and instance methods for sending messages through WebSocket connections.
 
@@ -120,7 +120,7 @@ Renders a WebSocket close connection method with optional pre- and post-executio
 
 **Returns**
 
-- **`JSX.Element`** - A Text component that contains method block with appropriate formatting.
+- `JSX.Element` - A Text component that contains method block with appropriate formatting.
 
 
 
@@ -171,7 +171,7 @@ Renders a WebSocket connection method for the specified programming language.
 
 **Returns**
 
-- **`JSX.Element`** - A Text component containing the generated WebSocket connection code for the specified language.
+- `JSX.Element` - A Text component containing the generated WebSocket connection code for the specified language.
 
 
 
@@ -214,7 +214,7 @@ Renders the top-of-file dependency statements for the selected programming langu
 
 **Returns**
 
-- **`JSX.Element`** - A Text component that contains list of import/require statements.
+- `JSX.Element` - A Text component that contains list of import/require statements.
 
 
 
@@ -259,7 +259,7 @@ Renders a file header with metadata information such as title, version, protocol
 
 **Returns**
 
-- **`JSX.Element`** - A Text component that contains file header.
+- `JSX.Element` - A Text component that contains file header.
 
 
 
@@ -314,7 +314,7 @@ Renders a WebSocket message handler method with optional pre- and post-execution
 
 **Returns**
 
-- **`JSX.Element`** - A Text component that contains method block with appropriate formatting.
+- `JSX.Element` - A Text component that contains method block with appropriate formatting.
 
 
 
@@ -378,7 +378,7 @@ Renders a language-specific formatted method definition.
 
 **Returns**
 
-- **`JSX.Element`** - A Text component that contains method block with appropriate formatting.
+- `JSX.Element` - A Text component that contains method block with appropriate formatting.
 
 
 
@@ -438,7 +438,7 @@ Renders an array of model files based on the AsyncAPI document.
 
 **Returns**
 
-- **`Array.&lt;File&gt;`** - Array of File components with generated model content.
+- `Array.<File>` - Array of File components with generated model content.
 
 
 
@@ -490,7 +490,7 @@ Renders a WebSocket onClose event handler for the specified programming language
 
 **Returns**
 
-- **`JSX.Element`** - A Text component containing the onClose handler code for the specified language.
+- `JSX.Element` - A Text component containing the onClose handler code for the specified language.
 
 
 
@@ -532,7 +532,7 @@ Renders a WebSocket onError event handler for the specified programming language
 
 **Returns**
 
-- **`JSX.Element`** - A Text component containing the onError handler code for the specified language.
+- `JSX.Element` - A Text component containing the onError handler code for the specified language.
 
 
 
@@ -568,7 +568,7 @@ Renders a WebSocket onMessage event handler for the specified programming langua
 
 **Returns**
 
-- **`JSX.Element`** - A Text component containing the onMessage handler code for the specified language.
+- `JSX.Element` - A Text component containing the onMessage handler code for the specified language.
 
 
 
@@ -606,7 +606,7 @@ Renders a WebSocket onOpen event handler for the specified programming language.
 
 **Returns**
 
-- **`JSX.Element`** - A Text component containing the onOpen handler code for the specified language.
+- `JSX.Element` - A Text component containing the onOpen handler code for the specified language.
 
 
 
@@ -650,7 +650,7 @@ Renders query parameter variables code blocks.
 
 **Returns**
 
-- **`Array.&lt;JSX.Element&gt;`** - Array of Text components for each query parameter, or null if queryParams is invalid.
+- `Array.<JSX.Element>` - Array of Text components for each query parameter, or null if queryParams is invalid.
 
 
 
@@ -707,7 +707,7 @@ Renders a list of AsyncAPI operations with their headers and message examples.
 
 **Returns**
 
-- **`JSX.Element`** - A Component containing rendered operations, or null if no operations are provided
+- `JSX.Element` - A Component containing rendered operations, or null if no operations are provided
 
 
 
@@ -752,7 +752,7 @@ Renders a list of core WebSocket client methods for a given target language.
 
 **Returns**
 
-- **`JSX.Element`** - A Text component that contains a list of core client methods.
+- `JSX.Element` - A Text component that contains a list of core client methods.
 
 
 
@@ -788,7 +788,7 @@ Renders the Installation Command for a given language.
 
 **Returns**
 
-- **`JSX.Element`** - A Text component that contains Installation Command.
+- `JSX.Element` - A Text component that contains Installation Command.
 
 
 
@@ -824,7 +824,7 @@ Renders Message Examples of a given AsyncAPI operation.
 
 **Returns**
 
-- **`JSX.Element`** - A Text component that contains message examples, or null when no examples exist.
+- `JSX.Element` - A Text component that contains message examples, or null when no examples exist.
 
 
 
@@ -872,7 +872,7 @@ Renders a header section for a single AsyncAPI operation.
 
 **Returns**
 
-- **`JSX.Element`** - A Text component that contains formatted operation header.
+- `JSX.Element` - A Text component that contains formatted operation header.
 
 
 
@@ -922,7 +922,7 @@ Renders an overview section for a WebSocket client. Displays the API description
 
 **Returns**
 
-- **`JSX.Element`** - A Text component that contains the Overview of a Websocket client.
+- `JSX.Element` - A Text component that contains the Overview of a Websocket client.
 
 
 
@@ -979,7 +979,7 @@ Renders a README.md file for a given AsyncAPI document. Composes multiple sectio
 
 **Returns**
 
-- **`JSX.Element`** - A File component representing the generated README.md.
+- `JSX.Element` - A File component representing the generated README.md.
 
 
 
@@ -1034,7 +1034,7 @@ Renders a usage example snippet for a generated WebSocket client in a given lang
 
 **Returns**
 
-- **`JSX.Element`** - A Text component containing a formatted usage example snippet.
+- `JSX.Element` - A Text component containing a formatted usage example snippet.
 
 
 
@@ -1081,7 +1081,7 @@ Renders a WebSocket error handler registration method with optional pre- and pos
 
 **Returns**
 
-- **`JSX.Element`** - A Text component that contains method block with appropriate formatting.
+- `JSX.Element` - A Text component that contains method block with appropriate formatting.
 
 
 
@@ -1133,7 +1133,7 @@ Renders a WebSocket message handler registration method with optional pre- and p
 
 **Returns**
 
-- **`JSX.Element`** - A Text component that contains method block with appropriate formatting.
+- `JSX.Element` - A Text component that contains method block with appropriate formatting.
 
 
 
@@ -1181,7 +1181,7 @@ Renders WebSocket send operation methods. Generates both static and instance met
 
 **Returns**
 
-- **`Array.&lt;JSX.Element&gt;`** - Array of Text components for static and non-static WebSocket send operation methods, or null if no send operations are provided.
+- `Array.<JSX.Element>` - Array of Text components for static and non-static WebSocket send operation methods, or null if no send operations are provided.
 
 
 

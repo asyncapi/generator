@@ -6,7 +6,7 @@ weight: 77
 ## Components
 
 {{#functions}}
-* [{{name}}](#{{name}}){{#if returns.length}} ⇒ `{{{escapeType returns.[0].type.names.[0]}}}`{{/if}}<br/>
+* [{{name}}](#{{name}}){{#if returns.length}} ⇒ `{{{returns.[0].type.names.[0]}}}`{{/if}}<br/>
   
   {{{description}}}
 
@@ -34,7 +34,7 @@ weight: 77
 **Returns**
 
 {{#each returns}}
-- **`{{{escapeType type.names.[0]}}}`**{{#if description}} - {{description}}{{/if}}
+- `{{{type.names.[0]}}}`{{#if description}} - {{description}}{{/if}}
 {{/each}}
 
 {{/if}}

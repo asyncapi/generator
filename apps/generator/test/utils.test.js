@@ -1,4 +1,5 @@
 /* eslint-disable sonarjs/no-duplicate-string */
+const fs = require('fs');
 const path = require('path');
 const Generator = require('../lib/generator');
 const log = require('loglevel');
@@ -54,7 +55,7 @@ describe('Utils', () => {
       expect(log.debug).toHaveBeenCalledWith(logMessage.templateNotFound(templateNpmName));
     });
 
-    it('doesnt work with a url', async () => {
+    it('doesnot work with a url', async () => {
       resolvePkg.__resolvePkgValue = undefined;
       resolveFrom.__resolveFromValue = undefined;
       const result = utils.getTemplateDetails(templateNpmName, 'package.json');
@@ -63,18 +64,38 @@ describe('Utils', () => {
   });
 
   describe('#exists', () => {
-    it('should return true if file exist', async () => {
-      const exists = await utils.exists(`${process.cwd()}/package.json`);
-      expect(exists).toBeTruthy();
+    afterEach(() => {
+      jest.restoreAllMocks();
+    });
+
+    it('should return true if file exists', async () => {
+      jest.spyOn(fs.promises, 'stat').mockResolvedValueOnce({});
+
+      const exists = await utils.exists('existing-file');
+
+      expect(fs.promises.stat).toHaveBeenCalledWith(
+        'existing-file',
+        fs.constants.F_OK
+      );
+      expect(exists).toBe(true);
     });
 
     it('should return false if file does not exist', async () => {
-      const exists = await utils.exists('./invalid-file');
-      expect(exists).toBeFalsy();
+      jest.spyOn(fs.promises, 'stat').mockRejectedValueOnce(
+        new Error('File not found')
+      );
+
+      const exists = await utils.exists('non-existing-file');
+
+      expect(fs.promises.stat).toHaveBeenCalledWith(
+        'non-existing-file',
+        fs.constants.F_OK
+      );
+      expect(exists).toBe(false);
     });
   });
 
-  describe('#isJsFile',() => {
+  describe('#isJsFile', () => {
     it('should return true if file extension is .js', () => {
       const isJsFile = utils.isJsFile('./valid-file.js');
       expect(isJsFile).toBeTruthy();

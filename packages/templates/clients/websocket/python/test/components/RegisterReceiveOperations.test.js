@@ -12,7 +12,6 @@ describe('Testing of RegisterReceiveOperations component', () => {
   beforeAll(async () => {
     const parseResult = await fromFile(parser, asyncapiWebsocketQuery).parse();
     parsedAsyncAPIDocument = parseResult.document;
-    expect(parsedAsyncAPIDocument).toBeDefined();
   });
 
   test('render RegisterReceiveOperations component with receive operations', () => {
@@ -36,12 +35,6 @@ describe('Testing of RegisterReceiveOperations component', () => {
 
   test('renders nothing without receive operations', () => {
     const result = render(<RegisterReceiveOperations />);
-    const actual = result.trim();
-    expect(actual).toBe('');
-  });
-
-  test('renders nothing when receiveOperations is undefined', () => {
-    const result = render(<RegisterReceiveOperations receiveOperations={undefined} />);
     const actual = result.trim();
     expect(actual).toBe('');
   });

@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CoreMethods component renders core methods for javascript 1`] = `
+"## API
+
+### \`connect()\`
+Establishes a WebSocket connection.
+
+### \`registerMessageHandler(handlerFunction)\`
+Registers a callback for incoming messages.
+
+### \`registerErrorHandler(handlerFunction)\`
+Registers a callback for connection errors.
+
+### \`close()\`
+Closes the WebSocket connection."
+`;
+
+exports[`CoreMethods component renders core methods for python 1`] = `
+"## API
+
+### \`connect()\`
+Establishes a WebSocket connection.
+
+### \`register_message_handler(handler_function)\`
+Registers a callback for incoming messages.
+
+### \`register_error_handler(handler_function)\`
+Registers a callback for connection errors.
+
+### \`close()\`
+Closes the WebSocket connection."
+`;

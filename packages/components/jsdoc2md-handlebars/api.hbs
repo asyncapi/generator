@@ -14,7 +14,7 @@ weight: 77
 {{#functions}}
 
 <a name="{{name}}"></a>
-## {{name}}()
+### {{name}}()
 {{description}}
 
 {{#if params.length}}
@@ -24,7 +24,7 @@ weight: 77
 | Name | Type | Description |
 |------|------|-------------|
 {{#each params}}
-| {{name}} | <code>{{{escapeType type.names.[0]}}}</code> | {{description}} |
+| {{name}} | `{{{type.names.[0]}}}` | {{description}} |
 {{/each}}
 
 {{/if}}

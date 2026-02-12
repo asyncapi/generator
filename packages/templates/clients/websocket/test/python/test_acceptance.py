@@ -53,7 +53,7 @@ def test_hoppscotch_client_sends_message():
         "testEndpoint": "ws://websocket-acceptance-tester-py:8083/ws",
         "runnerType": "ASYNC_API_SCHEMA",
         "timeout": 30000,
-        "filteredOperations": ["SEND handleEchoMessage"]
+        "filteredOperations": ["RECEIVE handleEchoMessage"]
     }
     
     server_ready = threading.Event()

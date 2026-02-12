@@ -1,5 +1,9 @@
 import { Text } from '@asyncapi/generator-react-sdk';
 
+/**
+ * @typedef {'python' | 'javascript' } Language
+ * Supported programming languages.
+ */
 const usageConfig = {
   python: (clientName, clientFileName) => `
 from ${clientFileName.replace('.py', '')} import ${clientName}
@@ -30,6 +34,32 @@ main();
 `,
 };
 
+/**
+ * Renders a usage example snippet for a generated WebSocket client in a given language.
+ * 
+ * @param {Object} props - Component props
+ * @param {string} props.clientName - The exported name of the client.
+ * @param {string} props.clientFileName - The file name where the client is defined.
+ * @param {Language} props.language - The target language for which to render the usage snippet
+ * @returns {JSX.Element} A Text component containing a formatted usage example snippet.
+ * 
+ * @example
+ * const clientName = "MyClient";
+ * const clientFileName = "myClient.js";
+ * const language = "javascript";
+ * 
+ * function renderUsage(){
+ *   return (
+ *     <Usage 
+ *        clientName={clientName} 
+ *        clientFileName={clientFileName} 
+ *        language={language}
+ *     />
+ *   )
+ * }
+ * 
+ * renderUsage();
+ */
 export function Usage({ clientName, clientFileName, language }) {
   const snippetFn = usageConfig[language];
   const snippet = snippetFn(clientName, clientFileName);

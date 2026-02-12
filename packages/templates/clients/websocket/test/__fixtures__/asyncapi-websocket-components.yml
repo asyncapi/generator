@@ -26,6 +26,8 @@ channels:
             bids:
               type: boolean
               default: true
+            sessionId:
+              type: string
     messages:
       testMessage:
         summary: Test message

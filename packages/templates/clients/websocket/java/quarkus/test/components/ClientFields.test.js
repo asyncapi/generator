@@ -21,19 +21,19 @@ describe('ClientFields component (integration with AsyncAPI document)', () => {
 
   test('renders base fields without query param fields when queryParams is null', () => {
     const result = render(
-        <ClientFields 
-            queryParams={null} 
-            clientName="WebSocketClient" 
-        />
+      <ClientFields 
+        queryParams={null} 
+        clientName="WebSocketClient" 
+      />
     );
     expect(result.trim()).toMatchSnapshot();
   });
 
   test('renders base fields without query param fields when queryParams is undefined', () => {
     const result = render(
-        <ClientFields 
-            clientName="WebSocketClient" 
-        />
+      <ClientFields 
+        clientName="WebSocketClient" 
+      />
     );
     expect(result.trim()).toMatchSnapshot();
   });
@@ -41,20 +41,20 @@ describe('ClientFields component (integration with AsyncAPI document)', () => {
   test('renders base fields without query param fields when queryParams is empty Map', () => {
     const emptyMap = new Map();
     const result = render(
-        <ClientFields 
-            queryParams={emptyMap} 
-            clientName="WebSocketClient" 
-        />
+      <ClientFields 
+        queryParams={emptyMap} 
+        clientName="WebSocketClient" 
+      />
     );
     expect(result.trim()).toMatchSnapshot();
   });
 
   test('renders base fields with query param fields when queryParams has data from fixture', () => {
     const result = render(
-        <ClientFields 
-            queryParams={queryParams} 
-            clientName="WebSocketClient" 
-        />
+      <ClientFields 
+        queryParams={queryParams} 
+        clientName="WebSocketClient" 
+      />
     );
     expect(result.trim()).toMatchSnapshot();
   });

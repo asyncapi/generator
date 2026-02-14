@@ -127,6 +127,7 @@ Renders a WebSocket close connection method with optional pre- and post-executio
 **Example**
 
 ```js
+import { CloseConnection } from "@asyncapi/generator-components";
 const language = "java";
 const framework = "quarkus";
 const methodName = "terminateConnection";
@@ -178,6 +179,7 @@ Renders a WebSocket connection method for the specified programming language.
 **Example**
 
 ```js
+import { Connect } from "@asyncapi/generator-components";
 const language = "python";
 const title = "HoppscotchEchoWebSocketClient";
 
@@ -221,6 +223,7 @@ Renders the top-of-file dependency statements for the selected programming langu
 **Example**
 
 ```js
+import { DependencyProvider } from "@asyncapi/generator-components";
 const language = "java";
 const framework = "quarkus";
 const role = "client";
@@ -321,6 +324,7 @@ Renders a WebSocket message handler method with optional pre- and post-execution
 **Example**
 
 ```js
+import { HandleMessage } from "@asyncapi/generator-components";
 const language = "javascript";
 const methodName = "handleMessage";
 const methodParams = ["message","cb"];
@@ -385,6 +389,7 @@ Renders a language-specific formatted method definition.
 **Example**
 
 ```js
+import { MethodGenerator } from "@asyncapi/generator-components";
 const language = "java";
 const methodName = "registerHandler";
 const methodParams = ["Handler handler"];
@@ -497,6 +502,7 @@ Renders a WebSocket onClose event handler for the specified programming language
 **Example**
 
 ```js
+import { OnClose } from "@asyncapi/generator-components";
 const language = "java";
 const framework = "quarkus";
 const title = "HoppscotchEchoWebSocketClient";
@@ -539,6 +545,7 @@ Renders a WebSocket onError event handler for the specified programming language
 **Example**
 
 ```js
+import { OnError } from "@asyncapi/generator-components";
 const language = "javascript";
 
 function renderOnError() {
@@ -575,6 +582,7 @@ Renders a WebSocket onMessage event handler for the specified programming langua
 **Example**
 
 ```js
+import { OnMessage } from "@asyncapi/generator-components";
 const language = "javascript";
 
 function renderOnMessage() {
@@ -613,6 +621,7 @@ Renders a WebSocket onOpen event handler for the specified programming language.
 **Example**
 
 ```js
+import { OnOpen } from "@asyncapi/generator-components";
 const language = "java";
 const framework = "quarkus";
 const title = "HoppscotchEchoWebSocketClient";
@@ -759,6 +768,7 @@ Renders a list of core WebSocket client methods for a given target language.
 **Example**
 
 ```js
+import { CoreMethods } from "@asyncapi/generator-components";
 const language = "javascript";
 
 function renderCoreMethods() {
@@ -795,6 +805,7 @@ Renders the Installation Command for a given language.
 **Example**
 
 ```js
+import { Installation } from "@asyncapi/generator-components";
 const language = "javascript";
 
 function renderInstallation() {
@@ -1041,6 +1052,7 @@ Renders a usage example snippet for a generated WebSocket client in a given lang
 **Example**
 
 ```js
+import { Usage } from "@asyncapi/generator-components";
 const clientName = "MyClient";
 const clientFileName = "myClient.js";
 const language = "javascript";
@@ -1088,6 +1100,7 @@ Renders a WebSocket error handler registration method with optional pre- and pos
 **Example**
 
 ```js
+import { RegisterErrorHandler } from "@asyncapi/generator-components";
 const language = "python";
 const methodName = "registerErrorHandler";
 const methodParams = ["self", "handler"];
@@ -1140,6 +1153,7 @@ Renders a WebSocket message handler registration method with optional pre- and p
 **Example**
 
 ```js
+import { RegisterMessageHandler } from "@asyncapi/generator-components";
 const language = "python";
 const methodName = "registerMessageHandler";
 const methodParams = ["self", "handler"];

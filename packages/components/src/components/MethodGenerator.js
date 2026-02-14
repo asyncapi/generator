@@ -89,6 +89,7 @@ const buildIndentedLogic = (logic, preExecutionCode, postExecutionCode, indentSi
  * @returns {JSX.Element} A Text component that contains method block with appropriate formatting.
  * 
  * @example
+ * import { MethodGenerator } from "@asyncapi/generator-components";
  * const language = "java";
  * const methodName = "registerHandler";
  * const methodParams = ["Handler handler"];

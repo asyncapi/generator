@@ -43,6 +43,7 @@ else:
  * @returns {JSX.Element} A Text component that contains method block with appropriate formatting.
  * 
  * @example
+ * import { RegisterErrorHandler } from "@asyncapi/generator-components";
  * const language = "python";
  * const methodName = "registerErrorHandler";
  * const methodParams = ["self", "handler"];

@@ -1,0 +1,250 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EchoWebSocket component (integration with AsyncAPI document) renders with default path when pathName is null 1`] = `
+"@WebSocketClient(path = \\"/\\")  
+public class WebSocketClient{
+
+  @Inject
+  public WebSocketClientConnection connection;
+
+  private static final Logger LOG = Logger.getLogger(WebSocketClient.class);
+
+
+  private HashMap<String, String> params;
+  private String heartbeat;
+  private String bids;
+  private String sessionId;
+
+  public WebSocketClient(){
+      this(\\"false\\", \\"true\\", null);
+  }
+
+  public WebSocketClient(String heartbeat, String bids, String sessionId){
+      params = new HashMap<>(); 
+      this.heartbeat = (heartbeat != null && !heartbeat.isEmpty()) ? heartbeat : System.getenv(\\"HEARTBEAT\\");
+      if (this.heartbeat != null){
+        params.put(\\"heartbeat\\", this.heartbeat);
+      }
+      this.bids = (bids != null && !bids.isEmpty()) ? bids : System.getenv(\\"BIDS\\");
+      if (this.bids != null){
+        params.put(\\"bids\\", this.bids);
+      }
+      this.sessionId = (sessionId != null && !sessionId.isEmpty()) ? sessionId : System.getenv(\\"SESSIONID\\");
+      if (this.sessionId != null){
+        params.put(\\"sessionId\\", this.sessionId);
+      }
+  }
+
+  @OnOpen
+  public void onOpen() {
+      String broadcastMessage = \\"Echo called from WebSocket Components Test Fixture server\\";
+      LOG.info(\\"Connected to WebSocket Components Test Fixture server\\");
+      LOG.info(broadcastMessage);
+  }
+
+  @OnTextMessage
+  public void handleTextMessage(String message, WebSocketClientConnection connection) {
+      LOG.info(\\"Handler received text message: \\" + message);
+      if (message != null && message.contains(\\"sendMessage\\")) {
+          sendMessage(message, connection);
+      }
+      else if (message != null && message.contains(\\"sendNotification\\")) {
+          sendNotification(message, connection);
+      }
+      else {
+          LOG.warn(\\"Handler received unrecognized message type. Falling back to default handler.\\");
+          // Note: By default, we route unrecognized messages to the first operation handler.
+          // Depending on your business logic, you may want to change this behavior.
+          sendMessage(message, connection);
+      }
+  }
+
+  public void sendMessage(String message, WebSocketClientConnection connection) {
+      LOG.info(\\"Processing sendMessage type message: \\" + message);
+      // TODO: implement processing logic for sendMessage
+  }
+
+  public void sendNotification(String message, WebSocketClientConnection connection) {
+      LOG.info(\\"Processing sendNotification type message: \\" + message);
+      // TODO: implement processing logic for sendNotification
+  }
+
+  @OnError
+  public void onError(Throwable throwable) {
+      LOG.error(\\"Websocket connection error: \\" + throwable.getMessage());
+  }
+
+
+  @OnClose
+  public void onClose(CloseReason reason, WebSocketClientConnection connection) {
+    int code = reason.getCode();
+    LOG.info(\\"Websocket disconnected from WebSocket Components Test Fixture with Close code: \\" + code);
+  }
+}"
+`;
+
+exports[`EchoWebSocket component (integration with AsyncAPI document) renders with default path when pathName is undefined 1`] = `
+"@WebSocketClient(path = \\"/\\")  
+public class WebSocketClient{
+
+  @Inject
+  public WebSocketClientConnection connection;
+
+  private static final Logger LOG = Logger.getLogger(WebSocketClient.class);
+
+
+  private HashMap<String, String> params;
+  private String heartbeat;
+  private String bids;
+  private String sessionId;
+
+  public WebSocketClient(){
+      this(\\"false\\", \\"true\\", null);
+  }
+
+  public WebSocketClient(String heartbeat, String bids, String sessionId){
+      params = new HashMap<>(); 
+      this.heartbeat = (heartbeat != null && !heartbeat.isEmpty()) ? heartbeat : System.getenv(\\"HEARTBEAT\\");
+      if (this.heartbeat != null){
+        params.put(\\"heartbeat\\", this.heartbeat);
+      }
+      this.bids = (bids != null && !bids.isEmpty()) ? bids : System.getenv(\\"BIDS\\");
+      if (this.bids != null){
+        params.put(\\"bids\\", this.bids);
+      }
+      this.sessionId = (sessionId != null && !sessionId.isEmpty()) ? sessionId : System.getenv(\\"SESSIONID\\");
+      if (this.sessionId != null){
+        params.put(\\"sessionId\\", this.sessionId);
+      }
+  }
+
+  @OnOpen
+  public void onOpen() {
+      String broadcastMessage = \\"Echo called from WebSocket Components Test Fixture server\\";
+      LOG.info(\\"Connected to WebSocket Components Test Fixture server\\");
+      LOG.info(broadcastMessage);
+  }
+
+  @OnTextMessage
+  public void handleTextMessage(String message, WebSocketClientConnection connection) {
+      LOG.info(\\"Handler received text message: \\" + message);
+      if (message != null && message.contains(\\"sendMessage\\")) {
+          sendMessage(message, connection);
+      }
+      else if (message != null && message.contains(\\"sendNotification\\")) {
+          sendNotification(message, connection);
+      }
+      else {
+          LOG.warn(\\"Handler received unrecognized message type. Falling back to default handler.\\");
+          // Note: By default, we route unrecognized messages to the first operation handler.
+          // Depending on your business logic, you may want to change this behavior.
+          sendMessage(message, connection);
+      }
+  }
+
+  public void sendMessage(String message, WebSocketClientConnection connection) {
+      LOG.info(\\"Processing sendMessage type message: \\" + message);
+      // TODO: implement processing logic for sendMessage
+  }
+
+  public void sendNotification(String message, WebSocketClientConnection connection) {
+      LOG.info(\\"Processing sendNotification type message: \\" + message);
+      // TODO: implement processing logic for sendNotification
+  }
+
+  @OnError
+  public void onError(Throwable throwable) {
+      LOG.error(\\"Websocket connection error: \\" + throwable.getMessage());
+  }
+
+
+  @OnClose
+  public void onClose(CloseReason reason, WebSocketClientConnection connection) {
+    int code = reason.getCode();
+    LOG.info(\\"Websocket disconnected from WebSocket Components Test Fixture with Close code: \\" + code);
+  }
+}"
+`;
+
+exports[`EchoWebSocket component (integration with AsyncAPI document) renders with path from fixture 1`] = `
+"@WebSocketClient(path = \\"/test\\")  
+public class WebSocketClient{
+
+  @Inject
+  public WebSocketClientConnection connection;
+
+  private static final Logger LOG = Logger.getLogger(WebSocketClient.class);
+
+
+  private HashMap<String, String> params;
+  private String heartbeat;
+  private String bids;
+  private String sessionId;
+
+  public WebSocketClient(){
+      this(\\"false\\", \\"true\\", null);
+  }
+
+  public WebSocketClient(String heartbeat, String bids, String sessionId){
+      params = new HashMap<>(); 
+      this.heartbeat = (heartbeat != null && !heartbeat.isEmpty()) ? heartbeat : System.getenv(\\"HEARTBEAT\\");
+      if (this.heartbeat != null){
+        params.put(\\"heartbeat\\", this.heartbeat);
+      }
+      this.bids = (bids != null && !bids.isEmpty()) ? bids : System.getenv(\\"BIDS\\");
+      if (this.bids != null){
+        params.put(\\"bids\\", this.bids);
+      }
+      this.sessionId = (sessionId != null && !sessionId.isEmpty()) ? sessionId : System.getenv(\\"SESSIONID\\");
+      if (this.sessionId != null){
+        params.put(\\"sessionId\\", this.sessionId);
+      }
+  }
+
+  @OnOpen
+  public void onOpen() {
+      String broadcastMessage = \\"Echo called from WebSocket Components Test Fixture server\\";
+      LOG.info(\\"Connected to WebSocket Components Test Fixture server\\");
+      LOG.info(broadcastMessage);
+  }
+
+  @OnTextMessage
+  public void handleTextMessage(String message, WebSocketClientConnection connection) {
+      LOG.info(\\"Handler received text message: \\" + message);
+      if (message != null && message.contains(\\"sendMessage\\")) {
+          sendMessage(message, connection);
+      }
+      else if (message != null && message.contains(\\"sendNotification\\")) {
+          sendNotification(message, connection);
+      }
+      else {
+          LOG.warn(\\"Handler received unrecognized message type. Falling back to default handler.\\");
+          // Note: By default, we route unrecognized messages to the first operation handler.
+          // Depending on your business logic, you may want to change this behavior.
+          sendMessage(message, connection);
+      }
+  }
+
+  public void sendMessage(String message, WebSocketClientConnection connection) {
+      LOG.info(\\"Processing sendMessage type message: \\" + message);
+      // TODO: implement processing logic for sendMessage
+  }
+
+  public void sendNotification(String message, WebSocketClientConnection connection) {
+      LOG.info(\\"Processing sendNotification type message: \\" + message);
+      // TODO: implement processing logic for sendNotification
+  }
+
+  @OnError
+  public void onError(Throwable throwable) {
+      LOG.error(\\"Websocket connection error: \\" + throwable.getMessage());
+  }
+
+
+  @OnClose
+  public void onClose(CloseReason reason, WebSocketClientConnection connection) {
+    int code = reason.getCode();
+    LOG.info(\\"Websocket disconnected from WebSocket Components Test Fixture with Close code: \\" + code);
+  }
+}"
+`;

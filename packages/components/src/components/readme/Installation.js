@@ -17,6 +17,7 @@ const installCommands = {
  * @returns {JSX.Element} A Text component that contains Installation Command.
  * 
  * @example
+ * import { Installation } from "@asyncapi/generator-components";
  * const language = "javascript";
  * 
  * function renderInstallation() {

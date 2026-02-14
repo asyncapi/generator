@@ -10,7 +10,7 @@ export function Send({ sendOperations }) {
       {
         `
 @staticmethod
-async def _send(message, socket):
+def _send(message, socket):
     """
     Internal helper to handle the actual sending logic.
 
@@ -24,7 +24,7 @@ async def _send(message, socket):
     try:
         if isinstance(message, dict):
             message = json.dumps(message)
-        await socket.send(message)
+        socket.send(message)
     except Exception as e:
         print("Error sending:", e)`
       }

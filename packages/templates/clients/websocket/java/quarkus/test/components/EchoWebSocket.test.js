@@ -1,7 +1,7 @@
 import path from 'path';
 import { render } from '@asyncapi/generator-react-sdk';
 import { Parser, fromFile } from '@asyncapi/parser';
-import { getQueryParams, getServer, getTitle } from '@asyncapi/generator-helpers';
+import { getQueryParams, getTitle } from '@asyncapi/generator-helpers';
 import { EchoWebSocket } from '../../components/EchoWebSocket.js';
 
 const parser = new Parser();

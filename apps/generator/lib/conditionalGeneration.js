@@ -111,9 +111,7 @@ async function conditionalSubjectGeneration (
   const server = templateParams.server && asyncapiDocument.servers().get(templateParams.server);
   const source = jmespath.search({
     ...asyncapiDocument.json(),
-    ...{
-      server: server ? server.json() : undefined,
-    },
+    server: server ? server.json() : undefined,
   }, subject);
 
   if (!source) {

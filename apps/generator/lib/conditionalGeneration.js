@@ -139,8 +139,6 @@ async function validateStatus(
   if (!validation) {
     return false; 
   }
-
-  
   const isValid = validation(argument);
 
   if (!isValid) {
@@ -154,6 +152,7 @@ async function validateStatus(
 
     return false;
   }
+  
   return true;
 }
 

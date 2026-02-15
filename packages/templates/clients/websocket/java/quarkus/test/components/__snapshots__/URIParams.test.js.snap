@@ -16,6 +16,12 @@ exports[`URIParams component (integration with AsyncAPI document) renders URI pa
             }
             query += \\"&bids=\\" + URLEncoder.encode(bids, StandardCharsets.UTF_8);
 
+            String sessionId = System.getenv(\\"SESSIONID\\");
+            if(sessionId == null || sessionId.isEmpty()){
+              throw new IllegalArgumentException(\\"Required environment variable SESSIONID is missing or empty\\");
+            }
+            query += \\"&sessionId=\\" + URLEncoder.encode(sessionId, StandardCharsets.UTF_8);
+
 
             String queryUri = baseURI + \\"/link\\" + \\"?\\" + query;
             WebSocketClientConnection connection = connector.baseUri(queryUri).connectAndAwait();

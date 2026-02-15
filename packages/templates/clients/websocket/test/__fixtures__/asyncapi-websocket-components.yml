@@ -26,6 +26,8 @@ channels:
             bids:
               type: boolean
               default: true
+            sessionId:
+              type: string
     messages:
       testMessage:
         summary: Test message
@@ -46,5 +48,21 @@ operations:
     channel:
       $ref: '#/channels/testChannel'
     summary: Send notification
+    messages:
+      - $ref: '#/channels/testChannel/messages/testMessage'
+  
+  receiveMessage:
+    action: receive
+    channel:
+      $ref: '#/channels/testChannel'
+    summary: Receive a message
+    messages:
+      - $ref: '#/channels/testChannel/messages/testMessage'
+  
+  receiveNotification:
+    action: receive
+    channel:
+      $ref: '#/channels/testChannel'
+    summary: Receive notification
     messages:
       - $ref: '#/channels/testChannel/messages/testMessage'

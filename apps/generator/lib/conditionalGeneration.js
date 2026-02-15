@@ -12,11 +12,11 @@ const jmespath = require('jmespath');
  * @param {AsyncAPIDocument} asyncapiDocument - The AsyncAPI document used for evaluating conditions.
  * @returns {Promise<boolean>} A promise that resolves to `true` if the condition is met, allowing the file or folder to render; otherwise, resolves to `false`. 
  */
-async function isGenerationConditionMet(
+async function isGenerationConditionMet (
   templateConfig,
   matchedConditionPath,
   templateParams,
-  asyncapiDocument
+  asyncapiDocument 
 ) {
   const conditionFilesGeneration = templateConfig?.conditionalFiles?.[matchedConditionPath] || {};
   const conditionalGeneration = templateConfig?.conditionalGeneration?.[matchedConditionPath] || {};

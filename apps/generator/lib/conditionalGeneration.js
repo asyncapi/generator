@@ -12,17 +12,17 @@ const jmespath = require('jmespath');
  * @param {AsyncAPIDocument} asyncapiDocument - The AsyncAPI document used for evaluating conditions.
  * @returns {Promise<boolean>} A promise that resolves to `true` if the condition is met, allowing the file or folder to render; otherwise, resolves to `false`. 
  */
-async function isGenerationConditionMet (
+async function isGenerationConditionMet(
   templateConfig,
   matchedConditionPath,
   templateParams,
-  asyncapiDocument 
+  asyncapiDocument
 ) {
   const conditionFilesGeneration = templateConfig?.conditionalFiles?.[matchedConditionPath] || {};
   const conditionalGeneration = templateConfig?.conditionalGeneration?.[matchedConditionPath] || {};
 
-  const config = Object.keys(conditionFilesGeneration).length > 0 
-    ? conditionFilesGeneration 
+  const config = Object.keys(conditionFilesGeneration).length > 0
+    ? conditionFilesGeneration
     : conditionalGeneration;
 
   const subject = config?.subject;
@@ -42,10 +42,11 @@ async function isGenerationConditionMet (
       return conditionalSubjectGeneration(
         asyncapiDocument,
         templateConfig,
-        matchedConditionPath
+        matchedConditionPath,
+        templateParams
       );
     }
-    return conditionalParameterGeneration(templateConfig,matchedConditionPath,templateParams);
+    return conditionalParameterGeneration(templateConfig, matchedConditionPath, templateParams);
   }
 };
 
@@ -77,7 +78,7 @@ async function conditionalParameterGeneration(templateConfig, matchedConditionPa
  * @param {Object} templateParams - The parameters passed to the generator, usually user input or default values.
  * @returns {Boolean} - Returns `true` if the file should be included; `false` if it should be skipped.
  */
-async function conditionalFilesGenerationDeprecatedVersion (
+async function conditionalFilesGenerationDeprecatedVersion(
   asyncapiDocument,
   templateConfig,
   matchedConditionPath,
@@ -96,7 +97,7 @@ async function conditionalFilesGenerationDeprecatedVersion (
  * @param {Object} templateParams - Parameters passed to the template.
  * @returns {Boolean} - Returns `true` if the file should be included; `false` if it should be skipped.
  */
-async function conditionalSubjectGeneration (
+async function conditionalSubjectGeneration(
   asyncapiDocument,
   templateConfig,
   matchedConditionPath,
@@ -105,7 +106,7 @@ async function conditionalSubjectGeneration (
 ) {
   const fileCondition = templateConfig.conditionalGeneration?.[matchedConditionPath] || templateConfig.conditionalFiles?.[matchedConditionPath];
   if (!fileCondition || !fileCondition.subject) {
-    return true; 
+    return true;
   }
   const { subject } = fileCondition;
   const server = templateParams.server && asyncapiDocument.servers().get(templateParams.server);
@@ -117,7 +118,7 @@ async function conditionalSubjectGeneration (
   if (!source) {
     log.debug(logMessage.relativeSourceFileNotGenerated(matchedConditionPath, subject));
     return false;
-  } 
+  }
   return validateStatus(source, matchedConditionPath, templateConfig);
 }
 
@@ -136,9 +137,9 @@ async function validateStatus(
 ) {
   const validation = templateConfig.conditionalGeneration?.[matchedConditionPath]?.validate || templateConfig.conditionalFiles?.[matchedConditionPath]?.validate;
   if (!validation) {
-    return false; 
+    return false;
   }
- 
+
   const isValid = validation(argument);
 
   if (!isValid) {
@@ -149,7 +150,7 @@ async function validateStatus(
       // TODO: https://github.com/asyncapi/generator/issues/1553
       log.debug(logMessage.conditionalFilesMatched(matchedConditionPath));
     }
- 
+
     return false;
   }
   return true;

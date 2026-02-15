@@ -149,10 +149,8 @@ async function validateStatus(
       // TODO: https://github.com/asyncapi/generator/issues/1553
       log.debug(logMessage.conditionalFilesMatched(matchedConditionPath));
     }
-
     return false;
   }
-  
   return true;
 }
 

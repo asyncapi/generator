@@ -21,8 +21,8 @@ async function isGenerationConditionMet (
   const conditionFilesGeneration = templateConfig?.conditionalFiles?.[matchedConditionPath] || {};
   const conditionalGeneration = templateConfig?.conditionalGeneration?.[matchedConditionPath] || {};
 
-  const config = Object.keys(conditionFilesGeneration).length > 0
-    ? conditionFilesGeneration
+  const config = Object.keys(conditionFilesGeneration).length > 0 
+    ? conditionFilesGeneration 
     : conditionalGeneration;
 
   const subject = config?.subject;
@@ -46,7 +46,7 @@ async function isGenerationConditionMet (
         templateParams
       );
     }
-    return conditionalParameterGeneration(templateConfig, matchedConditionPath, templateParams);
+    return conditionalParameterGeneration(templateConfig,matchedConditionPath,templateParams);
   }
 };
 
@@ -78,7 +78,7 @@ async function conditionalParameterGeneration(templateConfig, matchedConditionPa
  * @param {Object} templateParams - The parameters passed to the generator, usually user input or default values.
  * @returns {Boolean} - Returns `true` if the file should be included; `false` if it should be skipped.
  */
-async function conditionalFilesGenerationDeprecatedVersion(
+async function conditionalFilesGenerationDeprecatedVersion (
   asyncapiDocument,
   templateConfig,
   matchedConditionPath,
@@ -97,7 +97,7 @@ async function conditionalFilesGenerationDeprecatedVersion(
  * @param {Object} templateParams - Parameters passed to the template.
  * @returns {Boolean} - Returns `true` if the file should be included; `false` if it should be skipped.
  */
-async function conditionalSubjectGeneration(
+async function conditionalSubjectGeneration (
   asyncapiDocument,
   templateConfig,
   matchedConditionPath,
@@ -106,7 +106,7 @@ async function conditionalSubjectGeneration(
 ) {
   const fileCondition = templateConfig.conditionalGeneration?.[matchedConditionPath] || templateConfig.conditionalFiles?.[matchedConditionPath];
   if (!fileCondition || !fileCondition.subject) {
-    return true;
+    return true; 
   }
   const { subject } = fileCondition;
   const server = templateParams.server && asyncapiDocument.servers().get(templateParams.server);
@@ -118,7 +118,7 @@ async function conditionalSubjectGeneration(
   if (!source) {
     log.debug(logMessage.relativeSourceFileNotGenerated(matchedConditionPath, subject));
     return false;
-  }
+  } 
   return validateStatus(source, matchedConditionPath, templateConfig);
 }
 
@@ -137,9 +137,10 @@ async function validateStatus(
 ) {
   const validation = templateConfig.conditionalGeneration?.[matchedConditionPath]?.validate || templateConfig.conditionalFiles?.[matchedConditionPath]?.validate;
   if (!validation) {
-    return false;
+    return false; 
   }
 
+  
   const isValid = validation(argument);
 
   if (!isValid) {

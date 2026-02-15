@@ -55,7 +55,7 @@ describe('Utils', () => {
       expect(log.debug).toHaveBeenCalledWith(logMessage.templateNotFound(templateNpmName));
     });
 
-    it('doesnot work with a url', async () => {
+    it('does not work with a url', async () => {
       resolvePkg.__resolvePkgValue = undefined;
       resolveFrom.__resolveFromValue = undefined;
       const result = utils.getTemplateDetails(templateNpmName, 'package.json');
@@ -81,9 +81,10 @@ describe('Utils', () => {
     });
 
     it('should return false if file does not exist', async () => {
-      jest.spyOn(fs.promises, 'stat').mockRejectedValueOnce(
-        new Error('File not found')
-      );
+      const error = new Error('File not found');
+
+      jest.spyOn(fs.promises, 'stat').mockRejectedValueOnce(error);
+      jest.spyOn(log, 'debug').mockImplementation(() => {});
 
       const exists = await utils.exists('non-existing-file');
 
@@ -91,6 +92,11 @@ describe('Utils', () => {
         'non-existing-file',
         fs.constants.F_OK
       );
+
+      expect(log.debug).toHaveBeenCalledWith(
+        `File non-existing-file couldn't be found. Error: ${error.message}`
+      );
+
       expect(exists).toBe(false);
     });
   });

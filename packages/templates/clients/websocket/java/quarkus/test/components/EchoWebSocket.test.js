@@ -1,7 +1,7 @@
 import path from 'path';
 import { render } from '@asyncapi/generator-react-sdk';
 import { Parser, fromFile } from '@asyncapi/parser';
-import { getQueryParams } from '@asyncapi/generator-helpers';
+import { getQueryParams, getServer, getTitle } from '@asyncapi/generator-helpers';
 import { EchoWebSocket } from '../../components/EchoWebSocket.js';
 
 const parser = new Parser();
@@ -21,9 +21,10 @@ describe('EchoWebSocket component (integration with AsyncAPI document)', () => {
     channels = parsedAsyncAPIDocument.channels();
     queryParams = getQueryParams(channels);
     operations = parsedAsyncAPIDocument.operations();
-    title = parsedAsyncAPIDocument.info().title();
-    const channel = channels.all()[0];
-    pathName = channel.address();
+    title = getTitle(parsedAsyncAPIDocument);
+    const servers = parsedAsyncAPIDocument.servers();
+    const server = servers.all()[0];
+    pathName = server.pathname();
   });
 
   test('renders with default path when pathName is null', () => {

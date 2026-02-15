@@ -1,4 +1,5 @@
 import { Text } from '@asyncapi/generator-react-sdk';
+import { unsupportedLanguage, negativeIndent, invalidMethodName, invalidNewLines, invalidMethodParams } from '../../utils/ErrorHandling';
 
 /**
  * @typedef {'python' | 'javascript' | 'dart' | 'java'} Language
@@ -75,18 +76,19 @@ const buildIndentedLogic = (logic, preExecutionCode, postExecutionCode, indentSi
  *
  * @param {Object} props - Component props.
  * @param {Language} props.language - Programming language used for method formatting.
- * @param {string} props.methodName - Name of the method.
+ * @param {string} props.methodName - Name of the method (non-empty string required).
  * @param {string[]} [props.methodParams=[]] - Method parameters.
  * @param {string} [props.methodDocs=''] - Optional documentation string.
  * @param {string} [props.methodLogic=''] - Core method logic.
  * @param {string} [props.preExecutionCode=''] - Code before main logic.
  * @param {string} [props.postExecutionCode=''] - Code after main logic.
- * @param {number} [props.indent=2] - Indentation for the method block.
+ * @param {number} [props.indent=2] - Indentation for the method block (must be >= 0).
  * @param {number} [props.newLines=1] - Number of new lines after method.
- * @param {{ returnType: string | undefined, openingTag: string | undefined, closingTag: string | undefined, indentSize: number | undefined, parameterWrap: boolean | undefined }} [props.customMethodConfig]  - Optional custom syntax configuration for the current language.
+ * @param {{ returnType: string | undefined, openingTag: string | undefined, closingTag: string | undefined, indentSize: number | undefined, parameterWrap: boolean | undefined }} [props.customMethodConfig] - Optional custom syntax configuration for the current language.
  * @param {Record<Language, { methodDocs: string | undefined, methodLogic: string | undefined } | Record<string, { methodDocs: string | undefined, methodLogic: string | undefined }>>} [props.methodConfig] - Language-level or framework-level configuration.
  * @param {string} [props.framework] - Framework name for nested configurations (e.g., 'quarkus' for Java).
  * @returns {JSX.Element} A Text component that contains method block with appropriate formatting.
+ * @throws {Error} If language is unsupported, methodName is invalid, or indent is negative.
  * 
  * @example
  * const language = "java";
@@ -133,6 +135,28 @@ export function MethodGenerator({
   methodConfig,
   framework
 }) {
+  const supportedLanguages = Object.keys(defaultMethodConfig);
+  
+  if (!supportedLanguages.includes(language)) {
+    unsupportedLanguage(language, supportedLanguages);
+  }
+
+  if (typeof methodName !== 'string' || methodName.trim() === '') {
+    invalidMethodName(methodName);
+  }
+
+  if (indent < 0) {
+    negativeIndent(indent);
+  }
+
+  if (newLines < 0) {
+    invalidNewLines(newLines);
+  }
+
+  if (!Array.isArray(methodParams)) {
+    invalidMethodParams(methodParams);
+  }
+
   const { docs: resolvedMethodDocs, logic: resolvedMethodLogic } = resolveDocsAndLogic({
     language,
     methodDocs,

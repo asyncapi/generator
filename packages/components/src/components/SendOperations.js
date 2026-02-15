@@ -1,5 +1,6 @@
 import { Text } from '@asyncapi/generator-react-sdk';
 import { toSnakeCase } from '@asyncapi/generator-helpers';
+import { unsupportedLanguage, invalidClientName, invalidOperation } from '../../utils/ErrorHandling';
 
 /**
  * @typedef {'python' | 'javascript'} Language
@@ -156,13 +157,26 @@ static ${methodName}(message, socket, schemas) {
 export function SendOperations({ language, sendOperations, clientName }) {
   if (!sendOperations || sendOperations.length === 0) {
     return null;
-  }  
+  }
+
+  const supportedLanguages = Object.keys(websocketSendOperationConfig);
+  
+  if (!supportedLanguages.includes(language)) {
+    unsupportedLanguage(language, supportedLanguages);
+  }
+
+  if (typeof clientName !== 'string' || clientName.trim() === '') {
+    invalidClientName(clientName);
+  }
 
   const generateSendOperationCode = websocketSendOperationConfig[language];
 
   return sendOperations.map((operation) => {
-    const { nonStaticMethod, staticMethod } = generateSendOperationCode(operation, clientName);
+    if (!operation || typeof operation.id !== 'function' || !operation.id()) {
+      invalidOperation();
+    }
 
+    const { nonStaticMethod, staticMethod } = generateSendOperationCode(operation, clientName);
     return (
       <>
         <Text indent={2} newLines={2}>

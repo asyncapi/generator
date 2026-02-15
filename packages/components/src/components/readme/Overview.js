@@ -1,4 +1,5 @@
 import { Text } from '@asyncapi/generator-react-sdk';
+import { invalidInfo } from '../../../utils/ErrorHandling';
 
 /**
  * Renders an overview section for a WebSocket client.
@@ -44,6 +45,10 @@ import { Text } from '@asyncapi/generator-react-sdk';
  */
 
 export function Overview({ info, title, serverUrl }) {
+  if (!info) {
+    invalidInfo();
+  }
+
   return (
     <Text newLines={2}>
       {`## Overview

@@ -1,4 +1,5 @@
 import { Text } from '@asyncapi/generator-react-sdk';
+import { unsupportedLanguage, invalidInfo, invalidServer } from '../../utils/ErrorHandling';
 
 /**
  * @typedef {'python' | 'javascript' | 'typescript' | 'java' | 'csharp' | 'rust' | 'dart'} Language
@@ -54,6 +55,20 @@ const commentConfig = {
  * renderFileHeader().catch(console.error);
  */
 export function FileHeaderInfo({ info, server, language }) {
+  if (!info) {
+    invalidInfo();
+  }
+
+  if (!server) {
+    invalidServer();
+  }
+
+  const supportedLanguages = Object.keys(commentConfig);
+  
+  if (!supportedLanguages.includes(language)) {
+    unsupportedLanguage(language, supportedLanguages);
+  }
+
   const { commentChar, lineStyle } = commentConfig[language] || { 
     commentChar: '//', 
     lineStyle: '//'.repeat(25) 

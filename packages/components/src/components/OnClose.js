@@ -1,4 +1,5 @@
 import { Text } from '@asyncapi/generator-react-sdk';
+import { unsupportedFramework, unsupportedLanguage } from '../../utils/ErrorHandling';
 
 /**
  * @typedef {'python' | 'javascript' | 'dart' | 'java' } Language
@@ -96,15 +97,21 @@ export function OnClose({ language, framework = '', title }) {
   let onCloseMethod = '';
   let indent = 0;
 
-  if (websocketOnCloseMethod[language]) {
-    const generateOnCloseCode = resolveCloseConfig(language, framework);
-    if (!generateOnCloseCode) {
-      return <Text indent={0}>{''}</Text>;
-    }
-    const closeResult = generateOnCloseCode(title);
-    onCloseMethod = closeResult.onCloseMethod;
-    indent = closeResult.indent ?? 0;
+  const supportedLanguages = Object.keys(websocketOnCloseMethod);
+
+  if (!websocketOnCloseMethod[language]) {
+    unsupportedLanguage(language, supportedLanguages);
   }
+  
+  const generateOnCloseCode = resolveCloseConfig(language, framework);
+
+  if (typeof generateOnCloseCode !== 'function') {
+    unsupportedFramework(language, framework, ['quarkus']);
+  }
+
+  const closeResult = generateOnCloseCode(title);
+  onCloseMethod = closeResult.onCloseMethod;
+  indent = closeResult.indent ?? 0;
 
   return (
     <Text indent={indent}>

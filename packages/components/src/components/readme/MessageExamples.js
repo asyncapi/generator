@@ -1,5 +1,6 @@
 import { getMessageExamples, getOperationMessages, toSnakeCase } from '@asyncapi/generator-helpers';
 import { Text } from '@asyncapi/generator-react-sdk';
+import { invalidOperation } from '../../../utils/ErrorHandling';
 
 const languageConfig = {
   javascript: {
@@ -67,6 +68,10 @@ client.${opId}(${JSON.stringify(payload, null, 2)})
  */
 
 export function MessageExamples({ operation }) {
+  if (!operation) {
+    invalidOperation();
+  }
+
   const operationId = operation.id();
   const messages = getOperationMessages(operation) || [];
 

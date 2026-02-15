@@ -1,4 +1,5 @@
 import { Text } from '@asyncapi/generator-react-sdk';
+import { invalidOperation } from '../../../utils/ErrorHandling';
 
 /**
  * Renders a header section for a single AsyncAPI operation.
@@ -32,6 +33,10 @@ import { Text } from '@asyncapi/generator-react-sdk';
  */
 
 export function OperationHeader({ operation }) {
+  if (!operation) {
+    invalidOperation();
+  }
+
   const operationId = operation.id();
   const summary = operation.hasSummary() ? operation.summary() : '';
   const description = operation.hasDescription() ? `\n${operation.description()}` : '';

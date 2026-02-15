@@ -1,5 +1,6 @@
 /* eslint-disable sonarjs/no-duplicate-string */
 import { Text } from '@asyncapi/generator-react-sdk';
+import { unsupportedFramework, unsupportedLanguage, invalidRole } from '../../utils/ErrorHandling';
 
 /**
  * @typedef {'python' | 'javascript' | 'dart' | 'java'} Language
@@ -58,6 +59,33 @@ const dependenciesConfig = {
 };
 
 /**
+ * Helper function to resolve dependencies for framework and role configurations.
+ *
+ * @private
+ * @param {Object} frameworkConfig - The framework configuration object.
+ * @param {string} role - The role (e.g., 'client', 'connector' for Java).
+ * @returns {string[]} Array of dependency strings or empty array.
+ */
+function resolveFrameworkDependencies(frameworkConfig, role) {
+  if (role) {
+    const supportedRoles = Object.keys(frameworkConfig);
+    if (!supportedRoles.includes(role)) {
+      invalidRole(role, supportedRoles);
+    }
+    
+    if (frameworkConfig[role] && frameworkConfig[role].dependencies) {
+      return frameworkConfig[role].dependencies;
+    }
+  }
+  
+  if (frameworkConfig.dependencies) {
+    return frameworkConfig.dependencies;
+  }
+  
+  return [];
+}
+
+/**
  * Helper function to resolve dependencies based on language, framework, and role.
  *
  * @private
@@ -68,9 +96,10 @@ const dependenciesConfig = {
  */
 function resolveDependencies(language, framework = '', role = '') {
   const config = dependenciesConfig[language];
+  const supportedLanguages = Object.keys(dependenciesConfig);
   
   if (!config) {
-    return [];
+    unsupportedLanguage(language, supportedLanguages);
   }
   
   // Handle flat structure (python, javascript, dart)
@@ -79,16 +108,12 @@ function resolveDependencies(language, framework = '', role = '') {
   }
   
   // Handle nested structure (java with quarkus framework and roles)
-  if (framework && config[framework]) {
-    const frameworkConfig = config[framework];
-    
-    if (role && frameworkConfig[role] && frameworkConfig[role].dependencies) {
-      return frameworkConfig[role].dependencies;
+  if (framework) {
+    if (!config[framework]) {
+      unsupportedFramework(language, framework, ['quarkus']);
     }
     
-    if (frameworkConfig.dependencies) {
-      return frameworkConfig.dependencies;
-    }
+    return resolveFrameworkDependencies(config[framework], role);
   }
   
   return [];

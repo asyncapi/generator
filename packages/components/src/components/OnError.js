@@ -1,4 +1,5 @@
 import { Text } from '@asyncapi/generator-react-sdk';
+import { unsupportedLanguage } from '../../utils/ErrorHandling';
 
 /**
  * @typedef {'python' | 'javascript' | 'dart'} Language
@@ -68,13 +69,17 @@ const websocketOnErrorMethod = {
  */
 export function OnError({ language }) {
   let onErrorMethod = '';
+  const supportedLanguages = Object.keys(websocketOnErrorMethod);
   
-  if (websocketOnErrorMethod[language]) {
-    const generateErrorCode = websocketOnErrorMethod[language];
-    const errorResult = generateErrorCode();
-    onErrorMethod = errorResult.onErrorMethod;
-  }
+  const generateErrorCode = websocketOnErrorMethod[language];
 
+  if (!generateErrorCode) {
+    unsupportedLanguage(language, supportedLanguages);
+  }
+  
+  const errorResult = generateErrorCode();
+  onErrorMethod = errorResult.onErrorMethod;
+  
   return (
     <Text>
       {onErrorMethod}

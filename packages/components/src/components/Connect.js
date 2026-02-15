@@ -3,6 +3,7 @@ import { OnOpen } from './OnOpen';
 import { OnMessage } from './OnMessage';
 import { OnError } from './OnError';
 import { OnClose } from './OnClose';
+import { unsupportedLanguage } from '../../utils/ErrorHandling';
 
 /**
  * @typedef {'python' | 'javascript' | 'dart'} Language
@@ -115,12 +116,17 @@ Future<void> connect() async {
  * renderConnect();
  */
 export function Connect({ language, title }) {
+  const supportedLanguages = Object.keys(websocketConnectMethod);
+  const generateConnectCode = websocketConnectMethod[language];
+
+  if (!generateConnectCode) {
+    unsupportedLanguage(language, supportedLanguages);
+  }
+  
   const onOpenMethod = render(<OnOpen language={language} title={title} />);
   const onMessageMethod = render(<OnMessage language={language} />);
   const onErrorMethod = render(<OnError language={language} />);
   const onCloseMethod = render(<OnClose language={language} title={title} />);
-
-  const generateConnectCode = websocketConnectMethod[language];
 
   let connectMethod;
   

@@ -5,6 +5,7 @@ import { Installation } from './Installation';
 import { Usage } from './Usage';
 import { CoreMethods } from './CoreMethods';
 import { AvailableOperations } from './AvailableOperations';
+import { invalidAsyncAPI, invalidParams } from '../../../utils/ErrorHandling';
 
 /**
  * @typedef {'python' | 'javascript' } Language
@@ -54,6 +55,14 @@ import { AvailableOperations } from './AvailableOperations';
  */
 
 export function Readme({ asyncapi, params, language }) {
+  if (!asyncapi) {
+    invalidAsyncAPI();
+  }
+
+  if (!params) {
+    invalidParams(params);
+  }
+
   const server = getServer(asyncapi.servers(), params.server);
   const info = getInfo(asyncapi);
   const clientName = getClientName(asyncapi, params.appendClientSuffix, params.customClientName);

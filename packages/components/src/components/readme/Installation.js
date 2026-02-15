@@ -1,4 +1,5 @@
 import { Text } from '@asyncapi/generator-react-sdk';
+import { unsupportedLanguage } from '../../../utils/ErrorHandling';
 
 /**
  * @typedef {'python' | 'javascript'} Language
@@ -29,7 +30,13 @@ const installCommands = {
  */
 
 export function Installation({ language }) {
+  const supportedLanguages = Object.keys(installCommands);
   const command = installCommands[language];
+    
+  if (!command) {
+    unsupportedLanguage(language, supportedLanguages);
+  }
+
   return (
     <Text newLines={2}>
       {`## Installation

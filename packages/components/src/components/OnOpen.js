@@ -1,4 +1,5 @@
 import { Text } from '@asyncapi/generator-react-sdk';
+import { unsupportedFramework, unsupportedLanguage } from '../../utils/ErrorHandling';
 
 /**
  * @typedef {'python' | 'javascript' | 'java'} Language
@@ -81,17 +82,23 @@ export function OnOpen({ language, framework='', title }) {
   let onOpenMethod = '';
   let indent = 0;
   let newLines = 0;
-  
-  if (websocketOnOpenMethod[language]) {
-    const generateOnOpenCode = resolveOpenConfig(language, framework);
-    if (typeof generateOnOpenCode !== 'function') {
-      throw new Error(`Unsupported onOpen handler for language="${language}" framework="${framework}"`);
-    }
-    const openResult = generateOnOpenCode(title);
-    onOpenMethod = openResult.onOpenMethod;
-    indent = openResult.indent ?? 0;
-    newLines = openResult.newLines ?? 1;
+
+  const supportedLanguages = Object.keys(websocketOnOpenMethod);
+
+  if (!websocketOnOpenMethod[language]) {
+    unsupportedLanguage(language, supportedLanguages);
   }
+  
+  const generateOnOpenCode = resolveOpenConfig(language, framework);
+
+  if (typeof generateOnOpenCode !== 'function') {
+    unsupportedFramework(language, framework, ['quarkus']);
+  }
+
+  const openResult = generateOnOpenCode(title);
+  onOpenMethod = openResult.onOpenMethod;
+  indent = openResult.indent ?? 0;
+  newLines = openResult.newLines ?? 1;
 
   return (
     <Text newLines={newLines} indent={indent}>

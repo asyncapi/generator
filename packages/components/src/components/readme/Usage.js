@@ -1,4 +1,5 @@
 import { Text } from '@asyncapi/generator-react-sdk';
+import { unsupportedLanguage, invalidClientName, invalidClientFileName } from '../../../utils/ErrorHandling';
 
 /**
  * @typedef {'python' | 'javascript' } Language
@@ -61,7 +62,21 @@ main();
  * renderUsage();
  */
 export function Usage({ clientName, clientFileName, language }) {
+  const supportedLanguages = Object.keys(usageConfig);
   const snippetFn = usageConfig[language];
+
+  if (!snippetFn) {
+    unsupportedLanguage(language, supportedLanguages);
+  }
+
+  if (typeof clientName !== 'string' || clientName.trim() === '') {
+    invalidClientName(clientName);
+  }
+
+  if (typeof clientFileName !== 'string' || clientFileName.trim() === '') {
+    invalidClientFileName(clientFileName);
+  }
+
   const snippet = snippetFn(clientName, clientFileName);
 
   return (

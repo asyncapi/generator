@@ -50,3 +50,19 @@ operations:
     summary: Send notification
     messages:
       - $ref: '#/channels/testChannel/messages/testMessage'
+  
+  receiveMessage:
+    action: receive
+    channel:
+      $ref: '#/channels/testChannel'
+    summary: Receive a message
+    messages:
+      - $ref: '#/channels/testChannel/messages/testMessage'
+  
+  receiveNotification:
+    action: receive
+    channel:
+      $ref: '#/channels/testChannel'
+    summary: Receive notification
+    messages:
+      - $ref: '#/channels/testChannel/messages/testMessage'

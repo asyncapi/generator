@@ -7,6 +7,7 @@ info:
 servers:
   testServer:
     host: test.example.com
+    pathname: /ws
     protocol: wss
     description: Test WebSocket server
 
@@ -48,5 +49,21 @@ operations:
     channel:
       $ref: '#/channels/testChannel'
     summary: Send notification
+    messages:
+      - $ref: '#/channels/testChannel/messages/testMessage'
+  
+  receiveMessage:
+    action: receive
+    channel:
+      $ref: '#/channels/testChannel'
+    summary: Receive a message
+    messages:
+      - $ref: '#/channels/testChannel/messages/testMessage'
+  
+  receiveNotification:
+    action: receive
+    channel:
+      $ref: '#/channels/testChannel'
+    summary: Receive notification
     messages:
       - $ref: '#/channels/testChannel/messages/testMessage'

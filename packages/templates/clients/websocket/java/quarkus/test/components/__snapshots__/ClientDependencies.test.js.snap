@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ClientDependencies component (integration with AsyncAPI document) renders base dependencies without HashMap import when queryParams is null 1`] = `
+"package com.asyncapi;
+
+import io.quarkus.websockets.next.WebSocketClient;
+import io.quarkus.websockets.next.WebSocketClientConnection;
+import io.quarkus.websockets.next.OnOpen;
+import io.quarkus.websockets.next.OnClose;
+import io.quarkus.websockets.next.OnError;
+import io.quarkus.websockets.next.OnTextMessage;
+import io.quarkus.websockets.next.CloseReason;
+import jakarta.inject.Inject;
+import org.jboss.logging.Logger;"
+`;
+
+exports[`ClientDependencies component (integration with AsyncAPI document) renders base dependencies without HashMap import when queryParams is undefined 1`] = `
+"package com.asyncapi;
+
+import io.quarkus.websockets.next.WebSocketClient;
+import io.quarkus.websockets.next.WebSocketClientConnection;
+import io.quarkus.websockets.next.OnOpen;
+import io.quarkus.websockets.next.OnClose;
+import io.quarkus.websockets.next.OnError;
+import io.quarkus.websockets.next.OnTextMessage;
+import io.quarkus.websockets.next.CloseReason;
+import jakarta.inject.Inject;
+import org.jboss.logging.Logger;"
+`;
+
+exports[`ClientDependencies component (integration with AsyncAPI document) renders dependencies with HashMap import when queryParams has data from fixture 1`] = `
+"package com.asyncapi;
+
+import io.quarkus.websockets.next.WebSocketClient;
+import io.quarkus.websockets.next.WebSocketClientConnection;
+import io.quarkus.websockets.next.OnOpen;
+import io.quarkus.websockets.next.OnClose;
+import io.quarkus.websockets.next.OnError;
+import io.quarkus.websockets.next.OnTextMessage;
+import io.quarkus.websockets.next.CloseReason;
+import jakarta.inject.Inject;
+import org.jboss.logging.Logger;
+import java.util.HashMap;"
+`;
+
+exports[`ClientDependencies component (integration with AsyncAPI document) renders dependencies with HashMap import when queryParams is empty Map 1`] = `
+"package com.asyncapi;
+
+import io.quarkus.websockets.next.WebSocketClient;
+import io.quarkus.websockets.next.WebSocketClientConnection;
+import io.quarkus.websockets.next.OnOpen;
+import io.quarkus.websockets.next.OnClose;
+import io.quarkus.websockets.next.OnError;
+import io.quarkus.websockets.next.OnTextMessage;
+import io.quarkus.websockets.next.CloseReason;
+import jakarta.inject.Inject;
+import org.jboss.logging.Logger;
+import java.util.HashMap;"
+`;

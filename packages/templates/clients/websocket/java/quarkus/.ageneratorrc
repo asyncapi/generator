@@ -2,7 +2,7 @@ apiVersion: v3
 parameters:
   server:
     description: The name of the server described in AsyncAPI document
-    required: false
+    required: true
   appendClientSuffix:
     description: Add 'Client' suffix at the end of the class name. This option has no effect if 'customClientName' is specified.
     required: false

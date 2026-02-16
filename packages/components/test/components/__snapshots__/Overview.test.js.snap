@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing of Overview component render overview component when serverUrl is missing 1`] = `
+"## Overview
+
+This service is in charge of processing user signups
+
+- **Version:** 1.0.0
+- **Server URL:** undefined"
+`;
+
+exports[`Testing of Overview component render overview component when title is missing 1`] = `
+"## Overview
+
+This service is in charge of processing user signups
+
+- **Version:** 1.0.0
+- **Server URL:** ws://api.example.com"
+`;
+
+exports[`Testing of Overview component render overview component with all parameters 1`] = `
+"## Overview
+
+This service is in charge of processing user signups
+
+- **Version:** 1.0.0
+- **Server URL:** ws://api.example.com"
+`;

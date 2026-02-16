@@ -778,13 +778,12 @@ import java.util.Objects;
 import java.util.Map;
 
 public class Disconnect {
-  private String type;
+  private final String type = \\"disconnect\\";
   private DisconnectReasonEnum reason;
   private DebugInfo debugInfo;
   private Map<String, Object> additionalProperties;
 
   public String getType() { return this.type; }
-  public void setType(String type) { this.type = type; }
 
   public DisconnectReasonEnum getReason() { return this.reason; }
   public void setReason(DisconnectReasonEnum reason) { this.reason = reason; }
@@ -981,7 +980,7 @@ import java.util.Objects;
 public class Event {
   private String envelopeId;
   private EventPayload payload;
-  private String type;
+  private final String type = \\"events_api\\";
   private Boolean acceptsResponsePayload;
   private Integer retryAttempt;
   private String retryReason;
@@ -993,7 +992,6 @@ public class Event {
   public void setPayload(EventPayload payload) { this.payload = payload; }
 
   public String getType() { return this.type; }
-  public void setType(String type) { this.type = type; }
 
   public Boolean getAcceptsResponsePayload() { return this.acceptsResponsePayload; }
   public void setAcceptsResponsePayload(Boolean acceptsResponsePayload) { this.acceptsResponsePayload = acceptsResponsePayload; }
@@ -1179,14 +1177,13 @@ import java.util.Objects;
 import java.util.Map;
 
 public class Hello {
-  private String type;
+  private final String type = \\"hello\\";
   private ConnectionInfo connectionInfo;
   private Integer numConnections;
   private DebugInfo debugInfo;
   private Map<String, Object> additionalProperties;
 
   public String getType() { return this.type; }
-  public void setType(String type) { this.type = type; }
 
   public ConnectionInfo getConnectionInfo() { return this.connectionInfo; }
   public void setConnectionInfo(ConnectionInfo connectionInfo) { this.connectionInfo = connectionInfo; }
@@ -6286,6 +6283,13 @@ class HoppscotchClient {
       console.log('Schemas initialized successfully for operations:', this.sendOperationsId.join(', '));
     } catch (error) {
       console.error('Error initializing schemas:', error);
+      this.schemasCompiled = false;
+      if (error instanceof Error) {
+        error.message = \`Schema compilation failed: \${error.message}\`;
+        throw error;
+      } else {
+        throw new Error(\`Schema compilation failed: \${String(error)}\`);
+      }
     }
   }
 
@@ -6650,6 +6654,13 @@ class HoppscotchEchoWebSocketClient {
       console.log('Schemas initialized successfully for operations:', this.sendOperationsId.join(', '));
     } catch (error) {
       console.error('Error initializing schemas:', error);
+      this.schemasCompiled = false;
+      if (error instanceof Error) {
+        error.message = \`Schema compilation failed: \${error.message}\`;
+        throw error;
+      } else {
+        throw new Error(\`Schema compilation failed: \${String(error)}\`);
+      }
     }
   }
 
@@ -6984,6 +6995,13 @@ class PostmanEchoWebSocketClientClient {
       console.log('Schemas initialized successfully for operations:', this.sendOperationsId.join(', '));
     } catch (error) {
       console.error('Error initializing schemas:', error);
+      this.schemasCompiled = false;
+      if (error instanceof Error) {
+        error.message = \`Schema compilation failed: \${error.message}\`;
+        throw error;
+      } else {
+        throw new Error(\`Schema compilation failed: \${String(error)}\`);
+      }
     }
   }
 
@@ -7286,8 +7304,7 @@ exports[`WebSocket Clients Integration Tests Python Client Additional tests for 
 exports[`WebSocket Clients Integration Tests Python Client Additional tests for Python client generate client for slack: Disconnect.py 1`] = `
 "class Disconnect: 
   def __init__(self, input: Dict):
-    if 'type' in input:
-      self._type: str = input['type']
+    self._type: str = 'disconnect'
     if 'reason' in input:
       self._reason: DisconnectReasonEnum = DisconnectReasonEnum(input['reason'])
     if 'debug_info' in input:
@@ -7298,9 +7315,6 @@ exports[`WebSocket Clients Integration Tests Python Client Additional tests for 
   @property
   def type(self) -> str:
     return self._type
-  @type.setter
-  def type(self, type: str):
-    self._type = type
 
   @property
   def reason(self) -> DisconnectReasonEnum:
@@ -7339,8 +7353,7 @@ exports[`WebSocket Clients Integration Tests Python Client Additional tests for 
       self._envelope_id: str = input['envelope_id']
     if 'payload' in input:
       self._payload: EventPayload = EventPayload(input['payload'])
-    if 'type' in input:
-      self._type: str = input['type']
+    self._type: str = 'events_api'
     if 'accepts_response_payload' in input:
       self._accepts_response_payload: bool = input['accepts_response_payload']
     if 'retry_attempt' in input:
@@ -7365,9 +7378,6 @@ exports[`WebSocket Clients Integration Tests Python Client Additional tests for 
   @property
   def type(self) -> str:
     return self._type
-  @type.setter
-  def type(self, type: str):
-    self._type = type
 
   @property
   def accepts_response_payload(self) -> bool:
@@ -7500,8 +7510,7 @@ exports[`WebSocket Clients Integration Tests Python Client Additional tests for 
 exports[`WebSocket Clients Integration Tests Python Client Additional tests for Python client generate client for slack: Hello.py 1`] = `
 "class Hello: 
   def __init__(self, input: Dict):
-    if 'type' in input:
-      self._type: str = input['type']
+    self._type: str = 'hello'
     if 'connection_info' in input:
       self._connection_info: ConnectionInfo = ConnectionInfo(input['connection_info'])
     if 'num_connections' in input:
@@ -7514,9 +7523,6 @@ exports[`WebSocket Clients Integration Tests Python Client Additional tests for 
   @property
   def type(self) -> str:
     return self._type
-  @type.setter
-  def type(self, type: str):
-    self._type = type
 
   @property
   def connection_info(self) -> ConnectionInfo:
@@ -8165,8 +8171,10 @@ class SlackWebsocketAPIClient:
         self.error_handlers = []        # Callables for errors
         self.outgoing_processors = []   # Callables to process outgoing messages
         self._stop_event = threading.Event()
-      
         params = {}
+        self.receive_operation_handlers = {}
+        self.receive_operation_discriminators = [{\\"key\\":\\"type\\",\\"value\\":\\"hello\\",\\"operation_id\\":\\"onHelloMessage\\"},{\\"key\\":\\"type\\",\\"value\\":\\"events_api\\",\\"operation_id\\":\\"onEvent\\"},{\\"key\\":\\"type\\",\\"value\\":\\"disconnect\\",\\"operation_id\\":\\"onDisconnectMessage\\"}]
+
         ticket = ticket or os.getenv(\\"TICKET\\")
         if ticket is not None:
           params[\\"ticket\\"] = ticket
@@ -8181,7 +8189,33 @@ class SlackWebsocketAPIClient:
     print(\\"Connected to Slack Websocket API Client server\\")
 
   def on_message(self, ws, message):
-    self.handle_message(message)
+    # Parse message for routing
+    try:
+        parsed_message = json.loads(message)
+    except:
+        parsed_message = message
+
+    handled = False
+
+    # Check each operation's discriminator
+    for discriminator in self.receive_operation_discriminators:
+      key = discriminator.get(\\"key\\")
+      value = discriminator.get(\\"value\\")
+      operation_id = discriminator.get(\\"operation_id\\")
+
+      # Check if message matches this discriminator
+      if key and isinstance(parsed_message, dict) and parsed_message.get(key) == value:
+        handler = self.receive_operation_handlers.get(operation_id)
+        if handler:
+          try:
+            handler(message)
+            handled = True
+          except Exception as error:
+            print(f\\"Error in {operation_id} handler: {error}\\")
+
+    # Fallback to generic handlers if not handled
+    if not handled:
+        self.handle_message(message)
 
   def on_error(self, ws, error):
     print(\\"WebSocket Error:\\", error)
@@ -8260,6 +8294,126 @@ class SlackWebsocketAPIClient:
         # Call custom error handlers
         for handler in self.error_handlers:
           handler(error)
+
+  def register_on_hello_message_handler(self, handler, discriminator_key=None, discriminator_value=None):
+      \\"\\"\\"
+      Register a handler for onHelloMessage operation.
+
+      Args:
+          handler (callable): Handler function that receives raw_message as argument
+          discriminator_key (str): Message field to use for routing (e.g., 'type', 'event_type')
+          discriminator_value (str): Expected value for routing (e.g., 'hello', 'user_joined')
+      \\"\\"\\"
+      if not callable(handler):
+          print(\\"Handler must be callable\\")
+          return
+
+      # Validate that either both discriminator_key and discriminator_value are provided or neither
+      if (discriminator_key is not None and discriminator_value is None) or (discriminator_key is None and discriminator_value is not None):
+          print(\\"Error: Both discriminator_key and discriminator_value must be provided together\\")
+          return
+
+      # Register handler
+      self.receive_operation_handlers[\\"onHelloMessage\\"] = handler
+
+      # Add discriminator entry to the list if both key and value are provided
+      if discriminator_key is not None and discriminator_value is not None:
+          discriminator_entry = {
+              \\"key\\": discriminator_key,
+              \\"value\\": discriminator_value,
+              \\"operation_id\\": \\"onHelloMessage\\"
+          }
+        
+          # Check if this discriminator already exists
+          exists = any(
+              d.get(\\"key\\") == discriminator_key and 
+              d.get(\\"value\\") == discriminator_value and 
+              d.get(\\"operation_id\\") == \\"onHelloMessage\\" 
+              for d in self.receive_operation_discriminators
+          )
+
+          if not exists:
+            self.receive_operation_discriminators.append(discriminator_entry)
+
+  def register_on_event_handler(self, handler, discriminator_key=None, discriminator_value=None):
+      \\"\\"\\"
+      Register a handler for onEvent operation.
+
+      Args:
+          handler (callable): Handler function that receives raw_message as argument
+          discriminator_key (str): Message field to use for routing (e.g., 'type', 'event_type')
+          discriminator_value (str): Expected value for routing (e.g., 'hello', 'user_joined')
+      \\"\\"\\"
+      if not callable(handler):
+          print(\\"Handler must be callable\\")
+          return
+
+      # Validate that either both discriminator_key and discriminator_value are provided or neither
+      if (discriminator_key is not None and discriminator_value is None) or (discriminator_key is None and discriminator_value is not None):
+          print(\\"Error: Both discriminator_key and discriminator_value must be provided together\\")
+          return
+
+      # Register handler
+      self.receive_operation_handlers[\\"onEvent\\"] = handler
+
+      # Add discriminator entry to the list if both key and value are provided
+      if discriminator_key is not None and discriminator_value is not None:
+          discriminator_entry = {
+              \\"key\\": discriminator_key,
+              \\"value\\": discriminator_value,
+              \\"operation_id\\": \\"onEvent\\"
+          }
+        
+          # Check if this discriminator already exists
+          exists = any(
+              d.get(\\"key\\") == discriminator_key and 
+              d.get(\\"value\\") == discriminator_value and 
+              d.get(\\"operation_id\\") == \\"onEvent\\" 
+              for d in self.receive_operation_discriminators
+          )
+
+          if not exists:
+            self.receive_operation_discriminators.append(discriminator_entry)
+
+  def register_on_disconnect_message_handler(self, handler, discriminator_key=None, discriminator_value=None):
+      \\"\\"\\"
+      Register a handler for onDisconnectMessage operation.
+
+      Args:
+          handler (callable): Handler function that receives raw_message as argument
+          discriminator_key (str): Message field to use for routing (e.g., 'type', 'event_type')
+          discriminator_value (str): Expected value for routing (e.g., 'hello', 'user_joined')
+      \\"\\"\\"
+      if not callable(handler):
+          print(\\"Handler must be callable\\")
+          return
+
+      # Validate that either both discriminator_key and discriminator_value are provided or neither
+      if (discriminator_key is not None and discriminator_value is None) or (discriminator_key is None and discriminator_value is not None):
+          print(\\"Error: Both discriminator_key and discriminator_value must be provided together\\")
+          return
+
+      # Register handler
+      self.receive_operation_handlers[\\"onDisconnectMessage\\"] = handler
+
+      # Add discriminator entry to the list if both key and value are provided
+      if discriminator_key is not None and discriminator_value is not None:
+          discriminator_entry = {
+              \\"key\\": discriminator_key,
+              \\"value\\": discriminator_value,
+              \\"operation_id\\": \\"onDisconnectMessage\\"
+          }
+        
+          # Check if this discriminator already exists
+          exists = any(
+              d.get(\\"key\\") == discriminator_key and 
+              d.get(\\"value\\") == discriminator_value and 
+              d.get(\\"operation_id\\") == \\"onDisconnectMessage\\" 
+              for d in self.receive_operation_discriminators
+          )
+
+          if not exists:
+            self.receive_operation_discriminators.append(discriminator_entry)
 
   def close(self) :
     \\"\\"\\"Cleanly close the WebSocket connection.\\"\\"\\"
@@ -8440,7 +8594,9 @@ class HoppscotchClient:
         self.outgoing_processors = []   # Callables to process outgoing messages
         self._stop_event = threading.Event()
       
-      
+        self.receive_operation_handlers = {}
+        self.receive_operation_discriminators = []
+
 
         
         self.url = url
@@ -8449,7 +8605,33 @@ class HoppscotchClient:
     print(\\"Connected to Hoppscotch Echo WebSocket Client server\\")
 
   def on_message(self, ws, message):
-    self.handle_message(message)
+    # Parse message for routing
+    try:
+        parsed_message = json.loads(message)
+    except:
+        parsed_message = message
+
+    handled = False
+
+    # Check each operation's discriminator
+    for discriminator in self.receive_operation_discriminators:
+      key = discriminator.get(\\"key\\")
+      value = discriminator.get(\\"value\\")
+      operation_id = discriminator.get(\\"operation_id\\")
+
+      # Check if message matches this discriminator
+      if key and isinstance(parsed_message, dict) and parsed_message.get(key) == value:
+        handler = self.receive_operation_handlers.get(operation_id)
+        if handler:
+          try:
+            handler(message)
+            handled = True
+          except Exception as error:
+            print(f\\"Error in {operation_id} handler: {error}\\")
+
+    # Fallback to generic handlers if not handled
+    if not handled:
+        self.handle_message(message)
 
   def on_error(self, ws, error):
     print(\\"WebSocket Error:\\", error)
@@ -8529,8 +8711,48 @@ class HoppscotchClient:
         for handler in self.error_handlers:
           handler(error)
 
+  def register_handle_time_stamp_message_handler(self, handler, discriminator_key=None, discriminator_value=None):
+      \\"\\"\\"
+      Register a handler for handleTimeStampMessage operation.
+
+      Args:
+          handler (callable): Handler function that receives raw_message as argument
+          discriminator_key (str): Message field to use for routing (e.g., 'type', 'event_type')
+          discriminator_value (str): Expected value for routing (e.g., 'hello', 'user_joined')
+      \\"\\"\\"
+      if not callable(handler):
+          print(\\"Handler must be callable\\")
+          return
+
+      # Validate that either both discriminator_key and discriminator_value are provided or neither
+      if (discriminator_key is not None and discriminator_value is None) or (discriminator_key is None and discriminator_value is not None):
+          print(\\"Error: Both discriminator_key and discriminator_value must be provided together\\")
+          return
+
+      # Register handler
+      self.receive_operation_handlers[\\"handleTimeStampMessage\\"] = handler
+
+      # Add discriminator entry to the list if both key and value are provided
+      if discriminator_key is not None and discriminator_value is not None:
+          discriminator_entry = {
+              \\"key\\": discriminator_key,
+              \\"value\\": discriminator_value,
+              \\"operation_id\\": \\"handleTimeStampMessage\\"
+          }
+        
+          # Check if this discriminator already exists
+          exists = any(
+              d.get(\\"key\\") == discriminator_key and 
+              d.get(\\"value\\") == discriminator_value and 
+              d.get(\\"operation_id\\") == \\"handleTimeStampMessage\\" 
+              for d in self.receive_operation_discriminators
+          )
+
+          if not exists:
+            self.receive_operation_discriminators.append(discriminator_entry)
+
   @staticmethod
-  async def send_echo_message_static(message, socket):
+  def send_echo_message_static(message, socket):
       \\"\\"\\"
       Send a send_echo_message message using a provided WebSocket connection, without needing an instance.
 
@@ -8541,9 +8763,9 @@ class HoppscotchClient:
       Raises:
           Exception: If sending fails or the socket is not connected.
       \\"\\"\\"
-      await HoppscotchClient._send(message, socket)
+      HoppscotchClient._send(message, socket)
 
-  async def send_echo_message(self, message):
+  def send_echo_message(self, message):
       \\"\\"\\"
       Send a send_echo_message message using the WebSocket connection attached to this instance.
 
@@ -8553,10 +8775,10 @@ class HoppscotchClient:
       Raises:
           Exception: If sending fails or the socket is not connected.
       \\"\\"\\"
-      await self._send(message, self.ws_app)
+      self._send(message, self.ws_app)
 
   @staticmethod
-  async def _send(message, socket):
+  def _send(message, socket):
       \\"\\"\\"
       Internal helper to handle the actual sending logic.
 
@@ -8570,7 +8792,7 @@ class HoppscotchClient:
       try:
           if isinstance(message, dict):
               message = json.dumps(message)
-          await socket.send(message)
+          socket.send(message)
       except Exception as e:
           print(\\"Error sending:\\", e)
 
@@ -8753,7 +8975,9 @@ class HoppscotchEchoWebSocketClient:
         self.outgoing_processors = []   # Callables to process outgoing messages
         self._stop_event = threading.Event()
       
-      
+        self.receive_operation_handlers = {}
+        self.receive_operation_discriminators = []
+
 
         
         self.url = url
@@ -8762,7 +8986,33 @@ class HoppscotchEchoWebSocketClient:
     print(\\"Connected to Hoppscotch Echo WebSocket Client server\\")
 
   def on_message(self, ws, message):
-    self.handle_message(message)
+    # Parse message for routing
+    try:
+        parsed_message = json.loads(message)
+    except:
+        parsed_message = message
+
+    handled = False
+
+    # Check each operation's discriminator
+    for discriminator in self.receive_operation_discriminators:
+      key = discriminator.get(\\"key\\")
+      value = discriminator.get(\\"value\\")
+      operation_id = discriminator.get(\\"operation_id\\")
+
+      # Check if message matches this discriminator
+      if key and isinstance(parsed_message, dict) and parsed_message.get(key) == value:
+        handler = self.receive_operation_handlers.get(operation_id)
+        if handler:
+          try:
+            handler(message)
+            handled = True
+          except Exception as error:
+            print(f\\"Error in {operation_id} handler: {error}\\")
+
+    # Fallback to generic handlers if not handled
+    if not handled:
+        self.handle_message(message)
 
   def on_error(self, ws, error):
     print(\\"WebSocket Error:\\", error)
@@ -8842,8 +9092,48 @@ class HoppscotchEchoWebSocketClient:
         for handler in self.error_handlers:
           handler(error)
 
+  def register_handle_time_stamp_message_handler(self, handler, discriminator_key=None, discriminator_value=None):
+      \\"\\"\\"
+      Register a handler for handleTimeStampMessage operation.
+
+      Args:
+          handler (callable): Handler function that receives raw_message as argument
+          discriminator_key (str): Message field to use for routing (e.g., 'type', 'event_type')
+          discriminator_value (str): Expected value for routing (e.g., 'hello', 'user_joined')
+      \\"\\"\\"
+      if not callable(handler):
+          print(\\"Handler must be callable\\")
+          return
+
+      # Validate that either both discriminator_key and discriminator_value are provided or neither
+      if (discriminator_key is not None and discriminator_value is None) or (discriminator_key is None and discriminator_value is not None):
+          print(\\"Error: Both discriminator_key and discriminator_value must be provided together\\")
+          return
+
+      # Register handler
+      self.receive_operation_handlers[\\"handleTimeStampMessage\\"] = handler
+
+      # Add discriminator entry to the list if both key and value are provided
+      if discriminator_key is not None and discriminator_value is not None:
+          discriminator_entry = {
+              \\"key\\": discriminator_key,
+              \\"value\\": discriminator_value,
+              \\"operation_id\\": \\"handleTimeStampMessage\\"
+          }
+        
+          # Check if this discriminator already exists
+          exists = any(
+              d.get(\\"key\\") == discriminator_key and 
+              d.get(\\"value\\") == discriminator_value and 
+              d.get(\\"operation_id\\") == \\"handleTimeStampMessage\\" 
+              for d in self.receive_operation_discriminators
+          )
+
+          if not exists:
+            self.receive_operation_discriminators.append(discriminator_entry)
+
   @staticmethod
-  async def send_echo_message_static(message, socket):
+  def send_echo_message_static(message, socket):
       \\"\\"\\"
       Send a send_echo_message message using a provided WebSocket connection, without needing an instance.
 
@@ -8854,9 +9144,9 @@ class HoppscotchEchoWebSocketClient:
       Raises:
           Exception: If sending fails or the socket is not connected.
       \\"\\"\\"
-      await HoppscotchEchoWebSocketClient._send(message, socket)
+      HoppscotchEchoWebSocketClient._send(message, socket)
 
-  async def send_echo_message(self, message):
+  def send_echo_message(self, message):
       \\"\\"\\"
       Send a send_echo_message message using the WebSocket connection attached to this instance.
 
@@ -8866,10 +9156,10 @@ class HoppscotchEchoWebSocketClient:
       Raises:
           Exception: If sending fails or the socket is not connected.
       \\"\\"\\"
-      await self._send(message, self.ws_app)
+      self._send(message, self.ws_app)
 
   @staticmethod
-  async def _send(message, socket):
+  def _send(message, socket):
       \\"\\"\\"
       Internal helper to handle the actual sending logic.
 
@@ -8883,7 +9173,7 @@ class HoppscotchEchoWebSocketClient:
       try:
           if isinstance(message, dict):
               message = json.dumps(message)
-          await socket.send(message)
+          socket.send(message)
       except Exception as e:
           print(\\"Error sending:\\", e)
 
@@ -9024,7 +9314,9 @@ class PostmanEchoWebSocketClientClient:
         self.outgoing_processors = []   # Callables to process outgoing messages
         self._stop_event = threading.Event()
       
-      
+        self.receive_operation_handlers = {}
+        self.receive_operation_discriminators = []
+
 
         
         self.url = url
@@ -9033,7 +9325,33 @@ class PostmanEchoWebSocketClientClient:
     print(\\"Connected to Postman Echo WebSocket Client server\\")
 
   def on_message(self, ws, message):
-    self.handle_message(message)
+    # Parse message for routing
+    try:
+        parsed_message = json.loads(message)
+    except:
+        parsed_message = message
+
+    handled = False
+
+    # Check each operation's discriminator
+    for discriminator in self.receive_operation_discriminators:
+      key = discriminator.get(\\"key\\")
+      value = discriminator.get(\\"value\\")
+      operation_id = discriminator.get(\\"operation_id\\")
+
+      # Check if message matches this discriminator
+      if key and isinstance(parsed_message, dict) and parsed_message.get(key) == value:
+        handler = self.receive_operation_handlers.get(operation_id)
+        if handler:
+          try:
+            handler(message)
+            handled = True
+          except Exception as error:
+            print(f\\"Error in {operation_id} handler: {error}\\")
+
+    # Fallback to generic handlers if not handled
+    if not handled:
+        self.handle_message(message)
 
   def on_error(self, ws, error):
     print(\\"WebSocket Error:\\", error)
@@ -9114,7 +9432,7 @@ class PostmanEchoWebSocketClientClient:
           handler(error)
 
   @staticmethod
-  async def send_echo_message_static(message, socket):
+  def send_echo_message_static(message, socket):
       \\"\\"\\"
       Send a send_echo_message message using a provided WebSocket connection, without needing an instance.
 
@@ -9125,9 +9443,9 @@ class PostmanEchoWebSocketClientClient:
       Raises:
           Exception: If sending fails or the socket is not connected.
       \\"\\"\\"
-      await PostmanEchoWebSocketClientClient._send(message, socket)
+      PostmanEchoWebSocketClientClient._send(message, socket)
 
-  async def send_echo_message(self, message):
+  def send_echo_message(self, message):
       \\"\\"\\"
       Send a send_echo_message message using the WebSocket connection attached to this instance.
 
@@ -9137,10 +9455,10 @@ class PostmanEchoWebSocketClientClient:
       Raises:
           Exception: If sending fails or the socket is not connected.
       \\"\\"\\"
-      await self._send(message, self.ws_app)
+      self._send(message, self.ws_app)
 
   @staticmethod
-  async def _send(message, socket):
+  def _send(message, socket):
       \\"\\"\\"
       Internal helper to handle the actual sending logic.
 
@@ -9154,7 +9472,7 @@ class PostmanEchoWebSocketClientClient:
       try:
           if isinstance(message, dict):
               message = json.dumps(message)
-          await socket.send(message)
+          socket.send(message)
       except Exception as e:
           print(\\"Error sending:\\", e)
 

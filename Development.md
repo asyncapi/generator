@@ -31,7 +31,7 @@ git clone https://github.com/{your_username}/generator.git
 cd generator
 ```
 
-After cloning the repository, you should setup the fork properly and configure the `remote` repository as described [here](https://github.com/asyncapi/community/blob/master/git-workflow.md)
+After cloning the repository, you should setup the fork properly and configure the `remote` repository as described in the [AsyncAPI git workflow guidelines](https://github.com/asyncapi/community/blob/master/docs/010-contribution-guidelines/git-workflow.md)
 
 2. Install dependencies:
 
@@ -195,7 +195,7 @@ For the PR titles you can refer to [this guide](CONTRIBUTING.md?plain=1#L60)
 
 If you encounter any issues during development or testing, please check the following:
 
-1. Ensure you're using the correct Node.js version (18.20.8 or higher) and npm version (10.8.2 or higher).
+1. Ensure you're using the correct Node.js version (24.11 or higher) and npm version (11.5.1 or higher).
 2. Clear the `node_modules` directory and reinstall dependencies if you encounter unexpected behavior.
 3. For Docker-related issues, make sure Docker is running and you have sufficient permissions.
 

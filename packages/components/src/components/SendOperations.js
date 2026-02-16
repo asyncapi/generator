@@ -2,20 +2,33 @@ import { Text } from '@asyncapi/generator-react-sdk';
 import { toSnakeCase } from '@asyncapi/generator-helpers';
 
 /**
- * @typedef {'python' | 'javascript'} SupportedLanguage
+ * @typedef {'python' | 'javascript'} Language
  * Supported programming languages for WebSocket send operation generation.
  */
 
 /**
+ * @typedef {Object} SendOperationMethods
+ * @property {string} nonStaticMethod
+ * @property {string} staticMethod
+ */
+
+/**
+ * @callback SendOperationGenerator
+ * @param {Object} operation - An AsyncAPI operation object with an id() method.
+ * @param {string} clientName
+ * @returns {SendOperationMethods}
+ */
+
+/**
  * Configuration object for generating WebSocket send operations for different languages.
- * @type {Object.<string, function(operation: Object, clientName: string): {nonStaticMethod: string, staticMethod: string}>}
+ * @type {Object.<Language, SendOperationGenerator>}
  */
 const websocketSendOperationConfig = {
   python: (operation, clientName) => {
     const methodName = toSnakeCase(operation.id());
     const staticMethodName = `${methodName}_static`;
     return {
-      nonStaticMethod: `async def ${methodName}(self, message):
+      nonStaticMethod: `def ${methodName}(self, message):
     """
     Send a ${methodName} message using the WebSocket connection attached to this instance.
 
@@ -25,9 +38,9 @@ const websocketSendOperationConfig = {
     Raises:
         Exception: If sending fails or the socket is not connected.
     """
-    await self._send(message, self.ws_app)`,
+    self._send(message, self.ws_app)`,
       staticMethod: `@staticmethod
-async def ${staticMethodName}(message, socket):
+def ${staticMethodName}(message, socket):
     """
     Send a ${methodName} message using a provided WebSocket connection, without needing an instance.
 
@@ -38,7 +51,7 @@ async def ${staticMethodName}(message, socket):
     Raises:
         Exception: If sending fails or the socket is not connected.
     """
-    await ${clientName}._send(message, socket)`
+    ${clientName}._send(message, socket)`
     };
   },
   javascript: (operation, clientName) => {
@@ -103,13 +116,42 @@ static ${methodName}(message, socket, schemas) {
 };
 
 /**
- * Component for rendering WebSocket send operation methods.
+ * Renders WebSocket send operation methods.
  * Generates both static and instance methods for sending messages through WebSocket connections.
  *
  * @param {Object} props - Component props.
- * @param {SupportedLanguage} props.language - The target programming language.
+ * @param {Language} props.language - The target programming language.
  * @param {Array<Object>} props.sendOperations - Array of send operations from AsyncAPI document.
  * @param {string} props.clientName - The name of the client class.
+ * @returns {JSX.Element[]|null} Array of Text components for static and non-static WebSocket send operation methods, or null if no send operations are provided.
+ * 
+ * @example
+ * import path from "path";
+ * import { Parser, fromFile } from "@asyncapi/parser";
+ * import { SendOperations } from "@asyncapi/generator-components";
+ * 
+ * async function renderSendOperations(){
+ *    const parser = new Parser();
+ *    const asyncapi_v3_path = path.resolve(__dirname, '../__fixtures__/asyncapi-v3.yml');
+ *    
+ *    // Parse the AsyncAPI document
+ *    const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
+ *    const parsedAsyncAPIDocument = parseResult.document;
+ *    
+ *    const language = "javascript";
+ *    const clientName = "AccountServiceAPI";
+ *    const sendOperations = parsedAsyncAPIDocument.operations().filterBySend();
+ *    
+ *    return (
+ *       <SendOperations 
+ *          language={language} 
+ *          clientName={clientName} 
+ *          sendOperations={sendOperations} 
+ *       />
+ *    )
+ * }
+ * 
+ * renderSendOperations().catch(console.error);
  */
 export function SendOperations({ language, sendOperations, clientName }) {
   if (!sendOperations || sendOperations.length === 0) {

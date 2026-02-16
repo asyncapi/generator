@@ -141,7 +141,7 @@ export function MethodGenerator({
     throw unsupportedLanguage(language, supportedLanguages);
   }
 
-  if(typeof methodName !== 'string'){
+  if (typeof methodName !== 'string') {
     throw invalidMethodName();
   }
 

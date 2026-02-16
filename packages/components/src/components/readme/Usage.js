@@ -1,5 +1,5 @@
 import { Text } from '@asyncapi/generator-react-sdk';
-import { unsupportedLanguage, invalidClientName, invalidClientFileName } from '../../../utils/ErrorHandling';
+import { unsupportedLanguage, invalidClientName, invalidClientFileName } from '../../utils/ErrorHandling';
 
 /**
  * @typedef {'python' | 'javascript' } Language

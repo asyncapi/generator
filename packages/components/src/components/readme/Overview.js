@@ -1,5 +1,5 @@
 import { Text } from '@asyncapi/generator-react-sdk';
-import { invalidInfo } from '../../../utils/ErrorHandling';
+import { invalidInfo } from '../../utils/ErrorHandling';
 
 /**
  * Renders an overview section for a WebSocket client.

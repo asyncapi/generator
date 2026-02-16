@@ -1,5 +1,5 @@
 import { Text } from '@asyncapi/generator-react-sdk';
-import { unsupportedFramework, unsupportedLanguage } from '../../utils/ErrorHandling';
+import { unsupportedFramework, unsupportedLanguage } from '../utils/ErrorHandling';
 
 /**
  * @typedef {'python' | 'javascript' | 'dart' | 'java' } Language
@@ -98,6 +98,7 @@ export function OnClose({ language, framework = '', title }) {
   let indent = 0;
 
   const supportedLanguages = Object.keys(websocketOnCloseMethod);
+  const supportedFrameworks = Object.keys(websocketOnCloseMethod[language] || {});
 
   if (!websocketOnCloseMethod[language]) {
     throw unsupportedLanguage(language, supportedLanguages);
@@ -106,7 +107,7 @@ export function OnClose({ language, framework = '', title }) {
   const generateOnCloseCode = resolveCloseConfig(language, framework);
 
   if (typeof generateOnCloseCode !== 'function') {
-    throw unsupportedFramework(language, framework, ['quarkus']);
+    throw unsupportedFramework(language, framework, supportedFrameworks);
   }
 
   const closeResult = generateOnCloseCode(title);

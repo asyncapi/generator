@@ -1,5 +1,5 @@
 import { Text } from '@asyncapi/generator-react-sdk';
-import { invalidOperation } from '../../../utils/ErrorHandling';
+import { invalidOperation } from '../../utils/ErrorHandling';
 
 /**
  * Renders a header section for a single AsyncAPI operation.

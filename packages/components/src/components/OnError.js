@@ -1,5 +1,5 @@
 import { Text } from '@asyncapi/generator-react-sdk';
-import { unsupportedLanguage } from '../../utils/ErrorHandling';
+import { unsupportedLanguage } from '../utils/ErrorHandling';
 
 /**
  * @typedef {'python' | 'javascript' | 'dart'} Language

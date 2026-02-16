@@ -1,6 +1,6 @@
 import { Text } from '@asyncapi/generator-react-sdk';
 import { toSnakeCase } from '@asyncapi/generator-helpers';
-import { unsupportedLanguage, invalidClientName, invalidOperation } from '../../utils/ErrorHandling';
+import { unsupportedLanguage, invalidClientName, invalidOperation } from '../utils/ErrorHandling';
 
 /**
  * @typedef {'python' | 'javascript'} Language

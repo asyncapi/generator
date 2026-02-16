@@ -90,7 +90,7 @@ describe('Testing of DependencyProvider function', () => {
     expect(actual).toBe('');
   });
 
-  test('render java with invalid framework returns throws as error', () => {
+  test('render java with invalid framework throws as error', () => {
     expect(() => {
       render(
         <DependencyProvider

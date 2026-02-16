@@ -1,6 +1,6 @@
 import { getMessageExamples, getOperationMessages, toSnakeCase } from '@asyncapi/generator-helpers';
 import { Text } from '@asyncapi/generator-react-sdk';
-import { invalidOperation } from '../../../utils/ErrorHandling';
+import { invalidOperation } from '../../utils/ErrorHandling';
 
 const languageConfig = {
   javascript: {

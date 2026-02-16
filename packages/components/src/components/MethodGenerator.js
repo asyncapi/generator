@@ -1,5 +1,5 @@
 import { Text } from '@asyncapi/generator-react-sdk';
-import { unsupportedLanguage, negativeIndent, invalidMethodName, invalidNewLines, invalidMethodParams } from '../../utils/ErrorHandling';
+import { unsupportedLanguage, negativeIndent, invalidMethodName, invalidNewLines, invalidMethodParams } from '../utils/ErrorHandling';
 
 /**
  * @typedef {'python' | 'javascript' | 'dart' | 'java'} Language
@@ -141,8 +141,8 @@ export function MethodGenerator({
     throw unsupportedLanguage(language, supportedLanguages);
   }
 
-  if (typeof methodName !== 'string' || methodName.trim() === '') {
-    throw invalidMethodName(methodName);
+  if(typeof methodName !== 'string'){
+    throw invalidMethodName();
   }
 
   if (indent < 0) {

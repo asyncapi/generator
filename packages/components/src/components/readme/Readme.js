@@ -5,7 +5,7 @@ import { Installation } from './Installation';
 import { Usage } from './Usage';
 import { CoreMethods } from './CoreMethods';
 import { AvailableOperations } from './AvailableOperations';
-import { invalidAsyncAPI, invalidParams } from '../../../utils/ErrorHandling';
+import { invalidAsyncAPI, invalidParams } from '../../utils/ErrorHandling';
 
 /**
  * @typedef {'python' | 'javascript' } Language

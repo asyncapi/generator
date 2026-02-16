@@ -3,7 +3,7 @@ import { OnOpen } from './OnOpen';
 import { OnMessage } from './OnMessage';
 import { OnError } from './OnError';
 import { OnClose } from './OnClose';
-import { unsupportedLanguage } from '../../utils/ErrorHandling';
+import { unsupportedLanguage } from '../utils/ErrorHandling';
 
 /**
  * @typedef {'python' | 'javascript' | 'dart'} Language

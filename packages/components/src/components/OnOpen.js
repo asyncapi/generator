@@ -86,13 +86,13 @@ export function OnOpen({ language, framework='', title }) {
   const supportedLanguages = Object.keys(websocketOnOpenMethod);
 
   if (!websocketOnOpenMethod[language]) {
-    unsupportedLanguage(language, supportedLanguages);
+    throw unsupportedLanguage(language, supportedLanguages);
   }
   
   const generateOnOpenCode = resolveOpenConfig(language, framework);
 
   if (typeof generateOnOpenCode !== 'function') {
-    unsupportedFramework(language, framework, ['quarkus']);
+    throw unsupportedFramework(language, framework, ['quarkus']);
   }
 
   const openResult = generateOnOpenCode(title);

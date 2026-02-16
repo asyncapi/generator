@@ -41,7 +41,7 @@ export function CoreMethods({ language }) {
   const config = methodConfig[language];
   
   if (!config) {
-    unsupportedLanguage(language, supportedLanguages);
+    throw unsupportedLanguage(language, supportedLanguages);
   }
 
   const { msgHandler, errHandler } = config;

@@ -162,18 +162,18 @@ export function SendOperations({ language, sendOperations, clientName }) {
   const supportedLanguages = Object.keys(websocketSendOperationConfig);
   
   if (!supportedLanguages.includes(language)) {
-    unsupportedLanguage(language, supportedLanguages);
+    throw unsupportedLanguage(language, supportedLanguages);
   }
 
   if (typeof clientName !== 'string' || clientName.trim() === '') {
-    invalidClientName(clientName);
+    throw invalidClientName(clientName);
   }
 
   const generateSendOperationCode = websocketSendOperationConfig[language];
 
   return sendOperations.map((operation) => {
     if (!operation || typeof operation.id !== 'function' || !operation.id()) {
-      invalidOperation();
+      throw invalidOperation();
     }
 
     const { nonStaticMethod, staticMethod } = generateSendOperationCode(operation, clientName);

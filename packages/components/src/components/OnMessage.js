@@ -101,7 +101,7 @@ export function OnMessage({ language }) {
   const generateOnMessageCode = websocketOnMessageMethod[language];
   
   if (!generateOnMessageCode) {
-    unsupportedLanguage(language, supportedLanguages);
+    throw unsupportedLanguage(language, supportedLanguages);
   }
   
   const messageResult = generateOnMessageCode();

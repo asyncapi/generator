@@ -100,13 +100,13 @@ export function OnClose({ language, framework = '', title }) {
   const supportedLanguages = Object.keys(websocketOnCloseMethod);
 
   if (!websocketOnCloseMethod[language]) {
-    unsupportedLanguage(language, supportedLanguages);
+    throw unsupportedLanguage(language, supportedLanguages);
   }
   
   const generateOnCloseCode = resolveCloseConfig(language, framework);
 
   if (typeof generateOnCloseCode !== 'function') {
-    unsupportedFramework(language, framework, ['quarkus']);
+    throw unsupportedFramework(language, framework, ['quarkus']);
   }
 
   const closeResult = generateOnCloseCode(title);

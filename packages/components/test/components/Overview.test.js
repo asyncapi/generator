@@ -40,7 +40,7 @@ describe('Testing of Overview component', () => {
   test('throws error when info is missing', () => {
     expect(() => {
       render(<Overview title={title} serverUrl={serverUrl}/>);
-    }).toThrow(TypeError);
+    }).toThrow();
   });
 
   test('render overview component when title is missing', () => {

@@ -74,7 +74,7 @@ export function OnError({ language }) {
   const generateErrorCode = websocketOnErrorMethod[language];
 
   if (!generateErrorCode) {
-    unsupportedLanguage(language, supportedLanguages);
+    throw unsupportedLanguage(language, supportedLanguages);
   }
   
   const errorResult = generateErrorCode();

@@ -120,10 +120,10 @@ export function Connect({ language, title }) {
   const generateConnectCode = websocketConnectMethod[language];
 
   if (!generateConnectCode) {
-    unsupportedLanguage(language, supportedLanguages);
+    throw unsupportedLanguage(language, supportedLanguages);
   }
   
-  const onOpenMethod = render(<OnOpen language={language} title={title} />);
+  const onOpenMethod = language === 'dart'   ? ''  : render(<OnOpen language={language} title={title} />);
   const onMessageMethod = render(<OnMessage language={language} />);
   const onErrorMethod = render(<OnError language={language} />);
   const onCloseMethod = render(<OnClose language={language} title={title} />);

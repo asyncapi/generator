@@ -138,23 +138,23 @@ export function MethodGenerator({
   const supportedLanguages = Object.keys(defaultMethodConfig);
   
   if (!supportedLanguages.includes(language)) {
-    unsupportedLanguage(language, supportedLanguages);
+    throw unsupportedLanguage(language, supportedLanguages);
   }
 
   if (typeof methodName !== 'string' || methodName.trim() === '') {
-    invalidMethodName(methodName);
+    throw invalidMethodName(methodName);
   }
 
   if (indent < 0) {
-    negativeIndent(indent);
+    throw negativeIndent(indent);
   }
 
   if (newLines < 0) {
-    invalidNewLines(newLines);
+    throw invalidNewLines(newLines);
   }
 
   if (!Array.isArray(methodParams)) {
-    invalidMethodParams(methodParams);
+    throw invalidMethodParams(methodParams);
   }
 
   const { docs: resolvedMethodDocs, logic: resolvedMethodLogic } = resolveDocsAndLogic({

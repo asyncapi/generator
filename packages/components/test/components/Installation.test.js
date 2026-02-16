@@ -13,12 +13,8 @@ describe('Installation component', () => {
   });
 
   test('renders installation section when language is undefined', () => {
-    const result = render(<Installation />);
-    const output = result.trim();
-
-    // Explicitly document current behavior
-    expect(output).toContain('## Installation');
-    expect(output).toContain('Install dependencies');
-    expect(output).toContain('undefined');
+    expect(() => {
+      render(<Installation />);
+    }).toThrow('Unsupported language "undefined". Supported languages: python, javascript');
   });
 });

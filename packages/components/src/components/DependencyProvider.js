@@ -70,7 +70,7 @@ function resolveFrameworkDependencies(frameworkConfig, role) {
   if (role) {
     const supportedRoles = Object.keys(frameworkConfig);
     if (!supportedRoles.includes(role)) {
-      invalidRole(role, supportedRoles);
+      throw invalidRole(role, supportedRoles);
     }
     
     if (frameworkConfig[role] && frameworkConfig[role].dependencies) {
@@ -99,7 +99,7 @@ function resolveDependencies(language, framework = '', role = '') {
   const supportedLanguages = Object.keys(dependenciesConfig);
   
   if (!config) {
-    unsupportedLanguage(language, supportedLanguages);
+    throw unsupportedLanguage(language, supportedLanguages);
   }
   
   // Handle flat structure (python, javascript, dart)
@@ -110,7 +110,7 @@ function resolveDependencies(language, framework = '', role = '') {
   // Handle nested structure (java with quarkus framework and roles)
   if (framework) {
     if (!config[framework]) {
-      unsupportedFramework(language, framework, ['quarkus']);
+      throw unsupportedFramework(language, framework, ['quarkus']);
     }
     
     return resolveFrameworkDependencies(config[framework], role);

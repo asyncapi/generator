@@ -34,7 +34,7 @@ export function Installation({ language }) {
   const command = installCommands[language];
     
   if (!command) {
-    unsupportedLanguage(language, supportedLanguages);
+    throw unsupportedLanguage(language, supportedLanguages);
   }
 
   return (

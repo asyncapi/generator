@@ -46,7 +46,7 @@ import { invalidInfo } from '../../../utils/ErrorHandling';
 
 export function Overview({ info, title, serverUrl }) {
   if (!info) {
-    invalidInfo();
+    throw invalidInfo();
   }
 
   return (

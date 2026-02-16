@@ -34,7 +34,7 @@ import { invalidOperation } from '../../../utils/ErrorHandling';
 
 export function OperationHeader({ operation }) {
   if (!operation) {
-    invalidOperation();
+    throw invalidOperation();
   }
 
   const operationId = operation.id();

@@ -90,27 +90,27 @@ describe('Testing of DependencyProvider function', () => {
     expect(actual).toBe('');
   });
 
-  test('render java with invalid framework returns empty dependencies', () => {
-    const result = render(
-      <DependencyProvider
-        language="java"
-        framework="spring"
-        role="client"
-      />
-    );
-    const actual = result.trim();
-    expect(actual).toBe('');
+  test('render java with invalid framework returns throws as error', () => {
+    expect(() => {
+      render(
+        <DependencyProvider
+          language="java"
+          framework="spring"
+          role="client"
+        />
+      );
+    }).toThrow('Unsupported framework "spring" for language "java". Supported frameworks: quarkus');
   });
 
-  test('render java quarkus with invalid role returns empty dependencies', () => {
-    const result = render(
-      <DependencyProvider
-        language="java"
-        framework="quarkus"
-        role="invalid"
-      />
-    );
-    const actual = result.trim();
-    expect(actual).toBe('');
+  test('render java quarkus with invalid role throws an error', () => {
+    expect(() => {
+      render(
+        <DependencyProvider
+          language="java"
+          framework="quarkus"
+          role="invalid"
+        />
+      );
+    }).toThrow('Unsupported role "invalid". Supported roles: client, connector, producer, consumer, kafkaEndpoint');
   });
 });

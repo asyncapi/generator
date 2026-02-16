@@ -56,23 +56,20 @@ const commentConfig = {
  */
 export function FileHeaderInfo({ info, server, language }) {
   if (!info) {
-    invalidInfo();
+    throw invalidInfo();
   }
 
   if (!server) {
-    invalidServer();
+    throw invalidServer();
   }
 
   const supportedLanguages = Object.keys(commentConfig);
   
   if (!supportedLanguages.includes(language)) {
-    unsupportedLanguage(language, supportedLanguages);
+    throw unsupportedLanguage(language, supportedLanguages);
   }
 
-  const { commentChar, lineStyle } = commentConfig[language] || { 
-    commentChar: '//', 
-    lineStyle: '//'.repeat(25) 
-  };
+  const { commentChar, lineStyle } = commentConfig[language];
 
   return (
     <Text>

@@ -66,15 +66,15 @@ export function Usage({ clientName, clientFileName, language }) {
   const snippetFn = usageConfig[language];
 
   if (!snippetFn) {
-    unsupportedLanguage(language, supportedLanguages);
+    throw unsupportedLanguage(language, supportedLanguages);
   }
 
   if (typeof clientName !== 'string' || clientName.trim() === '') {
-    invalidClientName(clientName);
+    throw invalidClientName(clientName);
   }
 
   if (typeof clientFileName !== 'string' || clientFileName.trim() === '') {
-    invalidClientFileName(clientFileName);
+    throw invalidClientFileName(clientFileName);
   }
 
   const snippet = snippetFn(clientName, clientFileName);

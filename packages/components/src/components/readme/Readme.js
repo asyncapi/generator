@@ -56,11 +56,11 @@ import { invalidAsyncAPI, invalidParams } from '../../../utils/ErrorHandling';
 
 export function Readme({ asyncapi, params, language }) {
   if (!asyncapi) {
-    invalidAsyncAPI();
+    throw invalidAsyncAPI();
   }
 
   if (!params) {
-    invalidParams(params);
+    throw invalidParams(params);
   }
 
   const server = getServer(asyncapi.servers(), params.server);

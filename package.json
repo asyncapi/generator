@@ -45,5 +45,8 @@
     "apps/*",
     "packages/**",
     "!apps/generator/templates/bakedInTemplates/**"
-  ]
+  ],
+  "dependencies": {
+    "simple-git": "^3.30.0"
+  }
 }

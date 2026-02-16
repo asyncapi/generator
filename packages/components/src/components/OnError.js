@@ -68,7 +68,6 @@ const websocketOnErrorMethod = {
  * renderOnError();
  */
 export function OnError({ language }) {
-  let onErrorMethod = '';
   const supportedLanguages = Object.keys(websocketOnErrorMethod);
   
   const generateErrorCode = websocketOnErrorMethod[language];
@@ -78,7 +77,7 @@ export function OnError({ language }) {
   }
   
   const errorResult = generateErrorCode();
-  onErrorMethod = errorResult.onErrorMethod;
+  const { onErrorMethod } = errorResult;
   
   return (
     <Text>

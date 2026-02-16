@@ -68,7 +68,7 @@ client.${opId}(${JSON.stringify(payload, null, 2)})
  */
 
 export function MessageExamples({ operation }) {
-  if (!operation) {
+  if (!operation || typeof operation.id !== 'function' || !operation.id()) {
     throw invalidOperation();
   }
 

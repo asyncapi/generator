@@ -109,8 +109,9 @@ function resolveDependencies(language, framework = '', role = '') {
   
   // Handle nested structure (java with quarkus framework and roles)
   if (framework) {
+    const supportedFrameworks = Object.keys(config);
     if (!config[framework]) {
-      throw unsupportedFramework(language, framework, ['quarkus']);
+      throw unsupportedFramework(language, framework, supportedFrameworks);
     }
     
     return resolveFrameworkDependencies(config[framework], role);

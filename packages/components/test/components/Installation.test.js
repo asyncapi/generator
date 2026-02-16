@@ -12,7 +12,7 @@ describe('Installation component', () => {
     expect(result.trim()).toMatchSnapshot();
   });
 
-  test('renders installation section when language is undefined', () => {
+  test('throws error when language is undefined', () => {
     expect(() => {
       render(<Installation />);
     }).toThrow('Unsupported language "undefined". Supported languages: python, javascript');

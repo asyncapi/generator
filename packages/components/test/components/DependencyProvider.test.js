@@ -90,7 +90,7 @@ describe('Testing of DependencyProvider function', () => {
     expect(actual).toBe('');
   });
 
-  test('render java with invalid framework throws as error', () => {
+  test('throws error when framework is invalid', () => {
     expect(() => {
       render(
         <DependencyProvider
@@ -102,7 +102,7 @@ describe('Testing of DependencyProvider function', () => {
     }).toThrow('Unsupported framework "spring" for language "java". Supported frameworks: quarkus');
   });
 
-  test('render java quarkus with invalid role throws an error', () => {
+  test('throws error when role is invalid', () => {
     expect(() => {
       render(
         <DependencyProvider

@@ -94,11 +94,9 @@ const resolveCloseConfig = (language, framework = '') => {
  * renderOnClose();
  */
 export function OnClose({ language, framework = '', title }) {
-  let onCloseMethod = '';
   let indent = 0;
 
   const supportedLanguages = Object.keys(websocketOnCloseMethod);
-  const supportedFrameworks = Object.keys(websocketOnCloseMethod[language] || {});
 
   if (!websocketOnCloseMethod[language]) {
     throw unsupportedLanguage(language, supportedLanguages);
@@ -107,11 +105,13 @@ export function OnClose({ language, framework = '', title }) {
   const generateOnCloseCode = resolveCloseConfig(language, framework);
 
   if (typeof generateOnCloseCode !== 'function') {
+    const supportedFrameworks = Object.keys(websocketOnCloseMethod[language] || {});
     throw unsupportedFramework(language, framework, supportedFrameworks);
   }
 
   const closeResult = generateOnCloseCode(title);
-  onCloseMethod = closeResult.onCloseMethod;
+  const { onCloseMethod } = closeResult;
+  
   indent = closeResult.indent ?? 0;
 
   return (

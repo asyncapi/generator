@@ -778,13 +778,12 @@ import java.util.Objects;
 import java.util.Map;
 
 public class Disconnect {
-  private String type;
+  private final String type = \\"disconnect\\";
   private DisconnectReasonEnum reason;
   private DebugInfo debugInfo;
   private Map<String, Object> additionalProperties;
 
   public String getType() { return this.type; }
-  public void setType(String type) { this.type = type; }
 
   public DisconnectReasonEnum getReason() { return this.reason; }
   public void setReason(DisconnectReasonEnum reason) { this.reason = reason; }
@@ -981,7 +980,7 @@ import java.util.Objects;
 public class Event {
   private String envelopeId;
   private EventPayload payload;
-  private String type;
+  private final String type = \\"events_api\\";
   private Boolean acceptsResponsePayload;
   private Integer retryAttempt;
   private String retryReason;
@@ -993,7 +992,6 @@ public class Event {
   public void setPayload(EventPayload payload) { this.payload = payload; }
 
   public String getType() { return this.type; }
-  public void setType(String type) { this.type = type; }
 
   public Boolean getAcceptsResponsePayload() { return this.acceptsResponsePayload; }
   public void setAcceptsResponsePayload(Boolean acceptsResponsePayload) { this.acceptsResponsePayload = acceptsResponsePayload; }
@@ -1179,14 +1177,13 @@ import java.util.Objects;
 import java.util.Map;
 
 public class Hello {
-  private String type;
+  private final String type = \\"hello\\";
   private ConnectionInfo connectionInfo;
   private Integer numConnections;
   private DebugInfo debugInfo;
   private Map<String, Object> additionalProperties;
 
   public String getType() { return this.type; }
-  public void setType(String type) { this.type = type; }
 
   public ConnectionInfo getConnectionInfo() { return this.connectionInfo; }
   public void setConnectionInfo(ConnectionInfo connectionInfo) { this.connectionInfo = connectionInfo; }
@@ -5995,7 +5992,7 @@ exports[`WebSocket Clients Integration Tests Java Quarkus Client Common Integrat
 `;
 
 exports[`WebSocket Clients Integration Tests JavaScript Client Common Integration tests for JavaScript client generation generate simple client for hoppscotch echo with custom client name: README.md 1`] = `
-"# Hoppscotch Echo WebSocket Client 
+"# Hoppscotch Echo WebSocket Client
 
 ## Overview
 
@@ -6003,32 +6000,52 @@ Undestand how to use Hoppscotch Echo WebSocket as a client. Hoppscotch Echo WebS
 
 
 - **Version:** 1.0.0
-- **URL:** wss://echo-websocket.hoppscotch.io
+- **Server URL:** wss://echo-websocket.hoppscotch.io
 
 
-## Client API Reference
+## Installation
+
+Install dependencies:
+
+\`\`\`bash
+npm install
+\`\`\`
+
+
+## Usage
 
 \`\`\`javascript
 const HoppscotchClient = require('./client');
 const wsClient = new HoppscotchClient();
+
+async function main() {
+  try {
+    await wsClient.connect();
+    // use wsClient to send/receive messages
+    await wsClient.close();
+  } catch (error) {
+    console.error('Failed to connect:', error);
+  }
+}
+
+main();
 \`\`\`
 
-Here the wsClient is an instance of the \`HoppscotchClient\` class.
-### Core Methods
 
-#### \`connect()\`
-Establishes a WebSocket connection to the server.
+## API
 
-#### \`registerMessageHandler(handlerFunction)\`
-Registers a callback to handle incoming messages.
-- **Parameter:** \`handlerFunction\` - This Function takes a parameter \`message\` which is a string. 
+### \`connect()\`
+Establishes a WebSocket connection.
 
-#### \`registerErrorHandler(handlerFunction)\`
-Registers a callback to handle WebSocket errors.
-- **Parameter:** \`handlerFunction\` - This Function takes a parameter \`error\` which is an object
+### \`registerMessageHandler(handlerFunction)\`
+Registers a callback for incoming messages.
 
-#### \`close()\`
+### \`registerErrorHandler(handlerFunction)\`
+Registers a callback for connection errors.
+
+### \`close()\`
 Closes the WebSocket connection.
+
 
 ### Available Operations
 
@@ -6036,31 +6053,57 @@ Closes the WebSocket connection.
 Send a message to the echo server.
 
 
-
-**Example:**
+**Example (JavaScript):**
 \`\`\`javascript
-client.sendEchoMessage(\\"test\\");
+client.sendEchoMessage(\\"test\\")
 \`\`\`
 
 
-**Example:**
-\`\`\`javascript
-client.sendEchoMessage(true);
+**Example (Python):**
+\`\`\`python
+client.send_echo_message(\\"test\\")
 \`\`\`
 
 
-**Example:**
+**Example (JavaScript):**
 \`\`\`javascript
-client.sendEchoMessage(123);
+client.sendEchoMessage(true)
 \`\`\`
 
 
-**Example:**
+**Example (Python):**
+\`\`\`python
+client.send_echo_message(true)
+\`\`\`
+
+
+**Example (JavaScript):**
+\`\`\`javascript
+client.sendEchoMessage(123)
+\`\`\`
+
+
+**Example (Python):**
+\`\`\`python
+client.send_echo_message(123)
+\`\`\`
+
+
+**Example (JavaScript):**
 \`\`\`javascript
 client.sendEchoMessage({
   \\"test\\": \\"test text\\"
-});
+})
 \`\`\`
+
+
+**Example (Python):**
+\`\`\`python
+client.send_echo_message({
+  \\"test\\": \\"test text\\"
+})
+\`\`\`
+
 
 
 
@@ -6068,62 +6111,17 @@ client.sendEchoMessage({
 Receive the timestamp message sent from server every second.
 
 
-
-**Example:**
+**Example (JavaScript):**
 \`\`\`javascript
-client.handleTimeStampMessage(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\\");
+client.handleTimeStampMessage(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\\")
 \`\`\`
 
 
-
-## Testing the client
-
-\`\`\`javascript
-const HoppscotchClient = require('./client');
-const wsClient = new HoppscotchClient();
-
-
-// Example of how custom message handler that operates on incoming messages can look like
-
-function myHandler(message) {
-  console.log('====================');
-  console.log('Just proving I got the message in myHandler:', message);
-  console.log('====================');  
-}
-
-// Example of custom error handler
-
-function myErrorHandler(error) {
-  console.error('Errors from Websocket:', error.message);
-}
-
-async function main() {
-  wsClient.registerMessageHandler(myHandler);
-  wsClient.registerErrorHandler(myErrorHandler);
-
-  try {
-    await wsClient.connect();
-
-    // Loop to send messages every 5 seconds
-    const interval = 5000; // 5 seconds
-    const message = 'Hello, Echo!';
-
-    while (true) {
-      try {
-        await wsClient.sendEchoMessage(message);
-      } catch (error) {
-        console.error('Error while sending message:', error);
-      }
-      // Wait for the interval before sending the next message
-      await new Promise(resolve => setTimeout(resolve, interval));
-    }
-  } catch (error) {
-    console.error('Failed to connect to WebSocket:', error.message);
-  }
-}
-
-main();
+**Example (Python):**
+\`\`\`python
+client.handle_time_stamp_message(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\\")
 \`\`\`
+
 
 
 
@@ -6285,6 +6283,13 @@ class HoppscotchClient {
       console.log('Schemas initialized successfully for operations:', this.sendOperationsId.join(', '));
     } catch (error) {
       console.error('Error initializing schemas:', error);
+      this.schemasCompiled = false;
+      if (error instanceof Error) {
+        error.message = \`Schema compilation failed: \${error.message}\`;
+        throw error;
+      } else {
+        throw new Error(\`Schema compilation failed: \${String(error)}\`);
+      }
     }
   }
 
@@ -6358,7 +6363,7 @@ module.exports = HoppscotchClient;
 `;
 
 exports[`WebSocket Clients Integration Tests JavaScript Client Common Integration tests for JavaScript client generation generate simple client for hoppscotch echo: README.md 1`] = `
-"# Hoppscotch Echo WebSocket Client 
+"# Hoppscotch Echo WebSocket Client
 
 ## Overview
 
@@ -6366,32 +6371,52 @@ Undestand how to use Hoppscotch Echo WebSocket as a client. Hoppscotch Echo WebS
 
 
 - **Version:** 1.0.0
-- **URL:** wss://echo-websocket.hoppscotch.io
+- **Server URL:** wss://echo-websocket.hoppscotch.io
 
 
-## Client API Reference
+## Installation
+
+Install dependencies:
+
+\`\`\`bash
+npm install
+\`\`\`
+
+
+## Usage
 
 \`\`\`javascript
 const HoppscotchEchoWebSocketClient = require('./client');
 const wsClient = new HoppscotchEchoWebSocketClient();
+
+async function main() {
+  try {
+    await wsClient.connect();
+    // use wsClient to send/receive messages
+    await wsClient.close();
+  } catch (error) {
+    console.error('Failed to connect:', error);
+  }
+}
+
+main();
 \`\`\`
 
-Here the wsClient is an instance of the \`HoppscotchEchoWebSocketClient\` class.
-### Core Methods
 
-#### \`connect()\`
-Establishes a WebSocket connection to the server.
+## API
 
-#### \`registerMessageHandler(handlerFunction)\`
-Registers a callback to handle incoming messages.
-- **Parameter:** \`handlerFunction\` - This Function takes a parameter \`message\` which is a string. 
+### \`connect()\`
+Establishes a WebSocket connection.
 
-#### \`registerErrorHandler(handlerFunction)\`
-Registers a callback to handle WebSocket errors.
-- **Parameter:** \`handlerFunction\` - This Function takes a parameter \`error\` which is an object
+### \`registerMessageHandler(handlerFunction)\`
+Registers a callback for incoming messages.
 
-#### \`close()\`
+### \`registerErrorHandler(handlerFunction)\`
+Registers a callback for connection errors.
+
+### \`close()\`
 Closes the WebSocket connection.
+
 
 ### Available Operations
 
@@ -6399,31 +6424,57 @@ Closes the WebSocket connection.
 Send a message to the echo server.
 
 
-
-**Example:**
+**Example (JavaScript):**
 \`\`\`javascript
-client.sendEchoMessage(\\"test\\");
+client.sendEchoMessage(\\"test\\")
 \`\`\`
 
 
-**Example:**
-\`\`\`javascript
-client.sendEchoMessage(true);
+**Example (Python):**
+\`\`\`python
+client.send_echo_message(\\"test\\")
 \`\`\`
 
 
-**Example:**
+**Example (JavaScript):**
 \`\`\`javascript
-client.sendEchoMessage(123);
+client.sendEchoMessage(true)
 \`\`\`
 
 
-**Example:**
+**Example (Python):**
+\`\`\`python
+client.send_echo_message(true)
+\`\`\`
+
+
+**Example (JavaScript):**
+\`\`\`javascript
+client.sendEchoMessage(123)
+\`\`\`
+
+
+**Example (Python):**
+\`\`\`python
+client.send_echo_message(123)
+\`\`\`
+
+
+**Example (JavaScript):**
 \`\`\`javascript
 client.sendEchoMessage({
   \\"test\\": \\"test text\\"
-});
+})
 \`\`\`
+
+
+**Example (Python):**
+\`\`\`python
+client.send_echo_message({
+  \\"test\\": \\"test text\\"
+})
+\`\`\`
+
 
 
 
@@ -6431,62 +6482,17 @@ client.sendEchoMessage({
 Receive the timestamp message sent from server every second.
 
 
-
-**Example:**
+**Example (JavaScript):**
 \`\`\`javascript
-client.handleTimeStampMessage(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\\");
+client.handleTimeStampMessage(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\\")
 \`\`\`
 
 
-
-## Testing the client
-
-\`\`\`javascript
-const HoppscotchEchoWebSocketClient = require('./client');
-const wsClient = new HoppscotchEchoWebSocketClient();
-
-
-// Example of how custom message handler that operates on incoming messages can look like
-
-function myHandler(message) {
-  console.log('====================');
-  console.log('Just proving I got the message in myHandler:', message);
-  console.log('====================');  
-}
-
-// Example of custom error handler
-
-function myErrorHandler(error) {
-  console.error('Errors from Websocket:', error.message);
-}
-
-async function main() {
-  wsClient.registerMessageHandler(myHandler);
-  wsClient.registerErrorHandler(myErrorHandler);
-
-  try {
-    await wsClient.connect();
-
-    // Loop to send messages every 5 seconds
-    const interval = 5000; // 5 seconds
-    const message = 'Hello, Echo!';
-
-    while (true) {
-      try {
-        await wsClient.sendEchoMessage(message);
-      } catch (error) {
-        console.error('Error while sending message:', error);
-      }
-      // Wait for the interval before sending the next message
-      await new Promise(resolve => setTimeout(resolve, interval));
-    }
-  } catch (error) {
-    console.error('Failed to connect to WebSocket:', error.message);
-  }
-}
-
-main();
+**Example (Python):**
+\`\`\`python
+client.handle_time_stamp_message(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\\")
 \`\`\`
+
 
 
 
@@ -6648,6 +6654,13 @@ class HoppscotchEchoWebSocketClient {
       console.log('Schemas initialized successfully for operations:', this.sendOperationsId.join(', '));
     } catch (error) {
       console.error('Error initializing schemas:', error);
+      this.schemasCompiled = false;
+      if (error instanceof Error) {
+        error.message = \`Schema compilation failed: \${error.message}\`;
+        throw error;
+      } else {
+        throw new Error(\`Schema compilation failed: \${String(error)}\`);
+      }
     }
   }
 
@@ -6721,39 +6734,59 @@ module.exports = HoppscotchEchoWebSocketClient;
 `;
 
 exports[`WebSocket Clients Integration Tests JavaScript Client Common Integration tests for JavaScript client generation generate simple client for postman echo: README.md 1`] = `
-"# Postman Echo WebSocket Client 
+"# Postman Echo WebSocket Client
 
 ## Overview
 
 Understand how to use the Postman Echo WebSocket as a client. The Postman Echo WebSocket server echoes back any messages sent to it.
 
 - **Version:** 1.0.0
-- **URL:** wss://ws.postman-echo.com/raw
+- **Server URL:** wss://ws.postman-echo.com/raw
 
 
-## Client API Reference
+## Installation
+
+Install dependencies:
+
+\`\`\`bash
+npm install
+\`\`\`
+
+
+## Usage
 
 \`\`\`javascript
 const PostmanEchoWebSocketClientClient = require('./client');
 const wsClient = new PostmanEchoWebSocketClientClient();
+
+async function main() {
+  try {
+    await wsClient.connect();
+    // use wsClient to send/receive messages
+    await wsClient.close();
+  } catch (error) {
+    console.error('Failed to connect:', error);
+  }
+}
+
+main();
 \`\`\`
 
-Here the wsClient is an instance of the \`PostmanEchoWebSocketClientClient\` class.
-### Core Methods
 
-#### \`connect()\`
-Establishes a WebSocket connection to the server.
+## API
 
-#### \`registerMessageHandler(handlerFunction)\`
-Registers a callback to handle incoming messages.
-- **Parameter:** \`handlerFunction\` - This Function takes a parameter \`message\` which is a string. 
+### \`connect()\`
+Establishes a WebSocket connection.
 
-#### \`registerErrorHandler(handlerFunction)\`
-Registers a callback to handle WebSocket errors.
-- **Parameter:** \`handlerFunction\` - This Function takes a parameter \`error\` which is an object
+### \`registerMessageHandler(handlerFunction)\`
+Registers a callback for incoming messages.
 
-#### \`close()\`
+### \`registerErrorHandler(handlerFunction)\`
+Registers a callback for connection errors.
+
+### \`close()\`
 Closes the WebSocket connection.
+
 
 ### Available Operations
 
@@ -6761,70 +6794,33 @@ Closes the WebSocket connection.
 Send a message to the Postman Echo server.
 
 
-
-**Example:**
+**Example (JavaScript):**
 \`\`\`javascript
-client.sendEchoMessage(\\"test\\");
+client.sendEchoMessage(\\"test\\")
 \`\`\`
 
 
-**Example:**
+**Example (Python):**
+\`\`\`python
+client.send_echo_message(\\"test\\")
+\`\`\`
+
+
+**Example (JavaScript):**
 \`\`\`javascript
 client.sendEchoMessage({
   \\"test\\": \\"test text\\"
-});
+})
 \`\`\`
 
 
-
-## Testing the client
-
-\`\`\`javascript
-const PostmanEchoWebSocketClientClient = require('./client');
-const wsClient = new PostmanEchoWebSocketClientClient();
-
-
-// Example of how custom message handler that operates on incoming messages can look like
-
-function myHandler(message) {
-  console.log('====================');
-  console.log('Just proving I got the message in myHandler:', message);
-  console.log('====================');  
-}
-
-// Example of custom error handler
-
-function myErrorHandler(error) {
-  console.error('Errors from Websocket:', error.message);
-}
-
-async function main() {
-  wsClient.registerMessageHandler(myHandler);
-  wsClient.registerErrorHandler(myErrorHandler);
-
-  try {
-    await wsClient.connect();
-
-    // Loop to send messages every 5 seconds
-    const interval = 5000; // 5 seconds
-    const message = 'Hello, Echo!';
-
-    while (true) {
-      try {
-        await wsClient.sendEchoMessage(message);
-      } catch (error) {
-        console.error('Error while sending message:', error);
-      }
-      // Wait for the interval before sending the next message
-      await new Promise(resolve => setTimeout(resolve, interval));
-    }
-  } catch (error) {
-    console.error('Failed to connect to WebSocket:', error.message);
-  }
-}
-
-main();
+**Example (Python):**
+\`\`\`python
+client.send_echo_message({
+  \\"test\\": \\"test text\\"
+})
 \`\`\`
+
 
 
 
@@ -6999,6 +6995,13 @@ class PostmanEchoWebSocketClientClient {
       console.log('Schemas initialized successfully for operations:', this.sendOperationsId.join(', '));
     } catch (error) {
       console.error('Error initializing schemas:', error);
+      this.schemasCompiled = false;
+      if (error instanceof Error) {
+        error.message = \`Schema compilation failed: \${error.message}\`;
+        throw error;
+      } else {
+        throw new Error(\`Schema compilation failed: \${String(error)}\`);
+      }
     }
   }
 
@@ -7301,8 +7304,7 @@ exports[`WebSocket Clients Integration Tests Python Client Additional tests for 
 exports[`WebSocket Clients Integration Tests Python Client Additional tests for Python client generate client for slack: Disconnect.py 1`] = `
 "class Disconnect: 
   def __init__(self, input: Dict):
-    if 'type' in input:
-      self._type: str = input['type']
+    self._type: str = 'disconnect'
     if 'reason' in input:
       self._reason: DisconnectReasonEnum = DisconnectReasonEnum(input['reason'])
     if 'debug_info' in input:
@@ -7313,9 +7315,6 @@ exports[`WebSocket Clients Integration Tests Python Client Additional tests for 
   @property
   def type(self) -> str:
     return self._type
-  @type.setter
-  def type(self, type: str):
-    self._type = type
 
   @property
   def reason(self) -> DisconnectReasonEnum:
@@ -7354,8 +7353,7 @@ exports[`WebSocket Clients Integration Tests Python Client Additional tests for 
       self._envelope_id: str = input['envelope_id']
     if 'payload' in input:
       self._payload: EventPayload = EventPayload(input['payload'])
-    if 'type' in input:
-      self._type: str = input['type']
+    self._type: str = 'events_api'
     if 'accepts_response_payload' in input:
       self._accepts_response_payload: bool = input['accepts_response_payload']
     if 'retry_attempt' in input:
@@ -7380,9 +7378,6 @@ exports[`WebSocket Clients Integration Tests Python Client Additional tests for 
   @property
   def type(self) -> str:
     return self._type
-  @type.setter
-  def type(self, type: str):
-    self._type = type
 
   @property
   def accepts_response_payload(self) -> bool:
@@ -7421,7 +7416,7 @@ exports[`WebSocket Clients Integration Tests Python Client Additional tests for 
     if 'api_app_id' in input:
       self._api_app_id: str = input['api_app_id']
     if 'event' in input:
-      self._event: ChannelJoin | ReactionAdded | MessageDeleted = input['event']
+      self._event: Union[ChannelJoin, ReactionAdded, MessageDeleted] = input['event']
     if 'type' in input:
       self._type: str = input['type']
     if 'event_id' in input:
@@ -7469,10 +7464,10 @@ exports[`WebSocket Clients Integration Tests Python Client Additional tests for 
     self._api_app_id = api_app_id
 
   @property
-  def event(self) -> ChannelJoin | ReactionAdded | MessageDeleted:
+  def event(self) -> Union[ChannelJoin, ReactionAdded, MessageDeleted]:
     return self._event
   @event.setter
-  def event(self, event: ChannelJoin | ReactionAdded | MessageDeleted):
+  def event(self, event: Union[ChannelJoin, ReactionAdded, MessageDeleted]):
     self._event = event
 
   @property
@@ -7515,8 +7510,7 @@ exports[`WebSocket Clients Integration Tests Python Client Additional tests for 
 exports[`WebSocket Clients Integration Tests Python Client Additional tests for Python client generate client for slack: Hello.py 1`] = `
 "class Hello: 
   def __init__(self, input: Dict):
-    if 'type' in input:
-      self._type: str = input['type']
+    self._type: str = 'hello'
     if 'connection_info' in input:
       self._connection_info: ConnectionInfo = ConnectionInfo(input['connection_info'])
     if 'num_connections' in input:
@@ -7529,9 +7523,6 @@ exports[`WebSocket Clients Integration Tests Python Client Additional tests for 
   @property
   def type(self) -> str:
     return self._type
-  @type.setter
-  def type(self, type: str):
-    self._type = type
 
   @property
   def connection_info(self) -> ConnectionInfo:
@@ -7622,6 +7613,486 @@ exports[`WebSocket Clients Integration Tests Python Client Additional tests for 
 "
 `;
 
+exports[`WebSocket Clients Integration Tests Python Client Additional tests for Python client generate client for slack: README.md 1`] = `
+"# Slack Websocket API Client
+
+## Overview
+
+AsyncAPI document that represent the API of the application that is a client of the official Slack Websocket API To start using the Slack Websocket API, you need to create a Slack app and install it in your workspace. Make sure that the app is approved by the admin of the workspace.
+1. Create app in Slack: https://api.slack.com/apps. Do it by selecting option to create from scratch. Provide a name and select the workspace where the app will be used.
+1. Enable Socket Mode: Go to the \\"Socket Mode\\" section and enable the API. Follow all steps and save generated token for later. By default you are not yet subscribed to any events.
+1. Subscribe to events: Go to the \\"Event Subscriptions\\" section and enable the API. Subscribe to the bot events you want to receive. For example, you can subscribe to the \`reaction_added\` event. Remember to save changes.
+1. Install the app: Go to the \\"Install App\\" section and install the app in your workspace. After that make sure admin approved it for the workspace.
+1. Generate WebSocket URL: Make a REST call to the endpoint that will generate the WebSocket URL.  Use the \`apps.connections.open\` path from Slack's API. The response will contain a \`url\` field with the WebSocket URL. Use this URL to connect to the WebSocket API.
+    \`\`\`
+    curl --location --request POST 'https://slack.com/api/apps.connections.open' \\\\
+  --header 'Authorization: Bearer USE_TOKEN_GENERATED_DURING_SOCKET_MODE_ENABLEMENT' \\\\
+    \`\`\`
+
+1. Generated URL is the WebSocket URL you need to use to connect to the Slack WebSocket API. The URL will look like this:
+    \`\`\`
+    wss://wss-primary.slack.com/link?app_id=YOUR_APP_ID&ticket=YOUR_TICKET
+
+
+- **Version:** 1.0.0
+- **Server URL:** wss://wss-primary.slack.com/link
+
+
+## Installation
+
+Install dependencies:
+
+\`\`\`bash
+pip install -r requirements.txt
+\`\`\`
+
+
+## Usage
+
+\`\`\`python
+from client import SlackWebsocketAPIClient
+
+ws_client = SlackWebsocketAPIClient()
+
+async def main():
+    await ws_client.connect()
+    # use ws_client to send/receive messages
+    await ws_client.close()
+\`\`\`
+
+
+## API
+
+### \`connect()\`
+Establishes a WebSocket connection.
+
+### \`register_message_handler(handler_function)\`
+Registers a callback for incoming messages.
+
+### \`register_error_handler(handler_function)\`
+Registers a callback for connection errors.
+
+### \`close()\`
+Closes the WebSocket connection.
+
+
+### Available Operations
+
+#### \`onHelloMessage(payload)\`
+One time operation. You receive one message once you connect to the API
+
+
+**Example (JavaScript):**
+\`\`\`javascript
+client.onHelloMessage({
+  \\"type\\": \\"hello\\",
+  \\"num_connections\\": 1,
+  \\"debug_info\\": {
+    \\"host\\": \\"applink-8\\",
+    \\"build_number\\": 105,
+    \\"approximate_connection_time\\": 18060
+  },
+  \\"connection_info\\": {
+    \\"app_id\\": \\"A08NKKBFGBD\\"
+  }
+})
+\`\`\`
+
+
+**Example (Python):**
+\`\`\`python
+client.on_hello_message({
+  \\"type\\": \\"hello\\",
+  \\"num_connections\\": 1,
+  \\"debug_info\\": {
+    \\"host\\": \\"applink-8\\",
+    \\"build_number\\": 105,
+    \\"approximate_connection_time\\": 18060
+  },
+  \\"connection_info\\": {
+    \\"app_id\\": \\"A08NKKBFGBD\\"
+  }
+})
+\`\`\`
+
+
+
+
+#### \`onEvent(payload)\`
+
+
+
+**Example (JavaScript):**
+\`\`\`javascript
+client.onEvent({
+  \\"envelope_id\\": \\"c044c358-d17e-4f6d-94aa-3ddadb82ef59\\",
+  \\"payload\\": {
+    \\"token\\": \\"el8A2aGi0yIJ2so0ENvWcAfX\\",
+    \\"team_id\\": \\"T34F2JRQU\\",
+    \\"context_team_id\\": \\"T34F2JRQU\\",
+    \\"context_enterprise_id\\": null,
+    \\"api_app_id\\": \\"A08NKKBFGBD\\",
+    \\"event\\": {
+      \\"subtype\\": \\"channel_join\\",
+      \\"user\\": \\"U08NR6C69R8\\",
+      \\"text\\": \\"<@U08NR6C69R8> has joined the channel\\",
+      \\"inviter\\": \\"UD698Q5LM\\",
+      \\"type\\": \\"message\\",
+      \\"ts\\": \\"1744903248.779009\\",
+      \\"channel\\": \\"C072JMTJ85Q\\",
+      \\"event_ts\\": \\"1744903248.779009\\",
+      \\"channel_type\\": \\"channel\\"
+    },
+    \\"type\\": \\"event_callback\\",
+    \\"event_id\\": \\"Ev08NDP302UE\\",
+    \\"event_time\\": 1744903248,
+    \\"authorizations\\": [
+      {
+        \\"enterprise_id\\": null,
+        \\"team_id\\": \\"T34F2JRQU\\",
+        \\"user_id\\": \\"U08NR6C69R8\\",
+        \\"is_bot\\": true,
+        \\"is_enterprise_install\\": false
+      }
+    ],
+    \\"is_ext_shared_channel\\": false,
+    \\"event_context\\": \\"4-eyJldCI6Im1lc3NhZ2UiLCJ0aWQiOiJUMzRGMkpSUVUiLCJhaWQiOiJBMDhOS0tCRkdCRCIsImNpZCI6IkMwNzJKTVRKODVRIn0\\"
+  },
+  \\"type\\": \\"events_api\\",
+  \\"accepts_response_payload\\": false,
+  \\"retry_attempt\\": 0,
+  \\"retry_reason\\": \\"\\"
+})
+\`\`\`
+
+
+**Example (Python):**
+\`\`\`python
+client.on_event({
+  \\"envelope_id\\": \\"c044c358-d17e-4f6d-94aa-3ddadb82ef59\\",
+  \\"payload\\": {
+    \\"token\\": \\"el8A2aGi0yIJ2so0ENvWcAfX\\",
+    \\"team_id\\": \\"T34F2JRQU\\",
+    \\"context_team_id\\": \\"T34F2JRQU\\",
+    \\"context_enterprise_id\\": null,
+    \\"api_app_id\\": \\"A08NKKBFGBD\\",
+    \\"event\\": {
+      \\"subtype\\": \\"channel_join\\",
+      \\"user\\": \\"U08NR6C69R8\\",
+      \\"text\\": \\"<@U08NR6C69R8> has joined the channel\\",
+      \\"inviter\\": \\"UD698Q5LM\\",
+      \\"type\\": \\"message\\",
+      \\"ts\\": \\"1744903248.779009\\",
+      \\"channel\\": \\"C072JMTJ85Q\\",
+      \\"event_ts\\": \\"1744903248.779009\\",
+      \\"channel_type\\": \\"channel\\"
+    },
+    \\"type\\": \\"event_callback\\",
+    \\"event_id\\": \\"Ev08NDP302UE\\",
+    \\"event_time\\": 1744903248,
+    \\"authorizations\\": [
+      {
+        \\"enterprise_id\\": null,
+        \\"team_id\\": \\"T34F2JRQU\\",
+        \\"user_id\\": \\"U08NR6C69R8\\",
+        \\"is_bot\\": true,
+        \\"is_enterprise_install\\": false
+      }
+    ],
+    \\"is_ext_shared_channel\\": false,
+    \\"event_context\\": \\"4-eyJldCI6Im1lc3NhZ2UiLCJ0aWQiOiJUMzRGMkpSUVUiLCJhaWQiOiJBMDhOS0tCRkdCRCIsImNpZCI6IkMwNzJKTVRKODVRIn0\\"
+  },
+  \\"type\\": \\"events_api\\",
+  \\"accepts_response_payload\\": false,
+  \\"retry_attempt\\": 0,
+  \\"retry_reason\\": \\"\\"
+})
+\`\`\`
+
+
+**Example (JavaScript):**
+\`\`\`javascript
+client.onEvent({
+  \\"envelope_id\\": \\"6d0b4caf-95d3-410c-b85d-ce592e622aea\\",
+  \\"payload\\": {
+    \\"token\\": \\"el8A2aGi0yIJ2so0ENvWcAfX\\",
+    \\"team_id\\": \\"T34F2JRQU\\",
+    \\"context_team_id\\": \\"T34F2JRQU\\",
+    \\"context_enterprise_id\\": null,
+    \\"api_app_id\\": \\"A08NKKBFGBD\\",
+    \\"event\\": {
+      \\"type\\": \\"reaction_added\\",
+      \\"user\\": \\"UD698Q5LM\\",
+      \\"reaction\\": \\"beers\\",
+      \\"item\\": {
+        \\"type\\": \\"message\\",
+        \\"channel\\": \\"C072JMTJ85Q\\",
+        \\"ts\\": \\"1744903248.779009\\"
+      },
+      \\"event_ts\\": \\"1744903279.021400\\"
+    },
+    \\"type\\": \\"event_callback\\",
+    \\"event_id\\": \\"Ev08NRBU37QB\\",
+    \\"event_time\\": 1744903279,
+    \\"authorizations\\": [
+      {
+        \\"enterprise_id\\": null,
+        \\"team_id\\": \\"T34F2JRQU\\",
+        \\"user_id\\": \\"U08NR6C69R8\\",
+        \\"is_bot\\": true,
+        \\"is_enterprise_install\\": false
+      }
+    ],
+    \\"is_ext_shared_channel\\": false,
+    \\"event_context\\": \\"4-eyJldCI6InJlYWN0aW9uX2FkZGVkIiwidGlkIjoiVDM0RjJKUlFVIiwiYWlkIjoiQTA4TktLQkZHQkQiLCJjaWQiOiJDMDcySk1USjg1USJ9\\"
+  },
+  \\"type\\": \\"events_api\\",
+  \\"accepts_response_payload\\": false,
+  \\"retry_attempt\\": 3,
+  \\"retry_reason\\": \\"timeout\\"
+})
+\`\`\`
+
+
+**Example (Python):**
+\`\`\`python
+client.on_event({
+  \\"envelope_id\\": \\"6d0b4caf-95d3-410c-b85d-ce592e622aea\\",
+  \\"payload\\": {
+    \\"token\\": \\"el8A2aGi0yIJ2so0ENvWcAfX\\",
+    \\"team_id\\": \\"T34F2JRQU\\",
+    \\"context_team_id\\": \\"T34F2JRQU\\",
+    \\"context_enterprise_id\\": null,
+    \\"api_app_id\\": \\"A08NKKBFGBD\\",
+    \\"event\\": {
+      \\"type\\": \\"reaction_added\\",
+      \\"user\\": \\"UD698Q5LM\\",
+      \\"reaction\\": \\"beers\\",
+      \\"item\\": {
+        \\"type\\": \\"message\\",
+        \\"channel\\": \\"C072JMTJ85Q\\",
+        \\"ts\\": \\"1744903248.779009\\"
+      },
+      \\"event_ts\\": \\"1744903279.021400\\"
+    },
+    \\"type\\": \\"event_callback\\",
+    \\"event_id\\": \\"Ev08NRBU37QB\\",
+    \\"event_time\\": 1744903279,
+    \\"authorizations\\": [
+      {
+        \\"enterprise_id\\": null,
+        \\"team_id\\": \\"T34F2JRQU\\",
+        \\"user_id\\": \\"U08NR6C69R8\\",
+        \\"is_bot\\": true,
+        \\"is_enterprise_install\\": false
+      }
+    ],
+    \\"is_ext_shared_channel\\": false,
+    \\"event_context\\": \\"4-eyJldCI6InJlYWN0aW9uX2FkZGVkIiwidGlkIjoiVDM0RjJKUlFVIiwiYWlkIjoiQTA4TktLQkZHQkQiLCJjaWQiOiJDMDcySk1USjg1USJ9\\"
+  },
+  \\"type\\": \\"events_api\\",
+  \\"accepts_response_payload\\": false,
+  \\"retry_attempt\\": 3,
+  \\"retry_reason\\": \\"timeout\\"
+})
+\`\`\`
+
+
+**Example (JavaScript):**
+\`\`\`javascript
+client.onEvent({
+  \\"envelope_id\\": \\"aefc571f-0d8f-4f2a-a5e7-6acc7f986816\\",
+  \\"payload\\": {
+    \\"token\\": \\"el8A2aGi0yIJ2so0ENvWcAfX\\",
+    \\"team_id\\": \\"T34F2JRQU\\",
+    \\"context_team_id\\": \\"T34F2JRQU\\",
+    \\"context_enterprise_id\\": null,
+    \\"api_app_id\\": \\"A08NKKBFGBD\\",
+    \\"event\\": {
+      \\"type\\": \\"message\\",
+      \\"subtype\\": \\"message_deleted\\",
+      \\"previous_message\\": {
+        \\"user\\": \\"U08KSJS9Z4N\\",
+        \\"type\\": \\"message\\",
+        \\"ts\\": \\"1744904504.505559\\",
+        \\"client_msg_id\\": \\"c6d9111e-f9df-4b52-ba17-7bbb04255243\\",
+        \\"text\\": \\"Hi can we connect on linkedin\\",
+        \\"team\\": \\"T34F2JRQU\\",
+        \\"blocks\\": [
+          {
+            \\"type\\": \\"rich_text\\",
+            \\"block_id\\": \\"gCBVb\\",
+            \\"elements\\": [
+              {
+                \\"type\\": \\"rich_text_section\\",
+                \\"elements\\": [
+                  {
+                    \\"type\\": \\"text\\",
+                    \\"text\\": \\"Hi can we connect on linkedin\\"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      \\"channel\\": \\"C072JMTJ85Q\\",
+      \\"hidden\\": true,
+      \\"deleted_ts\\": \\"1744904504.505559\\",
+      \\"event_ts\\": \\"1744904513.021500\\",
+      \\"ts\\": \\"1744904513.021500\\",
+      \\"channel_type\\": \\"channel\\"
+    },
+    \\"type\\": \\"event_callback\\",
+    \\"event_id\\": \\"Ev08N76U6JHM\\",
+    \\"event_time\\": 1744904513,
+    \\"authorizations\\": [
+      {
+        \\"enterprise_id\\": null,
+        \\"team_id\\": \\"T34F2JRQU\\",
+        \\"user_id\\": \\"U08NR6C69R8\\",
+        \\"is_bot\\": true,
+        \\"is_enterprise_install\\": false
+      }
+    ],
+    \\"is_ext_shared_channel\\": false,
+    \\"event_context\\": \\"4-eyJldCI6Im1lc3NhZ2UiLCJ0aWQiOiJUMzRGMkpSUVUiLCJhaWQiOiJBMDhOS0tCRkdCRCIsImNpZCI6IkMwNzJKTVRKODVRIn0\\"
+  },
+  \\"type\\": \\"events_api\\",
+  \\"accepts_response_payload\\": false,
+  \\"retry_attempt\\": 3,
+  \\"retry_reason\\": \\"timeout\\"
+})
+\`\`\`
+
+
+**Example (Python):**
+\`\`\`python
+client.on_event({
+  \\"envelope_id\\": \\"aefc571f-0d8f-4f2a-a5e7-6acc7f986816\\",
+  \\"payload\\": {
+    \\"token\\": \\"el8A2aGi0yIJ2so0ENvWcAfX\\",
+    \\"team_id\\": \\"T34F2JRQU\\",
+    \\"context_team_id\\": \\"T34F2JRQU\\",
+    \\"context_enterprise_id\\": null,
+    \\"api_app_id\\": \\"A08NKKBFGBD\\",
+    \\"event\\": {
+      \\"type\\": \\"message\\",
+      \\"subtype\\": \\"message_deleted\\",
+      \\"previous_message\\": {
+        \\"user\\": \\"U08KSJS9Z4N\\",
+        \\"type\\": \\"message\\",
+        \\"ts\\": \\"1744904504.505559\\",
+        \\"client_msg_id\\": \\"c6d9111e-f9df-4b52-ba17-7bbb04255243\\",
+        \\"text\\": \\"Hi can we connect on linkedin\\",
+        \\"team\\": \\"T34F2JRQU\\",
+        \\"blocks\\": [
+          {
+            \\"type\\": \\"rich_text\\",
+            \\"block_id\\": \\"gCBVb\\",
+            \\"elements\\": [
+              {
+                \\"type\\": \\"rich_text_section\\",
+                \\"elements\\": [
+                  {
+                    \\"type\\": \\"text\\",
+                    \\"text\\": \\"Hi can we connect on linkedin\\"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      \\"channel\\": \\"C072JMTJ85Q\\",
+      \\"hidden\\": true,
+      \\"deleted_ts\\": \\"1744904504.505559\\",
+      \\"event_ts\\": \\"1744904513.021500\\",
+      \\"ts\\": \\"1744904513.021500\\",
+      \\"channel_type\\": \\"channel\\"
+    },
+    \\"type\\": \\"event_callback\\",
+    \\"event_id\\": \\"Ev08N76U6JHM\\",
+    \\"event_time\\": 1744904513,
+    \\"authorizations\\": [
+      {
+        \\"enterprise_id\\": null,
+        \\"team_id\\": \\"T34F2JRQU\\",
+        \\"user_id\\": \\"U08NR6C69R8\\",
+        \\"is_bot\\": true,
+        \\"is_enterprise_install\\": false
+      }
+    ],
+    \\"is_ext_shared_channel\\": false,
+    \\"event_context\\": \\"4-eyJldCI6Im1lc3NhZ2UiLCJ0aWQiOiJUMzRGMkpSUVUiLCJhaWQiOiJBMDhOS0tCRkdCRCIsImNpZCI6IkMwNzJKTVRKODVRIn0\\"
+  },
+  \\"type\\": \\"events_api\\",
+  \\"accepts_response_payload\\": false,
+  \\"retry_attempt\\": 3,
+  \\"retry_reason\\": \\"timeout\\"
+})
+\`\`\`
+
+
+
+
+#### \`onDisconnectMessage(payload)\`
+
+
+
+**Example (JavaScript):**
+\`\`\`javascript
+client.onDisconnectMessage({
+  \\"type\\": \\"disconnect\\",
+  \\"reason\\": \\"warning\\",
+  \\"debug_info\\": {
+    \\"host\\": \\"applink-0\\"
+  }
+})
+\`\`\`
+
+
+**Example (Python):**
+\`\`\`python
+client.on_disconnect_message({
+  \\"type\\": \\"disconnect\\",
+  \\"reason\\": \\"warning\\",
+  \\"debug_info\\": {
+    \\"host\\": \\"applink-0\\"
+  }
+})
+\`\`\`
+
+
+**Example (JavaScript):**
+\`\`\`javascript
+client.onDisconnectMessage({
+  \\"type\\": \\"disconnect\\",
+  \\"reason\\": \\"refresh_requested\\",
+  \\"debug_info\\": {
+    \\"host\\": \\"applink-0\\"
+  }
+})
+\`\`\`
+
+
+**Example (Python):**
+\`\`\`python
+client.on_disconnect_message({
+  \\"type\\": \\"disconnect\\",
+  \\"reason\\": \\"refresh_requested\\",
+  \\"debug_info\\": {
+    \\"host\\": \\"applink-0\\"
+  }
+})
+\`\`\`
+
+
+
+
+"
+`;
+
 exports[`WebSocket Clients Integration Tests Python Client Additional tests for Python client generate client for slack: ReactionAdded.py 1`] = `
 "class ReactionAdded: 
   def __init__(self, input: Dict):
@@ -7700,8 +8171,10 @@ class SlackWebsocketAPIClient:
         self.error_handlers = []        # Callables for errors
         self.outgoing_processors = []   # Callables to process outgoing messages
         self._stop_event = threading.Event()
-      
         params = {}
+        self.receive_operation_handlers = {}
+        self.receive_operation_discriminators = [{\\"key\\":\\"type\\",\\"value\\":\\"hello\\",\\"operation_id\\":\\"onHelloMessage\\"},{\\"key\\":\\"type\\",\\"value\\":\\"events_api\\",\\"operation_id\\":\\"onEvent\\"},{\\"key\\":\\"type\\",\\"value\\":\\"disconnect\\",\\"operation_id\\":\\"onDisconnectMessage\\"}]
+
         ticket = ticket or os.getenv(\\"TICKET\\")
         if ticket is not None:
           params[\\"ticket\\"] = ticket
@@ -7716,7 +8189,33 @@ class SlackWebsocketAPIClient:
     print(\\"Connected to Slack Websocket API Client server\\")
 
   def on_message(self, ws, message):
-    self.handle_message(message)
+    # Parse message for routing
+    try:
+        parsed_message = json.loads(message)
+    except:
+        parsed_message = message
+
+    handled = False
+
+    # Check each operation's discriminator
+    for discriminator in self.receive_operation_discriminators:
+      key = discriminator.get(\\"key\\")
+      value = discriminator.get(\\"value\\")
+      operation_id = discriminator.get(\\"operation_id\\")
+
+      # Check if message matches this discriminator
+      if key and isinstance(parsed_message, dict) and parsed_message.get(key) == value:
+        handler = self.receive_operation_handlers.get(operation_id)
+        if handler:
+          try:
+            handler(message)
+            handled = True
+          except Exception as error:
+            print(f\\"Error in {operation_id} handler: {error}\\")
+
+    # Fallback to generic handlers if not handled
+    if not handled:
+        self.handle_message(message)
 
   def on_error(self, ws, error):
     print(\\"WebSocket Error:\\", error)
@@ -7796,6 +8295,126 @@ class SlackWebsocketAPIClient:
         for handler in self.error_handlers:
           handler(error)
 
+  def register_on_hello_message_handler(self, handler, discriminator_key=None, discriminator_value=None):
+      \\"\\"\\"
+      Register a handler for onHelloMessage operation.
+
+      Args:
+          handler (callable): Handler function that receives raw_message as argument
+          discriminator_key (str): Message field to use for routing (e.g., 'type', 'event_type')
+          discriminator_value (str): Expected value for routing (e.g., 'hello', 'user_joined')
+      \\"\\"\\"
+      if not callable(handler):
+          print(\\"Handler must be callable\\")
+          return
+
+      # Validate that either both discriminator_key and discriminator_value are provided or neither
+      if (discriminator_key is not None and discriminator_value is None) or (discriminator_key is None and discriminator_value is not None):
+          print(\\"Error: Both discriminator_key and discriminator_value must be provided together\\")
+          return
+
+      # Register handler
+      self.receive_operation_handlers[\\"onHelloMessage\\"] = handler
+
+      # Add discriminator entry to the list if both key and value are provided
+      if discriminator_key is not None and discriminator_value is not None:
+          discriminator_entry = {
+              \\"key\\": discriminator_key,
+              \\"value\\": discriminator_value,
+              \\"operation_id\\": \\"onHelloMessage\\"
+          }
+        
+          # Check if this discriminator already exists
+          exists = any(
+              d.get(\\"key\\") == discriminator_key and 
+              d.get(\\"value\\") == discriminator_value and 
+              d.get(\\"operation_id\\") == \\"onHelloMessage\\" 
+              for d in self.receive_operation_discriminators
+          )
+
+          if not exists:
+            self.receive_operation_discriminators.append(discriminator_entry)
+
+  def register_on_event_handler(self, handler, discriminator_key=None, discriminator_value=None):
+      \\"\\"\\"
+      Register a handler for onEvent operation.
+
+      Args:
+          handler (callable): Handler function that receives raw_message as argument
+          discriminator_key (str): Message field to use for routing (e.g., 'type', 'event_type')
+          discriminator_value (str): Expected value for routing (e.g., 'hello', 'user_joined')
+      \\"\\"\\"
+      if not callable(handler):
+          print(\\"Handler must be callable\\")
+          return
+
+      # Validate that either both discriminator_key and discriminator_value are provided or neither
+      if (discriminator_key is not None and discriminator_value is None) or (discriminator_key is None and discriminator_value is not None):
+          print(\\"Error: Both discriminator_key and discriminator_value must be provided together\\")
+          return
+
+      # Register handler
+      self.receive_operation_handlers[\\"onEvent\\"] = handler
+
+      # Add discriminator entry to the list if both key and value are provided
+      if discriminator_key is not None and discriminator_value is not None:
+          discriminator_entry = {
+              \\"key\\": discriminator_key,
+              \\"value\\": discriminator_value,
+              \\"operation_id\\": \\"onEvent\\"
+          }
+        
+          # Check if this discriminator already exists
+          exists = any(
+              d.get(\\"key\\") == discriminator_key and 
+              d.get(\\"value\\") == discriminator_value and 
+              d.get(\\"operation_id\\") == \\"onEvent\\" 
+              for d in self.receive_operation_discriminators
+          )
+
+          if not exists:
+            self.receive_operation_discriminators.append(discriminator_entry)
+
+  def register_on_disconnect_message_handler(self, handler, discriminator_key=None, discriminator_value=None):
+      \\"\\"\\"
+      Register a handler for onDisconnectMessage operation.
+
+      Args:
+          handler (callable): Handler function that receives raw_message as argument
+          discriminator_key (str): Message field to use for routing (e.g., 'type', 'event_type')
+          discriminator_value (str): Expected value for routing (e.g., 'hello', 'user_joined')
+      \\"\\"\\"
+      if not callable(handler):
+          print(\\"Handler must be callable\\")
+          return
+
+      # Validate that either both discriminator_key and discriminator_value are provided or neither
+      if (discriminator_key is not None and discriminator_value is None) or (discriminator_key is None and discriminator_value is not None):
+          print(\\"Error: Both discriminator_key and discriminator_value must be provided together\\")
+          return
+
+      # Register handler
+      self.receive_operation_handlers[\\"onDisconnectMessage\\"] = handler
+
+      # Add discriminator entry to the list if both key and value are provided
+      if discriminator_key is not None and discriminator_value is not None:
+          discriminator_entry = {
+              \\"key\\": discriminator_key,
+              \\"value\\": discriminator_value,
+              \\"operation_id\\": \\"onDisconnectMessage\\"
+          }
+        
+          # Check if this discriminator already exists
+          exists = any(
+              d.get(\\"key\\") == discriminator_key and 
+              d.get(\\"value\\") == discriminator_value and 
+              d.get(\\"operation_id\\") == \\"onDisconnectMessage\\" 
+              for d in self.receive_operation_discriminators
+          )
+
+          if not exists:
+            self.receive_operation_discriminators.append(discriminator_entry)
+
   def close(self) :
     \\"\\"\\"Cleanly close the WebSocket connection.\\"\\"\\"
     self._stop_event.set()
@@ -7811,6 +8430,137 @@ exports[`WebSocket Clients Integration Tests Python Client Additional tests for 
 "websocket-client==1.8.0
 certifi==2025.1.31
 requests==2.32.3
+"
+`;
+
+exports[`WebSocket Clients Integration Tests Python Client Common Integration tests for Python client generation generate simple client for hoppscotch echo with custom client name: README.md 1`] = `
+"# Hoppscotch Echo WebSocket Client
+
+## Overview
+
+Undestand how to use Hoppscotch Echo WebSocket as a client. Hoppscotch Echo WebSocket server echoes back any messages sent to it. You can use this to test WebSocket connections and message flows.
+
+
+- **Version:** 1.0.0
+- **Server URL:** wss://echo-websocket.hoppscotch.io
+
+
+## Installation
+
+Install dependencies:
+
+\`\`\`bash
+pip install -r requirements.txt
+\`\`\`
+
+
+## Usage
+
+\`\`\`python
+from client import HoppscotchClient
+
+ws_client = HoppscotchClient()
+
+async def main():
+    await ws_client.connect()
+    # use ws_client to send/receive messages
+    await ws_client.close()
+\`\`\`
+
+
+## API
+
+### \`connect()\`
+Establishes a WebSocket connection.
+
+### \`register_message_handler(handler_function)\`
+Registers a callback for incoming messages.
+
+### \`register_error_handler(handler_function)\`
+Registers a callback for connection errors.
+
+### \`close()\`
+Closes the WebSocket connection.
+
+
+### Available Operations
+
+#### \`sendEchoMessage(payload)\`
+Send a message to the echo server.
+
+
+**Example (JavaScript):**
+\`\`\`javascript
+client.sendEchoMessage(\\"test\\")
+\`\`\`
+
+
+**Example (Python):**
+\`\`\`python
+client.send_echo_message(\\"test\\")
+\`\`\`
+
+
+**Example (JavaScript):**
+\`\`\`javascript
+client.sendEchoMessage(true)
+\`\`\`
+
+
+**Example (Python):**
+\`\`\`python
+client.send_echo_message(true)
+\`\`\`
+
+
+**Example (JavaScript):**
+\`\`\`javascript
+client.sendEchoMessage(123)
+\`\`\`
+
+
+**Example (Python):**
+\`\`\`python
+client.send_echo_message(123)
+\`\`\`
+
+
+**Example (JavaScript):**
+\`\`\`javascript
+client.sendEchoMessage({
+  \\"test\\": \\"test text\\"
+})
+\`\`\`
+
+
+**Example (Python):**
+\`\`\`python
+client.send_echo_message({
+  \\"test\\": \\"test text\\"
+})
+\`\`\`
+
+
+
+
+#### \`handleTimeStampMessage(payload)\`
+Receive the timestamp message sent from server every second.
+
+
+**Example (JavaScript):**
+\`\`\`javascript
+client.handleTimeStampMessage(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\\")
+\`\`\`
+
+
+**Example (Python):**
+\`\`\`python
+client.handle_time_stamp_message(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\\")
+\`\`\`
+
+
+
+
 "
 `;
 
@@ -7844,7 +8594,9 @@ class HoppscotchClient:
         self.outgoing_processors = []   # Callables to process outgoing messages
         self._stop_event = threading.Event()
       
-      
+        self.receive_operation_handlers = {}
+        self.receive_operation_discriminators = []
+
 
         
         self.url = url
@@ -7853,7 +8605,33 @@ class HoppscotchClient:
     print(\\"Connected to Hoppscotch Echo WebSocket Client server\\")
 
   def on_message(self, ws, message):
-    self.handle_message(message)
+    # Parse message for routing
+    try:
+        parsed_message = json.loads(message)
+    except:
+        parsed_message = message
+
+    handled = False
+
+    # Check each operation's discriminator
+    for discriminator in self.receive_operation_discriminators:
+      key = discriminator.get(\\"key\\")
+      value = discriminator.get(\\"value\\")
+      operation_id = discriminator.get(\\"operation_id\\")
+
+      # Check if message matches this discriminator
+      if key and isinstance(parsed_message, dict) and parsed_message.get(key) == value:
+        handler = self.receive_operation_handlers.get(operation_id)
+        if handler:
+          try:
+            handler(message)
+            handled = True
+          except Exception as error:
+            print(f\\"Error in {operation_id} handler: {error}\\")
+
+    # Fallback to generic handlers if not handled
+    if not handled:
+        self.handle_message(message)
 
   def on_error(self, ws, error):
     print(\\"WebSocket Error:\\", error)
@@ -7932,6 +8710,46 @@ class HoppscotchClient:
         # Call custom error handlers
         for handler in self.error_handlers:
           handler(error)
+
+  def register_handle_time_stamp_message_handler(self, handler, discriminator_key=None, discriminator_value=None):
+      \\"\\"\\"
+      Register a handler for handleTimeStampMessage operation.
+
+      Args:
+          handler (callable): Handler function that receives raw_message as argument
+          discriminator_key (str): Message field to use for routing (e.g., 'type', 'event_type')
+          discriminator_value (str): Expected value for routing (e.g., 'hello', 'user_joined')
+      \\"\\"\\"
+      if not callable(handler):
+          print(\\"Handler must be callable\\")
+          return
+
+      # Validate that either both discriminator_key and discriminator_value are provided or neither
+      if (discriminator_key is not None and discriminator_value is None) or (discriminator_key is None and discriminator_value is not None):
+          print(\\"Error: Both discriminator_key and discriminator_value must be provided together\\")
+          return
+
+      # Register handler
+      self.receive_operation_handlers[\\"handleTimeStampMessage\\"] = handler
+
+      # Add discriminator entry to the list if both key and value are provided
+      if discriminator_key is not None and discriminator_value is not None:
+          discriminator_entry = {
+              \\"key\\": discriminator_key,
+              \\"value\\": discriminator_value,
+              \\"operation_id\\": \\"handleTimeStampMessage\\"
+          }
+        
+          # Check if this discriminator already exists
+          exists = any(
+              d.get(\\"key\\") == discriminator_key and 
+              d.get(\\"value\\") == discriminator_value and 
+              d.get(\\"operation_id\\") == \\"handleTimeStampMessage\\" 
+              for d in self.receive_operation_discriminators
+          )
+
+          if not exists:
+            self.receive_operation_discriminators.append(discriminator_entry)
 
   @staticmethod
   async def send_echo_message_static(message, socket):
@@ -7996,6 +8814,137 @@ requests==2.32.3
 "
 `;
 
+exports[`WebSocket Clients Integration Tests Python Client Common Integration tests for Python client generation generate simple client for hoppscotch echo: README.md 1`] = `
+"# Hoppscotch Echo WebSocket Client
+
+## Overview
+
+Undestand how to use Hoppscotch Echo WebSocket as a client. Hoppscotch Echo WebSocket server echoes back any messages sent to it. You can use this to test WebSocket connections and message flows.
+
+
+- **Version:** 1.0.0
+- **Server URL:** wss://echo-websocket.hoppscotch.io
+
+
+## Installation
+
+Install dependencies:
+
+\`\`\`bash
+pip install -r requirements.txt
+\`\`\`
+
+
+## Usage
+
+\`\`\`python
+from client import HoppscotchEchoWebSocketClient
+
+ws_client = HoppscotchEchoWebSocketClient()
+
+async def main():
+    await ws_client.connect()
+    # use ws_client to send/receive messages
+    await ws_client.close()
+\`\`\`
+
+
+## API
+
+### \`connect()\`
+Establishes a WebSocket connection.
+
+### \`register_message_handler(handler_function)\`
+Registers a callback for incoming messages.
+
+### \`register_error_handler(handler_function)\`
+Registers a callback for connection errors.
+
+### \`close()\`
+Closes the WebSocket connection.
+
+
+### Available Operations
+
+#### \`sendEchoMessage(payload)\`
+Send a message to the echo server.
+
+
+**Example (JavaScript):**
+\`\`\`javascript
+client.sendEchoMessage(\\"test\\")
+\`\`\`
+
+
+**Example (Python):**
+\`\`\`python
+client.send_echo_message(\\"test\\")
+\`\`\`
+
+
+**Example (JavaScript):**
+\`\`\`javascript
+client.sendEchoMessage(true)
+\`\`\`
+
+
+**Example (Python):**
+\`\`\`python
+client.send_echo_message(true)
+\`\`\`
+
+
+**Example (JavaScript):**
+\`\`\`javascript
+client.sendEchoMessage(123)
+\`\`\`
+
+
+**Example (Python):**
+\`\`\`python
+client.send_echo_message(123)
+\`\`\`
+
+
+**Example (JavaScript):**
+\`\`\`javascript
+client.sendEchoMessage({
+  \\"test\\": \\"test text\\"
+})
+\`\`\`
+
+
+**Example (Python):**
+\`\`\`python
+client.send_echo_message({
+  \\"test\\": \\"test text\\"
+})
+\`\`\`
+
+
+
+
+#### \`handleTimeStampMessage(payload)\`
+Receive the timestamp message sent from server every second.
+
+
+**Example (JavaScript):**
+\`\`\`javascript
+client.handleTimeStampMessage(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\\")
+\`\`\`
+
+
+**Example (Python):**
+\`\`\`python
+client.handle_time_stamp_message(\\"11:13:24 GMT+0000 (Coordinated Universal Time)\\")
+\`\`\`
+
+
+
+
+"
+`;
+
 exports[`WebSocket Clients Integration Tests Python Client Common Integration tests for Python client generation generate simple client for hoppscotch echo: client.py 1`] = `
 "##################################################
 #
@@ -8026,7 +8975,9 @@ class HoppscotchEchoWebSocketClient:
         self.outgoing_processors = []   # Callables to process outgoing messages
         self._stop_event = threading.Event()
       
-      
+        self.receive_operation_handlers = {}
+        self.receive_operation_discriminators = []
+
 
         
         self.url = url
@@ -8035,7 +8986,33 @@ class HoppscotchEchoWebSocketClient:
     print(\\"Connected to Hoppscotch Echo WebSocket Client server\\")
 
   def on_message(self, ws, message):
-    self.handle_message(message)
+    # Parse message for routing
+    try:
+        parsed_message = json.loads(message)
+    except:
+        parsed_message = message
+
+    handled = False
+
+    # Check each operation's discriminator
+    for discriminator in self.receive_operation_discriminators:
+      key = discriminator.get(\\"key\\")
+      value = discriminator.get(\\"value\\")
+      operation_id = discriminator.get(\\"operation_id\\")
+
+      # Check if message matches this discriminator
+      if key and isinstance(parsed_message, dict) and parsed_message.get(key) == value:
+        handler = self.receive_operation_handlers.get(operation_id)
+        if handler:
+          try:
+            handler(message)
+            handled = True
+          except Exception as error:
+            print(f\\"Error in {operation_id} handler: {error}\\")
+
+    # Fallback to generic handlers if not handled
+    if not handled:
+        self.handle_message(message)
 
   def on_error(self, ws, error):
     print(\\"WebSocket Error:\\", error)
@@ -8115,6 +9092,46 @@ class HoppscotchEchoWebSocketClient:
         for handler in self.error_handlers:
           handler(error)
 
+  def register_handle_time_stamp_message_handler(self, handler, discriminator_key=None, discriminator_value=None):
+      \\"\\"\\"
+      Register a handler for handleTimeStampMessage operation.
+
+      Args:
+          handler (callable): Handler function that receives raw_message as argument
+          discriminator_key (str): Message field to use for routing (e.g., 'type', 'event_type')
+          discriminator_value (str): Expected value for routing (e.g., 'hello', 'user_joined')
+      \\"\\"\\"
+      if not callable(handler):
+          print(\\"Handler must be callable\\")
+          return
+
+      # Validate that either both discriminator_key and discriminator_value are provided or neither
+      if (discriminator_key is not None and discriminator_value is None) or (discriminator_key is None and discriminator_value is not None):
+          print(\\"Error: Both discriminator_key and discriminator_value must be provided together\\")
+          return
+
+      # Register handler
+      self.receive_operation_handlers[\\"handleTimeStampMessage\\"] = handler
+
+      # Add discriminator entry to the list if both key and value are provided
+      if discriminator_key is not None and discriminator_value is not None:
+          discriminator_entry = {
+              \\"key\\": discriminator_key,
+              \\"value\\": discriminator_value,
+              \\"operation_id\\": \\"handleTimeStampMessage\\"
+          }
+        
+          # Check if this discriminator already exists
+          exists = any(
+              d.get(\\"key\\") == discriminator_key and 
+              d.get(\\"value\\") == discriminator_value and 
+              d.get(\\"operation_id\\") == \\"handleTimeStampMessage\\" 
+              for d in self.receive_operation_discriminators
+          )
+
+          if not exists:
+            self.receive_operation_discriminators.append(discriminator_entry)
+
   @staticmethod
   async def send_echo_message_static(message, socket):
       \\"\\"\\"
@@ -8178,6 +9195,94 @@ requests==2.32.3
 "
 `;
 
+exports[`WebSocket Clients Integration Tests Python Client Common Integration tests for Python client generation generate simple client for postman echo: README.md 1`] = `
+"# Postman Echo WebSocket Client
+
+## Overview
+
+Understand how to use the Postman Echo WebSocket as a client. The Postman Echo WebSocket server echoes back any messages sent to it.
+
+- **Version:** 1.0.0
+- **Server URL:** wss://ws.postman-echo.com/raw
+
+
+## Installation
+
+Install dependencies:
+
+\`\`\`bash
+pip install -r requirements.txt
+\`\`\`
+
+
+## Usage
+
+\`\`\`python
+from client import PostmanEchoWebSocketClientClient
+
+ws_client = PostmanEchoWebSocketClientClient()
+
+async def main():
+    await ws_client.connect()
+    # use ws_client to send/receive messages
+    await ws_client.close()
+\`\`\`
+
+
+## API
+
+### \`connect()\`
+Establishes a WebSocket connection.
+
+### \`register_message_handler(handler_function)\`
+Registers a callback for incoming messages.
+
+### \`register_error_handler(handler_function)\`
+Registers a callback for connection errors.
+
+### \`close()\`
+Closes the WebSocket connection.
+
+
+### Available Operations
+
+#### \`sendEchoMessage(payload)\`
+Send a message to the Postman Echo server.
+
+
+**Example (JavaScript):**
+\`\`\`javascript
+client.sendEchoMessage(\\"test\\")
+\`\`\`
+
+
+**Example (Python):**
+\`\`\`python
+client.send_echo_message(\\"test\\")
+\`\`\`
+
+
+**Example (JavaScript):**
+\`\`\`javascript
+client.sendEchoMessage({
+  \\"test\\": \\"test text\\"
+})
+\`\`\`
+
+
+**Example (Python):**
+\`\`\`python
+client.send_echo_message({
+  \\"test\\": \\"test text\\"
+})
+\`\`\`
+
+
+
+
+"
+`;
+
 exports[`WebSocket Clients Integration Tests Python Client Common Integration tests for Python client generation generate simple client for postman echo: client.py 1`] = `
 "##################################################
 #
@@ -8209,7 +9314,6 @@ class PostmanEchoWebSocketClientClient:
         self.outgoing_processors = []   # Callables to process outgoing messages
         self._stop_event = threading.Event()
       
-      
 
         
         self.url = url
@@ -8218,7 +9322,33 @@ class PostmanEchoWebSocketClientClient:
     print(\\"Connected to Postman Echo WebSocket Client server\\")
 
   def on_message(self, ws, message):
-    self.handle_message(message)
+    # Parse message for routing
+    try:
+        parsed_message = json.loads(message)
+    except:
+        parsed_message = message
+
+    handled = False
+
+    # Check each operation's discriminator
+    for discriminator in self.receive_operation_discriminators:
+      key = discriminator.get(\\"key\\")
+      value = discriminator.get(\\"value\\")
+      operation_id = discriminator.get(\\"operation_id\\")
+
+      # Check if message matches this discriminator
+      if key and isinstance(parsed_message, dict) and parsed_message.get(key) == value:
+        handler = self.receive_operation_handlers.get(operation_id)
+        if handler:
+          try:
+            handler(message)
+            handled = True
+          except Exception as error:
+            print(f\\"Error in {operation_id} handler: {error}\\")
+
+    # Fallback to generic handlers if not handled
+    if not handled:
+        self.handle_message(message)
 
   def on_error(self, ws, error):
     print(\\"WebSocket Error:\\", error)

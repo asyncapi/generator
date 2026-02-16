@@ -1,4 +1,4 @@
-# CodeRabbit Configuration File
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
 
 language: en-US
 reviews:
@@ -12,19 +12,45 @@ reviews:
   auto_review:
     enabled: true
     auto_incremental_review: true
+    ignore_usernames: [dependabot, asyncapi-bot]
   review_status: true
   commit_status: true
   changed_files_summary: true
   assess_linked_issues: true
   related_issues: true
   related_prs: true
+  pre_merge_checks:
+    title:
+      mode: error
+      requirements: "Use a concise title that follows our Conventional Commits guidelines and clearly summarizes the change using imperative mood (it means spoken or written as if giving a command or instruction, like 'add new helper for listing operations'). In Generator, prepend feat: or fix: in PR title only when PATCH/MINOR release must be triggered."
+  tools:
+    actionlint:
+      enabled: true
+    github-checks:
+      enabled: true
+      timeout_ms: 900000  # Wait 15 min for checks to complete
+
 chat:
   auto_reply: false
 
 knowledge_base:
+  # Don't opt out - this enables all learning features
+  opt_out: false
+  web_search:
+    enabled: true
+  # Code Guidelines - automatically detects team standards
+  code_guidelines:
+    enabled: true
+    filePatterns:
+      # Add custom patterns here if you have other guideline files:
+      - ".github/pr-review-checklist.md"
+      - "Development.md"
+      - "CONTRIBUTING.md"
   learnings:
     scope: auto
   issues:
     scope: auto
   pull_requests:
     scope: auto
+  mcp:
+    usage: auto

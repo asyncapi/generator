@@ -1,0 +1,173 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InitConnector component (integration with AsyncAPI document) renders with TimedConnection when queryParamsArray is empty array 1`] = `
+"@PostConstruct
+  void openAndSendMessagesWithDelay() {
+      new Thread(() -> {
+          try {
+            Log.info(\\"Starting WebSocket connection attempt...\\");
+            WebSocketClientConnection connection = connector.connectAndAwait();
+
+            // Wait 2 seconds before first message
+            Thread.sleep(2000);
+
+            // Send 5 messages
+            for (int i = 1; i <= 5; i++) {
+                // Send a message to any available operation by including its operation ID (i.e. \\"sendMessage\\")
+                String msg = \\"Message #\\" + i + \\" from Quarkus for sendMessage\\";
+                connection.sendTextAndAwait(msg);
+                Log.info(\\"Sent: \\" + msg);
+                Thread.sleep(5000); // Wait 5 seconds between messages
+            }
+
+            // Wait 10 seconds after final message
+            Log.info(\\"All messages sent. Waiting 10 seconds before closing...\\");
+            Thread.sleep(10000);
+
+
+            // Calling to close the WebSocket connection
+  
+
+            connection.closeAndAwait();
+            Log.info(\\"Connection closed gracefully.\\");
+            Thread.sleep(1000); // Wait for a second before exiting
+            System.exit(0);
+        } catch (Exception e) {
+              Log.error(\\"Error during WebSocket communication\\", e);
+              System.exit(1);
+        }
+    }).start();
+  }
+}"
+`;
+
+exports[`InitConnector component (integration with AsyncAPI document) renders with TimedConnection when queryParamsArray is null 1`] = `
+"@PostConstruct
+  void openAndSendMessagesWithDelay() {
+      new Thread(() -> {
+          try {
+            Log.info(\\"Starting WebSocket connection attempt...\\");
+            WebSocketClientConnection connection = connector.connectAndAwait();
+
+            // Wait 2 seconds before first message
+            Thread.sleep(2000);
+
+            // Send 5 messages
+            for (int i = 1; i <= 5; i++) {
+                // Send a message to any available operation by including its operation ID (i.e. \\"sendMessage\\")
+                String msg = \\"Message #\\" + i + \\" from Quarkus for sendMessage\\";
+                connection.sendTextAndAwait(msg);
+                Log.info(\\"Sent: \\" + msg);
+                Thread.sleep(5000); // Wait 5 seconds between messages
+            }
+
+            // Wait 10 seconds after final message
+            Log.info(\\"All messages sent. Waiting 10 seconds before closing...\\");
+            Thread.sleep(10000);
+
+
+            // Calling to close the WebSocket connection
+  
+
+            connection.closeAndAwait();
+            Log.info(\\"Connection closed gracefully.\\");
+            Thread.sleep(1000); // Wait for a second before exiting
+            System.exit(0);
+        } catch (Exception e) {
+              Log.error(\\"Error during WebSocket communication\\", e);
+              System.exit(1);
+        }
+    }).start();
+  }
+}"
+`;
+
+exports[`InitConnector component (integration with AsyncAPI document) renders with TimedConnection when queryParamsArray is undefined 1`] = `
+"@PostConstruct
+  void openAndSendMessagesWithDelay() {
+      new Thread(() -> {
+          try {
+            Log.info(\\"Starting WebSocket connection attempt...\\");
+            WebSocketClientConnection connection = connector.connectAndAwait();
+
+            // Wait 2 seconds before first message
+            Thread.sleep(2000);
+
+            // Send 5 messages
+            for (int i = 1; i <= 5; i++) {
+                // Send a message to any available operation by including its operation ID (i.e. \\"sendMessage\\")
+                String msg = \\"Message #\\" + i + \\" from Quarkus for sendMessage\\";
+                connection.sendTextAndAwait(msg);
+                Log.info(\\"Sent: \\" + msg);
+                Thread.sleep(5000); // Wait 5 seconds between messages
+            }
+
+            // Wait 10 seconds after final message
+            Log.info(\\"All messages sent. Waiting 10 seconds before closing...\\");
+            Thread.sleep(10000);
+
+
+            // Calling to close the WebSocket connection
+  
+
+            connection.closeAndAwait();
+            Log.info(\\"Connection closed gracefully.\\");
+            Thread.sleep(1000); // Wait for a second before exiting
+            System.exit(0);
+        } catch (Exception e) {
+              Log.error(\\"Error during WebSocket communication\\", e);
+              System.exit(1);
+        }
+    }).start();
+  }
+}"
+`;
+
+exports[`InitConnector component (integration with AsyncAPI document) renders without TimedConnection when queryParamsArray has data from fixture 1`] = `
+"@PostConstruct
+  void openAndSendMessagesWithDelay() {
+      new Thread(() -> {
+          try {
+            Log.info(\\"Starting WebSocket connection attempt...\\");
+            // URI parameters
+            String query = \\"\\";
+            
+            String heartbeat = System.getenv(\\"HEARTBEAT\\");
+            if(heartbeat == null || heartbeat.isEmpty()){
+              throw new IllegalArgumentException(\\"Required environment variable HEARTBEAT is missing or empty\\");
+            }
+            query += \\"heartbeat=\\" + URLEncoder.encode(heartbeat, StandardCharsets.UTF_8);
+
+            String bids = System.getenv(\\"BIDS\\");
+            if(bids == null || bids.isEmpty()){
+              throw new IllegalArgumentException(\\"Required environment variable BIDS is missing or empty\\");
+            }
+            query += \\"&bids=\\" + URLEncoder.encode(bids, StandardCharsets.UTF_8);
+
+            String sessionId = System.getenv(\\"SESSIONID\\");
+            if(sessionId == null || sessionId.isEmpty()){
+              throw new IllegalArgumentException(\\"Required environment variable SESSIONID is missing or empty\\");
+            }
+            query += \\"&sessionId=\\" + URLEncoder.encode(sessionId, StandardCharsets.UTF_8);
+
+
+            String queryUri = baseURI + \\"/link\\" + \\"?\\" + query;
+            WebSocketClientConnection connection = connector.baseUri(queryUri).connectAndAwait();
+            Thread.sleep(120000); // Keep the connection open for 2 minutes
+            
+
+            // Calling to close the WebSocket connection
+  
+
+            connection.closeAndAwait();
+            Log.info(\\"Connection closed gracefully.\\");
+            Thread.sleep(1000); // Wait for a second before exiting
+            System.exit(0);
+        } catch (Exception e) {
+              Log.error(\\"Error during WebSocket communication\\", e);
+              System.exit(1);
+        }
+    }).start();
+  }
+}"
+`;

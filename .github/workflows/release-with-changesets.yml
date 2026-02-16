@@ -44,8 +44,11 @@ jobs:
         shell: bash
       - if: steps.packagejson.outputs.exists == 'true'
         name: Check package-lock version
+        # This workflow is from our own org repo and safe to reference by 'master'.
         uses: asyncapi/.github/.github/actions/get-node-version-from-package-lock@master
         id: lockversion
+        with:
+          node-version: ${{ vars.NODE_VERSION }}
       - if: steps.packagejson.outputs.exists == 'true'
         name: Setup Node.js
         uses: actions/setup-node@v4
@@ -76,7 +79,7 @@ jobs:
 
   release:
     needs: [test-nodejs]
-    name: Publish to any of NPM, GitHub, or Docker Hub
+    name: Publish to any of NPM and GitHub
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -95,7 +98,7 @@ jobs:
         shell: bash
       - if: steps.packagejson.outputs.exists == 'true'
         name: Check package-lock version
-        uses: derberg/.github-asyncapi/.github/actions/get-node-version-from-package-lock@fixnodereelase
+        uses: asyncapi/.github/.github/actions/get-node-version-from-package-lock@master
         with:
           node-version: ${{ vars.NODE_VERSION }}
         id: lockversion

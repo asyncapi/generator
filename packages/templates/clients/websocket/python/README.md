@@ -66,3 +66,69 @@ You can use our AsyncAPI's credentials to access different set of events produce
     {"type":"hello","num_connections":1,"debug_info":{"host":"applink-3","build_number":118,"approximate_connection_time":18060},"connection_info":{"app_id":"A08NKKBFGBD"}}
     ```
     If you did not receive it, you probably connect with wrong credentials. Remember that generated `ticket` can be used only once to establish a websocket connection.
+
+## Client for Slack with Auto-Routing
+
+To run the Slack Client example with auto-routing, first follow the "Client for Slack" setup above (generate credentials and install dependencies), then:
+- Use `example-slack-with-routing.py` instead of `example-slack.py`.
+- This example demonstrates auto-routing of messages to registered handlers for different event types (hello, event, disconnect, and unrecognized messages). The client automatically dispatches incoming messages based on their type without manual parsing.
+
+1. Start the example that uses generated client with auto-routing. Examine events, and modify example as you want:
+    
+    Linux/MacOs
+    ```bash
+    TICKET=6b150bb1-82b4-457f-a09d-6ff0af1fd2d1 APP_ID=00dfdcccb53a2645dd3f1773fcb10fa7b0a598cf333a990a9db12375ef1865dd python example-slack-with-routing.py
+    ```
+    Windows
+    ```powershell
+    $env:TICKET="dcaa9dc7-b728-40dd-ac40-16dd5f2f8710"; $env:APP_ID="00dfdcccb53a2645dd3f1773fcb10fa7b0a598cf333a990a9db12375ef1865dd"; python example-slack-with-routing.py
+    ```
+
+1. By default, `discriminator_key` is derived from the discriminator field, and `discriminator_value` from the corresponding `const` in the AsyncAPI document. For non-default cases, users must provide both `discriminator_key` and `discriminator_value` explicitly in register_handlers. Partial inputs are not supported to avoid ambiguity in message routing.
+
+### How Routing Works
+
+- Generated WebSocket clients now automatically route incoming messages to operation-specific handlers based on message discriminators. Users can register handlers for specific message types without manually parsing or filtering messages.
+- When a message arrives, the client checks it against registered discriminators (e.g., `type: "hello"`, `type: "events_api"`)
+- If a match is found, the message is routed to the specific operation handler (e.g., `onHelloMessage`, `onEvent`)
+- If no match is found, the message falls back to generic message handlers
+- This enables clean separation of message handling logic based on message types
+
+> `discriminator` is a `string` field that you can add to any AsyncAPI Schema. This also means that it is limited to AsyncAPI Schema only, and it won't work with other schema formats, like for example, Avro. 
+
+The implementation automatically derives discriminator information from your AsyncAPI document:
+- Discriminator `key` is extracted from the `discriminator` field in your AsyncAPI spec
+- Discriminator `value` is extracted from the `const` property defined in message schemas
+
+Example AsyncAPI Schema with `discriminator` and `const`:
+```yaml
+schemas:
+    hello:
+      type: object
+      discriminator: type # you specify name of property
+      properties:
+        type:
+          type: string
+          const: hello # you specify the value of the discriminator property that is used for routing
+          description: A hello string confirming WebSocket connection
+```
+
+### Fallback
+
+When defaults aren't available in the AsyncAPI document, users must provide **both** `discriminator_key` and `discriminator_value` when registering handlers. Providing only one parameter is not supported - you must provide either both or neither.
+
+> **Why this limitation exists**: When a receive operation has multiple messages sharing the same discriminator key (e.g., all use `"type"` field), we need the specific value (e.g., `"hello"`, `"disconnect"`) to distinguish between them. Without both pieces of information, the routing becomes ambiguous.
+
+Example:
+
+```python
+# Default case - discriminator info auto-derived from AsyncAPI doc
+client.register_on_hello_message_handler(my_handler)
+
+# Custom case - must provide both key AND value
+client.register_on_hello_message_handler(
+    my_handler,
+    discriminator_key="message_type",
+    discriminator_value="custom_hello"
+)
+```

@@ -18,13 +18,13 @@
     "lint:fix": "eslint --fix --max-warnings 0 --config ../../../../../../.eslintrc --ignore-path ../../../../../../.eslintignore ."
   },
   "dependencies": {
-    "@asyncapi/generator-helpers": "0.2.0",
+    "@asyncapi/generator-helpers": "1.1.0",
     "@asyncapi/generator-react-sdk": "^1.1.2"
   },
   "devDependencies": {
     "@asyncapi/generator": "*",
-    "@asyncapi/modelina": "^5.2.5",
-    "@asyncapi/parser": "^3.0.14",
+    "@asyncapi/modelina": "^5.10.1",
+    "@asyncapi/parser": "^3.4.0",
     "@babel/cli": "^7.25.9",
     "@babel/core": "^7.26.0",
     "@babel/preset-env": "^7.26.0",

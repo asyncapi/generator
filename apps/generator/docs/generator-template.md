@@ -44,7 +44,7 @@ Before you create the template, you'll need to have an [AsyncAPI document](https
 
 ``` yml
 
-asyncapi: 3.0.0
+asyncapi: 3.0.1
 
 info:
   title: Temperature Service

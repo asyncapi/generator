@@ -7,6 +7,7 @@ info:
 servers:
   testServer:
     host: test.example.com
+    pathname: /ws
     protocol: wss
     description: Test WebSocket server
 

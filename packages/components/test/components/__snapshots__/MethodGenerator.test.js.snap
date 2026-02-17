@@ -60,3 +60,9 @@ exports[`MethodGenerator renders with preExecutionCode and postExecutionCode 1`]
     self.handlers.append(handler)
     # After handler registration"
 `;
+
+exports[`MethodGenerator resolves docs and logic from framework-level methodConfig 1`] = `
+"// Framework Docs
+   testMethod 
+  System.out.println(\\"Framework Logic\\");"
+`;

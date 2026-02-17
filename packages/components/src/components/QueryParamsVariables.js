@@ -103,6 +103,7 @@ function resolveQueryParamLogic(language, framework = '') {
   if (framework && config[framework]) {
     return config[framework];
   }
+  return null;
 }
 
 /**

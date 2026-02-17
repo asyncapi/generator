@@ -6,6 +6,7 @@ import { invalidOperation } from '../../utils/ErrorHandling';
  * @param {Object} props - Component properties.
  * @param {Object} props.operation - An AsyncAPI Operation object.
  * @returns {JSX.Element} A Text component that contains formatted operation header.
+ * @throws {Error} When an invalid operation is provided.
  * 
  * @example
  * import path from "path";
@@ -33,7 +34,7 @@ import { invalidOperation } from '../../utils/ErrorHandling';
  */
 
 export function OperationHeader({ operation }) {
-  if (!operation) {
+  if (!operation || typeof operation.id !== 'function' || !operation.id()) {
     throw invalidOperation();
   }
 

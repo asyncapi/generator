@@ -65,24 +65,19 @@ const dependenciesConfig = {
  * @param {Object} frameworkConfig - The framework configuration object.
  * @param {string} role - The role (e.g., 'client', 'connector' for Java).
  * @returns {string[]} Array of dependency strings or empty array.
+ * @throws {Error} If the role is not supported by the framework configuration.
  */
 function resolveFrameworkDependencies(frameworkConfig, role) {
-  if (role) {
-    const supportedRoles = Object.keys(frameworkConfig);
-    if (!supportedRoles.includes(role)) {
-      throw invalidRole(role, supportedRoles);
-    }
-    
-    if (frameworkConfig[role] && frameworkConfig[role].dependencies) {
-      return frameworkConfig[role].dependencies;
-    }
+  if (!role) {
+    return frameworkConfig.dependencies || [];
   }
-  
-  if (frameworkConfig.dependencies) {
-    return frameworkConfig.dependencies;
+
+  const supportedRoles = Object.keys(frameworkConfig);
+  if (!supportedRoles.includes(role)) {
+    throw invalidRole(role, supportedRoles);
   }
-  
-  return [];
+
+  return frameworkConfig[role]?.dependencies || frameworkConfig.dependencies || [];
 }
 
 /**
@@ -93,6 +88,8 @@ function resolveFrameworkDependencies(frameworkConfig, role) {
  * @param {string} framework - The framework (e.g., 'quarkus' for Java).
  * @param {string} role - The role (e.g., 'client', 'connector' for Java).
  * @returns {string[]} Array of dependency strings.
+ * @throws {Error} When the specified language is not supported.
+ * @throws {Error} When the specified framework is not supported for the given language.
  */
 function resolveDependencies(language, framework = '', role = '') {
   const config = dependenciesConfig[language];
@@ -108,16 +105,13 @@ function resolveDependencies(language, framework = '', role = '') {
   }
   
   // Handle nested structure (java with quarkus framework and roles)
-  if (framework) {
-    const supportedFrameworks = Object.keys(config);
-    if (!config[framework]) {
-      throw unsupportedFramework(language, framework, supportedFrameworks);
-    }
-    
-    return resolveFrameworkDependencies(config[framework], role);
-  }
+  const supportedFrameworks = Object.keys(config);
   
-  return [];
+  if (!config[framework]) {
+    throw unsupportedFramework(language, framework, supportedFrameworks);
+  }
+    
+  return resolveFrameworkDependencies(config[framework], role);
 }
 
 /**

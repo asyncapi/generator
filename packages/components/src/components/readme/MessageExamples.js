@@ -42,6 +42,7 @@ client.${opId}(${JSON.stringify(payload, null, 2)})
  * @param {Object} props - Component Props
  * @param {Object} props.operation - An AsyncAPI Operation object.
  * @returns {JSX.Element|null} A Text component that contains message examples, or null when no examples exist.
+ * @throws {Error} When an invalid operation is provided.
  * 
  * @example
  * import path from "path";

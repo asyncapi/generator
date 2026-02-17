@@ -15,6 +15,6 @@ describe('Installation component', () => {
   test('throws error when language is undefined', () => {
     expect(() => {
       render(<Installation />);
-    }).toThrow('Unsupported language "undefined". Supported languages: python, javascript');
+    }).toThrow(/Language is required. Supported languages:/);
   });
 });

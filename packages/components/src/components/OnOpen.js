@@ -39,6 +39,14 @@ public void onOpen() {
     }
   }
 };
+/**
+ * Resolves the appropriate onOpen code generator for the given language and optional framework.
+ *
+ * @private
+ * @param {Language} language - The target programming language.
+ * @param {string} [framework=''] - Optional framework variant (e.g., 'quarkus' for java).
+ * @returns {Function|null} The code generator function, or null if not found.
+ */
 
 const resolveOpenConfig = (language, framework = '') => {
   const config = websocketOnOpenMethod[language];
@@ -59,7 +67,8 @@ const resolveOpenConfig = (language, framework = '') => {
  * @param {string} [props.framework=''] - Optional framework variant (e.g., 'quarkus' for java).
  * @param {string} props.title - The title of the WebSocket server.
  * @returns {JSX.Element} A Text component containing the onOpen handler code for the specified language.
- * @throws {Error} When the language/framework combination is unsupported.
+ * @throws {Error} When the specified language is not supported.
+ * @throws {Error} When the specified framework is not supported for the given language.
  * 
  * @example
  * const language = "java";
@@ -79,9 +88,8 @@ const resolveOpenConfig = (language, framework = '') => {
  * renderOnOpen();
  */
 export function OnOpen({ language, framework='', title }) {
-  let onOpenMethod = '';
   let indent = 0;
-  let newLines = 0;
+  let newLines = 1;
 
   const supportedLanguages = Object.keys(websocketOnOpenMethod);
 
@@ -92,14 +100,14 @@ export function OnOpen({ language, framework='', title }) {
   const generateOnOpenCode = resolveOpenConfig(language, framework);
 
   if (typeof generateOnOpenCode !== 'function') {
-    const supportedFrameworks = Object.keys(websocketOnOpenMethod[language] || {});
+    const supportedFrameworks = Object.keys(websocketOnOpenMethod[language]);
     throw unsupportedFramework(language, framework, supportedFrameworks);
   }
 
   const openResult = generateOnOpenCode(title);
-  onOpenMethod = openResult.onOpenMethod;
+  const { onOpenMethod } = openResult;
   indent = openResult.indent ?? 0;
-  newLines = openResult.newLines ?? 1;
+  newLines = openResult.newLines ?? newLines;
 
   return (
     <Text newLines={newLines} indent={indent}>

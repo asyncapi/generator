@@ -15,6 +15,6 @@ describe('CoreMethods component', () => {
   test('throws error for unsupported or missing language', () => {
     expect(() => {
       render(<CoreMethods />);
-    }).toThrow('Unsupported language "undefined". Supported languages: python, javascript');
+    }).toThrow(/Language is required. Supported languages: python, javascript/);
   });
 });

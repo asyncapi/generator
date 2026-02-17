@@ -73,4 +73,39 @@ describe('Testing of QueryParamsVariables component', () => {
     />);
     expect(result.trim()).toMatchSnapshot();
   });
+
+  test('returns null when language is unsupported', () => {
+    const result = render(
+      <QueryParamsVariables
+        language="go"
+        queryParams={[['token']]}
+      />
+    );
+
+    expect(result.trim()).toBe('');
+  });
+
+  test('returns null when framework is invalid for java', () => {
+    const result = render(
+      <QueryParamsVariables
+        language="java"
+        framework="spring"
+        queryParams={[['token']]}
+      />
+    );
+
+    expect(result.trim()).toBe('');
+  });
+
+  test('ignores framework for python', () => {
+    const result = render(
+      <QueryParamsVariables
+        language="python"
+        framework="randomFramework"
+        queryParams={[['token']]}
+      />
+    );
+
+    expect(result.trim()).toMatchSnapshot();
+  });
 });

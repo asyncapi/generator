@@ -99,6 +99,7 @@ Future<void> connect() async {
  * @param {Language} props.language - The programming language for which to generate connection code.
  * @param {string} props.title - The title of the WebSocket server.
  * @return {JSX.Element} A Text component containing the generated WebSocket connection code for the specified language.
+ * @throws When the specified language is not supported.
  * 
  * @example
  * const language = "python";

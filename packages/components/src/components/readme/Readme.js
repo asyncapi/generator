@@ -23,6 +23,8 @@ import { invalidAsyncAPI, invalidParams } from '../../utils/ErrorHandling';
  * @param {Object} props.params - Generator parameters used to customize output 
  * @param {Language} props.language - Target language used to render language-specific sections.
  * @returns {JSX.Element} A File component representing the generated README.md.
+ * @throws {Error} When asyncapi is missing or invalid.
+ * @throws {Error} When params object is missing or invalid.
  * 
  * @example
  * import path from "path";

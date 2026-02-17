@@ -43,6 +43,9 @@ main();
  * @param {string} props.clientFileName - The file name where the client is defined.
  * @param {Language} props.language - The target language for which to render the usage snippet
  * @returns {JSX.Element} A Text component containing a formatted usage example snippet.
+ * @throws {Error} When the specified language is not supported.
+ * @throws {Error} When clientName is missing or invalid.
+ * @throws {Error} When clientFileName is missing or invalid.
  * 
  * @example
  * const clientName = "MyClient";

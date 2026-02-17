@@ -40,7 +40,7 @@ describe('Testing of Overview component', () => {
   test('throws error when info is missing', () => {
     expect(() => {
       render(<Overview title={title} serverUrl={serverUrl}/>);
-    }).toThrow('AsyncAPI "info" object is missing or invalid.');
+    }).toThrow(/AsyncAPI "info" object is missing/);
   });
 
   test('render overview component when title is missing', () => {
@@ -60,6 +60,24 @@ describe('Testing of Overview component', () => {
       <Overview
         info={info}
         title={title}
+      />
+    );
+
+    const actual = result.trim();
+    expect(actual).toMatchSnapshot();
+  });
+
+  test('uses fallback description when description is empty', () => {
+    const fakeInfo = {
+      description: () => '',
+      version: () => '1.0.0'
+    };
+
+    const result = render(
+      <Overview
+        info={fakeInfo}
+        title="MyClient"
+        serverUrl="ws://localhost"
       />
     );
 

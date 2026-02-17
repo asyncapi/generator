@@ -10,6 +10,7 @@ import { invalidInfo } from '../../utils/ErrorHandling';
  * @param {string} props.title - Title from the AsyncAPI document.
  * @param {string} props.serverUrl - ServerUrl from a specific server from the AsyncAPI document.
  * @returns {JSX.Element} A Text component that contains the Overview of a Websocket client.
+ * @throws {Error} When an info object is missing or invalid.
  * 
  * @example
  *  
@@ -45,7 +46,7 @@ import { invalidInfo } from '../../utils/ErrorHandling';
  */
 
 export function Overview({ info, title, serverUrl }) {
-  if (!info) {
+  if (!info || typeof info.version !== 'function') {
     throw invalidInfo();
   }
 

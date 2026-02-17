@@ -109,6 +109,26 @@ describe('MethodGenerator', () => {
     expect(result.trim()).toMatchSnapshot();
   });
 
+  test('resolves docs and logic from framework-level methodConfig', () => {
+    const result = render(
+      <MethodGenerator
+        language="java"
+        methodName="testMethod"
+        methodConfig={{
+          java: {
+            quarkus: {
+              methodDocs: '// Framework Docs',
+              methodLogic: 'System.out.println("Framework Logic");'
+            }
+          }
+        }}
+        framework="quarkus"
+      />
+    );
+
+    expect(result.trim()).toMatchSnapshot();
+  });
+
   test('renders with parameterWrap false', () => {
     const result = render(
       <MethodGenerator
@@ -126,5 +146,68 @@ describe('MethodGenerator', () => {
       />
     );
     expect(result.trim()).toMatchSnapshot();
+  });
+
+  test('throws an error when unsupported language is provided', () => {
+    expect(() => 
+      render(
+        <MethodGenerator
+          language="cpp"
+          methodName="multiLineLogic"
+          methodParams={['url']}
+          methodLogic={'std::cout << \"Connecting...\" << std::endl;'}
+        />
+      )).toThrow(/Unsupported language "cpp". Supported languages:/);
+  });
+
+  test('throws an error when the indent is negative', () => {
+    expect(() => 
+      render(
+        <MethodGenerator
+          language="python"
+          methodName="connect"
+          methodParams={['self', 'url']}
+          methodLogic="print('Connecting...')"
+          indent={-2}
+        />
+      )).toThrow(/Indent size must be >= 0. Received: /);
+  });
+
+  test('throws an error when the newLines is negative', () => {
+    expect(() => 
+      render(
+        <MethodGenerator
+          language="python"
+          methodName="connect"
+          methodParams={['self', 'url']}
+          methodLogic="print('Connecting...')"
+          newLines={-2}
+        />
+      )).toThrow(/Invalid newLines value. Must be >= 0. Received:/);
+  });
+
+  test('throws an error when the methodName is non-empty string', () => {
+    expect(() => 
+      render(
+        <MethodGenerator
+          language="python"
+          methodName={() => {}}
+          methodParams={['self', 'url']}
+          methodLogic="print('Connecting...')"
+          newLines={-2}
+        />
+      )).toThrow(/Invalid method name. Expected a non-empty string. Received:/);
+  });
+
+  test('throws an error when the methodParams is not an array', () => {
+    expect(() => 
+      render(
+        <MethodGenerator
+          language="python"
+          methodName="connect"
+          methodParams={() => {}}
+          methodLogic="print('Connecting...')"
+        />
+      )).toThrow(/Invalid method parameters. Expected an array. Received:/);
   });
 });

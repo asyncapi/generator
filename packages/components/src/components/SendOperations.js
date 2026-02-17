@@ -125,6 +125,9 @@ static ${methodName}(message, socket, schemas) {
  * @param {Array<Object>} props.sendOperations - Array of send operations from AsyncAPI document.
  * @param {string} props.clientName - The name of the client class.
  * @returns {JSX.Element[]|null} Array of Text components for static and non-static WebSocket send operation methods, or null if no send operations are provided.
+ * @throws {Error} When the specified language is not supported.
+ * @throws {Error} When clientName is missing or invalid.
+ * @throws {Error} When operation is invalid or missing.
  * 
  * @example
  * import path from "path";

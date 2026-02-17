@@ -64,6 +64,7 @@ const resolveCloseConfig = (language, framework = '') => {
   if (framework && typeof config[framework] === 'function') {
     return config[framework];
   }
+  return null;
 };
 
 /**
@@ -75,6 +76,8 @@ const resolveCloseConfig = (language, framework = '') => {
  * @param {string} props.title - The title of the WebSocket server.
  * 
  * @returns {JSX.Element} A Text component containing the onClose handler code for the specified language.
+ * @throws {Error} When the specified language is not supported.
+ * @throws {Error} When the specified framework is not supported for the given language.
  * 
  * @example
  * const language = "java";

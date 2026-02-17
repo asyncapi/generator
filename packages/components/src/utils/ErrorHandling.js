@@ -7,11 +7,19 @@ const stringify = (v) => {
 };
 
 export function unsupportedLanguage(language, supported = []) {
-  return new Error(`Unsupported language "${language}". Supported languages: ${supported.join(', ')}`);
+  const supportedList = supported.join(', ');
+  if (language === undefined || language === null || language === '') {
+    return new Error(`Language is required. Supported languages: ${supportedList}`);
+  }
+  return new Error(`Unsupported language "${language}". Supported languages: ${supportedList}`);
 }
 
 export function unsupportedFramework(language, framework, supported = []) {
-  return new Error(`Unsupported framework "${framework}" for language "${language}". Supported frameworks: ${supported.join(', ')}`);
+  const supportedList = supported.join(', ');
+  if (framework === undefined || framework === null || framework === '') {
+    return new Error(`Framework is required for language "${language}". Supported frameworks: ${supportedList}`);
+  }
+  return new Error(`Unsupported framework "${framework}" for language "${language}". Supported frameworks: ${supportedList}`);
 }
 
 export function invalidMethodName(methodName) {
@@ -39,15 +47,15 @@ export function invalidParams(params) {
 }
 
 export function invalidAsyncAPI() {
-  return new Error('AsyncAPI document is missing or invalid.');
+  return new Error('AsyncAPI document is missing.');
 }
 
 export function invalidInfo() {
-  return new Error('AsyncAPI "info" object is missing or invalid.');
+  return new Error('AsyncAPI "info" object is missing.');
 }
 
 export function invalidServer() {
-  return new Error('AsyncAPI "server" object is missing or invalid.');
+  return new Error('AsyncAPI "server" object is missing.');
 }
 
 export function invalidOperation() {

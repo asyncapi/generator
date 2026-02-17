@@ -2,32 +2,35 @@
  * @jest-environment node
  */
 const path = require('path');
+
+jest.mock('../lib/templates/BakedInTemplatesList.json', () => require('./fixtures/bakedInTemplatesFixture.json'));
+
 const { listBakedInTemplates, isCoreTemplate, getTemplate } = require('../lib/templates/bakedInTemplates');
-const templates = require('../lib/templates/BakedInTemplatesList.json');
+const fixtureTemplates = require('./fixtures/bakedInTemplatesFixture.json');
 
 describe('bakedInTemplates', () => {
   describe('listBakedInTemplates', () => {
     it('returns all templates when no filter is provided', () => {
       const result = listBakedInTemplates();
-      expect(result).toHaveLength(templates.length);
-      expect(result).toEqual(templates);
+      expect(result).toHaveLength(fixtureTemplates.length);
+      expect(result).toEqual(fixtureTemplates);
     });
 
     it('returns all templates when filter is undefined', () => {
       const result = listBakedInTemplates(undefined);
-      expect(result).toHaveLength(templates.length);
-      expect(result).toEqual(templates);
+      expect(result).toHaveLength(fixtureTemplates.length);
+      expect(result).toEqual(fixtureTemplates);
     });
 
     it('returns all templates when filter is empty object', () => {
       const result = listBakedInTemplates({});
-      expect(result).toHaveLength(templates.length);
-      expect(result).toEqual(templates);
+      expect(result).toHaveLength(fixtureTemplates.length);
+      expect(result).toEqual(fixtureTemplates);
     });
 
     it('filters by type correctly', () => {
       const result = listBakedInTemplates({ type: 'client' });
-      expect(result.length).toBeGreaterThan(0);
+      expect(result).toHaveLength(3);
       expect(result.every(t => t.type === 'client')).toBe(true);
     });
 
@@ -38,7 +41,7 @@ describe('bakedInTemplates', () => {
 
     it('filters by stack correctly', () => {
       const result = listBakedInTemplates({ stack: 'quarkus' });
-      expect(result.length).toBeGreaterThan(0);
+      expect(result).toHaveLength(2);
       expect(result.every(t => t.stack === 'quarkus')).toBe(true);
     });
 
@@ -49,7 +52,7 @@ describe('bakedInTemplates', () => {
 
     it('filters by protocol correctly', () => {
       const result = listBakedInTemplates({ protocol: 'websocket' });
-      expect(result.length).toBeGreaterThan(0);
+      expect(result).toHaveLength(2);
       expect(result.every(t => t.protocol === 'websocket')).toBe(true);
     });
 
@@ -60,8 +63,8 @@ describe('bakedInTemplates', () => {
 
     it('filters by target correctly', () => {
       const result = listBakedInTemplates({ target: 'javascript' });
-      expect(result.length).toBeGreaterThan(0);
-      expect(result.every(t => t.target === 'javascript')).toBe(true);
+      expect(result).toHaveLength(1);
+      expect(result[0].target).toBe('javascript');
     });
 
     it('returns empty array when target filter matches nothing', () => {
@@ -71,62 +74,49 @@ describe('bakedInTemplates', () => {
 
     it('filters by combined type and protocol', () => {
       const result = listBakedInTemplates({ type: 'client', protocol: 'websocket' });
-      expect(result.length).toBeGreaterThan(0);
+      expect(result).toHaveLength(2);
       expect(result.every(t => t.type === 'client' && t.protocol === 'websocket')).toBe(true);
     });
 
     it('filters by combined type, protocol, and target', () => {
       const result = listBakedInTemplates({ type: 'client', protocol: 'websocket', target: 'javascript' });
-      expect(result.length).toBeGreaterThan(0);
-      expect(result.every(t => 
-        t.type === 'client' && 
-        t.protocol === 'websocket' && 
-        t.target === 'javascript'
-      )).toBe(true);
+      expect(result).toHaveLength(1);
+      expect(result[0].name).toBe('fixture-template-client-ws-js');
     });
 
     it('filters by combined type, protocol, target, and stack', () => {
-      const result = listBakedInTemplates({ 
-        type: 'client', 
-        protocol: 'websocket', 
+      const result = listBakedInTemplates({
+        type: 'client',
+        protocol: 'websocket',
         target: 'java',
         stack: 'quarkus'
       });
-      expect(result.length).toBeGreaterThan(0);
-      expect(result.every(t => 
-        t.type === 'client' && 
-        t.protocol === 'websocket' && 
-        t.target === 'java' &&
-        t.stack === 'quarkus'
-      )).toBe(true);
+      expect(result).toHaveLength(1);
+      expect(result[0].name).toBe('fixture-template-client-ws-java');
     });
 
     it('returns empty array when combined filters match nothing', () => {
-      const result = listBakedInTemplates({ 
-        type: 'client', 
-        protocol: 'nonexistent' 
+      const result = listBakedInTemplates({
+        type: 'client',
+        protocol: 'nonexistent'
       });
       expect(result).toEqual([]);
     });
 
     it('handles templates without optional stack property', () => {
-      const templatesWithoutStack = templates.filter(t => !t.stack);
-      if (templatesWithoutStack.length > 0) {
-        const result = listBakedInTemplates({ stack: 'quarkus' });
-        // Should not include templates without stack property
-        expect(result.every(t => t.stack === 'quarkus')).toBe(true);
-      }
+      const result = listBakedInTemplates({ stack: 'quarkus' });
+      expect(result.every(t => t.stack === 'quarkus')).toBe(true);
+      expect(result).toHaveLength(2);
     });
   });
 
   describe('isCoreTemplate', () => {
     it('returns true for existing template name', () => {
-      const existingTemplate = templates[0];
-      expect(isCoreTemplate(existingTemplate.name)).toBe(true);
+      expect(isCoreTemplate('fixture-template-client-ws-js')).toBe(true);
     });
 
     it('returns true for all templates in the list', () => {
-      templates.forEach(template => {
+      fixtureTemplates.forEach(template => {
         expect(isCoreTemplate(template.name)).toBe(true);
       });
     });
@@ -148,48 +138,36 @@ describe('bakedInTemplates', () => {
     });
 
     it('is case-sensitive', () => {
-      const existingTemplate = templates[0];
-      const caseVariation = existingTemplate.name.toUpperCase();
-      if (caseVariation !== existingTemplate.name) {
-        expect(isCoreTemplate(caseVariation)).toBe(false);
-      }
+      expect(isCoreTemplate('FIXTURE-TEMPLATE-CLIENT-WS-JS')).toBe(false);
     });
   });
 
   describe('getTemplate', () => {
     it('returns template object with name and path for existing template', async () => {
-      const existingTemplate = templates[0];
-      const result = await getTemplate(existingTemplate.name);
-      
+      const result = await getTemplate('fixture-template-client-ws-js');
       expect(result).toBeDefined();
-      expect(result.name).toBe(existingTemplate.name);
+      expect(result.name).toBe('fixture-template-client-ws-js');
       expect(result.path).toBeDefined();
       expect(typeof result.path).toBe('string');
     });
 
     it('uses template path when available', async () => {
-      const templateWithPath = templates.find(t => t.path);
-      if (templateWithPath) {
-        const result = await getTemplate(templateWithPath.name);
-        expect(result.path).toBe(templateWithPath.path);
-      }
+      const result = await getTemplate('fixture-template-with-path');
+      expect(result.path).toBe('/custom/path/to/template');
     });
 
     it('falls back to bakedInTemplates directory when path is not provided', async () => {
-      const templateWithoutPath = templates.find(t => !t.path);
-      if (templateWithoutPath) {
-        const result = await getTemplate(templateWithoutPath.name);
-        const expectedPath = path.resolve(
-          __dirname,
-          '../lib/templates/bakedInTemplates',
-          templateWithoutPath.name
-        );
-        expect(result.path).toBe(expectedPath);
-      }
+      const result = await getTemplate('fixture-template-client-ws-js');
+      const expectedPath = path.resolve(
+        __dirname,
+        '../lib/templates/bakedInTemplates',
+        'fixture-template-client-ws-js'
+      );
+      expect(result.path).toBe(expectedPath);
     });
 
     it('handles all templates in the list', async () => {
-      for (const template of templates) {
+      for (const template of fixtureTemplates) {
         const result = await getTemplate(template.name);
         expect(result).toBeDefined();
         expect(result.name).toBe(template.name);
@@ -198,24 +176,24 @@ describe('bakedInTemplates', () => {
       }
     });
 
-    it('throws error for non-existing template', async () => {
-      // Current implementation throws when template.name is accessed on undefined
-      await expect(getTemplate('nonexistent-template')).rejects.toThrow();
+    it('returns undefined for non-existing template', async () => {
+      const result = await getTemplate('nonexistent-template');
+      expect(result).toBeUndefined();
     });
 
-    it('throws error for empty string template name', async () => {
-      // Current implementation will throw when template is not found
-      await expect(getTemplate('')).rejects.toThrow();
+    it('returns undefined for empty string template name', async () => {
+      const result = await getTemplate('');
+      expect(result).toBeUndefined();
     });
 
-    it('throws error for null template name', async () => {
-      // Current implementation will throw when template is not found
-      await expect(getTemplate(null)).rejects.toThrow();
+    it('returns undefined for null template name', async () => {
+      const result = await getTemplate(null);
+      expect(result).toBeUndefined();
     });
 
-    it('throws error for undefined template name', async () => {
-      // Current implementation will throw when template is not found
-      await expect(getTemplate(undefined)).rejects.toThrow();
+    it('returns undefined for undefined template name', async () => {
+      const result = await getTemplate(undefined);
+      expect(result).toBeUndefined();
     });
   });
 });

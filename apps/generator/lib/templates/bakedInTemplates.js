@@ -37,18 +37,19 @@ module.exports.isCoreTemplate = (templateName) => {
 /**
  * Retrieve a template by name and validate its path.
  * If the path does not exist, fallback to `node_modules/{templateName}`.
+ * Returns undefined when templateName is invalid (null, undefined, not a string, or empty/whitespace-only) or when no baked-in template exists with the given name.
  *
  * @async
  * @param {string} templateName - The name of the template to retrieve.
- * @returns {Promise<{name: string, path: string}|undefined>} An object containing the template's name and path, or undefined if not found.
+ * @returns {Promise<{name: string, path: string}|undefined>} An object containing the template's name and path, or undefined if templateName is invalid or template is not on the list.
  */
 module.exports.getTemplate = async (templateName) => {
   if (templateName == null || typeof templateName !== 'string' || templateName.trim() === '') {
-    throw new Error('Invalid template name');
+    return undefined;
   }
   const template = templates.find(t => t.name === templateName);
   if (!template) {
-    throw new Error('Invalid template name');
+    return undefined;
   }
   const templatePath = template.path || path.resolve(__dirname, BAKED_IN_TEMPLATES_DIR, template.name);
   return {

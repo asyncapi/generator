@@ -16,6 +16,9 @@ exports[`Constructor component (integration with AsyncAPI document) renders with
         self.outgoing_processors = []   # Callables to process outgoing messages
         self._stop_event = threading.Event()
       
+        self.receive_operation_handlers = {}
+        self.receive_operation_discriminators = []
+
 
         
         self.url = url"
@@ -37,6 +40,9 @@ exports[`Constructor component (integration with AsyncAPI document) renders with
         self.outgoing_processors = []   # Callables to process outgoing messages
         self._stop_event = threading.Event()
       
+        self.receive_operation_handlers = {}
+        self.receive_operation_discriminators = []
+
 
         
         self.url = url"
@@ -62,6 +68,9 @@ exports[`Constructor component (integration with AsyncAPI document) renders with
         self.outgoing_processors = []   # Callables to process outgoing messages
         self._stop_event = threading.Event()
         params = {}
+        self.receive_operation_handlers = {}
+        self.receive_operation_discriminators = []
+
         heartbeat = heartbeat or os.getenv(\\"HEARTBEAT\\")
         if heartbeat is not None:
           params[\\"heartbeat\\"] = heartbeat
@@ -95,6 +104,9 @@ exports[`Constructor component (integration with AsyncAPI document) renders with
         self.outgoing_processors = []   # Callables to process outgoing messages
         self._stop_event = threading.Event()
       
+        self.receive_operation_handlers = {}
+        self.receive_operation_discriminators = []
+
 
         
         self.url = url"

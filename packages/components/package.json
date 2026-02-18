@@ -12,11 +12,11 @@
     "generate:assets": "npm run prepublishOnly && npm run docs",
     "docs": "jsdoc2md --template ./jsdoc2md-handlebars/api.hbs --files \"./src/**/*.js\" --files \"./src/**/readme/*.js\" > ../../apps/generator/docs/api_components.md"
   },
-"files": [
-"lib/**",
-"README.md",
-"LICENSE"
-],
+  "files": [
+    "lib/**",
+    "README.md",
+    "LICENSE"
+  ],
   "main": "lib/index.js",
   "repository": {
     "type": "git",

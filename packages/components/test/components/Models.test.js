@@ -88,4 +88,40 @@ describe('Integration Tests for models function', () => {
     const result = render(await component);
     expect(result).toMatchSnapshot();
   });
+
+  test('skips models with falsy content', async () => {
+    let component;
+    jest.isolateModules(() => {
+      jest.doMock('@asyncapi/modelina', () => ({
+        PythonGenerator: class {
+          constructor() {}
+          async generate() {
+            return [
+              { modelName: 'Example', result: null },
+              { modelName: 'Other', result: 'valid content' }
+            ];
+          }
+        },
+        JavaGenerator: class {},
+        TypeScriptGenerator: class {},
+        CSharpGenerator: class {},
+        RustGenerator: class {},
+        JavaScriptGenerator: class {},
+        FormatHelpers: {
+          toPascalCase: (s) => s,
+          toCamelCase: (s) => s,
+          toKebabCase: (s) => s,
+          toSnakeCase: (s) => s
+        }
+      }));
+
+      const { Models: MockedModels } = require('../../src/index');
+      component = MockedModels({ asyncapi: parsedAsyncAPIDocument });
+    });
+
+    const result = render(await component);
+    expect(result).toBe('valid content');
+
+    jest.resetModules();
+  });
 });

@@ -91,7 +91,7 @@ function resolveFrameworkDependencies(frameworkConfig, role) {
  * @throws {Error} When the specified language is not supported.
  * @throws {Error} When the specified framework is not supported for the given language.
  */
-function resolveDependencies(language, framework = '', role = '') {
+function resolveDependencies(language, framework, role) {
   const config = dependenciesConfig[language];
   const supportedLanguages = Object.keys(dependenciesConfig);
   

@@ -74,15 +74,13 @@ describe('Testing of QueryParamsVariables component', () => {
     expect(result.trim()).toMatchSnapshot();
   });
 
-  test('returns null when language is unsupported', () => {
-    const result = render(
+  test('throws an error when the language is not supported', () => {
+    expect(() => render(
       <QueryParamsVariables
         language="go"
         queryParams={[['token']]}
       />
-    );
-
-    expect(result.trim()).toBe('');
+    )).toThrow(/Unsupported language "go". Supported languages:/);
   });
 
   test('returns null when framework is invalid for java', () => {
@@ -107,5 +105,25 @@ describe('Testing of QueryParamsVariables component', () => {
     );
 
     expect(result.trim()).toMatchSnapshot();
+  });
+
+  test('returns null when java framework is missing', () => {
+    const result = render(
+      <QueryParamsVariables
+        language="java"
+        queryParams={[['token']]}
+      />
+    );
+
+    expect(result.trim()).toBe('');
+  });
+  test('directly covers resolveQueryParamLogic null branch', () => {
+    const result = QueryParamsVariables({
+      language: 'java',
+      framework: '',
+      queryParams: [['token']]
+    });
+
+    expect(result).toBeNull();
   });
 });

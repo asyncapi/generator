@@ -38,11 +38,11 @@ const resolveDocsAndLogic = ({ language, methodDocs, methodLogic, methodConfig, 
 
     if (framework && config[framework]) {
       const frameworkConfig = config[framework];
-      docs = frameworkConfig.methodDocs ?? methodDocs ?? '';
-      logic = frameworkConfig.methodLogic ?? methodLogic ?? '';
+      docs = frameworkConfig.methodDocs ?? methodDocs;
+      logic = frameworkConfig.methodLogic ?? methodLogic;
     } else if (config.methodLogic || config.methodDocs) {
-      docs = config.methodDocs ?? methodDocs ?? '';
-      logic = config.methodLogic ?? methodLogic ?? '';
+      docs = config.methodDocs ?? methodDocs;
+      logic = config.methodLogic ?? methodLogic;
     }
   }
 

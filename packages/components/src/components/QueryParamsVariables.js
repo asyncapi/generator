@@ -1,5 +1,6 @@
 import { Text } from '@asyncapi/generator-react-sdk';
 import { toCamelCase } from '@asyncapi/generator-helpers';
+import { unsupportedLanguage } from '../utils/ErrorHandling';
 
 /**
  * @typedef {'python' | 'java' | 'javascript'} Language
@@ -95,7 +96,7 @@ const queryParamLogicConfig = {
  * @param {string} [framework=''] - Optional framework (e.g., 'quarkus' for Java).
  * @returns {function | undefined} The configuration function for generating query parameter code.
  */
-function resolveQueryParamLogic(language, framework = '') {
+function resolveQueryParamLogic(language, framework) {
   const config = queryParamLogicConfig[language];
   if (typeof config === 'function') {
     return config;
@@ -151,6 +152,11 @@ function resolveQueryParamLogic(language, framework = '') {
 export function QueryParamsVariables({ language, framework = '', queryParams }) {
   if (!queryParams || !Array.isArray(queryParams)) {
     return null;
+  }
+
+  const supportedLanguages = Object.keys(queryParamLogicConfig);
+  if (!supportedLanguages.includes(language)) {
+    throw unsupportedLanguage(language, supportedLanguages);
   }
 
   const generateParamCode = resolveQueryParamLogic(language, framework);

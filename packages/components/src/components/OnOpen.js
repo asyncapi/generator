@@ -48,7 +48,7 @@ public void onOpen() {
  * @returns {Function|null} The code generator function, or null if not found.
  */
 
-const resolveOpenConfig = (language, framework = '') => {
+const resolveOpenConfig = (language, framework) => {
   const config = websocketOnOpenMethod[language];
   if (typeof config === 'function') {
     return config;

@@ -148,6 +148,111 @@ describe('MethodGenerator', () => {
     expect(result.trim()).toMatchSnapshot();
   });
 
+  test('renders with destructuring default values when customMethodConfig is partial', () => {
+    const result = render(
+      <MethodGenerator
+        language="java"
+        methodName="testMethod"
+        methodParams={['String param1', 'int param2']}
+        customMethodConfig={{ 
+          returnType: 'public void', 
+          closingTag: '}', 
+          parameterWrap: false 
+        }}
+        methodLogic="System.out.println('Testing parameterWrap');"
+      />
+    );
+    expect(result.trim()).toMatchSnapshot();
+  });
+
+  test('renders with framework config falls back to methodDocs prop when frameworkDocs missing', () => {
+    const result = render(
+      <MethodGenerator
+        language="java"
+        methodName="testMethod"
+        methodDocs="// Prop Docs"
+        methodConfig={{
+          java: {
+            quarkus: {
+              methodLogic: 'System.out.println("Logic");'
+            }
+          }
+        }}
+        framework="quarkus"
+      />
+    );
+
+    expect(result.trim()).toMatchSnapshot();
+  });
+
+  test('renders with framework config falls back to empty string when both docs missing', () => {
+    const result = render(
+      <MethodGenerator
+        language="java"
+        methodName="testMethod"
+        methodConfig={{
+          java: {
+            quarkus: {}
+          }
+        }}
+        framework="quarkus"
+      />
+    );
+
+    expect(result.trim()).toMatchSnapshot();
+  });
+
+  test('renders with language-level config falls back to methodLogic prop when config.methodLogic missing', () => {
+    const result = render(
+      <MethodGenerator
+        language="python"
+        methodName="testMethod"
+        methodLogic="print('from prop')"
+        methodConfig={{
+          python: {
+            methodDocs: 'Some docs'
+          }
+        }}
+      />
+    );
+
+    expect(result.trim()).toMatchSnapshot();
+  });
+
+  test('renders with language-level config falls back to empty string when both methodLogic sources missing', () => {
+    const result = render(
+      <MethodGenerator
+        language="python"
+        methodName="testMethod"
+        methodConfig={{
+          python: {
+            methodDocs: 'Some docs'
+          }
+        }}
+      />
+    );
+
+    expect(result.trim()).toMatchSnapshot();
+  });
+
+  test('renders with language-level config falls back to methodLogic prop', () => {
+    const result = render(
+      <MethodGenerator
+        language="python"
+        methodName="testMethod"
+        methodLogic="print('fallback')"
+        methodConfig={{
+          python: {
+            methodDocs: undefined,
+            methodLogic: undefined
+          }
+        }}
+      />
+    );
+
+    expect(result.trim()).toMatchSnapshot();
+  });
+
   test('throws an error when unsupported language is provided', () => {
     expect(() => 
       render(

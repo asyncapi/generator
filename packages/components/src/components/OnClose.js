@@ -56,7 +56,7 @@ const websocketOnCloseMethod = {
  * @returns {Function|undefined} The code generator function, or undefined if not found.
  */
 
-const resolveCloseConfig = (language, framework = '') => {
+const resolveCloseConfig = (language, framework) => {
   const config = websocketOnCloseMethod[language];
   if (typeof config === 'function') {
     return config;
@@ -108,7 +108,7 @@ export function OnClose({ language, framework = '', title }) {
   const generateOnCloseCode = resolveCloseConfig(language, framework);
 
   if (typeof generateOnCloseCode !== 'function') {
-    const supportedFrameworks = Object.keys(websocketOnCloseMethod[language] || {});
+    const supportedFrameworks = Object.keys(websocketOnCloseMethod[language]);
     throw unsupportedFramework(language, framework, supportedFrameworks);
   }
 

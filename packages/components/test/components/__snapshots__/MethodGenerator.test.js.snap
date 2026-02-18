@@ -42,6 +42,36 @@ exports[`MethodGenerator renders with customMethodConfig override 1`] = `
   }"
 `;
 
+exports[`MethodGenerator renders with destructuring default values when customMethodConfig is partial 1`] = `
+"public void testMethodString param1, int param2 
+    System.out.println('Testing parameterWrap');
+  }"
+`;
+
+exports[`MethodGenerator renders with framework config falls back to empty string when both docs missing 1`] = `"testMethod"`;
+
+exports[`MethodGenerator renders with framework config falls back to methodDocs prop when frameworkDocs missing 1`] = `
+"// Prop Docs
+   testMethod 
+  System.out.println(\\"Logic\\");"
+`;
+
+exports[`MethodGenerator renders with language-level config falls back to empty string when both methodLogic sources missing 1`] = `
+"Some docs
+  def testMethod() :"
+`;
+
+exports[`MethodGenerator renders with language-level config falls back to methodLogic prop 1`] = `
+"def testMethod() :
+    print('fallback')"
+`;
+
+exports[`MethodGenerator renders with language-level config falls back to methodLogic prop when config.methodLogic missing 1`] = `
+"Some docs
+  def testMethod() :
+    print('from prop')"
+`;
+
 exports[`MethodGenerator renders with methodDocs 1`] = `
 "\\"\\"\\"Process the input data.\\"\\"\\"
   def processData() :

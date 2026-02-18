@@ -10,7 +10,7 @@
     "lint": "eslint --max-warnings 0 --config ../../.eslintrc --ignore-path ../../.eslintignore .",
     "lint:fix": "eslint --max-warnings 0 --config ../../.eslintrc --ignore-path ../../.eslintignore . --fix",
     "generate:assets": "npm run prepublishOnly && npm run docs",
-    "docs": "jsdoc2md --helper \"jsdoc2md-helpers/jsdoc-helper.js\" --template \"jsdoc2md-handlebars/api.hbs\" \"./lib/**/*.js\" \"./lib/**/readme/*.js\" > docs/API.md"
+    "docs": "jsdoc2md --template ./jsdoc2md-handlebars/api.hbs --files \"./src/**/*.js\" --files \"./src/**/readme/*.js\" > ../../apps/generator/docs/api_components.md"
   },
   "files": [
     "lib/**",
@@ -40,7 +40,7 @@
     "@babel/preset-react": "^7.25.9",
     "jest": "^27.3.1",
     "jest-esm-transformer": "^1.0.0",
-    "jsdoc-to-markdown": "^7.1.1"
+    "jsdoc-to-markdown": "^9.0.0"
   },
   "babel": {
     "presets": [

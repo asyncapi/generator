@@ -64,7 +64,7 @@ exports[`Testing of SendOperation function render js websockets without send ope
 
 exports[`Testing of SendOperation function render websockets without send operations 1`] = `
 "@staticmethod
-  async def send_user_signedup_static(message, socket):
+  def send_user_signedup_static(message, socket):
       \\"\\"\\"
       Send a send_user_signedup message using a provided WebSocket connection, without needing an instance.
 
@@ -75,9 +75,9 @@ exports[`Testing of SendOperation function render websockets without send operat
       Raises:
           Exception: If sending fails or the socket is not connected.
       \\"\\"\\"
-      await AccountServiceAPI._send(message, socket)
+      AccountServiceAPI._send(message, socket)
 
-  async def send_user_signedup(self, message):
+  def send_user_signedup(self, message):
       \\"\\"\\"
       Send a send_user_signedup message using the WebSocket connection attached to this instance.
 
@@ -87,5 +87,5 @@ exports[`Testing of SendOperation function render websockets without send operat
       Raises:
           Exception: If sending fails or the socket is not connected.
       \\"\\"\\"
-      await self._send(message, self.ws_app)"
+      self._send(message, self.ws_app)"
 `;

@@ -19,6 +19,7 @@ const installCommands = {
  * @throws {Error} When the specified language is not supported.
  * 
  * @example
+ * import { Installation } from "@asyncapi/generator-components";
  * const language = "javascript";
  * 
  * function renderInstallation() {

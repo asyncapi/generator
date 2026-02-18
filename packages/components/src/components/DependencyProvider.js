@@ -125,6 +125,7 @@ function resolveDependencies(language, framework, role) {
  * @returns {JSX.Element} A Text component that contains list of import/require statements.
  * 
  * @example
+ * import { DependencyProvider } from "@asyncapi/generator-components";
  * const language = "java";
  * const framework = "quarkus";
  * const role = "client";

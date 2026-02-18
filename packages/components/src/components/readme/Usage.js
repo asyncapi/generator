@@ -48,6 +48,7 @@ main();
  * @throws {Error} When clientFileName is missing or invalid.
  * 
  * @example
+ * import { Usage } from "@asyncapi/generator-components";
  * const clientName = "MyClient";
  * const clientFileName = "myClient.js";
  * const language = "javascript";

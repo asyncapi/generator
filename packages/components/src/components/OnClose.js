@@ -80,6 +80,7 @@ const resolveCloseConfig = (language, framework) => {
  * @throws {Error} When the specified framework is not supported for the given language.
  * 
  * @example
+ * import { OnClose } from "@asyncapi/generator-components";
  * const language = "java";
  * const framework = "quarkus";
  * const title = "HoppscotchEchoWebSocketClient";

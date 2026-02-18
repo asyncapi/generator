@@ -2,8 +2,7 @@ import { Text } from '@asyncapi/generator-react-sdk';
 import { invalidInfo } from '../../utils/ErrorHandling';
 
 /**
- * Renders an overview section for a WebSocket client.
- * Displays the API description, version, and server URL.
+ * Renders an overview section for a WebSocket client. Displays the API description, version, and server URL.
  * 
  * @param {Object} props - Component props 
  * @param {Object} props.info - Info object from the AsyncAPI document.

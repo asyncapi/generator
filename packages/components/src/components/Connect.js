@@ -102,6 +102,7 @@ Future<void> connect() async {
  * @throws When the specified language is not supported.
  * 
  * @example
+ * import { Connect } from "@asyncapi/generator-components";
  * const language = "python";
  * const title = "HoppscotchEchoWebSocketClient";
  * 

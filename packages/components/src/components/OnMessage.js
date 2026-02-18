@@ -85,6 +85,7 @@ const websocketOnMessageMethod = {
  * @returns {JSX.Element} A Text component containing the onMessage handler code for the specified language.
  * @throws {Error} When the specified language is not supported.
  * @example
+ * import { OnMessage } from "@asyncapi/generator-components";
  * const language = "javascript";
  * 
  * function renderOnMessage() {

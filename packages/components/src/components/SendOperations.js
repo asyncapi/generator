@@ -117,8 +117,7 @@ static ${methodName}(message, socket, schemas) {
 };
 
 /**
- * Renders WebSocket send operation methods.
- * Generates both static and instance methods for sending messages through WebSocket connections.
+ * Renders WebSocket send operation methods. Generates both static and instance methods for sending messages through WebSocket connections.
  *
  * @param {Object} props - Component props.
  * @param {Language} props.language - The target programming language.

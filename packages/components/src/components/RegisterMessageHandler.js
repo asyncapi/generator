@@ -42,6 +42,7 @@ else:
  * @returns {JSX.Element} A Text component that contains method block with appropriate formatting.
  * 
  * @example
+ * import { RegisterMessageHandler } from "@asyncapi/generator-components";
  * const language = "python";
  * const methodName = "registerMessageHandler";
  * const methodParams = ["self", "handler"];

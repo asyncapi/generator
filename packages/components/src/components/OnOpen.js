@@ -71,6 +71,7 @@ const resolveOpenConfig = (language, framework) => {
  * @throws {Error} When the specified framework is not supported for the given language.
  * 
  * @example
+ * import { OnOpen } from "@asyncapi/generator-components";
  * const language = "java";
  * const framework = "quarkus";
  * const title = "HoppscotchEchoWebSocketClient";

@@ -58,6 +58,7 @@ const websocketOnErrorMethod = {
  * @throws {Error} When the specified language is not supported.
  * 
  * @example
+ * import { OnError } from "@asyncapi/generator-components";
  * const language = "javascript";
  * 
  * function renderOnError() {

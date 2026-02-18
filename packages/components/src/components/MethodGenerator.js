@@ -91,6 +91,7 @@ const buildIndentedLogic = (logic, preExecutionCode, postExecutionCode, indentSi
  * @throws {Error} If language is unsupported, methodName is invalid, or indent is negative.
  * 
  * @example
+ * import { MethodGenerator } from "@asyncapi/generator-components";
  * const language = "java";
  * const methodName = "registerHandler";
  * const methodParams = ["Handler handler"];

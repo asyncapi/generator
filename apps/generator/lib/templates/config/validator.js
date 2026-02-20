@@ -68,21 +68,25 @@ function isTemplateCompatible(generator, apiVersion) {
 }
 
 /**
- * Checks if parameters described in template configuration as required are passed to the generator
+ * Checks if parameters described in template configuration as required are passed to the generator.
  * @private
- * @param {Object} configParams Parameters specified in template configuration
- * @param {Object} templateParams All parameters provided to generator
+ * @param {Object} [configParams={}] Parameters specified in template configuration.
+ * @param {Object} [templateParams={}] All parameters provided to generator.
+ * @throws {Error} Throws when required parameters are missing.
+ * @returns {void}
+ *
+ * Note: Only `undefined` values are treated as missing.
+ * Falsy values such as false, 0, and '' are considered valid inputs.
  */
-function isRequiredParamProvided(configParams={}, templateParams={}) {
-  
-  const missingParams = Object.keys(configParams || {})
-    .filter(key => configParams[key].required && templateParams[key]===undefined);
-  
+function isRequiredParamProvided(configParams = {}, templateParams = {}) {
+
+  const missingParams = Object.keys(configParams )
+    .filter(key => configParams[key].required && templateParams[key] === undefined);
+
   if (missingParams.length) {
     throw new Error(`This template requires the following missing params: ${missingParams}.`);
   }
 }
-
 /**
  * Provides a hint for a user about correct parameter name.
  * @private

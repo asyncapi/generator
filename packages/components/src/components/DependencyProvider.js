@@ -60,6 +60,7 @@ const dependenciesConfig = {
 /**
  * Helper function to resolve dependencies based on language, framework, and role.
  *
+ * @private
  * @param {Language} language - The programming language.
  * @param {string} framework - The framework (e.g., 'quarkus' for Java).
  * @param {string} role - The role (e.g., 'client', 'connector' for Java).
@@ -101,7 +102,26 @@ function resolveDependencies(language, framework = '', role = '') {
  * @param {string} [props.framework=''] - The framework (e.g., 'quarkus' for Java).
  * @param {string} [props.role=''] - The role (e.g., 'client', 'connector' for Java).
  * @param {string[]} [props.additionalDependencies=[]] - Optional additional dependencies to include.
- * @returns {JSX.Element} Rendered list of import/require statements.
+ * @returns {JSX.Element} A Text component that contains list of import/require statements.
+ * 
+ * @example
+ * import { DependencyProvider } from "@asyncapi/generator-components";
+ * const language = "java";
+ * const framework = "quarkus";
+ * const role = "client";
+ * const additionalDependencies = ["import java.util.concurrent.CompletableFuture;", "import java.time.Duration;"];
+ * 
+ * function renderDependencyProvider() {
+ *   return (
+ *     <DependencyProvider 
+ *        language={language} 
+ *        framework={framework} 
+ *        role={role} 
+ *        additionalDependencies={additionalDependencies} 
+ *     />
+ *   )
+ * }
+ * renderDependencyProvider();
  */
 export function DependencyProvider({ language, framework = '', role = '', additionalDependencies = [] }) {
   const dependencies = resolveDependencies(language, framework, role);

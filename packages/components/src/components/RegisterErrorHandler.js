@@ -7,7 +7,7 @@ import { MethodGenerator } from './MethodGenerator';
 
 /**
  * Configuration for WebSocket error handler registration method logic per language.
- * @type {Record<Language, { methodDocs?: string, methodLogic: string }>}
+ * @type {Record<Language, { methodDocs: string | undefined, methodLogic: string }>}
  */
 const websocketErrorRegisterConfig = {
   python: {
@@ -31,7 +31,7 @@ else:
 };
 
 /**
- * Renders a WebSocket error handler registration method with optional pre and post execution logic.
+ * Renders a WebSocket error handler registration method with optional pre- and post-execution logic.
  *
  * @param {Object} props - Component props.
  * @param {Language} props.language - Programming language used for method formatting.
@@ -40,7 +40,31 @@ else:
  * @param {string} props.preExecutionCode - Code to insert before the main function logic.
  * @param {string} props.postExecutionCode - Code to insert after the main function logic.
  * @param {Object} [props.customMethodConfig] - Optional overrides for default method configuration.
- * @returns {JSX.Element} Rendered method block with appropriate formatting.
+ * @returns {JSX.Element} A Text component that contains method block with appropriate formatting.
+ * 
+ * @example
+ * import { RegisterErrorHandler } from "@asyncapi/generator-components";
+ * const language = "python";
+ * const methodName = "registerErrorHandler";
+ * const methodParams = ["self", "handler"];
+ * const preExecutionCode = "# Pre-register operations";
+ * const postExecutionCode = "# Post-register operations";
+ * const customMethodConfig = { returnType: "int", openingTag: "{", closingTag: "}", indentSize: 2};
+ * 
+ * function renderRegisterErrorHandler() {
+ *  return (
+ *    <RegisterErrorHandler 
+ *       language={language} 
+ *       methodName={methodName} 
+ *       methodParams={methodParams} 
+ *       preExecutionCode={preExecutionCode} 
+ *       postExecutionCode={postExecutionCode} 
+ *       customMethodConfig={customMethodConfig}   
+ *    />
+ *  )
+ * }
+ * 
+ * renderRegisterErrorHandler();
  */
 export function RegisterErrorHandler({ methodName = 'registerErrorHandler', ...props }) {
   return (

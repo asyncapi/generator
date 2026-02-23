@@ -9,7 +9,8 @@
     "prepublishOnly": "npm run build",
     "lint": "eslint --max-warnings 0 --config ../../.eslintrc --ignore-path ../../.eslintignore .",
     "lint:fix": "eslint --max-warnings 0 --config ../../.eslintrc --ignore-path ../../.eslintignore . --fix",
-    "generate:assets": "npm run prepublishOnly"
+    "generate:assets": "npm run prepublishOnly && npm run docs",
+    "docs": "jsdoc2md --template ./jsdoc2md-handlebars/api.hbs --files \"./src/**/*.js\" --files \"./src/**/readme/*.js\" > ../../apps/generator/docs/api_components.md"
   },
   "files": [
     "lib/**",
@@ -38,7 +39,8 @@
     "@babel/preset-env": "^7.26.0",
     "@babel/preset-react": "^7.25.9",
     "jest": "^27.3.1",
-    "jest-esm-transformer": "^1.0.0"
+    "jest-esm-transformer": "^1.0.0",
+    "jsdoc-to-markdown": "^9.0.0"
   },
   "babel": {
     "presets": [

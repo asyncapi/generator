@@ -11,12 +11,11 @@
       "persistent": true
     },
     "test": { 
-      "dependsOn": ["^test", "build"],
-      "cache": false 
+      "dependsOn": ["^test", "build"] 
     },
     "test:update": { "cache": false },
-    "test:unit": { "cache": false },
-    "test:integration": { "cache": false },
+    "test:unit": {},
+    "test:integration": {},
     "test:cleanup": {},
     "docs": {},
     "docker:build": {},

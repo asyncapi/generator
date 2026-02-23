@@ -44,6 +44,7 @@ main();
  * @returns {JSX.Element} A Text component containing a formatted usage example snippet.
  * 
  * @example
+ * import { Usage } from "@asyncapi/generator-components";
  * const clientName = "MyClient";
  * const clientFileName = "myClient.js";
  * const language = "javascript";

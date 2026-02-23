@@ -1,0 +1,81 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TimedConnection component (integration with AsyncAPI document) renders generic message when sendOperations is empty array 1`] = `
+"WebSocketClientConnection connection = connector.connectAndAwait();
+
+            // Wait 2 seconds before first message
+            Thread.sleep(2000);
+
+            // Send 5 messages
+            for (int i = 1; i <= 5; i++) {
+                // Send a message to any available operation by including its operation ID (i.e. \\"null\\")
+                String msg = \\"Message #\\" + i + \\" from Quarkus\\";
+                connection.sendTextAndAwait(msg);
+                Log.info(\\"Sent: \\" + msg);
+                Thread.sleep(5000); // Wait 5 seconds between messages
+            }
+
+            // Wait 10 seconds after final message
+            Log.info(\\"All messages sent. Waiting 10 seconds before closing...\\");
+            Thread.sleep(10000);"
+`;
+
+exports[`TimedConnection component (integration with AsyncAPI document) renders generic message when sendOperations is null 1`] = `
+"WebSocketClientConnection connection = connector.connectAndAwait();
+
+            // Wait 2 seconds before first message
+            Thread.sleep(2000);
+
+            // Send 5 messages
+            for (int i = 1; i <= 5; i++) {
+                // Send a message to any available operation by including its operation ID (i.e. \\"null\\")
+                String msg = \\"Message #\\" + i + \\" from Quarkus\\";
+                connection.sendTextAndAwait(msg);
+                Log.info(\\"Sent: \\" + msg);
+                Thread.sleep(5000); // Wait 5 seconds between messages
+            }
+
+            // Wait 10 seconds after final message
+            Log.info(\\"All messages sent. Waiting 10 seconds before closing...\\");
+            Thread.sleep(10000);"
+`;
+
+exports[`TimedConnection component (integration with AsyncAPI document) renders generic message when sendOperations is undefined 1`] = `
+"WebSocketClientConnection connection = connector.connectAndAwait();
+
+            // Wait 2 seconds before first message
+            Thread.sleep(2000);
+
+            // Send 5 messages
+            for (int i = 1; i <= 5; i++) {
+                // Send a message to any available operation by including its operation ID (i.e. \\"null\\")
+                String msg = \\"Message #\\" + i + \\" from Quarkus\\";
+                connection.sendTextAndAwait(msg);
+                Log.info(\\"Sent: \\" + msg);
+                Thread.sleep(5000); // Wait 5 seconds between messages
+            }
+
+            // Wait 10 seconds after final message
+            Log.info(\\"All messages sent. Waiting 10 seconds before closing...\\");
+            Thread.sleep(10000);"
+`;
+
+exports[`TimedConnection component (integration with AsyncAPI document) renders specific message with operationId when sendOperations has data from fixture 1`] = `
+"WebSocketClientConnection connection = connector.connectAndAwait();
+
+            // Wait 2 seconds before first message
+            Thread.sleep(2000);
+
+            // Send 5 messages
+            for (int i = 1; i <= 5; i++) {
+                // Send a message to any available operation by including its operation ID (i.e. \\"sendMessage\\")
+                String msg = \\"Message #\\" + i + \\" from Quarkus for sendMessage\\";
+                connection.sendTextAndAwait(msg);
+                Log.info(\\"Sent: \\" + msg);
+                Thread.sleep(5000); // Wait 5 seconds between messages
+            }
+
+            // Wait 10 seconds after final message
+            Log.info(\\"All messages sent. Waiting 10 seconds before closing...\\");
+            Thread.sleep(10000);"
+`;

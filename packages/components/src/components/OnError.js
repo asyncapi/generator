@@ -56,6 +56,7 @@ const websocketOnErrorMethod = {
  * @returns {JSX.Element} A Text component containing the onError handler code for the specified language.
  * 
  * @example
+ * import { OnError } from "@asyncapi/generator-components";
  * const language = "javascript";
  * 
  * function renderOnError() {

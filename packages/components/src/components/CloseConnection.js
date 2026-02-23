@@ -71,6 +71,7 @@ print('WebSocket connection closed.');`
  * @returns {JSX.Element} A Text component that contains method block with appropriate formatting.
  * 
  * @example
+ * import { CloseConnection } from "@asyncapi/generator-components";
  * const language = "java";
  * const framework = "quarkus";
  * const methodName = "terminateConnection";

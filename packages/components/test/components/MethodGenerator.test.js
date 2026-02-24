@@ -275,7 +275,7 @@ describe('MethodGenerator', () => {
           methodLogic="print('Connecting...')"
           indent={-2}
         />
-      )).toThrow(/Indent size must be >= 0. Received: /);
+      )).toThrow(/\"indent\" must be >= 0. Received: -2/);
   });
 
   test('throws an error when the newLines is negative', () => {
@@ -288,7 +288,7 @@ describe('MethodGenerator', () => {
           methodLogic="print('Connecting...')"
           newLines={-2}
         />
-      )).toThrow(/Invalid newLines value. Must be >= 0. Received:/);
+      )).toThrow(/\"newLines\" must be >= 0. Received: -2/);
   });
 
   test('throws an error when the methodName is non-empty string', () => {

@@ -123,9 +123,7 @@ The **package.json** file is used to define the dependencies for your template. 
   "dependencies": {
     "@asyncapi/generator-react-sdk": "^0.2.25"
   },
-  "devDependencies": {
-    "rimraf": "^5.0.0"
-  }
+  "devDependencies": {}
 }
 ```
 
@@ -324,7 +322,7 @@ In **package.json** you can have the scripts property that you invoke by calling
       "version": "0.0.1",
       "description": "A template that generates a Python MQTT client using MQTT.",
       "scripts": {
-        "test:clean": "rimraf test/project/client.py",
+        "test:clean": "node -e \"require('fs').rmSync('test/project/client.py', { force: true })\"",
         "test:generate": "asyncapi generate fromTemplate test/fixtures/asyncapi.yml ./ --output test/project --force-write",
         "test:start": "python test/project/test.py",
         "test": "npm run test:clean && npm run test:generate && npm run test:start"
@@ -337,15 +335,13 @@ In **package.json** you can have the scripts property that you invoke by calling
       "dependencies": {
         "@asyncapi/generator-react-sdk": "^0.2.25"
       },
-      "devDependencies": {
-        "rimraf": "^5.0.0"
-      }
+      "devDependencies": {}
     }
 ```
 
 The 4 scripts added in **package.json** do the following:
 
-1. `test:clean`: This script uses the `rimraf` package to remove the old version of the file **test/project/client.py** every time you run your test.
+1. `test:clean`: This script uses Node.js built-in `fs.rmSync` to remove the old version of the file **test/project/client.py** every time you run your test.
 2. `test:generate`: This script uses the AsyncAPI CLI to generate a new version of **client.py**.
 3. `test:start`: This script runs the python code using **client.py**.
 4. `test`: This script runs all the other scripts in proper order.

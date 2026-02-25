@@ -8,11 +8,10 @@
         "test:global": "jest --detectOpenHandles --testPathPattern=test-global --modulePathIgnorePatterns='./__mocks__'",
         "test:registry:arg": "jest --testNamePattern='argument' --detectOpenHandles --testPathPattern=test-registry --modulePathIgnorePatterns='./__mocks__'",
         "test:registry:npm-config": "jest --testNamePattern='npm config' --detectOpenHandles --testPathPattern=test-registry --modulePathIgnorePatterns='./__mocks__'",
-        "test:cleanup": "rimraf \"../temp\""
+        "test:cleanup": "node -e \"require('fs').rmSync('../temp', { recursive: true, force: true })\""
     },
     "devDependencies": {
-        "jest": "28.1.3",
-        "rimraf": "3.0.2"
+        "jest": "28.1.3"
     },
     "jest": {
         "moduleNameMapper": {

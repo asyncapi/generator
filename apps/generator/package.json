@@ -13,7 +13,7 @@
     "test:dev": "npm run test:unit -- --watchAll",
     "test:integration": "npm run test:cleanup && jest --testPathPattern=integration --modulePathIgnorePatterns='./__mocks__(?!\\/loglevel\\.js$)'",
     "test:integration:update": "npm run test:integration -- -u",
-    "test:cleanup": "rimraf \"test/temp\"",
+    "test:cleanup": "node -e \"require('fs').rmSync('test/temp', { recursive: true, force: true })\"",
     "docs": "jsdoc2md --partial \"docs/jsdoc2md-handlebars/**/*.hbs\" --files lib/generator.js > docs/api.md",
     "docker:build": "docker build -t asyncapi/generator:latest .",
     "lint": "eslint --max-warnings 0 --config ../../.eslintrc --ignore-path ../../.eslintignore .",
@@ -84,7 +84,6 @@
     "jest": "^28.1.3",
     "jsdoc-to-markdown": "^7.1.1",
     "markdown-toc": "^1.2.0",
-    "rimraf": "^3.0.2",
     "unixify": "^1.0.0"
   }
 }

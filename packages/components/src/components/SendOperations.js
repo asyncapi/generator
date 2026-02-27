@@ -1,5 +1,6 @@
 import { Text } from '@asyncapi/generator-react-sdk';
 import { toSnakeCase } from '@asyncapi/generator-helpers';
+import { unsupportedLanguage, invalidClientName, invalidOperation } from '../utils/ErrorHandling';
 
 /**
  * @typedef {'python' | 'javascript'} Language
@@ -123,6 +124,9 @@ static ${methodName}(message, socket, schemas) {
  * @param {Array<Object>} props.sendOperations - Array of send operations from AsyncAPI document.
  * @param {string} props.clientName - The name of the client class.
  * @returns {JSX.Element[]|null} Array of Text components for static and non-static WebSocket send operation methods, or null if no send operations are provided.
+ * @throws {Error} When the specified language is not supported.
+ * @throws {Error} When clientName is missing or invalid.
+ * @throws {Error} When operation is invalid or missing.
  * 
  * @example
  * import path from "path";
@@ -155,13 +159,26 @@ static ${methodName}(message, socket, schemas) {
 export function SendOperations({ language, sendOperations, clientName }) {
   if (!sendOperations || sendOperations.length === 0) {
     return null;
-  }  
+  }
+
+  const supportedLanguages = Object.keys(websocketSendOperationConfig);
+  
+  if (!supportedLanguages.includes(language)) {
+    throw unsupportedLanguage(language, supportedLanguages);
+  }
+
+  if (typeof clientName !== 'string' || clientName.trim() === '') {
+    throw invalidClientName(clientName);
+  }
 
   const generateSendOperationCode = websocketSendOperationConfig[language];
 
   return sendOperations.map((operation) => {
-    const { nonStaticMethod, staticMethod } = generateSendOperationCode(operation, clientName);
+    if (!operation || typeof operation.id !== 'function' || !operation.id()) {
+      throw invalidOperation();
+    }
 
+    const { nonStaticMethod, staticMethod } = generateSendOperationCode(operation, clientName);
     return (
       <>
         <Text indent={2} newLines={2}>

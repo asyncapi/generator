@@ -1,4 +1,5 @@
 import { Text } from '@asyncapi/generator-react-sdk';
+import { unsupportedFramework, unsupportedLanguage } from '../utils/ErrorHandling';
 
 /**
  * @typedef {'python' | 'javascript' | 'dart' | 'java' } Language
@@ -55,7 +56,7 @@ const websocketOnCloseMethod = {
  * @returns {Function|undefined} The code generator function, or undefined if not found.
  */
 
-const resolveCloseConfig = (language, framework = '') => {
+const resolveCloseConfig = (language, framework) => {
   const config = websocketOnCloseMethod[language];
   if (typeof config === 'function') {
     return config;
@@ -63,6 +64,7 @@ const resolveCloseConfig = (language, framework = '') => {
   if (framework && typeof config[framework] === 'function') {
     return config[framework];
   }
+  return null;
 };
 
 /**
@@ -74,6 +76,8 @@ const resolveCloseConfig = (language, framework = '') => {
  * @param {string} props.title - The title of the WebSocket server.
  * 
  * @returns {JSX.Element} A Text component containing the onClose handler code for the specified language.
+ * @throws {Error} When the specified language is not supported.
+ * @throws {Error} When the specified framework is not supported for the given language.
  * 
  * @example
  * import { OnClose } from "@asyncapi/generator-components";
@@ -94,18 +98,25 @@ const resolveCloseConfig = (language, framework = '') => {
  * renderOnClose();
  */
 export function OnClose({ language, framework = '', title }) {
-  let onCloseMethod = '';
   let indent = 0;
 
-  if (websocketOnCloseMethod[language]) {
-    const generateOnCloseCode = resolveCloseConfig(language, framework);
-    if (!generateOnCloseCode) {
-      return <Text indent={0}>{''}</Text>;
-    }
-    const closeResult = generateOnCloseCode(title);
-    onCloseMethod = closeResult.onCloseMethod;
-    indent = closeResult.indent ?? 0;
+  const supportedLanguages = Object.keys(websocketOnCloseMethod);
+
+  if (!websocketOnCloseMethod[language]) {
+    throw unsupportedLanguage(language, supportedLanguages);
   }
+  
+  const generateOnCloseCode = resolveCloseConfig(language, framework);
+
+  if (typeof generateOnCloseCode !== 'function') {
+    const supportedFrameworks = Object.keys(websocketOnCloseMethod[language]);
+    throw unsupportedFramework(language, framework, supportedFrameworks);
+  }
+
+  const closeResult = generateOnCloseCode(title);
+  const { onCloseMethod } = closeResult;
+  
+  indent = closeResult.indent ?? 0;
 
   return (
     <Text indent={indent}>

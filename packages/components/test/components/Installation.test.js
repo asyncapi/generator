@@ -12,13 +12,9 @@ describe('Installation component', () => {
     expect(result.trim()).toMatchSnapshot();
   });
 
-  test('renders installation section when language is undefined', () => {
-    const result = render(<Installation />);
-    const output = result.trim();
-
-    // Explicitly document current behavior
-    expect(output).toContain('## Installation');
-    expect(output).toContain('Install dependencies');
-    expect(output).toContain('undefined');
+  test('throws error when language is undefined', () => {
+    expect(() => {
+      render(<Installation />);
+    }).toThrow(/Language is required. Supported languages:/);
   });
 });

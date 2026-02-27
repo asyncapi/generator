@@ -1,5 +1,6 @@
 /* eslint-disable sonarjs/no-duplicate-string */
 import { Text } from '@asyncapi/generator-react-sdk';
+import { unsupportedFramework, unsupportedLanguage, invalidRole } from '../utils/ErrorHandling';
 
 /**
  * @typedef {'python' | 'javascript' | 'dart' | 'java'} Language
@@ -58,6 +59,28 @@ const dependenciesConfig = {
 };
 
 /**
+ * Helper function to resolve dependencies for framework and role configurations.
+ *
+ * @private
+ * @param {Object} frameworkConfig - The framework configuration object.
+ * @param {string} role - The role (e.g., 'client', 'connector' for Java).
+ * @returns {string[]} Array of dependency strings or empty array.
+ * @throws {Error} If the role is not supported by the framework configuration.
+ */
+function resolveFrameworkDependencies(frameworkConfig, role) {
+  if (!role) {
+    return frameworkConfig.dependencies || [];
+  }
+
+  const supportedRoles = Object.keys(frameworkConfig);
+  if (!supportedRoles.includes(role)) {
+    throw invalidRole(role, supportedRoles);
+  }
+
+  return frameworkConfig[role]?.dependencies || frameworkConfig.dependencies || [];
+}
+
+/**
  * Helper function to resolve dependencies based on language, framework, and role.
  *
  * @private
@@ -65,12 +88,15 @@ const dependenciesConfig = {
  * @param {string} framework - The framework (e.g., 'quarkus' for Java).
  * @param {string} role - The role (e.g., 'client', 'connector' for Java).
  * @returns {string[]} Array of dependency strings.
+ * @throws {Error} When the specified language is not supported.
+ * @throws {Error} When the specified framework is not supported for the given language.
  */
-function resolveDependencies(language, framework = '', role = '') {
+function resolveDependencies(language, framework, role) {
   const config = dependenciesConfig[language];
+  const supportedLanguages = Object.keys(dependenciesConfig);
   
   if (!config) {
-    return [];
+    throw unsupportedLanguage(language, supportedLanguages);
   }
   
   // Handle flat structure (python, javascript, dart)
@@ -79,19 +105,13 @@ function resolveDependencies(language, framework = '', role = '') {
   }
   
   // Handle nested structure (java with quarkus framework and roles)
-  if (framework && config[framework]) {
-    const frameworkConfig = config[framework];
-    
-    if (role && frameworkConfig[role] && frameworkConfig[role].dependencies) {
-      return frameworkConfig[role].dependencies;
-    }
-    
-    if (frameworkConfig.dependencies) {
-      return frameworkConfig.dependencies;
-    }
-  }
+  const supportedFrameworks = Object.keys(config);
   
-  return [];
+  if (!config[framework]) {
+    throw unsupportedFramework(language, framework, supportedFrameworks);
+  }
+    
+  return resolveFrameworkDependencies(config[framework], role);
 }
 
 /**

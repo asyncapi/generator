@@ -1,5 +1,6 @@
 import { getMessageExamples, getOperationMessages, toSnakeCase } from '@asyncapi/generator-helpers';
 import { Text } from '@asyncapi/generator-react-sdk';
+import { invalidOperation } from '../../utils/ErrorHandling';
 
 const languageConfig = {
   javascript: {
@@ -41,6 +42,7 @@ client.${opId}(${JSON.stringify(payload, null, 2)})
  * @param {Object} props - Component Props
  * @param {Object} props.operation - An AsyncAPI Operation object.
  * @returns {JSX.Element|null} A Text component that contains message examples, or null when no examples exist.
+ * @throws {Error} When an invalid operation is provided.
  * 
  * @example
  * import path from "path";
@@ -67,6 +69,10 @@ client.${opId}(${JSON.stringify(payload, null, 2)})
  */
 
 export function MessageExamples({ operation }) {
+  if (!operation || typeof operation.id !== 'function' || !operation.id()) {
+    throw invalidOperation();
+  }
+
   const operationId = operation.id();
   const messages = getOperationMessages(operation) || [];
 

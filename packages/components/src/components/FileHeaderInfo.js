@@ -1,4 +1,5 @@
 import { Text } from '@asyncapi/generator-react-sdk';
+import { unsupportedLanguage, invalidInfo, invalidServer } from '../utils/ErrorHandling';
 
 /**
  * @typedef {'python' | 'javascript' | 'typescript' | 'java' | 'csharp' | 'rust' | 'dart'} Language
@@ -27,6 +28,9 @@ const commentConfig = {
  * @param {Object} props.server - Server object from the AsyncAPI document.
  * @param {Language} props.language - Programming language used for comment formatting.
  * @returns {JSX.Element} A Text component that contains file header.
+ * @throws {Error} When info is missing or invalid.
+ * @throws {Error} When server is missing or invalid.
+ * @throws {Error} When the specified language is not supported.
  * 
  * @example
  * import path from "path";
@@ -54,10 +58,21 @@ const commentConfig = {
  * renderFileHeader().catch(console.error);
  */
 export function FileHeaderInfo({ info, server, language }) {
-  const { commentChar, lineStyle } = commentConfig[language] || { 
-    commentChar: '//', 
-    lineStyle: '//'.repeat(25) 
-  };
+  if (!info) {
+    throw invalidInfo();
+  }
+
+  if (!server) {
+    throw invalidServer();
+  }
+
+  const supportedLanguages = Object.keys(commentConfig);
+  
+  if (!supportedLanguages.includes(language)) {
+    throw unsupportedLanguage(language, supportedLanguages);
+  }
+
+  const { commentChar, lineStyle } = commentConfig[language];
 
   return (
     <Text>

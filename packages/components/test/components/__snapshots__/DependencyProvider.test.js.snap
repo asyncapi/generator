@@ -1,6 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Testing of DependencyProvider function render dart websockets file dependecies correctly 1`] = `
+exports[`Testing of DependencyProvider function render dart websockets file dependecies correctly with additionalDependencies 1`] = `
+"import 'dart:convert';
+import 'package:web_socket_channel/web_socket_channel.dart';
+import \\"package:web_socket_channel/web_socket_channel.dart\\";
+import \\"dart:convert\\";"
+`;
+
+exports[`Testing of DependencyProvider function render dart websockets file dependencies correctly 1`] = `
 "import 'dart:convert';
 import 'package:web_socket_channel/web_socket_channel.dart';"
 `;
@@ -47,16 +54,53 @@ import io.quarkus.logging.Log;
 import io.quarkus.runtime.Startup;"
 `;
 
-exports[`Testing of DependencyProvider function render js websockets file dependecies correctly 1`] = `
+exports[`Testing of DependencyProvider function render java quarkus consumer websockets file dependencies correctly 1`] = `
+"package com.asyncapi;
+
+import io.smallrye.reactive.messaging.kafka.Record;
+import org.eclipse.microprofile.reactive.messaging.Incoming;
+import org.jboss.logging.Logger;
+import jakarta.enterprise.context.ApplicationScoped;"
+`;
+
+exports[`Testing of DependencyProvider function render java quarkus kafkaEndpoint websockets file dependencies correctly 1`] = `
+"package com.asyncapi;
+
+import jakarta.inject.Inject;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+import org.eclipse.microprofile.reactive.messaging.Channel;
+import org.eclipse.microprofile.reactive.messaging.Emitter;
+import org.eclipse.microprofile.reactive.messaging.Incoming;
+import org.eclipse.microprofile.reactive.messaging.Message;
+import io.smallrye.reactive.messaging.kafka.Record;
+import io.smallrye.reactive.messaging.kafka.KafkaRecord;"
+`;
+
+exports[`Testing of DependencyProvider function render java quarkus producer websockets file dependencies correctly 1`] = `
+"package com.asyncapi;
+
+import io.smallrye.reactive.messaging.kafka.KafkaRecord;
+import org.eclipse.microprofile.reactive.messaging.Channel;
+import org.eclipse.microprofile.reactive.messaging.Emitter;
+import org.jboss.logging.Logger;
+import org.eclipse.microprofile.reactive.messaging.Message;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import java.util.UUID;"
+`;
+
+exports[`Testing of DependencyProvider function render javascript websockets file dependencies correctly 1`] = `
 "const WebSocket = require('ws');
 const { compileSchemasByOperationId, validateMessage } = require('@asyncapi/keeper');"
 `;
 
-exports[`Testing of DependencyProvider function render python websockets file dependecies correctly 1`] = `
-"import json
-import certifi
-import threading
-import websocket"
+exports[`Testing of DependencyProvider function render js websockets file dependecies correctly with additionalDependencies 1`] = `
+"const WebSocket = require('ws');
+const { compileSchemasByOperationId, validateMessage } = require('@asyncapi/keeper');
+const WebSocket = require('ws');
+const fetch = require('node-fetch');"
 `;
 
 exports[`Testing of DependencyProvider function render python websockets file dependecies correctly with additionalDependencies 1`] = `
@@ -66,4 +110,11 @@ import threading
 import websocket
 import os
 from urllib.parse import urlencode"
+`;
+
+exports[`Testing of DependencyProvider function render python websockets file dependencies correctly 1`] = `
+"import json
+import certifi
+import threading
+import websocket"
 `;

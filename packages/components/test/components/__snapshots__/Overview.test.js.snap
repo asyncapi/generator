@@ -26,3 +26,12 @@ This service is in charge of processing user signups
 - **Version:** 1.0.0
 - **Server URL:** ws://api.example.com"
 `;
+
+exports[`Testing of Overview component uses fallback description when description is empty 1`] = `
+"## Overview
+
+A WebSocket client for MyClient.
+
+- **Version:** 1.0.0
+- **Server URL:** ws://localhost"
+`;

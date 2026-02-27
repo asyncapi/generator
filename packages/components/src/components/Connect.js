@@ -3,6 +3,7 @@ import { OnOpen } from './OnOpen';
 import { OnMessage } from './OnMessage';
 import { OnError } from './OnError';
 import { OnClose } from './OnClose';
+import { unsupportedLanguage } from '../utils/ErrorHandling';
 
 /**
  * @typedef {'python' | 'javascript' | 'dart'} Language
@@ -98,6 +99,7 @@ Future<void> connect() async {
  * @param {Language} props.language - The programming language for which to generate connection code.
  * @param {string} props.title - The title of the WebSocket server.
  * @return {JSX.Element} A Text component containing the generated WebSocket connection code for the specified language.
+ * @throws When the specified language is not supported.
  * 
  * @example
  * import { Connect } from "@asyncapi/generator-components";
@@ -116,12 +118,17 @@ Future<void> connect() async {
  * renderConnect();
  */
 export function Connect({ language, title }) {
-  const onOpenMethod = render(<OnOpen language={language} title={title} />);
+  const supportedLanguages = Object.keys(websocketConnectMethod);
+  const generateConnectCode = websocketConnectMethod[language];
+
+  if (!generateConnectCode) {
+    throw unsupportedLanguage(language, supportedLanguages);
+  }
+  
+  const onOpenMethod = language === 'dart'   ? ''  : render(<OnOpen language={language} title={title} />);
   const onMessageMethod = render(<OnMessage language={language} />);
   const onErrorMethod = render(<OnError language={language} />);
   const onCloseMethod = render(<OnClose language={language} title={title} />);
-
-  const generateConnectCode = websocketConnectMethod[language];
 
   let connectMethod;
   

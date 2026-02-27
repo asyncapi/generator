@@ -44,4 +44,10 @@ describe('Testing MessageExamples component', () => {
     const actual = result.trim();
     expect(actual).toMatchSnapshot();
   });
+
+  test('throws error when operation is null', () => {
+    expect(() =>
+      render(<MessageExamples operation={null} />)
+    ).toThrow(/Invalid AsyncAPI operation. Expected a valid operation with id()./);
+  });
 });

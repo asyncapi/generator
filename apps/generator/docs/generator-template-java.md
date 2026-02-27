@@ -68,9 +68,7 @@ Add the following code snippet to your package.json file:
     "dependencies": {
       "@asyncapi/generator-react-sdk": "^0.2.25"
     },
-    "devDependencies": {
-      "rimraf": "^5.0.0"
-    }
+    "devDependencies": {}
 }
 ```
 
@@ -297,7 +295,7 @@ In **package.json** define a script property that you invoke by calling `npm run
         }
     },
     "scripts": {
-        "test:clean": "rimraf src/main/java/Client.java",
+        "test:clean": "node -e \"require('fs').rmSync('src/main/java/Client.java', { force: true })\"",
         "test:generate": "asyncapi generate fromTemplate src/fixtures/asyncapi.yml ./ --output src/main/java --force-write --param server=dev",
         "test:start": "gradle run -PmainClass=TestClient",
         "test": "npm run test:clean && npm run test:generate && npm run test:start"
@@ -305,9 +303,7 @@ In **package.json** define a script property that you invoke by calling `npm run
     "dependencies": {
       "@asyncapi/generator-react-sdk": "^0.2.25"
     },
-    "devDependencies": {
-      "rimraf": "^5.0.0"
-    }
+    "devDependencies": {}
   }
 ```
 Run `npm test` to see if everything is working.

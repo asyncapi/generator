@@ -1,11 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`InitSignature component (integration with AsyncAPI document) renders with empty query parameters array 1`] = `"def __init__(self, url: str = \\"wss://api.gemini.com/v1/marketdata/{symbol}\\", ):"`;
+exports[`InitSignature component (integration with AsyncAPI document) renders with empty query parameters array 1`] = `"def __init__(self, url: str = \\"wss://test.example.com/ws/{symbol}\\", ):"`;
 
-exports[`InitSignature component (integration with AsyncAPI document) renders with multiple query parameters with mixed default values 1`] = `"def __init__(self, url: str = \\"wss://api.gemini.com/v1/marketdata/{symbol}\\", heartbeat: str = \\"false\\", top_of_book: str = \\"false\\", bids: str = \\"true\\", offers: str = None):"`;
+exports[`InitSignature component (integration with AsyncAPI document) renders with multiple query parameters with mixed default values 1`] = `"def __init__(self, url: str = \\"wss://test.example.com/ws/{symbol}\\", heartbeat: str = \\"false\\", bids: str = \\"true\\", sessionId: str = None):"`;
 
-exports[`InitSignature component (integration with AsyncAPI document) renders with only serverUrl (no query parameters) 1`] = `"def __init__(self, url: str = \\"wss://api.gemini.com\\"):"`;
+exports[`InitSignature component (integration with AsyncAPI document) renders with only serverUrl (no query parameters) 1`] = `"def __init__(self, url: str = \\"wss://test.example.com\\"):"`;
 
-exports[`InitSignature component (integration with AsyncAPI document) renders with single query parameter with default value false 1`] = `"def __init__(self, url: str = \\"wss://api.gemini.com/v1/marketdata\\", heartbeat: str = \\"false\\"):"`;
+exports[`InitSignature component (integration with AsyncAPI document) renders with single query parameter with default value false 1`] = `"def __init__(self, url: str = \\"wss://test.example.com/ws\\", heartbeat: str = \\"false\\"):"`;
 
-exports[`InitSignature component (integration with AsyncAPI document) renders with single query parameter with default value true 1`] = `"def __init__(self, url: str = \\"wss://api.gemini.com\\", bids: str = \\"true\\"):"`;
+exports[`InitSignature component (integration with AsyncAPI document) renders with single query parameter with default value true 1`] = `"def __init__(self, url: str = \\"wss://test.example.com\\", bids: str = \\"true\\"):"`;

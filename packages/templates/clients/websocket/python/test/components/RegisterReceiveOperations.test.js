@@ -4,13 +4,13 @@ import { Parser, fromFile } from '@asyncapi/parser';
 import { RegisterReceiveOperations } from '../../components/RegisterReceiveOperations';
 
 const parser = new Parser();
-const asyncapiWebsocketQuery = path.resolve(__dirname, '../../../test/__fixtures__/asyncapi-websocket-components.yml');
+const asyncapiFilePath = path.resolve(__dirname, '../../../test/__fixtures__/asyncapi-websocket-components.yml');
 
 describe('Testing of RegisterReceiveOperations component', () => {
   let parsedAsyncAPIDocument;
 
   beforeAll(async () => {
-    const parseResult = await fromFile(parser, asyncapiWebsocketQuery).parse();
+    const parseResult = await fromFile(parser, asyncapiFilePath).parse();
     parsedAsyncAPIDocument = parseResult.document;
   });
 

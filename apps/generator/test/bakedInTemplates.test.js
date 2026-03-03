@@ -8,6 +8,8 @@ jest.mock('../lib/templates/BakedInTemplatesList.json', () => require('./fixture
 const { listBakedInTemplates, isCoreTemplate, getTemplate } = require('../lib/templates/bakedInTemplates');
 const fixtureTemplates = require('./fixtures/bakedInTemplatesFixture.json');
 
+const FIXTURE_TEMPLATE_CLIENT_WS_JS = 'fixture-template-client-ws-js';
+
 describe('bakedInTemplates', () => {
   describe('listBakedInTemplates', () => {
     it('returns all templates when no filter is provided', () => {
@@ -81,7 +83,7 @@ describe('bakedInTemplates', () => {
     it('filters by combined type, protocol, and target', () => {
       const result = listBakedInTemplates({ type: 'client', protocol: 'websocket', target: 'javascript' });
       expect(result).toHaveLength(1);
-      expect(result[0].name).toBe('fixture-template-client-ws-js');
+      expect(result[0].name).toBe(FIXTURE_TEMPLATE_CLIENT_WS_JS);
     });
 
     it('filters by combined type, protocol, target, and stack', () => {
@@ -112,7 +114,7 @@ describe('bakedInTemplates', () => {
 
   describe('isCoreTemplate', () => {
     it('returns true for existing template name', () => {
-      expect(isCoreTemplate('fixture-template-client-ws-js')).toBe(true);
+      expect(isCoreTemplate(FIXTURE_TEMPLATE_CLIENT_WS_JS)).toBe(true);
     });
 
     it('returns true for all templates in the list', () => {
@@ -144,9 +146,9 @@ describe('bakedInTemplates', () => {
 
   describe('getTemplate', () => {
     it('returns template object with name and path for existing template', async () => {
-      const result = await getTemplate('fixture-template-client-ws-js');
+      const result = await getTemplate(FIXTURE_TEMPLATE_CLIENT_WS_JS);
       expect(result).toBeDefined();
-      expect(result.name).toBe('fixture-template-client-ws-js');
+      expect(result.name).toBe(FIXTURE_TEMPLATE_CLIENT_WS_JS);
       expect(result.path).toBeDefined();
       expect(typeof result.path).toBe('string');
     });
@@ -157,11 +159,11 @@ describe('bakedInTemplates', () => {
     });
 
     it('falls back to bakedInTemplates directory when path is not provided', async () => {
-      const result = await getTemplate('fixture-template-client-ws-js');
+      const result = await getTemplate(FIXTURE_TEMPLATE_CLIENT_WS_JS);
       const expectedPath = path.resolve(
         __dirname,
         '../lib/templates/bakedInTemplates',
-        'fixture-template-client-ws-js'
+        FIXTURE_TEMPLATE_CLIENT_WS_JS
       );
       expect(result.path).toBe(expectedPath);
     });

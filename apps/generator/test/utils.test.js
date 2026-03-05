@@ -128,16 +128,33 @@ describe('Utils', () => {
     });
   });
   describe('#isFileSystemPath', () => {
-    beforeEach(() => {
-      jest.spyOn(utils, 'isFileSystemPath').mockImplementation((p) => {
-        return (
-          require('path').isAbsolute(p) ||
-          p.startsWith(`.${require('path').sep}`) ||
-          p.startsWith(`..${require('path').sep}`) ||
-          p.startsWith('~')
-        );
-      });
-    });
+
+  it('detects absolute path', () => {
+    const result = utils.isFileSystemPath(__dirname);
+    expect(result).toBe(true);
+  });
+
+  it('detects relative path', () => {
+    const result = utils.isFileSystemPath(`.${path.sep}test`);
+    expect(result).toBe(true);
+  });
+
+  it('detects parent relative path', () => {
+    const result = utils.isFileSystemPath(`..${path.sep}test`);
+    expect(result).toBe(true);
+  });
+
+  it('detects home path', () => {
+    const result = utils.isFileSystemPath('~/folder');
+    expect(result).toBe(true);
+  });
+
+  it('returns false for package name', () => {
+    const result = utils.isFileSystemPath('express');
+    expect(result).toBe(false);
+  });
+
+});
 
     afterEach(() => {
       jest.restoreAllMocks();
@@ -248,11 +265,19 @@ describe('Utils', () => {
     });
 
     it('skips when ts-node already registered', () => {
+      const previousTsNodeDev = process.env.TS_NODE_DEV;
+
       process.env.TS_NODE_DEV = 'true';
 
-      expect(() => utils.registerTypeScript('file.ts')).not.toThrow();
-
-      delete process.env.TS_NODE_DEV;
+      try {
+        expect(() => utils.registerTypeScript('file.ts')).not.toThrow();
+      } finally {
+        if (previousTsNodeDev === undefined) {
+           delete process.env.TS_NODE_DEV;
+        } else {
+          process.env.TS_NODE_DEV = previousTsNodeDev;
+        }
+      }
     });
   });
   describe('#convertCollectionToObject edge', () => {
@@ -262,4 +287,4 @@ describe('Utils', () => {
       expect(result).toEqual({});
     });
   });
-});
+

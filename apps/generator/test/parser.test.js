@@ -239,7 +239,7 @@ describe('Parser', () => {
       const generator = {
         mapBaseUrlToFolder: {
           url: 'https://schema.example.com/crm/',
-          folder: 'TEST_DOCS_PATH'
+          folder: TEST_DOCS_PATH
         }
       };
       const newOptions = convertOldOptionsToNew(oldOptions, generator);
@@ -287,7 +287,7 @@ describe('Parser', () => {
       const generator = {
         mapBaseUrlToFolder: {
           url: 'https://schema.example.com/',
-          folder: 'TEST_DOCS_PATH'
+          folder: TEST_DOCS_PATH
         }
       };
 
@@ -295,7 +295,15 @@ describe('Parser', () => {
 
       const newOptions = convertOldOptionsToNew(oldOptions, generator);
 
-      expect(newOptions.__unstable.resolver.resolvers.length).toBeGreaterThan(0);
+      const resolver = newOptions.__unstable.resolver.resolvers[0];
+
+      expect(resolver).toBeDefined();
+      expect(typeof resolver.read).toBe('function');
+
+      const content = await resolver.read('https://schema.example.com/dummy.yml');
+
+      expect(typeof content).toBe('string');
+      expect(content.length).toBeGreaterThan(0);
     });
   });
   describe('canReadFn branches', () => {

@@ -1,5 +1,5 @@
 import { Text } from '@asyncapi/generator-react-sdk';
-import { invalidInfo } from '../../utils/ErrorHandling';
+import { missingInfo } from '../../utils/ErrorHandling';
 
 /**
  * Renders an overview section for a WebSocket client. Displays the API description, version, and server URL.
@@ -46,7 +46,7 @@ import { invalidInfo } from '../../utils/ErrorHandling';
 
 export function Overview({ info, title, serverUrl }) {
   if (!info || typeof info.version !== 'function') {
-    throw invalidInfo();
+    throw missingInfo();
   }
 
   return (

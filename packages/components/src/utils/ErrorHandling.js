@@ -7,7 +7,7 @@ const stringify = (v) => {
 };
 
 const isEmpty = (v) => v === undefined || v === null || v === '';
-const list = (arr) => arr.join(', ');
+const list = (arr) => arr.length ? arr.join(', ') : '(none)';
 
 export const ERROR_CODES = {
   UNSUPPORTED_LANGUAGE: 'ERR_UNSUPPORTED_LANGUAGE',
@@ -22,7 +22,7 @@ export const ERROR_CODES = {
   MISSING_INFO: 'ERR_MISSING_INFO',
   MISSING_SERVER: 'ERR_MISSING_SERVER',
   INVALID_OPERATION: 'ERR_INVALID_OPERATION',
-  INVALID_ROLE: 'ERR_INVALID_ROLE',
+  UNSUPPORTED_ROLE: 'ERR_UNSUPPORTED_ROLE',
   NEGATIVE_INDENT: 'ERR_NEGATIVE_INDENT',
 };
 
@@ -74,15 +74,15 @@ export function invalidParams(params) {
   return createError(ERROR_CODES.INVALID_PARAMS, `Invalid params object. Received: ${stringify(params)}`);
 }
 
-export function invalidAsyncAPI() {
+export function missingAsyncAPIDocument() {
   return createError(ERROR_CODES.MISSING_ASYNC_API, 'AsyncAPI document is missing.');
 }
 
-export function invalidInfo() {
+export function missingInfo() {
   return createError(ERROR_CODES.MISSING_INFO, 'AsyncAPI "info" object is missing.');
 }
 
-export function invalidServer() {
+export function missingServer() {
   return createError(ERROR_CODES.MISSING_SERVER, 'AsyncAPI "server" object is missing.');
 }
 
@@ -90,8 +90,12 @@ export function invalidOperation() {
   return createError(ERROR_CODES.INVALID_OPERATION, 'Invalid AsyncAPI operation. Expected a valid operation with id().');
 }
 
-export function invalidRole(role, supported = []) {
-  return createError(ERROR_CODES.INVALID_ROLE, `Unsupported role "${role}". Supported roles: ${supported.join(', ')}`);
+export function unsupportedRole(role, supported = []) {
+  const supportedList = list(supported);
+  if (isEmpty(role)) {
+    return createError(ERROR_CODES.UNSUPPORTED_ROLE, `Role is required. Supported roles: ${supportedList}`);
+  }
+  return createError(ERROR_CODES.UNSUPPORTED_ROLE, `Unsupported role "${role}". Supported roles: ${supportedList}`);
 }
 
 export function invalidNonNegativeInteger(code, field, value) {

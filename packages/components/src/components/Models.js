@@ -8,7 +8,7 @@ import {
   FormatHelpers,
   JavaScriptGenerator
 } from '@asyncapi/modelina';
-import { invalidAsyncAPI } from '../utils/ErrorHandling';
+import { missingAsyncAPIDocument } from '../utils/ErrorHandling';
 
 /**
  * @typedef {'toPascalCase' | 'toCamelCase' | 'toKebabCase' | 'toSnakeCase'} Format
@@ -89,7 +89,7 @@ const formatHelpers = {
  */
 export async function Models({ asyncapi, language = 'python', format = 'toPascalCase', presets, constraints }) {
   if (!asyncapi) {
-    throw invalidAsyncAPI();
+    throw missingAsyncAPIDocument();
   }
   // Get the selected generator and file extension, defaulting to Python if unknown
   const { generator: GeneratorClass, extension } = generatorConfig[language] || generatorConfig.python;

@@ -1,6 +1,6 @@
 /* eslint-disable sonarjs/no-duplicate-string */
 import { Text } from '@asyncapi/generator-react-sdk';
-import { unsupportedFramework, unsupportedLanguage, invalidRole } from '../utils/ErrorHandling';
+import { unsupportedFramework, unsupportedLanguage, unsupportedRole } from '../utils/ErrorHandling';
 
 /**
  * @typedef {'python' | 'javascript' | 'dart' | 'java'} Language
@@ -74,7 +74,7 @@ function resolveFrameworkDependencies(frameworkConfig, role) {
 
   const supportedRoles = Object.keys(frameworkConfig);
   if (!supportedRoles.includes(role)) {
-    throw invalidRole(role, supportedRoles);
+    throw unsupportedRole(role, supportedRoles);
   }
 
   return frameworkConfig[role]?.dependencies || frameworkConfig.dependencies || [];

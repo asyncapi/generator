@@ -5,7 +5,7 @@ import { Installation } from './Installation';
 import { Usage } from './Usage';
 import { CoreMethods } from './CoreMethods';
 import { AvailableOperations } from './AvailableOperations';
-import { invalidAsyncAPI, invalidParams } from '../../utils/ErrorHandling';
+import { missingAsyncAPIDocument, invalidParams } from '../../utils/ErrorHandling';
 
 /**
  * @typedef {'python' | 'javascript' } Language
@@ -54,7 +54,7 @@ import { invalidAsyncAPI, invalidParams } from '../../utils/ErrorHandling';
 
 export function Readme({ asyncapi, params, language }) {
   if (!asyncapi) {
-    throw invalidAsyncAPI();
+    throw missingAsyncAPIDocument();
   }
 
   if (!params) {

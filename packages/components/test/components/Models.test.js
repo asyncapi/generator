@@ -34,4 +34,94 @@ describe('Integration Tests for models function', () => {
     const actual = result.trim();
     expect(actual).toMatchSnapshot();
   });
+
+  test('throws error if asyncapi is missing', async () => {
+    await expect(() => Models({ asyncapi: undefined })).rejects.toThrow();
+  });
+
+  test('falls back to python if invalid language provided', async () => {
+    const component = Models({
+      asyncapi: parsedAsyncAPIDocument,
+      language: 'invalidLang'
+    });
+
+    const result = render(await component);
+    expect(result).toMatchSnapshot();
+  });
+
+  test('renders models with camelCase formatting', async () => {
+    const component = Models({
+      asyncapi: parsedAsyncAPIDocument,
+      format: 'toCamelCase'
+    });
+
+    const result = render(await component);
+    expect(result).toMatchSnapshot();
+  });
+
+  test('falls back to PascalCase if invalid format', async () => {
+    const component = Models({
+      asyncapi: parsedAsyncAPIDocument,
+      format: 'invalidFormat'
+    });
+
+    const result = render(await component);
+    expect(result).toMatchSnapshot();
+  });
+
+  test('uses presets when provided', async () => {
+    const component = Models({
+      asyncapi: parsedAsyncAPIDocument,
+      presets: []
+    });
+
+    const result = render(await component);
+    expect(result).toMatchSnapshot();
+  });
+
+  test('uses constraints when provided', async () => {
+    const component = Models({
+      asyncapi: parsedAsyncAPIDocument,
+      constraints: {}
+    });
+
+    const result = render(await component);
+    expect(result).toMatchSnapshot();
+  });
+
+  test('skips models with falsy content', async () => {
+    let component;
+    jest.isolateModules(() => {
+      jest.doMock('@asyncapi/modelina', () => ({
+        PythonGenerator: class {
+          constructor() {}
+          async generate() {
+            return [
+              { modelName: 'Example', result: null },
+              { modelName: 'Other', result: 'valid content' }
+            ];
+          }
+        },
+        JavaGenerator: class {},
+        TypeScriptGenerator: class {},
+        CSharpGenerator: class {},
+        RustGenerator: class {},
+        JavaScriptGenerator: class {},
+        FormatHelpers: {
+          toPascalCase: (s) => s,
+          toCamelCase: (s) => s,
+          toKebabCase: (s) => s,
+          toSnakeCase: (s) => s
+        }
+      }));
+
+      const { Models: MockedModels } = require('../../src/index');
+      component = MockedModels({ asyncapi: parsedAsyncAPIDocument });
+    });
+
+    const result = render(await component);
+    expect(result).toBe('valid content');
+
+    jest.resetModules();
+  });
 });

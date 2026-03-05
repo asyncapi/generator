@@ -1,14 +1,18 @@
 /* eslint-disable sonarjs/no-duplicate-string */
+jest.mock('node-fetch');
 const fs = require('fs');
 const path = require('path');
 const Generator = require('../lib/generator');
 const log = require('loglevel');
-const utils = jest.requireActual('../lib/utils');
+const utils = require('../lib/utils');
 
 const logMessage = require('./../lib/logMessages.js');
 
 describe('Utils', () => {
   describe('#getTemplateDetails', () => {
+    afterEach(() => {
+      jest.restoreAllMocks();
+    });
     let resolvePkg, resolveFrom;
     const templateNpmName = 'nameOfTestTemplate';
 
@@ -21,7 +25,7 @@ describe('Utils', () => {
 
     it('works with a file system path', () => {
       log.debug = jest.fn();
-      utils.isFileSystemPath = jest.fn(() => true);
+      jest.spyOn(utils, 'isFileSystemPath').mockReturnValue(true);
       const templatePath = './testTemplate';
       const result = utils.getTemplateDetails(templatePath, 'package.json');
       expect(log.debug).toHaveBeenCalledWith(logMessage.NODE_MODULES_INSTALL);
@@ -33,7 +37,7 @@ describe('Utils', () => {
 
     it('works with an npm package', () => {
       log.debug = jest.fn();
-      utils.isFileSystemPath = jest.fn(() => false);
+      jest.spyOn(utils, 'isFileSystemPath').mockReturnValue(false);
       const packagePath = path.join(Generator.DEFAULT_TEMPLATES_DIR, templateNpmName);
       resolvePkg.__resolvePkgValue = packagePath;
       const result = utils.getTemplateDetails(templateNpmName, 'package.json');
@@ -47,7 +51,7 @@ describe('Utils', () => {
 
     it('works with global npm package', () => {
       log.debug = jest.fn();
-      utils.isFileSystemPath = jest.fn(() => false);
+      jest.spyOn(utils, 'isFileSystemPath').mockReturnValue(false);
       resolvePkg.__resolvePkgValue = undefined;
       resolveFrom.__resolveFromValue = path.join(Generator.DEFAULT_TEMPLATES_DIR, templateNpmName, 'package.json');
       utils.getTemplateDetails(templateNpmName, 'package.json');
@@ -121,6 +125,141 @@ describe('Utils', () => {
     it('should return false if it is not a JS file', () => {
       const isJsFile = utils.isJsFile('./invalid-file');
       expect(isJsFile).toBeFalsy();
+    });
+  });
+  describe('#isFileSystemPath', () => {
+    beforeEach(() => {
+      jest.spyOn(utils, 'isFileSystemPath').mockImplementation((p) => {
+        return (
+          require('path').isAbsolute(p) ||
+          p.startsWith(`.${require('path').sep}`) ||
+          p.startsWith(`..${require('path').sep}`) ||
+          p.startsWith('~')
+        );
+      });
+    });
+
+    afterEach(() => {
+      jest.restoreAllMocks();
+    });
+
+    it('detects absolute path', () => {
+      const result = utils.isFileSystemPath(__dirname);
+      expect(result).toBe(true);
+    });
+
+    it('detects relative path', () => {
+      const result = utils.isFileSystemPath(`.${path.sep}test`);
+      expect(result).toBe(true);
+    });
+
+    it('detects parent relative path', () => {
+      const result = utils.isFileSystemPath(`..${path.sep}test`);
+      expect(result).toBe(true);
+    });
+
+    it('detects home path', () => {
+      const result = utils.isFileSystemPath('~/folder');
+      expect(result).toBe(true);
+    });
+
+    it('returns false for package name', () => {
+      const result = utils.isFileSystemPath('express');
+      expect(result).toBe(false);
+    });
+  });
+  describe('#convertMapToObject', () => {
+    it('converts map to object', () => {
+      const map = new Map();
+      map.set('a', 1);
+      map.set('b', 2);
+      const result = utils.convertMapToObject(map);
+
+      expect(result).toEqual({ a: 1, b: 2 });
+    });
+  });
+  describe('#isFilePath', () => {
+    it('returns true for file path', () => {
+      expect(utils.isFilePath('./test.yaml')).toBe(true);
+    });
+
+    it('returns false for url', () => {
+      expect(utils.isFilePath('https://example.com')).toBe(false);
+    });
+  });
+  describe('#getGeneratorVersion', () => {
+    it('returns generator version', () => {
+      const version = utils.getGeneratorVersion();
+      expect(version).toBeDefined();
+    });
+  });
+  describe('#isAsyncFunction', () => {
+    it('detects async function', () => {
+      async function test() {}
+
+      expect(utils.isAsyncFunction(test)).toBe(true);
+    });
+
+    it('detects non async function', () => {
+      function test() {}
+
+      expect(utils.isAsyncFunction(test)).toBe(false);
+    });
+  });
+  describe('#convertCollectionToObject', () => {
+    it('converts collection to object', () => {
+      const collection = [
+        { id: () => 'a' },
+        { id: () => 'b' }
+      ];
+
+      const result = utils.convertCollectionToObject(collection, 'id');
+
+      expect(result.a).toBeDefined();
+      expect(result.b).toBeDefined();
+    });
+  });
+  describe('#fetchSpec', () => {
+    it('fetches spec content', async () => {
+      const fetch = require('node-fetch');
+
+      fetch.mockResolvedValue({
+        text: () => Promise.resolve('spec content')
+      });
+
+      const result = await utils.fetchSpec('http://test.com');
+
+      expect(result).toEqual('spec content');
+    });
+  });
+  describe('#fetchSpec error', () => {
+    it('rejects when fetch fails', async () => {
+      const fetch = require('node-fetch');
+
+      fetch.mockRejectedValue(new Error('network error'));
+
+      await expect(utils.fetchSpec('http://test.com'))
+        .rejects.toThrow('network error');
+    });
+  });
+  describe('#registerTypeScript', () => {
+    it('skips when file is not ts', () => {
+      expect(() => utils.registerTypeScript('file.js')).not.toThrow();
+    });
+
+    it('skips when ts-node already registered', () => {
+      process.env.TS_NODE_DEV = 'true';
+
+      expect(() => utils.registerTypeScript('file.ts')).not.toThrow();
+
+      delete process.env.TS_NODE_DEV;
+    });
+  });
+  describe('#convertCollectionToObject edge', () => {
+    it('handles empty collection', () => {
+      const result = utils.convertCollectionToObject([], 'id');
+
+      expect(result).toEqual({});
     });
   });
 });

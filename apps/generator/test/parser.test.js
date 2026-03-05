@@ -3,7 +3,57 @@ const path = require('path');
 const { sanitizeTemplateApiVersion, usesNewAPI, parse, convertOldOptionsToNew } = require('../lib/parser');
 const dummyV2Document = fs.readFileSync(path.resolve(__dirname, './docs/dummy.yml'), 'utf8');
 const dummyV3Document = fs.readFileSync(path.resolve(__dirname, './docs/dummyV3.yml'), 'utf8');
+const ASYNCAPI_V2_VERSION = '2.3.0';
+const ASYNCAPI_V3_VERSION = '3.0.0';
+const TEST_DOCS_PATH = './test/docs/';
+describe('resolver canRead variations', () => {
+  const uri = {
+    valueOf: () => 'http://example.com/test.yaml',
+    suffix: () => 'yaml'
+  };
 
+  it('supports boolean canRead', () => {
+    const resolver = {
+      http: {
+        canRead: true,
+        read: jest.fn()
+      }
+    };
+
+    const options = convertOldOptionsToNew({ resolve: resolver }, {});
+    const r = options.__unstable.resolver.resolvers[0];
+
+    expect(r.canRead(uri)).toBe(true);
+  });
+
+  it('supports string canRead', () => {
+    const resolver = {
+      http: {
+        canRead: 'http://example.com/test.yaml',
+        read: jest.fn()
+      }
+    };
+
+    const options = convertOldOptionsToNew({ resolve: resolver }, {});
+    const r = options.__unstable.resolver.resolvers[0];
+
+    expect(r.canRead(uri)).toBe(true);
+  });
+
+  it('supports regex canRead', () => {
+    const resolver = {
+      http: {
+        canRead: /example/,
+        read: jest.fn()
+      }
+    };
+
+    const options = convertOldOptionsToNew({ resolve: resolver }, {});
+    const r = options.__unstable.resolver.resolvers[0];
+
+    expect(r.canRead(uri)).toBe(true);
+  });
+});
 describe('Parser', () => {
   describe('sanitizeTemplateApiVersion', () => {
     it('should return version number when given `v99` syntax', () => {
@@ -26,6 +76,11 @@ describe('Parser', () => {
       const sanitizedVersion = sanitizeTemplateApiVersion(rawVersion);
 
       expect(sanitizedVersion).toStrictEqual(expectedVersion);
+    });
+    it('should return undefined if apiVersion not provided', () => {
+      const result = sanitizeTemplateApiVersion(undefined);
+
+      expect(result).toBeUndefined();
     });
   });
   describe('usesNewAPI', () => {
@@ -65,19 +120,19 @@ describe('Parser', () => {
       const parsedDocument = await parse(dummyV2Document, {}, {templateConfig: {apiVersion: 'v1'}});
 
       expect(parsedDocument).toBeDefined();
-      expect(parsedDocument.document.version()).toEqual('2.3.0');
+      expect(parsedDocument.document.version()).toEqual(ASYNCAPI_V2_VERSION);
     });
     it('should be able to parse AsyncAPI v2 document for parser API v2', async () => {
       const parsedDocument = await parse(dummyV2Document, {}, {templateConfig: {apiVersion: 'v2'}});
 
       expect(parsedDocument).toBeDefined();
-      expect(parsedDocument.document.version()).toEqual('2.3.0');
+      expect(parsedDocument.document.version()).toEqual(ASYNCAPI_V2_VERSION);
     });
     it('should be able to parse AsyncAPI v2 document for parser API v3', async () => {
       const parsedDocument = await parse(dummyV2Document, {}, {templateConfig: {apiVersion: 'v3'}});
 
       expect(parsedDocument).toBeDefined();
-      expect(parsedDocument.document.version()).toEqual('2.3.0');
+      expect(parsedDocument.document.version()).toEqual(ASYNCAPI_V2_VERSION);
     });
     it('should not be able to parse AsyncAPI v3 document for parser API v1', async () => {
       const parsedDocument = await parse(dummyV3Document, {}, {templateConfig: {apiVersion: 'v1'}});
@@ -95,12 +150,12 @@ describe('Parser', () => {
       const parsedDocument = await parse(dummyV3Document, {}, {templateConfig: {apiVersion: 'v2'}});
 
       expect(parsedDocument).toBeDefined();
-      expect(parsedDocument.document.version()).toEqual('3.0.0');
+      expect(parsedDocument.document.version()).toEqual(ASYNCAPI_V3_VERSION);
     });
     it('should be able to parse AsyncAPI v3 document for parser API v3', async () => {
       const parsedDocument = await parse(dummyV3Document, {}, {templateConfig: {apiVersion: 'v3'}});
       expect(parsedDocument).toBeDefined();
-      expect(parsedDocument.document.version()).toEqual('3.0.0');
+      expect(parsedDocument.document.version()).toEqual(ASYNCAPI_V3_VERSION);
     });
   });
   
@@ -121,7 +176,7 @@ describe('Parser', () => {
 
       expect(properDocument).toBeDefined();
       expect(properDocument.document._json).toBeDefined();
-      expect(properDocument.document._json.asyncapi).toEqual('2.3.0');
+      expect(properDocument.document._json.asyncapi).toEqual(ASYNCAPI_V2_VERSION);
       expect(properDocument.diagnostics).toBeDefined();
       expect(properDocument.diagnostics.length).toBeGreaterThan(0);
 
@@ -146,7 +201,7 @@ describe('Parser', () => {
       expect(properDocument).toBeDefined();
 
       // Validate that the document is converted to the specified API version
-      expect(properDocument.document._json.asyncapi).toEqual('2.3.0');
+      expect(properDocument.document._json.asyncapi).toEqual(ASYNCAPI_V2_VERSION);
       expect(properDocument.diagnostics).toBeDefined();
       expect(properDocument.diagnostics.length).toBeGreaterThan(0);
       
@@ -171,7 +226,7 @@ describe('Parser', () => {
   describe('convertOldOptionsToNew', () => {
     it('should convert old options to new options', () => {
       const oldOptions = {
-        path: './test/docs/',
+        path: TEST_DOCS_PATH,
         applyTraits: true,
         resolve: {
           http: {
@@ -184,7 +239,7 @@ describe('Parser', () => {
       const generator = {
         mapBaseUrlToFolder: {
           url: 'https://schema.example.com/crm/',
-          folder: './test/docs/'
+          folder: 'TEST_DOCS_PATH'
         }
       };
       const newOptions = convertOldOptionsToNew(oldOptions, generator);
@@ -200,6 +255,80 @@ describe('Parser', () => {
       const newOptions = convertOldOptionsToNew(undefined, {});
 
       expect(newOptions).toBeUndefined();
+    });
+    it('should handle empty resolve object', () => {
+      const oldOptions = { resolve: {} };
+      const generator = {};
+
+      const newOptions = convertOldOptionsToNew(oldOptions, generator);
+
+      expect(newOptions).toEqual({});
+    });
+    it('should work without generator.mapBaseUrlToFolder', () => {
+      const oldOptions = {
+        path: './docs',
+        applyTraits: false
+      };
+
+      const newOptions = convertOldOptionsToNew(oldOptions, {});
+
+      expect(newOptions.source).toEqual('./docs');
+      expect(newOptions.applyTraits).toBe(false);
+    });
+    it('should return empty array when resolvers empty', () => {
+      const result = convertOldOptionsToNew(
+        { resolve: {} },
+        {}
+      );
+
+      expect(result).toEqual({});
+    });
+    it('should read file using mapBaseUrlToFolder resolver', async () => {
+      const generator = {
+        mapBaseUrlToFolder: {
+          url: 'https://schema.example.com/',
+          folder: 'TEST_DOCS_PATH'
+        }
+      };
+
+      const oldOptions = {};
+
+      const newOptions = convertOldOptionsToNew(oldOptions, generator);
+
+      expect(newOptions.__unstable.resolver.resolvers.length).toBeGreaterThan(0);
+    });
+  });
+  describe('canReadFn branches', () => {
+    const uri = {
+      valueOf: () => 'http://example.com/file.yaml',
+      suffix: () => 'yaml'
+    };
+
+    it('handles array canRead', () => {
+      const resolver = {
+        http: {
+          canRead: ['http://example.com/file.yaml'],
+          read: jest.fn()
+        }
+      };
+
+      const options = convertOldOptionsToNew({ resolve: resolver }, {});
+      const r = options.__unstable.resolver.resolvers[0];
+
+      expect(r.canRead(uri)).toBe(true);
+    });
+    it('handles function canRead', () => {
+      const resolver = {
+        http: {
+          canRead: () => true,
+          read: jest.fn()
+        }
+      };
+
+      const options = convertOldOptionsToNew({ resolve: resolver }, {});
+      const r = options.__unstable.resolver.resolvers[0];
+
+      expect(r.canRead(uri)).toBe(true);
     });
   });
 });

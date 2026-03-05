@@ -128,38 +128,6 @@ describe('Utils', () => {
     });
   });
   describe('#isFileSystemPath', () => {
-
-  it('detects absolute path', () => {
-    const result = utils.isFileSystemPath(__dirname);
-    expect(result).toBe(true);
-  });
-
-  it('detects relative path', () => {
-    const result = utils.isFileSystemPath(`.${path.sep}test`);
-    expect(result).toBe(true);
-  });
-
-  it('detects parent relative path', () => {
-    const result = utils.isFileSystemPath(`..${path.sep}test`);
-    expect(result).toBe(true);
-  });
-
-  it('detects home path', () => {
-    const result = utils.isFileSystemPath('~/folder');
-    expect(result).toBe(true);
-  });
-
-  it('returns false for package name', () => {
-    const result = utils.isFileSystemPath('express');
-    expect(result).toBe(false);
-  });
-
-});
-
-    afterEach(() => {
-      jest.restoreAllMocks();
-    });
-
     it('detects absolute path', () => {
       const result = utils.isFileSystemPath(__dirname);
       expect(result).toBe(true);
@@ -273,7 +241,7 @@ describe('Utils', () => {
         expect(() => utils.registerTypeScript('file.ts')).not.toThrow();
       } finally {
         if (previousTsNodeDev === undefined) {
-           delete process.env.TS_NODE_DEV;
+          delete process.env.TS_NODE_DEV;
         } else {
           process.env.TS_NODE_DEV = previousTsNodeDev;
         }
@@ -287,4 +255,4 @@ describe('Utils', () => {
       expect(result).toEqual({});
     });
   });
-
+});

@@ -5,7 +5,7 @@ import { getServer, getServerUrl, getQueryParams } from '@asyncapi/generator-hel
 import { InitSignature } from '../../components/InitSignature.js';
 
 const parser = new Parser();
-const asyncapiFilePath = path.resolve(__dirname, '../../../../../../helpers/test/__fixtures__/asyncapi-websocket-query.yml');
+const asyncapiFilePath = path.resolve(__dirname, '../../../test/__fixtures__/asyncapi-websocket-components.yml');
 
 describe('InitSignature component (integration with AsyncAPI document)', () => {
   let servers;

@@ -10,6 +10,27 @@ servers:
     pathname: /ws
     protocol: wss
     description: Test WebSocket server
+  withHostDuplicatingProtocol:
+    host: wss://test.example.com
+    protocol: wss
+  withVariables:
+    host: test.example.com
+    protocol: wss
+    pathname: /ws/{symbol}
+    variables:
+      symbol:
+        description: The symbol to subscribe to.
+        enum:
+          - btcusd
+          - ethusd
+        default: btcusd
+  withPathname:
+    host: test.example.com
+    protocol: wss
+    pathname: /ws
+  withoutPathName:
+    host: test.example.com
+    protocol: wss
 
 channels:
   testChannel:

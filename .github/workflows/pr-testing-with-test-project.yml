@@ -67,7 +67,6 @@ jobs:
   #this test job runs acceptance tests that use microcks and check generated code against the asyncapi contract
   acceptance:
     needs: changes
-    if: needs.changes.outputs.should_test == 'true'
     name: Acceptance tests (${{ matrix.language }})
     runs-on: ubuntu-latest
     strategy:
@@ -76,15 +75,18 @@ jobs:
         language: [js, py, java]
     steps:
       - name: Checkout repository
+        if: needs.changes.outputs.should_test == 'true'
         uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744
 
       - name: Check package-lock version
+        if: needs.changes.outputs.should_test == 'true'
         uses: asyncapi/.github/.github/actions/get-node-version-from-package-lock@master
         id: lockversion
         with:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Use Node.js
+        if: needs.changes.outputs.should_test == 'true'
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: "${{ steps.lockversion.outputs.version }}"

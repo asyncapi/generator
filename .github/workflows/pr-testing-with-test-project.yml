@@ -117,4 +117,3 @@ jobs:
           --profile test-${{ matrix.language }} \
           up --abort-on-container-exit --force-recreate
         working-directory: ./packages/templates/clients/websocket/test
-        

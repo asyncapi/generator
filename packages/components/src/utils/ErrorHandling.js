@@ -98,7 +98,7 @@ export function unsupportedRole(role, supported = []) {
   return createError(ERROR_CODES.UNSUPPORTED_ROLE, `Unsupported role "${role}". Supported roles: ${supportedList}`);
 }
 
-export function invalidNonNegativeInteger(code, field, value) {
+function invalidNonNegativeInteger(code, field, value) {
   return createError(code, `"${field}" must be >= 0. Received: ${stringify(value)}`);
 }
 

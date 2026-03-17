@@ -16,8 +16,16 @@ describe('URIParams component (integration with AsyncAPI document)', () => {
     const parseResult = await fromFile(parser, asyncapiFilePath).parse();
     parsedAsyncAPIDocument = parseResult.document;
     channels = parsedAsyncAPIDocument.channels();
-    const queryParams = getQueryParams(channels);
-    queryParamsArray = queryParams ? Array.from(queryParams.entries()) : null;
+    
+    // Fetch all channel parameters with our new helper
+    const allQueryParams = getQueryParams(channels);
+    
+    // Extract the parameters from the first channel into an array for the tests
+    queryParamsArray = null;
+    if (allQueryParams) {
+      const firstChannelName = Object.keys(allQueryParams)[0];
+      queryParamsArray = Object.entries(allQueryParams[firstChannelName]);
+    }
   });
 
   test('renders nothing when queryParamsArray is null', () => {

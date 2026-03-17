@@ -41,10 +41,16 @@ describe('getQueryParams integration test with AsyncAPI', () => {
     const params = getQueryParams(channels);
 
     expect(params).not.toBeNull();
-    expect(params.get('heartbeat')).toBe('false');
-    expect(params.get('top_of_book')).toBe('false');
-    expect(params.get('bids')).toBe('true');
-    expect(params.get('offers')).toBe('');
+    
+    // We dynamically grab the first channel's name since our new structure is keyed by channel name
+    const firstChannelName = Object.keys(params)[0];
+    const channelParams = params[firstChannelName];
+
+    // Assert using standard object property access instead of Map's .get()
+    expect(channelParams.heartbeat).toBe('false');
+    expect(channelParams.top_of_book).toBe('false');
+    expect(channelParams.bids).toBe('true');
+    expect(channelParams.offers).toBe('');
   });
 
   it('should return null for channel without WebSocket binding', () => {

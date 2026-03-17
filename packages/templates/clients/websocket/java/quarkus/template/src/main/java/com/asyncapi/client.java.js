@@ -8,7 +8,17 @@ export default async function ({ asyncapi, params }) {
   const server = getServer(asyncapi.servers(), params.server);
   const info = getInfo(asyncapi);
   const title = getTitle(asyncapi);
-  const queryParams = getQueryParams(asyncapi.channels());
+  
+  // Fetch all channel parameters with our new helper
+  const allQueryParams = getQueryParams(asyncapi.channels());
+  
+  // Convert the first channel's parameters back into a Map so the Java template doesn't break
+  let queryParams = null;
+  if (allQueryParams) {
+    const firstChannelName = Object.keys(allQueryParams)[0];
+    queryParams = new Map(Object.entries(allQueryParams[firstChannelName]));
+  }
+
   const clientName = getClientName(asyncapi, params.appendClientSuffix, params.customClientName);
   const operations = asyncapi.operations();
   const clientJavaName = `${clientName}.java`;

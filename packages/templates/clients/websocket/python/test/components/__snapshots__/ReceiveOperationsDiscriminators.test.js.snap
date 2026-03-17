@@ -12,7 +12,7 @@ exports[`Testing of ReceiveOperationsDiscriminators component render ReceiveOper
 
 exports[`Testing of ReceiveOperationsDiscriminators component render ReceiveOperationsDiscriminators component with receive operations 1`] = `
 "self.receive_operation_handlers = {}
-        self.receive_operation_discriminators = []"
+        self.receive_operation_discriminators = [{\\"key\\":\\"messageType\\",\\"value\\":\\"testMessageWithDiscriminator\\",\\"operation_id\\":\\"receiveMessage\\"}]"
 `;
 
 exports[`Testing of ReceiveOperationsDiscriminators component render ReceiveOperationsDiscriminators component without receive operations 1`] = `

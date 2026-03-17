@@ -1,6 +1,7 @@
 import path from 'path';
 import { render } from '@asyncapi/generator-react-sdk';
 import { Parser, fromFile } from '@asyncapi/parser';
+import { getMessageDiscriminatorsFromOperations } from '@asyncapi/generator-helpers';
 import { ReceiveOperationsDiscriminators } from '../../components/ReceiveOperationsDiscriminators';
 
 const parser = new Parser();
@@ -24,6 +25,15 @@ describe('Testing of ReceiveOperationsDiscriminators component', () => {
     );
     const actual = result.trim();
     expect(actual).toMatchSnapshot();
+
+    // Verify that discriminators are actually extracted and present
+    const serialized = getMessageDiscriminatorsFromOperations(receiveOperations);
+    expect(serialized).toBeDefined();
+    expect(Array.isArray(serialized)).toBe(true);
+    expect(serialized.length).toBeGreaterThan(0);
+    
+    // Verify that the serialized discriminators are included in the output
+    expect(actual).toContain(JSON.stringify(serialized));
   });
 
   test('render ReceiveOperationsDiscriminators component with empty receive operations', () => {

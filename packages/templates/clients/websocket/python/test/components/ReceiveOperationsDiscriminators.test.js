@@ -31,8 +31,10 @@ describe('Testing of ReceiveOperationsDiscriminators component', () => {
     expect(serialized).toBeDefined();
     expect(Array.isArray(serialized)).toBe(true);
     expect(serialized.length).toBeGreaterThan(0);
+    expect(serialized[0]).toHaveProperty('key', 'messageType');
+    expect(serialized[0]).toHaveProperty('value', 'testMessageWithDiscriminator');
+    expect(serialized[0]).toHaveProperty('operation_id', 'receiveMessage');
     
-    // Verify that the serialized discriminators are included in the output
     expect(actual).toContain(JSON.stringify(serialized));
   });
 

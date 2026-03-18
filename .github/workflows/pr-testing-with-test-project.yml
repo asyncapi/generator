@@ -67,7 +67,6 @@ jobs:
   #this test job runs acceptance tests that use microcks and check generated code against the asyncapi contract
   acceptance:
     needs: changes
-    if: needs.changes.outputs.should_test == 'true'
     name: Acceptance tests (${{ matrix.language }})
     runs-on: ubuntu-latest
 
@@ -78,13 +77,16 @@ jobs:
 
     steps:
       - name: Checkout repository
+        if: needs.changes.outputs.should_test == 'true'
         uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3 https://github.com/actions/checkout/releases/tag/v3
 
       - name: Log should_test value across jobs #it has to stay here for some time for debugging
+        if: needs.changes.outputs.should_test == 'true'
         run: |
           echo "should_test value: ${{ needs.changes.outputs.should_test }}"
 
       - name: Check package-lock version
+        if: needs.changes.outputs.should_test == 'true'
         # This workflow is from our own org repo and safe to reference by 'master'.
         uses: asyncapi/.github/.github/actions/get-node-version-from-package-lock@master
         id: lockversion
@@ -92,26 +94,32 @@ jobs:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Use Node.js
+        if: needs.changes.outputs.should_test == 'true'
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: "${{ steps.lockversion.outputs.version }}"
 
       - name: Install dependencies
+        if: needs.changes.outputs.should_test == 'true'
         run: npm ci
 
       - name: Generate clients
+        if: needs.changes.outputs.should_test == 'true'
         run: npm run packages:test
 
       - name: Bundle AsyncAPI spec
+        if: needs.changes.outputs.should_test == 'true'
         uses: asyncapi/cli@1b8a4d320bb0e58d19d250dfe69e630df0cac9cd
         with:
           custom_command: bundle packages/templates/clients/websocket/test/__fixtures__/asyncapi-hoppscotch-server.yml --output packages/templates/clients/websocket/test/__fixtures__/bundled.yml
 
       - name: Setup microcks environment
+        if: needs.changes.outputs.should_test == 'true'
         run: docker compose -f ./microcks-setup/microcks-podman.yml --profile ci up -d --force-recreate
         working-directory: ./packages/templates/clients/websocket/test
 
       - name: Run ${{ matrix.language }} acceptance tests
+        if: needs.changes.outputs.should_test == 'true'
         run: |
           docker compose -f ./microcks-setup/microcks-podman.yml \
           --profile test-${{ matrix.language }} \

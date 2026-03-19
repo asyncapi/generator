@@ -77,11 +77,9 @@ jobs:
 
     steps:
       - name: Checkout repository
-        if: needs.changes.outputs.should_test == 'true'
         uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3 https://github.com/actions/checkout/releases/tag/v3
 
       - name: Log should_test value across jobs #it has to stay here for some time for debugging
-        if: needs.changes.outputs.should_test == 'true'
         run: |
           echo "should_test value: ${{ needs.changes.outputs.should_test }}"
 

@@ -17,8 +17,14 @@ describe('QueryParamsArgumentsDocs component (integration with AsyncAPI document
 
   test('render documentation for WebSocket query parameters when they exist in the AsyncAPI document', () => {
     const channels = parsedAsyncAPIDocument.channels();
-    const queryParams = getQueryParams(channels);
-    const queryParamsArray = queryParams && Array.from(queryParams.entries());
+    const allQueryParams = getQueryParams(channels);
+    
+    let queryParamsArray = null;
+    if (allQueryParams) {
+      const firstChannelName = Object.keys(allQueryParams)[0];
+      queryParamsArray = Object.entries(allQueryParams[firstChannelName]);
+    }
+
     const result = render(<QueryParamsArgumentsDocs queryParams={queryParamsArray} />);
     expect(result.trim()).toMatchSnapshot();
   });

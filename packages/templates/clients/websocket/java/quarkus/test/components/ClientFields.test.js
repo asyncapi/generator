@@ -16,7 +16,16 @@ describe('ClientFields component (integration with AsyncAPI document)', () => {
     const parseResult = await fromFile(parser, asyncapiFilePath).parse();
     parsedAsyncAPIDocument = parseResult.document;
     channels = parsedAsyncAPIDocument.channels();
-    queryParams = getQueryParams(channels);
+    
+    // Fetch all channel parameters with our new helper
+    const allQueryParams = getQueryParams(channels);
+    
+    // Convert the first channel's parameters back into a Map for the tests
+    queryParams = null;
+    if (allQueryParams) {
+      const firstChannelName = Object.keys(allQueryParams)[0];
+      queryParams = new Map(Object.entries(allQueryParams[firstChannelName]));
+    }
   });
 
   test('renders base fields without query param fields when queryParams is null', () => {

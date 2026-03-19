@@ -6,7 +6,17 @@ import ClientConnector from '../../../../../../components/ClientConnector.js';
 export default async function ({ asyncapi, params }) {
   const server = getServer(asyncapi.servers(), params.server);
   const clientName = getClientName(asyncapi, params.appendClientSuffix, params.customClientName);
-  const queryParams = getQueryParams(asyncapi.channels());
+  
+  // Fetch all channel parameters with our new helper
+  const allQueryParams = getQueryParams(asyncapi.channels());
+  
+  // Convert the first channel's parameters back into a Map so the template doesn't break
+  let queryParams = null;
+  if (allQueryParams) {
+    const firstChannelName = Object.keys(allQueryParams)[0];
+    queryParams = new Map(Object.entries(allQueryParams[firstChannelName]));
+  }
+
   const clientConnectorName = `${clientName}Connector.java`;
   const pathName = server.pathname();
   const operations = asyncapi.operations();

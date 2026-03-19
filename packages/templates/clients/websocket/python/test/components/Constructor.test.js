@@ -40,9 +40,18 @@ describe('Constructor component (integration with AsyncAPI document)', () => {
     const server = getServer(servers, 'withVariables');
     const serverUrl = getServerUrl(server);
     const channels = parsedAsyncAPIDocument.channels();
-    const queryParams = getQueryParams(channels);
+    
+    // Fetch all channel parameters with our new helper
+    const allQueryParams = getQueryParams(channels);
+    
+    // Convert the first channel's parameters back into a Map so the test doesn't break
+    let queryParams = null;
+    if (allQueryParams) {
+      const firstChannelName = Object.keys(allQueryParams)[0];
+      queryParams = new Map(Object.entries(allQueryParams[firstChannelName]));
+    }
+
     const result = render(<Constructor serverUrl={serverUrl} query={queryParams} />);
     expect(result.trim()).toMatchSnapshot();
   });
 });
-

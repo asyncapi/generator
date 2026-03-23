@@ -79,6 +79,48 @@ describe('Template Configuration Validator', () => {
     expect(() => validateTemplateConfig(templateConfig, templateParams)).toThrow('This template requires the following missing params: test.');
   });
 
+  it('Validation should not throw error if required param is provided with a falsy value (false)', () => {
+    const templateParams = { test: false };
+    const templateConfig  = {
+      parameters: {
+        test: {
+          description: 'test',
+          required: true
+        }
+      }
+    };
+
+    expect(() => validateTemplateConfig(templateConfig, templateParams)).not.toThrow();
+  });
+
+  it('Validation should not throw error if required param is provided with a falsy value (0)', () => {
+    const templateParams = { test: 0 };
+    const templateConfig  = {
+      parameters: {
+        test: {
+          description: 'test',
+          required: true
+        }
+      }
+    };
+
+    expect(() => validateTemplateConfig(templateConfig, templateParams)).not.toThrow();
+  });
+
+  it('Validation should not throw error if required param is provided with an empty string value', () => {
+    const templateParams = { test: '' };
+    const templateConfig  = {
+      parameters: {
+        test: {
+          description: 'test',
+          required: true
+        }
+      }
+    };
+
+    expect(() => validateTemplateConfig(templateConfig, templateParams)).not.toThrow();
+  });
+
   it('Validation throw error if provided param is not in the list of params supported by the template', () => {
     const templateParams = {
       tsets: 'myTest'

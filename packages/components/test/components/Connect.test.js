@@ -13,4 +13,21 @@ describe('Testing of Connect function', () => {
     const actual = result.trim();
     expect(actual).toMatchSnapshot();
   });
+
+  test('throws an error when unsupported language is provided', () => {
+    expect(() => render(
+      <Connect 
+        language='java'
+        title='HoppscotchEchoWebSocketClient'
+      />
+    )).toThrow(/Unsupported language "java". Supported languages:/);
+  });
+
+  test('throws an error when language is not provided', () => {
+    expect(() => render(
+      <Connect 
+        title='HoppscotchEchoWebSocketClient'
+      />
+    )).toThrow(/Language is required. Supported languages:/);
+  });
 });

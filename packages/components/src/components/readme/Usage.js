@@ -1,4 +1,5 @@
 import { Text } from '@asyncapi/generator-react-sdk';
+import { unsupportedLanguage, invalidClientName, invalidClientFileName } from '../../utils/ErrorHandling';
 
 /**
  * @typedef {'python' | 'javascript' } Language
@@ -42,6 +43,9 @@ main();
  * @param {string} props.clientFileName - The file name where the client is defined.
  * @param {Language} props.language - The target language for which to render the usage snippet
  * @returns {JSX.Element} A Text component containing a formatted usage example snippet.
+ * @throws {Error} When the specified language is not supported.
+ * @throws {Error} When clientName is missing or invalid.
+ * @throws {Error} When clientFileName is missing or invalid.
  * 
  * @example
  * import { Usage } from "@asyncapi/generator-components";
@@ -62,7 +66,21 @@ main();
  * renderUsage();
  */
 export function Usage({ clientName, clientFileName, language }) {
+  const supportedLanguages = Object.keys(usageConfig);
   const snippetFn = usageConfig[language];
+
+  if (!snippetFn) {
+    throw unsupportedLanguage(language, supportedLanguages);
+  }
+
+  if (typeof clientName !== 'string' || clientName.trim() === '') {
+    throw invalidClientName(clientName);
+  }
+
+  if (typeof clientFileName !== 'string' || clientFileName.trim() === '') {
+    throw invalidClientFileName(clientFileName);
+  }
+
   const snippet = snippetFn(clientName, clientFileName);
 
   return (

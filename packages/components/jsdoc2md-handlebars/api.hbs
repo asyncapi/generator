@@ -1,51 +1,47 @@
-<!-- markdownlint-disable MD024 -->
+---
+title: Reusable Components API
+weight: 77
+---
+
 ## Components
 
-<dl>
 {{#functions}}
-  <dt>
-    <a href="#{{name}}">{{name}}</a>
-    {{#if returns.length}}
-      ⇒ <code>{{{escapeType returns.[0].type.names.[0]}}}</code>
-    {{/if}}
-  </dt>
-  <dd>
-    <p>{{description}}</p>
-  </dd> 
-{{/functions}}
-</dl>
+* [{{name}}](#{{name}}){{#if returns.length}} ⇒ `{{{returns.[0].type.names.[0]}}}`{{/if}}<br/>
+  
+  {{{description}}}
 
+{{/functions}}
 {{#functions}}
 
 <a name="{{name}}"></a>
-## **{{name}}()** 
+### {{name}}()
 {{description}}
 
 {{#if params.length}}
 
-### Parameters
+**Parameters**
 
 | Name | Type | Description |
 |------|------|-------------|
 {{#each params}}
-| {{name}} | <code>{{{escapeType type.names.[0]}}}</code> | {{description}} |
+| {{name}} | `{{{type.names.[0]}}}` | {{description}} |
 {{/each}}
 
 {{/if}}
 
 {{#if returns.length}}
 
-### Returns
+**Returns**
 
 {{#each returns}}
-- **{{{escapeType type.names.[0]}}}**{{#if description}} - {{description}}{{/if}}
+- `{{{type.names.[0]}}}`{{#if description}} - {{description}}{{/if}}
 {{/each}}
 
 {{/if}}
 
 {{#if examples.length}}
 
-### Example
+**Example**
 
 {{#each examples}}
 ```js

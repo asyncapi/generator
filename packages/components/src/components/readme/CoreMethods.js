@@ -24,6 +24,7 @@ const methodConfig = {
  * @throws {Error} When an unsupported language is provided.
  * 
  * @example
+ * import { CoreMethods } from "@asyncapi/generator-components";
  * const language = "javascript";
  * 
  * function renderCoreMethods() {

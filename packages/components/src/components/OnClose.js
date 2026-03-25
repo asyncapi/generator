@@ -76,6 +76,7 @@ const resolveCloseConfig = (language, framework = '') => {
  * @returns {JSX.Element} A Text component containing the onClose handler code for the specified language.
  * 
  * @example
+ * import { OnClose } from "@asyncapi/generator-components";
  * const language = "java";
  * const framework = "quarkus";
  * const title = "HoppscotchEchoWebSocketClient";

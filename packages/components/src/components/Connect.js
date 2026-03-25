@@ -100,6 +100,7 @@ Future<void> connect() async {
  * @return {JSX.Element} A Text component containing the generated WebSocket connection code for the specified language.
  * 
  * @example
+ * import { Connect } from "@asyncapi/generator-components";
  * const language = "python";
  * const title = "HoppscotchEchoWebSocketClient";
  * 

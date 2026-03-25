@@ -84,11 +84,12 @@ const buildIndentedLogic = (logic, preExecutionCode, postExecutionCode, indentSi
  * @param {number} [props.indent=2] - Indentation for the method block.
  * @param {number} [props.newLines=1] - Number of new lines after method.
  * @param {{ returnType: string | undefined, openingTag: string | undefined, closingTag: string | undefined, indentSize: number | undefined, parameterWrap: boolean | undefined }} [props.customMethodConfig]  - Optional custom syntax configuration for the current language.
- * @param {Record<Language, { methodDocs: string | undefined, methodLogic: string | undefined } | Record<string, { methodDocs: string | undefined, methodLogic: string | undefined }>>} [props.methodConfig] - Language-level or framework-level configuration.
+ * @param {{Record<Language, { methodDocs: string | undefined, methodLogic: string | undefined } | Record<string, { methodDocs: string | undefined, methodLogic: string | undefined }>>}} [props.methodConfig] - Language-level or framework-level configuration.
  * @param {string} [props.framework] - Framework name for nested configurations (e.g., 'quarkus' for Java).
  * @returns {JSX.Element} A Text component that contains method block with appropriate formatting.
  * 
  * @example
+ * import { MethodGenerator } from "@asyncapi/generator-components";
  * const language = "java";
  * const methodName = "registerHandler";
  * const methodParams = ["Handler handler"];

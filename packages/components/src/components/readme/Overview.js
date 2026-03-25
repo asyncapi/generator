@@ -1,8 +1,7 @@
 import { Text } from '@asyncapi/generator-react-sdk';
 
 /**
- * Renders an overview section for a WebSocket client.
- * Displays the API description, version, and server URL.
+ * Renders an overview section for a WebSocket client. Displays the API description, version, and server URL.
  * 
  * @param {Object} props - Component props 
  * @param {Object} props.info - Info object from the AsyncAPI document.

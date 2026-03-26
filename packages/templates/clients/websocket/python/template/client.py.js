@@ -13,7 +13,7 @@ export default function ({ asyncapi, params }) {
   
   // Convert the first channel's parameters back into a Map so the template doesn't break
   let queryParams = null;
-  if (allQueryParams) {
+  if (allQueryParams && Object.keys(allQueryParams).length > 0) {
     const firstChannelName = Object.keys(allQueryParams)[0];
     queryParams = new Map(Object.entries(allQueryParams[firstChannelName]));
   }

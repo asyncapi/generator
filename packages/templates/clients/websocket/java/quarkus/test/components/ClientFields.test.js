@@ -1,7 +1,7 @@
 import path from 'path';
 import { render } from '@asyncapi/generator-react-sdk';
 import { Parser, fromFile } from '@asyncapi/parser';
-import { getQueryParams } from '@asyncapi/generator-helpers';
+import { getFirstChannelQueryParams } from '@asyncapi/generator-helpers';
 import { ClientFields } from '../../components/ClientFields.js';
 
 const parser = new Parser();
@@ -17,15 +17,8 @@ describe('ClientFields component (integration with AsyncAPI document)', () => {
     parsedAsyncAPIDocument = parseResult.document;
     channels = parsedAsyncAPIDocument.channels();
     
-    // Fetch all channel parameters with our new helper
-    const allQueryParams = getQueryParams(channels);
-    
-    // Convert the first channel's parameters back into a Map for the tests
-    queryParams = null;
-    if (allQueryParams) {
-      const firstChannelName = Object.keys(allQueryParams)[0];
-      queryParams = new Map(Object.entries(allQueryParams[firstChannelName]));
-    }
+    // Use the new helper to get the first channel's parameters directly as a Map
+    queryParams = getFirstChannelQueryParams(channels);
   });
 
   test('renders base fields without query param fields when queryParams is null', () => {

@@ -57,7 +57,7 @@ describe('InitSignature component (integration with AsyncAPI document)', () => {
     
     // Extract the parameters from the first channel into an array
     let queryParamsArray = null;
-    if (allQueryParams) {
+    if (allQueryParams && Object.keys(allQueryParams).length > 0) {
       const firstChannelName = Object.keys(allQueryParams)[0];
       queryParamsArray = Object.entries(allQueryParams[firstChannelName]);
     }

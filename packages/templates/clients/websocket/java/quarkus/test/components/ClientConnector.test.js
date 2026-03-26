@@ -1,7 +1,7 @@
 import path from 'path';
 import { render } from '@asyncapi/generator-react-sdk';
 import { Parser, fromFile } from '@asyncapi/parser';
-import { getQueryParams } from '@asyncapi/generator-helpers';
+import { getFirstChannelQueryParams } from '@asyncapi/generator-helpers';
 import ClientConnector from '../../components/ClientConnector.js';
 
 const parser = new Parser();
@@ -19,15 +19,8 @@ describe('ClientConnector component (integration with AsyncAPI document)', () =>
     parsedAsyncAPIDocument = parseResult.document;
     channels = parsedAsyncAPIDocument.channels();
     
-    // Fetch all channel parameters with our new helper
-    const allQueryParams = getQueryParams(channels);
-    
-    // Convert the first channel's parameters back into a Map for the tests
-    queryParams = null;
-    if (allQueryParams) {
-      const firstChannelName = Object.keys(allQueryParams)[0];
-      queryParams = new Map(Object.entries(allQueryParams[firstChannelName]));
-    }
+    // Use the new helper to get the first channel's parameters directly as a Map
+    queryParams = getFirstChannelQueryParams(channels);
     
     operations = parsedAsyncAPIDocument.operations();
     

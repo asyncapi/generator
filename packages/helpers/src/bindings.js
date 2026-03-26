@@ -1,7 +1,7 @@
 /**
  * Extracts default query parameters from all channels' WebSocket bindings.
  *
- * @param {Object} channels - An object representing all AsyncAPI channels.
+ * @param {Object} channels - An object representing all AsyncAPI channels. It assumes this object provides `.isEmpty()` and `.all()` methods.
  * @returns {Object|null} An object whose keys are channel names and whose values are objects of their defaults (or `''`), or null if none exist.
  *
  * @example
@@ -59,6 +59,25 @@ function getQueryParams(channels) {
   return Object.keys(result).length > 0 ? result : null;
 }
 
+/**
+ * Retrieves the query parameters for the first available WebSocket channel.
+ * This acts as a backward-compatibility helper for templates expecting a single Map of parameters.
+ *
+ * @param {Object} channels - The AsyncAPI channels collection object.
+ * @returns {Map|null} A Map of query parameters for the first channel, or null if none exist.
+ */
+function getFirstChannelQueryParams(channels) {
+  const allQueryParams = getQueryParams(channels);
+  
+  if (allQueryParams && Object.keys(allQueryParams).length > 0) {
+    const firstChannelName = Object.keys(allQueryParams)[0];
+    return new Map(Object.entries(allQueryParams[firstChannelName]));
+  }
+  
+  return null;
+}
+
 module.exports = {
-  getQueryParams
+  getQueryParams,
+  getFirstChannelQueryParams
 };

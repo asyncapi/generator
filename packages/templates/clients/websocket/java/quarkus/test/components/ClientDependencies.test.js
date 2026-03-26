@@ -1,7 +1,7 @@
 import path from 'path';
 import { render } from '@asyncapi/generator-react-sdk';
 import { Parser, fromFile } from '@asyncapi/parser';
-import { getQueryParams } from '@asyncapi/generator-helpers';
+import { getFirstChannelQueryParams } from '@asyncapi/generator-helpers';
 import { ClientDependencies } from '../../components/dependencies/ClientDependencies';
 
 const parser = new Parser();
@@ -16,7 +16,9 @@ describe('ClientDependencies component (integration with AsyncAPI document)', ()
     const parseResult = await fromFile(parser, asyncapiFilePath).parse();
     parsedAsyncAPIDocument = parseResult.document;
     channels = parsedAsyncAPIDocument.channels();
-    queryParams = getQueryParams(channels);
+    
+    // Use the new helper to get the first channel's parameters directly as a Map
+    queryParams = getFirstChannelQueryParams(channels);
   });
 
   test('renders base dependencies without HashMap import when queryParams is null', () => {

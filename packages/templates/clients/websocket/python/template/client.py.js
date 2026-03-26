@@ -7,7 +7,17 @@ import { ClientClass } from '../components/ClientClass';
 export default function ({ asyncapi, params }) {
   const server = getServer(asyncapi.servers(), params.server);
   const info = getInfo(asyncapi);
-  const queryParams = getQueryParams(asyncapi.channels());
+  
+  // Fetch all channel parameters with our new helper
+  const allQueryParams = getQueryParams(asyncapi.channels());
+  
+  // Convert the first channel's parameters back into a Map so the template doesn't break
+  let queryParams = null;
+  if (allQueryParams && Object.keys(allQueryParams).length > 0) {
+    const firstChannelName = Object.keys(allQueryParams)[0];
+    queryParams = new Map(Object.entries(allQueryParams[firstChannelName]));
+  }
+
   return (
     // The clientFileName default values can be found and modified under the .ageneratorrc
     <File name={params.clientFileName}>

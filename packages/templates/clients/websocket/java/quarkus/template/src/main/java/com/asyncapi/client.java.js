@@ -1,4 +1,4 @@
-import { getClientName, getInfo, getQueryParams, getServer, getTitle } from '@asyncapi/generator-helpers';
+import { getClientName, getInfo, getFirstChannelQueryParams, getServer, getTitle } from '@asyncapi/generator-helpers';
 import { File } from '@asyncapi/generator-react-sdk';
 import { FileHeaderInfo } from '@asyncapi/generator-components';
 import { ClientDependencies } from '../../../../../../components/dependencies/ClientDependencies.js';
@@ -8,7 +8,10 @@ export default async function ({ asyncapi, params }) {
   const server = getServer(asyncapi.servers(), params.server);
   const info = getInfo(asyncapi);
   const title = getTitle(asyncapi);
-  const queryParams = getQueryParams(asyncapi.channels());
+  
+  // Use the new helper to get the first channel's parameters directly as a Map
+  const queryParams = getFirstChannelQueryParams(asyncapi.channels());
+
   const clientName = getClientName(asyncapi, params.appendClientSuffix, params.customClientName);
   const operations = asyncapi.operations();
   const clientJavaName = `${clientName}.java`;

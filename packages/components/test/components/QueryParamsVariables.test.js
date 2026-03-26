@@ -18,7 +18,13 @@ describe('Testing of QueryParamsVariables component', () => {
   test('renders python query params correctly with query parameters', () => {
     const channels = parsedAsyncAPIDocument.channels();
     const queryParamsObject = getQueryParams(channels);
-    const queryParamsArray = queryParamsObject ? Array.from(queryParamsObject.entries()) : [];
+    
+    let queryParamsArray = [];
+    if (queryParamsObject) {
+      const firstChannelName = Object.keys(queryParamsObject)[0];
+      queryParamsArray = Object.entries(queryParamsObject[firstChannelName]);
+    }
+
     const result = render(
       <QueryParamsVariables 
         language='python' 
@@ -31,7 +37,13 @@ describe('Testing of QueryParamsVariables component', () => {
   test('renders js query params correctly with query parameters', () => {
     const channels = parsedAsyncAPIDocument.channels();
     const queryParamsObject = getQueryParams(channels);
-    const queryParamsArray = queryParamsObject ? Array.from(queryParamsObject.entries()) : [];
+    
+    let queryParamsArray = [];
+    if (queryParamsObject) {
+      const firstChannelName = Object.keys(queryParamsObject)[0];
+      queryParamsArray = Object.entries(queryParamsObject[firstChannelName]);
+    }
+
     const result = render(
       <QueryParamsVariables 
         language='javascript' 
@@ -44,7 +56,13 @@ describe('Testing of QueryParamsVariables component', () => {
   test('renders java quarkus query params correctly with query parameters', () => {
     const channels = parsedAsyncAPIDocument.channels();
     const queryParamsObject = getQueryParams(channels);
-    const queryParamsArray = queryParamsObject ? Array.from(queryParamsObject.entries()) : [];
+    
+    let queryParamsArray = [];
+    if (queryParamsObject) {
+      const firstChannelName = Object.keys(queryParamsObject)[0];
+      queryParamsArray = Object.entries(queryParamsObject[firstChannelName]);
+    }
+
     const result = render(
       <QueryParamsVariables 
         language='java'

@@ -113,38 +113,35 @@ function resolveQueryParamLogic(language, framework = '') {
  * @param {string} [props.framework=''] - Optional framework for the language.
  * @param {string[][]} props.queryParams - Array of query parameters, each represented as [paramName, paramType?].
  * @returns {JSX.Element[]|null} Array of Text components for each query parameter, or null if queryParams is invalid.
- * 
  * @example
  * import path from "path";
  * import { Parser, fromFile } from "@asyncapi/parser";
  * import { getQueryParams } from "@asyncapi/generator-helpers";
  * import { QueryParamsVariables } from "@asyncapi/generator-components";
- * 
-
  * async function renderQueryParamsVariable(){
- *    const parser = new Parser();
- *    const asyncapi_v3_path = path.resolve(__dirname, "../__fixtures__/asyncapi-v3.yml");
- *    
- *    // Parse the AsyncAPI document
- *    const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
- *    const parsedAsyncAPIDocument = parseResult.document;
- *    
- *    const channels = parsedAsyncAPIDocument.channels();
- *    const queryParamsObject = getQueryParams(channels);
- *    const queryParamsArray = queryParamsObject ? Array.from(queryParamsObject.entries()) : [];
- *    
- *    const language = "java";
- *    const framework = "quarkus";
- *    
- *    return (
- *      <QueryParamsVariables 
- *          language={language} 
- *          framework={framework}   
- *          queryParams={queryParamsArray} 
- *      />
- *    )
+ * const parser = new Parser();
+ * const asyncapi_v3_path = path.resolve(__dirname, "../__fixtures__/asyncapi-v3.yml");
+ * // Parse the AsyncAPI document
+ * const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
+ * const parsedAsyncAPIDocument = parseResult.document;
+ * const channels = parsedAsyncAPIDocument.channels();
+ * const queryParamsObject = getQueryParams(channels);
+ * let queryParamsArray = [];
+ * if (queryParamsObject) {
+ * // For this example, extract parameters from the first available channel
+ * const firstChannelName = Object.keys(queryParamsObject)[0];
+ * queryParamsArray = Object.entries(queryParamsObject[firstChannelName]);
  * }
- * 
+ * const language = "java";
+ * const framework = "quarkus";
+ * * return (
+ * <QueryParamsVariables 
+ * language={language} 
+ * framework={framework}   
+ * queryParams={queryParamsArray} 
+ * />
+ * )
+ * }
  * renderQueryParamsVariable().catch(console.error);
  */
 export function QueryParamsVariables({ language, framework = '', queryParams }) {

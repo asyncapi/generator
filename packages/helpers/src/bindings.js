@@ -16,7 +16,7 @@ function getQueryParams(channels) {
     return null;
   }
 
-  const result = {};
+  const result = Object.create(null);
 
   // Loop through every single channel
   for (const [channelName, channel] of channels.all().entries()) {
@@ -43,7 +43,7 @@ function getQueryParams(channels) {
     }
     
     // Populate the parameters for this specific channel
-    const channelParams = {};
+    const channelParams = Object.create(null);
     for (const [key, schema] of Object.entries(properties)) {
       const value = schema.default ?? '';
       channelParams[key] = String(value);

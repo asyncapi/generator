@@ -1,7 +1,5 @@
 /**
  * Comprehensive unit tests for lib/conditionalGeneration.js
-    * Focuses on the isGenerationConditionMet function which determines whether a given file path should be generated based on the template configuration and AsyncAPI document.    * Covers various scenarios including parameter-based conditions, subject-based conditions using JMESPath, and the deprecated conditionalFiles API.
-    * Mocks loglevel and logMessages to verify correct logging behavior for matched conditions and not-generated cases.             
  */
 
 'use strict';
@@ -40,14 +38,31 @@ function makeConditionalFilesConfig(path, conditionOpts) {
     },
   };
 }
+
+/**
+ * Build a minimal AsyncAPI document mock suitable for use with isGenerationConditionMet.
+ *
+ * @param {object} [jsonData={}]          - Plain object returned by asyncapiDocument.json().
+ * @param {object|null} [serverData=null] - Plain object returned by the matched server's
+ *   json() call. When non-null a serverMock `{ json }` is created and returned by
+ *   serversMock.get(); when null serversMock.get() returns undefined.
+ * @returns {{ json: jest.Mock, servers: jest.Mock }} A mock AsyncAPI document where
+ *   servers() always returns the same serversMock instance, making
+ *   `doc.servers().get` assertions reliable across multiple calls.
+ */
 function makeAsyncapiDocument(jsonData = {}, serverData = null) {
+  const serverMock = serverData ? { json: jest.fn(() => serverData) } : undefined;
+  const serversMock = { get: jest.fn(() => serverMock) };
   return {
     json: jest.fn(() => jsonData),
-    servers: jest.fn(() => ({
-      get: jest.fn(() => serverData ? { json: jest.fn(() => serverData) } : undefined),
-    })),
+    servers: jest.fn(() => serversMock),
   };
 }
+
+// ---------------------------------------------------------------------------
+// isGenerationConditionMet – dispatch logic
+// ---------------------------------------------------------------------------
+
 describe('isGenerationConditionMet', () => {
   const PATH = 'some/file.txt';
 
@@ -221,7 +236,6 @@ describe('isGenerationConditionMet', () => {
       expect(result).toBe(false);
     });
   });
-  // Deprecated conditionalFiles path
   describe('deprecated conditionalFiles path (with subject)', () => {
     it('returns true when conditionalFiles subject resolves and validate passes', async () => {
       const doc = makeAsyncapiDocument({ info: { version: '1.0.0' } });
@@ -289,9 +303,6 @@ describe('isGenerationConditionMet', () => {
       expect(result).toBe(true);
     });
   });
-
-  // validateStatus – missing validate function (the "silent false" bug guard)
-  // 
   describe('validateStatus – missing validate function', () => {
     it('returns false silently when validate is missing on a conditionalGeneration parameter path', async () => {
       const config = makeConditionalGenerationConfig(PATH, { parameter: 'flag' });

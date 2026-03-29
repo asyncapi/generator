@@ -149,6 +149,8 @@ describe('Generator', () => {
       expect(templateConfigValidator.validateTemplateConfig).toHaveBeenCalled();
       expect(gen.generateDirectoryStructure).toHaveBeenCalledWith(asyncApiDocumentMock);
       expect(gen.launchHook).toHaveBeenCalledWith('generate:after');
+      const afterHookCalls = gen.launchHook.mock.calls.filter(call => call[0] === 'generate:after');
+      expect(afterHookCalls.length).toBe(1);
 
       expect(util.exists).toHaveBeenCalledTimes(0);
       expect(util.readFile).toHaveBeenCalledTimes(0);

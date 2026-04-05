@@ -4,7 +4,7 @@ import { DefaultConstructorSignature } from './DefaultConstructorSignature';
 import { QueryParamsVariables } from '@asyncapi/generator-components';
 
 export function Constructor({ clientName, query }) {
-  const queryParamsArray = query && Array.from(queryParams.entries());
+  const queryParamsArray = query && Array.from(query instanceof Map ? query.entries() : Object.entries(query));
   if (!queryParamsArray || queryParamsArray.length === 0) {
     return;
   }

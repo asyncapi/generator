@@ -1,7 +1,7 @@
 import path from 'path';
 import { render } from '@asyncapi/generator-react-sdk';
 import { Parser, fromFile } from '@asyncapi/parser';
-import { getQueryParams } from '@asyncapi/generator-helpers';
+import { getFirstChannelQueryParams } from '@asyncapi/generator-helpers';
 import { QueryParamsArgumentsDocs } from '../../components/QueryParamsArgumentsDocs';
 
 const parser = new Parser();
@@ -17,7 +17,7 @@ describe('QueryParamsArgumentsDocs component (integration with AsyncAPI document
 
   test('render documentation for WebSocket query parameters when they exist in the AsyncAPI document', () => {
     const channels = parsedAsyncAPIDocument.channels();
-    const allQueryParams = getQueryParams(channels);
+    const allQueryParams = getFirstChannelQueryParams(channels);
     
     let queryParamsArray = null;
     if (allQueryParams) {

@@ -1,5 +1,5 @@
 import { File } from '@asyncapi/generator-react-sdk';
-import { getServer, getQueryParams, getInfo } from '@asyncapi/generator-helpers';
+import { getServer, getFirstChannelQueryParams, getInfo } from '@asyncapi/generator-helpers';
 import { FileHeaderInfo } from '@asyncapi/generator-components';
 import { Requires } from '../components/Requires';
 import { ClientClass } from '../components/ClientClass';
@@ -9,7 +9,7 @@ export default function ({ asyncapi, params }) {
   const info = getInfo(asyncapi);
   
   // Fetch all channel parameters with our new helper
-  const allQueryParams = getQueryParams(asyncapi.channels());
+  const allQueryParams = getFirstChannelQueryParams(asyncapi.channels());
   
   // Convert the first channel's parameters back into a Map so the template doesn't break
   let queryParams = null;

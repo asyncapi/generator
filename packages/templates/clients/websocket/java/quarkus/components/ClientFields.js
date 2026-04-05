@@ -3,7 +3,7 @@ import { Text } from '@asyncapi/generator-react-sdk';
 
 export function ClientFields({ queryParams, clientName }) {
   let queryParamsVariables = '';
-  const queryParamsArray = queryParams && Array.from(queryParams.entries());
+  const queryParamsArray = queryParams && Array.from(Object.entries(queryParams));
   
   if (queryParamsArray && queryParamsArray.length > 0) {
     queryParamsVariables = '\nprivate HashMap<String, String> params;\n';

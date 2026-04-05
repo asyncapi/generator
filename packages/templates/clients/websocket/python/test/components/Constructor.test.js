@@ -1,7 +1,7 @@
 import path from 'path';
 import { render } from '@asyncapi/generator-react-sdk';
 import { Parser, fromFile } from '@asyncapi/parser';
-import { getServer, getServerUrl, getQueryParams } from '@asyncapi/generator-helpers';
+import { getServer, getServerUrl, getFirstChannelQueryParams } from '@asyncapi/generator-helpers';
 import { Constructor } from '../../components/Constructor.js';
 
 const parser = new Parser();
@@ -42,7 +42,7 @@ describe('Constructor component (integration with AsyncAPI document)', () => {
     const channels = parsedAsyncAPIDocument.channels();
     
     // Fetch all channel parameters with our new helper
-    const allQueryParams = getQueryParams(channels);
+    const allQueryParams = getFirstChannelQueryParams(channels);
     
     // Convert the first channel's parameters back into a Map so the test doesn't break
     let queryParams = null;

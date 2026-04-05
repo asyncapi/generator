@@ -116,7 +116,7 @@ function resolveQueryParamLogic(language, framework = '') {
  * @example
  * import path from "path";
  * import { Parser, fromFile } from "@asyncapi/parser";
- * import { getQueryParams } from "@asyncapi/generator-helpers";
+ * import { getFirstChannelQueryParams } from "@asyncapi/generator-helpers";
  * import { QueryParamsVariables } from "@asyncapi/generator-components";
  * async function renderQueryParamsVariable(){
  * const parser = new Parser();
@@ -125,7 +125,7 @@ function resolveQueryParamLogic(language, framework = '') {
  * const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
  * const parsedAsyncAPIDocument = parseResult.document;
  * const channels = parsedAsyncAPIDocument.channels();
- * const queryParamsObject = getQueryParams(channels);
+ * const queryParamsObject = getFirstChannelQueryParams(channels);
  * let queryParamsArray = [];
  * if (queryParamsObject) {
  * // For this example, extract parameters from the first available channel

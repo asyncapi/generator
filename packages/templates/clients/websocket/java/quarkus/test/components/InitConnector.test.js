@@ -1,7 +1,7 @@
 import path from 'path';
 import { render } from '@asyncapi/generator-react-sdk';
 import { Parser, fromFile } from '@asyncapi/parser';
-import { getQueryParams } from '@asyncapi/generator-helpers';
+import { getFirstChannelQueryParams } from '@asyncapi/generator-helpers';
 import InitConnector from '../../components/InitConnector.js';
 
 const parser = new Parser();
@@ -18,7 +18,11 @@ describe('InitConnector component (integration with AsyncAPI document)', () => {
     parsedAsyncAPIDocument = parseResult.document;
 
     channels = parsedAsyncAPIDocument.channels();
-    const queryParams = getQueryParams(channels);
+    
+    // Use the new helper to get the first channel's parameters directly as a Map
+    const queryParams = getFirstChannelQueryParams(channels);
+    
+    // Convert the Map to an array for the tests since InitConnector expects an array
     queryParamsArray = queryParams ? Array.from(queryParams.entries()) : null;
 
     const operations = parsedAsyncAPIDocument.operations();

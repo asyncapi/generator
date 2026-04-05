@@ -3,7 +3,7 @@ import InitConnector from './InitConnector';
 import { ConnectorFields } from './ConnectorFields';
 
 export default function ClientConnector({ clientName, query, pathName, operations }) {
-  const queryParamsArray = query && Array.from(query.entries());
+  const queryParamsArray = query && Array.from(queryParams.entries());
   const sendOperations = operations.filterBySend();
   if (!pathName) {
     pathName = '/';

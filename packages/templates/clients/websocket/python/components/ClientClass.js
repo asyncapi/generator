@@ -1,5 +1,5 @@
 import { Text } from '@asyncapi/generator-react-sdk';
-import { getClientName, getServerUrl, getServer, getQueryParams, getTitle } from '@asyncapi/generator-helpers';
+import { getClientName, getServerUrl, getServer, getFirstChannelQueryParams, getTitle } from '@asyncapi/generator-helpers';
 import { Send } from './Send';
 import { Constructor } from './Constructor';
 import { CloseConnection, RegisterMessageHandler, RegisterErrorHandler, SendOperations, Connect, HandleMessage } from '@asyncapi/generator-components';
@@ -10,7 +10,17 @@ import { RegisterReceiveOperations } from './RegisterReceiveOperations';
 export function ClientClass({ asyncapi, params }) {
   const server = getServer(asyncapi.servers(), params.server);
   const title = getTitle(asyncapi);
-  const queryParams = getQueryParams(asyncapi.channels());
+  
+  // Fetch all channel parameters with our new helper
+  const allQueryParams = getFirstChannelQueryParams(asyncapi.channels());
+  
+  // Convert the first channel's parameters back into a Map so the Python template doesn't break
+  let queryParams = null;
+  if (allQueryParams) {
+    const firstChannelName = Object.keys(allQueryParams)[0];
+    queryParams = new Map(Object.entries(allQueryParams[firstChannelName]));
+  }
+
   const clientName = getClientName(asyncapi, params.appendClientSuffix, params.customClientName);
   const serverUrl = getServerUrl(server);
   const operations = asyncapi.operations();

@@ -3,8 +3,16 @@
     "private": true,
     "description": "This is a integration tests for all the websocket clients",
     "scripts": {
-        "test": "jest --coverage",
-        "test:update": "npm run test -- -u",
+        "test": "npm run test:python && npm run test:java-quarkus && npm run test:dart && npm run test:javascript",
+        "test:update": "npm run test:python:update && npm run test:java-quarkus:update && npm run test:dart:update && npm run test:javascript:update",
+        "test:dart": "cross-env TEST_CLIENT=dart jest",
+        "test:python": "cross-env TEST_CLIENT=python jest",
+        "test:java-quarkus": "cross-env TEST_CLIENT=java-quarkus jest",
+        "test:javascript": "cross-env TEST_CLIENT=javascript jest",
+        "test:dart:update": "cross-env TEST_CLIENT=dart jest -u",
+        "test:python:update": "cross-env TEST_CLIENT=python jest -u",
+        "test:java-quarkus:update": "cross-env TEST_CLIENT=java-quarkus jest -u",
+        "test:javascript:update": "cross-env TEST_CLIENT=javascript jest -u",
         "lint": "eslint --max-warnings 0 --config ../../../../../../.eslintrc --ignore-path ../../../../../../.eslintignore .",
         "lint:fix": "eslint --fix --max-warnings 0 --config ../../../../../../.eslintrc --ignore-path ../../../../../../.eslintignore ."
     },

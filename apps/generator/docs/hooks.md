@@ -3,7 +3,7 @@ title: "Hooks"
 weight: 130
 ---
 
-Hooks are functions called by the generator on a specific moment in the generation process. Hooks can be anonymous functions but you can also add function names. These hooks can have arguments provided to them or being expected to return a value.
+Hooks are functions called by the generator on a specific moment in the generation process. Hooks can be anonymous functions but you can also add function names. These hooks can have arguments provided to them or being expected to return a value. Two types of hooks pre and post execution can be used.
 
 ## Types
 

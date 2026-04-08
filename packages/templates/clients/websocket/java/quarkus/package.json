@@ -14,6 +14,8 @@
   "scripts": {
     "test": "jest  --coverage",
     "test:update": "npm run test -- -u",
+    "test:integration": "npm --prefix ../../test/integration-test run test:java-quarkus",
+    "test:integration:update": "npm --prefix ../../test/integration-test run test:java-quarkus:update",
     "lint": "eslint --max-warnings 0 --config ../../../../../../.eslintrc --ignore-path ../../../../../../.eslintignore .",
     "lint:fix": "eslint --fix --max-warnings 0 --config ../../../../../../.eslintrc --ignore-path ../../../../../../.eslintignore ."
   },

@@ -39,4 +39,27 @@ describe('Testing of Readme component', () => {
       expect(actual).toMatchSnapshot();
     });
   });
+
+  test('throws error when asyncapi is missing', () => {
+    expect(() =>
+      render(
+        <Readme
+          asyncapi={null}
+          params={{}}
+          language="javascript"
+        />
+      )
+    ).toThrow(/AsyncAPI document is missing./);
+  });
+
+  test('throws error when params is missing', () => {
+    expect(() =>
+      render(
+        <Readme
+          asyncapi={parsedAsyncAPIDocument}
+          language="javascript"
+        />
+      )
+    ).toThrow(/Invalid params object. Received:/);
+  });
 });

@@ -5,6 +5,8 @@
   "scripts": {
     "test": "jest --coverage --passWithNoTests",
     "test:update": "npm run test -- -u",
+    "test:integration": "npm --prefix ../test/integration-test run test:dart",
+    "test:integration:update": "npm --prefix ../test/integration-test run test:dart:update",
     "lint": "eslint --max-warnings 0 --config ../../../../../.eslintrc --ignore-path ../../../../../.eslintignore .",
     "lint:fix": "eslint --fix --max-warnings 0 --config ../../../../../.eslintrc --ignore-path ../../../../../.eslintignore ."
   },

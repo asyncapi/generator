@@ -13,6 +13,18 @@ jest.mock('../lib/hooksRegistry');
 jest.mock('../lib/templates/config/validator');
 jest.mock('../lib/templates/config/loader');
 
+beforeEach(() => {
+  jest.clearAllMocks();
+
+  const utils = require('../lib/utils');
+
+  utils.__files = {};
+  utils.__contentOfFetchedFile = '';
+  utils.__isFileSystemPathValue = false;
+  utils.__generatorVersion = '';
+  utils.__getTemplateDetails = undefined;
+});
+
 describe('Generator', () => {
   describe('constructor', () => {
     it('works with minimum amount of params', () => {
@@ -342,9 +354,7 @@ describe('Generator', () => {
       const templatePath = './testTemplate';
       const gen = new Generator(templatePath, __dirname);
       await gen.installTemplate();
-      setTimeout(() => { // This puts the call at the end of the Node.js event loop queue.
-        expect(arboristMock.reify).toHaveBeenCalledTimes(0);
-      }, 0);
+      expect(arboristMock.reify).not.toHaveBeenCalled();  
     });
 
     it('works with a file system path and force = true', async () => {
@@ -367,9 +377,7 @@ describe('Generator', () => {
       utils.__isFileSystemPathValue = false;
       const gen = new Generator('nameOfTestTemplate', __dirname);
       await gen.installTemplate();
-      setTimeout(() => { // This puts the call at the end of the Node.js event loop queue.
-        expect(arboristMock.reify).toHaveBeenCalledTimes(0);
-      }, 0);
+      expect(arboristMock.reify).not.toHaveBeenCalled();  
     });
 
     it('works with an npm package that is installed for the first time', async () => {

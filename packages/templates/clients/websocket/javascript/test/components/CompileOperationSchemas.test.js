@@ -25,4 +25,11 @@ describe('CompileOperationSchemas', () => {
 
     expect(result).toBe('');
   });
+  it('renders empty output when sendOperations is null', async () => {
+    const result = await render(
+      <CompileOperationSchemas sendOperations={null} />
+    );
+
+    expect(result).toBe('');
+  });
 });

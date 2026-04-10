@@ -1,0 +1,23 @@
+[
+  {
+    "name": "fixture-template-client-ws-js",
+    "type": "client",
+    "protocol": "websocket",
+    "target": "javascript"
+  },
+  {
+    "name": "fixture-template-client-ws-java",
+    "type": "client",
+    "protocol": "websocket",
+    "target": "java",
+    "stack": "quarkus"
+  },
+  {
+    "name": "fixture-template-with-path",
+    "type": "client",
+    "protocol": "kafka",
+    "target": "java",
+    "stack": "quarkus",
+    "path": "/custom/path/to/template"
+  }
+]

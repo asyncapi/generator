@@ -13,8 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3 https://github.com/actions/checkout/releases/tag/v3
       - name: Checks paths-filter
-        uses: rohansingh/paths-filter@084ca29929a4e7e708a4aa8b790347facfd830c9 # fork with predicate-quantifier fix
-        #TODO check if we can switch back to https://github.com/dorny/paths-filter in a month or 2 (today 17.03.2025)
+        uses: dorny/paths-filter@fbd0ab8f3e69293af611ebaee6363fc25e6d187d # v4.0.1 https://github.com/dorny/paths-filter/releases/tag/v4.0.1
         id: filter
         with:
           predicate-quantifier: 'some'
@@ -67,50 +66,59 @@ jobs:
   #this test job runs acceptance tests that use microcks and check generated code against the asyncapi contract
   acceptance:
     needs: changes
-    name: Acceptance tests for generated templates
+    name: Acceptance tests (${{ matrix.language }})
     runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [js, py, java]
+
     steps:
       - name: Checkout repository
-        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744
+        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3 https://github.com/actions/checkout/releases/tag/v3
+
       - name: Log should_test value across jobs #it has to stay here for some time for debugging
         run: |
           echo "should_test value: ${{ needs.changes.outputs.should_test }}"
-      - if: needs.changes.outputs.should_test == 'true'
-        name: Check package-lock version
+
+      - name: Check package-lock version
+        if: needs.changes.outputs.should_test == 'true'
         # This workflow is from our own org repo and safe to reference by 'master'.
         uses: asyncapi/.github/.github/actions/get-node-version-from-package-lock@master
         id: lockversion
         with:
           node-version: ${{ vars.NODE_VERSION }}
-      - if: needs.changes.outputs.should_test == 'true'
-        name: Use Node.js
+
+      - name: Use Node.js
+        if: needs.changes.outputs.should_test == 'true'
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: "${{ steps.lockversion.outputs.version }}"
-      - if: needs.changes.outputs.should_test == 'true'
-        name: Install dependencies
+
+      - name: Install dependencies
+        if: needs.changes.outputs.should_test == 'true'
         run: npm ci
-      - if: needs.changes.outputs.should_test == 'true'
-        name: Run package tests to generate clients #TODO: remove this step as we have a way to run the generator as a library and instead of running all integration tests again better to generate required clients separately/independently
+
+      - name: Generate clients
+        if: needs.changes.outputs.should_test == 'true'
         run: npm run packages:test
-      - if: needs.changes.outputs.should_test == 'true'
-        name: Bundle AsyncAPI spec
+
+      - name: Bundle AsyncAPI spec
+        if: needs.changes.outputs.should_test == 'true'
         uses: asyncapi/cli@1b8a4d320bb0e58d19d250dfe69e630df0cac9cd
         with:
           custom_command: bundle packages/templates/clients/websocket/test/__fixtures__/asyncapi-hoppscotch-server.yml --output packages/templates/clients/websocket/test/__fixtures__/bundled.yml
-      - if: needs.changes.outputs.should_test == 'true'
-        name: Setup microcks environment
-        run: docker compose -f ./microcks-setup/microcks-podman.yml --profile ci up  -d --force-recreate
+
+      - name: Setup microcks environment
+        if: needs.changes.outputs.should_test == 'true'
+        run: docker compose -f ./microcks-setup/microcks-podman.yml --profile ci up -d --force-recreate
         working-directory: ./packages/templates/clients/websocket/test
-      - if: needs.changes.outputs.should_test == 'true'
-        name: Run JS acceptance tests
-        run: docker compose -f ./microcks-setup/microcks-podman.yml --profile test-js up  --abort-on-container-exit --force-recreate
-        working-directory: ./packages/templates/clients/websocket/test
-      - if: needs.changes.outputs.should_test == 'true'
-        name: Run PY acceptance tests
-        run: docker compose -f ./microcks-setup/microcks-podman.yml --profile test-py up  --abort-on-container-exit --force-recreate
-        working-directory: ./packages/templates/clients/websocket/test
-      - if: needs.changes.outputs.should_test == 'true'
-        name: Run JAVA acceptance tests
-        run: docker compose -f ./microcks-setup/microcks-podman.yml --profile test-java up  --abort-on-container-exit --force-recreate
+
+      - name: Run ${{ matrix.language }} acceptance tests
+        if: needs.changes.outputs.should_test == 'true'
+        run: |
+          docker compose -f ./microcks-setup/microcks-podman.yml \
+          --profile test-${{ matrix.language }} \
+          up --abort-on-container-exit --force-recreate
         working-directory: ./packages/templates/clients/websocket/test

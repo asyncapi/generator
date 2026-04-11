@@ -347,7 +347,6 @@ class Generator {
       }
       if (this.output === 'fs') {
         await this.generateFile(this.asyncapi, path.basename(entrypointPath), path.dirname(entrypointPath));
-        await this.launchHook('generate:after');
       } else if (this.output === 'string') {
         return await this.renderFile(this.asyncapi, entrypointPath);
       }

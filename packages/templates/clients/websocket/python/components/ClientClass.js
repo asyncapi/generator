@@ -1,5 +1,5 @@
 import { Text } from '@asyncapi/generator-react-sdk';
-import { getClientName, getServerUrl, getServer, getQueryParams, getTitle } from '@asyncapi/generator-helpers';
+import { getClientName, getServerUrl, getServer, getFirstChannelQueryParams, getTitle } from '@asyncapi/generator-helpers';
 import { Send } from './Send';
 import { Constructor } from './Constructor';
 import { CloseConnection, RegisterMessageHandler, RegisterErrorHandler, SendOperations, Connect, HandleMessage } from '@asyncapi/generator-components';
@@ -10,7 +10,10 @@ import { RegisterReceiveOperations } from './RegisterReceiveOperations';
 export function ClientClass({ asyncapi, params }) {
   const server = getServer(asyncapi.servers(), params.server);
   const title = getTitle(asyncapi);
-  const queryParams = getQueryParams(asyncapi.channels());
+  
+  // Fetch the Map directly from the helper
+  const queryParams = getFirstChannelQueryParams(asyncapi.channels());
+
   const clientName = getClientName(asyncapi, params.appendClientSuffix, params.customClientName);
   const serverUrl = getServerUrl(server);
   const operations = asyncapi.operations();

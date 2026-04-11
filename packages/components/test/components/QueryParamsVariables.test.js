@@ -1,7 +1,7 @@
 import path from 'path';
 import { render } from '@asyncapi/generator-react-sdk';
 import { Parser, fromFile } from '@asyncapi/parser';
-import { getQueryParams } from '@asyncapi/generator-helpers';
+import { getFirstChannelQueryParams } from '@asyncapi/generator-helpers';
 import { QueryParamsVariables } from '../../src/index';
 
 const parser = new Parser();
@@ -17,8 +17,8 @@ describe('Testing of QueryParamsVariables component', () => {
 
   test('renders python query params correctly with query parameters', () => {
     const channels = parsedAsyncAPIDocument.channels();
-    const queryParamsObject = getQueryParams(channels);
-    const queryParamsArray = queryParamsObject ? Array.from(queryParamsObject.entries()) : [];
+    const queryParamsObject = getFirstChannelQueryParams(channels);
+    const queryParamsArray = queryParamsObject ? Object.entries(queryParamsObject) : [];
     const result = render(
       <QueryParamsVariables 
         language='python' 
@@ -30,8 +30,8 @@ describe('Testing of QueryParamsVariables component', () => {
 
   test('renders js query params correctly with query parameters', () => {
     const channels = parsedAsyncAPIDocument.channels();
-    const queryParamsObject = getQueryParams(channels);
-    const queryParamsArray = queryParamsObject ? Array.from(queryParamsObject.entries()) : [];
+    const queryParamsObject = getFirstChannelQueryParams(channels);
+    const queryParamsArray = queryParamsObject ? Object.entries(queryParamsObject) : [];
     const result = render(
       <QueryParamsVariables 
         language='javascript' 
@@ -43,8 +43,8 @@ describe('Testing of QueryParamsVariables component', () => {
 
   test('renders java quarkus query params correctly with query parameters', () => {
     const channels = parsedAsyncAPIDocument.channels();
-    const queryParamsObject = getQueryParams(channels);
-    const queryParamsArray = queryParamsObject ? Array.from(queryParamsObject.entries()) : [];
+    const queryParamsObject = getFirstChannelQueryParams(channels);
+    const queryParamsArray = queryParamsObject ? Object.entries(queryParamsObject) : [];
     const result = render(
       <QueryParamsVariables 
         language='java'

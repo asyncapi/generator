@@ -53,16 +53,10 @@ describe('InitSignature component (integration with AsyncAPI document)', () => {
     const channels = parsedAsyncAPIDocument.channels();
     
     // Fetch all channel parameters with our new helper
-    const allQueryParams = getFirstChannelQueryParams(channels);
-    
-    // Extract the parameters from the first channel into an array
-    let queryParamsArray = null;
-    if (allQueryParams && Object.keys(allQueryParams).length > 0) {
-      const firstChannelName = Object.keys(allQueryParams)[0];
-      queryParamsArray = Object.entries(allQueryParams[firstChannelName]);
-    }
+    const queryMap = getFirstChannelQueryParams(channels);
+    const queryParams = queryMap ? Array.from(queryMap.entries()) : null;
 
-    const result = render(<InitSignature queryParams={queryParamsArray} serverUrl={serverUrl} />);
+    const result = render(<InitSignature queryParams={queryParams} serverUrl={serverUrl} />);
     expect(result.trim()).toMatchSnapshot();
   });
 });

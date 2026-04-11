@@ -8151,8 +8151,6 @@ import json
 import certifi
 import threading
 import websocket
-import os
-from urllib.parse import urlencode
 class SlackWebsocketAPIClient:
 
   def __init__(self, url: str = \\"wss://wss-primary.slack.com/link\\", ticket: str = None, app_id: str = None):

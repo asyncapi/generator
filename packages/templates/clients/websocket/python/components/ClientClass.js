@@ -11,15 +11,8 @@ export function ClientClass({ asyncapi, params }) {
   const server = getServer(asyncapi.servers(), params.server);
   const title = getTitle(asyncapi);
   
-  // Fetch all channel parameters with our new helper
-  const allQueryParams = getFirstChannelQueryParams(asyncapi.channels());
-  
-  // Convert the first channel's parameters back into a Map so the Python template doesn't break
-  let queryParams = null;
-  if (allQueryParams) {
-    const firstChannelName = Object.keys(allQueryParams)[0];
-    queryParams = new Map(Object.entries(allQueryParams[firstChannelName]));
-  }
+  // Fetch the Map directly from the helper
+  const queryParams = getFirstChannelQueryParams(asyncapi.channels());
 
   const clientName = getClientName(asyncapi, params.appendClientSuffix, params.customClientName);
   const serverUrl = getServerUrl(server);

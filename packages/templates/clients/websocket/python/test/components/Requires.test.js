@@ -20,10 +20,12 @@ describe('Requires component (integration with AsyncAPI document)', () => {
     const allQueryParams = getFirstChannelQueryParams(channels);
     
     // Convert the first channel's parameters back into a Map so the test doesn't break
+    const queryParamsObj = getFirstChannelQueryParams(channels);
+    
+    // 2. Convert it directly into a Map
     let queryParams = null;
-    if (allQueryParams) {
-      const firstChannelName = Object.keys(allQueryParams)[0];
-      queryParams = new Map(Object.entries(allQueryParams[firstChannelName]));
+    if (queryParamsObj) {
+      queryParams = new Map(Object.entries(queryParamsObj));
     }
 
     const result = render(<Requires query={queryParams} />);

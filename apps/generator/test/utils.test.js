@@ -123,4 +123,68 @@ describe('Utils', () => {
       expect(isJsFile).toBeFalsy();
     });
   });
+
+  describe('#fetchSpec', () => {
+    let mockFetch;
+
+    beforeEach(() => {
+      mockFetch = jest.fn();
+      jest.mock('node-fetch', () => mockFetch);
+    });
+
+    afterEach(() => {
+      jest.resetModules();
+      jest.restoreAllMocks();
+    });
+
+    it('should return the body text for a successful 200 response', async () => {
+      jest.resetModules();
+      jest.mock('node-fetch', () => jest.fn().mockResolvedValueOnce({
+        ok: true,
+        text: () => Promise.resolve('spec content'),
+      }));
+      const freshUtils = require('../lib/utils');
+
+      const result = await freshUtils.fetchSpec('http://example.com/asyncapi.yaml');
+      expect(result).toBe('spec content');
+    });
+
+    it('should throw an error with URL and status for a 404 response', async () => {
+      jest.resetModules();
+      jest.mock('node-fetch', () => jest.fn().mockResolvedValueOnce({
+        ok: false,
+        status: 404,
+        statusText: 'Not Found',
+      }));
+      const freshUtils = require('../lib/utils');
+
+      await expect(freshUtils.fetchSpec('http://example.com/missing.yaml'))
+        .rejects
+        .toThrow('Failed to fetch AsyncAPI document from http://example.com/missing.yaml: HTTP 404 Not Found');
+    });
+
+    it('should throw an error with URL and status for a 500 response', async () => {
+      jest.resetModules();
+      jest.mock('node-fetch', () => jest.fn().mockResolvedValueOnce({
+        ok: false,
+        status: 500,
+        statusText: 'Internal Server Error',
+      }));
+      const freshUtils = require('../lib/utils');
+
+      await expect(freshUtils.fetchSpec('http://example.com/asyncapi.yaml'))
+        .rejects
+        .toThrow('Failed to fetch AsyncAPI document from http://example.com/asyncapi.yaml: HTTP 500 Internal Server Error');
+    });
+
+    it('should propagate network errors when fetch itself rejects', async () => {
+      jest.resetModules();
+      jest.mock('node-fetch', () => jest.fn().mockRejectedValueOnce(new Error('Network failure')));
+      const freshUtils = require('../lib/utils');
+
+      await expect(freshUtils.fetchSpec('http://example.com/asyncapi.yaml'))
+        .rejects
+        .toThrow('Network failure');
+    });
+  });
 });

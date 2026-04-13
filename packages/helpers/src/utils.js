@@ -55,7 +55,7 @@ const getClientName = (asyncapi, appendClientSuffix, customClientName) => {
     return customClientName;
   }
   const title = getTitle(asyncapi);
-  const baseName = `${title.replace(/\s+/g, '') // Remove all spaces
+  const baseName = `${title.replaceAll(/\s+/g, '') // Remove all spaces
     .replace(/^./, char => char.toUpperCase())}`; // Make the first letter uppercase
   return appendClientSuffix ? `${baseName}Client` : baseName;
 };
@@ -69,7 +69,7 @@ const getClientName = (asyncapi, appendClientSuffix, customClientName) => {
  */
 const toSnakeCase = (inputStr) => {
   return inputStr
-    .replace(/\W+/g, ' ')
+    .replaceAll(/\W+/g, ' ')
     .split(/ |\B(?=[A-Z])/)
     .map((word) => word.toLowerCase())
     .join('_');

@@ -3,10 +3,12 @@
  */
 const fs = require('fs');
 const path = require('path');
+const log = require('loglevel');
 const { addHook, registerLocalHooks, registerConfigHooks, registerHooks } = require('../lib/hooksRegistry');
 
 jest.mock('fs');
 jest.mock('path');
+jest.mock('loglevel');
 
 describe('hooksRegistry', () => {
   let hooks;
@@ -71,15 +73,45 @@ describe('hooksRegistry', () => {
     it('handles errors during hook loading', async () => {
       fs.existsSync.mockReturnValue(true);
       fs.readdirSync.mockReturnValue(['errorHook.js']);
-      
+
       jest.mock('fixtures/template/hooks/errorHook.js', () => {
         throw new Error('Mock import error');
       }, { virtual: true });
-      
+
       await expect(registerLocalHooks(hooks, 'fixtures/template', 'hooks'))
         .resolves.not.toThrow();
-        
+
       expect(hooks).toEqual({});
+    });
+
+    it('logs a warning when a hook file fails to load', async () => {
+      const EventEmitter = require('events');
+      const fakeWalker = new EventEmitter();
+      let localRegisterLocalHooks;
+      let localLog;
+
+      jest.isolateModules(() => {
+        const xfs = require('fs.extra');
+        xfs.walk = jest.fn().mockReturnValue(fakeWalker);
+
+        fs.promises = { stat: jest.fn().mockResolvedValue({}) };
+
+        localLog = require('loglevel');
+        localLog.warn = jest.fn();
+
+        localRegisterLocalHooks = require('../lib/hooksRegistry').registerLocalHooks;
+      });
+
+      const promise = localRegisterLocalHooks(hooks, '/some/template', 'hooks');
+
+      // Emit a file event - require(undefined) throws due to mocked path.resolve
+      fakeWalker.emit('file', '/some/template/hooks', { name: 'badHook.js' }, () => {});
+      fakeWalker.emit('end');
+
+      await expect(promise).rejects.toThrow();
+      expect(localLog.warn).toHaveBeenCalledWith(
+        expect.stringContaining('Failed to load hook file')
+      );
     });
   });
 

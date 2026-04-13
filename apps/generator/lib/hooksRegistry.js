@@ -1,5 +1,6 @@
 const path = require('path');
 const xfs = require('fs.extra');
+const log = require('loglevel');
 const { exists, registerTypeScript } = require('./utils');
 
 /**
@@ -47,6 +48,8 @@ async function registerLocalHooks(hooks, templateDir, hooksDir) {
 
         next();
       } catch (e) {
+        const filePath = path.resolve(root, stats.name);
+        log.warn(`Failed to load hook file ${filePath}: ${e.message}`);
         reject(e);
       }
     });

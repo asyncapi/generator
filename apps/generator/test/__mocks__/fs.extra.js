@@ -1,3 +1,3 @@
-const xfs = jest.genMockFromModule('fs.extra');
+const xfs = jest.createMockFromModule('fs.extra');
 
 module.exports = xfs;

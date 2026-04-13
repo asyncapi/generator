@@ -42,7 +42,7 @@ const DEFAULT_TEMPLATES_DIR = path.resolve(ROOT_DIR, 'node_modules');
 
 const TRANSPILED_TEMPLATE_LOCATION = '__transpiled';
 const TEMPLATE_CONTENT_DIRNAME = 'template';
-const GENERATOR_OPTIONS = ['debug', 'disabledHooks', 'entrypoint', 'forceWrite', 'install', 'noOverwriteGlobs', 'output', 'templateParams', 'mapBaseUrlToFolder', 'url', 'auth', 'token', 'registry', 'compile'];
+const GENERATOR_OPTIONS = ['debug', 'disabledHooks', 'entrypoint', 'forceWrite', 'generateOnly', 'install', 'noOverwriteGlobs', 'output', 'templateParams', 'mapBaseUrlToFolder', 'url', 'auth', 'token', 'registry', 'compile'];
 const logMessage = require('./logMessages');
 
 const shouldIgnoreFile = filePath =>
@@ -74,6 +74,7 @@ class Generator {
    * @param {Object<string, string>} [options.templateParams]   Optional parameters to pass to the template. Each template define their own params.
    * @param {String} [options.entrypoint]       Name of the file to use as the entry point for the rendering process. Use in case you want to use only a specific template file. Note: this potentially avoids rendering every file in the template.
    * @param {String[]} [options.noOverwriteGlobs] List of globs to skip when regenerating the template.
+   * @param {String[]} [options.generateOnly] List of globs to specify which files to generate. When set, only files matching these patterns will be generated.
    * @param {Object<String, Boolean | String | String[]>} [options.disabledHooks] Object with hooks to disable. The key is a hook type. If key has "true" value, then the generator skips all hooks from the given type. If the value associated with a key is a string with the name of a single hook, then the generator skips only this single hook name. If the value associated with a key is an array of strings, then the generator skips only hooks from the array.
    * @param {String} [options.output='fs'] Type of output. Can be either 'fs' (default) or 'string'. Only available when entrypoint is set.
    * @param {Boolean} [options.forceWrite=false] Force writing of the generated files to given directory even if it is a git repo with unstaged files or not empty dir. Default is set to false.
@@ -87,7 +88,7 @@ class Generator {
    * @param {String} [options.registry.token]     Optional parameter to pass npm registry auth token that you can grab from .npmrc file
    */
 
-  constructor(templateName, targetDir, { templateParams = {}, entrypoint, noOverwriteGlobs, disabledHooks, output = 'fs', forceWrite = false, install = false, debug = false, mapBaseUrlToFolder = {}, registry = {}, compile = true } = {}) {
+  constructor(templateName, targetDir, { templateParams = {}, entrypoint, noOverwriteGlobs, generateOnly, disabledHooks, output = 'fs', forceWrite = false, install = false, debug = false, mapBaseUrlToFolder = {}, registry = {}, compile = true } = {}) {
     const options = arguments[arguments.length - 1];
     this.verifyoptions(options);
     if (!templateName) throw new Error('No template name has been specified.');
@@ -105,6 +106,8 @@ class Generator {
     this.entrypoint = entrypoint;
     /** @type {String[]} List of globs to skip when regenerating the template. */
     this.noOverwriteGlobs = noOverwriteGlobs || [];
+    /** @type {String[]} List of globs to specify which files to generate. When set, only matching files are generated. */
+    this.generateOnly = generateOnly || [];
     /** @type {Object<String, Boolean | String | String[]>} Object with hooks to disable. The key is a hook type. If key has "true" value, then the generator skips all hooks from the given type. If the value associated with a key is a string with the name of a single hook, then the generator skips only this single hook name. If the value associated with a key is an array of strings, then the generator skips only hooks from the array. */
     this.disabledHooks = disabledHooks || {};
     /** @type {String} Type of output. Can be either 'fs' (default) or 'string'. Only available when entrypoint is set. */
@@ -846,6 +849,7 @@ class Generator {
     const relativeTargetFile = path.relative(this.targetDir, targetFile);
     const shouldOverwriteFile = await this.shouldOverwriteFile(relativeTargetFile);
     if (!shouldOverwriteFile) return;
+    if (!this.shouldGenerateFile(relativeTargetFile)) return;
     //Ensure the same object are parsed to the renderFile method as before.
     const temp = {};
     const key = template === 'everySchema' || template === 'objectSchema' ? 'schema' : template;
@@ -890,7 +894,9 @@ class Generator {
     let shouldGenerate = true;
   
     if (shouldIgnoreFile(relativeSourceFile)) return;
-    
+
+    if (!this.shouldGenerateFile(relativeSourceFile)) return;
+
     if (!(await this.shouldOverwriteFile(relativeTargetFile))) return;
 
     // conditionalFiles becomes deprecated with this PR, and soon will be removed.
@@ -999,6 +1005,18 @@ class Generator {
     if (!fileExists) return true;
 
     return !this.noOverwriteGlobs.some(globExp => minimatch(filePath, globExp));
+  }
+
+  /**
+   * Checks if a given file should be generated based on the generateOnly filter.
+   *
+   * @private
+   * @param  {string} filePath Relative path of the file to check against generateOnly globs.
+   * @return {boolean}
+   */
+  shouldGenerateFile(filePath) {
+    if (!Array.isArray(this.generateOnly) || this.generateOnly.length === 0) return true;
+    return this.generateOnly.some(globExp => minimatch(filePath, globExp));
   }
 
   /**

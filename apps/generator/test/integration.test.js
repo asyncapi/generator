@@ -188,4 +188,25 @@ describe('Integration testing generateFromFile() to make sure the result of the 
     const exists = await readFile(conditionalFilePath).then(() => true).catch(() => false);
     expect(exists).toBe(true);
   });
+
+  it('should generate only files matching generateOnly globs', async () => {
+    const outputDir = generateFolderName();
+    const cleanReactTemplate = await getCleanReactTemplate();
+    const generator = new Generator(cleanReactTemplate, outputDir, {
+      forceWrite: true,
+      generateOnly: ['**/*.md'],
+    });
+
+    await generator.generateFromFile(dummySpecPath);
+
+    // Check that .md files were generated
+    const mdFile = path.join(outputDir, 'test-file.md');
+    const mdExists = await readFile(mdFile).then(() => true).catch(() => false);
+    expect(mdExists).toBe(true);
+
+    // Check that non-.md files were NOT generated
+    const htmlFile = path.join(outputDir, 'index.html');
+    const htmlExists = await readFile(htmlFile).then(() => true).catch(() => false);
+    expect(htmlExists).toBe(false);
+  });
 });

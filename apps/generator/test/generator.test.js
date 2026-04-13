@@ -21,6 +21,7 @@ describe('Generator', () => {
       expect(gen.targetDir).toStrictEqual(__dirname);
       expect(gen.entrypoint).toStrictEqual(undefined);
       expect(gen.noOverwriteGlobs).toStrictEqual([]);
+      expect(gen.generateOnly).toStrictEqual([]);
       expect(gen.disabledHooks).toStrictEqual({});
       expect(gen.output).toStrictEqual('fs');
       expect(gen.forceWrite).toStrictEqual(false);
@@ -33,6 +34,7 @@ describe('Generator', () => {
       const gen = new Generator('testTemplate', __dirname, {
         entrypoint: 'test-entrypoint',
         noOverwriteGlobs: ['test-globs'],
+        generateOnly: ['**/*.js'],
         disabledHooks: { 'test-hooks': true, 'generate:after': ['foo', 'bar'], foo: 'bar' },
         output: 'string',
         forceWrite: true,
@@ -46,6 +48,7 @@ describe('Generator', () => {
       expect(gen.targetDir).toStrictEqual(__dirname);
       expect(gen.entrypoint).toStrictEqual('test-entrypoint');
       expect(gen.noOverwriteGlobs).toStrictEqual(['test-globs']);
+      expect(gen.generateOnly).toStrictEqual(['**/*.js']);
       expect(gen.disabledHooks).toStrictEqual({ 'test-hooks': true, 'generate:after': ['foo', 'bar'], foo: 'bar' });
       expect(gen.output).toStrictEqual('string');
       expect(gen.forceWrite).toStrictEqual(true);
@@ -531,6 +534,38 @@ describe('Generator', () => {
       gen.hooks = { 'test-hooks': [function fooBar() {}, function barFoo() {}], 'string-test-hooks': [function fooBar() {}] };
       expect(gen.isHookAvailable('test-hooks')).toStrictEqual(false);
       expect(gen.isHookAvailable('string-test-hooks')).toStrictEqual(false);
+    });
+  });
+
+  describe('#shouldGenerateFile', () => {
+    it('returns true when generateOnly is not set', () => {
+      const gen = new Generator('testTemplate', __dirname);
+      expect(gen.shouldGenerateFile('test.js')).toStrictEqual(true);
+    });
+
+    it('returns true when generateOnly is empty array', () => {
+      const gen = new Generator('testTemplate', __dirname, { generateOnly: [] });
+      expect(gen.shouldGenerateFile('test.js')).toStrictEqual(true);
+    });
+
+    it('returns true for matching file pattern', () => {
+      const gen = new Generator('testTemplate', __dirname, { generateOnly: ['**/*.js'] });
+      expect(gen.shouldGenerateFile('src/test.js')).toStrictEqual(true);
+    });
+
+    it('returns false for non-matching file pattern', () => {
+      const gen = new Generator('testTemplate', __dirname, { generateOnly: ['**/*.js'] });
+      expect(gen.shouldGenerateFile('src/test.md')).toStrictEqual(false);
+    });
+
+    it('returns true if any pattern matches', () => {
+      const gen = new Generator('testTemplate', __dirname, { generateOnly: ['**/*.js', '**/*.md'] });
+      expect(gen.shouldGenerateFile('README.md')).toStrictEqual(true);
+    });
+
+    it('returns false when file does not match any of multiple patterns', () => {
+      const gen = new Generator('testTemplate', __dirname, { generateOnly: ['**/*.js', '**/*.md'] });
+      expect(gen.shouldGenerateFile('style.css')).toStrictEqual(false);
     });
   });
 });

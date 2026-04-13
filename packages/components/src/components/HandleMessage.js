@@ -11,11 +11,11 @@ import { MethodGenerator } from './MethodGenerator';
  */
 const websocketHandleMessageConfig = {
   python: {
-    methodLogic: `if len(self.message_handlers) == 0:
-  print("\\033[94mReceived raw message:\\033[0m", message)
+    methodLogic: String.raw`if len(self.message_handlers) == 0:
+  print("\033[94mReceived raw message:\033[0m", message)
 else:
     for handler in self.message_handlers:
-      handler(message)`
+      handler(message)`,
   },
   javascript: {
     methodDocs: '// Method to handle message with callback',

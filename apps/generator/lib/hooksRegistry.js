@@ -25,19 +25,19 @@ async function registerHooks (hooks, templateConfig, templateDir, hooksDir) {
  * @param {String} hooksDir Directory where local hooks are located.
  */
 async function registerLocalHooks(hooks, templateDir, hooksDir) {
-  return new Promise(async (resolve, reject) => {
-    const localHooks = path.resolve(templateDir, hooksDir);
+  const localHooks = path.resolve(templateDir, hooksDir);
 
-    if (!await exists(localHooks)) return resolve(hooks);
+  if (!await exists(localHooks)) return hooks;
 
+  return new Promise((resolve, reject) => {
     const walker = xfs.walk(localHooks, {
       followLinks: false
     });
-    
-    walker.on('file', async (root, stats, next) => {
+
+    walker.on('file', (root, stats, next) => {
       try {
         const filePath = path.resolve(templateDir, path.resolve(root, stats.name));
-        
+
         registerTypeScript(filePath);
 
         delete require.cache[require.resolve(filePath)];
@@ -55,7 +55,7 @@ async function registerLocalHooks(hooks, templateDir, hooksDir) {
       reject(nodeStatsArray);
     });
 
-    walker.on('end', async () => {
+    walker.on('end', () => {
       resolve(hooks);
     });
   });

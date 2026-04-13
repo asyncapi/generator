@@ -332,7 +332,6 @@ class Generator {
    * - Resolves the absolute path of the entrypoint file.
    * - Throws an error if the entrypoint file doesn't exist.
    * - Generates a file or renders content based on the output type.
-   * - Launches the 'generate:after' hook if the output is 'fs'.
    *
    * If no entrypoint is specified, generates the directory structure.
    *
@@ -347,7 +346,6 @@ class Generator {
       }
       if (this.output === 'fs') {
         await this.generateFile(this.asyncapi, path.basename(entrypointPath), path.dirname(entrypointPath));
-        await this.launchHook('generate:after');
       } else if (this.output === 'string') {
         return await this.renderFile(this.asyncapi, entrypointPath);
       }

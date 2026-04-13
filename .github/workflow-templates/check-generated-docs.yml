@@ -1,0 +1,59 @@
+name: 'Check generated docs are up to date'
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+    paths:
+      - '**.js'
+      - '**.ts'
+      - '**.hbs'
+      - 'docs/**'
+      - 'README.md'
+
+jobs:
+  check-docs:
+    name: 'Verify generated docs'
+    runs-on: ubuntu-latest
+    if: >
+      !github.event.pull_request.draft && !(
+        (github.actor == 'asyncapi-bot' && (
+          startsWith(github.event.pull_request.title, 'ci: update of files from global .github repo') || 
+          startsWith(github.event.pull_request.title, 'chore(release):')
+        )) ||
+        (github.actor == 'asyncapi-bot-eve' && (
+          startsWith(github.event.pull_request.title, 'ci: update of files from global .github repo') || 
+          startsWith(github.event.pull_request.title, 'chore(release):')
+        )) ||
+        (github.actor == 'allcontributors[bot]' && 
+          startsWith(github.event.pull_request.title, 'docs: add')
+        )
+      )
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Determine what node version to use
+        uses: asyncapi/.github/.github/actions/get-node-version-from-package-lock@master
+        with:
+          node-version: ${{ vars.NODE_VERSION }}
+        id: lockversion
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "${{ steps.lockversion.outputs.version }}"
+          cache: 'npm'
+          cache-dependency-path: '**/package-lock.json'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate docs
+        run: npm run generate:assets
+
+      - name: Check for changes in generated files
+        run: |
+          git diff --exit-code -- docs/api.md README.md || {
+            echo "::error::Generated docs are out of date. Please run \`npm run generate:assets\` locally and commit the changes."
+            exit 1
+          }

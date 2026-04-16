@@ -3,7 +3,6 @@
  */
 const fs = require('fs');
 const path = require('path');
-const log = require('loglevel');
 const { addHook, registerLocalHooks, registerConfigHooks, registerHooks } = require('../lib/hooksRegistry');
 
 jest.mock('fs');
@@ -86,32 +85,50 @@ describe('hooksRegistry', () => {
 
     it('logs a warning when a hook file fails to load', async () => {
       const EventEmitter = require('events');
+      const realFs = jest.requireActual('fs');
+      const realPath = jest.requireActual('path');
+      const mockImportError = 'Mock import error';
       const fakeWalker = new EventEmitter();
       let localRegisterLocalHooks;
       let localLog;
+      const tempRoot = realFs.mkdtempSync(realPath.join('/tmp', 'hooks-registry-'));
+      const templateDir = realPath.join(tempRoot, 'template');
+      const hooksDir = realPath.join(templateDir, 'hooks');
+      const badHookPath = realPath.join(hooksDir, 'badHook.js');
 
-      jest.isolateModules(() => {
-        const xfs = require('fs.extra');
-        xfs.walk = jest.fn().mockReturnValue(fakeWalker);
+      realFs.mkdirSync(hooksDir, { recursive: true });
+      realFs.writeFileSync(badHookPath, `throw new Error(${JSON.stringify(mockImportError)});\n`);
 
-        fs.promises = { stat: jest.fn().mockResolvedValue({}) };
+      try {
+        jest.isolateModules(() => {
+          const localPath = require('path');
+          const localFs = require('fs');
+          const xfs = require('fs.extra');
+          localLog = require('loglevel');
 
-        localLog = require('loglevel');
-        localLog.warn = jest.fn();
+          localPath.resolve.mockImplementation((...parts) => realPath.resolve(...parts.filter(Boolean)));
+          localFs.promises = { stat: jest.fn().mockResolvedValue({}) };
+          xfs.walk = jest.fn().mockReturnValue(fakeWalker);
+          localLog.warn = jest.fn();
 
-        localRegisterLocalHooks = require('../lib/hooksRegistry').registerLocalHooks;
-      });
+          localRegisterLocalHooks = require('../lib/hooksRegistry').registerLocalHooks;
+        });
 
-      const promise = localRegisterLocalHooks(hooks, '/some/template', 'hooks');
+        const promise = localRegisterLocalHooks(hooks, templateDir, 'hooks');
+        await new Promise(resolve => setImmediate(resolve));
 
-      // Emit a file event - require(undefined) throws due to mocked path.resolve
-      fakeWalker.emit('file', '/some/template/hooks', { name: 'badHook.js' }, () => {});
-      fakeWalker.emit('end');
+        fakeWalker.emit('file', hooksDir, { name: 'badHook.js' }, () => {});
+        fakeWalker.emit('end');
 
-      await expect(promise).rejects.toThrow();
-      expect(localLog.warn).toHaveBeenCalledWith(
-        expect.stringContaining('Failed to load hook file')
-      );
+        await expect(promise).rejects.toThrow(mockImportError);
+        expect(localLog.warn).toHaveBeenCalledWith(
+          expect.stringContaining(`Failed to load hook file ${badHookPath}`)
+        );
+        expect(localLog.warn.mock.calls[0][0]).toContain(mockImportError);
+      } finally {
+        jest.restoreAllMocks();
+        realFs.rmSync(tempRoot, { recursive: true, force: true });
+      }
     });
   });
 

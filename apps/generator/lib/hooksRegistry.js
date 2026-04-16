@@ -24,6 +24,8 @@ async function registerHooks (hooks, templateConfig, templateDir, hooksDir) {
  * @param {Object} hooks Object that stores information about all available hook functions grouped by the type of the hook.
  * @param {String} templateDir Directory where template is located.
  * @param {String} hooksDir Directory where local hooks are located.
+ * @returns {Promise<Object>} Resolves to the hooks object after local hooks are loaded.
+ * @throws {Error} Rejects when a hook file cannot be loaded or transformed.
  */
 async function registerLocalHooks(hooks, templateDir, hooksDir) {
   return new Promise(async (resolve, reject) => {
@@ -49,7 +51,9 @@ async function registerLocalHooks(hooks, templateDir, hooksDir) {
         next();
       } catch (e) {
         const filePath = path.resolve(root, stats.name);
-        log.warn(`Failed to load hook file ${filePath}: ${e.message}`);
+        const errorMessage = e && e.message ? e.message : String(e);
+        const errorDetails = e && e.stack ? e.stack : errorMessage;
+        log.warn(`Failed to load hook file ${filePath}: ${errorDetails}`);
         reject(e);
       }
     });

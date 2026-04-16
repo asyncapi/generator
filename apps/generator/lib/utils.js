@@ -64,6 +64,7 @@ utils.convertMapToObject = (map) => {
  *
  * @param {String} link URL where the AsyncAPI document is located.
  * @returns {Promise<String>} Content of fetched file.
+ * @throws {Error} When fetch fails or the HTTP response is not 2xx, including the status and statusText.
  */
 utils.fetchSpec = async (link) => {
   const res = await fetch(link);

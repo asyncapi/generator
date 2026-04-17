@@ -1,7 +1,7 @@
 import path from 'path';
 import { render } from '@asyncapi/generator-react-sdk';
 import { Parser, fromFile } from '@asyncapi/parser';
-import { getQueryParams } from '@asyncapi/generator-helpers';
+import { getFirstChannelQueryParams } from '@asyncapi/generator-helpers';
 import { DefaultConstructorSignature } from '../../components/DefaultConstructorSignature.js';
 
 const parser = new Parser();
@@ -17,7 +17,10 @@ describe('DefaultConstructorSignature component (integration with AsyncAPI docum
     parsedAsyncAPIDocument = parseResult.document;
     channels = parsedAsyncAPIDocument.channels();
     
-    const queryParams = getQueryParams(channels);
+    // Use the new helper to get the first channel's parameters directly as a Map
+    const queryParams = getFirstChannelQueryParams(channels);
+    
+    // Convert the Map to an array for the tests since DefaultConstructorSignature expects an array
     queryParamsArray = queryParams ? Array.from(queryParams.entries()) : null;
   });
 

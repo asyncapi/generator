@@ -668,7 +668,7 @@ Renders query parameter variables code blocks.
 ```js
 import path from "path";
 import { Parser, fromFile } from "@asyncapi/parser";
-import { getQueryParams } from "@asyncapi/generator-helpers";
+import { getFirstChannelQueryParams } from "@asyncapi/generator-helpers";
 import { QueryParamsVariables } from "@asyncapi/generator-components";
 
 async function renderQueryParamsVariable(){
@@ -680,7 +680,7 @@ async function renderQueryParamsVariable(){
    const parsedAsyncAPIDocument = parseResult.document;
    
    const channels = parsedAsyncAPIDocument.channels();
-   const queryParamsObject = getQueryParams(channels);
+   const queryParamsObject = getFirstChannelQueryParams(channels);
    const queryParamsArray = queryParamsObject ? Array.from(queryParamsObject.entries()) : [];
    
    const language = "java";

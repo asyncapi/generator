@@ -1,7 +1,7 @@
 import path from 'path';
 import { render } from '@asyncapi/generator-react-sdk';
 import { Parser, fromFile } from '@asyncapi/parser';
-import { getServer, getServerUrl, getQueryParams } from '@asyncapi/generator-helpers';
+import { getServer, getServerUrl, getFirstChannelQueryParams } from '@asyncapi/generator-helpers';
 import { InitSignature } from '../../components/InitSignature.js';
 
 const parser = new Parser();
@@ -51,9 +51,12 @@ describe('InitSignature component (integration with AsyncAPI document)', () => {
     const server = getServer(servers, 'withVariables');
     const serverUrl = getServerUrl(server);
     const channels = parsedAsyncAPIDocument.channels();
-    const queryParams = getQueryParams(channels);
-    const queryParamsArray = queryParams && Array.from(queryParams.entries());
-    const result = render(<InitSignature queryParams={queryParamsArray} serverUrl={serverUrl} />);
+    
+    // Fetch all channel parameters with our new helper
+    const queryMap = getFirstChannelQueryParams(channels);
+    const queryParams = queryMap ? Array.from(queryMap.entries()) : null;
+
+    const result = render(<InitSignature queryParams={queryParams} serverUrl={serverUrl} />);
     expect(result.trim()).toMatchSnapshot();
   });
 });

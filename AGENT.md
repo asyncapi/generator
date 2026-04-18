@@ -16,7 +16,7 @@ apps/
   hooks/              # @asyncapi/generator-hooks — built-in lifecycle hooks (CJS, Jest)
   keeper/             # @asyncapi/keeper — AJV message validator (ESM → Babel → CJS)
   nunjucks-filters/   # legacy/stub — treat as frozen; do not add features here
-  react-sdk/          # @asyncapi/generator-react-sdk — TS React renderer (TS → tsc + Rollup)
+  react-sdk/          # @asyncapi/generator-react-sdk — TS React renderer (TS → tsc; bundles Rollup as a runtime dep for its template transpiler)
 packages/
   components/         # @asyncapi/generator-components — shared React template components (JSX)
   helpers/            # @asyncapi/generator-helpers — pure JS helpers over Parser API (CJS, no build)
@@ -76,7 +76,7 @@ Required tags: `@param`, `@returns`, and `@throws` / `@async` where applicable.
 - Changesets live in `.changeset/*.md` with frontmatter naming each affected `@asyncapi/*` package and the bump level (`patch`/`minor`/`major`).
 - When a PR touches both an app and a consumed package (e.g. `packages/helpers` + `apps/generator`), both must appear in the changeset if either's public behaviour changes.
 - Dependency bumps done by `dependabot`/`asyncapi-bot` are exempt from the changeset rule.
-- **Release-triggering prefixes are narrower than Conventional Commits.** The release workflow (`.github/workflows/release-with-changesets.yml`) only fires on master-push commits whose message **exactly starts with** `feat:`, `feat!:`, `fix:`, `fix!:`, or `chore(release):`. The workflow's `if:` uses `startsWith(..., 'feat:')` / `'fix:'`, so **scoped prefixes like `feat(generator):` do NOT trigger a release** — squash/rebase into an unscoped `feat:` / `fix:` at merge time if a release is intended. `refactor:`/`perf:`/`docs:`/`chore:` (without `(release)`) also do not trigger a release.
+- **Release-triggering prefixes are narrower than Conventional Commits.** The release workflow (`.github/workflows/release-with-changesets.yml`) only fires on master-push commits whose message **exactly starts with** `feat:`, `feat!:`, `fix:`, `fix!:`, or `chore(release):`. The workflow's `if:` uses five separate calls — `startsWith(..., 'feat:')`, `startsWith(..., 'feat!:')`, `startsWith(..., 'fix:')`, `startsWith(..., 'fix!:')`, and `startsWith(..., 'chore(release):')` — each matching its literal prefix, so **scoped prefixes like `feat(generator):` do NOT trigger a release** — squash/rebase into an unscoped `feat:` / `fix:` at merge time if a release is intended. `refactor:`/`perf:`/`docs:`/`chore:` (without `(release)`) also do not trigger a release.
 - **Major bumps use `!`.** `feat!:` or `fix!:` signals a breaking change and must be paired with a `major` changeset. Don't accept `major` changesets unless the PR title also carries the `!`.
 - **The `chore(release): release and bump versions of packages` PR is bot-authored** by `asyncapi-bot` via `changesets/action`. Do not rewrite its title or squash it under a different prefix — the exact `chore(release):` prefix is what re-fires the workflow to publish to npm.
 
@@ -135,8 +135,8 @@ Drawn from `packages/README.md` ("Assumptions and Principles") and applied on re
 
 **Conventions:**
 - **ES module source, Babel-transpiled to `lib/` (CJS) on publish.** Edit `src/*.js` only; `lib/*` is build output and must not be committed manually.
-- Public API: `compileSchemas`, `validateMessage`, `compileSchemasByOperationId`. All are `async` and throw on validation failure with descriptive messages.
-- AJV is used with `allErrors: true` and Draft-07. Do not downgrade or switch draft without cross-checking generated clients that depend on this.
+- Public API: `compileSchema`, `compileSchemas`, `compileSchemasByOperationId`, `validateMessage`. Only `compileSchemasByOperationId` is `async` (it reads and parses an AsyncAPI document via `@asyncapi/parser`); the other three are synchronous. All throw on invalid input or validation failure with descriptive messages.
+- AJV v8 is configured with `{ strict: false, allErrors: true }` (see `apps/keeper/src/index.js`). The meta-schema draft follows AJV v8 defaults (draft-2020-12) unless a schema declares its own `$schema` — do not change the AJV options or pin a different draft without cross-checking generated clients that depend on this validator.
 - Tests use Babel-jest and load fixtures from `test/__fixtures__/*.yml`.
 
 ### 4.4 `apps/react-sdk` — `@asyncapi/generator-react-sdk`
@@ -144,7 +144,7 @@ Drawn from `packages/README.md` ("Assumptions and Principles") and applied on re
 **Role:** custom React reconciler that renders JSX to strings (not HTML). Provides `Text`, `Indent`, `File` primitives and the Rollup-based template transpiler used by `apps/generator`.
 
 **Conventions:**
-- **TypeScript source (`src/**/*.ts[x]`), compiled to `lib/` via `tsc` + Rollup.** `lib/` is build output — review diffs there are almost always a mistake (`prepublishOnly` rebuilds it).
+- **TypeScript source (`src/**/*.ts[x]`), compiled to `lib/` via `tsc`** (see the `build` / `prepublishOnly` scripts in `apps/react-sdk/package.json`). Rollup is **not** part of the SDK's own build pipeline — it ships as a runtime dependency used by the template transpiler (`src/transpiler/`) at generation time. `lib/` is build output — review diffs there are almost always a mistake (`prepublishOnly` rebuilds it).
 - **No React hooks, no HTML tags, no `Suspense`.** This renderer is not a browser React — document the restriction when a reviewer encounters `useState`, `<div>`, etc.
 - Components use `PropTypes` *and* TypeScript interfaces — both. Don't drop one for the other.
 - Tests: `src/**/__tests__/*.spec.tsx` via `ts-jest`. Prefer string-output assertions (the renderer output *is* a string) over DOM-style matchers.

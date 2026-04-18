@@ -106,39 +106,75 @@ Do below to start receiving example messages in the terminal:
 websocat ws://localhost:8081/api/ws/Hoppscotch+WebSocket+Server/1.0.0/sendTimeStampMessage
 ```
 
-## Integration Testing 
+## Integration Testing
 
 The integration tests follow a centralized approach: they use common test helpers for standard validations and include only custom tests for template-specific features.
 
-### Adding a New Client to Integration Tests
+### Per-client isolation
 
-1. Go to integration test suite: `cd integration-test`.
+Integration runs are scoped to a single client at a time via the `TEST_CLIENT` environment variable. This is enforced in three places:
 
-2. Add your client configuration to `languageConfig` in `integration.test.js`:
-```js
-const languageConfig = {
-  // ...existing configs
-  yourlang: {
-    clientFileName: your_client_filename,
-    testResultPath: generated_client_path,
-    template: your_template_path
-  }
-}
+- **Per-client npm scripts** (`test:<client>` / `test:<client>:update`) set `TEST_CLIENT=<client>` and invoke jest. The aggregate `test` / `test:update` scripts chain these per-client runs sequentially — they never run jest once across all clients.
+- **`runTestSuiteForClient('<client>', () => { ... })` dispatcher** wraps every describe block. When `TEST_CLIENT` is set, only the matching describe executes; unrelated suites are skipped at registration time.
+- **Per-client snapshot files** via a custom `snapshotResolver.js`: snapshots are written to `__snapshots__/integration.test.js.<client>.snap` rather than a single shared file. 
+
+`beforeAll` cleanup is also scoped: it only wipes `testResultPath` for the targeted client, so running `test:python` won't clobber the Java output.
+
+### Running integration tests
+
+From `integration-test/`:
+
+```bash
+npm run test              # all clients (python → java-quarkus → dart → javascript, sequentially)
+npm run test:python       # only Python
+npm run test:javascript   # only JavaScript
+npm run test:dart         # only Dart
+npm run test:java-quarkus # only Java Quarkus
+
+npm run test:update                # regenerate all snapshots
+npm run test:<client>:update       # regenerate one client's snapshot
 ```
 
-3. Add a new describe block inside main `WebSocket Clients Integration Tests` block following this pattern:
-```js
-describe('YourLang Client', () => {
-  // Runs all standard tests
-  runCommonTests('YourLang', languageConfig.YourLang);
+When debugging a single client locally you can also run jest directly: `TEST_CLIENT=python jest` (or add `-u` to update).
 
-  // Add template-specific tests below
-  describe('Additional tests', () => {
-    it('should handle specific feature', async () => {
-      // Custom test implementation
-    });
-  });
-});
-```
+### Adding a new client to integration tests
 
-4. Run `npm run test:update` to generate client on the `testResultPath`. 
+All four steps are required — missing any one leaves the client partially covered:
+
+1. **`cd integration-test`** and add the client to `languageConfig` in `integration.test.js`:
+   ```js
+   const languageConfig = {
+     // ...existing configs
+     yourlang: {
+       clientFileName: 'your_client_filename',
+       testResultPath: path.resolve(__dirname, '../../yourlang/test/temp/snapshotTestResult'),
+       template: path.resolve(__dirname, '../../yourlang')
+     }
+   };
+   ```
+
+2. **Wrap the describe block in `runTestSuiteForClient`** so `TEST_CLIENT` filtering works:
+   ```js
+   runTestSuiteForClient('yourlang', () => {
+     describe('YourLang Client', () => {
+       const config = languageConfig.yourlang;
+       runCommonTests('YourLang', config);
+
+       // Template-specific tests below (only when the common suite can't cover a feature)
+       describe('Additional tests for YourLang client', () => {
+         it('should handle specific feature', async () => {
+           // Custom test implementation
+         });
+       });
+     });
+   });
+   ```
+
+3. **Add `test:yourlang` and `test:yourlang:update` scripts** to `integration-test/package.json` and chain them into the aggregate `test` / `test:update` scripts:
+   ```json
+   "test": "npm run test:python && npm run test:java-quarkus && npm run test:dart && npm run test:javascript && npm run test:yourlang",
+   "test:yourlang": "cross-env TEST_CLIENT=yourlang jest",
+   "test:yourlang:update": "cross-env TEST_CLIENT=yourlang jest -u"
+   ```
+
+4. **Bootstrap the snapshot**: `npm run test:yourlang:update` generates the client under `testResultPath` and writes `__snapshots__/integration.test.js.yourlang.snap`. Commit that snapshot file in the same PR.

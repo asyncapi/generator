@@ -35,7 +35,7 @@ Orchestration is Turborepo (`turbo.json`). Every package-level script (`test`, `
 - **No Prettier.** Formatting is enforced entirely through ESLint. Do not add a `.prettierrc` or `prettier` devDependency.
 
 ### 2.2 Linting
-Every package inherits `/.eslintrc` (root). Package `lint` scripts must invoke it via `--config ../../.eslintrc --ignore-path ../../.eslintignore`.
+Every package inherits `/.eslintrc` (root). Package `lint` scripts must invoke the root config and ignore file via relative `--config` / `--ignore-path` flags — the exact number of `../` segments depends on the package's depth in the tree (e.g. `apps/*` uses `../../.eslintrc`; `packages/templates/clients/<protocol>/test/integration-test/` uses `../../../../../../.eslintrc`). Do not add a package-local `.eslintrc` to avoid the relative path.
 
 Hard requirements from the root config (non-exhaustive — see `.eslintrc` for the full list):
 - **`--max-warnings 0`** in every lint script. A warning is a blocker.
@@ -76,7 +76,7 @@ Required tags: `@param`, `@returns`, and `@throws` / `@async` where applicable.
 - Changesets live in `.changeset/*.md` with frontmatter naming each affected `@asyncapi/*` package and the bump level (`patch`/`minor`/`major`).
 - When a PR touches both an app and a consumed package (e.g. `packages/helpers` + `apps/generator`), both must appear in the changeset if either's public behaviour changes.
 - Dependency bumps done by `dependabot`/`asyncapi-bot` are exempt from the changeset rule.
-- **Release-triggering prefixes are narrower than Conventional Commits.** The release workflow (`.github/workflows/release-with-changesets.yml`) only fires on master-push commits that start with `feat:`, `feat!:`, `fix:`, `fix!:`, or `chore(release):`. A `feat(...)` with a scope still qualifies; `refactor:`/`perf:`/`docs:`/`chore:` (without `(release)`) do not.
+- **Release-triggering prefixes are narrower than Conventional Commits.** The release workflow (`.github/workflows/release-with-changesets.yml`) only fires on master-push commits whose message **exactly starts with** `feat:`, `feat!:`, `fix:`, `fix!:`, or `chore(release):`. The workflow's `if:` uses `startsWith(..., 'feat:')` / `'fix:'`, so **scoped prefixes like `feat(generator):` do NOT trigger a release** — squash/rebase into an unscoped `feat:` / `fix:` at merge time if a release is intended. `refactor:`/`perf:`/`docs:`/`chore:` (without `(release)`) also do not trigger a release.
 - **Major bumps use `!`.** `feat!:` or `fix!:` signals a breaking change and must be paired with a `major` changeset. Don't accept `major` changesets unless the PR title also carries the `!`.
 - **The `chore(release): release and bump versions of packages` PR is bot-authored** by `asyncapi-bot` via `changesets/action`. Do not rewrite its title or squash it under a different prefix — the exact `chore(release):` prefix is what re-fires the workflow to publish to npm.
 
@@ -169,7 +169,7 @@ Drawn from `packages/README.md` ("Assumptions and Principles") and applied on re
 - CommonJS; no build step. `src/` is published directly via `main: src/index.js`.
 - All helpers are **synchronous and pure** (no I/O) except the testing utilities in `src/testing.js`. A helper that needs I/O probably belongs in `apps/generator`.
 - Every helper must have unit tests that exercise it with a real AsyncAPI fixture. Mocked Parser objects are a last resort and require a comment explaining why a fixture wasn't feasible.
-- Error handling: prefer throwing `Error` with a descriptive message on invalid input — that's the default. Returning `null`/`undefined` to signal "not found"/"not applicable" is acceptable **only** when the absence is a legitimate result the caller is expected to handle (e.g. an optional field lookup), not for invalid input. When a helper does return nullish, document it in the JSDoc `@returns` and cover both branches in tests; otherwise, throw.
+- Error handling: **throw `Error` with a descriptive message on invalid input** — that is always the default. Nullish returns (`null`/`undefined`) are reserved for documented optional lookups where absence is a legitimate, expected result the caller must handle (e.g. an optional field that may or may not exist on a message). When a helper returns nullish, the JSDoc `@returns` must say so and tests must cover both the present and absent branches. Never use nullish to signal invalid input — throw.
 - Naming helpers (`toSnakeCase`, `toCamelCase`, etc.) must be covered for Unicode and already-transformed input.
 
 ### 4.7 `packages/templates/clients/*` — client templates

@@ -50,7 +50,7 @@ Rule of thumb: if a lint rule is failing, fix the code. Inline `eslint-disable` 
 ### 2.3 Commits and PR titles
 Conventional Commits are enforced by the repo's `pre_merge_checks.title` rule.
 - PR titles start **lowercase**, imperative mood: `add`, `fix`, `refactor`, `document` — not `added`, `fixed`.
-- `feat:` / `fix:` are the only prefixes that trigger a changeset release. Use `chore:`, `docs:`, `test:`, `refactor:`, `ci:` for non-releasing changes.
+- The prefixes that trigger a changeset release are exactly `feat:`, `feat!:`, `fix:`, `fix!:`, and `chore(release):` (see §2.5 for workflow details). Use `chore:`, `docs:`, `test:`, `refactor:`, `ci:` for non-releasing changes.
 - Any `feat:` or `fix:` in the diff of a publishable package (`apps/*`, `packages/components`, `packages/helpers`) **must be accompanied by a `.changeset/*.md` file** naming the affected packages and the bump level. Flag missing changesets on review.
 
 ### 2.4 Documentation and comments

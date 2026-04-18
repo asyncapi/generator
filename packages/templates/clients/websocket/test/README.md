@@ -135,7 +135,7 @@ npm run test:update                # regenerate all snapshots
 npm run test:<client>:update       # regenerate one client's snapshot
 ```
 
-When debugging a single client locally you can also run jest directly: `TEST_CLIENT=python jest` (or add `-u` to update).
+When debugging a single client locally you can also run jest directly: `cross-env TEST_CLIENT=python jest` (or add `-u` to update).
 
 ### Adding a new client to integration tests
 

@@ -10,7 +10,7 @@ The monorepo contains tightly coupled packages that together form the AsyncAPI c
 
 ## 1. Repository topology
 
-```
+```text
 apps/
   generator/          # @asyncapi/generator — main CLI + Generator class (CJS, Jest)
   hooks/              # @asyncapi/generator-hooks — built-in lifecycle hooks (CJS, Jest)
@@ -89,9 +89,9 @@ Drawn from `packages/README.md` ("Assumptions and Principles") and applied on re
 1. **Parser-API, not shape-poking.** When extracting data from an AsyncAPI document, use the Parser API. Never do `binding.json()["query"]["properties"]` or equivalent shape-reaching. If the Parser lacks what you need, add a helper in `packages/helpers` instead of inlining.
 2. **Tested helpers over components over inline logic.** Template code should depend on **well-tested** `@asyncapi/generator-helpers` first, then shared components in `@asyncapi/generator-components`, and only drop into template-local components as a last resort. Templates must not reach into the Parser API directly when an equivalent helper exists (or could exist).
 3. **Reusability budget.** Every new template or template feature must be built with reusability in mind — custom helpers and template-local components are kept to the minimum. A new shared helper/component is justified when used in templates, or when the logic is too gnarly to test inline. Otherwise, keep it in the template.
-4. **Template-type taxonomy (provisional, opinionated).** Templates live under `packages/templates/<type>/<protocol>/<language>` where `type ∈ {client, sdk, docs, scripts}`. This split is intentionally opinionated and expected to evolve as the types are exercised in practice — treat it as a hard constraint today, but flag friction rather than forking the taxonomy silently. Semantics:
-   - `client` — generates a client library consumable from a server, a standalone app, **or** a server under development (there is deliberately no `server` type — a client used during server development covers that case).
-   - `sdk` — richer project generation; an `sdk` template **should extend an existing `client`** rather than fork it. If extension isn't feasible, that's a discussion, not a drop-in.
+4. **Template-type taxonomy (provisional, opinionated).** Templates live under `packages/templates/<type>/<protocol>/<language>` where `type ∈ {clients, sdk, docs, scripts}`. This split is intentionally opinionated and expected to evolve as the types are exercised in practice — treat it as a hard constraint today, but flag friction rather than forking the taxonomy silently. Semantics:
+   - `clients` — generates a client library consumable from a server, a standalone app, **or** a server under development (there is deliberately no `server` type — a client used during server development covers that case).
+   - `sdk` — richer project generation; an `sdk` template **should extend an existing `clients` template** rather than fork it. If extension isn't feasible, that's a discussion, not a drop-in.
    - `docs` — wraps standard doc generators (HTML, Markdown) that often already exist outside this repo.
    - `scripts` — generates operational scripts (e.g. broker topic setup).
    Do not introduce a new top-level type without an issue + discussion.
@@ -177,7 +177,7 @@ Drawn from `packages/README.md` ("Assumptions and Principles") and applied on re
 **Role:** per-protocol, per-language client library generators. Currently: `kafka/java/quarkus`, `websocket/{javascript,python,dart,java/quarkus}`.
 
 **Structure** (every client follows this):
-```
+```text
 <client>/
   template/       # JSX files that render each generated file (client.py.js, README.md.js, ...)
   components/     # Language-specific React components (Constructor.js, Send.js, ...)

@@ -1,10 +1,12 @@
 import { Text } from '@asyncapi/generator-react-sdk';
+import { invalidOperation } from '../../utils/ErrorHandling';
 
 /**
  * Renders a header section for a single AsyncAPI operation.
  * @param {Object} props - Component properties.
  * @param {Object} props.operation - An AsyncAPI Operation object.
  * @returns {JSX.Element} A Text component that contains formatted operation header.
+ * @throws {Error} When an invalid operation is provided.
  * 
  * @example
  * import path from "path";
@@ -32,6 +34,10 @@ import { Text } from '@asyncapi/generator-react-sdk';
  */
 
 export function OperationHeader({ operation }) {
+  if (!operation || typeof operation.id !== 'function' || !operation.id()) {
+    throw invalidOperation();
+  }
+
   const operationId = operation.id();
   const summary = operation.hasSummary() ? operation.summary() : '';
   const description = operation.hasDescription() ? `\n${operation.description()}` : '';

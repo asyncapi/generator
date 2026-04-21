@@ -27,4 +27,40 @@ describe('Testing of Usage component', () => {
       expect(result.trim()).toMatchSnapshot();
     }
   );
+
+  test('throws error for unsupported language', () => {
+    expect(() =>
+      render(
+        <Usage
+          clientName="MyClient"
+          clientFileName="myClient.js"
+          language="go"
+        />
+      )
+    ).toThrow(/Unsupported language "go". Supported languages:/);
+  });
+
+  test('throws error for empty clientName', () => {
+    expect(() =>
+      render(
+        <Usage
+          clientName=""
+          clientFileName="myClient.js"
+          language="javascript"
+        />
+      )
+    ).toThrow(/Invalid client name. Expected a non-empty string. Received:/);
+  });
+
+  test('throws error for empty clientFileName', () => {
+    expect(() =>
+      render(
+        <Usage
+          clientName="MyClient"
+          clientFileName=""
+          language="javascript"
+        />
+      )
+    ).toThrow(/Invalid client file name. Expected a non-empty string. Received:/);
+  });
 });

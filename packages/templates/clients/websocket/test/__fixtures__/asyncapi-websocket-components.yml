@@ -54,7 +54,29 @@ channels:
       testMessage:
         summary: Test message
         payload:
-          type: string
+          type: object
+          required:
+            - type
+          properties:
+            type:
+              type: string
+              description: Indicates the message type
+            content:
+              type: string
+      messageWithDiscriminator:
+        summary: Message with discriminator for operation routing
+        payload:
+          type: object
+          discriminator: messageType
+          required:
+            - messageType
+          properties:
+            messageType:
+              type: string
+              const: testMessageWithDiscriminator
+              description: Discriminator for routing
+            data:
+              type: string
 
 operations:
   sendMessage:
@@ -80,6 +102,7 @@ operations:
     summary: Receive a message
     messages:
       - $ref: '#/channels/testChannel/messages/testMessage'
+      - $ref: '#/channels/testChannel/messages/messageWithDiscriminator'
   
   receiveNotification:
     action: receive

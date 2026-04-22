@@ -1,0 +1,64 @@
+# This workflow verifies that generated documentation files are in sync with source code.
+# If a PR modifies JSDoc comments or source files without regenerating docs, this check will fail.
+name: 'Check generated docs are up to date'
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+    branches: [master]
+
+jobs:
+  check-docs:
+    name: 'Check generated docs sync'
+    runs-on: ubuntu-latest
+    # Skip for bot-generated PRs (docs updates, releases, CI sync)
+    if: >
+      !github.event.pull_request.draft && !(
+        (github.actor == 'asyncapi-bot' && (
+          startsWith(github.event.pull_request.title, 'ci: update of files from global .github repo') ||
+           startsWith(github.event.pull_request.title, 'chore(release):') ||
+           github.event.pull_request.title == 'chore: update generated docs'
+        )) ||
+        (github.actor == 'asyncapi-bot-eve' && (
+          startsWith(github.event.pull_request.title, 'ci: update of files from global .github repo') ||
+          startsWith(github.event.pull_request.title, 'chore(release):')
+        )) ||
+        (github.actor == 'allcontributors[bot]' &&
+          startsWith(github.event.pull_request.title, 'docs: add')
+        )
+      )
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Determine what node version to use
+        uses: asyncapi/.github/.github/actions/get-node-version-from-package-lock@master
+        with:
+          node-version: ${{ vars.NODE_VERSION }}
+        id: lockversion
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "${{ steps.lockversion.outputs.version }}"
+          cache: 'npm'
+          cache-dependency-path: '**/package-lock.json'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Regenerate documentation assets
+        run: npm run generate:assets
+
+      - name: Check for doc differences
+        run: |
+          if git diff --exit-code --quiet -- '*.md'; then
+            echo "✅ All generated documentation is up to date"
+          else
+            echo "::error::Generated documentation is out of sync with source code."
+            echo "Please run 'npm run generate:assets' locally and commit the updated docs."
+            echo ""
+            echo "Changed files:"
+            git diff --name-only -- '*.md'
+            exit 1
+          fi

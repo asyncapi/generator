@@ -7,4 +7,10 @@ describe('OnMessage renders per language', () => {
     const result = render(<OnMessage language={language} />);
     expect(result.trim()).toMatchSnapshot();
   });
+
+  test('throws error for unsupported language', () => {
+    expect(() =>
+      render(<OnMessage language="java" />)
+    ).toThrow(/Unsupported language "java". Supported languages:/);
+  });
 });

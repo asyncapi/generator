@@ -1,5 +1,12 @@
 # @asyncapi/generator-components
 
+## 0.6.0
+
+### Minor Changes
+
+- 51bcc7b: Add unified error handling for `@asyncapi/generator-components`.
+  A set of error codes was introduced to help template component development, so you can consistently introduce input validation errors.
+
 ## 0.5.0
 
 ### Minor Changes

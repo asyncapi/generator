@@ -41,4 +41,10 @@ describe('Testing of OperationHeader function', () => {
     const actual = result.trim();
     expect(actual).toMatchSnapshot();
   });
+
+  test('throws error when operation is null', () => {
+    expect(() =>
+      render(<OperationHeader operation={null} />)
+    ).toThrow(/Invalid AsyncAPI operation. Expected a valid operation with id()./);
+  });
 });

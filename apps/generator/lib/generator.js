@@ -347,7 +347,6 @@ class Generator {
       }
       if (this.output === 'fs') {
         await this.generateFile(this.asyncapi, path.basename(entrypointPath), path.dirname(entrypointPath));
-        await this.launchHook('generate:after');
       } else if (this.output === 'string') {
         return await this.renderFile(this.asyncapi, entrypointPath);
       }
@@ -401,7 +400,22 @@ class Generator {
    */
   async configureTemplate() {
     if (this.compile) {
-      await configureReact(this.templateDir, this.templateContentDir, TRANSPILED_TEMPLATE_LOCATION);
+      // Set BROWSERSLIST_ROOT_PATH to prevent browserslist from searching
+      // outside the template directory. This fixes issues with pnpm where
+      // browserslist would incorrectly parse pnpm shim files as config.
+      // See: https://github.com/asyncapi/cli/issues/1781
+      const previousRootPath = process.env.BROWSERSLIST_ROOT_PATH;
+      process.env.BROWSERSLIST_ROOT_PATH = this.templateDir;
+      try {
+        await configureReact(this.templateDir, this.templateContentDir, TRANSPILED_TEMPLATE_LOCATION);
+      } finally {
+        // Restore previous value if it existed
+        if (previousRootPath === undefined) {
+          delete process.env.BROWSERSLIST_ROOT_PATH;
+        } else {
+          process.env.BROWSERSLIST_ROOT_PATH = previousRootPath;
+        }
+      }
     }
   }
 

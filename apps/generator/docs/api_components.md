@@ -97,6 +97,10 @@ weight: 77
   
   Renders WebSocket send operation methods. Generates both static and instance methods for sending messages through WebSocket connections.
 
+* [createError](#createError) ⇒ `Error`<br/>
+  
+  Creates an error with a specific error code for programmatic handling
+
 
 <a name="CloseConnection"></a>
 ### CloseConnection()
@@ -366,13 +370,13 @@ Renders a language-specific formatted method definition.
 |------|------|-------------|
 | props | `Object` | Component props. |
 | props.language | `Language` | Programming language used for method formatting. |
-| props.methodName | `string` | Name of the method. |
+| props.methodName | `string` | Name of the method (non-empty string required). |
 | props.methodParams | `Array.<string>` | Method parameters. |
 | props.methodDocs | `string` | Optional documentation string. |
 | props.methodLogic | `string` | Core method logic. |
 | props.preExecutionCode | `string` | Code before main logic. |
 | props.postExecutionCode | `string` | Code after main logic. |
-| props.indent | `number` | Indentation for the method block. |
+| props.indent | `number` | Indentation for the method block (must be &gt;&#x3D; 0). |
 | props.newLines | `number` | Number of new lines after method. |
 | props.customMethodConfig | `Object` | Optional custom syntax configuration for the current language. |
 | props.methodConfig | `Object` | Language-level or framework-level configuration. |
@@ -1229,5 +1233,26 @@ async function renderSendOperations(){
 
 renderSendOperations().catch(console.error);
 ```
+
+
+
+<a name="createError"></a>
+### createError()
+Creates an error with a specific error code for programmatic handling
+
+
+**Parameters**
+
+| Name | Type | Description |
+|------|------|-------------|
+| code | `string` | The error code (from ERROR_CODES) |
+| message | `string` | The error message |
+
+
+
+**Returns**
+
+- `Error` - An error object with an attached code property
+
 
 

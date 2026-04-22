@@ -10,5 +10,6 @@ module.exports = {
   transform: {
     '^.+\\.jsx?$': 'babel-jest'
   },
+  snapshotResolver: './snapshotResolver.js'
 };
 

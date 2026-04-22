@@ -75,7 +75,7 @@ function isTemplateCompatible(generator, apiVersion) {
  */
 function isRequiredParamProvided(configParams, templateParams) {
   const missingParams = Object.keys(configParams || {})
-    .filter(key => configParams[key].required && !templateParams[key]);
+    .filter(key => configParams[key].required && templateParams[key] === undefined);
 
   if (missingParams.length) {
     throw new Error(`This template requires the following missing params: ${missingParams}.`);

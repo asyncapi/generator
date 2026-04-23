@@ -4,7 +4,20 @@ This document is the source of truth for code review standards in the `asyncapi/
 
 The monorepo contains tightly coupled packages that together form the AsyncAPI code/documentation generation pipeline. Each package has a specific role and its own conventions; this file captures both the shared rules and the per-package deviations.
 
-> If a guideline here conflicts with an inline code comment or a package-local README/CONTRIBUTING, **prefer this file for review decisions** and open a follow-up to reconcile the drift. Guidelines are expected to evolve — flag outdated rules rather than silently working around them.
+---
+
+## Referenced documents
+
+The guidelines below cross-reference the following authoritative docs. If a path or URL changes, update it **here only** — all inline mentions use reference-style links that resolve to this section.
+
+[contributing-commits]: CONTRIBUTING.md#conventional-commits
+[development-release]: Development.md#release-process
+[packages-readme]: packages/README.md
+[hooks-guide]: apps/generator/docs/hooks.md
+[keeper-readme]: apps/keeper/README.md
+[react-sdk-readme]: apps/react-sdk/README.md
+[baked-in-templates]: apps/generator/docs/baked-in-templates.md
+[websocket-test-readme]: packages/templates/clients/websocket/test/README.md
 
 ---
 
@@ -20,7 +33,7 @@ apps/
 packages/
   components/         # @asyncapi/generator-components — shared React template components (JSX)
   helpers/            # @asyncapi/generator-helpers — pure JS helpers over Parser API (CJS, no build)
-  templates/clients/  # Per-protocol, per-language client templates (kafka, websocket × JS/TS/Python/Dart/Java)
+  templates/          # Baked-in templates shipped inside the generator (grouped by type: clients, sdks, docs, configs). Currently: clients/kafka/java/quarkus, clients/websocket/{javascript,python,dart,java/quarkus}
 ```
 
 Orchestration is Turborepo (`turbo.json`). Every package-level script (`test`, `lint`, `build`, `docs`) must be runnable through the root `turbo run <script> --filter=<pkg>` — do not introduce scripts that only work from inside a package directory when they need the full workspace graph.
@@ -35,23 +48,10 @@ Orchestration is Turborepo (`turbo.json`). Every package-level script (`test`, `
 - **No Prettier.** Formatting is enforced entirely through ESLint. Do not add a `.prettierrc` or `prettier` devDependency.
 
 ### 2.2 Linting
-Every package inherits `/.eslintrc` (root). Package `lint` scripts must invoke the root config and ignore file via relative `--config` / `--ignore-path` flags — the exact number of `../` segments depends on the package's depth in the tree (e.g. `apps/*` uses `../../.eslintrc`; `packages/templates/clients/<protocol>/test/integration-test/` uses `../../../../../../.eslintrc`). Do not add a package-local `.eslintrc` to avoid the relative path.
-
-Hard requirements from the root config (non-exhaustive — see `.eslintrc` for the full list):
-- **`--max-warnings 0`** in every lint script. A warning is a blocker.
-- `eqeqeq: error`, `no-var: error`, `prefer-const: error`, `prefer-template: error`, `prefer-arrow-callback: error`, `object-shorthand: error`.
-- `quotes: single`, `semi: always`, `indent: 2 spaces`, `brace-style: 1tbs`, `no-multiple-empty-lines: max 1`.
-- `sonarjs/cognitive-complexity: warn` — treat as a signal to split a function, not to add an `// eslint-disable` line.
-- `camelcase` is disabled (templates generate snake_case / kebab-case identifiers for foreign languages), but JS source should still use camelCase by convention.
-- `no-unused-vars: error` except for function args — unused function args are allowed because they document signatures.
-
-Rule of thumb: if a lint rule is failing, fix the code. Inline `eslint-disable` is reserved for template source that must emit non-JS syntax.
+Every package inherits the root `.eslintrc` — that file is the source of truth for lint rules. Package `lint` scripts must invoke the root config and ignore file via relative `--config` / `--ignore-path` flags — the exact number of `../` segments depends on the package's depth in the tree (e.g. `apps/*` uses `../../.eslintrc`; `packages/templates/clients/<protocol>/test/integration-test/` uses `../../../../../../.eslintrc`). Do not add a package-local `.eslintrc` to avoid the relative path.
 
 ### 2.3 Commits and PR titles
-Conventional Commits are enforced by the repo's `pre_merge_checks.title` rule.
-- PR titles start **lowercase**, imperative mood: `add`, `fix`, `refactor`, `document` — not `added`, `fixed`.
-- The prefixes that trigger a changeset release are exactly `feat:`, `feat!:`, `fix:`, `fix!:`, and `chore(release):` (see §2.5 for workflow details). Use `chore:`, `docs:`, `test:`, `refactor:`, `ci:` for non-releasing changes.
-- Any `feat:`, `fix:`, `feat!:`, or `fix!:` in the diff of a publishable package (`apps/*`, `packages/components`, `packages/helpers`) **must be accompanied by a `.changeset/*.md` file** naming the affected packages and the bump level — `!`-marked commits must pair with a `major` changeset (see §2.5). Flag missing changesets on review.
+See the [Conventional Commits section in `CONTRIBUTING.md`][contributing-commits].
 
 ### 2.4 Documentation and comments
 
@@ -71,32 +71,14 @@ Required tags: `@param`, `@returns`, and `@throws` / `@async` where applicable.
 
 **Comments:** reserve comments for non-obvious *why*. In this codebase the comments that pay rent are **Parser-API quirks** and **AsyncAPI spec workarounds** — mark these with a `// Why:` prefix that cites the spec section or parser issue, so future cleanup passes can tell a load-bearing comment from a stale one.
 
-
 ### 2.5 Release hygiene
-- Changesets live in `.changeset/*.md` with frontmatter naming each affected `@asyncapi/*` package and the bump level (`patch`/`minor`/`major`).
-- When a PR touches both an app and a consumed package (e.g. `packages/helpers` + `apps/generator`), both must appear in the changeset if either's public behaviour changes.
-- Dependency bumps done by `dependabot`/`asyncapi-bot` are exempt from the changeset rule.
-- **Release-triggering prefixes are narrower than Conventional Commits.** The release workflow (`.github/workflows/release-with-changesets.yml`) only fires on master-push commits whose message **exactly starts with** `feat:`, `feat!:`, `fix:`, `fix!:`, or `chore(release):`. The workflow's `if:` uses five separate calls — `startsWith(..., 'feat:')`, `startsWith(..., 'feat!:')`, `startsWith(..., 'fix:')`, `startsWith(..., 'fix!:')`, and `startsWith(..., 'chore(release):')` — each matching its literal prefix, so **scoped prefixes like `feat(generator):` do NOT trigger a release** — squash/rebase into an unscoped `feat:` / `fix:` at merge time if a release is intended. `refactor:`/`perf:`/`docs:`/`chore:` (without `(release)`) also do not trigger a release.
-- **Major bumps use `!`.** `feat!:` or `fix!:` signals a breaking change and must be paired with a `major` changeset. Don't accept `major` changesets unless the PR title also carries the `!`.
-- **The `chore(release): release and bump versions of packages` PR is bot-authored** by `asyncapi-bot` via `changesets/action`. Do not rewrite its title or squash it under a different prefix — the exact `chore(release):` prefix is what re-fires the workflow to publish to npm.
+Changesets, release-triggering prefixes, and the full release flow are documented in the [Release process section in `Development.md`][development-release]. Use that as the source of truth on review; flag PRs whose diffs suggest a release but ship no `.changeset/*.md`.
 
 ---
 
 ## 3. Cross-cutting architectural principles
 
-Drawn from `packages/README.md` ("Assumptions and Principles") and applied on review:
-
-1. **Parser-API, not shape-poking.** When extracting data from an AsyncAPI document, use the Parser API. Never do `binding.json()["query"]["properties"]` or equivalent shape-reaching. If the Parser lacks what you need, add a helper in `packages/helpers` instead of inlining.
-2. **Tested helpers over components over inline logic.** Template code should depend on **well-tested** `@asyncapi/generator-helpers` first, then shared components in `@asyncapi/generator-components`, and only drop into template-local components as a last resort. Templates must not reach into the Parser API directly when an equivalent helper exists (or could exist).
-3. **Reusability budget.** Every new template or template feature must be built with reusability in mind — custom helpers and template-local components are kept to the minimum. A new shared helper/component is justified when used in templates, or when the logic is too gnarly to test inline. Otherwise, keep it in the template.
-4. **Template-type taxonomy (provisional, opinionated).** Templates live under `packages/templates/<type>/<protocol>/<language>` where `type ∈ {clients, sdk, docs, scripts}`. This split is intentionally opinionated and expected to evolve as the types are exercised in practice — treat it as a hard constraint today, but flag friction rather than forking the taxonomy silently. Semantics:
-   - `clients` — generates a client library consumable from a server, a standalone app, **or** a server under development (there is deliberately no `server` type — a client used during server development covers that case).
-   - `sdk` — richer project generation; an `sdk` template **should extend an existing `clients` template** rather than fork it. If extension isn't feasible, that's a discussion, not a drop-in.
-   - `docs` — wraps standard doc generators (HTML, Markdown) that often already exist outside this repo.
-   - `scripts` — generates operational scripts (e.g. broker topic setup).
-   Do not introduce a new top-level type without an issue + discussion.
-5. **Microcks acceptance tests** are the gate for "production-ready" status. A new client template without a Microcks-backed acceptance test (mocks + runtime) is experimental and must be labelled as such in its README. See `packages/templates/clients/websocket/test` for the reference implementation.
-6. **Spec-first feature work.** Every new template feature must be cross-referenced against the AsyncAPI 3.0 spec **and** the Parser API before implementation. Link the spec section (raw docs or visualizer) in the PR description, and confirm the data is reachable via Parser API capabilities rather than a workaround.
+Template development inside the generator is an experimental effort. All its architectural principles and assumptions — spanning `packages/helpers`, `packages/components`, and `packages/templates/*` — live in [`packages/README.md`][packages-readme] under **"Assumptions and Principles"**.
 
 ---
 
@@ -112,7 +94,6 @@ Drawn from `packages/README.md` ("Assumptions and Principles") and applied on re
 - Async I/O uses promisified `fs` wrappers in `lib/utils.js`. Do not use sync `fs` calls in new code.
 - Error handling: validate inputs in constructors (see `GENERATOR_OPTIONS` whitelist in `lib/generator.js`); reject with contextual messages; log at `log.debug`/`log.warn` via `loglevel` — never `console.log`.
 - User-facing strings live in `lib/logMessages.js` as functions returning strings. Do not inline user-facing strings at call sites — it breaks i18n/consistency.
-- Template configuration is loaded from `.ageneratorrc` → `package.json` in `lib/templates/config/loader.js`.
 - Conditional file generation: prefer the new `conditionalGeneration` (JMESPath) API over the deprecated `conditionalFiles`. Do not extend `conditionalFiles`.
 
 **Tests:**
@@ -123,82 +104,45 @@ Drawn from `packages/README.md` ("Assumptions and Principles") and applied on re
 
 ### 4.2 `apps/hooks` — `@asyncapi/generator-hooks`
 
-**Role:** built-in generator lifecycle hooks (currently a `generate:after` hook that writes the source AsyncAPI doc alongside output).
-
-**Conventions:**
-- Exports the hook map shape `{ 'generate:after': fn, ... }` — do not rename or restructure this object without coordinating with `apps/generator/lib/hooksRegistry.js`.
-- YAML vs JSON detection is by try/catch on `JSON.parse`. Keep this simple; do not introduce a format-detection dependency.
+**Role:** built-in generator lifecycle hooks (currently a `generate:after` hook that writes the source AsyncAPI doc alongside output). The generator also dispatches `generate:before` (after filter registration, before rendering) and `setFileTemplateName` (rename a file template's output just before write) — see the [Hooks guide][hooks-guide].
 
 ### 4.3 `apps/keeper` — `@asyncapi/keeper`
 
-**Role:** runtime message validator (AJV + AsyncAPI Parser). Used by generated clients to validate inbound/outbound messages.
+**Role:** runtime message validator (AJV v8 + AsyncAPI Parser). Used by generated clients to validate inbound/outbound messages. Public API surface and behavior live in the [keeper README][keeper-readme] — keep it in sync with `src/index.js` on any signature change.
 
 **Conventions:**
 - **ES module source, Babel-transpiled to `lib/` (CJS) on publish.** Edit `src/*.js` only; `lib/*` is build output and must not be committed manually.
-- Public API: `compileSchema`, `compileSchemas`, `compileSchemasByOperationId`, `validateMessage`. Only `compileSchemasByOperationId` is `async` (it reads and parses an AsyncAPI document via `@asyncapi/parser`); the other three are synchronous. All throw on invalid input or validation failure with descriptive messages.
-- AJV v8 is configured with `{ strict: false, allErrors: true }` (see `apps/keeper/src/index.js`). The meta-schema draft follows AJV v8 defaults (draft-2020-12) unless a schema declares its own `$schema` — do not change the AJV options or pin a different draft without cross-checking generated clients that depend on this validator.
-- Tests use Babel-jest and load fixtures from `test/__fixtures__/*.yml`.
+- Tests are integration-style: Babel-jest loads real AsyncAPI YAML fixtures from `apps/keeper/test/__fixtures__/` and exercises the public exports against them — no mocks of AJV or `@asyncapi/parser`.
 
 ### 4.4 `apps/react-sdk` — `@asyncapi/generator-react-sdk`
 
-**Role:** custom React reconciler that renders JSX to strings (not HTML). Provides `Text`, `Indent`, `File` primitives and the Rollup-based template transpiler used by `apps/generator`.
-
-**Conventions:**
-- **TypeScript source (`src/**/*.ts[x]`), compiled to `lib/` via `tsc`** (see the `build` / `prepublishOnly` scripts in `apps/react-sdk/package.json`). Rollup is **not** part of the SDK's own build pipeline — it ships as a runtime dependency used by the template transpiler (`src/transpiler/`) at generation time. `lib/` is build output — review diffs there are almost always a mistake (`prepublishOnly` rebuilds it).
-- **No React hooks, no HTML tags, no `Suspense`.** This renderer is not a browser React — document the restriction when a reviewer encounters `useState`, `<div>`, etc.
-- Components use `PropTypes` *and* TypeScript interfaces — both. Don't drop one for the other.
-- Tests: `src/**/__tests__/*.spec.tsx` via `ts-jest`. Prefer string-output assertions (the renderer output *is* a string) over DOM-style matchers.
-- The transpiler uses `@babel/preset-env` + `@babel/preset-react`. Changes to the Babel config affect every downstream template — flag them explicitly in the PR.
+**Role:** two-stage render engine used by `apps/generator`. A Rollup-based transpiler bundles each template directory to CJS, then a custom React reconciler walks the element tree and emits a plain string (with child output exposed to each component as `childrenContent`). Ships the `Text`, `Indent`, `File` primitives and the `render` entry point. For the architecture overview, restrictions, and rendering example see the [React SDK README][react-sdk-readme].
 
 ### 4.5 `packages/components` — `@asyncapi/generator-components`
 
-**Role:** shared React components used across multiple client templates (e.g. `Models`, `FileHeaderInfo`, `DependencyProvider`).
+**Role:** A library of reusable components that can be shared across different templates, helping to avoid duplication and accelerate template development.
 
 **Conventions:**
 - ES module JSX, Babel-transpiled to `lib/` on publish. Edit `src/`, never `lib/`.
-- A component belongs here when it is used by **two or more** language/protocol templates. Single-use components stay in the template's local `/components`.
-- Components receive `asyncapi` (parsed document) and template `params` as props. Do not reach into `process.env` or the filesystem from a component.
-- Language-specific boilerplate (imports, dependency declarations) is centralised in `DependencyProvider` — add new languages there, not by duplicating across templates.
-- **Every shared component must have its own tests.** Reuse means a regression here propagates across every template that depends on the component, so test coverage isn't optional. Tests are integration-style with a real AsyncAPI fixture and `toMatchSnapshot()`. If a snapshot changes, the PR description must explain *why*.
+- A component belongs here when it is used by **two or more** language/protocol templates. Single-use components stay in the template's local `components/` directory.
+- **Every shared component must have its own tests.** Reuse means a regression here propagates across every template that depends on the component, so test coverage isn't optional. Tests are integration-style with a real AsyncAPI fixture and `toMatchSnapshot()`.
 
 ### 4.6 `packages/helpers` — `@asyncapi/generator-helpers`
 
-**Role:** zero-dependency CommonJS utilities over the Parser API (server/URL parsing, operation/message introspection, naming converters, test helpers).
+**Role:** A utility library that provides helper functions and utilities to simplify template development. It reduces boilerplate and speeds up template creation.
 
 **Conventions:**
 - CommonJS; no build step. `src/` is published directly via `main: src/index.js`.
-- All helpers are **synchronous and pure** (no I/O) except the testing utilities in `src/testing.js`. A helper that needs I/O probably belongs in `apps/generator`.
-- Every helper must have unit tests that exercise it with a real AsyncAPI fixture. Mocked Parser objects are a last resort and require a comment explaining why a fixture wasn't feasible.
-- Error handling: **throw `Error` with a descriptive message on invalid input** — that is always the default. Nullish returns (`null`/`undefined`) are reserved for documented optional lookups where absence is a legitimate, expected result the caller must handle (e.g. an optional field that may or may not exist on a message). When a helper returns nullish, the JSDoc `@returns` must say so and tests must cover both the present and absent branches. Never use nullish to signal invalid input — throw.
-- Naming helpers (`toSnakeCase`, `toCamelCase`, etc.) must be covered for Unicode and already-transformed input.
+- **Every exported helper needs a test.** Default to parsing a fixture from `test/__fixtures__/` and passing the real Parser object to the helper. Only hand-construct a Parser-shaped stand-in when no fixture can express the case (e.g. an empty channels map, a malformed document the parser would reject), and leave an inline comment in the test explaining *why* a fixture wasn't viable — stand-ins drift silently when `@asyncapi/parser` is upgraded.
 
-### 4.7 `packages/templates/clients/*` — client templates
+### 4.7 `packages/templates/*` — baked-in templates
 
-**Role:** per-protocol, per-language client library generators. Currently: `kafka/java/quarkus`, `websocket/{javascript,python,dart,java/quarkus}`.
-
-**Structure** (every client follows this):
-```text
-<client>/
-  template/       # JSX files that render each generated file (client.py.js, README.md.js, ...)
-  components/     # Language-specific React components (Constructor.js, Send.js, ...)
-  test/
-    components/   # Jest snapshot tests per component
-    __fixtures__/ # AsyncAPI YAML inputs
-    temp/         # Scratch output (rimraf'd)
-    <lang>/       # Acceptance tests in the target language (pytest, JUnit, Jest, ...)
-```
+**Role:** official AsyncAPI templates that are **developed, versioned, and shipped directly inside the `generator` repository and exposed with `@asyncapi/generator` library**.
 
 **Conventions:**
-- **Template-local component tests are conditional-only.** A template-local component (under `<client>/components/`) gets a dedicated snapshot test **only when it contains conditional rendering or variant logic** that needs explicit coverage (e.g. branches per server, query-param shape, or operation type). Purely presentational components are covered by the template's integration/acceptance tests — do not add snapshot tests for them just for coverage's sake. When snapshots *do* exist, they are authoritative: do not delete snapshot tests to silence diffs — regenerate them and justify the change in the PR.
-- **Shared protocol fixture for component tests.** Each protocol keeps a shared AsyncAPI fixture that exercises the full component surface — for WebSocket this is [`packages/templates/clients/websocket/test/__fixtures__/asyncapi-websocket-components.yml`](packages/templates/clients/websocket/test/__fixtures__/asyncapi-websocket-components.yml). Reuse this fixture for component tests in new WebSocket clients instead of authoring a one-off YAML; extend it (and update dependent snapshots) when a new component variant genuinely isn't representable by the existing spec.
-- **Acceptance tests gate "production".** A template without a Microcks-backed acceptance test is experimental. New templates are expected to start experimental and graduate.
-- Template files must render valid target-language syntax — reviewers should mentally lint the generated output (indentation, imports, naming) against the language's idiomatic style, not just JS conventions.
-- **Shared integration tests live under `packages/templates/clients/<protocol>/test/integration-test/`** and use common test helpers (`common-test.js`). Only add template-specific tests when the shared ones don't cover a feature. Every client must be registered in the protocol's `integration.test.js` `languageConfig` (template path, output path, expected client filename) — an unregistered client is not actually under integration coverage.
-- **Per-client test isolation (`TEST_CLIENT` env var).** Integration runs are scoped to a single client via `TEST_CLIENT=<client> jest`, orchestrated by per-client npm scripts (`test:<client>` / `test:<client>:update`). The aggregate `test` / `test:update` scripts run each client sequentially, never in one jest invocation. Three rules follow:
-  1. Every describe block must be wrapped by the `runTestSuiteForClient('<client>', () => { ... })` dispatcher so unrelated suites don't execute when `TEST_CLIENT` is set. Unwrapped describes leak into every run and re-introduce the cross-client pollution this setup exists to prevent.
-  2. `beforeAll` cleanup must scope to the targeted client's `testResultPath` (via `getConfig(process.env.TEST_CLIENT)`), not blanket-clean all clients — otherwise a single-client update wipes artefacts from clients that weren't run.
-  3. Snapshot files are per-client via a custom `snapshotResolver.js` that appends `.<client>` to the snapshot filename (`integration.test.js.<client>.snap`).  
-- **Adding a new client to integration tests** requires all four: (a) a `languageConfig` entry, (b) a `runTestSuiteForClient` describe wrapper, (c) `test:<client>` + `test:<client>:update` scripts chained into the root `test` / `test:update`, and (d) running `npm run test:<client>:update` once to generate the client's isolated snapshot. A PR missing any of these is incomplete.
+- The directory layout (`{type}/[protocol]/[target]/[stack]`), required files (`.ageneratorrc`, `package.json`), metadata normalization, the `core-template-*` package-name rule, and the "how to add a new template" flow — live in the [Baked-in Templates guide][baked-in-templates].
+- **Template-local component tests are conditional-only, and share one protocol fixture.** A component under `<client>/components/` gets a dedicated snapshot test **only when it has conditional rendering or variant logic** (per-server branches, query-param shape, operation-type switches); purely presentational components are covered by integration + acceptance tests. Each protocol keeps a single AsyncAPI fixture under `test/__fixtures__/` that exercises the full component surface — reuse it across clients of the same protocol and extend it (updating dependent snapshots) only when a new variant genuinely isn't expressible against the existing spec.
+- **Integration and acceptance tests are protocol-shared** Each protocol owns one integration suite (snapshot-driven, common helpers, per-client isolation) and one Microcks-based acceptance suite (language-native tests against a mocked server). For the full mechanics — per-client `TEST_CLIENT` scoping, snapshot layout, Microcks setup, and the checklist for onboarding a new client — see the [WebSocket test README][websocket-test-readme].
 
 ### 4.8 `apps/nunjucks-filters`
 

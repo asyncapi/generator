@@ -12,6 +12,9 @@ on:
     branches:
       - master
 
+permissions:
+  contents: read            # Just to limit GITHUB_TOKEN as we use GH_TOKEN only
+
 jobs:
   docs-gen:
     name: 'Generate docs and create PR'
@@ -22,6 +25,8 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - name: Determine what node version to use
         # This workflow is from our own org repo and safe to reference by 'master'.
         uses: asyncapi/.github/.github/actions/get-node-version-from-package-lock@master # //NOSONAR

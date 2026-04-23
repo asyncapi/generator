@@ -9,12 +9,9 @@ import { getMessageDiscriminatorsFromOperations } from '@asyncapi/generator-help
  * @returns {React.Element|null} Rendered initialization code or null.
  */
 export function ReceiveOperationsDiscriminators({ receiveOperations }) {
-  const hasOperations = Array.isArray(receiveOperations) && receiveOperations.length > 0;
-  if (!hasOperations) {
-    return null;
-  }
-
-  const operationDiscriminators = getMessageDiscriminatorsFromOperations(receiveOperations);
+  const operationDiscriminators = Array.isArray(receiveOperations) && receiveOperations.length > 0
+    ? getMessageDiscriminatorsFromOperations(receiveOperations)
+    : [];
   const serializedDiscriminators = JSON.stringify(operationDiscriminators);
 
   return (

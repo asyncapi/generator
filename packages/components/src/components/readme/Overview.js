@@ -1,14 +1,15 @@
 import { Text } from '@asyncapi/generator-react-sdk';
+import { missingInfo } from '../../utils/ErrorHandling';
 
 /**
- * Renders an overview section for a WebSocket client.
- * Displays the API description, version, and server URL.
+ * Renders an overview section for a WebSocket client. Displays the API description, version, and server URL.
  * 
  * @param {Object} props - Component props 
  * @param {Object} props.info - Info object from the AsyncAPI document.
  * @param {string} props.title - Title from the AsyncAPI document.
  * @param {string} props.serverUrl - ServerUrl from a specific server from the AsyncAPI document.
  * @returns {JSX.Element} A Text component that contains the Overview of a Websocket client.
+ * @throws {Error} When an info object is missing or invalid.
  * 
  * @example
  *  
@@ -44,6 +45,10 @@ import { Text } from '@asyncapi/generator-react-sdk';
  */
 
 export function Overview({ info, title, serverUrl }) {
+  if (!info || typeof info.version !== 'function') {
+    throw missingInfo();
+  }
+
   return (
     <Text newLines={2}>
       {`## Overview

@@ -1,5 +1,6 @@
 import { Text } from '@asyncapi/generator-react-sdk';
 import { toSnakeCase } from '@asyncapi/generator-helpers';
+import { unsupportedLanguage, invalidClientName, invalidOperation } from '../utils/ErrorHandling';
 
 /**
  * @typedef {'python' | 'javascript'} Language
@@ -28,7 +29,7 @@ const websocketSendOperationConfig = {
     const methodName = toSnakeCase(operation.id());
     const staticMethodName = `${methodName}_static`;
     return {
-      nonStaticMethod: `async def ${methodName}(self, message):
+      nonStaticMethod: `def ${methodName}(self, message):
     """
     Send a ${methodName} message using the WebSocket connection attached to this instance.
 
@@ -38,9 +39,9 @@ const websocketSendOperationConfig = {
     Raises:
         Exception: If sending fails or the socket is not connected.
     """
-    await self._send(message, self.ws_app)`,
+    self._send(message, self.ws_app)`,
       staticMethod: `@staticmethod
-async def ${staticMethodName}(message, socket):
+def ${staticMethodName}(message, socket):
     """
     Send a ${methodName} message using a provided WebSocket connection, without needing an instance.
 
@@ -51,7 +52,7 @@ async def ${staticMethodName}(message, socket):
     Raises:
         Exception: If sending fails or the socket is not connected.
     """
-    await ${clientName}._send(message, socket)`
+    ${clientName}._send(message, socket)`
     };
   },
   javascript: (operation, clientName) => {
@@ -116,14 +117,16 @@ static ${methodName}(message, socket, schemas) {
 };
 
 /**
- * Renders WebSocket send operation methods.
- * Generates both static and instance methods for sending messages through WebSocket connections.
+ * Renders WebSocket send operation methods. Generates both static and instance methods for sending messages through WebSocket connections.
  *
  * @param {Object} props - Component props.
  * @param {Language} props.language - The target programming language.
  * @param {Array<Object>} props.sendOperations - Array of send operations from AsyncAPI document.
  * @param {string} props.clientName - The name of the client class.
  * @returns {JSX.Element[]|null} Array of Text components for static and non-static WebSocket send operation methods, or null if no send operations are provided.
+ * @throws {Error} When the specified language is not supported.
+ * @throws {Error} When clientName is missing or invalid.
+ * @throws {Error} When operation is invalid or missing.
  * 
  * @example
  * import path from "path";
@@ -156,13 +159,26 @@ static ${methodName}(message, socket, schemas) {
 export function SendOperations({ language, sendOperations, clientName }) {
   if (!sendOperations || sendOperations.length === 0) {
     return null;
-  }  
+  }
+
+  const supportedLanguages = Object.keys(websocketSendOperationConfig);
+  
+  if (!supportedLanguages.includes(language)) {
+    throw unsupportedLanguage(language, supportedLanguages);
+  }
+
+  if (typeof clientName !== 'string' || clientName.trim() === '') {
+    throw invalidClientName(clientName);
+  }
 
   const generateSendOperationCode = websocketSendOperationConfig[language];
 
   return sendOperations.map((operation) => {
-    const { nonStaticMethod, staticMethod } = generateSendOperationCode(operation, clientName);
+    if (!operation || typeof operation.id !== 'function' || !operation.id()) {
+      throw invalidOperation();
+    }
 
+    const { nonStaticMethod, staticMethod } = generateSendOperationCode(operation, clientName);
     return (
       <>
         <Text indent={2} newLines={2}>

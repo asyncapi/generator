@@ -42,7 +42,8 @@ async function isGenerationConditionMet (
       return conditionalSubjectGeneration(
         asyncapiDocument,
         templateConfig,
-        matchedConditionPath
+        matchedConditionPath,
+        templateParams
       );
     }
     return conditionalParameterGeneration(templateConfig,matchedConditionPath,templateParams);
@@ -111,9 +112,7 @@ async function conditionalSubjectGeneration (
   const server = templateParams.server && asyncapiDocument.servers().get(templateParams.server);
   const source = jmespath.search({
     ...asyncapiDocument.json(),
-    ...{
-      server: server ? server.json() : undefined,
-    },
+    server: server ? server.json() : undefined,
   }, subject);
 
   if (!source) {
@@ -140,7 +139,6 @@ async function validateStatus(
   if (!validation) {
     return false; 
   }
- 
   const isValid = validation(argument);
 
   if (!isValid) {
@@ -151,7 +149,6 @@ async function validateStatus(
       // TODO: https://github.com/asyncapi/generator/issues/1553
       log.debug(logMessage.conditionalFilesMatched(matchedConditionPath));
     }
- 
     return false;
   }
   return true;

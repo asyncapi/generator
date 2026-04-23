@@ -5,10 +5,7 @@ import { getQueryParams } from '@asyncapi/generator-helpers';
 import { Requires } from '../../components/Requires.js';
 
 const parser = new Parser();
-const asyncapiFilePath = path.resolve(
-  __dirname,
-  '../../../../../../helpers/test/__fixtures__/asyncapi-websocket-query.yml'
-);
+const asyncapiFilePath = path.resolve(__dirname, '../../../test/__fixtures__/asyncapi-websocket-components.yml');
 
 describe('Requires component (integration with AsyncAPI document)', () => {
   let parsedAsyncAPIDocument;

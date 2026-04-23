@@ -14,12 +14,14 @@
   "scripts": {
     "test": "jest  --coverage",
     "test:update": "npm run test -- -u",
+    "test:integration": "npm --prefix ../../test/integration-test run test:java-quarkus",
+    "test:integration:update": "npm --prefix ../../test/integration-test run test:java-quarkus:update",
     "lint": "eslint --max-warnings 0 --config ../../../../../../.eslintrc --ignore-path ../../../../../../.eslintignore .",
     "lint:fix": "eslint --fix --max-warnings 0 --config ../../../../../../.eslintrc --ignore-path ../../../../../../.eslintignore ."
   },
   "dependencies": {
     "@asyncapi/generator-helpers": "1.1.0",
-    "@asyncapi/generator-components": "0.5.0",
+    "@asyncapi/generator-components": "0.6.0",
     "@asyncapi/generator-react-sdk": "^1.1.2"
   },
   "devDependencies": {
@@ -33,8 +35,7 @@
     "eslint": "^6.8.0",
     "eslint-plugin-jest": "^23.8.2",
     "eslint-plugin-react": "^7.34.1",
-    "eslint-plugin-sonarjs": "^0.5.0",
-    "jest-esm-transformer": "^1.0.0"
+    "eslint-plugin-sonarjs": "^0.5.0"
   },
   "babel": {
     "presets": [

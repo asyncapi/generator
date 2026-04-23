@@ -353,7 +353,7 @@ export function TopicFunction({ operations }) {
    * It requires operations from the parsed AsyncAPI v3 document.
    */
   function getTopicsFromOperations(operations) {
-    const receiveOperations = operations.filterByReceive();
+    const receiveOperations = operations.filterBySend();
     let topicsDetails = []
   
     receiveOperations.forEach((op) => {
@@ -390,7 +390,7 @@ export default function ({ asyncapi, params }) {
 `import org.eclipse.paho.client.mqttv3.*;
 
 public class Client {
-    private static final String BROKER_URL = "${server.host()}";
+    private static final String BROKER_URL = "tcp://${server.host()}";
     private static final String TOPIC = "temperature/changed";
 
     private MqttClient client;

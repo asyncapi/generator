@@ -7,8 +7,30 @@ info:
 servers:
   testServer:
     host: test.example.com
+    pathname: /ws
     protocol: wss
     description: Test WebSocket server
+  withHostDuplicatingProtocol:
+    host: wss://test.example.com
+    protocol: wss
+  withVariables:
+    host: test.example.com
+    protocol: wss
+    pathname: /ws/{symbol}
+    variables:
+      symbol:
+        description: The symbol to subscribe to.
+        enum:
+          - btcusd
+          - ethusd
+        default: btcusd
+  withPathname:
+    host: test.example.com
+    protocol: wss
+    pathname: /ws
+  withoutPathName:
+    host: test.example.com
+    protocol: wss
 
 channels:
   testChannel:
@@ -32,7 +54,29 @@ channels:
       testMessage:
         summary: Test message
         payload:
-          type: string
+          type: object
+          required:
+            - type
+          properties:
+            type:
+              type: string
+              description: Indicates the message type
+            content:
+              type: string
+      messageWithDiscriminator:
+        summary: Message with discriminator for operation routing
+        payload:
+          type: object
+          discriminator: messageType
+          required:
+            - messageType
+          properties:
+            messageType:
+              type: string
+              const: testMessageWithDiscriminator
+              description: Discriminator for routing
+            data:
+              type: string
 
 operations:
   sendMessage:
@@ -48,5 +92,22 @@ operations:
     channel:
       $ref: '#/channels/testChannel'
     summary: Send notification
+    messages:
+      - $ref: '#/channels/testChannel/messages/testMessage'
+  
+  receiveMessage:
+    action: receive
+    channel:
+      $ref: '#/channels/testChannel'
+    summary: Receive a message
+    messages:
+      - $ref: '#/channels/testChannel/messages/testMessage'
+      - $ref: '#/channels/testChannel/messages/messageWithDiscriminator'
+  
+  receiveNotification:
+    action: receive
+    channel:
+      $ref: '#/channels/testChannel'
+    summary: Receive notification
     messages:
       - $ref: '#/channels/testChannel/messages/testMessage'

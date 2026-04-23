@@ -1,5 +1,26 @@
 # @asyncapi/generator
 
+## 3.2.1
+
+### Patch Changes
+
+- 643f194: Fix browserslist error when using pnpm
+
+  Set BROWSERSLIST_ROOT_PATH environment variable during template compilation
+  to prevent browserslist from searching outside the template directory. This
+  fixes an issue where pnpm's shim files were incorrectly parsed as browserslist
+  configuration, causing "Unknown browser query" errors.
+
+  Fixes: https://github.com/asyncapi/cli/issues/1781
+
+## 3.2.0
+
+### Minor Changes
+
+- 8f06c14: Update @npmcli/arborist from v5.6 to v9.2
+  This is a large jump but there are no breaking changes that affect us across these versions
+  https://github.com/npm/cli/blob/latest/workspaces/arborist/CHANGELOG.md
+
 ## 3.1.2
 
 ### Patch Changes
@@ -276,7 +297,6 @@
       "@babel/core": "^7.26.0",
       "@babel/preset-env": "^7.26.0",
       "@babel/preset-react": "^7.25.9",
-      "jest-esm-transformer": "^1.0.0",
       "@asyncapi/generator": "*",
       "eslint": "^6.8.0",
       "eslint-plugin-jest": "^23.8.2",

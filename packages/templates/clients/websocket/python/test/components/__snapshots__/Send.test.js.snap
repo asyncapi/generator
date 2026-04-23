@@ -2,7 +2,7 @@
 
 exports[`Testing of Send component render Send component with send operations 1`] = `
 "@staticmethod
-  async def _send(message, socket):
+  def _send(message, socket):
       \\"\\"\\"
       Internal helper to handle the actual sending logic.
 
@@ -16,7 +16,7 @@ exports[`Testing of Send component render Send component with send operations 1`
       try:
           if isinstance(message, dict):
               message = json.dumps(message)
-          await socket.send(message)
+          socket.send(message)
       except Exception as e:
           print(\\"Error sending:\\", e)"
 `;

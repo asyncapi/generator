@@ -5,6 +5,7 @@ import { Installation } from './Installation';
 import { Usage } from './Usage';
 import { CoreMethods } from './CoreMethods';
 import { AvailableOperations } from './AvailableOperations';
+import { missingAsyncAPIDocument, invalidParams } from '../../utils/ErrorHandling';
 
 /**
  * @typedef {'python' | 'javascript' } Language
@@ -12,16 +13,14 @@ import { AvailableOperations } from './AvailableOperations';
  */
 
 /**
- * Renders a README.md file for a given AsyncAPI document.
- * 
- * Composes multiple sections (overview, installation, usage, core methods,
- * and available operations) into a single File component based on the
- * provided AsyncAPI document, generator parameters, and target language.
+ * Renders a README.md file for a given AsyncAPI document. Composes multiple sections (overview, installation, usage, core methods, and available operations) into a single File component based on the provided AsyncAPI document, generator parameters, and target language.
  * @param {Object} props - Component props
  * @param {AsyncAPIDocumentInterface} props.asyncapi - Parsed AsyncAPI document instance.
  * @param {Object} props.params - Generator parameters used to customize output 
  * @param {Language} props.language - Target language used to render language-specific sections.
  * @returns {JSX.Element} A File component representing the generated README.md.
+ * @throws {Error} When asyncapi is missing or invalid.
+ * @throws {Error} When params object is missing or invalid.
  * 
  * @example
  * import path from "path";
@@ -54,6 +53,14 @@ import { AvailableOperations } from './AvailableOperations';
  */
 
 export function Readme({ asyncapi, params, language }) {
+  if (!asyncapi) {
+    throw missingAsyncAPIDocument();
+  }
+
+  if (!params) {
+    throw invalidParams(params);
+  }
+
   const server = getServer(asyncapi.servers(), params.server);
   const info = getInfo(asyncapi);
   const clientName = getClientName(asyncapi, params.appendClientSuffix, params.customClientName);

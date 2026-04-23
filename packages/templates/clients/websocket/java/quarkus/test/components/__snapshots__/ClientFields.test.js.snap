@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ClientFields component (integration with AsyncAPI document) renders base fields with query param fields when queryParams has data from fixture 1`] = `
+"@Inject
+  public WebSocketClientConnection connection;
+
+  private static final Logger LOG = Logger.getLogger(WebSocketClient.class);
+
+
+  private HashMap<String, String> params;
+  private String heartbeat;
+  private String bids;
+  private String sessionId;"
+`;
+
+exports[`ClientFields component (integration with AsyncAPI document) renders base fields without query param fields when queryParams is empty Map 1`] = `
+"@Inject
+  public WebSocketClientConnection connection;
+
+  private static final Logger LOG = Logger.getLogger(WebSocketClient.class);"
+`;
+
+exports[`ClientFields component (integration with AsyncAPI document) renders base fields without query param fields when queryParams is null 1`] = `
+"@Inject
+  public WebSocketClientConnection connection;
+
+  private static final Logger LOG = Logger.getLogger(WebSocketClient.class);"
+`;
+
+exports[`ClientFields component (integration with AsyncAPI document) renders base fields without query param fields when queryParams is undefined 1`] = `
+"@Inject
+  public WebSocketClientConnection connection;
+
+  private static final Logger LOG = Logger.getLogger(WebSocketClient.class);"
+`;

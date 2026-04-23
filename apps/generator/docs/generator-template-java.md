@@ -61,8 +61,8 @@ Add the following code snippet to your package.json file:
     "version": "0.0.1",
     "description": "A template that generates a Java MQTT client using MQTT.",
     "generator": {
-      "apiVersion": "v1",
-      "generator": ">=1.10.0 <2.0.0",
+      "apiVersion": "v2",
+      "generator": ">=2.0.0 <3.0.0",
       "supportedProtocols": ["mqtt"]
     },
     "dependencies": {
@@ -286,8 +286,8 @@ In **package.json** define a script property that you invoke by calling `npm run
     "version": "0.0.1",
     "description": "A template that generates a Java MQTT client using MQTT.",
     "generator": {
-      "apiVersion": "v1",
-      "generator": ">=1.10.0 <2.0.0",
+      "apiVersion": "v2",
+      "generator": ">=2.0.0 <3.0.0",
       "supportedProtocols": ["mqtt"],
       "parameters": {
             "server": {
@@ -378,7 +378,7 @@ import { TopicFunction } from '../components/TopicFunction'
 
 export default function ({ asyncapi, params }) {
     // v3: Get receive operations instead of channels
-    const operations = asyncapi.operations().filterByReceive();  
+    const operations = asyncapi.operations();  
     const server = asyncapi.server(params.server);
     // Generate Java code for each topic dynamically using TopicFunction
     const topicMethods = TopicFunction({ operations });  // This will return Java methods as text
@@ -470,11 +470,11 @@ channels:
 
 operations:
   temperatureDrop:
-    action: send
+    action: receive
     channel:
       $ref: '#/channels/temperature~1dropped'
   temperatureRise:
-    action: send
+    action: receive
     channel:
       $ref: '#/channels/temperature~1risen'
 

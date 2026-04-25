@@ -16,12 +16,15 @@ jobs:
         uses: dorny/paths-filter@fbd0ab8f3e69293af611ebaee6363fc25e6d187d # v4.0.1 https://github.com/dorny/paths-filter/releases/tag/v4.0.1
         id: filter
         with:
-          predicate-quantifier: 'some'
+          predicate-quantifier: 'every'
           filters: |
             modified_files:
               - '!**/*.md'
               - '!.all-contributorsrc'
               - '!.coderabbit.yaml'
+              - '!CODEOWNERS'
+              - '!LICENSE'
+              - '!NOTICE'
       - name: Determine if tests should run
         id: should_run
         if: >

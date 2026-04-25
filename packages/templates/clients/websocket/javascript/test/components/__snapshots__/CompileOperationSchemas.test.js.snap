@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CompileOperationSchemas renders correctly with send operations 1`] = `
+exports[`CompileOperationSchemas component renders correctly with send operations from AsyncAPI doc 1`] = `
 "  /**
    * Initialize and compile all schemas for operations defined.
    * This should be called once after creating the client instance.

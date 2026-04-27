@@ -2,11 +2,11 @@
 
 This is a Monorepo managed using [Turborepo](https://turbo.build/) and contains the following package:
 
-1. [Generator](apps/generator): This is a tool that you can use to generate whatever you want basing on the AsyncAPI specification file as an input.
+1. [Generator](apps/generator): This is a tool that you can use to generate whatever you want based on the AsyncAPI specification file as an input.
 
 1. [Hooks](apps/hooks): Hooks are designed to let template developers hook into the template generation process. For example, one can create a hook code that will be automatically invoked right after the template generation process has ended.
 
-1. [React-sdk](apps/react-sdk): AsyncAPI React SDK is a set of components/functions to use React as render engine for the generator. This is the library that undestand components from Generator's templates that are configured to use `react` render engine. 
+1. [React-sdk](apps/react-sdk): AsyncAPI React SDK is a set of components/functions to use React as render engine for the generator. This is the library that understands components from Generator's templates that are configured to use `react` render engine. 
 
 1. [Generator-helpers](packages/helpers): A utility library that provides helper functions and utilities to simplify template development. It reduces boilerplate and speeds up template creation.
 
@@ -28,7 +28,7 @@ This is a Monorepo managed using [Turborepo](https://turbo.build/) and contains 
 
 ## Overview
 
-Generator is a tool that you can use to generate whatever you want basing on the AsyncAPI specification file as an input. For more information [read the docs](https://www.asyncapi.com/docs/tools/generator).
+Generator is a tool that you can use to generate whatever you want based on the AsyncAPI specification file as an input. For more information [read the docs](https://www.asyncapi.com/docs/tools/generator).
 
 There is a large number of templates that are ready to use and are officially supported by the AsyncAPI Initiative.
 
@@ -68,7 +68,7 @@ These hooks are included in the generator without adding any specific dependency
 
 ## Contributing
 
-For the development setup, you can follow the detailed guide in [Developement guide](Development.md)
+For the development setup, you can follow the detailed guide in [Development guide](Development.md)
 
 Read [CONTRIBUTING](CONTRIBUTING.md) guide.
 

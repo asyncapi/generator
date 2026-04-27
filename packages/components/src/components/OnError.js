@@ -1,4 +1,5 @@
 import { Text } from '@asyncapi/generator-react-sdk';
+import { unsupportedLanguage } from '../utils/ErrorHandling';
 
 /**
  * @typedef {'python' | 'javascript' | 'dart'} Language
@@ -54,6 +55,7 @@ const websocketOnErrorMethod = {
  * @param {Object} props - Component props.
  * @param {Language} props.language - The programming language for which to generate onError handler code.
  * @returns {JSX.Element} A Text component containing the onError handler code for the specified language.
+ * @throws {Error} When the specified language is not supported.
  * 
  * @example
  * import { OnError } from "@asyncapi/generator-components";
@@ -68,14 +70,17 @@ const websocketOnErrorMethod = {
  * renderOnError();
  */
 export function OnError({ language }) {
-  let onErrorMethod = '';
+  const supportedLanguages = Object.keys(websocketOnErrorMethod);
   
-  if (websocketOnErrorMethod[language]) {
-    const generateErrorCode = websocketOnErrorMethod[language];
-    const errorResult = generateErrorCode();
-    onErrorMethod = errorResult.onErrorMethod;
-  }
+  const generateErrorCode = websocketOnErrorMethod[language];
 
+  if (!generateErrorCode) {
+    throw unsupportedLanguage(language, supportedLanguages);
+  }
+  
+  const errorResult = generateErrorCode();
+  const { onErrorMethod } = errorResult;
+  
   return (
     <Text>
       {onErrorMethod}

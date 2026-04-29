@@ -465,7 +465,7 @@ const content = await Generator.getTemplateFile('@asyncapi/html-template', 'part
 
 ## listBakedInTemplates
 List core templates, optionally filter by type, stack, protocol, or target.
-Use name of returned templates as input for the `generate` method for template generation. Such core templates code is part of the @asyncapi/generator package.
+Use name of returned templates as input for the `generate` method for template generation. Such core templates code is part of the @asyncapi/Generator package.
 
 **Kind**: global variable  
 **Returns**: `Array.<Object>` - Array of template objects matching the filter.  

@@ -358,7 +358,7 @@ Launches the after-hook to perform additional actions after code generation.
 <a name="Generator+parseInput"></a>
 
 * generator.parseInput()** :
-Parse the generator input based on the template `templateConfig.apiVersion` value.
+Parse the Generator input based on the template `templateConfig.apiVersion` value.
 
 **Kind**: instance method of [`Generator`](#Generator)  
 

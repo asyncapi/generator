@@ -46,13 +46,22 @@ export async function transpileFiles(directory: string, outputDir: string, optio
                 })
             ],
         })
+        let jsxRuntimePath: string;
+
+        try {
+            // React 17+ (compatible with React 18+)
+            jsxRuntimePath = require.resolve('react/jsx-runtime');
+        } catch (err) {
+            // fallback：(old version of React (internal path))
+            jsxRuntimePath = require.resolve('react/cjs/react-jsx-runtime.production.min');
+        }
         await bundles.write({
             format: "commonjs",
             sourcemap: true,
             dir: outputDir,
             exports: "auto",
             paths: {
-              'react/jsx-runtime': require.resolve('react/cjs/react-jsx-runtime.production.min').replace(/\\/g, '/'),
+              'react/jsx-runtime': jsxRuntimePath.replace(/\\/g, '/'),
             },
             sanitizeFileName: false,
         })

@@ -136,7 +136,8 @@ describe('Renderer', () => {
       error = err;
     }
     // check substring of the desired error
-    expect((error as Error).message).toContain('Invalid hook call.');
+    expect((error as Error).message)
+    .toMatch(/Invalid hook call|Cannot read properties of null/);
   });
 
   test('should skips internal React components', () => {

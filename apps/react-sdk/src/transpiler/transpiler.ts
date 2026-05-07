@@ -46,13 +46,22 @@ export async function transpileFiles(directory: string, outputDir: string, optio
                 })
             ],
         })
+        let jsxRuntimePath: string;
+
+        try {
+            // React 17+ 官方入口（兼容 React 18+）
+            jsxRuntimePath = require.resolve('react/jsx-runtime');
+        } catch (err) {
+            // fallback：旧版本 React（内部路径）
+            jsxRuntimePath = require.resolve('react/cjs/react-jsx-runtime.production.min');
+        }
         await bundles.write({
             format: "commonjs",
             sourcemap: true,
             dir: outputDir,
             exports: "auto",
             paths: {
-              'react/jsx-runtime': require.resolve('react/cjs/react-jsx-runtime.production.min').replace(/\\/g, '/'),
+              'react/jsx-runtime': jsxRuntimePath.replace(/\\/g, '/'),
             },
             sanitizeFileName: false,
         })

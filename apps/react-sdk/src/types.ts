@@ -1,9 +1,10 @@
-import React from "react";
+import React, { PropsWithChildren } from "react";
 import { AsyncAPIDocumentInterface, OldAsyncAPIDocument as AsyncAPIDocument } from "@asyncapi/parser";
 
-export type PropsWithChildrenContent<P> = P & {
-  childrenContent?: string;
-}
+export type PropsWithChildrenContent<P> = 
+  PropsWithChildren<P> & {
+    childrenContent?: string;
+  };
 
 export type FC<P = {}> = FunctionComponent<P>;
 export type FunctionComponent<P = {}> = React.FunctionComponent<PropsWithChildrenContent<P>>;

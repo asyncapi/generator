@@ -118,6 +118,16 @@ function switchToUnixLinebreaks(str: string) {
   We need to replace this in snapshots with something that will be stable across developer environments.
 */
 function stripAbsolutePathToReactLib(str: string) {
-  const reactPath = require.resolve('react/cjs/react-jsx-runtime.production.min').replace(/\\/g, '/')
+  
+  let jsxRuntimePath: string;
+
+  try {
+    // React 17+ 官方入口（兼容 React 18+）
+    jsxRuntimePath = require.resolve('react/jsx-runtime');
+  } catch (err) {
+    // fallback：旧版本 React（内部路径）
+    jsxRuntimePath = require.resolve('react/cjs/react-jsx-runtime.production.min');
+  }
+  const reactPath = jsxRuntimePath.replace(/\\/g, '/')
   return str.replace(reactPath, "/full/path/to/react/cjs/react-jsx-runtime.production.min.js")
 }

@@ -16,6 +16,7 @@ reviews:
     ignore_usernames: [dependabot, asyncapi-bot]
   slop_detection:
     enabled: true
+    label: "AI-Spam"
   review_status: true
   commit_status: true
   changed_files_summary: true

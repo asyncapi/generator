@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CompileOperationSchemas component renders correctly with send operations from AsyncAPI doc 1`] = `
+"  /**
+   * Initialize and compile all schemas for operations defined.
+   * This should be called once after creating the client instance.
+   * Subsequent calls will be ignored if schemas are already compiled.
+   * 
+   * @returns {Promise<void>}
+   * @throws {Error} If schema compilation fails for any operation
+   */
+  async compileOperationSchemas() {
+    if (this.schemasCompiled) {
+      return;
+    }
+
+    try {
+      // Compile schemas for all send operations
+      for (const operationId of this.sendOperationsId) {
+        this.compiledSchemas[operationId] = await compileSchemasByOperationId(asyncapiFilepath, operationId);
+      }
+      this.schemasCompiled = true;
+      console.log('Schemas initialized successfully for operations:', this.sendOperationsId.join(', '));
+    } catch (error) {
+      console.error('Error initializing schemas:', error);
+      this.schemasCompiled = false;
+      if (error instanceof Error) {
+        error.message = \`Schema compilation failed: \${error.message}\`;
+        throw error;
+      } else {
+        throw new Error(\`Schema compilation failed: \${String(error)}\`);
+      }
+    }
+  }
+
+"
+`;

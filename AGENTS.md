@@ -144,8 +144,4 @@ Template development inside the generator is an experimental effort. All its arc
 - **Template-local component tests are conditional-only, and share one protocol fixture.** A component under `<client>/components/` gets a dedicated snapshot test **only when it has conditional rendering or variant logic** (per-server branches, query-param shape, operation-type switches); purely presentational components are covered by integration + acceptance tests. Each protocol keeps a single AsyncAPI fixture under `test/__fixtures__/` that exercises the full component surface — reuse it across clients of the same protocol and extend it (updating dependent snapshots) only when a new variant genuinely isn't expressible against the existing spec.
 - **Integration and acceptance tests are protocol-shared** Each protocol owns one integration suite (snapshot-driven, common helpers, per-client isolation) and one Microcks-based acceptance suite (language-native tests against a mocked server). For the full mechanics — per-client `TEST_CLIENT` scoping, snapshot layout, Microcks setup, and the checklist for onboarding a new client — see the [WebSocket test README][websocket-test-readme].
 
-### 4.8 `apps/nunjucks-filters`
-
-Treat as **frozen**. This predates the React template architecture. Do not add features; only accept changes that remove it or migrate away.
-
 ---

@@ -8,16 +8,16 @@ The monorepo contains tightly coupled packages that together form the AsyncAPI c
 
 ## Referenced documents
 
-The guidelines below cross-reference the following authoritative docs. If a path or URL changes, update it **here only** — all inline mentions use reference-style links that resolve to this section.
+The guidelines below cross-reference the following authoritative docs. If a path or URL changes, update it here **and** at each inline mention.
 
-[contributing-commits]: CONTRIBUTING.md#conventional-commits
-[development-release]: Development.md#release-process
-[packages-readme]: packages/README.md
-[hooks-guide]: apps/generator/docs/hooks.md
-[keeper-readme]: apps/keeper/README.md
-[react-sdk-readme]: apps/react-sdk/README.md
-[baked-in-templates]: apps/generator/docs/baked-in-templates.md
-[websocket-test-readme]: packages/templates/clients/websocket/test/README.md
+- [Conventional Commits](CONTRIBUTING.md#conventional-commits) — commit and PR title format rules
+- [Release process](Development.md#release-process) — changesets, release-triggering prefixes, full release flow
+- [Packages README](packages/README.md) — template architectural principles and assumptions
+- [Hooks guide](apps/generator/docs/hooks.md) — lifecycle hook order and signatures (`generate:before`, `generate:after`, `setFileTemplateName`)
+- [Keeper README](apps/keeper/README.md) — `@asyncapi/keeper` public API surface
+- [React SDK README](apps/react-sdk/README.md) — rendering architecture, restrictions, and component examples
+- [Baked-in Templates guide](apps/generator/docs/baked-in-templates.md) — directory layout, required files, package-name convention
+- [WebSocket test README](packages/templates/clients/websocket/test/README.md) — `TEST_CLIENT` scoping, snapshot layout, Microcks setup
 
 ---
 
@@ -51,7 +51,7 @@ Orchestration is Turborepo (`turbo.json`). Every package-level script (`test`, `
 Every package inherits the root `.eslintrc` — that file is the source of truth for lint rules. Package `lint` scripts must invoke the root config and ignore file via relative `--config` / `--ignore-path` flags — the exact number of `../` segments depends on the package's depth in the tree (e.g. `apps/*` uses `../../.eslintrc`; `packages/templates/clients/<protocol>/test/integration-test/` uses `../../../../../../.eslintrc`). Do not add a package-local `.eslintrc` to avoid the relative path.
 
 ### 2.3 Commits and PR titles
-See the [Conventional Commits section in `CONTRIBUTING.md`][contributing-commits].
+See the [Conventional Commits section in `CONTRIBUTING.md`](CONTRIBUTING.md#conventional-commits).
 
 ### 2.4 Documentation and comments
 
@@ -72,13 +72,13 @@ Required tags: `@param`, `@returns`, and `@throws` / `@async` where applicable.
 **Comments:** reserve comments for non-obvious *why*. In this codebase the comments that pay rent are **Parser-API quirks** and **AsyncAPI spec workarounds** — mark these with a `// Why:` prefix that cites the spec section or parser issue, so future cleanup passes can tell a load-bearing comment from a stale one.
 
 ### 2.5 Release hygiene
-Changesets, release-triggering prefixes, and the full release flow are documented in the [Release process section in `Development.md`][development-release]. Use that as the source of truth on review; flag PRs whose diffs suggest a release but ship no `.changeset/*.md`.
+Changesets, release-triggering prefixes, and the full release flow are documented in the [Release process section in `Development.md`](Development.md#release-process). Use that as the source of truth on review; flag PRs whose diffs suggest a release but ship no `.changeset/*.md`.
 
 ---
 
 ## 3. Cross-cutting architectural principles
 
-Template development inside the generator is an experimental effort. All its architectural principles and assumptions — spanning `packages/helpers`, `packages/components`, and `packages/templates/*` — live in [`packages/README.md`][packages-readme] under **"Assumptions and Principles"**.
+Template development inside the generator is an experimental effort. All its architectural principles and assumptions — spanning `packages/helpers`, `packages/components`, and `packages/templates/*` — live in [`packages/README.md`](packages/README.md) under **"Assumptions and Principles"**.
 
 ---
 
@@ -104,11 +104,11 @@ Template development inside the generator is an experimental effort. All its arc
 
 ### 4.2 `apps/hooks` — `@asyncapi/generator-hooks`
 
-**Role:** built-in generator lifecycle hooks (currently a `generate:after` hook that writes the source AsyncAPI doc alongside output). The generator also dispatches `generate:before` (after filter registration, before rendering) and `setFileTemplateName` (rename a file template's output just before write) — see the [Hooks guide][hooks-guide].
+**Role:** built-in generator lifecycle hooks (currently a `generate:after` hook that writes the source AsyncAPI doc alongside output). The generator also dispatches `generate:before` (after filter registration, before rendering) and `setFileTemplateName` (rename a file template's output just before write) — see the [Hooks guide](apps/generator/docs/hooks.md).
 
 ### 4.3 `apps/keeper` — `@asyncapi/keeper`
 
-**Role:** runtime message validator (AJV v8 + AsyncAPI Parser). Used by generated clients to validate inbound/outbound messages. Public API surface and behavior live in the [keeper README][keeper-readme] — keep it in sync with `src/index.js` on any signature change.
+**Role:** runtime message validator (AJV v8 + AsyncAPI Parser). Used by generated clients to validate inbound/outbound messages. Public API surface and behavior live in the [keeper README](apps/keeper/README.md) — keep it in sync with `src/index.js` on any signature change.
 
 **Conventions:**
 - **ES module source, Babel-transpiled to `lib/` (CJS) on publish.** Edit `src/*.js` only; `lib/*` is build output and must not be committed manually.
@@ -116,7 +116,7 @@ Template development inside the generator is an experimental effort. All its arc
 
 ### 4.4 `apps/react-sdk` — `@asyncapi/generator-react-sdk`
 
-**Role:** two-stage render engine used by `apps/generator`. A Rollup-based transpiler bundles each template directory to CJS, then a custom React reconciler walks the element tree and emits a plain string (with child output exposed to each component as `childrenContent`). Ships the `Text`, `Indent`, `File` primitives and the `render` entry point. For the architecture overview, restrictions, and rendering example see the [React SDK README][react-sdk-readme].
+**Role:** two-stage render engine used by `apps/generator`. A Rollup-based transpiler bundles each template directory to CJS, then a custom React reconciler walks the element tree and emits a plain string (with child output exposed to each component as `childrenContent`). Ships the `Text`, `Indent`, `File` primitives and the `render` entry point. For the architecture overview, restrictions, and rendering example see the [React SDK README](apps/react-sdk/README.md).
 
 ### 4.5 `packages/components` — `@asyncapi/generator-components`
 
@@ -140,8 +140,8 @@ Template development inside the generator is an experimental effort. All its arc
 **Role:** official AsyncAPI templates that are **developed, versioned, and shipped directly inside the `generator` repository and exposed with `@asyncapi/generator` library**.
 
 **Conventions:**
-- The directory layout (`{type}/[protocol]/[target]/[stack]`), required files (`.ageneratorrc`, `package.json`), metadata normalization, the `core-template-*` package-name rule, and the "how to add a new template" flow — live in the [Baked-in Templates guide][baked-in-templates].
+- The directory layout (`{type}/[protocol]/[target]/[stack]`), required files (`.ageneratorrc`, `package.json`), metadata normalization, the `core-template-*` package-name rule, and the "how to add a new template" flow — live in the [Baked-in Templates guide](apps/generator/docs/baked-in-templates.md).
 - **Template-local component tests are conditional-only, and share one protocol fixture.** A component under `<client>/components/` gets a dedicated snapshot test **only when it has conditional rendering or variant logic** (per-server branches, query-param shape, operation-type switches); purely presentational components are covered by integration + acceptance tests. Each protocol keeps a single AsyncAPI fixture under `test/__fixtures__/` that exercises the full component surface — reuse it across clients of the same protocol and extend it (updating dependent snapshots) only when a new variant genuinely isn't expressible against the existing spec.
-- **Integration and acceptance tests are protocol-shared** Each protocol owns one integration suite (snapshot-driven, common helpers, per-client isolation) and one Microcks-based acceptance suite (language-native tests against a mocked server). For the full mechanics — per-client `TEST_CLIENT` scoping, snapshot layout, Microcks setup, and the checklist for onboarding a new client — see the [WebSocket test README][websocket-test-readme].
+- **Integration and acceptance tests are protocol-shared** Each protocol owns one integration suite (snapshot-driven, common helpers, per-client isolation) and one Microcks-based acceptance suite (language-native tests against a mocked server). For the full mechanics — per-client `TEST_CLIENT` scoping, snapshot layout, Microcks setup, and the checklist for onboarding a new client — see the [WebSocket test README](packages/templates/clients/websocket/test/README.md).
 
 ---

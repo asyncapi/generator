@@ -12,7 +12,11 @@ reviews:
   auto_review:
     enabled: true
     auto_incremental_review: true
+    drafts: false
     ignore_usernames: [dependabot, asyncapi-bot]
+  slop_detection:
+    enabled: true
+    label: "AI-Spam"
   review_status: true
   commit_status: true
   changed_files_summary: true
@@ -29,6 +33,12 @@ reviews:
     github-checks:
       enabled: true
       timeout_ms: 900000  # Wait 15 min for checks to complete
+    eslint:
+      enabled: true
+    yamllint:
+      enabled: true
+    markdownlint:
+      enabled: true
 
 chat:
   auto_reply: false
@@ -43,6 +53,7 @@ knowledge_base:
     enabled: true
     filePatterns:
       # Add custom patterns here if you have other guideline files:
+      - "AGENT.md"
       - ".github/pr-review-checklist.md"
       - "Development.md"
       - "CONTRIBUTING.md"

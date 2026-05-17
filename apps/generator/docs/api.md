@@ -75,7 +75,7 @@ Instantiates a new Generator object.
     - [.noOverwriteGlobs] `Array.<String>` - List of globs to skip when regenerating the template.
     - [.disabledHooks] `Object.<String, (Boolean|String|Array.<String>)>` - Object with hooks to disable. The key is a hook type. If key has "true" value, then the generator skips all hooks from the given type. If the value associated with a key is a string with the name of a single hook, then the generator skips only this single hook name. If the value associated with a key is an array of strings, then the generator skips only hooks from the array.
     - [.output] `String` ` = 'fs'` - Type of output. Can be either 'fs' (default) or 'string'. Only available when entrypoint is set.
-    - [.forceWrite] `Boolean` ` = false` - Force writing of the generated files to given directory even if it is a git repo with unstaged files or not empty dir. Default is set to false.
+    - [.forceWrite] `Boolean` ` = false` - Force writing of the generated files to given directory even if it is a git repo with unstaged Files or not empty dir. Default is set to false.
     - [.install] `Boolean` ` = false` - Install the template and its dependencies, even when the template has already been installed.
     - [.debug] `Boolean` ` = false` - Enable more specific errors in the console. At the moment it only shows specific errors about filters. Keep in mind that as a result errors about template are less descriptive.
     - [.compile] `Boolean` ` = true` - Whether to compile the template or use the cached transpiled version provided by template in '__transpiled' folder

@@ -42,7 +42,7 @@ jobs:
         shell: bash
       - if: steps.should_run.outputs.shouldrun == 'true' 
         name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
       - if: steps.should_run.outputs.shouldrun == 'true' 
         name: Check if Node.js project and has package.json
         id: packagejson
@@ -57,7 +57,7 @@ jobs:
         id: lockversion
       - if: steps.packagejson.outputs.exists == 'true'
         name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e
         with:
           node-version: "${{ steps.lockversion.outputs.version }}"
       - if: steps.lockversion.outputs.version == '18' && matrix.os == 'windows-latest'

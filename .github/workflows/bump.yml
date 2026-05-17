@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
       - name: Bumping latest version of this package in other repositories
         uses: derberg/npm-dependency-manager-for-your-github-org@1eafd3bf3974f21d395c1abac855cb04b295d570 # using v6.-.- https://github.com/derberg/npm-dependency-manager-for-your-github-org/releases/tag/v6
         with:

@@ -14,13 +14,13 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
     steps:
       - name: Checkout main branch
-        uses: actions/checkout@v3
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
         with:
           ref: master
           path: current_state
 
       - name: Checkout one commit before last one
-        uses: actions/checkout@v3
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
         with:
           fetch-depth: 2
           ref: master
@@ -29,14 +29,14 @@ jobs:
       - run: cd previous_state && git checkout HEAD^
 
       - name: Checkout community repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
         with:
           repository: asyncapi/community
           token: ${{ env.GITHUB_TOKEN }}
           path: community
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e
         with:
           node-version: '16'
 
@@ -47,7 +47,7 @@ jobs:
         id: compare-codeowners
         env:
           GH_TOKEN: ${{ env.GITHUB_TOKEN }}
-        uses: actions/github-script@v6
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3
         with:
           script: |
             const fs = require('fs');

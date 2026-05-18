@@ -1,0 +1,69 @@
+name: Docs Preview Build (Netlify)
+
+on:
+  pull_request:
+    paths:
+      - 'apps/generator/docs/**'
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout generator PR
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+
+      - name: Checkout website repo
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          repository: asyncapi/website
+          path: website
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Sync docs into website
+        run: |
+          rm -rf website/markdown/docs/tools/generator/*
+          cp -R apps/generator/docs/* website/markdown/docs/tools/generator/
+          rm website/markdown/docs/tools/generator/README.md
+          rm -r website/markdown/docs/tools/generator/jsdoc2md-handlebars
+          printf "%s\ntitle: Generator\nweight: 3\n%s" "---" "---"> website/markdown/docs/tools/generator/_section.md
+
+      - name: Setup Node
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e
+
+      - name: Install deps
+        working-directory: website
+        run: |
+          npm ci
+
+      - name: Build website
+        working-directory: website
+        run: npm run build
+
+      # Stash the PR number so the deploy workflow knows where to comment.
+      - name: Save PR metadata
+        run: |
+          mkdir -p ./pr-meta
+          echo "${{ github.event.number }}" > ./pr-meta/pr-number.txt
+
+      - name: Upload built site
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: docs-preview-site
+          path: |
+            website/out
+            website/.next
+            website/public
+          if-no-files-found: warn
+          
+      - name: Upload PR metadata
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: docs-preview-pr-meta
+          path: ./pr-meta

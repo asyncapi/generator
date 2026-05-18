@@ -1,6 +1,6 @@
 ## @asyncapi/keeper
 
-AsyncAPI message payload validation library that validates messages against JSON Schema (Draft-07).
+AsyncAPI message payload validation library. Compiles message payload schemas with [AJV](https://ajv.js.org/) (v8) and validates runtime messages against them.
 
 ### Installation
 
@@ -10,109 +10,95 @@ npm install @asyncapi/keeper
 
 ### API
 
-#### `await compileSchemas(schemas)`
+#### `compileSchema(schema)`
 
-#### Parameters
+Synchronously compiles a single JSON Schema into a validator function.
 
-| Parameter | Type               | Description                                                                 | Required |
-|-----------|--------------------|-----------------------------------------------------------------------------|----------|
-| `schemas` | `Array<Object>`    | Array of JSON Schema Draft-07 objects representing valid message structures  | Yes      |
+| Parameter | Type     | Description                     | Required |
+|-----------|----------|---------------------------------|----------|
+| `schema`  | `object` | JSON Schema object to compile.  | Yes      |
 
-#### Returns
-`Promise<Array<function>>` — Array of compiled schema validator functions.
+**Returns** `function` — a compiled validator function.
+**Throws** if AJV cannot compile the schema.
+
+#### `compileSchemas(schemas)`
+
+Synchronously compiles an array of schemas.
+
+| Parameter | Type             | Description                                   | Required |
+|-----------|------------------|-----------------------------------------------|----------|
+| `schemas` | `Array<object>`  | Array of JSON Schema objects to compile.      | Yes      |
+
+**Returns** `Array<function>` — array of compiled validator functions.
+**Throws** if `schemas` is not an array, or if AJV cannot compile any schema.
 
 #### `await compileSchemasByOperationId(asyncapiFilepath, operationId)`
 
-#### Parameters
+Parses an AsyncAPI document from disk and compiles the payload schemas of every message belonging to the given operation.
 
-| Parameter           | Type         | Description                                                                                 | Required |
-|---------------------|--------------|---------------------------------------------------------------------------------------------|----------|
-| `asyncapiFilepath`  | `string`     | Path to the AsyncAPI document file.                                                         | Yes      |
-| `operationId`       | `string`     | The ID of the operation to extract message schemas from.                                    | Yes      |
+| Parameter          | Type     | Description                                                          | Required |
+|--------------------|----------|----------------------------------------------------------------------|----------|
+| `asyncapiFilepath` | `string` | Path to the AsyncAPI document file (YAML or JSON).                   | Yes      |
+| `operationId`      | `string` | Non-empty ID of the operation whose message payloads to compile.     | Yes      |
 
-#### Returns
-`Promise<Array<function>>` — Array of compiled schema validator functions for the operation's messages.
+**Returns** `Promise<Array<function>>` — compiled validators for the operation's messages. Messages without a payload are skipped; if the operation has no messages, an empty array is returned (with a console warning).
+**Throws** if `operationId` is not a non-empty string, if parsing the document fails, or if the operation is not found.
 
-#### `validateMessage(compiledSchemas, message)`
+#### `validateMessage(compiledSchema, message)`
 
-#### Parameters
+Validates a single message against one compiled validator.
 
-| Parameter        | Type               | Description                                                                 | Required |
-|------------------|--------------------|-----------------------------------------------------------------------------|----------|
-| `compiledSchemas`| `Array<function>`  | Array of compiled schema validator functions                                | Yes      |
-| `message`        | `any`              | The message payload to validate (any non-null value)                       | Yes      |
+| Parameter        | Type       | Description                                     | Required |
+|------------------|------------|-------------------------------------------------|----------|
+| `compiledSchema` | `function` | A validator returned by `compileSchema(s)`.     | Yes      |
+| `message`        | `any`      | The message payload to validate (not `undefined`). | Yes   |
 
-#### Returns
-`{ isValid: boolean, validationErrors?: Array<object> }` — Object containing validation result and errors if invalid.
+**Returns** `{ isValid: boolean, validationErrors?: Array<object> }`. On failure, `validationErrors` contains AJV's error objects.
+**Throws** if `message` is `undefined` or `compiledSchema` is not a function.
 
-#### `removeCompiledSchemas()`
-
-#### Returns
-`void` — Unregisters all currently registered schemas from the validator.
+To validate against an array of compiled schemas (e.g. the output of `compileSchemas` / `compileSchemasByOperationId`), call `validateMessage` per entry and combine the results as your use case requires.
 
 ### Usage
 
-#### Basic Schema Compilation and Validation
-
-```js 
-import { compileSchemas, validateMessage, removeCompiledSchemas } from '@asyncapi/keeper';
-
-// Example schemas (JSON Schema Draft-07 objects)
-const schemas = [
-  {
-    type: 'object',
-    properties: {
-      content: { type: 'string' },
-      timestamp: { type: 'string', format: 'date-time' }
-    },
-    required: ['content', 'timestamp'],
-    additionalProperties: false
-  },
-  {
-    type: 'object',
-    properties: {
-      content: { type: 'string' }
-    },
-    required: ['content'],
-    additionalProperties: false
-  }
-];
-
-// Compile schemas
-const compiledSchemas = await compileSchemas(schemas);
-
-// Validate messages
-const message1 = { content: 'Hello', timestamp: '2024-05-01T12:00:00Z' };
-const result1 = validateMessage(compiledSchemas, message1);
-console.log('Valid:', result1.isValid); // true
-console.log('Errors:', result1.validationErrors); // undefined
-
-const message2 = { content: 42 }; // Invalid: content should be string
-const result2 = validateMessage(compiledSchemas, message2);
-console.log('Valid:', result2.isValid); // false
-console.log('Errors:', result2.validationErrors); // Array of validation errors
-
-// Clean up
-removeCompiledSchemas();
-```
-
-#### Operation-Specific Validation
+#### Basic schema compilation and validation
 
 ```js
-import { compileSchemasByOperationId, validateMessage, removeCompiledSchemas } from '@asyncapi/keeper';
+import { compileSchema, validateMessage } from '@asyncapi/keeper';
+
+const schema = {
+  type: 'object',
+  properties: {
+    content: { type: 'string' },
+    timestamp: { type: 'string', format: 'date-time' }
+  },
+  required: ['content', 'timestamp'],
+  additionalProperties: false
+};
+
+const validator = compileSchema(schema);
+
+const result = validateMessage(validator, {
+  content: 'Hello',
+  timestamp: '2024-05-01T12:00:00Z'
+});
+console.log(result.isValid);         // true
+console.log(result.validationErrors); // undefined
+
+const bad = validateMessage(validator, { content: 42 });
+console.log(bad.isValid);            // false
+console.log(bad.validationErrors);   // [ { ...AJV error... }, ... ]
+```
+
+#### Operation-specific validation
+
+```js
+import { compileSchemasByOperationId, validateMessage } from '@asyncapi/keeper';
 import path from 'path';
 
-const asyncapiFilepath = path.resolve(__dirname, './asyncapi.yaml'); // Path to your AsyncAPI document
-const operationId = 'sendHelloMessage'; // The operationId to validate against
+const asyncapiFilepath = path.resolve(__dirname, './asyncapi.yaml');
+const validators = await compileSchemasByOperationId(asyncapiFilepath, 'sendHelloMessage');
 
-// Compile schemas for specific operation
-const compiledSchemas = await compileSchemasByOperationId(asyncapiFilepath, operationId);
-
-// Validate message against operation schemas
 const message = { content: 'Hello from operation' };
-const result = validateMessage(compiledSchemas, message);
-console.log('Valid for operation:', result.isValid); // true or false
-
-// Clean up
-removeCompiledSchemas();
+const anyMatch = validators.some(v => validateMessage(v, message).isValid);
+console.log('Valid for operation:', anyMatch);
 ```

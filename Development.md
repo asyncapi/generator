@@ -39,6 +39,8 @@ After cloning the repository, you should setup the fork properly and configure t
 npm install --workspaces
 ```
 
+**`CLAUDE.md` vs `AGENTS.md`:** The repo may ship `CLAUDE.md` as a symlink to `AGENTS.md` (one canonical guidelines file). After a clone, Linux and macOS usually need no extra step. On **Windows**, turn on **Developer Mode** (or equivalent symlink permission), run `git config core.symlinks true`, then `git checkout -- CLAUDE.md` so Git creates a real link—not a one-line text stub. Edit **`AGENTS.md`** only for content; the symlink follows automatically.
+
 ## Running tests
 
 ### Local testing

@@ -4,6 +4,7 @@
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
+const xfs = require('fs.extra');
 const { addHook, registerLocalHooks, registerConfigHooks, registerHooks } = require('../lib/hooksRegistry');
 
 describe('hooksRegistry', () => {
@@ -20,20 +21,28 @@ describe('hooksRegistry', () => {
 
   describe('registerHooks', () => {
     it('registers both local and config hooks', async () => {
-      // Create spies for fs methods used in the flow
-      const mkdirSpy = jest.spyOn(fs, 'mkdirSync').mockImplementation(() => undefined);
-      const writeFileSpy = jest.spyOn(fs, 'writeFileSync').mockImplementation(() => undefined);
-      const rmSpy = jest.spyOn(fs, 'rmSync').mockImplementation(() => undefined);
-      const joinSpy = jest.spyOn(path, 'join').mockImplementation((...args) => args.join('/'));
+      const templateDir = fs.mkdtempSync(path.join(os.tmpdir(), 'hooks-registry-'));
+      const hooksDir = path.join(templateDir, 'hooks');
+      const configModuleDir = path.join(templateDir, 'node_modules', '@asyncapi', 'hooks-module');
+      const walkSpy = jest.spyOn(xfs, 'walk');
+      const statSpy = jest.spyOn(fs.promises, 'stat').mockResolvedValue({});
+
+      const handlers = {};
+      const walker = {
+        on (event, handler) {
+          handlers[event] = handler;
+          return walker;
+        }
+      };
+
+      walkSpy.mockReturnValue(walker);
 
       try {
-        const templateDir = path.join(__dirname, 'fixtures', 'template');
-        const hooksDir = path.join(templateDir, 'hooks');
-        
         fs.mkdirSync(hooksDir, { recursive: true });
-        fs.writeFileSync(path.join(hooksDir, 'preGenerate.js'), `
-          module.exports = function localPreGenerateHook() {};
-        `);
+        fs.mkdirSync(configModuleDir, { recursive: true });
+
+        fs.writeFileSync(path.join(hooksDir, 'preGenerate.js'), 'module.exports = function localPreGenerateHook() {};');
+        fs.writeFileSync(path.join(configModuleDir, 'index.js'), 'module.exports = { preGenerate: [function configPreGenerateHook() {}] };');
 
         const templateConfig = {
           hooks: {
@@ -41,21 +50,18 @@ describe('hooksRegistry', () => {
           }
         };
 
-        jest.doMock('@asyncapi/hooks-module', () => ({
-          preGenerate: [function configPreGenerateHook() {}]
-        }), { virtual: true });
+        const registerPromise = registerHooks(hooks, templateConfig, templateDir, 'hooks');
 
-        await registerHooks(hooks, templateConfig, templateDir, 'hooks');
-        expect(Object.keys(hooks).length).toBeGreaterThan(0);
-        expect(mkdirSpy).toHaveBeenCalled();
-        expect(writeFileSpy).toHaveBeenCalled();
+        await new Promise(resolve => setImmediate(resolve));
+        handlers.end();
+
+        await registerPromise;
+
+        expect(hooks.preGenerate.map(hook => hook.name)).toEqual(expect.arrayContaining(['configPreGenerateHook']));
+        expect(xfs.walk).toHaveBeenCalledWith(hooksDir, { followLinks: false });
       } finally {
-        // Ensure cleanup happens regardless of success or failure
-        jest.dontMock('@asyncapi/hooks-module');
-        mkdirSpy.mockRestore();
-        writeFileSpy.mockRestore();
-        rmSpy.mockRestore();
-        joinSpy.mockRestore();
+        statSpy.mockRestore();
+        fs.rmSync(templateDir, { recursive: true, force: true });
       }
     });
   });

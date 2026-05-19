@@ -94,12 +94,13 @@ describe('hooksRegistry', () => {
         const templateDir = path.join(__dirname, 'fixtures', 'template');
         const templateConfig = {
           hooks: {
-            '@asyncapi/hooks-module': ['preGenerateHook']
+            '`@asyncapi/hooks-module`': ['preGenerateHook']
           }
         };
 
-        // Verify spies are used
+        await registerConfigHooks(hooks, templateDir, templateConfig);
         expect(joinSpy).toHaveBeenCalled();
+        expect(Object.keys(hooks).length).toBeGreaterThan(0);
       } finally {
         joinSpy.mockRestore();
       }

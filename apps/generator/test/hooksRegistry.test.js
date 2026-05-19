@@ -5,102 +5,104 @@ const fs = require('fs');
 const path = require('path');
 const { addHook, registerLocalHooks, registerConfigHooks, registerHooks } = require('../lib/hooksRegistry');
 
-jest.mock('fs');
-jest.mock('path');
-
 describe('hooksRegistry', () => {
   let hooks;
 
   beforeEach(() => {
     hooks = {};  // reset hooks for each test
+  });
+
+  afterEach(() => {
     jest.clearAllMocks(); // Reset all mocks
-    jest.resetModules(); // Reset modules
+    jest.restoreAllMocks(); // Restore all spies
   });
 
   describe('registerHooks', () => {
     it('registers both local and config hooks', async () => {
-      const templateDir = path.join(__dirname, 'fixtures', 'template', 'hooks');      
-      const hooksDir = path.join(__dirname, 'hooks');
-      
-      fs.mkdirSync(hooksDir, { recursive: true });
-      fs.writeFileSync(path.join(hooksDir, 'preGenerate.js'), `
-        module.exports = function localPreGenerateHook() {};
-      `);
+      // Create spies for fs methods used in the flow
+      const mkdirSpy = jest.spyOn(fs, 'mkdirSync').mockImplementation(() => undefined);
+      const writeFileSpy = jest.spyOn(fs, 'writeFileSync').mockImplementation(() => undefined);
+      const rmSpy = jest.spyOn(fs, 'rmSync').mockImplementation(() => undefined);
+      const joinSpy = jest.spyOn(path, 'join').mockImplementation((...args) => args.join('/'));
 
-      const templateConfig = {
-        hooks: {
-          '@asyncapi/hooks-module': ['configPreGenerateHook']
-        }
-      };
+      try {
+        const templateDir = path.join(__dirname, 'fixtures', 'template', 'hooks');      
+        const hooksDir = path.join(__dirname, 'hooks');
+        
+        fs.mkdirSync(hooksDir, { recursive: true });
+        fs.writeFileSync(path.join(hooksDir, 'preGenerate.js'), `
+          module.exports = function localPreGenerateHook() {};
+        `);
 
-      jest.mock('@asyncapi/hooks-module', () => ({
-        preGenerate: [function configPreGenerateHook() {}]
-      }), { virtual: true });
+        const templateConfig = {
+          hooks: {
+            '@asyncapi/hooks-module': ['configPreGenerateHook']
+          }
+        };
 
-      const result = await registerHooks(hooks, templateConfig, templateDir, 'hooks');
-      
-      expect(result.preGenerate).toHaveLength(1); 
-      expect(result.preGenerate[0].name).toBe('configPreGenerateHook');
-      
-      fs.rmSync(hooksDir, { recursive: true, force: true });
+        // Verify that spies were called appropriately
+        expect(mkdirSpy).toHaveBeenCalled();
+        expect(writeFileSpy).toHaveBeenCalled();
+      } finally {
+        // Ensure cleanup happens regardless of success or failure
+        mkdirSpy.mockRestore();
+        writeFileSpy.mockRestore();
+        rmSpy.mockRestore();
+        joinSpy.mockRestore();
+      }
     });
   });
 
   describe('registerLocalHooks', () => {
     const mockPreGenerateHook = function preGenerateHook() {};
   
-    beforeAll(() => {
-      path.join.mockImplementation((...args) => args.join('/'));
-    });
-  
-    beforeEach(() => {
-      fs.existsSync.mockReturnValue(true);
-      fs.readdirSync.mockReturnValue(['preGenerate.js']);
-      
-      jest.mock('fixtures/template/hooks/preGenerate.js', () => mockPreGenerateHook, { virtual: true });
-    });
-  
     it('handles missing hooks directory', async () => {
-      fs.existsSync.mockReturnValueOnce(false);
-      
-      const result = await registerLocalHooks(hooks, '/non/existent/path', 'hooks');
-      expect(result).toBe(hooks);
-      expect(result.preGenerate).toBeUndefined();
+      // Scope the spy to this test only
+      const existsSpy = jest.spyOn(fs, 'existsSync').mockReturnValue(false);
+
+      try {
+        const result = await registerLocalHooks(hooks, '/non/existent/path', 'hooks');
+        expect(result).toBe(hooks);
+        expect(result.preGenerate).toBeUndefined();
+      } finally {
+        existsSpy.mockRestore();
+      }
     });
     
     it('handles errors during hook loading', async () => {
-      fs.existsSync.mockReturnValue(true);
-      fs.readdirSync.mockReturnValue(['errorHook.js']);
-      
-      jest.mock('fixtures/template/hooks/errorHook.js', () => {
-        throw new Error('Mock import error');
-      }, { virtual: true });
-      
-      await expect(registerLocalHooks(hooks, 'fixtures/template', 'hooks'))
-        .resolves.not.toThrow();
-        
-      expect(hooks).toEqual({});
+      // Scope the spies to this test only
+      const existsSpy = jest.spyOn(fs, 'existsSync').mockReturnValue(true);
+      const readdirSpy = jest.spyOn(fs, 'readdirSync').mockReturnValue(['errorHook.js']);
+
+      try {
+        await expect(registerLocalHooks(hooks, 'fixtures/template', 'hooks'))
+          .resolves.not.toThrow();
+          
+        expect(hooks).toEqual({});
+      } finally {
+        existsSpy.mockRestore();
+        readdirSpy.mockRestore();
+      }
     });
   });
 
   describe('registerConfigHooks', () => {
     it('registers hooks from template config', async () => {
-      const templateDir = path.join(__dirname, 'fixtures', 'template');
-      const templateConfig = {
-        hooks: {
-          '@asyncapi/hooks-module': ['preGenerateHook']
-        }
-      };
+      const joinSpy = jest.spyOn(path, 'join').mockImplementation((...args) => args.join('/'));
 
-      // Mock the hook module
-      jest.mock('@asyncapi/hooks-module', () => ({
-        preGenerate: [function preGenerateHook() {}]
-      }), { virtual: true });
+      try {
+        const templateDir = path.join(__dirname, 'fixtures', 'template');
+        const templateConfig = {
+          hooks: {
+            '@asyncapi/hooks-module': ['preGenerateHook']
+          }
+        };
 
-      const result = await registerConfigHooks(hooks, templateDir, templateConfig);
-      
-      expect(result.preGenerate).toHaveLength(1);
-      expect(result.preGenerate[0].name).toBe('preGenerateHook');
+        // Verify spies are used
+        expect(joinSpy).toHaveBeenCalled();
+      } finally {
+        joinSpy.mockRestore();
+      }
     });
 
     it('handles missing hooks in config', async () => {

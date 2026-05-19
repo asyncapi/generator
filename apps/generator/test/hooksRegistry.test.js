@@ -94,7 +94,11 @@ describe('hooksRegistry', () => {
         const templateDir = path.join(__dirname, 'fixtures', 'template');
         const templateConfig = {
           hooks: {
+         const templateConfig = {
+           hooks: {
             '`@asyncapi/hooks-module`': ['preGenerateHook']
+           }
+         };
           }
         };
 

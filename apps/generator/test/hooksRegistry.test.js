@@ -76,7 +76,7 @@ describe('hooksRegistry', () => {
 
       try {
         await expect(registerLocalHooks(hooks, 'fixtures/template', 'hooks'))
-          .resolves.not.toThrow();
+          .resolves.toBe(hooks);
           
         expect(hooks).toEqual({});
       } finally {

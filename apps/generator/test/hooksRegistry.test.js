@@ -40,7 +40,8 @@ describe('hooksRegistry', () => {
           }
         };
 
-        // Verify that spies were called appropriately
+        await registerHooks(hooks, templateDir, templateConfig);
+        expect(Object.keys(hooks).length).toBeGreaterThan(0);
         expect(mkdirSpy).toHaveBeenCalled();
         expect(writeFileSpy).toHaveBeenCalled();
       } finally {

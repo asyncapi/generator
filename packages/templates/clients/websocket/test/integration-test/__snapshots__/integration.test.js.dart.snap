@@ -48,13 +48,7 @@ class HoppscotchClient {
         },
 
           onError: (error) {
-          if (_errorHandlers.isNotEmpty) {
-            for (var handler in _errorHandlers) {
-              handler(error);
-            }
-          } else {
-            print('WebSocket Error: $error');
-          }
+          _handleError(error);
         },
 
           onDone: () {
@@ -175,13 +169,7 @@ class HoppscotchEchoWebSocketClient {
         },
 
           onError: (error) {
-          if (_errorHandlers.isNotEmpty) {
-            for (var handler in _errorHandlers) {
-              handler(error);
-            }
-          } else {
-            print('WebSocket Error: $error');
-          }
+          _handleError(error);
         },
 
           onDone: () {
@@ -303,13 +291,7 @@ class PostmanEchoWebSocketClientClient {
         },
 
           onError: (error) {
-          if (_errorHandlers.isNotEmpty) {
-            for (var handler in _errorHandlers) {
-              handler(error);
-            }
-          } else {
-            print('WebSocket Error: $error');
-          }
+          _handleError(error);
         },
 
           onDone: () {

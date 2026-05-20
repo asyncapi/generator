@@ -2,13 +2,7 @@
 
 exports[`Testing of OnError function render dart OnError method 1`] = `
 "onError: (error) {
-        if (_errorHandlers.isNotEmpty) {
-          for (var handler in _errorHandlers) {
-            handler(error);
-          }
-        } else {
-          print('WebSocket Error: $error');
-        }
+        _handleError(error);
       },"
 `;
 

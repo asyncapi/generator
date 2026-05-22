@@ -8,10 +8,15 @@ on:
       - 'apps/generator/docs/*.md'
       - '.github/workflows/update-docs-in-website.yml'
 
+permissions: {}
+
 jobs:
   Make-PR:
     name: Make PR on website repository with updated latest generator documentation
     runs-on: ubuntu-latest
+    permissions:
+      contents: write       # push to asyncapi/website via PAT
+      pull-requests: write  # gh pr create
     env:
       GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
     steps:
@@ -19,21 +24,29 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           path: generator
+          persist-credentials: false # since this repo only used for reading docs
       - name: Checkout The Website repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           repository: asyncapi/website
           path: website
           token: ${{ env.GITHUB_TOKEN }}
+          persist-credentials: true  # needed for git push of the docs to the website repo
+
       - name: Config git
+        working-directory: ./website
         run: |
           git config --global user.name asyncapi-bot
           git config --global user.email info@asyncapi.io
+
       - name: Create branch
         working-directory: ./website
+        env:
+          SHA: ${{ github.sha }}
         run: |
-          git checkout -b update-generator-docs-${{ github.sha }}
-      - name: Copy generator folder from Current Repo to Another
+          git checkout -b "update-generator-docs-${SHA}"
+
+      - name: Copy generator folder to the website repo
         working-directory: ./website
         run: |
           rm -r ./markdown/docs/tools/generator
@@ -42,12 +55,14 @@ jobs:
           rm -r ../generator/apps/generator/docs/jsdoc2md-handlebars
           printf "%s\ntitle: Generator\nweight: 3\n%s" "---" "---"> ../generator/apps/generator/docs/_section.md
           mv ../generator/apps/generator/docs/*.md ./markdown/docs/tools/generator
+
       - name: Commit and push
         working-directory: ./website
         run: |
           git add .
           git commit -m "docs(generator): update latest generator docs"
-          git push https://${{ env.GITHUB_TOKEN }}@github.com/asyncapi/website
+          git push origin HEAD
+          
       - name: Create PR
         working-directory: ./website
         run: |

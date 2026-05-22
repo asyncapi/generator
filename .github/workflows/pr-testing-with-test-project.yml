@@ -4,14 +4,20 @@ name: Test using test project
 on:
   pull_request:
     types: [opened, reopened, synchronize, ready_for_review]
-
+# Revokes default permissions since all jobs only need read access.
+permissions: {}
 jobs:
   changes:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read        # checkout
+      pull-requests: read   # paths-filter reads PR diff
     outputs:
       should_test: ${{ steps.should_run.outputs.shouldrun }}
     steps:
-      - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3 https://github.com/actions/checkout/releases/tag/v3
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
       - name: Checks paths-filter
         uses: dorny/paths-filter@fbd0ab8f3e69293af611ebaee6363fc25e6d187d # v4.0.1 https://github.com/dorny/paths-filter/releases/tag/v4.0.1
         id: filter
@@ -38,7 +44,7 @@ jobs:
               startsWith(github.event.pull_request.title, 'ci: update of files from global .github repo') ||
                startsWith(github.event.pull_request.title, 'chore(release):')
             )) ||
-            (github.actor == 'allcontributors[bot]' &&
+            (github.actor == '46447321' &&
               startsWith(github.event.pull_request.title, 'docs: add')
             )
           )
@@ -52,10 +58,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
       - name: Log should_test value across jobs #it has to stay here for some time for debugging
+        env:
+          SHOULD_TEST: ${{ needs.changes.outputs.should_test }}
         run: |
-          echo "should_test value: ${{ needs.changes.outputs.should_test }}"
+          echo "should_test value: ${SHOULD_TEST}"
       - if: needs.changes.outputs.should_test == 'true'
         name: Run test
         run: NODE_VERSION=24 docker compose up --abort-on-container-exit --force-recreate
@@ -66,6 +76,8 @@ jobs:
     needs: changes
     name: Acceptance tests (${{ matrix.language }})
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
 
     strategy:
       fail-fast: false
@@ -74,16 +86,20 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3 https://github.com/actions/checkout/releases/tag/v3
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
 
       - name: Log should_test value across jobs #it has to stay here for some time for debugging
+        env:
+          SHOULD_TEST: ${{ needs.changes.outputs.should_test }}
         run: |
-          echo "should_test value: ${{ needs.changes.outputs.should_test }}"
+          echo "should_test value: ${SHOULD_TEST}"
 
       - name: Check package-lock version
         if: needs.changes.outputs.should_test == 'true'
         # This workflow is from our own org repo and safe to reference by 'master'.
-        uses: asyncapi/.github/.github/actions/get-node-version-from-package-lock@master
+        uses: asyncapi/.github/.github/actions/get-node-version-from-package-lock@5eef1c65d29fca4c6621146c5047649fec158355 # pinned to https://github.com/asyncapi/.github/commit/5eef1c65d29fca4c6621146c5047649fec158355
         id: lockversion
         with:
           node-version: ${{ vars.NODE_VERSION }}

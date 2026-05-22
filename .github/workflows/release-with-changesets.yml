@@ -13,6 +13,9 @@ on:
       - alpha
       - next
 
+# revoke default permissions 
+permissions: {} 
+
 jobs:
   test-nodejs:
     # We just check the message of the first commit as there is always just one commit because we squash into one before merging
@@ -27,6 +30,8 @@ jobs:
       startsWith( github.event.commits[0].message, 'feat!:' ))
     name: Test NodeJS release on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
+    permissions:
+      contents: read  # no write permissions needed for testing
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
@@ -38,6 +43,8 @@ jobs:
         shell: bash
       - name: Checkout repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
       - name: Check if Node.js project and has package.json
         id: packagejson
         run: test -e ./package.json && echo "exists=true" >> $GITHUB_OUTPUT || echo "exists=false" >> $GITHUB_OUTPUT
@@ -69,7 +76,7 @@ jobs:
         run: npm test --if-present
       - if: failure() # Only, on failure, send a message on the 94_bot-failing-ci slack channel
         name: Report workflow run status to Slack
-        uses: 8398a7/action-slack@v3
+        uses: rtCamp/action-slack-notify@e31e87e03dd19038e411e38ae27cbad084a90661 # v2.3.3
         with:
           status: ${{ job.status }}
           fields: repo,action,workflow
@@ -92,6 +99,8 @@ jobs:
           git config --global core.eol lf
       - name: Checkout repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
       - name: Check if Node.js project and has package.json
         id: packagejson
         run: test -e ./package.json && echo "exists=true" >> $GITHUB_OUTPUT || echo "exists=false" >> $GITHUB_OUTPUT
@@ -119,7 +128,7 @@ jobs:
       - if: steps.packagejson.outputs.exists == 'true'
         name: Publish to any of NPM, Github, and Docker Hub
         #this step has 2 goals, it is either identifying that there is changeset file created and then this action creates a PR with version bump that will trigger release - or if it sees there is no changeset, and there are versions changes in package.json files, it publish new versions to NPM is they are not there yet
-        uses: changesets/action@v1
+        uses: changesets/action@63a615b9cd06ba9a3e6d13796c7fbcb080a60a0b #v1.8.0
         id: release
         with:
           version: npx -p @changesets/cli@2.27.7 changeset version
@@ -135,7 +144,7 @@ jobs:
           GIT_COMMITTER_EMAIL: info@asyncapi.io
       - if: failure() # Only, on failure, send a message on the 94_bot-failing-ci Slack channel
         name: Report workflow run status to Slack
-        uses: 8398a7/action-slack@v3
+        uses: rtCamp/action-slack-notify@e31e87e03dd19038e411e38ae27cbad084a90661 # v2.3.3
         with:
           status: ${{ job.status }}
           fields: repo,action,workflow

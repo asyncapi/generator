@@ -15,7 +15,7 @@ const delayExit = 1000;
 
 /**
  * Configuration for WebSocket close method logic per language.
- * @type {Record<Language, { methodDocs?: string, methodLogic: string } | Record<string, { methodDocs?: string, methodLogic: string }>>}
+ * @type {Record<Language, { methodDocs: string | undefined, methodLogic: string }>}
  */
 const websocketCloseConfig = {
   python: {
@@ -80,7 +80,7 @@ print('WebSocket connection closed.');`
  * const postExecutionCode = "// Connection terminated";
  * const indent = 2;
  *
- * function renderCloseConnection() {
+ * function renderCloseConnections() {
  *   return (
  *     <CloseConnection 
  *        language={language}

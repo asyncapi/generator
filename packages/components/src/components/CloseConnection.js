@@ -80,7 +80,7 @@ print('WebSocket connection closed.');`
  * const postExecutionCode = "// Connection terminated";
  * const indent = 2;
  *
- * function renderCloseConnections() {
+ * function renderCloseConnection() {
  *   return (
  *     <CloseConnection 
  *        language={language}

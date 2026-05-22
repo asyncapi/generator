@@ -16,6 +16,9 @@ jobs:
     name: Post welcome message
     if: ${{ !contains(fromJson('["asyncapi-bot", "dependabot[bot]", "dependabot-preview[bot]", "allcontributors[bot]"]'), github.actor) }}
     runs-on: ubuntu-latest
+    permissions:
+      issues: write  # createComment on issues
+      pull_requests: write # createReview on PRs
     steps:
     - uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
       with:

@@ -51,7 +51,7 @@ jobs:
       - if: steps.packagejson.outputs.exists == 'true'
         name: Determine what node version to use
         # This workflow is from our own org repo and safe to reference by 'master'.
-        uses: asyncapi/.github/.github/actions/get-node-version-from-package-lock@master # //NOSONAR
+        uses: asyncapi/.github/.github/actions/get-node-version-from-package-lock@5eef1c65d29fca4c6621146c5047649fec158355 # pinned to https://github.com/asyncapi/.github/commit/5eef1c65d29fca4c6621146c5047649fec158355
         with:
           node-version: ${{ vars.NODE_VERSION }}
         id: lockversion

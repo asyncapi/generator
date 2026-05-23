@@ -1,5 +1,3 @@
-# Trusted half: runs from the BASE branch definition on workflow_run.
-# Has secrets, never checks out PR code, never runs PR scripts.
 name: Docs Preview Deploy (Netlify)
 
 on:
@@ -92,4 +90,3 @@ jobs:
             🚀 **Docs preview deployed**
             Below link points directly to the generator docs preview. May the force be with you!
             → ${{ steps.deploy.outputs.url }}/docs/tools/generator
-          comment-tag: netlify-docs-preview

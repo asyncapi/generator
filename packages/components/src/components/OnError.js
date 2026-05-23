@@ -37,13 +37,7 @@ const websocketOnErrorMethod = {
   dart: () => {
     return {
       onErrorMethod: `onError: (error) {
-        if (_errorHandlers.isNotEmpty) {
-          for (var handler in _errorHandlers) {
-            handler(error);
-          }
-        } else {
-          print('WebSocket Error: $error');
-        }
+        _handleError(error);
       },`
     };
   }

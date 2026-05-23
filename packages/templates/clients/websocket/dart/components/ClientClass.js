@@ -3,6 +3,7 @@ import { Constructor } from './Constructor';
 import { SendEchoMessage } from './SendEchoMessage';
 import { CloseConnection, RegisterMessageHandler, RegisterErrorHandler, Connect, HandleMessage } from '@asyncapi/generator-components';
 import { ClientFields } from './ClientFields';
+import { HandleError } from './HandleError';
 
 export function ClientClass({ clientName, serverUrl, title }) {
   return (
@@ -26,6 +27,7 @@ export function ClientClass({ clientName, serverUrl, title }) {
         methodName="_handleMessage"
         methodParams={['dynamic message', 'void Function(String) cb']}
       />
+      <HandleError />
       <SendEchoMessage />
       <CloseConnection language="dart" />
       <Text>

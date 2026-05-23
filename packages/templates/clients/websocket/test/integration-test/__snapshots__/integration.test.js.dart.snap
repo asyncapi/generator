@@ -48,13 +48,7 @@ class HoppscotchClient {
         },
 
           onError: (error) {
-          if (_errorHandlers.isNotEmpty) {
-            for (var handler in _errorHandlers) {
-              handler(error);
-            }
-          } else {
-            print('WebSocket Error: $error');
-          }
+          _handleError(error);
         },
 
           onDone: () {
@@ -82,6 +76,18 @@ class HoppscotchClient {
   /// Method to handle message with callback
   void _handleMessage(dynamic message, void Function(String) cb) {
     cb(message is String ? message : message.toString());
+  }
+
+  /// Pass the error to all registered error handlers.
+  /// A generic log message is printed if no handlers are registered.
+  void _handleError(Object error) {
+    if (_errorHandlers.isEmpty) {
+      print('Error occurred: $error');
+    } else {
+      for (final handler in _errorHandlers) {
+        handler(error);
+      }
+    }
   }
 
   /// Method to send an echo message to the server
@@ -163,13 +169,7 @@ class HoppscotchEchoWebSocketClient {
         },
 
           onError: (error) {
-          if (_errorHandlers.isNotEmpty) {
-            for (var handler in _errorHandlers) {
-              handler(error);
-            }
-          } else {
-            print('WebSocket Error: $error');
-          }
+          _handleError(error);
         },
 
           onDone: () {
@@ -197,6 +197,18 @@ class HoppscotchEchoWebSocketClient {
   /// Method to handle message with callback
   void _handleMessage(dynamic message, void Function(String) cb) {
     cb(message is String ? message : message.toString());
+  }
+
+  /// Pass the error to all registered error handlers.
+  /// A generic log message is printed if no handlers are registered.
+  void _handleError(Object error) {
+    if (_errorHandlers.isEmpty) {
+      print('Error occurred: $error');
+    } else {
+      for (final handler in _errorHandlers) {
+        handler(error);
+      }
+    }
   }
 
   /// Method to send an echo message to the server
@@ -279,13 +291,7 @@ class PostmanEchoWebSocketClientClient {
         },
 
           onError: (error) {
-          if (_errorHandlers.isNotEmpty) {
-            for (var handler in _errorHandlers) {
-              handler(error);
-            }
-          } else {
-            print('WebSocket Error: $error');
-          }
+          _handleError(error);
         },
 
           onDone: () {
@@ -313,6 +319,18 @@ class PostmanEchoWebSocketClientClient {
   /// Method to handle message with callback
   void _handleMessage(dynamic message, void Function(String) cb) {
     cb(message is String ? message : message.toString());
+  }
+
+  /// Pass the error to all registered error handlers.
+  /// A generic log message is printed if no handlers are registered.
+  void _handleError(Object error) {
+    if (_errorHandlers.isEmpty) {
+      print('Error occurred: $error');
+    } else {
+      for (final handler in _errorHandlers) {
+        handler(error);
+      }
+    }
   }
 
   /// Method to send an echo message to the server

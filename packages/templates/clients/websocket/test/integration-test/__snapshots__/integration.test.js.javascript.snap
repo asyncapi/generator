@@ -197,6 +197,7 @@ class HoppscotchClient {
     this.websocket = null;
     this.messageHandlers = [];
     this.errorHandlers = [];
+    this.outgoingProcessors = [];
     this.compiledSchemas = {};
     this.schemasCompiled = false;
     this.sendOperationsId = [\\"sendEchoMessage\\"];
@@ -262,6 +263,14 @@ class HoppscotchClient {
       this.errorHandlers.push(handler);
     } else {
       console.warn('Error handler must be a function');
+    }
+  }
+
+  registerOutgoingProcessor(processor) {
+    if (typeof processor === 'function') {
+      this.outgoingProcessors.push(processor);
+    } else {
+      console.warn('Outgoing processor must be a function');
     }
   }
 
@@ -568,6 +577,7 @@ class HoppscotchEchoWebSocketClient {
     this.websocket = null;
     this.messageHandlers = [];
     this.errorHandlers = [];
+    this.outgoingProcessors = [];
     this.compiledSchemas = {};
     this.schemasCompiled = false;
     this.sendOperationsId = [\\"sendEchoMessage\\"];
@@ -633,6 +643,14 @@ class HoppscotchEchoWebSocketClient {
       this.errorHandlers.push(handler);
     } else {
       console.warn('Error handler must be a function');
+    }
+  }
+
+  registerOutgoingProcessor(processor) {
+    if (typeof processor === 'function') {
+      this.outgoingProcessors.push(processor);
+    } else {
+      console.warn('Outgoing processor must be a function');
     }
   }
 
@@ -909,6 +927,7 @@ class PostmanEchoWebSocketClientClient {
     this.websocket = null;
     this.messageHandlers = [];
     this.errorHandlers = [];
+    this.outgoingProcessors = [];
     this.compiledSchemas = {};
     this.schemasCompiled = false;
     this.sendOperationsId = [\\"sendEchoMessage\\"];
@@ -974,6 +993,14 @@ class PostmanEchoWebSocketClientClient {
       this.errorHandlers.push(handler);
     } else {
       console.warn('Error handler must be a function');
+    }
+  }
+
+  registerOutgoingProcessor(processor) {
+    if (typeof processor === 'function') {
+      this.outgoingProcessors.push(processor);
+    } else {
+      console.warn('Outgoing processor must be a function');
     }
   }
 

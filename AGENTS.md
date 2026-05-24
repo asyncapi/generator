@@ -125,7 +125,7 @@ Template development inside the generator is an experimental effort. All its arc
 **Conventions:**
 - ES module JSX, Babel-transpiled to `lib/` on publish. Edit `src/`, never `lib/`.
 - A component belongs here when it is used by **two or more** language/protocol templates. Single-use components stay in the template's local `components/` directory.
-- **Every shared component must have its own tests.** Reuse means a regression here propagates across every template that depends on the component, so test coverage isn't optional. Tests are integration-style with a real AsyncAPI fixture and `toMatchSnapshot()`.
+- **Every shared component must have its own tests.** Reuse means a regression here propagates across every template that depends on the component, so test coverage isn't optional. Tests are snapshot-based (`toMatchSnapshot()`) and use a real AsyncAPI fixture from `test/__fixtures__/` **only when the component consumes parsed document data** (operations, servers, channels, schemas); purely prop-driven components like `HandleError`/`HandleMessage` pass props inline — no fixture needed.
 
 ### 4.6 `packages/helpers` — `@asyncapi/generator-helpers`
 

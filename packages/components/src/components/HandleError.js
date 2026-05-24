@@ -85,6 +85,8 @@ function resolveHandleErrorBlock(language, framework) {
  * @param {Language} props.language - Target programming language.
  * @param {string} [props.framework=''] - Framework discriminator (required for languages with multiple frameworks, e.g. `java` → `quarkus`).
  * @returns {JSX.Element} A `<Text>` block containing the rendered method.
+ * @throws {Error} When `language` is missing or not one of the supported languages for `HandleError` (code: `ERR_UNSUPPORTED_LANGUAGE`).
+ * @throws {Error} When `language` requires a framework discriminator and `framework` is missing or not supported for that language (e.g. `java` without `quarkus`) (code: `ERR_UNSUPPORTED_FRAMEWORK`).
  *
  * @example
  * import { HandleError } from '@asyncapi/generator-components';

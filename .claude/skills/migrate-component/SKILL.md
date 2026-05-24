@@ -6,7 +6,7 @@ allowed-tools: Bash, Read, Edit, Write, AskUserQuestion
 
 # Migrate Component to @asyncapi/generator-components
 
-You are migrating a duplicated React/JSX template-local component out of `packages/templates/clients/<protocol>/<lang>/components/` into the shared `packages/components/src/components/` package.
+You are migrating a duplicated React/JSX template-local component out of `packages/templates/clients/<protocol>/<lang>[/<framework>]/components/` (the `<framework>` segment is present for stack-specific templates like `java/quarkus`, omitted for single-stack languages like `python`) into the shared `packages/components/src/components/` package.
 
 ## Invocation
 
@@ -133,16 +133,16 @@ Output: `packages/components/test/components/__snapshots__/<Component>.test.js.s
 For each path in **"the template files"** (research step 1):
 
 - `git rm <path>`
-- If a sibling test exists at `packages/templates/clients/<protocol>/<lang>/test/components/<Component>.test.js`: `git rm` it and its `.snap`.
+- If a sibling test exists at `packages/templates/clients/<protocol>/<lang>[/<framework>]/test/components/<Component>.test.js` (same `<lang>[/<framework>]` segments as the source file — e.g. `java/quarkus/test/components/…`): `git rm` it and its `.snap`.
 
 Do **not** re-run `find` — the list from research step 1 is canonical.
 
 ### 6. Update each consuming template
 
-For each path in **"the template files"** (research step 1), find the file that imported it:
+For each path in **"the template files"** (research step 1), find the file that imported it. Scope the grep to that file's template root — the directory immediately above `components/`, which is `<lang>/` for single-stack languages or `<lang>/<framework>/` for stack-specific ones (e.g. `packages/templates/clients/websocket/python/` or `packages/templates/clients/websocket/java/quarkus/`):
 
 ```bash
-grep -rn "from './<Component>'" packages/templates/clients/<protocol>/<lang>/
+grep -rEn "from[[:space:]]*['\"]\\./<Component>['\"]" packages/templates/clients/<protocol>/<lang>[/<framework>]/
 ```
 
 In each match:

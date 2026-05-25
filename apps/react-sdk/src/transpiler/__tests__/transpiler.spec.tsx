@@ -118,6 +118,6 @@ function switchToUnixLinebreaks(str: string) {
   We need to replace this in snapshots with something that will be stable across developer environments.
 */
 function stripAbsolutePathToReactLib(str: string) {
-  const reactPath = require.resolve('react/cjs/react-jsx-runtime.production.min').replace(/\\/g, '/')
-  return str.replace(reactPath, "/full/path/to/react/cjs/react-jsx-runtime.production.min.js")
+  const reactPath = require.resolve('react/jsx-runtime').replace(/\\/g, '/')
+  return str.replace(reactPath, "/full/path/to/react/jsx-runtime.js")
 }

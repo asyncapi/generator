@@ -5,7 +5,7 @@ exports[`Transpiler should keep names of files, even if special chars with a sim
 
 require('source-map-support/register');
 var path = require('path');
-var jsxRuntime = require('/full/path/to/react/cjs/react-jsx-runtime.production.min.js');
+var jsxRuntime = require('/full/path/to/react/jsx-runtime.js');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -33,7 +33,7 @@ exports[`Transpiler should transpile CommonJS files with a simple setup and impo
 "'use strict';
 
 require('source-map-support/register');
-var jsxRuntime = require('/full/path/to/react/cjs/react-jsx-runtime.production.min.js');
+var jsxRuntime = require('/full/path/to/react/jsx-runtime.js');
 
 /* eslint-disable no-undef */
 const path = require('path');
@@ -62,7 +62,7 @@ exports[`Transpiler should transpile ES5 files with a simple setup and import co
 
 require('source-map-support/register');
 var path = require('path');
-var jsxRuntime = require('/full/path/to/react/cjs/react-jsx-runtime.production.min.js');
+var jsxRuntime = require('/full/path/to/react/jsx-runtime.js');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -93,7 +93,7 @@ exports[`Transpiler should transpile ES6 files with a simple setup and import co
 
 require('source-map-support/register');
 var path = require('path');
-var jsxRuntime = require('/full/path/to/react/cjs/react-jsx-runtime.production.min.js');
+var jsxRuntime = require('/full/path/to/react/jsx-runtime.js');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 

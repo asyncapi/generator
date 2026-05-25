@@ -51,6 +51,9 @@ describe('ConnectorFields component (integration with AsyncAPI document)', () =>
   });
 
   test('renders connector field with base URI config when queryParamsArray has data from fixture', () => {
+    expect(Array.isArray(queryParamsArray)).toBe(true);
+    expect(queryParamsArray.length).toBeGreaterThan(0);
+
     const result = render(
       <ConnectorFields
         clientName="WebSocketClient"

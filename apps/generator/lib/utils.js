@@ -69,7 +69,8 @@ utils.convertMapToObject = (map) => {
 utils.fetchSpec = async (link) => {
   const res = await fetch(link);
   if (!res.ok) {
-    throw new Error(`Failed to fetch AsyncAPI document from ${link}: HTTP ${res.status}${res.statusText ? ` ${res.statusText}` : ''}`);
+    const statusText = res.statusText ? ` ${res.statusText}` : '';
+    throw new Error(`Failed to fetch AsyncAPI document from ${link}: HTTP ${res.status}${statusText}`);
   }
   return res.text();
 };

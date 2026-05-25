@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ConnectorFields component (integration with AsyncAPI document) renders connector field with base URI config when queryParamsArray has data from fixture 1`] = `
+"@Inject
+  WebSocketConnector<WebSocketClient> connector;
+
+
+  @Inject
+  @ConfigProperty(name = \\"com.asyncapi.WebSocketClient.base-uri\\")
+  String baseURI;"
+`;
+
+exports[`ConnectorFields component (integration with AsyncAPI document) renders connector field without base URI config when queryParamsArray is empty array 1`] = `
+"@Inject
+  WebSocketConnector<WebSocketClient> connector;"
+`;
+
+exports[`ConnectorFields component (integration with AsyncAPI document) renders connector field without base URI config when queryParamsArray is null 1`] = `
+"@Inject
+  WebSocketConnector<WebSocketClient> connector;"
+`;
+
+exports[`ConnectorFields component (integration with AsyncAPI document) renders connector field without base URI config when queryParamsArray is undefined 1`] = `
+"@Inject
+  WebSocketConnector<WebSocketClient> connector;"
+`;

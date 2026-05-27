@@ -1,7 +1,7 @@
 /**
  * Extracts query parameters from all channels with WebSocket bindings.
  *
- * @param {Map<string,string>} channels - A Map representing all AsyncAPI channels.
+ * @param {Object} channels - An AsyncAPI channels collection object with isEmpty() and all() methods. 
  * @returns {Map<string, Map<string,string>>} A Map where keys are channel names and values are Maps of parameter names to their defaults (or `''`).
  *
  * @example
@@ -58,7 +58,7 @@ function getQueryParamsForAllChannels(channels) {
     }
 
     const properties = query.properties;
-    if (!properties || typeof properties !== 'object') {
+    if (!properties || typeof properties !== 'object' || Object.keys(properties).length === 0) {
       continue;
     }
 

@@ -6,6 +6,6 @@ describe('RegisterOutgoingProcessor component', () => {
     const result = await render(<RegisterOutgoingProcessor />);
     expect(result).toContain('registerOutgoingProcessor(processor)');
     expect(result).toContain('this.outgoingProcessors.push(processor)');
-    expect(result).toContain("console.warn('Outgoing processor must be a function')");
+    expect(result).toContain('console.warn(\'Outgoing processor must be a function\')');
   });
 });

@@ -87,6 +87,13 @@ describe('getQueryParamsForAllChannels integration test with AsyncAPI', () => {
     parsedAsyncAPIDocument = parseResult.document;
   });
 
+/**
+ * Filters document channels by name and returns extracted WS query params for all matching channels.
+ *
+ * @param {string[]} channelNames - Channel IDs to include.
+ * @returns {Map<string, Map<string, string>>} Map of channel name -> query param defaults.
+ * Returns an empty Map when no matching channels with WS query properties are found.
+ */
   const getFilteredAllChannelsParams = (channelNames) => {
     const channels = parsedAsyncAPIDocument.channels();
     const filteredMap = new Map();

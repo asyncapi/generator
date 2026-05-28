@@ -87,66 +87,73 @@ describe('getQueryParamsForAllChannels integration test with AsyncAPI', () => {
     parsedAsyncAPIDocument = parseResult.document;
   });
 
-  // Helper function to create filtered channels and get all query params
-  const getQueryParamsForAllChannelsFiltered = (channelNames) => {
+  const getFilteredAllChannelsParams = (channelNames) => {
     const channels = parsedAsyncAPIDocument.channels();
-    const filteredChannelsMap = createChannelsWithOnly(channelNames, channels);
+    const filteredMap = new Map();
+    for (const channel of channels.all()) {
+      if (channelNames.includes(channel.id())) {
+        filteredMap.set(channel.id(), channel);
+      }
+    }
     return getQueryParamsForAllChannels({
-      isEmpty: () => filteredChannelsMap.size === 0,
-      all: () => filteredChannelsMap
+      isEmpty: () => filteredMap.size === 0,
+      all: () => [...filteredMap.values()]
     });
   };
 
-  it('should extract query parameters from all channels with WS bindings', () => {
-    const channels = parsedAsyncAPIDocument.channels();
-    const allParams = getQueryParamsForAllChannels(channels);
+  it('should extract query parameters from marketDataV1 channel', () => {
+    const allParams = getFilteredAllChannelsParams(['marketDataV1']);
 
-    // Should return a Map with all channels that have WS bindings
-    expect(allParams).not.toBeNull();
-    expect(allParams.size).toBeGreaterThan(0);
-    
-    // Check that marketDataV1 channel exists and has correct params
-    expect(allParams.has('marketDataV1')).toBe(true);
-    expect(allParams.get('marketDataV1').get('heartbeat')).toBe('false');
-  });
-
-  it('should return empty map when no channels have WS bindings', () => {
-    const allParams = getQueryParamsForAllChannelsFiltered(['marketDataV1NoBinding', 'emptyChannel']);
-
-    expect(allParams).not.toBeNull();
-    expect(allParams.size).toBe(0); // Empty map, not null
-  });
-
-  it('should skip channels without WS bindings and only include those with WS bindings', () => {
-    // Mix of channels with and without WS bindings
-    const allParams = getQueryParamsForAllChannelsFiltered(['marketDataV1', 'marketDataV1NoBinding']);
-
-    // Should only include marketDataV1, not marketDataV1NoBinding
     expect(allParams.size).toBe(1);
     expect(allParams.has('marketDataV1')).toBe(true);
-    expect(allParams.has('marketDataV1NoBinding')).toBe(false);
+
+    const params = allParams.get('marketDataV1');
+    expect(params).toBeInstanceOf(Map);
+    expect(params.get('heartbeat')).toBe('false');
+    expect(params.get('top_of_book')).toBe('false');
+    expect(params.get('bids')).toBe('true');
+    expect(params.get('offers')).toBe('');
   });
 
-  it('should handle multiple channels with different query parameters', () => {
-    // Test with all channels that might have WS bindings
-    const channels = parsedAsyncAPIDocument.channels();
-    const allParams = getQueryParamsForAllChannels(channels);
+  it('should return empty map for channel without WebSocket binding', () => {
+    const allParams = getFilteredAllChannelsParams(['marketDataV1NoBinding']);
 
-    // Each channel in the result should have its own parameter map
-    for (const [channelName, params] of allParams.entries()) {
-      expect(params).toBeInstanceOf(Map);
-      expect(params.size).toBeGreaterThan(0);
-    }
+    expect(allParams.size).toBe(0);
   });
 
   it('should return empty map for empty channels', () => {
     const emptyChannels = {
       isEmpty: () => true,
-      all: () => new Map()
+      all: () => []
     };
     const allParams = getQueryParamsForAllChannels(emptyChannels);
 
-    expect(allParams).not.toBeNull();
     expect(allParams.size).toBe(0);
+  });
+
+  it('should return empty map for channel with empty binding', () => {
+    const allParams = getFilteredAllChannelsParams(['emptyChannel']);
+
+    expect(allParams.size).toBe(0);
+  });
+
+  it('should return empty map if WebSocket binding exists but has no query parameters', () => {
+    const allParams = getFilteredAllChannelsParams(['wsBindingNoQuery']);
+
+    expect(allParams.size).toBe(0);
+  });
+
+  it('should return empty map if WebSocket binding query exists but has no properties', () => {
+    const allParams = getFilteredAllChannelsParams(['wsBindingEmptyQuery']);
+
+    expect(allParams.size).toBe(0);
+  });
+
+  it('should skip channels without WS bindings and only include those with WS bindings', () => {
+    const allParams = getFilteredAllChannelsParams(['marketDataV1', 'marketDataV1NoBinding']);
+
+    expect(allParams.size).toBe(1);
+    expect(allParams.has('marketDataV1')).toBe(true);
+    expect(allParams.has('marketDataV1NoBinding')).toBe(false);
   });
 });

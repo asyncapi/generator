@@ -45,7 +45,8 @@ function getQueryParamsForAllChannels(channels) {
     return allChannelsParams;
   }
 
-  for (const [channelName, channel] of channels.all().entries()) {
+  for (const channel of channels.all()) {
+    const channelName = channel.id();
     const bindings = channel?.bindings?.();
     if (!bindings?.has('ws')) {
       continue;

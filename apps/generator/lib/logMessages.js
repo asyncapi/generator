@@ -54,6 +54,10 @@ function compileEnabled(dir, output_dir) {
   return `Transpilation of files ${dir} into ${output_dir} started.`;
 }
 
+function mappedRefOutsideBaseFolder(ref, baseFolder) {
+  return `Reference "${ref}" resolves to a location outside the mapped base folder "${baseFolder}" and was blocked to prevent path traversal.`;
+}
+
 module.exports = {
   TEMPLATE_INSTALL_FLAG_MSG,
   TEMPLATE_INSTALL_DISK_MSG,
@@ -69,5 +73,6 @@ module.exports = {
   conditionalGenerationMatched,
   conditionalFilesMatched,
   compileEnabled,
-  skipOverwrite
+  skipOverwrite,
+  mappedRefOutsideBaseFolder
 };

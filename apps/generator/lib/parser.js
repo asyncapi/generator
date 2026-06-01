@@ -1,4 +1,6 @@
 const fs = require('fs');
+const path = require('path');
+const logMessages = require('./logMessages');
 const { convertToOldAPI } = require('@asyncapi/parser');
 const { ConvertDocumentParserAPIVersion, NewParser } = require('@asyncapi/multi-parser');
 
@@ -102,8 +104,18 @@ function getMapBaseUrlToFolderResolvers({ url: baseUrl, folder: baseDir }) {
     canRead: true,
     read(uri) {
       return new Promise(((resolve, reject) => {
-        const path = uri.toString();
-        const localpath = path.replace(baseUrl, baseDir);
+        const uriStr = uri.toString();
+        const localpath = uriStr.replace(baseUrl, baseDir);
+        // Why: a $ref under the mapped baseUrl can contain `../` segments that the parser passes
+        // through unnormalized, letting the resolved file path escape baseDir (path traversal).
+        // Only guard refs that actually fall under baseUrl so unrelated http(s) refs keep their behavior.
+        if (uriStr.startsWith(baseUrl)) {
+          const resolvedBase = path.resolve(baseDir);
+          const resolvedTarget = path.resolve(localpath);
+          if (resolvedTarget !== resolvedBase && !resolvedTarget.startsWith(resolvedBase + path.sep)) {
+            return reject(new Error(logMessages.mappedRefOutsideBaseFolder(uriStr, resolvedBase)));
+          }
+        }
         try {
           fs.readFile(localpath, (err, data) => {
             if (err) {

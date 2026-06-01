@@ -202,4 +202,30 @@ describe('Parser', () => {
       expect(newOptions).toBeUndefined();
     });
   });
+
+  describe('mapBaseUrlToFolder resolver path traversal', () => {
+    const baseUrl = 'https://schema.example.com/crm/';
+    // Trailing slash mirrors how the option is configured in real usage (see integration.test.js)
+    const folder = `${path.resolve(__dirname, './docs')}/`;
+
+    function getHttpsResolver() {
+      const newOptions = convertOldOptionsToNew({}, { mapBaseUrlToFolder: { url: baseUrl, folder } });
+      return newOptions.__unstable.resolver.resolvers.find((r) => r.schema === 'https');
+    }
+
+    it('should reject a reference that escapes the mapped base folder', async () => {
+      const resolver = getHttpsResolver();
+      const maliciousUri = { toString: () => `${baseUrl}../../../etc/passwd` };
+
+      await expect(resolver.read(maliciousUri)).rejects.toThrow(/outside the mapped base folder/);
+    });
+
+    it('should resolve a reference that stays within the mapped base folder', async () => {
+      const resolver = getHttpsResolver();
+      const safeUri = { toString: () => `${baseUrl}shared.json` };
+
+      const data = await resolver.read(safeUri);
+      expect(data).toContain('Shared Customer Relationship Management models');
+    });
+  });
 });

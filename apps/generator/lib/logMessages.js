@@ -54,8 +54,10 @@ function compileEnabled(dir, output_dir) {
   return `Transpilation of files ${dir} into ${output_dir} started.`;
 }
 
-function mappedRefOutsideBaseFolder(ref, baseFolder) {
-  return `Reference "${ref}" resolves to a location outside the mapped base folder "${baseFolder}" and was blocked to prevent path traversal.`;
+function mappedRefOutsideBaseFolder(ref, mappingKey) {
+  // Why: never interpolate the resolved host filesystem path here — it leaks the internal
+  // directory layout. Reference the configured mapping key (the mapped base url) instead.
+  return `Reference "${ref}" resolves to a location outside the mapped base folder "${mappingKey}" and was blocked to prevent path traversal.`;
 }
 
 module.exports = {

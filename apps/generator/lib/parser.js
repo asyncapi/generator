@@ -113,7 +113,7 @@ function getMapBaseUrlToFolderResolvers({ url: baseUrl, folder: baseDir }) {
           const resolvedBase = path.resolve(baseDir);
           const resolvedTarget = path.resolve(localpath);
           if (resolvedTarget !== resolvedBase && !resolvedTarget.startsWith(resolvedBase + path.sep)) {
-            return reject(new Error(logMessages.mappedRefOutsideBaseFolder(uriStr, resolvedBase)));
+            return reject(new Error(logMessages.mappedRefOutsideBaseFolder(uriStr, baseUrl)));
           }
         }
         try {

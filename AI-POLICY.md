@@ -38,7 +38,7 @@ If a contribution was materially AI-assisted, you **must** disclose it:
 
 - **Pull requests:** include a `Generated-by:` line in the PR description naming the tool and its version, for example:
 
-  ```
+  ```text
   Generated-by: Claude Code 1.x
   Generated-by: GitHub Copilot
   ```

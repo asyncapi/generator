@@ -9,16 +9,30 @@ const usageConfig = {
   python: (clientName, clientFileName) => `
 from ${clientFileName.replace('.py', '')} import ${clientName}
 
+# raise_send_errors defaults to True: a failed send raises after the registered
+# error handlers run, so you can react to each failure. Pass
+# raise_send_errors=False to keep a high-throughput producer loop running and
+# rely on registered error handlers instead.
 ws_client = ${clientName}()
 
 async def main():
     await ws_client.connect()
-    # use ws_client to send/receive messages
+    try:
+        # use ws_client to send/receive messages
+        pass
+    except Exception as error:
+        # only reached when raise_send_errors is True (the default)
+        print("Send failed:", error)
     await ws_client.close()
 `,
 
   javascript: (clientName, clientFileName) => `
 const ${clientName} = require('./${clientFileName.replace('.js', '')}');
+
+// throwSendErrors defaults to true: a failed send re-throws after the registered
+// error handlers run, so you can react to each failure. Pass
+// new ${clientName}(undefined, false) to keep a high-throughput producer loop
+// running and rely on registered error handlers instead.
 const wsClient = new ${clientName}();
 
 async function main() {
@@ -27,7 +41,7 @@ async function main() {
     // use wsClient to send/receive messages
     await wsClient.close();
   } catch (error) {
-    console.error('Failed to connect:', error);
+    console.error('Failed to connect or send:', error);
   }
 }
 

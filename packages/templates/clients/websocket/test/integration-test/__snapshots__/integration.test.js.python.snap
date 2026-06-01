@@ -578,11 +578,20 @@ pip install -r requirements.txt
 \`\`\`python
 from client import SlackWebsocketAPIClient
 
+# raise_send_errors defaults to True: a failed send raises after the registered
+# error handlers run, so you can react to each failure. Pass
+# raise_send_errors=False to keep a high-throughput producer loop running and
+# rely on registered error handlers instead.
 ws_client = SlackWebsocketAPIClient()
 
 async def main():
     await ws_client.connect()
-    # use ws_client to send/receive messages
+    try:
+        # use ws_client to send/receive messages
+        pass
+    except Exception as error:
+        # only reached when raise_send_errors is True (the default)
+        print(\\"Send failed:\\", error)
     await ws_client.close()
 \`\`\`
 
@@ -1081,14 +1090,19 @@ import os
 from urllib.parse import urlencode
 class SlackWebsocketAPIClient:
 
-  def __init__(self, url: str = \\"wss://wss-primary.slack.com/link\\", ticket: str = None, app_id: str = None):
+  def __init__(self, url: str = \\"wss://wss-primary.slack.com/link\\", ticket: str = None, app_id: str = None, raise_send_errors: bool = True):
 
         \\"\\"\\"
         Constructor to initialize the WebSocket client.
 
         Args:
-            url (str, optional): The WebSocket server URL. Use it if the server URL is 
+            url (str, optional): The WebSocket server URL. Use it if the server URL is
             different from the default one taken from the AsyncAPI document.
+            raise_send_errors (bool, optional): Controls how the instance send_* methods
+            react to a send failure. When True (default) the error is re-raised after the
+            registered error handlers run, so the caller can handle each failure. When
+            False the error is suppressed after the handlers run, which keeps a
+            high-throughput producer loop going. Defaults to True.
  ticket (str, optional):If provided (or if TICKET environment variable is set), added as ?ticket=… to URL
  app_id (str, optional):If provided (or if APP_ID environment variable is set), added as ?app_id=… to URL
         \\"\\"\\"
@@ -1096,6 +1110,7 @@ class SlackWebsocketAPIClient:
         self.message_handlers = []      # Callables for incoming messages
         self.error_handlers = []        # Callables for errors
         self.outgoing_processors = []   # Callables to process outgoing messages
+        self.raise_send_errors = raise_send_errors  # Re-raise send failures after handlers run
         self._stop_event = threading.Event()
         params = {}
         self.receive_operation_handlers = {}
@@ -1385,11 +1400,20 @@ pip install -r requirements.txt
 \`\`\`python
 from client import HoppscotchClient
 
+# raise_send_errors defaults to True: a failed send raises after the registered
+# error handlers run, so you can react to each failure. Pass
+# raise_send_errors=False to keep a high-throughput producer loop running and
+# rely on registered error handlers instead.
 ws_client = HoppscotchClient()
 
 async def main():
     await ws_client.connect()
-    # use ws_client to send/receive messages
+    try:
+        # use ws_client to send/receive messages
+        pass
+    except Exception as error:
+        # only reached when raise_send_errors is True (the default)
+        print(\\"Send failed:\\", error)
     await ws_client.close()
 \`\`\`
 
@@ -1505,19 +1529,25 @@ import threading
 import websocket
 class HoppscotchClient:
 
-  def __init__(self, url: str = \\"wss://echo-websocket.hoppscotch.io\\"):
+  def __init__(self, url: str = \\"wss://echo-websocket.hoppscotch.io\\", raise_send_errors: bool = True):
 
         \\"\\"\\"
         Constructor to initialize the WebSocket client.
 
         Args:
-            url (str, optional): The WebSocket server URL. Use it if the server URL is 
+            url (str, optional): The WebSocket server URL. Use it if the server URL is
             different from the default one taken from the AsyncAPI document.
+            raise_send_errors (bool, optional): Controls how the instance send_* methods
+            react to a send failure. When True (default) the error is re-raised after the
+            registered error handlers run, so the caller can handle each failure. When
+            False the error is suppressed after the handlers run, which keeps a
+            high-throughput producer loop going. Defaults to True.
         \\"\\"\\"
         self.ws_app = None  # Instance of WebSocketApp
         self.message_handlers = []      # Callables for incoming messages
         self.error_handlers = []        # Callables for errors
         self.outgoing_processors = []   # Callables to process outgoing messages
+        self.raise_send_errors = raise_send_errors  # Re-raise send failures after handlers run
         self._stop_event = threading.Event()
       
         self.receive_operation_handlers = {}
@@ -1682,6 +1712,11 @@ class HoppscotchClient:
       \\"\\"\\"
       Send a send_echo_message message using a provided WebSocket connection, without needing an instance.
 
+      Being a static method it has no access to the instance error handlers or to
+      the raise_send_errors flag, so a send failure is always raised to the
+      caller. Use the instance method send_echo_message() if you want failures routed
+      through the registered error handlers.
+
       Args:
           message (dict or str): The message to send.
           socket (websockets.WebSocketCommonProtocol): The WebSocket to send through.
@@ -1695,32 +1730,54 @@ class HoppscotchClient:
       \\"\\"\\"
       Send a send_echo_message message using the WebSocket connection attached to this instance.
 
+      A send failure is always forwarded to every callback registered with
+      register_error_handler(). What happens next depends on the
+      raise_send_errors flag passed to the constructor (default: True):
+
+      - raise_send_errors=True  -- the exception is re-raised after the
+        handlers run, so the caller can react to each failure (retry,
+        dead-letter, abort the loop, ...). This is the safe default: failures
+        are never lost silently.
+      - raise_send_errors=False -- the exception is suppressed after the
+        handlers run, so a high-throughput producer loop keeps going and relies
+        on the registered error handlers for observability.
+
       Args:
           message (dict or str): The message to send. Will be serialized to JSON if it's a dictionary.
 
       Raises:
-          Exception: If sending fails or the socket is not connected.
+          Exception: If sending fails and raise_send_errors is True.
       \\"\\"\\"
-      self._send(message, self.ws_app)
+      try:
+          self._send(message, self.ws_app)
+      except Exception as e:
+          self.handle_error(e)
+          if self.raise_send_errors:
+              raise
 
   @staticmethod
   def _send(message, socket):
       \\"\\"\\"
-      Internal helper to handle the actual sending logic.
+      Internal helper that performs the actual send.
+
+      This is the low-level send primitive: it serializes the message if needed
+      and writes it to the socket. It does NOT swallow errors -- any failure is
+      propagated to the caller, which decides how to handle it (the instance
+      send_* methods route failures through the registered error handlers and
+      honour the raise_send_errors flag; the static send_*_static methods
+      let the exception propagate directly).
 
       Args:
-          message (dict or str): The message to send.
+          message (dict or str): The message to send. A dict is serialized to JSON.
           socket (websockets.WebSocketCommonProtocol): The WebSocket to send through.
 
-      Notes:
-          If message is a dictionary, it will be automatically converted to JSON.
+      Raises:
+          Exception: Propagates any error raised while serializing the message or
+              sending it (for example when the socket is not connected).
       \\"\\"\\"
-      try:
-          if isinstance(message, dict):
-              message = json.dumps(message)
-          socket.send(message)
-      except Exception as e:
-          print(\\"Error sending:\\", e)
+      if isinstance(message, dict):
+          message = json.dumps(message)
+      socket.send(message)
 
   def close(self) :
     \\"\\"\\"Cleanly close the WebSocket connection.\\"\\"\\"
@@ -1766,11 +1823,20 @@ pip install -r requirements.txt
 \`\`\`python
 from client import HoppscotchEchoWebSocketClient
 
+# raise_send_errors defaults to True: a failed send raises after the registered
+# error handlers run, so you can react to each failure. Pass
+# raise_send_errors=False to keep a high-throughput producer loop running and
+# rely on registered error handlers instead.
 ws_client = HoppscotchEchoWebSocketClient()
 
 async def main():
     await ws_client.connect()
-    # use ws_client to send/receive messages
+    try:
+        # use ws_client to send/receive messages
+        pass
+    except Exception as error:
+        # only reached when raise_send_errors is True (the default)
+        print(\\"Send failed:\\", error)
     await ws_client.close()
 \`\`\`
 
@@ -1886,19 +1952,25 @@ import threading
 import websocket
 class HoppscotchEchoWebSocketClient:
 
-  def __init__(self, url: str = \\"wss://echo-websocket.hoppscotch.io\\"):
+  def __init__(self, url: str = \\"wss://echo-websocket.hoppscotch.io\\", raise_send_errors: bool = True):
 
         \\"\\"\\"
         Constructor to initialize the WebSocket client.
 
         Args:
-            url (str, optional): The WebSocket server URL. Use it if the server URL is 
+            url (str, optional): The WebSocket server URL. Use it if the server URL is
             different from the default one taken from the AsyncAPI document.
+            raise_send_errors (bool, optional): Controls how the instance send_* methods
+            react to a send failure. When True (default) the error is re-raised after the
+            registered error handlers run, so the caller can handle each failure. When
+            False the error is suppressed after the handlers run, which keeps a
+            high-throughput producer loop going. Defaults to True.
         \\"\\"\\"
         self.ws_app = None  # Instance of WebSocketApp
         self.message_handlers = []      # Callables for incoming messages
         self.error_handlers = []        # Callables for errors
         self.outgoing_processors = []   # Callables to process outgoing messages
+        self.raise_send_errors = raise_send_errors  # Re-raise send failures after handlers run
         self._stop_event = threading.Event()
       
         self.receive_operation_handlers = {}
@@ -2063,6 +2135,11 @@ class HoppscotchEchoWebSocketClient:
       \\"\\"\\"
       Send a send_echo_message message using a provided WebSocket connection, without needing an instance.
 
+      Being a static method it has no access to the instance error handlers or to
+      the raise_send_errors flag, so a send failure is always raised to the
+      caller. Use the instance method send_echo_message() if you want failures routed
+      through the registered error handlers.
+
       Args:
           message (dict or str): The message to send.
           socket (websockets.WebSocketCommonProtocol): The WebSocket to send through.
@@ -2076,32 +2153,54 @@ class HoppscotchEchoWebSocketClient:
       \\"\\"\\"
       Send a send_echo_message message using the WebSocket connection attached to this instance.
 
+      A send failure is always forwarded to every callback registered with
+      register_error_handler(). What happens next depends on the
+      raise_send_errors flag passed to the constructor (default: True):
+
+      - raise_send_errors=True  -- the exception is re-raised after the
+        handlers run, so the caller can react to each failure (retry,
+        dead-letter, abort the loop, ...). This is the safe default: failures
+        are never lost silently.
+      - raise_send_errors=False -- the exception is suppressed after the
+        handlers run, so a high-throughput producer loop keeps going and relies
+        on the registered error handlers for observability.
+
       Args:
           message (dict or str): The message to send. Will be serialized to JSON if it's a dictionary.
 
       Raises:
-          Exception: If sending fails or the socket is not connected.
+          Exception: If sending fails and raise_send_errors is True.
       \\"\\"\\"
-      self._send(message, self.ws_app)
+      try:
+          self._send(message, self.ws_app)
+      except Exception as e:
+          self.handle_error(e)
+          if self.raise_send_errors:
+              raise
 
   @staticmethod
   def _send(message, socket):
       \\"\\"\\"
-      Internal helper to handle the actual sending logic.
+      Internal helper that performs the actual send.
+
+      This is the low-level send primitive: it serializes the message if needed
+      and writes it to the socket. It does NOT swallow errors -- any failure is
+      propagated to the caller, which decides how to handle it (the instance
+      send_* methods route failures through the registered error handlers and
+      honour the raise_send_errors flag; the static send_*_static methods
+      let the exception propagate directly).
 
       Args:
-          message (dict or str): The message to send.
+          message (dict or str): The message to send. A dict is serialized to JSON.
           socket (websockets.WebSocketCommonProtocol): The WebSocket to send through.
 
-      Notes:
-          If message is a dictionary, it will be automatically converted to JSON.
+      Raises:
+          Exception: Propagates any error raised while serializing the message or
+              sending it (for example when the socket is not connected).
       \\"\\"\\"
-      try:
-          if isinstance(message, dict):
-              message = json.dumps(message)
-          socket.send(message)
-      except Exception as e:
-          print(\\"Error sending:\\", e)
+      if isinstance(message, dict):
+          message = json.dumps(message)
+      socket.send(message)
 
   def close(self) :
     \\"\\"\\"Cleanly close the WebSocket connection.\\"\\"\\"
@@ -2146,11 +2245,20 @@ pip install -r requirements.txt
 \`\`\`python
 from client import PostmanEchoWebSocketClientClient
 
+# raise_send_errors defaults to True: a failed send raises after the registered
+# error handlers run, so you can react to each failure. Pass
+# raise_send_errors=False to keep a high-throughput producer loop running and
+# rely on registered error handlers instead.
 ws_client = PostmanEchoWebSocketClientClient()
 
 async def main():
     await ws_client.connect()
-    # use ws_client to send/receive messages
+    try:
+        # use ws_client to send/receive messages
+        pass
+    except Exception as error:
+        # only reached when raise_send_errors is True (the default)
+        print(\\"Send failed:\\", error)
     await ws_client.close()
 \`\`\`
 
@@ -2225,19 +2333,25 @@ import threading
 import websocket
 class PostmanEchoWebSocketClientClient:
 
-  def __init__(self, url: str = \\"wss://ws.postman-echo.com/raw\\"):
+  def __init__(self, url: str = \\"wss://ws.postman-echo.com/raw\\", raise_send_errors: bool = True):
 
         \\"\\"\\"
         Constructor to initialize the WebSocket client.
 
         Args:
-            url (str, optional): The WebSocket server URL. Use it if the server URL is 
+            url (str, optional): The WebSocket server URL. Use it if the server URL is
             different from the default one taken from the AsyncAPI document.
+            raise_send_errors (bool, optional): Controls how the instance send_* methods
+            react to a send failure. When True (default) the error is re-raised after the
+            registered error handlers run, so the caller can handle each failure. When
+            False the error is suppressed after the handlers run, which keeps a
+            high-throughput producer loop going. Defaults to True.
         \\"\\"\\"
         self.ws_app = None  # Instance of WebSocketApp
         self.message_handlers = []      # Callables for incoming messages
         self.error_handlers = []        # Callables for errors
         self.outgoing_processors = []   # Callables to process outgoing messages
+        self.raise_send_errors = raise_send_errors  # Re-raise send failures after handlers run
         self._stop_event = threading.Event()
       
         self.receive_operation_handlers = {}
@@ -2362,6 +2476,11 @@ class PostmanEchoWebSocketClientClient:
       \\"\\"\\"
       Send a send_echo_message message using a provided WebSocket connection, without needing an instance.
 
+      Being a static method it has no access to the instance error handlers or to
+      the raise_send_errors flag, so a send failure is always raised to the
+      caller. Use the instance method send_echo_message() if you want failures routed
+      through the registered error handlers.
+
       Args:
           message (dict or str): The message to send.
           socket (websockets.WebSocketCommonProtocol): The WebSocket to send through.
@@ -2375,32 +2494,54 @@ class PostmanEchoWebSocketClientClient:
       \\"\\"\\"
       Send a send_echo_message message using the WebSocket connection attached to this instance.
 
+      A send failure is always forwarded to every callback registered with
+      register_error_handler(). What happens next depends on the
+      raise_send_errors flag passed to the constructor (default: True):
+
+      - raise_send_errors=True  -- the exception is re-raised after the
+        handlers run, so the caller can react to each failure (retry,
+        dead-letter, abort the loop, ...). This is the safe default: failures
+        are never lost silently.
+      - raise_send_errors=False -- the exception is suppressed after the
+        handlers run, so a high-throughput producer loop keeps going and relies
+        on the registered error handlers for observability.
+
       Args:
           message (dict or str): The message to send. Will be serialized to JSON if it's a dictionary.
 
       Raises:
-          Exception: If sending fails or the socket is not connected.
+          Exception: If sending fails and raise_send_errors is True.
       \\"\\"\\"
-      self._send(message, self.ws_app)
+      try:
+          self._send(message, self.ws_app)
+      except Exception as e:
+          self.handle_error(e)
+          if self.raise_send_errors:
+              raise
 
   @staticmethod
   def _send(message, socket):
       \\"\\"\\"
-      Internal helper to handle the actual sending logic.
+      Internal helper that performs the actual send.
+
+      This is the low-level send primitive: it serializes the message if needed
+      and writes it to the socket. It does NOT swallow errors -- any failure is
+      propagated to the caller, which decides how to handle it (the instance
+      send_* methods route failures through the registered error handlers and
+      honour the raise_send_errors flag; the static send_*_static methods
+      let the exception propagate directly).
 
       Args:
-          message (dict or str): The message to send.
+          message (dict or str): The message to send. A dict is serialized to JSON.
           socket (websockets.WebSocketCommonProtocol): The WebSocket to send through.
 
-      Notes:
-          If message is a dictionary, it will be automatically converted to JSON.
+      Raises:
+          Exception: Propagates any error raised while serializing the message or
+              sending it (for example when the socket is not connected).
       \\"\\"\\"
-      try:
-          if isinstance(message, dict):
-              message = json.dumps(message)
-          socket.send(message)
-      except Exception as e:
-          print(\\"Error sending:\\", e)
+      if isinstance(message, dict):
+          message = json.dumps(message)
+      socket.send(message)
 
   def close(self) :
     \\"\\"\\"Cleanly close the WebSocket connection.\\"\\"\\"

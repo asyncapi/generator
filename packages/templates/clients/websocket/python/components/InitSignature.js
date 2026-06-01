@@ -4,21 +4,21 @@ export function InitSignature({ queryParams, serverUrl }) {
   if (!queryParams) {
     return (
       <Text indent={2} newLines={2}>
-        {`def __init__(self, url: str = "${serverUrl}"):`}
+        {`def __init__(self, url: str = "${serverUrl}", raise_send_errors: bool = True):`}
       </Text>
     );
   }
-  
+
   const queryParamsArguments = queryParams?.map((param) => {
     const paramName = param[0];
     const paramDefaultValue = param[1];
     const defaultValue = paramDefaultValue ? `"${paramDefaultValue}"` : 'None';
     return `${paramName}: str = ${defaultValue}`;
   }).join(', ');
-  
+
   return (
     <Text indent={2} newLines={2}>
-      {`def __init__(self, url: str = "${serverUrl}", ${queryParamsArguments}):`}
+      {`def __init__(self, url: str = "${serverUrl}", ${queryParamsArguments}, raise_send_errors: bool = True):`}
     </Text>
   );
 }

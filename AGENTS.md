@@ -74,6 +74,19 @@ Required tags: `@param`, `@returns`, and `@throws` / `@async` where applicable.
 ### 2.5 Release hygiene
 Changesets, release-triggering prefixes, and the full release flow are documented in the [Release process section in `Development.md`](Development.md#release-process). Use that as the source of truth on review; flag PRs whose diffs suggest a release but ship no `.changeset/*.md`.
 
+A changeset must name the **published** package a change ships through — not the directory you edited. `packages/templates/*` are `private` and unpublished, so they are **never** valid changeset targets; baked-in template changes reach users via `@asyncapi/generator`. Map changed files to the changeset package as:
+
+| Changed files | Changeset package(s) |
+|---|---|
+| `packages/templates/**` (private, baked-in) | `@asyncapi/generator` |
+| `apps/generator/**` | `@asyncapi/generator` |
+| `packages/components/**` | `@asyncapi/generator-components` |
+| `packages/helpers/**` | `@asyncapi/generator-helpers` |
+| `apps/keeper/**` | `@asyncapi/keeper` |
+| `apps/react-sdk/**` | `@asyncapi/generator-react-sdk` |
+
+A change spanning a shared package and a baked-in template (e.g. `packages/components` + `packages/templates`) needs **one** changeset naming both released packages (`@asyncapi/generator-components` + `@asyncapi/generator`).
+
 ---
 
 ## 3. Cross-cutting architectural principles

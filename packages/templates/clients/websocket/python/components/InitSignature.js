@@ -1,7 +1,7 @@
 import { Text } from '@asyncapi/generator-react-sdk';
 
 export function InitSignature({ queryParams, serverUrl }) {
-  if (!queryParams) {
+  if (!queryParams || queryParams.length === 0) {
     return (
       <Text indent={2} newLines={2}>
         {`def __init__(self, url: str = "${serverUrl}", raise_send_errors: bool = True):`}

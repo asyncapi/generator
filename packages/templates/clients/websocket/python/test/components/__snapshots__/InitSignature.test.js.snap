@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`InitSignature component (integration with AsyncAPI document) renders with empty query parameters array 1`] = `"def __init__(self, url: str = \\"wss://test.example.com/ws/{symbol}\\", , raise_send_errors: bool = True):"`;
+exports[`InitSignature component (integration with AsyncAPI document) renders with empty query parameters array 1`] = `"def __init__(self, url: str = \\"wss://test.example.com/ws/{symbol}\\", raise_send_errors: bool = True):"`;
 
 exports[`InitSignature component (integration with AsyncAPI document) renders with multiple query parameters with mixed default values 1`] = `"def __init__(self, url: str = \\"wss://test.example.com/ws/{symbol}\\", heartbeat: str = \\"false\\", bids: str = \\"true\\", sessionId: str = None, raise_send_errors: bool = True):"`;
 

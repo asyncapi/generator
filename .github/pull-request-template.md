@@ -13,3 +13,10 @@
 **Related issue(s)**
 <!-- If you refer to a particular issue, provide its number, othewise, remove this section.
 For example, `Resolves #123`, `Fixes #43`, or `See also #33`. The 3rd option will not automatically close the issue after the merge. -->
+
+**AI assistance**
+<!-- See our AI Usage Policy: https://github.com/asyncapi/generator/blob/master/AI-POLICY.md
+Check exactly one box. If this PR was materially AI-assisted, keep the Generated-by line and fill in the tool + version. -->
+
+- [ ] This PR was created with AI assistance — `Generated-by:` <!-- e.g. Generated-by: Claude Code 1.x -->
+- [ ] No AI assistance was used

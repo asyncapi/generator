@@ -13,6 +13,7 @@ We love your input! We want to make contributing to this project as easy and tra
 - [Issues](#issues)
 - [Bug Reports and Feature Requests](#bug-reports-and-feature-requests)
 - [Pull Requests](#pull-requests)
+- [AI-Assisted Contributions](#ai-assisted-contributions)
 - [Conventional Commits](#conventional-commits)
 - [Maintainer Roles](#maintainer-roles)
   - [Triager](#triager)
@@ -104,6 +105,14 @@ Please use our issues templates that provide you with hints on what information 
 ## Pull Requests
 
 **Please, make sure you open an issue before starting with a Pull Request, unless it's a typo or a really obvious error.** Pull requests are the best way to propose changes to the specification. Get familiar with our document that explains [Git workflow](https://github.com/asyncapi/community/blob/master/docs/010-contribution-guidelines/git-workflow.md) used in our repositories.
+
+## AI-Assisted Contributions
+
+You may use generative AI and AI-assisted tooling to help you contribute, but you remain the author of and are fully accountable for everything you submit. Before submitting AI-assisted work, review it thoroughly, verify it meets our standards, remove unrelated changes, and confirm it does not violate any licenses.
+
+If a contribution was materially AI-assisted, you **must** disclose it: add a `Generated-by: <tool + version>` line to your pull request description (the PR template includes a dedicated section), or check the "No AI assistance" box. A CI check verifies that one of the two is present.
+
+Read the full [AI Usage Policy](AI-POLICY.md) for details, including the functions that are off-limits for automation.
 
 ## Conventional Commits
 

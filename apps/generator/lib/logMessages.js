@@ -60,6 +60,10 @@ function mappedRefOutsideBaseFolder(ref, mappingKey) {
   return `Reference "${ref}" resolves to a location outside the mapped base folder "${mappingKey}" and was blocked to prevent path traversal.`;
 }
 
+function errorOpeningFile(filePath) {
+  return `Error opening file "${filePath}"`;
+}
+
 module.exports = {
   TEMPLATE_INSTALL_FLAG_MSG,
   TEMPLATE_INSTALL_DISK_MSG,
@@ -76,5 +80,6 @@ module.exports = {
   conditionalFilesMatched,
   compileEnabled,
   skipOverwrite,
-  mappedRefOutsideBaseFolder
+  mappedRefOutsideBaseFolder,
+  errorOpeningFile
 };

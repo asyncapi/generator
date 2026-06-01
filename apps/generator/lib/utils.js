@@ -17,6 +17,7 @@ const utils = module.exports;
 utils.lstat = util.promisify(fs.lstat);
 utils.readlink = util.promisify(fs.readlink);
 utils.readFile = util.promisify(fs.readFile);
+utils.realpath = util.promisify(fs.realpath);
 utils.writeFile = util.promisify(fs.writeFile);
 utils.copyFile = util.promisify(fs.copyFile);
 utils.readDir = util.promisify(fs.readdir);

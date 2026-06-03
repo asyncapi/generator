@@ -122,7 +122,7 @@ describe('Utils', () => {
       fetch.mockResolvedValueOnce({ ok: false, status: 404, statusText: 'Not Found' });
 
       await expect(utils.fetchSpec(specUrl)).rejects.toThrow(
-        `Failed to fetch AsyncAPI document from ${specUrl}: HTTP 404 Not Found`
+        logMessage.fetchSpecError(specUrl, 404, ' Not Found')
       );
     });
 
@@ -130,7 +130,7 @@ describe('Utils', () => {
       fetch.mockResolvedValueOnce({ ok: false, status: 500, statusText: 'Internal Server Error' });
 
       await expect(utils.fetchSpec(specUrl)).rejects.toThrow(
-        `Failed to fetch AsyncAPI document from ${specUrl}: HTTP 500 Internal Server Error`
+        logMessage.fetchSpecError(specUrl, 500, ' Internal Server Error')
       );
     });
 
@@ -138,7 +138,7 @@ describe('Utils', () => {
       fetch.mockResolvedValueOnce({ ok: false, status: 503, statusText: '' });
 
       await expect(utils.fetchSpec(specUrl)).rejects.toThrow(
-        `Failed to fetch AsyncAPI document from ${specUrl}: HTTP 503`
+        logMessage.fetchSpecError(specUrl, 503, '')
       );
     });
   });

@@ -70,7 +70,7 @@ utils.fetchSpec = async (link) => {
   const res = await fetch(link);
   if (!res.ok) {
     const statusText = res.statusText ? ` ${res.statusText}` : '';
-    throw new Error(`Failed to fetch AsyncAPI document from ${link}: HTTP ${res.status}${statusText}`);
+    throw new Error(logMessage.fetchSpecError(link, res.status, statusText));
   }
   return res.text();
 };

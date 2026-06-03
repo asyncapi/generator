@@ -5,6 +5,8 @@ on:
   release:
     types: 
       - published
+      
+permissions: {}
 
 jobs:
   version_bump:
@@ -12,22 +14,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           # target branch of release. More info https://docs.github.com/en/rest/reference/repos#releases
           # in case release is created from release branch then we need to checkout from given branch
           # if @semantic-release/github is used to publish, the minimum version is 7.2.0 for proper working
           ref: ${{ github.event.release.target_commitish }}
+          persist-credentials: false
+          
       - name: Check package-lock version
         # This workflow is from our own org repo and safe to reference by 'master'.
-        uses: asyncapi/.github/.github/actions/get-node-version-from-package-lock@master
+        uses: asyncapi/.github/.github/actions/get-node-version-from-package-lock@5eef1c65d29fca4c6621146c5047649fec158355 # pinned to https://github.com/asyncapi/.github/commit/5eef1c65d29fca4c6621146c5047649fec158355
         id: lockversion
         with:
           node-version: ${{ vars.NODE_VERSION }}
       - name: Setup Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
         with:
           node-version: "${{ steps.lockversion.outputs.version }}"
+          cache: ''   # disable default npm cache which prevents cache-poisoning on release artifacts
       - name: Install dependencies
         run: npm ci
       - name: Assets generation
@@ -44,7 +49,7 @@ jobs:
           branch: assets-update/${{github.event.release.tag_name}}
       - if: failure() # Only, on failure, send a message on the 94_bot-failing-ci slack channel
         name: Report workflow run status to Slack
-        uses: 8398a7/action-slack@v3
+        uses: rtCamp/action-slack-notify@e31e87e03dd19038e411e38ae27cbad084a90661 # v2.3.3
         with:
           status: ${{ job.status }}
           fields: repo,action,workflow

@@ -1,12 +1,13 @@
 ---
 name: migrate-component
-description: Promote a duplicated React/JSX template-local component into the shared @asyncapi/generator-components package. Use when the user asks to "migrate", "move", "promote", "extract", "share", or "consolidate" a component into generator-components (or shared components / the components package). Do not fire for unrelated React refactors or for moving code between apps/.
-allowed-tools: Bash, Read, Edit, Write, AskUserQuestion
+description: Promote a duplicated React/JSX template-local component into the shared @asyncapi/generator-components package. Use this skill whenever the user asks to "migrate", "move", "promote", "extract", "share", or "consolidate" a component into generator-components (or shared components / the components package). Also trigger for phrases like "it's used in multiple templates now, let's share it" or "avoid duplication across clients". Do not fire for unrelated React refactors or for moving code between apps/.
 ---
 
 # Migrate Component to @asyncapi/generator-components
 
 You are migrating a duplicated React/JSX template-local component out of `packages/templates/clients/<protocol>/<lang>[/<framework>]/components/` (the `<framework>` segment is present for stack-specific templates like `java/quarkus`, omitted for single-stack languages like `python`) into the shared `packages/components/src/components/` package.
+
+> **Important:** Always edit `src/` files. The `lib/` directory is generated at publish time by Babel — never edit files there.
 
 ## Invocation
 
@@ -16,11 +17,7 @@ The user has named the component to migrate, e.g. "migrate HandleError". If they
 
 ### 1. Two-template threshold check
 
-Run the following command to find the template files for this component:
-
-```bash
-find packages/templates/clients -type f -name "<Component>.js" -path "*/components/*"
-```
+Use the **Glob tool** with pattern `packages/templates/clients/**/components/<Component>.js` to find all template-local copies of this component.
 
 Decide based on the result count:
 
@@ -34,7 +31,7 @@ The 1-template case is the only judgment call — do not stop unilaterally; let 
 
 ### 2. No naming collision
 
-Run `test -f packages/components/src/components/<Component>.js` — if it exists, stop and report.
+Use the **Glob tool** with pattern `packages/components/src/components/<Component>.js` — if it returns a result, stop and report that the component already exists in the shared package.
 
 ## Research & design (produce the migration plan)
 
@@ -46,7 +43,7 @@ Before touching any files, work through these three steps in order. Each produce
 
 ### 1. Catalog the template files
 
-The output of precondition 1's `find` is the canonical list — call it **"the template files"** in subsequent steps. Every later step (read sources, delete files, update imports) refers back to these exact paths. Echo the list back to the user as a fenced block so it stays visible; do not re-run `find`.
+The Glob results from precondition 1 are the canonical list — call it **"the template files"** in subsequent steps. Every later step (read sources, delete files, update imports) refers back to these exact paths. Echo the list back to the user as a fenced block so it stays visible; do not re-run Glob.
 
 ### 2. Read every copy and tabulate
 
@@ -92,8 +89,8 @@ Python's consuming template then renders `<<Component> methodName='onMessage' me
 
 **Choose the abstraction shape** based on the table and signature:
 
-- **Method-shaped** — delegates to `MethodGenerator` with a `websocket<X>Config` map. Use when per-language differences are mostly method-body strings. See `packages/components/src/components/RegisterErrorHandler.js` or `HandleMessage.js`.
-- **Structural** — config object keyed by language returning indented `Text` blocks. Use when the rendering structure itself varies across languages. See `packages/components/src/components/QueryParamsVariables.js`.
+- **Method-shaped** — delegates to `MethodGenerator` with a `websocket<X>Config` map. Use when per-language differences are mostly method-body strings (the config object holds the language-specific logic; the component itself is thin). See `packages/components/src/components/RegisterErrorHandler.js`.
+- **Structural** — config object keyed by language returning `Text` code blocks. Use when the rendering structure itself varies across languages (different indentation, different block shapes, framework sub-keys). See `packages/components/src/components/QueryParamsVariables.js`.
 
 ## Execution steps
 
@@ -101,12 +98,12 @@ Execute strictly in this order; each step must succeed before the next.
 
 ### 1. Author the shared component
 
-Create `packages/components/src/components/<Component>.js` using **the signature and abstraction shape from research step 3**. 
+Create `packages/components/src/components/<Component>.js` using **the signature and abstraction shape from research step 3**.
 
-Two things the skill must enforce (everything else — named export, body code, imports, EOF newline — copy from the canonical example for your chosen shape):
+Two things to enforce (everything else — named export, body code, imports, EOF newline — copy from the canonical example for your chosen shape):
 
-- **JSDoc** — `@typedef` for the `Language` union, `@param` for **every prop in the research step 3 union** (matching required/optional/defaults exactly), `@returns {JSX.Element}`. This is what `jsdoc2md` publishes to `apps/generator/docs/api_components.md` in step 9; missing or malformed tags = empty diff there.
-- **Validate constrained props** — for `language`/`framework` (or any prop with a supported set), throw using helpers from `packages/components/src/utils/ErrorHandling.js` (e.g. `throw unsupportedLanguage(language, supportedList)`). See `QueryParamsVariables.js` for the pattern.
+- **JSDoc** — `@typedef` for the `Language` union, `@param` for **every prop in the research step 3 union** (matching required/optional/defaults exactly), `@returns {JSX.Element}`, and a `@example` block. This is what `jsdoc2md` publishes to `apps/generator/docs/api_components.md` in step 9; missing or malformed tags produce an empty diff there.
+- **Validate constrained props** — for `language`/`framework` (or any prop with a supported set), throw using helpers from `packages/components/src/utils/ErrorHandling.js`. Use `unsupportedLanguage(language, supportedList)` for the `language` prop; use `unsupportedFramework(language, framework, supportedList)` when the component also accepts a `framework` prop (e.g. `java/quarkus`). See `QueryParamsVariables.js` for the full pattern.
 
 ### 2. Export it
 
@@ -135,15 +132,11 @@ For each path in **"the template files"** (research step 1):
 - `git rm <path>`
 - If a sibling test exists at `packages/templates/clients/<protocol>/<lang>[/<framework>]/test/components/<Component>.test.js` (same `<lang>[/<framework>]` segments as the source file — e.g. `java/quarkus/test/components/…`): `git rm` it and its `.snap`.
 
-Do **not** re-run `find` — the list from research step 1 is canonical.
+Do **not** re-run Glob — the list from research step 1 is canonical.
 
 ### 6. Update each consuming template
 
-For each path in **"the template files"** (research step 1), find the file that imported it. Scope the grep to that file's template root — the directory immediately above `components/`, which is `<lang>/` for single-stack languages or `<lang>/<framework>/` for stack-specific ones (e.g. `packages/templates/clients/websocket/python/` or `packages/templates/clients/websocket/java/quarkus/`):
-
-```bash
-grep -rEn "from[[:space:]]*['\"]\\./<Component>['\"]" packages/templates/clients/<protocol>/<lang>[/<framework>]/
-```
+For each path in **"the template files"** (research step 1), find the file that imported it. Use the **Grep tool** with pattern `from './<Component>'` scoped to that file's template root — the directory immediately above `components/`, which is `<lang>/` for single-stack languages or `<lang>/<framework>/` for stack-specific ones (e.g. `packages/templates/clients/websocket/python/` or `packages/templates/clients/websocket/java/quarkus/`).
 
 In each match:
 
@@ -174,9 +167,10 @@ In each match:
 Run from the integration-test package — much faster than repo root since it skips the rest of the pipeline:
 
 ```bash
-cd packages/templates/clients/<protocol>/test/integration-test
-npm run test:update            # all clients; or per-client: npm run test:<lang>:update
+cd packages/templates/clients/<protocol>/test/integration-test && npm run test:update
 ```
+
+Or to update a single client: `cd packages/templates/clients/<protocol>/test/integration-test && npm run test:<lang>:update`
 
 Rebuilds `__snapshots__/integration.test.js.<lang>.snap` (one per client).
 
@@ -213,3 +207,4 @@ From repo root:
 - Canonical method-shaped example: `packages/components/src/components/RegisterErrorHandler.js`.
 - Canonical structural example: `packages/components/src/components/QueryParamsVariables.js`.
 - Test idioms: `packages/components/test/components/RegisterErrorHandler.test.js`.
+- Error handling utilities: `packages/components/src/utils/ErrorHandling.js`.

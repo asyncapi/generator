@@ -7,6 +7,12 @@ on:
 
 jobs:
   preview:
+    # Security: only run for PRs from the same repository (asyncapi/generator).
+    # Without this guard, a fork PR could checkout untrusted code with a
+    # write-scoped GITHUB_TOKEN and gain access to NETLIFY_AUTH_TOKEN,
+    # allowing arbitrary modification of the production docs site.
+    # See https://github.com/asyncapi/generator/issues/2097
+    if: github.event.pull_request.head.repo.full_name == 'asyncapi/generator'
     runs-on: ubuntu-latest
 
     steps:

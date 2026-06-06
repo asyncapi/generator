@@ -16,7 +16,7 @@ For example, `Resolves #123`, `Fixes #43`, or `See also #33`. The 3rd option wil
 
 **AI assistance**
 <!-- See our AI Usage Policy: https://github.com/asyncapi/generator/blob/master/AI-POLICY.md
-Check exactly one box. If this PR was materially AI-assisted, keep the Generated-by line and fill in the tool + version. -->
+Check exactly one box. If this PR was materially AI-assisted, keep the Generated-by line and fill in the tool + model version. -->
 
 - [ ] This PR was created with AI assistance — `Generated-by:` <!-- e.g. Generated-by: Claude Code 1.x -->
 - [ ] No AI assistance was used

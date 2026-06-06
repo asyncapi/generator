@@ -110,7 +110,7 @@ Please use our issues templates that provide you with hints on what information 
 
 You may use generative AI and AI-assisted tooling to help you contribute, but you remain the author of and are fully accountable for everything you submit. Before submitting AI-assisted work, review it thoroughly, verify it meets our standards, remove unrelated changes, and confirm it does not violate any licenses.
 
-If a contribution was materially AI-assisted, you **must** disclose it: add a `Generated-by: <tool + version>` line to your pull request description (the PR template includes a dedicated section), or check the "No AI assistance" box. A CI check verifies that one of the two is present.
+If a contribution was materially AI-assisted, you **must** disclose it: add a `Generated-by: <tool + model version>` line to your pull request description (the PR template includes a dedicated section), or check the "No AI assistance" box. A CI check verifies that one of the two is present.
 
 Read the full [AI Usage Policy](AI-POLICY.md) for details, including the functions that are off-limits for automation.
 

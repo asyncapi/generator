@@ -54,6 +54,10 @@ function compileEnabled(dir, output_dir) {
   return `Transpilation of files ${dir} into ${output_dir} started.`;
 }
 
+function fetchSpecError(link, status, statusText) {
+  return `Failed to fetch AsyncAPI document from ${link}: HTTP ${status}${statusText}`;
+}
+
 module.exports = {
   TEMPLATE_INSTALL_FLAG_MSG,
   TEMPLATE_INSTALL_DISK_MSG,
@@ -69,5 +73,6 @@ module.exports = {
   conditionalGenerationMatched,
   conditionalFilesMatched,
   compileEnabled,
-  skipOverwrite
+  skipOverwrite,
+  fetchSpecError
 };

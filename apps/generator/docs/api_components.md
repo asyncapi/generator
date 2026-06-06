@@ -21,6 +21,11 @@ weight: 77
   
   Renders a file header with metadata information such as title, version, protocol, host, and path.
 
+* [HandleError](#HandleError) ⇒ `JSX.Element`<br/>
+  
+  Renders the `handleError` (or framework-equivalent) method body that dispatches
+an error to registered handlers (or logs it when none are registered).
+
 * [HandleMessage](#HandleMessage) ⇒ `JSX.Element`<br/>
   
   Renders a WebSocket message handler method with optional pre- and post-execution logic.
@@ -296,6 +301,40 @@ async function renderFileHeader() {
 }
 
 renderFileHeader().catch(console.error);
+```
+
+
+
+<a name="HandleError"></a>
+### HandleError()
+Renders the &#x60;handleError&#x60; (or framework-equivalent) method body that dispatches
+an error to registered handlers (or logs it when none are registered).
+
+
+**Parameters**
+
+| Name | Type | Description |
+|------|------|-------------|
+| props | `Object` |  |
+| props.language | `Language` | Target programming language. |
+| props.framework | `string` | Framework discriminator (required for languages with multiple frameworks, e.g. &#x60;java&#x60; → &#x60;quarkus&#x60;). |
+
+
+
+**Returns**
+
+- `JSX.Element` - A &#x60;&lt;Text&gt;&#x60; block containing the rendered method.
+
+
+
+**Example**
+
+```js
+import { HandleError } from '@asyncapi/generator-components';
+
+function renderHandleError() {
+  return <HandleError language='python' />;
+}
 ```
 
 

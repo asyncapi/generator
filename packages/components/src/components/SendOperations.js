@@ -130,7 +130,7 @@ void ${methodName}(dynamic message) {
   }
   final payload = message is String ? message : jsonEncode(message);
   _channel!.sink.add(payload);
-  print('Sent message: \$payload');
+  print('Sent message: $payload');
 }`,
       staticMethod: ''
     };

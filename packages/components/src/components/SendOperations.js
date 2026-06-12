@@ -83,6 +83,7 @@ def ${staticMethodName}(message, socket):
       nonStaticMethod: `/**
  * Instance method version of ${methodName} that uses the client's own WebSocket connection.
  * Automatically compiles schemas if not already compiled.
+ * Runs any registered outgoing processors on the message before sending.
  *
  * On a send failure the error is forwarded to every callback registered with
  * registerErrorHandler() (or logged if none is registered), then re-thrown unless the
@@ -100,9 +101,13 @@ async ${methodName}(message){
     throw new Error('WebSocket connection not established. Call connect() first.');
   }
   await this.compileOperationSchemas();
+  let processedMessage = message;
+  for (const processor of this.outgoingProcessors) {
+    processedMessage = processor(processedMessage) ?? processedMessage;
+  }
   const schemas = this.compiledSchemas['${methodName}'];
   try {
-    return ${clientName}.${methodName}(message, this.websocket, schemas);
+    return ${clientName}.${methodName}(processedMessage, this.websocket, schemas);
   } catch (error) {
     if (this.errorHandlers.length > 0) {
       this.errorHandlers.forEach(handler => handler(error));

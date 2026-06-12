@@ -20,6 +20,7 @@ constructor(url, throwSendErrors = true) {
   this.websocket = null;
   this.messageHandlers = [];
   this.errorHandlers = [];
+  this.outgoingProcessors = [];
   this.compiledSchemas = {};
   this.schemasCompiled = false;
   this.sendOperationsId = ${sendOperationsArray};

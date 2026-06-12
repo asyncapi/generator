@@ -206,6 +206,7 @@ class HoppscotchClient {
     this.websocket = null;
     this.messageHandlers = [];
     this.errorHandlers = [];
+    this.outgoingProcessors = [];
     this.compiledSchemas = {};
     this.schemasCompiled = false;
     this.sendOperationsId = [\\"sendEchoMessage\\"];
@@ -272,6 +273,14 @@ class HoppscotchClient {
       this.errorHandlers.push(handler);
     } else {
       console.warn('Error handler must be a function');
+    }
+  }
+
+  registerOutgoingProcessor(processor) {
+    if (typeof processor === 'function') {
+      this.outgoingProcessors.push(processor);
+    } else {
+      console.warn('Outgoing processor must be a function');
     }
   }
 
@@ -351,6 +360,7 @@ class HoppscotchClient {
   /**
    * Instance method version of sendEchoMessage that uses the client's own WebSocket connection.
    * Automatically compiles schemas if not already compiled.
+   * Runs any registered outgoing processors on the message before sending.
    *
    * On a send failure the error is forwarded to every callback registered with
    * registerErrorHandler() (or logged if none is registered), then re-thrown unless the
@@ -368,9 +378,13 @@ class HoppscotchClient {
       throw new Error('WebSocket connection not established. Call connect() first.');
     }
     await this.compileOperationSchemas();
+    let processedMessage = message;
+    for (const processor of this.outgoingProcessors) {
+      processedMessage = processor(processedMessage) ?? processedMessage;
+    }
     const schemas = this.compiledSchemas['sendEchoMessage'];
     try {
-      return HoppscotchClient.sendEchoMessage(message, this.websocket, schemas);
+      return HoppscotchClient.sendEchoMessage(processedMessage, this.websocket, schemas);
     } catch (error) {
       if (this.errorHandlers.length > 0) {
         this.errorHandlers.forEach(handler => handler(error));
@@ -602,6 +616,7 @@ class HoppscotchEchoWebSocketClient {
     this.websocket = null;
     this.messageHandlers = [];
     this.errorHandlers = [];
+    this.outgoingProcessors = [];
     this.compiledSchemas = {};
     this.schemasCompiled = false;
     this.sendOperationsId = [\\"sendEchoMessage\\"];
@@ -668,6 +683,14 @@ class HoppscotchEchoWebSocketClient {
       this.errorHandlers.push(handler);
     } else {
       console.warn('Error handler must be a function');
+    }
+  }
+
+  registerOutgoingProcessor(processor) {
+    if (typeof processor === 'function') {
+      this.outgoingProcessors.push(processor);
+    } else {
+      console.warn('Outgoing processor must be a function');
     }
   }
 
@@ -747,6 +770,7 @@ class HoppscotchEchoWebSocketClient {
   /**
    * Instance method version of sendEchoMessage that uses the client's own WebSocket connection.
    * Automatically compiles schemas if not already compiled.
+   * Runs any registered outgoing processors on the message before sending.
    *
    * On a send failure the error is forwarded to every callback registered with
    * registerErrorHandler() (or logged if none is registered), then re-thrown unless the
@@ -764,9 +788,13 @@ class HoppscotchEchoWebSocketClient {
       throw new Error('WebSocket connection not established. Call connect() first.');
     }
     await this.compileOperationSchemas();
+    let processedMessage = message;
+    for (const processor of this.outgoingProcessors) {
+      processedMessage = processor(processedMessage) ?? processedMessage;
+    }
     const schemas = this.compiledSchemas['sendEchoMessage'];
     try {
-      return HoppscotchEchoWebSocketClient.sendEchoMessage(message, this.websocket, schemas);
+      return HoppscotchEchoWebSocketClient.sendEchoMessage(processedMessage, this.websocket, schemas);
     } catch (error) {
       if (this.errorHandlers.length > 0) {
         this.errorHandlers.forEach(handler => handler(error));
@@ -968,6 +996,7 @@ class PostmanEchoWebSocketClientClient {
     this.websocket = null;
     this.messageHandlers = [];
     this.errorHandlers = [];
+    this.outgoingProcessors = [];
     this.compiledSchemas = {};
     this.schemasCompiled = false;
     this.sendOperationsId = [\\"sendEchoMessage\\"];
@@ -1034,6 +1063,14 @@ class PostmanEchoWebSocketClientClient {
       this.errorHandlers.push(handler);
     } else {
       console.warn('Error handler must be a function');
+    }
+  }
+
+  registerOutgoingProcessor(processor) {
+    if (typeof processor === 'function') {
+      this.outgoingProcessors.push(processor);
+    } else {
+      console.warn('Outgoing processor must be a function');
     }
   }
 
@@ -1113,6 +1150,7 @@ class PostmanEchoWebSocketClientClient {
   /**
    * Instance method version of sendEchoMessage that uses the client's own WebSocket connection.
    * Automatically compiles schemas if not already compiled.
+   * Runs any registered outgoing processors on the message before sending.
    *
    * On a send failure the error is forwarded to every callback registered with
    * registerErrorHandler() (or logged if none is registered), then re-thrown unless the
@@ -1130,9 +1168,13 @@ class PostmanEchoWebSocketClientClient {
       throw new Error('WebSocket connection not established. Call connect() first.');
     }
     await this.compileOperationSchemas();
+    let processedMessage = message;
+    for (const processor of this.outgoingProcessors) {
+      processedMessage = processor(processedMessage) ?? processedMessage;
+    }
     const schemas = this.compiledSchemas['sendEchoMessage'];
     try {
-      return PostmanEchoWebSocketClientClient.sendEchoMessage(message, this.websocket, schemas);
+      return PostmanEchoWebSocketClientClient.sendEchoMessage(processedMessage, this.websocket, schemas);
     } catch (error) {
       if (this.errorHandlers.length > 0) {
         this.errorHandlers.forEach(handler => handler(error));

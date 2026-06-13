@@ -3,7 +3,7 @@ import { toSnakeCase } from '@asyncapi/generator-helpers';
 import { unsupportedLanguage, invalidClientName, invalidOperation } from '../utils/ErrorHandling';
 
 /**
- * @typedef {'python' | 'javascript'} Language
+ * @typedef {'python' | 'javascript' | 'dart'} Language
  * Supported programming languages for WebSocket send operation generation.
  */
 
@@ -118,6 +118,22 @@ static ${methodName}(message, socket, schemas) {
   }
 }`
     };
+  },
+  dart: (operation) => {
+    const methodName = operation.id();
+    return {
+      nonStaticMethod: `/// Send a ${methodName} message to the server
+void ${methodName}(dynamic message) {
+  if (_channel == null) {
+    print('Error: WebSocket is not connected.');
+    return;
+  }
+  final payload = message is String ? message : jsonEncode(message);
+  _channel!.sink.add(payload);
+  print('Sent message: $payload');
+}`,
+      staticMethod: ''
+    };
   }
 };
 
@@ -186,9 +202,11 @@ export function SendOperations({ language, sendOperations, clientName }) {
     const { nonStaticMethod, staticMethod } = generateSendOperationCode(operation, clientName);
     return (
       <>
-        <Text indent={2} newLines={2}>
-          {staticMethod}
-        </Text>
+        {staticMethod ? (
+          <Text indent={2} newLines={2}>
+            {staticMethod}
+          </Text>
+        ) : null}
         <Text indent={2} newLines={2}>
           {nonStaticMethod}
         </Text>

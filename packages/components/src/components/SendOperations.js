@@ -3,7 +3,7 @@ import { toSnakeCase } from '@asyncapi/generator-helpers';
 import { unsupportedLanguage, invalidClientName, invalidOperation } from '../utils/ErrorHandling';
 
 /**
- * @typedef {'python' | 'javascript'} Language
+ * @typedef {'python' | 'javascript' | 'dart'} Language
  * Supported programming languages for WebSocket send operation generation.
  */
 
@@ -61,6 +61,7 @@ def ${staticMethodName}(message, socket):
       nonStaticMethod: `/**
  * Instance method version of ${methodName} that uses the client's own WebSocket connection.
  * Automatically compiles schemas if not already compiled.
+ * Runs any registered outgoing processors on the message before sending.
  * 
  * @param {Object} message - The message payload to send
  * @throws {Error} If WebSocket connection is not established
@@ -72,8 +73,12 @@ async ${methodName}(message){
     throw new Error('WebSocket connection not established. Call connect() first.');
   }
   await this.compileOperationSchemas();
+  let processedMessage = message;
+  for (const processor of this.outgoingProcessors) {
+    processedMessage = processor(processedMessage) ?? processedMessage;
+  }
   const schemas = this.compiledSchemas['${methodName}'];
-  ${clientName}.${methodName}(message, this.websocket, schemas);
+  ${clientName}.${methodName}(processedMessage, this.websocket, schemas);
 }`,
       staticMethod: `/**
  * Sends a ${methodName} message over the WebSocket connection.
@@ -112,6 +117,22 @@ static ${methodName}(message, socket, schemas) {
     console.error('Error sending ${methodName} message:', error);
   }
 }`
+    };
+  },
+  dart: (operation) => {
+    const methodName = operation.id();
+    return {
+      nonStaticMethod: `/// Send a ${methodName} message to the server
+void ${methodName}(dynamic message) {
+  if (_channel == null) {
+    print('Error: WebSocket is not connected.');
+    return;
+  }
+  final payload = message is String ? message : jsonEncode(message);
+  _channel!.sink.add(payload);
+  print('Sent message: $payload');
+}`,
+      staticMethod: ''
     };
   }
 };
@@ -181,9 +202,11 @@ export function SendOperations({ language, sendOperations, clientName }) {
     const { nonStaticMethod, staticMethod } = generateSendOperationCode(operation, clientName);
     return (
       <>
-        <Text indent={2} newLines={2}>
-          {staticMethod}
-        </Text>
+        {staticMethod ? (
+          <Text indent={2} newLines={2}>
+            {staticMethod}
+          </Text>
+        ) : null}
         <Text indent={2} newLines={2}>
           {nonStaticMethod}
         </Text>

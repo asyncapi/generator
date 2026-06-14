@@ -70,6 +70,10 @@ function errorOpeningFile(filePath) {
   return `Error opening file "${filePath}"`;
 }
 
+function fetchSpecError(link, status, statusText) {
+  return `Failed to fetch AsyncAPI document from ${link}: HTTP ${status}${statusText}`;
+}
+
 module.exports = {
   TEMPLATE_INSTALL_FLAG_MSG,
   TEMPLATE_INSTALL_DISK_MSG,
@@ -88,5 +92,6 @@ module.exports = {
   skipOverwrite,
   mappedRefOutsideBaseFolder,
   mappedRefSymlinkOutsideBaseFolder,
-  errorOpeningFile
+  errorOpeningFile,
+  fetchSpecError
 };

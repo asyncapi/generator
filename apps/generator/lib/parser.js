@@ -126,7 +126,9 @@ function getMapBaseUrlToFolderResolvers({ url: baseUrl, folder: baseDir }) {
           throw err;
         });
         if (realTarget !== null && realTarget !== realBase && !realTarget.startsWith(realBase + path.sep)) {
-          throw new Error(logMessages.mappedRefOutsideBaseFolder(uriStr, baseUrl));
+          // Why: reaching here means the lexical check above passed but canonicalization still
+          // escaped baseDir — that can only happen via a symlink, so report it as such.
+          throw new Error(logMessages.mappedRefSymlinkOutsideBaseFolder(uriStr, baseUrl));
         }
       }
       try {

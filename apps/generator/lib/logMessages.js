@@ -60,6 +60,12 @@ function mappedRefOutsideBaseFolder(ref, mappingKey) {
   return `Reference "${ref}" resolves to a location outside the mapped base folder "${mappingKey}" and was blocked to prevent path traversal.`;
 }
 
+function mappedRefSymlinkOutsideBaseFolder(ref, mappingKey) {
+  // Why: same no-path-leak rule as above. This message is specific to the symlink branch so the
+  // user is told the escape happened through a symbolic link rather than `../` traversal.
+  return `Reference "${ref}" resolves a symbolic link that points outside the mapped base folder "${mappingKey}" and was blocked to prevent path traversal.`;
+}
+
 function errorOpeningFile(filePath) {
   return `Error opening file "${filePath}"`;
 }
@@ -81,5 +87,6 @@ module.exports = {
   compileEnabled,
   skipOverwrite,
   mappedRefOutsideBaseFolder,
+  mappedRefSymlinkOutsideBaseFolder,
   errorOpeningFile
 };

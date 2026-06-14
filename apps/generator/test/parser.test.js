@@ -247,7 +247,7 @@ describe('Parser', () => {
       const symlinkUri = { toString: () => ref };
 
       try {
-        await expect(resolver.read(symlinkUri)).rejects.toThrow(logMessages.mappedRefOutsideBaseFolder(ref, baseUrl));
+        await expect(resolver.read(symlinkUri)).rejects.toThrow(logMessages.mappedRefSymlinkOutsideBaseFolder(ref, baseUrl));
       } finally {
         fs.rmSync(root, { recursive: true, force: true });
       }

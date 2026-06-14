@@ -1,6 +1,6 @@
 const path = require('path');
 const { Parser, fromFile } = require('@asyncapi/parser');
-const { getQueryParams,getQueryParamsForAllChannels } = require('@asyncapi/generator-helpers');
+const { getQueryParams, getQueryParamsForAllChannels } = require('@asyncapi/generator-helpers');
 const parser = new Parser();
 const asyncapi_v3_path = path.resolve(__dirname, './__fixtures__/asyncapi-websocket-query.yml');
 

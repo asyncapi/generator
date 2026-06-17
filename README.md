@@ -72,6 +72,8 @@ For the development setup, you can follow the detailed guide in [Development gui
 
 Read [CONTRIBUTING](CONTRIBUTING.md) guide.
 
+If you use generative AI or AI-assisted tooling when contributing, read our [AI Usage Policy](AI-POLICY.md) first.
+
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):

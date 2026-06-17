@@ -33,17 +33,39 @@ const websocketSendOperationConfig = {
     """
     Send a ${methodName} message using the WebSocket connection attached to this instance.
 
+    A send failure is always forwarded to every callback registered with
+    register_error_handler(). What happens next depends on the
+    raise_send_errors flag passed to the constructor (default: True):
+
+    - raise_send_errors=True  -- the exception is re-raised after the
+      handlers run, so the caller can react to each failure (retry,
+      dead-letter, abort the loop, ...). This is the safe default: failures
+      are never lost silently.
+    - raise_send_errors=False -- the exception is suppressed after the
+      handlers run, so a high-throughput producer loop keeps going and relies
+      on the registered error handlers for observability.
+
     Args:
         message (dict or str): The message to send. Will be serialized to JSON if it's a dictionary.
 
     Raises:
-        Exception: If sending fails or the socket is not connected.
+        Exception: If sending fails and raise_send_errors is True.
     """
-    self._send(message, self.ws_app)`,
+    try:
+        self._send(message, self.ws_app)
+    except Exception as e:
+        self.handle_error(e)
+        if self.raise_send_errors:
+            raise`,
       staticMethod: `@staticmethod
 def ${staticMethodName}(message, socket):
     """
     Send a ${methodName} message using a provided WebSocket connection, without needing an instance.
+
+    Being a static method it has no access to the instance error handlers or to
+    the raise_send_errors flag, so a send failure is always raised to the
+    caller. Use the instance method ${methodName}() if you want failures routed
+    through the registered error handlers.
 
     Args:
         message (dict or str): The message to send.
@@ -62,11 +84,17 @@ def ${staticMethodName}(message, socket):
  * Instance method version of ${methodName} that uses the client's own WebSocket connection.
  * Automatically compiles schemas if not already compiled.
  * Runs any registered outgoing processors on the message before sending.
- * 
+ *
+ * On a send failure the error is forwarded to every callback registered with
+ * registerErrorHandler() (or logged if none is registered), then re-thrown unless the
+ * client was constructed with throwSendErrors=false. Setting throwSendErrors=false keeps a
+ * high-throughput producer loop running and relies on the registered error handlers instead.
+ *
  * @param {Object} message - The message payload to send
+ * @returns {Object|undefined} The static method result (e.g. { isValid: true }) on success, or undefined when a failure was suppressed via throwSendErrors=false
  * @throws {Error} If WebSocket connection is not established
  * @throws {Error} If schema compilation fails
- * @throws {Error} If message validation fails against all schemas
+ * @throws {Error} If sending or validation fails and throwSendErrors is true (the constructor default)
  */
 async ${methodName}(message){
   if(!this.websocket){
@@ -78,44 +106,53 @@ async ${methodName}(message){
     processedMessage = processor(processedMessage) ?? processedMessage;
   }
   const schemas = this.compiledSchemas['${methodName}'];
-  ${clientName}.${methodName}(processedMessage, this.websocket, schemas);
+  try {
+    return ${clientName}.${methodName}(processedMessage, this.websocket, schemas);
+  } catch (error) {
+    if (this.errorHandlers.length > 0) {
+      this.errorHandlers.forEach(handler => handler(error));
+    } else {
+      console.error('Error sending ${methodName} message:', error);
+    }
+    if (this.throwSendErrors) {
+      throw error;
+    }
+  }
 }`,
       staticMethod: `/**
  * Sends a ${methodName} message over the WebSocket connection.
- * 
+ *
+ * This static method has no access to the instance error handlers or the throwSendErrors
+ * flag, so any failure (serialization, validation against all schemas, or a closed socket)
+ * is always thrown to the caller. Use the instance method ${methodName}() if you want
+ * failures routed through the registered error handlers.
+ *
  * @param {Object} message - The message payload to send. Should match the schema defined in the AsyncAPI document.
  * @param {WebSocket} socket - The WebSocket connection to use.
  * @param {Array<function>} schemas - Array of compiled schema validator functions for this operation.
+ * @returns {Object} { isValid: true } once the message has been sent.
  * @throws {TypeError} If message cannot be stringified to JSON
  * @throws {Error} If WebSocket connection is not in OPEN state
  * @throws {Error} If message validation fails against all schemas
  */
 static ${methodName}(message, socket, schemas) {
-  try {
-    if (!schemas || schemas.length === 0) {
-      socket.send(JSON.stringify(message));
-      return { isValid: true }; 
-    }
-    const allValidationErrors = [];
-    let isValid = false;
-    for(const compiledSchema of schemas){
-      const validationResult = validateMessage(compiledSchema, message);
-      if (validationResult.isValid) {
-        isValid = true;
-        socket.send(JSON.stringify(message));
-        break;
-      } else {
-        if (validationResult.validationErrors) {
-          allValidationErrors.push(...validationResult.validationErrors);
-        }
-      }
-      if (!isValid) {
-        console.error('Validation errors:', JSON.stringify(allValidationErrors, null, 2));
-      }
-    }
-  } catch (error) {
-    console.error('Error sending ${methodName} message:', error);
+  if (!schemas || schemas.length === 0) {
+    socket.send(JSON.stringify(message));
+    return { isValid: true };
   }
+  const allValidationErrors = [];
+  for (const compiledSchema of schemas) {
+    const validationResult = validateMessage(compiledSchema, message);
+    if (validationResult.isValid) {
+      socket.send(JSON.stringify(message));
+      return { isValid: true };
+    }
+    if (validationResult.validationErrors) {
+      allValidationErrors.push(...validationResult.validationErrors);
+    }
+  }
+  // No schema matched: surface the failure instead of silently dropping the message.
+  throw new Error('Message validation failed for ${methodName}: ' + JSON.stringify(allValidationErrors));
 }`
     };
   },

@@ -25,6 +25,11 @@ npm install
 
 \`\`\`javascript
 const HoppscotchClient = require('./client');
+
+// throwSendErrors defaults to true: a failed send re-throws after the registered
+// error handlers run, so you can react to each failure. Pass
+// new HoppscotchClient(undefined, false) to keep a high-throughput producer loop
+// running and rely on registered error handlers instead.
 const wsClient = new HoppscotchClient();
 
 async function main() {
@@ -33,7 +38,7 @@ async function main() {
     // use wsClient to send/receive messages
     await wsClient.close();
   } catch (error) {
-    console.error('Failed to connect:', error);
+    console.error('Failed to connect or send:', error);
   }
 }
 
@@ -191,8 +196,12 @@ class HoppscotchClient {
   /*
     * Constructor to initialize the WebSocket client
     * @param {string} url - The WebSocket server URL. Use it if the server URL is different from the default one taken from the AsyncAPI document.
+    * @param {boolean} [throwSendErrors=true] - Controls how the instance send methods react to a send failure.
+    *   When true (default) the error is re-thrown after the registered error handlers run, so the caller can
+    *   handle each failure. When false the error is suppressed after the handlers run, which keeps a
+    *   high-throughput producer loop going.
   */
-  constructor(url) {
+  constructor(url, throwSendErrors = true) {
     this.url = url || 'wss://echo-websocket.hoppscotch.io';
     this.websocket = null;
     this.messageHandlers = [];
@@ -201,6 +210,7 @@ class HoppscotchClient {
     this.compiledSchemas = {};
     this.schemasCompiled = false;
     this.sendOperationsId = [\\"sendEchoMessage\\"];
+    this.throwSendErrors = throwSendErrors; // Re-throw send failures after handlers run
   }
 
   // Method to establish a WebSocket connection
@@ -313,51 +323,55 @@ class HoppscotchClient {
 
   /**
    * Sends a sendEchoMessage message over the WebSocket connection.
-   * 
+   *
+   * This static method has no access to the instance error handlers or the throwSendErrors
+   * flag, so any failure (serialization, validation against all schemas, or a closed socket)
+   * is always thrown to the caller. Use the instance method sendEchoMessage() if you want
+   * failures routed through the registered error handlers.
+   *
    * @param {Object} message - The message payload to send. Should match the schema defined in the AsyncAPI document.
    * @param {WebSocket} socket - The WebSocket connection to use.
    * @param {Array<function>} schemas - Array of compiled schema validator functions for this operation.
+   * @returns {Object} { isValid: true } once the message has been sent.
    * @throws {TypeError} If message cannot be stringified to JSON
    * @throws {Error} If WebSocket connection is not in OPEN state
    * @throws {Error} If message validation fails against all schemas
    */
   static sendEchoMessage(message, socket, schemas) {
-    try {
-      if (!schemas || schemas.length === 0) {
-        socket.send(JSON.stringify(message));
-        return { isValid: true }; 
-      }
-      const allValidationErrors = [];
-      let isValid = false;
-      for(const compiledSchema of schemas){
-        const validationResult = validateMessage(compiledSchema, message);
-        if (validationResult.isValid) {
-          isValid = true;
-          socket.send(JSON.stringify(message));
-          break;
-        } else {
-          if (validationResult.validationErrors) {
-            allValidationErrors.push(...validationResult.validationErrors);
-          }
-        }
-        if (!isValid) {
-          console.error('Validation errors:', JSON.stringify(allValidationErrors, null, 2));
-        }
-      }
-    } catch (error) {
-      console.error('Error sending sendEchoMessage message:', error);
+    if (!schemas || schemas.length === 0) {
+      socket.send(JSON.stringify(message));
+      return { isValid: true };
     }
+    const allValidationErrors = [];
+    for (const compiledSchema of schemas) {
+      const validationResult = validateMessage(compiledSchema, message);
+      if (validationResult.isValid) {
+        socket.send(JSON.stringify(message));
+        return { isValid: true };
+      }
+      if (validationResult.validationErrors) {
+        allValidationErrors.push(...validationResult.validationErrors);
+      }
+    }
+    // No schema matched: surface the failure instead of silently dropping the message.
+    throw new Error('Message validation failed for sendEchoMessage: ' + JSON.stringify(allValidationErrors));
   }
 
   /**
    * Instance method version of sendEchoMessage that uses the client's own WebSocket connection.
    * Automatically compiles schemas if not already compiled.
    * Runs any registered outgoing processors on the message before sending.
-   * 
+   *
+   * On a send failure the error is forwarded to every callback registered with
+   * registerErrorHandler() (or logged if none is registered), then re-thrown unless the
+   * client was constructed with throwSendErrors=false. Setting throwSendErrors=false keeps a
+   * high-throughput producer loop running and relies on the registered error handlers instead.
+   *
    * @param {Object} message - The message payload to send
+   * @returns {Object|undefined} The static method result (e.g. { isValid: true }) on success, or undefined when a failure was suppressed via throwSendErrors=false
    * @throws {Error} If WebSocket connection is not established
    * @throws {Error} If schema compilation fails
-   * @throws {Error} If message validation fails against all schemas
+   * @throws {Error} If sending or validation fails and throwSendErrors is true (the constructor default)
    */
   async sendEchoMessage(message){
     if(!this.websocket){
@@ -369,7 +383,18 @@ class HoppscotchClient {
       processedMessage = processor(processedMessage) ?? processedMessage;
     }
     const schemas = this.compiledSchemas['sendEchoMessage'];
-    HoppscotchClient.sendEchoMessage(processedMessage, this.websocket, schemas);
+    try {
+      return HoppscotchClient.sendEchoMessage(processedMessage, this.websocket, schemas);
+    } catch (error) {
+      if (this.errorHandlers.length > 0) {
+        this.errorHandlers.forEach(handler => handler(error));
+      } else {
+        console.error('Error sending sendEchoMessage message:', error);
+      }
+      if (this.throwSendErrors) {
+        throw error;
+      }
+    }
   }
 
   // Method to close the WebSocket connection
@@ -410,6 +435,11 @@ npm install
 
 \`\`\`javascript
 const HoppscotchEchoWebSocketClient = require('./client');
+
+// throwSendErrors defaults to true: a failed send re-throws after the registered
+// error handlers run, so you can react to each failure. Pass
+// new HoppscotchEchoWebSocketClient(undefined, false) to keep a high-throughput producer loop
+// running and rely on registered error handlers instead.
 const wsClient = new HoppscotchEchoWebSocketClient();
 
 async function main() {
@@ -418,7 +448,7 @@ async function main() {
     // use wsClient to send/receive messages
     await wsClient.close();
   } catch (error) {
-    console.error('Failed to connect:', error);
+    console.error('Failed to connect or send:', error);
   }
 }
 
@@ -576,8 +606,12 @@ class HoppscotchEchoWebSocketClient {
   /*
     * Constructor to initialize the WebSocket client
     * @param {string} url - The WebSocket server URL. Use it if the server URL is different from the default one taken from the AsyncAPI document.
+    * @param {boolean} [throwSendErrors=true] - Controls how the instance send methods react to a send failure.
+    *   When true (default) the error is re-thrown after the registered error handlers run, so the caller can
+    *   handle each failure. When false the error is suppressed after the handlers run, which keeps a
+    *   high-throughput producer loop going.
   */
-  constructor(url) {
+  constructor(url, throwSendErrors = true) {
     this.url = url || 'wss://echo-websocket.hoppscotch.io';
     this.websocket = null;
     this.messageHandlers = [];
@@ -586,6 +620,7 @@ class HoppscotchEchoWebSocketClient {
     this.compiledSchemas = {};
     this.schemasCompiled = false;
     this.sendOperationsId = [\\"sendEchoMessage\\"];
+    this.throwSendErrors = throwSendErrors; // Re-throw send failures after handlers run
   }
 
   // Method to establish a WebSocket connection
@@ -698,51 +733,55 @@ class HoppscotchEchoWebSocketClient {
 
   /**
    * Sends a sendEchoMessage message over the WebSocket connection.
-   * 
+   *
+   * This static method has no access to the instance error handlers or the throwSendErrors
+   * flag, so any failure (serialization, validation against all schemas, or a closed socket)
+   * is always thrown to the caller. Use the instance method sendEchoMessage() if you want
+   * failures routed through the registered error handlers.
+   *
    * @param {Object} message - The message payload to send. Should match the schema defined in the AsyncAPI document.
    * @param {WebSocket} socket - The WebSocket connection to use.
    * @param {Array<function>} schemas - Array of compiled schema validator functions for this operation.
+   * @returns {Object} { isValid: true } once the message has been sent.
    * @throws {TypeError} If message cannot be stringified to JSON
    * @throws {Error} If WebSocket connection is not in OPEN state
    * @throws {Error} If message validation fails against all schemas
    */
   static sendEchoMessage(message, socket, schemas) {
-    try {
-      if (!schemas || schemas.length === 0) {
-        socket.send(JSON.stringify(message));
-        return { isValid: true }; 
-      }
-      const allValidationErrors = [];
-      let isValid = false;
-      for(const compiledSchema of schemas){
-        const validationResult = validateMessage(compiledSchema, message);
-        if (validationResult.isValid) {
-          isValid = true;
-          socket.send(JSON.stringify(message));
-          break;
-        } else {
-          if (validationResult.validationErrors) {
-            allValidationErrors.push(...validationResult.validationErrors);
-          }
-        }
-        if (!isValid) {
-          console.error('Validation errors:', JSON.stringify(allValidationErrors, null, 2));
-        }
-      }
-    } catch (error) {
-      console.error('Error sending sendEchoMessage message:', error);
+    if (!schemas || schemas.length === 0) {
+      socket.send(JSON.stringify(message));
+      return { isValid: true };
     }
+    const allValidationErrors = [];
+    for (const compiledSchema of schemas) {
+      const validationResult = validateMessage(compiledSchema, message);
+      if (validationResult.isValid) {
+        socket.send(JSON.stringify(message));
+        return { isValid: true };
+      }
+      if (validationResult.validationErrors) {
+        allValidationErrors.push(...validationResult.validationErrors);
+      }
+    }
+    // No schema matched: surface the failure instead of silently dropping the message.
+    throw new Error('Message validation failed for sendEchoMessage: ' + JSON.stringify(allValidationErrors));
   }
 
   /**
    * Instance method version of sendEchoMessage that uses the client's own WebSocket connection.
    * Automatically compiles schemas if not already compiled.
    * Runs any registered outgoing processors on the message before sending.
-   * 
+   *
+   * On a send failure the error is forwarded to every callback registered with
+   * registerErrorHandler() (or logged if none is registered), then re-thrown unless the
+   * client was constructed with throwSendErrors=false. Setting throwSendErrors=false keeps a
+   * high-throughput producer loop running and relies on the registered error handlers instead.
+   *
    * @param {Object} message - The message payload to send
+   * @returns {Object|undefined} The static method result (e.g. { isValid: true }) on success, or undefined when a failure was suppressed via throwSendErrors=false
    * @throws {Error} If WebSocket connection is not established
    * @throws {Error} If schema compilation fails
-   * @throws {Error} If message validation fails against all schemas
+   * @throws {Error} If sending or validation fails and throwSendErrors is true (the constructor default)
    */
   async sendEchoMessage(message){
     if(!this.websocket){
@@ -754,7 +793,18 @@ class HoppscotchEchoWebSocketClient {
       processedMessage = processor(processedMessage) ?? processedMessage;
     }
     const schemas = this.compiledSchemas['sendEchoMessage'];
-    HoppscotchEchoWebSocketClient.sendEchoMessage(processedMessage, this.websocket, schemas);
+    try {
+      return HoppscotchEchoWebSocketClient.sendEchoMessage(processedMessage, this.websocket, schemas);
+    } catch (error) {
+      if (this.errorHandlers.length > 0) {
+        this.errorHandlers.forEach(handler => handler(error));
+      } else {
+        console.error('Error sending sendEchoMessage message:', error);
+      }
+      if (this.throwSendErrors) {
+        throw error;
+      }
+    }
   }
 
   // Method to close the WebSocket connection
@@ -794,6 +844,11 @@ npm install
 
 \`\`\`javascript
 const PostmanEchoWebSocketClientClient = require('./client');
+
+// throwSendErrors defaults to true: a failed send re-throws after the registered
+// error handlers run, so you can react to each failure. Pass
+// new PostmanEchoWebSocketClientClient(undefined, false) to keep a high-throughput producer loop
+// running and rely on registered error handlers instead.
 const wsClient = new PostmanEchoWebSocketClientClient();
 
 async function main() {
@@ -802,7 +857,7 @@ async function main() {
     // use wsClient to send/receive messages
     await wsClient.close();
   } catch (error) {
-    console.error('Failed to connect:', error);
+    console.error('Failed to connect or send:', error);
   }
 }
 
@@ -931,8 +986,12 @@ class PostmanEchoWebSocketClientClient {
   /*
     * Constructor to initialize the WebSocket client
     * @param {string} url - The WebSocket server URL. Use it if the server URL is different from the default one taken from the AsyncAPI document.
+    * @param {boolean} [throwSendErrors=true] - Controls how the instance send methods react to a send failure.
+    *   When true (default) the error is re-thrown after the registered error handlers run, so the caller can
+    *   handle each failure. When false the error is suppressed after the handlers run, which keeps a
+    *   high-throughput producer loop going.
   */
-  constructor(url) {
+  constructor(url, throwSendErrors = true) {
     this.url = url || 'wss://ws.postman-echo.com/raw';
     this.websocket = null;
     this.messageHandlers = [];
@@ -941,6 +1000,7 @@ class PostmanEchoWebSocketClientClient {
     this.compiledSchemas = {};
     this.schemasCompiled = false;
     this.sendOperationsId = [\\"sendEchoMessage\\"];
+    this.throwSendErrors = throwSendErrors; // Re-throw send failures after handlers run
   }
 
   // Method to establish a WebSocket connection
@@ -1053,51 +1113,55 @@ class PostmanEchoWebSocketClientClient {
 
   /**
    * Sends a sendEchoMessage message over the WebSocket connection.
-   * 
+   *
+   * This static method has no access to the instance error handlers or the throwSendErrors
+   * flag, so any failure (serialization, validation against all schemas, or a closed socket)
+   * is always thrown to the caller. Use the instance method sendEchoMessage() if you want
+   * failures routed through the registered error handlers.
+   *
    * @param {Object} message - The message payload to send. Should match the schema defined in the AsyncAPI document.
    * @param {WebSocket} socket - The WebSocket connection to use.
    * @param {Array<function>} schemas - Array of compiled schema validator functions for this operation.
+   * @returns {Object} { isValid: true } once the message has been sent.
    * @throws {TypeError} If message cannot be stringified to JSON
    * @throws {Error} If WebSocket connection is not in OPEN state
    * @throws {Error} If message validation fails against all schemas
    */
   static sendEchoMessage(message, socket, schemas) {
-    try {
-      if (!schemas || schemas.length === 0) {
-        socket.send(JSON.stringify(message));
-        return { isValid: true }; 
-      }
-      const allValidationErrors = [];
-      let isValid = false;
-      for(const compiledSchema of schemas){
-        const validationResult = validateMessage(compiledSchema, message);
-        if (validationResult.isValid) {
-          isValid = true;
-          socket.send(JSON.stringify(message));
-          break;
-        } else {
-          if (validationResult.validationErrors) {
-            allValidationErrors.push(...validationResult.validationErrors);
-          }
-        }
-        if (!isValid) {
-          console.error('Validation errors:', JSON.stringify(allValidationErrors, null, 2));
-        }
-      }
-    } catch (error) {
-      console.error('Error sending sendEchoMessage message:', error);
+    if (!schemas || schemas.length === 0) {
+      socket.send(JSON.stringify(message));
+      return { isValid: true };
     }
+    const allValidationErrors = [];
+    for (const compiledSchema of schemas) {
+      const validationResult = validateMessage(compiledSchema, message);
+      if (validationResult.isValid) {
+        socket.send(JSON.stringify(message));
+        return { isValid: true };
+      }
+      if (validationResult.validationErrors) {
+        allValidationErrors.push(...validationResult.validationErrors);
+      }
+    }
+    // No schema matched: surface the failure instead of silently dropping the message.
+    throw new Error('Message validation failed for sendEchoMessage: ' + JSON.stringify(allValidationErrors));
   }
 
   /**
    * Instance method version of sendEchoMessage that uses the client's own WebSocket connection.
    * Automatically compiles schemas if not already compiled.
    * Runs any registered outgoing processors on the message before sending.
-   * 
+   *
+   * On a send failure the error is forwarded to every callback registered with
+   * registerErrorHandler() (or logged if none is registered), then re-thrown unless the
+   * client was constructed with throwSendErrors=false. Setting throwSendErrors=false keeps a
+   * high-throughput producer loop running and relies on the registered error handlers instead.
+   *
    * @param {Object} message - The message payload to send
+   * @returns {Object|undefined} The static method result (e.g. { isValid: true }) on success, or undefined when a failure was suppressed via throwSendErrors=false
    * @throws {Error} If WebSocket connection is not established
    * @throws {Error} If schema compilation fails
-   * @throws {Error} If message validation fails against all schemas
+   * @throws {Error} If sending or validation fails and throwSendErrors is true (the constructor default)
    */
   async sendEchoMessage(message){
     if(!this.websocket){
@@ -1109,7 +1173,18 @@ class PostmanEchoWebSocketClientClient {
       processedMessage = processor(processedMessage) ?? processedMessage;
     }
     const schemas = this.compiledSchemas['sendEchoMessage'];
-    PostmanEchoWebSocketClientClient.sendEchoMessage(processedMessage, this.websocket, schemas);
+    try {
+      return PostmanEchoWebSocketClientClient.sendEchoMessage(processedMessage, this.websocket, schemas);
+    } catch (error) {
+      if (this.errorHandlers.length > 0) {
+        this.errorHandlers.forEach(handler => handler(error));
+      } else {
+        console.error('Error sending sendEchoMessage message:', error);
+      }
+      if (this.throwSendErrors) {
+        throw error;
+      }
+    }
   }
 
   // Method to close the WebSocket connection

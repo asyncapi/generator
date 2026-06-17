@@ -5,6 +5,11 @@ exports[`Testing of Usage component renders usage snippet for { language: 'javas
 
 \`\`\`javascript
 const MyClient = require('./myClient');
+
+// throwSendErrors defaults to true: a failed send re-throws after the registered
+// error handlers run, so you can react to each failure. Pass
+// new MyClient(undefined, false) to keep a high-throughput producer loop
+// running and rely on registered error handlers instead.
 const wsClient = new MyClient();
 
 async function main() {
@@ -13,7 +18,7 @@ async function main() {
     // use wsClient to send/receive messages
     await wsClient.close();
   } catch (error) {
-    console.error('Failed to connect:', error);
+    console.error('Failed to connect or send:', error);
   }
 }
 
@@ -27,11 +32,20 @@ exports[`Testing of Usage component renders usage snippet for { language: 'pytho
 \`\`\`python
 from my_client import MyClient
 
+# raise_send_errors defaults to True: a failed send raises after the registered
+# error handlers run, so you can react to each failure. Pass
+# raise_send_errors=False to keep a high-throughput producer loop running and
+# rely on registered error handlers instead.
 ws_client = MyClient()
 
 async def main():
     await ws_client.connect()
-    # use ws_client to send/receive messages
+    try:
+        # use ws_client to send/receive messages
+        pass
+    except Exception as error:
+        # only reached when raise_send_errors is True (the default)
+        print(\\"Send failed:\\", error)
     await ws_client.close()
 \`\`\`"
 `;

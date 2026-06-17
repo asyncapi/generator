@@ -54,6 +54,22 @@ function compileEnabled(dir, output_dir) {
   return `Transpilation of files ${dir} into ${output_dir} started.`;
 }
 
+function mappedRefOutsideBaseFolder(ref, mappingKey) {
+  // Why: never interpolate the resolved host filesystem path here — it leaks the internal
+  // directory layout. Reference the configured mapping key (the mapped base url) instead.
+  return `Reference "${ref}" resolves to a location outside the mapped base folder "${mappingKey}" and was blocked to prevent path traversal.`;
+}
+
+function mappedRefSymlinkOutsideBaseFolder(ref, mappingKey) {
+  // Why: same no-path-leak rule as above. This message is specific to the symlink branch so the
+  // user is told the escape happened through a symbolic link rather than `../` traversal.
+  return `Reference "${ref}" resolves a symbolic link that points outside the mapped base folder "${mappingKey}" and was blocked to prevent path traversal.`;
+}
+
+function errorOpeningFile(filePath) {
+  return `Error opening file "${filePath}"`;
+}
+
 function fetchSpecError(link, status, statusText) {
   return `Failed to fetch AsyncAPI document from ${link}: HTTP ${status}${statusText}`;
 }
@@ -74,5 +90,8 @@ module.exports = {
   conditionalFilesMatched,
   compileEnabled,
   skipOverwrite,
+  mappedRefOutsideBaseFolder,
+  mappedRefSymlinkOutsideBaseFolder,
+  errorOpeningFile,
   fetchSpecError
 };

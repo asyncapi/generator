@@ -1,4 +1,6 @@
-const fs = require('fs');
+const path = require('path');
+const utils = require('./utils');
+const logMessages = require('./logMessages');
 const { convertToOldAPI } = require('@asyncapi/parser');
 const { ConvertDocumentParserAPIVersion, NewParser } = require('@asyncapi/multi-parser');
 
@@ -100,22 +102,40 @@ function getMapBaseUrlToFolderResolvers({ url: baseUrl, folder: baseDir }) {
   const resolver = {
     order: 1,
     canRead: true,
-    read(uri) {
-      return new Promise(((resolve, reject) => {
-        const path = uri.toString();
-        const localpath = path.replace(baseUrl, baseDir);
-        try {
-          fs.readFile(localpath, (err, data) => {
-            if (err) {
-              reject(`Error opening file "${localpath}"`);
-            } else {
-              resolve(data.toString());
-            }
-          });
-        } catch (err) {
-          reject(`Error opening file "${localpath}"`);
+    async read(uri) {
+      const uriStr = uri.toString();
+      const localpath = uriStr.replace(baseUrl, baseDir);
+      // Why: a $ref under the mapped baseUrl can contain `../` segments that the parser passes
+      // through unnormalized, letting the resolved file path escape baseDir (path traversal).
+      // Only guard refs that actually fall under baseUrl so unrelated http(s) refs keep their behavior.
+      if (uriStr.startsWith(baseUrl)) {
+        const resolvedBase = path.resolve(baseDir);
+        const resolvedTarget = path.resolve(localpath);
+        // Lexical containment runs first: it rejects `../` traversal even when the target file
+        // does not exist (realpath below would throw ENOENT before we could report it).
+        if (resolvedTarget !== resolvedBase && !resolvedTarget.startsWith(resolvedBase + path.sep)) {
+          throw new Error(logMessages.mappedRefOutsideBaseFolder(uriStr, baseUrl));
         }
-      }));
+        // Why: path.resolve is purely lexical and ignores symlinks, so a symlink inside baseDir
+        // pointing elsewhere would pass the check above yet read a file outside baseDir.
+        // Canonicalize with realpath to close that gap. realpath needs the path to exist; a
+        // missing target is already proven contained lexically, so ENOENT is safe to ignore.
+        const realBase = await utils.realpath(resolvedBase);
+        const realTarget = await utils.realpath(resolvedTarget).catch((err) => {
+          if (err.code === 'ENOENT') return null;
+          throw err;
+        });
+        if (realTarget !== null && realTarget !== realBase && !realTarget.startsWith(realBase + path.sep)) {
+          // Why: reaching here means the lexical check above passed but canonicalization still
+          // escaped baseDir — that can only happen via a symlink, so report it as such.
+          throw new Error(logMessages.mappedRefSymlinkOutsideBaseFolder(uriStr, baseUrl));
+        }
+      }
+      try {
+        return (await utils.readFile(localpath)).toString();
+      } catch (err) {
+        throw new Error(logMessages.errorOpeningFile(localpath));
+      }
     }
   };
 

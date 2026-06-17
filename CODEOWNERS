@@ -19,3 +19,7 @@ packages/ @Adi-204 @derberg @magicmatatjahu @asyncapi-bot-eve
 
 # Changeset markdown files — override so Docs Champions aren't requested
 .changeset/**/*.md @derberg @magicmatatjahu @asyncapi-bot-eve
+
+# AI agent instruction files — override so Docs Champions aren't requested
+AGENTS.md @Adi-204 @derberg @magicmatatjahu @asyncapi-bot-eve
+CLAUDE.md @Adi-204 @derberg @magicmatatjahu @asyncapi-bot-eve

@@ -14,75 +14,73 @@ describe('Testing of FileHeaderInfo function', () => {
     parsedAsyncAPIDocument = parseResult.document;
   });
 
-  test('render websockets file header info with pathname correctly', () => {
+  const languages = ['Dart', 'Python', 'Javascript'];
+  it.each(languages)('render websockets file header info with pathname correctly (%s)', (language) => {
     const result = render(
       <FileHeaderInfo
         info={parsedAsyncAPIDocument.info()}
         server={parsedAsyncAPIDocument.servers().get('withPathname')}
-        language="javascript"
+        language={language.toLowerCase()}
       />
     );
     const actual = result.trim();
     expect(actual).toMatchSnapshot();
   });
 
-  test('render websockets file header info without pathname correctly', () => {
+  it.each(languages)('render websockets file header info without pathname correctly (%s)', (language) => {
     const result = render(
       <FileHeaderInfo
         info={parsedAsyncAPIDocument.info()}
         server={parsedAsyncAPIDocument.servers().get('withoutPathName')}
-        language="javascript"
+        language={language.toLowerCase()}
       />
     );
     const actual = result.trim();
     expect(actual).toMatchSnapshot();
   });
 
-  test('render websockets file header info with pathname correctly (Python)', () => {
-    const result = render(
-      <FileHeaderInfo
-        info={parsedAsyncAPIDocument.info()}
-        server={parsedAsyncAPIDocument.servers().get('withPathname')}
-        language="python"
-      />
-    );
-    const actual = result.trim();
-    expect(actual).toMatchSnapshot();
+  test('throws an error when info object is not provided', () => {
+    expect(() => {
+      render(
+        <FileHeaderInfo
+          server={parsedAsyncAPIDocument.servers().get('withPathname')}
+          language='javascript'
+        />
+      );
+    }).toThrow(/AsyncAPI "info" object is missing./);
   });
 
-  test('render websockets file header info without pathname correctly (Python)', () => {
-    const result = render(
-      <FileHeaderInfo
-        info={parsedAsyncAPIDocument.info()}
-        server={parsedAsyncAPIDocument.servers().get('withoutPathName')}
-        language="python"
-      />
-    );
-    const actual = result.trim();
-    expect(actual).toMatchSnapshot();
+  test('throws an error when server object is not provided', () => {
+    expect(() => {
+      render(
+        <FileHeaderInfo
+          info={parsedAsyncAPIDocument.info()}
+          language='javascript'
+        />
+      );
+    }).toThrow(/AsyncAPI "server" object is missing./);
   });
 
-  test('render websockets file header info with pathname correctly (Dart)', () => {
-    const result = render(
-      <FileHeaderInfo
-        info={parsedAsyncAPIDocument.info()}
-        server={parsedAsyncAPIDocument.servers().get('withPathname')}
-        language="dart"
-      />
-    );
-    const actual = result.trim();
-    expect(actual).toMatchSnapshot();
+  test('throws an error when unsupported language is provided', () => {
+    expect(() => {
+      render(
+        <FileHeaderInfo
+          info={parsedAsyncAPIDocument.info()}
+          server={parsedAsyncAPIDocument.servers().get('withPathname')}
+          language='cpp'
+        />
+      );
+    }).toThrow(/Unsupported language "cpp". Supported languages:/);
   });
 
-  test('render websockets file header info without pathname correctly (Dart)', () => {
-    const result = render(
-      <FileHeaderInfo
-        info={parsedAsyncAPIDocument.info()}
-        server={parsedAsyncAPIDocument.servers().get('withoutPathName')}
-        language="dart"
-      />
-    );
-    const actual = result.trim();
-    expect(actual).toMatchSnapshot();
+  test('throws an error when language is not provided', () => {
+    expect(() => {
+      render(
+        <FileHeaderInfo
+          info={parsedAsyncAPIDocument.info()}
+          server={parsedAsyncAPIDocument.servers().get('withPathname')}
+        />
+      );
+    }).toThrow(/Language is required. Supported languages:/);
   });
 });

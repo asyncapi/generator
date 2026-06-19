@@ -1,6 +1,8 @@
 const fs = require('fs');
+const os = require('os');
 const path = require('path');
 const { sanitizeTemplateApiVersion, usesNewAPI, parse, convertOldOptionsToNew } = require('../lib/parser');
+const logMessages = require('../lib/logMessages');
 const dummyV2Document = fs.readFileSync(path.resolve(__dirname, './docs/dummy.yml'), 'utf8');
 const dummyV3Document = fs.readFileSync(path.resolve(__dirname, './docs/dummyV3.yml'), 'utf8');
 
@@ -200,6 +202,55 @@ describe('Parser', () => {
       const newOptions = convertOldOptionsToNew(undefined, {});
 
       expect(newOptions).toBeUndefined();
+    });
+  });
+
+  describe('mapBaseUrlToFolder resolver path traversal', () => {
+    const baseUrl = 'https://schema.example.com/crm/';
+    // Trailing slash mirrors how the option is configured in real usage (see integration.test.js)
+    const folder = `${path.resolve(__dirname, './docs')}/`;
+
+    function getHttpsResolver() {
+      const newOptions = convertOldOptionsToNew({}, { mapBaseUrlToFolder: { url: baseUrl, folder } });
+      return newOptions.__unstable.resolver.resolvers.find((r) => r.schema === 'https');
+    }
+
+    it('should reject a reference that escapes the mapped base folder', async () => {
+      const resolver = getHttpsResolver();
+      const ref = `${baseUrl}../../../etc/passwd`;
+      const maliciousUri = { toString: () => ref };
+
+      await expect(resolver.read(maliciousUri)).rejects.toThrow(logMessages.mappedRefOutsideBaseFolder(ref, baseUrl));
+    });
+
+    it('should resolve a reference that stays within the mapped base folder', async () => {
+      const resolver = getHttpsResolver();
+      const safeUri = { toString: () => `${baseUrl}shared.json` };
+
+      const data = await resolver.read(safeUri);
+      expect(data).toContain('Shared Customer Relationship Management models');
+    });
+
+    it('should reject a reference whose target is a symlink escaping the mapped base folder', async () => {
+      // path.resolve is lexical and ignores symlinks, so this guards against a symlink planted
+      // inside the mapped folder that points outside it.
+      const root = fs.mkdtempSync(path.join(os.tmpdir(), 'parser-symlink-'));
+      const symBase = path.join(root, 'base');
+      fs.mkdirSync(symBase);
+      const outside = path.join(root, 'secret.txt');
+      fs.writeFileSync(outside, 'secret');
+      fs.symlinkSync(outside, path.join(symBase, 'escape.json'));
+
+      const newOptions = convertOldOptionsToNew({}, { mapBaseUrlToFolder: { url: baseUrl, folder: `${symBase}/` } });
+      const resolver = newOptions.__unstable.resolver.resolvers.find((r) => r.schema === 'https');
+      const ref = `${baseUrl}escape.json`;
+      const symlinkUri = { toString: () => ref };
+
+      try {
+        await expect(resolver.read(symlinkUri)).rejects.toThrow(logMessages.mappedRefSymlinkOutsideBaseFolder(ref, baseUrl));
+      } finally {
+        fs.rmSync(root, { recursive: true, force: true });
+      }
     });
   });
 });

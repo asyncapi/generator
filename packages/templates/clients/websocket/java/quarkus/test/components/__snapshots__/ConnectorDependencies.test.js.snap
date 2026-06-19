@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ConnectorDependencies component (integration with AsyncAPI document) renders base dependencies without query param imports when queryParams is null 1`] = `
+"package com.asyncapi;
+
+import io.quarkus.websockets.next.WebSocketConnector;
+import io.quarkus.websockets.next.WebSocketClientConnection;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
+import jakarta.annotation.PostConstruct;
+import io.quarkus.logging.Log;
+import io.quarkus.runtime.Startup;"
+`;
+
+exports[`ConnectorDependencies component (integration with AsyncAPI document) renders base dependencies without query param imports when queryParams is undefined 1`] = `
+"package com.asyncapi;
+
+import io.quarkus.websockets.next.WebSocketConnector;
+import io.quarkus.websockets.next.WebSocketClientConnection;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
+import jakarta.annotation.PostConstruct;
+import io.quarkus.logging.Log;
+import io.quarkus.runtime.Startup;"
+`;
+
+exports[`ConnectorDependencies component (integration with AsyncAPI document) renders dependencies with query param imports when queryParams has data from fixture 1`] = `
+"package com.asyncapi;
+
+import io.quarkus.websockets.next.WebSocketConnector;
+import io.quarkus.websockets.next.WebSocketClientConnection;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
+import jakarta.annotation.PostConstruct;
+import io.quarkus.logging.Log;
+import io.quarkus.runtime.Startup;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
+import java.net.URI;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;"
+`;
+
+exports[`ConnectorDependencies component (integration with AsyncAPI document) renders dependencies with query param imports when queryParams is empty Map 1`] = `
+"package com.asyncapi;
+
+import io.quarkus.websockets.next.WebSocketConnector;
+import io.quarkus.websockets.next.WebSocketClientConnection;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
+import jakarta.annotation.PostConstruct;
+import io.quarkus.logging.Log;
+import io.quarkus.runtime.Startup;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
+import java.net.URI;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;"
+`;

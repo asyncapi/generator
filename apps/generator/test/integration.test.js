@@ -12,7 +12,6 @@ const refSpecFolder = path.resolve(__dirname, './docs/');
 const crypto = require('crypto');
 const mainTestResultPath = path.resolve(__dirname, './temp/integrationTestResult');
 const reactTemplate = path.resolve(__dirname, './test-templates/react-template');
-const nunjucksTemplate = path.resolve(__dirname, './test-templates/nunjucks-template');
 //temp location where react template is copied for each test that does some mutation on template files
 const copyOfReactTemplate = path.resolve(__dirname, './temp/reactTemplate');
 
@@ -43,17 +42,6 @@ describe('Integration testing generateFromFile() to make sure the result of the 
     );
   }
   `;
-
-  it('generated using Nunjucks template', async () => {
-    const outputDir = generateFolderName();
-    const generator = new Generator(nunjucksTemplate, outputDir, {
-      forceWrite: true,
-      templateParams: { version: 'v1', mode: 'production' }
-    });
-    await generator.generateFromFile(dummySpecPath);
-    const file = await readFile(path.join(outputDir, testOutputFile), 'utf8');
-    expect(file).toMatchSnapshot();
-  });
 
   it('generate using React template', async () => {
     const outputDir = generateFolderName();

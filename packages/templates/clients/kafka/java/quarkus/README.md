@@ -26,7 +26,7 @@
 1. Navigate to `packages/templates/clients/kafka/java/quarkus`
 2. Install with `npm install`
 3. Navigate back to `./generator`
-4. Generate the template client with `node .\apps\generator\cli.js <path-to-custom-document> .\packages\templates\clients\kafka\java\quarkus\ -o outputClient --force-write --param server=<custom-server>`
+4. Generate the template client with `node .\apps\generator\test\cli.js <path-to-custom-document> .\packages\templates\clients\kafka\java\quarkus\ -o outputClient --force-write --param server=<custom-server>`
 5. Navigate to `outputClient` or any other name you gave the output folder
 6. Navigate to the docker folder with `cd src/main/docker` and find the `docker-compose.yaml` file. 
 7. Start the kafka broker by runnning `docker-compose up -d`. Make sure you have docker desktop up and running.

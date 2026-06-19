@@ -17,6 +17,7 @@ const utils = module.exports;
 utils.lstat = util.promisify(fs.lstat);
 utils.readlink = util.promisify(fs.readlink);
 utils.readFile = util.promisify(fs.readFile);
+utils.realpath = util.promisify(fs.realpath);
 utils.writeFile = util.promisify(fs.writeFile);
 utils.copyFile = util.promisify(fs.copyFile);
 utils.readDir = util.promisify(fs.readdir);
@@ -60,38 +61,19 @@ utils.convertMapToObject = (map) => {
 };
 
 /**
- * Checks if template is local or not (i.e., it's remote).
- * @private
- * @param {String} templatePath The path to the template.
- * @returns {Promise<Boolean>}
- */
-utils.isLocalTemplate = async (templatePath) => {
-  const stats = await utils.lstat(templatePath);
-  return stats.isSymbolicLink();
-};
-
-/**
- * Returns whether or not the template is a react template
- *
- * @param {object} templateConfig
- * @returns {boolean} Whether the template is a React template or not.
- */
-utils.isReactTemplate = (templateConfig) => {
-  return templateConfig !== undefined && templateConfig.renderer === 'react';
-};
-
-/**
  * Fetches an AsyncAPI document from the given URL and return its content as string
  *
  * @param {String} link URL where the AsyncAPI document is located.
  * @returns {Promise<String>} Content of fetched file.
+ * @throws {Error} When the HTTP response is not successful (non-2xx status).
  */
-utils.fetchSpec = (link) => {
-  return new Promise((resolve, reject) => {
-    fetch(link)
-      .then(res => resolve(res.text()))
-      .catch(reject);
-  });
+utils.fetchSpec = async (link) => {
+  const res = await fetch(link);
+  if (!res.ok) {
+    const statusText = res.statusText ? ` ${res.statusText}` : '';
+    throw new Error(logMessage.fetchSpecError(link, res.status, statusText));
+  }
+  return res.text();
 };
 
 /**
@@ -141,11 +123,11 @@ utils.isAsyncFunction = (fn) => {
  */
 utils.registerTypeScript = (filePath) => {
   const isTypescriptFile = filePath.endsWith('.ts');
-  
+
   if (!isTypescriptFile) {
     return;
   }
-  
+
   const { REGISTER_INSTANCE, register } = require('ts-node');
   // if the ts-node has already been registered before, do not register it again.
   // Check the env. TS_NODE_ENV if ts-node started via ts-node-dev package

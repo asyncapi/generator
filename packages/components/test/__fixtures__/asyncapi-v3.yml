@@ -3,6 +3,11 @@ info:
   title: Account Service
   version: 1.0.0
   description: This service is in charge of processing user signups
+servers:
+  production:
+    host: api.example.com
+    protocol: ws
+    description: Production WebSocket server
 channels:
   userSignedup:
     address: user/signedup

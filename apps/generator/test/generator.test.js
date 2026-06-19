@@ -9,10 +9,21 @@ const dummyYAML = fs.readFileSync(path.resolve(__dirname, './docs/dummy.yml'), '
 const logMessage = require('./../lib/logMessages.js');
 
 jest.mock('../lib/utils');
-jest.mock('../lib/filtersRegistry');
 jest.mock('../lib/hooksRegistry');
 jest.mock('../lib/templates/config/validator');
 jest.mock('../lib/templates/config/loader');
+
+beforeEach(() => {
+  jest.clearAllMocks();
+
+  const utils = require('../lib/utils');
+
+  utils.__files = {};
+  utils.__contentOfFetchedFile = '';
+  utils.__isFileSystemPathValue = false;
+  utils.__generatorVersion = '';
+  utils.__getTemplateDetails = undefined;
+});
 
 describe('Generator', () => {
   describe('constructor', () => {
@@ -110,7 +121,6 @@ describe('Generator', () => {
     let asyncApiDocumentMock;
     let xfsMock;
     let util;
-    let filtersRegistry;
     let hooksRegistry;
     let templateConfigValidator;
     let templateConfigLoader;
@@ -120,7 +130,6 @@ describe('Generator', () => {
       gen.installTemplate = jest.fn().mockResolvedValue({ name: 'nameOfTestTemplate', path: '/path/to/template/nameOfTestTemplate' });
       gen.configureTemplate = jest.fn();
       gen.registerHooks = jest.fn();
-      gen.registerFilters = jest.fn();
       gen.validateTemplateConfig = jest.fn();
       gen.generateDirectoryStructure = jest.fn();
       gen.launchHook = jest.fn();
@@ -130,7 +139,6 @@ describe('Generator', () => {
 
     beforeAll(() => {
       util = require('../lib/utils');
-      filtersRegistry = require('../lib/filtersRegistry');
       hooksRegistry = require('../lib/hooksRegistry');
       templateConfigValidator = require('../lib/templates/config/validator');
       templateConfigLoader = require('../lib/templates/config/loader');
@@ -150,7 +158,6 @@ describe('Generator', () => {
       expect(templateConfigLoader.loadTemplateConfig).toHaveBeenCalled();
       expect(gen.configureTemplate).toHaveBeenCalled();
       expect(hooksRegistry.registerHooks).toHaveBeenCalled();
-      expect(filtersRegistry.registerFilters).toHaveBeenCalled();
       expect(templateConfigValidator.validateTemplateConfig).toHaveBeenCalled();
       expect(gen.generateDirectoryStructure).toHaveBeenCalledWith(asyncApiDocumentMock);
       expect(gen.launchHook).toHaveBeenCalledWith('generate:after');
@@ -172,7 +179,6 @@ describe('Generator', () => {
       expect(templateConfigLoader.loadTemplateConfig).toHaveBeenCalled();
       expect(gen.configureTemplate).toHaveBeenCalled();
       expect(hooksRegistry.registerHooks).toHaveBeenCalled();
-      expect(filtersRegistry.registerFilters).toHaveBeenCalled();
       expect(templateConfigValidator.validateTemplateConfig).toHaveBeenCalled();
       expect(gen.generateDirectoryStructure).toHaveBeenCalledWith(asyncApiDocumentMock);
       expect(gen.launchHook).toHaveBeenCalledWith('generate:after');
@@ -192,7 +198,6 @@ describe('Generator', () => {
       expect(gen.installTemplate).toHaveBeenCalledWith(false);
       expect(gen.configureTemplate).toHaveBeenCalled();
       expect(hooksRegistry.registerHooks).toHaveBeenCalled();
-      expect(filtersRegistry.registerFilters).toHaveBeenCalled();
       expect(templateConfigValidator.validateTemplateConfig).toHaveBeenCalled();
       expect(gen.generateDirectoryStructure).toHaveBeenCalledWith(asyncApiDocumentMock);
       expect(gen.launchHook).toHaveBeenCalledWith('generate:after');
@@ -213,7 +218,6 @@ describe('Generator', () => {
       expect(gen.installTemplate).toHaveBeenCalledWith(true);
       expect(templateConfigLoader.loadTemplateConfig).toHaveBeenCalled();
       expect(hooksRegistry.registerHooks).toHaveBeenCalled();
-      expect(filtersRegistry.registerFilters).toHaveBeenCalled();
       expect(templateConfigValidator.validateTemplateConfig).toHaveBeenCalled();
       expect(gen.generateDirectoryStructure).toHaveBeenCalledWith(asyncApiDocumentMock);
       expect(gen.launchHook).toHaveBeenCalledWith('generate:after');
@@ -236,7 +240,6 @@ describe('Generator', () => {
       expect(gen.installTemplate).toHaveBeenCalledWith(false);
       expect(templateConfigLoader.loadTemplateConfig).toHaveBeenCalled();
       expect(hooksRegistry.registerHooks).toHaveBeenCalled();
-      expect(filtersRegistry.registerFilters).toHaveBeenCalled();
       expect(templateConfigValidator.validateTemplateConfig).toHaveBeenCalled();
       expect(gen.launchHook).toHaveBeenCalledWith('generate:after');
       expect(unixify(util.exists.mock.calls[0][0])).toEqual('/path/to/template/nameOfTestTemplate/template/file.js');
@@ -258,7 +261,6 @@ describe('Generator', () => {
       expect(gen.installTemplate).toHaveBeenCalledWith(false);
       expect(gen.configureTemplate).toHaveBeenCalled();
       expect(hooksRegistry.registerHooks).toHaveBeenCalled();
-      expect(filtersRegistry.registerFilters).toHaveBeenCalled();
       expect(templateConfigValidator.validateTemplateConfig).toHaveBeenCalled();
       expect(gen.launchHook).toHaveBeenCalledWith('generate:after');
       expect(gen.originalAsyncAPI).toBe(dummyYAML);
@@ -352,9 +354,7 @@ describe('Generator', () => {
       const templatePath = './testTemplate';
       const gen = new Generator(templatePath, __dirname);
       await gen.installTemplate();
-      setTimeout(() => { // This puts the call at the end of the Node.js event loop queue.
-        expect(arboristMock.reify).toHaveBeenCalledTimes(0);
-      }, 0);
+      expect(arboristMock.reify).not.toHaveBeenCalled();  
     });
 
     it('works with a file system path and force = true', async () => {
@@ -377,9 +377,7 @@ describe('Generator', () => {
       utils.__isFileSystemPathValue = false;
       const gen = new Generator('nameOfTestTemplate', __dirname);
       await gen.installTemplate();
-      setTimeout(() => { // This puts the call at the end of the Node.js event loop queue.
-        expect(arboristMock.reify).toHaveBeenCalledTimes(0);
-      }, 0);
+      expect(arboristMock.reify).not.toHaveBeenCalled();  
     });
 
     it('works with an npm package that is installed for the first time', async () => {

@@ -3,7 +3,7 @@ title: "Template development"
 weight: 80
 ---
 > **Note**
-> It is advised against attempting to manually template types and models from scratch using the AsyncAPI templating engines such as Nunjucks and React render engines. Instead, it is recommended to use [AsyncAPI Modelina](/docs/tools/generator/model-generation) a dedicated library for model generation.
+> It is advised against attempting to manually template types and models from scratch using the AsyncAPI templating engines such as the React render engine. Instead, it is recommended to use [AsyncAPI Modelina](/docs/tools/generator/model-generation) a dedicated library for model generation.
 
 ## Minimum template requirements
 
@@ -40,9 +40,7 @@ The following block shows an example `package.json` file that points to the [Rea
 ```json
 {
   "name": "myTemplate",
-  "generator": {
-    "renderer": "react"
-  },
+  "generator": {},
   "dependencies": {
     "@asyncapi/generator-react-sdk": "^0.2.25"
   }
@@ -57,7 +55,6 @@ You must configure the generator's `package.json` file to contain JSON objects w
 
 |Name|Type|Description|
 |---|---|---|
-|`renderer`| String | Its value can be either `react` or `nunjucks` (default).
 |`supportedProtocols`| [String] | A list with all the protocols this template supports.
 |`parameters`| Object[String, Object] | An object with all the parameters that can be passed when generating the template. When using the command line, it's done by indicating `--param name=value` or `-p name=value`.
 |`parameters[param].description`| String | A user-friendly description about the parameter.
@@ -76,7 +73,6 @@ The following examples show some advanced configurations that we can use in our 
 {
   "name": "myTemplate",
   "generator": {
-    "renderer": "react",
     "supportedProtocols": [
       "mqtt"
     ]
@@ -98,7 +94,6 @@ Additionally, we can also have a configuration called `parameters`, which is an 
 {
   "name": "myTemplate",
   "generator": {
-    "renderer": "react",
     "supportedProtocols": [
       "mqtt"
     ],

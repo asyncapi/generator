@@ -1,4 +1,3 @@
-renderer: react
 apiVersion: v3
 parameters:
   server:

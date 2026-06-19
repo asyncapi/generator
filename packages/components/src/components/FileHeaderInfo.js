@@ -1,4 +1,5 @@
 import { Text } from '@asyncapi/generator-react-sdk';
+import { unsupportedLanguage, missingInfo, missingServer } from '../utils/ErrorHandling';
 
 /**
  * @typedef {'python' | 'javascript' | 'typescript' | 'java' | 'csharp' | 'rust' | 'dart'} Language
@@ -23,16 +24,55 @@ const commentConfig = {
  * Renders a file header with metadata information such as title, version, protocol, host, and path.
  *
  * @param {Object} props - Component props.
- * @param {object} props.info - Info object from the AsyncAPI document.
- * @param {object} props.server - Server object from the AsyncAPI document.
+ * @param {Object} props.info - Info object from the AsyncAPI document.
+ * @param {Object} props.server - Server object from the AsyncAPI document.
  * @param {Language} props.language - Programming language used for comment formatting.
- * @returns {JSX.Element} Rendered file header.
+ * @returns {JSX.Element} A Text component that contains file header.
+ * @throws {Error} When info is missing or invalid.
+ * @throws {Error} When server is missing or invalid.
+ * @throws {Error} When the specified language is not supported.
+ * 
+ * @example
+ * import path from "path";
+ * import { Parser, fromFile } from "@asyncapi/parser";
+ * import { FileHeaderInfo } from "@asyncapi/generator-components";
+ * 
+ * async function renderFileHeader() {
+ *   const parser = new Parser();
+ *   const asyncapi_websocket_query = path.resolve(__dirname, "../../../helpers/test/__fixtures__/asyncapi-websocket-query.yml");
+ *   const language = "javascript";
+ *   
+ *   // Parse the AsyncAPI document 
+ *   const parseResult = await fromFile(parser, asyncapi_websocket_query).parse();
+ *   const parsedAsyncAPIDocument = parseResult.document;
+ *   
+ *   return (
+ *     <FileHeaderInfo 
+ *       info={parsedAsyncAPIDocument.info()} 
+ *       server={parsedAsyncAPIDocument.servers().get("withPathname")} 
+ *       language={language} 
+ *     />
+ *   )
+ * }
+ * 
+ * renderFileHeader().catch(console.error);
  */
 export function FileHeaderInfo({ info, server, language }) {
-  const { commentChar, lineStyle } = commentConfig[language] || { 
-    commentChar: '//', 
-    lineStyle: '//'.repeat(25) 
-  };
+  if (!info) {
+    throw missingInfo();
+  }
+
+  if (!server) {
+    throw missingServer();
+  }
+
+  const supportedLanguages = Object.keys(commentConfig);
+  
+  if (!supportedLanguages.includes(language)) {
+    throw unsupportedLanguage(language, supportedLanguages);
+  }
+
+  const { commentChar, lineStyle } = commentConfig[language];
 
   return (
     <Text>

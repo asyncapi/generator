@@ -11,4 +11,10 @@ describe('Testing of OnError function', () => {
     const actual = result.trim();
     expect(actual).toMatchSnapshot();
   });
+
+  test('throws error for unsupported language', () => {
+    expect(() =>
+      render(<OnError language="java" />)
+    ).toThrow(/Unsupported language "java". Supported languages:/);
+  });
 });

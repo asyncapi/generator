@@ -5,7 +5,7 @@ import { getQueryParams } from '@asyncapi/generator-helpers';
 import { QueryParamsArgumentsDocs } from '../../components/QueryParamsArgumentsDocs';
 
 const parser = new Parser();
-const asyncapiFilePath = path.resolve(__dirname, '../../../../../../helpers/test/__fixtures__/asyncapi-websocket-query.yml');
+const asyncapiFilePath = path.resolve(__dirname, '../../../test/__fixtures__/asyncapi-websocket-components.yml');
 
 describe('QueryParamsArgumentsDocs component (integration with AsyncAPI document)', () => {
   let parsedAsyncAPIDocument;

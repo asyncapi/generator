@@ -1,5 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Testing of QueryParamsVariables component ignores framework for python 1`] = `
+"token = token or os.getenv(\\"TOKEN\\")
+        if token is not None:
+          params[\\"token\\"] = token"
+`;
+
 exports[`Testing of QueryParamsVariables component renders java quarkus nothing when queryParams is an empty array 1`] = `""`;
 
 exports[`Testing of QueryParamsVariables component renders java quarkus query params correctly with query parameters 1`] = `

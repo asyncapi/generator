@@ -26,6 +26,18 @@ describe('Testing of SendOperation function', () => {
     expect(actual).toMatchSnapshot();
   });
 
+  test('render dart websockets with send operations and client name', () => {
+    const result = render(
+      <SendOperations
+        language="dart"
+        clientName="AccountServiceAPI"
+        sendOperations={parsedAsyncAPIDocument.operations().filterBySend()}
+      />
+    );
+    const actual = result.trim();
+    expect(actual).toMatchSnapshot();
+  });
+
   test('render websockets without send operations', () => {
     const result = render(
       <SendOperations 
@@ -60,5 +72,65 @@ describe('Testing of SendOperation function', () => {
     );
     const actual = result.trim();
     expect(actual).toMatchSnapshot();
+  });
+
+  test('throws error for unsupported language', () => {
+    expect(() =>
+      render(
+        <SendOperations
+          language="go"
+          clientName="AccountServiceAPI"
+          sendOperations={[{ id: () => 'testOperation' }]}
+        />
+      )
+    ).toThrow(/Unsupported language "go". Supported languages:/);
+  });
+
+  test('throws error for invalid client name', () => {
+    expect(() =>
+      render(
+        <SendOperations
+          language="javascript"
+          clientName=""
+          sendOperations={[{ id: () => 'testOperation' }]}
+        />
+      )
+    ).toThrow(/Invalid client name. Expected a non-empty string. Received:/);
+  });
+
+  test('throws error for non-string client name', () => {
+    expect(() =>
+      render(
+        <SendOperations
+          language="javascript"
+          clientName={null}
+          sendOperations={[{ id: () => 'testOperation' }]}
+        />
+      )
+    ).toThrow(/Invalid client name. Expected a non-empty string. Received:/);
+  });
+
+  test('throws error for invalid operation object', () => {
+    expect(() =>
+      render(
+        <SendOperations
+          language="javascript"
+          clientName="AccountServiceAPI"
+          sendOperations={[{}]}
+        />
+      )
+    ).toThrow(/Invalid AsyncAPI operation. Expected a valid operation with id()/);
+  });
+
+  test('throws error when operation id is empty', () => {
+    expect(() =>
+      render(
+        <SendOperations
+          language="javascript"
+          clientName="AccountServiceAPI"
+          sendOperations={[{ id: () => '' }]}
+        />
+      )
+    ).toThrow(/Invalid AsyncAPI operation. Expected a valid operation with id()/);
   });
 });

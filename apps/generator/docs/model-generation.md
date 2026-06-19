@@ -5,7 +5,7 @@ weight: 200
 
 This guide will walk you through the process of enabling models/types generation in a template by using [Modelina](https://www.asyncapi.com/tools/modelina).
 
-Modelina is an AsyncAPI library designed for generating data models using inputs such as [AsyncAPI](generator/asyncapi-document), OpenAPI, or JSON schema inputs. Its functionality revolves around creating data models from the provided AsyncAPI document and the model template, which defines message payloads. It is better to use Modelina in your template to handle model generation rather than providing custom templates.
+Modelina is an AsyncAPI library designed for generating data models using inputs such as [AsyncAPI](asyncapi-document), OpenAPI, or JSON schema inputs. Its functionality revolves around creating data models from the provided AsyncAPI document and the model template, which defines message payloads. It is better to use Modelina in your template to handle model generation rather than providing custom templates.
 
 You can integrate the work shown in this guide into a template by following the [tutorial about creating a template](https://www.asyncapi.com/docs/tools/generator/generator-template).
 

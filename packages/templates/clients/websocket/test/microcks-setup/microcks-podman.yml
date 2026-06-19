@@ -139,7 +139,7 @@ services:
   npm-test:
     profiles:
       - infra
-    image: node:20
+    image: node:24
     container_name: npm-test
     working_dir: /usr/src/app
     volumes:
@@ -152,7 +152,7 @@ services:
   tester-js:
     profiles:
       - test-js
-    image: node:22
+    image: node:24
     container_name: websocket-acceptance-tester-js
     ports:
       - 8082:8082

@@ -4,13 +4,13 @@ import { Parser, fromFile } from '@asyncapi/parser';
 import { Send } from '../../components/Send';
 
 const parser = new Parser();
-const asyncapi_websocket_query = path.resolve(__dirname, '../../../../../../helpers/test/__fixtures__/asyncapi-websocket-query.yml');
+const asyncapiFilePath = path.resolve(__dirname, '../../../test/__fixtures__/asyncapi-websocket-components.yml');
 
 describe('Testing of Send component', () => {
   let parsedAsyncAPIDocument;
 
   beforeAll(async () => {
-    const parseResult = await fromFile(parser, asyncapi_websocket_query).parse();
+    const parseResult = await fromFile(parser, asyncapiFilePath).parse();
     parsedAsyncAPIDocument = parseResult.document;
   });
 

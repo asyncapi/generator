@@ -407,13 +407,3 @@ components:
           bindingVersion: '0.1.0'
 "
 `;
-
-exports[`Integration testing generateFromFile() to make sure the result of the generation is not changend comparing to snapshot generated using Nunjucks template 1`] = `
-"This is a markdown file for my application.
-App name is: **Dummy example with all spec features included**
-Version v1 running on production mode
-
-HTML description: **&lt;p&gt;This is an example of AsyncAPI specification file that is suppose to include all possible features of the AsyncAPI specification. Do not use it on production.&lt;/p&gt;
-&lt;p&gt;It&#39;s goal is to support development of documentation and code generation with the &lt;a href=&quot;https://github.com/asyncapi/generator/&quot;&gt;AsyncAPI Generator&lt;/a&gt; and &lt;a href=&quot;https://github.com/search?q=topic%3Aasyncapi+topic%3Agenerator+topic%3Atemplate&quot;&gt;Template projects&lt;/a&gt;&lt;/p&gt;
-**"
-`;

@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ConstructorSignature component (integration with AsyncAPI document) renders constructor signature with empty parameters when queryParams is empty array 1`] = `"public WebSocketClient(){"`;
+
+exports[`ConstructorSignature component (integration with AsyncAPI document) renders constructor signature with query parameters from fixture 1`] = `"public WebSocketClient(String heartbeat, String bids, String sessionId){"`;
+
+exports[`ConstructorSignature component (integration with AsyncAPI document) renders nothing when queryParams is null 1`] = `""`;
+
+exports[`ConstructorSignature component (integration with AsyncAPI document) renders nothing when queryParams is undefined 1`] = `""`;

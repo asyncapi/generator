@@ -498,7 +498,7 @@ import java.util.Objects;
 import java.util.Map;
 
 public class ComDotAdeoDotCasestudyDotCostingresponseDotCostingErrorItem {
-  private AnonymousSchema_35 type;
+  private AnonymousSchema_35 type = AnonymousSchema_35.FUNCTIONAL;
   private String code;
   private String step;
   private String description;
@@ -696,7 +696,7 @@ import java.util.Map;
 
 public class ComDotAdeoDotCasestudyDotCostingresponseDotCostingResultItem implements AnonymousSchema_25 {
   private float calculationPrice;
-  private AnonymousSchema_27 calculationCurrency;
+  private AnonymousSchema_27 calculationCurrency = AnonymousSchema_27.EUR;
   private ComDotAdeoDotCasestudyDotCostingresponseDotCostingResultDetailsItem[] calculationDetails;
   private Map<String, Object> additionalProperties;
 

@@ -1,5 +1,177 @@
 # @asyncapi/generator
 
+## 3.3.0
+
+### Minor Changes
+
+- 5fe91b0: Generated Python and JavaScript WebSocket clients no longer swallow send errors. Failures are now forwarded to the registered error handlers and raised by default, so callers learn when a message fails to send. Pass `raise_send_errors=False` (Python) or `throwSendErrors=false` (JavaScript) to the constructor to keep a high-throughput producer loop running and rely on the error handlers instead.
+
+### Patch Changes
+
+- Updated dependencies [5fe91b0]
+  - @asyncapi/generator-components@0.7.0
+
+## 3.2.3
+
+### Patch Changes
+
+- 69c2fa1: The `mapBaseUrlToFolder` resolver now rejects `$ref`s that resolve outside the configured base folder. Previously a reference such as `https://schema.example.com/crm/../../../etc/passwd` was passed through unnormalized, letting a malicious AsyncAPI document read files outside the mapped folder (path traversal). References that escape the base folder are now blocked with an explicit error.
+
+  This only affects references that start with the mapped base URL and then use `../` to climb out of the mapped folder (e.g. `https://schema.example.com/crm/../shared/common.json` reaching a sibling folder). If you relied on this to reference files outside the mapped folder, map a higher-level base instead — e.g. map `https://schema.example.com/` to `./schemas/` and reference `https://schema.example.com/shared/common.json` directly — so the resolved paths stay within the mapped folder.
+
+## 3.2.2
+
+### Patch Changes
+
+- b43cd7c: Fix `fetchSpec` silently resolving on non-2xx HTTP responses. Previously, fetching an AsyncAPI document from a URL that returned a 4xx or 5xx status would resolve with the error response body (e.g. an HTML page) instead of rejecting. `fetchSpec` now throws a descriptive error including the URL and HTTP status code, so failures are surfaced immediately rather than propagating as invalid spec content.
+
+## 3.2.1
+
+### Patch Changes
+
+- 643f194: Fix browserslist error when using pnpm
+
+  Set BROWSERSLIST_ROOT_PATH environment variable during template compilation
+  to prevent browserslist from searching outside the template directory. This
+  fixes an issue where pnpm's shim files were incorrectly parsed as browserslist
+  configuration, causing "Unknown browser query" errors.
+
+  Fixes: https://github.com/asyncapi/cli/issues/1781
+
+## 3.2.0
+
+### Minor Changes
+
+- 8f06c14: Update @npmcli/arborist from v5.6 to v9.2
+  This is a large jump but there are no breaking changes that affect us across these versions
+  https://github.com/npm/cli/blob/latest/workspaces/arborist/CHANGELOG.md
+
+## 3.1.2
+
+### Patch Changes
+
+- 4a09f57: Bump @asyncapi/parser to 3.6.0 to support AsyncAPI 3.1.0
+
+## 3.1.1
+
+### Patch Changes
+
+- 2bfad27: Fix generator handling of template parameters with `false` default values, ensuring defaults are correctly injected and conditional generation works as expected.
+
+## 3.1.0
+
+### Minor Changes
+
+- 11a1b8d: - **Updated Component**: `OnMessage` (Python) - Added discriminator-based routing logic that automatically dispatches messages to operation-specific handlers before falling back to generic handlers
+
+  - **New Helpers**:
+    - `getMessageDiscriminatorData` - Extracts discriminator key and value from individual messages
+    - `getMessageDiscriminatorsFromOperations` - Collects all discriminator metadata from receive operations
+  - Enhanced Python webSocket client generation with **automatic operation-based message routing**:
+
+  ## How python routing works
+
+  - Generated WebSocket clients now automatically route incoming messages to operation-specific handlers based on message discriminators. Users can register handlers for specific message types without manually parsing or filtering messages.
+  - When a message arrives, the client checks it against registered discriminators (e.g., `type: "hello"`, `type: "events_api"`)
+  - If a match is found, the message is routed to the specific operation handler (e.g., `onHelloMessage`, `onEvent`)
+  - If no match is found, the message falls back to generic message handlers
+  - This enables clean separation of message handling logic based on message types
+
+  > `discriminator` is a `string` field that you can add to any AsyncAPI Schema. This also means that it is limited to AsyncAPI Schema only, and it won't work with other schema formats, like for example, Avro.
+
+  The implementation automatically derives discriminator information from your AsyncAPI document:
+
+  - Discriminator `key` is extracted from the `discriminator` field in your AsyncAPI spec
+  - Discriminator `value` is extracted from the `const` property defined in message schemas
+
+  Example AsyncAPI Schema with `discriminator` and `const`:
+
+  ```yaml
+  schemas:
+    hello:
+      type: object
+      discriminator: type # you specify name of property
+      properties:
+        type:
+          type: string
+          const: hello # you specify the value of the discriminator property that is used for routing
+          description: A hello string confirming WebSocket connection
+  ```
+
+  ## Fallback
+
+  When defaults aren't available in the AsyncAPI document, users must provide **both** `discriminator_key` and `discriminator_value` when registering handlers. Providing only one parameter is not supported - you must provide either both or neither.
+
+  > **Why this limitation exists**: When a receive operation has multiple messages sharing the same discriminator key (e.g., all use `"type"` field), we need the specific value (e.g., `"hello"`, `"disconnect"`) to distinguish between them. Without both pieces of information, the routing becomes ambiguous.
+
+  Example:
+
+  ```python
+  # Default case - discriminator info auto-derived from AsyncAPI doc
+  client.register_on_hello_message_handler(my_handler)
+
+  # Custom case - must provide both key AND value
+  client.register_on_hello_message_handler(
+      my_handler,
+      discriminator_key="message_type",
+      discriminator_value="custom_hello"
+  )
+  ```
+
+### Patch Changes
+
+- Updated dependencies [11a1b8d]
+  - @asyncapi/generator-components@0.5.0
+  - @asyncapi/generator-helpers@1.1.0
+
+## 3.0.1
+
+### Patch Changes
+
+- c5be81a: Enforce new helpers and components release to use latest versions in generator. Required because of the recent misconfiguration of releases and Trusted Publishing.
+- Updated dependencies [c5be81a]
+  - @asyncapi/generator-helpers@1.0.1
+  - @asyncapi/generator-components@0.4.1
+
+## 3.0.0
+
+### Major Changes
+
+- df08ae7: ### Breaking Changes
+
+  - You must use Node.js 24.11 or higher, and NPM 11.5.1 or higher
+  - Nunjucks renderer removed — React is now the sole rendering engine. No need to specify render engine in config anymore
+  - Nunjucks filters package and its public filters removed; filter-based template APIs no longer available.
+  - `ag` CLI is no longer available. It was announced some time ago that it would be deprecated, and users are encouraged to switch to the [AsyncAPI CLI](https://github.com/asyncapi/cli/)
+
+  ### Migration Guides
+
+  - [Migrating from Nunjucks to React render engine](https://github.com/asyncapi/generator/blob/%40asyncapi/generator%402.8.4/apps/generator/docs/migration-nunjucks-react.md)
+  - [Migrating from `ag` CLI to AsyncAPI CLI](https://github.com/asyncapi/generator/blob/%40asyncapi/generator%402.8.4/apps/generator/docs/migration-cli.md)
+
+### Patch Changes
+
+- Updated dependencies [df08ae7]
+  - @asyncapi/generator-helpers@1.0.0
+
+## 2.11.0
+
+### Minor Changes
+
+- ced1404: Pushing of release https://github.com/asyncapi/generator/pull/1747 that failed due to pipeline issues.
+
+## 2.10.0
+
+### Minor Changes
+
+- aee45ba: Pushing of release https://github.com/asyncapi/generator/pull/1747 that failed due to pipeline issues.
+
+## 2.9.0
+
+### Minor Changes
+
+- 8168bcd: Pushing of release https://github.com/asyncapi/generator/pull/1747 that failed due to pipeline issues.
+
 ## 2.8.4
 
 ### Patch Changes
@@ -150,7 +322,6 @@
       "@babel/core": "^7.26.0",
       "@babel/preset-env": "^7.26.0",
       "@babel/preset-react": "^7.25.9",
-      "jest-esm-transformer": "^1.0.0",
       "@asyncapi/generator": "*",
       "eslint": "^6.8.0",
       "eslint-plugin-jest": "^23.8.2",

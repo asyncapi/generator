@@ -61,7 +61,6 @@ Add the following code snippet to your package.json file:
     "version": "0.0.1",
     "description": "A template that generates a Java MQTT client using MQTT.",
     "generator": {
-      "renderer": "react",
       "apiVersion": "v1",
       "generator": ">=1.10.0 <2.0.0",
       "supportedProtocols": ["mqtt"]
@@ -287,7 +286,6 @@ In **package.json** define a script property that you invoke by calling `npm run
     "version": "0.0.1",
     "description": "A template that generates a Java MQTT client using MQTT.",
     "generator": {
-      "renderer": "react",
       "apiVersion": "v1",
       "generator": ">=1.10.0 <2.0.0",
       "supportedProtocols": ["mqtt"],

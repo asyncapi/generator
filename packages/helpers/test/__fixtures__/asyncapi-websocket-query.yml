@@ -74,6 +74,36 @@ channels:
             payload: false
           - name: number
             payload: 123
+      MarketUpdateMessage:
+        summary: Market update message with discriminator
+        payload:
+          type: object
+          discriminator: messageType
+          properties:
+            messageType:
+              type: string
+              const: marketUpdate
+            data:
+              type: string
+      MessageWithoutDiscriminator:
+        summary: Message without discriminator
+        payload:
+          type: object
+          properties:
+            messageType:
+              type: string
+            data:
+              type: string
+      MessageWithDiscriminatorNoConst:
+        summary: Message with discriminator but no const value
+        payload:
+          type: object
+          discriminator: messageType
+          properties:
+            messageType:
+              type: string
+            data:
+              type: string
   wsBindingNoQuery:
     address: '/no-query'
     bindings:
@@ -163,6 +193,16 @@ operations:
       $ref: '#/channels/marketDataV1'
     messages:
       - $ref: '#/channels/marketDataV1/messages/noExamples'
+  
+  receiveMarketUpdate:
+    action: receive
+    channel:
+      $ref: '#/channels/marketDataV1'
+    summary: Receive market update message
+    messages:
+      - $ref: '#/channels/marketDataV1/messages/MarketUpdateMessage'
+      - $ref: '#/channels/marketDataV1/messages/MessageWithoutDiscriminator'
+      - $ref: '#/channels/marketDataV1/messages/MessageWithDiscriminatorNoConst'
 
 components:
   parameters:

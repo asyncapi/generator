@@ -1,14 +1,15 @@
 import { Text } from '@asyncapi/generator-react-sdk';
+import { unsupportedLanguage } from '../utils/ErrorHandling';
 
 /**
- * @typedef {'python' | 'javascript' | 'dart'} SupportedLanguage
+ * @typedef {'python' | 'javascript' | 'dart'} Language
  * Supported programming languages for WebSocket onError handler generation.
  */
 
 /**
  * Mapping of supported programming languages to their WebSocket onError event handler implementations.
  * 
- * @type {Object.<SupportedLanguage, Function>}
+ * @type {Object.<Language, Function>}
  */
 const websocketOnErrorMethod = {
   javascript: () => {
@@ -36,33 +37,44 @@ const websocketOnErrorMethod = {
   dart: () => {
     return {
       onErrorMethod: `onError: (error) {
-        if (_errorHandlers.isNotEmpty) {
-          for (var handler in _errorHandlers) {
-            handler(error);
-          }
-        } else {
-          print('WebSocket Error: $error');
-        }
+        _handleError(error);
       },`
     };
   }
 };
 
 /**
- * Component that renders WebSocket onError event handler for the specified programming language.
+ * Renders a WebSocket onError event handler for the specified programming language.
  * 
- * @param {Object} props - Component properties.
- * @param {SupportedLanguage} props.language - The programming language for which to generate onError handler code.
+ * @param {Object} props - Component props.
+ * @param {Language} props.language - The programming language for which to generate onError handler code.
+ * @returns {JSX.Element} A Text component containing the onError handler code for the specified language.
+ * @throws {Error} When the specified language is not supported.
+ * 
+ * @example
+ * import { OnError } from "@asyncapi/generator-components";
+ * const language = "javascript";
+ * 
+ * function renderOnError() {
+ *   return (
+ *     <OnError language={language} />
+ *   )
+ * }
+ * 
+ * renderOnError();
  */
 export function OnError({ language }) {
-  let onErrorMethod = '';
+  const supportedLanguages = Object.keys(websocketOnErrorMethod);
   
-  if (websocketOnErrorMethod[language]) {
-    const generateErrorCode = websocketOnErrorMethod[language];
-    const errorResult = generateErrorCode();
-    onErrorMethod = errorResult.onErrorMethod;
-  }
+  const generateErrorCode = websocketOnErrorMethod[language];
 
+  if (!generateErrorCode) {
+    throw unsupportedLanguage(language, supportedLanguages);
+  }
+  
+  const errorResult = generateErrorCode();
+  const { onErrorMethod } = errorResult;
+  
   return (
     <Text>
       {onErrorMethod}

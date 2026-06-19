@@ -1,0 +1,54 @@
+---
+title: Reusable Components API
+weight: 77
+---
+
+## Components
+
+{{#functions}}
+* [{{name}}](#{{name}}){{#if returns.length}} ⇒ `{{{returns.[0].type.names.[0]}}}`{{/if}}<br/>
+  
+  {{{description}}}
+
+{{/functions}}
+{{#functions}}
+
+<a name="{{name}}"></a>
+### {{name}}()
+{{description}}
+
+{{#if params.length}}
+
+**Parameters**
+
+| Name | Type | Description |
+|------|------|-------------|
+{{#each params}}
+| {{name}} | `{{{type.names.[0]}}}` | {{description}} |
+{{/each}}
+
+{{/if}}
+
+{{#if returns.length}}
+
+**Returns**
+
+{{#each returns}}
+- `{{{type.names.[0]}}}`{{#if description}} - {{description}}{{/if}}
+{{/each}}
+
+{{/if}}
+
+{{#if examples.length}}
+
+**Example**
+
+{{#each examples}}
+```js
+{{{this}}}
+```
+{{/each}}
+
+{{/if}}
+
+{{/functions}}

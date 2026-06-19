@@ -2,6 +2,24 @@
 
 This guide will help you set up the `generator` locally, run tests, and use Docker for isolated testing.
 
+## Before You Begin - New Contributor Onboarding
+
+New to AsyncAPI Generator? We strongly recommend watching our comprehensive onboarding webinar first:
+
+**Watch: [One Tool, One Flow: AsyncAPI's New Take on Code/Docs/Config Generation](https://www.youtube.com/watch?v=Mkd7FgKOMNE)**
+
+### What you'll learn:
+
+- What AsyncAPI is and the challenges it solves
+- The origins and evolution of the Generator (legacy vs. future architecture)
+- Understanding event-driven architectures and protocol complexity
+- How the Generator works: templates, render engines, and the generation process
+- Component-based template development for better reusability
+- Baked-in templates and the monorepo structure
+- Live demonstrations of code generation from AsyncAPI documents
+
+This webinar provides essential context about the Generator's architecture, design decisions, and development workflow. Watching it will make the rest of this development guide much clearer and help you contribute more effectively.
+
 ## Getting started
 
 1. Fork & Clone the repository:
@@ -13,13 +31,15 @@ git clone https://github.com/{your_username}/generator.git
 cd generator
 ```
 
-After cloning the repository, you should setup the fork properly and configure the `remote` repository as described [here](https://github.com/asyncapi/community/blob/master/git-workflow.md)
+After cloning the repository, you should setup the fork properly and configure the `remote` repository as described in the [AsyncAPI git workflow guidelines](https://github.com/asyncapi/community/blob/master/docs/010-contribution-guidelines/git-workflow.md)
 
 2. Install dependencies:
 
 ```bash
-npm install
+npm install --workspaces
 ```
+
+**`CLAUDE.md` vs `AGENTS.md`:** The repo may ship `CLAUDE.md` as a symlink to `AGENTS.md` (one canonical guidelines file). After a clone, Linux and macOS usually need no extra step. On **Windows**, turn on **Developer Mode** (or equivalent symlink permission), run `git config core.symlinks true`, then `git checkout -- CLAUDE.md` so Git creates a real link—not a one-line text stub. Edit **`AGENTS.md`** only for content; the symlink follows automatically.
 
 ## Running tests
 
@@ -58,7 +78,7 @@ You can also opt in to run the lint checks after the tests, by setting an enviro
 
 ### Manually testing with test templates
 
-To test template features manually we have `react-template` and `nunjucks-template` in `apps/generator/test/templates`, you can use this templates to manually test your changes like this:
+To test template features, use the `react-template` in `apps/generator/test/test-templates`. You can run your changes against this template as follows:
 
 1. Navigate to the generator directory:
 
@@ -70,7 +90,7 @@ cd apps/generator
 3. Run the generator with the react-template:
 
 ```bash
-node ./cli  ./test/docs/dummy.yml ./test/test-templates/react-template -o ./test/output --force-write
+node ./test/cli  ./test/docs/dummy.yml ./test/test-templates/react-template -o ./test/output --force-write
 ```
 
 4. Check the output in the `./test/output` directory to verify the output that you desired.
@@ -177,7 +197,7 @@ For the PR titles you can refer to [this guide](CONTRIBUTING.md?plain=1#L60)
 
 If you encounter any issues during development or testing, please check the following:
 
-1. Ensure you're using the correct Node.js version (18.20.8 or higher) and npm version (10.8.2 or higher).
+1. Ensure you're using the correct Node.js version (24.11 or higher) and npm version (11.5.1 or higher).
 2. Clear the `node_modules` directory and reinstall dependencies if you encounter unexpected behavior.
 3. For Docker-related issues, make sure Docker is running and you have sufficient permissions.
 

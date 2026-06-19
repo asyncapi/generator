@@ -13,15 +13,14 @@ describe('Transpiler', () => {
   const testFiles = path.resolve(__dirname, './testfiles');
   const outputFiles = path.resolve(__dirname, './__transpiled_testfiles');
 
-  beforeAll(async (done) => {
+  beforeAll(async () => {
     try {
       await transpileFiles(testFiles, outputFiles, {
         recursive: true
       });
-      done();
     } catch (e) {
       console.log(e);
-      done(e);
+      throw e;
     }
   });
 

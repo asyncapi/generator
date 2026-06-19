@@ -22,13 +22,3 @@ export const parseAsyncAPIDocumentFromFile = async (asyncapiFilepath) => {
   }
   return asyncapi;
 };
-
-/**
- * Generates a unique schema URI using the current timestamp.
- *
- * @returns {string} A unique schema URI.
- */
-export const generateSchemaURI = () => {
-  const timestamp = Date.now().toString();
-  return `http://asyncapi/keeper/schema/${timestamp}`;
-};

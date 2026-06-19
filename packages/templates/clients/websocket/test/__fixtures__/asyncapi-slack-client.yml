@@ -274,9 +274,11 @@ components:
   schemas:
     hello:
       type: object
+      discriminator: type
       properties:
         type:
           type: string
+          const: hello
           description: A hello string confirming WebSocket connection
         connection_info:
           title: connectionInfo
@@ -291,6 +293,7 @@ components:
 
     event:
       type: object
+      discriminator: type
       additionalProperties: false
       properties:
         envelope_id:
@@ -421,6 +424,7 @@ components:
                 description: Whether the event is from an external shared channel or not
         type:
           type: string
+          const: events_api
         accepts_response_payload:
           type: boolean
         retry_attempt:
@@ -442,10 +446,11 @@ components:
           description: Optional payload of event
     disconnect:
       type: object
+      discriminator: type
       properties:
         type:
           type: string
-          cont: disconnect
+          const: disconnect
         reason:
           title: disconnectReasonEnum
           type: string

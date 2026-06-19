@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Constructor component (integration with AsyncAPI document) renders constructor when query parameters are present 1`] = `
+"public WebSocketClient(){
+      this(\\"false\\", \\"true\\", null);
+  }
+
+  public WebSocketClient(String heartbeat, String bids, String sessionId){
+      params = new HashMap<>(); 
+      this.heartbeat = (heartbeat != null && !heartbeat.isEmpty()) ? heartbeat : System.getenv(\\"HEARTBEAT\\");
+      if (this.heartbeat != null){
+        params.put(\\"heartbeat\\", this.heartbeat);
+      }
+      this.bids = (bids != null && !bids.isEmpty()) ? bids : System.getenv(\\"BIDS\\");
+      if (this.bids != null){
+        params.put(\\"bids\\", this.bids);
+      }
+      this.sessionId = (sessionId != null && !sessionId.isEmpty()) ? sessionId : System.getenv(\\"SESSIONID\\");
+      if (this.sessionId != null){
+        params.put(\\"sessionId\\", this.sessionId);
+      }
+  }"
+`;
+
+exports[`Constructor component (integration with AsyncAPI document) renders nothing when query has no entries 1`] = `""`;
+
+exports[`Constructor component (integration with AsyncAPI document) renders nothing when query is null 1`] = `""`;

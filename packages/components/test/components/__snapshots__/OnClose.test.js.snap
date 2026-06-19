@@ -1,5 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Testing of OnClose function ignores framework for languages that do not use frameworks 1`] = `
+"// On connection close
+    this.websocket.onclose = () => {
+      console.log('Disconnected from HoppscotchEchoWebSocketClient server');
+    };"
+`;
+
 exports[`Testing of OnClose function render dart OnClose method 1`] = `
 "onDone: () {
         _channel = null;

@@ -1,10 +1,14 @@
 /* eslint-disable sonarjs/no-duplicate-string */
+const fs = require('fs');
 const path = require('path');
 const Generator = require('../lib/generator');
 const log = require('loglevel');
 const utils = jest.requireActual('../lib/utils');
 
 const logMessage = require('./../lib/logMessages.js');
+
+jest.mock('node-fetch');
+const fetch = require('node-fetch');
 
 describe('Utils', () => {
   describe('#getTemplateDetails', () => {
@@ -54,7 +58,7 @@ describe('Utils', () => {
       expect(log.debug).toHaveBeenCalledWith(logMessage.templateNotFound(templateNpmName));
     });
 
-    it('doesnt work with a url', async () => {
+    it('does not work with a url', async () => {
       resolvePkg.__resolvePkgValue = undefined;
       resolveFrom.__resolveFromValue = undefined;
       const result = utils.getTemplateDetails(templateNpmName, 'package.json');
@@ -63,18 +67,83 @@ describe('Utils', () => {
   });
 
   describe('#exists', () => {
-    it('should return true if file exist', async () => {
-      const exists = await utils.exists(`${process.cwd()}/package.json`);
-      expect(exists).toBeTruthy();
+    afterEach(() => {
+      jest.restoreAllMocks();
+    });
+
+    it('should return true if file exists', async () => {
+      jest.spyOn(fs.promises, 'stat').mockResolvedValueOnce({});
+
+      const exists = await utils.exists('existing-file');
+
+      expect(fs.promises.stat).toHaveBeenCalledWith(
+        'existing-file',
+        fs.constants.F_OK
+      );
+      expect(exists).toBe(true);
     });
 
     it('should return false if file does not exist', async () => {
-      const exists = await utils.exists('./invalid-file');
-      expect(exists).toBeFalsy();
+      const error = new Error('File not found');
+
+      jest.spyOn(fs.promises, 'stat').mockRejectedValueOnce(error);
+      jest.spyOn(log, 'debug').mockImplementation(() => {});
+
+      const exists = await utils.exists('non-existing-file');
+
+      expect(fs.promises.stat).toHaveBeenCalledWith(
+        'non-existing-file',
+        fs.constants.F_OK
+      );
+
+      expect(log.debug).toHaveBeenCalledWith(
+        `File non-existing-file couldn't be found. Error: ${error.message}`
+      );
+
+      expect(exists).toBe(false);
     });
   });
 
-  describe('#isJsFile',() => {
+  describe('#fetchSpec', () => {
+    const specUrl = 'http://example.com/asyncapi.yaml';
+
+    afterEach(() => {
+      jest.resetAllMocks();
+    });
+
+    it('returns response body on HTTP 200', async () => {
+      const body = 'asyncapi: 2.6.0\ninfo:\n  title: test\n  version: 0.0.1';
+      fetch.mockResolvedValueOnce({ ok: true, text: jest.fn().mockResolvedValueOnce(body) });
+
+      await expect(utils.fetchSpec(specUrl)).resolves.toBe(body);
+    });
+
+    it('rejects with error message including URL and status on 404', async () => {
+      fetch.mockResolvedValueOnce({ ok: false, status: 404, statusText: 'Not Found' });
+
+      await expect(utils.fetchSpec(specUrl)).rejects.toThrow(
+        logMessage.fetchSpecError(specUrl, 404, ' Not Found')
+      );
+    });
+
+    it('rejects with error message including URL and status on 500', async () => {
+      fetch.mockResolvedValueOnce({ ok: false, status: 500, statusText: 'Internal Server Error' });
+
+      await expect(utils.fetchSpec(specUrl)).rejects.toThrow(
+        logMessage.fetchSpecError(specUrl, 500, ' Internal Server Error')
+      );
+    });
+
+    it('rejects with only status code when response has no status text', async () => {
+      fetch.mockResolvedValueOnce({ ok: false, status: 503, statusText: '' });
+
+      await expect(utils.fetchSpec(specUrl)).rejects.toThrow(
+        logMessage.fetchSpecError(specUrl, 503, '')
+      );
+    });
+  });
+
+  describe('#isJsFile', () => {
     it('should return true if file extension is .js', () => {
       const isJsFile = utils.isJsFile('./valid-file.js');
       expect(isJsFile).toBeTruthy();
@@ -94,36 +163,6 @@ describe('Utils', () => {
     it('should return false if it is not a JS file', () => {
       const isJsFile = utils.isJsFile('./invalid-file');
       expect(isJsFile).toBeFalsy();
-    });
-  });
-
-  describe('#isReactTemplate', () => {
-    it('should return true if it is a react template', () => {
-      const templateConfig  = {
-        renderer: 'react'
-      };
-      const isReactTemplate = utils.isReactTemplate(templateConfig);
-      expect(isReactTemplate).toBeTruthy();
-    });
-
-    it('should return false if it is not a react template', () => {
-      const templateConfig  = {
-        renderer: 'nunjucks'
-      };
-      const isReactTemplate = utils.isReactTemplate(templateConfig);
-      expect(isReactTemplate).toBeFalsy();
-    });
-    
-    it('should return false if template config is not specified', () => {
-      const templateConfig  = {};
-      const isReactTemplate = utils.isReactTemplate(templateConfig);
-      expect(isReactTemplate).toBeFalsy();
-    });
-
-    it('should return false if template config is undefined', () => {
-      const templateConfig  = undefined;
-      const isReactTemplate = utils.isReactTemplate(templateConfig);
-      expect(isReactTemplate).toBeFalsy();
     });
   });
 });

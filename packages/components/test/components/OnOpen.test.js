@@ -26,4 +26,50 @@ describe('Testing of OnOpen function', () => {
     const actual = result.trim();
     expect(actual).toMatchSnapshot();
   });
+
+  test('throws error for unsupported language', () => {
+    expect(() =>
+      render(
+        <OnOpen
+          language="go"
+          title="HoppscotchEchoWebSocketClient"
+        />
+      )
+    ).toThrow(/Unsupported language "go". Supported languages:/);
+  });
+
+  test('throws error when framework is missing for java', () => {
+    expect(() =>
+      render(
+        <OnOpen
+          language="java"
+          title="HoppscotchEchoWebSocketClient"
+        />
+      )
+    ).toThrow(/Framework is required for language "java". Supported frameworks:/);
+  });
+
+  test('throws error for unsupported framework in java', () => {
+    expect(() =>
+      render(
+        <OnOpen
+          language="java"
+          framework="spring"
+          title="HoppscotchEchoWebSocketClient"
+        />
+      )
+    ).toThrow(/Unsupported framework "spring" for language "java". Supported frameworks:/);
+  });
+
+  test('ignores framework for javascript', () => {
+    const result = render(
+      <OnOpen
+        language="javascript"
+        framework="randomFramework"
+        title="HoppscotchEchoWebSocketClient"
+      />
+    );
+
+    expect(result.trim()).toMatchSnapshot();
+  });
 });

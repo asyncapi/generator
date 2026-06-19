@@ -1,7 +1,8 @@
 const { getMessageExamples, getOperationMessages } = require('./operations');
 const { getServerUrl, getServer, getServerHost, getServerProtocol }  = require('./servers');
-const { getClientName, getInfo, toSnakeCase, toCamelCase, getTitle, lowerFirst, upperFirst} = require('./utils');
-const { getQueryParams } = require('./bindings');
+const { getClientName, getInfo, toSnakeCase, toCamelCase, getTitle, lowerFirst, upperFirst } = require('./utils');
+const { getMessageDiscriminatorData, getMessageDiscriminatorsFromOperations } = require('./discriminators');
+const { getQueryParams, getQueryParamsForAllChannels } = require('./bindings');
 const { cleanTestResultPaths, verifyDirectoryStructure, getDirElementsRecursive, buildParams, listFiles, hasNestedConfig} = require('./testing');
 const { JavaModelsPresets } = require('./ModelsPresets');
 
@@ -13,6 +14,7 @@ module.exports = {
   getServerProtocol,
   listFiles,
   getQueryParams,
+  getQueryParamsForAllChannels,
   getOperationMessages,
   getMessageExamples,
   getTitle,
@@ -26,5 +28,7 @@ module.exports = {
   getDirElementsRecursive,
   buildParams,
   hasNestedConfig,
-  JavaModelsPresets
+  JavaModelsPresets,
+  getMessageDiscriminatorData, 
+  getMessageDiscriminatorsFromOperations
 };

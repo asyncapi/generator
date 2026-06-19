@@ -26,4 +26,50 @@ describe('Testing of OnClose function', () => {
     const actual = result.trim();
     expect(actual).toMatchSnapshot();
   });
+
+  test('ignores framework for languages that do not use frameworks', () => {
+    const result = render(
+      <OnClose
+        language="javascript"
+        framework="react"
+        title="HoppscotchEchoWebSocketClient"
+      />
+    );
+
+    expect(result.trim()).toMatchSnapshot();
+  });
+
+  test('throws an error for unsupported language', () => {
+    expect(() =>
+      render(
+        <OnClose
+          language="go"
+          title="HoppscotchEchoWebSocketClient"
+        />
+      )
+    ).toThrow(/Unsupported language "go". Supported languages:/);
+  });
+
+  test('throws error for unsupported framework in java', () => {
+    expect(() =>
+      render(
+        <OnClose
+          language="java"
+          framework="spring"
+          title="HoppscotchEchoWebSocketClient"
+        />
+      )
+    ).toThrow(/Unsupported framework "spring" for language "java". Supported frameworks:/);
+  });
+
+  test('throws error when framework missing for java', () => {
+    expect(() =>
+      render(
+        <OnClose
+          language="java"
+          title="HoppscotchEchoWebSocketClient"
+        />
+      )
+    ).toThrow(/Framework is required for language "java". Supported frameworks:/);
+  });
 });

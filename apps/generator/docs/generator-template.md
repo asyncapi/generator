@@ -83,7 +83,7 @@ components:
           type: string
 ```
 
- ## Overview of steps
+## Overview of steps
 
 1. Create a new directory for your template named **python-mqtt-client-template**.
 2. Install the AsyncAPI CLI using the command `npm install -g @asyncapi/cli`.

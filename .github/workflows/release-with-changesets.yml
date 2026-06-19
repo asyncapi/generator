@@ -122,7 +122,10 @@ jobs:
         uses: changesets/action@v1
         id: release
         with:
-          version: npx -p @changesets/cli@2.27.7 changeset version
+          # `changeset version` only rewrites package.json/CHANGELOG files; it never runs an
+          # install, so the root package-lock.json drifts out of sync with the bumped manifests.
+          # Refresh the lockfile (lockfile-only, no scripts) so the release PR carries it too.
+          version: npx -p @changesets/cli@2.27.7 changeset version && npm install --package-lock-only --ignore-scripts
           commit: "chore(release): release and bump versions of packages"
           title: "chore(release): release and bump versions of packages"
           publish: npx -p @changesets/cli@2.27.7 changeset publish

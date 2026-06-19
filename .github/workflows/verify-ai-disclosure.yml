@@ -31,6 +31,11 @@ permissions:
 
 jobs:
   verify-ai-disclosure:
+    # it runs only if PR actor is not a bot, at least not a bot that we know
+    if: |
+      (github.event.pull_request.user.login != 'asyncapi-bot' && 
+      github.event.pull_request.user.login != 'dependabot[bot]' && 
+      github.event.pull_request.user.login != 'dependabot-preview[bot]') 
     runs-on: ubuntu-latest
     steps:
       - name: Check PR body for AI-assistance disclosure

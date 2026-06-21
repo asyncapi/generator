@@ -5,6 +5,10 @@ on:
     paths:
       - 'apps/generator/docs/**'
 
+concurrency:
+  group: docs-preview-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+  
 jobs:
   preview:
     runs-on: ubuntu-latest

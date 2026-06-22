@@ -88,14 +88,16 @@ components:
 1. Create a new directory for your template named **python-mqtt-client-template**.
 2. Install the AsyncAPI CLI using the command `npm install -g @asyncapi/cli`.
 3. Create a new folder **test/fixtures** with a file named **asyncapi.yml** in your fixtures directory. This file is used to define the **structure** of your template. You can copy the above example and paste it in your **asyncapi.yml** document.
-4. Create a new file named **package.json** in your **python-mqtt-client-template** directory. This file is used to define the **dependencies** for your template.
+4. Create a new file named **package.json** in your **python-mqtt-client-template** directory. This file is used to define the **dependencies** for your template. Make sure to include `@asyncapi/generator` alongside your other dependencies here.
 5. Create a new folder **python-mqtt-client-template/template**. Create a new file named **index.js** in your **template** directory. This file is used to define the **logic** for your template.
-6. Create a **test.py** file to validate the logic of your application. Don't worry about this file for now. The tutorial will tell you how to create it later.
-
+6. Navigate into your template directory and run a single installation command to install all defined dependencies locally (this is required for the CLI to execute template commands):
+   ```bash
+   cd python-mqtt-client-template
+   npm install
 Now your directory should look like this:
 
-```
-python-mqtt-client-template 
+```text
+python-mqtt-client-template
 ├── template
 │   └── index.js
 ├── test
@@ -285,6 +287,12 @@ New temperature detected 72955029 sent to temperature/changed
 ```
 
 To make sure your **test.py** and client code works check if the broker really receives temperature-related messages. You can do it using an [MQTT CLI](https://hivemq.github.io/mqtt-cli/) using docker. Run the command `docker run hivemq/mqtt-cli sub -t temperature/changed -h test.mosquitto.org` in your terminal. It will download the image if you don't have it locally, then the CLI will connect to the broker, subscribe to the `temperature/changed` topic and then output the temperature ids on the terminal.
+
+> For testing against a local Docker broker, route to the host machine:
+
+```bash
+docker run hivemq/mqtt-cli sub -t temperature/changed -h host.docker.internal
+```
 
 ### 3. Update the template with client code
 

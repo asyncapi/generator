@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ExampleSendInvocations component elides extra ops when sendOps length exceeds maxOpsToList 1`] = `
+"for (var i = 0; i < 5; i++) {
+      try {
+        myClient.sendOp0('TODO: replace with payload for sendOp0');
+        myClient.sendOp1('TODO: replace with payload for sendOp1');
+        myClient.sendOp2('TODO: replace with payload for sendOp2');
+        // ... 4 more send operations elided from the example.
+      } catch (error) {
+        print('Error while sending message: $error');
+      }
+      await Future.delayed(Duration(seconds: 2));
+    }"
+`;
+
+exports[`ExampleSendInvocations component emits TODO placeholder when message has no examples 1`] = `
+"for (var i = 0; i < 5; i++) {
+      try {
+        myClient.sendStuff('TODO: replace with payload matching StuffPayload');
+      } catch (error) {
+        print('Error while sending message: $error');
+      }
+      await Future.delayed(Duration(seconds: 2));
+    }"
+`;
+
+exports[`ExampleSendInvocations component renders bounded for-loop with one send op (hoppscotch echo) 1`] = `
+"for (var i = 0; i < 5; i++) {
+      try {
+        hoppscotchClient.sendEchoMessage('test');
+      } catch (error) {
+        print('Error while sending message: $error');
+      }
+      await Future.delayed(Duration(seconds: 2));
+    }"
+`;
+
+exports[`ExampleSendInvocations component renders nothing when sendOps is empty 1`] = `""`;

@@ -1,0 +1,89 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ExampleMain component renders both branch: hasSend=true, hasReceive=true 1`] = `
+"Future<void> main() async {
+  final hoppscotchClient = HoppscotchClient();
+  hoppscotchClient.registerMessageHandler(myMessageHandler);
+  hoppscotchClient.registerErrorHandler(myErrorHandler);
+
+  try {
+    await hoppscotchClient.connect();
+
+    for (var i = 0; i < 5; i++) {
+      try {
+        hoppscotchClient.sendEchoMessage('test');
+      } catch (error) {
+        print('Error while sending message: $error');
+      }
+      await Future.delayed(Duration(seconds: 2));
+    }
+  } catch (error) {
+    print('Failed to connect to WebSocket: $error');
+  } finally {
+    hoppscotchClient.close();
+  }
+}"
+`;
+
+exports[`ExampleMain component renders none branch: hasSend=false, hasReceive=false 1`] = `
+"Future<void> main() async {
+  final hoppscotchClient = HoppscotchClient();
+  hoppscotchClient.registerErrorHandler(myErrorHandler);
+
+  try {
+    await hoppscotchClient.connect();
+
+    // Wait for incoming messages to be processed by myMessageHandler.
+    await Future.delayed(Duration(seconds: 10));
+
+  } catch (error) {
+    print('Failed to connect to WebSocket: $error');
+  } finally {
+    hoppscotchClient.close();
+  }
+}"
+`;
+
+exports[`ExampleMain component renders receive-only branch: hasSend=false, hasReceive=true 1`] = `
+"Future<void> main() async {
+  final hoppscotchClient = HoppscotchClient();
+  hoppscotchClient.registerMessageHandler(myMessageHandler);
+  hoppscotchClient.registerErrorHandler(myErrorHandler);
+
+  try {
+    await hoppscotchClient.connect();
+
+    // Wait for incoming messages to be processed by myMessageHandler.
+    await Future.delayed(Duration(seconds: 10));
+
+  } catch (error) {
+    print('Failed to connect to WebSocket: $error');
+  } finally {
+    hoppscotchClient.close();
+  }
+}"
+`;
+
+exports[`ExampleMain component renders send-only branch: hasSend=true, hasReceive=false 1`] = `
+"Future<void> main() async {
+  final hoppscotchClient = HoppscotchClient();
+  hoppscotchClient.registerErrorHandler(myErrorHandler);
+
+  try {
+    await hoppscotchClient.connect();
+
+    for (var i = 0; i < 5; i++) {
+      try {
+        hoppscotchClient.sendEchoMessage('test');
+      } catch (error) {
+        print('Error while sending message: $error');
+      }
+      await Future.delayed(Duration(seconds: 2));
+    }
+  } catch (error) {
+    print('Failed to connect to WebSocket: $error');
+  } finally {
+    hoppscotchClient.close();
+  }
+}"
+`;

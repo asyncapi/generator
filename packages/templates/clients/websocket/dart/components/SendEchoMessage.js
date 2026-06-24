@@ -10,7 +10,14 @@ void sendEchoMessage(dynamic message) {
     print('Error: WebSocket is not connected.');
     return;
   }
-  final payload = message is String ? message : jsonEncode(message);
+  
+  // Run all outgoing processors sequentially
+  for (var processor in _outgoingProcessors) {
+      processedMessage = processor(message);
+  }
+
+
+  final payload = processedMessage is String ? processedMessage : jsonEncode(processedMessage);
   _channel!.sink.add(payload);
   print('Sent message to echo server: $payload');
 }`

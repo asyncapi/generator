@@ -6,7 +6,8 @@ export function ClientFields() {
       {`final String _url;
 WebSocketChannel? _channel;
 final List<void Function(String)> _messageHandlers = [];
-final List<void Function(Object)> _errorHandlers = [];`}
+final List<void Function(Object)> _errorHandlers = [];
+final List<Function> _outgoingProcessors = [];`}
     </Text>
   );
 }

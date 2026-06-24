@@ -17,6 +17,7 @@ class HoppscotchClient {
   WebSocketChannel? _channel;
   final List<void Function(String)> _messageHandlers = [];
   final List<void Function(Object)> _errorHandlers = [];
+  final List<Function> _outgoingProcessors = [];
 
   /// Constructor to initialize the WebSocket client
   /// 
@@ -73,6 +74,12 @@ class HoppscotchClient {
     _errorHandlers.add(handler);
   }
 
+  /// Register a function that processes outgoing messages automatically.
+  void registerOutgoingProcessor(Function processor) {
+    _outgoingProcessors.add(processor);
+  }
+      
+
   /// Method to handle message with callback
   void _handleMessage(dynamic message, void Function(String) cb) {
     cb(message is String ? message : message.toString());
@@ -96,7 +103,14 @@ class HoppscotchClient {
       print('Error: WebSocket is not connected.');
       return;
     }
-    final payload = message is String ? message : jsonEncode(message);
+  
+    // Run all outgoing processors sequentially
+    for (var processor in _outgoingProcessors) {
+        processedMessage = processor(message);
+    }
+
+
+    final payload = processedMessage is String ? processedMessage : jsonEncode(processedMessage);
     _channel!.sink.add(payload);
     print('Sent message to echo server: $payload');
   }
@@ -138,6 +152,7 @@ class HoppscotchEchoWebSocketClient {
   WebSocketChannel? _channel;
   final List<void Function(String)> _messageHandlers = [];
   final List<void Function(Object)> _errorHandlers = [];
+  final List<Function> _outgoingProcessors = [];
 
   /// Constructor to initialize the WebSocket client
   /// 
@@ -194,6 +209,12 @@ class HoppscotchEchoWebSocketClient {
     _errorHandlers.add(handler);
   }
 
+  /// Register a function that processes outgoing messages automatically.
+  void registerOutgoingProcessor(Function processor) {
+    _outgoingProcessors.add(processor);
+  }
+      
+
   /// Method to handle message with callback
   void _handleMessage(dynamic message, void Function(String) cb) {
     cb(message is String ? message : message.toString());
@@ -217,7 +238,14 @@ class HoppscotchEchoWebSocketClient {
       print('Error: WebSocket is not connected.');
       return;
     }
-    final payload = message is String ? message : jsonEncode(message);
+  
+    // Run all outgoing processors sequentially
+    for (var processor in _outgoingProcessors) {
+        processedMessage = processor(message);
+    }
+
+
+    final payload = processedMessage is String ? processedMessage : jsonEncode(processedMessage);
     _channel!.sink.add(payload);
     print('Sent message to echo server: $payload');
   }
@@ -260,6 +288,7 @@ class PostmanEchoWebSocketClientClient {
   WebSocketChannel? _channel;
   final List<void Function(String)> _messageHandlers = [];
   final List<void Function(Object)> _errorHandlers = [];
+  final List<Function> _outgoingProcessors = [];
 
   /// Constructor to initialize the WebSocket client
   /// 
@@ -316,6 +345,12 @@ class PostmanEchoWebSocketClientClient {
     _errorHandlers.add(handler);
   }
 
+  /// Register a function that processes outgoing messages automatically.
+  void registerOutgoingProcessor(Function processor) {
+    _outgoingProcessors.add(processor);
+  }
+      
+
   /// Method to handle message with callback
   void _handleMessage(dynamic message, void Function(String) cb) {
     cb(message is String ? message : message.toString());
@@ -339,7 +374,14 @@ class PostmanEchoWebSocketClientClient {
       print('Error: WebSocket is not connected.');
       return;
     }
-    final payload = message is String ? message : jsonEncode(message);
+  
+    // Run all outgoing processors sequentially
+    for (var processor in _outgoingProcessors) {
+        processedMessage = processor(message);
+    }
+
+
+    final payload = processedMessage is String ? processedMessage : jsonEncode(processedMessage);
     _channel!.sink.add(payload);
     print('Sent message to echo server: $payload');
   }

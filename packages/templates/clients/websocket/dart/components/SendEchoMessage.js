@@ -13,7 +13,7 @@ void sendEchoMessage(dynamic message) {
   
   // Run all outgoing processors sequentially
   for (var processor in _outgoingProcessors) {
-      processedMessage = processor(message);
+      processedMessage = processor(processedMessage);
   }
 
 

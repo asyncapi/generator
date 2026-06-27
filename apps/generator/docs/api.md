@@ -3,7 +3,7 @@ title: Library API
 weight: 75
 ---
 
-Reference API documentation for AsyncAPI Generator library.
+Reference API documentation for AsyncAPI generator library.
 ## Classes
 
 <dl>

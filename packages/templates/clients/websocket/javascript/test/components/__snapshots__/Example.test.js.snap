@@ -1,0 +1,185 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Example composer (end-to-end) honors appendClientSuffix param 1`] = `
+"const HoppscotchEchoWebSocketClientClient = require('./client');
+
+function myMessageHandler(message) {
+  console.log('====================');
+  console.log('Just proving I got the message in myMessageHandler:', message);
+  console.log('====================');
+}
+
+function myErrorHandler(error) {
+  console.error('Errors from WebSocket:', error.message);
+}
+
+function outgoingProcessor(message) {
+  const processed = { payload: message, timestamp: new Date().toISOString() };
+  console.log('Outgoing processor fired:', JSON.stringify(processed));
+  return processed;
+}
+
+async function main() {
+  const wsClient = new HoppscotchEchoWebSocketClientClient();
+  wsClient.registerMessageHandler(myMessageHandler);
+  wsClient.registerErrorHandler(myErrorHandler);
+  wsClient.registerOutgoingProcessor(outgoingProcessor);
+
+  try {
+    await wsClient.connect();
+
+    for (let i = 0; i < 5; i++) {
+      try {
+          await wsClient.sendEchoMessage('test');
+      } catch (error) {
+        console.error('Error while sending message:', error);
+      }
+      await new Promise(resolve => setTimeout(resolve, 5000));
+    }
+  } catch (error) {
+    console.error('Failed to connect to WebSocket:', error.message);
+  } finally {
+    await wsClient.close();
+  }
+}
+
+main();"
+`;
+
+exports[`Example composer (end-to-end) honors customClientName param 1`] = `
+"const MyEchoClient = require('./client');
+
+function myMessageHandler(message) {
+  console.log('====================');
+  console.log('Just proving I got the message in myMessageHandler:', message);
+  console.log('====================');
+}
+
+function myErrorHandler(error) {
+  console.error('Errors from WebSocket:', error.message);
+}
+
+function outgoingProcessor(message) {
+  const processed = { payload: message, timestamp: new Date().toISOString() };
+  console.log('Outgoing processor fired:', JSON.stringify(processed));
+  return processed;
+}
+
+async function main() {
+  const wsClient = new MyEchoClient();
+  wsClient.registerMessageHandler(myMessageHandler);
+  wsClient.registerErrorHandler(myErrorHandler);
+  wsClient.registerOutgoingProcessor(outgoingProcessor);
+
+  try {
+    await wsClient.connect();
+
+    for (let i = 0; i < 5; i++) {
+      try {
+          await wsClient.sendEchoMessage('test');
+      } catch (error) {
+        console.error('Error while sending message:', error);
+      }
+      await new Promise(resolve => setTimeout(resolve, 5000));
+    }
+  } catch (error) {
+    console.error('Failed to connect to WebSocket:', error.message);
+  } finally {
+    await wsClient.close();
+  }
+}
+
+main();"
+`;
+
+exports[`Example composer (end-to-end) registers outgoing processor when send op present (postman echo) 1`] = `
+"const PostmanEchoWebSocketClientClient = require('./client');
+
+function myMessageHandler(message) {
+  console.log('====================');
+  console.log('Just proving I got the message in myMessageHandler:', message);
+  console.log('====================');
+}
+
+function myErrorHandler(error) {
+  console.error('Errors from WebSocket:', error.message);
+}
+
+function outgoingProcessor(message) {
+  const processed = { payload: message, timestamp: new Date().toISOString() };
+  console.log('Outgoing processor fired:', JSON.stringify(processed));
+  return processed;
+}
+
+async function main() {
+  const wsClient = new PostmanEchoWebSocketClientClient();
+  wsClient.registerMessageHandler(myMessageHandler);
+  wsClient.registerErrorHandler(myErrorHandler);
+  wsClient.registerOutgoingProcessor(outgoingProcessor);
+
+  try {
+    await wsClient.connect();
+
+    for (let i = 0; i < 5; i++) {
+      try {
+          await wsClient.sendEchoMessage('test');
+      } catch (error) {
+        console.error('Error while sending message:', error);
+      }
+      await new Promise(resolve => setTimeout(resolve, 5000));
+    }
+  } catch (error) {
+    console.error('Failed to connect to WebSocket:', error.message);
+  } finally {
+    await wsClient.close();
+  }
+}
+
+main();"
+`;
+
+exports[`Example composer (end-to-end) renders full example.js for hoppscotch (send+receive) with default params 1`] = `
+"const HoppscotchEchoWebSocketClient = require('./client');
+
+function myMessageHandler(message) {
+  console.log('====================');
+  console.log('Just proving I got the message in myMessageHandler:', message);
+  console.log('====================');
+}
+
+function myErrorHandler(error) {
+  console.error('Errors from WebSocket:', error.message);
+}
+
+function outgoingProcessor(message) {
+  const processed = { payload: message, timestamp: new Date().toISOString() };
+  console.log('Outgoing processor fired:', JSON.stringify(processed));
+  return processed;
+}
+
+async function main() {
+  const wsClient = new HoppscotchEchoWebSocketClient();
+  wsClient.registerMessageHandler(myMessageHandler);
+  wsClient.registerErrorHandler(myErrorHandler);
+  wsClient.registerOutgoingProcessor(outgoingProcessor);
+
+  try {
+    await wsClient.connect();
+
+    for (let i = 0; i < 5; i++) {
+      try {
+          await wsClient.sendEchoMessage('test');
+      } catch (error) {
+        console.error('Error while sending message:', error);
+      }
+      await new Promise(resolve => setTimeout(resolve, 5000));
+    }
+  } catch (error) {
+    console.error('Failed to connect to WebSocket:', error.message);
+  } finally {
+    await wsClient.close();
+  }
+}
+
+main();"
+`;

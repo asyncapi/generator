@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ExampleSendInvocations component emits TODO placeholder when message has no examples 1`] = `
+"for (let i = 0; i < 5; i++) {
+      try {
+          await wsClient.sendStuff('TODO: replace with payload matching StuffPayload');
+      } catch (error) {
+        console.error('Error while sending message:', error);
+      }
+      await new Promise(resolve => setTimeout(resolve, 5000));
+    }"
+`;
+
+exports[`ExampleSendInvocations component renders bounded for-loop with one send op (hoppscotch echo) 1`] = `
+"for (let i = 0; i < 5; i++) {
+      try {
+          await wsClient.sendEchoMessage('test');
+      } catch (error) {
+        console.error('Error while sending message:', error);
+      }
+      await new Promise(resolve => setTimeout(resolve, 5000));
+    }"
+`;
+
+exports[`ExampleSendInvocations component renders nothing when sendOps is empty 1`] = `""`;

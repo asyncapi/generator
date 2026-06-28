@@ -3,7 +3,7 @@ import { toCamelCase } from '@asyncapi/generator-helpers';
 import { unsupportedLanguage } from '../utils/ErrorHandling';
 
 /**
- * @typedef {'python' | 'java' | 'javascript'} Language
+ * @typedef {'python' | 'java' | 'javascript' | 'dart'} Language
  * Supported programming languages for query parameter generation.
  */
 
@@ -82,6 +82,30 @@ const queryParamLogicConfig = {
       closing: {
         text: '}',
         indent: 8,
+        newLines: 1,
+      },
+    };
+  },
+  dart: (param) => {
+    const paramName = toCamelCase(param[0]);
+    const capitalizedName = paramName[0].toUpperCase() + paramName.slice(1);
+    const envKey = param[0].toUpperCase();
+    return {
+      variableDefinition: {
+        text: `final resolved${capitalizedName} = ${paramName} ?? Platform.environment['${envKey}'];`,
+        indent: 6,
+      },
+      ifCondition: {
+        text: `if (resolved${capitalizedName} != null) {`,
+        indent: 6,
+      },
+      assignment: {
+        text: `params['${param[0]}'] = resolved${capitalizedName};`,
+        indent: 8,
+      },
+      closing: {
+        text: '}',
+        indent: 6,
         newLines: 1,
       },
     };

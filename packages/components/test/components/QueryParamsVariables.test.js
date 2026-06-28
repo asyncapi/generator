@@ -55,6 +55,19 @@ describe('Testing of QueryParamsVariables component', () => {
     expect(result.trim()).toMatchSnapshot();
   });
 
+  test('renders dart query params correctly with query parameters', () => {
+    const channels = parsedAsyncAPIDocument.channels();
+    const queryParamsObject = getQueryParams(channels);
+    const queryParamsArray = queryParamsObject ? Array.from(queryParamsObject.entries()) : [];
+    const result = render(
+      <QueryParamsVariables 
+        language='dart' 
+        queryParams={queryParamsArray} 
+      />
+    );
+    expect(result.trim()).toMatchSnapshot();
+  });
+
   test('renders python nothing when queryParams is null', () => {
     const result = render(<QueryParamsVariables language='python' queryParams={null} />);
     expect(result.trim()).toMatchSnapshot();

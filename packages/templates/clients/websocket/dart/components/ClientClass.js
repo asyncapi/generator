@@ -3,14 +3,14 @@ import { Constructor } from './Constructor';
 import { CloseConnection, RegisterMessageHandler, RegisterErrorHandler, SendOperations, Connect, HandleMessage, HandleError } from '@asyncapi/generator-components';
 import { ClientFields } from './ClientFields';
 
-export function ClientClass({ clientName, serverUrl, title, sendOperations }) {
+export function ClientClass({ clientName, serverUrl, title, sendOperations, query }) {
   return (
     <Text>
       <Text newLines={2}>
         {`class ${clientName} {`}
       </Text>
       <ClientFields />
-      <Constructor clientName={clientName} serverUrl={serverUrl} />
+      <Constructor clientName={clientName} serverUrl={serverUrl} query={query} />
       <Connect language="dart" title={title} />
       <RegisterMessageHandler 
         language="dart" 

@@ -6,6 +6,25 @@ exports[`Testing of QueryParamsVariables component ignores framework for python 
           params[\\"token\\"] = token"
 `;
 
+exports[`Testing of QueryParamsVariables component renders dart query params correctly with query parameters 1`] = `
+"final resolvedHeartbeat = heartbeat ?? Platform.environment['HEARTBEAT'];
+      if (resolvedHeartbeat != null) {
+        params['heartbeat'] = resolvedHeartbeat;
+      }
+      final resolvedTopOfBook = topOfBook ?? Platform.environment['TOP_OF_BOOK'];
+      if (resolvedTopOfBook != null) {
+        params['top_of_book'] = resolvedTopOfBook;
+      }
+      final resolvedBids = bids ?? Platform.environment['BIDS'];
+      if (resolvedBids != null) {
+        params['bids'] = resolvedBids;
+      }
+      final resolvedOffers = offers ?? Platform.environment['OFFERS'];
+      if (resolvedOffers != null) {
+        params['offers'] = resolvedOffers;
+      }"
+`;
+
 exports[`Testing of QueryParamsVariables component renders java quarkus nothing when queryParams is an empty array 1`] = `""`;
 
 exports[`Testing of QueryParamsVariables component renders java quarkus query params correctly with query parameters 1`] = `

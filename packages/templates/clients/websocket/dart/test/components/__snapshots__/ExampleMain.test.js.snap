@@ -15,7 +15,7 @@ exports[`ExampleMain component renders both branch: hasSend=true, hasReceive=tru
       } catch (error) {
         print('Error while sending message: $error');
       }
-      await Future.delayed(Duration(seconds: 2));
+      await Future.delayed(Duration(seconds: 5));
     }
   } catch (error) {
     print('Failed to connect to WebSocket: $error');
@@ -28,13 +28,11 @@ exports[`ExampleMain component renders both branch: hasSend=true, hasReceive=tru
 exports[`ExampleMain component renders none branch: hasSend=false, hasReceive=false 1`] = `
 "Future<void> main() async {
   final hoppscotchClient = HoppscotchClient();
+  hoppscotchClient.registerMessageHandler(myMessageHandler);
   hoppscotchClient.registerErrorHandler(myErrorHandler);
 
   try {
     await hoppscotchClient.connect();
-
-    // Wait for incoming messages to be processed by myMessageHandler.
-    await Future.delayed(Duration(seconds: 10));
 
   } catch (error) {
     print('Failed to connect to WebSocket: $error');
@@ -53,9 +51,6 @@ exports[`ExampleMain component renders receive-only branch: hasSend=false, hasRe
   try {
     await hoppscotchClient.connect();
 
-    // Wait for incoming messages to be processed by myMessageHandler.
-    await Future.delayed(Duration(seconds: 10));
-
   } catch (error) {
     print('Failed to connect to WebSocket: $error');
   } finally {
@@ -67,6 +62,7 @@ exports[`ExampleMain component renders receive-only branch: hasSend=false, hasRe
 exports[`ExampleMain component renders send-only branch: hasSend=true, hasReceive=false 1`] = `
 "Future<void> main() async {
   final hoppscotchClient = HoppscotchClient();
+  hoppscotchClient.registerMessageHandler(myMessageHandler);
   hoppscotchClient.registerErrorHandler(myErrorHandler);
 
   try {
@@ -78,7 +74,7 @@ exports[`ExampleMain component renders send-only branch: hasSend=true, hasReceiv
       } catch (error) {
         print('Error while sending message: $error');
       }
-      await Future.delayed(Duration(seconds: 2));
+      await Future.delayed(Duration(seconds: 5));
     }
   } catch (error) {
     print('Failed to connect to WebSocket: $error');

@@ -13,8 +13,8 @@ export function Example({ asyncapi, params }) {
 
   const clientName = getClientName(asyncapi, appendClientSuffix, customClientName);
   const instanceName = lowerFirst(clientName);
-  const sendOps = asyncapi.operations().filterBySend();
-  const hasReceive = asyncapi.operations().filterByReceive().length > 0;
+  const operations = asyncapi.operations();
+  const sendOps = operations.filterBySend();
 
   return (
     <Text>
@@ -24,7 +24,6 @@ export function Example({ asyncapi, params }) {
         clientName={clientName}
         instanceName={instanceName}
         sendOps={sendOps}
-        hasReceive={hasReceive}
       />
     </Text>
   );

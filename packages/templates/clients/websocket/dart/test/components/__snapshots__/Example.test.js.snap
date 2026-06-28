@@ -28,7 +28,7 @@ Future<void> main() async {
       } catch (error) {
         print('Error while sending message: $error');
       }
-      await Future.delayed(Duration(seconds: 2));
+      await Future.delayed(Duration(seconds: 5));
     }
   } catch (error) {
     print('Failed to connect to WebSocket: $error');
@@ -66,12 +66,50 @@ Future<void> main() async {
       } catch (error) {
         print('Error while sending message: $error');
       }
-      await Future.delayed(Duration(seconds: 2));
+      await Future.delayed(Duration(seconds: 5));
     }
   } catch (error) {
     print('Failed to connect to WebSocket: $error');
   } finally {
     myEchoClient.close();
+  }
+}"
+`;
+
+exports[`Example composer (end-to-end) registers message handler for send op with reply (postman echo) 1`] = `
+"import 'dart:async';
+import 'client.dart';
+
+void myMessageHandler(String message) {
+  print('====================');
+  print('Just proving I got the message in myMessageHandler: $message');
+  print('====================');
+}
+
+void myErrorHandler(Object error) {
+  print('Errors from WebSocket: $error');
+}
+
+Future<void> main() async {
+  final postmanEchoWebSocketClientClient = PostmanEchoWebSocketClientClient();
+  postmanEchoWebSocketClientClient.registerMessageHandler(myMessageHandler);
+  postmanEchoWebSocketClientClient.registerErrorHandler(myErrorHandler);
+
+  try {
+    await postmanEchoWebSocketClientClient.connect();
+
+    for (var i = 0; i < 5; i++) {
+      try {
+        postmanEchoWebSocketClientClient.sendEchoMessage('test');
+      } catch (error) {
+        print('Error while sending message: $error');
+      }
+      await Future.delayed(Duration(seconds: 5));
+    }
+  } catch (error) {
+    print('Failed to connect to WebSocket: $error');
+  } finally {
+    postmanEchoWebSocketClientClient.close();
   }
 }"
 `;
@@ -104,7 +142,7 @@ Future<void> main() async {
       } catch (error) {
         print('Error while sending message: $error');
       }
-      await Future.delayed(Duration(seconds: 2));
+      await Future.delayed(Duration(seconds: 5));
     }
   } catch (error) {
     print('Failed to connect to WebSocket: $error');

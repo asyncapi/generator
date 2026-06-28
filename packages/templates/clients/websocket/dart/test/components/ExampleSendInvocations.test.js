@@ -31,21 +31,6 @@ describe('ExampleSendInvocations component', () => {
     expect(result.trim()).toMatchSnapshot();
   });
 
-  test('elides extra ops when sendOps length exceeds maxOpsToList', () => {
-    const fakeOps = Array.from({ length: 7 }, (_, i) => ({
-      id: () => `sendOp${i}`,
-      messages: () => ({ isEmpty: () => true })
-    }));
-    const result = render(
-      <ExampleSendInvocations
-        instanceName="myClient"
-        sendOps={fakeOps}
-        maxOpsToList={3}
-      />
-    );
-    expect(result.trim()).toMatchSnapshot();
-  });
-
   test('emits TODO placeholder when message has no examples', () => {
     const fakeOp = {
       id: () => 'sendStuff',

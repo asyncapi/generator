@@ -11,7 +11,7 @@ export default function ({ asyncapi, params }) {
   const serverUrl = getServerUrl(server);
   const sendOperations = asyncapi.operations().filterBySend();
   const queryParams = getQueryParams(asyncapi.channels());
-  const additionalDependencies = queryParams ? ["import 'dart:io';"] : [];
+  const additionalDependencies = queryParams ? ['import \'dart:io\';'] : [];
   return (  
     // The clientFileName default values can be found and modified under the package.json
     <File name={params.clientFileName}>

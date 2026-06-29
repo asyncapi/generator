@@ -25,9 +25,9 @@ export function ExampleMain({ clientName, instanceName, sendOps, receiveOps }) {
       {hasReceive && (
         <Text>{receiveRegistrations}</Text>
       )}
-      <Text indent={4} newLines={hasSend ? 1 : 2}>{`${instanceName}.register_error_handler(custom_error_handler)`}</Text>
+      <Text indent={4}>{`${instanceName}.register_error_handler(custom_error_handler)`}</Text>
       {hasSend && (
-        <Text indent={4} newLines={2}>{`${instanceName}.register_outgoing_processor(outgoing_message_processor)`}</Text>
+        <Text indent={4}>{`${instanceName}.register_outgoing_processor(outgoing_message_processor)`}</Text>
       )}
       <Text indent={4}>{'try:'}</Text>
       <ExampleConnect instanceName={instanceName} />

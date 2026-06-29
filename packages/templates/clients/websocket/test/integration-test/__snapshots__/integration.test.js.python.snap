@@ -1389,7 +1389,6 @@ def main():
     slack_websocket_a_p_i_client.register_on_event_handler(handle_on_event)
     slack_websocket_a_p_i_client.register_on_disconnect_message_handler(handle_on_disconnect_message)
     slack_websocket_a_p_i_client.register_error_handler(custom_error_handler)
-
     try:
         slack_websocket_a_p_i_client.connect()
         time.sleep(30)  # Increase as needed to keep the connection alive longer
@@ -1849,7 +1848,6 @@ def main():
     hoppscotch_client.register_handle_time_stamp_message_handler(handle_handle_time_stamp_message)
     hoppscotch_client.register_error_handler(custom_error_handler)
     hoppscotch_client.register_outgoing_processor(outgoing_message_processor)
-
     try:
         hoppscotch_client.connect()
         for i in range(5):
@@ -2315,7 +2313,6 @@ def main():
     hoppscotch_echo_web_socket_client.register_handle_time_stamp_message_handler(handle_handle_time_stamp_message)
     hoppscotch_echo_web_socket_client.register_error_handler(custom_error_handler)
     hoppscotch_echo_web_socket_client.register_outgoing_processor(outgoing_message_processor)
-
     try:
         hoppscotch_echo_web_socket_client.connect()
         for i in range(5):
@@ -2695,7 +2692,6 @@ def main():
     postman_echo_web_socket_client_client = PostmanEchoWebSocketClientClient()
     postman_echo_web_socket_client_client.register_error_handler(custom_error_handler)
     postman_echo_web_socket_client_client.register_outgoing_processor(outgoing_message_processor)
-
     try:
         postman_echo_web_socket_client_client.connect()
         for i in range(5):

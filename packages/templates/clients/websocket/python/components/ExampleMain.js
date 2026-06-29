@@ -3,7 +3,6 @@ import { toSnakeCase } from '@asyncapi/generator-helpers';
 import { ExampleConnect } from './ExampleConnect';
 import { ExampleSendInvocations } from './ExampleSendInvocations';
 import { ExampleClose } from './ExampleClose';
-import { ExampleKeepAlive } from './ExampleKeepAlive';
 
 export function ExampleMain({ clientName, instanceName, sendOps, receiveOps }) {
   const hasSend = Array.isArray(sendOps) && sendOps.length > 0;
@@ -35,7 +34,7 @@ export function ExampleMain({ clientName, instanceName, sendOps, receiveOps }) {
         <ExampleSendInvocations instanceName={instanceName} sendOps={sendOps} />
       )}
       {hasReceive && (
-        <ExampleKeepAlive />
+        <Text indent={8}>{'time.sleep(30)  # Increase as needed to keep the connection alive longer'}</Text>
       )}
       <Text indent={4}>{'except Exception as error:'}</Text>
       <Text indent={8}>{'print(f"Failed to connect to WebSocket: {error}")'}</Text>

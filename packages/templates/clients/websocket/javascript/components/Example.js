@@ -1,5 +1,5 @@
 import { Text } from '@asyncapi/generator-react-sdk';
-import { getClientName } from '@asyncapi/generator-helpers';
+import { getClientName, lowerFirst } from '@asyncapi/generator-helpers';
 import { ExampleImports } from './ExampleImports';
 import { ExampleHandlers } from './ExampleHandlers';
 import { ExampleOutgoingProcessor } from './ExampleOutgoingProcessor';
@@ -13,7 +13,7 @@ export function Example({ asyncapi, params }) {
   } = params || {};
 
   const clientName = getClientName(asyncapi, appendClientSuffix, customClientName);
-  const instanceName = 'wsClient';
+  const instanceName = lowerFirst(clientName);
   const sendOps = asyncapi.operations().filterBySend();
   const hasSend = sendOps.length > 0;
 

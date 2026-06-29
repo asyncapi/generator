@@ -33,33 +33,22 @@ function resolvePayloadLiteral(operation) {
   return toJsLiteral(examples.all()[0].payload());
 }
 
-export function ExampleSendInvocations({
-  instanceName,
-  sendOps,
-  iterations = 5,
-  maxOpsToList = 5,
-}) {
+export function ExampleSendInvocations({ instanceName, sendOps }) {
   if (!sendOps || sendOps.length === 0) {
     return null;
   }
 
-  const opsToList = sendOps.slice(0, maxOpsToList);
-  const remainder = sendOps.length - opsToList.length;
+  const iterations = 5;
 
-  const calls = opsToList
+  const calls = sendOps
     .map((op) => `      await ${instanceName}.${op.id()}(${resolvePayloadLiteral(op)});`)
     .join('\n');
-
-  const tail =
-    remainder > 0
-      ? `\n      // ... ${remainder} more send operation${remainder > 1 ? 's' : ''} elided from the example.`
-      : '';
 
   return (
     <Text indent={4}>
       {`for (let i = 0; i < ${iterations}; i++) {
   try {
-${calls}${tail}
+${calls}
   } catch (error) {
     console.error('Error while sending message:', error);
   }

@@ -1,5 +1,5 @@
 import { Text } from '@asyncapi/generator-react-sdk';
-import { getClientName } from '@asyncapi/generator-helpers';
+import { getClientName, toSnakeCase } from '@asyncapi/generator-helpers';
 import { ExampleImports } from './ExampleImports';
 import { ExampleHandlers } from './ExampleHandlers';
 import { ExampleOutgoingProcessor } from './ExampleOutgoingProcessor';
@@ -13,7 +13,7 @@ export function Example({ asyncapi, params }) {
   } = params || {};
 
   const clientName = getClientName(asyncapi, appendClientSuffix, customClientName);
-  const instanceName = 'client';
+  const instanceName = toSnakeCase(clientName);
   const operations = asyncapi.operations();
   const sendOps = operations.filterBySend();
   const receiveOps = operations.filterByReceive();

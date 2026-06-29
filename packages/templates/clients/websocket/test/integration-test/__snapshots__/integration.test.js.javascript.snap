@@ -430,17 +430,17 @@ function outgoingProcessor(message) {
 }
 
 async function main() {
-  const wsClient = new HoppscotchClient();
-  wsClient.registerMessageHandler(myMessageHandler);
-  wsClient.registerErrorHandler(myErrorHandler);
-  wsClient.registerOutgoingProcessor(outgoingProcessor);
+  const hoppscotchClient = new HoppscotchClient();
+  hoppscotchClient.registerMessageHandler(myMessageHandler);
+  hoppscotchClient.registerErrorHandler(myErrorHandler);
+  hoppscotchClient.registerOutgoingProcessor(outgoingProcessor);
 
   try {
-    await wsClient.connect();
+    await hoppscotchClient.connect();
 
     for (let i = 0; i < 5; i++) {
       try {
-          await wsClient.sendEchoMessage('test');
+          await hoppscotchClient.sendEchoMessage('test');
       } catch (error) {
         console.error('Error while sending message:', error);
       }
@@ -449,7 +449,7 @@ async function main() {
   } catch (error) {
     console.error('Failed to connect to WebSocket:', error.message);
   } finally {
-    await wsClient.close();
+    await hoppscotchClient.close();
   }
 }
 
@@ -889,17 +889,17 @@ function outgoingProcessor(message) {
 }
 
 async function main() {
-  const wsClient = new HoppscotchEchoWebSocketClient();
-  wsClient.registerMessageHandler(myMessageHandler);
-  wsClient.registerErrorHandler(myErrorHandler);
-  wsClient.registerOutgoingProcessor(outgoingProcessor);
+  const hoppscotchEchoWebSocketClient = new HoppscotchEchoWebSocketClient();
+  hoppscotchEchoWebSocketClient.registerMessageHandler(myMessageHandler);
+  hoppscotchEchoWebSocketClient.registerErrorHandler(myErrorHandler);
+  hoppscotchEchoWebSocketClient.registerOutgoingProcessor(outgoingProcessor);
 
   try {
-    await wsClient.connect();
+    await hoppscotchEchoWebSocketClient.connect();
 
     for (let i = 0; i < 5; i++) {
       try {
-          await wsClient.sendEchoMessage('test');
+          await hoppscotchEchoWebSocketClient.sendEchoMessage('test');
       } catch (error) {
         console.error('Error while sending message:', error);
       }
@@ -908,7 +908,7 @@ async function main() {
   } catch (error) {
     console.error('Failed to connect to WebSocket:', error.message);
   } finally {
-    await wsClient.close();
+    await hoppscotchEchoWebSocketClient.close();
   }
 }
 
@@ -1318,17 +1318,17 @@ function outgoingProcessor(message) {
 }
 
 async function main() {
-  const wsClient = new PostmanEchoWebSocketClientClient();
-  wsClient.registerMessageHandler(myMessageHandler);
-  wsClient.registerErrorHandler(myErrorHandler);
-  wsClient.registerOutgoingProcessor(outgoingProcessor);
+  const postmanEchoWebSocketClientClient = new PostmanEchoWebSocketClientClient();
+  postmanEchoWebSocketClientClient.registerMessageHandler(myMessageHandler);
+  postmanEchoWebSocketClientClient.registerErrorHandler(myErrorHandler);
+  postmanEchoWebSocketClientClient.registerOutgoingProcessor(outgoingProcessor);
 
   try {
-    await wsClient.connect();
+    await postmanEchoWebSocketClientClient.connect();
 
     for (let i = 0; i < 5; i++) {
       try {
-          await wsClient.sendEchoMessage('test');
+          await postmanEchoWebSocketClientClient.sendEchoMessage('test');
       } catch (error) {
         console.error('Error while sending message:', error);
       }
@@ -1337,7 +1337,7 @@ async function main() {
   } catch (error) {
     console.error('Failed to connect to WebSocket:', error.message);
   } finally {
-    await wsClient.close();
+    await postmanEchoWebSocketClientClient.close();
   }
 }
 

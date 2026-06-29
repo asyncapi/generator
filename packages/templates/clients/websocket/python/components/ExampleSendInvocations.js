@@ -38,20 +38,14 @@ function resolvePayloadLiteral(operation) {
   return toPyLiteral(examples.all()[0].payload());
 }
 
-export function ExampleSendInvocations({
-  instanceName,
-  sendOps,
-  iterations = 5,
-  maxOpsToList = 5,
-}) {
+export function ExampleSendInvocations({ instanceName, sendOps }) {
   if (!sendOps || sendOps.length === 0) {
     return null;
   }
 
-  const opsToList = sendOps.slice(0, maxOpsToList);
-  const remainder = sendOps.length - opsToList.length;
+  const iterations = 5;
 
-  const calls = opsToList
+  const calls = sendOps
     .map((op) => {
       const method = toSnakeCase(op.id());
       return `    try:
@@ -61,15 +55,10 @@ export function ExampleSendInvocations({
     })
     .join('\n');
 
-  const tail =
-    remainder > 0
-      ? `\n    # ... ${remainder} more send operation${remainder > 1 ? 's' : ''} elided from the example.`
-      : '';
-
   return (
     <Text indent={8}>
       {`for i in range(${iterations}):
-${calls}${tail}
+${calls}
     time.sleep(2)`}
     </Text>
   );

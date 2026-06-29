@@ -1,0 +1,89 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ExampleMain component renders minimal body when spec has no send or receive ops 1`] = `
+"def main():
+    client = EmptyClient()
+    client.register_error_handler(custom_error_handler)
+
+    try:
+        client.connect()
+    except Exception as error:
+        print(f\\"Failed to connect to WebSocket: {error}\\")
+    finally:
+        client.close()
+
+
+if __name__ == '__main__':
+    main()"
+`;
+
+exports[`ExampleMain component renders receive-only body (slack) 1`] = `
+"def main():
+    client = SlackWebsocketAPIClient()
+    client.register_on_hello_message_handler(handle_on_hello_message)
+    client.register_on_event_handler(handle_on_event)
+    client.register_on_disconnect_message_handler(handle_on_disconnect_message)
+    client.register_error_handler(custom_error_handler)
+
+    try:
+        client.connect()
+        time.sleep(30)  # Increase as needed to keep the connection alive longer
+    except Exception as error:
+        print(f\\"Failed to connect to WebSocket: {error}\\")
+    finally:
+        client.close()
+
+
+if __name__ == '__main__':
+    main()"
+`;
+
+exports[`ExampleMain component renders send+receive body (hoppscotch) 1`] = `
+"def main():
+    client = HoppscotchEchoWebSocketClient()
+    client.register_handle_time_stamp_message_handler(handle_handle_time_stamp_message)
+    client.register_error_handler(custom_error_handler)
+    client.register_outgoing_processor(outgoing_message_processor)
+
+    try:
+        client.connect()
+        for i in range(5):
+            try:
+                client.send_echo_message('test')
+            except Exception as e:
+                print(f\\"Error while sending send_echo_message: {e}\\")
+            time.sleep(2)
+        time.sleep(30)  # Increase as needed to keep the connection alive longer
+    except Exception as error:
+        print(f\\"Failed to connect to WebSocket: {error}\\")
+    finally:
+        client.close()
+
+
+if __name__ == '__main__':
+    main()"
+`;
+
+exports[`ExampleMain component renders send-only body (parser-shaped stand-in) 1`] = `
+"def main():
+    client = StuffClient()
+    client.register_error_handler(custom_error_handler)
+    client.register_outgoing_processor(outgoing_message_processor)
+
+    try:
+        client.connect()
+        for i in range(5):
+            try:
+                client.send_stuff('TODO: replace with payload matching StuffPayload')
+            except Exception as e:
+                print(f\\"Error while sending send_stuff: {e}\\")
+            time.sleep(2)
+    except Exception as error:
+        print(f\\"Failed to connect to WebSocket: {error}\\")
+    finally:
+        client.close()
+
+
+if __name__ == '__main__':
+    main()"
+`;

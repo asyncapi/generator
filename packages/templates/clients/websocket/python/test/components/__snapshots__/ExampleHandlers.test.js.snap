@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ExampleHandlers component renders one handler def + error handler (hoppscotch: 1 receive op) 1`] = `
+"def handle_handle_time_stamp_message(message):
+    print(f\\"[handleTimeStampMessage] Received message: {message}\\")
+
+def custom_error_handler(error):
+    print(f\\"WebSocket error: {error}\\")"
+`;
+
+exports[`ExampleHandlers component renders one handler def per receive op (slack: 3 receive ops) 1`] = `
+"def handle_on_hello_message(message):
+    print(f\\"[onHelloMessage] Received message: {message}\\")
+
+def handle_on_event(message):
+    print(f\\"[onEvent] Received message: {message}\\")
+
+def handle_on_disconnect_message(message):
+    print(f\\"[onDisconnectMessage] Received message: {message}\\")
+
+def custom_error_handler(error):
+    print(f\\"WebSocket error: {error}\\")"
+`;
+
+exports[`ExampleHandlers component renders only the error handler when receiveOps is empty 1`] = `
+"def custom_error_handler(error):
+    print(f\\"WebSocket error: {error}\\")"
+`;
+
+exports[`ExampleHandlers component renders only the error handler when receiveOps is undefined 1`] = `
+"def custom_error_handler(error):
+    print(f\\"WebSocket error: {error}\\")"
+`;

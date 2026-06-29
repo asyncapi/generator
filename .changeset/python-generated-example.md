@@ -1,0 +1,5 @@
+---
+"@asyncapi/generator": minor
+---
+
+The WebSocket Python template now emits a spec-aware `example.py` next to the generated client. The example uses the real exported client class, registers per-receive-op handlers via `register_on_<op>_handler` when the spec has receive operations, iterates the spec's send operations with payloads from `message.examples()` when the spec has send operations, runs a bounded 5-iteration send loop instead of an infinite `while(true)`, inserts a `time.sleep(30)` keep-alive after `connect()` for receive-bearing specs (Python's `connect()` is non-blocking and runs the receive loop in a background thread), wraps the body in `try / except / finally:` with `client.close()` in `finally`, and ends with the `if __name__ == '__main__':` entry-point idiom. A new `exampleFileName` parameter (default `example.py`) overrides the output filename. The legacy hardcoded `packages/templates/clients/websocket/python/example.py`, `example-slack.py`, and `example-slack-with-routing.py` remain in place for this release; they will be removed in a follow-up.

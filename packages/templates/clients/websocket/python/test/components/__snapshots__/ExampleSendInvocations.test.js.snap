@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ExampleSendInvocations component emits TODO placeholder when message has no examples 1`] = `
+"for i in range(5):
+            try:
+                client.send_stuff('TODO: replace with payload matching StuffPayload')
+            except Exception as e:
+                print(f\\"Error while sending send_stuff: {e}\\")
+            time.sleep(2)"
+`;
+
+exports[`ExampleSendInvocations component renders bounded for-loop with one send op (hoppscotch echo) 1`] = `
+"for i in range(5):
+            try:
+                client.send_echo_message('test')
+            except Exception as e:
+                print(f\\"Error while sending send_echo_message: {e}\\")
+            time.sleep(2)"
+`;
+
+exports[`ExampleSendInvocations component renders nothing when sendOps is empty 1`] = `""`;

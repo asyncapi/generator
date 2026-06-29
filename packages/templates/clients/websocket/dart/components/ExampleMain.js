@@ -11,7 +11,7 @@ export function ExampleMain({ clientName, instanceName, sendOps }) {
       <Text>{'Future<void> main() async {'}</Text>
       <Text indent={2}>{`final ${instanceName} = ${clientName}();`}</Text>
       <Text indent={2}>{`${instanceName}.registerMessageHandler(myMessageHandler);`}</Text>
-      <Text indent={2}>{`${instanceName}.registerErrorHandler(myErrorHandler);`}</Text>
+      <Text indent={2} newLines={2}>{`${instanceName}.registerErrorHandler(myErrorHandler);`}</Text>
       <Text indent={2}>{'try {'}</Text>
       <ExampleConnect instanceName={instanceName} />
       {hasSend && (

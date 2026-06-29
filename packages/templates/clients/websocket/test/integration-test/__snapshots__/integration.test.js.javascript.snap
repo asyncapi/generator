@@ -433,7 +433,9 @@ async function main() {
   const hoppscotchClient = new HoppscotchClient();
   hoppscotchClient.registerMessageHandler(myMessageHandler);
   hoppscotchClient.registerErrorHandler(myErrorHandler);
+
   hoppscotchClient.registerOutgoingProcessor(outgoingProcessor);
+
   try {
     await hoppscotchClient.connect();
 
@@ -891,7 +893,9 @@ async function main() {
   const hoppscotchEchoWebSocketClient = new HoppscotchEchoWebSocketClient();
   hoppscotchEchoWebSocketClient.registerMessageHandler(myMessageHandler);
   hoppscotchEchoWebSocketClient.registerErrorHandler(myErrorHandler);
+
   hoppscotchEchoWebSocketClient.registerOutgoingProcessor(outgoingProcessor);
+
   try {
     await hoppscotchEchoWebSocketClient.connect();
 
@@ -1319,7 +1323,9 @@ async function main() {
   const postmanEchoWebSocketClientClient = new PostmanEchoWebSocketClientClient();
   postmanEchoWebSocketClientClient.registerMessageHandler(myMessageHandler);
   postmanEchoWebSocketClientClient.registerErrorHandler(myErrorHandler);
+
   postmanEchoWebSocketClientClient.registerOutgoingProcessor(outgoingProcessor);
+
   try {
     await postmanEchoWebSocketClientClient.connect();
 

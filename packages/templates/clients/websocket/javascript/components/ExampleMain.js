@@ -11,9 +11,9 @@ export function ExampleMain({ clientName, instanceName, sendOps }) {
       <Text>{'async function main() {'}</Text>
       <Text indent={2}>{`const ${instanceName} = new ${clientName}();`}</Text>
       <Text indent={2}>{`${instanceName}.registerMessageHandler(myMessageHandler);`}</Text>
-      <Text indent={2}>{`${instanceName}.registerErrorHandler(myErrorHandler);`}</Text>
+      <Text indent={2} newLines={2}>{`${instanceName}.registerErrorHandler(myErrorHandler);`}</Text>
       {hasSend && (
-        <Text indent={2}>{`${instanceName}.registerOutgoingProcessor(outgoingProcessor);`}</Text>
+        <Text indent={2} newLines={2}>{`${instanceName}.registerOutgoingProcessor(outgoingProcessor);`}</Text>
       )}
       <Text indent={2}>{'try {'}</Text>
       <ExampleConnect instanceName={instanceName} />

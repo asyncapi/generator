@@ -130,6 +130,7 @@ Future<void> main() async {
   final hoppscotchClient = HoppscotchClient();
   hoppscotchClient.registerMessageHandler(myMessageHandler);
   hoppscotchClient.registerErrorHandler(myErrorHandler);
+
   try {
     await hoppscotchClient.connect();
 
@@ -291,6 +292,7 @@ Future<void> main() async {
   final hoppscotchEchoWebSocketClient = HoppscotchEchoWebSocketClient();
   hoppscotchEchoWebSocketClient.registerMessageHandler(myMessageHandler);
   hoppscotchEchoWebSocketClient.registerErrorHandler(myErrorHandler);
+
   try {
     await hoppscotchEchoWebSocketClient.connect();
 
@@ -453,6 +455,7 @@ Future<void> main() async {
   final postmanEchoWebSocketClientClient = PostmanEchoWebSocketClientClient();
   postmanEchoWebSocketClientClient.registerMessageHandler(myMessageHandler);
   postmanEchoWebSocketClientClient.registerErrorHandler(myErrorHandler);
+
   try {
     await postmanEchoWebSocketClientClient.connect();
 

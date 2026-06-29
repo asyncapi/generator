@@ -22,7 +22,9 @@ ${clientName}({String? url})
   const queryParamsSignature = queryParamsArray.map((param) => {
     const paramName = toCamelCase(param[0]);
     const paramDefaultValue = param[1];
-    const defaultValue = paramDefaultValue ? `'${paramDefaultValue}'` : 'null';
+    const defaultValue = paramDefaultValue !== null
+      ? `'${String(paramDefaultValue).replace(/'/g, '\\\'')}'`
+      : 'null';
     return `String? ${paramName} = ${defaultValue}`;
   }).join(', ');
 

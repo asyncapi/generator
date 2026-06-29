@@ -13,7 +13,7 @@ import 'dart:convert';
 import 'package:web_socket_channel/web_socket_channel.dart';
 class HoppscotchClient {
 
-  final String _url;
+  late String _url;
   WebSocketChannel? _channel;
   final List<void Function(String)> _messageHandlers = [];
   final List<void Function(Object)> _errorHandlers = [];
@@ -134,7 +134,7 @@ import 'dart:convert';
 import 'package:web_socket_channel/web_socket_channel.dart';
 class HoppscotchEchoWebSocketClient {
 
-  final String _url;
+  late String _url;
   WebSocketChannel? _channel;
   final List<void Function(String)> _messageHandlers = [];
   final List<void Function(Object)> _errorHandlers = [];
@@ -256,7 +256,7 @@ import 'dart:convert';
 import 'package:web_socket_channel/web_socket_channel.dart';
 class PostmanEchoWebSocketClientClient {
 
-  final String _url;
+  late String _url;
   WebSocketChannel? _channel;
   final List<void Function(String)> _messageHandlers = [];
   final List<void Function(Object)> _errorHandlers = [];

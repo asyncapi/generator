@@ -3,7 +3,7 @@ title: "Development setup"
 weight: 210
 ---
 
-This guide helps you set up the `generator` locally and run it. For testing see [Testing](/docs/tools/generator/development-testing); for releasing see [Release process](/docs/tools/generator/release-process); for the AI tools that review your PRs see [AI tooling](/docs/tools/generator/ai-tooling).
+This guide helps you set up the `generator` locally and run it. For testing, see [Testing](/docs/tools/generator/development-testing). For releasing, see [Release process](/docs/tools/generator/release-process). For the AI tools that review your PRs, see [AI tooling](/docs/tools/generator/ai-tooling).
 
 ## Before you begin - new contributor onboarding
 
@@ -42,7 +42,7 @@ After cloning the repository, you should set up the fork properly and configure 
 npm install --workspaces
 ```
 
-**`CLAUDE.md` vs `AGENTS.md`:** The repo may ship `CLAUDE.md` as a symlink to [`AGENTS.md`](https://github.com/asyncapi/generator/blob/master/AGENTS.md) (one canonical guidelines file). After a clone, Linux and macOS usually need no extra step. On **Windows**, turn on **Developer Mode** (or equivalent symlink permission), run `git config core.symlinks true`, then `git checkout -- CLAUDE.md` so Git creates a real link—not a one-line text stub. Edit **`AGENTS.md`** only for content; the symlink follows automatically.
+**`CLAUDE.md` vs `AGENTS.md`:** The repo may ship `CLAUDE.md` as a symlink to [`AGENTS.md`](https://github.com/asyncapi/generator/blob/master/AGENTS.md) (one canonical guidelines file). After a clone, Linux and macOS usually need no extra step. On **Windows**, turn on **Developer Mode** (or equivalent symlink permission), run `git config core.symlinks true`, then `git checkout -- CLAUDE.md` so Git creates a real link—not a one-line text stub. Edit **`AGENTS.md`** only for content. The symlink follows automatically.
 
 ## Additional commands
 

@@ -14,7 +14,7 @@ This project uses automated AI tools to assist with code review and to answer qu
 
 **What it does on a pull request:**
 
-- Posts an automatic review when a PR is opened and re-reviews incrementally as you push new commits. Draft PRs are not reviewed; bot accounts (`dependabot`, `asyncapi-bot`) are ignored.
+- Posts an automatic review when a PR is opened and re-reviews incrementally as you push new commits. Draft PRs are not reviewed, and bot accounts (`dependabot`, `asyncapi-bot`) are ignored.
 - Adds a high-level summary of the change and a per-file changed-files summary.
 - Links the PR to related issues and PRs and assesses whether it addresses its linked issue.
 - Runs linters as part of the review: ESLint, markdownlint, yamllint, and actionlint (for GitHub Actions workflows).
@@ -54,6 +54,5 @@ Dosu is useful for **orientation and context**, but its answers are **not author
 | Pause/resume CodeRabbit on a PR | Comment `@coderabbitai pause` / `@coderabbitai resume` |
 | Fix a failing title check | Edit the PR title to follow [Conventional Commits](https://github.com/asyncapi/generator/blob/master/CONTRIBUTING.md#conventional-commits) |
 | Ask a question about the project | Mention `@dosu` on an issue or PR, ask in the `#generator` Slack channel, or use [Dosu's web chat](https://app.dosu.dev/e0d32413-3b37-4b53-85d6-bd7caab075e8/ask) |
-| Disagree with a bot | Reply explaining why; a human maintainer makes the final call |
 
 Both tools are assistants, not decision-makers. A human maintainer always has the final say.

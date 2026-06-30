@@ -16,7 +16,7 @@ To run all tests locally:
 
 ### Adding tests
 
-1. Create new test files in the appropriate directory under `apps/generator/test/`:
+1. Create new test files in the appropriate directory under `apps/generator/test/`.
 
 2. Follow the existing test patterns.
 
@@ -54,7 +54,7 @@ cd apps/generator
 3. Run the generator with the react-template:
 
 ```bash
-node ./test/cli  ./test/docs/dummy.yml ./test/test-templates/react-template -o ./test/output --force-write
+node ./test/cli ./test/docs/dummy.yml ./test/test-templates/react-template -o ./test/output --force-write
 ```
 
-4. Check the output in the `./test/output` directory to verify the output that you desired.
+4. Check the `./test/output` directory to confirm it matches the output you expected.

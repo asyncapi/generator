@@ -27,14 +27,14 @@ This webinar provides essential context about the Generator's architecture, desi
 
 1. Fork & Clone the repository:
 
-First fork the repository from github and then clone it,
+First fork the repository from GitHub and then clone it,
 
 ```bash
 git clone https://github.com/{your_username}/generator.git
 cd generator
 ```
 
-After cloning the repository, you should setup the fork properly and configure the `remote` repository as described in the [AsyncAPI git workflow guidelines](https://github.com/asyncapi/community/blob/master/docs/010-contribution-guidelines/git-workflow.md)
+After cloning the repository, you should set up the fork properly and configure the `remote` repository as described in the [AsyncAPI git workflow guidelines](https://github.com/asyncapi/community/blob/master/docs/010-contribution-guidelines/git-workflow.md)
 
 2. Install dependencies:
 

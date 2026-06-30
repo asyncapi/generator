@@ -9,7 +9,7 @@ To release a major/minor/patch:
 
 ## Conventional Commits
 
-For a detailed explanation of conventional commits, refer to [this guide](https://github.com/asyncapi/generator/blob/master/CONTRIBUTING.md#conventional-commits)
+For a detailed explanation of conventional commits, refer to [this guide](https://github.com/asyncapi/generator/blob/master/CONTRIBUTING.md#conventional-commits).
 To maintain a clear git history of commits and easily identify what each commit changed and whether it triggered a release, we use conventional commits. The feat and fix prefixes are particularly important as they are needed to trigger changesets. Using these prefixes ensures that the changes are correctly categorized and the versioning system functions as expected.
 
 For Example:
@@ -52,16 +52,15 @@ For the PR titles you can refer to [this guide](https://github.com/asyncapi/gene
 
 ### Using CLI
 
-1. Create a new release markdown file using changeset CLI. Below command will trigger an interactive prompt that you can use to specify release type and affected packages.
-    ```cli
+1. Create a new release markdown file using changeset CLI. The command below triggers an interactive prompt that you can use to specify the release type and affected packages.
+    ```bash
     npx -p @changesets/cli@2.27.7 changeset
     ```
 
 2. Include the file in your pull request.
 
-> [!TIP]
-> For more detailed instructions, you can refer to the official documentation for creating a changeset:
-[Adding a changeset](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md)
+> **Tip:**
+> For more detailed instructions, refer to the official documentation for [adding a changeset](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
 
 ## Release Flow
 
@@ -72,7 +71,7 @@ For the PR titles you can refer to [this guide](https://github.com/asyncapi/gene
    - Push your changes and open a Pull Request (PR). After the PR is merged the changeset file helps communicate the type of changes (major, minor, patch).
 
 3. **CI Processes Changeset**:
-   - After PR is merged, a dedicated GitHub Actions release workflow runs using changeset action,
+   - After the PR is merged, a dedicated GitHub Actions release workflow runs using the changeset action.
 
    - This action reads the markdown files in the `.changeset` folder and creates a PR with the updated version of the package and removes the markdown file. For example:
 
@@ -88,9 +87,9 @@ For the PR titles you can refer to [this guide](https://github.com/asyncapi/gene
      "version": "3.0.1",
      ```
 
-   - The new PR will also contain the description from the markdown files,
+   - The new PR will also contain the description from the markdown files.
 
-   - AsyncAPI bot automatically merge such release PR.
+   - The AsyncAPI bot automatically merges such a release PR.
 
 4. **Release the Package**:
 

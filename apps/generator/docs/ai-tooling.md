@@ -32,7 +32,7 @@ CodeRabbit only acts on explicit mentions (it does not auto-reply to every comme
 
 **How to treat its feedback:**
 
-CodeRabbit is **advisory**. It is not a maintainer, and its review is **not an approval** — a human maintainer still reviews and approves every PR. Use its suggestions as a helpful first pass: act on the ones that make the change better, and explain in a reply when you disagree. If a suggestion is wrong, say so; you are not obligated to apply it.
+CodeRabbit is **advisory**. It is not a maintainer, and its review is **not an approval** — a human maintainer still reviews and approves every PR. Use its suggestions as a helpful first pass and act on the ones that make the change better. You are not obligated to apply a suggestion, but when you choose not to, reply with a comment explaining why.
 
 ## Dosu
 

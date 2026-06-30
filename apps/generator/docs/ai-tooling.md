@@ -36,15 +36,15 @@ CodeRabbit is **advisory**. It is not a maintainer, and its review is **not an a
 
 ## Dosu
 
-[Dosu](https://dosu.dev/) answers questions on issues and pull requests. It does not comment on its own — you reach it by mentioning it.
+[Dosu](https://dosu.dev/) answers questions about the project. You can reach it in three ways:
 
-**How to use it:**
-
-- Mention `@dosu` in an issue or PR comment with your question (for example, asking where a feature lives or how a workflow behaves). Dosu replies with an answer drawn from the repository and its history.
+- **On GitHub** — mention `@dosu` in an issue or pull request comment with your question (for example, asking where a feature lives or how a workflow behaves). It does not comment on its own and replies only when mentioned.
+- **On Slack** — Dosu is connected to the public `#generator` channel in the [AsyncAPI community Slack](https://www.asyncapi.com/slack-invite), so you can ask it there as well.
+- **In its web chat** — ask a question directly in [Dosu's chat for the generator](https://app.dosu.dev/e0d32413-3b37-4b53-85d6-bd7caab075e8/ask).
 
 **How to treat its answers:**
 
-Dosu is useful for **orientation and context**, but its answers are **not authoritative maintainer decisions** and can be wrong or out of date. Verify anything important against the code, the docs, or a maintainer before relying on it. For a binding decision, ask a maintainer in the `#generator` channel on [AsyncAPI Slack](https://www.asyncapi.com/slack-invite).
+Dosu is useful for **orientation and context**, but its answers are **not authoritative maintainer decisions** and can be wrong or out of date. Verify anything important against the code, the docs, or a maintainer before relying on it. For a binding decision, ask a maintainer in the `#generator` channel on the AsyncAPI community Slack.
 
 ## Quick reference
 
@@ -53,7 +53,7 @@ Dosu is useful for **orientation and context**, but its answers are **not author
 | Re-run the CodeRabbit review | Comment `@coderabbitai review` |
 | Pause/resume CodeRabbit on a PR | Comment `@coderabbitai pause` / `@coderabbitai resume` |
 | Fix a failing title check | Edit the PR title to follow [Conventional Commits](https://github.com/asyncapi/generator/blob/master/CONTRIBUTING.md#conventional-commits) |
-| Ask a question about the project | Comment `@dosu <your question>` on the issue or PR |
+| Ask a question about the project | Mention `@dosu` on an issue or PR, ask in the `#generator` Slack channel, or use [Dosu's web chat](https://app.dosu.dev/e0d32413-3b37-4b53-85d6-bd7caab075e8/ask) |
 | Disagree with a bot | Reply explaining why; a human maintainer makes the final call |
 
 Both tools are assistants, not decision-makers. A human maintainer always has the final say.

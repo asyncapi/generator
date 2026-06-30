@@ -68,7 +68,7 @@ These hooks are included in the generator without adding any specific dependency
 
 ## Contributing
 
-For the development setup, you can follow the detailed guide in [Development guide](Development.md)
+For the development setup, you can follow the detailed guide in the [development documentation](https://www.asyncapi.com/docs/tools/generator/development-setup).
 
 Read [CONTRIBUTING](CONTRIBUTING.md) guide.
 

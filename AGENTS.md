@@ -10,8 +10,8 @@ The monorepo contains tightly coupled packages that together form the AsyncAPI c
 
 The guidelines below cross-reference the following authoritative docs. If a path or URL changes, update it here **and** at each inline mention.
 
-- [Conventional Commits](CONTRIBUTING.md#conventional-commits) — commit and PR title format rules
-- [Release process](Development.md#release-process) — changesets, release-triggering prefixes, full release flow
+- [Conventional Commits](apps/generator/docs/contributing.md#conventional-commits) — commit and PR title format rules
+- [Release process](apps/generator/docs/release-process.md) — changesets, release-triggering prefixes, full release flow
 - [Packages README](packages/README.md) — template architectural principles and assumptions
 - [Hooks guide](apps/generator/docs/hooks.md) — lifecycle hook order and signatures (`generate:before`, `generate:after`, `setFileTemplateName`)
 - [Keeper README](apps/keeper/README.md) — `@asyncapi/keeper` public API surface
@@ -51,7 +51,7 @@ Orchestration is Turborepo (`turbo.json`). Every package-level script (`test`, `
 Every package inherits the root `.eslintrc` — that file is the source of truth for lint rules. Package `lint` scripts must invoke the root config and ignore file via relative `--config` / `--ignore-path` flags — the exact number of `../` segments depends on the package's depth in the tree (e.g. `apps/*` uses `../../.eslintrc`; `packages/templates/clients/<protocol>/test/integration-test/` uses `../../../../../../.eslintrc`). Do not add a package-local `.eslintrc` to avoid the relative path.
 
 ### 2.3 Commits and PR titles
-See the [Conventional Commits section in `CONTRIBUTING.md`](CONTRIBUTING.md#conventional-commits).
+See the [Conventional Commits section in the contributing guide](apps/generator/docs/contributing.md#conventional-commits).
 
 ### 2.4 Documentation and comments
 
@@ -72,7 +72,7 @@ Required tags: `@param`, `@returns`, and `@throws` / `@async` where applicable.
 **Comments:** reserve comments for non-obvious *why*. In this codebase the comments that pay rent are **Parser-API quirks** and **AsyncAPI spec workarounds** — mark these with a `// Why:` prefix that cites the spec section or parser issue, so future cleanup passes can tell a load-bearing comment from a stale one.
 
 ### 2.5 Release hygiene
-Changesets, release-triggering prefixes, and the full release flow are documented in the [Release process section in `Development.md`](Development.md#release-process). Use that as the source of truth on review; flag PRs whose diffs suggest a release but ship no `.changeset/*.md`.
+Changesets, release-triggering prefixes, and the full release flow are documented in the [Release process documentation](apps/generator/docs/release-process.md). Use that as the source of truth on review; flag PRs whose diffs suggest a release but ship no `.changeset/*.md`.
 
 A changeset must name the **published** package a change ships through — not the directory you edited. `packages/templates/*` are `private` and unpublished, so they are **never** valid changeset targets; baked-in template changes reach users via `@asyncapi/generator`. Map changed files to the changeset package as:
 

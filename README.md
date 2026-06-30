@@ -68,11 +68,11 @@ These hooks are included in the generator without adding any specific dependency
 
 ## Contributing
 
-For the development setup, you can follow the detailed guide in [Development guide](Development.md)
+For the development setup, you can follow the detailed guide in the [development documentation](https://www.asyncapi.com/docs/tools/generator/development-setup).
 
-Read [CONTRIBUTING](CONTRIBUTING.md) guide.
+Read the [Contributing guide](https://www.asyncapi.com/docs/tools/generator/contributing).
 
-If you use generative AI or AI-assisted tooling when contributing, read our [AI Usage Policy](AI-POLICY.md) first.
+If you use generative AI or AI-assisted tooling when contributing, read our [AI Usage Policy](https://www.asyncapi.com/docs/tools/generator/ai-policy) first.
 
 ## Contributors ✨
 

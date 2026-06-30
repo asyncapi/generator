@@ -1,7 +1,7 @@
 ### What reviewer looks at during PR review
 The following are ideal points maintainers look for during review. Reviewing these points yourself beforehand can help streamline the review process and reduce time to merge.
 
-1. **PR Title**: Use a concise title that follows our [Conventional Commits](https://github.com/asyncapi/generator/blob/master/CONTRIBUTING.md#conventional-commits) guidelines and clearly summarizes the change using [imperative mood](https://cbea.ms/git-commit/#imperative) (it means `spoken or written as if giving a command or instruction`, like "add new helper for listing operations")
+1. **PR Title**: Use a concise title that follows our [Conventional Commits](https://www.asyncapi.com/docs/tools/generator/contributing#conventional-commits) guidelines and clearly summarizes the change using [imperative mood](https://cbea.ms/git-commit/#imperative) (it means `spoken or written as if giving a command or instruction`, like "add new helper for listing operations")
     > **Note** - In Generator, prepend `feat:` or `fix:` in PR title only when PATCH/MINOR release must be triggered.
 
 1. **PR Description**: Clearly explain the issue being solved, summarize the changes made, and mention the related issue.

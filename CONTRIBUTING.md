@@ -10,4 +10,4 @@ The guide covers:
 - AI-assisted contributions and the AI tools the project runs on your PRs and issues
 - Maintainer roles: Triager, Committer, and Champion
 
-See also the [AI Usage Policy](AI-POLICY.md) and the [Code of Conduct](CODE_OF_CONDUCT.md).
+See also the [AI Usage Policy](https://www.asyncapi.com/docs/tools/generator/ai-policy) and the [Code of Conduct](CODE_OF_CONDUCT.md).

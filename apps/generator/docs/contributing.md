@@ -92,7 +92,7 @@ You may use generative AI and AI-assisted tooling to help you contribute, but yo
 
 If a contribution was materially AI-assisted, you **must** disclose it: add a `Generated-by: <tool + model version>` line to your pull request description (the PR template includes a dedicated section), or check the "No AI assistance" box. A CI check verifies that one of the two is present.
 
-Read the full [AI Usage Policy](https://github.com/asyncapi/generator/blob/master/AI-POLICY.md) for details, including the functions that are off-limits for automation.
+Read the full [AI Usage Policy](/docs/tools/generator/ai-policy) for details, including the functions that are off-limits for automation.
 
 The project also runs AI tools on your PRs and issues (CodeRabbit reviews, Dosu Q&A). See the [AI tooling guide](/docs/tools/generator/ai-tooling) for what they do and how to work with them.
 

@@ -3,13 +3,10 @@ title: "AI tooling"
 weight: 240
 ---
 
-This project runs automated AI tools on your pull requests and issues. This page explains what they are, how to work with them, and how much to rely on them.
+This project uses automated AI tools to assist with code review and to answer questions on pull requests and issues. This page describes those tools, CodeRabbit and Dosu, explaining how they work, how to interact with them, and how much to rely on their output.
 
-There are three separate AI-related topics in this repository — don't confuse them:
-
-- **This page** — the AI tools the **project runs on your contributions** (CodeRabbit, Dosu).
-- **[AI Usage Policy](https://github.com/asyncapi/generator/blob/master/AI-POLICY.md)** — the rules for **your own** use of AI when writing a contribution, including required disclosure.
-- **[`AGENTS.md`](https://github.com/asyncapi/generator/blob/master/AGENTS.md)** — guidelines that tell coding **agents how to write code** that fits this repository.
+> **Note:**
+> This page covers the AI tools that the project runs on your contributions. It is distinct from two related documents: the [AI Usage Policy](https://github.com/asyncapi/generator/blob/master/AI-POLICY.md) defines the rules for using AI to write your own contributions, including the required disclosure, while [`AGENTS.md`](https://github.com/asyncapi/generator/blob/master/AGENTS.md) provides guidelines for coding agents that generate code for this repository.
 
 ## CodeRabbit
 

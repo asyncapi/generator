@@ -1,5 +1,5 @@
 ---
-title: "Development setup"
+title: "Community - Development setup"
 weight: 210
 ---
 

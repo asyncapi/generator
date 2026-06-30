@@ -1,5 +1,5 @@
 ---
-title: "AI tooling"
+title: "Community - AI tooling"
 weight: 240
 ---
 

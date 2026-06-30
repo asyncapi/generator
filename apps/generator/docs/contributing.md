@@ -5,29 +5,6 @@ weight: 205
 
 We love your input! We want to make contributing to this project as easy and transparent as possible.
 
-## Table of Contents
-
-- [Contribution Recognition](#contribution-recognition)
-- [Guidelines for New Contributors](#guidelines-for-new-contributors)
-- [Few Tips for Effective Contributions](#few-tips-for-effective-contributions)
-- [Summary of the Contribution Flow](#summary-of-the-contribution-flow)
-- [Code of Conduct](#code-of-conduct)
-- [Our Development Process](#our-development-process)
-- [Issues](#issues)
-- [Bug Reports and Feature Requests](#bug-reports-and-feature-requests)
-- [Pull Requests](#pull-requests)
-- [AI-Assisted Contributions](#ai-assisted-contributions)
-- [Conventional Commits](#conventional-commits)
-- [Maintainer Roles](#maintainer-roles)
-  - [Triager](#triager)
-  - [Committer](#committer)
-  - [Champion](#champion)
-  - [Maintainer Role Matrix](#maintainer-role-matrix)
-- [License](#license)
-- [References](#references)
-
----
-
 ## Contribution Recognition
 
 We use [All Contributors](https://allcontributors.org/docs/en/specification) specification to handle recognitions. For more details read [this](https://github.com/asyncapi/community/blob/master/docs/010-contribution-guidelines/recognize-contributors.md) document.

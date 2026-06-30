@@ -11,7 +11,7 @@ The monorepo contains tightly coupled packages that together form the AsyncAPI c
 The guidelines below cross-reference the following authoritative docs. If a path or URL changes, update it here **and** at each inline mention.
 
 - [Conventional Commits](CONTRIBUTING.md#conventional-commits) — commit and PR title format rules
-- [Release process](https://www.asyncapi.com/docs/tools/generator/release-process) — changesets, release-triggering prefixes, full release flow
+- [Release process](apps/generator/docs/release-process.md) — changesets, release-triggering prefixes, full release flow
 - [Packages README](packages/README.md) — template architectural principles and assumptions
 - [Hooks guide](apps/generator/docs/hooks.md) — lifecycle hook order and signatures (`generate:before`, `generate:after`, `setFileTemplateName`)
 - [Keeper README](apps/keeper/README.md) — `@asyncapi/keeper` public API surface
@@ -72,7 +72,7 @@ Required tags: `@param`, `@returns`, and `@throws` / `@async` where applicable.
 **Comments:** reserve comments for non-obvious *why*. In this codebase the comments that pay rent are **Parser-API quirks** and **AsyncAPI spec workarounds** — mark these with a `// Why:` prefix that cites the spec section or parser issue, so future cleanup passes can tell a load-bearing comment from a stale one.
 
 ### 2.5 Release hygiene
-Changesets, release-triggering prefixes, and the full release flow are documented in the [Release process documentation](https://www.asyncapi.com/docs/tools/generator/release-process). Use that as the source of truth on review; flag PRs whose diffs suggest a release but ship no `.changeset/*.md`.
+Changesets, release-triggering prefixes, and the full release flow are documented in the [Release process documentation](apps/generator/docs/release-process.md). Use that as the source of truth on review; flag PRs whose diffs suggest a release but ship no `.changeset/*.md`.
 
 A changeset must name the **published** package a change ships through — not the directory you edited. `packages/templates/*` are `private` and unpublished, so they are **never** valid changeset targets; baked-in template changes reach users via `@asyncapi/generator`. Map changed files to the changeset package as:
 

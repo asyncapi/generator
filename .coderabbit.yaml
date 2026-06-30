@@ -55,8 +55,8 @@ knowledge_base:
       # Add custom patterns here if you have other guideline files:
       - "AGENT.md"
       - ".github/pr-review-checklist.md"
-      - "Development.md"
-      - "CONTRIBUTING.md"
+      - "apps/generator/docs/release-process.md"
+      - "apps/generator/docs/contributing.md"
   learnings:
     scope: auto
   issues:

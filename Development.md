@@ -7,4 +7,4 @@ The development guide is now part of the official documentation and is published
 - **[Release process](https://www.asyncapi.com/docs/tools/generator/release-process)** — Conventional Commits, PR title rules, changesets, release flow.
 - **[AI tooling](https://www.asyncapi.com/docs/tools/generator/ai-tooling)** — CodeRabbit and Dosu: what the project's AI tools do and how to work with them.
 
-For contribution rules see [CONTRIBUTING.md](CONTRIBUTING.md). For the AI usage policy see [AI-POLICY.md](AI-POLICY.md).
+For contribution rules see the [Contributing guide](https://www.asyncapi.com/docs/tools/generator/contributing). For the AI usage policy see [AI-POLICY.md](AI-POLICY.md).

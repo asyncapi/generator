@@ -10,7 +10,7 @@ The monorepo contains tightly coupled packages that together form the AsyncAPI c
 
 The guidelines below cross-reference the following authoritative docs. If a path or URL changes, update it here **and** at each inline mention.
 
-- [Conventional Commits](CONTRIBUTING.md#conventional-commits) — commit and PR title format rules
+- [Conventional Commits](apps/generator/docs/contributing.md#conventional-commits) — commit and PR title format rules
 - [Release process](apps/generator/docs/release-process.md) — changesets, release-triggering prefixes, full release flow
 - [Packages README](packages/README.md) — template architectural principles and assumptions
 - [Hooks guide](apps/generator/docs/hooks.md) — lifecycle hook order and signatures (`generate:before`, `generate:after`, `setFileTemplateName`)
@@ -51,7 +51,7 @@ Orchestration is Turborepo (`turbo.json`). Every package-level script (`test`, `
 Every package inherits the root `.eslintrc` — that file is the source of truth for lint rules. Package `lint` scripts must invoke the root config and ignore file via relative `--config` / `--ignore-path` flags — the exact number of `../` segments depends on the package's depth in the tree (e.g. `apps/*` uses `../../.eslintrc`; `packages/templates/clients/<protocol>/test/integration-test/` uses `../../../../../../.eslintrc`). Do not add a package-local `.eslintrc` to avoid the relative path.
 
 ### 2.3 Commits and PR titles
-See the [Conventional Commits section in `CONTRIBUTING.md`](CONTRIBUTING.md#conventional-commits).
+See the [Conventional Commits section in the contributing guide](apps/generator/docs/contributing.md#conventional-commits).
 
 ### 2.4 Documentation and comments
 

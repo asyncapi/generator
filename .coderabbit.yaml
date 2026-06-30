@@ -53,7 +53,7 @@ knowledge_base:
     enabled: true
     filePatterns:
       # Add custom patterns here if you have other guideline files:
-      - "AGENT.md"
+      - "AGENTS.md"
       - ".github/pr-review-checklist.md"
       - "apps/generator/docs/release-process.md"
       - "apps/generator/docs/contributing.md"

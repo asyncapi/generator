@@ -14,9 +14,10 @@ export function QueryParamsArgumentsDocs({ queryParams }) {
     return null;
   }
 
+  const usedNames = new Set();
   return queryParams.map((param) => {
     const originalParamName = param[0];
-    const paramName = getSafeJSName(originalParamName);
+    const paramName = getSafeJSName(originalParamName, usedNames);
     const envVarName = originalParamName.toUpperCase().replace(/[^A-Z0-9_]/g, '_');
     const firstLine = `* @param {string} ${paramName} - `;
     const secondLine = `If provided (or if ${envVarName} environment variable is set), added as ?${originalParamName}=… to URL`;

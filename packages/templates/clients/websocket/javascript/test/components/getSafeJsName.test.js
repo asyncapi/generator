@@ -20,6 +20,14 @@ describe('getSafeJSName', () => {
     expect(result).toMatch(/^[a-zA-Z_$][a-zA-Z0-9_$]*$/);
   });
 
+  test('generates unique names for collisions when given a shared Set', () => {
+    const usedNames = new Set();
+    expect(getSafeJSName('my-param', usedNames)).toBe('myParam');
+    expect(getSafeJSName('my_param', usedNames)).toBe('myParam_1');
+    expect(getSafeJSName('myParam', usedNames)).toBe('myParam_2');
+    expect(getSafeJSName('my-param', usedNames)).toBe('myParam_3');
+  });
+
   test('prefixes reserved words to avoid collisions', () => {
     expect(getSafeJSName('url')).toBe('_url');
     expect(getSafeJSName('throwSendErrors')).toBe('_throwSendErrors');

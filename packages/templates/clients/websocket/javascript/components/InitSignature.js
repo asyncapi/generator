@@ -18,8 +18,9 @@ export function InitSignature({ queryParams }) {
     );
   }
 
+  const usedNames = new Set();
   const queryParamsArguments = queryParams.map((param) => {
-    const paramName = getSafeJSName(param[0]);
+    const paramName = getSafeJSName(param[0], usedNames);
     const paramDefaultValue = param[1];
     let defaultValue = '';
     if (paramDefaultValue !== undefined && paramDefaultValue !== null && paramDefaultValue !== '') {

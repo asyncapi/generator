@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing of Handlers function render dart handlers (static) 1`] = `
+"void myMessageHandler(String message) {
+  print('====================');
+  print('Just proving I got the message in myMessageHandler: $message');
+  print('====================');
+}
+
+void myErrorHandler(Object error) {
+  print('Errors from WebSocket: $error');
+}"
+`;
+
+exports[`Testing of Handlers function render javascript handlers (static) 1`] = `
+"function myMessageHandler(message) {
+  console.log('====================');
+  console.log('Just proving I got the message in myMessageHandler:', message);
+  console.log('====================');
+}
+
+function myErrorHandler(error) {
+  console.error('Errors from WebSocket:', error.message);
+}"
+`;
+
+exports[`Testing of Handlers function render python handlers with no receive operations (error handler only) 1`] = `
+"def custom_error_handler(error):
+    print(f\\"WebSocket error: {error}\\")"
+`;
+
+exports[`Testing of Handlers function render python handlers with receive operations 1`] = `
+"def handle_no_message_examples(message):
+    print(f\\"[noMessageExamples] Received message: {message}\\")
+
+def handle_one_message_example(message):
+    print(f\\"[oneMessageExample] Received message: {message}\\")
+
+def handle_multiple_examples(message):
+    print(f\\"[multipleExamples] Received message: {message}\\")
+
+def handle_pascal_case_operation(message):
+    print(f\\"[PascalCaseOperation] Received message: {message}\\")
+
+def handle_receive_market_update(message):
+    print(f\\"[receiveMarketUpdate] Received message: {message}\\")
+
+def custom_error_handler(error):
+    print(f\\"WebSocket error: {error}\\")"
+`;

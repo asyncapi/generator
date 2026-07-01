@@ -1,0 +1,146 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing of Main function render dart main with send operations 1`] = `
+"Future<void> main() async {
+  final echoClient = EchoClient();
+  echoClient.registerMessageHandler(myMessageHandler);
+  echoClient.registerErrorHandler(myErrorHandler);
+
+  try {
+    await echoClient.connect();
+
+    for (var i = 0; i < 5; i++) {
+      try {
+        echoClient.noMessage('TODO: replace with payload for noMessage');
+        echoClient.noSummaryOperations('TODO: replace with payload matching noSummaryOperations');
+        echoClient.noSummaryNoDescriptionOperations('test');
+        echoClient.mixedMessageExamples('TODO: replace with payload matching mixedMessageExamples');
+        echoClient.operation_with_snake_case('TODO: replace with payload matching operation_with_snake_case');
+      } catch (error) {
+        print('Error while sending message: $error');
+      }
+      await Future.delayed(Duration(seconds: 5));
+    }
+  } catch (error) {
+    print('Failed to connect to WebSocket: $error');
+  } finally {
+    echoClient.close();
+  }
+}"
+`;
+
+exports[`Testing of Main function render javascript main with no send operations 1`] = `
+"async function main() {
+  const echoClient = new EchoClient();
+  echoClient.registerMessageHandler(myMessageHandler);
+  echoClient.registerErrorHandler(myErrorHandler);
+
+  try {
+    await echoClient.connect();
+
+  } catch (error) {
+    console.error('Failed to connect to WebSocket:', error.message);
+  } finally {
+    await echoClient.close();
+  }
+}
+
+main();"
+`;
+
+exports[`Testing of Main function render javascript main with send operations 1`] = `
+"async function main() {
+  const echoClient = new EchoClient();
+  echoClient.registerMessageHandler(myMessageHandler);
+  echoClient.registerErrorHandler(myErrorHandler);
+
+  echoClient.registerOutgoingProcessor(outgoingProcessor);
+
+  try {
+    await echoClient.connect();
+
+    for (let i = 0; i < 5; i++) {
+      try {
+          await echoClient.noMessage('TODO: replace with payload for noMessage');
+          await echoClient.noSummaryOperations('TODO: replace with payload matching noSummaryOperations');
+          await echoClient.noSummaryNoDescriptionOperations('test');
+          await echoClient.mixedMessageExamples('TODO: replace with payload matching mixedMessageExamples');
+          await echoClient.operation_with_snake_case('TODO: replace with payload matching operation_with_snake_case');
+      } catch (error) {
+        console.error('Error while sending message:', error);
+      }
+      await new Promise(resolve => setTimeout(resolve, 5000));
+    }
+  } catch (error) {
+    console.error('Failed to connect to WebSocket:', error.message);
+  } finally {
+    await echoClient.close();
+  }
+}
+
+main();"
+`;
+
+exports[`Testing of Main function render python main with no send and no receive operations 1`] = `
+"def main():
+    echo_client = EchoClient()
+    echo_client.register_error_handler(custom_error_handler)
+
+    try:
+        echo_client.connect()
+    except Exception as error:
+        print(f\\"Failed to connect to WebSocket: {error}\\")
+    finally:
+        echo_client.close()
+
+
+if __name__ == '__main__':
+    main()"
+`;
+
+exports[`Testing of Main function render python main with send and receive operations 1`] = `
+"def main():
+    echo_client = EchoClient()
+    echo_client.register_no_message_examples_handler(handle_no_message_examples)
+    echo_client.register_one_message_example_handler(handle_one_message_example)
+    echo_client.register_multiple_examples_handler(handle_multiple_examples)
+    echo_client.register_pascal_case_operation_handler(handle_pascal_case_operation)
+    echo_client.register_receive_market_update_handler(handle_receive_market_update)
+    echo_client.register_error_handler(custom_error_handler)
+
+    echo_client.register_outgoing_processor(outgoing_message_processor)
+
+    try:
+        echo_client.connect()
+        for i in range(5):
+            try:
+                echo_client.no_message('TODO: replace with payload for noMessage')
+            except Exception as e:
+                print(f\\"Error while sending no_message: {e}\\")
+            try:
+                echo_client.no_summary_operations('TODO: replace with payload matching noSummaryOperations')
+            except Exception as e:
+                print(f\\"Error while sending no_summary_operations: {e}\\")
+            try:
+                echo_client.no_summary_no_description_operations('test')
+            except Exception as e:
+                print(f\\"Error while sending no_summary_no_description_operations: {e}\\")
+            try:
+                echo_client.mixed_message_examples('TODO: replace with payload matching mixedMessageExamples')
+            except Exception as e:
+                print(f\\"Error while sending mixed_message_examples: {e}\\")
+            try:
+                echo_client.operation_with_snake_case('TODO: replace with payload matching operation_with_snake_case')
+            except Exception as e:
+                print(f\\"Error while sending operation_with_snake_case: {e}\\")
+            time.sleep(2)
+        time.sleep(30)  # Increase as needed to keep the connection alive longer
+    except Exception as error:
+        print(f\\"Failed to connect to WebSocket: {error}\\")
+    finally:
+        echo_client.close()
+
+
+if __name__ == '__main__':
+    main()"
+`;

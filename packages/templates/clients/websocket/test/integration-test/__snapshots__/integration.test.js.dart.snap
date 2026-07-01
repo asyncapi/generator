@@ -149,7 +149,6 @@ Future<void> main() async {
   }
 }
 
-
 "
 `;
 
@@ -310,7 +309,6 @@ Future<void> main() async {
     hoppscotchEchoWebSocketClient.close();
   }
 }
-
 
 "
 `;
@@ -473,7 +471,6 @@ Future<void> main() async {
     postmanEchoWebSocketClientClient.close();
   }
 }
-
 
 "
 `;

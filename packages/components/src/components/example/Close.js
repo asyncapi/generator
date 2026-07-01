@@ -33,8 +33,8 @@ const closeConfig = {
 
 /**
  * Renders the `client.close()` invocation line for the runnable example
- * script in the chosen language. Sibling of {@link OpenConnection}; meant to
- * be embedded inside the `finally` block of {@link Main}.
+ * script in the chosen language. Sibling of `OpenConnection`; meant to
+ * be embedded inside the `finally` block of the example script.
  *
  * @param {Object} props - Component props.
  * @param {Language} props.language - Target programming language.

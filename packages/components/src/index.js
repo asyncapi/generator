@@ -22,8 +22,6 @@ export { Readme } from './components/readme/Readme';
 export { AvailableOperations } from './components/readme/AvailableOperations';
 export { OperationHeader } from './components/readme/OperationHeader';
 export { MessageExamples } from './components/readme/MessageExamples';
-export { Example } from './components/example/Example';
-export { Main } from './components/example/Main';
 export { Imports } from './components/example/Imports';
 export { Handlers } from './components/example/Handlers';
 export { OpenConnection } from './components/example/OpenConnection';

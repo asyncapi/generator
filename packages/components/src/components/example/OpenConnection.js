@@ -35,8 +35,8 @@ const openConnectionConfig = {
 
 /**
  * Renders the `client.connect()` invocation line for the runnable example
- * script in the chosen language. Sibling of {@link Close} and
- * {@link SendInvocations}; meant to be embedded inside {@link Main}.
+ * script in the chosen language. Sibling of `Close` and
+ * `SendInvocations`; meant to be embedded inside the example script.
  *
  * @param {Object} props - Component props.
  * @param {Language} props.language - Target programming language.

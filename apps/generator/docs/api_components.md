@@ -20,16 +20,8 @@ weight: 77
 * [Close](#Close) ⇒ `JSX.Element`<br/>
   
   Renders the `client.close()` invocation line for the runnable example
-script in the chosen language. Sibling of {@link OpenConnection}; meant to
-be embedded inside the `finally` block of {@link Main}.
-
-* [Example](#Example) ⇒ `JSX.Element`<br/>
-  
-  Renders a complete runnable example script (`example.js` / `example.py` /
-`example.dart`) for the generated WebSocket client. Composes
-{@link Imports}, {@link Handlers}, {@link OutgoingProcessor} (JS/Python
-only), and {@link Main}, resolving the client/instance names and the
-relevant send/receive operations from the AsyncAPI document.
+script in the chosen language. Sibling of `OpenConnection`; meant to
+be embedded inside the `finally` block of the example script.
 
 * [Handlers](#Handlers) ⇒ `JSX.Element`<br/>
   
@@ -42,20 +34,11 @@ error handler.
   
   Renders the top-of-file imports block for the runnable example script.
 
-* [Main](#Main) ⇒ `JSX.Element`<br/>
-  
-  Renders the runnable example's `main` function body for the chosen language.
-Composes {@link OpenConnection}, {@link Close}, and {@link SendInvocations},
-and wires up message-handler / error-handler registration appropriate to the
-language. Python additionally registers per-receive-operation handlers and
-blocks at the end of `try` so the worker thread stays alive long enough to
-receive messages.
-
 * [OpenConnection](#OpenConnection) ⇒ `JSX.Element`<br/>
   
   Renders the `client.connect()` invocation line for the runnable example
-script in the chosen language. Sibling of {@link Close} and
-{@link SendInvocations}; meant to be embedded inside {@link Main}.
+script in the chosen language. Sibling of `Close` and
+`SendInvocations`; meant to be embedded inside the example script.
 
 * [OutgoingProcessor](#OutgoingProcessor) ⇒ `JSX.Element`<br/>
   
@@ -312,8 +295,8 @@ renderDependencyProvider();
 <a name="Close"></a>
 ### Close()
 Renders the &#x60;client.close()&#x60; invocation line for the runnable example
-script in the chosen language. Sibling of {@link OpenConnection}; meant to
-be embedded inside the &#x60;finally&#x60; block of {@link Main}.
+script in the chosen language. Sibling of &#x60;OpenConnection&#x60;; meant to
+be embedded inside the &#x60;finally&#x60; block of the example script.
 
 
 **Parameters**
@@ -344,59 +327,6 @@ function renderClose() {
 }
 
 renderClose();
-```
-
-
-
-<a name="Example"></a>
-### Example()
-Renders a complete runnable example script (&#x60;example.js&#x60; / &#x60;example.py&#x60; /
-&#x60;example.dart&#x60;) for the generated WebSocket client. Composes
-{@link Imports}, {@link Handlers}, {@link OutgoingProcessor} (JS/Python
-only), and {@link Main}, resolving the client/instance names and the
-relevant send/receive operations from the AsyncAPI document.
-
-
-**Parameters**
-
-| Name | Type | Description |
-|------|------|-------------|
-| props | `Object` | Component props. |
-| props.asyncapi | `AsyncAPIDocumentInterface` | Parsed AsyncAPI document instance. |
-| props.params | `Object` | Generator parameters used to customize output (&#x60;clientFileName&#x60;, optional &#x60;appendClientSuffix&#x60;, &#x60;customClientName&#x60;). |
-| props.language | `Language` | Target programming language. |
-
-
-
-**Returns**
-
-- `JSX.Element` - A &#x60;Text&#x60; tree containing the full example script.
-
-
-
-**Example**
-
-```js
-import path from "path";
-import { Parser, fromFile } from "@asyncapi/parser";
-import { buildParams } from "@asyncapi/generator-helpers";
-import { Example } from "@asyncapi/generator-components";
-
-async function renderExample() {
-  const parser = new Parser();
-  const fixture = path.resolve(__dirname, "../../../helpers/test/__fixtures__/asyncapi-websocket-query.yml");
-  const parseResult = await fromFile(parser, fixture).parse();
-  const params = buildParams("javascript", { clientFileName: "myClient.js" }, "withPathname");
-  return (
-    <Example
-      asyncapi={parseResult.document}
-      params={params}
-      language="javascript"
-    />
-  );
-}
-
-renderExample().catch(console.error);
 ```
 
 
@@ -454,7 +384,6 @@ Renders the top-of-file imports block for the runnable example script.
 | props.language | `Language` | Target programming language. |
 | props.clientFileName | `string` | The generated client file name (e.g. &#x60;myClient.js&#x60;, &#x60;my_client.py&#x60;, &#x60;my_client.dart&#x60;). |
 | props.clientName | `string` | The generated client class/symbol name. Required for JavaScript/Python; unused for Dart. |
-| props.needsTime | `boolean` | Python-only: when true, prepends &#x60;import time&#x60; (used when the example contains a send loop or a long-running receive wait). |
 
 
 
@@ -475,7 +404,6 @@ function renderImports() {
       language="python"
       clientName="EchoClient"
       clientFileName="echo_client.py"
-      needsTime
     />
   );
 }
@@ -485,61 +413,11 @@ renderImports();
 
 
 
-<a name="Main"></a>
-### Main()
-Renders the runnable example&#x27;s &#x60;main&#x60; function body for the chosen language.
-Composes {@link OpenConnection}, {@link Close}, and {@link SendInvocations},
-and wires up message-handler / error-handler registration appropriate to the
-language. Python additionally registers per-receive-operation handlers and
-blocks at the end of &#x60;try&#x60; so the worker thread stays alive long enough to
-receive messages.
-
-
-**Parameters**
-
-| Name | Type | Description |
-|------|------|-------------|
-| props | `Object` | Component props. |
-| props.language | `Language` | Target programming language. |
-| props.clientName | `string` | The generated client class/symbol name. |
-| props.instanceName | `string` | The variable name to bind the client instance to inside &#x60;main&#x60;. |
-| props.sendOps | `Array.<object>` | AsyncAPI send operations. When non-empty, the example registers an outgoing processor (JS/Python) and runs the send loop. |
-| props.receiveOps | `Array.<object>` | Python-only: AsyncAPI receive operations. Each one gets a registered handler and the example blocks on &#x60;time.sleep(30)&#x60; so the worker thread can deliver messages. |
-
-
-
-**Returns**
-
-- `JSX.Element` - A &#x60;Text&#x60; tree containing the rendered &#x60;main&#x60; function.
-
-
-
-**Example**
-
-```js
-import { Main } from "@asyncapi/generator-components";
-
-function renderMain() {
-  return (
-    <Main
-      language="javascript"
-      clientName="EchoClient"
-      instanceName="echoClient"
-      sendOps={[]}
-    />
-  );
-}
-
-renderMain();
-```
-
-
-
 <a name="OpenConnection"></a>
 ### OpenConnection()
 Renders the &#x60;client.connect()&#x60; invocation line for the runnable example
-script in the chosen language. Sibling of {@link Close} and
-{@link SendInvocations}; meant to be embedded inside {@link Main}.
+script in the chosen language. Sibling of &#x60;Close&#x60; and
+&#x60;SendInvocations&#x60;; meant to be embedded inside the example script.
 
 
 **Parameters**

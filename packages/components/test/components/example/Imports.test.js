@@ -13,24 +13,12 @@ describe('Testing of Imports function', () => {
     expect(result.trim()).toMatchSnapshot();
   });
 
-  test('render python imports without needsTime', () => {
+  test('render python imports', () => {
     const result = render(
       <Imports
         language="python"
         clientName="EchoClient"
         clientFileName="echo_client.py"
-      />
-    );
-    expect(result.trim()).toMatchSnapshot();
-  });
-
-  test('render python imports with needsTime', () => {
-    const result = render(
-      <Imports
-        language="python"
-        clientName="EchoClient"
-        clientFileName="echo_client.py"
-        needsTime
       />
     );
     expect(result.trim()).toMatchSnapshot();

@@ -68,20 +68,20 @@ const queryParamLogicConfig = {
     const paramName = param[0];
     return {
       variableDefinition: {
-        text: `const ${paramName} = ${paramName} || process.env.${paramName.toUpperCase()};`,
-        indent: 8,
+        text: `const _${paramName} = ${paramName} || process.env.${paramName.toUpperCase()};`,
+        indent: 0,
       },
       ifCondition: {
-        text: `if (${paramName}) {`,
-        indent: 8,
+        text: `if (_${paramName}) {`,
+        indent: 0,
       },
       assignment: {
-        text: `params["${paramName}"] = ${paramName};`,
-        indent: 10,
+        text: `params["${paramName}"] = _${paramName};`,
+        indent: 2,
       },
       closing: {
         text: '}',
-        indent: 8,
+        indent: 0,
         newLines: 1,
       },
     };

@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`QueryParamsArgumentsDocs component (integration with AsyncAPI document) renders with query parameters 1`] = `
+"* @param {string} heartbeat - If provided (or if HEARTBEAT environment variable is set), added as ?heartbeat=… to URL
+
+  * @param {string} bids - If provided (or if BIDS environment variable is set), added as ?bids=… to URL
+
+  * @param {string} sessionId - If provided (or if SESSIONID environment variable is set), added as ?sessionId=… to URL"
+`;

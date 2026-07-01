@@ -44,4 +44,33 @@ describe('InitSignature component (integration with AsyncAPI document)', () => {
     const result = render(<InitSignature queryParams={queryParamsArray} />);
     expect(result.trim()).toMatchSnapshot();
   });
+  test('renders with single query parameter without default value', () => {
+    const queryParamsWithoutDefault = [['token', undefined]];
+    const result = render(<InitSignature queryParams={queryParamsWithoutDefault} />);
+    expect(result.trim()).toMatchSnapshot();
+  });
+
+  test('renders with single query parameter with default value as primitive boolean', () => {
+    const queryParams = [['bids', false]];
+    const result = render(<InitSignature queryParams={queryParams} />);
+    expect(result.trim()).toMatchSnapshot();
+  });
+
+  test('renders with single query parameter with default value as primitive number', () => {
+    const queryParams = [['count', 42]];
+    const result = render(<InitSignature queryParams={queryParams} />);
+    expect(result.trim()).toMatchSnapshot();
+  });
+
+  test('renders with single query parameter with default value as stringified number', () => {
+    const queryParams = [['count', '42']];
+    const result = render(<InitSignature queryParams={queryParams} />);
+    expect(result.trim()).toMatchSnapshot();
+  });
+
+  test('renders with single query parameter with explicit empty string default', () => {
+    const queryParams = [['token', '']];
+    const result = render(<InitSignature queryParams={queryParams} />);
+    expect(result.trim()).toMatchSnapshot();
+  });
 });

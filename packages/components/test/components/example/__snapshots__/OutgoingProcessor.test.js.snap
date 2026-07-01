@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing of OutgoingProcessor function render javascript example outgoing processor 1`] = `
+"function outgoingProcessor(message) {
+  const processed = { payload: message, timestamp: new Date().toISOString() };
+  console.log('Outgoing processor fired:', JSON.stringify(processed));
+  return processed;
+}"
+`;
+
+exports[`Testing of OutgoingProcessor function render python example outgoing processor 1`] = `
+"def outgoing_message_processor(message):
+    \\"\\"\\"Process outgoing messages before they are sent (e.g., wrap with metadata).\\"\\"\\"
+    print(f\\"Outgoing processor fired: {message}\\")
+    return {\\"payload\\": message, \\"timestamp\\": \\"2025-01-01T00:00:00Z\\"}"
+`;

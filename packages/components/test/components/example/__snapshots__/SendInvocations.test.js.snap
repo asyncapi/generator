@@ -1,0 +1,56 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing of SendInvocations function render dart send loop with real operations 1`] = `
+"for (var i = 0; i < 5; i++) {
+      try {
+        echoClient.noMessage('TODO: replace with payload for noMessage');
+        echoClient.noSummaryOperations('TODO: replace with payload matching noSummaryOperations');
+        echoClient.noSummaryNoDescriptionOperations('test');
+        echoClient.mixedMessageExamples('TODO: replace with payload matching mixedMessageExamples');
+        echoClient.operation_with_snake_case('TODO: replace with payload matching operation_with_snake_case');
+      } catch (error) {
+        print('Error while sending message: $error');
+      }
+      await Future.delayed(Duration(seconds: 5));
+    }"
+`;
+
+exports[`Testing of SendInvocations function render javascript send loop with real operations 1`] = `
+"for (let i = 0; i < 5; i++) {
+      try {
+          await echoClient.noMessage('TODO: replace with payload for noMessage');
+          await echoClient.noSummaryOperations('TODO: replace with payload matching noSummaryOperations');
+          await echoClient.noSummaryNoDescriptionOperations('test');
+          await echoClient.mixedMessageExamples('TODO: replace with payload matching mixedMessageExamples');
+          await echoClient.operation_with_snake_case('TODO: replace with payload matching operation_with_snake_case');
+      } catch (error) {
+        console.error('Error while sending message:', error);
+      }
+      await new Promise(resolve => setTimeout(resolve, 5000));
+    }"
+`;
+
+exports[`Testing of SendInvocations function render python send loop with real operations 1`] = `
+"for i in range(5):
+            try:
+                echoClient.no_message('TODO: replace with payload for noMessage')
+            except Exception as e:
+                print(f\\"Error while sending no_message: {e}\\")
+            try:
+                echoClient.no_summary_operations('TODO: replace with payload matching noSummaryOperations')
+            except Exception as e:
+                print(f\\"Error while sending no_summary_operations: {e}\\")
+            try:
+                echoClient.no_summary_no_description_operations('test')
+            except Exception as e:
+                print(f\\"Error while sending no_summary_no_description_operations: {e}\\")
+            try:
+                echoClient.mixed_message_examples('TODO: replace with payload matching mixedMessageExamples')
+            except Exception as e:
+                print(f\\"Error while sending mixed_message_examples: {e}\\")
+            try:
+                echoClient.operation_with_snake_case('TODO: replace with payload matching operation_with_snake_case')
+            except Exception as e:
+                print(f\\"Error while sending operation_with_snake_case: {e}\\")
+            time.sleep(2)"
+`;

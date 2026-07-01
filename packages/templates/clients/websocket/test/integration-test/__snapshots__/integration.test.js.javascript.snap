@@ -410,6 +410,55 @@ module.exports = HoppscotchClient;
 "
 `;
 
+exports[`WebSocket Clients Integration Tests JavaScript Client Common Integration tests for JavaScript client generation generate simple client for hoppscotch echo with custom client name: example.js 1`] = `
+"const HoppscotchClient = require('./client');
+
+function myMessageHandler(message) {
+  console.log('====================');
+  console.log('Just proving I got the message in myMessageHandler:', message);
+  console.log('====================');
+}
+
+function myErrorHandler(error) {
+  console.error('Errors from WebSocket:', error.message);
+}
+
+function outgoingProcessor(message) {
+  const processed = { payload: message, timestamp: new Date().toISOString() };
+  console.log('Outgoing processor fired:', JSON.stringify(processed));
+  return processed;
+}
+
+async function main() {
+  const hoppscotchClient = new HoppscotchClient();
+  hoppscotchClient.registerMessageHandler(myMessageHandler);
+  hoppscotchClient.registerErrorHandler(myErrorHandler);
+
+  hoppscotchClient.registerOutgoingProcessor(outgoingProcessor);
+
+  try {
+    await hoppscotchClient.connect();
+
+    for (let i = 0; i < 5; i++) {
+      try {
+          await hoppscotchClient.sendEchoMessage('test');
+      } catch (error) {
+        console.error('Error while sending message:', error);
+      }
+      await new Promise(resolve => setTimeout(resolve, 5000));
+    }
+  } catch (error) {
+    console.error('Failed to connect to WebSocket:', error.message);
+  } finally {
+    await hoppscotchClient.close();
+  }
+}
+
+main();
+
+"
+`;
+
 exports[`WebSocket Clients Integration Tests JavaScript Client Common Integration tests for JavaScript client generation generate simple client for hoppscotch echo: README.md 1`] = `
 "# Hoppscotch Echo WebSocket Client
 
@@ -820,6 +869,55 @@ module.exports = HoppscotchEchoWebSocketClient;
 "
 `;
 
+exports[`WebSocket Clients Integration Tests JavaScript Client Common Integration tests for JavaScript client generation generate simple client for hoppscotch echo: example.js 1`] = `
+"const HoppscotchEchoWebSocketClient = require('./client');
+
+function myMessageHandler(message) {
+  console.log('====================');
+  console.log('Just proving I got the message in myMessageHandler:', message);
+  console.log('====================');
+}
+
+function myErrorHandler(error) {
+  console.error('Errors from WebSocket:', error.message);
+}
+
+function outgoingProcessor(message) {
+  const processed = { payload: message, timestamp: new Date().toISOString() };
+  console.log('Outgoing processor fired:', JSON.stringify(processed));
+  return processed;
+}
+
+async function main() {
+  const hoppscotchEchoWebSocketClient = new HoppscotchEchoWebSocketClient();
+  hoppscotchEchoWebSocketClient.registerMessageHandler(myMessageHandler);
+  hoppscotchEchoWebSocketClient.registerErrorHandler(myErrorHandler);
+
+  hoppscotchEchoWebSocketClient.registerOutgoingProcessor(outgoingProcessor);
+
+  try {
+    await hoppscotchEchoWebSocketClient.connect();
+
+    for (let i = 0; i < 5; i++) {
+      try {
+          await hoppscotchEchoWebSocketClient.sendEchoMessage('test');
+      } catch (error) {
+        console.error('Error while sending message:', error);
+      }
+      await new Promise(resolve => setTimeout(resolve, 5000));
+    }
+  } catch (error) {
+    console.error('Failed to connect to WebSocket:', error.message);
+  } finally {
+    await hoppscotchEchoWebSocketClient.close();
+  }
+}
+
+main();
+
+"
+`;
+
 exports[`WebSocket Clients Integration Tests JavaScript Client Common Integration tests for JavaScript client generation generate simple client for postman echo: README.md 1`] = `
 "# Postman Echo WebSocket Client
 
@@ -1196,6 +1294,55 @@ class PostmanEchoWebSocketClientClient {
   }
 }
 module.exports = PostmanEchoWebSocketClientClient;
+
+"
+`;
+
+exports[`WebSocket Clients Integration Tests JavaScript Client Common Integration tests for JavaScript client generation generate simple client for postman echo: example.js 1`] = `
+"const PostmanEchoWebSocketClientClient = require('./client');
+
+function myMessageHandler(message) {
+  console.log('====================');
+  console.log('Just proving I got the message in myMessageHandler:', message);
+  console.log('====================');
+}
+
+function myErrorHandler(error) {
+  console.error('Errors from WebSocket:', error.message);
+}
+
+function outgoingProcessor(message) {
+  const processed = { payload: message, timestamp: new Date().toISOString() };
+  console.log('Outgoing processor fired:', JSON.stringify(processed));
+  return processed;
+}
+
+async function main() {
+  const postmanEchoWebSocketClientClient = new PostmanEchoWebSocketClientClient();
+  postmanEchoWebSocketClientClient.registerMessageHandler(myMessageHandler);
+  postmanEchoWebSocketClientClient.registerErrorHandler(myErrorHandler);
+
+  postmanEchoWebSocketClientClient.registerOutgoingProcessor(outgoingProcessor);
+
+  try {
+    await postmanEchoWebSocketClientClient.connect();
+
+    for (let i = 0; i < 5; i++) {
+      try {
+          await postmanEchoWebSocketClientClient.sendEchoMessage('test');
+      } catch (error) {
+        console.error('Error while sending message:', error);
+      }
+      await new Promise(resolve => setTimeout(resolve, 5000));
+    }
+  } catch (error) {
+    console.error('Failed to connect to WebSocket:', error.message);
+  } finally {
+    await postmanEchoWebSocketClientClient.close();
+  }
+}
+
+main();
 
 "
 `;

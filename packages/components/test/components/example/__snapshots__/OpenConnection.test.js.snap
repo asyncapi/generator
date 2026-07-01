@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing of OpenConnection function render dart example connect line 1`] = `"await echoClient.connect();"`;
+
+exports[`Testing of OpenConnection function render javascript example connect line 1`] = `"await echoClient.connect();"`;
+
+exports[`Testing of OpenConnection function render python example connect line 1`] = `"echoClient.connect()"`;

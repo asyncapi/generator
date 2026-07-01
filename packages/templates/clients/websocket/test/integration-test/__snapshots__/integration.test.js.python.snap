@@ -1367,6 +1367,44 @@ class SlackWebsocketAPIClient:
 "
 `;
 
+exports[`WebSocket Clients Integration Tests Python Client Additional tests for Python client generate client for slack: example.py 1`] = `
+"import time
+from client import SlackWebsocketAPIClient
+
+def handle_on_hello_message(message):
+    print(f\\"[onHelloMessage] Received message: {message}\\")
+
+def handle_on_event(message):
+    print(f\\"[onEvent] Received message: {message}\\")
+
+def handle_on_disconnect_message(message):
+    print(f\\"[onDisconnectMessage] Received message: {message}\\")
+
+def custom_error_handler(error):
+    print(f\\"WebSocket error: {error}\\")
+
+def main():
+    slack_websocket_a_p_i_client = SlackWebsocketAPIClient()
+    slack_websocket_a_p_i_client.register_on_hello_message_handler(handle_on_hello_message)
+    slack_websocket_a_p_i_client.register_on_event_handler(handle_on_event)
+    slack_websocket_a_p_i_client.register_on_disconnect_message_handler(handle_on_disconnect_message)
+    slack_websocket_a_p_i_client.register_error_handler(custom_error_handler)
+
+    try:
+        slack_websocket_a_p_i_client.connect()
+        time.sleep(30)  # Increase as needed to keep the connection alive longer
+    except Exception as error:
+        print(f\\"Failed to connect to WebSocket: {error}\\")
+    finally:
+        slack_websocket_a_p_i_client.close()
+
+
+if __name__ == '__main__':
+    main()
+
+"
+`;
+
 exports[`WebSocket Clients Integration Tests Python Client Additional tests for Python client generate client for slack: requirements.txt 1`] = `
 "websocket-client==1.8.0
 certifi==2025.1.31
@@ -1786,6 +1824,49 @@ class HoppscotchClient:
         self.ws_app.close()
         print(\\"WebSocket connection closed.\\")
 
+
+"
+`;
+
+exports[`WebSocket Clients Integration Tests Python Client Common Integration tests for Python client generation generate simple client for hoppscotch echo with custom client name: example.py 1`] = `
+"import time
+from client import HoppscotchClient
+
+def handle_handle_time_stamp_message(message):
+    print(f\\"[handleTimeStampMessage] Received message: {message}\\")
+
+def custom_error_handler(error):
+    print(f\\"WebSocket error: {error}\\")
+
+def outgoing_message_processor(message):
+    \\"\\"\\"Process outgoing messages before they are sent (e.g., wrap with metadata).\\"\\"\\"
+    print(f\\"Outgoing processor fired: {message}\\")
+    return {\\"payload\\": message, \\"timestamp\\": \\"2025-01-01T00:00:00Z\\"}
+
+def main():
+    hoppscotch_client = HoppscotchClient()
+    hoppscotch_client.register_handle_time_stamp_message_handler(handle_handle_time_stamp_message)
+    hoppscotch_client.register_error_handler(custom_error_handler)
+
+    hoppscotch_client.register_outgoing_processor(outgoing_message_processor)
+
+    try:
+        hoppscotch_client.connect()
+        for i in range(5):
+            try:
+                hoppscotch_client.send_echo_message('test')
+            except Exception as e:
+                print(f\\"Error while sending send_echo_message: {e}\\")
+            time.sleep(2)
+        time.sleep(30)  # Increase as needed to keep the connection alive longer
+    except Exception as error:
+        print(f\\"Failed to connect to WebSocket: {error}\\")
+    finally:
+        hoppscotch_client.close()
+
+
+if __name__ == '__main__':
+    main()
 
 "
 `;
@@ -2213,6 +2294,49 @@ class HoppscotchEchoWebSocketClient:
 "
 `;
 
+exports[`WebSocket Clients Integration Tests Python Client Common Integration tests for Python client generation generate simple client for hoppscotch echo: example.py 1`] = `
+"import time
+from client import HoppscotchEchoWebSocketClient
+
+def handle_handle_time_stamp_message(message):
+    print(f\\"[handleTimeStampMessage] Received message: {message}\\")
+
+def custom_error_handler(error):
+    print(f\\"WebSocket error: {error}\\")
+
+def outgoing_message_processor(message):
+    \\"\\"\\"Process outgoing messages before they are sent (e.g., wrap with metadata).\\"\\"\\"
+    print(f\\"Outgoing processor fired: {message}\\")
+    return {\\"payload\\": message, \\"timestamp\\": \\"2025-01-01T00:00:00Z\\"}
+
+def main():
+    hoppscotch_echo_web_socket_client = HoppscotchEchoWebSocketClient()
+    hoppscotch_echo_web_socket_client.register_handle_time_stamp_message_handler(handle_handle_time_stamp_message)
+    hoppscotch_echo_web_socket_client.register_error_handler(custom_error_handler)
+
+    hoppscotch_echo_web_socket_client.register_outgoing_processor(outgoing_message_processor)
+
+    try:
+        hoppscotch_echo_web_socket_client.connect()
+        for i in range(5):
+            try:
+                hoppscotch_echo_web_socket_client.send_echo_message('test')
+            except Exception as e:
+                print(f\\"Error while sending send_echo_message: {e}\\")
+            time.sleep(2)
+        time.sleep(30)  # Increase as needed to keep the connection alive longer
+    except Exception as error:
+        print(f\\"Failed to connect to WebSocket: {error}\\")
+    finally:
+        hoppscotch_echo_web_socket_client.close()
+
+
+if __name__ == '__main__':
+    main()
+
+"
+`;
+
 exports[`WebSocket Clients Integration Tests Python Client Common Integration tests for Python client generation generate simple client for hoppscotch echo: requirements.txt 1`] = `
 "websocket-client==1.8.0
 certifi==2025.1.31
@@ -2550,6 +2674,44 @@ class PostmanEchoWebSocketClientClient:
         self.ws_app.close()
         print(\\"WebSocket connection closed.\\")
 
+
+"
+`;
+
+exports[`WebSocket Clients Integration Tests Python Client Common Integration tests for Python client generation generate simple client for postman echo: example.py 1`] = `
+"import time
+from client import PostmanEchoWebSocketClientClient
+
+def custom_error_handler(error):
+    print(f\\"WebSocket error: {error}\\")
+
+def outgoing_message_processor(message):
+    \\"\\"\\"Process outgoing messages before they are sent (e.g., wrap with metadata).\\"\\"\\"
+    print(f\\"Outgoing processor fired: {message}\\")
+    return {\\"payload\\": message, \\"timestamp\\": \\"2025-01-01T00:00:00Z\\"}
+
+def main():
+    postman_echo_web_socket_client_client = PostmanEchoWebSocketClientClient()
+    postman_echo_web_socket_client_client.register_error_handler(custom_error_handler)
+
+    postman_echo_web_socket_client_client.register_outgoing_processor(outgoing_message_processor)
+
+    try:
+        postman_echo_web_socket_client_client.connect()
+        for i in range(5):
+            try:
+                postman_echo_web_socket_client_client.send_echo_message('test')
+            except Exception as e:
+                print(f\\"Error while sending send_echo_message: {e}\\")
+            time.sleep(2)
+    except Exception as error:
+        print(f\\"Failed to connect to WebSocket: {error}\\")
+    finally:
+        postman_echo_web_socket_client_client.close()
+
+
+if __name__ == '__main__':
+    main()
 
 "
 `;

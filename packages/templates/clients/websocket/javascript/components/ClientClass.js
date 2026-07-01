@@ -5,13 +5,13 @@ import { ModuleExport } from './ModuleExport';
 import { CompileOperationSchemas } from './CompileOperationSchemas';
 import { RegisterOutgoingProcessor } from './RegisterOutgoingProcessor';
 
-export function ClientClass({ clientName, serverUrl, title, sendOperations }) {
+export function ClientClass({ clientName, serverUrl, queryParams, title, sendOperations }) {
   return (
     <Text>
       <Text newLines={2}>
         {`class ${clientName} {`}
       </Text>
-      <Constructor serverUrl={serverUrl} sendOperations={sendOperations} />
+      <Constructor serverUrl={serverUrl} queryParams={queryParams} sendOperations={sendOperations} />
       <Connect language="javascript" title={title} />
       <RegisterMessageHandler 
         language="javascript" 

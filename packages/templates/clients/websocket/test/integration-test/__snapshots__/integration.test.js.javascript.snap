@@ -212,7 +212,6 @@ class HoppscotchClient {
     this.sendOperationsId = [\\"sendEchoMessage\\"];
     this.throwSendErrors = throwSendErrors; // Re-throw send failures after handlers run
   }
-
   // Method to establish a WebSocket connection
   connect() {
       return new Promise((resolve, reject) => {
@@ -622,7 +621,6 @@ class HoppscotchEchoWebSocketClient {
     this.sendOperationsId = [\\"sendEchoMessage\\"];
     this.throwSendErrors = throwSendErrors; // Re-throw send failures after handlers run
   }
-
   // Method to establish a WebSocket connection
   connect() {
       return new Promise((resolve, reject) => {
@@ -1002,7 +1000,6 @@ class PostmanEchoWebSocketClientClient {
     this.sendOperationsId = [\\"sendEchoMessage\\"];
     this.throwSendErrors = throwSendErrors; // Re-throw send failures after handlers run
   }
-
   // Method to establish a WebSocket connection
   connect() {
       return new Promise((resolve, reject) => {

@@ -33,8 +33,11 @@ function getAsyncapiFileExtension(asyncapi) {
   try {
     JSON.parse(asyncapi);
     return 'json';
-  } catch (_) {
-    return 'yaml';
+  } catch (error) {
+    if (error instanceof SyntaxError) {
+      return 'yaml';
+    }
+    throw error;
   }
 }
 

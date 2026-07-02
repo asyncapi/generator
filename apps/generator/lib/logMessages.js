@@ -74,6 +74,10 @@ function fetchSpecError(link, status, statusText) {
   return `Failed to fetch AsyncAPI document from ${link}: HTTP ${status}${statusText}`;
 }
 
+function asyncapiFileDirOutsideTarget(asyncapiFileDir) {
+  return `asyncapiFileDir "${asyncapiFileDir}" must resolve within the target directory.`;
+}
+
 module.exports = {
   TEMPLATE_INSTALL_FLAG_MSG,
   TEMPLATE_INSTALL_DISK_MSG,
@@ -93,5 +97,6 @@ module.exports = {
   mappedRefOutsideBaseFolder,
   mappedRefSymlinkOutsideBaseFolder,
   errorOpeningFile,
-  fetchSpecError
+  fetchSpecError,
+  asyncapiFileDirOutsideTarget
 };

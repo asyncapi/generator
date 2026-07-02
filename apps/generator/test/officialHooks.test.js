@@ -21,6 +21,9 @@ const dummyJSON = JSON.stringify({
   }
 }, null, 2);
 
+const flowStyleYAML = '{ asyncapi: "2.0.0", info: { title: "Dummy example", version: "1.0.0" } }';
+
+const yamlOutputFileName = 'asyncapi.yaml';
 const testResultPath = path.resolve(__dirname, './temp/officialHooks');
 
 describe('officialHooks', () => {
@@ -36,7 +39,7 @@ describe('officialHooks', () => {
       templateParams: {}
     });
 
-    const outputFile = path.join(testResultPath, 'asyncapi.yaml');
+    const outputFile = path.join(testResultPath, yamlOutputFileName);
     const checkOutputFileExists = await stat(outputFile);
     const outputFileContent = await readFile(outputFile, 'utf8');
 
@@ -59,6 +62,21 @@ describe('officialHooks', () => {
     expect(outputFileContent).toBe(dummyJSON);
   });
 
+  it('creates a YAML file when the originalAsyncAPI is flow-style YAML', async () => {
+    await createAsyncapiFile({
+      originalAsyncAPI: flowStyleYAML,
+      targetDir: testResultPath,
+      templateParams: {}
+    });
+
+    const outputFile = path.join(testResultPath, yamlOutputFileName);
+    const checkOutputFileExists = await stat(outputFile);
+    const outputFileContent = await readFile(outputFile, 'utf8');
+
+    expect(checkOutputFileExists.isFile()).toBeTruthy();
+    expect(outputFileContent).toBe(flowStyleYAML);
+  });
+
   it('creates the file in a custom directory when asyncapiFileDir parameter is provided', async () => {
     const customDir = 'custom-test';
 
@@ -70,11 +88,21 @@ describe('officialHooks', () => {
       }
     });
 
-    const outputFilePath = path.join(testResultPath, customDir, 'asyncapi.yaml');
+    const outputFilePath = path.join(testResultPath, customDir, yamlOutputFileName);
     const checkOutputFileExists = await stat(outputFilePath);
     const outputFileContent = await readFile(outputFilePath, 'utf8');
 
     expect(checkOutputFileExists.isFile()).toBeTruthy();
     expect(outputFileContent).toBe(dummyYAML);
+  });
+
+  it('rejects a custom directory that resolves outside the target directory', async () => {
+    await expect(createAsyncapiFile({
+      originalAsyncAPI: dummyYAML,
+      targetDir: testResultPath,
+      templateParams: {
+        asyncapiFileDir: '../outside'
+      }
+    })).rejects.toThrow('asyncapiFileDir "../outside" must resolve within the target directory.');
   });
 });

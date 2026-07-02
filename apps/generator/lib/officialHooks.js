@@ -1,18 +1,11 @@
-const path = require('path');
-const { mkdir, writeFile } = require('fs').promises;
+const path = require('node:path');
+const { mkdir, writeFile } = require('node:fs').promises;
 
 async function createAsyncapiFile(generator) {
   const asyncapi = generator.originalAsyncAPI;
   const targetDir = generator.targetDir;
-  const customDirInTarget = generator.templateParams && generator.templateParams.asyncapiFileDir;
-  let extension;
-
-  try {
-    JSON.parse(asyncapi);
-    extension = 'json';
-  } catch (e) {
-    extension = 'yaml';
-  }
+  const customDirInTarget = generator.templateParams?.asyncapiFileDir;
+  const extension = asyncapi.trimStart().startsWith('{') ? 'json' : 'yaml';
 
   const outputFileName = `asyncapi.${extension}`;
   const outputDir = customDirInTarget

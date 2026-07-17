@@ -1,5 +1,30 @@
 # @asyncapi/generator
 
+## 3.3.0
+
+### Minor Changes
+
+- 5fe91b0: Generated Python and JavaScript WebSocket clients no longer swallow send errors. Failures are now forwarded to the registered error handlers and raised by default, so callers learn when a message fails to send. Pass `raise_send_errors=False` (Python) or `throwSendErrors=false` (JavaScript) to the constructor to keep a high-throughput producer loop running and rely on the error handlers instead.
+
+### Patch Changes
+
+- Updated dependencies [5fe91b0]
+  - @asyncapi/generator-components@0.7.0
+
+## 3.2.3
+
+### Patch Changes
+
+- 69c2fa1: The `mapBaseUrlToFolder` resolver now rejects `$ref`s that resolve outside the configured base folder. Previously a reference such as `https://schema.example.com/crm/../../../etc/passwd` was passed through unnormalized, letting a malicious AsyncAPI document read files outside the mapped folder (path traversal). References that escape the base folder are now blocked with an explicit error.
+
+  This only affects references that start with the mapped base URL and then use `../` to climb out of the mapped folder (e.g. `https://schema.example.com/crm/../shared/common.json` reaching a sibling folder). If you relied on this to reference files outside the mapped folder, map a higher-level base instead — e.g. map `https://schema.example.com/` to `./schemas/` and reference `https://schema.example.com/shared/common.json` directly — so the resolved paths stay within the mapped folder.
+
+## 3.2.2
+
+### Patch Changes
+
+- b43cd7c: Fix `fetchSpec` silently resolving on non-2xx HTTP responses. Previously, fetching an AsyncAPI document from a URL that returned a 4xx or 5xx status would resolve with the error response body (e.g. an HTML page) instead of rejecting. `fetchSpec` now throws a descriptive error including the URL and HTTP status code, so failures are surfaced immediately rather than propagating as invalid spec content.
+
 ## 3.2.1
 
 ### Patch Changes

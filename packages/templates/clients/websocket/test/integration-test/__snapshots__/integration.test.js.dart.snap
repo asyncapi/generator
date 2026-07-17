@@ -90,7 +90,7 @@ class HoppscotchClient {
     }
   }
 
-  /// Method to send an echo message to the server
+  /// Send a sendEchoMessage message to the server
   void sendEchoMessage(dynamic message) {
     if (_channel == null) {
       print('Error: WebSocket is not connected.');
@@ -98,7 +98,7 @@ class HoppscotchClient {
     }
     final payload = message is String ? message : jsonEncode(message);
     _channel!.sink.add(payload);
-    print('Sent message to echo server: $payload');
+    print('Sent message: $payload');
   }
 
   /// Method to close the WebSocket connection
@@ -211,7 +211,7 @@ class HoppscotchEchoWebSocketClient {
     }
   }
 
-  /// Method to send an echo message to the server
+  /// Send a sendEchoMessage message to the server
   void sendEchoMessage(dynamic message) {
     if (_channel == null) {
       print('Error: WebSocket is not connected.');
@@ -219,7 +219,7 @@ class HoppscotchEchoWebSocketClient {
     }
     final payload = message is String ? message : jsonEncode(message);
     _channel!.sink.add(payload);
-    print('Sent message to echo server: $payload');
+    print('Sent message: $payload');
   }
 
   /// Method to close the WebSocket connection
@@ -333,7 +333,7 @@ class PostmanEchoWebSocketClientClient {
     }
   }
 
-  /// Method to send an echo message to the server
+  /// Send a sendEchoMessage message to the server
   void sendEchoMessage(dynamic message) {
     if (_channel == null) {
       print('Error: WebSocket is not connected.');
@@ -341,7 +341,7 @@ class PostmanEchoWebSocketClientClient {
     }
     final payload = message is String ? message : jsonEncode(message);
     _channel!.sink.add(payload);
-    print('Sent message to echo server: $payload');
+    print('Sent message: $payload');
   }
 
   /// Method to close the WebSocket connection

@@ -9,16 +9,21 @@ on:
   pull_request_target:
     types:
       - synchronize
-      - edited
+      - edited                                # zizmor: ignore[dangerous-triggers] needed as pull_request token is read-only
+
+permissions: {}
 
 jobs:
   remove-ready-label:
+    name: Remove ready-to-merge label
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write # required to remove labels and post comments on PR issues 
     steps:
       - name: Remove label
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         with:
-          github-token: ${{ secrets.GH_TOKEN }}
+          github-token: ${{ github.token }}
           script: |
             const labelToRemove = 'ready-to-merge';
             const labels = context.payload.pull_request.labels;

@@ -7,6 +7,9 @@ const utils = jest.requireActual('../lib/utils');
 
 const logMessage = require('./../lib/logMessages.js');
 
+jest.mock('node-fetch');
+const fetch = require('node-fetch');
+
 describe('Utils', () => {
   describe('#getTemplateDetails', () => {
     let resolvePkg, resolveFrom;
@@ -98,6 +101,45 @@ describe('Utils', () => {
       );
 
       expect(exists).toBe(false);
+    });
+  });
+
+  describe('#fetchSpec', () => {
+    const specUrl = 'http://example.com/asyncapi.yaml';
+
+    afterEach(() => {
+      jest.resetAllMocks();
+    });
+
+    it('returns response body on HTTP 200', async () => {
+      const body = 'asyncapi: 2.6.0\ninfo:\n  title: test\n  version: 0.0.1';
+      fetch.mockResolvedValueOnce({ ok: true, text: jest.fn().mockResolvedValueOnce(body) });
+
+      await expect(utils.fetchSpec(specUrl)).resolves.toBe(body);
+    });
+
+    it('rejects with error message including URL and status on 404', async () => {
+      fetch.mockResolvedValueOnce({ ok: false, status: 404, statusText: 'Not Found' });
+
+      await expect(utils.fetchSpec(specUrl)).rejects.toThrow(
+        logMessage.fetchSpecError(specUrl, 404, ' Not Found')
+      );
+    });
+
+    it('rejects with error message including URL and status on 500', async () => {
+      fetch.mockResolvedValueOnce({ ok: false, status: 500, statusText: 'Internal Server Error' });
+
+      await expect(utils.fetchSpec(specUrl)).rejects.toThrow(
+        logMessage.fetchSpecError(specUrl, 500, ' Internal Server Error')
+      );
+    });
+
+    it('rejects with only status code when response has no status text', async () => {
+      fetch.mockResolvedValueOnce({ ok: false, status: 503, statusText: '' });
+
+      await expect(utils.fetchSpec(specUrl)).rejects.toThrow(
+        logMessage.fetchSpecError(specUrl, 503, '')
+      );
     });
   });
 

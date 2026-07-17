@@ -1,0 +1,55 @@
+name: Check generated docs are up to date
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, ready_for_review]
+
+permissions:
+  contents: read
+
+jobs:
+  check-docs:
+    name: Verify generated docs are up to date
+    runs-on: ubuntu-latest
+    if: >
+      !github.event.pull_request.draft && !(
+        (github.actor == 'asyncapi-bot' && (
+          startsWith(github.event.pull_request.title, 'ci: update of files from global .github repo') ||
+          startsWith(github.event.pull_request.title, 'chore(release):')
+        )) ||
+        (github.actor == 'asyncapi-bot-eve' && (
+          startsWith(github.event.pull_request.title, 'ci: update of files from global .github repo') ||
+          startsWith(github.event.pull_request.title, 'chore(release):')
+        )) ||
+        (github.actor == 'allcontributors[bot]' &&
+          startsWith(github.event.pull_request.title, 'docs: add')
+        )
+      )
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 #v4.2.2 https://github.com/actions/checkout/releases/tag/v4.2.2
+
+      - name: Check package-lock version
+        # This workflow is from our own org repo and safe to reference by 'master'.
+        uses: asyncapi/.github/.github/actions/get-node-version-from-package-lock@master # //NOSONAR
+        id: lockversion
+        with:
+          node-version: ${{ vars.NODE_VERSION }}
+
+      - name: Use Node.js
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.2.0 https://github.com/actions/setup-node/commit/48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e
+        with:
+          node-version: "${{ steps.lockversion.outputs.version }}"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Regenerate docs
+        run: npm run generate:assets
+
+      - name: Verify no doc drift
+        run: |
+          git diff --exit-code || {
+            echo "::error::Generated docs are out of date. Run 'npm run generate:assets' locally and commit the result."
+            exit 1
+          }

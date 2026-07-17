@@ -4,17 +4,18 @@
 name: Automerge PRs from bots
 
 on:
-  pull_request_target:
+  pull_request_target:          # Needed as GH_TOKEN_BOT_EVE needed for approval.
     types:
       - opened
-      - synchronize
+      - synchronize             # zizmor: ignore[dangerous-triggers]
+
+permissions: {}
 
 jobs:
   autoapprove-for-bot:
     name: Autoapprove PR comming from a bot
     if: >
       contains(fromJson('["asyncapi-bot", "dependabot[bot]", "dependabot-preview[bot]"]'), github.event.pull_request.user.login) &&
-      contains(fromJson('["asyncapi-bot", "dependabot[bot]", "dependabot-preview[bot]"]'), github.actor) &&
       !contains(github.event.pull_request.labels.*.name, 'released')
     runs-on: ubuntu-latest
     steps:

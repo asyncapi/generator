@@ -1,19 +1,25 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Constructor component (integration with AsyncAPI document) renders with neither serverUrl nor query 1`] = `
-"def __init__(self, url: str = \\"null\\"):
+"def __init__(self, url: str = \\"null\\", raise_send_errors: bool = True):
 
         \\"\\"\\"
         Constructor to initialize the WebSocket client.
 
         Args:
-            url (str, optional): The WebSocket server URL. Use it if the server URL is 
+            url (str, optional): The WebSocket server URL. Use it if the server URL is
             different from the default one taken from the AsyncAPI document.
+            raise_send_errors (bool, optional): Controls how the instance send_* methods
+            react to a send failure. When True (default) the error is re-raised after the
+            registered error handlers run, so the caller can handle each failure. When
+            False the error is suppressed after the handlers run, which keeps a
+            high-throughput producer loop going. Defaults to True.
         \\"\\"\\"
         self.ws_app = None  # Instance of WebSocketApp
         self.message_handlers = []      # Callables for incoming messages
         self.error_handlers = []        # Callables for errors
         self.outgoing_processors = []   # Callables to process outgoing messages
+        self.raise_send_errors = raise_send_errors  # Re-raise send failures after handlers run
         self._stop_event = threading.Event()
       
         self.receive_operation_handlers = {}
@@ -25,19 +31,25 @@ exports[`Constructor component (integration with AsyncAPI document) renders with
 `;
 
 exports[`Constructor component (integration with AsyncAPI document) renders with only serverUrl (withHostDuplicatingProtocol) 1`] = `
-"def __init__(self, url: str = \\"wss://test.example.com\\"):
+"def __init__(self, url: str = \\"wss://test.example.com\\", raise_send_errors: bool = True):
 
         \\"\\"\\"
         Constructor to initialize the WebSocket client.
 
         Args:
-            url (str, optional): The WebSocket server URL. Use it if the server URL is 
+            url (str, optional): The WebSocket server URL. Use it if the server URL is
             different from the default one taken from the AsyncAPI document.
+            raise_send_errors (bool, optional): Controls how the instance send_* methods
+            react to a send failure. When True (default) the error is re-raised after the
+            registered error handlers run, so the caller can handle each failure. When
+            False the error is suppressed after the handlers run, which keeps a
+            high-throughput producer loop going. Defaults to True.
         \\"\\"\\"
         self.ws_app = None  # Instance of WebSocketApp
         self.message_handlers = []      # Callables for incoming messages
         self.error_handlers = []        # Callables for errors
         self.outgoing_processors = []   # Callables to process outgoing messages
+        self.raise_send_errors = raise_send_errors  # Re-raise send failures after handlers run
         self._stop_event = threading.Event()
       
         self.receive_operation_handlers = {}
@@ -49,14 +61,19 @@ exports[`Constructor component (integration with AsyncAPI document) renders with
 `;
 
 exports[`Constructor component (integration with AsyncAPI document) renders with serverUrl and query parameters 1`] = `
-"def __init__(self, url: str = \\"wss://test.example.com/ws/{symbol}\\", heartbeat: str = \\"false\\", bids: str = \\"true\\", sessionId: str = None):
+"def __init__(self, url: str = \\"wss://test.example.com/ws/{symbol}\\", heartbeat: str = \\"false\\", bids: str = \\"true\\", sessionId: str = None, raise_send_errors: bool = True):
 
         \\"\\"\\"
         Constructor to initialize the WebSocket client.
 
         Args:
-            url (str, optional): The WebSocket server URL. Use it if the server URL is 
+            url (str, optional): The WebSocket server URL. Use it if the server URL is
             different from the default one taken from the AsyncAPI document.
+            raise_send_errors (bool, optional): Controls how the instance send_* methods
+            react to a send failure. When True (default) the error is re-raised after the
+            registered error handlers run, so the caller can handle each failure. When
+            False the error is suppressed after the handlers run, which keeps a
+            high-throughput producer loop going. Defaults to True.
  heartbeat (str, optional):If provided (or if HEARTBEAT environment variable is set), added as ?heartbeat=… to URL
  bids (str, optional):If provided (or if BIDS environment variable is set), added as ?bids=… to URL
  sessionId (str, optional):If provided (or if SESSIONID environment variable is set), added as ?sessionId=… to URL
@@ -65,6 +82,7 @@ exports[`Constructor component (integration with AsyncAPI document) renders with
         self.message_handlers = []      # Callables for incoming messages
         self.error_handlers = []        # Callables for errors
         self.outgoing_processors = []   # Callables to process outgoing messages
+        self.raise_send_errors = raise_send_errors  # Re-raise send failures after handlers run
         self._stop_event = threading.Event()
         params = {}
         self.receive_operation_handlers = {}
@@ -85,19 +103,25 @@ exports[`Constructor component (integration with AsyncAPI document) renders with
 `;
 
 exports[`Constructor component (integration with AsyncAPI document) renders with undefined query 1`] = `
-"def __init__(self, url: str = \\"wss://test.example.com/ws/{symbol}\\"):
+"def __init__(self, url: str = \\"wss://test.example.com/ws/{symbol}\\", raise_send_errors: bool = True):
 
         \\"\\"\\"
         Constructor to initialize the WebSocket client.
 
         Args:
-            url (str, optional): The WebSocket server URL. Use it if the server URL is 
+            url (str, optional): The WebSocket server URL. Use it if the server URL is
             different from the default one taken from the AsyncAPI document.
+            raise_send_errors (bool, optional): Controls how the instance send_* methods
+            react to a send failure. When True (default) the error is re-raised after the
+            registered error handlers run, so the caller can handle each failure. When
+            False the error is suppressed after the handlers run, which keeps a
+            high-throughput producer loop going. Defaults to True.
         \\"\\"\\"
         self.ws_app = None  # Instance of WebSocketApp
         self.message_handlers = []      # Callables for incoming messages
         self.error_handlers = []        # Callables for errors
         self.outgoing_processors = []   # Callables to process outgoing messages
+        self.raise_send_errors = raise_send_errors  # Re-raise send failures after handlers run
         self._stop_event = threading.Event()
       
         self.receive_operation_handlers = {}

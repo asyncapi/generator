@@ -1,0 +1,104 @@
+# Purpose of this workflow is to enforce the AI Usage Policy (AI-POLICY.md):
+# every pull request must declare whether it was AI-assisted, either by providing
+# a non-empty `Generated-by:` line or by checking the "No AI assistance" box.
+# This verifies that a declaration is PRESENT - it cannot verify its truthfulness.
+#
+# Why pull_request_target instead of pull_request: the check must be able to post a
+# comment on pull requests opened from forks, and the plain `pull_request` event only
+# grants a read-only token for forks.
+#
+# Security: this is hardened against the classic PR-body script-injection vector.
+#   - No `${{ }}` expression interpolation: the body is read at runtime as a JS value
+#     via context.payload.pull_request.body, never substituted into code.
+#   - The body is treated purely as data (regex/string ops); never eval'd, shelled,
+#     or passed to a `run:` step.
+#   - pull_request_target is safe because there is NO checkout - PR code is never
+#     fetched or executed, so the write-scoped token is never exposed to it.
+#   - The failure comment is static text and does not echo back the PR body.
+#   - Token is scoped to `pull-requests: write` only.
+name: Verify AI disclosure
+
+on:
+  pull_request_target:
+    types:
+      - opened
+      - edited
+      - reopened
+      - synchronize
+
+permissions:
+  pull-requests: write
+
+jobs:
+  verify-ai-disclosure:
+    # it runs only if PR actor is not a bot, at least not a bot that we know
+    if: |
+      (github.event.pull_request.user.login != 'asyncapi-bot' && 
+      github.event.pull_request.user.login != 'dependabot[bot]' && 
+      github.event.pull_request.user.login != 'dependabot-preview[bot]') 
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check PR body for AI-assistance disclosure
+        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7.1.0
+        with:
+          script: |
+            const MARKER = '<!-- ai-disclosure-check -->';
+            const policyUrl = 'https://github.com/asyncapi/generator/blob/master/AI-POLICY.md';
+            const body = context.payload.pull_request.body || '';
+            // Strip HTML comments so example text inside <!-- --> doesn't count as a real declaration.
+            const stripped = body.replace(/<!--[\s\S]*?-->/g, '');
+
+            const noAiChecked = /- \[x\]\s*No AI assistance/i.test(stripped);
+
+            // Match only horizontal whitespace after the colon so an empty
+            // `Generated-by:` line does not swallow the following line as its value.
+            const values = [...stripped.matchAll(/Generated-by:[ \t]*([^\n]*)/gi)]
+              .map(m => m[1].replace(/`/g, '').trim())
+              .filter(v => v.length > 0);
+            const generatedByValue = values[0] || '';
+            const hasGeneratedBy = values.length > 0;
+
+            const { owner, repo } = context.repo;
+            const issue_number = context.payload.pull_request.number;
+
+            // Find a previous comment from this check so we update/remove it instead of spamming.
+            const comments = await github.paginate(github.rest.issues.listComments, {
+              owner, repo, issue_number, per_page: 100,
+            });
+            const existing = comments.find(c => (c.body || '').includes(MARKER));
+
+            if (noAiChecked || hasGeneratedBy) {
+              core.info(
+                hasGeneratedBy
+                  ? `AI assistance disclosed: Generated-by: ${generatedByValue}`
+                  : 'Declared: no AI assistance used.'
+              );
+              // PR is now compliant - clean up any earlier failure comment.
+              if (existing) {
+                await github.rest.issues.deleteComment({ owner, repo, comment_id: existing.id });
+              }
+              return;
+            }
+
+            const message = [
+              MARKER,
+              '### ⚠️ Missing AI-assistance disclosure',
+              '',
+              `Per our [AI Usage Policy](${policyUrl}), every pull request must declare whether generative AI assisted in creating it. Please **edit this PR description** to do one of the following:`,
+              '',
+              '- If AI assisted, add a line naming the tool and version, for example:',
+              '  ```',
+              '  Generated-by: Claude Code 1.x',
+              '  ```',
+              '- If no AI was used, check the **"No AI assistance was used"** box in the PR template.',
+              '',
+              'This check re-runs whenever you edit the description, and this comment will disappear once a declaration is present. Note that it confirms a declaration *exists* — it does not verify its accuracy; you remain accountable for everything you submit.',
+            ].join('\n');
+
+            if (existing) {
+              await github.rest.issues.updateComment({ owner, repo, comment_id: existing.id, body: message });
+            } else {
+              await github.rest.issues.createComment({ owner, repo, issue_number, body: message });
+            }
+
+            core.setFailed(`Missing AI-assistance disclosure. See ${policyUrl}`);

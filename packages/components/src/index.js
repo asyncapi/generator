@@ -13,6 +13,7 @@ export { OnClose } from './components/OnClose';
 export { SendOperations } from './components/SendOperations';
 export { QueryParamsVariables } from './components/QueryParamsVariables';
 export { RegisterErrorHandler } from './components/RegisterErrorHandler';
+export { HandleError } from './components/HandleError';
 export { CoreMethods } from './components/readme/CoreMethods';
 export { Installation } from './components/readme/Installation';
 export { Usage } from './components/readme/Usage';

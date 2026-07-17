@@ -62,7 +62,7 @@ To run all tests locally:
 
 To run tests in an isolated Docker environment:
 
-1. Ensure Docker is installed and running on your machine.
+1. Ensure Docker is installed and running on your machine, with **Docker Compose v2** (the `docker compose` command, not the legacy `docker-compose` v1). The Compose files use the `pull_policy` key, which is only supported by Compose v2.
 
 2. Run the following command from the project root:
 

@@ -9,6 +9,7 @@ export default function ({ asyncapi, params }) {
   const title = getTitle(asyncapi);
   const clientName = getClientName(asyncapi, params.appendClientSuffix, params.customClientName);
   const serverUrl = getServerUrl(server);
+  const sendOperations = asyncapi.operations().filterBySend();
   return (  
     // The clientFileName default values can be found and modified under the package.json
     <File name={params.clientFileName}>
@@ -18,7 +19,7 @@ export default function ({ asyncapi, params }) {
         language="dart"
       />
       <DependencyProvider language="dart" />
-      <ClientClass clientName={clientName} serverUrl={serverUrl} title={title} />
+      <ClientClass clientName={clientName} serverUrl={serverUrl} title={title} sendOperations={sendOperations} />
     </File>
   );
 }

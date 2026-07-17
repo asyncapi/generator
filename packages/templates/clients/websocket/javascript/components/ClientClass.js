@@ -3,6 +3,7 @@ import { Constructor } from './Constructor';
 import { CloseConnection, RegisterMessageHandler, RegisterErrorHandler, SendOperations, Connect, HandleMessage } from '@asyncapi/generator-components';
 import { ModuleExport } from './ModuleExport';
 import { CompileOperationSchemas } from './CompileOperationSchemas';
+import { RegisterOutgoingProcessor } from './RegisterOutgoingProcessor';
 
 export function ClientClass({ clientName, serverUrl, title, sendOperations }) {
   return (
@@ -20,6 +21,7 @@ export function ClientClass({ clientName, serverUrl, title, sendOperations }) {
         language="javascript" 
         methodParams={['handler']}
       />
+      <RegisterOutgoingProcessor />
       <HandleMessage 
         language="javascript" 
         methodParams={['message', 'cb']}

@@ -14,9 +14,18 @@ function myErrorHandler(error) {
   console.error('Errors from Websocket:', error.message);
 }
 
+// Example of an outgoing processor — runs before every message is sent.
+// Use it for logging, adding metadata, transforming payloads, etc.
+function outgoingProcessor(message) {
+  const processed = { payload: message, timestamp: new Date().toISOString() };
+  console.log('Outgoing processor fired:', JSON.stringify(processed));
+  return processed;
+}
+
 async function main() {
   wsClient.registerMessageHandler(myHandler);
   wsClient.registerErrorHandler(myErrorHandler);
+  wsClient.registerOutgoingProcessor(outgoingProcessor);
 
   try {
     await wsClient.connect();

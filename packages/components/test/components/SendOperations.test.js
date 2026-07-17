@@ -26,6 +26,18 @@ describe('Testing of SendOperation function', () => {
     expect(actual).toMatchSnapshot();
   });
 
+  test('render dart websockets with send operations and client name', () => {
+    const result = render(
+      <SendOperations
+        language="dart"
+        clientName="AccountServiceAPI"
+        sendOperations={parsedAsyncAPIDocument.operations().filterBySend()}
+      />
+    );
+    const actual = result.trim();
+    expect(actual).toMatchSnapshot();
+  });
+
   test('render websockets without send operations', () => {
     const result = render(
       <SendOperations 

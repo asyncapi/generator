@@ -57,15 +57,15 @@ See the [Conventional Commits section in `CONTRIBUTING.md`](CONTRIBUTING.md#conv
 
 **Packages that require JSDoc on public functions:**
 
-| Package source | Published docs file | Build? |
+| jsdoc2md scans (entry passed to `--files`) | Published docs file | Build? |
 |---|---|---|
-| `apps/generator/lib` | `apps/generator/docs/api.md` | `jsdoc2md`, committed |
+| `apps/generator/lib/generator.js` only | `apps/generator/docs/api.md` | `jsdoc2md`, committed |
 | `packages/components/src` | `apps/generator/docs/api_components.md` | `jsdoc2md`, committed |
 | `apps/react-sdk/src` | `apps/react-sdk/API.md` | `jsdoc2md`, committed |
 
 Required tags: `@param`, `@returns`, and `@throws` / `@async` where applicable.
 
-"Public" means **exported from the package's main entry, or reachable via that package's jsdoc2md config** — not every file-internal helper. If a symbol shows up in one of the generated MD files, it is public by definition.
+"Public" means **exported from the package's main entry, or reachable via that package's jsdoc2md config** — not every file-internal helper. If a symbol shows up in one of the generated MD files, it is public by definition. Being under the source tree or `module.exports`-ed is *not* the trigger: for `apps/generator` the docs build scans only `lib/generator.js`, so internal modules it never reaches (`lib/logMessages.js`, `lib/utils.js`, `lib/parser.js`) need no JSDoc — demanding it there is a false positive.
 
 **Docs are committed artifacts — regenerate them in the same PR.** CI does not rebuild `api.md` / `api_components.md` / `API.md`. When a public signature in a docs-emitting package changes, regenerate via `turbo run docs --filter=<pkg>` (or `npm run generator:docs` from the root for the generator pipeline) and commit the diff. A source-signature change without a matching docs-file diff is a review flag.
 
@@ -73,6 +73,19 @@ Required tags: `@param`, `@returns`, and `@throws` / `@async` where applicable.
 
 ### 2.5 Release hygiene
 Changesets, release-triggering prefixes, and the full release flow are documented in the [Release process section in `Development.md`](Development.md#release-process). Use that as the source of truth on review; flag PRs whose diffs suggest a release but ship no `.changeset/*.md`.
+
+A changeset must name the **published** package a change ships through — not the directory you edited. `packages/templates/*` are `private` and unpublished, so they are **never** valid changeset targets; baked-in template changes reach users via `@asyncapi/generator`. Map changed files to the changeset package as:
+
+| Changed files | Changeset package(s) |
+|---|---|
+| `packages/templates/**` (private, baked-in) | `@asyncapi/generator` |
+| `apps/generator/**` | `@asyncapi/generator` |
+| `packages/components/**` | `@asyncapi/generator-components` |
+| `packages/helpers/**` | `@asyncapi/generator-helpers` |
+| `apps/keeper/**` | `@asyncapi/keeper` |
+| `apps/react-sdk/**` | `@asyncapi/generator-react-sdk` |
+
+A change spanning a shared package and a baked-in template (e.g. `packages/components` + `packages/templates`) needs **one** changeset naming both released packages (`@asyncapi/generator-components` + `@asyncapi/generator`).
 
 ---
 
@@ -92,7 +105,7 @@ Template development inside the generator is an experimental effort. All its arc
 - **CommonJS only.** `require` / `module.exports`. Do not introduce ESM.
 - Main entry: `lib/generator.js` exports the `Generator` class. Public API surface is what `jsdoc2md` publishes to `docs/api.md` — any change there is a breaking-API signal and needs a `minor`/`major` changeset.
 - Async I/O uses promisified `fs` wrappers in `lib/utils.js`. Do not use sync `fs` calls in new code.
-- Error handling: validate inputs in constructors (see `GENERATOR_OPTIONS` whitelist in `lib/generator.js`); reject with contextual messages; log at `log.debug`/`log.warn` via `loglevel` — never `console.log`.
+- Error handling: validate inputs in constructors (see `GENERATOR_OPTIONS` whitelist in `lib/generator.js`); reject with contextual messages; log at `log.debug`/`log.warn` via `loglevel` — never `console.log`. Validate results at every system boundary (network responses, file reads, external APIs) immediately at the call site — don't let a bad value propagate into domain logic where the failure message will be unrelated to the actual cause.
 - User-facing strings live in `lib/logMessages.js` as functions returning strings. Do not inline user-facing strings at call sites — it breaks i18n/consistency.
 - Conditional file generation: prefer the new `conditionalGeneration` (JMESPath) API over the deprecated `conditionalFiles`. Do not extend `conditionalFiles`.
 
@@ -125,7 +138,7 @@ Template development inside the generator is an experimental effort. All its arc
 **Conventions:**
 - ES module JSX, Babel-transpiled to `lib/` on publish. Edit `src/`, never `lib/`.
 - A component belongs here when it is used by **two or more** language/protocol templates. Single-use components stay in the template's local `components/` directory.
-- **Every shared component must have its own tests.** Reuse means a regression here propagates across every template that depends on the component, so test coverage isn't optional. Tests are integration-style with a real AsyncAPI fixture and `toMatchSnapshot()`.
+- **Every shared component must have its own tests.** Reuse means a regression here propagates across every template that depends on the component, so test coverage isn't optional. Tests are snapshot-based (`toMatchSnapshot()`) and use a real AsyncAPI fixture from `test/__fixtures__/` **only when the component consumes parsed document data** (operations, servers, channels, schemas); purely prop-driven components like `HandleError`/`HandleMessage` pass props inline — no fixture needed.
 
 ### 4.6 `packages/helpers` — `@asyncapi/generator-helpers`
 

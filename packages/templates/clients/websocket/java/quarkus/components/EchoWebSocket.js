@@ -1,7 +1,6 @@
 import { ClientFields } from './ClientFields.js';
 import { Constructor } from './Constructor.js';
-import HandleError from './HandleError.js';
-import { OnClose, OnOpen } from '@asyncapi/generator-components';
+import { OnClose, OnOpen, HandleError } from '@asyncapi/generator-components';
 import OnTextMessageHandler from './OnTextMessageHandler.js';
 import { Text } from '@asyncapi/generator-react-sdk';
 
@@ -26,7 +25,7 @@ public class ${clientName}{`}
         title={title}
       />
       <OnTextMessageHandler sendOperations={sendOperations}/>
-      <HandleError/>
+      <HandleError language='java' framework='quarkus' />
       <OnClose
         language='java'
         framework='quarkus'

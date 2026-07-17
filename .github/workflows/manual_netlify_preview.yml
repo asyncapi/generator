@@ -63,9 +63,14 @@ jobs:
           PR_NUMBER: ${{ steps.pr.outputs.number }}
         run: |
           set -euo pipefail
-          # Pick whichever output directory the build produced.
-          DEPLOY_DIR="site/out"
-          [ -d "site/.next" ] && DEPLOY_DIR="site/.next"
+          # Prefer the static export; only fall back to .next when it's absent.
+          if [ -d "site/out" ]; then
+            DEPLOY_DIR="site/out"
+          elif [ -d "site/.next" ]; then
+            DEPLOY_DIR="site/.next"
+          else
+            echo "No deployable directory found (expected site/out or site/.next)"; exit 1
+          fi
 
           DEPLOY_JSON=$(netlify deploy \
             --auth "$NETLIFY_AUTH_TOKEN" \

@@ -1,6 +1,7 @@
 ---
 "@asyncapi/generator": patch
 "@asyncapi/generator-components": patch
+"@asyncapi/generator-hooks": patch
 ---
 
-Pin AsyncAPI workspace dependencies to released versions instead of publishing wildcard ranges.
+Release the existing hooks package and pin AsyncAPI workspace dependencies instead of publishing wildcard ranges.

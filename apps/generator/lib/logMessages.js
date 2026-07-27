@@ -74,15 +74,6 @@ function fetchSpecError(link, status, statusText) {
   return `Failed to fetch AsyncAPI document from ${link}: HTTP ${status}${statusText}`;
 }
 
-/**
- * Returns an error message for when the resolved asyncapiFileDir escapes the target directory.
- * @param {String} asyncapiFileDir The configured custom output directory.
- * @returns {String} The formatted error message.
- */
-function asyncapiFileDirOutsideTarget(asyncapiFileDir) {
-  return `asyncapiFileDir "${asyncapiFileDir}" must resolve within the target directory.`;
-}
-
 module.exports = {
   TEMPLATE_INSTALL_FLAG_MSG,
   TEMPLATE_INSTALL_DISK_MSG,
@@ -102,6 +93,5 @@ module.exports = {
   mappedRefOutsideBaseFolder,
   mappedRefSymlinkOutsideBaseFolder,
   errorOpeningFile,
-  fetchSpecError,
-  asyncapiFileDirOutsideTarget
+  fetchSpecError
 };

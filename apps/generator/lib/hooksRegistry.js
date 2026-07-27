@@ -2,10 +2,6 @@ const path = require('path');
 const xfs = require('fs.extra');
 const { exists, registerTypeScript } = require('./utils');
 
-const BUILT_IN_HOOK_MODULES = {
-  '@asyncapi/generator-hooks': () => require('./officialHooks')
-};
-
 /**
  * Registers all template hooks.
  * @param {Object} hooks Object that stores information about all available hook functions grouped by the type of the hook.
@@ -81,17 +77,13 @@ async function registerConfigHooks(hooks, templateDir, templateConfig) {
 
   const promises = Object.keys(configHooks).map(async hooksModuleName => {
     let mod;
-    if (BUILT_IN_HOOK_MODULES[hooksModuleName]) {
-      mod = BUILT_IN_HOOK_MODULES[hooksModuleName]();
-    } else {
-      try {
-        //first we try to grab module with hooks by the module name
-        //this is when generation is used on production using remote templates
-        mod = require(hooksModuleName);
-      } catch (error) {
-        //in case template is local but was not installed in node_modules of the generator then we need to explicitly provide modules location
-        mod = require(path.resolve(templateDir, DEFAULT_MODULES_DIR, hooksModuleName));
-      }
+    try {
+      //first we try to grab module with hooks by the module name
+      //this is when generation is used on production using remote templates
+      mod = require(hooksModuleName);
+    } catch (error) {
+      //in case template is local but was not installed in node_modules of the generator then we need to explicitly provide modules location
+      mod = require(path.resolve(templateDir, DEFAULT_MODULES_DIR, hooksModuleName));
     }
     const configHooksArray = [].concat(configHooks[hooksModuleName]);
 

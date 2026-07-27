@@ -7,9 +7,6 @@ const { addHook, registerLocalHooks, registerConfigHooks, registerHooks } = requ
 
 jest.mock('fs');
 jest.mock('path');
-jest.mock('../lib/officialHooks', () => ({
-  'generate:after': function createAsyncapiFile() {}
-}));
 
 describe('hooksRegistry', () => {
   let hooks;
@@ -87,17 +84,6 @@ describe('hooksRegistry', () => {
   });
 
   describe('registerConfigHooks', () => {
-    it('loads official generator hooks from the bundled module', async () => {
-      const result = await registerConfigHooks(hooks, '/template', {
-        hooks: {
-          '@asyncapi/generator-hooks': ['createAsyncapiFile']
-        }
-      });
-
-      expect(result['generate:after']).toHaveLength(1);
-      expect(result['generate:after'][0].name).toBe('createAsyncapiFile');
-    });
-
     it('registers hooks from template config', async () => {
       const templateDir = path.join(__dirname, 'fixtures', 'template');
       const templateConfig = {

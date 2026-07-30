@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing of Close function render dart example close line 1`] = `"echoClient.close();"`;
+
+exports[`Testing of Close function render javascript example close line 1`] = `"await echoClient.close();"`;
+
+exports[`Testing of Close function render python example close line 1`] = `"echoClient.close()"`;

@@ -17,6 +17,45 @@ weight: 77
   
   Renders the top-of-file dependency statements for the selected programming language.
 
+* [Close](#Close) ⇒ `JSX.Element`<br/>
+  
+  Renders the `client.close()` invocation line for the runnable example
+script in the chosen language. Sibling of `OpenConnection`; meant to
+be embedded inside the `finally` block of the example script.
+
+* [Handlers](#Handlers) ⇒ `JSX.Element`<br/>
+  
+  Renders the message/error handler definitions block for the runnable
+example script. JavaScript and Dart render a static pair of placeholder
+handlers; Python renders one per-receive-operation handler plus a custom
+error handler.
+
+* [Imports](#Imports) ⇒ `JSX.Element`<br/>
+  
+  Renders the top-of-file imports block for the runnable example script.
+
+* [OpenConnection](#OpenConnection) ⇒ `JSX.Element`<br/>
+  
+  Renders the `client.connect()` invocation line for the runnable example
+script in the chosen language. Sibling of `Close` and
+`SendInvocations`; meant to be embedded inside the example script.
+
+* [OutgoingProcessor](#OutgoingProcessor) ⇒ `JSX.Element`<br/>
+  
+  Renders an example outgoing message processor function for the runnable
+example script. The body is a starter implementation; users customize it
+after generation.
+
+* [SendInvocations](#SendInvocations) ⇒ `JSX.Element`<br/>
+  
+  Renders the send-invocations loop for the runnable example script: a fixed
+5-iteration loop that invokes each send operation in turn, with sample
+payloads resolved from the AsyncAPI message examples (or `TODO:` placeholders
+when no example is present).
+
+Returns `null` when `sendOps` is missing or empty so the caller can render
+nothing without conditional wrapping.
+
 * [FileHeaderInfo](#FileHeaderInfo) ⇒ `JSX.Element`<br/>
   
   Renders a file header with metadata information such as title, version, protocol, host, and path.
@@ -249,6 +288,259 @@ function renderDependencyProvider() {
   )
 }
 renderDependencyProvider();
+```
+
+
+
+<a name="Close"></a>
+### Close()
+Renders the &#x60;client.close()&#x60; invocation line for the runnable example
+script in the chosen language. Sibling of &#x60;OpenConnection&#x60;; meant to
+be embedded inside the &#x60;finally&#x60; block of the example script.
+
+
+**Parameters**
+
+| Name | Type | Description |
+|------|------|-------------|
+| props | `Object` | Component props. |
+| props.language | `Language` | Target programming language. |
+| props.instanceName | `string` | The client instance variable name (e.g. &#x60;echoClient&#x60;, &#x60;echo_client&#x60;). |
+
+
+
+**Returns**
+
+- `JSX.Element` - A &#x60;Text&#x60; component containing the close invocation line.
+
+
+
+**Example**
+
+```js
+import { Close } from "@asyncapi/generator-components";
+
+function renderClose() {
+  return (
+    <Close language="javascript" instanceName="echoClient" />
+  );
+}
+
+renderClose();
+```
+
+
+
+<a name="Handlers"></a>
+### Handlers()
+Renders the message/error handler definitions block for the runnable
+example script. JavaScript and Dart render a static pair of placeholder
+handlers; Python renders one per-receive-operation handler plus a custom
+error handler.
+
+
+**Parameters**
+
+| Name | Type | Description |
+|------|------|-------------|
+| props | `Object` | Component props. |
+| props.language | `Language` | Target programming language. |
+| props.receiveOps | `Array.<object>` | Python-only: the AsyncAPI receive operations to generate handler definitions for. Defaults to an empty array. Ignored for JavaScript and Dart. |
+
+
+
+**Returns**
+
+- `JSX.Element` - A &#x60;Text&#x60; component containing the handler definitions.
+
+
+
+**Example**
+
+```js
+import { Handlers } from "@asyncapi/generator-components";
+
+function renderHandlers() {
+  return (
+    <Handlers language="dart" />
+  );
+}
+
+renderHandlers();
+```
+
+
+
+<a name="Imports"></a>
+### Imports()
+Renders the top-of-file imports block for the runnable example script.
+
+
+**Parameters**
+
+| Name | Type | Description |
+|------|------|-------------|
+| props | `Object` | Component props. |
+| props.language | `Language` | Target programming language. |
+| props.clientFileName | `string` | The generated client file name (e.g. &#x60;myClient.js&#x60;, &#x60;my_client.py&#x60;, &#x60;my_client.dart&#x60;). |
+| props.clientName | `string` | The generated client class/symbol name. Required for JavaScript/Python; unused for Dart. |
+
+
+
+**Returns**
+
+- `JSX.Element` - A &#x60;Text&#x60; component containing the imports block.
+
+
+
+**Example**
+
+```js
+import { Imports } from "@asyncapi/generator-components";
+
+function renderImports() {
+  return (
+    <Imports
+      language="python"
+      clientName="EchoClient"
+      clientFileName="echo_client.py"
+    />
+  );
+}
+
+renderImports();
+```
+
+
+
+<a name="OpenConnection"></a>
+### OpenConnection()
+Renders the &#x60;client.connect()&#x60; invocation line for the runnable example
+script in the chosen language. Sibling of &#x60;Close&#x60; and
+&#x60;SendInvocations&#x60;; meant to be embedded inside the example script.
+
+
+**Parameters**
+
+| Name | Type | Description |
+|------|------|-------------|
+| props | `Object` | Component props. |
+| props.language | `Language` | Target programming language. |
+| props.instanceName | `string` | The client instance variable name (e.g. &#x60;echoClient&#x60;, &#x60;echo_client&#x60;). |
+
+
+
+**Returns**
+
+- `JSX.Element` - A &#x60;Text&#x60; component containing the connect invocation line.
+
+
+
+**Example**
+
+```js
+import { OpenConnection } from "@asyncapi/generator-components";
+
+function renderOpenConnection() {
+  return (
+    <OpenConnection language="javascript" instanceName="echoClient" />
+  );
+}
+
+renderOpenConnection();
+```
+
+
+
+<a name="OutgoingProcessor"></a>
+### OutgoingProcessor()
+Renders an example outgoing message processor function for the runnable
+example script. The body is a starter implementation; users customize it
+after generation.
+
+
+**Parameters**
+
+| Name | Type | Description |
+|------|------|-------------|
+| props | `Object` | Component props. |
+| props.language | `Language` | Target programming language. |
+
+
+
+**Returns**
+
+- `JSX.Element` - A &#x60;Text&#x60; component containing the processor function definition.
+
+
+
+**Example**
+
+```js
+import { OutgoingProcessor } from "@asyncapi/generator-components";
+
+function renderOutgoingProcessor() {
+  return (
+    <OutgoingProcessor language="python" />
+  );
+}
+
+renderOutgoingProcessor();
+```
+
+
+
+<a name="SendInvocations"></a>
+### SendInvocations()
+Renders the send-invocations loop for the runnable example script: a fixed
+5-iteration loop that invokes each send operation in turn, with sample
+payloads resolved from the AsyncAPI message examples (or &#x60;TODO:&#x60; placeholders
+when no example is present).
+
+Returns &#x60;null&#x60; when &#x60;sendOps&#x60; is missing or empty so the caller can render
+nothing without conditional wrapping.
+
+
+**Parameters**
+
+| Name | Type | Description |
+|------|------|-------------|
+| props | `Object` | Component props. |
+| props.language | `Language` | Target programming language. |
+| props.instanceName | `string` | The client instance variable name. |
+| props.sendOps | `Array.<object>` | AsyncAPI send operations to invoke. When empty or missing, the component renders nothing. |
+
+
+
+**Returns**
+
+- `JSX.Element` - A &#x60;Text&#x60; component containing the loop, or &#x60;null&#x60; when there are no send operations.
+
+
+
+**Example**
+
+```js
+import path from "path";
+import { Parser, fromFile } from "@asyncapi/parser";
+import { SendInvocations } from "@asyncapi/generator-components";
+
+async function renderSendInvocations() {
+  const parser = new Parser();
+  const fixture = path.resolve(__dirname, "../../../helpers/test/__fixtures__/asyncapi-websocket-query.yml");
+  const parseResult = await fromFile(parser, fixture).parse();
+  const sendOps = parseResult.document.operations().filterBySend();
+
+  return (
+    <SendInvocations
+      language="javascript"
+      instanceName="echoClient"
+      sendOps={sendOps}
+    />
+  );
+}
+
+renderSendInvocations().catch(console.error);
 ```
 
 

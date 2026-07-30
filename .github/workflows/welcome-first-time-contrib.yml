@@ -22,8 +22,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read            # Required to read repository data for checking if it's the user's first contribution
-      issues: write  # createComment on issues
-      pull-requests: write # createReview on PRs
+      issues: write             # Required to post welcome message on issues
+      pull-requests: write      # Required to post welcome message on pull requests
     steps:
     - uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
       with:

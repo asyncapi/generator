@@ -9,14 +9,16 @@ on:
     types: [opened, reopened]
 
   pull_request_target:
-    types: [opened, reopened, ready_for_review]
+    types: [opened, reopened, ready_for_review]   # zizmor: ignore[dangerous-triggers]   
 
   discussion:
     types: [created]
 
+permissions: {}
+
 jobs:
   issue:
-    if: github.event_name == 'issues' && github.actor != 'asyncapi-bot' && github.actor != 'dependabot[bot]' && github.actor != 'dependabot-preview[bot]'
+    if: github.event_name == 'issues' && github.event.issue.user.login != 'asyncapi-bot' && github.event.issue.user.login != 'dependabot[bot]' && github.event.issue.user.login != 'dependabot-preview[bot]'
     name: Notify slack on every new issue
     runs-on: ubuntu-latest
     steps:
@@ -31,7 +33,7 @@ jobs:
         with:
           markdown: "[${{ env.ISSUE_TITLE }}](${{ env.ISSUE_URL }}) \n ${{ env.ISSUE_BODY }}"
       - name: Send info about issue
-        uses: rtCamp/action-slack-notify@c33737706dea87cd7784c687dadc9adf1be59990 # Using v2.3.2
+        uses: rtCamp/action-slack-notify@33ca3be66c6f378fe1610fd1d5258632dbed5e58 # v2.4.0
         env:
           SLACK_WEBHOOK: ${{secrets.SLACK_GITHUB_NEWISSUEPR}}
           SLACK_TITLE: 🐛 New Issue in ${{github.repository}} 🐛
@@ -39,7 +41,7 @@ jobs:
           MSG_MINIMAL: true
 
   pull_request:
-    if: github.event_name == 'pull_request_target' && github.actor != 'asyncapi-bot' && github.actor != 'dependabot[bot]' && github.actor != 'dependabot-preview[bot]'
+    if: github.event_name == 'pull_request_target' && github.event.pull_request.user.login != 'asyncapi-bot' && github.event.pull_request.user.login != 'dependabot[bot]' && github.event.pull_request.user.login != 'dependabot-preview[bot]'
     name: Notify slack on every new pull request
     runs-on: ubuntu-latest
     steps:
@@ -54,7 +56,7 @@ jobs:
         with:
           markdown: "[${{ env.PR_TITLE }}](${{ env.PR_URL }}) \n ${{ env.PR_BODY }}"
       - name: Send info about pull request
-        uses: rtCamp/action-slack-notify@c33737706dea87cd7784c687dadc9adf1be59990 # Using v2.3.2
+        uses: rtCamp/action-slack-notify@33ca3be66c6f378fe1610fd1d5258632dbed5e58 # v2.4.0
         env:
           SLACK_WEBHOOK: ${{secrets.SLACK_GITHUB_NEWISSUEPR}}
           SLACK_TITLE: 💪 New Pull Request in ${{github.repository}} 💪
@@ -62,7 +64,7 @@ jobs:
           MSG_MINIMAL: true
 
   discussion:
-    if: github.event_name == 'discussion' && github.actor != 'asyncapi-bot' && github.actor != 'dependabot[bot]' && github.actor != 'dependabot-preview[bot]'
+    if: github.event_name == 'discussion' && github.event.discussion.user.login != 'asyncapi-bot' && github.event.discussion.user.login != 'dependabot[bot]' && github.event.discussion.user.login != 'dependabot-preview[bot]'
     name: Notify slack on every new pull request
     runs-on: ubuntu-latest
     steps:
@@ -77,7 +79,7 @@ jobs:
         with:
           markdown: "[${{ env.DISCUSSION_TITLE }}](${{ env.DISCUSSION_URL }}) \n ${{ env.DISCUSSION_BODY }}"
       - name: Send info about pull request
-        uses: rtCamp/action-slack-notify@c33737706dea87cd7784c687dadc9adf1be59990 # Using v2.3.2
+        uses: rtCamp/action-slack-notify@33ca3be66c6f378fe1610fd1d5258632dbed5e58 # v2.4.0
         env:
           SLACK_WEBHOOK: ${{secrets.SLACK_GITHUB_NEWISSUEPR}}
           SLACK_TITLE: 💬 New Discussion in ${{github.repository}} 💬

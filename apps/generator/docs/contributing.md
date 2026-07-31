@@ -135,7 +135,7 @@ One person can be both a code and docs triager. However, this is not required, a
 - Ensure PRs are of high quality and fullfil all the requirements
 
 **Scope:**
-- Applies to the entire monorepo (not scoped to specific templates)
+- Applies to the entire monorepo (not scoped to specific templates).
 
 **Notes:**
 - Triagers **cannot** merge pull requests.

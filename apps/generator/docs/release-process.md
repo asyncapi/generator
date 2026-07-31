@@ -3,7 +3,7 @@ title: "Community - Release process"
 weight: 230
 ---
 
-How releases are produced for the generator packages. For local setup see [Development setup](/docs/tools/generator/development-setup).
+This guide details how releases are handled for the generator packages. For local setup see the [Development setup](/docs/tools/generator/development-setup) guide.
 
 To release a major/minor/patch:
 
@@ -19,8 +19,8 @@ feat: add new feature
 
 ## Pull Request Title Guidelines
 
-To ensure successful workflow execution, all PR titles must follow the Conventional Commits format and PR titles should start with a lowercase character. Incorrect PR titles can cause workflow failures, preventing PRs from being merged.
-For the PR titles you can refer to [this guide](/docs/tools/generator/contributing#conventional-commits)
+To ensure successful workflow execution, all PR titles must follow the conventional commits format and PR titles should start with a lowercase character. Incorrect PR titles can cause workflow failures, preventing PRs from being merged.
+For the PR titles you can refer to [this guide](/docs/tools/generator/contributing#conventional-commits).
 
 ### Manual
 

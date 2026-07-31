@@ -27,14 +27,14 @@ This webinar provides essential context about the Generator's architecture, desi
 
 1. Fork & Clone the repository:
 
-First fork the repository from GitHub and then clone it,
+First fork the repository from GitHub and then clone it using the following command:
 
 ```bash
 git clone https://github.com/{your_username}/generator.git
 cd generator
 ```
 
-After cloning the repository, you should set up the fork properly and configure the `remote` repository as described in the [AsyncAPI git workflow guidelines](https://github.com/asyncapi/community/blob/master/docs/010-contribution-guidelines/git-workflow.md)
+After cloning the repository, you should set up the fork properly and configure the `remote` repository as described in the [AsyncAPI git workflow guidelines](https://github.com/asyncapi/community/blob/master/docs/010-contribution-guidelines/git-workflow.md).
 
 2. Install dependencies:
 
@@ -42,7 +42,7 @@ After cloning the repository, you should set up the fork properly and configure 
 npm install --workspaces
 ```
 
-**`CLAUDE.md` vs `AGENTS.md`:** The repo may ship `CLAUDE.md` as a symlink to [`AGENTS.md`](https://github.com/asyncapi/generator/blob/master/AGENTS.md) (one canonical guidelines file). After a clone, Linux and macOS usually need no extra step. On **Windows**, turn on **Developer Mode** (or equivalent symlink permission), run `git config core.symlinks true`, then `git checkout -- CLAUDE.md` so Git creates a real link—not a one-line text stub. Edit **`AGENTS.md`** only for content. The symlink follows automatically.
+**`CLAUDE.md` vs `AGENTS.md`:** The repo may ship `CLAUDE.md` as a symlink to [`AGENTS.md`](https://github.com/asyncapi/generator/blob/master/AGENTS.md) (the canonical guidelines file). After cloning, Linux and macOS usually need no extra step. On **Windows**, turn on **Developer Mode** (or enable symlink permissions), run `git config core.symlinks true`, then `git checkout -- CLAUDE.md` so Git creates a real symlink and not a one-line text stub. Edit **`AGENTS.md`** only for content updates and the symlink follows automatically.
 
 ## Additional commands
 

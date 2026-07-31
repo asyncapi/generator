@@ -7,6 +7,10 @@ parameters:
     description: The name of the generated client file
     required: false
     default: client.py
+  exampleFileName:
+    description: The name of the generated example file
+    required: false
+    default: example.py
   appendClientSuffix:
     description: Add 'Client' suffix at the end of the class name. This option has no effect if 'customClientName' is specified.
     required: false

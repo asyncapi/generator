@@ -24,7 +24,7 @@ jobs:
     if: >
       github.event.issue.pull_request && 
       github.event.issue.state != 'closed' && 
-      github.actor != 'asyncapi-bot' && 
+      github.event.comment.user.login != 'asyncapi-bot' && 
       (
         contains(github.event.comment.body, '/ready-to-merge') || 
         contains(github.event.comment.body, '/rtm' )
@@ -86,7 +86,7 @@ jobs:
     if: >
       github.event.issue.pull_request &&
       github.event.issue.state != 'closed' &&
-      github.actor != 'asyncapi-bot' &&
+      github.event.comment.user.login != 'asyncapi-bot' &&
       (
         contains(github.event.comment.body, '/do-not-merge') ||
         contains(github.event.comment.body, '/dnm' )
@@ -113,7 +113,7 @@ jobs:
     if: >
       github.event.issue.pull_request && 
       github.event.issue.state != 'closed' && 
-      github.actor != 'asyncapi-bot' &&
+      github.event.comment.user.login != 'asyncapi-bot' &&
       (
         contains(github.event.comment.body, '/autoupdate') ||
         contains(github.event.comment.body, '/au' )

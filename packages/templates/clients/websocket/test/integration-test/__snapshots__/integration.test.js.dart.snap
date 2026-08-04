@@ -112,6 +112,46 @@ class HoppscotchClient {
 "
 `;
 
+exports[`WebSocket Clients Integration Tests Dart Client Common Integration tests for Dart client generation generate simple client for hoppscotch echo with custom client name: example.dart 1`] = `
+"import 'dart:async';
+import 'client.dart';
+
+void myMessageHandler(String message) {
+  print('====================');
+  print('Just proving I got the message in myMessageHandler: $message');
+  print('====================');
+}
+
+void myErrorHandler(Object error) {
+  print('Errors from WebSocket: $error');
+}
+
+Future<void> main() async {
+  final hoppscotchClient = HoppscotchClient();
+  hoppscotchClient.registerMessageHandler(myMessageHandler);
+  hoppscotchClient.registerErrorHandler(myErrorHandler);
+
+  try {
+    await hoppscotchClient.connect();
+
+    for (var i = 0; i < 5; i++) {
+      try {
+        hoppscotchClient.sendEchoMessage('test');
+      } catch (error) {
+        print('Error while sending message: $error');
+      }
+      await Future.delayed(Duration(seconds: 5));
+    }
+  } catch (error) {
+    print('Failed to connect to WebSocket: $error');
+  } finally {
+    hoppscotchClient.close();
+  }
+}
+
+"
+`;
+
 exports[`WebSocket Clients Integration Tests Dart Client Common Integration tests for Dart client generation generate simple client for hoppscotch echo with custom client name: pubspec.yaml 1`] = `
 "name: wsclient
 environment:
@@ -227,6 +267,46 @@ class HoppscotchEchoWebSocketClient {
     _channel?.sink.close();
     _channel = null;
     print('WebSocket connection closed.');
+  }
+}
+
+"
+`;
+
+exports[`WebSocket Clients Integration Tests Dart Client Common Integration tests for Dart client generation generate simple client for hoppscotch echo: example.dart 1`] = `
+"import 'dart:async';
+import 'client.dart';
+
+void myMessageHandler(String message) {
+  print('====================');
+  print('Just proving I got the message in myMessageHandler: $message');
+  print('====================');
+}
+
+void myErrorHandler(Object error) {
+  print('Errors from WebSocket: $error');
+}
+
+Future<void> main() async {
+  final hoppscotchEchoWebSocketClient = HoppscotchEchoWebSocketClient();
+  hoppscotchEchoWebSocketClient.registerMessageHandler(myMessageHandler);
+  hoppscotchEchoWebSocketClient.registerErrorHandler(myErrorHandler);
+
+  try {
+    await hoppscotchEchoWebSocketClient.connect();
+
+    for (var i = 0; i < 5; i++) {
+      try {
+        hoppscotchEchoWebSocketClient.sendEchoMessage('test');
+      } catch (error) {
+        print('Error while sending message: $error');
+      }
+      await Future.delayed(Duration(seconds: 5));
+    }
+  } catch (error) {
+    print('Failed to connect to WebSocket: $error');
+  } finally {
+    hoppscotchEchoWebSocketClient.close();
   }
 }
 
@@ -349,6 +429,46 @@ class PostmanEchoWebSocketClientClient {
     _channel?.sink.close();
     _channel = null;
     print('WebSocket connection closed.');
+  }
+}
+
+"
+`;
+
+exports[`WebSocket Clients Integration Tests Dart Client Common Integration tests for Dart client generation generate simple client for postman echo: example.dart 1`] = `
+"import 'dart:async';
+import 'client.dart';
+
+void myMessageHandler(String message) {
+  print('====================');
+  print('Just proving I got the message in myMessageHandler: $message');
+  print('====================');
+}
+
+void myErrorHandler(Object error) {
+  print('Errors from WebSocket: $error');
+}
+
+Future<void> main() async {
+  final postmanEchoWebSocketClientClient = PostmanEchoWebSocketClientClient();
+  postmanEchoWebSocketClientClient.registerMessageHandler(myMessageHandler);
+  postmanEchoWebSocketClientClient.registerErrorHandler(myErrorHandler);
+
+  try {
+    await postmanEchoWebSocketClientClient.connect();
+
+    for (var i = 0; i < 5; i++) {
+      try {
+        postmanEchoWebSocketClientClient.sendEchoMessage('test');
+      } catch (error) {
+        print('Error while sending message: $error');
+      }
+      await Future.delayed(Duration(seconds: 5));
+    }
+  } catch (error) {
+    print('Failed to connect to WebSocket: $error');
+  } finally {
+    postmanEchoWebSocketClientClient.close();
   }
 }
 

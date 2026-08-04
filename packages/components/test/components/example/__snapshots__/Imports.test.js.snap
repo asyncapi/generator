@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing of Imports function render dart imports (clientName not used) 1`] = `
+"import 'dart:async';
+import 'echo_client.dart';"
+`;
+
+exports[`Testing of Imports function render javascript imports 1`] = `"const EchoClient = require('./echoClient');"`;
+
+exports[`Testing of Imports function render python imports 1`] = `
+"import time
+from echo_client import EchoClient"
+`;

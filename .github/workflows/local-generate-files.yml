@@ -1,7 +1,8 @@
 # this workflow runs after releases to generate some files like for example api.md
 name: Autogenerate API files
 
-on: 
+on:
+  workflow_dispatch:
   release:
     types: 
       - published

@@ -1,6 +1,7 @@
 name: Check generated docs are up to date
 
 on:
+  workflow_dispatch:
   pull_request:
     types: [opened, reopened, synchronize, ready_for_review]
 

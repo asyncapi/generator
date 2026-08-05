@@ -1,6 +1,7 @@
 name: Update latest generator documentation in the website
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - 'master'

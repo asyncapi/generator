@@ -2,6 +2,7 @@
 name: Release
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - master

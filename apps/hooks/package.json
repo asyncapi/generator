@@ -1,6 +1,6 @@
 {
   "name": "@asyncapi/generator-hooks",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Library with hooks function for templates using AsyncAPI Generator",
   "main": "src/index.js",
   "scripts": {
@@ -12,7 +12,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/asyncapi/generator-hooks.git"
+    "url": "https://github.com/asyncapi/generator.git",
+    "directory": "apps/hooks"
   },
   "keywords": [
     "asyncapi",
@@ -21,13 +22,14 @@
   "author": "Lukasz Gornicki <lpgornicki@gmail.com>",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/asyncapi/generator-hooks/issues"
+    "url": "https://github.com/asyncapi/generator/issues"
   },
   "publishConfig": {
     "access": "public"
   },
-  "homepage": "https://github.com/asyncapi/generator-hooks#readme",
+  "homepage": "https://github.com/asyncapi/generator/tree/master/apps/hooks#readme",
   "dependencies": {
+    "@asyncapi/bundler": "1.0.1",
     "fs.extra": "^1.3.2"
   },
   "devDependencies": {

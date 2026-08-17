@@ -92,7 +92,9 @@ It is a library of reusable hooks that you can use in your templates. You only h
 This library consists of the following hooks:
 |Hook name|Hook type|Description|
 |---|---|---|
-| `createAsyncapiFile` | `generate:after` | It creates an AsyncAPI file with the content of the spec file passed to the generator. By default, it creates the file in the root of the generation output directory. This hook also supports custom parameters that the user can pass to template generation. The parameter called `asyncapiFileDir` allows the user to specify the location where the spec file should be created. To make your template users use this parameter, you need to add it to the configuration of your template like other parameters |
+| `createAsyncapiFile` | `generate:after` | It creates an AsyncAPI file with the content of the spec file passed to the generator. If the spec was loaded from a file on disk, external `$ref`s (e.g. `$ref: './commons/servers.yml#/...'`) are bundled via [`@asyncapi/bundler`](https://github.com/asyncapi/bundler) into a single self-contained file; otherwise, or if bundling fails, the original spec is written unchanged. By default, it creates the file in the root of the generation output directory. This hook also supports custom parameters that the user can pass to template generation. The parameter called `asyncapiFileDir` allows the user to specify the location where the spec file should be created. To make your template users use this parameter, you need to add it to the configuration of your template like other parameters |
+
+> **Limitation:** refs are only resolved relative to the source file's own directory, so a `$ref` reachable only through another path (e.g. a symlink) won't bundle and falls back to the unresolved source.
 
 1. In your template configuration in `package.json` specify you want to use this library and what hook exactly:
     ```json

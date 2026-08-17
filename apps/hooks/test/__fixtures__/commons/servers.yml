@@ -1,0 +1,4 @@
+servers:
+  echoServer:
+    host: echo.example.org
+    protocol: ws

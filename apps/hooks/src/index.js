@@ -1,17 +1,21 @@
 const fs = require('fs');
 const path = require('path');
 const xfs = require('fs.extra');
+const bundle = require('@asyncapi/bundler');
 
-function createAsyncapiFile(generator) {
-  const asyncapi = generator.originalAsyncAPI;
+async function createAsyncapiFile(generator) {
+  const sourceFilePath = typeof generator.asyncapi?.meta === 'function'
+    ? generator.asyncapi.meta('asyncapi')?.source
+    : undefined;
+  let asyncapi = generator.originalAsyncAPI;
   const targetDir = generator.targetDir;
   const customDirInTarget = generator.templateParams.asyncapiFileDir;
   const getCustomFileLocation = (target, dir, filename) => {
-    xfs.mkdirpSync(path.resolve(target, dir)); 
-    return path.resolve(target, dir, filename); 
+    xfs.mkdirpSync(path.resolve(target, dir));
+    return path.resolve(target, dir, filename);
   };
   let extension;
-  
+
   try {
     JSON.parse(asyncapi);
     extension = 'json';
@@ -20,10 +24,21 @@ function createAsyncapiFile(generator) {
   }
 
   const outputFileName = `asyncapi.${extension}`;
-
-  const asyncapiOutputLocation = customDirInTarget 
+  
+  const asyncapiOutputLocation = customDirInTarget
     ? getCustomFileLocation(targetDir, customDirInTarget, outputFileName)
     : path.resolve(targetDir, outputFileName);
+
+  if (sourceFilePath && fs.existsSync(sourceFilePath)) {
+    try {
+      const bundled = await bundle([sourceFilePath], {
+        baseDir: path.dirname(sourceFilePath)
+      });
+      asyncapi = extension === 'json' ? bundled.string() : bundled.yml();
+    } catch (err) {
+      console.warn(`[generator-hooks] Failed to bundle AsyncAPI document, writing original source verbatim: ${err.message}`);
+    }
+  }
 
   fs.writeFileSync(asyncapiOutputLocation, asyncapi);
 }

@@ -1,0 +1,4 @@
+messages:
+  echo:
+    payload:
+      type: string

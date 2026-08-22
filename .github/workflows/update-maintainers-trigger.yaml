@@ -4,7 +4,6 @@
 name: Trigger MAINTAINERS.yaml file update
 
 on:
-  workflow_dispatch:
   push:
     branches: [ master ]
     paths:

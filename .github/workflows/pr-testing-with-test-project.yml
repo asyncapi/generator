@@ -2,7 +2,6 @@
 name: Test using test project
 
 on:
-  workflow_dispatch:
   pull_request:
     types: [opened, reopened, synchronize, ready_for_review]
 # Revokes default permissions since all jobs only need read access.

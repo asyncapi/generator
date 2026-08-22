@@ -1,7 +1,6 @@
 name: Bump package version in dependent repos
 
 on:
-  workflow_dispatch:
   # It cannot run on release event as when release is created then version is not yet bumped in package.json
   # This means we cannot extract easily latest version and have a risk that package is not yet on npm
   push:

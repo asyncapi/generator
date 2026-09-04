@@ -30,6 +30,7 @@ describe('Integration testing generateFromFile() to make sure the result of the 
 
   jest.setTimeout(100000);
   const testOutputFile = 'test-file.md';
+  const nestedConditionalFile = 'conditionalFolder2/input.txt';
 
   const tempJsContent = `
   import { File, Text } from '@asyncapi/generator-react-sdk';
@@ -184,8 +185,63 @@ describe('Integration testing generateFromFile() to make sure the result of the 
       templateParams: { version: 'v1', mode: 'production', singleFile: 'false' }
     });
     await generator.generateFromFile(dummySpecPath);
-    const conditionalFilePath = path.join(outputDir, 'conditionalFolder2/input.txt');
+    const conditionalFilePath = path.join(outputDir, nestedConditionalFile);
     const exists = await readFile(conditionalFilePath).then(() => true).catch(() => false);
     expect(exists).toBe(true);
+  });
+
+  it('should not generate a nested conditional file if the singleFile parameter is set true', async () => {
+    const outputDir = generateFolderName();
+    const generator = new Generator(reactTemplate, outputDir, {
+      forceWrite: true ,
+      templateParams: { version: 'v1', mode: 'production', singleFile: 'true' }
+    });
+    await generator.generateFromFile(dummySpecPath);
+    const conditionalFilePath = path.join(outputDir, nestedConditionalFile);
+    const exists = await access(conditionalFilePath).then(() => true).catch(() => false);
+    expect(exists).toBe(false);
+  });
+
+  //deprecated conditionalFiles config is keyed by file paths that can be nested, so generation must evaluate the condition also for such keys
+  const getReactTemplateWithConditionalFiles = async (expectedTitle) => {
+    const cleanReactTemplate = await getCleanReactTemplate();
+    const templateConfigPath = path.join(cleanReactTemplate, '.ageneratorrc');
+    const templateConfig = await readFile(templateConfigPath, 'utf8');
+    const conditionalFilesConfig = [
+      'conditionalFiles:',
+      `  ${nestedConditionalFile}:`,
+      '    subject: info.title',
+      '    validation:',
+      `      const: ${expectedTitle}`,
+      ''
+    ].join('\n');
+    await writeFile(templateConfigPath, templateConfig.slice(0, templateConfig.indexOf('conditionalGeneration:')) + conditionalFilesConfig);
+    return cleanReactTemplate;
+  };
+
+  it('should generate a nested file when deprecated conditionalFiles condition is met', async () => {
+    const outputDir = generateFolderName();
+    const templateWithConditionalFiles = await getReactTemplateWithConditionalFiles('Dummy example with all spec features included');
+    const generator = new Generator(templateWithConditionalFiles, outputDir, {
+      forceWrite: true,
+      templateParams: { version: 'v1', mode: 'production' }
+    });
+    await generator.generateFromFile(dummySpecPath);
+    const conditionalFilePath = path.join(outputDir, nestedConditionalFile);
+    const exists = await access(conditionalFilePath).then(() => true).catch(() => false);
+    expect(exists).toBe(true);
+  });
+
+  it('should not generate a nested file when deprecated conditionalFiles condition is not met', async () => {
+    const outputDir = generateFolderName();
+    const templateWithConditionalFiles = await getReactTemplateWithConditionalFiles('Some other title');
+    const generator = new Generator(templateWithConditionalFiles, outputDir, {
+      forceWrite: true,
+      templateParams: { version: 'v1', mode: 'production' }
+    });
+    await generator.generateFromFile(dummySpecPath);
+    const conditionalFilePath = path.join(outputDir, nestedConditionalFile);
+    const exists = await access(conditionalFilePath).then(() => true).catch(() => false);
+    expect(exists).toBe(false);
   });
 });

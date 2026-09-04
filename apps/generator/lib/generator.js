@@ -903,7 +903,9 @@ class Generator {
     // Why: conditionalGeneration/conditionalFiles keys are written with POSIX separators in the
     // template config, while path.relative uses backslashes on Windows; normalize before lookups.
     const sourceFileConditionKey = relativeSourceFile.split(path.sep).join('/');
-    const relativeSourceDirectory = sourceFileConditionKey.split('/')[0] || '.';
+    // Why: a conditionalGeneration key can name any ancestor directory, e.g. 'parent/child',
+    // so resolve the full POSIX dirname rather than only the first segment.
+    const relativeSourceDirectory = sourceFileConditionKey.split('/').slice(0, -1).join('/') || '.';
   
     const targetFile = path.resolve(this.targetDir, this.maybeRenameSourceFile(relativeSourceFile));
     const relativeTargetFile = path.relative(this.targetDir, targetFile);

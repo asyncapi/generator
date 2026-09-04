@@ -31,6 +31,7 @@ describe('Integration testing generateFromFile() to make sure the result of the 
   jest.setTimeout(100000);
   const testOutputFile = 'test-file.md';
   const nestedConditionalFile = 'conditionalFolder2/input.txt';
+  const nestedConditionalDirFile = 'nestedParent/nestedChild/input.txt';
 
   const tempJsContent = `
   import { File, Text } from '@asyncapi/generator-react-sdk';
@@ -198,6 +199,30 @@ describe('Integration testing generateFromFile() to make sure the result of the 
     });
     await generator.generateFromFile(dummySpecPath);
     const conditionalFilePath = path.join(outputDir, nestedConditionalFile);
+    const exists = await access(conditionalFilePath).then(() => true).catch(() => false);
+    expect(exists).toBe(false);
+  });
+
+  it('should generate a file under a nested conditional directory when its condition is met', async () => {
+    const outputDir = generateFolderName();
+    const generator = new Generator(reactTemplate, outputDir, {
+      forceWrite: true ,
+      templateParams: { version: 'v1', mode: 'production', singleFolder: 'false' }
+    });
+    await generator.generateFromFile(dummySpecPath);
+    const conditionalFilePath = path.join(outputDir, nestedConditionalDirFile);
+    const exists = await access(conditionalFilePath).then(() => true).catch(() => false);
+    expect(exists).toBe(true);
+  });
+
+  it('should not generate a file under a nested conditional directory when its condition is not met', async () => {
+    const outputDir = generateFolderName();
+    const generator = new Generator(reactTemplate, outputDir, {
+      forceWrite: true ,
+      templateParams: { version: 'v1', mode: 'production', singleFolder: 'true' }
+    });
+    await generator.generateFromFile(dummySpecPath);
+    const conditionalFilePath = path.join(outputDir, nestedConditionalDirFile);
     const exists = await access(conditionalFilePath).then(() => true).catch(() => false);
     expect(exists).toBe(false);
   });

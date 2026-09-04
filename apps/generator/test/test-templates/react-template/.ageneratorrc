@@ -30,3 +30,8 @@ conditionalGeneration:
     parameter: singleFile
     validation:
       enum: ["false"]
+  nestedParent/nestedChild:
+    parameter: singleFolder
+    validation:
+      not:
+        const: "true"

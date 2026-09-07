@@ -34,7 +34,7 @@
   },
   "devDependencies": {
     "markdown-toc": "^1.2.0",
-    "turbo": "1.13.3"
+    "turbo": "2.9.14"
   },
   "engines": {
     "node": ">=24.11",

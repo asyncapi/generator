@@ -169,6 +169,109 @@ describe('Template Configuration Validator', () => {
     expect(templateConfig.conditionalFiles['my/path/to/file.js']).toBeDefined();
   });
 
+  it('Validation throw error if subject in conditionalGeneration is not string', () => {
+    const templateParams = {};
+    const templateConfig = {
+      conditionalGeneration: {
+        'my/path/to/file.js': {
+          subject: ['server.protocol'],
+          validation: {
+            const: 'myprotocol'
+          }
+        }
+      }
+    };
+
+    expect(() => validateTemplateConfig(templateConfig, templateParams)).toThrow('Invalid \'subject\' for my/path/to/file.js: server.protocol');
+  });
+
+  it('Validation throw error if parameter in conditionalGeneration is not string', () => {
+    const templateParams = {};
+    const templateConfig = {
+      conditionalGeneration: {
+        'my/path/to/file.js': {
+          parameter: ['singleFile'],
+          validation: {
+            const: 'true'
+          }
+        }
+      }
+    };
+
+    expect(() => validateTemplateConfig(templateConfig, templateParams)).toThrow('Invalid \'parameter\' for my/path/to/file.js: singleFile');
+  });
+
+  it('Validation throw error if both subject and parameter are defined in conditionalGeneration', () => {
+    const templateParams = {};
+    const templateConfig = {
+      conditionalGeneration: {
+        'my/path/to/file.js': {
+          subject: 'server.protocol',
+          parameter: 'singleFile',
+          validation: {
+            const: 'myprotocol'
+          }
+        }
+      }
+    };
+
+    expect(() => validateTemplateConfig(templateConfig, templateParams)).toThrow('Both \'subject\' and \'parameter\' cannot be defined for my/path/to/file.js');
+  });
+
+  it('Validation throw error if validation in conditionalGeneration is not object', () => {
+    const templateParams = {};
+    const templateConfig = {
+      conditionalGeneration: {
+        'my/path/to/file.js': {
+          subject: 'server.url',
+          validation: 'http://example.com'
+        }
+      }
+    };
+
+    expect(() => validateTemplateConfig(templateConfig, templateParams)).toThrow('Invalid \'validation\' object for my/path/to/file.js: http://example.com');
+  });
+
+  it('Validation enrich conditionalGeneration object with validate object', () => {
+    const templateParams = {};
+    const templateConfig = {
+      conditionalGeneration: {
+        'my/path/to/file.js': {
+          subject: 'server.protocol',
+          validation: {
+            const: 'myprotocol'
+          }
+        }
+      }
+    };
+    validateTemplateConfig(templateConfig, templateParams);
+
+    const validateFn = templateConfig.conditionalGeneration['my/path/to/file.js'].validate;
+    expect(typeof validateFn).toBe('function');
+    expect(validateFn('myprotocol')).toBe(true);
+    expect(validateFn('differentprotocol')).toBe(false);
+  });
+
+  it('Validation enrich conditionalGeneration object with validate object if the subject is info', () => {
+    const templateParams = {};
+    const templateConfig = {
+      conditionalGeneration: {
+        'my/path/to/file.js': {
+          subject: 'info.title',
+          validation: {
+            const: 'asyncapi'
+          }
+        }
+      }
+    };
+    validateTemplateConfig(templateConfig, templateParams);
+
+    const validateFn = templateConfig.conditionalGeneration['my/path/to/file.js'].validate;
+    expect(typeof validateFn).toBe('function');
+    expect(validateFn('asyncapi')).toBe(true);
+    expect(validateFn('differenttitle')).toBe(false);
+  });
+
   it('Validation throw error if specified server is not in asyncapi document', () => {
     const templateParams = {
       server: 'myserver'

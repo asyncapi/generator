@@ -11,6 +11,7 @@ const jmespath = require('jmespath');
  * @param {Object} templateParams - Parameters passed to the template.
  * @param {AsyncAPIDocument} asyncapiDocument - The AsyncAPI document used for evaluating conditions.
  * @returns {Promise<boolean>} A promise that resolves to `true` if the condition is met, allowing the file or folder to render; otherwise, resolves to `false`. 
+ * @throws {Error} When errors occur during condition evaluation or validation.
  */
 async function isGenerationConditionMet (
   templateConfig,
@@ -48,7 +49,9 @@ async function isGenerationConditionMet (
     }
     return conditionalParameterGeneration(templateConfig,matchedConditionPath,templateParams);
   }
-};
+
+  return true;
+}
 
 /**
  * Evaluates whether a template path should be conditionally generated 
@@ -91,7 +94,7 @@ async function conditionalFilesGenerationDeprecatedVersion (
  * Determines whether a file should be conditionally included based on the provided subject expression
  * and optional validation logic defined in the template configuration.
  * @private
- * @param {Object} asyncapiDocument - The parsed AsyncAPI document instance used for context evaluation.
+ * @param {AsyncAPIDocument} asyncapiDocument - The parsed AsyncAPI document instance used for context evaluation.
  * @param {Object} templateConfig - The configuration object that contains `conditionalFiles` rules.
  * @param {String} matchedConditionPath - The relative path to the directory of the source file.
  * @param {Object} templateParams - Parameters passed to the template.

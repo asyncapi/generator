@@ -1,41 +1,52 @@
-name: Docs Preview (Netlify)
+name: Docs Preview Deploy (Netlify)
 
 on:
-  pull_request_target:
-    paths:
-      - 'apps/generator/docs/**'
+  workflow_run:
+    workflows: ["Docs Preview Build (Netlify)"]
+    types: [completed]
 
-concurrency:
-  group: docs-preview-${{ github.event.pull_request.number }}
-  cancel-in-progress: true
-  
+permissions:
+  contents: read
+  pull-requests: write   # only for the comment step
+  actions: read          # to download artifacts from the triggering run
+
 jobs:
-  preview:
+  deploy:
+    if: >
+      github.event.workflow_run.event == 'pull_request' &&
+      github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
-
+    # Require a maintainer review before any secret is exposed:
+    environment: docs-preview
     steps:
-      - name: Checkout generator PR
-        uses: actions/checkout@v5
+      - name: Download built site artifact
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
+          name: docs-preview-site
+          path: site
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: ${{ github.event.workflow_run.id }}
 
-      - name: Checkout website repo
-        uses: actions/checkout@v5
+      - name: Download PR metadata artifact
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
-          repository: asyncapi/website
-          path: website
-          fetch-depth: 1
+          name: docs-preview-pr-meta
+          path: pr-meta
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: ${{ github.event.workflow_run.id }}
 
-      - name: Sync docs into website
+      - name: Read PR number
+        id: pr
         run: |
-          rm -rf website/markdown/docs/tools/generator/*
-          cp -R apps/generator/docs/* website/markdown/docs/tools/generator/
-          rm website/markdown/docs/tools/generator/README.md
-          rm -r website/markdown/docs/tools/generator/jsdoc2md-handlebars
-          printf "%s\ntitle: Generator\nweight: 3\n%s" "---" "---"> website/markdown/docs/tools/generator/_section.md
+          set -euo pipefail
+          PR=$(cat pr-meta/pr-number.txt | tr -dc '0-9')
+          if [ -z "$PR" ]; then echo "Invalid PR number"; exit 1; fi
+          echo "number=$PR" >> "$GITHUB_OUTPUT"
 
       - name: Setup Node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 'lts/*'
 
       - name: Install jq
         run: |
@@ -44,37 +55,43 @@ jobs:
       - name: Install Netlify CLI
         run: npm i -g netlify-cli@23.9.5
 
-      - name: Install deps
-        working-directory: website
-        run: |
-          npm ci
-
-      - name: Build and deploy draft preview to Netlify
+      - name: Deploy docs draft preview to Netlify
         id: deploy
-        working-directory: website
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          PR_NUMBER: ${{ steps.pr.outputs.number }}
         run: |
-          set -e
-          # Build and deploy built files to Netlify
+          set -euo pipefail
+          # Prefer the static export; only fall back to .next when it's absent.
+          if [ -d "site/out" ]; then
+            DEPLOY_DIR="site/out"
+          elif [ -d "site/.next" ]; then
+            DEPLOY_DIR="site/.next"
+          else
+            echo "No deployable directory found (expected site/out or site/.next)"; exit 1
+          fi
+
           DEPLOY_JSON=$(netlify deploy \
             --auth "$NETLIFY_AUTH_TOKEN" \
             --site "$NETLIFY_SITE_ID" \
-            --message "generator repo PR #${{ github.event.number }}" \
+            --dir "$DEPLOY_DIR" \
+            --message "generator repo PR #${PR_NUMBER}" \
             --draft \
             --json)
 
           echo "$DEPLOY_JSON"
-          echo "url=$(echo "$DEPLOY_JSON" | jq -r '.deploy_url')" >> "$GITHUB_OUTPUT"
+          URL=$(echo "$DEPLOY_JSON" | jq -r '.deploy_url')
+          echo "url=$URL" >> "$GITHUB_OUTPUT"
 
       - name: Comment preview URL on PR
         if: success()
-        uses: thollander/actions-comment-pull-request@24bffb9b452ba05a4f3f77933840a6a841d1b32b #v3.0.1 release https://github.com/thollander/actions-comment-pull-request/releases/tag/v3.0.1
+        uses: thollander/actions-comment-pull-request@24bffb9b452ba05a4f3f77933840a6a841d1b32b # v3.0.1
         with:
-          github-token: ${{ secrets.GH_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          pr-number: ${{ steps.pr.outputs.number }}
+          comment-tag: netlify-docs-preview
           message: |
             🚀 **Docs preview deployed**
             Below link points directly to the generator docs preview. May the force be with you!
             → ${{ steps.deploy.outputs.url }}/docs/tools/generator
-          comment-tag: netlify-docs-preview

@@ -11,10 +11,17 @@ void myErrorHandler(Object error) {
   print('Errors from WebSocket: $error');
 }
 
+dynamic outgoingProcessor(dynamic message) {
+  final processed = {'payload': message, 'timestamp': DateTime.now().toIso8601String()};
+  print('Outgoing processor fired: $processed');
+  return processed;
+}
+
 Future<void> main() async {
   final wsClient = HoppscotchClient();
   wsClient.registerMessageHandler(myHandler);
   wsClient.registerErrorHandler(myErrorHandler);
+  wsClient.registerOutgoingProcessor(outgoingProcessor);
 
   try {
     await wsClient.connect();

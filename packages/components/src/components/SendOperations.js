@@ -160,12 +160,17 @@ static ${methodName}(message, socket, schemas) {
     const methodName = operation.id();
     return {
       nonStaticMethod: `/// Send a ${methodName} message to the server
+/// Runs any registered outgoing processors on the message before sending.
 void ${methodName}(dynamic message) {
   if (_channel == null) {
     print('Error: WebSocket is not connected.');
     return;
   }
-  final payload = message is String ? message : jsonEncode(message);
+  dynamic processedMessage = message;
+  for (final processor in _outgoingProcessors) {
+    processedMessage = processor(processedMessage) ?? processedMessage;
+  }
+  final payload = processedMessage is String ? processedMessage : jsonEncode(processedMessage);
   _channel!.sink.add(payload);
   print('Sent message: $payload');
 }`,

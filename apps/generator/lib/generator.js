@@ -734,12 +734,15 @@ class Generator {
   async ignoredDirHandler(root, stats, next) {
     const relativeDir = path.relative(this.templateContentDir, path.resolve(root, stats.name));
     const dirPath = path.resolve(this.targetDir, relativeDir);
-    const conditionalEntry = this.templateConfig?.conditionalGeneration?.[relativeDir];
+    // Why: conditionalGeneration keys are written with POSIX separators in the template config,
+    // while path.relative uses backslashes on Windows; normalize before the lookup.
+    const dirConditionKey = relativeDir.split(path.sep).join('/');
+    const conditionalEntry = this.templateConfig?.conditionalGeneration?.[dirConditionKey];
     let shouldGenerate =  true;
     if (conditionalEntry) {
       shouldGenerate = await isGenerationConditionMet(
         this.templateConfig,
-        relativeDir,
+        dirConditionKey,
         this.templateParams,
         this.asyncapiDocument
       );
@@ -897,7 +900,12 @@ class Generator {
   async generateFile(asyncapiDocument, fileName, baseDir) {
     const sourceFile = path.resolve(baseDir, fileName);
     const relativeSourceFile = path.relative(this.templateContentDir, sourceFile);
-    const relativeSourceDirectory = relativeSourceFile.split(path.sep)[0] || '.';
+    // Why: conditionalGeneration/conditionalFiles keys are written with POSIX separators in the
+    // template config, while path.relative uses backslashes on Windows; normalize before lookups.
+    const sourceFileConditionKey = relativeSourceFile.split(path.sep).join('/');
+    // Why: a conditionalGeneration key can name any ancestor directory, e.g. 'parent/child',
+    // so resolve the full POSIX dirname rather than only the first segment.
+    const relativeSourceDirectory = sourceFileConditionKey.split('/').slice(0, -1).join('/') || '.';
   
     const targetFile = path.resolve(this.targetDir, this.maybeRenameSourceFile(relativeSourceFile));
     const relativeTargetFile = path.relative(this.targetDir, targetFile);
@@ -921,13 +929,13 @@ class Generator {
 
     if (this.templateConfig.conditionalGeneration?.[relativeSourceDirectory]) {
       conditionalPath = relativeSourceDirectory;
-    } else if (this.templateConfig.conditionalGeneration?.[relativeSourceFile]) {
-      conditionalPath = relativeSourceFile;
+    } else if (this.templateConfig.conditionalGeneration?.[sourceFileConditionKey]) {
+      conditionalPath = sourceFileConditionKey;
     } else
-    if (this.templateConfig.conditionalFiles?.[relativeSourceFile]) {  
+    if (this.templateConfig.conditionalFiles?.[sourceFileConditionKey]) {
       // conditionalFiles becomes deprecated with this PR, and soon will be removed.
       // TODO: https://github.com/asyncapi/generator/issues/1553
-      conditionalPath = relativeSourceDirectory;
+      conditionalPath = sourceFileConditionKey;
     }
    
     if (conditionalPath) {
@@ -940,7 +948,7 @@ class Generator {
     }
     
     if (!shouldGenerate) {
-      if (this.templateConfig.conditionalFiles?.[relativeSourceFile]) {
+      if (this.templateConfig.conditionalFiles?.[sourceFileConditionKey]) {
         // conditionalFiles becomes deprecated with this PR, and soon will be removed.
         // TODO: https://github.com/asyncapi/generator/issues/1553
         return log.debug(logMessage.conditionalFilesMatched(relativeSourceFile));

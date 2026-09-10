@@ -1,0 +1,40 @@
+# v1: changeset .md in the PR diff and release-style PR title must both be present or both absent.
+name: Verify changeset release alignment
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, edited, ready_for_review]
+
+jobs:
+  verify-changeset-release-alignment:
+    name: Verify changeset release alignment
+    runs-on: ubuntu-latest
+    if: >
+      !github.event.pull_request.draft &&
+      github.event.pull_request.user.login != 'asyncapi-bot' &&
+      github.event.pull_request.user.login != 'dependabot[bot]' &&
+      github.event.pull_request.user.login != 'dependabot-preview[bot]'
+    env:
+      # Human squash-merge titles that trigger Release (see release-with-changesets.yml; chore(release): is bot-only and skipped above).
+      TITLE_TRIGGERS_RELEASE: ${{ startsWith(github.event.pull_request.title, 'fix:') || startsWith(github.event.pull_request.title, 'fix!:') || startsWith(github.event.pull_request.title, 'feat:') || startsWith(github.event.pull_request.title, 'feat!:') }}
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - uses: dorny/paths-filter@fbd0ab8f3e69293af611ebaee6363fc25e6d187d # v4.0.1
+        id: filter
+        with:
+          filters: |
+            changeset_md:
+              - '.changeset/**.md'
+
+      - name: Changeset in PR but title will not trigger Release
+        if: steps.filter.outputs.changeset_md == 'true' && env.TITLE_TRIGGERS_RELEASE != 'true'
+        run: |
+          echo "::error title=Changeset / release title mismatch::This PR changes .changeset/*.md but the squash-merge title will not trigger Release. Use fix:, fix!:, feat:, or feat!: at the start of the title. More info: https://github.com/asyncapi/generator/blob/master/Development.md#release-process"
+          exit 1
+
+      - name: Release title but no changeset in PR
+        if: steps.filter.outputs.changeset_md != 'true' && env.TITLE_TRIGGERS_RELEASE == 'true'
+        run: |
+          echo "::error title=Changeset / release title mismatch::Release-style PR title but no .changeset/*.md in this PR. Add a changeset or use a non-release title (docs:, chore:, …). More info: https://github.com/asyncapi/generator/blob/master/Development.md#release-process"
+          exit 1

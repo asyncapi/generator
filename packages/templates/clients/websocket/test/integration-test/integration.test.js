@@ -91,6 +91,7 @@ describe('WebSocket Clients Integration Tests', () => {
     describe('JavaScript Client', () => {
       const config = languageConfig.javascript;
       runCommonTests('JavaScript', config);
+      runCommonSlackTests('JavaScript', config);
 
       describe('Additional tests for JavaScript client', () => {
         it('generate simple client for hoppscotch echo without clientFileName param', async () => {

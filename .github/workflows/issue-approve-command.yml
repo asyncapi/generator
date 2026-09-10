@@ -1,0 +1,148 @@
+# Purpose of this workflow is to allow core maintainers (listed on the catch-all
+# `*` line of the CODEOWNERS file) to approve issues via the /approve command,
+# swapping the 'Awaiting Approval' label for 'Approved Issue' and posting an
+# instruction comment for contributors.
+
+name: Issue /approve command
+
+on:
+  issue_comment:
+    types:
+      - created
+
+jobs:
+  approve-issue:
+    if: >
+      !github.event.issue.pull_request &&
+      github.event.issue.state != 'closed' &&
+      (github.event.comment.body == '/approve' || startsWith(github.event.comment.body, '/approve '))
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout CODEOWNERS
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          sparse-checkout: CODEOWNERS
+          sparse-checkout-cone-mode: false
+
+      - name: Check authorization and approve
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        env:
+          ACTOR: ${{ github.actor }}
+        with:
+          github-token: ${{ secrets.GH_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const actor = process.env.ACTOR;
+
+            const codeowners = fs.readFileSync('./CODEOWNERS', 'utf8');
+            const lines = codeowners.split('\n');
+
+            const catchAllLine = lines.find(
+              line => !line.startsWith('#') && line.trim().startsWith('* ')
+            );
+
+            if (!catchAllLine) {
+              core.setFailed('Could not find the catch-all `*` line in CODEOWNERS');
+              return;
+            }
+
+            const regex = /@([a-zA-Z0-9_-]+)/g;
+            const matches = catchAllLine.match(regex);
+            const approvers = matches
+              ? matches
+                  .map(m => m.substring(1))
+                  .filter(name => !name.includes('bot'))
+              : [];
+
+            core.info(`Core maintainer approvers from CODEOWNERS: ${approvers.join(', ')}`);
+
+            if (!approvers.includes(actor)) {
+              const approverMentions = approvers.map(u => `[@${u}](https://github.com/${u})`).join(', ');
+              const commentText = `❌ @${actor} is not authorized to use the \`/approve\` command.\nOnly core maintainers (${approverMentions}) can approve issues.`;
+
+              console.log(`❌ @${actor} made an unauthorized attempt to use /approve.`);
+              await github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: commentText,
+              });
+              return;
+            }
+
+            const { data: currentLabels } = await github.rest.issues.listLabelsOnIssue({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+            if (currentLabels.some(l => l.name === 'Approved Issue')) {
+              console.log('Issue already approved, skipping.');
+              await github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: `ℹ️ @${actor} this issue is already approved.`,
+              });
+              return;
+            }
+
+            const awaitingLabel = 'Awaiting Approval';
+            if (currentLabels.some(l => l.name === awaitingLabel)) {
+              console.log(`Removing label '${awaitingLabel}'...`);
+              await github.rest.issues.removeLabel({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                name: awaitingLabel,
+              });
+            }
+
+            const approvedLabel = 'Approved Issue';
+            const labelColor = '0e8a16';
+            const labelDescription = 'Issue has been approved by a maintainer and is ready for work';
+
+            const { data: repoLabels } = await github.rest.issues.listLabelsForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            });
+
+            if (!repoLabels.some(l => l.name === approvedLabel)) {
+              try {
+                await github.rest.issues.createLabel({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  name: approvedLabel,
+                  color: labelColor,
+                  description: labelDescription,
+                });
+              } catch (e) {
+                if (e.status !== 422) throw e;
+              }
+            }
+
+            console.log(`Adding label '${approvedLabel}' to issue #${context.issue.number}...`);
+            await github.rest.issues.addLabels({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: [approvedLabel],
+            });
+
+            const commentBody = `👋 Thanks for your patience. This issue has been reviewed and is ready to be worked on.
+
+            **Before you start:**
+
+            - Comment below to let others know you're working on it (avoids duplicate work)
+            - Read our [CONTRIBUTING.md](../blob/master/CONTRIBUTING.md) if you haven't already
+            - Fork the repo, create a feature branch, and open a draft PR early
+
+            _Approved by @${actor}_`;
+
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: commentBody,
+            });

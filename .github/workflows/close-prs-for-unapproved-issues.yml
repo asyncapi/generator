@@ -1,0 +1,102 @@
+# Purpose of this workflow is to automatically close PRs that reference
+# issues still carrying the 'Awaiting Approval' label, preventing work
+# on issues that have not yet been approved by a maintainer.
+
+name: Close PRs linked to unapproved issues
+
+on:
+  pull_request_target:
+    types:
+      - opened
+      - edited
+      - reopened
+
+jobs:
+  close-if-unapproved:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check linked issue and close PR if unapproved
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        with:
+          github-token: ${{ secrets.GH_TOKEN }}
+          script: |
+            const prBody = context.payload.pull_request.body || '';
+            const prNumber = context.payload.pull_request.number;
+
+            const issuePattern = /(?:close[sd]?|fix(?:e[sd])?|resolve[sd]?)\s#(\d+)/gi;
+            const matches = [...prBody.matchAll(issuePattern)];
+
+            if (matches.length === 0) {
+              console.log(`No linked issues found in PR #${prNumber} body. Closing PR.`);
+
+              await github.rest.issues.createComment({
+                issue_number: prNumber,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: `🚫 This PR has been automatically closed because it does not reference a linked issue.\n\nPlease update your PR description to include a reference to the issue it addresses (e.g. \`Fixes #123\`, \`Closes #123\`, or \`Resolves #123\`) and reopen this PR.`,
+              });
+
+              await github.rest.pulls.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: prNumber,
+                state: 'closed',
+              });
+
+              return;
+            }
+
+            const awaitingLabel = 'Awaiting Approval';
+
+            for (const match of matches) {
+              const issueNumber = parseInt(match[1], 10);
+              console.log(`Checking issue #${issueNumber} for '${awaitingLabel}' label...`);
+
+              try {
+                const { data: labels } = await github.rest.issues.listLabelsOnIssue({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: issueNumber,
+                });
+
+                if (labels.some(l => l.name === awaitingLabel)) {
+                  console.log(`Issue #${issueNumber} still has '${awaitingLabel}'. Closing PR #${prNumber}.`);
+
+                  await github.rest.issues.createComment({
+                    issue_number: prNumber,
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    body: `🚫 This PR has been automatically closed because the linked issue #${issueNumber} has not been approved yet.\n\nPlease wait for a maintainer to approve the issue with the \`/approve\` command before opening a PR.`,
+                  });
+
+                  await github.rest.pulls.update({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    pull_number: prNumber,
+                    state: 'closed',
+                  });
+
+                  return;
+                }
+              } catch (error) {
+                if (error.status === 404) {
+                   await github.rest.issues.createComment({
+                    issue_number: prNumber,
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    body: `🚫 This PR references issue #${issueNumber}, which does not exist. Please correct the linked issue reference.`,
+                  });
+                  await github.rest.pulls.update({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    pull_number: prNumber,
+                    state: 'closed',
+                  });
+                  return;
+                }
+                console.log(`Could not fetch labels for issue #${issueNumber}: ${error.message}`);
+              }
+            }
+
+            console.log('All linked issues are approved or no matching label found. PR stays open.');

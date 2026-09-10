@@ -108,6 +108,8 @@ components:
   messages:
     event:
       summary: Event message representing different event types
+      correlationId:
+        location: $message.payload#/envelope_id
       payload:
         $ref: '#/components/schemas/event'
       examples:
@@ -249,6 +251,8 @@ components:
               app_id: A08NKKBFGBD
     acknowledge:
       summary: Acknowledgement response sent to Server
+      correlationId:
+        location: $message.payload#/envelope_id
       payload:
         $ref: '#/components/schemas/acknowledge'
       examples:

@@ -1,0 +1,59 @@
+asyncapi: 3.0.0
+
+info:
+  title: Postman Echo WebSocket Client with Reply (No Correlation)
+  version: 1.0.0
+  description: >
+    Test fixture for reply handling without correlation IDs.
+    Postman Echo server replies to incoming messages without any correlation tracking.
+
+servers:
+  echoServer:
+    host: ws.postman-echo.com
+    pathname: /raw
+    protocol: wss
+
+channels:
+  echo:
+    description: The main channel where messages are sent and echoed back by the Postman Echo WebSocket server.
+    address: /
+    messages:
+      echoMessage:
+        $ref: '#/components/messages/echoMessage'
+
+operations:
+  sendEchoMessage:
+    summary: Send a message to the Postman Echo server and receive a reply.
+    action: send
+    channel: 
+      $ref: '#/channels/echo'
+    messages:
+      - $ref: '#/channels/echo/messages/echoMessage'
+    reply:
+      channel: 
+        $ref: '#/channels/echo'
+      messages:
+        - $ref: '#/channels/echo/messages/echoMessage'
+
+components:
+  messages:
+    echoMessage:
+      summary: A message exchanged with the echo server.
+      payload:
+        type: object
+        properties:
+          message:
+            type: string
+            description: Message to echo back
+          timestamp:
+            type: string
+            description: Request timestamp
+      examples:
+        - name: string
+          payload:
+            message: test
+            timestamp: '2025-12-23T10:00:00Z'
+        - name: object
+          payload:
+            message: test text
+            timestamp: '2025-12-23T10:00:00Z'

@@ -1,9 +1,10 @@
 const path = require('path');
-const { stat } = require('fs').promises;
+const { readFile, stat } = require('fs').promises;
 const Generator = require('@asyncapi/generator');
 const { cleanTestResultPaths } = require('@asyncapi/generator-helpers');
 const { runCommonTests, runCommonSlackTests } = require('./common-test.js');
 const asyncapi_v3_path_hoppscotch = path.resolve(__dirname, '../__fixtures__/asyncapi-hoppscotch-client.yml');
+const asyncapi_v3_json_path = path.resolve(__dirname, '../__fixtures__/asyncapi-postman-echo.json');
 
 /**
  * Configuration for different target languages.
@@ -105,6 +106,22 @@ describe('WebSocket Clients Integration Tests', () => {
           const clientOutputFile = path.join(config.testResultPath, defaultOutputFile);
           const checkClientOutputFileExists = await stat(clientOutputFile);
           expect(checkClientOutputFileExists.isFile()).toBeTruthy();
+        }, 30000);
+
+        it('references the generated JSON AsyncAPI file for JSON input', async () => {
+          const outputPath = path.join(config.testResultPath, 'json_input');
+          const generator = new Generator(config.template, outputPath, {
+            forceWrite: true,
+            templateParams: {
+              server: 'echoServer'
+            }
+          });
+          await generator.generateFromFile(asyncapi_v3_json_path);
+          const asyncapiOutputFile = await stat(path.join(outputPath, 'asyncapi.json'));
+          expect(asyncapiOutputFile.isFile()).toBeTruthy();
+
+          const client = await readFile(path.join(outputPath, 'client.js'), 'utf8');
+          expect(client).toContain('path.resolve(__dirname, \'./asyncapi.json\')');
         }, 30000);
       });
     });

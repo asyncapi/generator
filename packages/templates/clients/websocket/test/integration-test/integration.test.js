@@ -117,8 +117,10 @@ describe('WebSocket Clients Integration Tests', () => {
             }
           });
           await generator.generateFromFile(asyncapi_v3_json_path);
-          const client = await readFile(path.join(outputPath, 'client.js'), 'utf8');
+          const asyncapiOutputFile = await stat(path.join(outputPath, 'asyncapi.json'));
+          expect(asyncapiOutputFile.isFile()).toBeTruthy();
 
+          const client = await readFile(path.join(outputPath, 'client.js'), 'utf8');
           expect(client).toContain('path.resolve(__dirname, \'./asyncapi.json\')');
         }, 30000);
       });

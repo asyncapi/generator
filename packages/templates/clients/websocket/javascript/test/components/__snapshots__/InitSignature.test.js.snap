@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InitSignature component (integration with AsyncAPI document) renders with empty query parameters array 1`] = `"constructor(url, throwSendErrors = true) {"`;
+
+exports[`InitSignature component (integration with AsyncAPI document) renders with multiple query parameters with mixed default values 1`] = `"constructor(url, heartbeat = false, bids = true, sessionId, throwSendErrors = true) {"`;
+
+exports[`InitSignature component (integration with AsyncAPI document) renders with no query parameters 1`] = `"constructor(url, throwSendErrors = true) {"`;
+
+exports[`InitSignature component (integration with AsyncAPI document) renders with single query parameter with default value as primitive boolean 1`] = `"constructor(url, bids = false, throwSendErrors = true) {"`;
+
+exports[`InitSignature component (integration with AsyncAPI document) renders with single query parameter with default value as primitive number 1`] = `"constructor(url, count = 42, throwSendErrors = true) {"`;
+
+exports[`InitSignature component (integration with AsyncAPI document) renders with single query parameter with default value as stringified number 1`] = `"constructor(url, count = 42, throwSendErrors = true) {"`;
+
+exports[`InitSignature component (integration with AsyncAPI document) renders with single query parameter with default value false 1`] = `"constructor(url, heartbeat = false, throwSendErrors = true) {"`;
+
+exports[`InitSignature component (integration with AsyncAPI document) renders with single query parameter with default value true 1`] = `"constructor(url, bids = true, throwSendErrors = true) {"`;
+
+exports[`InitSignature component (integration with AsyncAPI document) renders with single query parameter with explicit empty string default 1`] = `"constructor(url, token, throwSendErrors = true) {"`;
+
+exports[`InitSignature component (integration with AsyncAPI document) renders with single query parameter without default value 1`] = `"constructor(url, token, throwSendErrors = true) {"`;

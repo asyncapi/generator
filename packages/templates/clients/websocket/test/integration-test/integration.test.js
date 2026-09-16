@@ -1,5 +1,5 @@
 const path = require('path');
-const { stat } = require('fs').promises;
+const { stat, readFile } = require('fs').promises;
 const Generator = require('@asyncapi/generator');
 const { cleanTestResultPaths } = require('@asyncapi/generator-helpers');
 const { runCommonTests, runCommonSlackTests } = require('./common-test.js');
@@ -93,6 +93,34 @@ describe('WebSocket Clients Integration Tests', () => {
       runCommonTests('JavaScript', config);
 
       describe('Additional tests for JavaScript client', () => {
+        it.each([
+          ['default directory', undefined, '.'],
+          ['custom directory', 'specs', 'specs']
+        ])('references asyncapi.json for JSON input in the %s', async (_, asyncapiFileDir, expectedDir) => {
+          const asyncapiPath = path.resolve(
+            __dirname,
+            '../../../../../../apps/hooks/test/__fixtures__/asyncapi-with-refs.json'
+          );
+          const outputPath = path.join(config.testResultPath, `client_json_${asyncapiFileDir || 'default'}`);
+          const generator = new Generator(config.template, outputPath, {
+            forceWrite: true,
+            templateParams: {
+              server: 'echoServer',
+              ...(asyncapiFileDir === undefined ? {} : { asyncapiFileDir })
+            }
+          });
+
+          await generator.generateFromFile(asyncapiPath);
+
+          const generatedDocument = await readFile(path.join(outputPath, expectedDir, 'asyncapi.json'), 'utf8');
+          expect(JSON.parse(generatedDocument).asyncapi).toBe('3.0.0');
+
+          const generatedClient = await readFile(path.join(outputPath, config.clientFileName), 'utf8');
+          expect(generatedClient).toContain(
+            `const asyncapiFilepath = path.resolve(__dirname, '${expectedDir}/asyncapi.json');`
+          );
+        }, 30000);
+
         it('generate simple client for hoppscotch echo without clientFileName param', async () => {
           const defaultOutputFile = 'client.js';
           const generator = new Generator(config.template, config.testResultPath, {

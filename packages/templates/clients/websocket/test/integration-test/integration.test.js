@@ -121,7 +121,7 @@ describe('WebSocket Clients Integration Tests', () => {
           );
         }, 30000);
 
-        it('generate simple client for hoppscotch echo without clientFileName param', async () => {
+        it('uses the default client filename and references asyncapi.yaml for a custom-named .yml input', async () => {
           const defaultOutputFile = 'client.js';
           const generator = new Generator(config.template, config.testResultPath, {
             forceWrite: true,
@@ -133,6 +133,12 @@ describe('WebSocket Clients Integration Tests', () => {
           const clientOutputFile = path.join(config.testResultPath, defaultOutputFile);
           const checkClientOutputFileExists = await stat(clientOutputFile);
           expect(checkClientOutputFileExists.isFile()).toBeTruthy();
+          const documentOutputFile = await stat(path.join(config.testResultPath, 'asyncapi.yaml'));
+          expect(documentOutputFile.isFile()).toBeTruthy();
+          const generatedClient = await readFile(clientOutputFile, 'utf8');
+          expect(generatedClient).toContain(
+            'const asyncapiFilepath = path.resolve(__dirname, \'./asyncapi.yaml\');'
+          );
         }, 30000);
       });
     });

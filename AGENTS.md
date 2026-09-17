@@ -16,7 +16,7 @@ The guidelines below cross-reference the following authoritative docs. If a path
 - [Hooks guide](apps/generator/docs/hooks.md) — lifecycle hook order and signatures (`generate:before`, `generate:after`, `setFileTemplateName`)
 - [Keeper README](apps/keeper/README.md) — `@asyncapi/keeper` public API surface
 - [React SDK README](apps/react-sdk/README.md) — rendering architecture, restrictions, and component examples
-- [Baked-in Templates guide](apps/generator/docs/baked-in-templates.md) — directory layout, required files, package-name convention
+- [Baked-in Templates guide](apps/generator/docs/baked-in-templates.md) — directory layout, required files, package-name convention, and how the build derives template metadata from the folder path and rewrites `.ageneratorrc` / `package.json` `name`
 - [WebSocket test README](packages/templates/clients/websocket/test/README.md) — `TEST_CLIENT` scoping, snapshot layout, Microcks setup
 
 ---
@@ -154,6 +154,7 @@ Template development inside the generator is an experimental effort. All its arc
 
 **Conventions:**
 - The directory layout (`{type}/[protocol]/[target]/[stack]`), required files (`.ageneratorrc`, `package.json`), metadata normalization, the `core-template-*` package-name rule, and the "how to add a new template" flow — live in the [Baked-in Templates guide](apps/generator/docs/baked-in-templates.md).
+- **The `metadata` block in `.ageneratorrc` and the `name` in `package.json` are build-generated from the template's folder path** — `apps/generator/scripts/build-templates.js` overwrites both on every `npm run build` (and `pretest`). Flag any PR that hand-edits them or strips the injected auto-generated comment; metadata changes must come from renaming/moving the template directory instead. See "Metadata and naming conventions" in the [Baked-in Templates guide](apps/generator/docs/baked-in-templates.md).
 - **Template-local component tests are conditional-only, and share one protocol fixture.** A component under `<client>/components/` gets a dedicated snapshot test **only when it has conditional rendering or variant logic** (per-server branches, query-param shape, operation-type switches); purely presentational components are covered by integration + acceptance tests. Each protocol keeps a single AsyncAPI fixture under `test/__fixtures__/` that exercises the full component surface — reuse it across clients of the same protocol and extend it (updating dependent snapshots) only when a new variant genuinely isn't expressible against the existing spec.
 - **Integration and acceptance tests are protocol-shared** Each protocol owns one integration suite (snapshot-driven, common helpers, per-client isolation) and one Microcks-based acceptance suite (language-native tests against a mocked server). For the full mechanics — per-client `TEST_CLIENT` scoping, snapshot layout, Microcks setup, and the checklist for onboarding a new client — see the [WebSocket test README](packages/templates/clients/websocket/test/README.md).
 

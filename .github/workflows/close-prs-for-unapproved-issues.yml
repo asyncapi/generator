@@ -28,7 +28,7 @@ jobs:
             // this bypass they get auto-closed by this workflow, which blocks the release
             // pipeline (see asyncapi/generator#2249). Bot list kept in sync with the one
             // used in pr-review-checklist.yml.
-            const botAuthors = ['asyncapi-bot', 'dependabot[bot]', 'dependabot-preview[bot]'];
+            const botAuthors = ['asyncapi-bot', 'dependabot[bot]', 'dependabot-preview[bot]', 'github-actions[bot]'];
             if (botAuthors.includes(prAuthor)) {
               console.log(`PR opened by automation account '${prAuthor}'. Skipping issue-link enforcement.`);
               return;

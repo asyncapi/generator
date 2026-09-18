@@ -21,6 +21,19 @@ jobs:
         with:
           github-token: ${{ secrets.GH_TOKEN }}
           script: |
+            const prAuthor = context.payload.pull_request.user.login;
+            const prAuthorType = context.payload.pull_request.user.type;
+
+            // Why: automation-authored PRs (changesets release PRs, dependency bumps, etc.)
+            // are mechanically generated and never reference an issue by design. Without
+            // this bypass they get auto-closed by this workflow, which blocks the release
+            // pipeline (see asyncapi/generator#2249).
+            const botAuthors = ['asyncapi-bot', 'dependabot[bot]', 'github-actions[bot]'];
+            if (botAuthors.includes(prAuthor) || prAuthorType === 'Bot') {
+              console.log(`PR opened by automation account '${prAuthor}'. Skipping issue-link enforcement.`);
+              return;
+            }
+
             const prBody = context.payload.pull_request.body || '';
             const prNumber = context.payload.pull_request.number;
 

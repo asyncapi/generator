@@ -1,10 +1,12 @@
 # this workflow runs after releases to generate some files like for example api.md
 name: Autogenerate API files
 
-on: 
+on:
   release:
     types: 
       - published
+      
+permissions: {}
 
 jobs:
   version_bump:
@@ -12,22 +14,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           # target branch of release. More info https://docs.github.com/en/rest/reference/repos#releases
           # in case release is created from release branch then we need to checkout from given branch
           # if @semantic-release/github is used to publish, the minimum version is 7.2.0 for proper working
           ref: ${{ github.event.release.target_commitish }}
+          persist-credentials: false
+          
       - name: Check package-lock version
         # This workflow is from our own org repo and safe to reference by 'master'.
-        uses: asyncapi/.github/.github/actions/get-node-version-from-package-lock@master
+        uses: asyncapi/.github/.github/actions/get-node-version-from-package-lock@master # pinned to latest master
         id: lockversion
         with:
           node-version: ${{ vars.NODE_VERSION }}
       - name: Setup Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: "${{ steps.lockversion.outputs.version }}"
+          cache: ''   # disable default npm cache which prevents cache-poisoning on release artifacts
       - name: Install dependencies
         run: npm ci
       - name: Assets generation
@@ -44,7 +49,7 @@ jobs:
           branch: assets-update/${{github.event.release.tag_name}}
       - if: failure() # Only, on failure, send a message on the 94_bot-failing-ci slack channel
         name: Report workflow run status to Slack
-        uses: 8398a7/action-slack@v3
+        uses: rtCamp/action-slack-notify@e31e87e03dd19038e411e38ae27cbad084a90661 # v2.3.3
         with:
           status: ${{ job.status }}
           fields: repo,action,workflow

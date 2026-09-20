@@ -26,7 +26,7 @@ export default function ({ asyncapi, params, originalAsyncAPI }) {
     try {
       JSON.parse(originalAsyncAPI);
       return 'json';
-    } catch {
+    } catch (e) {
       return 'yaml';
     }
   })();

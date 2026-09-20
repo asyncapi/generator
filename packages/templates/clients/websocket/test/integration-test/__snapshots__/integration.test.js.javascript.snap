@@ -2082,9 +2082,9 @@ class SlackWebsocketAPIClient {
     if (_ticket) {
       params[\\"ticket\\"] = _ticket;
     }
-    const _app_id = appId || process.env.APP_ID;
-    if (_app_id) {
-      params[\\"app_id\\"] = _app_id;
+    const _appId = appId || process.env.APP_ID;
+    if (_appId) {
+      params[\\"app_id\\"] = _appId;
     }
     const queryString = querystring.stringify(params);
     if (queryString) {

@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing of RegisterOutgoingProcessor function render dart outgoing processor registration method 1`] = `
+"/// Register a function that processes outgoing messages automatically.
+  /// These processors run in sequence before each message is sent.
+  void registerOutgoingProcessor(dynamic Function(dynamic) processor) {
+    _outgoingProcessors.add(processor);
+  }"
+`;
+
+exports[`Testing of RegisterOutgoingProcessor function render javascript outgoing processor registration method 1`] = `
+"registerOutgoingProcessor(processor) {
+    if (typeof processor === 'function') {
+      this.outgoingProcessors.push(processor);
+    } else {
+      console.warn('Outgoing processor must be a function');
+    }
+  }"
+`;
+
+exports[`Testing of RegisterOutgoingProcessor function render python outgoing processor registration method 1`] = `
+"def register_outgoing_processor(self, processor):
+      \\"\\"\\"
+      Register a callable that processes outgoing messages automatically.
+      These processors run in sequence before each message is sent.
+      \\"\\"\\"
+      if callable(processor):
+          self.outgoing_processors.append(processor)
+      else:
+          print(\\"Outgoing processor must be callable\\")"
+`;

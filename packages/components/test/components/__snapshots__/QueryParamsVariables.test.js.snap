@@ -32,9 +32,9 @@ exports[`Testing of QueryParamsVariables component renders js query params corre
 if (_heartbeat) {
   params[\\"heartbeat\\"] = _heartbeat;
 }
-const _top_of_book = topOfBook || process.env.TOP_OF_BOOK;
-if (_top_of_book) {
-  params[\\"top_of_book\\"] = _top_of_book;
+const _topOfBook = topOfBook || process.env.TOP_OF_BOOK;
+if (_topOfBook) {
+  params[\\"top_of_book\\"] = _topOfBook;
 }
 const _bids = bids || process.env.BIDS;
 if (_bids) {

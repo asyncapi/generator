@@ -1,5 +1,6 @@
 import { Text } from '@asyncapi/generator-react-sdk';
-import { getSafeJSName } from './getSafeJsName';
+import { getSafeJSName } from '@asyncapi/generator-helpers';
+import { CONSTRUCTOR_RESERVED_NAMES } from './constants';
 
 /**
  * Renders the constructor signature for the generated WebSocket client.
@@ -18,9 +19,9 @@ export function InitSignature({ queryParams }) {
     );
   }
 
-  const usedNames = new Set();
+  const usedNames = new Map();
   const queryParamsArguments = queryParams.map((param) => {
-    const paramName = getSafeJSName(param[0], usedNames);
+    const paramName = getSafeJSName(param[0], usedNames, CONSTRUCTOR_RESERVED_NAMES);
     const paramDefaultValue = param[1];
     let defaultValue = '';
     if (paramDefaultValue !== undefined && paramDefaultValue !== null && paramDefaultValue !== '') {

@@ -1,5 +1,5 @@
 import { Text } from '@asyncapi/generator-react-sdk';
-import { toCamelCase } from '@asyncapi/generator-helpers';
+import { toCamelCase, getSafeJSName } from '@asyncapi/generator-helpers';
 import { unsupportedLanguage } from '../utils/ErrorHandling';
 
 /**
@@ -64,20 +64,21 @@ const queryParamLogicConfig = {
       };
     },
   },
-  javascript: (param) => {
+  javascript: (param, usedNames, reservedNames) => {
     const rawName = param[0];
-    const paramName = toCamelCase(rawName);
+    const paramName = getSafeJSName(rawName, usedNames, reservedNames);
+    const envVarName = rawName.toUpperCase().replace(/[^A-Z0-9_]/g, '_');
     return {
       variableDefinition: {
-        text: `const _${rawName} = ${paramName} || process.env.${rawName.toUpperCase()};`,
+        text: `const _${paramName} = ${paramName} || process.env.${envVarName};`,
         indent: 0,
       },
       ifCondition: {
-        text: `if (_${rawName}) {`,
+        text: `if (_${paramName}) {`,
         indent: 0,
       },
       assignment: {
-        text: `params["${rawName}"] = _${rawName};`,
+        text: `params["${rawName}"] = _${paramName};`,
         indent: 2,
       },
       closing: {
@@ -150,7 +151,7 @@ function resolveQueryParamLogic(language, framework) {
  * 
  * renderQueryParamsVariable().catch(console.error);
  */
-export function QueryParamsVariables({ language, framework = '', queryParams }) {
+export function QueryParamsVariables({ language, framework = '', queryParams, reservedNames }) {
   if (!queryParams || !Array.isArray(queryParams)) {
     return null;
   }
@@ -165,8 +166,9 @@ export function QueryParamsVariables({ language, framework = '', queryParams }) 
     return null;
   }
 
+  const usedNames = new Map();
   return queryParams.map((param) => {
-    const { variableDefinition, ifCondition, assignment, closing } = generateParamCode(param);
+    const { variableDefinition, ifCondition, assignment, closing } = generateParamCode(param, usedNames, reservedNames);
 
     return (
       <>

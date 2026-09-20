@@ -2,6 +2,7 @@ import { Text } from '@asyncapi/generator-react-sdk';
 import { QueryParamsVariables } from '@asyncapi/generator-components';
 import { InitSignature } from './InitSignature';
 import { QueryParamsArgumentsDocs } from './QueryParamsArgumentsDocs';
+import { CONSTRUCTOR_RESERVED_NAMES } from './constants';
 
 export function Constructor({ serverUrl, queryParams, sendOperations }) {
   const sendOperationsId = sendOperations.map((operation) => operation.id());
@@ -29,7 +30,7 @@ export function Constructor({ serverUrl, queryParams, sendOperations }) {
           <Text>
             {`const params = {};
 `}
-            <QueryParamsVariables language="javascript" queryParams={queryParamsArray} />
+            <QueryParamsVariables language="javascript" queryParams={queryParamsArray} reservedNames={CONSTRUCTOR_RESERVED_NAMES} />
             {`const queryString = querystring.stringify(params);
 if (queryString) {
   this.url += '?' + queryString;

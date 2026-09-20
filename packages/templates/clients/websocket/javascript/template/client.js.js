@@ -21,14 +21,7 @@ export default function ({ asyncapi, params, originalAsyncAPI }) {
   const clientName = getClientName(asyncapi, params.appendClientSuffix, params.customClientName);
   const serverUrl = getServerUrl(server);
   const sendOperations = asyncapi.operations().filterBySend();
-  const asyncapiFilepath = `${params.asyncapiFileDir}/asyncapi.yaml`;
   const queryParams = getQueryParams(asyncapi.channels());
-
-  const dependencies = ['const path = require(\'path\');', `const asyncapiFilepath = path.resolve(__dirname, '${asyncapiFilepath}');`];
-  if (queryParams) {
-    dependencies.push('const querystring = require(\'querystring\');');
-  }
-
   const asyncapiFileExtension = (() => {
     try {
       JSON.parse(originalAsyncAPI);
@@ -38,6 +31,12 @@ export default function ({ asyncapi, params, originalAsyncAPI }) {
     }
   })();
   const asyncapiFilepath = `${params.asyncapiFileDir}/asyncapi.${asyncapiFileExtension}`;
+
+  const dependencies = ['const path = require(\'path\');', `const asyncapiFilepath = path.resolve(__dirname, '${asyncapiFilepath}');`];
+  if (queryParams) {
+    dependencies.push('const querystring = require(\'querystring\');');
+  }
+  
   return (
     <File name={params.clientFileName}>
       <FileHeaderInfo

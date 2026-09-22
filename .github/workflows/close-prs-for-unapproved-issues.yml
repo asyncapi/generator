@@ -1,5 +1,5 @@
 # Purpose of this workflow is to automatically close PRs that reference
-# issues still carrying the 'Awaiting Approval' label, preventing work
+# issues not carrying the 'Approved Issue' label, preventing work
 # on issues that have not yet been approved by a maintainer.
 
 name: Close PRs linked to unapproved issues
@@ -60,11 +60,11 @@ jobs:
               return;
             }
 
-            const awaitingLabel = 'Awaiting Approval';
+            const approvedLabel = 'Approved Issue';
 
             for (const match of matches) {
               const issueNumber = parseInt(match[1], 10);
-              console.log(`Checking issue #${issueNumber} for '${awaitingLabel}' label...`);
+              console.log(`Checking issue #${issueNumber} for '${approvedLabel}' label...`);
 
               try {
                 const { data: labels } = await github.rest.issues.listLabelsOnIssue({
@@ -73,8 +73,8 @@ jobs:
                   issue_number: issueNumber,
                 });
 
-                if (labels.some(l => l.name === awaitingLabel)) {
-                  console.log(`Issue #${issueNumber} still has '${awaitingLabel}'. Closing PR #${prNumber}.`);
+                if (!labels.some(l => l.name === approvedLabel)) {
+                  console.log(`Issue #${issueNumber} does not have '${approvedLabel}'. Closing PR #${prNumber}.`);
 
                   await github.rest.issues.createComment({
                     issue_number: prNumber,
@@ -112,4 +112,4 @@ jobs:
               }
             }
 
-            console.log('All linked issues are approved or no matching label found. PR stays open.');
+            console.log('All linked issues are approved. PR stays open.');

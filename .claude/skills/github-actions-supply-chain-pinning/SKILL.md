@@ -1,6 +1,6 @@
 ---
 name: github-actions-supply-chain-pinning
-description: Use when editing, adding, or reviewing any file under .github/workflows/, or when a CI step installs a CLI tool (npm i -g, npx, pipx, uses: */setup-*). Enforces full commit-SHA pinning for every action and exact-version pinning for installed tools, and checks whether a workflow is generator-owned or synced from asyncapi/.github before editing it.
+description: "Use when editing, adding, or reviewing any file under .github/workflows/, or when a CI step installs a CLI tool (npm i -g, npx, pipx, uses: */setup-*). Enforces full commit-SHA pinning for every action and exact-version pinning for installed tools, and checks whether a workflow is generator-owned or synced from asyncapi/.github before editing it."
 ---
 
 # GitHub Actions Supply-Chain Pinning

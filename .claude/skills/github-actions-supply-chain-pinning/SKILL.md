@@ -50,7 +50,7 @@ A job's `patterns_to_include` applies to generator when `generator` isn't in tha
 ### 1. Pick the version
 
 - **Default:** the latest release (`gh api repos/<owner>/<repo>/releases/latest --jq .tag_name`). If that returns 404 (the action publishes tags without GitHub Releases), list the tags with `gh api repos/<owner>/<repo>/tags --paginate --jq '.[].name'` and pick the highest stable semver yourself. That list isn't sorted by version.
-- **Reuse** the version the global workflows already run for that action when one exists (for example, `grep -h "uses: actions/checkout@" .github/workflows/automerge.yml`), so the repo converges on one pin per action.
+- **Reuse** the version the global workflows already run for that action when one exists (for example, `grep -rhoE "uses: actions/checkout@[^ ]+ # v[0-9.]+" .github/workflows/ | sort | uniq -c | sort -rn` lists every pin of that action and how often it's used), so the repo converges on one pin per action.
 - **Crossing a major version:** read the release notes against how the step actually uses the action's inputs, outputs and env. If our usage breaks, pin the latest release of the current major and write down the deferred upgrade (PR description or an issue). Don't migrate behavior inside a pinning change.
 - If a spec or plan already fixed the version, use that version. Don't re-pick "latest".
 

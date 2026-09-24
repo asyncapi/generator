@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ConnectorFields component (Quarkus WebSocket) no query params (empty array) - snapshot 1`] = `
+"@Inject
+  WebSocketConnector<NotificationsClient> connector;"
+`;
+
+exports[`ConnectorFields component (Quarkus WebSocket) no query params (undefined) - snapshot 1`] = `
+"@Inject
+  WebSocketConnector<NotificationsClient> connector;"
+`;
+
+exports[`ConnectorFields component (Quarkus WebSocket) robustness: empty clientName - snapshot 1`] = `
+"@Inject
+  WebSocketConnector<> connector;
+
+
+  @Inject
+  @ConfigProperty(name = \\"com.asyncapi..base-uri\\")
+  String baseURI;"
+`;
+
+exports[`ConnectorFields component (Quarkus WebSocket) with query params - snapshot 1`] = `
+"@Inject
+  WebSocketConnector<NotificationsClient> connector;
+
+
+  @Inject
+  @ConfigProperty(name = \\"com.asyncapi.NotificationsClient.base-uri\\")
+  String baseURI;"
+`;

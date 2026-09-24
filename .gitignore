@@ -21,3 +21,6 @@ __pycache__
 
 microcks-data
 packages/templates/clients/websocket/test/__fixtures__/bundled.yml
+
+# Local planning/brainstorming artifacts (not part of published docs)
+docs/superpowers/

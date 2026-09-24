@@ -1,5 +1,13 @@
 # @asyncapi/generator
 
+## 3.4.1
+
+### Patch Changes
+
+- 93bd9ce: Fix the JavaScript WebSocket client template to reference `asyncapi.json` when the input AsyncAPI document is JSON.
+- Updated dependencies [3651e21]
+  - @asyncapi/generator-hooks@0.1.2
+
 ## 3.4.0
 
 ### Minor Changes

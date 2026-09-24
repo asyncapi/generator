@@ -21,36 +21,29 @@ Run `gh auth status`. If it fails, stop and ask the user to run `! gh auth login
 
 ### 2. Ownership
 
-Some workflows are synced into this repo from `asyncapi/.github` by its `global-replicator.yml`, and the next sync overwrites any local edit. If the file you're about to touch is global-owned, **stop** and point the user to `asyncapi/.github` instead. In review mode, don't stop: report the file as global-owned (fix upstream) and keep reviewing the rest.
-
-Global-owned as of 2026-09:
-
-| Global-owned | Why |
-|---|---|
-| `add-good-first-issue-labels.yml`, `automerge.yml`, `automerge-for-humans-add-ready-to-merge-or-do-not-merge-label.yml`, `automerge-for-humans-merging.yml`, `automerge-for-humans-remove-ready-to-merge-label-on-edit.yml`, `automerge-orphans.yml`, `autoupdate.yml`, `bounty-program-commands.yml`, `help-command.yml`, `issues-prs-notifications.yml`, `lint-pr-title.yml`, `microgrant-program-commands.yml`, `notify-tsc-members-mention.yml`, `please-take-a-look-command.yml`, `release-announcements.yml`, `stale-issues-prs.yml`, `update-pr.yml`, `welcome-first-time-contrib.yml`, `.github/workflows/scripts/` | generic set, synced to every repo |
-| `if-nodejs-pr-testing.yml` | topic `nodejs` |
-| `update-docs-on-docs-commits.yml` | topic `get-global-docs-autoupdate` |
-| `update-maintainers-trigger.yaml` | every repo |
-| `.github/holopin.yml` | topic `get-global-holopin` |
-
-`bump.yml` **looks** global but isn't. Its replicator job needs the `get-global-node-release-workflows` topic, which generator doesn't have, so it's a generator-owned local copy.
-
-This list can go stale. To re-check it live:
+Some workflows are maintained globally and copied from `asyncapi/.github`. Before editing or reviewing a workflow, check for its central-management marker:
 
 ```bash
-gh api repos/asyncapi/.github/contents/.github/workflows/global-replicator.yml -H "Accept: application/vnd.github.raw" \
-  | grep -E "patterns_to_include|topics_to_include|repos_to_ignore"
+rg -li 'centrally managed.*asyncapi/\.github' .github/workflows
+```
+
+Then verify ownership against the current replication rules and repository topics:
+
+```bash
+gh api repos/asyncapi/.github/contents/.github/workflows/global-replicator.yml \
+  -H "Accept: application/vnd.github.raw"
 gh api repos/asyncapi/generator/topics
 ```
 
-A job's `patterns_to_include` applies to generator when `generator` isn't in that job's `repos_to_ignore` and the job either has no `topics_to_include` or shares a topic with generator.
+A workflow is globally maintained only when an applicable job's `patterns_to_include` contains it, `generator` is not in `repos_to_ignore`, and any `topics_to_include` matches a generator topic.
+
+If the target is globally maintained, skip that workflow. Continue with any other files, then mention at the end: `<file> was skipped because it is maintained globally and local changes would be overwritten.` Do not ask the contributor to edit the global repository.
 
 ## Research
 
 ### 1. Pick the version
 
 - **Default:** the latest release (`gh api repos/<owner>/<repo>/releases/latest --jq .tag_name`). If that returns 404 (the action publishes tags without GitHub Releases), list the tags with `gh api repos/<owner>/<repo>/tags --paginate --jq '.[].name'` and pick the highest stable semver yourself. That list isn't sorted by version.
-- **Reuse** the version the global workflows already run for that action when one exists (for example, `grep -rhoE "uses: actions/checkout@[^ ]+ # v[0-9.]+" .github/workflows/ | sort | uniq -c | sort -rn` lists every pin of that action and how often it's used), so the repo converges on one pin per action.
 - **Crossing a major version:** read the release notes against how the step actually uses the action's inputs, outputs and env. If our usage breaks, pin the latest release of the current major and write down the deferred upgrade (PR description or an issue). Don't migrate behavior inside a pinning change.
 - If a spec or plan already fixed the version, use that version. Don't re-pick "latest".
 

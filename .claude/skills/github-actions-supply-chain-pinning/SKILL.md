@@ -92,7 +92,6 @@ A floating ref like `@v1` in an existing workflow may be a **branch**, not a tag
 | A tag-object SHA pinned instead of the commit SHA | Dereference the annotated tag to its commit |
 | `npm i -g <tool>@latest`, bare `npx <tool>`, `pipx install <tool>`, `version: latest` | Pin an exact version |
 | Editing a global-owned file | Stop; change it in `asyncapi/.github` |
-| `pull_request_target` (or `workflow_run`) + checkout of `github.event.pull_request.head.*` + later steps that build or run that code with secrets in scope | Stop and flag it to the user as a pwn-request risk. Pinning doesn't fix it. See `manual-netlify-preview.yml` for a known case. |
 
 ### Rationalizations to reject
 
@@ -105,5 +104,5 @@ A floating ref like `@v1` in an existing workflow may be a **branch**, not a tag
 ## Non-goals
 
 - CI enforcement (zizmor, or a Dependabot `github-actions` ecosystem config) is a possible follow-up, not part of this skill.
-- Fixing a `pull_request_target` design problem. Flag it and hand it to the user; it needs its own issue and PR.
+- Fixing a `pull_request_target` design problem (pwn-request risk). Flag it and hand it to the user; it needs its own issue and PR.
 - Editing global-owned workflows.

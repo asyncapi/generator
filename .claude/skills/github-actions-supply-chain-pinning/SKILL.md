@@ -104,5 +104,5 @@ A floating ref like `@v1` in an existing workflow may be a **branch**, not a tag
 ## Non-goals
 
 - CI enforcement (zizmor, or a Dependabot `github-actions` ecosystem config) is a possible follow-up, not part of this skill.
-- Fixing a `pull_request_target` design problem (pwn-request risk). Flag it and hand it to the user; it needs its own issue and PR.
+- Fixing a `pull_request_target` or `workflow_run` design problem where pull-request code is checked out and executed with secrets in scope (pwn-request risk). Flag it and hand it to the user; it needs its own issue and PR.
 - Editing global-owned workflows.

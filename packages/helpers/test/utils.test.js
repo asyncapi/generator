@@ -1,6 +1,6 @@
 const path = require('path');
 const { Parser, fromFile } = require('@asyncapi/parser');
-const { getClientName, getInfo, getTitle, toSnakeCase, toCamelCase, lowerFirst, upperFirst } = require('@asyncapi/generator-helpers');
+const { getClientName, getInfo, getTitle, toSnakeCase, toCamelCase, lowerFirst, upperFirst, getSafeJSName } = require('@asyncapi/generator-helpers');
 
 const parser = new Parser();
 const asyncapi_v3_path = path.resolve(__dirname, './__fixtures__/asyncapi-websocket-query.yml');
@@ -247,5 +247,97 @@ describe('upperFirst', () => {
     const actualResult = upperFirst('a');
     const expectedResult = 'A';
     expect(actualResult).toBe(expectedResult);
+  });
+});
+
+describe('getSafeJSName', () => {
+  it('should convert hyphenated names to camelCase', () => {
+    expect(getSafeJSName('my-param')).toBe('myParam');
+    expect(getSafeJSName('some_other_param')).toBe('someOtherParam');
+  });
+
+  it('should prefix names starting with a digit with an underscore', () => {
+    expect(getSafeJSName('1st')).toBe('_1st');
+    expect(getSafeJSName('2nd-param')).toBe('_2ndParam');
+  });
+
+  it('should replace invalid JavaScript identifier characters', () => {
+    const result = getSafeJSName('my@param!');
+    expect(result).toMatch(/^[a-zA-Z_$][a-zA-Z0-9_$]*$/);
+  });
+
+  it('should prefix JavaScript keywords detected by Babel', () => {
+    expect(getSafeJSName('class')).toBe('_class');
+    expect(getSafeJSName('return')).toBe('_return');
+    expect(getSafeJSName('const')).toBe('_const');
+    expect(getSafeJSName('import')).toBe('_import');
+    expect(getSafeJSName('for')).toBe('_for');
+  });
+
+  it('should prefix strict-mode reserved words detected by Babel', () => {
+    expect(getSafeJSName('true')).toBe('_true');
+    expect(getSafeJSName('false')).toBe('_false');
+    expect(getSafeJSName('null')).toBe('_null');
+    expect(getSafeJSName('enum')).toBe('_enum');
+    expect(getSafeJSName('implements')).toBe('_implements');
+    expect(getSafeJSName('interface')).toBe('_interface');
+    expect(getSafeJSName('let')).toBe('_let');
+    expect(getSafeJSName('package')).toBe('_package');
+    expect(getSafeJSName('private')).toBe('_private');
+    expect(getSafeJSName('protected')).toBe('_protected');
+    expect(getSafeJSName('public')).toBe('_public');
+    expect(getSafeJSName('static')).toBe('_static');
+    expect(getSafeJSName('yield')).toBe('_yield');
+    expect(getSafeJSName('arguments')).toBe('_arguments');
+    expect(getSafeJSName('eval')).toBe('_eval');
+  });
+
+  it('should not prefix non-reserved words that resemble reserved words', () => {
+    expect(getSafeJSName('classic')).toBe('classic');
+    expect(getSafeJSName('returning')).toBe('returning');
+    expect(getSafeJSName('constant')).toBe('constant');
+  });
+
+  it('should prefix names that collide with caller-supplied reservedNames', () => {
+    const reserved = new Set(['url', 'throwSendErrors', 'params', 'queryString']);
+    expect(getSafeJSName('url', new Map(), reserved)).toBe('_url');
+    expect(getSafeJSName('throwSendErrors', new Map(), reserved)).toBe('_throwSendErrors');
+    expect(getSafeJSName('params', new Map(), reserved)).toBe('_params');
+  });
+
+  it('should not prefix names not in the reservedNames set', () => {
+    const reserved = new Set(['url']);
+    expect(getSafeJSName('urlValue', new Map(), reserved)).toBe('urlValue');
+  });
+
+  it('should throw when two different names produce the same identifier', () => {
+    const usedNames = new Map();
+    getSafeJSName('client-id', usedNames);
+    expect(() => getSafeJSName('client_id', usedNames)).toThrow(
+      'Cannot generate JavaScript client: query parameters "client-id" and "client_id" both produce "clientId".'
+    );
+  });
+
+  it('should throw when the same name is registered twice', () => {
+    const usedNames = new Map();
+    getSafeJSName('token', usedNames);
+    expect(() => getSafeJSName('token', usedNames)).toThrow(
+      'Cannot generate JavaScript client: query parameters "token" and "token" both produce "token".'
+    );
+  });
+
+  it('should throw when a name cannot produce a valid identifier', () => {
+    expect(() => getSafeJSName('!@#$%')).toThrow(
+      'Cannot generate JavaScript client: query parameter "!@#$%" cannot be converted to a valid JavaScript identifier.'
+    );
+  });
+
+  it('should track used names in the shared Map across calls', () => {
+    const usedNames = new Map();
+    expect(getSafeJSName('token', usedNames)).toBe('token');
+    expect(getSafeJSName('secret', usedNames)).toBe('secret');
+    expect(usedNames.size).toBe(2);
+    expect(usedNames.get('token')).toBe('token');
+    expect(usedNames.get('secret')).toBe('secret');
   });
 });

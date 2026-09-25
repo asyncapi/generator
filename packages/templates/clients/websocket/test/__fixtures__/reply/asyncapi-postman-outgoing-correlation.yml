@@ -1,0 +1,80 @@
+asyncapi: 3.0.0
+
+info:
+  title: Postman Echo WebSocket Client with Reply (Outgoing Correlation Only)
+  version: 1.0.0
+  description: >
+    Test fixture for reply handling with correlation ID only on reply message.
+    Template should log a warning that correlation cannot be populated from incoming message.
+
+servers:
+  echoServer:
+    host: ws.postman-echo.com
+    pathname: /raw
+    protocol: wss
+
+channels:
+  echo:
+    description: The main channel where messages are sent and echoed back by the Postman Echo WebSocket server.
+    address: /
+    messages:
+      echoRequest:
+        $ref: '#/components/messages/echoRequest'
+      echoReply:
+        $ref: '#/components/messages/echoReply'
+
+operations:
+  sendEchoMessage:
+    summary: Send a message to the Postman Echo server and receive a reply.
+    action: send
+    channel: 
+      $ref: '#/channels/echo'
+    messages:
+      - $ref: '#/channels/echo/messages/echoRequest'
+    reply:
+      channel: 
+        $ref: '#/channels/echo'
+      messages:
+        - $ref: '#/channels/echo/messages/echoReply'
+
+components:
+  messages:
+    echoRequest:
+      summary: Echo request message without correlation ID.
+      payload:
+        type: object
+        properties:
+          message:
+            type: string
+            description: Message to echo back
+          timestamp:
+            type: string
+            description: Request timestamp
+      examples:
+        - name: string
+          payload:
+            message: test
+            timestamp: '2025-12-23T10:00:00Z'
+
+    echoReply:
+      summary: Echo reply message with correlation ID.
+      correlationId:
+        location: $message.payload#/responseId
+      payload:
+        type: object
+        properties:
+          responseId:
+            type: string
+            description: Response identifier (cannot be auto-populated)
+          echo:
+            type: string
+            description: Echoed message
+          processedAt:
+            type: string
+            description: Server processing timestamp
+      examples:
+        - name: replyWithId
+          payload:
+            responseId: resp-67890
+            echo: test
+            processedAt: '2025-12-23T10:00:01Z'

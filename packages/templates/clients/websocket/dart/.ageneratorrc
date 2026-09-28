@@ -18,6 +18,7 @@ parameters:
   customClientName:
     description: The custom name for the generated client class
     required: false
+# The metadata block below is auto-generated from the template folder structure - do not edit it manually. Learn more: https://www.asyncapi.com/docs/tools/generator/baked-in-templates
 metadata:
   type: client
   protocol: websocket

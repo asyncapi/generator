@@ -28,3 +28,4 @@ export { OpenConnection } from './components/example/OpenConnection';
 export { Close } from './components/example/Close';
 export { SendInvocations } from './components/example/SendInvocations';
 export { OutgoingProcessor } from './components/example/OutgoingProcessor';
+export { RegisterOutgoingProcessor } from './components/RegisterOutgoingProcessor';

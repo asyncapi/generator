@@ -72,19 +72,22 @@ AsyncAPI has a list of available templates to enhance your generation process. T
 
 Template Name | Description | Source code
 ---|---|---
-`@asyncapi/nodejs-template` | Generates Node.js service that uses Hermes package | [Node.js template](https://github.com/asyncapi/nodejs-template)
-`@asyncapi/nodejs-ws-template` | Generates Node.js service that supports WebSocket protocol only | [Node.js WebSocket template](https://github.com/asyncapi/nodejs-ws-template)
+`@asyncapi/nodejs-template` | (**archived**) Generates Node.js service that uses Hermes package | [Node.js template](https://github.com/asyncapi/nodejs-template)
+`@asyncapi/nodejs-ws-template` | (**archived**) Generates Node.js service that supports WebSocket protocol only | [Node.js WebSocket template](https://github.com/asyncapi/nodejs-ws-template)
 `@asyncapi/java-template` | Generates Java JMS application | [Java template](https://github.com/asyncapi/java-template)
-`@asyncapi/java-spring-template` | Generates Java Spring service | [Java spring template](https://github.com/asyncapi/java-spring-template)
+`@asyncapi/java-spring-template` | (**archived**) Generates Java Spring service | [Java spring template](https://github.com/asyncapi/java-spring-template)
 `@asyncapi/java-spring-cloud-stream-template` | Generates Java Spring Cloud Stream service | [Java spring cloud stream template](https://github.com/asyncapi/java-spring-cloud-stream-template)
-`@asyncapi/python-paho-template` | Generates Python service that uses Paho library | [Python paho template](https://github.com/asyncapi/python-paho-template)
+`@asyncapi/python-paho-template` | (**archived**) Generates Python service that uses Paho library | [Python paho template](https://github.com/asyncapi/python-paho-template)
 `@asyncapi/html-template` | Generates HTML documentation site | [HTML template](https://github.com/asyncapi/html-template)
 `@asyncapi/markdown-template` | Generates documentation in Markdown file | [Markdown template](https://github.com/asyncapi/markdown-template)
-`@asyncapi/ts-nats-template` | Generates TypeScript NATS client | [TypeScript/Node.js NATS template](https://github.com/asyncapi/ts-nats-template/)
-`@asyncapi/go-watermill-template` | Generates Go client using Watermill | [GO watermill template](https://github.com/asyncapi/go-watermill-template)
-`@asyncapi/dotnet-nats-template` | Generates .NET C# client using NATS | [.NET C# NATS template](https://github.com/asyncapi/dotnet-nats-template)
+`@asyncapi/ts-nats-template` | (**archived**) Generates TypeScript NATS client | [TypeScript/Node.js NATS template](https://github.com/asyncapi/ts-nats-template/)
+`@asyncapi/go-watermill-template` | (**archived**) Generates Go client using Watermill | [GO watermill template](https://github.com/asyncapi/go-watermill-template)
+`@asyncapi/dotnet-nats-template` | (**archived**) Generates .NET C# client using NATS | [.NET C# NATS template](https://github.com/asyncapi/dotnet-nats-template)
 
 <!-- TEMPLATES-LIST:END -->
+
+> [!NOTE]
+> Templates marked **(archived)** live in the [`asyncapi-archived-repos`](https://github.com/asyncapi-archived-repos) organization and are no longer maintained. Consider the **[baked-in templates](https://www.asyncapi.com/docs/tools/generator/baked-in-templates)** for supported alternatives.
 
 > Some of these templates are maintained by various third-party organizations. The README file usually contains this information and more, such as configuration options the user can pass to the template, usage, technical requirements, etc.
 

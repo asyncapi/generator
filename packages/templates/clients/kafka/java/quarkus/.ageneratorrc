@@ -24,6 +24,7 @@ nonRenderableFiles:
   - .mvn/**
   - mvnw
   - mvnw.cmd
+# The metadata block below is auto-generated from the template folder structure - do not edit it manually. Learn more: https://www.asyncapi.com/docs/tools/generator/baked-in-templates
 metadata:
   type: client
   protocol: kafka

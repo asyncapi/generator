@@ -70,12 +70,12 @@ jobs:
       - if: failure() # Only, on failure, send a message on the 94_bot-failing-ci slack channel
         name: Report workflow run status to Slack
         uses: rtCamp/action-slack-notify@e31e87e03dd19038e411e38ae27cbad084a90661 # v2.3.3
-        with:
-          status: ${{ job.status }}
-          fields: repo,action,workflow
-          text: "Release workflow failed in testing job"
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_CI_FAIL_NOTIFY }}
+          SLACK_WEBHOOK: ${{ secrets.SLACK_CI_FAIL_NOTIFY }}
+          SLACK_TITLE: 🚨 Release workflow failed in testing job 🚨
+          SLACK_MESSAGE: 'Release workflow failed in testing job'
+          SLACK_COLOR: ${{ job.status }}
+          MSG_MINIMAL: actions url,commit
 
   release:
     needs: [test-nodejs]
@@ -143,9 +143,9 @@ jobs:
       - if: failure() # Only, on failure, send a message on the 94_bot-failing-ci Slack channel
         name: Report workflow run status to Slack
         uses: rtCamp/action-slack-notify@e31e87e03dd19038e411e38ae27cbad084a90661 # v2.3.3
-        with:
-          status: ${{ job.status }}
-          fields: repo,action,workflow
-          text: "Release workflow failed in release job"
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_CI_FAIL_NOTIFY }}
+          SLACK_WEBHOOK: ${{ secrets.SLACK_CI_FAIL_NOTIFY }}
+          SLACK_TITLE: 🚨 Release workflow failed in release job 🚨
+          SLACK_MESSAGE: 'Release workflow failed in release job'
+          SLACK_COLOR: ${{ job.status }}
+          MSG_MINIMAL: actions url,commit

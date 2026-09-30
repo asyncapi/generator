@@ -14,9 +14,8 @@ jobs:
   Make-PR:
     name: Make PR on website repository with updated latest generator documentation
     runs-on: ubuntu-latest
-    permissions:
-      contents: write       # push to asyncapi/website via PAT
-      pull-requests: write  # gh pr create
+    # Why: writes go to asyncapi/website via secrets.GH_TOKEN (PAT); the built-in
+    # GITHUB_TOKEN is never used for writes here, so no job-level permissions needed.
     env:
       GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
     steps:

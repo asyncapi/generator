@@ -50,9 +50,9 @@ jobs:
       - if: failure() # Only, on failure, send a message on the 94_bot-failing-ci slack channel
         name: Report workflow run status to Slack
         uses: rtCamp/action-slack-notify@e31e87e03dd19038e411e38ae27cbad084a90661 # v2.3.3
-        with:
-          status: ${{ job.status }}
-          fields: repo,action,workflow
-          text: 'Unable to bump the version in package.json after the release'
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_CI_FAIL_NOTIFY }}
+          SLACK_WEBHOOK: ${{ secrets.SLACK_CI_FAIL_NOTIFY }}
+          SLACK_TITLE: 🚨 Version bump after release failed 🚨
+          SLACK_MESSAGE: 'Unable to bump the version in package.json after the release'
+          SLACK_COLOR: ${{ job.status }}
+          MSG_MINIMAL: actions url,commit

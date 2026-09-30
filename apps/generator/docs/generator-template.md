@@ -44,7 +44,7 @@ Before you create the template, you'll need to have an [AsyncAPI document](https
 
 ``` yml
 
-asyncapi: 3.0.1
+asyncapi: 3.0.0
 
 info:
   title: Temperature Service
@@ -94,6 +94,8 @@ components:
    ```bash
    cd python-mqtt-client-template
    npm install
+   ```
+
 Now your directory should look like this:
 
 ```text
@@ -123,7 +125,7 @@ The **package.json** file is used to define the dependencies for your template. 
     "supportedProtocols": ["mqtt"]
   },
   "dependencies": {
-    "@asyncapi/generator-react-sdk": "^0.2.25"
+    "@asyncapi/generator-react-sdk": "^1.1.3"
   },
   "devDependencies": {
     "rimraf": "^5.0.0"
@@ -164,7 +166,7 @@ The code snippet above does the following:
 2. The `asyncapi` argument is an instance of the [AsyncAPI Parser](https://www.asyncapi.com/docs/tools/generator/parser). It will allow you to access the content of the AsyncAPI document in your template using helper functions.
 3. The `asyncapi.info().title()` is using the info() helper function to return the info object from the AsyncAPI document illustrated in the code snippet below:
 
-``` json
+``` yml
 info:
   title: Temperature Service
   version: 1.0.0
@@ -343,7 +345,7 @@ In **package.json** you can have the scripts property that you invoke by calling
         "supportedProtocols": ["mqtt"]
       },
       "dependencies": {
-        "@asyncapi/generator-react-sdk": "^0.2.25"
+        "@asyncapi/generator-react-sdk": "^1.1.3"
       },
       "devDependencies": {
         "rimraf": "^5.0.0"
@@ -524,11 +526,11 @@ export function TopicFunction({ operations }) {
 }
 
 /*
- * This function returns a list of objects, one for each channel with two properties, name and topic
- * name - holds information about the operationId provided in the AsyncAPI document
- * topic - holds information about the address of the topic
+ * This function returns a list of objects, one for each operation with two properties, name and topic
+ * name - holds the ID of the operation from the AsyncAPI document
+ * topic - holds the address of the channel the operation uses
  *
- * As input it requires a list of Channel models from the parsed AsyncAPI document
+ * As input it requires a list of Operation models from the parsed AsyncAPI document
  */
 function getTopics(operations) {
   let topicsDetails = [];
@@ -538,20 +540,20 @@ function getTopics(operations) {
     if (!channels.length) return;
 
     const channel = channels[0];
-    const operationId = op.operationId() || op.id();
-    
+    const operationId = op.id();
+
     topicsDetails.push({
       name: operationId.charAt(0).toUpperCase() + operationId.slice(1),
       topic: channel.address()
     });
   });
-  
+
   return topicsDetails;
 }
 ```
 
-`{ operations }`: the `TopicFunction` component accepts a custom prop called operations and in your template code 
-`getTopics(operations)`: Returns a list of objects, one for each operation with two properties; name and topic. The **name** holds information about the `operationId` provided in the AsyncAPI document (or a generated ID if operationId is not set) while the **topic** holds information about the address of the topic from the operation's associated channel.
+- `{ operations }`: the `TopicFunction` component accepts a custom prop called `operations`. In your template code, you pass it the operations marked with `action: receive`.
+- `getTopics(operations)`: returns a list of objects, one for each operation, with two properties: `name` and `topic`. The `name` holds the operation ID, which is the key of the operation in the `operations` section of the AsyncAPI document. The `topic` holds the address of the channel the operation uses.
 
 Import the `TopicFunction` component in your template code in **index.js** and add the template code to generate the functions to topics that the `Temperature Service` application is subscribed to. In your case, the final version of your template code should look like this:
 

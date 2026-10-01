@@ -447,13 +447,13 @@ import { File, Text } from '@asyncapi/generator-react-sdk'
 export default function ({ asyncapi, params }) {
   return (
     <File name="client.py">
-    // 2
+      {/* 2 */}
       <Text newLines={2}>import paho.mqtt.client as mqtt</Text>
-    // 3
+      {/* 3 */}
       <Text newLines={2}>mqttBroker = "{asyncapi.servers().get(params.server).host()}"</Text>
-    // 4
+      {/* 4 */}
       <Text newLines={2}>class {asyncapi.info().title().replaceAll(' ', '')}Client:</Text>
-    // 5
+      {/* 5 */}
       <Text indent={2} newLines={2}>
         {`def __init__(self):
             self.client = mqtt.Client()

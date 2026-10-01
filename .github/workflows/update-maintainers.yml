@@ -36,7 +36,7 @@ jobs:
           repository: asyncapi/community
           token: ${{ secrets.GH_TOKEN }}
           path: community
-          persist-credentials: true   # needed for the `git push` later
+          persist-credentials: false  # PAT re-attached only on the push step below
 
       - name: Setup Node.js
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
@@ -48,8 +48,6 @@ jobs:
 
       - name: Compare CODEOWNERS
         id: compare-codeowners
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         with:
           script: |
@@ -159,12 +157,14 @@ jobs:
 
       - name: Commit and push
         working-directory: ./community
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           git config --global user.email "info@asyncapi.io"
           git config --global user.name "asyncapi-bot"
           git add .
           git commit -m "Update MAINTAINERS.yaml"
-          git push origin HEAD
+          git -c http.extraheader="AUTHORIZATION: bearer ${GH_TOKEN}" push origin HEAD
 
       - name: Create PR
         working-directory: ./community

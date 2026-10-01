@@ -24,7 +24,7 @@ jobs:
           
       - name: Check package-lock version
         # This workflow is from our own org repo and safe to reference by 'master'.
-        uses: asyncapi/.github/.github/actions/get-node-version-from-package-lock@master # pinned to latest master
+        uses: asyncapi/.github/.github/actions/get-node-version-from-package-lock@master # //NOSONAR
         id: lockversion
         with:
           node-version: ${{ vars.NODE_VERSION }}
@@ -38,7 +38,7 @@ jobs:
       - name: Assets generation
         run: npm run generate:assets --if-present
       - name: Create Pull Request with updated asset files including package.json
-        uses: peter-evans/create-pull-request@38e0b6e68b4c852a5500a94740f0e535e0d7ba54 # use 4.2.4 https://github.com/peter-evans/create-pull-request/releases/tag/v4.2.4
+        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
         with:
           token: ${{ secrets.GH_TOKEN }}
           commit-message: 'chore(release): ${{github.event.release.tag_name}}'
@@ -49,7 +49,7 @@ jobs:
           branch: assets-update/${{github.event.release.tag_name}}
       - if: failure() # Only, on failure, send a message on the 94_bot-failing-ci slack channel
         name: Report workflow run status to Slack
-        uses: rtCamp/action-slack-notify@e31e87e03dd19038e411e38ae27cbad084a90661 # v2.3.3
+        uses: rtCamp/action-slack-notify@33ca3be66c6f378fe1610fd1d5258632dbed5e58 # v2.4.0
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_CI_FAIL_NOTIFY }}
           SLACK_TITLE: 🚨 Version bump after release failed 🚨

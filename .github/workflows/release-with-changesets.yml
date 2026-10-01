@@ -45,7 +45,7 @@ jobs:
       - if: steps.packagejson.outputs.exists == 'true'
         name: Check package-lock version
         # This workflow is from our own org repo and safe to reference by 'master'.
-        uses: asyncapi/.github/.github/actions/get-node-version-from-package-lock@master # pinned to latest master
+        uses: asyncapi/.github/.github/actions/get-node-version-from-package-lock@master # //NOSONAR
         id: lockversion
         with:
           node-version: ${{ vars.NODE_VERSION }}
@@ -69,7 +69,7 @@ jobs:
         run: npm test --if-present
       - if: failure() # Only, on failure, send a message on the 94_bot-failing-ci slack channel
         name: Report workflow run status to Slack
-        uses: rtCamp/action-slack-notify@e31e87e03dd19038e411e38ae27cbad084a90661 # v2.3.3
+        uses: rtCamp/action-slack-notify@33ca3be66c6f378fe1610fd1d5258632dbed5e58 # v2.4.0
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_CI_FAIL_NOTIFY }}
           SLACK_TITLE: 🚨 Release workflow failed in testing job 🚨
@@ -100,7 +100,7 @@ jobs:
         shell: bash
       - if: steps.packagejson.outputs.exists == 'true'
         name: Check package-lock version
-        uses: asyncapi/.github/.github/actions/get-node-version-from-package-lock@master # pinned to latest master
+        uses: asyncapi/.github/.github/actions/get-node-version-from-package-lock@master # //NOSONAR
         with:
           node-version: ${{ vars.NODE_VERSION }}
         id: lockversion
@@ -121,7 +121,7 @@ jobs:
       - if: steps.packagejson.outputs.exists == 'true'
         name: Publish to any of NPM, Github, and Docker Hub
         #this step has 2 goals, it is either identifying that there is changeset file created and then this action creates a PR with version bump that will trigger release - or if it sees there is no changeset, and there are versions changes in package.json files, it publish new versions to NPM is they are not there yet
-        uses: changesets/action@63a615b9cd06ba9a3e6d13796c7fbcb080a60a0b #v1.8.0
+        uses: changesets/action@a45c4d594aa4e2c509dc14a9f2b3b67ba3780d0d # v1.9.0
         id: release
         with:
           # `changeset version` only rewrites package.json/CHANGELOG files; it never runs an
@@ -142,7 +142,7 @@ jobs:
           GIT_COMMITTER_EMAIL: info@asyncapi.io
       - if: failure() # Only, on failure, send a message on the 94_bot-failing-ci Slack channel
         name: Report workflow run status to Slack
-        uses: rtCamp/action-slack-notify@e31e87e03dd19038e411e38ae27cbad084a90661 # v2.3.3
+        uses: rtCamp/action-slack-notify@33ca3be66c6f378fe1610fd1d5258632dbed5e58 # v2.4.0
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_CI_FAIL_NOTIFY }}
           SLACK_TITLE: 🚨 Release workflow failed in release job 🚨

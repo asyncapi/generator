@@ -23,7 +23,7 @@ jobs:
         with:
           persist-credentials: false
       - name: Checks paths-filter
-        uses: dorny/paths-filter@fbd0ab8f3e69293af611ebaee6363fc25e6d187d # v4.0.1 https://github.com/dorny/paths-filter/releases/tag/v4.0.1
+        uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4.0.3
         id: filter
         with:
           predicate-quantifier: 'every'
@@ -105,14 +105,14 @@ jobs:
       - name: Check package-lock version
         if: needs.changes.outputs.should_test == 'true'
         # This workflow is from our own org repo and safe to reference by 'master'.
-        uses: asyncapi/.github/.github/actions/get-node-version-from-package-lock@master # pinned to latest master
+        uses: asyncapi/.github/.github/actions/get-node-version-from-package-lock@master # //NOSONAR
         id: lockversion
         with:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Use Node.js
         if: needs.changes.outputs.should_test == 'true'
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: "${{ steps.lockversion.outputs.version }}"
           cache: npm
@@ -127,7 +127,7 @@ jobs:
 
       - name: Bundle AsyncAPI spec
         if: needs.changes.outputs.should_test == 'true'
-        uses: asyncapi/cli@1b8a4d320bb0e58d19d250dfe69e630df0cac9cd
+        uses: asyncapi/cli@63df7607f902aba80e2ef4d88a5605821f49ec58 # v6.2.0
         with:
           custom_command: bundle packages/templates/clients/websocket/test/__fixtures__/asyncapi-hoppscotch-server.yml --output packages/templates/clients/websocket/test/__fixtures__/bundled.yml
 

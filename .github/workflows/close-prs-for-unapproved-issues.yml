@@ -34,10 +34,10 @@ jobs:
               return;
             }
 
-            // Why: core maintainers (the catch-all `*` line in CODEOWNERS, the same list
-            // that may use /approve in issue-approve-command.yml) approve issues themselves,
-            // so requiring an approved issue for their own PRs adds nothing. CODEOWNERS is
-            // read from the base branch, so a PR cannot add its author to bypass the check.
+            // Why: maintainers listed anywhere in CODEOWNERS (core, docs, templates) already
+            // own the code they change, so requiring an approved issue for their own PRs adds
+            // nothing. CODEOWNERS is read from the base branch, so a PR cannot add its author
+            // to bypass the check.
             try {
               const { data: codeownersFile } = await github.rest.repos.getContent({
                 owner: context.repo.owner,
@@ -46,15 +46,15 @@ jobs:
                 ref: context.payload.pull_request.base.ref,
               });
               const codeowners = Buffer.from(codeownersFile.content, 'base64').toString('utf8');
-              const catchAllLine = codeowners
+              const maintainers = codeowners
                 .split('\n')
-                .find(line => !line.startsWith('#') && line.trim().startsWith('* '));
-              const coreMaintainers = (catchAllLine?.match(/@([a-zA-Z0-9_-]+)/g) || [])
+                .filter(line => !line.trim().startsWith('#'))
+                .flatMap(line => line.match(/@([a-zA-Z0-9_-]+)/g) || [])
                 .map(m => m.substring(1))
                 .filter(name => !name.includes('bot'));
 
-              if (coreMaintainers.includes(prAuthor)) {
-                console.log(`PR opened by core maintainer '${prAuthor}'. Skipping issue-link enforcement.`);
+              if (maintainers.includes(prAuthor)) {
+                console.log(`PR opened by maintainer '${prAuthor}'. Skipping issue-link enforcement.`);
                 return;
               }
             } catch (error) {

@@ -8,14 +8,20 @@ concurrency:
 on:
   pull_request:
     types: [opened, reopened, synchronize, ready_for_review]
-
+# Revokes default permissions since all jobs only need read access.
+permissions: {}
 jobs:
   changes:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read        # checkout
+      pull-requests: read   # paths-filter reads PR diff
     outputs:
       should_test: ${{ steps.should_run.outputs.shouldrun }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
       - name: Checks paths-filter
         uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4.0.3
         id: filter
@@ -42,7 +48,7 @@ jobs:
               startsWith(github.event.pull_request.title, 'ci: update of files from global .github repo') ||
                startsWith(github.event.pull_request.title, 'chore(release):')
             )) ||
-            (github.actor == 'allcontributors[bot]' &&
+            (github.actor_id == '46447321' &&
               startsWith(github.event.pull_request.title, 'docs: add')
             )
           )
@@ -54,12 +60,18 @@ jobs:
     needs: changes
     name: Test generator as dependency with Node 24
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Checkout repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
       - name: Log should_test value across jobs #it has to stay here for some time for debugging
+        env:
+          SHOULD_TEST: ${{ needs.changes.outputs.should_test }}
         run: |
-          echo "should_test value: ${{ needs.changes.outputs.should_test }}"
+          echo "should_test value: ${SHOULD_TEST}"
       - if: needs.changes.outputs.should_test == 'true'
         name: Run test
         run: NODE_VERSION=24 docker compose up --abort-on-container-exit --force-recreate
@@ -70,6 +82,8 @@ jobs:
     needs: changes
     name: Acceptance tests (${{ matrix.language }})
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
 
     strategy:
       fail-fast: false
@@ -79,10 +93,14 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       - name: Log should_test value across jobs #it has to stay here for some time for debugging
+        env:
+          SHOULD_TEST: ${{ needs.changes.outputs.should_test }}
         run: |
-          echo "should_test value: ${{ needs.changes.outputs.should_test }}"
+          echo "should_test value: ${SHOULD_TEST}"
 
       - name: Check package-lock version
         if: needs.changes.outputs.should_test == 'true'

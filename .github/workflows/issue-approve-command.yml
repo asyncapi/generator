@@ -15,7 +15,7 @@ jobs:
     if: >
       !github.event.issue.pull_request &&
       github.event.issue.state != 'closed' &&
-      (github.event.comment.body == '/approve' || startsWith(github.event.comment.body, '/approve '))
+      startsWith(github.event.comment.body, '/approve')
 
     runs-on: ubuntu-latest
 
@@ -30,11 +30,20 @@ jobs:
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         env:
           ACTOR: ${{ github.actor }}
+          COMMENT_BODY: ${{ github.event.comment.body }}
         with:
           github-token: ${{ secrets.GH_TOKEN }}
           script: |
             const fs = require('fs');
             const actor = process.env.ACTOR;
+
+            // Why: GitHub expressions have no trim(), so the job `if` only filters on the
+            // prefix. A comment posted from the web UI or CLI can end with a newline, and
+            // `/approved` must not count, so the exact match happens here.
+            if (!/^\/approve(\s|$)/.test(process.env.COMMENT_BODY.trim())) {
+              console.log('Comment is not an /approve command, skipping.');
+              return;
+            }
 
             const codeowners = fs.readFileSync('./CODEOWNERS', 'utf8');
             const lines = codeowners.split('\n');

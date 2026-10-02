@@ -49,8 +49,7 @@ jobs:
               const maintainers = codeowners
                 .split('\n')
                 .flatMap(line => line.split('#')[0].match(/@([a-zA-Z0-9_-]+)/g) || [])
-                .map(m => m.substring(1).toLowerCase())
-                .filter(name => !name.includes('bot'));
+                .map(m => m.substring(1).toLowerCase());
 
               if (maintainers.includes(prAuthor.toLowerCase())) {
                 console.log(`PR opened by maintainer '${prAuthor}'. Skipping issue-link enforcement.`);

@@ -1,5 +1,5 @@
 import { Text } from '@asyncapi/generator-react-sdk';
-import { toCamelCase } from '@asyncapi/generator-helpers';
+import { toCamelCase, getSafeJSName } from '@asyncapi/generator-helpers';
 import { unsupportedLanguage } from '../utils/ErrorHandling';
 
 /**
@@ -64,24 +64,26 @@ const queryParamLogicConfig = {
       };
     },
   },
-  javascript: (param) => {
-    const paramName = param[0];
+  javascript: (param, usedNames, reservedNames) => {
+    const rawName = param[0];
+    const paramName = getSafeJSName(rawName, usedNames, reservedNames);
+    const envVarName = rawName.toUpperCase().replace(/[^A-Z0-9_]/g, '_');
     return {
       variableDefinition: {
-        text: `const ${paramName} = ${paramName} || process.env.${paramName.toUpperCase()};`,
-        indent: 8,
+        text: `const _${paramName} = ${paramName} || process.env.${envVarName};`,
+        indent: 0,
       },
       ifCondition: {
-        text: `if (${paramName}) {`,
-        indent: 8,
+        text: `if (_${paramName}) {`,
+        indent: 0,
       },
       assignment: {
-        text: `params["${paramName}"] = ${paramName};`,
-        indent: 10,
+        text: `params["${rawName}"] = _${paramName};`,
+        indent: 2,
       },
       closing: {
         text: '}',
-        indent: 8,
+        indent: 0,
         newLines: 1,
       },
     };
@@ -149,7 +151,7 @@ function resolveQueryParamLogic(language, framework) {
  * 
  * renderQueryParamsVariable().catch(console.error);
  */
-export function QueryParamsVariables({ language, framework = '', queryParams }) {
+export function QueryParamsVariables({ language, framework = '', queryParams, reservedNames }) {
   if (!queryParams || !Array.isArray(queryParams)) {
     return null;
   }
@@ -164,8 +166,9 @@ export function QueryParamsVariables({ language, framework = '', queryParams }) 
     return null;
   }
 
+  const usedNames = new Map();
   return queryParams.map((param) => {
-    const { variableDefinition, ifCondition, assignment, closing } = generateParamCode(param);
+    const { variableDefinition, ifCondition, assignment, closing } = generateParamCode(param, usedNames, reservedNames);
 
     return (
       <>

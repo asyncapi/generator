@@ -15,12 +15,12 @@ jobs:
 
     steps:
       - name: Checkout generator PR
-        uses: actions/checkout@v5
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Checkout website repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: asyncapi/website
           path: website
@@ -35,7 +35,7 @@ jobs:
           printf "%s\ntitle: Generator\nweight: 3\n%s" "---" "---"> website/markdown/docs/tools/generator/_section.md
 
       - name: Setup Node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
 
       - name: Install jq
         run: |
@@ -70,7 +70,7 @@ jobs:
 
       - name: Comment preview URL on PR
         if: success()
-        uses: thollander/actions-comment-pull-request@24bffb9b452ba05a4f3f77933840a6a841d1b32b #v3.0.1 release https://github.com/thollander/actions-comment-pull-request/releases/tag/v3.0.1
+        uses: thollander/actions-comment-pull-request@24bffb9b452ba05a4f3f77933840a6a841d1b32b # v3.0.1
         with:
           github-token: ${{ secrets.GH_TOKEN }}
           message: |

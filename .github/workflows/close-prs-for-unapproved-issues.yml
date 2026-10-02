@@ -34,6 +34,31 @@ jobs:
               return;
             }
 
+            // Why: maintainers listed anywhere in CODEOWNERS (core, docs, templates) already
+            // own the code they change, so requiring an approved issue for their own PRs adds
+            // nothing. CODEOWNERS is read from the base branch, so a PR cannot add its author
+            // to bypass the check.
+            try {
+              const { data: codeownersFile } = await github.rest.repos.getContent({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                path: 'CODEOWNERS',
+                ref: context.payload.pull_request.base.ref,
+              });
+              const codeowners = Buffer.from(codeownersFile.content, 'base64').toString('utf8');
+              const maintainers = codeowners
+                .split('\n')
+                .flatMap(line => line.split('#')[0].match(/@([a-zA-Z0-9_-]+)/g) || [])
+                .map(m => m.substring(1).toLowerCase());
+
+              if (maintainers.includes(prAuthor.toLowerCase())) {
+                console.log(`PR opened by maintainer '${prAuthor}'. Skipping issue-link enforcement.`);
+                return;
+              }
+            } catch (error) {
+              console.log(`Could not read CODEOWNERS, enforcing issue link: ${error.message}`);
+            }
+
             const prBody = context.payload.pull_request.body || '';
             const prNumber = context.payload.pull_request.number;
 

@@ -14,7 +14,7 @@ const TEMPLATES_ROOT = path.join(MONOREPO_ROOT, 'packages/templates');
 const IGNORED_DIRS = ['test', '__tests__', '__fixtures__', '__snapshots__', 'components', 'helpers', 'node_modules', 'coverage', '__transpiled'];
 
 // Templates structure inside generator/packages/templates must follow this opinionated naming convention:
-const ALLOWED_TYPE_PATHS = ['docs', 'clients', 'sdks', 'configs'];
+const ALLOWED_TYPE_PATHS = ['docs', 'clients', 'servers', 'sdks', 'configs'];
 
 // Comment injected above the metadata block of every baked-in template's .ageneratorrc.
 const METADATA_COMMENT = '# The metadata block below is auto-generated from the template folder structure - do not edit it manually. Learn more: https://www.asyncapi.com/docs/tools/generator/baked-in-templates';
@@ -37,9 +37,9 @@ async function main() {
       console.warn(`⚠️ Skipping template at ${dir}, wrong metadata for docs/config: ${relPath.join('/')}`);
       continue;
     }
-    // For clients and sdks: require type, protocol, and target.
-    if ((meta.type === 'client' || meta.type === 'sdk') && (!meta.type || !meta.protocol || !meta.target)) {
-      console.warn(`⚠️ Skipping template at ${dir}, not enough metadata for client/sdk: ${relPath.join('/')}`);
+    // For clients, servers, and sdks: require type, protocol, and target.
+    if ((meta.type === 'client' || meta.type === 'server' || meta.type === 'sdk') && (!meta.type || !meta.protocol || !meta.target)) {
+      console.warn(`⚠️ Skipping template at ${dir}, not enough metadata for client/server/sdk: ${relPath.join('/')}`);
       continue;
     }
 
@@ -128,6 +128,7 @@ async function transpileTemplate(templatePath, outputDir) {
  */
 function normalizeType(type) {
   if (type === 'clients') return 'client';
+  if (type === 'servers') return 'server';
   if (type === 'sdks') return 'sdk';
   if (type === 'configs') return 'config';
   return type;

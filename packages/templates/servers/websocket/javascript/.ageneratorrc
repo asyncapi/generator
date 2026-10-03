@@ -1,0 +1,30 @@
+apiVersion: v3
+parameters:
+  server:
+    description: The name of the server described in AsyncAPI document
+    required: false
+  port:
+    description: The port on which the WebSocket server will listen
+    required: false
+    default: '8080'
+  serverFileName:
+    description: The name of the generated server file
+    required: false
+    default: server.js
+  packageJsonFileName:
+    description: The name of the generated package.json file
+    required: false
+    default: package.json
+  asyncapiFileDir:
+    description: >-
+      Custom location of the AsyncAPI file that you provided as an input in generation. By default it is located in the
+      root of the output directory
+    required: false
+    default: .
+# The metadata block below is auto-generated from the template folder structure - do not edit it manually. Learn more: https://www.asyncapi.com/docs/tools/generator/baked-in-templates
+metadata:
+  type: server
+  protocol: websocket
+  target: javascript
+hooks:
+  '@asyncapi/generator-hooks': createAsyncapiFile

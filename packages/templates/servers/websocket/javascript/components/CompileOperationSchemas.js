@@ -21,11 +21,7 @@ export function CompileOperationSchemas({ allOps = [] }) {
     }
 
     for (const operationId of this.allOperationIds) {
-      try {
-        this.compiledSchemas[operationId] = await compileSchemasByOperationId(this.asyncapiFilepath, operationId);
-      } catch (err) {
-        console.warn(\`[WebSocketServer] Schema compilation skipped for operation "\${operationId}": \${err.message}\`);
-      }
+      this.compiledSchemas[operationId] = await compileSchemasByOperationId(this.asyncapiFilepath, operationId);
     }
 
     this.schemasCompiled = true;

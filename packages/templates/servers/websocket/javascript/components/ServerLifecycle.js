@@ -65,15 +65,17 @@ export function ServerLifecycle() {
         channel.clients.clear();
       }
 
+      const closePromises = [];
+
       if (this.wss) {
-        this.wss.close();
+        closePromises.push(new Promise((wssResolve) => this.wss.close(wssResolve)));
       }
 
       if (this.server) {
-        this.server.close(() => resolve());
-      } else {
-        resolve();
+        closePromises.push(new Promise((serverResolve) => this.server.close(serverResolve)));
       }
+
+      Promise.all(closePromises).then(() => resolve());
     });
   }`}
     </Text>

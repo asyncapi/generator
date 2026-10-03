@@ -58,7 +58,13 @@ export function RouteHandlers() {
       if (normalized === channelNorm) {
         return channelAddress;
       }
-      const paramPattern = new RegExp('^' + channelNorm.replace(/\\{[^}]+\\}/g, '([^/]+)') + '$');
+      const regexParts = channelNorm.split(/(\\{[^}]+\\})/g).map((part) => {
+        if (part.startsWith('{') && part.endsWith('}')) {
+          return '([^/]+)';
+        }
+        return part.replace(/[-/\\\\^$*+?.()|[\\]{}]/g, '\\\\$&');
+      });
+      const paramPattern = new RegExp('^' + regexParts.join('') + '$');
       if (paramPattern.test(normalized)) {
         return channelAddress;
       }
@@ -101,7 +107,11 @@ export function RouteHandlers() {
       const receiveOps = channel.operations.receive || [];
       if (receiveOps.length === 0) {
         if (this.messageHandlers.default) {
-          await this.messageHandlers.default({ message: parsedPayload, raw: data, ws, req, channel: channelAddress });
+          try {
+            await this.messageHandlers.default({ message: parsedPayload, raw: data, ws, req, channel: channelAddress });
+          } catch (err) {
+            this.handleError(err, { ws, req, channel: channelAddress, phase: 'handler' });
+          }
         }
         return;
       }

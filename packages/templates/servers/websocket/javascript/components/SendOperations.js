@@ -1,5 +1,19 @@
 import { Text } from '@asyncapi/generator-react-sdk';
 
+const RESERVED_METHOD_NAMES = new Set([
+  'constructor',
+  'compileOperationSchemas',
+  'registerMessageHandler',
+  'registerErrorHandler',
+  'registerConnectionHandler',
+  'matchChannel',
+  'handleConnection',
+  'handleError',
+  'broadcast',
+  'start',
+  'stop'
+]);
+
 /**
  * Renders outbound send and broadcast methods for the server.
  *
@@ -10,16 +24,20 @@ import { Text } from '@asyncapi/generator-react-sdk';
 export function SendOperations({ sendOperations = [] }) {
   const operationsCode = sendOperations.map(op => {
     const opId = op.id;
+    if (RESERVED_METHOD_NAMES.has(opId)) {
+      throw new Error(`Operation ID "${opId}" conflicts with reserved WebSocketServer method name.`);
+    }
+
     const channelAddress = op.channelAddress || '/';
 
     return `  /**
-   * Send validated message for operation "${opId}".
+   * Send validated message for operation ${JSON.stringify(opId)}.
    *
    * @param {any} payload Message payload.
    * @param {WebSocket} [targetWs=null] Optional target client. If omitted, broadcasts to channel.
    * @returns {Promise<boolean|number>} True if sent to target, or count of broadcast recipients.
    */
-  async ${opId}(payload, targetWs = null) {
+  async [${JSON.stringify(opId)}](payload, targetWs = null) {
     const validators = this.compiledSchemas[${JSON.stringify(opId)}];
     if (validators && validators.length > 0) {
       let passed = false;
@@ -34,7 +52,7 @@ export function SendOperations({ sendOperations = [] }) {
         }
       }
       if (!passed) {
-        const err = new Error('Outbound message validation failed for operation "${opId}"');
+        const err = new Error(\`Outbound message validation failed for operation \${${JSON.stringify(JSON.stringify(opId))}}\`);
         err.validationErrors = validationErrors;
         throw err;
       }

@@ -33,7 +33,7 @@ apps/
 packages/
   components/         # @asyncapi/generator-components — shared React template components (JSX)
   helpers/            # @asyncapi/generator-helpers — pure JS helpers over Parser API (CJS, no build)
-  templates/          # Baked-in templates shipped inside the generator (grouped by type: clients, sdks, docs, configs). Currently: clients/kafka/java/quarkus, clients/websocket/{javascript,python,dart,java/quarkus}
+  templates/          # Baked-in templates shipped inside the generator (grouped by type: clients, servers, sdks, docs, configs). Currently: clients/kafka/java/quarkus, clients/websocket/{javascript,python,dart,java/quarkus}, servers/websocket/javascript
 ```
 
 Orchestration is Turborepo (`turbo.json`). Every package-level script (`test`, `lint`, `build`, `docs`) must be runnable through the root `turbo run <script> --filter=<pkg>` — do not introduce scripts that only work from inside a package directory when they need the full workspace graph.

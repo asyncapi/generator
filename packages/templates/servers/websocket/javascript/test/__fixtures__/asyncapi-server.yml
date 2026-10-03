@@ -1,0 +1,46 @@
+asyncapi: 3.0.0
+info:
+  title: Test WebSocket Server API
+  version: 1.0.0
+  description: Self-contained AsyncAPI document for testing Node.js WebSocket server template.
+
+servers:
+  devServer:
+    host: localhost
+    protocol: ws
+    pathname: /
+
+channels:
+  echoChannel:
+    address: /echo
+    messages:
+      echoMessage:
+        payload:
+          type: object
+          properties:
+            message:
+              type: string
+          required:
+            - message
+      timestampMessage:
+        payload:
+          type: object
+          properties:
+            timestamp:
+              type: number
+          required:
+            - timestamp
+
+operations:
+  handleEchoMessage:
+    action: receive
+    channel:
+      $ref: '#/channels/echoChannel'
+    messages:
+      - $ref: '#/channels/echoChannel/messages/echoMessage'
+  sendTimeStampMessage:
+    action: send
+    channel:
+      $ref: '#/channels/echoChannel'
+    messages:
+      - $ref: '#/channels/echoChannel/messages/timestampMessage'

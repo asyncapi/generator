@@ -30,5 +30,11 @@
     "type": "client",
     "protocol": "websocket",
     "target": "python"
+  },
+  {
+    "name": "core-template-server-websocket-javascript",
+    "type": "server",
+    "protocol": "websocket",
+    "target": "javascript"
   }
 ]

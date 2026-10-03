@@ -152,7 +152,7 @@ describe('conditionalGeneration unit tests', () => {
           {},
           asyncapiDocument
         )
-      ).rejects.toThrow();
+      ).rejects.toMatchObject({ name: 'ParserError' });
     });
 
     it('should correctly query server when server param is provided', async () => {

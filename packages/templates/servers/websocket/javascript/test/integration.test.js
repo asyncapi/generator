@@ -72,10 +72,12 @@ describe('Node.js WebSocket Server Template Integration', () => {
 
     // Verify starting and stopping the server
     await serverInstance.start();
-    expect(serverInstance.schemasCompiled).toBe(true);
-    expect(serverInstance.compiledSchemas).toHaveProperty('handleEchoMessage');
-    expect(serverInstance.compiledSchemas).toHaveProperty('sendTimeStampMessage');
-
-    await serverInstance.stop();
+    try {
+      expect(serverInstance.schemasCompiled).toBe(true);
+      expect(serverInstance.compiledSchemas).toHaveProperty('handleEchoMessage');
+      expect(serverInstance.compiledSchemas).toHaveProperty('sendTimeStampMessage');
+    } finally {
+      await serverInstance.stop();
+    }
   });
 });

@@ -8,6 +8,10 @@ import { TranspileFilesOptions } from '../types';
 
 const ROOT_DIR = Path.resolve(__dirname, '../..');
 
+// Why: React 18's `exports` map blocks `require.resolve('react/cjs/...')`, so resolve the always-exported `react/package.json` and build the file path from its directory instead.
+const REACT_DIR = Path.dirname(require.resolve('react/package.json'));
+const REACT_JSX_RUNTIME = Path.join(REACT_DIR, 'cjs', 'react-jsx-runtime.production.min.js');
+
 /**
  * Transpile files in a given directory (and sub directory if recursive option are passed) and write it to an output directory, if no errors are thrown it completed successfully.
  * 
@@ -52,7 +56,7 @@ export async function transpileFiles(directory: string, outputDir: string, optio
             dir: outputDir,
             exports: "auto",
             paths: {
-              'react/jsx-runtime': require.resolve('react/cjs/react-jsx-runtime.production.min').replace(/\\/g, '/'),
+              'react/jsx-runtime': REACT_JSX_RUNTIME.replace(/\\/g, '/'),
             },
             sanitizeFileName: false,
         })

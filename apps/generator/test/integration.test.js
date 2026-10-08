@@ -36,6 +36,10 @@ describe('Integration testing generateFromFile() to make sure the result of the 
   const tempOutputFile = 'temp.md';
   const tempJsFile = 'template/temp.md.js';
 
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
   const tempJsContent = `
   import { File, Text } from '@asyncapi/generator-react-sdk';
   
@@ -51,7 +55,7 @@ describe('Integration testing generateFromFile() to make sure the result of the 
   it('generate using React template', async () => {
     const outputDir = generateFolderName();
     const generator = new Generator(reactTemplate, outputDir, {
-      forceWrite: true ,
+      forceWrite: true,
       templateParams: { version: 'v1', mode: 'production' }
     });
     await generator.generateFromFile(dummySpecPath);
@@ -77,7 +81,6 @@ describe('Integration testing generateFromFile() to make sure the result of the 
   it('check if the temp.md file is created with compile option true', async () => {
     const outputDir = generateFolderName();
     const cleanReactTemplate = await getCleanReactTemplate();
-    // Create temp.md.js file dynamically
 
     const tempJsPath = path.join(cleanReactTemplate, tempJsFile);
     // Create temp.md.js file dynamically
@@ -100,7 +103,6 @@ describe('Integration testing generateFromFile() to make sure the result of the 
   it('check if the temp.md file is not created when compile option is false', async () => {
     const outputDir = generateFolderName();
     const cleanReactTemplate = await getCleanReactTemplate();
-    // Create temp.md.js file dynamically
     const tempJsPath = path.join(cleanReactTemplate, tempJsFile);
     await writeFile(tempJsPath, tempJsContent);
   
@@ -120,15 +122,12 @@ describe('Integration testing generateFromFile() to make sure the result of the 
   it('should ignore specified files with noOverwriteGlobs and log debug message', async () => {
     const outputDir = generateFolderName();
     const cleanReactTemplate = await getCleanReactTemplate();
-    // Manually create a file to test if it's not overwritten
     await mkdir(outputDir, { recursive: true });
-    // Create a variable to store the file content
     const testContent = '<script>const initialContent = "This should not change";</script>';
     // eslint-disable-next-line sonarjs/no-duplicate-string
     const testFilePath = path.normalize(path.resolve(outputDir, testOutputFile));
     await writeFile(testFilePath, testContent);
 
-    // Manually create an output first, before generation, with additional custom file to validate if later it is still there, not overwritten
     const generator = new Generator(cleanReactTemplate, outputDir, {
       forceWrite: true,
       noOverwriteGlobs: [`**/${testOutputFile}`],
@@ -138,21 +137,14 @@ describe('Integration testing generateFromFile() to make sure the result of the 
     jest.spyOn(generator, 'setLogLevel').mockImplementation(() => {});
     const logSpy = jest.spyOn(log, 'debug');
 
-    try {
-      await generator.generateFromFile(dummySpecPath);
+    await generator.generateFromFile(dummySpecPath);
 
-      // Read the file to confirm it was not overwritten
-      const fileContent = await readFile(testFilePath, 'utf8');
-      // Check if the files have been overwritten
-      expect(fileContent).toBe(testContent);
-      // Check if the log debug message was printed
-      expect(logSpy).toHaveBeenCalledWith(logMessage.skipOverwrite(testFilePath));
-    } finally {
-      logSpy.mockRestore();
-    }
+    const fileContent = await readFile(testFilePath, 'utf8');
+    expect(fileContent).toBe(testContent);
+    expect(logSpy).toHaveBeenCalledWith(logMessage.skipOverwrite(testFilePath));
   });
 
-  it('should support multiple patterns in noOverwriteGlobs and preserve all matching files', async () => {
+  it('should support multiple files with wildcard pattern in noOverwriteGlobs and preserve all matching files', async () => {
     const outputDir = generateFolderName();
     const cleanReactTemplate = await getCleanReactTemplate();
     await mkdir(outputDir, { recursive: true });
@@ -171,26 +163,22 @@ describe('Integration testing generateFromFile() to make sure the result of the 
 
     const generator = new Generator(cleanReactTemplate, outputDir, {
       forceWrite: true,
-      noOverwriteGlobs: [`**/${testOutputFile}`, `**/${tempOutputFile}`],
+      noOverwriteGlobs: ['*.md'],
       debug: true,
     });
 
     jest.spyOn(generator, 'setLogLevel').mockImplementation(() => {});
     const logSpy = jest.spyOn(log, 'debug');
 
-    try {
-      await generator.generateFromFile(dummySpecPath);
+    await generator.generateFromFile(dummySpecPath);
 
-      const actualMd = await readFile(mdFilePath, 'utf8');
-      const actualTemp = await readFile(tempFilePath, 'utf8');
+    const actualMd = await readFile(mdFilePath, 'utf8');
+    const actualTemp = await readFile(tempFilePath, 'utf8');
 
-      expect(actualMd).toBe(mdContent);
-      expect(actualTemp).toBe(tempContent);
-      expect(logSpy).toHaveBeenCalledWith(logMessage.skipOverwrite(mdFilePath));
-      expect(logSpy).toHaveBeenCalledWith(logMessage.skipOverwrite(tempFilePath));
-    } finally {
-      logSpy.mockRestore();
-    }
+    expect(actualMd).toBe(mdContent);
+    expect(actualTemp).toBe(tempContent);
+    expect(logSpy).toHaveBeenCalledWith(logMessage.skipOverwrite(mdFilePath));
+    expect(logSpy).toHaveBeenCalledWith(logMessage.skipOverwrite(tempFilePath));
   });
 
   it('should overwrite files not matching noOverwriteGlobs while preserving matching ones', async () => {
@@ -198,7 +186,6 @@ describe('Integration testing generateFromFile() to make sure the result of the 
     const cleanReactTemplate = await getCleanReactTemplate();
     await mkdir(outputDir, { recursive: true });
 
-    // Dynamically add temp.md.js to template
     const tempJsPath = path.join(cleanReactTemplate, tempJsFile);
     await writeFile(tempJsPath, tempJsContent);
 
@@ -212,29 +199,25 @@ describe('Integration testing generateFromFile() to make sure the result of the 
 
     const generator = new Generator(cleanReactTemplate, outputDir, {
       forceWrite: true,
-      noOverwriteGlobs: [`**/${testOutputFile}`],
+      noOverwriteGlobs: [testOutputFile],
       debug: true,
     });
 
     jest.spyOn(generator, 'setLogLevel').mockImplementation(() => {});
     const logSpy = jest.spyOn(log, 'debug');
 
-    try {
-      await generator.generateFromFile(dummySpecPath);
+    await generator.generateFromFile(dummySpecPath);
 
-      const actualProtected = await readFile(protectedFilePath, 'utf8');
-      const actualUnprotected = await readFile(unprotectedFilePath, 'utf8');
+    const actualProtected = await readFile(protectedFilePath, 'utf8');
+    const actualUnprotected = await readFile(unprotectedFilePath, 'utf8');
 
-      // Protected file is not overwritten
-      expect(actualProtected).toBe(protectedContent);
-      expect(logSpy).toHaveBeenCalledWith(logMessage.skipOverwrite(protectedFilePath));
+    // Protected file is not overwritten
+    expect(actualProtected).toBe(protectedContent);
+    expect(logSpy).toHaveBeenCalledWith(logMessage.skipOverwrite(protectedFilePath));
 
-      // Unprotected file IS overwritten with generated template content ("Test")
-      expect(actualUnprotected).not.toBe(unprotectedInitialContent);
-      expect(actualUnprotected.trim()).toBe('Test');
-    } finally {
-      logSpy.mockRestore();
-    }
+    // Unprotected file is overwritten with generated template content ("Test")
+    expect(actualUnprotected).not.toBe(unprotectedInitialContent);
+    expect(actualUnprotected.trim()).toBe('Test');
   });
 
   it('should not generate the conditionalFolder if the singleFolder parameter is set true', async () => {

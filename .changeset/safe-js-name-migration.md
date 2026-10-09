@@ -4,4 +4,4 @@
 "@asyncapi/generator": minor
 ---
 
-Migrate `getSafeJSName` to `@asyncapi/generator-helpers` using `@babel/helper-validator-identifier` for keyword detection. Deduplicate `CONSTRUCTOR_RESERVED_NAMES` into a shared constants module.
+Add query-parameter support to the JavaScript WebSocket client.

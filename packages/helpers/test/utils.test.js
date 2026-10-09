@@ -298,16 +298,16 @@ describe('getSafeJSName', () => {
     expect(getSafeJSName('constant')).toBe('constant');
   });
 
-  it('should prefix names that collide with caller-supplied reservedNames', () => {
-    const reserved = new Set(['url', 'throwSendErrors', 'params', 'queryString']);
-    expect(getSafeJSName('url', new Map(), reserved)).toBe('_url');
-    expect(getSafeJSName('throwSendErrors', new Map(), reserved)).toBe('_throwSendErrors');
-    expect(getSafeJSName('params', new Map(), reserved)).toBe('_params');
+  it('should prefix names that collide with built-in constructor-reserved names', () => {
+    expect(getSafeJSName('url')).toBe('_url');
+    expect(getSafeJSName('throwSendErrors')).toBe('_throwSendErrors');
+    expect(getSafeJSName('params')).toBe('_params');
+    expect(getSafeJSName('process')).toBe('_process');
+    expect(getSafeJSName('querystring')).toBe('_querystring');
   });
 
-  it('should not prefix names not in the reservedNames set', () => {
-    const reserved = new Set(['url']);
-    expect(getSafeJSName('urlValue', new Map(), reserved)).toBe('urlValue');
+  it('should not prefix names that are not constructor-reserved', () => {
+    expect(getSafeJSName('urlValue')).toBe('urlValue');
   });
 
   it('should throw when two different names produce the same identifier', () => {

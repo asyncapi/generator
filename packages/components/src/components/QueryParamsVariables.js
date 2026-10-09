@@ -64,9 +64,9 @@ const queryParamLogicConfig = {
       };
     },
   },
-  javascript: (param, usedNames, reservedNames) => {
+  javascript: (param, usedNames) => {
     const rawName = param[0];
-    const paramName = getSafeJSName(rawName, usedNames, reservedNames);
+    const paramName = getSafeJSName(rawName, usedNames);
     const envVarName = rawName.toUpperCase().replace(/[^A-Z0-9_]/g, '_');
     return {
       variableDefinition: {
@@ -151,7 +151,7 @@ function resolveQueryParamLogic(language, framework) {
  * 
  * renderQueryParamsVariable().catch(console.error);
  */
-export function QueryParamsVariables({ language, framework = '', queryParams, reservedNames }) {
+export function QueryParamsVariables({ language, framework = '', queryParams }) {
   if (!queryParams || !Array.isArray(queryParams)) {
     return null;
   }
@@ -168,7 +168,7 @@ export function QueryParamsVariables({ language, framework = '', queryParams, re
 
   const usedNames = new Map();
   return queryParams.map((param) => {
-    const { variableDefinition, ifCondition, assignment, closing } = generateParamCode(param, usedNames, reservedNames);
+    const { variableDefinition, ifCondition, assignment, closing } = generateParamCode(param, usedNames);
 
     return (
       <>

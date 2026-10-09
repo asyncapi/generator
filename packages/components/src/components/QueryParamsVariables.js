@@ -70,11 +70,11 @@ const queryParamLogicConfig = {
     const envVarName = rawName.toUpperCase().replace(/[^A-Z0-9_]/g, '_');
     return {
       variableDefinition: {
-        text: `const _${paramName} = ${paramName} || process.env.${envVarName};`,
+        text: `const _${paramName} = ${paramName} ?? process.env.${envVarName};`,
         indent: 0,
       },
       ifCondition: {
-        text: `if (_${paramName}) {`,
+        text: `if (_${paramName} != null) {`,
         indent: 0,
       },
       assignment: {

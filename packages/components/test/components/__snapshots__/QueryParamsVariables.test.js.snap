@@ -28,20 +28,20 @@ exports[`Testing of QueryParamsVariables component renders java quarkus query pa
 `;
 
 exports[`Testing of QueryParamsVariables component renders js query params correctly with query parameters 1`] = `
-"const _heartbeat = heartbeat || process.env.HEARTBEAT;
-if (_heartbeat) {
+"const _heartbeat = heartbeat ?? process.env.HEARTBEAT;
+if (_heartbeat != null) {
   params[\\"heartbeat\\"] = _heartbeat;
 }
-const _topOfBook = topOfBook || process.env.TOP_OF_BOOK;
-if (_topOfBook) {
+const _topOfBook = topOfBook ?? process.env.TOP_OF_BOOK;
+if (_topOfBook != null) {
   params[\\"top_of_book\\"] = _topOfBook;
 }
-const _bids = bids || process.env.BIDS;
-if (_bids) {
+const _bids = bids ?? process.env.BIDS;
+if (_bids != null) {
   params[\\"bids\\"] = _bids;
 }
-const _offers = offers || process.env.OFFERS;
-if (_offers) {
+const _offers = offers ?? process.env.OFFERS;
+if (_offers != null) {
   params[\\"offers\\"] = _offers;
 }"
 `;

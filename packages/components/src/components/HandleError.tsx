@@ -2,23 +2,26 @@ import { Text } from '@asyncapi/generator-react-sdk';
 import { unsupportedLanguage, unsupportedFramework } from '../utils/ErrorHandling';
 
 /**
- * @typedef {'python' | 'dart' | 'java'} Language
  * Supported programming languages for error-handling method generation.
  */
+type Language = 'python' | 'dart' | 'java';
 
 /**
- * @typedef {Object} HandleErrorBlock
- * @property {string} body - Source string rendered inside the `<Text>` block.
- * @property {number} indent - Indentation applied by the `<Text>` wrapper.
- * @property {number} [newLines] - Trailing newlines on the `<Text>` wrapper (defaults to 1 in react-sdk).
+ * Shape of a single handle-error code block.
  */
+interface HandleErrorBlock {
+  /** Source string rendered inside the `<Text>` block. */
+  body: string;
+  /** Indentation applied by the `<Text>` wrapper. */
+  indent: number;
+  /** Trailing newlines on the `<Text>` wrapper (defaults to 1 in react-sdk). */
+  newLines?: number;
+}
 
 /**
  * Language/framework-specific bodies of the `handleError` method.
- *
- * @type {Record<Language, HandleErrorBlock | Record<string, HandleErrorBlock>>}
  */
-const handleErrorConfig = {
+const handleErrorConfig: Record<string, HandleErrorBlock | Record<string, HandleErrorBlock>> = {
   python: {
     indent: 2,
     newLines: 2,
@@ -62,31 +65,33 @@ public void onError(Throwable throwable) {
  * Resolve the appropriate handle-error block for the given language/framework pair.
  *
  * @private
- * @param {Language} language
- * @param {string} framework
- * @returns {HandleErrorBlock | null}
  */
-function resolveHandleErrorBlock(language, framework) {
+function resolveHandleErrorBlock(language: Language, framework: string): HandleErrorBlock | null {
   const config = handleErrorConfig[language];
-  if (config && typeof config.body === 'string') {
-    return config;
+  if (config && typeof (config as HandleErrorBlock).body === 'string') {
+    return config as HandleErrorBlock;
   }
-  if (config && framework && config[framework]) {
-    return config[framework];
+  if (config && framework && (config as Record<string, HandleErrorBlock>)[framework]) {
+    return (config as Record<string, HandleErrorBlock>)[framework];
   }
   return null;
+}
+
+interface HandleErrorProps {
+  /** Target programming language. */
+  language: Language;
+  /** Framework discriminator (required for languages with multiple frameworks, e.g. `java` → `quarkus`). */
+  framework?: string;
 }
 
 /**
  * Renders the `handleError` (or framework-equivalent) method body that dispatches
  * an error to registered handlers (or logs it when none are registered).
  *
- * @param {Object} props
- * @param {Language} props.language - Target programming language.
- * @param {string} [props.framework=''] - Framework discriminator (required for languages with multiple frameworks, e.g. `java` → `quarkus`).
- * @returns {JSX.Element} A `<Text>` block containing the rendered method.
- * @throws {Error} When `language` is missing or not one of the supported languages for `HandleError` (code: `ERR_UNSUPPORTED_LANGUAGE`).
- * @throws {Error} When `language` requires a framework discriminator and `framework` is missing or not supported for that language (e.g. `java` without `quarkus`) (code: `ERR_UNSUPPORTED_FRAMEWORK`).
+ * @param props
+ * @returns A `<Text>` block containing the rendered method.
+ * @throws When `language` is missing or not one of the supported languages for `HandleError` (code: `ERR_UNSUPPORTED_LANGUAGE`).
+ * @throws When `language` requires a framework discriminator and `framework` is missing or not supported for that language (e.g. `java` without `quarkus`) (code: `ERR_UNSUPPORTED_FRAMEWORK`).
  *
  * @example
  * import { HandleError } from '@asyncapi/generator-components';
@@ -95,7 +100,7 @@ function resolveHandleErrorBlock(language, framework) {
  *   return <HandleError language='python' />;
  * }
  */
-export function HandleError({ language, framework = '' }) {
+export function HandleError({ language, framework = '' }: HandleErrorProps): JSX.Element {
   const supportedLanguages = Object.keys(handleErrorConfig);
   if (!supportedLanguages.includes(language)) {
     throw unsupportedLanguage(language, supportedLanguages);

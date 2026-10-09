@@ -2,47 +2,73 @@ import { Text } from '@asyncapi/generator-react-sdk';
 import { unsupportedLanguage, negativeIndent, invalidMethodName, invalidNewLines, invalidMethodParams } from '../utils/ErrorHandling';
 
 /**
- * @typedef {'python' | 'javascript' | 'dart' | 'java'} Language
  * Supported programming languages.
  */
+type Language = 'python' | 'javascript' | 'dart' | 'java';
 
 /**
  * Configuration for method syntax based on programming language.
- * @type {Record<Language, { returnType: string | undefined, openingTag: string | undefined, closingTag: string | undefined, indentSize: number | undefined }>}
  */
-const defaultMethodConfig = {
+interface MethodSyntaxConfig {
+  returnType?: string;
+  openingTag?: string;
+  closingTag?: string;
+  indentSize?: number;
+  parameterWrap?: boolean;
+}
+
+/**
+ * Configuration for method docs and logic per language.
+ */
+interface MethodDocsLogic {
+  methodDocs?: string;
+  methodLogic?: string;
+}
+
+/**
+ * Method config can be a flat docs/logic object or a nested framework map.
+ */
+type MethodConfigEntry = MethodDocsLogic | Record<string, MethodDocsLogic>;
+
+/**
+ * Full method config keyed by language.
+ */
+type MethodConfig = Partial<Record<Language, MethodConfigEntry>>;
+
+const defaultMethodConfig: Record<Language, MethodSyntaxConfig> = {
   python: { returnType: 'def', openingTag: ':', indentSize: 2, parameterWrap: true },
   javascript: { openingTag: '{', closingTag: '}', indentSize: 2, parameterWrap: true },
   dart: { returnType: 'void', openingTag: '{', closingTag: '}', indentSize: 2, parameterWrap: true },
   java: { returnType: '', openingTag: '', closingTag: '', indentSize: 0, parameterWrap: false }
 };
 
+interface ResolveDocsAndLogicParams {
+  language: string;
+  methodDocs?: string;
+  methodLogic?: string;
+  methodConfig?: MethodConfig;
+  framework?: string;
+}
+
 /**
  * Resolve docs and logic for the given language + framework config.
- * 
+ *
  * @private
- * @param {Object} params
- * @param {Language} params.language
- * @param {string} [params.methodDocs]
- * @param {string} [params.methodLogic]
- * @param {Record<Language, { methodDocs: string | undefined, methodLogic: string | undefined } | Record<string, { methodDocs: string | undefined, methodLogic: string | undefined }>>} [params.methodConfig]
- * @param {string} [params.framework]
- * @returns {{ docs: string, logic: string }}
  */
-const resolveDocsAndLogic = ({ language, methodDocs, methodLogic, methodConfig, framework }) => {
+const resolveDocsAndLogic = ({ language, methodDocs, methodLogic, methodConfig, framework }: ResolveDocsAndLogicParams): { docs: string | undefined; logic: string | undefined } => {
   let docs = methodDocs;
   let logic = methodLogic;
 
-  if (methodConfig && methodConfig[language]) {
-    const config = methodConfig[language];
+  if (methodConfig && methodConfig[language as Language]) {
+    const config = methodConfig[language as Language] as Record<string, unknown>;
 
     if (framework && config[framework]) {
-      const frameworkConfig = config[framework];
+      const frameworkConfig = config[framework] as MethodDocsLogic;
       docs = frameworkConfig.methodDocs ?? methodDocs;
       logic = frameworkConfig.methodLogic ?? methodLogic;
-    } else if (config.methodLogic || config.methodDocs) {
-      docs = config.methodDocs ?? methodDocs;
-      logic = config.methodLogic ?? methodLogic;
+    } else if ((config as MethodDocsLogic).methodLogic || (config as MethodDocsLogic).methodDocs) {
+      docs = (config as MethodDocsLogic).methodDocs ?? methodDocs;
+      logic = (config as MethodDocsLogic).methodLogic ?? methodLogic;
     }
   }
 
@@ -51,16 +77,11 @@ const resolveDocsAndLogic = ({ language, methodDocs, methodLogic, methodConfig, 
 
 /**
  * Build indented method body.
- * 
+ *
  * @private
- * @param {string} logic
- * @param {string} [preExecutionCode]
- * @param {string} [postExecutionCode]
- * @param {number} indentSize
- * @returns {string}
  */
-const buildIndentedLogic = (logic, preExecutionCode, postExecutionCode, indentSize) => {
-  let completeCode = logic;
+const buildIndentedLogic = (logic: string | undefined, preExecutionCode: string, postExecutionCode: string, indentSize: number): string => {
+  let completeCode = logic || '';
   if (preExecutionCode) completeCode = `${preExecutionCode}\n${completeCode}`;
   if (postExecutionCode) completeCode = `${completeCode}\n${postExecutionCode}`;
 
@@ -71,25 +92,40 @@ const buildIndentedLogic = (logic, preExecutionCode, postExecutionCode, indentSi
     .join('\n');
 };
 
+export interface MethodGeneratorProps {
+  /** Programming language used for method formatting. */
+  language: string;
+  /** Name of the method (non-empty string required). */
+  methodName: string;
+  /** Method parameters. */
+  methodParams?: string[];
+  /** Optional documentation string. */
+  methodDocs?: string;
+  /** Core method logic. */
+  methodLogic?: string;
+  /** Code before main logic. */
+  preExecutionCode?: string;
+  /** Code after main logic. */
+  postExecutionCode?: string;
+  /** Indentation for the method block (must be >= 0). */
+  indent?: number;
+  /** Number of new lines after method. */
+  newLines?: number;
+  /** Optional custom syntax configuration for the current language. */
+  customMethodConfig?: MethodSyntaxConfig;
+  /** Language-level or framework-level configuration. */
+  methodConfig?: MethodConfig;
+  /** Framework name for nested configurations (e.g., 'quarkus' for Java). */
+  framework?: string;
+}
+
 /**
  * Renders a language-specific formatted method definition.
  *
- * @param {Object} props - Component props.
- * @param {Language} props.language - Programming language used for method formatting.
- * @param {string} props.methodName - Name of the method (non-empty string required).
- * @param {string[]} [props.methodParams=[]] - Method parameters.
- * @param {string} [props.methodDocs=''] - Optional documentation string.
- * @param {string} [props.methodLogic=''] - Core method logic.
- * @param {string} [props.preExecutionCode=''] - Code before main logic.
- * @param {string} [props.postExecutionCode=''] - Code after main logic.
- * @param {number} [props.indent=2] - Indentation for the method block (must be >= 0).
- * @param {number} [props.newLines=1] - Number of new lines after method.
- * @param {{ returnType: string | undefined, openingTag: string | undefined, closingTag: string | undefined, indentSize: number | undefined, parameterWrap: boolean | undefined }} [props.customMethodConfig] - Optional custom syntax configuration for the current language.
- * @param {{Record<Language, { methodDocs: string | undefined, methodLogic: string | undefined } | Record<string, { methodDocs: string | undefined, methodLogic: string | undefined }>>}} [props.methodConfig] - Language-level or framework-level configuration.
- * @param {string} [props.framework] - Framework name for nested configurations (e.g., 'quarkus' for Java).
- * @returns {JSX.Element} A Text component that contains method block with appropriate formatting.
- * @throws {Error} If language is unsupported, methodName is invalid, or indent is negative.
- * 
+ * @param props - Component props.
+ * @returns A Text component that contains method block with appropriate formatting.
+ * @throws If language is unsupported, methodName is invalid, or indent is negative.
+ *
  * @example
  * import { MethodGenerator } from "@asyncapi/generator-components";
  * const language = "java";
@@ -102,24 +138,24 @@ const buildIndentedLogic = (logic, preExecutionCode, postExecutionCode, indentSi
  * const customMethodConfig={ openingTag: "{", closingTag: "}", indentSize: 6 };
  * const methodConfig = {"java" : {"quarkus": {methodDocs : methodDocs, methodLogic: methodLogic }}};
  * const framework = "quarkus";
- * 
+ *
  * function renderMethodGenerator() {
  *   return (
- *     <MethodGenerator 
+ *     <MethodGenerator
  *        language={language}
- *        methodName={methodName} 
- *        methodParams={methodParams} 
- *        methodDocs={methodDocs} 
- *        methodLogic={methodLogic} 
- *        preExecutionCode={preExecutionCode} 
- *        postExecutionCode={postExecutionCode} 
- *        customMethodConfig={customMethodConfig} 
- *        methodConfig={methodConfig} 
- *        framework={framework} 
+ *        methodName={methodName}
+ *        methodParams={methodParams}
+ *        methodDocs={methodDocs}
+ *        methodLogic={methodLogic}
+ *        preExecutionCode={preExecutionCode}
+ *        postExecutionCode={postExecutionCode}
+ *        customMethodConfig={customMethodConfig}
+ *        methodConfig={methodConfig}
+ *        framework={framework}
  *     />
  *   )
  * }
- * 
+ *
  * renderMethodGenerator();
  */
 export function MethodGenerator({
@@ -135,7 +171,7 @@ export function MethodGenerator({
   customMethodConfig,
   methodConfig,
   framework
-}) {
+}: MethodGeneratorProps): JSX.Element {
   const supportedLanguages = Object.keys(defaultMethodConfig);
   
   if (!supportedLanguages.includes(language)) {
@@ -172,7 +208,7 @@ export function MethodGenerator({
     closingTag = '',
     indentSize = 2,
     parameterWrap = true
-  } = customMethodConfig || defaultMethodConfig[language];
+  } = customMethodConfig || defaultMethodConfig[language as Language];
 
   const params = methodParams.join(', ');
   const parameterBlock = parameterWrap ? `(${params})` : `${params}`;

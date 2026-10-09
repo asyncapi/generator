@@ -1,15 +1,16 @@
-import { MethodGenerator } from './MethodGenerator';
+import { MethodGenerator, MethodGeneratorProps } from './MethodGenerator';
 
-/**
- * @typedef {'python' | 'javascript' | 'dart'} Language
- * Supported programming languages.
- */
+type Language = 'python' | 'javascript' | 'dart';
+
+interface MethodConfigEntry {
+  methodDocs?: string;
+  methodLogic: string;
+}
 
 /**
  * Configuration for WebSocket message handler method logic per language.
- * @type {Record<Language, { methodDocs: string | undefined, methodLogic: string }>}
  */
-const websocketHandleMessageConfig = {
+const websocketHandleMessageConfig: Record<Language, MethodConfigEntry> = {
   python: {
     methodLogic: String.raw`if len(self.message_handlers) == 0:
   print("\033[94mReceived raw message:\033[0m", message)
@@ -27,18 +28,17 @@ else:
   }
 };
 
+interface HandleMessageProps extends Omit<MethodGeneratorProps, 'methodName' | 'methodConfig' | 'indent' | 'newLines'> {
+  /** Name of the method to generate. */
+  methodName?: string;
+}
+
 /**
  * Renders a WebSocket message handler method with optional pre- and post-execution logic.
  *
- * @param {Object} props - Component props.
- * @param {Language} props.language - Programming language used for method formatting.
- * @param {string} [props.methodName='handleMessage'] - Name of the method to generate.
- * @param {string[]} [props.methodParams=[]] - List of parameters for the method.
- * @param {string} [props.preExecutionCode] - Code to insert before the main function logic.
- * @param {string} [props.postExecutionCode] - Code to insert after the main function logic.
- * @param {Object} [props.customMethodConfig] - Optional overrides for default method configuration.
- * @returns {JSX.Element} A Text component that contains method block with appropriate formatting.
- * 
+ * @param props - Component props.
+ * @returns A Text component that contains method block with appropriate formatting.
+ *
  * @example
  * import { HandleMessage } from "@asyncapi/generator-components";
  * const language = "javascript";
@@ -52,23 +52,23 @@ else:
  *     methodLogic: "if (cb) cb(message);"
  *   }
  * };
- * 
+ *
  * function renderHandleMessage() {
  *   return (
- *     <HandleMessage 
- *        language={language} 
- *        methodName={methodName} 
- *        methodParams={methodParams} 
- *        preExecutionCode={preExecutionCode} 
- *        postExecutionCode={postExecutionCode} 
- *        customMethodConfig={customMethodConfig} 
+ *     <HandleMessage
+ *        language={language}
+ *        methodName={methodName}
+ *        methodParams={methodParams}
+ *        preExecutionCode={preExecutionCode}
+ *        postExecutionCode={postExecutionCode}
+ *        customMethodConfig={customMethodConfig}
  *     />
  *   )
  * }
- * 
+ *
  * renderHandleMessage();
  */
-export function HandleMessage({ methodName = 'handleMessage', ...props }) {
+export function HandleMessage({ methodName = 'handleMessage', ...props }: HandleMessageProps): JSX.Element {
   return (
     <MethodGenerator
       {...props}

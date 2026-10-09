@@ -1,18 +1,20 @@
 import { Text } from '@asyncapi/generator-react-sdk';
 import { unsupportedFramework, unsupportedLanguage } from '../utils/ErrorHandling';
 
-/**
- * @typedef {'python' | 'javascript' | 'dart' | 'java' } Language
- * Supported programming languages for WebSocket onClose handler generation.
- */
+type Language = 'python' | 'javascript' | 'dart' | 'java';
+
+interface OnCloseResult {
+  onCloseMethod: string;
+  indent?: number;
+}
+
+type OnCloseGenerator = (title: string) => OnCloseResult;
 
 /**
  * Mapping of supported programming languages to their WebSocket onClose event handler implementations.
- * 
- * @type {Object.<Language, Function|Object.<string, Function>>}
  */
-const websocketOnCloseMethod = {
-  javascript: (title) => {
+const websocketOnCloseMethod: Record<string, OnCloseGenerator | Record<string, OnCloseGenerator>> = {
+  javascript: (title: string): OnCloseResult => {
     return {
       onCloseMethod: `// On connection close
     this.websocket.onclose = () => {
@@ -20,13 +22,13 @@ const websocketOnCloseMethod = {
     };`
     };
   },
-  python: (title) => {
+  python: (title: string): OnCloseResult => {
     return {
       onCloseMethod: `def on_close(self, ws, close_status_code, close_msg):
   print("Disconnected from ${title}", close_status_code, close_msg)`
     };
   },
-  dart: (title) => {
+  dart: (title: string): OnCloseResult => {
     return {
       onCloseMethod: `onDone: () {
         _channel = null;
@@ -35,7 +37,7 @@ const websocketOnCloseMethod = {
     };
   },
   java: {
-    quarkus: (title) => {
+    quarkus: (title: string): OnCloseResult => {
       const onCloseMethod = `
   @OnClose
   public void onClose(CloseReason reason, WebSocketClientConnection connection) {
@@ -47,57 +49,59 @@ const websocketOnCloseMethod = {
     }
   }
 };
+
 /**
  * Resolves the appropriate onClose code generator for the given language and optional framework.
  *
  * @private
- * @param {Language} language - The target programming language.
- * @param {string} [framework=''] - Optional framework variant (e.g., 'quarkus' for java).
- * @returns {Function|undefined} The code generator function, or undefined if not found.
  */
-
-const resolveCloseConfig = (language, framework) => {
+const resolveCloseConfig = (language: string, framework: string): OnCloseGenerator | null => {
   const config = websocketOnCloseMethod[language];
   if (typeof config === 'function') {
     return config;
   }
-  if (framework && typeof config[framework] === 'function') {
-    return config[framework];
+  if (framework && typeof (config as Record<string, OnCloseGenerator>)[framework] === 'function') {
+    return (config as Record<string, OnCloseGenerator>)[framework];
   }
   return null;
 };
 
+interface OnCloseProps {
+  /** The programming language for which to generate onClose handler code. */
+  language: Language;
+  /** Framework variant; required for framework-specific languages (e.g., 'quarkus' for java). */
+  framework?: string;
+  /** The title of the WebSocket server. */
+  title: string;
+}
+
 /**
  * Renders a WebSocket onClose event handler for the specified programming language.
- * 
- * @param {Object} props - Component props.
- * @param {Language} props.language - The programming language for which to generate onClose handler code.
- * @param {string} [props.framework=''] - Framework variant; required for framework-specific languages (e.g., 'quarkus' for java).
- * @param {string} props.title - The title of the WebSocket server.
- * 
- * @returns {JSX.Element} A Text component containing the onClose handler code for the specified language.
- * @throws {Error} When the specified language is not supported.
- * @throws {Error} When the specified framework is not supported for the given language.
- * 
+ *
+ * @param props - Component props.
+ * @returns A Text component containing the onClose handler code for the specified language.
+ * @throws When the specified language is not supported.
+ * @throws When the specified framework is not supported for the given language.
+ *
  * @example
  * import { OnClose } from "@asyncapi/generator-components";
  * const language = "java";
  * const framework = "quarkus";
  * const title = "HoppscotchEchoWebSocketClient";
- * 
+ *
  * function renderOnClose() {
  *  return (
- *    <OnClose 
- *       language={language} 
- *       framework={framework} 
- *       title={title}  
+ *    <OnClose
+ *       language={language}
+ *       framework={framework}
+ *       title={title}
  *    />
  *  )
  * }
- * 
+ *
  * renderOnClose();
  */
-export function OnClose({ language, framework = '', title }) {
+export function OnClose({ language, framework = '', title }: OnCloseProps): JSX.Element {
   let indent = 0;
 
   const supportedLanguages = Object.keys(websocketOnCloseMethod);

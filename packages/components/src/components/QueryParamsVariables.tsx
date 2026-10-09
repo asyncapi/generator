@@ -2,27 +2,26 @@ import { Text } from '@asyncapi/generator-react-sdk';
 import { toCamelCase } from '@asyncapi/generator-helpers';
 import { unsupportedLanguage } from '../utils/ErrorHandling';
 
-/**
- * @typedef {'python' | 'java' | 'javascript'} Language
- * Supported programming languages for query parameter generation.
- */
+type Language = 'python' | 'java' | 'javascript';
 
 /**
- * @typedef {Object} QueryParamCodeBlock
- * @property {{ text: string, indent: number | undefined, newLines: number | undefined }} variableDefinition - Code block for variable initialization.
- * @property {{ text: string, indent: number | undefined, newLines: number | undefined }} ifCondition - Conditional statement block.
- * @property {{ text: string, indent: number | undefined, newLines: number | undefined }} assignment - Code block assigning query param.
- * @property {{ text: string, indent: number | undefined, newLines: number | undefined } | null} [closing] - Optional closing block (for braces, etc.).
+ * Shape of a single query parameter code block.
  */
+interface QueryParamCodeBlock {
+  variableDefinition: { text: string; indent?: number; newLines?: number };
+  ifCondition: { text: string; indent?: number; newLines?: number };
+  assignment: { text: string; indent?: number; newLines?: number };
+  closing?: { text: string; indent?: number; newLines?: number } | null;
+}
+
+type QueryParamGenerator = (param: string[]) => QueryParamCodeBlock;
 
 /**
  * Language and framework specific logic for generating query parameter code.
- * Each entry returns a {@link QueryParamCodeBlock}.
- *
- * @type {Record<Language, Record<string, function>|function>}
+ * Each entry returns a QueryParamCodeBlock.
  */
-const queryParamLogicConfig = {
-  python: (param) => {
+const queryParamLogicConfig: Record<string, QueryParamGenerator | Record<string, QueryParamGenerator>> = {
+  python: (param: string[]): QueryParamCodeBlock => {
     const paramName = param[0];
     return {
       variableDefinition: {
@@ -41,7 +40,7 @@ const queryParamLogicConfig = {
     };
   },
   java: {
-    quarkus: (param) => {
+    quarkus: (param: string[]): QueryParamCodeBlock => {
       const paramName = toCamelCase(param[0]);
       return {
         variableDefinition: {
@@ -64,7 +63,7 @@ const queryParamLogicConfig = {
       };
     },
   },
-  javascript: (param) => {
+  javascript: (param: string[]): QueryParamCodeBlock => {
     const paramName = param[0];
     return {
       variableDefinition: {
@@ -92,64 +91,67 @@ const queryParamLogicConfig = {
  * Resolve the appropriate query parameter configuration function based on language and framework.
  *
  * @private
- * @param {Language} language - The target programming language.
- * @param {string} [framework=''] - Optional framework (e.g., 'quarkus' for Java).
- * @returns {function | undefined} The configuration function for generating query parameter code.
  */
-function resolveQueryParamLogic(language, framework) {
+function resolveQueryParamLogic(language: string, framework: string): QueryParamGenerator | null {
   const config = queryParamLogicConfig[language];
   if (typeof config === 'function') {
     return config;
   }
-  if (framework && config[framework]) {
-    return config[framework];
+  if (framework && (config as Record<string, QueryParamGenerator>)[framework]) {
+    return (config as Record<string, QueryParamGenerator>)[framework];
   }
   return null;
+}
+
+interface QueryParamsVariablesProps {
+  /** The target programming language. */
+  language: string;
+  /** Optional framework for the language. */
+  framework?: string;
+  /** Array of query parameters, each represented as [paramName, paramType?]. */
+  queryParams: string[][];
 }
 
 /**
  * Renders query parameter variables code blocks.
  *
- * @param {Object} props - Component props.
- * @param {Language} props.language - The target programming language.
- * @param {string} [props.framework=''] - Optional framework for the language.
- * @param {string[][]} props.queryParams - Array of query parameters, each represented as [paramName, paramType?].
- * @returns {JSX.Element[]|null} Array of Text components for each query parameter, or null if queryParams is invalid.
- * 
+ * @param props - Component props.
+ * @returns Array of Text components for each query parameter, or null if queryParams is invalid.
+ *
  * @example
  * import path from "path";
  * import { Parser, fromFile } from "@asyncapi/parser";
  * import { getQueryParams } from "@asyncapi/generator-helpers";
  * import { QueryParamsVariables } from "@asyncapi/generator-components";
- * 
+ *
 
  * async function renderQueryParamsVariable(){
  *    const parser = new Parser();
  *    const asyncapi_v3_path = path.resolve(__dirname, "../__fixtures__/asyncapi-v3.yml");
- *    
+ *
  *    // Parse the AsyncAPI document
  *    const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
  *    const parsedAsyncAPIDocument = parseResult.document;
- *    
+ *
  *    const channels = parsedAsyncAPIDocument.channels();
  *    const queryParamsObject = getQueryParams(channels);
  *    const queryParamsArray = queryParamsObject ? Array.from(queryParamsObject.entries()) : [];
- *    
+ *
  *    const language = "java";
  *    const framework = "quarkus";
- *    
+ *
  *    return (
- *      <QueryParamsVariables 
- *          language={language} 
- *          framework={framework}   
- *          queryParams={queryParamsArray} 
+ *      <QueryParamsVariables
+ *          language={language}
+ *          framework={framework}
+ *          queryParams={queryParamsArray}
  *      />
  *    )
  * }
- * 
+ *
  * renderQueryParamsVariable().catch(console.error);
  */
-export function QueryParamsVariables({ language, framework = '', queryParams }) {
+export function QueryParamsVariables({ language, framework = '', queryParams }: QueryParamsVariablesProps): JSX.Element[] | null {
   if (!queryParams || !Array.isArray(queryParams)) {
     return null;
   }

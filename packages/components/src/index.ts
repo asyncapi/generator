@@ -22,3 +22,6 @@ export { Readme } from './components/readme/Readme';
 export { AvailableOperations } from './components/readme/AvailableOperations';
 export { OperationHeader } from './components/readme/OperationHeader';
 export { MessageExamples } from './components/readme/MessageExamples';
+
+// Re-export key types for consumers
+export type { MethodGeneratorProps } from './components/MethodGenerator';

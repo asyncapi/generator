@@ -1,4 +1,8 @@
-const stringify = (v) => {
+interface CodedError extends Error {
+  code: string;
+}
+
+const stringify = (v: unknown): string => {
   try {
     return JSON.stringify(v);
   } catch {
@@ -6,8 +10,8 @@ const stringify = (v) => {
   }
 };
 
-const isEmpty = (v) => v === undefined || v === null || v === '';
-const list = (arr) => arr.length ? arr.join(', ') : '(none)';
+const isEmpty = (v: unknown): boolean => v === undefined || v === null || v === '';
+const list = (arr: string[]): string => arr.length ? arr.join(', ') : '(none)';
 
 export const ERROR_CODES = {
   UNSUPPORTED_LANGUAGE: 'ERR_UNSUPPORTED_LANGUAGE',
@@ -24,21 +28,21 @@ export const ERROR_CODES = {
   INVALID_OPERATION: 'ERR_INVALID_OPERATION',
   UNSUPPORTED_ROLE: 'ERR_UNSUPPORTED_ROLE',
   NEGATIVE_INDENT: 'ERR_NEGATIVE_INDENT',
-};
+} as const;
 
 /**
  * Creates an error with a specific error code for programmatic handling
- * @param {string} code - The error code (from ERROR_CODES)
- * @param {string} message - The error message
- * @returns {Error} An error object with an attached code property
+ * @param code - The error code (from ERROR_CODES)
+ * @param message - The error message
+ * @returns An error object with an attached code property
  */
-function createError(code, message) {
-  const error = new Error(message);
+function createError(code: string, message: string): CodedError {
+  const error = new Error(message) as CodedError;
   error.code = code;
   return error;
 }
 
-export function unsupportedLanguage(language, supported = []) {
+export function unsupportedLanguage(language: unknown, supported: string[] = []): CodedError {
   const supportedList = list(supported);
   if (isEmpty(language)) {
     return createError(ERROR_CODES.UNSUPPORTED_LANGUAGE, `Language is required. Supported languages: ${supportedList}`);
@@ -46,7 +50,7 @@ export function unsupportedLanguage(language, supported = []) {
   return createError(ERROR_CODES.UNSUPPORTED_LANGUAGE, `Unsupported language "${language}". Supported languages: ${supportedList}`);
 }
 
-export function unsupportedFramework(language, framework, supported = []) {
+export function unsupportedFramework(language: string, framework: unknown, supported: string[] = []): CodedError {
   const supportedList = list(supported);
   if (isEmpty(framework)) {
     return createError(ERROR_CODES.UNSUPPORTED_FRAMEWORK, `Framework is required for language "${language}". Supported frameworks: ${supportedList}`);
@@ -54,43 +58,43 @@ export function unsupportedFramework(language, framework, supported = []) {
   return createError(ERROR_CODES.UNSUPPORTED_FRAMEWORK, `Unsupported framework "${framework}" for language "${language}". Supported frameworks: ${supportedList}`);
 }
 
-export function invalidMethodName(methodName) {
+export function invalidMethodName(methodName?: unknown): CodedError {
   return createError(ERROR_CODES.INVALID_METHOD_NAME, `Invalid method name. Expected a non-empty string. Received: ${stringify(methodName)}`);
 }
 
-export function invalidMethodParams(methodParams) {
+export function invalidMethodParams(methodParams: unknown): CodedError {
   return createError(ERROR_CODES.INVALID_METHOD_PARAMS, `Invalid method parameters. Expected an array. Received: ${stringify(methodParams)}`);
 }
 
-export function invalidClientName(clientName) {
+export function invalidClientName(clientName: unknown): CodedError {
   return createError(ERROR_CODES.INVALID_CLIENT_NAME, `Invalid client name. Expected a non-empty string. Received: ${stringify(clientName)}`);
 }
 
-export function invalidClientFileName(clientFileName) {
+export function invalidClientFileName(clientFileName: unknown): CodedError {
   return createError(ERROR_CODES.INVALID_CLIENT_FILE_NAME, `Invalid client file name. Expected a non-empty string. Received: ${stringify(clientFileName)}`);
 }
 
-export function invalidParams(params) {
+export function invalidParams(params: unknown): CodedError {
   return createError(ERROR_CODES.INVALID_PARAMS, `Invalid params object. Received: ${stringify(params)}`);
 }
 
-export function missingAsyncAPIDocument() {
+export function missingAsyncAPIDocument(): CodedError {
   return createError(ERROR_CODES.MISSING_ASYNC_API, 'AsyncAPI document is missing.');
 }
 
-export function missingInfo() {
+export function missingInfo(): CodedError {
   return createError(ERROR_CODES.MISSING_INFO, 'AsyncAPI "info" object is missing.');
 }
 
-export function missingServer() {
+export function missingServer(): CodedError {
   return createError(ERROR_CODES.MISSING_SERVER, 'AsyncAPI "server" object is missing.');
 }
 
-export function invalidOperation() {
+export function invalidOperation(): CodedError {
   return createError(ERROR_CODES.INVALID_OPERATION, 'Invalid AsyncAPI operation. Expected a valid operation with id().');
 }
 
-export function unsupportedRole(role, supported = []) {
+export function unsupportedRole(role: unknown, supported: string[] = []): CodedError {
   const supportedList = list(supported);
   if (isEmpty(role)) {
     return createError(ERROR_CODES.UNSUPPORTED_ROLE, `Role is required. Supported roles: ${supportedList}`);
@@ -98,14 +102,14 @@ export function unsupportedRole(role, supported = []) {
   return createError(ERROR_CODES.UNSUPPORTED_ROLE, `Unsupported role "${role}". Supported roles: ${supportedList}`);
 }
 
-function invalidNonNegativeInteger(code, field, value) {
+function invalidNonNegativeInteger(code: string, field: string, value: unknown): CodedError {
   return createError(code, `"${field}" must be >= 0. Received: ${stringify(value)}`);
 }
 
-export function invalidNewLines(newLines) {
+export function invalidNewLines(newLines: unknown): CodedError {
   return invalidNonNegativeInteger(ERROR_CODES.INVALID_NEW_LINES, 'newLines', newLines);
 }
 
-export function negativeIndent(indent) {
+export function negativeIndent(indent: unknown): CodedError {
   return invalidNonNegativeInteger(ERROR_CODES.NEGATIVE_INDENT, 'indent', indent);
 }

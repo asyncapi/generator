@@ -1,17 +1,16 @@
 import { Text } from '@asyncapi/generator-react-sdk';
 import { unsupportedLanguage } from '../utils/ErrorHandling';
 
-/**
- * @typedef {'python' | 'javascript' | 'dart'} Language
- * Supported programming languages for WebSocket onMessage handler generation.
- */
+type Language = 'python' | 'javascript' | 'dart';
+
+interface OnMessageResult {
+  onMessageMethod: string;
+}
 
 /**
  * Mapping of supported programming languages to their WebSocket onMessage event handler implementations.
- * 
- * @type {Object.<Language, Function>}
  */
-const websocketOnMessageMethod = {
+const websocketOnMessageMethod: Record<Language, () => OnMessageResult> = {
   javascript: () => {
     return {
       onMessageMethod: `// On receiving a message
@@ -77,26 +76,31 @@ const websocketOnMessageMethod = {
   }
 };
 
+interface OnMessageProps {
+  /** The programming language for which to generate onMessage handler code. */
+  language: Language;
+}
+
 /**
  * Renders a WebSocket onMessage event handler for the specified programming language.
- * 
- * @param {Object} props - Component props.
- * @param {Language} props.language - The programming language for which to generate onMessage handler code.
- * @returns {JSX.Element} A Text component containing the onMessage handler code for the specified language.
- * @throws {Error} When the specified language is not supported.
+ *
+ * @param props - Component props.
+ * @returns A Text component containing the onMessage handler code for the specified language.
+ * @throws When the specified language is not supported.
+ *
  * @example
  * import { OnMessage } from "@asyncapi/generator-components";
  * const language = "javascript";
- * 
+ *
  * function renderOnMessage() {
  *   return (
  *     <OnMessage language={language} />
  *   )
  * }
- * 
+ *
  * renderOnMessage();
  */
-export function OnMessage({ language }) {
+export function OnMessage({ language }: OnMessageProps): JSX.Element {
   const supportedLanguages = Object.keys(websocketOnMessageMethod);
   const generateOnMessageCode = websocketOnMessageMethod[language];
   

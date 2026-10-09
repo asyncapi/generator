@@ -2,30 +2,26 @@ import { Text } from '@asyncapi/generator-react-sdk';
 import { toSnakeCase } from '@asyncapi/generator-helpers';
 import { unsupportedLanguage, invalidClientName, invalidOperation } from '../utils/ErrorHandling';
 
-/**
- * @typedef {'python' | 'javascript' | 'dart'} Language
- * Supported programming languages for WebSocket send operation generation.
- */
+type Language = 'python' | 'javascript' | 'dart';
 
-/**
- * @typedef {Object} SendOperationMethods
- * @property {string} nonStaticMethod
- * @property {string} staticMethod
- */
+interface SendOperationMethods {
+  nonStaticMethod: string;
+  staticMethod: string;
+}
 
-/**
- * @callback SendOperationGenerator
- * @param {Object} operation - An AsyncAPI operation object with an id() method.
- * @param {string} clientName
- * @returns {SendOperationMethods}
- */
+// Why: AsyncAPI Parser operation objects are accessed via method calls (e.g. operation.id()).
+// This minimal interface captures what SendOperations actually calls.
+interface AsyncAPIOperation {
+  id(): string;
+}
+
+type SendOperationGenerator = (operation: AsyncAPIOperation, clientName: string) => SendOperationMethods;
 
 /**
  * Configuration object for generating WebSocket send operations for different languages.
- * @type {Object.<Language, SendOperationGenerator>}
  */
-const websocketSendOperationConfig = {
-  python: (operation, clientName) => {
+const websocketSendOperationConfig: Record<Language, SendOperationGenerator> = {
+  python: (operation: AsyncAPIOperation, clientName: string): SendOperationMethods => {
     const methodName = toSnakeCase(operation.id());
     const staticMethodName = `${methodName}_static`;
     return {
@@ -77,7 +73,7 @@ def ${staticMethodName}(message, socket):
     ${clientName}._send(message, socket)`
     };
   },
-  javascript: (operation, clientName) => {
+  javascript: (operation: AsyncAPIOperation, clientName: string): SendOperationMethods => {
     const methodName = operation.id();
     return {
       nonStaticMethod: `/**
@@ -156,7 +152,7 @@ static ${methodName}(message, socket, schemas) {
 }`
     };
   },
-  dart: (operation) => {
+  dart: (operation: AsyncAPIOperation): SendOperationMethods => {
     const methodName = operation.id();
     return {
       nonStaticMethod: `/// Send a ${methodName} message to the server
@@ -174,47 +170,53 @@ void ${methodName}(dynamic message) {
   }
 };
 
+interface SendOperationsProps {
+  /** The target programming language. */
+  language: string;
+  /** Array of send operations from AsyncAPI document. */
+  sendOperations: unknown[];
+  /** The name of the client class. */
+  clientName: string;
+}
+
 /**
  * Renders WebSocket send operation methods. Generates both static and instance methods for sending messages through WebSocket connections.
  *
- * @param {Object} props - Component props.
- * @param {Language} props.language - The target programming language.
- * @param {Array<Object>} props.sendOperations - Array of send operations from AsyncAPI document.
- * @param {string} props.clientName - The name of the client class.
- * @returns {JSX.Element[]|null} Array of Text components for static and non-static WebSocket send operation methods, or null if no send operations are provided.
- * @throws {Error} When the specified language is not supported.
- * @throws {Error} When clientName is missing or invalid.
- * @throws {Error} When operation is invalid or missing.
- * 
+ * @param props - Component props.
+ * @returns Array of Text components for static and non-static WebSocket send operation methods, or null if no send operations are provided.
+ * @throws When the specified language is not supported.
+ * @throws When clientName is missing or invalid.
+ * @throws When operation is invalid or missing.
+ *
  * @example
  * import path from "path";
  * import { Parser, fromFile } from "@asyncapi/parser";
  * import { SendOperations } from "@asyncapi/generator-components";
- * 
+ *
  * async function renderSendOperations(){
  *    const parser = new Parser();
  *    const asyncapi_v3_path = path.resolve(__dirname, '../__fixtures__/asyncapi-v3.yml');
- *    
+ *
  *    // Parse the AsyncAPI document
  *    const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
  *    const parsedAsyncAPIDocument = parseResult.document;
- *    
+ *
  *    const language = "javascript";
  *    const clientName = "AccountServiceAPI";
  *    const sendOperations = parsedAsyncAPIDocument.operations().filterBySend();
- *    
+ *
  *    return (
- *       <SendOperations 
- *          language={language} 
- *          clientName={clientName} 
- *          sendOperations={sendOperations} 
+ *       <SendOperations
+ *          language={language}
+ *          clientName={clientName}
+ *          sendOperations={sendOperations}
  *       />
  *    )
  * }
- * 
+ *
  * renderSendOperations().catch(console.error);
  */
-export function SendOperations({ language, sendOperations, clientName }) {
+export function SendOperations({ language, sendOperations, clientName }: SendOperationsProps): JSX.Element[] | null {
   if (!sendOperations || sendOperations.length === 0) {
     return null;
   }
@@ -229,14 +231,15 @@ export function SendOperations({ language, sendOperations, clientName }) {
     throw invalidClientName(clientName);
   }
 
-  const generateSendOperationCode = websocketSendOperationConfig[language];
+  const generateSendOperationCode = websocketSendOperationConfig[language as Language];
 
   return sendOperations.map((operation) => {
-    if (!operation || typeof operation.id !== 'function' || !operation.id()) {
+    const op = operation as AsyncAPIOperation;
+    if (!op || typeof op.id !== 'function' || !op.id()) {
       throw invalidOperation();
     }
 
-    const { nonStaticMethod, staticMethod } = generateSendOperationCode(operation, clientName);
+    const { nonStaticMethod, staticMethod } = generateSendOperationCode(op, clientName);
     return (
       <>
         {staticMethod ? (

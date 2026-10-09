@@ -1,23 +1,23 @@
-import { MethodGenerator } from './MethodGenerator';
+import { MethodGenerator, MethodGeneratorProps } from './MethodGenerator';
 
-/**
- * @typedef {'python' | 'javascript' | 'dart' | 'java'} Language
- * Supported programming languages.
- */
+type Language = 'python' | 'javascript' | 'dart' | 'java';
 
 /**
  * Delay in milliseconds before exiting the application after closing WebSocket connection.
  * This ensures there's enough time for cleanup operations and connection closure to complete.
  * Currently used in Java/Quarkus implementation.
- * @constant {number}
  */
 const delayExit = 1000;
 
+interface MethodConfigEntry {
+  methodDocs?: string;
+  methodLogic: string;
+}
+
 /**
  * Configuration for WebSocket close method logic per language.
- * @type {Record<Language, { methodDocs: string | undefined, methodLogic: string }>}
  */
-const websocketCloseConfig = {
+const websocketCloseConfig: Record<string, MethodConfigEntry | Record<string, MethodConfigEntry>> = {
   python: {
     methodLogic: `self._stop_event.set()
 if self.ws_app:
@@ -57,19 +57,19 @@ print('WebSocket connection closed.');`
   }
 };
 
+interface CloseConnectionProps extends Omit<MethodGeneratorProps, 'methodName' | 'methodConfig' | 'indent'> {
+  /** Name of the method to generate. */
+  methodName?: string;
+  /** Indentation level for the method block. */
+  indent?: number;
+}
+
 /**
  * Renders a WebSocket close connection method with optional pre- and post-execution logic.
  *
- * @param {Object} props - Component props.
- * @param {Language} props.language - Programming language used for method formatting.
- * @param {string} props.framework - Framework used, if any (e.g., 'quarkus' for Java).
- * @param {string} props.methodName='close' - Name of the method to generate.
- * @param {string[]} props.methodParams=[] - List of parameters for the method.
- * @param {string} props.preExecutionCode - Code to insert before the main function logic.
- * @param {string} props.postExecutionCode - Code to insert after the main function logic.
- * @param {number} props.indent=2 - Indentation level for the method block.
- * @returns {JSX.Element} A Text component that contains method block with appropriate formatting.
- * 
+ * @param props - Component props.
+ * @returns A Text component that contains method block with appropriate formatting.
+ *
  * @example
  * import { CloseConnection } from "@asyncapi/generator-components";
  * const language = "java";
@@ -82,22 +82,22 @@ print('WebSocket connection closed.');`
  *
  * function renderCloseConnection() {
  *   return (
- *     <CloseConnection 
+ *     <CloseConnection
  *        language={language}
  *        framework={framework}
  *        methodName={methodName}
  *        methodParams={methodParams}
- *        preExecutionCode={preExecutionCode} 
- *        postExecutionCode={postExecutionCode} 
- *        indent={indent} 
+ *        preExecutionCode={preExecutionCode}
+ *        postExecutionCode={postExecutionCode}
+ *        indent={indent}
  *      />
  *   );
  * }
- * 
+ *
  * renderCloseConnection();
  */
 
-export function CloseConnection({ methodName = 'close', indent = 2, ...props }) {
+export function CloseConnection({ methodName = 'close', indent = 2, ...props }: CloseConnectionProps): JSX.Element {
   return (
     <MethodGenerator
       {...props}

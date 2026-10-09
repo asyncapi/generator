@@ -2,17 +2,22 @@
 import { Text } from '@asyncapi/generator-react-sdk';
 import { unsupportedFramework, unsupportedLanguage, unsupportedRole } from '../utils/ErrorHandling';
 
-/**
- * @typedef {'python' | 'javascript' | 'dart' | 'java'} Language
- * Supported programming languages.
- */
+type Language = 'python' | 'javascript' | 'dart' | 'java';
+
+interface FlatDependencyConfig {
+  dependencies: string[];
+}
+
+interface FrameworkRoleConfig {
+  [role: string]: FlatDependencyConfig;
+}
+
+type LanguageDependencyConfig = FlatDependencyConfig | Record<string, FlatDependencyConfig | FrameworkRoleConfig>;
 
 /**
  * Mapping of supported programming languages to their default dependency import statements.
- *
- * @type {Record<Language, { dependencies: string[] }>}
  */
-const dependenciesConfig = {
+const dependenciesConfig: Record<string, LanguageDependencyConfig> = {
   python: {
     dependencies: ['import json', 'import certifi', 'import threading', 'import websocket']
   },
@@ -62,14 +67,14 @@ const dependenciesConfig = {
  * Helper function to resolve dependencies for framework and role configurations.
  *
  * @private
- * @param {Object} frameworkConfig - The framework configuration object.
- * @param {string} role - The role (e.g., 'client', 'connector' for Java).
- * @returns {string[]} Array of dependency strings or empty array.
- * @throws {Error} If the role is not supported by the framework configuration.
+ * @param frameworkConfig - The framework configuration object.
+ * @param role - The role (e.g., 'client', 'connector' for Java).
+ * @returns Array of dependency strings or empty array.
+ * @throws If the role is not supported by the framework configuration.
  */
-function resolveFrameworkDependencies(frameworkConfig, role) {
+function resolveFrameworkDependencies(frameworkConfig: Record<string, unknown>, role: string): string[] {
   if (!role) {
-    return frameworkConfig.dependencies || [];
+    return (frameworkConfig as FlatDependencyConfig).dependencies || [];
   }
 
   const supportedRoles = Object.keys(frameworkConfig);
@@ -77,21 +82,22 @@ function resolveFrameworkDependencies(frameworkConfig, role) {
     throw unsupportedRole(role, supportedRoles);
   }
 
-  return frameworkConfig[role]?.dependencies || frameworkConfig.dependencies || [];
+  const roleConfig = frameworkConfig[role] as FlatDependencyConfig | undefined;
+  return roleConfig?.dependencies || (frameworkConfig as FlatDependencyConfig).dependencies || [];
 }
 
 /**
  * Helper function to resolve dependencies based on language, framework, and role.
  *
  * @private
- * @param {Language} language - The programming language.
- * @param {string} framework - The framework (e.g., 'quarkus' for Java).
- * @param {string} role - The role (e.g., 'client', 'connector' for Java).
- * @returns {string[]} Array of dependency strings.
- * @throws {Error} When the specified language is not supported.
- * @throws {Error} When the specified framework is not supported for the given language.
+ * @param language - The programming language.
+ * @param framework - The framework (e.g., 'quarkus' for Java).
+ * @param role - The role (e.g., 'client', 'connector' for Java).
+ * @returns Array of dependency strings.
+ * @throws When the specified language is not supported.
+ * @throws When the specified framework is not supported for the given language.
  */
-function resolveDependencies(language, framework, role) {
+function resolveDependencies(language: string, framework: string, role: string): string[] {
   const config = dependenciesConfig[language];
   const supportedLanguages = Object.keys(dependenciesConfig);
   
@@ -100,50 +106,57 @@ function resolveDependencies(language, framework, role) {
   }
   
   // Handle flat structure (python, javascript, dart)
-  if (config.dependencies) {
-    return config.dependencies;
+  if ((config as FlatDependencyConfig).dependencies) {
+    return (config as FlatDependencyConfig).dependencies;
   }
   
   // Handle nested structure (java with quarkus framework and roles)
   const supportedFrameworks = Object.keys(config);
   
-  if (!config[framework]) {
+  if (!(config as Record<string, unknown>)[framework]) {
     throw unsupportedFramework(language, framework, supportedFrameworks);
   }
     
-  return resolveFrameworkDependencies(config[framework], role);
+  return resolveFrameworkDependencies((config as Record<string, unknown>)[framework] as Record<string, unknown>, role);
+}
+
+interface DependencyProviderProps {
+  /** The programming language for which to render dependency statements. */
+  language: string;
+  /** The framework (e.g., 'quarkus' for Java). */
+  framework?: string;
+  /** The role (e.g., 'client', 'connector' for Java). */
+  role?: string;
+  /** Optional additional dependencies to include. */
+  additionalDependencies?: string[];
 }
 
 /**
  * Renders the top-of-file dependency statements for the selected programming language.
  *
- * @param {Object} props - Component props.
- * @param {Language} props.language - The programming language for which to render dependency statements.
- * @param {string} [props.framework=''] - The framework (e.g., 'quarkus' for Java).
- * @param {string} [props.role=''] - The role (e.g., 'client', 'connector' for Java).
- * @param {string[]} [props.additionalDependencies=[]] - Optional additional dependencies to include.
- * @returns {JSX.Element} A Text component that contains list of import/require statements.
- * 
+ * @param props - Component props.
+ * @returns A Text component that contains list of import/require statements.
+ *
  * @example
  * import { DependencyProvider } from "@asyncapi/generator-components";
  * const language = "java";
  * const framework = "quarkus";
  * const role = "client";
  * const additionalDependencies = ["import java.util.concurrent.CompletableFuture;", "import java.time.Duration;"];
- * 
+ *
  * function renderDependencyProvider() {
  *   return (
- *     <DependencyProvider 
- *        language={language} 
- *        framework={framework} 
- *        role={role} 
- *        additionalDependencies={additionalDependencies} 
+ *     <DependencyProvider
+ *        language={language}
+ *        framework={framework}
+ *        role={role}
+ *        additionalDependencies={additionalDependencies}
  *     />
  *   )
  * }
  * renderDependencyProvider();
  */
-export function DependencyProvider({ language, framework = '', role = '', additionalDependencies = [] }) {
+export function DependencyProvider({ language, framework = '', role = '', additionalDependencies = [] }: DependencyProviderProps): JSX.Element {
   const dependencies = resolveDependencies(language, framework, role);
 
   const allDependencies = [...dependencies, ...additionalDependencies];

@@ -5,18 +5,19 @@ import { OnError } from './OnError';
 import { OnClose } from './OnClose';
 import { unsupportedLanguage } from '../utils/ErrorHandling';
 
-/**
- * @typedef {'python' | 'javascript' | 'dart'} Language
- * Supported programming languages for WebSocket connection method generation.
- */
+type Language = 'python' | 'javascript' | 'dart';
+
+interface ConnectResult {
+  connectMethod: string;
+}
+
+type ConnectGenerator = (...args: string[]) => ConnectResult;
 
 /**
  * Mapping of supported programming languages to their WebSocket connection method implementations.
- * 
- * @type {Object.<Language, Function>}
  */
-const websocketConnectMethod = {
-  javascript: (onOpenMethod, onMessageMethod, onErrorMethod, onCloseMethod) => {
+const websocketConnectMethod: Record<Language, ConnectGenerator> = {
+  javascript: (onOpenMethod: string, onMessageMethod: string, onErrorMethod: string, onCloseMethod: string): ConnectResult => {
     return {
       connectMethod: `// Method to establish a WebSocket connection
 connect() {
@@ -30,7 +31,7 @@ connect() {
 }`
     };
   },
-  python: (onOpenMethod, onMessageMethod, onErrorMethod, onCloseMethod) => {
+  python: (onOpenMethod: string, onMessageMethod: string, onErrorMethod: string, onCloseMethod: string): ConnectResult => {
     const onConnectMethod = `def connect(self):
     """Establish the connection and start the run_forever loop in a background thread."""
     ssl_opts = {"ca_certs": certifi.where()}
@@ -65,7 +66,7 @@ ${onCloseMethod}
 ${onConnectMethod}`
     };
   },
-  dart: (onMessageMethod, onErrorMethod, onCloseMethod, title) => {
+  dart: (onMessageMethod: string, onErrorMethod: string, onCloseMethod: string, title: string): ConnectResult => {
     return {
       connectMethod: `/// Method to establish a WebSocket connection
 Future<void> connect() async {
@@ -92,32 +93,37 @@ Future<void> connect() async {
   }
 };
 
+interface ConnectProps {
+  /** The programming language for which to generate connection code. */
+  language: Language;
+  /** The title of the WebSocket server. */
+  title: string;
+}
+
 /**
  * Renders a WebSocket connection method for the specified programming language.
- * 
- * @param {Object} props - Component props.
- * @param {Language} props.language - The programming language for which to generate connection code.
- * @param {string} props.title - The title of the WebSocket server.
- * @return {JSX.Element} A Text component containing the generated WebSocket connection code for the specified language.
+ *
+ * @param props - Component props.
+ * @returns A Text component containing the generated WebSocket connection code for the specified language.
  * @throws When the specified language is not supported.
- * 
+ *
  * @example
  * import { Connect } from "@asyncapi/generator-components";
  * const language = "python";
  * const title = "HoppscotchEchoWebSocketClient";
- * 
+ *
  * function renderConnect() {
  *   return(
- *    <Connect 
- *        language={language} 
- *        title={title} 
+ *    <Connect
+ *        language={language}
+ *        title={title}
  *    />
  *   )
  * }
- * 
+ *
  * renderConnect();
  */
-export function Connect({ language, title }) {
+export function Connect({ language, title }: ConnectProps): JSX.Element {
   const supportedLanguages = Object.keys(websocketConnectMethod);
   const generateConnectCode = websocketConnectMethod[language];
 
@@ -130,7 +136,7 @@ export function Connect({ language, title }) {
   const onErrorMethod = render(<OnError language={language} />);
   const onCloseMethod = render(<OnClose language={language} title={title} />);
 
-  let connectMethod;
+  let connectMethod: string;
   
   if (language === 'dart') {
     const result = generateConnectCode(onMessageMethod, onErrorMethod, onCloseMethod, title);

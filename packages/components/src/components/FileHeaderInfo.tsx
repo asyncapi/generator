@@ -1,16 +1,17 @@
 import { Text } from '@asyncapi/generator-react-sdk';
 import { unsupportedLanguage, missingInfo, missingServer } from '../utils/ErrorHandling';
 
-/**
- * @typedef {'python' | 'javascript' | 'typescript' | 'java' | 'csharp' | 'rust' | 'dart'} Language
- * Supported programming languages.
- */
+type Language = 'python' | 'javascript' | 'typescript' | 'java' | 'csharp' | 'rust' | 'dart';
+
+interface CommentStyle {
+  commentChar: string;
+  lineStyle: string;
+}
 
 /**
  * Mapping of supported programming languages to their respective comment syntax configurations.
- * @type {Record<Language, { commentChar: string, lineStyle: string }>}
  */
-const commentConfig = {
+const commentConfig: Record<Language, CommentStyle> = {
   python: {  commentChar: '#', lineStyle: '#'.repeat(50) },
   javascript: { commentChar: '//', lineStyle: '//'.repeat(25) },
   typescript: { commentChar: '//', lineStyle: '//'.repeat(25) },
@@ -20,44 +21,46 @@ const commentConfig = {
   dart: { commentChar: '///', lineStyle: '///' }
 };
 
+interface FileHeaderInfoProps {
+  info: unknown;
+  server: unknown;
+  language: string;
+}
 /**
  * Renders a file header with metadata information such as title, version, protocol, host, and path.
  *
- * @param {Object} props - Component props.
- * @param {Object} props.info - Info object from the AsyncAPI document.
- * @param {Object} props.server - Server object from the AsyncAPI document.
- * @param {Language} props.language - Programming language used for comment formatting.
- * @returns {JSX.Element} A Text component that contains file header.
- * @throws {Error} When info is missing or invalid.
- * @throws {Error} When server is missing or invalid.
- * @throws {Error} When the specified language is not supported.
- * 
+ * @param props - Component props.
+ * @returns A Text component that contains file header.
+ * @throws When info is missing or invalid.
+ * @throws When server is missing or invalid.
+ * @throws When the specified language is not supported.
+ *
  * @example
  * import path from "path";
  * import { Parser, fromFile } from "@asyncapi/parser";
  * import { FileHeaderInfo } from "@asyncapi/generator-components";
- * 
+ *
  * async function renderFileHeader() {
  *   const parser = new Parser();
  *   const asyncapi_websocket_query = path.resolve(__dirname, "../../../helpers/test/__fixtures__/asyncapi-websocket-query.yml");
  *   const language = "javascript";
- *   
- *   // Parse the AsyncAPI document 
+ *
+ *   // Parse the AsyncAPI document
  *   const parseResult = await fromFile(parser, asyncapi_websocket_query).parse();
  *   const parsedAsyncAPIDocument = parseResult.document;
- *   
+ *
  *   return (
- *     <FileHeaderInfo 
- *       info={parsedAsyncAPIDocument.info()} 
- *       server={parsedAsyncAPIDocument.servers().get("withPathname")} 
- *       language={language} 
+ *     <FileHeaderInfo
+ *       info={parsedAsyncAPIDocument.info()}
+ *       server={parsedAsyncAPIDocument.servers().get("withPathname")}
+ *       language={language}
  *     />
  *   )
  * }
- * 
+ *
  * renderFileHeader().catch(console.error);
  */
-export function FileHeaderInfo({ info, server, language }) {
+export function FileHeaderInfo({ info, server, language }: FileHeaderInfoProps): JSX.Element {
   if (!info) {
     throw missingInfo();
   }

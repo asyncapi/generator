@@ -1,51 +1,58 @@
 import { Text } from '@asyncapi/generator-react-sdk';
 import { missingInfo } from '../../utils/ErrorHandling';
 
+interface OverviewProps {
+  /** Info object from the AsyncAPI document. */
+  info: unknown;
+  /** Title from the AsyncAPI document. */
+  title: string;
+  /** ServerUrl from a specific server from the AsyncAPI document. */
+  serverUrl: string;
+}
+
 /**
  * Renders an overview section for a WebSocket client. Displays the API description, version, and server URL.
- * 
- * @param {Object} props - Component props 
- * @param {Object} props.info - Info object from the AsyncAPI document.
- * @param {string} props.title - Title from the AsyncAPI document.
- * @param {string} props.serverUrl - ServerUrl from a specific server from the AsyncAPI document.
- * @returns {JSX.Element} A Text component that contains the Overview of a Websocket client.
- * @throws {Error} When an info object is missing or invalid.
- * 
+ *
+ * @param props - Component props
+ * @returns A Text component that contains the Overview of a Websocket client.
+ * @throws When an info object is missing or invalid.
+ *
  * @example
- *  
+ *
  * import path from "path";
  * import { Parser, fromFile } from "@asyncapi/parser";
  * import { getServer, getServerUrl } from '@asyncapi/generator-helpers';
  * import { Overview } from "@asyncapi/generator-components";
- * 
+ *
  * async function renderOverview(){
  *   const parser = new Parser();
  *   const asyncapi_websocket_query = path.resolve(__dirname, '../../../helpers/test/__fixtures__/asyncapi-websocket-query.yml');
- * 
+ *
  *   //parse the AsyncAPI document
  *   const parseResult = await fromFile(parser, asyncapi_websocket_query).parse();
  *   const parsedAsyncAPIDocument = parseResult.document;
- * 
+ *
  *   const info = parsedAsyncAPIDocument.info();
  *   const title = info.title();
  *   const server = getServer(parsedAsyncAPIDocument.servers(), 'withoutPathName');
  *   const serverUrl = getServerUrl(server);
- * 
+ *
  *   return (
- *      <Overview 
- *        info={info} 
- *        title={title} 
- *        serverUrl={serverUrl} 
+ *      <Overview
+ *        info={info}
+ *        title={title}
+ *        serverUrl={serverUrl}
  *      />
  *   )
  * }
- * 
+ *
  * renderOverview().catch(console.error);
- * 
+ *
  */
 
-export function Overview({ info, title, serverUrl }) {
-  if (!info || typeof info.version !== 'function') {
+export function Overview({ info, title, serverUrl }: OverviewProps): JSX.Element {
+  const infoObj = info as { version?: () => string; description?: () => string | undefined } | null | undefined;
+  if (!infoObj || typeof infoObj.version !== 'function') {
     throw missingInfo();
   }
 
@@ -53,12 +60,11 @@ export function Overview({ info, title, serverUrl }) {
     <Text newLines={2}>
       {`## Overview
 
-${info.description() || `A WebSocket client for ${title}.`}
+${infoObj.description?.() || `A WebSocket client for ${title}.`}
 
-- **Version:** ${info.version()}
+- **Version:** ${infoObj.version()}
 - **Server URL:** ${serverUrl}
 `}
     </Text>
   );
 }
-

@@ -1,15 +1,16 @@
-import { MethodGenerator } from './MethodGenerator';
+import { MethodGenerator, MethodGeneratorProps } from './MethodGenerator';
 
-/**
- * @typedef {'python' | 'javascript' | 'dart'} Language
- * Supported programming languages.
- */
+type Language = 'python' | 'javascript' | 'dart';
+
+interface MethodConfigEntry {
+  methodDocs?: string;
+  methodLogic: string;
+}
 
 /**
  * Configuration for WebSocket error handler registration method logic per language.
- * @type {Record<Language, { methodDocs: string | undefined, methodLogic: string }>}
  */
-const websocketErrorRegisterConfig = {
+const websocketErrorRegisterConfig: Record<Language, MethodConfigEntry> = {
   python: {
     methodLogic: `if callable(handler):
   self.error_handlers.append(handler)
@@ -30,18 +31,17 @@ else:
   }
 };
 
+interface RegisterErrorHandlerProps extends Omit<MethodGeneratorProps, 'methodName' | 'methodConfig' | 'indent' | 'newLines'> {
+  /** Name of the method to generate. */
+  methodName?: string;
+}
+
 /**
  * Renders a WebSocket error handler registration method with optional pre- and post-execution logic.
  *
- * @param {Object} props - Component props.
- * @param {Language} props.language - Programming language used for method formatting.
- * @param {string} props.methodName='registerErrorHandler' - Name of the method to generate.
- * @param {string[]} props.methodParams=[] - List of parameters for the method.
- * @param {string} props.preExecutionCode - Code to insert before the main function logic.
- * @param {string} props.postExecutionCode - Code to insert after the main function logic.
- * @param {Object} [props.customMethodConfig] - Optional overrides for default method configuration.
- * @returns {JSX.Element} A Text component that contains method block with appropriate formatting.
- * 
+ * @param props - Component props.
+ * @returns A Text component that contains method block with appropriate formatting.
+ *
  * @example
  * import { RegisterErrorHandler } from "@asyncapi/generator-components";
  * const language = "python";
@@ -50,23 +50,23 @@ else:
  * const preExecutionCode = "# Pre-register operations";
  * const postExecutionCode = "# Post-register operations";
  * const customMethodConfig = { returnType: "int", openingTag: "{", closingTag: "}", indentSize: 2};
- * 
+ *
  * function renderRegisterErrorHandler() {
  *  return (
- *    <RegisterErrorHandler 
- *       language={language} 
- *       methodName={methodName} 
- *       methodParams={methodParams} 
- *       preExecutionCode={preExecutionCode} 
- *       postExecutionCode={postExecutionCode} 
- *       customMethodConfig={customMethodConfig}   
+ *    <RegisterErrorHandler
+ *       language={language}
+ *       methodName={methodName}
+ *       methodParams={methodParams}
+ *       preExecutionCode={preExecutionCode}
+ *       postExecutionCode={postExecutionCode}
+ *       customMethodConfig={customMethodConfig}
  *    />
  *  )
  * }
- * 
+ *
  * renderRegisterErrorHandler();
  */
-export function RegisterErrorHandler({ methodName = 'registerErrorHandler', ...props }) {
+export function RegisterErrorHandler({ methodName = 'registerErrorHandler', ...props }: RegisterErrorHandlerProps): JSX.Element {
   return (
     <MethodGenerator
       {...props}

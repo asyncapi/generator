@@ -1,18 +1,21 @@
 import { Text } from '@asyncapi/generator-react-sdk';
 import { unsupportedFramework, unsupportedLanguage } from '../utils/ErrorHandling';
 
-/**
- * @typedef {'python' | 'javascript' | 'java'} Language
- * Supported programming languages for WebSocket onOpen handler generation.
- */
+type Language = 'python' | 'javascript' | 'java';
+
+interface OnOpenResult {
+  onOpenMethod: string;
+  indent?: number;
+  newLines?: number;
+}
+
+type OnOpenGenerator = (title: string) => OnOpenResult;
 
 /**
  * Mapping of supported programming languages to their WebSocket onOpen event handler implementations.
- * 
- * @type {Object.<Language, (Function|Object.<string, Function>)>}
  */
-const websocketOnOpenMethod = {
-  javascript: (title) => {
+const websocketOnOpenMethod: Record<string, OnOpenGenerator | Record<string, OnOpenGenerator>> = {
+  javascript: (title: string): OnOpenResult => {
     return {
       onOpenMethod: `// On successful connection
       this.websocket.onopen = () => {
@@ -21,14 +24,14 @@ const websocketOnOpenMethod = {
     };`
     };
   },
-  python: (title) => {
+  python: (title: string): OnOpenResult => {
     return {
       onOpenMethod: `def on_open(self, ws):
   print("Connected to ${title} server")`
     };
   },
   java: {
-    quarkus: (title) => {
+    quarkus: (title: string): OnOpenResult => {
       const onOpenMethod = `@OnOpen
 public void onOpen() {
     String broadcastMessage = "Echo called from ${title} server";
@@ -39,56 +42,59 @@ public void onOpen() {
     }
   }
 };
+
 /**
  * Resolves the appropriate onOpen code generator for the given language and optional framework.
  *
  * @private
- * @param {Language} language - The target programming language.
- * @param {string} [framework=''] - Optional framework variant (e.g., 'quarkus' for java).
- * @returns {Function|null} The code generator function, or null if not found.
  */
-
-const resolveOpenConfig = (language, framework) => {
+const resolveOpenConfig = (language: string, framework: string): OnOpenGenerator | null => {
   const config = websocketOnOpenMethod[language];
   if (typeof config === 'function') {
     return config;
   }
-  if (framework && typeof config[framework] === 'function') {
-    return config[framework];
+  if (framework && typeof (config as Record<string, OnOpenGenerator>)[framework] === 'function') {
+    return (config as Record<string, OnOpenGenerator>)[framework];
   }
   return null;
 };
 
+interface OnOpenProps {
+  /** The programming language for which to generate onOpen handler code. */
+  language: Language;
+  /** Optional framework variant (e.g., 'quarkus' for java). */
+  framework?: string;
+  /** The title of the WebSocket server. */
+  title: string;
+}
+
 /**
  * Renders a WebSocket onOpen event handler for the specified programming language.
- * 
- * @param {Object} props - Component props.
- * @param {Language} props.language - The programming language for which to generate onOpen handler code.
- * @param {string} [props.framework=''] - Optional framework variant (e.g., 'quarkus' for java).
- * @param {string} props.title - The title of the WebSocket server.
- * @returns {JSX.Element} A Text component containing the onOpen handler code for the specified language.
- * @throws {Error} When the specified language is not supported.
- * @throws {Error} When the specified framework is not supported for the given language.
- * 
+ *
+ * @param props - Component props.
+ * @returns A Text component containing the onOpen handler code for the specified language.
+ * @throws When the specified language is not supported.
+ * @throws When the specified framework is not supported for the given language.
+ *
  * @example
  * import { OnOpen } from "@asyncapi/generator-components";
  * const language = "java";
  * const framework = "quarkus";
  * const title = "HoppscotchEchoWebSocketClient";
- * 
+ *
  * function renderOnOpen() {
  *   return (
- *     <OnOpen 
- *        language={language} 
- *        framework={framework} 
- *        title={title} 
+ *     <OnOpen
+ *        language={language}
+ *        framework={framework}
+ *        title={title}
  *     />
  *   )
  * }
- * 
+ *
  * renderOnOpen();
  */
-export function OnOpen({ language, framework='', title }) {
+export function OnOpen({ language, framework='', title }: OnOpenProps): JSX.Element {
   let indent = 0;
   let newLines = 1;
 

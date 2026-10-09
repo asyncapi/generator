@@ -2088,7 +2088,8 @@ class SlackWebsocketAPIClient {
     }
     const queryString = querystring.stringify(params);
     if (queryString) {
-      this.url += '?' + queryString;
+      const separator = this.url.includes('?') ? '&' : '?';
+      this.url += separator + queryString;
     }
 
     this.websocket = null;

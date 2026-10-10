@@ -1,4 +1,4 @@
-const path = require('path');
+const path = require('node:path');
 const baseConfig = require('../../jest.config.base');
 
 // Why: Jest sets NODE_ENV=test, so react/jsx-runtime loads its dev build and warns about missing list keys.

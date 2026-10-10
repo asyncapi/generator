@@ -1,3 +1,5 @@
+const { isKeyword, isStrictBindReservedWord } = require('@babel/helper-validator-identifier');
+
 /**
  * Validate and retrieve the AsyncAPI info object from an AsyncAPI document.
  *
@@ -89,6 +91,82 @@ const upperFirst = (inputStr) => {
   return inputStr.charAt(0).toUpperCase() + inputStr.slice(1);
 };
 
+/**
+ * Names reserved by the generated WebSocket client constructor.
+ * These are used as parameter or local-variable names in the constructor body,
+ * so query-parameter identifiers that collide must be prefixed.
+ */
+const CONSTRUCTOR_RESERVED_NAMES = new Set([
+  'url',
+  'throwSendErrors',
+  'params',
+  'queryString',
+  'process',
+  'querystring'
+]);
+
+/**
+ * Converts an AsyncAPI query parameter name into a safe JavaScript identifier.
+ *
+ * The function camelCases the input, strips invalid identifier characters,
+ * prefixes with `_` when the result starts with a digit or is a JavaScript
+ * keyword / strict-mode reserved word, and checks the built-in
+ * constructor-reserved names the same way.
+ *
+ * **Collision detection:** when two different AsyncAPI names produce the same
+ * identifier the function throws instead of silently renaming, so the user
+ * gets a clear generation-time error rather than broken code.
+ *
+ * @param {string} name - The original AsyncAPI query parameter name.
+ * @param {Map<string,string>} [usedNames=new Map()] - A Map whose keys are
+ *   already-claimed identifiers and values are the original AsyncAPI names
+ *   that produced them. The map is mutated (the new mapping is added).
+ * @returns {string} A safe JavaScript identifier.
+ * @throws {Error} When `name` cannot produce a valid JavaScript identifier,
+ *   or when two different AsyncAPI names collide on the same identifier.
+ */
+const getSafeJSName = (name, usedNames = new Map()) => {
+  let safe = toCamelCase(name);
+
+  // Why: toCamelCase strips most non-identifier chars, but a few edge cases
+  // (e.g. lone non-ASCII symbols) can slip through — clean them out.
+  safe = safe.replace(/[^a-zA-Z0-9_$]/g, '');
+
+  if (safe.length === 0) {
+    throw new Error(
+      `Cannot generate JavaScript client: query parameter "${name}" cannot be converted to a valid JavaScript identifier.`
+    );
+  }
+
+  if ((/^[0-9]/).test(safe)) {
+    safe = `_${safe}`;
+  }
+
+  // Why: isKeyword covers all ES2015+ keywords (break, class, const, …).
+  // isStrictBindReservedWord covers strict-mode bindings (eval, arguments,
+  // implements, interface, let, package, private, protected, public, static,
+  // yield) plus literals (true, false, null) and future-reserved words (enum).
+  // Why: inModule=false (omitted) is intentional — the generated client is CJS,
+  // where `await` is a valid identifier. Passing true would over-restrict.
+  if (isKeyword(safe) || isStrictBindReservedWord(safe)) {
+    safe = `_${safe}`;
+  }
+
+  if (CONSTRUCTOR_RESERVED_NAMES.has(safe)) {
+    safe = `_${safe}`;
+  }
+
+  if (usedNames.has(safe)) {
+    const previousName = usedNames.get(safe);
+    throw new Error(
+      `Cannot generate JavaScript client: query parameters "${previousName}" and "${name}" both produce "${safe}".`
+    );
+  }
+  usedNames.set(safe, name);
+
+  return safe;
+};
+
 module.exports = {
   getClientName,
   getTitle,
@@ -96,5 +174,6 @@ module.exports = {
   toSnakeCase,
   toCamelCase,
   lowerFirst,
-  upperFirst
+  upperFirst,
+  getSafeJSName
 };

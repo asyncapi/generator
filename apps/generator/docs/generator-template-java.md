@@ -61,12 +61,12 @@ Add the following code snippet to your package.json file:
     "version": "0.0.1",
     "description": "A template that generates a Java MQTT client using MQTT.",
     "generator": {
-      "apiVersion": "v1",
-      "generator": ">=1.10.0 <2.0.0",
+      "apiVersion": "v3",
+      "generator": ">=2.0.0 <4.0.0",
       "supportedProtocols": ["mqtt"]
     },
     "dependencies": {
-      "@asyncapi/generator-react-sdk": "^0.2.25"
+      "@asyncapi/generator-react-sdk": "^1.1.3"
     },
     "devDependencies": {
       "rimraf": "^5.0.0"
@@ -90,11 +90,11 @@ export default function ({ asyncapi }) {
 }
 ```
 
-To see this in action, navigate to the `java-mqtt-client-template` directory. Then, run `asyncapi generate fromTemplate src/fixtures/asyncapi.yml ./ --output src/main/java` command in your terminal. You should get  a sucess message as shown below and a `Client.java` file in `src/main/java`.
+To see this in action, navigate to the `java-mqtt-client-template` directory. Then, run `asyncapi generate fromTemplate src/fixtures/asyncapi.yml ./ --output src/main/java` command in your terminal. You should get a success message as shown below and a `Client.java` file in `src/main/java`.
 
 ``` cmd
 Generation in progress. Keep calm and wait a bit... done
-Check out your shiny new generated files at test/project.
+Check out your shiny new generated files at src/main/java.
 ```
 
 ### 2. Create the Java client
@@ -204,7 +204,7 @@ public class TestClient {
         int idLength = 8;
         int minValue = (int) Math.pow(10, idLength - 1); // Minimum 8-digit number (e.g., 10000000)
         int maxValue = (int) Math.pow(10, idLength) - 1; // Maximum 8-digit number (e.g., 99999999)
-        System.out.println("Validating generated generated Client.java");
+        System.out.println("Validating generated Client.java");
         System.out.println("Running tests in TestClient.java");
         System.out.println("Sending temperature changes to the broker...");
         System.err.println("\n");
@@ -286,8 +286,8 @@ In **package.json** define a script property that you invoke by calling `npm run
     "version": "0.0.1",
     "description": "A template that generates a Java MQTT client using MQTT.",
     "generator": {
-      "apiVersion": "v1",
-      "generator": ">=1.10.0 <2.0.0",
+      "apiVersion": "v3",
+      "generator": ">=2.0.0 <4.0.0",
       "supportedProtocols": ["mqtt"],
       "parameters": {
             "server": {
@@ -303,7 +303,7 @@ In **package.json** define a script property that you invoke by calling `npm run
         "test": "npm run test:clean && npm run test:generate && npm run test:start"
     },
     "dependencies": {
-      "@asyncapi/generator-react-sdk": "^0.2.25"
+      "@asyncapi/generator-react-sdk": "^1.1.3"
     },
     "devDependencies": {
       "rimraf": "^5.0.0"
@@ -315,17 +315,17 @@ Run `npm test` to see if everything is working.
 
 #### 5a. Creating more reusable components
 
-Similar to the previous `TopicFunction` function we will create a function to make reusable components regardless of the number of channels in the asyncAPI document. 
+Similar to the `TopicFunction` component from the Python tutorial, you create a component that generates one function for each operation marked with `action: receive`. It works for any number of operations in the AsyncAPI document.
 
-Create a **components** directory at the root of your project and create a file named `TopicFunction.js` and add the code snippet below:
+Create a **components** directory at the root of your project, create a file named `TopicFunction.js` in it, and add the code snippet below:
 
 ```js
 /*
  * This component returns a block of functions that users can use to send messages to specific topics.
- * As input it requires a list of Channel models from the parsed AsyncAPI document.
+ * As input it requires a list of Operation models from the parsed AsyncAPI document marked with `action: receive`.
  */
-export function TopicFunction({ channels }) {
-  const topicsDetails = getTopics(channels);
+export function TopicFunction({ operations }) {
+  const topicsDetails = getTopics(operations);
   let functions = '';
 
   topicsDetails.forEach((t) => {
@@ -344,53 +344,58 @@ export function TopicFunction({ channels }) {
 
   return functions;
 }
-  
-  /*
-   * This function returns a list of objects, one for each channel, each containing two properties: `name` and `topic`.
-   * name - holds information about the `operationId` definedin the AsyncAPI document
-   * topic - holds information about the topic's address.
-   *
-   * It requires as input, a list of Channel models from the parsed AsyncAPI document.
-   */
-  function getTopics(channels) {
-    const channelsCanSendTo = channels
-    let topicsDetails = []
-  
-    channelsCanSendTo.forEach((ch) => {
-      const topic = {}
-      const operationId = ch.operations().filterByReceive()[0].id()
-      topic.name = operationId.charAt(0).toUpperCase() + operationId.slice(1)
-      topic.topic = ch.address()
-  
-      topicsDetails.push(topic)
-    })
-  
-    return topicsDetails
-  }
 
+/*
+ * This function returns a list of objects, one for each operation, each containing two properties: `name` and `topic`.
+ * name - holds the ID of the operation from the AsyncAPI document
+ * topic - holds the address of the channel the operation uses
+ *
+ * It requires as input, a list of Operation models from the parsed AsyncAPI document.
+ */
+function getTopics(operations) {
+  let topicsDetails = [];
+
+  operations.forEach((op) => {
+    const channels = op.channels().all();
+    if (!channels.length) return;
+
+    const operationId = op.id();
+
+    topicsDetails.push({
+      name: operationId.charAt(0).toUpperCase() + operationId.slice(1),
+      topic: channels[0].address()
+    });
+  });
+
+  return topicsDetails;
+}
 ```
+
+In AsyncAPI v3, an operation references its channel, so `getTopics` reads the topic from `op.channels()`. The operation ID is the key of the operation in the `operations` section of the AsyncAPI document.
 
 Import the `TopicFunction` component in your template code in **index.js** and add the template code to generate the functions for the topics which the `Temperature Service` application is subscribed to. In your case, the final version of your template code should look like this:
 
 ```js
-import { File, Text } from '@asyncapi/generator-react-sdk';
+import { File } from '@asyncapi/generator-react-sdk';
 import { TopicFunction } from '../components/TopicFunction'
 
 export default function ({ asyncapi, params }) {
-    let channels = asyncapi.channels().filterByReceive();  // Get all the channels that receive messages
+    // Get all the operations that the Temperature Service receives messages on
+    const operations = asyncapi.operations().filterByReceive();
+    // Get the server that the user passes with the `server` parameter
+    const server = asyncapi.servers().get(params.server);
 
     // Generate Java code for each topic dynamically using TopicFunction
-    const topicMethods = TopicFunction({ channels });  // This will return Java methods as text
-    
+    const topicMethods = TopicFunction({ operations });  // This will return Java methods as text
+
     return (
     <File name="Client.java">
     {
-      
+
 `import org.eclipse.paho.client.mqttv3.*;
 
 public class Client {
-    private static final String BROKER_URL = "${asyncapi.servers().get(params.server).url()}";
-    private static final String TOPIC = "temperature/changed";
+    private static final String BROKER_URL = "tcp://${server.host()}";
 
     private MqttClient client;
 
@@ -426,6 +431,8 @@ public class Client {
 }
 ```
 
+In AsyncAPI v3, a server defines its `host` and `protocol` separately. The Paho Java client expects a broker URL with the `tcp://` scheme, so the template adds it in front of `server.host()`. If the host has no port, Paho connects to the default MQTT port `1883`.
+
 Now your directory should look like this:
 
 ```
@@ -446,10 +453,10 @@ java-mqtt-client-template
 
 #### 5b. Update AsyncAPI document with more channels
 
-Add the following AsyncAPI document to have more channels:
+Replace the content of **src/fixtures/asyncapi.yml** with the following AsyncAPI document that has two channels:
 
 ```yaml
-asyncapi: 2.6.0
+asyncapi: 3.0.0
 
 info:
   title: Temperature Service
@@ -458,35 +465,38 @@ info:
 
 servers:
   dev:
-    url: tcp://test.mosquitto.org:1883
+    host: test.mosquitto.org #in case you're using local mosquitto instance, change this value to localhost.
     protocol: mqtt
 
 channels:
-  temperature/dropped:
-    description:  Notifies the user when the temperature drops past a certain point.
-    publish:
-      operationId: temperatureDrop
-      message:
+  temperatureDropped:
+    address: temperature/dropped
+    messages:
+      temperatureDrop:
         description: Message that is being sent when the temperature drops past a certain point.
         payload:
-          type: object
-          additionalProperties: false
-          properties:
-            temperatureId:
-              type: string
-
-  temperature/risen:
-    description: Notifies the user when the temperature rises past a certain point.
-    publish:
-      operationId: temperatureRise
-      message:
+          $ref: '#/components/schemas/temperatureId'
+    description: Notifies the user when the temperature drops past a certain point.
+  temperatureRisen:
+    address: temperature/risen
+    messages:
+      temperatureRise:
         description: Message that is being sent when the temperature rises past a certain point.
         payload:
-          type: object
-          additionalProperties: false
-          properties:
-            temperatureId:
-              type: string
+          $ref: '#/components/schemas/temperatureId'
+    description: Notifies the user when the temperature rises past a certain point.
+
+operations:
+  temperatureDrop:
+    action: receive
+    summary: Message sent to the broker when the temperature is dropped.
+    channel:
+      $ref: '#/channels/temperatureDropped'
+  temperatureRise:
+    action: receive
+    summary: Message sent to the broker when the temperature is risen.
+    channel:
+      $ref: '#/channels/temperatureRisen'
 
 components:
   schemas:
@@ -513,7 +523,7 @@ public class TestClient {
         int idLength = 8;
         int minValue = (int) Math.pow(10, idLength - 1); // Minimum 8-digit number (e.g., 10000000)
         int maxValue = (int) Math.pow(10, idLength) - 1; // Maximum 8-digit number (e.g., 99999999)
-        System.out.println("Validating generated generated Client.java");
+        System.out.println("Validating generated Client.java");
         System.out.println("Running tests in TestClient.java");
         System.out.println("Sending temperature changes to the broker...");
         System.err.println("\n");
@@ -538,9 +548,9 @@ public class TestClient {
 Run `npm test` to validate that everything works as expected. You should see logs similar to the snippet below in your terminal:
 
 ```cmd
-Connected to MQTT broker: tcp://test.mosquitto.org:1883
+Connected to MQTT broker: tcp://test.mosquitto.org
 
-Validating generated generated Client.java
+Validating generated Client.java
 Running tests in TestClient.java
 Sending temperature changes to the broker...
 TemperatureDrop change sent: 43289900

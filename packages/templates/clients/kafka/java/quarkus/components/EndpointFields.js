@@ -13,7 +13,7 @@ export function EndpointFields({ sendOperations, channels }) {
         const producerName = `${upperFirst(topicName)  }Producer`;
 
         return (
-          <Text key={producerName} newLines={2}>
+          <Text newLines={2}>
             {`
     @Inject
     ${producerName} producer;`}

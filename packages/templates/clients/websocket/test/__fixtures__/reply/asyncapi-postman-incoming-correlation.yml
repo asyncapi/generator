@@ -1,0 +1,66 @@
+asyncapi: 3.0.0
+
+info:
+  title: Postman Echo WebSocket Client with Reply (Incoming Correlation Only)
+  version: 1.0.0
+  description: >
+    Test fixture for reply handling with correlation ID only on incoming message.
+    Template should extract correlation ID and pass to handler, but not auto-inject into reply.
+
+servers:
+  echoServer:
+    host: ws.postman-echo.com
+    pathname: /raw
+    protocol: wss
+
+channels:
+  echo:
+    description: The main channel where messages are sent and echoed back by the Postman Echo WebSocket server.
+    address: /
+    messages:
+      echoMessage:
+        $ref: '#/components/messages/echoMessage'
+
+operations:
+  sendEchoMessage:
+    summary: Send a message to the Postman Echo server and receive a reply.
+    action: send
+    channel: 
+      $ref: '#/channels/echo'
+    messages:
+      - $ref: '#/channels/echo/messages/echoMessage'
+    reply:
+      channel: 
+        $ref: '#/channels/echo'
+      messages:
+        - $ref: '#/channels/echo/messages/echoMessage'
+
+components:
+  messages:
+    echoMessage:
+      summary: A message exchanged with the echo server with correlation ID.
+      correlationId:
+        location: $message.payload#/requestId
+      payload:
+        type: object
+        properties:
+          requestId:
+            type: string
+            description: Unique request identifier
+          message:
+            type: string
+            description: Message to echo back
+          timestamp:
+            type: string
+            description: Request timestamp
+      examples:
+        - name: stringWithId
+          payload:
+            requestId: req-12345
+            message: test
+            timestamp: '2025-12-23T10:00:00Z'
+        - name: objectWithId
+          payload:
+            requestId: req-67890
+            message: test text
+            timestamp: '2025-12-23T10:00:00Z'

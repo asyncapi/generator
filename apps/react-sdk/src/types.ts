@@ -2,6 +2,7 @@ import React from "react";
 import { AsyncAPIDocumentInterface, OldAsyncAPIDocument as AsyncAPIDocument } from "@asyncapi/parser";
 
 export type PropsWithChildrenContent<P> = P & {
+  children?: React.ReactNode;
   childrenContent?: string;
 }
 

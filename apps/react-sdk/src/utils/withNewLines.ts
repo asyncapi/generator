@@ -6,6 +6,6 @@
  * @returns {string}
  */
 export function withNewLines(content: string = '', number: number = 0): string {
-  const newLines = Array(number).fill('\n').join('');
+  const newLines = new Array(number).fill('\n').join('');
   return content + newLines;
 }

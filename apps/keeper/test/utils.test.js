@@ -2,6 +2,7 @@ import path from 'path';
 import { parseAsyncAPIDocumentFromFile } from '../src/utils.js';
 
 const validFixturePath = path.resolve(__dirname, './__fixtures__/asyncapi-message-validation.yml');
+const invalidFixturePath = path.resolve(__dirname, './__fixtures__/asyncapi-invalid.yml');
 const nonExistentPath = path.resolve(__dirname, './__fixtures__/non-existent-file.yml');
 
 describe('parseAsyncAPIDocumentFromFile', () => {
@@ -26,6 +27,12 @@ describe('parseAsyncAPIDocumentFromFile', () => {
     test('should throw wrapped error when file does not exist', async () => {
       await expect(parseAsyncAPIDocumentFromFile(nonExistentPath)).rejects.toThrow(
         /^Failed to parse AsyncAPI document:/
+      );
+    });
+
+    test('should throw wrapped error when AsyncAPI document is invalid', async () => {
+      await expect(parseAsyncAPIDocumentFromFile(invalidFixturePath)).rejects.toThrow(
+        /^Failed to parse AsyncAPI document: Object must have required property "info"$/
       );
     });
   });

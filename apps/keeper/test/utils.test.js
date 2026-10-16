@@ -32,7 +32,7 @@ describe('parseAsyncAPIDocumentFromFile', () => {
 
     test('should throw wrapped error when AsyncAPI document is invalid', async () => {
       await expect(parseAsyncAPIDocumentFromFile(invalidFixturePath)).rejects.toThrow(
-        /^Failed to parse AsyncAPI document:/
+        /^Failed to parse AsyncAPI document: Object must have required property "info"$/
       );
     });
   });

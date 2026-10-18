@@ -34,3 +34,7 @@ conditionalGeneration:
     subject: info.contact.name
     validation:
       const: API Support
+  conditionalFolder4:
+    subject: info.contact.name
+    validation:
+      const: Not API Support

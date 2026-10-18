@@ -25,11 +25,11 @@ export const parseAsyncAPIDocumentFromFile = async (asyncapiFilepath) => {
     const errorMessages = parseResult.diagnostics
       ?.filter(d => d.severity === DiagnosticSeverity.Error)
       ?.map(d => d.message)
-      ?.join(', ');
+      ?.join('\n');
 
     throw new Error(
       errorMessages
-        ? `Failed to parse AsyncAPI document: ${errorMessages}`
+        ? `Failed to parse AsyncAPI document:\n${errorMessages}`
         : 'Failed to parse AsyncAPI document.'
     );
   }

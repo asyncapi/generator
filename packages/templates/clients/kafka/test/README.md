@@ -10,6 +10,12 @@ This `test` directory contains two types of testing for the Kafka client templat
 
 The acceptance tests verify that the generated Kafka client can connect, produce messages, and consume messages over a live TCP connection against a real mock broker (Microcks + Redpanda) inside Docker/Podman containers.
 
+### Test Architecture & Validation
+1. **CDI & Dependency Injection**: Verifies generated Quarkus beans (`CostingResponseProducer`, `CostingRequestConsumer`) are indexed and discoverable in Quarkus ArC.
+2. **Broker Integration**: Emits live messages across topics on the Redpanda broker.
+3. **Microcks Contract Participation**: Triggers Microcks `ASYNC_API_SCHEMA` test runner to validate that emitted events conform to the imported AsyncAPI contract.
+4. **Performance**: Measures ~11s execution with a warm Maven `.m2` cache (`maven-cache` volume). Initial cold runs on fresh runners will take longer while downloading Quarkus dependencies.
+
 ### Prerequisites
 
 Install [Docker](https://docs.docker.com/get-docker/) or [Podman](https://podman.io/docs/installation).

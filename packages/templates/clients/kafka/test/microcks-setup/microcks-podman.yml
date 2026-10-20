@@ -115,11 +115,11 @@ services:
     depends_on:
       app:
         condition: service_healthy
-    command: >
-      sh -c "microcks-cli import __fixtures__/asyncapi-adeo.yml
-      --microcksURL=http://microcks:8080/api/
+    command: >-
+      microcks-cli import __fixtures__/asyncapi-adeo.yml
+      --microcksURL=http://microcks:8080/api
       --keycloakClientId=microcks-serviceaccount
-      --keycloakClientSecret=ab54d329-e435-41ae-a900-ec6b3fe15c54"
+      --keycloakClientSecret=ab54d329-e435-41ae-a900-ec6b3fe15c54
 
   tester-java:
     profiles:

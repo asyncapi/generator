@@ -6,6 +6,9 @@ on:
     branches:
       - master
 
+# revoke default permissions
+permissions: {}
+
 jobs:
   test-nodejs:
     # We just check the message of the first commit as there is always just one commit because we squash into one before merging
@@ -20,6 +23,8 @@ jobs:
       startsWith( github.event.commits[0].message, 'feat!:' ))
     name: Test NodeJS release on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
+    permissions:
+      contents: read  # no write permissions needed for testing
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
@@ -31,6 +36,8 @@ jobs:
         shell: bash
       - name: Checkout repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
       - name: Check if Node.js project and has package.json
         id: packagejson
         run: test -e ./package.json && echo "exists=true" >> $GITHUB_OUTPUT || echo "exists=false" >> $GITHUB_OUTPUT
@@ -62,13 +69,13 @@ jobs:
         run: npm test --if-present
       - if: failure() # Only, on failure, send a message on the 94_bot-failing-ci slack channel
         name: Report workflow run status to Slack
-        uses: 8398a7/action-slack@77eaa4f1c608a7d68b38af4e3f739dcd8cba273e # v3.19.0
-        with:
-          status: ${{ job.status }}
-          fields: repo,action,workflow
-          text: "Release workflow failed in testing job"
+        uses: rtCamp/action-slack-notify@33ca3be66c6f378fe1610fd1d5258632dbed5e58 # v2.4.0
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_CI_FAIL_NOTIFY }}
+          SLACK_WEBHOOK: ${{ secrets.SLACK_CI_FAIL_NOTIFY }}
+          SLACK_TITLE: 🚨 Release workflow failed in testing job 🚨
+          SLACK_MESSAGE: 'Release workflow failed in testing job'
+          SLACK_COLOR: ${{ job.status }}
+          MSG_MINIMAL: actions url,commit
 
   release:
     needs: [test-nodejs]
@@ -85,6 +92,8 @@ jobs:
           git config --global core.eol lf
       - name: Checkout repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
       - name: Check if Node.js project and has package.json
         id: packagejson
         run: test -e ./package.json && echo "exists=true" >> $GITHUB_OUTPUT || echo "exists=false" >> $GITHUB_OUTPUT
@@ -133,10 +142,10 @@ jobs:
           GIT_COMMITTER_EMAIL: info@asyncapi.io
       - if: failure() # Only, on failure, send a message on the 94_bot-failing-ci Slack channel
         name: Report workflow run status to Slack
-        uses: 8398a7/action-slack@77eaa4f1c608a7d68b38af4e3f739dcd8cba273e # v3.19.0
-        with:
-          status: ${{ job.status }}
-          fields: repo,action,workflow
-          text: "Release workflow failed in release job"
+        uses: rtCamp/action-slack-notify@33ca3be66c6f378fe1610fd1d5258632dbed5e58 # v2.4.0
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_CI_FAIL_NOTIFY }}
+          SLACK_WEBHOOK: ${{ secrets.SLACK_CI_FAIL_NOTIFY }}
+          SLACK_TITLE: 🚨 Release workflow failed in release job 🚨
+          SLACK_MESSAGE: 'Release workflow failed in release job'
+          SLACK_COLOR: ${{ job.status }}
+          MSG_MINIMAL: actions url,commit

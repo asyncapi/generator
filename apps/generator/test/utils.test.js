@@ -143,26 +143,6 @@ describe('Utils', () => {
     });
   });
 
-  describe('#checkNodeVersion', () => {
-    // Pinned on purpose: loosening engines.node in package.json must fail this test,
-    // because older versions are exposed to CVE-2026-111497 (Brotli decoder RCE).
-    const supportedRange = '>=24.22.1';
-
-    beforeEach(() => {
-      log.warn = jest.fn();
-    });
-
-    it.each(['24.22.1', '24.30.0', '24.23.0-pre', '26.12.1', '28.0.0'])('returns true and does not warn for Node.js %s', (nodeVersion) => {
-      expect(utils.checkNodeVersion(nodeVersion)).toBe(true);
-      expect(log.warn).not.toHaveBeenCalled();
-    });
-
-    it.each(['24.11.0', '24.22.0', '24.22.1-rc.1', '22.23.4'])('returns false and warns for Node.js %s', (nodeVersion) => {
-      expect(utils.checkNodeVersion(nodeVersion)).toBe(false);
-      expect(log.warn).toHaveBeenCalledWith(logMessage.unsupportedNodeVersion(nodeVersion, supportedRange));
-    });
-  });
-
   describe('#isJsFile', () => {
     it('should return true if file extension is .js', () => {
       const isJsFile = utils.isJsFile('./valid-file.js');

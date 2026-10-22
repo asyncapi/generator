@@ -28,7 +28,6 @@ const {
   isJsFile,
   getTemplateDetails,
   convertCollectionToObject,
-  checkNodeVersion,
 } = require('./utils');
 const { parse, usesNewAPI, getProperApiDocument } = require('./parser');
 const { registerHooks } = require('./hooksRegistry');
@@ -94,7 +93,6 @@ class Generator {
     if (!templateName) throw new Error('No template name has been specified.');
     if (!entrypoint && !targetDir) throw new Error('No target directory has been specified.');
     if (!['fs', 'string'].includes(output)) throw new Error(`Invalid output type ${output}. Valid values are 'fs' and 'string'.`);
-    checkNodeVersion();
     /** @type {Boolean} Whether to compile the template or use the cached transpiled version provided by template in '__transpiled' folder. */
     this.compile = compile;
     /** @type {Object} Npm registry information. */

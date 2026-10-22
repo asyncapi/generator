@@ -74,10 +74,6 @@ function fetchSpecError(link, status, statusText) {
   return `Failed to fetch AsyncAPI document from ${link}: HTTP ${status}${statusText}`;
 }
 
-function unsupportedNodeVersion(nodeVersion, supportedRange) {
-  return `You are running Node.js ${nodeVersion}, which is outside the supported range "${supportedRange}". Older Node.js versions have known security vulnerabilities, so upgrade Node.js before generating from documents or URLs you do not control.`;
-}
-
 module.exports = {
   TEMPLATE_INSTALL_FLAG_MSG,
   TEMPLATE_INSTALL_DISK_MSG,
@@ -97,6 +93,5 @@ module.exports = {
   mappedRefOutsideBaseFolder,
   mappedRefSymlinkOutsideBaseFolder,
   errorOpeningFile,
-  fetchSpecError,
-  unsupportedNodeVersion
+  fetchSpecError
 };

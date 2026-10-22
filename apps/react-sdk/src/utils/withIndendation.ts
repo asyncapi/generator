@@ -43,5 +43,5 @@ export function withIndendation(content: string = '', size: number, type: Indent
  */
 function getIndentation(size: number = 0, type: IndentationTypes = IndentationTypes.SPACES): string {
   const whitespaceChar = type === IndentationTypes.SPACES ? ' ' : '\t';
-  return Array(size).fill(whitespaceChar).join("");
+  return new Array(size).fill(whitespaceChar).join("");
 }

@@ -27,6 +27,13 @@ beforeEach(() => {
 
 describe('Generator', () => {
   describe('constructor', () => {
+    it('checks the running Node.js version', () => {
+      const utils = require('../lib/utils');
+      const gen = new Generator('testTemplate', __dirname);
+      expect(gen).toBeInstanceOf(Generator);
+      expect(utils.checkNodeVersion).toHaveBeenCalledTimes(1);
+    });
+
     it('works with minimum amount of params', () => {
       const gen = new Generator('testTemplate', __dirname);
       expect(gen.templateName).toStrictEqual('testTemplate');

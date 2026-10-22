@@ -7,6 +7,7 @@ const resolvePkg = require('resolve-pkg');
 const resolveFrom = require('resolve-from');
 const globalDirs = require('global-dirs');
 const log = require('loglevel');
+const semver = require('semver');
 
 const packageJson = require('../package.json');
 
@@ -104,6 +105,21 @@ utils.isJsFile = (filepath) => {
  */
 utils.getGeneratorVersion = () => {
   return packageJson.version;
+};
+
+/**
+ * Warns when the given Node.js version does not satisfy the generator's `engines.node` range.
+ *
+ * @param {String} [nodeVersion=process.versions.node] Node.js version to check.
+ * @returns {Boolean} `true` when the version is supported, otherwise `false`.
+ */
+utils.checkNodeVersion = (nodeVersion = process.versions.node) => {
+  // Why: npm enforces `engines` only at install time, so a global install keeps running after the
+  // user's Node.js falls behind a security release (e.g. CVE-2026-111497, Brotli decoder RCE).
+  const supportedRange = packageJson.engines.node;
+  if (semver.satisfies(nodeVersion, supportedRange, { includePrerelease: true })) return true;
+  log.warn(logMessage.unsupportedNodeVersion(nodeVersion, supportedRange));
+  return false;
 };
 
 /**

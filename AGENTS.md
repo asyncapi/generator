@@ -43,7 +43,7 @@ Orchestration is Turborepo (`turbo.json`). Every package-level script (`test`, `
 ## 2. Monorepo-wide rules
 
 ### 2.1 Runtime and tooling
-- **Node**: `>=24.11`. **npm**: `>=11.5.1`. Do not regress `engines` in any `package.json`.
+- **Node**: `>=24.22.1` (floor set by the October 2026 Node.js security release, CVE-2026-111497). **npm**: `>=11.5.1`. Do not regress `engines` in any `package.json`.
 - **Module style** differs per package (see 4). Do not silently switch a package from CJS to ESM or vice versa; that is a structural change that must be called out in the PR description.
 - **No Prettier.** Formatting is enforced entirely through ESLint. Do not add a `.prettierrc` or `prettier` devDependency.
 

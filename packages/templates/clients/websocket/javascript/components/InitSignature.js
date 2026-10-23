@@ -25,12 +25,16 @@ export function InitSignature({ queryParams }) {
     let defaultValue = '';
     if (paramDefaultValue !== undefined && paramDefaultValue !== null && paramDefaultValue !== '') {
       const isBoolean = paramDefaultValue === 'true' || paramDefaultValue === 'false' || typeof paramDefaultValue === 'boolean';
-      const isNumber = typeof paramDefaultValue === 'number' || (!isNaN(parseFloat(paramDefaultValue)) && isFinite(paramDefaultValue));
+      // Why: only canonical numbers are emitted unquoted — values like "0123" (octal, a
+      // SyntaxError in strict class code) or "0x10" would otherwise change meaning.
+      const asNumber = Number(paramDefaultValue);
+      const isNumber = typeof paramDefaultValue === 'number' ||
+        (Number.isFinite(asNumber) && String(asNumber) === paramDefaultValue);
 
       if (isBoolean || isNumber) {
         defaultValue = ` = ${paramDefaultValue}`;
       } else {
-        defaultValue = ` = "${paramDefaultValue}"`;
+        defaultValue = ` = ${JSON.stringify(String(paramDefaultValue))}`;
       }
     }
     return `${paramName}${defaultValue}`;

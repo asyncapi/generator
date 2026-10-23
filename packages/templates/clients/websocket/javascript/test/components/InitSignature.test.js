@@ -73,4 +73,16 @@ describe('InitSignature component (integration with AsyncAPI document)', () => {
     const result = render(<InitSignature queryParams={queryParams} />);
     expect(result.trim()).toMatchSnapshot();
   });
+
+  test('renders non-canonical numeric defaults as strings', () => {
+    const queryParams = [['code', '0123'], ['hex', '0x10'], ['price', '1.50'], ['limit', 'Infinity']];
+    const result = render(<InitSignature queryParams={queryParams} />);
+    expect(result.trim()).toMatchSnapshot();
+  });
+
+  test('escapes quotes, backslashes and newlines in string defaults', () => {
+    const queryParams = [['token', 'a"b\\c\nd']];
+    const result = render(<InitSignature queryParams={queryParams} />);
+    expect(result.trim()).toMatchSnapshot();
+  });
 });

@@ -2078,11 +2078,11 @@ class SlackWebsocketAPIClient {
   constructor(url, ticket, appId, throwSendErrors = true) {
     this.url = url || 'wss://wss-primary.slack.com/link';
     const params = {};
-    const _ticket = ticket ?? process.env.TICKET;
+    const _ticket = ticket ?? process.env[\\"TICKET\\"];
     if (_ticket != null) {
       params[\\"ticket\\"] = _ticket;
     }
-    const _appId = appId ?? process.env.APP_ID;
+    const _appId = appId ?? process.env[\\"APP_ID\\"];
     if (_appId != null) {
       params[\\"app_id\\"] = _appId;
     }

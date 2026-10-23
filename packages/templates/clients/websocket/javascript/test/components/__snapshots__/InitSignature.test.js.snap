@@ -1,5 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`InitSignature component (integration with AsyncAPI document) escapes quotes, backslashes and newlines in string defaults 1`] = `"constructor(url, token = \\"a\\\\\\"b\\\\\\\\c\\\\nd\\", throwSendErrors = true) {"`;
+
+exports[`InitSignature component (integration with AsyncAPI document) renders non-canonical numeric defaults as strings 1`] = `"constructor(url, code = \\"0123\\", hex = \\"0x10\\", price = \\"1.50\\", limit = \\"Infinity\\", throwSendErrors = true) {"`;
+
 exports[`InitSignature component (integration with AsyncAPI document) renders with empty query parameters array 1`] = `"constructor(url, throwSendErrors = true) {"`;
 
 exports[`InitSignature component (integration with AsyncAPI document) renders with multiple query parameters with mixed default values 1`] = `"constructor(url, heartbeat = false, bids = true, sessionId, throwSendErrors = true) {"`;

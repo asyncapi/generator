@@ -732,7 +732,7 @@ class Generator {
    * @param  {Function} next Callback function
    */
   async ignoredDirHandler(root, stats, next) {
-    const relativeDir = path.relative(this.templateContentDir, path.resolve(root, stats.name));
+    const relativeDir = path.relative(this.templateContentDir, path.resolve(root, stats.name)).split(path.sep).join('/');
     const dirPath = path.resolve(this.targetDir, relativeDir);
     const conditionalEntry = this.templateConfig?.conditionalGeneration?.[relativeDir];
     let shouldGenerate =  true;
@@ -896,8 +896,10 @@ class Generator {
    */
   async generateFile(asyncapiDocument, fileName, baseDir) {
     const sourceFile = path.resolve(baseDir, fileName);
-    const relativeSourceFile = path.relative(this.templateContentDir, sourceFile);
-    const relativeSourceDirectory = relativeSourceFile.split(path.sep)[0] || '.';
+    // Normalize to POSIX separators so conditionalGeneration/conditionalFiles keys
+    // (which always use forward slashes in template configs) match on every platform.
+    const relativeSourceFile = path.relative(this.templateContentDir, sourceFile).split(path.sep).join('/');
+    const relativeSourceDirectory = relativeSourceFile.split('/')[0] || '.';
   
     const targetFile = path.resolve(this.targetDir, this.maybeRenameSourceFile(relativeSourceFile));
     const relativeTargetFile = path.relative(this.targetDir, targetFile);
@@ -927,7 +929,9 @@ class Generator {
     if (this.templateConfig.conditionalFiles?.[relativeSourceFile]) {  
       // conditionalFiles becomes deprecated with this PR, and soon will be removed.
       // TODO: https://github.com/asyncapi/generator/issues/1553
-      conditionalPath = relativeSourceDirectory;
+      // Use the file key (relativeSourceFile) rather than the top-level directory so
+      // isGenerationConditionMet can find the correct entry in conditionalFiles.
+      conditionalPath = relativeSourceFile;
     }
    
     if (conditionalPath) {

@@ -74,6 +74,16 @@ describe('Testing of QueryParamsVariables component', () => {
     expect(result.trim()).toMatchSnapshot();
   });
 
+  test('renders js query params with a leading digit and quotes as valid code', () => {
+    const result = render(
+      <QueryParamsVariables
+        language='javascript'
+        queryParams={[['1st'], ['say"hi']]}
+      />
+    );
+    expect(result.trim()).toMatchSnapshot();
+  });
+
   test('throws an error when the language is not supported', () => {
     expect(() => render(
       <QueryParamsVariables

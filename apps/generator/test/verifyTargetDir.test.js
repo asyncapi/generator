@@ -1,6 +1,6 @@
 const os = require('os');
 const path = require('path');
-const { mkdtemp, writeFile, unlink, mkdir, rm } = require('fs').promises;
+const { mkdtemp, realpath, writeFile, unlink, mkdir, rm } = require('fs').promises;
 const git = require('simple-git');
 const Generator = require('../lib/generator');
 
@@ -13,6 +13,7 @@ describe('verifyTargetDir with a real Git repository', () => {
 
   beforeEach(async () => {
     targetDir = await mkdtemp(path.join(os.tmpdir(), 'generator-target-'));
+    targetDir = await realpath(targetDir);
     repository = git(targetDir);
     await repository.init();
     await repository.addConfig('user.name', 'Generator tests');

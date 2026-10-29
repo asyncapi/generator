@@ -125,3 +125,48 @@ jobs:
           --profile test-${{ matrix.language }} \
           up --abort-on-container-exit --force-recreate
         working-directory: ./packages/templates/clients/websocket/test
+
+  # this test job runs acceptance tests for Kafka using Microcks and Redpanda
+  acceptance-kafka:
+    needs: changes
+    name: Kafka Acceptance tests (java)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Check package-lock version
+        if: needs.changes.outputs.should_test == 'true'
+        uses: asyncapi/.github/.github/actions/get-node-version-from-package-lock@master # //NOSONAR
+        id: lockversion
+        with:
+          node-version: ${{ vars.NODE_VERSION }}
+
+      - name: Use Node.js
+        if: needs.changes.outputs.should_test == 'true'
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "${{ steps.lockversion.outputs.version }}"
+          cache: npm
+
+      - name: Install dependencies
+        if: needs.changes.outputs.should_test == 'true'
+        run: npm ci
+
+      - name: Generate clients
+        if: needs.changes.outputs.should_test == 'true'
+        run: npm run packages:test
+
+      - name: Setup microcks & redpanda environment
+        if: needs.changes.outputs.should_test == 'true'
+        run: docker compose -f ./microcks-setup/microcks-podman.yml --profile ci up -d --force-recreate
+        working-directory: ./packages/templates/clients/kafka/test
+
+      - name: Run Kafka Java acceptance tests
+        if: needs.changes.outputs.should_test == 'true'
+        run: |
+          docker compose -f ./microcks-setup/microcks-podman.yml \
+          --profile test-java \
+          up --abort-on-container-exit --force-recreate
+        working-directory: ./packages/templates/clients/kafka/test

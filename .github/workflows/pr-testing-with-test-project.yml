@@ -136,6 +136,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
+      - name: Log should_test value across jobs #it has to stay here for some time for debugging
+        run: |
+          echo "should_test value: ${{ needs.changes.outputs.should_test }}"
+
       - name: Check package-lock version
         if: needs.changes.outputs.should_test == 'true'
         uses: asyncapi/.github/.github/actions/get-node-version-from-package-lock@master # //NOSONAR
@@ -152,7 +156,7 @@ jobs:
 
       - name: Install dependencies
         if: needs.changes.outputs.should_test == 'true'
-        run: npm ci
+        run: npm ci --ignore-scripts # //NOSONAR
 
       - name: Generate clients
         if: needs.changes.outputs.should_test == 'true'

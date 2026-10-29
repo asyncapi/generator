@@ -188,4 +188,28 @@ describe('Integration testing generateFromFile() to make sure the result of the 
     const exists = await readFile(conditionalFilePath).then(() => true).catch(() => false);
     expect(exists).toBe(true);
   });
+
+  it('should generate the conditionalFolder3 if the subject condition on the folder is met', async () => {
+    const outputDir = generateFolderName();
+    const generator = new Generator(reactTemplate, outputDir, {
+      forceWrite: true ,
+      templateParams: { version: 'v1', mode: 'production' }
+    });
+    await generator.generateFromFile(dummySpecPath);
+    const conditionalFilePath = path.join(outputDir, 'conditionalFolder3/conditionalFile.txt');
+    const exists = await readFile(conditionalFilePath).then(() => true).catch(() => false);
+    expect(exists).toBe(true);
+  });
+
+  it('should not generate the conditionalFolder4 if the subject condition on the folder is not met', async () => {
+    const outputDir = generateFolderName();
+    const generator = new Generator(reactTemplate, outputDir, {
+      forceWrite: true ,
+      templateParams: { version: 'v1', mode: 'production' }
+    });
+    await generator.generateFromFile(dummySpecPath);
+    const conditionalFolderPath = path.join(outputDir, 'conditionalFolder4');
+    const exists = await access(conditionalFolderPath).then(() => true).catch(() => false);
+    expect(exists).toBe(false);
+  });
 });

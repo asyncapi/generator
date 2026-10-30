@@ -7,7 +7,7 @@
 # The default owners are automatically added as reviewers when you open a pull request unless different owners are specified in the file.
 
 # Core Maintainers
-* @derberg @magicmatatjahu @jonaslagoni @asyncapi-bot-eve
+* @derberg @magicmatatjahu @jonaslagoni @Adi-204 @asyncapi-bot-eve
 
 # Packages directory
 # @Adi-204 is Templates Champion
@@ -18,7 +18,7 @@ packages/ @Adi-204 @derberg @magicmatatjahu @asyncapi-bot-eve
 *.md @Florence-Njeri @derberg @asyncapi-bot-eve
 
 # Changeset markdown files — override so Docs Champions aren't requested
-.changeset/**/*.md @derberg @magicmatatjahu @asyncapi-bot-eve
+.changeset/**/*.md @derberg @magicmatatjahu @Adi-204 @asyncapi-bot-eve
 
 # AI agent instruction files — override so Docs Champions aren't requested
 AGENTS.md @Adi-204 @derberg @magicmatatjahu @asyncapi-bot-eve

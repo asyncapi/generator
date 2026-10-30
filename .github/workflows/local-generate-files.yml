@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           # target branch of release. More info https://docs.github.com/en/rest/reference/repos#releases
           # in case release is created from release branch then we need to checkout from given branch
@@ -20,12 +20,12 @@ jobs:
           ref: ${{ github.event.release.target_commitish }}
       - name: Check package-lock version
         # This workflow is from our own org repo and safe to reference by 'master'.
-        uses: asyncapi/.github/.github/actions/get-node-version-from-package-lock@master
+        uses: asyncapi/.github/.github/actions/get-node-version-from-package-lock@master # //NOSONAR
         id: lockversion
         with:
           node-version: ${{ vars.NODE_VERSION }}
       - name: Setup Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: "${{ steps.lockversion.outputs.version }}"
       - name: Install dependencies
@@ -33,7 +33,7 @@ jobs:
       - name: Assets generation
         run: npm run generate:assets --if-present
       - name: Create Pull Request with updated asset files including package.json
-        uses: peter-evans/create-pull-request@38e0b6e68b4c852a5500a94740f0e535e0d7ba54 # use 4.2.4 https://github.com/peter-evans/create-pull-request/releases/tag/v4.2.4
+        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
         with:
           token: ${{ secrets.GH_TOKEN }}
           commit-message: 'chore(release): ${{github.event.release.tag_name}}'
@@ -44,7 +44,7 @@ jobs:
           branch: assets-update/${{github.event.release.tag_name}}
       - if: failure() # Only, on failure, send a message on the 94_bot-failing-ci slack channel
         name: Report workflow run status to Slack
-        uses: 8398a7/action-slack@v3
+        uses: 8398a7/action-slack@77eaa4f1c608a7d68b38af4e3f739dcd8cba273e # v3.19.0
         with:
           status: ${{ job.status }}
           fields: repo,action,workflow

@@ -18,6 +18,8 @@ The guidelines below cross-reference the following authoritative docs. If a path
 - [React SDK README](apps/react-sdk/README.md) — rendering architecture, restrictions, and component examples
 - [Baked-in Templates guide](apps/generator/docs/baked-in-templates.md) — directory layout, required files, package-name convention, and how the build derives template metadata from the folder path and rewrites `.ageneratorrc` / `package.json` `name`
 - [WebSocket test README](packages/templates/clients/websocket/test/README.md) — `TEST_CLIENT` scoping, snapshot layout, Microcks setup
+- [PR template](.github/pull-request-template.md) — required PR description sections, including the AI assistance disclosure
+- [AI Usage Policy](AI-POLICY.md) — when AI assistance must be disclosed and the `Generated-by:` format
 
 ---
 
@@ -50,8 +52,10 @@ Orchestration is Turborepo (`turbo.json`). Every package-level script (`test`, `
 ### 2.2 Linting
 Every package inherits the root `.eslintrc` — that file is the source of truth for lint rules. Package `lint` scripts must invoke the root config and ignore file via relative `--config` / `--ignore-path` flags — the exact number of `../` segments depends on the package's depth in the tree (e.g. `apps/*` uses `../../.eslintrc`; `packages/templates/clients/<protocol>/test/integration-test/` uses `../../../../../../.eslintrc`). Do not add a package-local `.eslintrc` to avoid the relative path.
 
-### 2.3 Commits and PR titles
+### 2.3 Commits, PR titles and descriptions
 See the [Conventional Commits section in the contributing guide](apps/generator/docs/contributing.md#conventional-commits).
+
+PR descriptions must follow the [PR template](.github/pull-request-template.md): keep every section, replace the `- ...` placeholders, and tick exactly one **AI assistance** box. AI-assisted PRs must fill in the `Generated-by:` line (tool + model) per the [AI Usage Policy](AI-POLICY.md). Tools that pass the body directly (e.g. `gh pr create --body`) skip the template, so build the body from it explicitly.
 
 ### 2.4 Documentation and comments
 

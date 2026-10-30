@@ -1,5 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`QueryParamsArgumentsDocs component (integration with AsyncAPI document) escapes comment terminators and line breaks in the parameter name 1`] = `
+"* @param {string} aB - If provided (or if A__B environment variable is set), added as ?a*\\\\/b=… to URL
+
+  * @param {string} lineBreak - If provided (or if LINE__BREAK environment variable is set), added as ?line break=… to URL"
+`;
+
 exports[`QueryParamsArgumentsDocs component (integration with AsyncAPI document) renders with query parameters 1`] = `
 "* @param {string} heartbeat - If provided (or if HEARTBEAT environment variable is set), added as ?heartbeat=… to URL
 

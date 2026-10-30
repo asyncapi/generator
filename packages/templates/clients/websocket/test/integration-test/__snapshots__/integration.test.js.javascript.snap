@@ -2074,6 +2074,8 @@ class SlackWebsocketAPIClient {
     *   When true (default) the error is re-thrown after the registered error handlers run, so the caller can
     *   handle each failure. When false the error is suppressed after the handlers run, which keeps a
     *   high-throughput producer loop going.
+    *   It comes after the query parameters, so pass a value (or undefined) for each of them first:
+    *   (url, undefined, undefined, false).
   */
   constructor(url, ticket, appId, throwSendErrors = true) {
     this.url = url || 'wss://wss-primary.slack.com/link';

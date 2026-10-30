@@ -19,8 +19,9 @@ export function QueryParamsArgumentsDocs({ queryParams }) {
     const originalParamName = param[0];
     const paramName = getSafeJSName(originalParamName, usedNames);
     const envVarName = originalParamName.toUpperCase().replace(/[^A-Z0-9_]/g, '_');
+    const docParamName = originalParamName.replace(/\*\//g, '*\\/').replace(/[\r\n]+/g, ' ');
     const firstLine = `* @param {string} ${paramName} - `;
-    const secondLine = `If provided (or if ${envVarName} environment variable is set), added as ?${originalParamName}=… to URL`;
+    const secondLine = `If provided (or if ${envVarName} environment variable is set), added as ?${docParamName}=… to URL`;
     return (
       <Text indent={2}>
         {`${firstLine}${secondLine}\n`}

@@ -23,6 +23,14 @@ describe('QueryParamsArgumentsDocs component (integration with AsyncAPI document
     expect(result.trim()).toMatchSnapshot();
   });
 
+  test('escapes comment terminators and line breaks in the parameter name', () => {
+    const queryParams = [['a*/b', undefined], ['line\r\nbreak', undefined]];
+    const result = render(<QueryParamsArgumentsDocs queryParams={queryParams} />);
+    expect(result).not.toContain('*/');
+    expect(() => new Function(`/**\n${result}*/`)).not.toThrow();
+    expect(result.trim()).toMatchSnapshot();
+  });
+
   test('renders empty with empty array', () => {
     const result = render(<QueryParamsArgumentsDocs queryParams={[]} />);
     expect(result).toBe('');

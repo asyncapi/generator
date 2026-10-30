@@ -7,6 +7,12 @@ export function Constructor({ serverUrl, queryParams, sendOperations }) {
   const sendOperationsId = sendOperations.map((operation) => operation.id());
   const sendOperationsArray = JSON.stringify(sendOperationsId);
   const queryParamsArray = queryParams && Array.from(queryParams.entries());
+  const hasQueryParams = queryParamsArray && queryParamsArray.length > 0;
+  const throwSendErrorsOrderNote = hasQueryParams
+    ? `  *   It comes after the query parameters, so pass a value (or undefined) for each of them first:
+  *   (url, ${queryParamsArray.map(() => 'undefined').join(', ')}, false).
+`
+    : '';
 
   return (
     <Text indent={2}>
@@ -19,13 +25,13 @@ export function Constructor({ serverUrl, queryParams, sendOperations }) {
   *   When true (default) the error is re-thrown after the registered error handlers run, so the caller can
   *   handle each failure. When false the error is suppressed after the handlers run, which keeps a
   *   high-throughput producer loop going.
-*/
+${throwSendErrorsOrderNote}*/
 `}
       <InitSignature queryParams={queryParamsArray} />
       <Text indent={2} newLines={1}>
         {`this.url = url || '${serverUrl}';
 `}
-        {queryParamsArray && queryParamsArray.length > 0 && (
+        {hasQueryParams && (
           <Text>
             {`const params = {};
 `}

@@ -28,6 +28,7 @@ if self.ws_app:
     methodDocs: '// Method to close the WebSocket connection',
     methodLogic: `if (this.websocket) {
     this.websocket.close();
+    this.websocket = null;
     console.log('WebSocket connection closed.');
 }`
   },

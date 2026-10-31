@@ -33,6 +33,7 @@ connect() {
   python: (onOpenMethod, onMessageMethod, onErrorMethod, onCloseMethod) => {
     const onConnectMethod = `def connect(self):
     """Establish the connection and start the run_forever loop in a background thread."""
+    self._stop_event.clear()
     ssl_opts = {"ca_certs": certifi.where()}
     self.ws_app = websocket.WebSocketApp(
         self.url,

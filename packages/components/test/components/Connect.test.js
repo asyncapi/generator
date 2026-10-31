@@ -30,4 +30,14 @@ describe('Testing of Connect function', () => {
       />
     )).toThrow(/Language is required. Supported languages:/);
   });
+
+  test('python Connect method clears _stop_event before starting connection loop', () => {
+    const result = render(
+      <Connect
+        language='python'
+        title='HoppscotchEchoWebSocketClient'
+      />
+    );
+    expect(result).toContain('self._stop_event.clear()');
+  });
 });

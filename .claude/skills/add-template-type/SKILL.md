@@ -46,7 +46,7 @@ Stop and name the behavior that would hide the type.
 ### 4. Edit targets are clean
 
 ```bash
-git diff --quiet HEAD -- apps/generator/scripts/build-templates.js apps/generator/test/buildTemplates.test.js apps/generator/docs/baked-in-templates.md packages/README.md AGENTS.md .sonarcloud.properties apps/generator/lib/templates/BakedInTemplatesList.json || git diff --stat HEAD -- apps/generator/scripts/build-templates.js apps/generator/test/buildTemplates.test.js apps/generator/docs/baked-in-templates.md packages/README.md AGENTS.md .sonarcloud.properties apps/generator/lib/templates/BakedInTemplatesList.json
+git diff --quiet HEAD -- apps/generator/scripts/build-templates.js apps/generator/docs/baked-in-templates.md packages/README.md AGENTS.md .sonarcloud.properties apps/generator/lib/templates/BakedInTemplatesList.json || git diff --stat HEAD -- apps/generator/scripts/build-templates.js apps/generator/docs/baked-in-templates.md packages/README.md AGENTS.md .sonarcloud.properties apps/generator/lib/templates/BakedInTemplatesList.json
 ```
 
 If the second command prints anything, stop and list the dirty files. The check compares content with HEAD, so line-ending-only changes left by an earlier build on a `core.autocrlf=true` checkout don't count, while real staged or unstaged edits do. `CLAUDE.md` is a symlink to `AGENTS.md`, so edit only `AGENTS.md`.
@@ -124,24 +124,7 @@ Append to `TEMPLATE_TYPES` in `apps/generator/scripts/build-templates.js`:
   { dir: '<dir>', type: '<type>', protocolScoped: <true|false> },
 ```
 
-### 2. Test cases
-
-In `apps/generator/test/buildTemplates.test.js`, append to `VALID_PATHS`. For a protocol-scoped type, add one entry without a stack and one with:
-
-```js
-  { path: '<dir>/websocket/javascript', meta: { type: '<type>', protocol: 'websocket', target: 'javascript' }, name: 'core-template-<type>-websocket-javascript' },
-  { path: '<dir>/websocket/java/quarkus', meta: { type: '<type>', protocol: 'websocket', target: 'java', stack: 'quarkus' }, name: 'core-template-<type>-websocket-java-quarkus' },
-```
-
-For a flat type, add one:
-
-```js
-  { path: '<dir>/yaml', meta: { type: '<type>', target: 'yaml' }, name: 'core-template-<type>-yaml' },
-```
-
-Append to `INVALID_SHAPE_PATHS`: `'<dir>'` and `'<dir>/websocket'` for a protocol-scoped type, or `'<dir>'` and `'<dir>/yaml/extra'` for a flat one.
-
-### 3. Baked-in Templates guide
+### 2. Baked-in Templates guide
 
 In `apps/generator/docs/baked-in-templates.md`:
 
@@ -153,7 +136,7 @@ In `apps/generator/docs/baked-in-templates.md`:
 - **Flat:** append `/<dir>` to the flat label in "Type-specific rules" (today `**docs/configs**`).
 - **If `<type>` equals `<dir>`:** in the plural/singular note, change "except for `docs`" to "except for `docs` and `<dir>`".
 
-### 4. Principle 2
+### 3. Principle 2
 
 In `packages/README.md`, append after the last principle 2 sub-bullet (4-space indent, like its siblings). Append only when Q3b found no existing sub-bullet. Otherwise apply Q3b's answer (replace the bullet, or leave it as it is):
 
@@ -165,25 +148,25 @@ Also append `, <type>` inside the backticked list of the principle 2 lead-in sen
 
 Apply the Q3 answer to the conflicting sentence, if there is one.
 
-### 5. AGENTS.md topology
+### 4. AGENTS.md topology
 
 In the `templates/` line of `AGENTS.md` §1, append `, <dir>` inside "(grouped by type: …)".
 
-### 6. Sonar exclusion
+### 5. Sonar exclusion
 
 In `.sonarcloud.properties`, insert `,packages/templates/<dir>/**/*` into `sonar.exclusions=` right after `packages/templates/clients/**/*`. Template folders are excluded until the template structure is finalized (see the TODO under that line).
 
 ## Verification
 
-### 1. Unit test and lint
+### 1. Lint
 
 ```bash
-cd apps/generator && npx jest test/buildTemplates.test.js && npm run lint
+cd apps/generator && npm run lint
 ```
 
-`build-templates.js` imports `@asyncapi/generator-react-sdk`. If `apps/react-sdk/lib` is missing, run `npm run build:reactsdk` in `apps/generator` first.
-
 ### 2. Probe template
+
+`build-templates.js` imports `@asyncapi/generator-react-sdk`. If `apps/react-sdk/lib` is missing, run `npm run build:reactsdk` in `apps/generator` first.
 
 Run from the repo root in Bash. The probe is:
 
@@ -226,7 +209,7 @@ git diff --quiet -- packages/templates apps/generator/lib/templates/BakedInTempl
 
 ### 3. Failure loop
 
-If step 1 or 2 fails, fix the registry row or the test cases and re-run both steps. After 3 failed rounds, stop and show `git diff` plus the failing output.
+If step 1 or 2 fails, fix the registry row and re-run both steps. After 3 failed rounds, stop and show `git diff` plus the failing output.
 
 ## Final report
 
@@ -244,8 +227,7 @@ Don't commit unless the user asks.
 
 ## Reference materials
 
-- Registry, path parsing and validation: `apps/generator/scripts/build-templates.js` (`TEMPLATE_TYPES`, `getTemplateMeta`, `isValidTemplateMeta`, `IGNORED_DIRS`).
-- Tests: `apps/generator/test/buildTemplates.test.js`. A coverage test fails until a new row has `VALID_PATHS` and `INVALID_SHAPE_PATHS` entries.
+- Registry, path parsing and validation: `apps/generator/scripts/build-templates.js` (`TEMPLATE_TYPES`, `getTemplateMeta`, the skip checks in `main`, `IGNORED_DIRS`).
 - Runtime lookup: `apps/generator/lib/templates/bakedInTemplates.js` filters on any `type` string, so it needs no change.
 
 ## Non-goals

@@ -178,6 +178,8 @@ Run from the repo root in Bash. The probe is:
 ```bash
 LIST=apps/generator/lib/templates/BakedInTemplatesList.json
 PROBE=packages/templates/<dir>/probe/js     # flat: packages/templates/<dir>/probe
+OUT=apps/generator/lib/templates/bakedInTemplates/core-template-<type>-probe-js     # flat: …/core-template-<type>-probe
+rm -rf "$OUT"     # stale output from an earlier run would fake the copy check below
 mkdir -p "$PROBE"
 printf '{"name": "x", "private": true}\n' > "$PROBE/package.json"
 printf '{}\n' > "$PROBE/.ageneratorrc"
@@ -187,10 +189,10 @@ echo "templates before probe: $N"
 grep -A5 '"core-template-<type>-probe' "$LIST"
 cat "$PROBE/.ageneratorrc"
 grep '"name"' "$PROBE/package.json"
-ls apps/generator/lib/templates/bakedInTemplates/core-template-<type>-probe*/package.json
+test -f "$OUT/package.json" && echo "probe copied" || echo "PROBE NOT COPIED"
 ```
 
-Check all three outputs against the table. The build must also report one more template than before: `Updated <N+1> templates`, where N is the count printed before the build. The last command must list the probe's copied `package.json`: `transpileTemplate` drops every source path that contains `test` anywhere, including the checkout path, so a missing copy means the build would ship the type's templates empty.
+Check all three outputs against the table. The build must also report one more template than before: `Updated <N+1> templates`, where N is the count printed before the build. The last command must print "probe copied": `transpileTemplate` drops every source path that contains `test` anywhere, including the checkout path, so a missing copy means the build would ship the type's templates empty.
 
 **Cleanup.** Run it once the probe folder has been created, including when an assertion fails or you stop after that point. Never run it after a precondition stop: if precondition 2 stopped because `packages/templates/<dir>` already exists, that folder holds someone's work and `rm -rf` would delete it.
 

@@ -187,11 +187,12 @@ echo "templates before probe: $N"
 grep -A5 '"core-template-<type>-probe' "$LIST"
 cat "$PROBE/.ageneratorrc"
 grep '"name"' "$PROBE/package.json"
+ls apps/generator/lib/templates/bakedInTemplates/core-template-<type>-probe*/package.json
 ```
 
-Check all three outputs against the table. The build must also report one more template than before: `Updated <N+1> templates`, where N is the count printed before the build.
+Check all three outputs against the table. The build must also report one more template than before: `Updated <N+1> templates`, where N is the count printed before the build. The last command must list the probe's copied `package.json`: `transpileTemplate` drops every source path that contains `test` anywhere, including the checkout path, so a missing copy means the build would ship the type's templates empty.
 
-**Cleanup.** Always run it, including when an assertion fails or you stop early:
+**Cleanup.** Run it once the probe folder has been created, including when an assertion fails or you stop after that point. Never run it after a precondition stop: if precondition 2 stopped because `packages/templates/<dir>` already exists, that folder holds someone's work and `rm -rf` would delete it.
 
 ```bash
 rm -rf packages/templates/<dir> apps/generator/lib/templates/bakedInTemplates/core-template-<type>-probe*
@@ -200,7 +201,7 @@ git diff --quiet HEAD -- apps/generator/lib/templates/BakedInTemplatesList.json 
 git diff --quiet -- packages/templates apps/generator/lib/templates/BakedInTemplatesList.json && git checkout -- packages/templates apps/generator/lib/templates/BakedInTemplatesList.json
 ```
 
-- The `rm` of `packages/templates/<dir>` is safe because precondition 2 proved the folder didn't exist.
+- The `rm` of `packages/templates/<dir>` is safe only because precondition 2 proved the folder didn't exist before the probe created it.
 - The transpiled probe under `lib/templates/bakedInTemplates/` is gitignored, and the build never removes stale entries, so delete it by hand.
 - The list check compares the working tree with HEAD. Precondition 4 proved the list matched HEAD before the probe, and a rebuild of the committed templates reproduces it exactly. The block uses no variables from the probe step, so it works in a fresh shell.
 - The last line restores line endings. On `core.autocrlf=true` checkouts, the build rewrites every `.ageneratorrc` and the list with LF, so `git status` shows them as modified even though the content is unchanged. It runs only when there's no content diff.

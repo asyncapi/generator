@@ -14,7 +14,14 @@ const TEMPLATES_ROOT = path.join(MONOREPO_ROOT, 'packages/templates');
 const IGNORED_DIRS = ['test', '__tests__', '__fixtures__', '__snapshots__', 'components', 'helpers', 'node_modules', 'coverage', '__transpiled'];
 
 // Templates structure inside generator/packages/templates must follow this opinionated naming convention:
-const ALLOWED_TYPE_PATHS = ['docs', 'clients', 'sdks', 'configs'];
+// `dir` is the type folder, `type` the singular name used in metadata and package name,
+// `protocolScoped` means paths are `dir/protocol/target[/stack]` instead of `dir/target`.
+const TEMPLATE_TYPES = [
+  { dir: 'docs', type: 'docs', protocolScoped: false },
+  { dir: 'clients', type: 'client', protocolScoped: true },
+  { dir: 'sdks', type: 'sdk', protocolScoped: true },
+  { dir: 'configs', type: 'config', protocolScoped: false },
+];
 
 // Comment injected above the metadata block of every baked-in template's .ageneratorrc.
 const METADATA_COMMENT = '# The metadata block below is auto-generated from the template folder structure - do not edit it manually. Learn more: https://www.asyncapi.com/docs/tools/generator/baked-in-templates';
@@ -31,15 +38,16 @@ async function main() {
     * 2. Get metadata of single template.
     */
     const meta = getTemplateMeta(relPath);
+    const { protocolScoped } = TEMPLATE_TYPES.find(t => t.dir === relPath[0]);
 
-    // For docs and configs: require type and target and no others
-    if ((meta.type === 'docs' || meta.type === 'config') && (!meta.target || meta.protocol)) {
-      console.warn(`⚠️ Skipping template at ${dir}, wrong metadata for docs/config: ${relPath.join('/')}`);
+    // For types like docs and configs: require type and target and no others
+    if (!protocolScoped && (!meta.target || meta.protocol)) {
+      console.warn(`⚠️ Skipping template at ${dir}, wrong metadata for ${meta.type}: ${relPath.join('/')}`);
       continue;
     }
-    // For clients and sdks: require type, protocol, and target.
-    if ((meta.type === 'client' || meta.type === 'sdk') && (!meta.type || !meta.protocol || !meta.target)) {
-      console.warn(`⚠️ Skipping template at ${dir}, not enough metadata for client/sdk: ${relPath.join('/')}`);
+    // For types like clients and sdks: require type, protocol, and target.
+    if (protocolScoped && (!meta.protocol || !meta.target)) {
+      console.warn(`⚠️ Skipping template at ${dir}, not enough metadata for ${meta.type}: ${relPath.join('/')}`);
       continue;
     }
 
@@ -123,16 +131,6 @@ async function transpileTemplate(templatePath, outputDir) {
   }
 }
 
-/**
- * Maps plural path type to singular for metadata and templatesInfo.
- */
-function normalizeType(type) {
-  if (type === 'clients') return 'client';
-  if (type === 'sdks') return 'sdk';
-  if (type === 'configs') return 'config';
-  return type;
-}
-
 function isIgnored(name) {
   return IGNORED_DIRS.includes(name) || name.startsWith('.');
 }
@@ -146,13 +144,14 @@ function getTemplateMeta(segments) {
   if (!segments.length) return {};
 
   const typePath = segments[0];
-  if (!ALLOWED_TYPE_PATHS.includes(typePath)) throw new Error(`Invalid template type path: ${typePath}. Allowed paths are: ${ALLOWED_TYPE_PATHS.join(', ')}`);
+  const templateType = TEMPLATE_TYPES.find(t => t.dir === typePath);
+  if (!templateType) throw new Error(`Invalid template type path: ${typePath}. Allowed paths are: ${TEMPLATE_TYPES.map(t => t.dir).join(', ')}`);
 
-  const type = normalizeType(typePath);
+  const { type } = templateType;
 
-  // docs/html or configs/yaml
-  // assumption is that these two types have only one segment after the type that always describes the target
-  if ((typePath === 'docs' || typePath === 'configs') && segments.length === 2) {
+  // e.g. docs/html or configs/yaml
+  // assumption is that types that are not protocol scoped have only one segment after the type that always describes the target
+  if (!templateType.protocolScoped && segments.length === 2) {
     const [, target] = segments;
     return { type, target };
   }

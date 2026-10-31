@@ -70,6 +70,7 @@ exports[`Testing of CloseConnection function render javascript method with custo
    disconnect() {
     if (this.websocket) {
         this.websocket.close();
+        this.websocket = null;
         console.log('WebSocket connection closed.');
     }
   }
@@ -81,6 +82,7 @@ exports[`Testing of CloseConnection function render javascript websocket close c
    close() {
     if (this.websocket) {
         this.websocket.close();
+        this.websocket = null;
         console.log('WebSocket connection closed.');
     }
   }"

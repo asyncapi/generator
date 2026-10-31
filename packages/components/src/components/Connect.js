@@ -20,6 +20,9 @@ const websocketConnectMethod = {
     return {
       connectMethod: `// Method to establish a WebSocket connection
 connect() {
+    if (this.websocket) {
+        this.websocket.close();
+    }
     return new Promise((resolve, reject) => {
         this.websocket = new WebSocket(this.url);
         ${onOpenMethod}

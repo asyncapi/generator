@@ -21,6 +21,7 @@ const TEMPLATE_TYPES = [
   { dir: 'clients', type: 'client', protocolScoped: true },
   { dir: 'sdks', type: 'sdk', protocolScoped: true },
   { dir: 'configs', type: 'config', protocolScoped: false },
+  { dir: 'servers', type: 'server', protocolScoped: true },
 ];
 
 // Comment injected above the metadata block of every baked-in template's .ageneratorrc.

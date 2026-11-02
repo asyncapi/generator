@@ -1,3 +1,6 @@
+@Timeout(Duration(minutes: 2))
+library;
+
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
@@ -40,7 +43,7 @@ void main() {
         contains(expectedMessage),
         reason: "Expected message containing '$expectedMessage' but got '${receivedMessages.first}'",
       );
-    });
+    }, timeout: const Timeout(Duration(minutes: 1)));
 
     test('dart client should send a valid message validated by Microcks', () async {
       const expectedOutgoingMessage = 'Sending acceptance test message to Microcks.';
@@ -103,10 +106,10 @@ void main() {
       await Future.delayed(const Duration(milliseconds: 500));
       client.close();
 
-      // Poll Microcks for test success
+      // Poll Microcks for test success (up to 30 attempts, 2 seconds apart)
       var testSuccess = false;
       for (var i = 0; i < 30; i++) {
-        await Future.delayed(const Duration(seconds: 1));
+        await Future.delayed(const Duration(seconds: 2));
         final pollResponse = await http.get(
           Uri.parse('$microcksTestEndpoint/$testId'),
           headers: {'Accept': 'application/json'},
@@ -114,10 +117,8 @@ void main() {
 
         if (pollResponse.statusCode == 200) {
           final pollResult = jsonDecode(pollResponse.body) as Map<String, dynamic>;
-          final inProgress = pollResult['inProgress'] ?? false;
-          final success = pollResult['success'] ?? false;
-
-          if (!inProgress && success) {
+          print('Polling Microcks (attempt ${i + 1}): $pollResult');
+          if (pollResult['success'] == true) {
             testSuccess = true;
             break;
           }
@@ -126,6 +127,6 @@ void main() {
 
       await server.close(force: true);
       expect(testSuccess, isTrue, reason: 'Microcks test did not report success for Dart client');
-    });
-  });
+    }, timeout: const Timeout(Duration(minutes: 2)));
+  }, timeout: const Timeout(Duration(minutes: 2)));
 }

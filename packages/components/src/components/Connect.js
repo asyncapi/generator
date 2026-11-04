@@ -20,13 +20,28 @@ const websocketConnectMethod = {
     return {
       connectMethod: `// Method to establish a WebSocket connection
 connect() {
-    return new Promise((resolve, reject) => {
+    if (this.websocket) {
+        if (this.websocket.readyState === WebSocket.OPEN) {
+            return Promise.resolve();
+        }
+        if (this.websocket.readyState === WebSocket.CONNECTING) {
+            return this._connectionPromise;
+        }
+        if (this.websocket.readyState === WebSocket.CLOSING) {
+            return Promise.reject(new Error('WebSocket connection is closing. Wait for it to close before reconnecting.'));
+        }
+    }
+    this._connectionPromise = new Promise((resolve, reject) => {
         this.websocket = new WebSocket(this.url);
+        this.websocket.once('close', () => {
+            reject(new Error('WebSocket connection closed before it opened.'));
+        });
         ${onOpenMethod}
         ${onMessageMethod}
         ${onErrorMethod}
         ${onCloseMethod}
     });
+    return this._connectionPromise;
 }`
     };
   },

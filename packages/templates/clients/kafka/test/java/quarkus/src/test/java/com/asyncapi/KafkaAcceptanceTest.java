@@ -56,16 +56,11 @@ public class KafkaAcceptanceTest {
             .POST(java.net.http.HttpRequest.BodyPublishers.ofString(testPayload))
             .build();
 
-        try {
-            java.net.http.HttpResponse<String> response = client.send(request, java.net.http.HttpResponse.BodyHandlers.ofString());
-            assertEquals(201, response.statusCode(), "Microcks test runner should initialize with HTTP 201 Created");
-            assertTrue(response.body().contains("ASYNC_API_SCHEMA"), "Microcks test response should acknowledge schema runner");
+        java.net.http.HttpResponse<String> response = client.send(request, java.net.http.HttpResponse.BodyHandlers.ofString());
+        assertEquals(201, response.statusCode(), "Microcks test runner should initialize with HTTP 201 Created");
+        assertTrue(response.body().contains("ASYNC_API_SCHEMA"), "Microcks test response should acknowledge schema runner");
 
-            // Emit message through the generated producer to verify live broker delivery
-            producer.sendCostingResponseProducer("test-microcks-req", "{\"test\": \"contract-payload\"}");
-        } catch (java.io.IOException e) {
-            // Why: Allows Quarkus tests to execute in offline/local environments where Microcks HTTP is not running. In container/CI runs, Microcks is healthy and assertions verify contract initialization.
-            System.err.println("Microcks endpoint unreachable in current test profile: " + e.getMessage());
-        }
+        // Emit message through the generated producer to verify live broker delivery
+        producer.sendCostingResponseProducer("test-microcks-req", "{\"test\": \"contract-payload\"}");
     }
 }

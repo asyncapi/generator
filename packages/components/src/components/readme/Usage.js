@@ -1,4 +1,5 @@
 import { Text } from '@asyncapi/generator-react-sdk';
+import { getSafeJSName } from '@asyncapi/generator-helpers';
 import { unsupportedLanguage, invalidClientName, invalidClientFileName } from '../../utils/ErrorHandling';
 
 /**
@@ -26,13 +27,21 @@ async def main():
     await ws_client.close()
 `,
 
-  javascript: (clientName, clientFileName) => `
+  javascript: (clientName, clientFileName, queryParams) => {
+    const usedNames = new Map();
+    const queryParamNames = queryParams.map((param) => getSafeJSName(param[0], usedNames));
+    const skippedArgs = ['undefined', ...queryParamNames.map(() => 'undefined')].join(', ');
+    const argumentOrder = queryParamNames.length > 0
+      ? `\n// Arguments are (url, ${queryParamNames.join(', ')}, throwSendErrors).`
+      : '';
+
+    return `
 const ${clientName} = require('./${clientFileName.replace('.js', '')}');
 
 // throwSendErrors defaults to true: a failed send re-throws after the registered
 // error handlers run, so you can react to each failure. Pass
-// new ${clientName}(undefined, false) to keep a high-throughput producer loop
-// running and rely on registered error handlers instead.
+// new ${clientName}(${skippedArgs}, false) to keep a high-throughput producer loop
+// running and rely on registered error handlers instead.${argumentOrder}
 const wsClient = new ${clientName}();
 
 async function main() {
@@ -46,7 +55,8 @@ async function main() {
 }
 
 main();
-`,
+`;
+  },
 };
 
 /**
@@ -56,6 +66,7 @@ main();
  * @param {string} props.clientName - The exported name of the client.
  * @param {string} props.clientFileName - The file name where the client is defined.
  * @param {Language} props.language - The target language for which to render the usage snippet
+ * @param {Array<Array<string>>} [props.queryParams=[]] - Query parameters from the AsyncAPI document, where each item is a tuple `[name, defaultValue]`. For JavaScript they are positional constructor arguments placed before `throwSendErrors`, so the snippet skips each of them.
  * @returns {JSX.Element} A Text component containing a formatted usage example snippet.
  * @throws {Error} When the specified language is not supported.
  * @throws {Error} When clientName is missing or invalid.
@@ -79,7 +90,7 @@ main();
  * 
  * renderUsage();
  */
-export function Usage({ clientName, clientFileName, language }) {
+export function Usage({ clientName, clientFileName, language, queryParams = [] }) {
   const supportedLanguages = Object.keys(usageConfig);
   const snippetFn = usageConfig[language];
 
@@ -95,7 +106,7 @@ export function Usage({ clientName, clientFileName, language }) {
     throw invalidClientFileName(clientFileName);
   }
 
-  const snippet = snippetFn(clientName, clientFileName);
+  const snippet = snippetFn(clientName, clientFileName, queryParams);
 
   return (
     <Text newLines={2}>

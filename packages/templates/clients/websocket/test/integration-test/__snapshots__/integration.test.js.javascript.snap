@@ -41,8 +41,9 @@ const SlackWebsocketAPIClient = require('./client');
 
 // throwSendErrors defaults to true: a failed send re-throws after the registered
 // error handlers run, so you can react to each failure. Pass
-// new SlackWebsocketAPIClient(undefined, false) to keep a high-throughput producer loop
+// new SlackWebsocketAPIClient(undefined, undefined, undefined, false) to keep a high-throughput producer loop
 // running and rely on registered error handlers instead.
+// Arguments are (url, ticket, appId, throwSendErrors).
 const wsClient = new SlackWebsocketAPIClient();
 
 async function main() {

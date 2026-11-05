@@ -1381,6 +1381,7 @@ Renders a usage example snippet for a generated WebSocket client in a given lang
 | props.clientName | `string` | The exported name of the client. |
 | props.clientFileName | `string` | The file name where the client is defined. |
 | props.language | `Language` | The target language for which to render the usage snippet |
+| props.queryParams | `Array.<Array.<string>>` | Query parameters from the AsyncAPI document, where each item is a tuple &#x60;[name, defaultValue]&#x60;. For JavaScript they are positional constructor arguments placed before &#x60;throwSendErrors&#x60;, so the snippet skips each of them. |
 
 
 

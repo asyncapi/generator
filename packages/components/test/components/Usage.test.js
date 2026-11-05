@@ -28,6 +28,33 @@ describe('Testing of Usage component', () => {
     }
   );
 
+  test('renders javascript throwSendErrors hint that skips query parameters', () => {
+    const result = render(
+      <Usage
+        clientName="MyClient"
+        clientFileName="myClient.js"
+        language="javascript"
+        queryParams={[['ticket', ''], ['app_id', '']]}
+      />
+    );
+
+    expect(result).toContain('new MyClient(undefined, undefined, undefined, false)');
+    expect(result).toContain('// Arguments are (url, ticket, appId, throwSendErrors).');
+    expect(result.trim()).toMatchSnapshot();
+  });
+
+  test('renders the same javascript hint for an empty queryParams array as without it', () => {
+    const withEmpty = render(
+      <Usage clientName="MyClient" clientFileName="myClient.js" language="javascript" queryParams={[]} />
+    );
+    const without = render(
+      <Usage clientName="MyClient" clientFileName="myClient.js" language="javascript" />
+    );
+
+    expect(withEmpty).toBe(without);
+    expect(withEmpty).toContain('new MyClient(undefined, false)');
+  });
+
   test('throws error for unsupported language', () => {
     expect(() =>
       render(

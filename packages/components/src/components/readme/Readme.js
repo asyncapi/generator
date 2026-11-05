@@ -1,5 +1,5 @@
 import { File, Text } from '@asyncapi/generator-react-sdk';
-import { getClientName, getServer, getServerUrl, getInfo, getTitle } from '@asyncapi/generator-helpers';
+import { getClientName, getServer, getServerUrl, getInfo, getTitle, getQueryParams } from '@asyncapi/generator-helpers';
 import { Overview } from './Overview';
 import { Installation } from './Installation';
 import { Usage } from './Usage';
@@ -68,6 +68,8 @@ export function Readme({ asyncapi, params, language }) {
   const serverUrl = getServerUrl(server);
 
   const operations = asyncapi.operations().all();
+  const queryParams = getQueryParams(asyncapi.channels());
+  const queryParamsArray = queryParams ? Array.from(queryParams.entries()) : [];
 
   return (
     <File name="README.md">
@@ -78,6 +80,7 @@ export function Readme({ asyncapi, params, language }) {
         clientName={clientName}
         clientFileName={params.clientFileName}
         language={language}
+        queryParams={queryParamsArray}
       />
       <CoreMethods language={language} />
       {operations.length > 0 && <AvailableOperations operations={operations} />}

@@ -27,8 +27,8 @@ export function QueryParamsArgumentsDocs({ queryParams }) {
     const firstLine = `* @param {string} ${paramName} - `;
     const secondLine = `If provided (or if ${envVarName} environment variable is set), added as ?${docParamName}=… to URL${defaultNote}`;
     return (
-      <Text indent={2}>
-        {`${firstLine}${secondLine}\n`}
+      <Text indent={2} newLines={1}>
+        {`${firstLine}${secondLine}`}
       </Text>
     );
   });

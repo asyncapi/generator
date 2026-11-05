@@ -2068,9 +2068,7 @@ class SlackWebsocketAPIClient {
     * Constructor to initialize the WebSocket client
     * @param {string} url - The WebSocket server URL. Use it if the server URL is different from the default one taken from the AsyncAPI document.
     * @param {string} ticket - If provided (or if TICKET environment variable is set), added as ?ticket=… to URL
-
     * @param {string} appId - If provided (or if APP_ID environment variable is set), added as ?app_id=… to URL
-
     * @param {boolean} [throwSendErrors=true] - Controls how the instance send methods react to a send failure.
     *   When true (default) the error is re-thrown after the registered error handlers run, so the caller can
     *   handle each failure. When false the error is suppressed after the handlers run, which keeps a

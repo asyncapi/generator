@@ -19,9 +19,13 @@ export function QueryParamsArgumentsDocs({ queryParams }) {
     const originalParamName = param[0];
     const paramName = getSafeJSName(originalParamName, usedNames);
     const envVarName = originalParamName.toUpperCase().replace(/[^A-Z0-9_]/g, '_');
-    const docParamName = originalParamName.replace(/\*\//g, '*\\/').replace(/[\r\n]+/g, ' ');
+    const toDocText = (text) => String(text).replace(/\*\//g, '*\\/').replace(/[\r\n]+/g, ' ');
+    const docParamName = toDocText(originalParamName);
+    const paramDefaultValue = param[1];
+    const hasDefault = paramDefaultValue !== undefined && paramDefaultValue !== null && paramDefaultValue !== '';
+    const defaultNote = hasDefault ? `. Defaults to ${toDocText(paramDefaultValue)}` : '';
     const firstLine = `* @param {string} ${paramName} - `;
-    const secondLine = `If provided (or if ${envVarName} environment variable is set), added as ?${docParamName}=… to URL`;
+    const secondLine = `If provided (or if ${envVarName} environment variable is set), added as ?${docParamName}=… to URL${defaultNote}`;
     return (
       <Text indent={2}>
         {`${firstLine}${secondLine}\n`}

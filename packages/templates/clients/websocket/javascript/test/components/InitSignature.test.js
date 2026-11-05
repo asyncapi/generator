@@ -25,64 +25,17 @@ describe('InitSignature component (integration with AsyncAPI document)', () => {
     expect(result.trim()).toMatchSnapshot();
   });
 
-  test('renders with single query parameter with default value false', () => {
-    const queryParamsWithFalseDefault = [['heartbeat', 'false']];
-    const result = render(<InitSignature queryParams={queryParamsWithFalseDefault} />);
-    expect(result.trim()).toMatchSnapshot();
-  });
-
-  test('renders with single query parameter with default value true', () => {
-    const queryParamsWithTrueDefault = [['bids', 'true']];
-    const result = render(<InitSignature queryParams={queryParamsWithTrueDefault} />);
-    expect(result.trim()).toMatchSnapshot();
-  });
-
-  test('renders with multiple query parameters with mixed default values', () => {
+  test('renders with multiple query parameters from the AsyncAPI document', () => {
     const channels = parsedAsyncAPIDocument.channels();
     const queryParams = getQueryParams(channels);
     const queryParamsArray = queryParams && Array.from(queryParams.entries());
     const result = render(<InitSignature queryParams={queryParamsArray} />);
     expect(result.trim()).toMatchSnapshot();
   });
-  test('renders with single query parameter without default value', () => {
-    const queryParamsWithoutDefault = [['token', undefined]];
-    const result = render(<InitSignature queryParams={queryParamsWithoutDefault} />);
-    expect(result.trim()).toMatchSnapshot();
-  });
 
-  test('renders with single query parameter with default value as primitive boolean', () => {
-    const queryParams = [['bids', false]];
+  test('does not emit spec default values as parameter defaults', () => {
+    const queryParams = [['heartbeat', 'false'], ['count', 42], ['token', 'abc'], ['sessionId', undefined]];
     const result = render(<InitSignature queryParams={queryParams} />);
-    expect(result.trim()).toMatchSnapshot();
-  });
-
-  test('renders with single query parameter with default value as primitive number', () => {
-    const queryParams = [['count', 42]];
-    const result = render(<InitSignature queryParams={queryParams} />);
-    expect(result.trim()).toMatchSnapshot();
-  });
-
-  test('renders with single query parameter with default value as stringified number', () => {
-    const queryParams = [['count', '42']];
-    const result = render(<InitSignature queryParams={queryParams} />);
-    expect(result.trim()).toMatchSnapshot();
-  });
-
-  test('renders with single query parameter with explicit empty string default', () => {
-    const queryParams = [['token', '']];
-    const result = render(<InitSignature queryParams={queryParams} />);
-    expect(result.trim()).toMatchSnapshot();
-  });
-
-  test('renders non-canonical numeric defaults as strings', () => {
-    const queryParams = [['code', '0123'], ['hex', '0x10'], ['price', '1.50'], ['limit', 'Infinity']];
-    const result = render(<InitSignature queryParams={queryParams} />);
-    expect(result.trim()).toMatchSnapshot();
-  });
-
-  test('escapes quotes, backslashes and newlines in string defaults', () => {
-    const queryParams = [['token', 'a"b\\c\nd']];
-    const result = render(<InitSignature queryParams={queryParams} />);
-    expect(result.trim()).toMatchSnapshot();
+    expect(result.trim()).toBe('constructor(url, heartbeat, count, token, sessionId, throwSendErrors = true) {');
   });
 });

@@ -1,5 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Testing of QueryParamsVariables component escapes quotes, backslashes and newlines in js string defaults 1`] = `
+"const _token = token ?? process.env[\\"TOKEN\\"] ?? \\"a\\\\\\"b\\\\\\\\c\\\\nd\\";
+if (_token != null) {
+  params[\\"token\\"] = _token;
+}"
+`;
+
 exports[`Testing of QueryParamsVariables component ignores framework for python 1`] = `
 "token = token or os.getenv(\\"TOKEN\\")
         if token is not None:
@@ -27,16 +34,54 @@ exports[`Testing of QueryParamsVariables component renders java quarkus query pa
       }"
 `;
 
+exports[`Testing of QueryParamsVariables component renders js boolean, numeric and missing defaults in their literal form 1`] = `
+"const _bids = bids ?? process.env[\\"BIDS\\"] ?? true;
+if (_bids != null) {
+  params[\\"bids\\"] = _bids;
+}
+const _offers = offers ?? process.env[\\"OFFERS\\"] ?? false;
+if (_offers != null) {
+  params[\\"offers\\"] = _offers;
+}
+const _count = count ?? process.env[\\"COUNT\\"] ?? 42;
+if (_count != null) {
+  params[\\"count\\"] = _count;
+}
+const _token = token ?? process.env[\\"TOKEN\\"];
+if (_token != null) {
+  params[\\"token\\"] = _token;
+}"
+`;
+
+exports[`Testing of QueryParamsVariables component renders js non-canonical numeric defaults as strings 1`] = `
+"const _code = code ?? process.env[\\"CODE\\"] ?? \\"0123\\";
+if (_code != null) {
+  params[\\"code\\"] = _code;
+}
+const _hex = hex ?? process.env[\\"HEX\\"] ?? \\"0x10\\";
+if (_hex != null) {
+  params[\\"hex\\"] = _hex;
+}
+const _price = price ?? process.env[\\"PRICE\\"] ?? \\"1.50\\";
+if (_price != null) {
+  params[\\"price\\"] = _price;
+}
+const _limit = limit ?? process.env[\\"LIMIT\\"] ?? \\"Infinity\\";
+if (_limit != null) {
+  params[\\"limit\\"] = _limit;
+}"
+`;
+
 exports[`Testing of QueryParamsVariables component renders js query params correctly with query parameters 1`] = `
-"const _heartbeat = heartbeat ?? process.env[\\"HEARTBEAT\\"];
+"const _heartbeat = heartbeat ?? process.env[\\"HEARTBEAT\\"] ?? false;
 if (_heartbeat != null) {
   params[\\"heartbeat\\"] = _heartbeat;
 }
-const _topOfBook = topOfBook ?? process.env[\\"TOP_OF_BOOK\\"];
+const _topOfBook = topOfBook ?? process.env[\\"TOP_OF_BOOK\\"] ?? false;
 if (_topOfBook != null) {
   params[\\"top_of_book\\"] = _topOfBook;
 }
-const _bids = bids ?? process.env[\\"BIDS\\"];
+const _bids = bids ?? process.env[\\"BIDS\\"] ?? true;
 if (_bids != null) {
   params[\\"bids\\"] = _bids;
 }
@@ -54,6 +99,25 @@ if (__1st != null) {
 const _sayHi = sayHi ?? process.env[\\"SAY_HI\\"];
 if (_sayHi != null) {
   params[\\"say\\\\\\"hi\\"] = _sayHi;
+}"
+`;
+
+exports[`Testing of QueryParamsVariables component renders js spec defaults after the environment variable lookup 1`] = `
+"const _heartbeat = heartbeat ?? process.env[\\"HEARTBEAT\\"] ?? false;
+if (_heartbeat != null) {
+  params[\\"heartbeat\\"] = _heartbeat;
+}
+const _count = count ?? process.env[\\"COUNT\\"] ?? 42;
+if (_count != null) {
+  params[\\"count\\"] = _count;
+}
+const _token = token ?? process.env[\\"TOKEN\\"] ?? \\"abc\\";
+if (_token != null) {
+  params[\\"token\\"] = _token;
+}
+const _sessionId = sessionId ?? process.env[\\"SESSIONID\\"];
+if (_sessionId != null) {
+  params[\\"sessionId\\"] = _sessionId;
 }"
 `;
 

@@ -3,7 +3,8 @@ import { getSafeJSName } from '@asyncapi/generator-helpers';
 
 /**
  * Renders the constructor signature for the generated WebSocket client.
- * Injects any query parameters into the signature with their default values (if provided in the AsyncAPI document).
+ * Injects any query parameters into the signature. Their default values from the AsyncAPI document
+ * are applied in the constructor body after the environment variable lookup, not as parameter defaults.
  *
  * @param {Object} props - The component props.
  * @param {Array<Array<string>>} [props.queryParams] - Array of query parameters from the AsyncAPI document, where each item is a tuple `[name, defaultValue]`.
@@ -19,26 +20,7 @@ export function InitSignature({ queryParams }) {
   }
 
   const usedNames = new Map();
-  const queryParamsArguments = queryParams.map((param) => {
-    const paramName = getSafeJSName(param[0], usedNames);
-    const paramDefaultValue = param[1];
-    let defaultValue = '';
-    if (paramDefaultValue !== undefined && paramDefaultValue !== null && paramDefaultValue !== '') {
-      const isBoolean = paramDefaultValue === 'true' || paramDefaultValue === 'false' || typeof paramDefaultValue === 'boolean';
-      // Why: only canonical numbers are emitted unquoted — values like "0123" (octal, a
-      // SyntaxError in strict class code) or "0x10" would otherwise change meaning.
-      const asNumber = Number(paramDefaultValue);
-      const isNumber = typeof paramDefaultValue === 'number' ||
-        (Number.isFinite(asNumber) && String(asNumber) === paramDefaultValue);
-
-      if (isBoolean || isNumber) {
-        defaultValue = ` = ${paramDefaultValue}`;
-      } else {
-        defaultValue = ` = ${JSON.stringify(String(paramDefaultValue))}`;
-      }
-    }
-    return `${paramName}${defaultValue}`;
-  }).join(', ');
+  const queryParamsArguments = queryParams.map((param) => getSafeJSName(param[0], usedNames)).join(', ');
 
   return (
     <Text indent={0}>

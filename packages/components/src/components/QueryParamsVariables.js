@@ -16,6 +16,28 @@ import { unsupportedLanguage } from '../utils/ErrorHandling';
  */
 
 /**
+ * Converts a query parameter default value into a JavaScript literal.
+ *
+ * @private
+ * @param {string|number|boolean|undefined|null} defaultValue - The default value from the AsyncAPI document.
+ * @returns {string|null} The JavaScript literal, or null when there is no default.
+ */
+function toJsLiteral(defaultValue) {
+  if (defaultValue === undefined || defaultValue === null || defaultValue === '') {
+    return null;
+  }
+  const isBoolean = defaultValue === 'true' || defaultValue === 'false' || typeof defaultValue === 'boolean';
+  const asNumber = Number(defaultValue);
+  const isNumber = typeof defaultValue === 'number' ||
+    (Number.isFinite(asNumber) && String(asNumber) === defaultValue);
+
+  if (isBoolean || isNumber) {
+    return String(defaultValue);
+  }
+  return JSON.stringify(String(defaultValue));
+}
+
+/**
  * Language and framework specific logic for generating query parameter code.
  * Each entry returns a {@link QueryParamCodeBlock}.
  *
@@ -68,9 +90,11 @@ const queryParamLogicConfig = {
     const rawName = param[0];
     const paramName = getSafeJSName(rawName, usedNames);
     const envVarName = rawName.toUpperCase().replace(/[^A-Z0-9_]/g, '_');
+    const defaultLiteral = toJsLiteral(param[1]);
+    const defaultFallback = defaultLiteral === null ? '' : ` ?? ${defaultLiteral}`;
     return {
       variableDefinition: {
-        text: `const _${paramName} = ${paramName} ?? process.env[${JSON.stringify(envVarName)}];`,
+        text: `const _${paramName} = ${paramName} ?? process.env[${JSON.stringify(envVarName)}]${defaultFallback};`,
         indent: 0,
       },
       ifCondition: {

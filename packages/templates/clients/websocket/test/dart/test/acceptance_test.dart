@@ -50,6 +50,7 @@ void main() {
 
       // Start custom WebSocket server on port 8085 to receive connections from Microcks
       final server = await HttpServer.bind(InternetAddress.anyIPv4, serverPort);
+      addTearDown(() => server.close(force: true));
       final connectedSockets = <WebSocket>[];
       final microcksConnected = Completer<void>();
 
@@ -125,7 +126,6 @@ void main() {
         }
       }
 
-      await server.close(force: true);
       expect(testSuccess, isTrue, reason: 'Microcks test did not report success for Dart client');
     }, timeout: const Timeout(Duration(minutes: 2)));
   }, timeout: const Timeout(Duration(minutes: 2)));

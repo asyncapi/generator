@@ -111,6 +111,30 @@ describe('Generator', () => {
       expect(t).toThrow('No target directory has been specified.');
     });
 
+    it('fails if no targetDir is given even when entrypoint is provided with default output', () => {
+      const t = () => new Generator('testTemplate', undefined, { entrypoint: 'test-entrypoint' });
+      expect(t).toThrow('No target directory has been specified.');
+    });
+
+    it('fails if no targetDir is given when entrypoint is provided with output fs', () => {
+      const t = () => new Generator('testTemplate', undefined, { entrypoint: 'test-entrypoint', output: 'fs' });
+      expect(t).toThrow('No target directory has been specified.');
+    });
+
+    it('does not require targetDir when output is string and entrypoint is provided', () => {
+      const gen = new Generator('testTemplate', undefined, { entrypoint: 'test-entrypoint', output: 'string' });
+      expect(gen.targetDir).toBeUndefined();
+      expect(gen.entrypoint).toStrictEqual('test-entrypoint');
+      expect(gen.output).toStrictEqual('string');
+    });
+
+    it('works with targetDir, entrypoint and output fs', () => {
+      const gen = new Generator('testTemplate', __dirname, { entrypoint: 'test-entrypoint', output: 'fs' });
+      expect(gen.targetDir).toStrictEqual(__dirname);
+      expect(gen.entrypoint).toStrictEqual('test-entrypoint');
+      expect(gen.output).toStrictEqual('fs');
+    });
+
     it('fails if output is given and is different than "fs" and "string"', () => {
       const t = () => new Generator('testTemplate', __dirname, { output: 'fail' });
       expect(t).toThrow('Invalid output type fail. Valid values are \'fs\' and \'string\'.');

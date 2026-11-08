@@ -91,8 +91,8 @@ class Generator {
     const options = arguments[arguments.length - 1];
     this.verifyoptions(options);
     if (!templateName) throw new Error('No template name has been specified.');
-    if (!entrypoint && !targetDir) throw new Error('No target directory has been specified.');
     if (!['fs', 'string'].includes(output)) throw new Error(`Invalid output type ${output}. Valid values are 'fs' and 'string'.`);
+    if (output === 'fs' && !targetDir) throw new Error('No target directory has been specified.');
     /** @type {Boolean} Whether to compile the template or use the cached transpiled version provided by template in '__transpiled' folder. */
     this.compile = compile;
     /** @type {Object} Npm registry information. */

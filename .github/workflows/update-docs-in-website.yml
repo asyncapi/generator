@@ -18,14 +18,12 @@ jobs:
     steps:
       - name: Checkout Current repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-
         with:
           path: generator
           persist-credentials: false
 
       - name: Checkout Another repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-
         with:
           repository: asyncapi/website
           path: website

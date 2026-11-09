@@ -78,6 +78,28 @@ We use Github to host code, to track issues and feature requests, as well as acc
 
 [Open an issue](https://github.com/asyncapi/asyncapi/issues/new) **only** if you want to report a bug or a feature. Don't open issues for questions or support, instead join our [Slack workspace](https://www.asyncapi.com/slack-invite) and ask there. Don't forget to follow our [Slack Etiquette](https://github.com/asyncapi/community/blob/master/docs/060-meetings-and-communication/slack-etiquette.md) while interacting with community members! It's more likely you'll get help, and much faster!
 
+### Issue Approval Process
+
+Every newly opened issue is automatically labelled **`Awaiting Approval`**. This label signals that a core maintainer still needs to review and triage the issue before any work should begin.
+
+#### How approval works
+
+1. **A core maintainer reviews the issue** and, if it is valid and ready for work, posts a comment containing the `/approve` command.
+2. The automation removes the `Awaiting Approval` label, adds the **`Approved Issue`** label, and posts a comment with contribution instructions.
+3. Contributors can now pick up the issue, comment to claim it, and open a pull request.
+
+> **Who can approve?** Only the core maintainers listed on the catch-all (`*`) line of the [`CODEOWNERS`](https://github.com/asyncapi/generator/blob/master/CODEOWNERS) file. Bot accounts are excluded. If anyone else uses `/approve`, a comment is posted explaining they are not authorized.
+
+#### PR gating
+
+Pull requests that reference an issue still carrying the `Awaiting Approval` label (via `Closes #N`, `Fixes #N`, or `Resolves #N`) are **automatically closed**. This ensures no work is merged for issues that have not been vetted. PRs that do not reference any issue at all are also automatically closed.
+
+#### Commands reference
+
+| Command | Who can use it | Effect |
+|---------|---------------|--------|
+| `/approve` | Core maintainers (from `CODEOWNERS`) | Removes `Awaiting Approval`, adds `Approved Issue`, posts contribution instructions |
+
 ## Bug Reports and Feature Requests
 
 Please use our issues templates that provide you with hints on what information we need from you to help you out.

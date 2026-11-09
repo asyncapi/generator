@@ -1,5 +1,24 @@
 # @asyncapi/generator
 
+## 3.5.0
+
+### Minor Changes
+
+- 51dbf37: Add outgoing-processor support to the Dart WebSocket client: `registerOutgoingProcessor()` registers processors that run on each message before it is sent, and the generated example shows a sample processor. The `RegisterOutgoingProcessor` component is now shared in `@asyncapi/generator-components` and reused by the Python, JavaScript, and Dart clients.
+
+### Patch Changes
+
+- Updated dependencies [51dbf37]
+  - @asyncapi/generator-components@0.9.0
+
+## 3.4.1
+
+### Patch Changes
+
+- 93bd9ce: Fix the JavaScript WebSocket client template to reference `asyncapi.json` when the input AsyncAPI document is JSON.
+- Updated dependencies [3651e21]
+  - @asyncapi/generator-hooks@0.1.2
+
 ## 3.4.0
 
 ### Minor Changes

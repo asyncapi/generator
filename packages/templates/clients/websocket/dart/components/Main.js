@@ -19,6 +19,9 @@ export function Main({ clientName, instanceName, sendOps }) {
       <Text indent={2}>{`final ${instanceName} = ${clientName}();`}</Text>
       <Text indent={2}>{`${instanceName}.registerMessageHandler(myMessageHandler);`}</Text>
       <Text indent={2} newLines={2}>{`${instanceName}.registerErrorHandler(myErrorHandler);`}</Text>
+      {hasSend && (
+        <Text indent={2} newLines={2}>{`${instanceName}.registerOutgoingProcessor(outgoingProcessor);`}</Text>
+      )}
       <Text indent={2}>{'try {'}</Text>
       <OpenConnection language="dart" instanceName={instanceName} />
       {hasSend && (

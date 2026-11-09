@@ -1,0 +1,51 @@
+# Purpose of this workflow is to automatically add the 'Awaiting Approval' label
+# to every newly opened issue so maintainers can triage before work begins.
+
+name: Add 'Awaiting Approval' label on new issues
+
+on:
+  issues:
+    types:
+      - opened
+
+jobs:
+  add-awaiting-approval-label:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Add 'Awaiting Approval' label
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        with:
+          github-token: ${{ secrets.GH_TOKEN }}
+          script: |
+            const labelName = 'Awaiting Approval';
+            const labelColor = 'fbca04';
+            const labelDescription = 'Issue awaiting maintainer approval before work can begin';
+
+            // Ensure the label exists in the repo
+            const { data: repoLabels } = await github.rest.issues.listLabelsForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            });
+
+            if (!repoLabels.some(l => l.name === labelName)) {
+              try {
+                await github.rest.issues.createLabel({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  name: labelName,
+                  color: labelColor,
+                  description: labelDescription,
+                });
+              } catch (e) {
+                if (e.status !== 422) throw e;
+              }
+            }
+
+            console.log(`Adding label '${labelName}' to issue #${context.issue.number}...`);
+            await github.rest.issues.addLabels({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: [labelName],
+            });

@@ -2,10 +2,8 @@ import { Text } from '@asyncapi/generator-react-sdk';
 import { unsupportedLanguage } from '../../utils/ErrorHandling';
 
 /**
- * @typedef {'python' | 'javascript'} Language
+ * @typedef {'python' | 'javascript' | 'dart'} Language
  * Supported programming languages for the example outgoing processor.
- * Dart's WebSocket client does not expose an outgoing processor hook today,
- * so it is not part of the supported set.
  */
 
 /**
@@ -26,6 +24,11 @@ const outgoingProcessorConfig = {
     from datetime import datetime
     print(f"Outgoing processor fired: {message}")
     return {"payload": message, "timestamp": datetime.now().isoformat()}`,
+  dart: `dynamic outgoingProcessor(dynamic message) {
+  final processed = {'payload': message, 'timestamp': DateTime.now().toIso8601String()};
+  print('Outgoing processor fired: $processed');
+  return processed;
+}`,
 };
 
 /**

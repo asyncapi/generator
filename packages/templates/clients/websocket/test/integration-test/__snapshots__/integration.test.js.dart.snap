@@ -17,6 +17,7 @@ class HoppscotchClient {
   WebSocketChannel? _channel;
   final List<void Function(String)> _messageHandlers = [];
   final List<void Function(Object)> _errorHandlers = [];
+  final List<dynamic Function(dynamic)> _outgoingProcessors = [];
 
   /// Constructor to initialize the WebSocket client
   /// 
@@ -73,6 +74,12 @@ class HoppscotchClient {
     _errorHandlers.add(handler);
   }
 
+  /// Register a function that processes outgoing messages automatically.
+  /// These processors run in sequence before each message is sent.
+  void registerOutgoingProcessor(dynamic Function(dynamic) processor) {
+    _outgoingProcessors.add(processor);
+  }
+
   /// Method to handle message with callback
   void _handleMessage(dynamic message, void Function(String) cb) {
     cb(message is String ? message : message.toString());
@@ -91,12 +98,17 @@ class HoppscotchClient {
   }
 
   /// Send a sendEchoMessage message to the server
+  /// Runs any registered outgoing processors on the message before sending.
   void sendEchoMessage(dynamic message) {
     if (_channel == null) {
       print('Error: WebSocket is not connected.');
       return;
     }
-    final payload = message is String ? message : jsonEncode(message);
+    dynamic processedMessage = message;
+    for (final processor in _outgoingProcessors) {
+      processedMessage = processor(processedMessage) ?? processedMessage;
+    }
+    final payload = processedMessage is String ? processedMessage : jsonEncode(processedMessage);
     _channel!.sink.add(payload);
     print('Sent message: $payload');
   }
@@ -126,10 +138,18 @@ void myErrorHandler(Object error) {
   print('Errors from WebSocket: $error');
 }
 
+dynamic outgoingProcessor(dynamic message) {
+  final processed = {'payload': message, 'timestamp': DateTime.now().toIso8601String()};
+  print('Outgoing processor fired: $processed');
+  return processed;
+}
+
 Future<void> main() async {
   final hoppscotchClient = HoppscotchClient();
   hoppscotchClient.registerMessageHandler(myMessageHandler);
   hoppscotchClient.registerErrorHandler(myErrorHandler);
+
+  hoppscotchClient.registerOutgoingProcessor(outgoingProcessor);
 
   try {
     await hoppscotchClient.connect();
@@ -178,6 +198,7 @@ class HoppscotchEchoWebSocketClient {
   WebSocketChannel? _channel;
   final List<void Function(String)> _messageHandlers = [];
   final List<void Function(Object)> _errorHandlers = [];
+  final List<dynamic Function(dynamic)> _outgoingProcessors = [];
 
   /// Constructor to initialize the WebSocket client
   /// 
@@ -234,6 +255,12 @@ class HoppscotchEchoWebSocketClient {
     _errorHandlers.add(handler);
   }
 
+  /// Register a function that processes outgoing messages automatically.
+  /// These processors run in sequence before each message is sent.
+  void registerOutgoingProcessor(dynamic Function(dynamic) processor) {
+    _outgoingProcessors.add(processor);
+  }
+
   /// Method to handle message with callback
   void _handleMessage(dynamic message, void Function(String) cb) {
     cb(message is String ? message : message.toString());
@@ -252,12 +279,17 @@ class HoppscotchEchoWebSocketClient {
   }
 
   /// Send a sendEchoMessage message to the server
+  /// Runs any registered outgoing processors on the message before sending.
   void sendEchoMessage(dynamic message) {
     if (_channel == null) {
       print('Error: WebSocket is not connected.');
       return;
     }
-    final payload = message is String ? message : jsonEncode(message);
+    dynamic processedMessage = message;
+    for (final processor in _outgoingProcessors) {
+      processedMessage = processor(processedMessage) ?? processedMessage;
+    }
+    final payload = processedMessage is String ? processedMessage : jsonEncode(processedMessage);
     _channel!.sink.add(payload);
     print('Sent message: $payload');
   }
@@ -287,10 +319,18 @@ void myErrorHandler(Object error) {
   print('Errors from WebSocket: $error');
 }
 
+dynamic outgoingProcessor(dynamic message) {
+  final processed = {'payload': message, 'timestamp': DateTime.now().toIso8601String()};
+  print('Outgoing processor fired: $processed');
+  return processed;
+}
+
 Future<void> main() async {
   final hoppscotchEchoWebSocketClient = HoppscotchEchoWebSocketClient();
   hoppscotchEchoWebSocketClient.registerMessageHandler(myMessageHandler);
   hoppscotchEchoWebSocketClient.registerErrorHandler(myErrorHandler);
+
+  hoppscotchEchoWebSocketClient.registerOutgoingProcessor(outgoingProcessor);
 
   try {
     await hoppscotchEchoWebSocketClient.connect();
@@ -340,6 +380,7 @@ class PostmanEchoWebSocketClientClient {
   WebSocketChannel? _channel;
   final List<void Function(String)> _messageHandlers = [];
   final List<void Function(Object)> _errorHandlers = [];
+  final List<dynamic Function(dynamic)> _outgoingProcessors = [];
 
   /// Constructor to initialize the WebSocket client
   /// 
@@ -396,6 +437,12 @@ class PostmanEchoWebSocketClientClient {
     _errorHandlers.add(handler);
   }
 
+  /// Register a function that processes outgoing messages automatically.
+  /// These processors run in sequence before each message is sent.
+  void registerOutgoingProcessor(dynamic Function(dynamic) processor) {
+    _outgoingProcessors.add(processor);
+  }
+
   /// Method to handle message with callback
   void _handleMessage(dynamic message, void Function(String) cb) {
     cb(message is String ? message : message.toString());
@@ -414,12 +461,17 @@ class PostmanEchoWebSocketClientClient {
   }
 
   /// Send a sendEchoMessage message to the server
+  /// Runs any registered outgoing processors on the message before sending.
   void sendEchoMessage(dynamic message) {
     if (_channel == null) {
       print('Error: WebSocket is not connected.');
       return;
     }
-    final payload = message is String ? message : jsonEncode(message);
+    dynamic processedMessage = message;
+    for (final processor in _outgoingProcessors) {
+      processedMessage = processor(processedMessage) ?? processedMessage;
+    }
+    final payload = processedMessage is String ? processedMessage : jsonEncode(processedMessage);
     _channel!.sink.add(payload);
     print('Sent message: $payload');
   }
@@ -449,10 +501,18 @@ void myErrorHandler(Object error) {
   print('Errors from WebSocket: $error');
 }
 
+dynamic outgoingProcessor(dynamic message) {
+  final processed = {'payload': message, 'timestamp': DateTime.now().toIso8601String()};
+  print('Outgoing processor fired: $processed');
+  return processed;
+}
+
 Future<void> main() async {
   final postmanEchoWebSocketClientClient = PostmanEchoWebSocketClientClient();
   postmanEchoWebSocketClientClient.registerMessageHandler(myMessageHandler);
   postmanEchoWebSocketClientClient.registerErrorHandler(myErrorHandler);
+
+  postmanEchoWebSocketClientClient.registerOutgoingProcessor(outgoingProcessor);
 
   try {
     await postmanEchoWebSocketClientClient.connect();

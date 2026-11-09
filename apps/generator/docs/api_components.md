@@ -137,6 +137,12 @@ an error to registered handlers (or logs it when none are registered).
   
   Renders a WebSocket message handler registration method with optional pre- and post-execution logic.
 
+* [RegisterOutgoingProcessor](#RegisterOutgoingProcessor) ⇒ `JSX.Element`<br/>
+  
+  Renders the client method that registers an outgoing message processor.
+Registered processors are stored on the client instance and run in sequence
+on each message before it is sent.
+
 * [SendOperations](#SendOperations) ⇒ `Array.<JSX.Element>`<br/>
   
   Renders WebSocket send operation methods. Generates both static and instance methods for sending messages through WebSocket connections.
@@ -1508,6 +1514,44 @@ function renderRegisterMessageHandler(){
 }
 
 renderRegisterMessageHandler();
+```
+
+
+
+<a name="RegisterOutgoingProcessor"></a>
+### RegisterOutgoingProcessor()
+Renders the client method that registers an outgoing message processor.
+Registered processors are stored on the client instance and run in sequence
+on each message before it is sent.
+
+
+**Parameters**
+
+| Name | Type | Description |
+|------|------|-------------|
+| props | `Object` | Component props. |
+| props.language | `Language` | Target programming language. |
+
+
+
+**Returns**
+
+- `JSX.Element` - A &#x60;Text&#x60; component containing the registration method definition.
+
+
+
+**Example**
+
+```js
+import { RegisterOutgoingProcessor } from "@asyncapi/generator-components";
+
+function renderRegisterOutgoingProcessor() {
+  return (
+    <RegisterOutgoingProcessor language="python" />
+  );
+}
+
+renderRegisterOutgoingProcessor();
 ```
 
 

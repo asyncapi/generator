@@ -1,5 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Testing of OutgoingProcessor function render dart example outgoing processor 1`] = `
+"dynamic outgoingProcessor(dynamic message) {
+  final processed = {'payload': message, 'timestamp': DateTime.now().toIso8601String()};
+  print('Outgoing processor fired: $processed');
+  return processed;
+}"
+`;
+
 exports[`Testing of OutgoingProcessor function render javascript example outgoing processor 1`] = `
 "function outgoingProcessor(message) {
   const processed = { payload: message, timestamp: new Date().toISOString() };

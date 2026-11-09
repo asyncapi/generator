@@ -250,14 +250,25 @@ class HoppscotchClient {
               return this._connectionPromise;
           }
           if (this.websocket.readyState === WebSocket.CLOSING) {
-              return Promise.reject(new Error('WebSocket connection is closing. Wait for it to close before reconnecting.'));
+              if (!this._reconnectionPromise) {
+                  this._reconnectionPromise = new Promise(resolve => this.websocket.once('close', resolve))
+                      .then(() => {
+                          this._reconnectionPromise = undefined;
+                          return this.connect();
+                      });
+              }
+              return this._reconnectionPromise;
           }
       }
       this._connectionPromise = new Promise((resolve, reject) => {
-          this.websocket = new WebSocket(this.url);
-          this.websocket.once('close', () => {
+          const socket = this.websocket = new WebSocket(this.url);
+          const onCloseBeforeOpen = () => {
+              socket.removeListener('open', onOpen);
               reject(new Error('WebSocket connection closed before it opened.'));
-          });
+          };
+          const onOpen = () => socket.removeListener('close', onCloseBeforeOpen);
+          socket.once('close', onCloseBeforeOpen);
+          socket.once('open', onOpen);
           // On successful connection
         this.websocket.onopen = () => {
         console.log('Connected to Hoppscotch Echo WebSocket Client server');
@@ -751,14 +762,25 @@ class HoppscotchEchoWebSocketClient {
               return this._connectionPromise;
           }
           if (this.websocket.readyState === WebSocket.CLOSING) {
-              return Promise.reject(new Error('WebSocket connection is closing. Wait for it to close before reconnecting.'));
+              if (!this._reconnectionPromise) {
+                  this._reconnectionPromise = new Promise(resolve => this.websocket.once('close', resolve))
+                      .then(() => {
+                          this._reconnectionPromise = undefined;
+                          return this.connect();
+                      });
+              }
+              return this._reconnectionPromise;
           }
       }
       this._connectionPromise = new Promise((resolve, reject) => {
-          this.websocket = new WebSocket(this.url);
-          this.websocket.once('close', () => {
+          const socket = this.websocket = new WebSocket(this.url);
+          const onCloseBeforeOpen = () => {
+              socket.removeListener('open', onOpen);
               reject(new Error('WebSocket connection closed before it opened.'));
-          });
+          };
+          const onOpen = () => socket.removeListener('close', onCloseBeforeOpen);
+          socket.once('close', onCloseBeforeOpen);
+          socket.once('open', onOpen);
           // On successful connection
         this.websocket.onopen = () => {
         console.log('Connected to Hoppscotch Echo WebSocket Client server');
@@ -1201,14 +1223,25 @@ class PostmanEchoWebSocketClientClient {
               return this._connectionPromise;
           }
           if (this.websocket.readyState === WebSocket.CLOSING) {
-              return Promise.reject(new Error('WebSocket connection is closing. Wait for it to close before reconnecting.'));
+              if (!this._reconnectionPromise) {
+                  this._reconnectionPromise = new Promise(resolve => this.websocket.once('close', resolve))
+                      .then(() => {
+                          this._reconnectionPromise = undefined;
+                          return this.connect();
+                      });
+              }
+              return this._reconnectionPromise;
           }
       }
       this._connectionPromise = new Promise((resolve, reject) => {
-          this.websocket = new WebSocket(this.url);
-          this.websocket.once('close', () => {
+          const socket = this.websocket = new WebSocket(this.url);
+          const onCloseBeforeOpen = () => {
+              socket.removeListener('open', onOpen);
               reject(new Error('WebSocket connection closed before it opened.'));
-          });
+          };
+          const onOpen = () => socket.removeListener('close', onCloseBeforeOpen);
+          socket.once('close', onCloseBeforeOpen);
+          socket.once('open', onOpen);
           // On successful connection
         this.websocket.onopen = () => {
         console.log('Connected to Postman Echo WebSocket Client server');

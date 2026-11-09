@@ -26,7 +26,8 @@ if self.ws_app:
   },
   javascript: {
     methodDocs: '// Method to close the WebSocket connection',
-    methodLogic: `if (this.websocket) {
+    methodLogic: `this._pendingReconnect?.cancel();
+if (this.websocket) {
     this.websocket.close();
     console.log('WebSocket connection closed.');
 }`

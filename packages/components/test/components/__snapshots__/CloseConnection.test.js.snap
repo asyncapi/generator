@@ -68,6 +68,7 @@ exports[`Testing of CloseConnection function render java websocket close connect
 exports[`Testing of CloseConnection function render javascript method with custom name 1`] = `
 "  // Method to close the WebSocket connection
    disconnect() {
+    this._pendingReconnect?.cancel();
     if (this.websocket) {
         this.websocket.close();
         console.log('WebSocket connection closed.');
@@ -79,6 +80,7 @@ exports[`Testing of CloseConnection function render javascript method with custo
 exports[`Testing of CloseConnection function render javascript websocket close connection method 1`] = `
 "// Method to close the WebSocket connection
    close() {
+    this._pendingReconnect?.cancel();
     if (this.websocket) {
         this.websocket.close();
         console.log('WebSocket connection closed.');

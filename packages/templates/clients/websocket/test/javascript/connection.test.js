@@ -58,6 +58,33 @@ describe('generated JavaScript client connection lifecycle', () => {
     expect(server.clients.size).toBe(1);
   });
 
+  it('cancels all queued reconnect callers when closed again', async () => {
+    let connections = 0;
+    server.on('connection', () => { connections++; });
+    await client.connect();
+
+    const socket = client.websocket;
+    const closed = once(socket, 'close');
+    client.close();
+
+    const first = client.connect();
+    const second = client.connect();
+    const results = Promise.allSettled([first, second]);
+    client.close();
+
+    for (const result of await results) {
+      expect(result.status).toBe('rejected');
+      expect(result.reason.message).toBe('WebSocket reconnect canceled by close().');
+    }
+    await closed;
+    expect(client.websocket).toBe(socket);
+    expect(server.clients.size).toBe(0);
+    expect(connections).toBe(1);
+
+    await client.connect();
+    expect(connections).toBe(2);
+  });
+
   it('rejects pending callers when closed during the handshake and can reconnect', async () => {
     const first = client.connect();
     const second = client.connect();

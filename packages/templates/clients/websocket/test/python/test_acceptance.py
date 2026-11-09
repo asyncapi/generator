@@ -4,6 +4,7 @@ import os
 import pytest
 import requests
 import threading
+from websockets.exceptions import ConnectionClosedOK
 from websockets.sync.server import serve
 
 module_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../python/test/temp/snapshotTestResult/client_hoppscotch'))
@@ -106,3 +107,37 @@ def test_hoppscotch_client_sends_message():
         if server_instance:
             server_instance.shutdown()  # This stops serve_forever()
         server_thread.join(timeout=5)
+
+def test_hoppscotch_client_reconnects_after_close():
+    opened = threading.Event()
+    disconnected = threading.Event()
+
+    class Client(HoppscotchEchoWebSocketClient):
+        def on_open(self, ws):
+            super().on_open(ws)
+            opened.set()
+
+    def handler(socket):
+        try:
+            socket.recv(timeout=5)
+        except ConnectionClosedOK:
+            disconnected.set()
+
+    with serve(handler, "127.0.0.1", 0) as server:
+        thread = threading.Thread(target=server.serve_forever, daemon=True)
+        thread.start()
+        client = Client(f"ws://127.0.0.1:{server.socket.getsockname()[1]}")
+
+        try:
+            client.connect()
+            assert opened.wait(timeout=5), "First connection did not open"
+            client.close()
+            assert disconnected.wait(timeout=5), "First connection did not close"
+
+            opened.clear()
+            client.connect()
+            assert opened.wait(timeout=5), "Second connection did not open"
+        finally:
+            client.close()
+            server.shutdown()
+            thread.join(timeout=5)

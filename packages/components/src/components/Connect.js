@@ -38,12 +38,37 @@ connect() {
 
     ssl_opts = {"ca_certs": certifi.where()}
     stop_event = threading.Event()
+    def handshake_headers():
+        # run_forever resets keep_running before starting the handshake.
+        if stop_event.is_set():
+            raise websocket.WebSocketException("WebSocket connection was cancelled")
+        return {}
+
+    def on_open(ws):
+        if stop_event.is_set():
+            ws.close()
+            return
+        self.on_open(ws)
+
+    def on_message(ws, message):
+        if not stop_event.is_set():
+            self.on_message(ws, message)
+
+    def on_error(ws, error):
+        if not stop_event.is_set():
+            self.on_error(ws, error)
+
+    def on_close(ws, code, reason):
+        if self.ws_app is ws:
+            self.on_close(ws, code, reason)
+
     ws_app = websocket.WebSocketApp(
         self.url,
-        on_open=self.on_open,
-        on_message=self.on_message,
-        on_error=self.on_error,
-        on_close=self.on_close
+        header=handshake_headers,
+        on_open=on_open,
+        on_message=on_message,
+        on_error=on_error,
+        on_close=on_close
     )
     self.ws_app = ws_app
     self._stop_event = stop_event

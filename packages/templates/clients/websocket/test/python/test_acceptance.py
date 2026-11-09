@@ -141,3 +141,44 @@ def test_hoppscotch_client_reconnects_after_close():
             client.close()
             server.shutdown()
             thread.join(timeout=5)
+
+
+def test_hoppscotch_client_cancels_pending_startup(monkeypatch):
+    import websocket
+
+    starting = threading.Event()
+    resume = threading.Event()
+    finished = threading.Event()
+    accepted = threading.Event()
+    original_run = websocket.WebSocketApp.run_forever
+
+    def pause_startup(app, **kwargs):
+        starting.set()
+        try:
+            assert resume.wait(timeout=5)
+            return original_run(app, **kwargs)
+        finally:
+            finished.set()
+
+    def handler(socket):
+        accepted.set()
+        socket.close()
+
+    monkeypatch.setattr(websocket.WebSocketApp, "run_forever", pause_startup)
+    with serve(handler, "127.0.0.1", 0) as server:
+        thread = threading.Thread(target=server.serve_forever, daemon=True)
+        thread.start()
+        client = HoppscotchEchoWebSocketClient(f"ws://127.0.0.1:{server.socket.getsockname()[1]}")
+
+        try:
+            client.connect()
+            assert starting.wait(timeout=5)
+            client.close()
+            resume.set()
+            assert finished.wait(timeout=5)
+            assert not accepted.is_set()
+        finally:
+            resume.set()
+            client.close()
+            server.shutdown()
+            thread.join(timeout=5)

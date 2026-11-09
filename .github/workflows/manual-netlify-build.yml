@@ -1,10 +1,10 @@
 name: Docs Preview Build (Netlify)
 
 on:
-  workflow_dispatch:
   pull_request:
     paths:
       - 'apps/generator/docs/**'
+
 permissions:
   contents: read
 
@@ -40,21 +40,19 @@ jobs:
 
       - name: Install deps
         working-directory: website
-        run: |
-          npm ci
+        run: npm ci --ignore-scripts
 
       - name: Build website
         working-directory: website
         run: npm run build
 
-      # Stash the PR number so the deploy workflow knows where to comment.
       - name: Save PR metadata
         run: |
           mkdir -p ./pr-meta
           echo "${{ github.event.number }}" > ./pr-meta/pr-number.txt
 
       - name: Upload built site
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.2
         with:
           name: docs-preview-site
           path: |
@@ -64,7 +62,7 @@ jobs:
           if-no-files-found: warn
           
       - name: Upload PR metadata
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.2
         with:
           name: docs-preview-pr-meta
           path: ./pr-meta

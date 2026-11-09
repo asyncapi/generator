@@ -26,7 +26,7 @@ jobs:
           ref: master
           path: website
           fetch-depth: 1
-          persist-credentials: true
+          persist-credentials: false
 
       - name: Sync docs into website
         run: |

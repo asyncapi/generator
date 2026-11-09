@@ -55,7 +55,7 @@ jobs:
         run: |
           git add .
           git commit -m "docs(generator): update latest generator docs"
-          git push https://${{ env.GH_TOKEN }}@github.com/asyncapi/website
+          git push https://${{ env.GITHUB_TOKEN }}@github.com/asyncapi/website
       - name: Create PR
         working-directory: ./website
         env:

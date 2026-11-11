@@ -298,16 +298,32 @@ describe('getSafeJSName', () => {
     expect(getSafeJSName('constant')).toBe('constant');
   });
 
-  it('should prefix names that collide with built-in constructor-reserved names', () => {
-    expect(getSafeJSName('url')).toBe('_url');
-    expect(getSafeJSName('throwSendErrors')).toBe('_throwSendErrors');
-    expect(getSafeJSName('params')).toBe('_params');
-    expect(getSafeJSName('process')).toBe('_process');
-    expect(getSafeJSName('querystring')).toBe('_querystring');
+  it('should prefix names that collide with caller-provided reserved names', () => {
+    const reservedNames = new Set(['url', 'throwSendErrors', 'params', 'process', 'querystring']);
+    expect(getSafeJSName('url', new Map(), reservedNames)).toBe('_url');
+    expect(getSafeJSName('throwSendErrors', new Map(), reservedNames)).toBe('_throwSendErrors');
+    expect(getSafeJSName('params', new Map(), reservedNames)).toBe('_params');
+    expect(getSafeJSName('process', new Map(), reservedNames)).toBe('_process');
+    expect(getSafeJSName('querystring', new Map(), reservedNames)).toBe('_querystring');
   });
 
-  it('should not prefix names that are not constructor-reserved', () => {
-    expect(getSafeJSName('urlValue')).toBe('urlValue');
+  it('should not prefix names that are not in the reserved names', () => {
+    const reservedNames = new Set(['url']);
+    expect(getSafeJSName('urlValue', new Map(), reservedNames)).toBe('urlValue');
+  });
+
+  it('should not reserve any template names when no reserved names are given', () => {
+    expect(getSafeJSName('url')).toBe('url');
+    expect(getSafeJSName('process')).toBe('process');
+  });
+
+  it('should detect collisions between a prefixed reserved name and an existing name', () => {
+    const usedNames = new Map();
+    const reservedNames = new Set(['url']);
+    getSafeJSName('_url', usedNames, reservedNames);
+    expect(() => getSafeJSName('url', usedNames, reservedNames)).toThrow(
+      'Cannot generate JavaScript client: query parameters "_url" and "url" both produce "_url".'
+    );
   });
 
   it('should throw when two different names produce the same identifier', () => {

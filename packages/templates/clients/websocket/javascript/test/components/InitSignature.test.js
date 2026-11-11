@@ -3,6 +3,7 @@ import { render } from '@asyncapi/generator-react-sdk';
 import { Parser, fromFile } from '@asyncapi/parser';
 import { getQueryParams } from '@asyncapi/generator-helpers';
 import { InitSignature } from '../../components/InitSignature.js';
+import { CONSTRUCTOR_RESERVED_NAMES } from '../../components/Constructor.js';
 
 const parser = new Parser();
 const asyncapiFilePath = path.resolve(__dirname, '../../../test/__fixtures__/asyncapi-websocket-components.yml');
@@ -37,5 +38,11 @@ describe('InitSignature component (integration with AsyncAPI document)', () => {
     const queryParams = [['heartbeat', 'false'], ['count', 42], ['token', 'abc'], ['sessionId', undefined]];
     const result = render(<InitSignature queryParams={queryParams} />);
     expect(result.trim()).toBe('constructor(url, heartbeat, count, token, sessionId, throwSendErrors = true) {');
+  });
+
+  test('prefixes query parameters that clash with the constructor reserved names', () => {
+    const queryParams = [['url', undefined], ['process', undefined], ['token', undefined]];
+    const result = render(<InitSignature queryParams={queryParams} reservedNames={CONSTRUCTOR_RESERVED_NAMES} />);
+    expect(result.trim()).toBe('constructor(url, _url, _process, token, throwSendErrors = true) {');
   });
 });

@@ -86,9 +86,9 @@ const queryParamLogicConfig = {
       };
     },
   },
-  javascript: (param, usedNames) => {
+  javascript: (param, usedNames, reservedNames) => {
     const rawName = param[0];
-    const paramName = getSafeJSName(rawName, usedNames);
+    const paramName = getSafeJSName(rawName, usedNames, reservedNames);
     const envVarName = rawName.toUpperCase().replace(/[^A-Z0-9_]/g, '_');
     const defaultLiteral = toJsLiteral(param[1]);
     const defaultFallback = defaultLiteral === null ? '' : ` ?? ${defaultLiteral}`;
@@ -140,6 +140,7 @@ function resolveQueryParamLogic(language, framework) {
  * @param {Language} props.language - The target programming language.
  * @param {string} [props.framework=''] - Optional framework for the language.
  * @param {string[][]} props.queryParams - Array of query parameters, each represented as [paramName, paramType?].
+ * @param {Set<string>} [props.reservedNames=new Set()] - JavaScript only: identifiers the surrounding generated code already uses, so query parameters with those names are prefixed with `_`.
  * @returns {JSX.Element[]|null} Array of Text components for each query parameter, or null if queryParams is invalid.
  * 
  * @example
@@ -175,7 +176,7 @@ function resolveQueryParamLogic(language, framework) {
  * 
  * renderQueryParamsVariable().catch(console.error);
  */
-export function QueryParamsVariables({ language, framework = '', queryParams }) {
+export function QueryParamsVariables({ language, framework = '', queryParams, reservedNames = new Set() }) {
   if (!queryParams || !Array.isArray(queryParams)) {
     return null;
   }
@@ -192,7 +193,7 @@ export function QueryParamsVariables({ language, framework = '', queryParams }) 
 
   const usedNames = new Map();
   return queryParams.map((param) => {
-    const { variableDefinition, ifCondition, assignment, closing } = generateParamCode(param, usedNames);
+    const { variableDefinition, ifCondition, assignment, closing } = generateParamCode(param, usedNames, reservedNames);
 
     return (
       <>

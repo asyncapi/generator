@@ -43,6 +43,20 @@ describe('Testing of Usage component', () => {
     expect(result.trim()).toMatchSnapshot();
   });
 
+  test('names javascript query params in the hint the same way as the constructor reserved names', () => {
+    const result = render(
+      <Usage
+        clientName="MyClient"
+        clientFileName="myClient.js"
+        language="javascript"
+        queryParams={[['url', ''], ['ticket', '']]}
+        reservedNames={new Set(['url'])}
+      />
+    );
+
+    expect(result).toContain('// Arguments are (url, _url, ticket, throwSendErrors).');
+  });
+
   test('renders the same javascript hint for an empty queryParams array as without it', () => {
     const withEmpty = render(
       <Usage clientName="MyClient" clientFileName="myClient.js" language="javascript" queryParams={[]} />

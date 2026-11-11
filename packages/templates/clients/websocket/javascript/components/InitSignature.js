@@ -8,9 +8,10 @@ import { getSafeJSName } from '@asyncapi/generator-helpers';
  *
  * @param {Object} props - The component props.
  * @param {Array<Array<string>>} [props.queryParams] - Array of query parameters from the AsyncAPI document, where each item is a tuple `[name, defaultValue]`.
+ * @param {Set<string>} [props.reservedNames] - Identifiers the constructor body already uses; query parameters with those names are prefixed with `_`.
  * @returns {React.Element} The rendered React SDK Text element containing the constructor signature.
  */
-export function InitSignature({ queryParams }) {
+export function InitSignature({ queryParams, reservedNames }) {
   if (!queryParams || queryParams.length === 0) {
     return (
       <Text indent={0}>
@@ -20,7 +21,7 @@ export function InitSignature({ queryParams }) {
   }
 
   const usedNames = new Map();
-  const queryParamsArguments = queryParams.map((param) => getSafeJSName(param[0], usedNames)).join(', ');
+  const queryParamsArguments = queryParams.map((param) => getSafeJSName(param[0], usedNames, reservedNames)).join(', ');
 
   return (
     <Text indent={0}>

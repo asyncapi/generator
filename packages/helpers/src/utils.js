@@ -92,26 +92,12 @@ const upperFirst = (inputStr) => {
 };
 
 /**
- * Names reserved by the generated WebSocket client constructor.
- * These are used as parameter or local-variable names in the constructor body,
- * so query-parameter identifiers that collide must be prefixed.
- */
-const CONSTRUCTOR_RESERVED_NAMES = new Set([
-  'url',
-  'throwSendErrors',
-  'params',
-  'queryString',
-  'process',
-  'querystring'
-]);
-
-/**
  * Converts an AsyncAPI query parameter name into a safe JavaScript identifier.
  *
  * The function camelCases the input, strips invalid identifier characters,
  * prefixes with `_` when the result starts with a digit or is a JavaScript
- * keyword / strict-mode reserved word, and checks the built-in
- * constructor-reserved names the same way.
+ * keyword / strict-mode reserved word, and checks the caller-provided
+ * reserved names the same way.
  *
  * **Collision detection:** when two different AsyncAPI names produce the same
  * identifier the function throws instead of silently renaming, so the user
@@ -121,11 +107,14 @@ const CONSTRUCTOR_RESERVED_NAMES = new Set([
  * @param {Map<string,string>} [usedNames=new Map()] - A Map whose keys are
  *   already-claimed identifiers and values are the original AsyncAPI names
  *   that produced them. The map is mutated (the new mapping is added).
+ * @param {Set<string>} [reservedNames=new Set()] - Identifiers the caller's
+ *   generated code already uses (for example a template's constructor locals),
+ *   which must be prefixed with `_` to avoid shadowing them.
  * @returns {string} A safe JavaScript identifier.
  * @throws {Error} When `name` cannot produce a valid JavaScript identifier,
  *   or when two different AsyncAPI names collide on the same identifier.
  */
-const getSafeJSName = (name, usedNames = new Map()) => {
+const getSafeJSName = (name, usedNames = new Map(), reservedNames = new Set()) => {
   let safe = toCamelCase(name);
 
   // Why: toCamelCase strips most non-identifier chars, but a few edge cases
@@ -152,7 +141,7 @@ const getSafeJSName = (name, usedNames = new Map()) => {
     safe = `_${safe}`;
   }
 
-  if (CONSTRUCTOR_RESERVED_NAMES.has(safe)) {
+  if (reservedNames.has(safe)) {
     safe = `_${safe}`;
   }
 

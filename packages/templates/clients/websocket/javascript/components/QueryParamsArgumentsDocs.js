@@ -7,9 +7,10 @@ import { getSafeJSName } from '@asyncapi/generator-helpers';
  *
  * @param {Object} props - The component props.
  * @param {Array<Array<string>>} [props.queryParams] - Array of query parameters from the AsyncAPI document, where each item is a tuple `[name, defaultValue]`.
+ * @param {Set<string>} [props.reservedNames] - Identifiers the constructor body already uses; query parameters with those names are prefixed with `_`.
  * @returns {React.Element[] | null} An array of rendered React SDK Text elements containing the parameter documentation, or null if no query parameters exist.
  */
-export function QueryParamsArgumentsDocs({ queryParams }) {
+export function QueryParamsArgumentsDocs({ queryParams, reservedNames }) {
   if (!queryParams || queryParams.length === 0) {
     return null;
   }
@@ -17,7 +18,7 @@ export function QueryParamsArgumentsDocs({ queryParams }) {
   const usedNames = new Map();
   return queryParams.map((param) => {
     const originalParamName = param[0];
-    const paramName = getSafeJSName(originalParamName, usedNames);
+    const paramName = getSafeJSName(originalParamName, usedNames, reservedNames);
     const envVarName = originalParamName.toUpperCase().replace(/[^A-Z0-9_]/g, '_');
     const toDocText = (text) => String(text).replace(/\*\//g, '*\\/').replace(/[\r\n]+/g, ' ');
     const docParamName = toDocText(originalParamName);

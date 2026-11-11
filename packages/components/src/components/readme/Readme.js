@@ -18,6 +18,7 @@ import { missingAsyncAPIDocument, invalidParams } from '../../utils/ErrorHandlin
  * @param {AsyncAPIDocumentInterface} props.asyncapi - Parsed AsyncAPI document instance.
  * @param {Object} props.params - Generator parameters used to customize output 
  * @param {Language} props.language - Target language used to render language-specific sections.
+ * @param {Set<string>} [props.reservedNames=new Set()] - JavaScript only: identifiers the generated client constructor already uses, passed to the usage section so query parameter names match the constructor.
  * @returns {JSX.Element} A File component representing the generated README.md.
  * @throws {Error} When asyncapi is missing or invalid.
  * @throws {Error} When params object is missing or invalid.
@@ -52,7 +53,7 @@ import { missingAsyncAPIDocument, invalidParams } from '../../utils/ErrorHandlin
  * 
  */
 
-export function Readme({ asyncapi, params, language }) {
+export function Readme({ asyncapi, params, language, reservedNames = new Set() }) {
   if (!asyncapi) {
     throw missingAsyncAPIDocument();
   }
@@ -81,6 +82,7 @@ export function Readme({ asyncapi, params, language }) {
         clientFileName={params.clientFileName}
         language={language}
         queryParams={queryParamsArray}
+        reservedNames={reservedNames}
       />
       <CoreMethods language={language} />
       {operations.length > 0 && <AvailableOperations operations={operations} />}

@@ -110,6 +110,29 @@ describe('Testing of QueryParamsVariables component', () => {
     expect(result.trim()).toMatchSnapshot();
   });
 
+  test('prefixes js query params that clash with the given reserved names', () => {
+    const result = render(
+      <QueryParamsVariables
+        language='javascript'
+        queryParams={[['process', ''], ['token', '']]}
+        reservedNames={new Set(['process'])}
+      />
+    );
+    expect(result).toContain('const __process = _process ?? process.env["PROCESS"];');
+    expect(result).toContain('params["process"] = __process;');
+    expect(result).toContain('const _token = token ?? process.env["TOKEN"];');
+  });
+
+  test('does not prefix js query params when no reserved names are given', () => {
+    const result = render(
+      <QueryParamsVariables
+        language='javascript'
+        queryParams={[['url', '']]}
+      />
+    );
+    expect(result).toContain('const _url = url ?? process.env["URL"];');
+  });
+
   test('renders js non-canonical numeric defaults as strings', () => {
     const result = render(
       <QueryParamsVariables

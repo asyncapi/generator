@@ -27,9 +27,9 @@ async def main():
     await ws_client.close()
 `,
 
-  javascript: (clientName, clientFileName, queryParams) => {
+  javascript: (clientName, clientFileName, queryParams, reservedNames) => {
     const usedNames = new Map();
-    const queryParamNames = queryParams.map((param) => getSafeJSName(param[0], usedNames));
+    const queryParamNames = queryParams.map((param) => getSafeJSName(param[0], usedNames, reservedNames));
     const skippedArgs = ['undefined', ...queryParamNames.map(() => 'undefined')].join(', ');
     const argumentOrder = queryParamNames.length > 0
       ? `\n// Arguments are (url, ${queryParamNames.join(', ')}, throwSendErrors).`
@@ -67,6 +67,7 @@ main();
  * @param {string} props.clientFileName - The file name where the client is defined.
  * @param {Language} props.language - The target language for which to render the usage snippet
  * @param {Array<Array<string>>} [props.queryParams=[]] - Query parameters from the AsyncAPI document, where each item is a tuple `[name, defaultValue]`. For JavaScript they are positional constructor arguments placed before `throwSendErrors`, so the snippet skips each of them.
+ * @param {Set<string>} [props.reservedNames=new Set()] - JavaScript only: identifiers the generated constructor already uses, so the snippet names query parameters the same way the constructor does.
  * @returns {JSX.Element} A Text component containing a formatted usage example snippet.
  * @throws {Error} When the specified language is not supported.
  * @throws {Error} When clientName is missing or invalid.
@@ -90,7 +91,7 @@ main();
  * 
  * renderUsage();
  */
-export function Usage({ clientName, clientFileName, language, queryParams = [] }) {
+export function Usage({ clientName, clientFileName, language, queryParams = [], reservedNames = new Set() }) {
   const supportedLanguages = Object.keys(usageConfig);
   const snippetFn = usageConfig[language];
 
@@ -106,7 +107,7 @@ export function Usage({ clientName, clientFileName, language, queryParams = [] }
     throw invalidClientFileName(clientFileName);
   }
 
-  const snippet = snippetFn(clientName, clientFileName, queryParams);
+  const snippet = snippetFn(clientName, clientFileName, queryParams, reservedNames);
 
   return (
     <Text newLines={2}>

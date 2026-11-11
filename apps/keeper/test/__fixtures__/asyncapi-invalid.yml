@@ -1,0 +1,6 @@
+asyncapi: 3.0.0
+# Intentionally invalid: missing required 'info' object
+servers:
+  dev:
+    host: localhost:8080
+    protocol: ws

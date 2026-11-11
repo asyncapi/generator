@@ -15,7 +15,7 @@ jobs:
     if: >
       !github.event.issue.pull_request &&
       github.event.issue.state != 'closed' &&
-      (github.event.comment.body == '/approve' || startsWith(github.event.comment.body, '/approve '))
+      startsWith(github.event.comment.body, '/approve')
 
     runs-on: ubuntu-latest
 

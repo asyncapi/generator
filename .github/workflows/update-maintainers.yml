@@ -14,13 +14,13 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
     steps:
       - name: Checkout main branch
-        uses: actions/checkout@v3
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: master
           path: current_state
 
       - name: Checkout one commit before last one
-        uses: actions/checkout@v3
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 2
           ref: master
@@ -29,14 +29,14 @@ jobs:
       - run: cd previous_state && git checkout HEAD^
 
       - name: Checkout community repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: asyncapi/community
           token: ${{ env.GITHUB_TOKEN }}
           path: community
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: '16'
 
@@ -47,7 +47,7 @@ jobs:
         id: compare-codeowners
         env:
           GH_TOKEN: ${{ env.GITHUB_TOKEN }}
-        uses: actions/github-script@v6
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         with:
           script: |
             const fs = require('fs');
@@ -169,7 +169,7 @@ jobs:
 
       - name: Report workflow run status to Slack
         if: failure() # Only, on failure, send a message on the slack channel
-        uses: rtCamp/action-slack-notify@v2
+        uses: rtCamp/action-slack-notify@33ca3be66c6f378fe1610fd1d5258632dbed5e58 # v2.4.0
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_CI_FAIL_NOTIFY }}
           SLACK_TITLE: 🚨 Update maintainers list action failed 🚨

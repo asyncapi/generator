@@ -1,5 +1,11 @@
 # @asyncapi/keeper
 
+## 0.5.1
+
+### Patch Changes
+
+- afc8082: Throw descriptive error when `parseAsyncAPIDocumentFromFile` encounters an invalid AsyncAPI document, preventing downstream `TypeError` exceptions.
+
 ## 0.5.0
 
 ### Minor Changes

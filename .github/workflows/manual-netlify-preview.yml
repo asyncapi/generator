@@ -5,17 +5,22 @@ on:
     workflows: ["Docs Preview Build (Netlify)"]
     types: [completed]
 
-permissions:
-  contents: read
-  pull-requests: write   # to comment the preview URL
-  actions: read          # to download artifacts from the triggering run
+permissions: {}
 
 jobs:
   deploy:
+    name: Deploy docs preview to Netlify
     if: >
       github.event.workflow_run.event == 'pull_request' &&
       github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: read          # to download artifacts from the triggering run
+    outputs:
+      url: ${{ steps.deploy.outputs.url }}
+      pr_number: ${{ steps.pr.outputs.number }}
+      stale: ${{ steps.pr.outputs.stale }}
     steps:
       - name: Download built site artifact
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
@@ -38,6 +43,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WORKFLOW_RUN_HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+          REPO: ${{ github.repository }}
         run: |
           set -euo pipefail
           PR=$(cat pr-meta/pr-number.txt | tr -dc '0-9')
@@ -45,7 +51,7 @@ jobs:
 
           # Skip stale runs: if this artifact's commit no longer matches the PR head,
           # a newer build is in flight and will post the real preview.
-          CURRENT_HEAD=$(gh api "repos/${{ github.repository }}/pulls/${PR}" --jq .head.sha)
+          CURRENT_HEAD=$(gh api "repos/${REPO}/pulls/${PR}" --jq .head.sha)
           if [ "$CURRENT_HEAD" != "$WORKFLOW_RUN_HEAD_SHA" ]; then
             echo "stale=true" >> "$GITHUB_OUTPUT"
             echo "Skipping stale deploy: artifact head $WORKFLOW_RUN_HEAD_SHA, PR head $CURRENT_HEAD"
@@ -95,16 +101,27 @@ jobs:
             --json)
 
           echo "$DEPLOY_JSON"
-          URL=$(echo "$DEPLOY_JSON" | jq -r '.deploy_url')
+          URL=$(echo "$DEPLOY_JSON" | jq -r '.deploy_url // empty')
+          if [ -z "$URL" ]; then
+            echo "Netlify did not return a deploy_url"; exit 1
+          fi
           echo "url=$URL" >> "$GITHUB_OUTPUT"
 
+  comment:
+    name: Post preview URL to PR
+    needs: deploy
+    if: needs.deploy.outputs.stale != 'true' && needs.deploy.outputs.url != ''
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
       - name: Comment preview URL on PR
         uses: thollander/actions-comment-pull-request@24bffb9b452ba05a4f3f77933840a6a841d1b32b # v3.0.1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          pr-number: ${{ steps.pr.outputs.number }}
+          pr-number: ${{ needs.deploy.outputs.pr_number }}
           comment-tag: netlify-docs-preview
           message: |
             🚀 **Docs preview deployed**
             Below link points directly to the generator docs preview. May the force be with you!
-            → ${{ steps.deploy.outputs.url }}/docs/tools/generator
+            → ${{ needs.deploy.outputs.url }}/docs/tools/generator

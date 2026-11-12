@@ -4,7 +4,7 @@ import os
 import pytest
 import requests
 import threading
-from websockets.exceptions import ConnectionClosedOK
+from websockets.exceptions import ConnectionClosed, ConnectionClosedOK
 from websockets.sync.server import serve
 
 module_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../python/test/temp/snapshotTestResult/client_hoppscotch'))
@@ -256,3 +256,61 @@ def test_hoppscotch_client_close_keeps_app_and_stop_event_paired(monkeypatch):
         assert not client._stop_event.is_set()
     finally:
         client.close()
+
+
+def test_hoppscotch_client_closes_socket_when_handshake_finishes_after_close(monkeypatch):
+    import websocket
+
+    handshaking = threading.Event()
+    resume = threading.Event()
+    connected = threading.Event()
+    opened = threading.Event()
+    sockets = []
+    original_connect = websocket.WebSocket.connect
+    workers = []
+
+    class Client(HoppscotchEchoWebSocketClient):
+        def on_open(self, ws):
+            opened.set()
+
+    def pause_handshake(ws, *args, **kwargs):
+        sockets.append(ws)
+        workers.append(threading.current_thread())
+        handshaking.set()
+        if not resume.wait(timeout=5):
+            raise TimeoutError("Handshake was not released")
+        original_connect(ws, *args, **kwargs)
+        connected.set()
+
+    def handler(socket):
+        try:
+            socket.recv(timeout=5)
+        except ConnectionClosed:
+            pass
+
+
+    monkeypatch.setattr(websocket.WebSocket, "connect", pause_handshake)
+    with serve(handler, "127.0.0.1", 0) as server:
+        thread = threading.Thread(target=server.serve_forever, daemon=True)
+        thread.start()
+        client = Client(f"ws://127.0.0.1:{server.socket.getsockname()[1]}")
+
+        try:
+            client.connect()
+            assert handshaking.wait(timeout=5)
+            client.close()
+            resume.set()
+            workers[0].join(timeout=5)
+            assert not workers[0].is_alive()
+            assert connected.is_set()
+            assert not opened.is_set()
+            assert sockets[0].sock is None
+        finally:
+            resume.set()
+            client.close()
+            for worker in workers:
+                worker.join(timeout=5)
+            for socket in sockets:
+                socket.shutdown()
+            server.shutdown()
+            thread.join(timeout=5)

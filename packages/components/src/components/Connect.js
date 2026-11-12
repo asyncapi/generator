@@ -35,10 +35,15 @@ connect() {
     """Establish the connection and start the run_forever loop in a background thread."""
     ssl_opts = {"ca_certs": certifi.where()}
     stop_event = threading.Event()
+    attempt_socket = None
+
     def handshake_headers():
-        # run_forever resets keep_running before starting the handshake.
-        if stop_event.is_set():
-            raise websocket.WebSocketException("WebSocket connection was cancelled")
+        nonlocal attempt_socket
+        with self._connection_lock:
+            # run_forever resets keep_running before starting the handshake.
+            if stop_event.is_set():
+                raise websocket.WebSocketException("WebSocket connection was cancelled")
+            attempt_socket = ws_app.sock
         return {}
 
     def on_open(ws):
@@ -86,7 +91,12 @@ connect() {
                 except Exception as e:
                     print(f"Exception in WebSocket thread: {e}")  # Print full error details
         finally:
-            stop_event.set()
+            # close() can detach the app's socket before its handshake finishes.
+            try:
+                if attempt_socket is not None:
+                    attempt_socket.shutdown()
+            finally:
+                stop_event.set()
 
     thread = threading.Thread(target=run, daemon=True)
     thread.start()`;

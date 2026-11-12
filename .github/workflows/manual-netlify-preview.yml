@@ -36,25 +36,41 @@ jobs:
 
       - name: Read PR number
         id: pr
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WORKFLOW_RUN_HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
         run: |
           set -euo pipefail
           PR=$(cat pr-meta/pr-number.txt | tr -dc '0-9')
           if [ -z "$PR" ]; then echo "Invalid PR number"; exit 1; fi
+
+          # Skip stale runs: if this artifact's commit no longer matches the PR head,
+          # a newer build is in flight and will post the real preview.
+          CURRENT_HEAD=$(gh api "repos/${{ github.repository }}/pulls/${PR}" --jq .head.sha)
+          if [ "$CURRENT_HEAD" != "$WORKFLOW_RUN_HEAD_SHA" ]; then
+            echo "stale=true" >> "$GITHUB_OUTPUT"
+            echo "Skipping stale deploy: artifact head $WORKFLOW_RUN_HEAD_SHA, PR head $CURRENT_HEAD"
+          fi
+
           echo "number=$PR" >> "$GITHUB_OUTPUT"
 
       - name: Setup Node
+        if: steps.pr.outputs.stale != 'true'
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: '24.18.0'
 
       - name: Install jq
+        if: steps.pr.outputs.stale != 'true'
         run: |
           sudo apt-get update && sudo apt-get install -y jq
 
       - name: Install Netlify CLI
+        if: steps.pr.outputs.stale != 'true'
         run: npm i -g --ignore-scripts netlify-cli@23.9.5
 
       - name: Deploy docs draft preview to Netlify
+        if: steps.pr.outputs.stale != 'true'
         id: deploy
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
@@ -84,6 +100,7 @@ jobs:
           echo "url=$URL" >> "$GITHUB_OUTPUT"
 
       - name: Comment preview URL on PR
+        if: steps.pr.outputs.stale != 'true'
         uses: thollander/actions-comment-pull-request@24bffb9b452ba05a4f3f77933840a6a841d1b32b # v3.0.1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}

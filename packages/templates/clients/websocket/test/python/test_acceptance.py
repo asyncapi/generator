@@ -1,3 +1,4 @@
+import socket
 import time
 import sys
 import os
@@ -155,7 +156,7 @@ def test_hoppscotch_client_cancels_pending_startup(monkeypatch):
     def pause_startup(app, **kwargs):
         starting.set()
         try:
-            assert resume.wait(timeout=5)
+            resume.wait()
             return original_run(app, **kwargs)
         finally:
             finished.set()
@@ -198,7 +199,7 @@ def test_hoppscotch_client_close_keeps_app_and_stop_event_paired(monkeypatch):
             self.closed = threading.Event()
 
         def run_forever(self, **kwargs):
-            self.closed.wait(timeout=5)
+            self.closed.wait()
 
         def close(self):
             self.closed.set()
@@ -237,18 +238,18 @@ def test_hoppscotch_client_close_keeps_app_and_stop_event_paired(monkeypatch):
 
     closer = threading.Thread(target=client.close, daemon=True)
     reconnector = threading.Thread(target=reconnect, daemon=True)
-    closer.start()
     try:
-        assert captured_old_app.wait(timeout=5)
-        reconnector.start()
-        assert reconnect_attempted.wait(timeout=5)
-    finally:
-        resume_close.set()
-        closer.join(timeout=5)
-        if reconnector.ident is not None:
-            reconnector.join(timeout=5)
+        closer.start()
+        try:
+            assert captured_old_app.wait(timeout=5)
+            reconnector.start()
+            assert reconnect_attempted.wait(timeout=5)
+        finally:
+            resume_close.set()
+            closer.join(timeout=5)
+            if reconnector.ident is not None:
+                reconnector.join(timeout=5)
 
-    try:
         assert not closer.is_alive()
         assert not reconnector.is_alive()
         assert client.ws_app is not old_app
@@ -277,8 +278,7 @@ def test_hoppscotch_client_closes_socket_when_handshake_finishes_after_close(mon
         sockets.append(ws)
         workers.append(threading.current_thread())
         handshaking.set()
-        if not resume.wait(timeout=5):
-            raise TimeoutError("Handshake was not released")
+        resume.wait()
         original_connect(ws, *args, **kwargs)
         connected.set()
 
@@ -287,7 +287,6 @@ def test_hoppscotch_client_closes_socket_when_handshake_finishes_after_close(mon
             socket.recv(timeout=5)
         except ConnectionClosed:
             pass
-
 
     monkeypatch.setattr(websocket.WebSocket, "connect", pause_handshake)
     with serve(handler, "127.0.0.1", 0) as server:
@@ -314,3 +313,42 @@ def test_hoppscotch_client_closes_socket_when_handshake_finishes_after_close(mon
                 socket.shutdown()
             server.shutdown()
             thread.join(timeout=5)
+
+
+
+def test_hoppscotch_client_close_releases_stalled_handshake(monkeypatch):
+    import websocket
+
+    workers = []
+    original_run = websocket.WebSocketApp.run_forever
+
+    def track_worker(app, **kwargs):
+        workers.append(threading.current_thread())
+        return original_run(app, **kwargs)
+
+    monkeypatch.setattr(websocket.WebSocketApp, "run_forever", track_worker)
+    with socket.socket() as server:
+        server.bind(("127.0.0.1", 0))
+        server.listen()
+        server.settimeout(5)
+        client = HoppscotchEchoWebSocketClient(f"ws://127.0.0.1:{server.getsockname()[1]}")
+
+        client.connect()
+        try:
+            peer, _ = server.accept()
+            with peer:
+                peer.settimeout(5)
+                request = b""
+                while b"\r\n\r\n" not in request:
+                    chunk = peer.recv(4096)
+                    assert chunk, "Client disconnected before sending its handshake"
+                    request += chunk
+                # Keep the peer open without sending an upgrade response.
+                client.close()
+                workers[0].join(timeout=8)
+                assert not workers[0].is_alive(), "Worker is still waiting for the handshake"
+                assert peer.recv(1) == b""
+        finally:
+            client.close()
+            for worker in workers:
+                worker.join(timeout=5)

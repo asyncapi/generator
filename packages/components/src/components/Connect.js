@@ -36,20 +36,26 @@ connect() {
     ssl_opts = {"ca_certs": certifi.where()}
     stop_event = threading.Event()
     attempt_socket = None
+    previous_timeout = None
 
     def handshake_headers():
-        nonlocal attempt_socket
+        nonlocal attempt_socket, previous_timeout
         with self._connection_lock:
             # run_forever resets keep_running before starting the handshake.
             if stop_event.is_set():
                 raise websocket.WebSocketException("WebSocket connection was cancelled")
             attempt_socket = ws_app.sock
+            previous_timeout = attempt_socket.gettimeout()
+            # Bound stalled handshakes without changing the established connection timeout.
+            if previous_timeout is None or previous_timeout > 5:
+                attempt_socket.settimeout(5)
         return {}
 
     def on_open(ws):
         if stop_event.is_set():
             ws.close()
             return
+        attempt_socket.settimeout(previous_timeout)
         self.on_open(ws)
 
     def on_message(ws, message):

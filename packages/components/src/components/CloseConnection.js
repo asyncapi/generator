@@ -19,8 +19,9 @@ const delayExit = 1000;
  */
 const websocketCloseConfig = {
   python: {
-    methodLogic: `ws_app = self.ws_app
-self._stop_event.set()
+    methodLogic: `with self._connection_lock:
+    ws_app = self.ws_app
+    self._stop_event.set()
 if ws_app:
     ws_app.close()
     print("WebSocket connection closed.")`

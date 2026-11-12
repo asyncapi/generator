@@ -1111,6 +1111,7 @@ class SlackWebsocketAPIClient:
         self.error_handlers = []        # Callables for errors
         self.outgoing_processors = []   # Callables to process outgoing messages
         self.raise_send_errors = raise_send_errors  # Re-raise send failures after handlers run
+        self._connection_lock = threading.Lock()
         self._stop_event = threading.Event()
         params = {}
         self.receive_operation_handlers = {}
@@ -1167,9 +1168,6 @@ class SlackWebsocketAPIClient:
 
   def connect(self):
       \\"\\"\\"Establish the connection and start the run_forever loop in a background thread.\\"\\"\\"
-      if self.ws_app is not None and not self._stop_event.is_set():
-          return
-
       ssl_opts = {\\"ca_certs\\": certifi.where()}
       stop_event = threading.Event()
       def handshake_headers():
@@ -1196,16 +1194,19 @@ class SlackWebsocketAPIClient:
           if self.ws_app is ws:
               self.on_close(ws, code, reason)
 
-      ws_app = websocket.WebSocketApp(
-          self.url,
-          header=handshake_headers,
-          on_open=on_open,
-          on_message=on_message,
-          on_error=on_error,
-          on_close=on_close
-      )
-      self.ws_app = ws_app
-      self._stop_event = stop_event
+      with self._connection_lock:
+          if self.ws_app is not None and not self._stop_event.is_set():
+              return
+          ws_app = websocket.WebSocketApp(
+              self.url,
+              header=handshake_headers,
+              on_open=on_open,
+              on_message=on_message,
+              on_error=on_error,
+              on_close=on_close
+          )
+          self.ws_app = ws_app
+          self._stop_event = stop_event
 
       def run():
           retry = 0
@@ -1391,8 +1392,9 @@ class SlackWebsocketAPIClient:
 
   def close(self) :
     \\"\\"\\"Cleanly close the WebSocket connection.\\"\\"\\"
-    ws_app = self.ws_app
-    self._stop_event.set()
+    with self._connection_lock:
+        ws_app = self.ws_app
+        self._stop_event.set()
     if ws_app:
         ws_app.close()
         print(\\"WebSocket connection closed.\\")
@@ -1620,6 +1622,7 @@ class HoppscotchClient:
         self.error_handlers = []        # Callables for errors
         self.outgoing_processors = []   # Callables to process outgoing messages
         self.raise_send_errors = raise_send_errors  # Re-raise send failures after handlers run
+        self._connection_lock = threading.Lock()
         self._stop_event = threading.Event()
       
         self.receive_operation_handlers = {}
@@ -1670,9 +1673,6 @@ class HoppscotchClient:
 
   def connect(self):
       \\"\\"\\"Establish the connection and start the run_forever loop in a background thread.\\"\\"\\"
-      if self.ws_app is not None and not self._stop_event.is_set():
-          return
-
       ssl_opts = {\\"ca_certs\\": certifi.where()}
       stop_event = threading.Event()
       def handshake_headers():
@@ -1699,16 +1699,19 @@ class HoppscotchClient:
           if self.ws_app is ws:
               self.on_close(ws, code, reason)
 
-      ws_app = websocket.WebSocketApp(
-          self.url,
-          header=handshake_headers,
-          on_open=on_open,
-          on_message=on_message,
-          on_error=on_error,
-          on_close=on_close
-      )
-      self.ws_app = ws_app
-      self._stop_event = stop_event
+      with self._connection_lock:
+          if self.ws_app is not None and not self._stop_event.is_set():
+              return
+          ws_app = websocket.WebSocketApp(
+              self.url,
+              header=handshake_headers,
+              on_open=on_open,
+              on_message=on_message,
+              on_error=on_error,
+              on_close=on_close
+          )
+          self.ws_app = ws_app
+          self._stop_event = stop_event
 
       def run():
           retry = 0
@@ -1886,8 +1889,9 @@ class HoppscotchClient:
 
   def close(self) :
     \\"\\"\\"Cleanly close the WebSocket connection.\\"\\"\\"
-    ws_app = self.ws_app
-    self._stop_event.set()
+    with self._connection_lock:
+        ws_app = self.ws_app
+        self._stop_event.set()
     if ws_app:
         ws_app.close()
         print(\\"WebSocket connection closed.\\")
@@ -2121,6 +2125,7 @@ class HoppscotchEchoWebSocketClient:
         self.error_handlers = []        # Callables for errors
         self.outgoing_processors = []   # Callables to process outgoing messages
         self.raise_send_errors = raise_send_errors  # Re-raise send failures after handlers run
+        self._connection_lock = threading.Lock()
         self._stop_event = threading.Event()
       
         self.receive_operation_handlers = {}
@@ -2171,9 +2176,6 @@ class HoppscotchEchoWebSocketClient:
 
   def connect(self):
       \\"\\"\\"Establish the connection and start the run_forever loop in a background thread.\\"\\"\\"
-      if self.ws_app is not None and not self._stop_event.is_set():
-          return
-
       ssl_opts = {\\"ca_certs\\": certifi.where()}
       stop_event = threading.Event()
       def handshake_headers():
@@ -2200,16 +2202,19 @@ class HoppscotchEchoWebSocketClient:
           if self.ws_app is ws:
               self.on_close(ws, code, reason)
 
-      ws_app = websocket.WebSocketApp(
-          self.url,
-          header=handshake_headers,
-          on_open=on_open,
-          on_message=on_message,
-          on_error=on_error,
-          on_close=on_close
-      )
-      self.ws_app = ws_app
-      self._stop_event = stop_event
+      with self._connection_lock:
+          if self.ws_app is not None and not self._stop_event.is_set():
+              return
+          ws_app = websocket.WebSocketApp(
+              self.url,
+              header=handshake_headers,
+              on_open=on_open,
+              on_message=on_message,
+              on_error=on_error,
+              on_close=on_close
+          )
+          self.ws_app = ws_app
+          self._stop_event = stop_event
 
       def run():
           retry = 0
@@ -2387,8 +2392,9 @@ class HoppscotchEchoWebSocketClient:
 
   def close(self) :
     \\"\\"\\"Cleanly close the WebSocket connection.\\"\\"\\"
-    ws_app = self.ws_app
-    self._stop_event.set()
+    with self._connection_lock:
+        ws_app = self.ws_app
+        self._stop_event.set()
     if ws_app:
         ws_app.close()
         print(\\"WebSocket connection closed.\\")
@@ -2580,6 +2586,7 @@ class PostmanEchoWebSocketClientClient:
         self.error_handlers = []        # Callables for errors
         self.outgoing_processors = []   # Callables to process outgoing messages
         self.raise_send_errors = raise_send_errors  # Re-raise send failures after handlers run
+        self._connection_lock = threading.Lock()
         self._stop_event = threading.Event()
       
         self.receive_operation_handlers = {}
@@ -2630,9 +2637,6 @@ class PostmanEchoWebSocketClientClient:
 
   def connect(self):
       \\"\\"\\"Establish the connection and start the run_forever loop in a background thread.\\"\\"\\"
-      if self.ws_app is not None and not self._stop_event.is_set():
-          return
-
       ssl_opts = {\\"ca_certs\\": certifi.where()}
       stop_event = threading.Event()
       def handshake_headers():
@@ -2659,16 +2663,19 @@ class PostmanEchoWebSocketClientClient:
           if self.ws_app is ws:
               self.on_close(ws, code, reason)
 
-      ws_app = websocket.WebSocketApp(
-          self.url,
-          header=handshake_headers,
-          on_open=on_open,
-          on_message=on_message,
-          on_error=on_error,
-          on_close=on_close
-      )
-      self.ws_app = ws_app
-      self._stop_event = stop_event
+      with self._connection_lock:
+          if self.ws_app is not None and not self._stop_event.is_set():
+              return
+          ws_app = websocket.WebSocketApp(
+              self.url,
+              header=handshake_headers,
+              on_open=on_open,
+              on_message=on_message,
+              on_error=on_error,
+              on_close=on_close
+          )
+          self.ws_app = ws_app
+          self._stop_event = stop_event
 
       def run():
           retry = 0
@@ -2806,8 +2813,9 @@ class PostmanEchoWebSocketClientClient:
 
   def close(self) :
     \\"\\"\\"Cleanly close the WebSocket connection.\\"\\"\\"
-    ws_app = self.ws_app
-    self._stop_event.set()
+    with self._connection_lock:
+        ws_app = self.ws_app
+        self._stop_event.set()
     if ws_app:
         ws_app.close()
         print(\\"WebSocket connection closed.\\")

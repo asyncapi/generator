@@ -182,3 +182,77 @@ def test_hoppscotch_client_cancels_pending_startup(monkeypatch):
             client.close()
             server.shutdown()
             thread.join(timeout=5)
+
+
+def test_hoppscotch_client_close_keeps_app_and_stop_event_paired(monkeypatch):
+    import websocket
+
+    captured_old_app = threading.Event()
+    resume_close = threading.Event()
+    reconnect_attempted = threading.Event()
+    closer = None
+    reconnector = None
+
+    class App:
+        def __init__(self, *args, **kwargs):
+            self.closed = threading.Event()
+
+        def run_forever(self, **kwargs):
+            self.closed.wait(timeout=5)
+
+        def close(self):
+            self.closed.set()
+
+    class Client(HoppscotchEchoWebSocketClient):
+        def __getattribute__(self, name):
+            value = super().__getattribute__(name)
+            if name == "ws_app" and threading.current_thread() is closer:
+                captured_old_app.set()
+                resume_close.wait(timeout=5)
+            return value
+
+    class ObservedLock:
+        def __init__(self):
+            self.lock = threading.Lock()
+
+        def __enter__(self):
+            if threading.current_thread() is reconnector:
+                reconnect_attempted.set()
+            self.lock.acquire()
+
+        def __exit__(self, *args):
+            self.lock.release()
+
+    monkeypatch.setattr(websocket, "WebSocketApp", App)
+    client = Client()
+    client._connection_lock = ObservedLock()
+    client.connect()
+    old_app = client.ws_app
+    client.close()
+
+    def reconnect():
+        client.connect()
+        # Without synchronization the call can finish before close resumes.
+        reconnect_attempted.set()
+
+    closer = threading.Thread(target=client.close, daemon=True)
+    reconnector = threading.Thread(target=reconnect, daemon=True)
+    closer.start()
+    try:
+        assert captured_old_app.wait(timeout=5)
+        reconnector.start()
+        assert reconnect_attempted.wait(timeout=5)
+    finally:
+        resume_close.set()
+        closer.join(timeout=5)
+        if reconnector.ident is not None:
+            reconnector.join(timeout=5)
+
+    try:
+        assert not closer.is_alive()
+        assert not reconnector.is_alive()
+        assert client.ws_app is not old_app
+        assert not client.ws_app.closed.is_set()
+        assert not client._stop_event.is_set()
+    finally:
+        client.close()

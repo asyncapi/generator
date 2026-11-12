@@ -33,9 +33,6 @@ connect() {
   python: (onOpenMethod, onMessageMethod, onErrorMethod, onCloseMethod) => {
     const onConnectMethod = `def connect(self):
     """Establish the connection and start the run_forever loop in a background thread."""
-    if self.ws_app is not None and not self._stop_event.is_set():
-        return
-
     ssl_opts = {"ca_certs": certifi.where()}
     stop_event = threading.Event()
     def handshake_headers():
@@ -62,16 +59,19 @@ connect() {
         if self.ws_app is ws:
             self.on_close(ws, code, reason)
 
-    ws_app = websocket.WebSocketApp(
-        self.url,
-        header=handshake_headers,
-        on_open=on_open,
-        on_message=on_message,
-        on_error=on_error,
-        on_close=on_close
-    )
-    self.ws_app = ws_app
-    self._stop_event = stop_event
+    with self._connection_lock:
+        if self.ws_app is not None and not self._stop_event.is_set():
+            return
+        ws_app = websocket.WebSocketApp(
+            self.url,
+            header=handshake_headers,
+            on_open=on_open,
+            on_message=on_message,
+            on_error=on_error,
+            on_close=on_close
+        )
+        self.ws_app = ws_app
+        self._stop_event = stop_event
 
     def run():
         retry = 0

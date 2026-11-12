@@ -33,6 +33,7 @@ export function Constructor({ serverUrl, query, receiveOperations }) {
       self.error_handlers = []        # Callables for errors
       self.outgoing_processors = []   # Callables to process outgoing messages
       self.raise_send_errors = raise_send_errors  # Re-raise send failures after handlers run
+      self._connection_lock = threading.Lock()
       self._stop_event = threading.Event()
       ${ query ? 'params = {}' : ''}`
         }

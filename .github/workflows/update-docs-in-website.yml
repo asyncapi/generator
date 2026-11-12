@@ -29,8 +29,7 @@ jobs:
         with:
           repository: asyncapi/website
           path: website
-          token: ${{ env.GITHUB_TOKEN }}
-          persist-credentials: true  # needed for git push of the docs to the website repo
+          persist-credentials: false 
 
       - name: Config git
         working-directory: ./website
@@ -57,6 +56,8 @@ jobs:
 
       - name: Commit and push
         working-directory: ./website
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           git add .
           git commit -m "docs(generator): update latest generator docs"

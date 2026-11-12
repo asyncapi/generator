@@ -208,7 +208,7 @@ def test_hoppscotch_client_close_keeps_app_and_stop_event_paired(monkeypatch):
             value = super().__getattribute__(name)
             if name == "ws_app" and threading.current_thread() is closer:
                 captured_old_app.set()
-                resume_close.wait(timeout=5)
+                resume_close.wait()
             return value
 
     class ObservedLock:

@@ -1,0 +1,131 @@
+# This action is centrally managed in https://github.com/asyncapi/.github/
+# Don't make changes to this file in this repo as they will be overwritten with changes made to the same file in above mentioned repo
+
+# Purpose of this workflow is to validate the workflow files in this repo. It runs on every PR that changes any of the workflow files.
+# The flow consists of 4 steps:
+# 1. yamlint to validate the syntax of the yaml files.
+# 2. Check against schema using ajv to make sure the workflow files are following the correct structure and not missing any required fields.
+# 3. Use action-lint to check for any potential security issues or best practices in the workflow files. It also checks the params for popular actions.
+# 4. Use zizmor to check for any potential security issues in the workflow files.
+
+name: Workflow Validation
+
+on:
+  pull_request:
+    branches:
+      - master
+    paths:
+      - '.github/workflows/**'
+      - 'zizmor.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  yaml-lint:
+    name: Lint YAML files
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Install Dependencies
+        run: npm install --no-save yaml-lint ajv axios js-yaml
+
+      - name: Lint YAML Files
+        run: |
+          set -e
+          find .github/workflows -type f \( -name "*.yml" -o -name "*.yaml" \) -print0 | xargs -0 ./node_modules/.bin/yamllint -q
+
+      - name: Run YAML validation
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        with:
+          script: |
+            const Ajv = require("ajv");
+            const axios = require("axios");
+            const yaml = require("js-yaml");
+            const fs = require("fs").promises;
+
+            async function validateWorkflows() {
+              const schema = await axios.get(
+                "https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/schemas/json/github-workflow.json"
+              );
+
+              const files = await fs.readdir(".github/workflows");
+              const ymlFiles = files.filter((file) => file.endsWith(".yml") || file.endsWith(".yaml"));
+              const ajv = new Ajv({ strict: false, allErrors: true });
+              const validator = ajv.compile(schema.data);
+
+              for (const file of ymlFiles) {
+                try {
+                  const content = await fs.readFile(`.github/workflows/${file}`, "utf8");
+                  const target = yaml.load(content);
+
+                  const valid = validator(target);
+                  if (!valid) {
+                    console.error(
+                      `Validation failed for file '${file}' with the following errors:`
+                    );
+                    console.error(validator.errors);
+                    process.exitCode = 1;
+                  } else {
+                    console.log(`Workflow in file '${file}' is valid`);
+                  }
+                } catch (error) {
+                  console.error(`Error validating file '${file}': ${error.message}`);
+                  process.exitCode = 1;
+                }
+              }
+            }
+            await validateWorkflows();
+
+  actionlint:
+    name: Run actionlint
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      checks: write           # to be able to create check runs with the results of actionlint
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Run actionlint
+        uses: reviewdog/action-actionlint@50842263c20a7c46bd0065b9e624d3c569db061e # v1.73.0
+        with:
+          fail_level: any
+          reporter: github-pr-check
+
+  zizmor:
+    name: Run zizmor
+    permissions:
+      contents: read
+      actions: read           # to be able to read actions used in the workflow files and check if they have any known vulnerabilities
+      checks: write           # to be able to create check runs with the results of zizmor
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Run zizmor with advanced security
+        uses: zizmorcore/zizmor-action@6fc4b006235f201fdab3722e17240ab420d580e5 # v0.6.1
+        with:
+          config: ./zizmor.yml
+          persona: auditor
+          version: 1.23.1
+          token: ${{ github.token }}
+
+      - name: Run zizmor
+        uses: zizmorcore/zizmor-action@6fc4b006235f201fdab3722e17240ab420d580e5 # v0.6.1
+        with:
+          advanced-security: false
+          config: ./zizmor.yml
+          persona: auditor
+          version: 1.23.1
+          token: ${{ github.token }}
+          min-severity: medium

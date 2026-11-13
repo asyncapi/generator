@@ -26,7 +26,7 @@ const getMessageDiscriminatorData = (message, operationId) => {
   const discriminatorProperty = properties[discriminator_key];
   const discriminator_value = discriminatorProperty.const();
 
-  if (!discriminator_value) {
+  if (discriminator_value === undefined || discriminator_value === null) {
     return null;
   }
 

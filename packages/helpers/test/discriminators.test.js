@@ -55,6 +55,78 @@ describe('getMessageDiscriminatorData', () => {
     const discriminatorData = getMessageDiscriminatorData(message, operationId);
     expect(discriminatorData).toBeNull();
   });
+
+  it('should extract discriminator data when discriminator const is boolean false', () => {
+    const mockMessage = {
+      payload: () => ({
+        discriminator: () => 'enabled',
+        properties: () => ({
+          enabled: {
+            const: () => false
+          }
+        })
+      })
+    };
+    const discriminatorData = getMessageDiscriminatorData(mockMessage, 'receiveStatus');
+    expect(discriminatorData).toEqual({
+      key: 'enabled',
+      value: false,
+      operation_id: 'receiveStatus'
+    });
+  });
+
+  it('should extract discriminator data when discriminator const is numeric 0', () => {
+    const mockMessage = {
+      payload: () => ({
+        discriminator: () => 'errorCode',
+        properties: () => ({
+          errorCode: {
+            const: () => 0
+          }
+        })
+      })
+    };
+    const discriminatorData = getMessageDiscriminatorData(mockMessage, 'receiveError');
+    expect(discriminatorData).toEqual({
+      key: 'errorCode',
+      value: 0,
+      operation_id: 'receiveError'
+    });
+  });
+
+  it('should extract discriminator data when discriminator const is an empty string', () => {
+    const mockMessage = {
+      payload: () => ({
+        discriminator: () => 'tag',
+        properties: () => ({
+          tag: {
+            const: () => ''
+          }
+        })
+      })
+    };
+    const discriminatorData = getMessageDiscriminatorData(mockMessage, 'receiveTag');
+    expect(discriminatorData).toEqual({
+      key: 'tag',
+      value: '',
+      operation_id: 'receiveTag'
+    });
+  });
+
+  it('should return null when discriminator const value is null', () => {
+    const mockMessage = {
+      payload: () => ({
+        discriminator: () => 'tag',
+        properties: () => ({
+          tag: {
+            const: () => null
+          }
+        })
+      })
+    };
+    const discriminatorData = getMessageDiscriminatorData(mockMessage, 'receiveTag');
+    expect(discriminatorData).toBeNull();
+  });
 });
 
 describe('getMessageDiscriminatorsFromOperations', () => {
@@ -97,5 +169,35 @@ describe('getMessageDiscriminatorsFromOperations', () => {
   it('should return empty array for empty operations list', () => {
     const discriminators = getMessageDiscriminatorsFromOperations([]);
     expect(discriminators).toEqual([]);
+  });
+
+  it('should include operations with falsy discriminator values', () => {
+    const mockOperation = {
+      id: () => 'testOp',
+      messages: () => ({
+        all: () => [
+          {
+            hasPayload: () => true,
+            payload: () => ({
+              discriminator: () => 'active',
+              properties: () => ({
+                active: {
+                  const: () => false
+                }
+              })
+            })
+          }
+        ]
+      })
+    };
+
+    const discriminators = getMessageDiscriminatorsFromOperations([mockOperation]);
+    expect(discriminators).toEqual([
+      {
+        key: 'active',
+        value: false,
+        operation_id: 'testOp'
+      }
+    ]);
   });
 });

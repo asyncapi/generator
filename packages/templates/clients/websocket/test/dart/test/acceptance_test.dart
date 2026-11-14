@@ -21,6 +21,7 @@ void main() {
       final client = HoppscotchEchoWebSocketClient(
         url: 'ws://microcks-async-minion:8081/api/ws/Hoppscotch+Echo+WebSocket+Server/1.0.0/sendTimeStampMessage',
       );
+      addTearDown(() => client.close());
       final receivedMessages = <String>[];
       const expectedMessage = 'GMT+0000 (Coordinated Universal Time)';
 
@@ -50,9 +51,14 @@ void main() {
 
       // Start custom WebSocket server on port 8085 to receive connections from Microcks
       final server = await HttpServer.bind(InternetAddress.anyIPv4, serverPort);
-      addTearDown(() => server.close(force: true));
       final connectedSockets = <WebSocket>[];
       final microcksConnected = Completer<void>();
+      addTearDown(() async {
+        for (final socket in connectedSockets) {
+          await socket.close();
+        }
+        await server.close(force: true);
+      });
 
       server.transform(WebSocketTransformer()).listen((WebSocket socket) {
         connectedSockets.add(socket);
@@ -98,6 +104,7 @@ void main() {
 
       // Connect our generated Dart client and send the message through it
       final client = HoppscotchEchoWebSocketClient(url: 'ws://127.0.0.1:$serverPort/ws');
+      addTearDown(() => client.close());
       await client.connect();
 
       // Send the echo message using generated client method

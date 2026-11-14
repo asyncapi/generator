@@ -184,6 +184,18 @@ services:
     volumes:
       - ../../../../../../:/usr/src/app
     command: ["sh", "-c", "cd packages/templates/clients/websocket/java/quarkus/test/temp/snapshotTestResult/client_hoppscotch && mvn clean install && cd ../../../../../../test/java/quarkus && mvn clean test"]
+
+  tester-dart:
+    profiles:
+      - test-dart
+    image: dart:stable
+    container_name: websocket-acceptance-tester-dart
+    ports:
+      - "8085:8085"
+    working_dir: /usr/src/app
+    volumes:
+      - ../../../../../../:/usr/src/app
+    command: ["sh", "-c", "cd packages/templates/clients/websocket/dart/test/temp/snapshotTestResult/client_hoppscotch && dart pub get && cd ../../../../../test/dart && dart pub get && dart test"]
     
   # Below for debugging purposes. 
   # Just uncomment below and after starting environment you can enter the constainer with "podman exec -it net-debug sh" and use websocat to test the websocket connection

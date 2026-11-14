@@ -106,3 +106,57 @@ def test_hoppscotch_client_sends_message():
         if server_instance:
             server_instance.shutdown()  # This stops serve_forever()
         server_thread.join(timeout=5)
+
+
+class RecordingSocket:
+    """Stands in for the WebSocketApp so tests can see what the client writes to the socket."""
+
+    def __init__(self):
+        self.sent = []
+
+    def send(self, message):
+        self.sent.append(message)
+
+
+def create_client_with_recording_socket(**kwargs):
+    client = HoppscotchEchoWebSocketClient(**kwargs)
+    client.ws_app = RecordingSocket()
+    return client
+
+
+def test_outgoing_processors_run_in_registration_order_before_sending():
+    client = create_client_with_recording_socket()
+    client.register_outgoing_processor(lambda message: f"{message}-first")
+    client.register_outgoing_processor(lambda message: {"payload": f"{message}-second"})
+
+    client.send_echo_message("test")
+
+    assert client.ws_app.sent == ['{"payload": "test-first-second"}']
+
+
+def test_outgoing_processor_returning_none_keeps_the_message():
+    client = create_client_with_recording_socket()
+    client.register_outgoing_processor(lambda message: None)
+
+    client.send_echo_message("test")
+
+    assert client.ws_app.sent == ["test"]
+
+
+def test_outgoing_processor_failure_is_routed_like_a_send_failure():
+    def failing_processor(message):
+        raise ValueError("processor failed")
+
+    client = create_client_with_recording_socket(raise_send_errors=False)
+    errors = []
+    client.register_error_handler(errors.append)
+    client.register_outgoing_processor(failing_processor)
+
+    client.send_echo_message("test")
+
+    assert [str(error) for error in errors] == ["processor failed"]
+    assert client.ws_app.sent == []
+
+    client.raise_send_errors = True
+    with pytest.raises(ValueError, match="processor failed"):
+        client.send_echo_message("test")

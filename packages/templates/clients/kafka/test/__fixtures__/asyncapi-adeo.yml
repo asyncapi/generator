@@ -125,6 +125,9 @@ operations:
       action: receive
       channel: 
         $ref: '#/channels/costingRequest'
+      # Why: Microcks ASYNC_API_SCHEMA runner evaluates /operations/<opName>/messages to locate message schemas; without this explicit pointer, Microcks fails with "messagePathPointer does not represent a valid JSON Pointer"
+      messages:
+        - $ref: '#/channels/costingRequest/messages/costingRequest'
       reply:
         channel: 
           $ref: '#/channels/costingResponse'
@@ -156,6 +159,9 @@ operations:
       action: send
       channel: 
         $ref: '#/channels/costingResponse'
+      # Why: Microcks ASYNC_API_SCHEMA runner evaluates /operations/<opName>/messages to locate message schemas; without this explicit pointer, Microcks fails with "messagePathPointer does not represent a valid JSON Pointer"
+      messages:
+        - $ref: '#/channels/costingResponse/messages/costingResponse'
       summary: >
         [COSTING] Get the costing responses matching an initial Costing
         Request.

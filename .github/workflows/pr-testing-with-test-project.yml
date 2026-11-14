@@ -74,7 +74,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: [js, py, java]
+        language: [js, py, java, kafka]
 
     steps:
       - name: Checkout repository
@@ -115,7 +115,19 @@ jobs:
 
       - name: Setup microcks environment
         if: needs.changes.outputs.should_test == 'true'
-        run: docker compose -f ./microcks-setup/microcks-podman.yml --profile ci up -d --force-recreate
+        run: |
+          docker compose -f ./microcks-setup/microcks-podman.yml --profile ci up -d --force-recreate
+          importer_status=$(docker wait microcks-cli-importer)
+          docker logs microcks-cli-importer
+          [ "$importer_status" = "0" ] || { echo "::error::microcks-cli-importer failed with exit code $importer_status"; exit 1; }
+          importer_kafka_status=$(docker wait microcks-cli-importer-kafka)
+          docker logs microcks-cli-importer-kafka
+          [ "$importer_kafka_status" = "0" ] || { echo "::error::microcks-cli-importer-kafka failed with exit code $importer_kafka_status"; exit 1; }
+          if ! timeout 60 bash -c 'until [ "$(docker inspect microcks-async-minion --format "{{.State.Health.Status}}" 2>/dev/null)" = "healthy" ]; do sleep 2; done'; then
+            echo "::error::microcks-async-minion failed to become healthy within 60s"
+            docker logs microcks-async-minion
+            exit 1
+          fi
         working-directory: ./packages/templates/clients/websocket/test
 
       - name: Run ${{ matrix.language }} acceptance tests

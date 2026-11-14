@@ -8,27 +8,33 @@ on:
       - 'apps/generator/docs/*.md'
       - '.github/workflows/update-docs-in-website.yml'
 
+permissions:
+  contents: read
+
 jobs:
   Make-PR:
     name: Make PR on website repository with updated latest generator documentation
     runs-on: ubuntu-latest
-    env:
-      GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
     steps:
       - name: Checkout Current repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           path: generator
+          persist-credentials: false
+
       - name: Checkout Another repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: asyncapi/website
           path: website
-          token: ${{ env.GITHUB_TOKEN }}
+          token: ${{ secrets.GH_TOKEN }}
+          ref: master
+          persist-credentials: false
       - name: Config git
         run: |
-          git config --global user.name asyncapi-bot
-          git config --global user.email info@asyncapi.io
+          cd website
+          git config user.name asyncapi-bot
+          git config user.email info@asyncapi.io
       - name: Create branch
         working-directory: ./website
         run: |
@@ -44,11 +50,15 @@ jobs:
           mv ../generator/apps/generator/docs/*.md ./markdown/docs/tools/generator
       - name: Commit and push
         working-directory: ./website
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           git add .
           git commit -m "docs(generator): update latest generator docs"
           git push https://${{ env.GITHUB_TOKEN }}@github.com/asyncapi/website
       - name: Create PR
         working-directory: ./website
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           gh pr create --title "docs(generator): update latest generator documentation" --body "Updated generator documentation is available and this PR introduces update to generator folder on the website" --head "update-generator-docs-${{ github.sha }}"

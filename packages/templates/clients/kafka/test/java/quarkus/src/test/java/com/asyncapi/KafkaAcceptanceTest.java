@@ -27,11 +27,18 @@ import java.util.logging.Logger;
 import static org.awaitility.Awaitility.await;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 @QuarkusTest
 public class KafkaAcceptanceTest {
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+    private static final Duration HTTP_TIMEOUT = Duration.ofSeconds(10);
+    private static final Duration CONSUMER_AWAIT_TIMEOUT = Duration.ofSeconds(30);
+    private static final Duration CONSUMER_POLL_INTERVAL = Duration.ofMillis(500);
+    private static final Duration POLL_INTERVAL = Duration.ofSeconds(1);
+    private static final int MAX_POST_ATTEMPTS = 10;
+    private static final int MAX_MICROCKS_POLL_ATTEMPTS = 30;
 
     @Inject
     CostingResponseProducer producer;
@@ -52,7 +59,7 @@ public class KafkaAcceptanceTest {
                 if (record != null) {
                     String msg = record.getMessage();
                     Object[] params = record.getParameters();
-                    if (params != null && params.length > 0 && msg != null && msg.contains("%")) {
+                    if (params != null && params.length > 0 && msg != null) {
                         try {
                             msg = String.format(msg, params);
                         } catch (Exception ignored) {
@@ -86,12 +93,13 @@ public class KafkaAcceptanceTest {
         String testKey = "consumer-test-" + UUID.randomUUID();
         String testPayload = "{\"test\": \"consumer-payload\"}";
 
-        testCostingRequestEmitter.send(Record.of(testKey, testPayload));
-
         await()
-            .atMost(Duration.ofSeconds(15))
-            .pollInterval(Duration.ofMillis(200))
-            .until(() -> capturedLogMessages.stream().anyMatch(log -> log.contains(testKey)));
+            .atMost(CONSUMER_AWAIT_TIMEOUT)
+            .pollInterval(CONSUMER_POLL_INTERVAL)
+            .until(() -> {
+                testCostingRequestEmitter.send(Record.of(testKey, testPayload));
+                return capturedLogMessages.stream().anyMatch(log -> log.contains(testKey));
+            });
     }
 
     @Test
@@ -114,17 +122,17 @@ public class KafkaAcceptanceTest {
         HttpRequest postRequest = HttpRequest.newBuilder()
             .uri(URI.create(testEndpointUrl))
             .header("Content-Type", "application/json")
-            .timeout(Duration.ofSeconds(10))
+            .timeout(HTTP_TIMEOUT)
             .POST(HttpRequest.BodyPublishers.ofString(testPayload))
             .build();
 
         HttpResponse<String> postResponse = null;
-        for (int attempt = 0; attempt < 10; attempt++) {
+        for (int attempt = 0; attempt < MAX_POST_ATTEMPTS; attempt++) {
             postResponse = httpClient.send(postRequest, HttpResponse.BodyHandlers.ofString());
             if (postResponse.statusCode() == 201) {
                 break;
             }
-            Thread.sleep(1000);
+            Thread.sleep(POLL_INTERVAL.toMillis());
         }
         assertEquals(201, postResponse != null ? postResponse.statusCode() : -1, "Microcks test runner should initialize with HTTP 201 Created");
 
@@ -133,59 +141,52 @@ public class KafkaAcceptanceTest {
         boolean success = false;
         String payload = "{\"test\": \"contract-payload\"}";
 
-        for (int i = 0; i < 30; i++) {
+        for (int i = 0; i < MAX_MICROCKS_POLL_ATTEMPTS; i++) {
             producer.sendCostingResponseProducer("test-microcks-req-" + i, payload);
 
             HttpRequest getRequest = HttpRequest.newBuilder()
                 .uri(URI.create(microcksBaseUrl + "/api/tests/" + testId))
                 .header("Accept", "application/json")
-                .timeout(Duration.ofSeconds(10))
+                .timeout(HTTP_TIMEOUT)
                 .GET()
                 .build();
 
             HttpResponse<String> getResponse = httpClient.send(getRequest, HttpResponse.BodyHandlers.ofString());
             String responseBody = getResponse.body();
 
-            if (isTestSuccessful(responseBody)) {
-                success = true;
-                break;
+            JsonNode testResult = parseJsonResponse(responseBody);
+            boolean inProgress = testResult.path("inProgress").asBoolean(true);
+            boolean testSuccess = testResult.path("success").asBoolean(false);
+
+            if (!inProgress) {
+                if (testSuccess) {
+                    success = true;
+                    break;
+                } else {
+                    fail("Microcks contract validation completed with failure for test " + testId + ": " + responseBody);
+                }
             }
 
-            Thread.sleep(1000);
+            Thread.sleep(POLL_INTERVAL.toMillis());
         }
 
-        assertTrue(success, "Microcks test " + testId + " did not succeed");
+        assertTrue(success, "Microcks test " + testId + " did not succeed within timeout");
     }
 
-    private boolean isTestSuccessful(String jsonResponse) {
+    private JsonNode parseJsonResponse(String json) {
         try {
-            JsonNode root = OBJECT_MAPPER.readTree(jsonResponse);
-            JsonNode inProgress = root.get("inProgress");
-            JsonNode success = root.get("success");
-            return inProgress != null && !inProgress.asBoolean() && success != null && success.asBoolean();
+            return OBJECT_MAPPER.readTree(json);
         } catch (Exception e) {
-            return jsonResponse.contains("\"inProgress\":false") && jsonResponse.contains("\"success\":true");
+            throw new IllegalStateException("Failed to parse Microcks JSON response: " + json, e);
         }
     }
 
     private String extractTestId(String responseBody) {
-        try {
-            JsonNode root = OBJECT_MAPPER.readTree(responseBody);
-            JsonNode idNode = root.get("id");
-            if (idNode != null && !idNode.asText().isEmpty()) {
-                return idNode.asText();
-            }
-        } catch (Exception ignored) {
+        JsonNode root = parseJsonResponse(responseBody);
+        String id = root.path("id").asText();
+        if (id.isEmpty()) {
+            throw new IllegalStateException("Test ID is missing in Microcks response: " + responseBody);
         }
-        String idMarker = "\"id\":\"";
-        int start = responseBody.indexOf(idMarker);
-        if (start != -1) {
-            start += idMarker.length();
-            int end = responseBody.indexOf("\"", start);
-            if (end != -1) {
-                return responseBody.substring(start, end);
-            }
-        }
-        throw new IllegalStateException("Failed to extract test ID from Microcks response: " + responseBody);
+        return id;
     }
 }

@@ -19,6 +19,7 @@ Templates are grouped by **type**, which must be one of the following:
 - `client`: Templates that generate clients
 - `sdk` (not yet implemented): Template that generate full sdk's
 - `config` (not yet implemented): Template that generate configuration files
+- `server` (not yet implemented): Templates that generate a server application implementing the API, e.g. a WebSocket server
 
 > **Note:**  
 > The **directory name is always plural** (e.g., `clients`), but the **type recorded in metadata and package name is singular** (e.g., `client`), except for `docs`.
@@ -32,16 +33,16 @@ All template directories must follow this convention:
 packages/templates/{type}/[protocol]/[target]/[stack]
 ```
 
-- `type`: One of `docs`, `clients`, `sdks`, or `configs`.
-- `protocol`: (Only for `clients` and `sdks`) The protocol this template supports, e.g. `websocket`, `http`, `kafka`.
+- `type`: One of `docs`, `clients`, `sdks`, `configs`, or `servers`.
+- `protocol`: (Only for `clients`, `sdks`, and `servers`) The protocol this template supports, e.g. `websocket`, `http`, `kafka`.
 - `target`: The output language, markup, or format, e.g. `javascript`, `python`, `html`, `yaml`.
-- `stack`: (Optional, for `clients` and `sdks`) Used for technology stack, e.g. `express`, `quarkus`.
+- `stack`: (Optional, for `clients`, `sdks`, and `servers`) Used for technology stack, e.g. `express`, `quarkus`.
 
 #### Type-specific rules
 
 - **docs/configs**:  
   Path must be `type/target` (e.g., `docs/html` or `configs/yaml`).
-- **clients/sdks**:  
+- **clients/sdks/servers**:  
   Path must be `type/protocol/target` or `type/protocol/target/stack` (e.g., `clients/websocket/javascript`, `sdks/kafka/java/spring`).
 
 ### Required files

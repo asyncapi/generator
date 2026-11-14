@@ -157,7 +157,7 @@ jobs:
 
       - name: Install dependencies
         if: needs.changes.outputs.should_test == 'true'
-        run: npm ci
+        run: npm ci --ignore-scripts
 
       - name: Generate clients
         if: needs.changes.outputs.should_test == 'true'

@@ -1,9 +1,11 @@
+import socket
 import time
 import sys
 import os
 import pytest
 import requests
 import threading
+from websockets.exceptions import ConnectionClosed, ConnectionClosedOK
 from websockets.sync.server import serve
 
 module_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../python/test/temp/snapshotTestResult/client_hoppscotch'))
@@ -106,3 +108,247 @@ def test_hoppscotch_client_sends_message():
         if server_instance:
             server_instance.shutdown()  # This stops serve_forever()
         server_thread.join(timeout=5)
+
+def test_hoppscotch_client_reconnects_after_close():
+    opened = threading.Event()
+    disconnected = threading.Event()
+
+    class Client(HoppscotchEchoWebSocketClient):
+        def on_open(self, ws):
+            super().on_open(ws)
+            opened.set()
+
+    def handler(socket):
+        try:
+            socket.recv(timeout=5)
+        except ConnectionClosedOK:
+            disconnected.set()
+
+    with serve(handler, "127.0.0.1", 0) as server:
+        thread = threading.Thread(target=server.serve_forever, daemon=True)
+        thread.start()
+        client = Client(f"ws://127.0.0.1:{server.socket.getsockname()[1]}")
+
+        try:
+            client.connect()
+            assert opened.wait(timeout=5), "First connection did not open"
+            client.close()
+            assert disconnected.wait(timeout=5), "First connection did not close"
+
+            opened.clear()
+            client.connect()
+            assert opened.wait(timeout=5), "Second connection did not open"
+        finally:
+            client.close()
+            server.shutdown()
+            thread.join(timeout=5)
+
+
+def test_hoppscotch_client_cancels_pending_startup(monkeypatch):
+    import websocket
+
+    starting = threading.Event()
+    resume = threading.Event()
+    finished = threading.Event()
+    accepted = threading.Event()
+    original_run = websocket.WebSocketApp.run_forever
+
+    def pause_startup(app, **kwargs):
+        starting.set()
+        try:
+            resume.wait()
+            return original_run(app, **kwargs)
+        finally:
+            finished.set()
+
+    def handler(socket):
+        accepted.set()
+        socket.close()
+
+    monkeypatch.setattr(websocket.WebSocketApp, "run_forever", pause_startup)
+    with serve(handler, "127.0.0.1", 0) as server:
+        thread = threading.Thread(target=server.serve_forever, daemon=True)
+        thread.start()
+        client = HoppscotchEchoWebSocketClient(f"ws://127.0.0.1:{server.socket.getsockname()[1]}")
+
+        try:
+            client.connect()
+            assert starting.wait(timeout=5)
+            client.close()
+            resume.set()
+            assert finished.wait(timeout=5)
+            assert not accepted.is_set()
+        finally:
+            resume.set()
+            client.close()
+            server.shutdown()
+            thread.join(timeout=5)
+
+
+def test_hoppscotch_client_close_keeps_app_and_stop_event_paired(monkeypatch):
+    import websocket
+
+    captured_old_app = threading.Event()
+    resume_close = threading.Event()
+    reconnect_attempted = threading.Event()
+    closer = None
+    reconnector = None
+
+    class App:
+        def __init__(self, *args, **kwargs):
+            self.closed = threading.Event()
+
+        def run_forever(self, **kwargs):
+            self.closed.wait()
+
+        def close(self):
+            self.closed.set()
+
+    class Client(HoppscotchEchoWebSocketClient):
+        def __getattribute__(self, name):
+            value = super().__getattribute__(name)
+            if name == "ws_app" and threading.current_thread() is closer:
+                captured_old_app.set()
+                resume_close.wait()
+            return value
+
+    class ObservedLock:
+        def __init__(self):
+            self.lock = threading.Lock()
+
+        def __enter__(self):
+            if threading.current_thread() is reconnector:
+                reconnect_attempted.set()
+            self.lock.acquire()
+
+        def __exit__(self, *args):
+            self.lock.release()
+
+    monkeypatch.setattr(websocket, "WebSocketApp", App)
+    client = Client()
+    client._connection_lock = ObservedLock()
+    client.connect()
+    old_app = client.ws_app
+    client.close()
+
+    def reconnect():
+        client.connect()
+        # Without synchronization the call can finish before close resumes.
+        reconnect_attempted.set()
+
+    closer = threading.Thread(target=client.close, daemon=True)
+    reconnector = threading.Thread(target=reconnect, daemon=True)
+    try:
+        closer.start()
+        try:
+            assert captured_old_app.wait(timeout=5)
+            reconnector.start()
+            assert reconnect_attempted.wait(timeout=5)
+        finally:
+            resume_close.set()
+            closer.join(timeout=5)
+            if reconnector.ident is not None:
+                reconnector.join(timeout=5)
+
+        assert not closer.is_alive()
+        assert not reconnector.is_alive()
+        assert client.ws_app is not old_app
+        assert not client.ws_app.closed.is_set()
+        assert not client._stop_event.is_set()
+    finally:
+        client.close()
+
+
+def test_hoppscotch_client_closes_socket_when_handshake_finishes_after_close(monkeypatch):
+    import websocket
+
+    handshaking = threading.Event()
+    resume = threading.Event()
+    connected = threading.Event()
+    opened = threading.Event()
+    sockets = []
+    original_connect = websocket.WebSocket.connect
+    workers = []
+
+    class Client(HoppscotchEchoWebSocketClient):
+        def on_open(self, ws):
+            opened.set()
+
+    def pause_handshake(ws, *args, **kwargs):
+        sockets.append(ws)
+        workers.append(threading.current_thread())
+        handshaking.set()
+        resume.wait()
+        original_connect(ws, *args, **kwargs)
+        connected.set()
+
+    def handler(socket):
+        try:
+            socket.recv(timeout=5)
+        except ConnectionClosed:
+            pass
+
+    monkeypatch.setattr(websocket.WebSocket, "connect", pause_handshake)
+    with serve(handler, "127.0.0.1", 0) as server:
+        thread = threading.Thread(target=server.serve_forever, daemon=True)
+        thread.start()
+        client = Client(f"ws://127.0.0.1:{server.socket.getsockname()[1]}")
+
+        try:
+            client.connect()
+            assert handshaking.wait(timeout=5)
+            client.close()
+            resume.set()
+            workers[0].join(timeout=5)
+            assert not workers[0].is_alive()
+            assert connected.is_set()
+            assert not opened.is_set()
+            assert sockets[0].sock is None
+        finally:
+            resume.set()
+            client.close()
+            for worker in workers:
+                worker.join(timeout=5)
+            for socket in sockets:
+                socket.shutdown()
+            server.shutdown()
+            thread.join(timeout=5)
+
+
+
+def test_hoppscotch_client_close_releases_stalled_handshake(monkeypatch):
+    import websocket
+
+    workers = []
+    original_run = websocket.WebSocketApp.run_forever
+
+    def track_worker(app, **kwargs):
+        workers.append(threading.current_thread())
+        return original_run(app, **kwargs)
+
+    monkeypatch.setattr(websocket.WebSocketApp, "run_forever", track_worker)
+    with socket.socket() as server:
+        server.bind(("127.0.0.1", 0))
+        server.listen()
+        server.settimeout(5)
+        client = HoppscotchEchoWebSocketClient(f"ws://127.0.0.1:{server.getsockname()[1]}")
+
+        client.connect()
+        try:
+            peer, _ = server.accept()
+            with peer:
+                peer.settimeout(5)
+                request = b""
+                while b"\r\n\r\n" not in request:
+                    chunk = peer.recv(4096)
+                    assert chunk, "Client disconnected before sending its handshake"
+                    request += chunk
+                # Keep the peer open without sending an upgrade response.
+                client.close()
+                workers[0].join(timeout=8)
+                assert not workers[0].is_alive(), "Worker is still waiting for the handshake"
+                assert peer.recv(1) == b""
+        finally:
+            client.close()
+            for worker in workers:
+                worker.join(timeout=5)

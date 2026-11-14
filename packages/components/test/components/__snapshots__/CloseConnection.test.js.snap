@@ -89,18 +89,22 @@ exports[`Testing of CloseConnection function render javascript websocket close c
 exports[`Testing of CloseConnection function render python websocket close connection method 1`] = `
 "def close(self) :
     \\"\\"\\"Cleanly close the WebSocket connection.\\"\\"\\"
-    self._stop_event.set()
-    if self.ws_app:
-        self.ws_app.close()
+    with self._connection_lock:
+        ws_app = self.ws_app
+        self._stop_event.set()
+    if ws_app:
+        ws_app.close()
         print(\\"WebSocket connection closed.\\")"
 `;
 
 exports[`Testing of CloseConnection function render python with pre and post execution code 1`] = `
 "  def close() :
     # Pre-close operations
-    self._stop_event.set()
-    if self.ws_app:
-        self.ws_app.close()
+    with self._connection_lock:
+        ws_app = self.ws_app
+        self._stop_event.set()
+    if ws_app:
+        ws_app.close()
         print(\\"WebSocket connection closed.\\")
     # Post-close cleanup
 

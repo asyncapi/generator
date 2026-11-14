@@ -1081,11 +1081,12 @@ class Generator {
       //New files are not tracked and not visible as modified
       const hasUntrackedUnstagedFiles = gitStatus.not_added.length !== 0;
 
-      const stagedFiles = gitStatus.staged;
-      const modifiedFiles = gitStatus.modified;
-      const hasModifiedUstagedFiles = (modifiedFiles.filter(e => stagedFiles.indexOf(e) === -1)).length !== 0;
+      // A file can have both staged and unstaged changes; inspect the working tree independently.
+      const hasModifiedUnstagedFiles = gitStatus.files.some(
+        file => file.working_dir !== ' ' && file.working_dir !== '?'
+      );
 
-      if (hasModifiedUstagedFiles || hasUntrackedUnstagedFiles) throw new Error(`"${this.targetDir}" is in a git repository with unstaged changes. Please commit your changes before proceeding or add proper directory to .gitignore file. You can also use the --force-write flag to skip this rule (not recommended).`);
+      if (hasModifiedUnstagedFiles || hasUntrackedUnstagedFiles) throw new Error(`"${this.targetDir}" is in a git repository with unstaged changes. Please commit your changes before proceeding or add proper directory to .gitignore file. You can also use the --force-write flag to skip this rule (not recommended).`);
     } else {
       const isDirEmpty = (await readDir(dir)).length === 0;
 

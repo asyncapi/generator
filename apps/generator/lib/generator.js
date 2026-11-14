@@ -741,7 +741,7 @@ class Generator {
         this.templateConfig,
         relativeDir,
         this.templateParams,
-        this.asyncapiDocument
+        this.asyncapi
       );
       if (!shouldGenerate) {
         log.debug(logMessage.conditionalGenerationMatched(relativeDir));

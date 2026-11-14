@@ -113,8 +113,15 @@ public class KafkaAcceptanceTest {
             .POST(HttpRequest.BodyPublishers.ofString(testPayload))
             .build();
 
-        HttpResponse<String> postResponse = httpClient.send(postRequest, HttpResponse.BodyHandlers.ofString());
-        assertEquals(201, postResponse.statusCode(), "Microcks test runner should initialize with HTTP 201 Created");
+        HttpResponse<String> postResponse = null;
+        for (int attempt = 0; attempt < 10; attempt++) {
+            postResponse = httpClient.send(postRequest, HttpResponse.BodyHandlers.ofString());
+            if (postResponse.statusCode() == 201) {
+                break;
+            }
+            Thread.sleep(1000);
+        }
+        assertEquals(201, postResponse != null ? postResponse.statusCode() : -1, "Microcks test runner should initialize with HTTP 201 Created");
 
         String testId = extractTestId(postResponse.body());
 

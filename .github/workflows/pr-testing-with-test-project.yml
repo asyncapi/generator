@@ -115,7 +115,10 @@ jobs:
 
       - name: Setup microcks environment
         if: needs.changes.outputs.should_test == 'true'
-        run: docker compose -f ./microcks-setup/microcks-podman.yml --profile ci up -d --force-recreate
+        run: |
+          docker compose -f ./microcks-setup/microcks-podman.yml --profile ci up -d --force-recreate
+          docker compose -f ./microcks-setup/microcks-podman.yml wait importer importer-kafka
+          timeout 60 bash -c 'until [ "$(docker inspect microcks-async-minion --format "{{.State.Health.Status}}" 2>/dev/null)" = "healthy" ]; do sleep 2; done'
         working-directory: ./packages/templates/clients/websocket/test
 
       - name: Run ${{ matrix.language }} acceptance tests

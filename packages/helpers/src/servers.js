@@ -1,4 +1,34 @@
 /**
+ * Replace `{variable}` placeholders in a server URL with the default value
+ * declared for the matching server variable.
+ *
+ * @param {string} url - Server URL that may contain variable placeholders.
+ * @param {Map<string, object>} [variables] - Parsed AsyncAPI server variables collection.
+ *
+ * @returns {string} The URL with every resolvable placeholder replaced.
+ */
+const replaceServerVariables = (url, variables) => {
+  if (!variables || typeof variables.entries !== 'function') {
+    return url;
+  }
+
+  for (const [id, variable] of variables.entries()) {
+    const defaultValue = variable.defaultValue();
+
+    // Why: `default` is required by the AsyncAPI spec, but a malformed document
+    // can omit it. Keep the placeholder rather than emitting `undefined`.
+    if (defaultValue === undefined) {
+      continue;
+    }
+
+    const variableName = typeof variable.id === 'function' ? variable.id() : id;
+    url = url.split(`{${variableName}}`).join(defaultValue);
+  }
+
+  return url;
+};
+
+/**
    * Get server URL from AsyncAPI server object.
    *
    * @param {object} server - The AsyncAPI server object.
@@ -18,7 +48,7 @@ const getServerUrl = (server) => {
     url = `${url}${server.pathname()}`;
   }
 
-  return url;
+  return replaceServerVariables(url, typeof server.variables === 'function' ? server.variables() : undefined);
 };
 
 /**

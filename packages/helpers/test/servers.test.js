@@ -40,6 +40,33 @@ describe('getServerUrl integration test with AsyncAPI', () => {
     // Example assertion: Ensure the pathname is appended to the URL
     expect(serverUrl).toBe('wss://api.gemini.com/v1/marketdata');
   });
+
+  it('should replace server variables in the URL with their default values', () => {
+    const server = parsedAsyncAPIDocument.servers().get('withVariables');
+
+    const serverUrl = getServerUrl(server);
+
+    expect(serverUrl).toBe('wss://api.gemini.com/v1/marketdata/btcusd');
+  });
+
+  it('should keep the placeholder when a server variable has no default value', () => {
+    // Why: the spec marks `default` as required, so no fixture can express a
+    // server variable without one - the Parser rejects it. A hand-built
+    // stand-in is the only way to cover this defensive branch.
+    const mockServer = {
+      host: () => 'api.gemini.com',
+      protocol: () => 'wss',
+      hasPathname: () => true,
+      pathname: () => '/v1/marketdata/{symbol}',
+      variables: () => ({
+        entries: () => [
+          [0, { id: () => 'symbol', defaultValue: () => undefined }]
+        ]
+      })
+    };
+
+    expect(getServerUrl(mockServer)).toBe('wss://api.gemini.com/v1/marketdata/{symbol}');
+  });
 });
 
 describe('getServer integration test with AsyncAPI', () => {

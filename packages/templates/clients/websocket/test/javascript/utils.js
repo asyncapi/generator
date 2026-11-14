@@ -8,23 +8,25 @@ const fetch = require('node-fetch');
  * @returns {Promise<boolean>} Resolves with `true` when the test is marked as successful.
  */
 async function waitForTestSuccess(url) {
-  for (let i = 0; i < 30; i++) {
+  while (true) {
     try {
       const response = await fetch(url, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
       });
 
-      if (response.ok) {
-        const data = await response.json();
-        if (data.success) {
-          return true;
-        }
-      } else {
+      if (!response.ok) {
         console.error(`Request failed with status: ${response.status}`);
+        break;
+      }
+
+      const data = await response.json();
+
+      if (data.success) {
+        return true;
       }
     } catch (err) {
-      console.error(`Error polling Microcks: ${err.message}`);
+      break;
     }
 
     await new Promise(resolve => setTimeout(resolve, 2000)); // Wait 2 seconds
@@ -37,11 +39,11 @@ async function waitForTestSuccess(url) {
  * Wait for a specific message to appear in the spy's log calls.
  * @param {array} a - array with messages
  * @param {string} expectedMessage - The message to look for in logs.
- * @param {number} timeout - Maximum time (in ms) to wait. Default is 10000ms.
+ * @param {number} timeout - Maximum time (in ms) to wait. Default is 3000ms.
  * @param {number} interval - How long to wait (in ms) until next check. Default is 10ms.
  * @returns {Promise<void>} Resolves if the message is found, otherwise rejects.
  */
-async function waitForMessage(a, expectedMessage, timeout = 10000, interval = 10) {
+async function waitForMessage(a, expectedMessage, timeout = 3000, interval = 10) {
   const start = Date.now();
   while (Date.now() - start < timeout) {
     if (a.some(message => message.includes(expectedMessage))) {

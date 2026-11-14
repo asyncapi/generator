@@ -36,7 +36,7 @@ describe('client - receiver tests', () => {
     await wsClient.connect();
 
     // wait for the incomming message to be logged
-    await waitForMessage(received_messages, expectedMessage, 10000);
+    await waitForMessage(received_messages, expectedMessage);
 
     const isReceived = received_messages.some((message) =>
       message.includes(expectedMessage)
@@ -82,27 +82,12 @@ describe('client - sender tests', () => {
       WSClient.sendEchoMessage(expectedMessage, socket);
     });
 
-    // Start test in Microcks with retry
-    let response;
-    for (let i = 0; i < 15; i++) {
-      try {
-        response = await fetch(microcksTestEndpoint, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: payload,
-        });
-        if (response.status === 201) {
-          break;
-        }
-      } catch (e) {
-        // retry
-      }
-      await delay(1000);
-    }
-
-    if (!response || response.status !== 201) {
-      throw new Error(`Failed to start Microcks test: ${response ? response.status : 'no response'}`);
-    }
+    // Start test in Microcks
+    const response = await fetch(microcksTestEndpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: payload,
+    });
 
     //checking test result
     const responseBody = await response.json();

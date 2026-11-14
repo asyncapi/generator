@@ -83,20 +83,9 @@ def test_hoppscotch_client_sends_message():
     time.sleep(1)  # Give server time to start
 
     try:
-        # Start test in Microcks with retry
-        response = None
-        for _ in range(15):
-            try:
-                response = requests.post(microcks_test_endpoint, json=payload)
-                if response.status_code == 201:
-                    break
-            except Exception:
-                pass
-            time.sleep(1)
-        if response is not None:
-            response.raise_for_status()
-        else:
-            raise RuntimeError("Failed to connect to Microcks test endpoint")
+        # Start test in Microcks
+        response = requests.post(microcks_test_endpoint, json=payload)
+        response.raise_for_status()
         response_data = response.json()
         test_id = response_data.get('id')
 

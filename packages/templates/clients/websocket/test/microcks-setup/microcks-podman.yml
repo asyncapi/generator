@@ -9,6 +9,7 @@ services:
       - infra
       - infra-kafka
       - ci
+      - ci-kafka
     image: docker.io/mongo:4.4.29
     container_name: microcks-db
     volumes:
@@ -24,6 +25,7 @@ services:
       - infra
       - infra-kafka
       - ci
+      - ci-kafka
     image: docker.io/redpandadata/redpanda:v24.3.1
     container_name: microcks-kafka
     command:
@@ -58,6 +60,7 @@ services:
       - infra
       - infra-kafka
       - ci
+      - ci-kafka
     depends_on:
       - mongo
     image: quay.io/microcks/microcks:1.11.2
@@ -90,6 +93,7 @@ services:
       - infra
       - infra-kafka
       - ci
+      - ci-kafka
     depends_on:
       app:
         condition: service_healthy
@@ -134,12 +138,16 @@ services:
     depends_on:
       app:
         condition: service_healthy
-    command: ["sh", "-c", "for i in 1 2 3 4 5 6 7 8 9 10; do out=$$(microcks-cli import __fixtures__/bundled.yml --microcksURL=http://microcks:8080/api/ --keycloakClientId=microcks-serviceaccount --keycloakClientSecret=ab54d329-e435-41ae-a900-ec6b3fe15c54 2>&1); echo \"$$out\"; if echo \"$$out\" | grep -q 'Microcks has discovered'; then exit 0; fi; echo 'Import failed or not ready, retrying in 2s...'; sleep 2; done; exit 1"]
+    command: >
+      sh -c "microcks-cli import __fixtures__/bundled.yml
+      --microcksURL=http://microcks:8080/api/
+      --keycloakClientId=microcks-serviceaccount
+      --keycloakClientSecret=ab54d329-e435-41ae-a900-ec6b3fe15c54"
 
   importer-kafka:
     profiles:
       - infra-kafka
-      - ci
+      - ci-kafka
     image: quay.io/microcks/microcks-cli:0.5.8
     container_name: microcks-cli-importer-kafka
     working_dir: /usr/src/app
@@ -148,7 +156,11 @@ services:
     depends_on:
       app:
         condition: service_healthy
-    command: ["sh", "-c", "for i in 1 2 3 4 5 6 7 8 9 10; do out=$$(microcks-cli import __fixtures__/asyncapi-adeo.yml --microcksURL=http://microcks:8080/api/ --keycloakClientId=microcks-serviceaccount --keycloakClientSecret=ab54d329-e435-41ae-a900-ec6b3fe15c54 2>&1); echo \"$$out\"; if echo \"$$out\" | grep -q 'Microcks has discovered'; then exit 0; fi; echo 'Import failed or not ready, retrying in 2s...'; sleep 2; done; exit 1"]
+    command: >
+      sh -c "microcks-cli import __fixtures__/asyncapi-adeo.yml
+      --microcksURL=http://microcks:8080/api/
+      --keycloakClientId=microcks-serviceaccount
+      --keycloakClientSecret=ab54d329-e435-41ae-a900-ec6b3fe15c54"
 
   #this only runs on local with tests profile. In CI/CD there is a dedicated job step for that
   npm-test:

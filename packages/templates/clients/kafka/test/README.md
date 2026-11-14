@@ -29,18 +29,19 @@ Acceptance tests share the unified Microcks infrastructure located in `packages/
    npm run test --prefix packages/templates/clients/kafka/test/integration-test
    ```
 
-2. **Start the Microcks Infrastructure** (spins up Redpanda Kafka broker, Mongo, Microcks, and Async Minion):
+2. **Start the Microcks Infrastructure** (spins up Redpanda Kafka broker, Mongo, Microcks, Async Minion, and imports the Kafka fixture):
    ```bash
    cd packages/templates/clients/websocket/test/microcks-setup
-   docker compose -f microcks-podman.yml --profile infra up -d
+   docker compose -f microcks-podman.yml --profile infra-kafka up -d
    ```
-   *(Or with Podman: `podman compose -f microcks-podman.yml --profile infra up -d`)*
+   *(Or with Podman: `podman compose -f microcks-podman.yml --profile infra-kafka up -d`)*
 
-3. **Verify services are healthy**:
+3. **Wait for fixture import and verify services are healthy**:
    ```bash
+   docker compose -f microcks-podman.yml wait importer-kafka
    docker compose -f microcks-podman.yml ps
    ```
-   *(Or if using Podman: `bash ./checkMicrocksReady.sh`)*
+   *(Or if using Podman: `podman compose -f microcks-podman.yml wait importer-kafka && bash ./checkMicrocksReady.sh`)*
 
 4. **Execute the Kafka Acceptance Test**:
    ```bash

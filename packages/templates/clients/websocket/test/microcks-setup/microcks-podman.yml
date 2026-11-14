@@ -7,6 +7,7 @@ services:
   mongo:
     profiles:
       - infra
+      - infra-kafka
       - ci
     image: docker.io/mongo:4.4.29
     container_name: microcks-db
@@ -21,6 +22,7 @@ services:
   kafka:
     profiles:
       - infra
+      - infra-kafka
       - ci
     image: docker.io/redpandadata/redpanda:v24.3.1
     container_name: microcks-kafka
@@ -54,6 +56,7 @@ services:
   app:
     profiles:
       - infra
+      - infra-kafka
       - ci
     depends_on:
       - mongo
@@ -85,6 +88,7 @@ services:
   async-minion:
     profiles: 
       - infra
+      - infra-kafka
       - ci
     depends_on:
       app:
@@ -138,7 +142,7 @@ services:
 
   importer-kafka:
     profiles:
-      - infra
+      - infra-kafka
       - ci
     image: quay.io/microcks/microcks-cli:0.5.8
     container_name: microcks-cli-importer-kafka

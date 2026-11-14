@@ -135,8 +135,9 @@ describe('Renderer', () => {
     } catch(err) {
       error = err;
     }
-    // check substring of the desired error
-    expect((error as Error).message).toContain('Invalid hook call.');
+    // React 17 and 18 throw different messages for hooks called outside a reconciler
+    expect(error).toBeInstanceOf(Error);
+    expect((error as Error).message).toMatch(/Invalid hook call|reading 'useState'/);
   });
 
   test('should skips internal React components', () => {

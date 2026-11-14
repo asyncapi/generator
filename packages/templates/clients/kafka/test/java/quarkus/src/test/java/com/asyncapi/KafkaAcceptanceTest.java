@@ -1,5 +1,7 @@
 package com.asyncapi;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.quarkus.test.junit.QuarkusTest;
 import io.smallrye.reactive.messaging.kafka.Record;
 import jakarta.inject.Inject;
@@ -7,8 +9,8 @@ import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.eclipse.microprofile.reactive.messaging.Emitter;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -28,6 +30,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @QuarkusTest
 public class KafkaAcceptanceTest {
+
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     @Inject
     CostingResponseProducer producer;
@@ -110,6 +114,7 @@ public class KafkaAcceptanceTest {
         HttpRequest postRequest = HttpRequest.newBuilder()
             .uri(URI.create(testEndpointUrl))
             .header("Content-Type", "application/json")
+            .timeout(Duration.ofSeconds(10))
             .POST(HttpRequest.BodyPublishers.ofString(testPayload))
             .build();
 
@@ -134,13 +139,14 @@ public class KafkaAcceptanceTest {
             HttpRequest getRequest = HttpRequest.newBuilder()
                 .uri(URI.create(microcksBaseUrl + "/api/tests/" + testId))
                 .header("Accept", "application/json")
+                .timeout(Duration.ofSeconds(10))
                 .GET()
                 .build();
 
             HttpResponse<String> getResponse = httpClient.send(getRequest, HttpResponse.BodyHandlers.ofString());
             String responseBody = getResponse.body();
 
-            if (responseBody.contains("\"success\":true")) {
+            if (isTestSuccessful(responseBody)) {
                 success = true;
                 break;
             }
@@ -151,7 +157,26 @@ public class KafkaAcceptanceTest {
         assertTrue(success, "Microcks test " + testId + " did not succeed");
     }
 
+    private boolean isTestSuccessful(String jsonResponse) {
+        try {
+            JsonNode root = OBJECT_MAPPER.readTree(jsonResponse);
+            JsonNode inProgress = root.get("inProgress");
+            JsonNode success = root.get("success");
+            return inProgress != null && !inProgress.asBoolean() && success != null && success.asBoolean();
+        } catch (Exception e) {
+            return jsonResponse.contains("\"inProgress\":false") && jsonResponse.contains("\"success\":true");
+        }
+    }
+
     private String extractTestId(String responseBody) {
+        try {
+            JsonNode root = OBJECT_MAPPER.readTree(responseBody);
+            JsonNode idNode = root.get("id");
+            if (idNode != null && !idNode.asText().isEmpty()) {
+                return idNode.asText();
+            }
+        } catch (Exception ignored) {
+        }
         String idMarker = "\"id\":\"";
         int start = responseBody.indexOf(idMarker);
         if (start != -1) {

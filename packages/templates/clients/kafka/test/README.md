@@ -38,8 +38,9 @@ Acceptance tests share the unified Microcks infrastructure located in `packages/
 
 3. **Verify services are healthy**:
    ```bash
-   bash ./checkMicrocksReady.sh
+   docker compose -f microcks-podman.yml ps
    ```
+   *(Or if using Podman: `bash ./checkMicrocksReady.sh`)*
 
 4. **Execute the Kafka Acceptance Test**:
    ```bash

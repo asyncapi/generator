@@ -1,11 +1,30 @@
 package com.asyncapi;
 
 import io.quarkus.test.junit.QuarkusTest;
+import io.smallrye.reactive.messaging.kafka.Record;
 import jakarta.inject.Inject;
+import org.eclipse.microprofile.reactive.messaging.Channel;
+import org.eclipse.microprofile.reactive.messaging.Emitter;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.time.Duration;
+import java.util.List;
+import java.util.UUID;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
+import java.util.logging.Logger;
+
+import static org.awaitility.Awaitility.await;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @QuarkusTest
 public class KafkaAcceptanceTest {
@@ -14,23 +33,61 @@ public class KafkaAcceptanceTest {
     CostingResponseProducer producer;
 
     @Inject
-    CostingRequestConsumer consumer;
+    @Channel("test-costing-request-producer")
+    Emitter<Record<String, String>> testCostingRequestEmitter;
 
-    @Test
-    @DisplayName("Verify Kafka producer and consumer beans are injected and healthy")
-    public void testBeansInjected() {
-        assertNotNull(producer, "CostingResponseProducer should be injected by Quarkus CDI");
-        assertNotNull(consumer, "CostingRequestConsumer should be injected by Quarkus CDI");
+    private final List<String> capturedLogMessages = new CopyOnWriteArrayList<>();
+    private Handler testLogHandler;
+
+    @BeforeEach
+    public void setupLogCapture() {
+        capturedLogMessages.clear();
+        testLogHandler = new Handler() {
+            @Override
+            public void publish(LogRecord record) {
+                if (record != null) {
+                    String msg = record.getMessage();
+                    Object[] params = record.getParameters();
+                    if (params != null && params.length > 0 && msg != null && msg.contains("%")) {
+                        try {
+                            msg = String.format(msg, params);
+                        } catch (Exception ignored) {
+                        }
+                    }
+                    if (msg != null) {
+                        capturedLogMessages.add(msg);
+                    }
+                }
+            }
+
+            @Override
+            public void flush() {}
+
+            @Override
+            public void close() {}
+        };
+        Logger.getLogger(CostingRequestConsumer.class.getName()).addHandler(testLogHandler);
+    }
+
+    @AfterEach
+    public void tearDownLogCapture() {
+        if (testLogHandler != null) {
+            Logger.getLogger(CostingRequestConsumer.class.getName()).removeHandler(testLogHandler);
+        }
     }
 
     @Test
-    @DisplayName("Verify Kafka producer can emit messages to the broker")
-    public void testProducerSendMessage() {
-        String testRequestId = "req-acceptance-test-123";
-        String payload = "{\"test\": \"payload\"}";
+    @DisplayName("Verify generated Kafka consumer receives messages from the broker")
+    public void testConsumerReceivesMessage() {
+        String testKey = "consumer-test-" + UUID.randomUUID();
+        String testPayload = "{\"test\": \"consumer-payload\"}";
 
-        String resultId = producer.sendCostingResponseProducer(testRequestId, payload);
-        assertEquals(testRequestId, resultId, "Producer should return the matching requestId");
+        testCostingRequestEmitter.send(Record.of(testKey, testPayload));
+
+        await()
+            .atMost(Duration.ofSeconds(15))
+            .pollInterval(Duration.ofMillis(200))
+            .until(() -> capturedLogMessages.stream().anyMatch(log -> log.contains(testKey)));
     }
 
     @Test
@@ -49,18 +106,54 @@ public class KafkaAcceptanceTest {
             }
             """;
 
-        java.net.http.HttpClient client = java.net.http.HttpClient.newHttpClient();
-        java.net.http.HttpRequest request = java.net.http.HttpRequest.newBuilder()
-            .uri(java.net.URI.create(testEndpointUrl))
+        HttpClient httpClient = HttpClient.newHttpClient();
+        HttpRequest postRequest = HttpRequest.newBuilder()
+            .uri(URI.create(testEndpointUrl))
             .header("Content-Type", "application/json")
-            .POST(java.net.http.HttpRequest.BodyPublishers.ofString(testPayload))
+            .POST(HttpRequest.BodyPublishers.ofString(testPayload))
             .build();
 
-        java.net.http.HttpResponse<String> response = client.send(request, java.net.http.HttpResponse.BodyHandlers.ofString());
-        assertEquals(201, response.statusCode(), "Microcks test runner should initialize with HTTP 201 Created");
-        assertTrue(response.body().contains("ASYNC_API_SCHEMA"), "Microcks test response should acknowledge schema runner");
+        HttpResponse<String> postResponse = httpClient.send(postRequest, HttpResponse.BodyHandlers.ofString());
+        assertEquals(201, postResponse.statusCode(), "Microcks test runner should initialize with HTTP 201 Created");
 
-        // Emit message through the generated producer to verify live broker delivery
-        producer.sendCostingResponseProducer("test-microcks-req", "{\"test\": \"contract-payload\"}");
+        String testId = extractTestId(postResponse.body());
+
+        boolean success = false;
+        String payload = "{\"test\": \"contract-payload\"}";
+
+        for (int i = 0; i < 30; i++) {
+            producer.sendCostingResponseProducer("test-microcks-req-" + i, payload);
+
+            HttpRequest getRequest = HttpRequest.newBuilder()
+                .uri(URI.create(microcksBaseUrl + "/api/tests/" + testId))
+                .header("Accept", "application/json")
+                .GET()
+                .build();
+
+            HttpResponse<String> getResponse = httpClient.send(getRequest, HttpResponse.BodyHandlers.ofString());
+            String responseBody = getResponse.body();
+
+            if (responseBody.contains("\"success\":true")) {
+                success = true;
+                break;
+            }
+
+            Thread.sleep(1000);
+        }
+
+        assertTrue(success, "Microcks test " + testId + " did not succeed");
+    }
+
+    private String extractTestId(String responseBody) {
+        String idMarker = "\"id\":\"";
+        int start = responseBody.indexOf(idMarker);
+        if (start != -1) {
+            start += idMarker.length();
+            int end = responseBody.indexOf("\"", start);
+            if (end != -1) {
+                return responseBody.substring(start, end);
+            }
+        }
+        throw new IllegalStateException("Failed to extract test ID from Microcks response: " + responseBody);
     }
 }

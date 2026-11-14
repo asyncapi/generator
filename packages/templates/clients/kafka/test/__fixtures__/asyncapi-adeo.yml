@@ -125,6 +125,7 @@ operations:
       action: receive
       channel: 
         $ref: '#/channels/costingRequest'
+      # Why: Microcks ASYNC_API_SCHEMA runner evaluates /operations/<opName>/messages to locate message schemas; without this explicit pointer, Microcks fails with "messagePathPointer does not represent a valid JSON Pointer"
       messages:
         - $ref: '#/channels/costingRequest/messages/costingRequest'
       reply:
@@ -158,6 +159,7 @@ operations:
       action: send
       channel: 
         $ref: '#/channels/costingResponse'
+      # Why: Microcks ASYNC_API_SCHEMA runner evaluates /operations/<opName>/messages to locate message schemas; without this explicit pointer, Microcks fails with "messagePathPointer does not represent a valid JSON Pointer"
       messages:
         - $ref: '#/channels/costingResponse/messages/costingResponse'
       summary: >
@@ -192,14 +194,6 @@ components:
         - name: costing
       correlationId:
         $ref: "#/components/correlationIds/costingCorrelationId"
-      examples:
-        - name: defaultRequest
-          summary: Default costing request
-          payload:
-            ProductId: "PROD-12345"
-            ShortProductDescription: "BOTTLE RACK, STACKABLE, 2 TIER, 10 BOTTLES"
-            SupplierCode: "12345678"
-            SupplierPrice: 19.99
       headers:
         type: object
         required:
@@ -314,13 +308,6 @@ components:
         project](https://github.url/).
       correlationId:
         $ref: "#/components/correlationIds/costingCorrelationId"
-      examples:
-        - name: defaultResponse
-          summary: Default costing response
-          payload:
-            CostingResult:
-              CalculationPrice: 25.5
-              CalculationCurrency: EUR
       headers:
         type: object
         properties:

@@ -11,9 +11,9 @@ This `test` directory contains two types of testing for the Kafka client templat
 The acceptance tests verify that the generated Kafka client can connect, produce messages, and consume messages over a live TCP connection against a real mock broker (Microcks + Redpanda) inside Docker/Podman containers.
 
 ### Test Architecture & Validation
-1. **CDI & Dependency Injection**: Verifies generated Quarkus beans (`CostingResponseProducer`, `CostingRequestConsumer`) are indexed and discoverable in Quarkus ArC.
-2. **Broker Integration**: Emits live messages across topics on the Redpanda broker.
-3. **Microcks Contract Participation**: Triggers Microcks `ASYNC_API_SCHEMA` test runner to validate that emitted events conform to the imported AsyncAPI contract.
+1. **Producer Contract Validation**: Triggers Microcks `ASYNC_API_SCHEMA` test runner to validate that messages emitted by `CostingResponseProducer` conform to the imported AsyncAPI contract.
+2. **Consumer Message Handling**: Emits test messages across topics on the Redpanda broker and verifies that `CostingRequestConsumer` receives, deserializes, and processes them.
+3. **Broker Integration**: Emits live messages across topics on the Redpanda broker.
 4. **Performance**: Measures ~11s execution with a warm Maven `.m2` cache (`maven-cache` volume). Initial cold runs on fresh runners will take longer while downloading Quarkus dependencies.
 
 ### Prerequisites
@@ -22,6 +22,8 @@ Install [Docker](https://docs.docker.com/get-docker/) or [Podman](https://podman
 
 ### How to Run Acceptance Tests Locally
 
+Acceptance tests share the unified Microcks infrastructure located in `packages/templates/clients/websocket/test/microcks-setup`.
+
 1. **Generate the Kafka client** (runs snapshot tests and outputs the generated Quarkus client):
    ```bash
    npm run test --prefix packages/templates/clients/kafka/test/integration-test
@@ -29,7 +31,7 @@ Install [Docker](https://docs.docker.com/get-docker/) or [Podman](https://podman
 
 2. **Start the Microcks Infrastructure** (spins up Redpanda Kafka broker, Mongo, Microcks, and Async Minion):
    ```bash
-   cd packages/templates/clients/kafka/test/microcks-setup
+   cd packages/templates/clients/websocket/test/microcks-setup
    docker compose -f microcks-podman.yml --profile infra up -d
    ```
    *(Or with Podman: `podman compose -f microcks-podman.yml --profile infra up -d`)*
@@ -39,9 +41,9 @@ Install [Docker](https://docs.docker.com/get-docker/) or [Podman](https://podman
    bash ./checkMicrocksReady.sh
    ```
 
-4. **Execute the Java Acceptance Test**:
+4. **Execute the Kafka Acceptance Test**:
    ```bash
-   docker compose -f microcks-podman.yml --profile test-java up --abort-on-container-exit
+   docker compose -f microcks-podman.yml --profile test-kafka up --abort-on-container-exit
    ```
 
 5. **Cleanup**:

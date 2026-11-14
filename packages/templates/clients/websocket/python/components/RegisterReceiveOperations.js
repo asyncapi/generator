@@ -19,7 +19,7 @@ export function RegisterReceiveOperations({ receiveOperations }) {
     const methodName = `register_${toSnakeCase(operationId)}_handler`;
 
     return (
-      <Text indent={2} newLines={2} key={operationId}>
+      <Text indent={2} newLines={2}>
         {`def ${methodName}(self, handler, discriminator_key=None, discriminator_value=None):
     """
     Register a handler for ${operationId} operation.

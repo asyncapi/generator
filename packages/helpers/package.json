@@ -18,6 +18,9 @@
   "publishConfig": {
     "access": "public"
   },
+  "dependencies": {
+    "@babel/helper-validator-identifier": "^7.28.5"
+  },
   "devDependencies": {
     "jest": "^28.1.3"
   }

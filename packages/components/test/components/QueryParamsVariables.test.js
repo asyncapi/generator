@@ -74,6 +74,86 @@ describe('Testing of QueryParamsVariables component', () => {
     expect(result.trim()).toMatchSnapshot();
   });
 
+  test('renders js query params with a leading digit and quotes as valid code', () => {
+    const result = render(
+      <QueryParamsVariables
+        language='javascript'
+        queryParams={[['1st'], ['say"hi']]}
+      />
+    );
+    expect(result.trim()).toMatchSnapshot();
+  });
+
+  test('renders js spec defaults after the environment variable lookup', () => {
+    const result = render(
+      <QueryParamsVariables
+        language='javascript'
+        queryParams={[['heartbeat', 'false'], ['count', 42], ['token', 'abc'], ['sessionId', '']]}
+      />
+    );
+    expect(result).toContain('const _heartbeat = heartbeat ?? process.env["HEARTBEAT"] ?? false;');
+    expect(result).toContain('const _sessionId = sessionId ?? process.env["SESSIONID"];');
+    expect(result.trim()).toMatchSnapshot();
+  });
+
+  test('renders js boolean, numeric and missing defaults in their literal form', () => {
+    const result = render(
+      <QueryParamsVariables
+        language='javascript'
+        queryParams={[['bids', 'true'], ['offers', false], ['count', '42'], ['token', undefined]]}
+      />
+    );
+    expect(result).toContain('const _bids = bids ?? process.env["BIDS"] ?? true;');
+    expect(result).toContain('const _offers = offers ?? process.env["OFFERS"] ?? false;');
+    expect(result).toContain('const _count = count ?? process.env["COUNT"] ?? 42;');
+    expect(result).toContain('const _token = token ?? process.env["TOKEN"];');
+    expect(result.trim()).toMatchSnapshot();
+  });
+
+  test('prefixes js query params that clash with the given reserved names', () => {
+    const result = render(
+      <QueryParamsVariables
+        language='javascript'
+        queryParams={[['process', ''], ['token', '']]}
+        reservedNames={new Set(['process'])}
+      />
+    );
+    expect(result).toContain('const __process = _process ?? process.env["PROCESS"];');
+    expect(result).toContain('params["process"] = __process;');
+    expect(result).toContain('const _token = token ?? process.env["TOKEN"];');
+  });
+
+  test('does not prefix js query params when no reserved names are given', () => {
+    const result = render(
+      <QueryParamsVariables
+        language='javascript'
+        queryParams={[['url', '']]}
+      />
+    );
+    expect(result).toContain('const _url = url ?? process.env["URL"];');
+  });
+
+  test('renders js non-canonical numeric defaults as strings', () => {
+    const result = render(
+      <QueryParamsVariables
+        language='javascript'
+        queryParams={[['code', '0123'], ['hex', '0x10'], ['price', '1.50'], ['limit', 'Infinity']]}
+      />
+    );
+    expect(result.trim()).toMatchSnapshot();
+  });
+
+  test('escapes quotes, backslashes and newlines in js string defaults', () => {
+    const result = render(
+      <QueryParamsVariables
+        language='javascript'
+        queryParams={[['token', 'a"b\\c\nd']]}
+      />
+    );
+    expect(() => new Function(result)).not.toThrow();
+    expect(result.trim()).toMatchSnapshot();
+  });
+
   test('throws an error when the language is not supported', () => {
     expect(() => render(
       <QueryParamsVariables

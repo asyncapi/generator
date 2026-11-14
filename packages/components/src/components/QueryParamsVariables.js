@@ -1,5 +1,5 @@
 import { Text } from '@asyncapi/generator-react-sdk';
-import { toCamelCase } from '@asyncapi/generator-helpers';
+import { toCamelCase, getSafeJSName } from '@asyncapi/generator-helpers';
 import { unsupportedLanguage } from '../utils/ErrorHandling';
 
 /**
@@ -14,6 +14,28 @@ import { unsupportedLanguage } from '../utils/ErrorHandling';
  * @property {{ text: string, indent: number | undefined, newLines: number | undefined }} assignment - Code block assigning query param.
  * @property {{ text: string, indent: number | undefined, newLines: number | undefined } | null} [closing] - Optional closing block (for braces, etc.).
  */
+
+/**
+ * Converts a query parameter default value into a JavaScript literal.
+ *
+ * @private
+ * @param {string|number|boolean|undefined|null} defaultValue - The default value from the AsyncAPI document.
+ * @returns {string|null} The JavaScript literal, or null when there is no default.
+ */
+function toJsLiteral(defaultValue) {
+  if (defaultValue === undefined || defaultValue === null || defaultValue === '') {
+    return null;
+  }
+  const isBoolean = defaultValue === 'true' || defaultValue === 'false' || typeof defaultValue === 'boolean';
+  const asNumber = Number(defaultValue);
+  const isNumber = typeof defaultValue === 'number' ||
+    (Number.isFinite(asNumber) && String(asNumber) === defaultValue);
+
+  if (isBoolean || isNumber) {
+    return String(defaultValue);
+  }
+  return JSON.stringify(String(defaultValue));
+}
 
 /**
  * Language and framework specific logic for generating query parameter code.
@@ -64,24 +86,28 @@ const queryParamLogicConfig = {
       };
     },
   },
-  javascript: (param) => {
-    const paramName = param[0];
+  javascript: (param, usedNames, reservedNames) => {
+    const rawName = param[0];
+    const paramName = getSafeJSName(rawName, usedNames, reservedNames);
+    const envVarName = rawName.toUpperCase().replace(/[^A-Z0-9_]/g, '_');
+    const defaultLiteral = toJsLiteral(param[1]);
+    const defaultFallback = defaultLiteral === null ? '' : ` ?? ${defaultLiteral}`;
     return {
       variableDefinition: {
-        text: `const ${paramName} = ${paramName} || process.env.${paramName.toUpperCase()};`,
-        indent: 8,
+        text: `const _${paramName} = ${paramName} ?? process.env[${JSON.stringify(envVarName)}]${defaultFallback};`,
+        indent: 0,
       },
       ifCondition: {
-        text: `if (${paramName}) {`,
-        indent: 8,
+        text: `if (_${paramName} != null) {`,
+        indent: 0,
       },
       assignment: {
-        text: `params["${paramName}"] = ${paramName};`,
-        indent: 10,
+        text: `params[${JSON.stringify(rawName)}] = _${paramName};`,
+        indent: 2,
       },
       closing: {
         text: '}',
-        indent: 8,
+        indent: 0,
         newLines: 1,
       },
     };
@@ -114,6 +140,7 @@ function resolveQueryParamLogic(language, framework) {
  * @param {Language} props.language - The target programming language.
  * @param {string} [props.framework=''] - Optional framework for the language.
  * @param {string[][]} props.queryParams - Array of query parameters, each represented as [paramName, paramType?].
+ * @param {Set<string>} [props.reservedNames=new Set()] - JavaScript only: identifiers the surrounding generated code already uses, so query parameters with those names are prefixed with `_`.
  * @returns {JSX.Element[]|null} Array of Text components for each query parameter, or null if queryParams is invalid.
  * 
  * @example
@@ -149,7 +176,7 @@ function resolveQueryParamLogic(language, framework) {
  * 
  * renderQueryParamsVariable().catch(console.error);
  */
-export function QueryParamsVariables({ language, framework = '', queryParams }) {
+export function QueryParamsVariables({ language, framework = '', queryParams, reservedNames = new Set() }) {
   if (!queryParams || !Array.isArray(queryParams)) {
     return null;
   }
@@ -164,8 +191,9 @@ export function QueryParamsVariables({ language, framework = '', queryParams }) 
     return null;
   }
 
+  const usedNames = new Map();
   return queryParams.map((param) => {
-    const { variableDefinition, ifCondition, assignment, closing } = generateParamCode(param);
+    const { variableDefinition, ifCondition, assignment, closing } = generateParamCode(param, usedNames, reservedNames);
 
     return (
       <>

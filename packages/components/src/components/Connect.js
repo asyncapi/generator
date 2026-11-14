@@ -20,13 +20,52 @@ const websocketConnectMethod = {
     return {
       connectMethod: `// Method to establish a WebSocket connection
 connect() {
-    return new Promise((resolve, reject) => {
-        this.websocket = new WebSocket(this.url);
+    if (this.websocket) {
+        if (this.websocket.readyState === WebSocket.OPEN) {
+            return Promise.resolve();
+        }
+        if (this.websocket.readyState === WebSocket.CONNECTING) {
+            return this._connectionPromise;
+        }
+        if (this.websocket.readyState === WebSocket.CLOSING) {
+            if (!this._pendingReconnect) {
+                const socket = this.websocket;
+                let cancel;
+                const promise = new Promise((resolve, reject) => {
+                    const reconnect = () => {
+                        if (this._pendingReconnect?.cancel !== cancel) {
+                            return;
+                        }
+                        this._pendingReconnect = undefined;
+                        resolve(this.connect());
+                    };
+                    cancel = () => {
+                        socket.removeListener('close', reconnect);
+                        this._pendingReconnect = undefined;
+                        reject(new Error('WebSocket reconnect canceled by close().'));
+                    };
+                    socket.once('close', reconnect);
+                });
+                this._pendingReconnect = { promise, cancel };
+            }
+            return this._pendingReconnect.promise;
+        }
+    }
+    this._connectionPromise = new Promise((resolve, reject) => {
+        const socket = this.websocket = new WebSocket(this.url);
+        const onCloseBeforeOpen = () => {
+            socket.removeListener('open', onOpen);
+            reject(new Error('WebSocket connection closed before it opened.'));
+        };
+        const onOpen = () => socket.removeListener('close', onCloseBeforeOpen);
+        socket.once('close', onCloseBeforeOpen);
+        socket.once('open', onOpen);
         ${onOpenMethod}
         ${onMessageMethod}
         ${onErrorMethod}
         ${onCloseMethod}
     });
+    return this._connectionPromise;
 }`
     };
   },

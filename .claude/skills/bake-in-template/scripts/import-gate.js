@@ -42,11 +42,19 @@ function isImportOrExportFrom(node) {
   return declarationTypes.includes(node.type) && Boolean(node.source);
 }
 
-// `require('a')` and `import('a')` with a string literal argument.
+// The module name in a `require(…)` or `import(…)` argument: a string literal, or a template literal with no ${…} in it.
+// Null for anything else (a variable, a template literal with an expression), whose value can't be read from the code.
+function fixedModuleName(argument) {
+  if (!argument) return null;
+  if (argument.type === 'StringLiteral') return argument.value;
+  if (argument.type === 'TemplateLiteral' && argument.expressions.length === 0) return argument.quasis[0].value.cooked;
+  return null;
+}
+
+// `require('a')` and `import('a')` with a fixed module name.
 function isRequireOrDynamicImport(node) {
   if (node.type !== 'CallExpression') return false;
-  const firstArgument = node.arguments[0];
-  if (!firstArgument || firstArgument.type !== 'StringLiteral') return false;
+  if (fixedModuleName(node.arguments[0]) === null) return false;
   const isRequire = node.callee.type === 'Identifier' && node.callee.name === 'require';
   const isDynamicImport = node.callee.type === 'Import';
   return isRequire || isDynamicImport;
@@ -56,7 +64,7 @@ function isRequireOrDynamicImport(node) {
 function collectSpecifiers(node, specifiers = []) {
   if (!node || typeof node.type !== 'string') return specifiers;
   if (isImportOrExportFrom(node)) specifiers.push(node.source.value);
-  if (isRequireOrDynamicImport(node)) specifiers.push(node.arguments[0].value);
+  if (isRequireOrDynamicImport(node)) specifiers.push(fixedModuleName(node.arguments[0]));
 
   for (const [key, value] of Object.entries(node)) {
     if (key === 'loc') continue;

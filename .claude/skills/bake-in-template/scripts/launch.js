@@ -7,8 +7,14 @@ const [runDir, logFile, errFile, exitFile, ...commandWords] = process.argv.slice
 const stdoutFile = fs.openSync(logFile, 'a');
 const stderrFile = fs.openSync(errFile, 'a');
 
+// The shell splits the joined line on spaces, so a word that contains one (e.g. the path "config files/dev.json")
+// gets its quotes back and stays one argument.
+function quoteIfSpaced(word) {
+  return /\s/.test(word) ? `"${word}"` : word;
+}
+
 // On Linux/macOS, `detached` puts the command in its own process group, so `kill -- -<childPid>` stops all of it.
-const child = spawn(commandWords.join(' '), {
+const child = spawn(commandWords.map(quoteIfSpaced).join(' '), {
   cwd: runDir,
   shell: true,
   stdio: ['ignore', stdoutFile, stderrFile],

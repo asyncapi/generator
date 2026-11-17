@@ -39,7 +39,8 @@ This file defines what passes between the orchestrator ([SKILL.md](SKILL.md)) an
 }
 ```
 
-- `files_written`: every deliverable file written, repo-relative. A directory entry (e.g. `temp/bake-in-template/<SOURCE_NAME>/golden/<fixture>`) stands for every file under it, and intermediate scratch files (e.g. `capture-run-<i>.json`) aren't listed. Translator mode `2a` returns an object keyed by row id, e.g. `{ "S1": ["packages/helpers/src/routes.js", "packages/helpers/src/index.js"] }`.- `summary`: at most five sentences. Translators name the change ids they applied.
+- `files_written`: every deliverable file written, repo-relative. A directory entry (e.g. `temp/bake-in-template/<SOURCE_NAME>/golden/<fixture>`) stands for every file under it, and intermediate scratch files (e.g. `capture-run-<i>.json`) aren't listed. Translator mode `2a` returns an object keyed by row id, e.g. `{ "S1": ["packages/helpers/src/routes.js", "packages/helpers/src/index.js"] }`.
+- `summary`: at most five sentences. Translators name the change ids they applied.
 - `unresolved`: ids (`A3`, `I7`, `C2`) or tagged strings (`hook-package:<pkg>`, `license:<value>`, `config-key:<key>`, `capture:<fixture>`) the orchestrator must act on.
 - `dependencies`: npm package → range. List only the packages that **the template's own code** imports and that `TARGET_PATH/package.json` doesn't list yet. Use an empty object when nothing is needed. Packages the *generated project* needs go into the generated `package.json` content, never here.
 
@@ -116,10 +117,10 @@ Per `files[]` entry:
 | `origin` | `template`, `filter`, `hook`, `component`, `helper` or `partial`. It comes from the file's top folder, or is `partial` for an included file found anywhere else in the source |
 | `kind` | Nunjucks `template`/`partial` files: `dynamic` (contains `{{`, `{%` or `{#`) or `static`. React `template`/`partial` files: `react` for `.js`/`.jsx`, else `static`. Other origins: `js`. Binary files: `binary` |
 | `filenameTemplated` | the path contains `$$` (Nunjucks only) |
-| `hasConditionals` | contains `{% if` / `{% for`, or (React files and `components/` files) `if`, `switch`, a ternary, `&&` or `.map(` in the code. Text inside generated-code strings doesn't count |
+| `hasConditionals` | contains `{% if` / `{% for`, or (React files and `components/` files) `if`, `switch`, a ternary, `&&`, a loop (`for`, `while`, `do…while`), `.map(` or `.forEach(` in the code. Text inside generated-code strings doesn't count |
 | `filters` | filter names used inside `{{ … }}` and `{% … %}` tags only, so Markdown tables, shell pipes and `\|\|` never count |
 | `includes` | the paths named by `{% include %}`, `{% import %}`, `{% from %}` and `{% extends %}` |
-| `parserCalls` | candidate method chains `{ line, receiver, method, chain }`: tag lines of `dynamic` files, every line of `react` and `js` files. They are only candidates, e.g. `pathName.startsWith('/')` too; `api-mapper` drops the non-Parser ones |
+| `parserCalls` | candidate method chains `{ line, receiver, method, chain }`: chains that start on a tag line of a `dynamic` file, and every chain of a `react` or `js` file. A chain written over several lines is one candidate: `line` is the line it starts on, and `chain` holds it on one line. They are only candidates, e.g. `pathName.startsWith('/')` too; `api-mapper` drops the non-Parser ones |
 | `definesFilters` | `origin: filter` only: the exported filter names |
 | `definesHooks` | `origin: hook` only: the exported hook types |
 

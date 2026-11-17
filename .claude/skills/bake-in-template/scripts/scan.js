@@ -59,9 +59,13 @@ const FILTER_USE = /(?<!\|)\|(?!\|)\s*([A-Za-z_]\w*)/g;
 // Matches: "partials/usage.md" in "{% include 'partials/usage.md' %}"
 const INCLUDE_TAG = /\{%-?\s*(?:include|import|extends|from)\s+['"]([^'"]+)['"]/g;
 
-// A word followed by one or more ".method(…)" calls.
+// A word followed by one or more ".method(…)" calls. The calls can sit on separate lines and can use "?.".
+// Each argument list stays on one line, so a callback written over several lines ends the chain.
 // Matches: "channel.subscribe().id()" → receiver "channel", methods ".subscribe().id()"
-const METHOD_CHAIN = /\b([A-Za-z_$][\w$]*)((?:\.[A-Za-z_$][\w$]*\((?:[^()]|\([^()]*\))*\))+)/g;
+//          "asyncapi", ".channels()" and "?.all()" on three lines → receiver "asyncapi", one chain
+// The pattern sits in a lookahead so that matches can overlap: "list.map((channel) => channel.id())" gives the
+// whole chain and also "channel.id()".
+const METHOD_CHAIN = /(?=(\b([A-Za-z_$][\w$]*)((?:\s*\??\.[A-Za-z_$][\w$]*\((?:[^()\n]|\([^()\n]*\))*\))+)))/g;
 
 // A Nunjucks if or for tag.
 // Matches: "{% if" and "{%- for"
@@ -166,19 +170,21 @@ function exportedNames(filePath) {
 }
 
 function findParserCalls(text, kind) {
+  if (kind === 'static') return [];
   const calls = [];
-  const lines = text.split(/\r?\n/);
-  lines.forEach((line, index) => {
-    // Nunjucks files: only lines with a tag. JS and React files: every line.
-    if (kind === 'static') return;
-    if (kind === 'dynamic' && !hasNunjucksSyntax(line)) return;
+  const lines = text.split('\n');
 
-    for (const match of line.matchAll(METHOD_CHAIN)) {
-      const [chain, receiver, methods] = match;
-      const method = methods.slice(1, methods.indexOf('('));
-      calls.push({ line: index + 1, receiver, method, chain });
-    }
-  });
+  for (const match of text.matchAll(METHOD_CHAIN)) {
+    const [, chainAsWritten, receiver, methods] = match;
+    const line = text.slice(0, match.index).split('\n').length;
+    // Nunjucks files: only chains that start on a line with a tag. JS and React files: every chain.
+    if (kind === 'dynamic' && !hasNunjucksSyntax(lines[line - 1])) continue;
+
+    const method = methods.slice(methods.indexOf('.') + 1, methods.indexOf('('));
+    // A chain written over several lines is stored on one: its line breaks and indentation are removed.
+    const chain = chainAsWritten.replace(/\s*\n\s*/g, '');
+    calls.push({ line, receiver, method, chain });
+  }
   return calls;
 }
 

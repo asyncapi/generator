@@ -4,6 +4,9 @@ const path = require('path');
 
 const [scratchArg, fixture, paramsFile] = process.argv.slice(2);
 const scratchDir = path.resolve(scratchArg);
+// stdout carries only the run object. The old generator and the source's hooks run in this process,
+// so whatever they log goes to stderr instead.
+for (const method of ['log', 'info', 'debug']) console[method] = console.error;
 // The OLD generator, installed under oldgen/ in Wave 0. Not the repo's generator.
 const OldGenerator = require(path.join(scratchDir, 'oldgen', 'node_modules', '@asyncapi', 'generator'));
 const fixtureName = path.parse(fixture).name; // "asyncapi" for "test/fixtures/asyncapi.yml"
@@ -30,7 +33,8 @@ async function main() {
   await generator.generateFromFile(path.resolve(fixture));
 
   const files = listFiles(outputDir).map(toScratchRelative);
-  console.log(JSON.stringify({ fixture, params: templateParams, outputDir: toScratchRelative(outputDir), files }));
+  const run = { fixture, params: templateParams, outputDir: toScratchRelative(outputDir), files };
+  process.stdout.write(`${JSON.stringify(run)}\n`);
 }
 
 main().catch((error) => {

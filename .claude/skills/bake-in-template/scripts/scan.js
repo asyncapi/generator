@@ -9,6 +9,7 @@
 //   reads  <SCRATCH_DIR>/oldgen/             the old generator, for the Nunjucks built-in filter names (step 4)
 //   writes <SCRATCH_DIR>/fixtures/           fixtures downloaded from a URL
 //   writes <SCRATCH_DIR>/source-index.json   the result
+const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
 const yaml = require('js-yaml');
@@ -347,8 +348,10 @@ async function resolveFixture(fixture, testFile) {
   const repoFile = fixture.match(REPO_FILE_URL);
   if (repoFile && fs.existsSync(repoFile[1])) return repoFile[1];
 
-  // Any other URL: download it once.
-  const target = path.join(scratchDir, 'fixtures', path.basename(fixture));
+  // Any other URL: download it once. The file name starts with a hash of the whole URL,
+  // so two URLs that end in the same file name get a file each.
+  const urlHash = crypto.createHash('sha256').update(fixture).digest('hex').slice(0, 8);
+  const target = path.join(scratchDir, 'fixtures', `${urlHash}-${path.basename(fixture)}`);
   if (!fs.existsSync(target)) {
     const response = await fetch(fixture).catch(() => null);
     if (!response || !response.ok) return null;

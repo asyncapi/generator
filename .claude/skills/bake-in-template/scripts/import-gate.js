@@ -6,7 +6,7 @@
 const fs = require('fs');
 const path = require('path');
 const { execFileSync } = require('child_process');
-const { builtinModules } = require('module');
+const { isBuiltin } = require('module');
 const { parse } = require('@babel/parser');
 
 const templateDir = path.resolve(process.argv[2]);
@@ -76,11 +76,10 @@ function collectSpecifiers(node, specifiers = []) {
   return specifiers;
 }
 
-// The package a specifier belongs to: "node:fs/promises" → "fs", "@asyncapi/parser/cjs" → "@asyncapi/parser", "lodash/fp" → "lodash".
+// The package a specifier belongs to: "@asyncapi/parser/cjs" → "@asyncapi/parser", "lodash/fp" → "lodash".
 function packageNameOf(specifier) {
-  const bare = specifier.replace(/^node:/, '');
-  const parts = bare.split('/');
-  return bare.startsWith('@') ? parts.slice(0, 2).join('/') : parts[0];
+  const parts = specifier.split('/');
+  return specifier.startsWith('@') ? parts.slice(0, 2).join('/') : parts[0];
 }
 
 function parseCode(text) {
@@ -114,9 +113,9 @@ for (const filePath of files) {
   const allowedDeps = helperFiles.includes(filePath) ? helpersDeps.concat(packagesAtHead(displayPath)) : generatorDeps;
   for (const specifier of collectSpecifiers(ast.program)) {
     const isRelative = specifier.startsWith('.') || specifier.startsWith('/');
-    if (isRelative) continue;
+    if (isRelative || isBuiltin(specifier)) continue;
     const packageName = packageNameOf(specifier);
-    if (builtinModules.includes(packageName) || allowedDeps.includes(packageName)) continue;
+    if (allowedDeps.includes(packageName)) continue;
     violations.push({ file: displayPath, specifier, package: packageName });
   }
 }

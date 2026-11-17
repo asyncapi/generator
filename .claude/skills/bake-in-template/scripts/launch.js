@@ -23,6 +23,8 @@ const child = spawn(commandWords.map(quoteIfSpaced).join(' '), {
 fs.writeFileSync(`${exitFile}.child`, String(child.pid));
 
 child.on('exit', (code, signal) => {
-  fs.writeFileSync(exitFile, JSON.stringify({ code, signal }));
+  // Written under another name and then renamed, so start-check.js never reads a half-written exit file.
+  fs.writeFileSync(`${exitFile}.tmp`, JSON.stringify({ code, signal }));
+  fs.renameSync(`${exitFile}.tmp`, exitFile);
   process.exit(0);
 });

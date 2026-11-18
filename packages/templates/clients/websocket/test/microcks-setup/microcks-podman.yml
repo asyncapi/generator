@@ -188,7 +188,7 @@ services:
   tester-dart:
     profiles:
       - test-dart
-    image: dart:stable
+    image: dart:3
     container_name: websocket-acceptance-tester-dart
     ports:
       - "8085:8085"

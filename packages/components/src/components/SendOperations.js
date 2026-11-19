@@ -32,10 +32,12 @@ const websocketSendOperationConfig = {
       nonStaticMethod: `def ${methodName}(self, message):
     """
     Send a ${methodName} message using the WebSocket connection attached to this instance.
+    Runs any registered outgoing processors on the message before sending. A processor
+    that returns None leaves the message unchanged.
 
-    A send failure is always forwarded to every callback registered with
-    register_error_handler(). What happens next depends on the
-    raise_send_errors flag passed to the constructor (default: True):
+    A send failure, including an error raised by a processor, is always forwarded
+    to every callback registered with register_error_handler(). What happens next
+    depends on the raise_send_errors flag passed to the constructor (default: True):
 
     - raise_send_errors=True  -- the exception is re-raised after the
       handlers run, so the caller can react to each failure (retry,
@@ -52,7 +54,12 @@ const websocketSendOperationConfig = {
         Exception: If sending fails and raise_send_errors is True.
     """
     try:
-        self._send(message, self.ws_app)
+        processed_message = message
+        for processor in self.outgoing_processors:
+            result = processor(processed_message)
+            if result is not None:
+                processed_message = result
+        self._send(processed_message, self.ws_app)
     except Exception as e:
         self.handle_error(e)
         if self.raise_send_errors:

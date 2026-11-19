@@ -4,16 +4,31 @@
 
 name: Close PRs linked to unapproved issues
 
+# Why: pull_request_target is required because PRs from forks must be able to be
+# closed and commented on, which a read-only pull_request token cannot do. This
+# workflow never checks out or executes PR-authored code -- it only reads event
+# payload metadata (author, body, base ref) and CODEOWNERS from the base branch --
+# so it is not exposed to the pwn-request class of attack.
 on:
   pull_request_target:
     types:
       - opened
       - edited
-      - reopened
+      - reopened              # zizmor: ignore[dangerous-triggers] no PR code is checked out or executed; see comment above
+
+permissions: {}
 
 jobs:
   close-if-unapproved:
     runs-on: ubuntu-latest
+
+    # contents: read     -> read CODEOWNERS from the base branch
+    # issues: read       -> list labels on the linked issues
+    # pull-requests: write -> comment on and close the PR
+    permissions:
+      contents: read
+      issues: read
+      pull-requests: write
 
     steps:
       - name: Check linked issue and close PR if unapproved

@@ -10,6 +10,8 @@ on:
     types:
       - created
 
+permissions: {}
+
 jobs:
   approve-issue:
     if: >
@@ -19,12 +21,21 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    # contents: read is the only scope GITHUB_TOKEN needs here: it covers the
+    # sparse-checkout of CODEOWNERS and nothing else. The label changes and
+    # comments are made with secrets.GH_TOKEN, which carries its own scopes, so
+    # granting issues: write here would be inert.
+    permissions:
+      contents: read
+
     steps:
       - name: Checkout CODEOWNERS
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           sparse-checkout: CODEOWNERS
           sparse-checkout-cone-mode: false
+          # Nothing runs git after this step, so the token need not be left on disk.
+          persist-credentials: false
 
       - name: Check authorization and approve
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0

@@ -3,7 +3,10 @@ name: PR Review Checklist
 on:
   pull_request_target:
     types: 
-      - opened
+      - opened              # zizmor: ignore[dangerous-triggers] base-branch checkout only; pull_request_target is required so the checklist can be posted on PRs from
+# forks, which a read-only pull_request token cannot do. 
+
+permissions: {}
 
 permissions: {}
 
@@ -16,13 +19,27 @@ jobs:
       github.event.pull_request.user.login != 'dependabot[bot]' && 
       github.event.pull_request.user.login != 'dependabot-preview[bot]') 
     runs-on: ubuntu-latest
+<<<<<<< Updated upstream
     permissions:
       pull-requests: write  # permission to create-or-update-comment posts to the PR thread
+=======
+
+    # contents: read -> checkout of the base branch, which supplies the checklist
+    # body file. The comment itself is posted with secrets.GH_TOKEN, not GITHUB_TOKEN.
+    permissions:
+      contents: read
+
+>>>>>>> Stashed changes
     steps:
     - name: Checkout repository
       uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       with:
+<<<<<<< Updated upstream
           persist-credentials: false # read-only; only used to access .github/pr-review-checklist.md
+=======
+        # Nothing runs git after this step, so the token need not be left on disk.
+        persist-credentials: false
+>>>>>>> Stashed changes
 
     - name: Post initial PR checklist
       uses: peter-evans/create-or-update-comment@e8674b075228eee787fea43ef493e45ece1004c9 # v5.0.0

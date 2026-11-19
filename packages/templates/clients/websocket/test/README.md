@@ -8,6 +8,8 @@ This `test` directory contains two types of testing:
 
 The acceptance tests check different clients with tests written in their respective languages. So JavaScript client is tested with JavaScript test, and Python with Python tests, and so on.
 
+Keep the acceptance test file of each client (for example `python/test_acceptance.py` or `javascript/acceptance.test.js`) for Microcks tests only. Tests that check client behaviour without Microcks go in separate files next to it, for example `python/test_outgoing_processors.py`. The test container runs every test file in the client's folder, so a new file is picked up without CI changes.
+
 ## Prerequisites
 
 Install [Podman](https://podman.io/docs/installation). 

@@ -7,17 +7,18 @@ on:
     paths:
       - 'CODEOWNERS'
 
+permissions: {}
+
 jobs:
   update-maintainers:
     runs-on: ubuntu-latest
-    env:
-      GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
     steps:
       - name: Checkout main branch
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: master
           path: current_state
+          persist-credentials: false
 
       - name: Checkout one commit before last one
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -25,6 +26,7 @@ jobs:
           fetch-depth: 2
           ref: master
           path: previous_state
+          persist-credentials: false
 
       - run: cd previous_state && git checkout HEAD^
 
@@ -32,21 +34,20 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: asyncapi/community
-          token: ${{ env.GITHUB_TOKEN }}
+          token: ${{ secrets.GH_TOKEN }}
           path: community
+          persist-credentials: false  # PAT re-attached only on the push step below
 
       - name: Setup Node.js
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
-          node-version: '16'
+          node-version: '20'
 
       - name: Install js-yaml
         run: npm install js-yaml@3.14.1
 
       - name: Compare CODEOWNERS
         id: compare-codeowners
-        env:
-          GH_TOKEN: ${{ env.GITHUB_TOKEN }}
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         with:
           script: |
@@ -149,22 +150,29 @@ jobs:
 
       - name: Create new branch
         working-directory: ./community
+        env:
+          RUN_ID: ${{ github.run_id }}
         run: |
-          git checkout -b update-maintainers-${{ github.run_id }}
+          git checkout -b "update-maintainers-${RUN_ID}"
 
       - name: Commit and push
         working-directory: ./community
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           git config --global user.email "info@asyncapi.io"
           git config --global user.name "asyncapi-bot"
           git add .
           git commit -m "Update MAINTAINERS.yaml"
-          git push https://${{ env.GITHUB_TOKEN }}@github.com/asyncapi/community
+          git -c http.extraheader="AUTHORIZATION: bearer ${GH_TOKEN}" push origin HEAD
 
       - name: Create PR
         working-directory: ./community
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          RUN_ID: ${{ github.run_id }}
         run: |
-          gh pr create --title "docs(community): update latest maintainers list" --body "Updated Maintainers list is available and this PR introduces changes with latest information about Maintainers" --head update-maintainers-${{ github.run_id }}
+          gh pr create --title "docs(community): update latest maintainers list" --body "Updated Maintainers list is available and this PR introduces changes with latest information about Maintainers" --head "update-maintainers-${RUN_ID}"
 
 
       - name: Report workflow run status to Slack

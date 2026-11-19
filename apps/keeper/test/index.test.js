@@ -126,5 +126,12 @@ describe('Integration Tests for message validation module', () => {
         compileSchemasByOperationId(asyncapi_v3_path, '')
       ).rejects.toThrow('Invalid "operationId" parameter');
     });
+
+    test('should throw error when AsyncAPI document is invalid', async () => {
+      const invalidPath = path.resolve(__dirname, '../test/__fixtures__/asyncapi-invalid.yml');
+      await expect(
+        compileSchemasByOperationId(invalidPath, 'sendHelloMessage')
+      ).rejects.toThrow(/^Failed to parse AsyncAPI document:/);
+    });
   });
 });

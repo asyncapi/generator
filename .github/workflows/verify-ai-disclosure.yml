@@ -38,9 +38,8 @@ jobs:
       github.event.pull_request.user.login != 'dependabot-preview[bot]') 
     runs-on: ubuntu-latest
 
-    # pull-requests: write -> create/update/delete this check's own PR comment
     permissions:
-      pull-requests: write
+      pull-requests: write # required to create, update and delete this check's own PR comment
 
     steps:
       - name: Check PR body for AI-assistance disclosure

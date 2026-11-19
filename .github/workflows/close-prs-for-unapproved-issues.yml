@@ -22,13 +22,10 @@ jobs:
   close-if-unapproved:
     runs-on: ubuntu-latest
 
-    # contents: read     -> read CODEOWNERS from the base branch
-    # issues: read       -> list labels on the linked issues
-    # pull-requests: write -> comment on and close the PR
     permissions:
-      contents: read
-      issues: read
-      pull-requests: write
+      contents: read # required to read CODEOWNERS from the base branch
+      issues: read # required to list labels on the linked issues
+      pull-requests: write # required to comment on and close the PR
 
     steps:
       - name: Check linked issue and close PR if unapproved

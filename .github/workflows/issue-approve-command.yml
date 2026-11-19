@@ -21,12 +21,10 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    # contents: read is the only scope GITHUB_TOKEN needs here: it covers the
-    # sparse-checkout of CODEOWNERS and nothing else. The label changes and
-    # comments are made with secrets.GH_TOKEN, which carries its own scopes, so
-    # granting issues: write here would be inert.
+    # Label changes and comments use secrets.GH_TOKEN, which carries its own
+    # scopes, so GITHUB_TOKEN needs nothing beyond the checkout.
     permissions:
-      contents: read
+      contents: read # required by checkout of CODEOWNERS
 
     steps:
       - name: Checkout CODEOWNERS

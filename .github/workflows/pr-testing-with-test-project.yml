@@ -52,11 +52,7 @@ jobs:
               startsWith(github.event.pull_request.title, 'ci: update of files from global .github repo') ||
                startsWith(github.event.pull_request.title, 'chore(release):')
             )) ||
-<<<<<<< Updated upstream
-            (github.actor_id == '46447321' &&
-=======
             (github.event.pull_request.user.login == 'allcontributors[bot]' &&
->>>>>>> Stashed changes
               startsWith(github.event.pull_request.title, 'docs: add')
             )
           )

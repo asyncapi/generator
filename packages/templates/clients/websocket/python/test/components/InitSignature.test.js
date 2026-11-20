@@ -56,4 +56,12 @@ describe('InitSignature component (integration with AsyncAPI document)', () => {
     const result = render(<InitSignature queryParams={queryParamsArray} serverUrl={serverUrl} />);
     expect(result.trim()).toMatchSnapshot();
   });
+
+  test('escapes quote characters in the server URL', () => {
+    const server = getServer(servers, 'withQuotedVariables');
+    const serverUrl = getServerUrl(server);
+    const result = render(<InitSignature queryParams={null} serverUrl={serverUrl} />);
+
+    expect(result.trim()).toBe('def __init__(self, url: str = "wss://test.example.com/ws/btc\\"usd", raise_send_errors: bool = True):');
+  });
 });

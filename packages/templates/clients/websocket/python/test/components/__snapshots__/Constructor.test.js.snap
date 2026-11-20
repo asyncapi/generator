@@ -61,7 +61,7 @@ exports[`Constructor component (integration with AsyncAPI document) renders with
 `;
 
 exports[`Constructor component (integration with AsyncAPI document) renders with serverUrl and query parameters 1`] = `
-"def __init__(self, url: str = \\"wss://test.example.com/ws/{symbol}\\", heartbeat: str = \\"false\\", bids: str = \\"true\\", sessionId: str = None, raise_send_errors: bool = True):
+"def __init__(self, url: str = \\"wss://test.example.com/ws/btcusd\\", heartbeat: str = \\"false\\", bids: str = \\"true\\", sessionId: str = None, raise_send_errors: bool = True):
 
         \\"\\"\\"
         Constructor to initialize the WebSocket client.
@@ -103,7 +103,7 @@ exports[`Constructor component (integration with AsyncAPI document) renders with
 `;
 
 exports[`Constructor component (integration with AsyncAPI document) renders with undefined query 1`] = `
-"def __init__(self, url: str = \\"wss://test.example.com/ws/{symbol}\\", raise_send_errors: bool = True):
+"def __init__(self, url: str = \\"wss://test.example.com/ws/btcusd\\", raise_send_errors: bool = True):
 
         \\"\\"\\"
         Constructor to initialize the WebSocket client.

@@ -3,6 +3,10 @@ import { Text } from '@asyncapi/generator-react-sdk';
 export function Constructor({ serverUrl, sendOperations }) {
   const sendOperationsId = sendOperations.map((operation) => operation.id());
   const sendOperationsArray = JSON.stringify(sendOperationsId);
+  // Why: server-variable defaults are user-controlled and may contain quotes,
+  // backslashes or line breaks. Serialize the URL as a JS string literal so the
+  // generated client stays syntactically valid and cannot be injected into.
+  const serverUrlLiteral = JSON.stringify(String(serverUrl));
 
   return (
     <Text indent={2}>
@@ -16,7 +20,7 @@ export function Constructor({ serverUrl, sendOperations }) {
   *   high-throughput producer loop going.
 */
 constructor(url, throwSendErrors = true) {
-  this.url = url || '${serverUrl}';
+  this.url = url || ${serverUrlLiteral};
   this.websocket = null;
   this.messageHandlers = [];
   this.errorHandlers = [];

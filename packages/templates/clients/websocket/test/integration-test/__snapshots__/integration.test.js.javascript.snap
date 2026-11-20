@@ -229,7 +229,7 @@ class HoppscotchClient {
     *   high-throughput producer loop going.
   */
   constructor(url, throwSendErrors = true) {
-    this.url = url || 'wss://echo-websocket.hoppscotch.io';
+    this.url = url || \\"wss://echo-websocket.hoppscotch.io\\";
     this.websocket = null;
     this.messageHandlers = [];
     this.errorHandlers = [];
@@ -715,7 +715,7 @@ class HoppscotchEchoWebSocketClient {
     *   high-throughput producer loop going.
   */
   constructor(url, throwSendErrors = true) {
-    this.url = url || 'wss://echo-websocket.hoppscotch.io';
+    this.url = url || \\"wss://echo-websocket.hoppscotch.io\\";
     this.websocket = null;
     this.messageHandlers = [];
     this.errorHandlers = [];
@@ -1150,7 +1150,7 @@ class PostmanEchoWebSocketClientClient {
     *   high-throughput producer loop going.
   */
   constructor(url, throwSendErrors = true) {
-    this.url = url || 'wss://ws.postman-echo.com/raw';
+    this.url = url || \\"wss://ws.postman-echo.com/raw\\";
     this.websocket = null;
     this.messageHandlers = [];
     this.errorHandlers = [];

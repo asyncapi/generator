@@ -49,18 +49,68 @@ describe('getServerUrl integration test with AsyncAPI', () => {
     expect(serverUrl).toBe('wss://api.gemini.com/v1/marketdata/btcusd');
   });
 
+  it('should replace a server variable in the host with its default value', () => {
+    const server = parsedAsyncAPIDocument.servers().get('withHostVariable');
+
+    const serverUrl = getServerUrl(server);
+
+    expect(serverUrl).toBe('wss://us-east.api.gemini.com/v1/marketdata');
+  });
+
+  it('should replace variables in both the host and pathname', () => {
+    const server = parsedAsyncAPIDocument.servers().get('withMultipleVariables');
+
+    const serverUrl = getServerUrl(server);
+
+    expect(serverUrl).toBe('wss://us-east.api.gemini.com/v1/marketdata/btcusd');
+  });
+
+  it('should not cascade substitutions through a default containing a placeholder', () => {
+    const server = parsedAsyncAPIDocument.servers().get('withNestedDefault');
+
+    const serverUrl = getServerUrl(server);
+
+    expect(serverUrl).toBe('wss://api.gemini.com/v1/marketdata/{second}');
+  });
+
+  it('should preserve quote characters from a server variable default', () => {
+    const server = parsedAsyncAPIDocument.servers().get('withQuotedDefault');
+
+    const serverUrl = getServerUrl(server);
+
+    expect(serverUrl).toBe('wss://api.gemini.com/v1/marketdata/btc"usd');
+  });
+
   it('should keep the placeholder when a server variable has no default value', () => {
     // Why: the spec marks `default` as required, so no fixture can express a
     // server variable without one - the Parser rejects it. A hand-built
     // stand-in is the only way to cover this defensive branch.
     const mockServer = {
-      host: () => 'api.gemini.com',
+      host: () => GEMINI_HOST,
       protocol: () => 'wss',
       hasPathname: () => true,
       pathname: () => '/v1/marketdata/{symbol}',
       variables: () => ({
         entries: () => [
           [0, { id: () => 'symbol', defaultValue: () => undefined }]
+        ]
+      })
+    };
+
+    expect(getServerUrl(mockServer)).toBe('wss://api.gemini.com/v1/marketdata/{symbol}');
+  });
+
+  it('should keep the placeholder when a server variable default is null', () => {
+    // Why: the Parser rejects a `null` default because the spec requires a
+    // string, so a hand-built stand-in is the only way to cover this branch.
+    const mockServer = {
+      host: () => GEMINI_HOST,
+      protocol: () => 'wss',
+      hasPathname: () => true,
+      pathname: () => '/v1/marketdata/{symbol}',
+      variables: () => ({
+        entries: () => [
+          [0, { id: () => 'symbol', defaultValue: () => null }]
         ]
       })
     };
@@ -125,6 +175,14 @@ describe('getServerHost integration test with AsyncAPI', () => {
     const expectedHost = server.host();
 
     expect(serverHost).toBe(expectedHost);
+  });
+
+  it('should replace a server variable in the host with its default value', () => {
+    const server = parsedAsyncAPIDocument.servers().get('withHostVariable');
+
+    const serverHost = getServerHost(server);
+
+    expect(serverHost).toBe('us-east.api.gemini.com');
   });
 
   it('should handle server with duplicate protocol in host', () => {

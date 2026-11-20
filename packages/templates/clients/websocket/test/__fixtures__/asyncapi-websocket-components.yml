@@ -24,6 +24,14 @@ servers:
           - btcusd
           - ethusd
         default: btcusd
+  withQuotedVariables:
+    host: test.example.com
+    protocol: wss
+    pathname: /ws/{symbol}
+    variables:
+      symbol:
+        description: A symbol whose default needs escaping in generated source.
+        default: 'btc"usd'
   withPathname:
     host: test.example.com
     protocol: wss

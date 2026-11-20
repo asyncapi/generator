@@ -3,7 +3,9 @@
  * declared for the matching server variable.
  *
  * @param {string} url - Server URL that may contain variable placeholders.
- * @param {Map<string, object>} [variables] - Parsed AsyncAPI server variables collection.
+ * @param {Object} [variables] - Parsed AsyncAPI `ServerVariables` collection returned by
+ * `server.variables()`. It is an array-like collection keyed by numeric index, not a
+ * plain `Map`, so the variable name must come from `variable.id()`.
  *
  * @returns {string} The URL with every resolvable placeholder replaced.
  */
@@ -12,20 +14,34 @@ const replaceServerVariables = (url, variables) => {
     return url;
   }
 
-  for (const [id, variable] of variables.entries()) {
-    const defaultValue = variable.defaultValue();
+  const defaults = new Map();
 
-    // Why: `default` is required by the AsyncAPI spec, but a malformed document
-    // can omit it. Keep the placeholder rather than emitting `undefined`.
-    if (defaultValue === undefined) {
+  for (const [, variable] of variables.entries()) {
+    if (!variable || typeof variable.defaultValue !== 'function') {
       continue;
     }
 
-    const variableName = typeof variable.id === 'function' ? variable.id() : id;
-    url = url.split(`{${variableName}}`).join(defaultValue);
+    const defaultValue = variable.defaultValue();
+
+    // Why: `default` is required by the AsyncAPI spec, but a malformed document
+    // can omit it or set it to null. Keep the placeholder rather than emitting
+    // `undefined` or `null` into the generated URL.
+    if (defaultValue === undefined || defaultValue === null) {
+      continue;
+    }
+
+    const variableName = typeof variable.id === 'function' ? variable.id() : undefined;
+    if (variableName) {
+      defaults.set(variableName, String(defaultValue));
+    }
   }
 
-  return url;
+  // Why: substitute against the original URL in a single pass so a default that
+  // contains another placeholder is kept literal instead of being resolved by a
+  // later iteration.
+  return url.replace(/\{([^{}]+)\}/g, (placeholder, variableName) =>
+    defaults.has(variableName) ? defaults.get(variableName) : placeholder
+  );
 };
 
 /**
@@ -79,7 +95,7 @@ const getServer = (servers, serverName) => {
    *
    * @param {object} server - The AsyncAPI server object.
    * 
-   * return {string} - The server host.
+   * @returns {string} - The server host with server variables resolved.
    */
 const getServerHost = (server) => {
   const serverHost = server.host();
@@ -88,7 +104,11 @@ const getServerHost = (server) => {
   }
   // Match common protocols followed by :// (User should not include protocol in host, check with server.protocol() method)
   const protocolRegex = /^[a-zA-Z][a-zA-Z0-9+.-]*:\/\//;
-  return serverHost.replace(protocolRegex, '');  
+  const hostWithoutProtocol = serverHost.replace(protocolRegex, '');
+  return replaceServerVariables(
+    hostWithoutProtocol,
+    typeof server.variables === 'function' ? server.variables() : undefined
+  );
 };
 
 /**

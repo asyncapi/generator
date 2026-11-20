@@ -24,6 +24,44 @@ servers:
           - ethbtc
           - ethusd
         default: btcusd
+  withHostVariable:
+    host: '{region}.api.gemini.com'
+    protocol: wss
+    pathname: /v1/marketdata
+    variables:
+      region:
+        description: The deployment region.
+        default: us-east
+  withMultipleVariables:
+    host: '{region}.api.gemini.com'
+    protocol: wss
+    pathname: /v1/marketdata/{symbol}
+    variables:
+      region:
+        description: The deployment region.
+        default: us-east
+      symbol:
+        description: The symbol to get market data for.
+        default: btcusd
+  withNestedDefault:
+    host: api.gemini.com
+    protocol: wss
+    pathname: /v1/marketdata/{first}
+    variables:
+      first:
+        description: A default that contains another placeholder.
+        default: '{second}'
+      second:
+        description: The placeholder target that must not cascade.
+        default: btcusd
+  withQuotedDefault:
+    host: api.gemini.com
+    protocol: wss
+    pathname: /v1/marketdata/{symbol}
+    variables:
+      symbol:
+        description: A default containing a quote character.
+        default: 'btc"usd'
   withPathname:
     host: api.gemini.com
     protocol: wss

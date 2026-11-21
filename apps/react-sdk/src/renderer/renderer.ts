@@ -20,9 +20,15 @@ function normalizeProps<P = any>(props: any): PropsWithChildrenContent<P> {
  * @param {React.ReactElement} element a given component or complex form
  * @returns {(React.ReactElement | string)}
  */
-function createElement(element: React.ReactElement): React.ReactElement | string {
-  if (!element) {
+function createElement(element: any): React.ReactElement | string {
+  if (element === null || element === undefined || typeof element === 'boolean') {
     return "";
+  }
+  if (typeof element === 'number' || typeof element === 'bigint') {
+    return String(element);
+  }
+  if (typeof element === 'string') {
+    return element;
   }
   const typeOf = typeof element.type;
 
@@ -65,12 +71,14 @@ export function render(component: React.ReactNode): string {
   const typeOf = typeof component;
   if (typeOf === 'string') {
     content += component;
+  } else if (typeOf === 'number' || typeOf === 'bigint') {
+    content += String(component);
   } else if (Array.isArray(component)) {
     content += component.map(child => {
       const childValue = createElement(child as React.ReactElement);
       return render(childValue);
     }).join("");
-  } else if (typeOf === "object") {
+  } else if (typeOf === "object" && component !== null) {
     content += createElement(component as React.ReactElement);
   }
   return content;

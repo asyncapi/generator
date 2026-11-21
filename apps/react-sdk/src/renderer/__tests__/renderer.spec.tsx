@@ -170,4 +170,60 @@ describe('Renderer', () => {
     // check substring of the desired error
     expect((error as Error).message).toEqual('HTML tags is not supported yet.');
   });
+
+  test('should render direct numeric values correctly', () => {
+    expect(render(0)).toEqual("0");
+    expect(render(8080)).toEqual("8080");
+    expect(render(-42)).toEqual("-42");
+    expect(render(3.14)).toEqual("3.14");
+    expect(render(BigInt(0))).toEqual("0");
+    expect(render(BigInt(100))).toEqual("100");
+  });
+
+  test('should render empty string for booleans, null, and undefined', () => {
+    expect(render(null)).toEqual("");
+    expect(render(undefined)).toEqual("");
+    expect(render(true as any)).toEqual("");
+    expect(render(false as any)).toEqual("");
+  });
+
+  test('should render numbers interpolated in JSX elements and arrays', () => {
+    const content = render(<>Port: {8080}, Retries: {0}</>);
+    expect(content).toEqual("Port: 8080, Retries: 0");
+
+    const arrayContent = render(["Item: ", 1, ", Count: ", 0]);
+    expect(arrayContent).toEqual("Item: 1, Count: 0");
+  });
+
+  test('should render numbers returned from function and class components', () => {
+    function ZeroComponent() {
+      return 0 as any;
+    }
+
+    function PortComponent() {
+      return 8080 as any;
+    }
+
+    function BigIntComponent() {
+      return BigInt(99) as any;
+    }
+
+    class NumberClass extends React.Component {
+      render() {
+        return 123 as any;
+      }
+    }
+
+    class ZeroClass extends React.Component {
+      render() {
+        return 0 as any;
+      }
+    }
+
+    expect(render(<ZeroComponent />)).toEqual("0");
+    expect(render(<PortComponent />)).toEqual("8080");
+    expect(render(<BigIntComponent />)).toEqual("99");
+    expect(render(<NumberClass />)).toEqual("123");
+    expect(render(<ZeroClass />)).toEqual("0");
+  });
 });

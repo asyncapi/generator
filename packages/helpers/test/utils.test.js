@@ -153,6 +153,15 @@ describe('toSnakeCase integration test with AsyncAPI', () => {
     const expectedOperationId = '';
     expect(actualOperationId).toBe(expectedOperationId);
   });
+
+  it('should not split uppercase acronyms into single letters', () => {
+    expect(toSnakeCase('SlackWebsocketAPIClient')).toBe('slack_websocket_api_client');
+    expect(toSnakeCase('getUserID')).toBe('get_user_id');
+    expect(toSnakeCase('sendJSONMessage')).toBe('send_json_message');
+    expect(toSnakeCase('HTTPServer')).toBe('http_server');
+    expect(toSnakeCase('API')).toBe('api');
+    expect(toSnakeCase('GL11Version')).toBe('gl11_version');
+  });
 });
 
 describe('toCamelCase integration test with AsyncAPI', () => {

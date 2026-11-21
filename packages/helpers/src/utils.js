@@ -70,7 +70,7 @@ const getClientName = (asyncapi, appendClientSuffix, customClientName) => {
 const toSnakeCase = (inputStr) => {
   return inputStr
     .replace(/\W+/g, ' ')
-    .split(/ |\B(?=[A-Z])/)
+    .split(/ |\B(?=[A-Z][a-z])|(?<=[a-z0-9])(?=[A-Z])/)
     .map((word) => word.toLowerCase())
     .join('_');
 };

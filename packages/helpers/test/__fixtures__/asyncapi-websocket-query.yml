@@ -62,6 +62,13 @@ servers:
       symbol:
         description: A default containing a quote character.
         default: 'btc"usd'
+  withVariableWithoutDefault:
+    host: api.gemini.com
+    protocol: wss
+    pathname: /v1/marketdata/{symbol}
+    variables:
+      symbol:
+        description: A symbol whose default is not declared.
   withPathname:
     host: api.gemini.com
     protocol: wss

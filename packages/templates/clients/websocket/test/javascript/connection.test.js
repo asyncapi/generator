@@ -43,46 +43,42 @@ describe('generated JavaScript client connection lifecycle', () => {
     expect(server.clients.size).toBe(0);
   });
 
-  it('shares a reconnect that waits for the previous socket to close', async () => {
+  it('reconnects without waiting for a peer that does not finish closing', async () => {
     await client.connect();
     const oldSocket = client.websocket;
+    const [oldPeer] = server.clients;
+    // Keep the old close frame unread while accepting a new connection.
+    oldPeer.pause();
     client.close();
 
+    expect(oldSocket.readyState).toBe(WebSocket.CLOSING);
     const reconnect = client.connect();
+    const newSocket = client.websocket;
+    expect(newSocket).not.toBe(oldSocket);
     expect(client.connect()).toBe(reconnect);
-    expect(client.websocket).toBe(oldSocket);
     await reconnect;
 
-    expect(oldSocket.readyState).toBe(WebSocket.CLOSED);
-    expect(client.websocket).not.toBe(oldSocket);
-    expect(server.clients.size).toBe(1);
+    expect(newSocket.readyState).toBe(WebSocket.OPEN);
+    expect(oldSocket.readyState).toBe(WebSocket.CLOSING);
+
+    const oldClosed = once(oldSocket, 'close');
+    oldPeer.terminate();
+    await oldClosed;
+    expect(client.websocket).toBe(newSocket);
+    await client.connect();
+    expect(client.websocket).toBe(newSocket);
   });
 
-  it('cancels all queued reconnect callers when closed again', async () => {
-    let connections = 0;
-    server.on('connection', () => { connections++; });
+  it('can reconnect after a completed close', async () => {
     await client.connect();
-
-    const socket = client.websocket;
-    const closed = once(socket, 'close');
+    const oldSocket = client.websocket;
+    const closed = once(oldSocket, 'close');
     client.close();
-
-    const first = client.connect();
-    const second = client.connect();
-    const results = Promise.allSettled([first, second]);
-    client.close();
-
-    for (const result of await results) {
-      expect(result.status).toBe('rejected');
-      expect(result.reason.message).toBe('WebSocket reconnect canceled by close().');
-    }
     await closed;
-    expect(client.websocket).toBe(socket);
-    expect(server.clients.size).toBe(0);
-    expect(connections).toBe(1);
 
     await client.connect();
-    expect(connections).toBe(2);
+    expect(client.websocket).not.toBe(oldSocket);
+    expect(client.websocket.readyState).toBe(WebSocket.OPEN);
   });
 
   it('rejects pending callers when closed during the handshake and can reconnect', async () => {

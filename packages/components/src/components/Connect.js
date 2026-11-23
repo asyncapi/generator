@@ -27,29 +27,6 @@ connect() {
         if (this.websocket.readyState === WebSocket.CONNECTING) {
             return this._connectionPromise;
         }
-        if (this.websocket.readyState === WebSocket.CLOSING) {
-            if (!this._pendingReconnect) {
-                const socket = this.websocket;
-                let cancel;
-                const promise = new Promise((resolve, reject) => {
-                    const reconnect = () => {
-                        if (this._pendingReconnect?.cancel !== cancel) {
-                            return;
-                        }
-                        this._pendingReconnect = undefined;
-                        resolve(this.connect());
-                    };
-                    cancel = () => {
-                        socket.removeListener('close', reconnect);
-                        this._pendingReconnect = undefined;
-                        reject(new Error('WebSocket reconnect canceled by close().'));
-                    };
-                    socket.once('close', reconnect);
-                });
-                this._pendingReconnect = { promise, cancel };
-            }
-            return this._pendingReconnect.promise;
-        }
     }
     this._connectionPromise = new Promise((resolve, reject) => {
         const socket = this.websocket = new WebSocket(this.url);

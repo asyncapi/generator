@@ -57,21 +57,23 @@ reactExport.renderReact = async (asyncapiDocument, filePath, extraTemplateData, 
 };
 
 /**
- * Save the single rendered react content based on the meta data available.
+ * Resolves the final file path and other metadata for a single rendered content item.
  *
  * @private
- * @param {TemplateRenderResult} renderedContent the react content rendered
- * @param {String} outputPath Path to the file being rendered.
+ * @param {TemplateRenderResult} renderedContent The react content rendered.
+ * @param {String} outputPath Base path to the file being rendered.
+ * @param {Array} noOverwriteGlobs Array of globs to skip overwriting files.
+ * @returns {Object} An object containing filePath, content, permissions, and shouldOverwrite.
  */
-const saveContentToFile = async (renderedContent, outputPath, noOverwriteGlobs = []) => {
+const resolveFileMetadata = (renderedContent, outputPath, noOverwriteGlobs = []) => {
   let filePath = outputPath;
-  // Might be the same as in the `fs` package, but is an active choice for our default file permission for any rendered files.
   let permissions = 0o666;
   const content = renderedContent.content;
 
   if (content === undefined || typeof content !== 'string') {
     throw Error(`Template file not rendered correctly, was rendered as ${content}`);
   }
+
   if (renderedContent.metadata !== undefined) {
     if (renderedContent.metadata.permissions !== undefined) {
       permissions = renderedContent.metadata.permissions;
@@ -83,10 +85,26 @@ const saveContentToFile = async (renderedContent, outputPath, noOverwriteGlobs =
     }
   }
 
-  // get the final file name of the file
   const finalFileName = path.basename(filePath);
-  // check whether the filename should be ignored based on user's inputs
   const shouldOverwrite = !noOverwriteGlobs.some(globExp => minimatch(finalFileName, globExp));
+
+  return {
+    filePath,
+    content,
+    permissions,
+    shouldOverwrite
+  };
+};
+
+/**
+ * Save the single rendered react content based on the meta data available.
+ *
+ * @private
+ * @param {TemplateRenderResult} renderedContent the react content rendered
+ * @param {String} outputPath Path to the file being rendered.
+ */
+const saveContentToFile = async (renderedContent, outputPath, noOverwriteGlobs = []) => {
+  const { filePath, content, permissions, shouldOverwrite } = resolveFileMetadata(renderedContent, outputPath, noOverwriteGlobs);
 
   // Write the file only if it should not be skipped
   if (shouldOverwrite) {
@@ -101,14 +119,35 @@ const saveContentToFile = async (renderedContent, outputPath, noOverwriteGlobs =
 /**
  * Save the rendered react content based on the meta data available.
  *
+ * If multiple rendered contents resolve to the same output path, an error is thrown.
+ *
  * @private
  * @param {TemplateRenderResult[] | TemplateRenderResult} renderedContent the react content rendered
  * @param {String} outputPath Path to the file being rendered.
  * @param noOverwriteGlobs Array of globs to skip overwriting files.
  */
 reactExport.saveRenderedReactContent = async (renderedContent, outputPath, noOverwriteGlobs = []) => {
-  if (Array.isArray(renderedContent)) {
-    return Promise.all(renderedContent.map(content => saveContentToFile(content, outputPath, noOverwriteGlobs)));
+  const contentsToProcess = Array.isArray(renderedContent) ? renderedContent : [renderedContent];
+  const resolvedFiles = [];
+  const filePathsSeen = new Set();
+
+  for (const content of contentsToProcess) {
+    const fileMetadata = resolveFileMetadata(content, outputPath, noOverwriteGlobs);
+
+    if (filePathsSeen.has(fileMetadata.filePath)) {
+      throw new Error(`Multiple template outputs resolve to the same file path: ${fileMetadata.filePath}. Please ensure all <File> components have unique 'name' props.`);
+    }
+    filePathsSeen.add(fileMetadata.filePath);
+    resolvedFiles.push(fileMetadata);
   }
-  return await saveContentToFile(renderedContent, outputPath, noOverwriteGlobs);
+
+  return Promise.all(resolvedFiles.map(async ({ filePath, content, permissions, shouldOverwrite }) => {
+    if (shouldOverwrite) {
+      await writeFile(filePath, content, {
+        mode: permissions
+      });
+    } else {
+      await log.debug(logMessage.skipOverwrite(filePath));
+    }
+  }));
 };

@@ -30,7 +30,7 @@ Before you begin, make sure you have the following set up:
 > If you choose to run the broker on localhost, then in the further steps, replace all occurrences of `test.mosquitto.org` with `localhost` and run the following Docker command:  
 >  
 > ```sh
-> docker run -d --name mosquitto -p 1883:1883 eclipse-mosquitto:2 mosquitto -c /mosquitto-no-auth.conf
+> docker run -d --name mosquitto -p 1883:1883 eclipse-mosquitto:2.1.4-alpine mosquitto -c /mosquitto-no-auth.conf
 > ```
 >  
 > This starts an Eclipse Mosquitto broker locally on your machine, listening on port 1883.  

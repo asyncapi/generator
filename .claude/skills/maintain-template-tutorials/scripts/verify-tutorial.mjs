@@ -139,9 +139,14 @@ function run(cmd, cwd, binDir) {
   return { code: r.status, out: `${r.stdout}${r.stderr}` };
 }
 
+// Long-running commands still to stop. A signal handler stops them, because on POSIX they run in
+// their own process groups and would outlive an interrupted run.
+const live = new Set();
+
 // Starts a long-running command. With `restartMs`, it is started again that long after it exits, until stopped.
 function start(cmd, cwd, binDir, restartMs) {
   const st = { out: '', p: null, stopped: false };
+  live.add(st);
   const launch = () => {
     // detached on POSIX gives the command its own process group, so stop() can kill all of it.
     st.p = spawn(cmd, { shell: true, cwd, env: env(binDir), detached: !IS_WIN, windowsHide: true });
@@ -155,13 +160,44 @@ function start(cmd, cwd, binDir, restartMs) {
 
 function stop(st) {
   st.stopped = true;
+  live.delete(st);
   // Only kill a live process: an exited one's PID may already belong to something else (Windows reuses them fast).
   if (st.p.exitCode === null && st.p.signalCode === null) {
     if (IS_WIN) spawnSync('taskkill', ['/pid', String(st.p.pid), '/T', '/F'], { stdio: 'ignore' });
     else try { process.kill(-st.p.pid, 'SIGTERM'); } catch { /* already gone */ }
   }
+  rmLabelled();
+}
+
+// Removes leftover dockerised Gradle containers: killing the docker CLI does not stop its container.
+function rmLabelled() {
   const ps = docker(['ps', '-q', '--filter', `label=${LABEL}`]);
   if (ps.code === 0) dockerRm(...ps.stdout.split(/\s+/).filter(Boolean));
+}
+
+let interrupted = false;
+for (const sig of ['SIGINT', 'SIGTERM']) {
+  process.on(sig, () => {
+    if (interrupted) return;
+    interrupted = true;
+    console.error(`\n${sig}: stopping clients, subscriber and containers`);
+    for (const st of [...live]) stop(st);
+    rmLabelled();
+    stopLocalBroker();
+    process.exit(130);
+  });
+}
+
+// Deletes a directory tree. Dockerised Gradle runs as root, so on Linux it leaves root-owned
+// build dirs that the user cannot delete; those are emptied from a container first.
+function rmTree(p) {
+  try {
+    fs.rmSync(p, { recursive: true, force: true, maxRetries: 5, retryDelay: 500 });
+  } catch (e) {
+    if (IS_WIN || !['EACCES', 'EPERM'].includes(e.code)) throw e;
+    docker(['run', '--rm', '-v', `${p}:/d`, '--entrypoint', 'sh', 'gradle:8.10-jdk17', '-c', 'rm -rf /d/* /d/.[!.]* /d/..?*']);
+    fs.rmSync(p, { recursive: true, force: true });
+  }
 }
 
 const docker = (argv) => {
@@ -213,8 +249,12 @@ async function setupBin() {
   const bin = path.join(WORK, 'bin');
   fs.rmSync(bin, { recursive: true, force: true });
   fs.mkdirSync(bin, { recursive: true });
-  // The tutorials call a global `asyncapi`; route it through npx instead.
-  const cli = `npx --yes @asyncapi/cli@${CLI_VERSION}`;
+  // The tutorials call a global `asyncapi`; route it through npx instead. Resolve the version once,
+  // so every step runs the same CLI and npx does not ask the registry for `latest` on each call.
+  const view = spawnSync(`npm view @asyncapi/cli@${CLI_VERSION} version`, { shell: true, encoding: 'utf8', windowsHide: true });
+  const cliVersion = (view.stdout || '').trim().split('\n').pop()?.match(/(\d+\.\d+\.\d+\S*?)'?$/)?.[1];
+  if (view.status !== 0 || !cliVersion) throw new Error(`setup: could not resolve @asyncapi/cli@${CLI_VERSION} on npm:\n${view.stdout}${view.stderr}`);
+  const cli = `npx --yes @asyncapi/cli@${cliVersion}`;
   shim(bin, 'asyncapi', `exec ${cli} "$@"`, `${cli} %*`);
 
   const dockerGradle = WANT_JAVA && !HAVE_GRADLE;
@@ -227,10 +267,15 @@ async function setupBin() {
     shim(bin, 'gradle', `exec ${gradle('$PWD')} "$@"`, `${gradle('%CD%')} %*`);
   }
 
-  if (WANT_PY && !fs.existsSync(VENV_BIN)) {
+  // The marker is written only after pip succeeds, so a half-built venv from a failed run is rebuilt.
+  const venvDir = path.join(WORK, 'venv');
+  const venvOk = path.join(venvDir, '.paho-installed');
+  if (WANT_PY && !fs.existsSync(venvOk)) {
+    rmTree(venvDir);
     const venvPy = path.join(VENV_BIN, IS_WIN ? 'python.exe' : 'python');
-    const r = run(`${PY} -m venv "${path.join(WORK, 'venv')}" && "${venvPy}" -m pip -q install paho-mqtt==1.6.1`, WORK, bin);
-    if (r.code !== 0) throw new Error(`python venv setup failed:\n${r.out}`);
+    const r = run(`${PY} -m venv "${venvDir}" && "${venvPy}" -m pip -q install paho-mqtt==1.6.1`, WORK, bin);
+    if (r.code !== 0) throw new Error(`setup: python venv setup failed:\n${r.out}`);
+    fs.writeFileSync(venvOk, '');
   }
 
   const ver = run('asyncapi --version', WORK, bin);
@@ -242,7 +287,9 @@ async function startLocalBroker(needRelay) {
   if (await portOpen(1883)) {
     log('broker: using the broker already listening on localhost:1883');
   } else {
-    // The command from the tutorials' local broker note, plus a cleanup label and an exact image tag.
+    // The command from the tutorials' local broker note, plus a cleanup label. A stopped container
+    // from an interrupted run would block the fixed name, so remove it first.
+    dockerRm(`${LABEL}-mosquitto`);
     const r = docker(['run', '-d', '--label', `${LABEL}-broker`, '--name', `${LABEL}-mosquitto`, '-p', '1883:1883', 'eclipse-mosquitto:2.1.4-alpine', 'mosquitto', '-c', '/mosquitto-no-auth.conf']);
     let up = false;
     for (let i = 0; r.code === 0 && !up && i < 10; i++) { await sleep(1000); up = await portOpen(1883); }
@@ -251,8 +298,15 @@ async function startLocalBroker(needRelay) {
   }
   if (!needRelay) return;
   // Native Linux Docker has no host.docker.internal unless we map it to the host gateway.
+  const hostGw = '--add-host=host.docker.internal:host-gateway';
+  // A broker bound to 127.0.0.1 only (a native Mosquitto's default) is invisible from containers.
+  const probe = docker(['run', '--rm', hostGw, 'alpine/socat:1.8.1.3', '-T2', '/dev/null', 'TCP:host.docker.internal:1883,connect-timeout=5']);
+  if (probe.code !== 0) {
+    throw new Error('setup: the broker on localhost:1883 is not reachable from Docker, which dockerised Gradle needs. '
+      + 'Make it listen on all interfaces, or stop it so the script starts its own.');
+  }
   dockerRm(`${LABEL}-fwd`);
-  const fwd = docker(['run', '-d', '--rm', '--add-host=host.docker.internal:host-gateway', '--label', `${LABEL}-fwd`, '--name', `${LABEL}-fwd`, 'alpine/socat:1.8.1.3', 'tcp-listen:1883,fork,reuseaddr', 'tcp-connect:host.docker.internal:1883']);
+  const fwd = docker(['run', '-d', '--rm', hostGw, '--label', `${LABEL}-fwd`, '--name', `${LABEL}-fwd`, 'alpine/socat:1.8.1.3', 'tcp-listen:1883,fork,reuseaddr', 'tcp-connect:host.docker.internal:1883']);
   if (fwd.code !== 0) throw new Error(`could not start the broker relay container for dockerised Gradle:\n${fwd.out}`);
 }
 
@@ -270,7 +324,10 @@ const generated = (r) => r.code === 0 && r.out.includes('Check out your shiny ne
 // Swaps the channels/operations part of a full AsyncAPI document for a snippet
 // that holds only those sections (the "update AsyncAPI document" steps).
 function replaceChannels(doc, snippet) {
-  return `${doc.slice(0, doc.indexOf('\nchannels:') + 1)}${snippet.trimEnd()}\n\n${doc.slice(doc.indexOf('\ncomponents:') + 1)}`;
+  const from = doc.indexOf('\nchannels:');
+  const to = doc.indexOf('\ncomponents:');
+  if (from === -1 || to < from) throw new Error('selector "channels..components in the AsyncAPI document" did not match: the tutorial changed shape');
+  return `${doc.slice(0, from + 1)}${snippet.trimEnd()}\n\n${doc.slice(to + 1)}`;
 }
 
 // ---------- Python tutorial (generator-template.md) ----------
@@ -279,7 +336,7 @@ async function python(bin) {
   log('\n=== Creating a template - Python (generator-template.md) ===');
   const b = blocks('generator-template.md');
   const dir = path.join(WORK, 'python-mqtt-client-template');
-  fs.rmSync(dir, { recursive: true, force: true });
+  rmTree(dir);
   const sh = (cmd) => run(cmd, dir, bin);
   const compiles = () => sh('python -m py_compile test/project/client.py');
 
@@ -324,8 +381,10 @@ async function python(bin) {
   // 5d: two channels
   write(dir, 'test/fixtures/asyncapi.yml', replaceChannels(read(dir, 'test/fixtures/asyncapi.yml'), pick(b, '5d channels', ['yml', 'yaml'], (s) => s.trimStart().startsWith('channels:'))));
   const loop = pick(b, '5d test.py loop body', ['py'], 'sendTemperatureDrop');
-  const test = read(dir, 'test/project/test.py').replace(/^ *client\.sendTemperatureChange.*\n *print\(.*\n/m, `${loop.replace(/\n*$/, '\n')}`);
-  write(dir, 'test/project/test.py', test);
+  const before = read(dir, 'test/project/test.py');
+  const callAndPrint = /^ *client\.sendTemperatureChange.*\n *print\(.*\n/m;
+  if (!callAndPrint.test(before)) throw new Error('selector "5d test.py sendTemperatureChange + print lines" did not match: the tutorial changed shape');
+  write(dir, 'test/project/test.py', before.replace(callAndPrint, `${loop.replace(/\n*$/, '\n')}`));
   await runAgainstBroker('5d: npm test publishes to dropped and risen', 'npm test', dir, bin, ['temperature/dropped', 'temperature/risen'], changed);
   check('5d: generated client.py compiles', compiles().code === 0);
 }
@@ -337,7 +396,7 @@ async function java(bin) {
   const b = blocks('generator-template-java.md');
   const pyDoc = blocks('generator-template.md');
   const dir = path.join(WORK, 'java-mqtt-client-template');
-  fs.rmSync(dir, { recursive: true, force: true });
+  rmTree(dir);
   const sh = (cmd) => run(cmd, dir, bin);
   const changed = /detected (\d+) sent to (\S+)/g;
 
@@ -379,19 +438,16 @@ async function java(bin) {
 
 // ---------- main ----------
 
+// Each tutorial gets its own catch, so a broken Python selector does not hide the Java results.
+const guarded = async (name, fn) => { try { await fn(); } catch (e) { check(name, false, e.stack || String(e)); } };
 let bin;
-try {
-  bin = await setupBin();
-  if (target === 'python' || target === 'all') await python(bin);
-  if (target === 'java' || target === 'all') await java(bin);
-} catch (e) {
-  check('harness', false, e.stack || String(e));
-}
+await guarded('setup', async () => { bin = await setupBin(); });
+if (bin && WANT_PY) await guarded('python harness', () => python(bin));
+if (bin && WANT_JAVA) await guarded('java harness', () => java(bin));
 stopLocalBroker();
 const failed = results.filter((x) => !x.ok);
 log(`\n${results.length - failed.length}/${results.length} checks passed${failed.length ? `; failed: ${failed.map((x) => x.name).join(' | ')}` : ''}`);
 if (!KEEP && !failed.length && OWN_WORK) {
-  // Files can stay locked briefly on Windows, and dockerised Gradle leaves root-owned build dirs on Linux.
-  try { fs.rmSync(WORK, { recursive: true, force: true, maxRetries: 5, retryDelay: 500 }); } catch (e) { log(`could not delete workdir ${WORK}: ${e.code}`); }
+  try { rmTree(WORK); } catch (e) { log(`could not delete workdir ${WORK}: ${e.code}`); }
 } else log(`workdir kept: ${WORK}`);
 process.exit(failed.length ? 1 : 0);

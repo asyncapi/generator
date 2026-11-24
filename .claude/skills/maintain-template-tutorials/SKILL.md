@@ -21,8 +21,8 @@ node .claude/skills/maintain-template-tutorials/scripts/verify-tutorial.mjs {pyt
 
 When a step fails:
 
-- `selector "..." matched N code blocks` means the tutorial changed shape. Fix the selector so it matches exactly one block.
-- `setup: missing ...` means the machine lacks a tool (Python, Docker). The script checks this before any step. Fix the machine, not the tutorial.
+- A `selector "..."` error means the tutorial changed shape. Fix the selector in the script so it matches exactly once.
+- A `setup: ...` failure is the machine, not the tutorial: a missing tool (Python, Docker), a broker Docker cannot reach, or no access to npm or PyPI. Fix the machine and run again.
 - Anything else is a tutorial bug until proven otherwise. Reproduce it in the work directory, fix the tutorial, and run again.
 
 ## Update a tutorial

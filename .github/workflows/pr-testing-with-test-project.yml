@@ -37,10 +37,9 @@ jobs:
               - '!NOTICE'
       - name: Determine if tests should run
         id: should_run
-        # Why: the bot skips below test github.event.pull_request.user.login, not
-        # github.actor. github.actor is the LAST actor on the triggering context, so a
-        # PR whose head commit is attributed to a bot passes an actor check even when
-        # the branch is attacker-authored; user.login is the PR's actual creator.
+        # Why: the bot skips below test github.event.pull_request.user.login, the
+        # PR's author, not github.actor, the account that triggered this run.
+        # Tests are skipped for every push to a bot-authored PR, even one made by a human.
         if: >
           steps.filter.outputs.modified_files == 'true' &&
           !github.event.pull_request.draft && !(

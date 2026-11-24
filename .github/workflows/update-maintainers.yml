@@ -164,7 +164,7 @@ jobs:
           git config --global user.name "asyncapi-bot"
           git add .
           git commit -m "Update MAINTAINERS.yaml"
-          git -c http.extraheader="AUTHORIZATION: bearer ${GH_TOKEN}" push origin HEAD
+          git push "https://${GH_TOKEN}@github.com/asyncapi/community"
 
       - name: Create PR
         working-directory: ./community

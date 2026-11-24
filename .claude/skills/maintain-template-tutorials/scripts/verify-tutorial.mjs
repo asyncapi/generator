@@ -30,9 +30,14 @@ const LABEL = 'asyncapi-tutorial-verify';
 const IS_WIN = process.platform === 'win32';
 
 const args = process.argv.slice(2);
+const USAGE = 'Usage: node verify-tutorial.mjs <python|java|all> [--broker local|public] [--keep] [--workdir DIR] [--cli-version X] [--timeout SECONDS]';
+const usageExit = (msg) => { console.error(`${msg ? `${msg}\n` : ''}${USAGE}`); process.exit(2); };
 const flag = (name, def) => {
   const i = args.indexOf(name);
-  return i === -1 ? def : args[i + 1];
+  if (i === -1) return def;
+  const v = args[i + 1];
+  if (v === undefined || v.startsWith('--')) usageExit(`${name} needs a value`);
+  return v;
 };
 const target = args[0];
 const KEEP = args.includes('--keep');
@@ -42,10 +47,8 @@ const BROKER = BROKER_MODE === 'public' ? PUBLIC_BROKER : 'localhost';
 const CLI_VERSION = flag('--cli-version', 'latest');
 const TIMEOUT = Number(flag('--timeout', '300')) * 1000;
 
-if (!['python', 'java', 'all'].includes(target) || !['local', 'public'].includes(BROKER_MODE)) {
-  console.error('Usage: node verify-tutorial.mjs <python|java|all> [--broker local|public] [--keep] [--workdir DIR] [--cli-version X] [--timeout SECONDS]');
-  process.exit(2);
-}
+if (!(TIMEOUT > 0)) usageExit('--timeout must be a positive number of seconds');
+if (!['python', 'java', 'all'].includes(target) || !['local', 'public'].includes(BROKER_MODE)) usageExit();
 
 // Only a workdir this script created may be deleted on success; a caller-supplied one may hold unrelated files.
 const OWN_WORK = !args.includes('--workdir');

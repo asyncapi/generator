@@ -1,5 +1,12 @@
 # @asyncapi/generator-components
 
+## 0.9.1
+
+### Patch Changes
+
+- Updated dependencies [379fda7]
+  - @asyncapi/generator-react-sdk@1.2.0
+
 ## 0.9.0
 
 ### Minor Changes

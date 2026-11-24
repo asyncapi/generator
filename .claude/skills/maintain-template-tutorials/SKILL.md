@@ -16,7 +16,7 @@ node .claude/skills/maintain-template-tutorials/scripts/verify-tutorial.mjs {pyt
 ```
 
 - The script rebuilds the reader's project from the code blocks and runs each step's commands, with the AsyncAPI CLI and an MQTT subscriber through `npx`. A broker step passes only when the subscriber receives the IDs the client printed.
-- It needs `node`, `python3`, and a running Docker daemon. A full run takes 20 to 30 minutes, so run it in the background and watch the `PASS` and `FAIL` lines.
+- It needs `node`, Python 3 (`python3`, or `python` on Windows), and a running Docker daemon. It runs on macOS, Linux and Windows. A full run takes 20 to 30 minutes, so run it in the background and watch the `PASS` and `FAIL` lines.
 - `--broker local` (the default) applies the tutorials' localhost note. It uses the broker on `localhost:1883`, or starts the tutorials' Mosquitto container. Add a `--broker public` run when a change touches the broker address or connection code. `test.mosquitto.org` is often unstable, so a public failure counts only when the same step passes locally.
 
 When a step fails:

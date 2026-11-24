@@ -11,11 +11,13 @@
 // already listening on localhost:1883, or starts the tutorials' Mosquitto
 // container. --broker public uses test.mosquitto.org as written.
 //
-// Needs: node + npm (npx), python3, docker (used for gradle when no local
-// gradle/java), network access to npm (and test.mosquitto.org with public).
+// Needs: node + npm (npx), python 3 (python3, or python on Windows), docker
+// (used for gradle when no local gradle/java), network access to npm (and
+// test.mosquitto.org with public). Runs on macOS, Linux and Windows.
 
 import { spawn, spawnSync } from 'node:child_process';
 import fs from 'node:fs';
+import net from 'node:net';
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -25,6 +27,7 @@ const REPO = path.resolve(HERE, '../../../..');
 const DOCS = path.join(REPO, 'apps/generator/docs');
 const PUBLIC_BROKER = 'test.mosquitto.org';
 const LABEL = 'asyncapi-tutorial-verify';
+const IS_WIN = process.platform === 'win32';
 
 const args = process.argv.slice(2);
 const flag = (name, def) => {
@@ -46,8 +49,10 @@ if (!['python', 'java', 'all'].includes(target) || !['local', 'public'].includes
 
 // Only a workdir this script created may be deleted on success; a caller-supplied one may hold unrelated files.
 const OWN_WORK = !args.includes('--workdir');
-const WORK = OWN_WORK ? fs.mkdtempSync(path.join(os.tmpdir(), 'tutorial-verify-')) : path.resolve(flag('--workdir'));
-fs.mkdirSync(WORK, { recursive: true });
+const WORK_IN = OWN_WORK ? fs.mkdtempSync(path.join(os.tmpdir(), 'tutorial-verify-')) : path.resolve(flag('--workdir'));
+fs.mkdirSync(WORK_IN, { recursive: true });
+// Long, real path: Windows may hand out 8.3 names (FIRSTL~1) that Docker bind mounts can't resolve.
+const WORK = fs.realpathSync.native(WORK_IN);
 
 // ---------- markdown block extraction ----------
 
@@ -86,29 +91,60 @@ function check(name, ok, detail = '') {
 // The venv bin dir goes on PATH so `python` (as the tutorial writes it) is the
 // venv interpreter with paho-mqtt 1.6.1. A symlink would not activate the venv.
 // PYTHONUNBUFFERED: piped stdout is block-buffered; a reader's terminal is not.
+const VENV_BIN = path.join(WORK, 'venv', IS_WIN ? 'Scripts' : 'bin');
+// Windows env keys are case-insensitive but a plain object copy is not: drop every PATH variant (`Path`, `PATH`) and set one.
 function env(binDir) {
-  return { ...process.env, PYTHONUNBUFFERED: '1', PATH: `${binDir}:${path.join(WORK, 'venv/bin')}:${process.env.PATH}`, npm_config_yes: 'true' };
+  const base = Object.fromEntries(Object.entries(process.env).filter(([k]) => k.toUpperCase() !== 'PATH'));
+  const pathVal = Object.entries(process.env).find(([k]) => k.toUpperCase() === 'PATH')?.[1] ?? '';
+  return { ...base, PYTHONUNBUFFERED: '1', PATH: [binDir, VENV_BIN, pathVal].join(path.delimiter), npm_config_yes: 'true' };
 }
 
+// Commands go through the platform shell (sh, or cmd.exe on Windows), as a reader would type them.
 function run(cmd, cwd, binDir) {
-  const r = spawnSync('bash', ['-c', cmd], { cwd, env: env(binDir), encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
+  const r = spawnSync(cmd, { shell: true, cwd, env: env(binDir), encoding: 'utf8', maxBuffer: 64 * 1024 * 1024, windowsHide: true });
   return { code: r.status, out: `${r.stdout}${r.stderr}` };
 }
 
-function start(cmd, cwd, binDir) {
-  const p = spawn('bash', ['-c', cmd], { cwd, env: env(binDir), detached: true });
-  const st = { out: '', p };
-  p.stdout.on('data', (d) => { st.out += d; });
-  p.stderr.on('data', (d) => { st.out += d; });
+// Starts a long-running command. With `restartMs`, it is started again that long after it exits, until stopped.
+function start(cmd, cwd, binDir, restartMs) {
+  const st = { out: '', p: null, stopped: false };
+  const launch = () => {
+    // detached on POSIX gives the command its own process group, so stop() can kill all of it.
+    st.p = spawn(cmd, { shell: true, cwd, env: env(binDir), detached: !IS_WIN, windowsHide: true });
+    st.p.stdout.on('data', (d) => { st.out += d; });
+    st.p.stderr.on('data', (d) => { st.out += d; });
+    if (restartMs) st.p.on('exit', () => { if (!st.stopped) setTimeout(() => { if (!st.stopped) launch(); }, restartMs); });
+  };
+  launch();
   return st;
 }
 
 function stop(st) {
-  try { process.kill(-st.p.pid, 'SIGTERM'); } catch { /* already gone */ }
-  spawnSync('bash', ['-c', `docker ps -q --filter label=${LABEL} | xargs -r docker rm -f`], { stdio: 'ignore' });
+  st.stopped = true;
+  // Only kill a live process: an exited one's PID may already belong to something else (Windows reuses them fast).
+  if (st.p.exitCode === null && st.p.signalCode === null) {
+    if (IS_WIN) spawnSync('taskkill', ['/pid', String(st.p.pid), '/T', '/F'], { stdio: 'ignore' });
+    else try { process.kill(-st.p.pid, 'SIGTERM'); } catch { /* already gone */ }
+  }
+  const ps = docker(['ps', '-q', '--filter', `label=${LABEL}`]);
+  if (ps.code === 0) dockerRm(...ps.stdout.split(/\s+/).filter(Boolean));
 }
 
+const docker = (argv) => {
+  const r = spawnSync('docker', argv, { encoding: 'utf8', windowsHide: true });
+  return { code: r.error ? 1 : r.status, stdout: r.stdout || '', out: r.error ? String(r.error) : `${r.stdout}${r.stderr}` };
+};
+const dockerRm = (...names) => names.length && docker(['rm', '-f', ...names]);
+
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+const portOpen = (port) => new Promise((resolve) => {
+  const s = net.connect(port, 'localhost');
+  const done = (ok) => { s.destroy(); resolve(ok); };
+  s.setTimeout(2000, () => done(false));
+  s.on('connect', () => done(true));
+  s.on('error', () => done(false));
+});
 
 // Runs a client that loops forever (the tutorials' test programs do) next to an
 // `mqtt sub` subscriber, until every topic has at least `want` IDs that the
@@ -117,7 +153,7 @@ async function runAgainstBroker(name, cmd, cwd, binDir, topics, linePattern, wan
   // MQTT 3.1.1 (-V 4): the public broker resets MQTT 5 connections. The broker
   // also resets some connections at random and `mqtt sub` exits on that, so
   // restart it, with a pause: fast reconnects get throttled.
-  const sub = start(`while true; do npx --yes mqtt@5.16.1 sub -V 4 -h ${BROKER} ${topics.map((t) => `-t ${t}`).join(' ')} -v; sleep 5; done`, cwd, binDir);
+  const sub = start(`npx --yes mqtt@5.16.1 sub -V 4 -h ${BROKER} ${topics.map((t) => `-t ${t}`).join(' ')} -v`, cwd, binDir, 5000);
   await sleep(5000); // let the subscriber connect before the first publish
   const client = start(cmd, cwd, binDir);
   const deadline = Date.now() + TIMEOUT;
@@ -140,27 +176,35 @@ async function runAgainstBroker(name, cmd, cwd, binDir, topics, linePattern, wan
 
 // ---------- shared tool setup ----------
 
-function setupBin() {
+// Writes a command shim to bin: a sh script for POSIX and a .cmd for Windows (cmd.exe picks it via PATHEXT).
+function shim(bin, name, posix, win) {
+  fs.writeFileSync(path.join(bin, name), `#!/bin/sh\n${posix}\n`, { mode: 0o755 });
+  fs.writeFileSync(path.join(bin, `${name}.cmd`), `@echo off\r\n${win}\r\n`);
+}
+
+async function setupBin() {
   const bin = path.join(WORK, 'bin');
   fs.rmSync(bin, { recursive: true, force: true });
   fs.mkdirSync(bin, { recursive: true });
   // The tutorials call a global `asyncapi`; route it through npx instead.
-  fs.writeFileSync(path.join(bin, 'asyncapi'), `#!/usr/bin/env bash\nexec npx --yes @asyncapi/cli@${CLI_VERSION} "$@"\n`, { mode: 0o755 });
+  const cli = `npx --yes @asyncapi/cli@${CLI_VERSION}`;
+  shim(bin, 'asyncapi', `exec ${cli} "$@"`, `${cli} %*`);
 
-  const haveGradle = spawnSync('bash', ['-c', 'command -v gradle && java -version'], { stdio: 'ignore' }).status === 0;
-  if (BROKER_MODE === 'local') startLocalBroker(bin);
+  // gradle --version starts the JVM, so it also proves java works.
+  const haveGradle = spawnSync('gradle --version', { shell: true, stdio: 'ignore', windowsHide: true }).status === 0;
+  if (BROKER_MODE === 'local') await startLocalBroker(!haveGradle);
   if (!haveGradle) {
     // With a local broker, Gradle shares the network of a socat container that
     // forwards localhost:1883 to the host, so `localhost` in the Java code works.
-    const net = BROKER_MODE === 'local' ? `--network container:${LABEL}-fwd` : '';
-    fs.writeFileSync(path.join(bin, 'gradle'), `#!/usr/bin/env bash
-exec docker run --rm --init --label ${LABEL} ${net} -v "$PWD":/w -v ${LABEL}-gradle-cache:/home/gradle/.gradle -w /w gradle:8.10-jdk17 gradle "$@"
-`, { mode: 0o755 });
+    const netArg = BROKER_MODE === 'local' ? `--network container:${LABEL}-fwd` : '';
+    const gradle = (cwd) => `docker run --rm --init --label ${LABEL} ${netArg} -v "${cwd}":/w -v ${LABEL}-gradle-cache:/home/gradle/.gradle -w /w gradle:8.10-jdk17 gradle`;
+    shim(bin, 'gradle', `exec ${gradle('$PWD')} "$@"`, `${gradle('%CD%')} %*`);
   }
 
-  const venv = path.join(WORK, 'venv');
-  if (!fs.existsSync(venv)) {
-    const r = run(`python3 -m venv "${venv}" && "${venv}/bin/pip" -q install paho-mqtt==1.6.1`, WORK, bin);
+  if (!fs.existsSync(VENV_BIN)) {
+    const py = IS_WIN ? 'python' : 'python3';
+    const venvPy = path.join(VENV_BIN, IS_WIN ? 'python.exe' : 'python');
+    const r = run(`${py} -m venv "${path.join(WORK, 'venv')}" && "${venvPy}" -m pip -q install paho-mqtt==1.6.1`, WORK, bin);
     if (r.code !== 0) throw new Error(`python venv setup failed:\n${r.out}`);
   }
 
@@ -169,24 +213,26 @@ exec docker run --rm --init --label ${LABEL} ${net} -v "$PWD":/w -v ${LABEL}-gra
   return bin;
 }
 
-function startLocalBroker(bin) {
-  const listening = () => spawnSync('nc', ['-z', '-w', '2', 'localhost', '1883']).status === 0;
-  if (listening()) {
+async function startLocalBroker(needRelay) {
+  if (await portOpen(1883)) {
     log('broker: using the broker already listening on localhost:1883');
   } else {
     // The command from the tutorials' local broker note, plus a cleanup label and an exact image tag.
-    const r = run(`docker run -d --label ${LABEL}-broker --name ${LABEL}-mosquitto -p 1883:1883 eclipse-mosquitto:2.1.4-alpine mosquitto -c /mosquitto-no-auth.conf`, WORK, bin);
-    spawnSync('sleep', ['3']);
-    if (r.code !== 0 || !listening()) throw new Error(`could not start the local Mosquitto broker:\n${r.out}`);
+    const r = docker(['run', '-d', '--label', `${LABEL}-broker`, '--name', `${LABEL}-mosquitto`, '-p', '1883:1883', 'eclipse-mosquitto:2.1.4-alpine', 'mosquitto', '-c', '/mosquitto-no-auth.conf']);
+    let up = false;
+    for (let i = 0; r.code === 0 && !up && i < 10; i++) { await sleep(1000); up = await portOpen(1883); }
+    if (!up) throw new Error(`could not start the local Mosquitto broker:\n${r.out}`);
     log('broker: started the tutorials\' eclipse-mosquitto container on localhost:1883');
   }
+  if (!needRelay) return;
   // Native Linux Docker has no host.docker.internal unless we map it to the host gateway.
-  const fwd = run(`docker rm -f ${LABEL}-fwd >/dev/null 2>&1; docker run -d --rm --add-host=host.docker.internal:host-gateway --label ${LABEL}-fwd --name ${LABEL}-fwd alpine/socat:1.8.1.3 tcp-listen:1883,fork,reuseaddr tcp-connect:host.docker.internal:1883`, WORK, bin);
+  dockerRm(`${LABEL}-fwd`);
+  const fwd = docker(['run', '-d', '--rm', '--add-host=host.docker.internal:host-gateway', '--label', `${LABEL}-fwd`, '--name', `${LABEL}-fwd`, 'alpine/socat:1.8.1.3', 'tcp-listen:1883,fork,reuseaddr', 'tcp-connect:host.docker.internal:1883']);
   if (fwd.code !== 0) throw new Error(`could not start the broker relay container for dockerised Gradle:\n${fwd.out}`);
 }
 
 function stopLocalBroker() {
-  spawnSync('bash', ['-c', `docker rm -f ${LABEL}-fwd ${LABEL}-mosquitto`], { stdio: 'ignore' });
+  dockerRm(`${LABEL}-fwd`, `${LABEL}-mosquitto`);
 }
 
 const write = (dir, file, content) => {
@@ -310,7 +356,7 @@ async function java(bin) {
 
 let bin;
 try {
-  bin = setupBin();
+  bin = await setupBin();
   if (target === 'python' || target === 'all') await python(bin);
   if (target === 'java' || target === 'all') await java(bin);
 } catch (e) {
@@ -319,6 +365,8 @@ try {
 stopLocalBroker();
 const failed = results.filter((x) => !x.ok);
 log(`\n${results.length - failed.length}/${results.length} checks passed${failed.length ? `; failed: ${failed.map((x) => x.name).join(' | ')}` : ''}`);
-if (!KEEP && !failed.length && OWN_WORK) fs.rmSync(WORK, { recursive: true, force: true });
-else log(`workdir kept: ${WORK}`);
+if (!KEEP && !failed.length && OWN_WORK) {
+  // Files can stay locked briefly on Windows, and dockerised Gradle leaves root-owned build dirs on Linux.
+  try { fs.rmSync(WORK, { recursive: true, force: true, maxRetries: 5, retryDelay: 500 }); } catch (e) { log(`could not delete workdir ${WORK}: ${e.code}`); }
+} else log(`workdir kept: ${WORK}`);
 process.exit(failed.length ? 1 : 0);

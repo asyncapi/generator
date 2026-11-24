@@ -35,6 +35,7 @@ const target = args[0];
 const KEEP = args.includes('--keep');
 const BROKER_MODE = flag('--broker', 'local');
 const BROKER = BROKER_MODE === 'public' ? PUBLIC_BROKER : 'localhost';
+// CLI stays on latest on purpose: we want to catch tutorials breaking against what people install. Pin with --cli-version.
 const CLI_VERSION = flag('--cli-version', 'latest');
 const TIMEOUT = Number(flag('--timeout', '300')) * 1000;
 
@@ -116,7 +117,7 @@ async function runAgainstBroker(name, cmd, cwd, binDir, topics, linePattern, wan
   // MQTT 3.1.1 (-V 4): the public broker resets MQTT 5 connections. The broker
   // also resets some connections at random and `mqtt sub` exits on that, so
   // restart it, with a pause: fast reconnects get throttled.
-  const sub = start(`while true; do npx --yes mqtt@5 sub -V 4 -h ${BROKER} ${topics.map((t) => `-t ${t}`).join(' ')} -v; sleep 5; done`, cwd, binDir);
+  const sub = start(`while true; do npx --yes mqtt@5.16.1 sub -V 4 -h ${BROKER} ${topics.map((t) => `-t ${t}`).join(' ')} -v; sleep 5; done`, cwd, binDir);
   await sleep(5000); // let the subscriber connect before the first publish
   const client = start(cmd, cwd, binDir);
   const deadline = Date.now() + TIMEOUT;
@@ -173,8 +174,8 @@ function startLocalBroker(bin) {
   if (listening()) {
     log('broker: using the broker already listening on localhost:1883');
   } else {
-    // The command from the tutorials' local broker note, plus a cleanup label.
-    const r = run(`docker run -d --label ${LABEL}-broker --name ${LABEL}-mosquitto -p 1883:1883 eclipse-mosquitto:2 mosquitto -c /mosquitto-no-auth.conf`, WORK, bin);
+    // The command from the tutorials' local broker note, plus a cleanup label and an exact image tag.
+    const r = run(`docker run -d --label ${LABEL}-broker --name ${LABEL}-mosquitto -p 1883:1883 eclipse-mosquitto:2.1.4-alpine mosquitto -c /mosquitto-no-auth.conf`, WORK, bin);
     spawnSync('sleep', ['3']);
     if (r.code !== 0 || !listening()) throw new Error(`could not start the local Mosquitto broker:\n${r.out}`);
     log('broker: started the tutorials\' eclipse-mosquitto container on localhost:1883');

@@ -31,14 +31,16 @@ jobs:
           ref: master
           persist-credentials: false
       - name: Config git
+        working-directory: ./website
         run: |
-          cd website
           git config user.name asyncapi-bot
           git config user.email info@asyncapi.io
       - name: Create branch
         working-directory: ./website
+        env:
+          SHA: ${{ github.sha }}
         run: |
-          git checkout -b update-generator-docs-${{ github.sha }}
+          git checkout -b "update-generator-docs-${SHA}"
       - name: Copy generator folder from Current Repo to Another
         working-directory: ./website
         run: |

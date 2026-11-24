@@ -8,9 +8,15 @@ on:
     types:
       - opened
 
+permissions: {}
+
 jobs:
   add-awaiting-approval-label:
     runs-on: ubuntu-latest
+
+    # The label is created and applied with secrets.GH_TOKEN, and there is no
+    # checkout, so GITHUB_TOKEN needs no scopes at all.
+    permissions: {}
 
     steps:
       - name: Add 'Awaiting Approval' label

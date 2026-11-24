@@ -3,7 +3,7 @@ name: Docs Preview Deploy (Netlify)
 on:
   workflow_run:
     workflows: ["Docs Preview Build (Netlify)"]
-    types: [completed]
+    types: [completed]   # zizmor: ignore[dangerous-triggers] artifact is treated as untrusted data: PR number reduced to digits and bound to the run's head SHA, site uploaded with --no-build, nothing from it is executed
 
 permissions: {}
 

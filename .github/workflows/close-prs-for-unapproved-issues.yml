@@ -1,19 +1,31 @@
 # Purpose of this workflow is to automatically close PRs that reference
-# issues still carrying the 'Awaiting Approval' label, preventing work
+# issues not carrying the 'Approved Issue' label, preventing work
 # on issues that have not yet been approved by a maintainer.
 
 name: Close PRs linked to unapproved issues
 
+# Why: pull_request_target is required because PRs from forks must be able to be
+# closed and commented on, which a read-only pull_request token cannot do. This
+# workflow never checks out or executes PR-authored code -- it only reads event
+# payload metadata (author, body, base ref) and CODEOWNERS from the base branch --
+# so it is not exposed to the pwn-request class of attack.
 on:
   pull_request_target:
     types:
       - opened
       - edited
-      - reopened
+      - reopened              # zizmor: ignore[dangerous-triggers] no PR code is checked out or executed; see comment above
+
+permissions: {}
 
 jobs:
   close-if-unapproved:
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: read # required to read CODEOWNERS from the base branch
+      issues: read # required to list labels on the linked issues
+      pull-requests: write # required to comment on and close the PR
 
     steps:
       - name: Check linked issue and close PR if unapproved
@@ -85,11 +97,11 @@ jobs:
               return;
             }
 
-            const awaitingLabel = 'Awaiting Approval';
+            const approvedLabel = 'Approved Issue';
 
             for (const match of matches) {
               const issueNumber = parseInt(match[1], 10);
-              console.log(`Checking issue #${issueNumber} for '${awaitingLabel}' label...`);
+              console.log(`Checking issue #${issueNumber} for '${approvedLabel}' label...`);
 
               try {
                 const { data: labels } = await github.rest.issues.listLabelsOnIssue({
@@ -98,8 +110,8 @@ jobs:
                   issue_number: issueNumber,
                 });
 
-                if (labels.some(l => l.name === awaitingLabel)) {
-                  console.log(`Issue #${issueNumber} still has '${awaitingLabel}'. Closing PR #${prNumber}.`);
+                if (!labels.some(l => l.name === approvedLabel)) {
+                  console.log(`Issue #${issueNumber} does not have '${approvedLabel}'. Closing PR #${prNumber}.`);
 
                   await github.rest.issues.createComment({
                     issue_number: prNumber,
@@ -137,4 +149,4 @@ jobs:
               }
             }
 
-            console.log('All linked issues are approved or no matching label found. PR stays open.');
+            console.log('All linked issues are approved. PR stays open.');

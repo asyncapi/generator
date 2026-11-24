@@ -174,7 +174,7 @@ function startLocalBroker(bin) {
     log('broker: using the broker already listening on localhost:1883');
   } else {
     // The command from the tutorials' local broker note, plus a cleanup label.
-    const r = run(`docker run -d --label ${LABEL}-broker --name ${LABEL}-mosquitto -p 1883:1883 eclipse-mosquitto`, WORK, bin);
+    const r = run(`docker run -d --label ${LABEL}-broker --name ${LABEL}-mosquitto -p 1883:1883 eclipse-mosquitto:2 mosquitto -c /mosquitto-no-auth.conf`, WORK, bin);
     spawnSync('sleep', ['3']);
     if (r.code !== 0 || !listening()) throw new Error(`could not start the local Mosquitto broker:\n${r.out}`);
     log('broker: started the tutorials\' eclipse-mosquitto container on localhost:1883');

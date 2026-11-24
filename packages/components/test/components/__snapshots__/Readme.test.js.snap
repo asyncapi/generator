@@ -27,8 +27,9 @@ const AccountServiceClient = require('./myClient');
 
 // throwSendErrors defaults to true: a failed send re-throws after the registered
 // error handlers run, so you can react to each failure. Pass
-// new AccountServiceClient(undefined, false) to keep a high-throughput producer loop
+// new AccountServiceClient(undefined, undefined, undefined, undefined, undefined, false) to keep a high-throughput producer loop
 // running and rely on registered error handlers instead.
+// Arguments are (url, heartbeat, topOfBook, bids, offers, throwSendErrors).
 const wsClient = new AccountServiceClient();
 
 async function main() {

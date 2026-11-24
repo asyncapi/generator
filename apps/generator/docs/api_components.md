@@ -995,6 +995,7 @@ Renders query parameter variables code blocks.
 | props.language | `Language` | The target programming language. |
 | props.framework | `string` | Optional framework for the language. |
 | props.queryParams | `Array.<Array.<string>>` | Array of query parameters, each represented as [paramName, paramType?]. |
+| props.reservedNames | `Set.<string>` | JavaScript only: identifiers the surrounding generated code already uses, so query parameters with those names are prefixed with &#x60;_&#x60;. |
 
 
 
@@ -1326,6 +1327,7 @@ Renders a README.md file for a given AsyncAPI document. Composes multiple sectio
 | props.asyncapi | `AsyncAPIDocumentInterface` | Parsed AsyncAPI document instance. |
 | props.params | `Object` | Generator parameters used to customize output |
 | props.language | `Language` | Target language used to render language-specific sections. |
+| props.reservedNames | `Set.<string>` | JavaScript only: identifiers the generated client constructor already uses, passed to the usage section so query parameter names match the constructor. |
 
 
 
@@ -1381,6 +1383,8 @@ Renders a usage example snippet for a generated WebSocket client in a given lang
 | props.clientName | `string` | The exported name of the client. |
 | props.clientFileName | `string` | The file name where the client is defined. |
 | props.language | `Language` | The target language for which to render the usage snippet |
+| props.queryParams | `Array.<Array.<string>>` | Query parameters from the AsyncAPI document, where each item is a tuple &#x60;[name, defaultValue]&#x60;. For JavaScript they are positional constructor arguments placed before &#x60;throwSendErrors&#x60;, so the snippet skips each of them. |
+| props.reservedNames | `Set.<string>` | JavaScript only: identifiers the generated constructor already uses, so the snippet names query parameters the same way the constructor does. |
 
 
 

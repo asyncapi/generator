@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InitSignature component (integration with AsyncAPI document) renders with empty query parameters array 1`] = `"constructor(url, throwSendErrors = true) {"`;
+
+exports[`InitSignature component (integration with AsyncAPI document) renders with multiple query parameters from the AsyncAPI document 1`] = `"constructor(url, heartbeat, bids, sessionId, throwSendErrors = true) {"`;
+
+exports[`InitSignature component (integration with AsyncAPI document) renders with no query parameters 1`] = `"constructor(url, throwSendErrors = true) {"`;

@@ -1,0 +1,36 @@
+import { Text } from '@asyncapi/generator-react-sdk';
+import { getSafeJSName } from '@asyncapi/generator-helpers';
+
+/**
+ * Generates the JSDoc `@param` documentation blocks for each query parameter
+ * injected into the constructor signature.
+ *
+ * @param {Object} props - The component props.
+ * @param {Array<Array<string>>} [props.queryParams] - Array of query parameters from the AsyncAPI document, where each item is a tuple `[name, defaultValue]`.
+ * @param {Set<string>} [props.reservedNames] - Identifiers the constructor body already uses; query parameters with those names are prefixed with `_`.
+ * @returns {React.Element[] | null} An array of rendered React SDK Text elements containing the parameter documentation, or null if no query parameters exist.
+ */
+export function QueryParamsArgumentsDocs({ queryParams, reservedNames }) {
+  if (!queryParams || queryParams.length === 0) {
+    return null;
+  }
+
+  const usedNames = new Map();
+  return queryParams.map((param) => {
+    const originalParamName = param[0];
+    const paramName = getSafeJSName(originalParamName, usedNames, reservedNames);
+    const envVarName = originalParamName.toUpperCase().replace(/[^A-Z0-9_]/g, '_');
+    const toDocText = (text) => String(text).replace(/\*\//g, '*\\/').replace(/[\r\n]+/g, ' ');
+    const docParamName = toDocText(originalParamName);
+    const paramDefaultValue = param[1];
+    const hasDefault = paramDefaultValue !== undefined && paramDefaultValue !== null && paramDefaultValue !== '';
+    const defaultNote = hasDefault ? `. Defaults to ${toDocText(paramDefaultValue)}` : '';
+    const firstLine = `* @param {string} ${paramName} - `;
+    const secondLine = `If provided (or if ${envVarName} environment variable is set), added as ?${docParamName}=… to URL${defaultNote}`;
+    return (
+      <Text indent={2} newLines={1}>
+        {`${firstLine}${secondLine}`}
+      </Text>
+    );
+  });
+}

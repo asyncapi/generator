@@ -92,6 +92,14 @@ jobs:
             echo "No deployable directory found (expected site/out or site/.next)"; exit 1
           fi
 
+          # SECURITY: keep --no-build. Do not remove it.
+          # Without it, `netlify deploy` runs a build here, on this runner, with
+          # NETLIFY_AUTH_TOKEN in the environment and next to files the PR author
+          # controls (the downloaded artifact). The site is already built by the
+          # unprivileged "Docs Preview Build (Netlify)" workflow; this job only uploads it.
+          # Building PR content in a job with secrets is how the docs from a PR
+          # ran attacker code and leaked tokens, see
+          # https://github.com/asyncapi/generator/issues/2184
           DEPLOY_JSON=$(netlify deploy \
             --auth "$NETLIFY_AUTH_TOKEN" \
             --site "$NETLIFY_SITE_ID" \

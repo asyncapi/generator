@@ -22,13 +22,14 @@ node .claude/skills/maintain-template-tutorials/scripts/verify-tutorial.mjs {pyt
 When a step fails:
 
 - `selector "..." matched N code blocks` means the tutorial changed shape. Fix the selector so it matches exactly one block.
+- `setup: missing ...` means the machine lacks a tool (Python, Docker). The script checks this before any step. Fix the machine, not the tutorial.
 - Anything else is a tutorial bug until proven otherwise. Reproduce it in the work directory, fix the tutorial, and run again.
 
 ## Update a tutorial
 
 - Keep both tutorials consistent: the AsyncAPI document, `apiVersion`, the `generator` range, the `react-sdk` version, and the `TopicFunction` logic.
 - Both tutorials repeat `package.json` and `index.js`. Update every copy.
-- Check Parser API calls against `apps/generator/node_modules/@asyncapi/parser/cjs/models/v3/`. For example, a v3 `Operation` has `channels()`, not `channel()`.
+- Check Parser API calls against `cjs/models/v3/` of the parser the generator resolves. Find it with `node -p "require.resolve('@asyncapi/parser/package.json', { paths: ['apps/generator'] })"`. For example, a v3 `Operation` has `channels()`, not `channel()`.
 - Use an AsyncAPI version listed in `@asyncapi/specs/schemas/`. The parser rejects `3.0.1`.
 - Inside JSX children, write comments as `{/* ... */}`. A `// ...` line there ends up in the generated file.
 - When you add, remove, or reorder tutorial steps, update the script's steps in the same change.

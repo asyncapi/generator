@@ -29,6 +29,14 @@ const PUBLIC_BROKER = 'test.mosquitto.org';
 const LABEL = 'asyncapi-tutorial-verify';
 const IS_WIN = process.platform === 'win32';
 
+const portOpen = (port) => new Promise((resolve) => {
+  const s = net.connect(port, 'localhost');
+  const done = (ok) => { s.destroy(); resolve(ok); };
+  s.setTimeout(2000, () => done(false));
+  s.on('connect', () => done(true));
+  s.on('error', () => done(false));
+});
+
 const args = process.argv.slice(2);
 const USAGE = 'Usage: node verify-tutorial.mjs <python|java|all> [--broker local|public] [--keep] [--workdir DIR] [--cli-version X] [--timeout SECONDS]';
 const usageExit = (msg) => { console.error(`${msg ? `${msg}\n` : ''}${USAGE}`); process.exit(2); };
@@ -49,6 +57,29 @@ const TIMEOUT = Number(flag('--timeout', '300')) * 1000;
 
 if (!(TIMEOUT > 0)) usageExit('--timeout must be a positive number of seconds');
 if (!['python', 'java', 'all'].includes(target) || !['local', 'public'].includes(BROKER_MODE)) usageExit();
+const WANT_PY = target !== 'java';
+const WANT_JAVA = target !== 'python';
+const PY = IS_WIN ? 'python' : 'python3';
+// gradle --version starts the JVM, so it also proves java works.
+const HAVE_GRADLE = WANT_JAVA && spawnSync('gradle --version', { shell: true, stdio: 'ignore', windowsHide: true }).status === 0;
+
+// Fail fast on a missing tool, so a broken machine is never reported as a broken tutorial.
+{
+  const missing = [];
+  if (spawnSync('npx --version', { shell: true, stdio: 'ignore', windowsHide: true }).status !== 0) missing.push('npx (comes with node and npm)');
+  if (WANT_PY) {
+    const r = spawnSync(`${PY} --version`, { shell: true, encoding: 'utf8', windowsHide: true });
+    if (r.status !== 0 || !/Python 3/.test(`${r.stdout}${r.stderr}`)) missing.push(`Python 3 as \`${PY}\``);
+  }
+  const needDocker = (WANT_JAVA && !HAVE_GRADLE) || (BROKER_MODE === 'local' && !(await portOpen(1883)));
+  if (needDocker && spawnSync('docker', ['info'], { stdio: 'ignore', windowsHide: true }).status !== 0) {
+    missing.push('a running Docker daemon (for Gradle without a local install, or for the local broker when nothing listens on localhost:1883)');
+  }
+  if (missing.length) {
+    console.error(`setup: missing ${missing.join('; ')}.\nThis is the machine, not the tutorial: fix it and run again.`);
+    process.exit(2);
+  }
+}
 
 // Only a workdir this script created may be deleted on success; a caller-supplied one may hold unrelated files.
 const OWN_WORK = !args.includes('--workdir');
@@ -141,13 +172,6 @@ const dockerRm = (...names) => names.length && docker(['rm', '-f', ...names]);
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-const portOpen = (port) => new Promise((resolve) => {
-  const s = net.connect(port, 'localhost');
-  const done = (ok) => { s.destroy(); resolve(ok); };
-  s.setTimeout(2000, () => done(false));
-  s.on('connect', () => done(true));
-  s.on('error', () => done(false));
-});
 
 // Runs a client that loops forever (the tutorials' test programs do) next to an
 // `mqtt sub` subscriber, until every topic has at least `want` IDs that the
@@ -193,10 +217,9 @@ async function setupBin() {
   const cli = `npx --yes @asyncapi/cli@${CLI_VERSION}`;
   shim(bin, 'asyncapi', `exec ${cli} "$@"`, `${cli} %*`);
 
-  // gradle --version starts the JVM, so it also proves java works.
-  const haveGradle = spawnSync('gradle --version', { shell: true, stdio: 'ignore', windowsHide: true }).status === 0;
-  if (BROKER_MODE === 'local') await startLocalBroker(!haveGradle);
-  if (!haveGradle) {
+  const dockerGradle = WANT_JAVA && !HAVE_GRADLE;
+  if (BROKER_MODE === 'local') await startLocalBroker(dockerGradle);
+  if (dockerGradle) {
     // With a local broker, Gradle shares the network of a socat container that
     // forwards localhost:1883 to the host, so `localhost` in the Java code works.
     const netArg = BROKER_MODE === 'local' ? `--network container:${LABEL}-fwd` : '';
@@ -204,15 +227,14 @@ async function setupBin() {
     shim(bin, 'gradle', `exec ${gradle('$PWD')} "$@"`, `${gradle('%CD%')} %*`);
   }
 
-  if (!fs.existsSync(VENV_BIN)) {
-    const py = IS_WIN ? 'python' : 'python3';
+  if (WANT_PY && !fs.existsSync(VENV_BIN)) {
     const venvPy = path.join(VENV_BIN, IS_WIN ? 'python.exe' : 'python');
-    const r = run(`${py} -m venv "${path.join(WORK, 'venv')}" && "${venvPy}" -m pip -q install paho-mqtt==1.6.1`, WORK, bin);
+    const r = run(`${PY} -m venv "${path.join(WORK, 'venv')}" && "${venvPy}" -m pip -q install paho-mqtt==1.6.1`, WORK, bin);
     if (r.code !== 0) throw new Error(`python venv setup failed:\n${r.out}`);
   }
 
   const ver = run('asyncapi --version', WORK, bin);
-  log(`broker: ${BROKER}  |  asyncapi CLI: ${ver.out.trim().split('\n').pop()}  |  gradle: ${haveGradle ? 'local' : 'docker gradle:8.10-jdk17'}  |  workdir: ${WORK}`);
+  log(`broker: ${BROKER}  |  asyncapi CLI: ${ver.out.trim().split('\n').pop()}  |  gradle: ${!WANT_JAVA ? 'not needed' : HAVE_GRADLE ? 'local' : 'docker gradle:8.10-jdk17'}  |  workdir: ${WORK}`);
   return bin;
 }
 

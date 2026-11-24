@@ -3,6 +3,7 @@ const { readFile, stat } = require('fs').promises;
 const Generator = require('@asyncapi/generator');
 const { cleanTestResultPaths } = require('@asyncapi/generator-helpers');
 const { runCommonTests, runCommonSlackTests } = require('./common-test.js');
+const { runJavaScriptConnectionTests } = require('./javascript-connection-tests.js');
 const asyncapi_v3_path_hoppscotch = path.resolve(__dirname, '../__fixtures__/asyncapi-hoppscotch-client.yml');
 const asyncapi_v3_json_path = path.resolve(__dirname, '../__fixtures__/asyncapi-postman-echo.json');
 
@@ -92,6 +93,7 @@ describe('WebSocket Clients Integration Tests', () => {
     describe('JavaScript Client', () => {
       const config = languageConfig.javascript;
       runCommonTests('JavaScript', config);
+      runJavaScriptConnectionTests(config, asyncapi_v3_path_hoppscotch);
 
       describe('Additional tests for JavaScript client', () => {
         it('generate simple client for hoppscotch echo without clientFileName param', async () => {

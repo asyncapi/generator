@@ -37,12 +37,16 @@ const BROKER_MODE = flag('--broker', 'local');
 const BROKER = BROKER_MODE === 'public' ? PUBLIC_BROKER : 'localhost';
 const CLI_VERSION = flag('--cli-version', 'latest');
 const TIMEOUT = Number(flag('--timeout', '300')) * 1000;
-const WORK = path.resolve(flag('--workdir', fs.mkdtempSync(path.join(os.tmpdir(), 'tutorial-verify-'))));
 
 if (!['python', 'java', 'all'].includes(target) || !['local', 'public'].includes(BROKER_MODE)) {
   console.error('Usage: node verify-tutorial.mjs <python|java|all> [--broker local|public] [--keep] [--workdir DIR] [--cli-version X] [--timeout SECONDS]');
   process.exit(2);
 }
+
+// Only a workdir this script created may be deleted on success; a caller-supplied one may hold unrelated files.
+const OWN_WORK = !args.includes('--workdir');
+const WORK = OWN_WORK ? fs.mkdtempSync(path.join(os.tmpdir(), 'tutorial-verify-')) : path.resolve(flag('--workdir'));
+fs.mkdirSync(WORK, { recursive: true });
 
 // ---------- markdown block extraction ----------
 
@@ -312,6 +316,6 @@ try {
 stopLocalBroker();
 const failed = results.filter((x) => !x.ok);
 log(`\n${results.length - failed.length}/${results.length} checks passed${failed.length ? `; failed: ${failed.map((x) => x.name).join(' | ')}` : ''}`);
-if (!KEEP && !failed.length) fs.rmSync(WORK, { recursive: true, force: true });
+if (!KEEP && !failed.length && OWN_WORK) fs.rmSync(WORK, { recursive: true, force: true });
 else log(`workdir kept: ${WORK}`);
 process.exit(failed.length ? 1 : 0);

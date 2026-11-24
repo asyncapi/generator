@@ -13,11 +13,12 @@ This approach with templates developed as part of `generator` repository is a wo
 ## Assumptions and Principles
 
 1. When developing templates further, follow the nested folder structure where templates are grouped by their usage purpose. 
-2. The idea is that templates inside generator are grouped under a predefined opinionated types, like `client, sdk, docs, scripts`. This is subject to change over time as the development proceeds and we check these types in action:
-    - `client` purpose is that the template generates a client library that anyone can easily import and use in their server to interact with the API. In theory, this could also be a client used to develop a server, thus no dedicated `server` type.
+2. The idea is that templates inside generator are grouped under a predefined opinionated types, like `client, sdk, docs, scripts, server`. This is subject to change over time as the development proceeds and we check these types in action:
+    - `client` purpose is that the template generates a client library that anyone can easily import and use in their server to interact with the API. In theory, this could also be a client used to develop a server.
     - `sdk` assumption is that people might need a more sophisticated project generation than a simple client. Templates for generating `sdk` should ideally extend the existing `client`.
     - `docs` is for templates that already exist outside this repository, e.g html or markdown generation templates that might be more standard.
     - `scripts` is a rough idea to address the idea that we can generate scripts that one can use to setup topics in a broker.
+    - `server` purpose is that the template generates a server application that implements the API, e.g. a WebSocket server.
 3. `components` package should contain a set of reusable react components that could be shared between templates.
 4. `helpers` package should contain a set of reusable helpers that focus mainly on smart extract of info from AsyncAPI document using the Parser API. Templates should rely on well-tested `helpers` rather than directly using the AsyncAPI Parser API.
 5. Each new template or new feature in existing template must be done with reusability in mind. Custom helpers and components should be limited to minimum.

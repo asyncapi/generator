@@ -1,5 +1,11 @@
 # @asyncapi/generator
 
+## 3.5.1
+
+### Patch Changes
+
+- 16f2a55: Reject generation into Git repositories with unstaged changes even when the affected file also has staged changes. Preserve the existing allowance for staged-only changes.
+
 ## 3.5.0
 
 ### Minor Changes

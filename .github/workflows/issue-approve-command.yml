@@ -10,6 +10,8 @@ on:
     types:
       - created
 
+permissions: {}
+
 jobs:
   approve-issue:
     if: >
@@ -19,12 +21,19 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    # Label changes and comments use secrets.GH_TOKEN, which carries its own
+    # scopes, so GITHUB_TOKEN needs nothing beyond the checkout.
+    permissions:
+      contents: read # required by checkout of CODEOWNERS
+
     steps:
       - name: Checkout CODEOWNERS
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           sparse-checkout: CODEOWNERS
           sparse-checkout-cone-mode: false
+          # Nothing runs git after this step, so the token need not be left on disk.
+          persist-credentials: false
 
       - name: Check authorization and approve
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0

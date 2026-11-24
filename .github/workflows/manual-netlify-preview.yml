@@ -96,6 +96,7 @@ jobs:
             --auth "$NETLIFY_AUTH_TOKEN" \
             --site "$NETLIFY_SITE_ID" \
             --dir "$DEPLOY_DIR" \
+            --no-build \
             --message "generator repo PR #${PR_NUMBER}" \
             --draft \
             --json)

@@ -15,7 +15,8 @@
 #   - pull_request_target is safe because there is NO checkout - PR code is never
 #     fetched or executed, so the write-scoped token is never exposed to it.
 #   - The failure comment is static text and does not echo back the PR body.
-#   - Token is scoped to `pull-requests: write` only.
+#   - Token is scoped to `pull-requests: write` only, granted on the job rather
+#     than the workflow, so nothing added later inherits it.
 name: Verify AI disclosure
 
 on:
@@ -24,10 +25,9 @@ on:
       - opened
       - edited
       - reopened
-      - synchronize
+      - synchronize         # zizmor: ignore[dangerous-triggers] no checkout; PR body handled as data only; see header
 
-permissions:
-  pull-requests: write
+permissions: {}
 
 jobs:
   verify-ai-disclosure:
@@ -37,6 +37,10 @@ jobs:
       github.event.pull_request.user.login != 'dependabot[bot]' && 
       github.event.pull_request.user.login != 'dependabot-preview[bot]') 
     runs-on: ubuntu-latest
+
+    permissions:
+      pull-requests: write # required to create, update and delete this check's own PR comment
+
     steps:
       - name: Check PR body for AI-assistance disclosure
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0

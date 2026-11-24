@@ -5,10 +5,15 @@ on:
   pull_request:
     types: [opened, reopened, synchronize, edited, ready_for_review]
 
+permissions: {}
+
 jobs:
   verify-changeset-release-alignment:
     name: Verify changeset release alignment
     runs-on: ubuntu-latest
+
+    permissions:
+      pull-requests: read # required by dorny/paths-filter to list the PR's changed files over the REST API
     if: >
       !github.event.pull_request.draft &&
       github.event.pull_request.user.login != 'asyncapi-bot' &&

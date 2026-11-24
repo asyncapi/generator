@@ -179,7 +179,9 @@ function startLocalBroker(bin) {
     if (r.code !== 0 || !listening()) throw new Error(`could not start the local Mosquitto broker:\n${r.out}`);
     log('broker: started the tutorials\' eclipse-mosquitto container on localhost:1883');
   }
-  run(`docker rm -f ${LABEL}-fwd >/dev/null 2>&1; docker run -d --rm --label ${LABEL}-fwd --name ${LABEL}-fwd alpine/socat tcp-listen:1883,fork,reuseaddr tcp-connect:host.docker.internal:1883`, WORK, bin);
+  // Native Linux Docker has no host.docker.internal unless we map it to the host gateway.
+  const fwd = run(`docker rm -f ${LABEL}-fwd >/dev/null 2>&1; docker run -d --rm --add-host=host.docker.internal:host-gateway --label ${LABEL}-fwd --name ${LABEL}-fwd alpine/socat:1.8.1.3 tcp-listen:1883,fork,reuseaddr tcp-connect:host.docker.internal:1883`, WORK, bin);
+  if (fwd.code !== 0) throw new Error(`could not start the broker relay container for dockerised Gradle:\n${fwd.out}`);
 }
 
 function stopLocalBroker() {

@@ -32,7 +32,7 @@ jobs:
           persist-credentials: false
 
       - name: Install Dependencies
-        run: npm install --no-save yaml-lint ajv axios js-yaml
+        run: npm install --no-save --ignore-scripts yaml-lint@1.7.0 ajv@8.20.0 axios@1.21.1 js-yaml@5.5.0
 
       - name: Lint YAML Files
         run: |

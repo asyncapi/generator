@@ -1,5 +1,5 @@
 const { getMessageExamples, getOperationMessages } = require('./operations');
-const { getServerUrl, getServer, getServerHost, getServerProtocol }  = require('./servers');
+const { getServerUrl, getServer, getServerHost, getServerPathname, getServerProtocol }  = require('./servers');
 const { getClientName, getInfo, toSnakeCase, toCamelCase, getTitle, lowerFirst, upperFirst } = require('./utils');
 const { getMessageDiscriminatorData, getMessageDiscriminatorsFromOperations } = require('./discriminators');
 const { getQueryParams, getQueryParamsForAllChannels } = require('./bindings');
@@ -11,6 +11,7 @@ module.exports = {
   getClientName,
   getServer,
   getServerHost,
+  getServerPathname,
   getServerProtocol,
   listFiles,
   getQueryParams,

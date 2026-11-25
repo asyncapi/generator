@@ -1,4 +1,4 @@
-﻿---
+---
 "@asyncapi/generator-helpers": patch
 "@asyncapi/generator": patch
 ---

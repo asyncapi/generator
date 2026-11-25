@@ -3,6 +3,7 @@ import { Constructor } from './Constructor.js';
 import { OnClose, OnOpen, HandleError } from '@asyncapi/generator-components';
 import OnTextMessageHandler from './OnTextMessageHandler.js';
 import { Text } from '@asyncapi/generator-react-sdk';
+import { toJavaStringLiteral } from './javaStringLiteral.js';
 
 export function EchoWebSocket({ clientName, pathName, title, queryParams, operations }) {
   const sendOperations = operations.filterBySend();
@@ -14,7 +15,7 @@ export function EchoWebSocket({ clientName, pathName, title, queryParams, operat
     <Text>
       <Text newLines={2}>
         {`
-@WebSocketClient(path = "${pathName}")  
+@WebSocketClient(path = ${toJavaStringLiteral(pathName)})  
 public class ${clientName}{`}
       </Text>
       <ClientFields queryParams={queryParams} clientName={clientName}/>

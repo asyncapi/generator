@@ -1,5 +1,6 @@
 import { Text } from '@asyncapi/generator-react-sdk';
 import { toCamelCase } from '@asyncapi/generator-helpers';
+import { toJavaStringLiteral } from './javaStringLiteral.js';
 
 export default function URIParams({ queryParamsArray, pathName }) {
   if (!queryParamsArray || queryParamsArray.length === 0) {
@@ -50,7 +51,7 @@ export default function URIParams({ queryParamsArray, pathName }) {
       })}
       <Text>
         {`
-            String queryUri = baseURI + "${pathName}" + "?" + query;
+            String queryUri = baseURI + ${toJavaStringLiteral(pathName)} + "?" + query;
             WebSocketClientConnection connection = connector.baseUri(queryUri).connectAndAwait();
             Thread.sleep(120000); // Keep the connection open for 2 minutes
             `}

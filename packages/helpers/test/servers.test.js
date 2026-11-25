@@ -1,6 +1,6 @@
 const path = require('path');
 const { Parser, fromFile } = require('@asyncapi/parser');
-const { getServerUrl, getServer, getServerHost, getServerProtocol } = require('@asyncapi/generator-helpers');
+const { getServerUrl, getServer, getServerHost, getServerPathname, getServerProtocol } = require('@asyncapi/generator-helpers');
 
 const parser = new Parser();
 const asyncapi_v3_path = path.resolve(__dirname, './__fixtures__/asyncapi-websocket-query.yml');
@@ -105,6 +105,51 @@ describe('getServerUrl integration test with AsyncAPI', () => {
     };
 
     expect(getServerUrl(mockServer)).toBe('wss://api.gemini.com/v1/marketdata/{symbol}');
+  });
+});
+
+describe('getServerPathname integration test with AsyncAPI', () => {
+  let parsedAsyncAPIDocument;
+
+  beforeAll(async () => {
+    const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
+    parsedAsyncAPIDocument = parseResult.document;
+  });
+
+  it('should return the pathname when it contains no variables', () => {
+    const server = parsedAsyncAPIDocument.servers().get('withPathname');
+
+    expect(getServerPathname(server)).toBe('/v1/marketdata');
+  });
+
+  it('should replace a server variable in the pathname with its default value', () => {
+    const server = parsedAsyncAPIDocument.servers().get('withVariables');
+
+    expect(getServerPathname(server)).toBe('/v1/marketdata/btcusd');
+  });
+
+  it('should return a quoted default unescaped so templates can escape it for their target language', () => {
+    const server = parsedAsyncAPIDocument.servers().get('withQuotedDefault');
+
+    expect(getServerPathname(server)).toBe('/v1/marketdata/btc"usd');
+  });
+
+  it('should replace variables in the pathname when the host also has variables', () => {
+    const server = parsedAsyncAPIDocument.servers().get('withMultipleVariables');
+
+    expect(getServerPathname(server)).toBe('/v1/marketdata/btcusd');
+  });
+
+  it('should keep the placeholder when a pathname variable has no default value', () => {
+    const server = parsedAsyncAPIDocument.servers().get('withVariableWithoutDefault');
+
+    expect(getServerPathname(server)).toBe('/v1/marketdata/{symbol}');
+  });
+
+  it('should return undefined when the server has no pathname', () => {
+    const server = parsedAsyncAPIDocument.servers().get('withoutPathName');
+
+    expect(getServerPathname(server)).toBeUndefined();
   });
 });
 

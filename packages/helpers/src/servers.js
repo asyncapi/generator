@@ -23,8 +23,8 @@ const replaceServerVariables = (url, variables) => {
 
     const defaultValue = variable.defaultValue();
 
-    // Why: `default` is required by the AsyncAPI spec, but a malformed document
-    // can omit it or set it to null. Keep the placeholder rather than emitting
+    // Why: `default` is optional in the AsyncAPI spec. Without one there is
+    // nothing to substitute, so keep the placeholder rather than emitting
     // `undefined` or `null` into the generated URL.
     if (defaultValue === undefined || defaultValue === null) {
       continue;
@@ -112,6 +112,27 @@ const getServerHost = (server) => {
 };
 
 /**
+ * Get server pathname from AsyncAPI server object with server variables resolved.
+ *
+ * @param {object} server - The AsyncAPI server object.
+ *
+ * @returns {string|undefined} - The server pathname with every resolvable
+ * placeholder replaced, or `undefined` when the server has no pathname.
+ */
+const getServerPathname = (server) => {
+  const pathname = server.pathname();
+
+  if (!pathname) {
+    return pathname;
+  }
+
+  return replaceServerVariables(
+    pathname,
+    typeof server.variables === 'function' ? server.variables() : undefined
+  );
+};
+
+/**
  * Get server Protocol from AsyncAPI server object.
  *
  * @param {object} server - The AsyncAPI server object.
@@ -132,6 +153,7 @@ module.exports = {
   getServerUrl,
   getServer,
   getServerHost,
+  getServerPathname,
   getServerProtocol
 };
 

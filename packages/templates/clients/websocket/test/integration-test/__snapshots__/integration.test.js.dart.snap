@@ -23,7 +23,7 @@ class HoppscotchClient {
   /// 
   /// [url] - The WebSocket server URL. Use it if the server URL is different from the default one taken from the AsyncAPI document.
   HoppscotchClient({String? url})
-    : _url = url ?? 'wss://echo-websocket.hoppscotch.io';
+    : _url = url ?? \\"wss://echo-websocket.hoppscotch.io\\";
 
 
   /// Method to establish a WebSocket connection
@@ -204,7 +204,7 @@ class HoppscotchEchoWebSocketClient {
   /// 
   /// [url] - The WebSocket server URL. Use it if the server URL is different from the default one taken from the AsyncAPI document.
   HoppscotchEchoWebSocketClient({String? url})
-    : _url = url ?? 'wss://echo-websocket.hoppscotch.io';
+    : _url = url ?? \\"wss://echo-websocket.hoppscotch.io\\";
 
 
   /// Method to establish a WebSocket connection
@@ -386,7 +386,7 @@ class PostmanEchoWebSocketClientClient {
   /// 
   /// [url] - The WebSocket server URL. Use it if the server URL is different from the default one taken from the AsyncAPI document.
   PostmanEchoWebSocketClientClient({String? url})
-    : _url = url ?? 'wss://ws.postman-echo.com/raw';
+    : _url = url ?? \\"wss://ws.postman-echo.com/raw\\";
 
 
   /// Method to establish a WebSocket connection

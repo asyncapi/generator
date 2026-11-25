@@ -1,0 +1,14 @@
+rules:
+  excessive-permissions:
+    disable: false
+  dangerous-triggers:
+    disable: false
+  secrets-outside-env:
+    disable: true         # Don't need env for secrets.
+  archived-uses:
+    disable: true         # https://github.com/8398a7/action-slack/ is archived but needs to be done separately
+  unpinned-uses:
+    config:
+      policies:
+        asyncapi/.github/*: any
+        "*": hash-pin

@@ -1,12 +1,15 @@
 volumes:
   microcks-data:
+  maven-cache:
   
 services:
   # ───────────── infrastructure ─────────────────────
   mongo:
     profiles:
       - infra
+      - infra-kafka
       - ci
+      - ci-kafka
     image: docker.io/mongo:4.4.29
     container_name: microcks-db
     volumes:
@@ -20,7 +23,9 @@ services:
   kafka:
     profiles:
       - infra
+      - infra-kafka
       - ci
+      - ci-kafka
     image: docker.io/redpandadata/redpanda:v24.3.1
     container_name: microcks-kafka
     command:
@@ -53,7 +58,9 @@ services:
   app:
     profiles:
       - infra
+      - infra-kafka
       - ci
+      - ci-kafka
     depends_on:
       - mongo
     image: quay.io/microcks/microcks:1.11.2
@@ -84,7 +91,9 @@ services:
   async-minion:
     profiles: 
       - infra
+      - infra-kafka
       - ci
+      - ci-kafka
     depends_on:
       app:
         condition: service_healthy
@@ -131,6 +140,24 @@ services:
         condition: service_healthy
     command: >
       sh -c "microcks-cli import __fixtures__/bundled.yml
+      --microcksURL=http://microcks:8080/api/
+      --keycloakClientId=microcks-serviceaccount
+      --keycloakClientSecret=ab54d329-e435-41ae-a900-ec6b3fe15c54"
+
+  importer-kafka:
+    profiles:
+      - infra-kafka
+      - ci-kafka
+    image: quay.io/microcks/microcks-cli:0.5.8
+    container_name: microcks-cli-importer-kafka
+    working_dir: /usr/src/app
+    volumes:
+      - ../../../kafka/test:/usr/src/app
+    depends_on:
+      app:
+        condition: service_healthy
+    command: >
+      sh -c "microcks-cli import __fixtures__/asyncapi-adeo.yml
       --microcksURL=http://microcks:8080/api/
       --keycloakClientId=microcks-serviceaccount
       --keycloakClientSecret=ab54d329-e435-41ae-a900-ec6b3fe15c54"
@@ -182,6 +209,7 @@ services:
       - "8084:8084"
     working_dir: /usr/src/app
     volumes:
+      - maven-cache:/root/.m2
       - ../../../../../../:/usr/src/app
     command: ["sh", "-c", "cd packages/templates/clients/websocket/java/quarkus/test/temp/snapshotTestResult/client_hoppscotch && mvn clean install && cd ../../../../../../test/java/quarkus && mvn clean test"]
 
@@ -196,6 +224,17 @@ services:
     volumes:
       - ../../../../../../:/usr/src/app
     command: ["sh", "-c", "cd packages/templates/clients/websocket/dart/test/temp/snapshotTestResult/client_hoppscotch && dart pub get && cd ../../../../../test/dart && dart pub get && dart test"]
+
+  tester-kafka:
+    profiles:
+      - test-kafka
+    image: maven:3.9-eclipse-temurin-21
+    container_name: kafka-acceptance-tester-java
+    working_dir: /usr/src/app
+    volumes:
+      - maven-cache:/root/.m2
+      - ../../../../../../:/usr/src/app
+    command: ["sh", "-c", "cd packages/templates/clients/kafka/java/quarkus/test/temp/snapshotTestResult/client_adeo && mvn clean install -DskipTests && cd ../../../../../../test/java/quarkus && mvn clean test"]
     
   # Below for debugging purposes. 
   # Just uncomment below and after starting environment you can enter the constainer with "podman exec -it net-debug sh" and use websocat to test the websocket connection

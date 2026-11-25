@@ -1,5 +1,19 @@
 # @asyncapi/generator
 
+## 3.5.2
+
+### Patch Changes
+
+- Updated dependencies [379fda7]
+  - @asyncapi/generator-react-sdk@1.2.0
+  - @asyncapi/generator-components@0.9.1
+
+## 3.5.1
+
+### Patch Changes
+
+- 16f2a55: Reject generation into Git repositories with unstaged changes even when the affected file also has staged changes. Preserve the existing allowance for staged-only changes.
+
 ## 3.5.0
 
 ### Minor Changes

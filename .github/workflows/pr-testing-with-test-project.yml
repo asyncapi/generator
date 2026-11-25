@@ -91,7 +91,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: [js, py, java]
+        language: [js, py, java, dart]
 
     steps:
       - name: Checkout repository
@@ -191,11 +191,15 @@ jobs:
           importer_kafka_status=$(docker wait microcks-cli-importer-kafka)
           docker logs microcks-cli-importer-kafka
           [ "$importer_kafka_status" = "0" ] || { echo "::error::microcks-cli-importer-kafka failed with exit code $importer_kafka_status"; exit 1; }
-          if ! timeout 60 bash -c 'until [ "$(docker inspect microcks-async-minion --format "{{.State.Health.Status}}" 2>/dev/null)" = "healthy" ]; do sleep 2; done'; then
-            echo "::error::microcks-async-minion failed to become healthy within 60s"
-            docker logs microcks-async-minion
-            exit 1
-          fi
+          start_time=$(date +%s)
+          while [ "$(docker inspect microcks-async-minion --format '{{.State.Health.Status}}' 2>/dev/null)" != "healthy" ]; do
+            if [ $(( $(date +%s) - start_time )) -ge 60 ]; then
+              echo "::error::microcks-async-minion failed to become healthy within 60s"
+              docker logs microcks-async-minion
+              exit 1
+            fi
+            sleep 2
+          done
         working-directory: ./packages/templates/clients/websocket/test
 
       - name: Run kafka acceptance tests

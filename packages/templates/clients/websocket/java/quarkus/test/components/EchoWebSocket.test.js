@@ -1,7 +1,7 @@
 import path from 'path';
 import { render } from '@asyncapi/generator-react-sdk';
 import { Parser, fromFile } from '@asyncapi/parser';
-import { getQueryParams, getTitle } from '@asyncapi/generator-helpers';
+import { getQueryParams, getServerPathname, getTitle } from '@asyncapi/generator-helpers';
 import { EchoWebSocket } from '../../components/EchoWebSocket.js';
 
 const parser = new Parser();
@@ -14,6 +14,8 @@ describe('EchoWebSocket component (integration with AsyncAPI document)', () => {
   let operations;
   let title;
   let pathName;
+  let resolvedPathName;
+  let quotedPathName;
 
   beforeAll(async () => {
     const parseResult = await fromFile(parser, asyncapiFilePath).parse();
@@ -25,6 +27,8 @@ describe('EchoWebSocket component (integration with AsyncAPI document)', () => {
     const servers = parsedAsyncAPIDocument.servers();
     const server = servers.all()[0];
     pathName = server.pathname();
+    resolvedPathName = getServerPathname(servers.get('withVariables'));
+    quotedPathName = getServerPathname(servers.get('withQuotedVariables'));
   });
 
   test('renders with default path when pathName is null', () => {
@@ -62,6 +66,34 @@ describe('EchoWebSocket component (integration with AsyncAPI document)', () => {
         operations={operations} 
       />
     );
+    expect(result.trim()).toMatchSnapshot();
+  });
+
+  test('renders the resolved pathname for a variable with a plain default', () => {
+    const result = render(
+      <EchoWebSocket 
+        clientName="WebSocketClient" 
+        pathName={resolvedPathName} 
+        title={title} 
+        queryParams={queryParams} 
+        operations={operations} 
+      />
+    );
+    expect(result).toContain('@WebSocketClient(path = "/ws/btcusd")');
+    expect(result.trim()).toMatchSnapshot();
+  });
+
+  test('escapes quotes in the resolved pathname', () => {
+    const result = render(
+      <EchoWebSocket 
+        clientName="WebSocketClient" 
+        pathName={quotedPathName} 
+        title={title} 
+        queryParams={queryParams} 
+        operations={operations} 
+      />
+    );
+    expect(result).toContain('@WebSocketClient(path = "/ws/btc\\"usd")');
     expect(result.trim()).toMatchSnapshot();
   });
 });

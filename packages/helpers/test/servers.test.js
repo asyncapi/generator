@@ -1,6 +1,6 @@
 const path = require('path');
 const { Parser, fromFile } = require('@asyncapi/parser');
-const { getServerUrl, getServer, getServerHost, getServerProtocol } = require('@asyncapi/generator-helpers');
+const { getServerUrl, getServer, getServerHost, getServerPathname, getServerProtocol } = require('@asyncapi/generator-helpers');
 
 const parser = new Parser();
 const asyncapi_v3_path = path.resolve(__dirname, './__fixtures__/asyncapi-websocket-query.yml');
@@ -39,6 +39,117 @@ describe('getServerUrl integration test with AsyncAPI', () => {
 
     // Example assertion: Ensure the pathname is appended to the URL
     expect(serverUrl).toBe('wss://api.gemini.com/v1/marketdata');
+  });
+
+  it('should replace server variables in the URL with their default values', () => {
+    const server = parsedAsyncAPIDocument.servers().get('withVariables');
+
+    const serverUrl = getServerUrl(server);
+
+    expect(serverUrl).toBe('wss://api.gemini.com/v1/marketdata/btcusd');
+  });
+
+  it('should replace a server variable in the host with its default value', () => {
+    const server = parsedAsyncAPIDocument.servers().get('withHostVariable');
+
+    const serverUrl = getServerUrl(server);
+
+    expect(serverUrl).toBe('wss://us-east.api.gemini.com/v1/marketdata');
+  });
+
+  it('should replace variables in both the host and pathname', () => {
+    const server = parsedAsyncAPIDocument.servers().get('withMultipleVariables');
+
+    const serverUrl = getServerUrl(server);
+
+    expect(serverUrl).toBe('wss://us-east.api.gemini.com/v1/marketdata/btcusd');
+  });
+
+  it('should not cascade substitutions through a default containing a placeholder', () => {
+    const server = parsedAsyncAPIDocument.servers().get('withNestedDefault');
+
+    const serverUrl = getServerUrl(server);
+
+    expect(serverUrl).toBe('wss://api.gemini.com/v1/marketdata/{second}');
+  });
+
+  it('should preserve quote characters from a server variable default', () => {
+    const server = parsedAsyncAPIDocument.servers().get('withQuotedDefault');
+
+    const serverUrl = getServerUrl(server);
+
+    expect(serverUrl).toBe('wss://api.gemini.com/v1/marketdata/btc"usd');
+  });
+
+  it('should keep the placeholder when a server variable has no default value', () => {
+    const server = parsedAsyncAPIDocument.servers().get('withVariableWithoutDefault');
+
+    const serverUrl = getServerUrl(server);
+
+    expect(serverUrl).toBe('wss://api.gemini.com/v1/marketdata/{symbol}');
+  });
+
+  it('should keep the placeholder when a server variable default is null', () => {
+    // Why: the Parser rejects a `null` default because the spec requires a
+    // string, so a hand-built stand-in is the only way to cover this branch.
+    const mockServer = {
+      host: () => GEMINI_HOST,
+      protocol: () => 'wss',
+      hasPathname: () => true,
+      pathname: () => '/v1/marketdata/{symbol}',
+      variables: () => ({
+        entries: () => [
+          [0, { id: () => 'symbol', defaultValue: () => null }]
+        ]
+      })
+    };
+
+    expect(getServerUrl(mockServer)).toBe('wss://api.gemini.com/v1/marketdata/{symbol}');
+  });
+});
+
+describe('getServerPathname integration test with AsyncAPI', () => {
+  let parsedAsyncAPIDocument;
+
+  beforeAll(async () => {
+    const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
+    parsedAsyncAPIDocument = parseResult.document;
+  });
+
+  it('should return the pathname when it contains no variables', () => {
+    const server = parsedAsyncAPIDocument.servers().get('withPathname');
+
+    expect(getServerPathname(server)).toBe('/v1/marketdata');
+  });
+
+  it('should replace a server variable in the pathname with its default value', () => {
+    const server = parsedAsyncAPIDocument.servers().get('withVariables');
+
+    expect(getServerPathname(server)).toBe('/v1/marketdata/btcusd');
+  });
+
+  it('should return a quoted default unescaped so templates can escape it for their target language', () => {
+    const server = parsedAsyncAPIDocument.servers().get('withQuotedDefault');
+
+    expect(getServerPathname(server)).toBe('/v1/marketdata/btc"usd');
+  });
+
+  it('should replace variables in the pathname when the host also has variables', () => {
+    const server = parsedAsyncAPIDocument.servers().get('withMultipleVariables');
+
+    expect(getServerPathname(server)).toBe('/v1/marketdata/btcusd');
+  });
+
+  it('should keep the placeholder when a pathname variable has no default value', () => {
+    const server = parsedAsyncAPIDocument.servers().get('withVariableWithoutDefault');
+
+    expect(getServerPathname(server)).toBe('/v1/marketdata/{symbol}');
+  });
+
+  it('should return undefined when the server has no pathname', () => {
+    const server = parsedAsyncAPIDocument.servers().get('withoutPathName');
+
+    expect(getServerPathname(server)).toBeUndefined();
   });
 });
 
@@ -98,6 +209,14 @@ describe('getServerHost integration test with AsyncAPI', () => {
     const expectedHost = server.host();
 
     expect(serverHost).toBe(expectedHost);
+  });
+
+  it('should replace a server variable in the host with its default value', () => {
+    const server = parsedAsyncAPIDocument.servers().get('withHostVariable');
+
+    const serverHost = getServerHost(server);
+
+    expect(serverHost).toBe('us-east.api.gemini.com');
   });
 
   it('should handle server with duplicate protocol in host', () => {

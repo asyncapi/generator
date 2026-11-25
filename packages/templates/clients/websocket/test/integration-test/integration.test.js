@@ -5,6 +5,7 @@ const { cleanTestResultPaths } = require('@asyncapi/generator-helpers');
 const { runCommonTests, runCommonSlackTests } = require('./common-test.js');
 const asyncapi_v3_path_hoppscotch = path.resolve(__dirname, '../__fixtures__/asyncapi-hoppscotch-client.yml');
 const asyncapi_v3_json_path = path.resolve(__dirname, '../__fixtures__/asyncapi-postman-echo.json');
+const asyncapi_v3_path_components = path.resolve(__dirname, '../__fixtures__/asyncapi-websocket-components.yml');
 
 /**
  * Configuration for different target languages.
@@ -77,6 +78,31 @@ describe('WebSocket Clients Integration Tests', () => {
       const config = languageConfig['java-quarkus'];
       runCommonTests('Java', config);
       runCommonSlackTests('Java', config);
+
+      describe('Additional tests for Java client', () => {
+        it('escapes a quoted server variable default in the generated pathname', async () => {
+          const outputPath = path.join(config.testResultPath, 'quoted_pathname');
+          const generator = new Generator(config.template, outputPath, {
+            forceWrite: true,
+            templateParams: {
+              server: 'withQuotedVariables'
+            }
+          });
+          await generator.generateFromFile(asyncapi_v3_path_components);
+
+          const client = await readFile(
+            path.join(outputPath, 'src/main/java/com/asyncapi/WebSocketComponentsTestFixture.java'),
+            'utf8'
+          );
+          const connector = await readFile(
+            path.join(outputPath, 'src/main/java/com/asyncapi/WebSocketComponentsTestFixtureConnector.java'),
+            'utf8'
+          );
+
+          expect(client).toContain('@WebSocketClient(path = "/ws/btc\\"usd")');
+          expect(connector).toContain('String queryUri = baseURI + "/ws/btc\\"usd" + "?" + query;');
+        }, 30000);
+      });
     });
   });
   

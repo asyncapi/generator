@@ -1,4 +1,4 @@
-import { getClientName, getInfo, getQueryParams, getServer, getTitle } from '@asyncapi/generator-helpers';
+import { getClientName, getInfo, getQueryParams, getServer, getServerPathname, getTitle } from '@asyncapi/generator-helpers';
 import { File } from '@asyncapi/generator-react-sdk';
 import { FileHeaderInfo } from '@asyncapi/generator-components';
 import { ClientDependencies } from '../../../../../../components/dependencies/ClientDependencies.js';
@@ -12,7 +12,7 @@ export default async function ({ asyncapi, params }) {
   const clientName = getClientName(asyncapi, params.appendClientSuffix, params.customClientName);
   const operations = asyncapi.operations();
   const clientJavaName = `${clientName}.java`;
-  const pathName = server.pathname();
+  const pathName = getServerPathname(server);
 
   return (
     <File name={clientJavaName}>

@@ -1,4 +1,4 @@
-import { getClientName, getQueryParams, getServer } from '@asyncapi/generator-helpers';
+import { getClientName, getQueryParams, getServer, getServerPathname } from '@asyncapi/generator-helpers';
 import { File } from '@asyncapi/generator-react-sdk';
 import { ConnectorDependencies } from '../../../../../../components/dependencies/ConnectorDependencies.js';
 import ClientConnector from '../../../../../../components/ClientConnector.js';
@@ -8,7 +8,7 @@ export default async function ({ asyncapi, params }) {
   const clientName = getClientName(asyncapi, params.appendClientSuffix, params.customClientName);
   const queryParams = getQueryParams(asyncapi.channels());
   const clientConnectorName = `${clientName}Connector.java`;
-  const pathName = server.pathname();
+  const pathName = getServerPathname(server);
   const operations = asyncapi.operations();
   
   return (

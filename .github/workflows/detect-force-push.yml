@@ -14,6 +14,7 @@ on:
   pull_request_target:
     types:
       - synchronize # zizmor: ignore[dangerous-triggers] no checkout; API-only comparison of before/after SHAs
+      - reopened # zizmor: ignore[dangerous-triggers] no checkout; catches force-pushes made while the PR was closed
 
 permissions: {}
 
@@ -35,34 +36,36 @@ jobs:
         with:
           script: |
             const { before, after, pull_request: pr, sender } = context.payload;
-            if (!before || !after || before === after) return;
-
             const { owner, repo } = context.repo;
             let currentIsForcePush = false;
             let compareUnavailable = false;
             let comparisonStatus = '';
 
-            try {
-              const { data: comparison } = await github.rest.repos.compareCommitsWithBasehead({
-                owner,
-                repo,
-                basehead: `${before}...${after}`,
-              });
+            // Why: reopened events have no before/after SHAs, so only compare when both are present;
+            // the timeline check below still catches any force-pushes made while the PR was closed.
+            if (before && after && before !== after) {
+              try {
+                const { data: comparison } = await github.rest.repos.compareCommitsWithBasehead({
+                  owner,
+                  repo,
+                  basehead: `${before}...${after}`,
+                });
 
-              // Fast-forward pushes always report 'ahead'; 'diverged' or 'behind' means history was rewritten.
-              comparisonStatus = comparison.status;
-              currentIsForcePush = comparisonStatus === 'diverged' || comparisonStatus === 'behind';
-            } catch (error) {
-              // Why: 404 (previous SHA unavailable) or 422 with missing-ancestry details indicate rewritten history;
-              // unrelated 422s (e.g. validation/spam errors) or 5xx errors should fail loudly rather than mislabeling.
-              const msg = String(error.message || '');
-              const isMissingAncestry422 =
-                error.status === 422 && /no common ancestor|not found/i.test(msg);
-              if (error.status === 404 || isMissingAncestry422) {
-                currentIsForcePush = true;
-                compareUnavailable = true;
-              } else {
-                throw error;
+                // Fast-forward pushes always report 'ahead'; 'diverged' or 'behind' means history was rewritten.
+                comparisonStatus = comparison.status;
+                currentIsForcePush = comparisonStatus === 'diverged' || comparisonStatus === 'behind';
+              } catch (error) {
+                // Why: 404 (previous SHA unavailable) or 422 with missing-ancestry details indicate rewritten history;
+                // unrelated 422s (e.g. validation/spam errors) or 5xx errors should fail loudly rather than mislabeling.
+                const msg = String(error.message || '');
+                const isMissingAncestry422 =
+                  error.status === 422 && /no common ancestor|not found/i.test(msg);
+                if (error.status === 404 || isMissingAncestry422) {
+                  currentIsForcePush = true;
+                  compareUnavailable = true;
+                } else {
+                  throw error;
+                }
               }
             }
 

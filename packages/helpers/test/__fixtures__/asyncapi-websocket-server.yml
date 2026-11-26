@@ -1,0 +1,114 @@
+asyncapi: 3.0.0
+info:
+  title: Chat WebSocket Server
+  version: 1.0.0
+  description: >
+    A chat server, described from the server's perspective: it sends what its
+    send operations describe and receives what its receive operations describe.
+servers:
+  withPort:
+    host: localhost:3000
+    protocol: ws
+  withoutPort:
+    host: localhost
+    protocol: ws
+
+channels:
+  chatRoom:
+    address: /chatRoom
+    messages:
+      welcome:
+        $ref: '#/components/messages/welcome'
+      chatMessage:
+        $ref: '#/components/messages/chatMessage'
+  notifications:
+    address: /notifications
+    messages:
+      welcome:
+        $ref: '#/components/messages/welcome'
+  commands:
+    address: /commands
+    messages:
+      chatMessage:
+        $ref: '#/components/messages/chatMessage'
+  noOperations:
+    address: /no-operations
+
+operations:
+  # The receive operation of chatRoom comes before its send operations on purpose.
+  onChatMessage:
+    action: receive
+    channel:
+      $ref: '#/channels/chatRoom'
+    messages:
+      - $ref: '#/channels/chatRoom/messages/chatMessage'
+  sendWelcome:
+    action: send
+    channel:
+      $ref: '#/channels/chatRoom'
+    messages:
+      - $ref: '#/channels/chatRoom/messages/welcome'
+  sendChatMessage:
+    action: send
+    channel:
+      $ref: '#/channels/chatRoom'
+    messages:
+      - $ref: '#/channels/chatRoom/messages/chatMessage'
+  sendNotification:
+    action: send
+    channel:
+      $ref: '#/channels/notifications'
+    messages:
+      - $ref: '#/channels/notifications/messages/welcome'
+  onCommand:
+    action: receive
+    channel:
+      $ref: '#/channels/commands'
+    messages:
+      - $ref: '#/channels/commands/messages/chatMessage'
+
+components:
+  messages:
+    welcome:
+      summary: A greeting the server sends to a client after it connects.
+      payload:
+        type: string
+    chatMessage:
+      summary: A message a client writes in a room.
+      headers:
+        type: object
+        properties:
+          correlationId:
+            type: string
+            description: Identifies the message this one answers.
+      payload:
+        type: object
+        properties:
+          text:
+            type: string
+            description: The text of the message.
+          room:
+            type: string
+            default: general
+          priority:
+            type: integer
+            description: |
+              How urgent the message is.
+              A higher number is more urgent.
+            default: 1
+          silent:
+            type: boolean
+            default: false
+          metadata:
+            description: Free-form data the client attaches.
+          sender:
+            type: object
+            description: The user who wrote the message.
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+                description: The display name of the user.
+          attachments:
+            type: object

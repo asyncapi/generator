@@ -1,0 +1,10 @@
+asyncapi: 2.6.0
+info:
+  title: Chat WebSocket Server
+  version: 1.0.0
+channels:
+  /chatRoom:
+    publish:
+      message:
+        payload:
+          type: string

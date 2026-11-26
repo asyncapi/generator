@@ -1,9 +1,10 @@
 const path = require('path');
 const { Parser, fromFile } = require('@asyncapi/parser');
-const { getServerUrl, getServer, getServerHost, getServerProtocol } = require('@asyncapi/generator-helpers');
+const { getServerUrl, getServer, getServerHost, getServerProtocol, getServerPort } = require('@asyncapi/generator-helpers');
 
 const parser = new Parser();
 const asyncapi_v3_path = path.resolve(__dirname, './__fixtures__/asyncapi-websocket-query.yml');
+const asyncapi_v3_server_path = path.resolve(__dirname, './__fixtures__/asyncapi-websocket-server.yml');
 const GEMINI_HOST = 'api.gemini.com';
 
 describe('getServerUrl integration test with AsyncAPI', () => {
@@ -184,5 +185,30 @@ describe('getServerProtocol integration test with AsyncAPI', () => {
       const result = getServerProtocol(mockServer);
       expect(result).toBe(protocolValue);
     });
+  });
+});
+
+describe('getServerPort integration test with AsyncAPI', () => {
+  let servers;
+
+  beforeAll(async () => {
+    const parseResult = await fromFile(parser, asyncapi_v3_server_path).parse();
+    servers = parseResult.document.servers();
+  });
+
+  it('should return the port as a number when the host has a port', () => {
+    const server = servers.get('withPort');
+
+    const serverPort = getServerPort(server);
+
+    expect(serverPort).toBe(3000);
+  });
+
+  it('should return undefined when the host has no port', () => {
+    const server = servers.get('withoutPort');
+
+    const serverPort = getServerPort(server);
+
+    expect(serverPort).toBeUndefined();
   });
 });

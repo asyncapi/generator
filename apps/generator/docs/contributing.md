@@ -108,6 +108,8 @@ Please use our issues templates that provide you with hints on what information 
 
 **Please, make sure you open an issue before starting with a Pull Request, unless it's a typo or a really obvious error.** Pull requests are the best way to propose changes to the specification. Get familiar with our document that explains [Git workflow](https://github.com/asyncapi/community/blob/master/docs/010-contribution-guidelines/git-workflow.md) used in our repositories.
 
+**Do not force-push on open pull requests.** Use normal incremental commits when addressing review feedback or syncing with `master` (all PRs are squash-merged on merge). Force-pushing erases incremental diff history, collapses earlier review context, and triggers automated `force-pushed` flagging in CI.
+
 ## AI-Assisted Contributions
 
 You may use generative AI and AI-assisted tooling to help you contribute, but you remain the author of and are fully accountable for everything you submit. Before submitting AI-assisted work, review it thoroughly, verify it meets our standards, remove unrelated changes, and confirm it does not violate any licenses.

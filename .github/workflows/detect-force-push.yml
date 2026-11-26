@@ -1,0 +1,176 @@
+# Purpose of this workflow is to flag pull requests whose commit history was
+# rewritten via force-push, helping reviewers spot replaced commits and inspect
+# what changed.
+#
+# Why pull_request_target instead of pull_request: the workflow must add labels
+# and post/update a comment on PRs opened from forks, and the plain `pull_request`
+# event only grants a read-only token for forks.
+#
+# Security: safe because there is NO checkout and NO PR code execution — only
+# commit SHAs, PR timeline events, and sender metadata are read via GitHub REST APIs.
+name: Detect force-push on PR
+
+on:
+  pull_request_target:
+    types:
+      - synchronize # zizmor: ignore[dangerous-triggers] no checkout; API-only comparison of before/after SHAs
+      - reopened # zizmor: ignore[dangerous-triggers] no checkout; catches force-pushes made while the PR was closed
+
+permissions: {}
+
+concurrency:
+  group: detect-force-push-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+
+jobs:
+  detect-force-push:
+    name: Detect force-push on PR
+    if: ${{ !contains(fromJson('["asyncapi-bot", "dependabot[bot]", "dependabot-preview[bot]", "github-actions[bot]"]'), github.event.pull_request.user.login) }} # zizmor: ignore[obfuscation]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read # required by repos.compareCommitsWithBasehead
+      pull-requests: write # required to add 'force-pushed' label and post/update the summary comment
+    steps:
+      - name: Check if push rewrote commit history
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        with:
+          script: |
+            const { before, after, pull_request: pr, sender } = context.payload;
+            const { owner, repo } = context.repo;
+            let currentIsForcePush = false;
+            let compareUnavailable = false;
+            let comparisonStatus = '';
+
+            // Why: reopened events have no before/after SHAs, so only compare when both are present;
+            // the timeline check below still catches any force-pushes made while the PR was closed.
+            if (before && after && before !== after) {
+              try {
+                const { data: comparison } = await github.rest.repos.compareCommitsWithBasehead({
+                  owner,
+                  repo,
+                  basehead: `${before}...${after}`,
+                });
+
+                // Fast-forward pushes always report 'ahead'; 'diverged' or 'behind' means history was rewritten.
+                comparisonStatus = comparison.status;
+                currentIsForcePush = comparisonStatus === 'diverged' || comparisonStatus === 'behind';
+              } catch (error) {
+                // Why: 404 (previous SHA unavailable) or 422 with missing-ancestry details indicate rewritten history;
+                // unrelated 422s (e.g. validation/spam errors) or 5xx errors should fail loudly rather than mislabeling.
+                const msg = String(error.message || '');
+                const isMissingAncestry422 =
+                  error.status === 422 && /no common ancestor|not found/i.test(msg);
+                if (error.status === 404 || isMissingAncestry422) {
+                  currentIsForcePush = true;
+                  compareUnavailable = true;
+                } else {
+                  throw error;
+                }
+              }
+            }
+
+            const marker = '<!-- detect-force-push -->';
+            const comments = await github.paginate(github.rest.issues.listComments, {
+              owner,
+              repo,
+              issue_number: pr.number,
+              per_page: 100,
+            });
+
+            // Why: filter by github-actions[bot] so another user quoting the marker cannot break updateComment.
+            const existing = comments.find(
+              c => c.user && c.user.login === 'github-actions[bot]' && (c.body || '').includes(marker)
+            );
+            const existingBody = existing ? existing.body : '';
+
+            // Why: GitHub's concurrency group keeps at most 1 running + 1 pending run, cancelling earlier pending
+            // runs during rapid pushes. Checking head_ref_force_pushed timeline events ensures any cancelled
+            // force-push run between pushes is still caught and recorded by the surviving run.
+            const timelineEvents = await github.paginate(github.rest.issues.listEventsForTimeline, {
+              owner,
+              repo,
+              issue_number: pr.number,
+              per_page: 100,
+            });
+
+            const missedForcePushes = timelineEvents.filter(
+              e =>
+                e.event === 'head_ref_force_pushed' &&
+                e.commit_id &&
+                !(currentIsForcePush && e.commit_id === after) &&
+                !existingBody.includes(e.commit_id)
+            );
+
+            const currentAlreadyRecorded =
+              currentIsForcePush &&
+              (existingBody.includes(`${before}..${after}`) ||
+                (compareUnavailable &&
+                  existingBody.includes(`\`${before.slice(0, 7)}\` → \`${after.slice(0, 7)}\``)));
+            const shouldRecordCurrent = currentIsForcePush && !currentAlreadyRecorded;
+
+            if (!shouldRecordCurrent && missedForcePushes.length === 0) return;
+
+            await github.rest.issues.addLabels({
+              owner,
+              repo,
+              issue_number: pr.number,
+              labels: ['force-pushed'],
+            });
+
+            const newRows = missedForcePushes.map(e => {
+              const ts = (e.created_at || new Date().toISOString()).replace('T', ' ').slice(0, 16) + ' UTC';
+              const who = e.actor && e.actor.login ? `@${e.actor.login}` : 'unknown';
+              const shortSha = e.commit_id.slice(0, 7);
+              const commitUrl = `https://github.com/${owner}/${repo}/commit/${e.commit_id}`;
+              return `| ${ts} | ${who} | — → \`${shortSha}\` | Timeline event (prior run skipped) | [Commit](${commitUrl}) |`;
+            });
+
+            if (shouldRecordCurrent) {
+              const timestamp = new Date().toISOString().replace('T', ' ').slice(0, 16) + ' UTC';
+              const actor = sender && sender.login ? `@${sender.login}` : 'unknown';
+              const shortBefore = before.slice(0, 7);
+              const shortAfter = after.slice(0, 7);
+
+              const rewriteType = compareUnavailable
+                ? 'Unreachable (`before` unavailable)'
+                : comparisonStatus === 'behind'
+                  ? 'Reset / dropped commits (`behind`)'
+                  : 'Rewritten (`diverged`)';
+
+              // Why: use two-dot (before..after) rather than three-dot (before...after) so reverted
+              // commits still show their exact snapshot diff instead of an empty merge-base diff.
+              const diffLink = compareUnavailable
+                ? `[Commits](https://github.com/${owner}/${repo}/pull/${pr.number}/commits)`
+                : `[Compare](https://github.com/${owner}/${repo}/compare/${before}..${after})`;
+              newRows.push(`| ${timestamp} | ${actor} | \`${shortBefore}\` → \`${shortAfter}\` | ${rewriteType} | ${diffLink} |`);
+            }
+
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner,
+                repo,
+                comment_id: existing.id,
+                body: `${existingBody.trimEnd()}\n${newRows.join('\n')}`,
+              });
+            } else {
+              const body = [
+                marker,
+                '⚠️ **Force-push detected on this PR**',
+                '',
+                'Commit history was rewritten. Inspect the snapshot diff below and re-check any collapsed or outdated review comments before approving.',
+                '',
+                '> **Note for contributors:** Please push incremental commits instead of force-pushing (PRs are squash-merged).',
+                '> *(If this force-push included a rebase, the snapshot diff will also include changes from the base branch.)*',
+                '',
+                '| Time (UTC) | Actor | Before → After | Type | Snapshot diff |',
+                '|---|---|---|---|---|',
+                ...newRows,
+              ].join('\n');
+
+              await github.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number: pr.number,
+                body,
+              });
+            }

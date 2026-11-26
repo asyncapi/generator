@@ -55,6 +55,8 @@ Every package inherits the root `.eslintrc` — that file is the source of truth
 ### 2.3 Commits, PR titles and descriptions
 See the [Conventional Commits section in the contributing guide](apps/generator/docs/contributing.md#conventional-commits).
 
+**Never force-push on open PRs.** Always push incremental commits when addressing review feedback or syncing with `master` (PRs are squash-merged on merge). Force-pushing destroys incremental review diffs and triggers the automated `force-pushed` CI flag.
+
 PR descriptions must follow the [PR template](.github/pull-request-template.md): keep every section, replace the `- ...` placeholders, and tick exactly one **AI assistance** box. AI-assisted PRs must fill in the `Generated-by:` line (tool + model) per the [AI Usage Policy](AI-POLICY.md). Tools that pass the body directly (e.g. `gh pr create --body`) skip the template, so build the body from it explicitly.
 
 ### 2.4 Documentation and comments

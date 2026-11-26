@@ -17,6 +17,10 @@ on:
 
 permissions: {}
 
+concurrency:
+  group: detect-force-push-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+
 jobs:
   detect-force-push:
     name: Detect force-push on PR
@@ -49,9 +53,12 @@ jobs:
               comparisonStatus = comparison.status;
               isForcePush = comparisonStatus === 'diverged' || comparisonStatus === 'behind';
             } catch (error) {
-              // Why: 404 (previous SHA unavailable) or 422 (no common ancestor) indicate rewritten history;
-              // any other error (e.g. 5xx) should fail loudly rather than silently passing.
-              if (error.status === 404 || error.status === 422) {
+              // Why: 404 (previous SHA unavailable) or 422 with missing-ancestry details indicate rewritten history;
+              // unrelated 422s (e.g. validation/spam errors) or 5xx errors should fail loudly rather than mislabeling.
+              const msg = String(error.message || '');
+              const isMissingAncestry422 =
+                error.status === 422 && /no common ancestor|not found/i.test(msg);
+              if (error.status === 404 || isMissingAncestry422) {
                 isForcePush = true;
                 compareUnavailable = true;
               } else {

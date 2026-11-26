@@ -57,5 +57,5 @@ From the spawn prompt:
 ## Rules
 
 - Write only `TARGET_PATH` and its missing parent folders. Never run `npm install` or the build.
-- No `README.md`. The report lists README authoring as a manual follow-up.
+- No `README.md`. The orchestrator writes it in Final, from the smoke run.
 - Never put `test` in a file or directory name you create under `TARGET_PATH`, outside `TARGET_PATH/test/`: the build's copy filter drops any path containing `test`.

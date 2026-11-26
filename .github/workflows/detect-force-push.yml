@@ -101,7 +101,14 @@ jobs:
                 !existingBody.includes(e.commit_id)
             );
 
-            if (!currentIsForcePush && missedForcePushes.length === 0) return;
+            const currentAlreadyRecorded =
+              currentIsForcePush &&
+              (existingBody.includes(`${before}..${after}`) ||
+                (compareUnavailable &&
+                  existingBody.includes(`\`${before.slice(0, 7)}\` → \`${after.slice(0, 7)}\``)));
+            const shouldRecordCurrent = currentIsForcePush && !currentAlreadyRecorded;
+
+            if (!shouldRecordCurrent && missedForcePushes.length === 0) return;
 
             await github.rest.issues.addLabels({
               owner,
@@ -118,7 +125,7 @@ jobs:
               return `| ${ts} | ${who} | — → \`${shortSha}\` | Timeline event (prior run skipped) | [Commit](${commitUrl}) |`;
             });
 
-            if (currentIsForcePush) {
+            if (shouldRecordCurrent) {
               const timestamp = new Date().toISOString().replace('T', ' ').slice(0, 16) + ' UTC';
               const actor = sender && sender.login ? `@${sender.login}` : 'unknown';
               const shortBefore = before.slice(0, 7);

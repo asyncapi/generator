@@ -93,7 +93,7 @@ const upperFirst = (inputStr) => {
 // has no case here: it joins the word on either side of it.
 const UPPER = '[A-Z]';
 const LOWER = '[a-z]';
-const OTHER = '(?![A-Za-z0-9])[\\p{L}\\p{M}\\p{N}]';
+const OTHER = String.raw`(?![A-Za-z0-9])[\p{L}\p{M}\p{N}]`;
 
 // The alternatives are tried in this order at every position of the string.
 const KEBAB_CASE_WORDS = new RegExp([
@@ -102,10 +102,10 @@ const KEBAB_CASE_WORDS = new RegExp([
   // A lower-case or capitalized word.
   `${UPPER}?(?:${LOWER}|${OTHER})+`,
   // An ordinal number, kept in one piece: `1st`, `22ND`.
-  '\\d*(?:1st|2nd|3rd|(?![123])\\dth)(?=\\b|[A-Z_])',
-  '\\d*(?:1ST|2ND|3RD|(?![123])\\dTH)(?=\\b|[a-z_])',
+  String.raw`\d*(?:1st|2nd|3rd|(?![123])\dth)(?=\b|[A-Z_])`,
+  String.raw`\d*(?:1ST|2ND|3RD|(?![123])\dTH)(?=\b|[a-z_])`,
   // Any other number.
-  '\\d+'
+  String.raw`\d+`
 ].join('|'), 'gu');
 
 /**
@@ -121,18 +121,17 @@ const KEBAB_CASE_WORDS = new RegExp([
  * @returns {string} The converted kebab-case string, or an empty string for `null` and `undefined`
  */
 const kebabCase = (inputStr) => {
-  if (inputStr === null || inputStr === undefined) {
-    return '';
-  }
-  const plainStr = String(inputStr)
+  // `null` and `undefined` become an empty string, which has no words.
+  const plainStr = String(inputStr ?? '')
     // Split each accented Latin letter into the letter and its accent, then drop the accents.
     .replace(/[\u00c0-\u017f]/g, (letter) => letter.normalize('NFD'))
     .replace(/[\u0300-\u036f\ufe20-\ufe2f\u20d0-\u20ff]/g, '')
     // Drop apostrophes, so that `don't` stays one word.
     .replace(/['\u2019]/g, '');
-  const words = plainStr.match(KEBAB_CASE_WORDS) || [];
-  return words
-    .map((word) => word.toLowerCase())
+  // `matchAll`, not `exec`: the pattern is global and every word is needed, not only the first.
+  const matches = [...plainStr.matchAll(KEBAB_CASE_WORDS)];
+  return matches
+    .map((match) => match[0].toLowerCase())
     .join('-');
 };
 
@@ -146,7 +145,7 @@ const oneLine = (inputStr) => {
   if (!inputStr) {
     return inputStr;
   }
-  return inputStr.replace(/\n/g, ' ');
+  return inputStr.replaceAll('\n', ' ');
 };
 
 module.exports = {

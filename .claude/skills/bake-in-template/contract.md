@@ -13,7 +13,7 @@ This file defines what passes between the orchestrator ([SKILL.md](SKILL.md)) an
   | `SCRATCH_DIR/api-map.json` | `api-mapper` |
   | `RUNS_DIR/run-<n>.json` | `smoke-runner` |
 
-- **Structured handoffs are JSON; prose is Markdown.** The orchestrator checks the JSON files mechanically: `v3: "NONE"` triggers `Q-parser-gap`, `uncovered` triggers `Q-uncovered-files`, `outputs` routes Wave 4 failures, and `state.json` drives the previous-run check and process cleanup. Agents receive single slices of them by id. `changes.md`, `feedback-<n>.md` and `report.md` hold the user's wording and the human-facing report, so they stay Markdown.
+- **Structured handoffs are JSON; prose is Markdown.** The orchestrator checks the JSON files mechanically: `v3: "NONE"` triggers `Q-parser-gap`, `oneOfMany` triggers `Q-one-of-many`, `uncovered` triggers `Q-uncovered-files`, `outputs` routes Wave 4 failures, and `state.json` drives the previous-run check and process cleanup. Agents receive single slices of them by id. `changes.md`, `feedback-<n>.md` and `report.md` hold the user's wording and the human-facing report, so they stay Markdown.
 - **Read JSON with `scripts/read-slice.js`, never `jq`.** `jq` may not be installed on Windows. Read only the rows you need, by id:
 
   ```bash
@@ -187,6 +187,7 @@ Written by `api-mapper`.
       "helper": null,
       "grepEvidence": ["node_modules/@asyncapi/parser/cjs/models/channel.d.ts: operations(): OperationsInterface;", "node_modules/@asyncapi/parser/cjs/models/operations.d.ts: filterByReceive(): OperationInterface[];"],
       "note": "v2 publish = the application RECEIVES",
+      "oneOfMany": [],
       "forChange": null
     },
     {
@@ -197,6 +198,7 @@ Written by `api-mapper`.
       "helper": null,
       "grepEvidence": ["node_modules/@asyncapi/parser/cjs/models/operations.d.ts: filterBySend(): OperationInterface[];", "node_modules/@asyncapi/parser/cjs/models/operation-trait.d.ts:7: operationId(): string | undefined;", "node_modules/@asyncapi/parser/cjs/models/v2/operation-trait.js:11: return this.operationId() || this._meta.id;"],
       "note": "v2 subscribe = the application SENDS. Use operationId(), not id(): the v2 model id() falls back to subscribe or publish, while the old API id() was the operationId only",
+      "oneOfMany": ["the channel's send operations"],
       "forChange": null
     }
   ],
@@ -219,6 +221,7 @@ Written by `api-mapper`.
 | `helper` | an `@asyncapi/generator-helpers` export that wraps the call, or `null` |
 | `grepEvidence` | `path:line: match` lines (or `command → result` for a count) from the greps that confirmed every name in `v3` / `helper`. A row with an empty `grepEvidence` and a `v3` other than `NONE` is invalid |
 | `note` | semantics the translator must not get wrong |
+| `oneOfMany` | one name per collection that `v3` takes one item out of with an index (`[0]`), saying what the collection holds; `[]` when it takes none. A name triggers `Q-one-of-many` |
 | `forChange` | `C<n>` when the row exists only for a change, else `null` |
 
 `filters[]`:

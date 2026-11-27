@@ -43,9 +43,9 @@ Spawn the agents of one wave in one message, so they run in parallel. Each retur
 ```
 Wave 0   orchestrator: previous-run check (Q-previous-run) · clean working tree · clone · preconditions (Q-engine) · installs · source-index.json · Q-role, Q-target-path, Q-capture-doc, Q-capture-params, Q-what-to-change, Q-confirm-changes, Q-template-author, Q-config-mapping · changes.md · summary
 Wave 1   capturer ∥ api-mapper ∥ scaffolder (writes files only)
-         orchestrator: scaffold gate (root npm install + BUILD) · inventory.json · Q-uncovered-files/Q-parser-gap/Q-test-folder if needed
+         orchestrator: scaffold gate (root npm install + BUILD) · inventory.json · Q-uncovered-files/Q-parser-gap/Q-test-folder/Q-one-of-many if needed
 Wave 2a  translator (all shared rows) ∥ orchestrator copies and wraps static files
-Wave 2b  translator × N (one per remaining row, into staging/) → merge: collisions (Q-file-collision), dependencies (Q-dependency-range, Q-new-dependency) → root npm install
+Wave 2b  translator × N (one per remaining row, into staging/) → merge: structure, collisions (Q-file-collision), dependencies (Q-dependency-range, Q-new-dependency) → root npm install
 Wave 3   BUILD → test-wirer → lint → import gate → tests → test coverage
 Wave 4   Q-smoke-doc → Q-smoke-params → generate by BAKED_IN_NAME → smoke-runner (start + verifications) → Q-start-failed if unclean · Q-does-it-work → stop PID → fixes (≤3 iterations)
 Final    root npm install · BUILD · lint · import gate · tests (CI=true) · ignored-files check · README · changeset · report.md
@@ -60,7 +60,7 @@ Rewrite `state.json` after every wave and every question.
 | What | Deleted when |
 |---|---|
 | `generator-versions.json` | Wave 0 step 4, once `pick-generator-version.js` has read it |
-| `staging/<rowId>/` | right after that row is merged (Wave 2b step 2, and every fix merge) |
+| `staging/<rowId>/` | right after that row is merged (Wave 2b step 3, and every fix merge) |
 | `tmp/<agent>[-<id>]/`, an agent's own throwaway scripts | by that agent, before it returns |
 | `RUNS_DIR/run-<n>/`, a generated project with its `node_modules` | before the next run is generated (Wave 4 step 2) |
 | everything else, `state.json` included | Final cleanup |
@@ -84,6 +84,8 @@ It needs `apps/react-sdk/lib/` and `packages/components/lib/`, which preconditio
 **Design decisions.** These hold for every run:
 
 - **Static JS becomes a verbatim wrapper component**, not a raw file under `nonRenderableFiles`. The React engine renders every `.js`, `.jsx` and `.cjs` file under `template/` as a component. A raw copy of the source's static JS would also have to pass the root lint, and fixing a lint finding would change the generated code. A wrapper written by `wrap-static.js` (Wave 2a) reproduces the file byte for byte, with line endings normalized to LF, and passes the root lint. So the source's `nonRenderableFiles` is dropped: the generator never renders non-JS files anyway, and a glob such as `src/lib/*.js` would also match the wrapper `utils.js.js`, which would then be copied raw as JSX.
+- **A template file composes components**, and is never one string. The repo's templates keep each block of generated code that depends on the document in a component (`packages/README.md` principles 3 and 5), and a component with logic gets its own test, which logic left inside a `template/` file never does (AGENTS.md §4.7). A Nunjucks source has no components to carry over, so the translators create them (translator.md, **Structure**), the Wave 2b merge checks that they did, and Wave 3 checks their tests. This is about how the template's own code is organized, never about what it generates, so it needs no question (rule 1).
+- **Taking one item of many is the user's decision.** An AsyncAPI 2.x channel has at most one `publish` and one `subscribe` operation; an AsyncAPI 3 channel has any number of operations. A call-by-call port keeps the old shape (`filterBySend()[0]`), so the generated project silently ignores every operation after the first, and no gate notices: the capture fixture and most test documents have one of each. So `api-mapper` marks every such row (`oneOfMany`), its validation refuses an unmarked one, and `Q-one-of-many` asks before translation (rule 2).
 - **`--no-eslintrc` is required** in the template's lint scripts when the source `template/` ships `.eslintrc*` files. Without the flag, ESLint 6.8 cascades that config, which was written for the generated project, onto the template's own code. With it, the root config passed through `--config` still applies in full.
 - **A process started by a subagent survives the subagent.** So `smoke-runner` leaves the project running for `Q-does-it-work`, and the orchestrator stops it later by its recorded PID (rule 4). On Windows, `taskkill /PID <pid> /T /F` stops its whole process tree. Only the Windows path has been confirmed; the Linux and macOS path (`nohup`, process groups, `kill -- -<pid>`) is untested.
 - **The smoke run happens inside the repo** (`RUNS_DIR`). A run directory outside the repo could catch a dependency the generated `package.json` forgot, but Node resolves packages from every ancestor `node_modules`, so a directory elsewhere (such as the system temp folder) isn't guaranteed to be isolated either. So the run stays under `temp/`, and the accepted risk is that the repo's hoisted `node_modules` can hide a missing dependency. To offset it, `smoke-runner` lists the bare packages the generated code requires that its `package.json` doesn't declare, and `Q-does-it-work` shows that list.
@@ -328,6 +330,13 @@ Round 2:  Q-capture-params · Q-what-to-change · Q-template-author · Q-config-
 **`Q-what-to-change`: What do you want to change in the template's functionality?**
 - Start with one line on what the old template generates, from its README and `source-index.json`, e.g. "a `<language>` `<protocol>` `<role>` with one handler per channel, plus a README and a Dockerfile".
 - Options: No changes, straight port (Recommended) · Other (describe the changes).
+- **When the source generates no runnable example** (no `source-index.json` file under `template/` has a name starting with `example`), say that every baked-in template of the repo generates one, and offer instead: Straight port plus a runnable example (Recommended) · Straight port, no example · Other (describe the changes). The first option is the **example change** below.
+
+**The example change.** The generated project gets `example.<ext>` at its root, written in its own language, so that one command exercises it:
+- **server:** a client script. It connects to the running server at the address the server's own configuration gives, so a port change reaches both. It sends one message for every operation the server receives: the first example of the operation's first message in the document, or a `TODO` placeholder when the document has none. It prints what the server sends, then exits with code 0, or with another code when it can't connect. Verification: command `<the example's run command, run in {RUN_DIR}>` → `exit code 0`.
+- **client:** a script that creates the generated client, registers a message handler and an error handler, connects, calls every send operation once with such a payload, and closes, as `SCAFFOLD_BASE/template/example.*` does. It needs a server to talk to, so its verification is `manual`.
+- It uses only packages the generated project already depends on.
+- Affects: new file `example.<ext>`, and the generated manifest when it lists run commands.
 
 **`Q-template-author`: Who should be the `author` in the new template's `package.json`?**
 - Always ask. Quote the source `package.json` `author` and the `author` of `SCAFFOLD_BASE/package.json`, which follows from the `Q-target-path` answer, and say which is which.
@@ -341,7 +350,7 @@ Round 2:  Q-capture-params · Q-what-to-change · Q-template-author · Q-config-
 - Ask `Q-capture-params`, `Q-what-to-change`, `Q-template-author` and 1 key in this round, and any remaining keys in a follow-up call.
 - Save each answer in `state.json` with `id` `Q-config-mapping:<key>`. `scaffolder` looks it up by that id.
 
-**`Q-confirm-changes`: Did I understand your changes correctly?** Ask only when `Q-what-to-change` described changes.
+**`Q-confirm-changes`: Did I understand your changes correctly?** Ask only when `Q-what-to-change` described changes, and again for a change that `Q-one-of-many` adds after Wave 1.
 - Restate each change as `C1`, `C2`, …, in a testable form, with how it will be verified. For example: "C1: `GET /health` answers 200 (verify: `curl … /health` → `200`). C2: no Dockerfile (verify: `test ! -f {RUN_DIR}/Dockerfile` → exit code `0`). C3: log lines start with a timestamp (verify: manual). Correct?"
 - Options: Correct · Other (fix the list or the verifications).
 - Repeat until the user picks "Correct". Then write `SCRATCH_DIR/changes.md` (format and example in `contract.md`).
@@ -500,13 +509,19 @@ Then set the remaining fields:
 
 ### Questions before Wave 2
 
-Ask only the questions that apply, in one call. Apply each answer to `inventory.json`.
+Ask only the questions that apply, in one call, or in a follow-up call when there are more than 4. Apply each answer to `inventory.json`.
 
 | # | Ask when | Question | Options |
 |---|---|---|---|
 | `Q-uncovered-files` | rows with `uncovered: true` | These files generated nothing in the capture, so there is no example to compare with: … | translate anyway · drop them |
 | `Q-parser-gap` | `api-map.json` rows with `v3: "NONE"` | These old Parser calls have no replacement: … (each with its `foundIn`) | write a new helper in `@asyncapi/generator-helpers` (adds a `2a` row) · abort · Other (give the replacement; re-dispatch `api-mapper` with it, so the row gets grep evidence) |
 | `Q-test-folder` | rows with `excludedByBuild: true` | The build skips any path containing `test`, so these files would be lost: … | drop them · abort · Other (give a new path; add it to `changes.md` as a new change with a file check) |
+| `Q-one-of-many` | `api-map.json` rows with a name in `oneOfMany`: one question per distinct name, saved with `id` `Q-one-of-many:<name>` | The old template handles only the first of `<name>` (`<old>`, in `<foundIn>`). An AsyncAPI 3 document can have several, and the generated `<ROLE>` would ignore the others. What should the new template do? | handle every one (Recommended; becomes a change, below) · keep only the first (the report lists it as a limitation) · Other |
+
+**`Q-one-of-many`, "handle every one".** Turn the answer into a change:
+1. Restate it as a new change `C<n>` that says what happens for each item. Include whatever the old code did once and now has to choose between, e.g. which handler gets an incoming message when a channel has several receive operations. Confirm it with `Q-confirm-changes`.
+2. Only a document that has several of those items exercises the change. Say so in its verification, and again in `Q-smoke-doc`.
+3. Append it to `changes.md`, and set `CHANGES` if it was `none`. Add its id to the `changes` of every inventory row whose `apiMapIds` include a marked row, and set `hasConditionals: true` on those rows. The marked rows already name every method the loop needs, so `api-mapper` isn't re-dispatched.
 
 Two cases need no question. Tell the user about both:
 - files renamed because their file name contains `test`. The generated files keep their names;
@@ -540,12 +555,15 @@ Each writes only into `SCRATCH_DIR/staging/<rowId>/`, which mirrors `TARGET_PATH
 When all have returned, merge:
 
 0. **Unresolved Parser calls.** For each `unresolved` call that has an `api-map.json` row with a `v3` other than `NONE`, add that row's id to the translator row's `apiMapIds`. If the agent says its staged file already uses it, accept the file; otherwise re-dispatch the row once. For a call with no `api-map.json` row, re-dispatch `api-mapper` for that call, then the row.
-1. **Collisions.** List every staged relative path across rows, plus the files already in `TARGET_PATH` (a row's own earlier output doesn't count). A file already in `TARGET_PATH` always keeps its path. When two staged rows produce the same path, the lower row id keeps it (compare the numbers: `I3` < `I10`). Re-dispatch the other staged row's translator **once**, naming the conflicting file read-only: it either imports that file or renames its own. If the paths still collide, ask **`Q-file-collision`**. Also re-check every staged path for the substring `test`, and re-dispatch any violation to its row.
-2. **Copy** each `staging/<rowId>/` into `TARGET_PATH` (a `shared-helper` row's `packages/helpers/…` into the repo root), and record the row's `outputs` as the final repo-relative paths (not the staging paths). Then delete the staged copy, so a later `fix` starts from the merged file: `node .claude/skills/bake-in-template/scripts/clean.js <SCRATCH_DIR>/staging/<rowId>`.
-3. **Dependencies.** For every `dependencies` entry from Wave 2a and 2b:
-   - a package not in `GENERATOR_DEPS` would break the published generator, whose users never install a baked-in template: ask **`Q-new-dependency`** before merging it. On "rewrite the code without it", write the answer to `SCRATCH_DIR/feedback-new-dependency.md`, dispatch one **translator, mode `fix`**, per owning row with that file, and merge it as in steps 1–2;
+1. **Structure.** A staged `component` or `component-file-array` row with `hasConditionals: true` must have staged a file under `components/`, or import a component in its `template/` file: `Grep` that file's `import` lines for `components/` and `@asyncapi/generator-components`. A row that did neither wrote its file as one string. Re-dispatch its translator **once**, quoting the **Structure** rule of translator.md. If it still has no component, ask **`Q-gate-attempts-used-up`**.
+2. **Collisions.** List every staged relative path across rows, plus the files already in `TARGET_PATH` (a row's own earlier output doesn't count). A file already in `TARGET_PATH` always keeps its path. When two staged rows produce the same path, the lower row id keeps it (compare the numbers: `I3` < `I10`). Re-dispatch the other staged row's translator **once**, naming the conflicting file read-only: it either imports that file or renames its own. If the paths still collide, ask **`Q-file-collision`**. Also re-check every staged path for the substring `test`, and re-dispatch any violation to its row.
+3. **Copy** each `staging/<rowId>/` into `TARGET_PATH` (a `shared-helper` row's `packages/helpers/…` into the repo root), and record the row's `outputs` as the final repo-relative paths (not the staging paths). Then delete the staged copy, so a later `fix` starts from the merged file: `node .claude/skills/bake-in-template/scripts/clean.js <SCRATCH_DIR>/staging/<rowId>`.
+4. **Dependencies.** For every `dependencies` entry from Wave 2a and 2b:
+   - a package not in `GENERATOR_DEPS` would break the published generator, whose users never install a baked-in template: ask **`Q-new-dependency`** before merging it. On "rewrite the code without it", write the answer to `SCRATCH_DIR/feedback-new-dependency.md`, dispatch one **translator, mode `fix`**, per owning row with that file, and merge it as in steps 2–3;
    - merge the others into `TARGET_PATH/package.json` `dependencies`, at the range `apps/generator/package.json` pins, so ranges never conflict. **`Q-dependency-range`** applies only to packages that `Q-new-dependency` is adding to the generator, when two rows request different ranges. Never pick a range silently.
-4. **Install.** If step 3 changed any `package.json`, run `npm install --no-audit --no-fund` from the root, so the Wave 3 build sees the change. In a fix merge, after the tests have run, first delete their output with `node .claude/skills/bake-in-template/scripts/clean.js --test-output <TARGET_PATH>`, as Final "Gates" explains.
+
+   Then remove `@asyncapi/generator-helpers` or `@asyncapi/generator-components` from `TARGET_PATH/package.json` `dependencies` when no file under `TARGET_PATH/template/`, `components/` or `hooks/` imports it (`Grep` for the package name). `scaffolder` lists both before any code exists, and a translator that imports one later reports it again.
+5. **Install.** If step 4 changed any `package.json`, run `npm install --no-audit --no-fund` from the root, so the Wave 3 build sees the change. In a fix merge, after the tests have run, first delete their output with `node .claude/skills/bake-in-template/scripts/clean.js --test-output <TARGET_PATH>`, as Final "Gates" explains.
 
 Write `state.json` with `completedWave: "2b"`. Wave 4 fixes and gate fixes use the same staging, merge, collision and dependency rules. Step 0 can re-dispatch `api-mapper` in any of those fix merges, so `oldgen/` and `source/node_modules/`, which it reads, stay until Final cleanup.
 
@@ -560,7 +578,7 @@ The orchestrator runs these steps in order. Only `test-wirer` and any `fix` tran
 5. **Import gate** (below).
 6. **Tests.** Run the template tests, `(cd <TARGET_PATH> && npm test)`, and, if `shared-helper` rows exist, the helpers tests, `(cd packages/helpers && npm test)`.
 7. **Test coverage.** The tests above can pass with a test missing (the template's script uses `--passWithNoTests`), so check:
-   - every row with `hasConditionals: true` whose `plannedPath` starts with `components/` has the file `TARGET_PATH/test/components/<base>.test.js`. `<base>` is the `plannedPath` basename up to its first `.`. Components with no logic and files under `template/` need no test of their own;
+   - every component with logic has a test: `node .claude/skills/bake-in-template/scripts/component-tests.js <TARGET_PATH>` must exit 0. It prints `{ needTest, missing }`: `needTest` lists the files under `TARGET_PATH/components/` whose code branches or loops, whichever row wrote them, and `missing` the ones without `TARGET_PATH/test/components/<base>.test.js`. `<base>` is the file name up to its first `.`. Components with no logic and files under `template/` need no test of their own;
    - every `shared-helper` row's `exportName` appears in `packages/helpers/test/<module>.test.js`. `<module>` is the `plannedPath` basename without `.js`.
 
 **If a step fails,** handle it like a failed Final gate (see "Final, Gates"), with the gate keys `build`, `templateLint`, `importGate`, `templateTest` and `helpers`, then repeat that step. If a test is missing, re-dispatch `test-wirer` once, naming the missing test; if it's still missing, ask **`Q-gate-attempts-used-up`**.
@@ -597,6 +615,8 @@ Ask the user for their own document first. A repo fixture is only a fallback, us
 | `Q-smoke-params` | Template parameters for `SMOKE_DOC` | the detected values, with `server` checked against `SMOKE_DOC`'s `servers` ids · Other (edit) | once, in the call after `Q-smoke-doc`. Reruns reuse `SMOKE_PARAMS` |
 
 Mark no `Q-smoke-doc` option "(Recommended)". This is an exception to rule 2, because the user's own document comes before any fallback.
+
+When a change came from `Q-one-of-many`, add to the `Q-smoke-doc` question what the document needs for that change to be exercised, e.g. "a channel with two receive operations".
 
 **The user's document.** Resolve a URL: a URL to a file in this repo becomes that repo path, and any other URL is downloaded once to `SCRATCH_DIR/smoke/<basename>`. Not `fixtures/`, where a capture fixture with the same name may already sit. Then run `node .claude/skills/bake-in-template/scripts/fixture-info.js <SMOKE_DOC>`. If it prints an `error`, show the error and ask `Q-smoke-doc` again. Show its `title`, `send` / `receive` counts and `servers` ids in `Q-smoke-params`.
 
@@ -725,11 +745,13 @@ You can test this template:
 3. Navigate to the generated <role> with `cd test/temp/snapshotTestResult/<folder>`
 4. Install dependencies of the generated <role>: `<install command>`
 5. Start the <role> generated by the test: `<RUN_COMMAND>`
+6. In a second terminal, run the example against it: `<example command>`
 ```
 
 - **The title** spells the target, stack, protocol and role as the sibling READMEs do (`JavaScript WebSocket Client`).
 - **`<folder>`** is a folder the suite gate just generated under `TARGET_PATH/test/temp/snapshotTestResult/`.
 - **Steps 4 and 5** come from the last smoke run that started cleanly (`run-<n>.json`). `<install command>` is its `install.command`. For npm it is always `npm install --no-workspaces`, followed by ` (without the flag, npm installs the whole repository instead)`: the folder is inside the root `packages/**` workspaces glob, so a plain `npm install` there runs for the whole repo and adds the generated project to the root `package-lock.json`. A run without an install gets no step 4. If no run started cleanly, leave out both steps and the note; the report lists them as a manual follow-up.
+- **Step 6** appears only when that run passed the example change's command verification. `<example command>` is that command as a user types it in the generated folder.
 - **A note** follows the list only when that run has `adjustments`: one `>` line with the default each one replaced, how a user changes it (read the adjusted file), and where to reach the project (`url`, with `<port>` in place of the port).
 
 ### Changeset
@@ -757,6 +779,8 @@ Write `SCRATCH_DIR/report.md`, and print it. It contains:
 - the smoke runs: document, parameters, adjustments, verification results, iterations used, the verbatim check's `notGenerated` files, and the user's final confirmation, or that the user skipped the smoke run at `Q-start-failed`;
 - uncovered, dropped and unused source files, including filters defined but never used, and files renamed because their file name contains `test`;
 - the new `@asyncapi/generator-helpers` exports, each with the source filter or function it came from;
+- the components each row wrote, the `@asyncapi/generator-components` exports the translators used, and the ones they passed over because their output differs from the old template's (each is a change the user can ask for in a later run);
+- every `Q-one-of-many` answered "keep only the first", as a limitation of the new template, and any row accepted without a component at the Wave 2b structure check;
 - the gate results, and any code a Final gate fix changed after the user's "Works", because no smoke run covered that change;
 - the run's repo changes, from `git status --porcelain`. Note that `BakedInTemplatesList.json` and `package-lock.json` belong in the template's PR, as does `apps/generator/package.json` if `Q-new-dependency` added a dependency. List any files from "Ignored files" here, to add with `git add -f`;
 - the dropped config keys (`generator`, `supportedProtocols`, `nonRenderableFiles`) and the `Q-config-mapping` answers;
@@ -798,6 +822,7 @@ Each of these either stops the run with a stated reason or asks the user. Never 
 | Wave 4, 3 iterations used | **`Q-iterations-used-up`** (Wave 4 step 6) |
 | A Wave 3 or Final gate, 3 attempts used | **`Q-gate-attempts-used-up`** (Final, Gates) |
 | Adding scoping to a single-client suite changed its existing snapshots | Stop and report the diff. Never update the existing client's snapshots |
+| A row whose source branches or loops still has no component after one re-dispatch (Wave 2b step 1) | **`Q-gate-attempts-used-up`** (Final, Gates) |
 | Staged files still collide after one re-dispatch | **`Q-file-collision`:** quote the path and both rows. Options: keep row A's file · keep row B's file · Other (guidance) |
 | Two rows request different ranges of a package `Q-new-dependency` is adding | **`Q-dependency-range`:** quote both ranges and the rows. Options: each range · Other |
 | `SCRATCH_DIR/state.json` exists at start | **`Q-previous-run`** (precondition 0) |

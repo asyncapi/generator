@@ -13,7 +13,6 @@
   "author": "Adi-204 <adiboghawala@gmail.com>",
   "license": "Apache-2.0",
   "dependencies": {
-    "@asyncapi/generator-components": "0.9.1",
     "@asyncapi/generator-helpers": "1.1.0",
     "@asyncapi/generator-react-sdk": "*"
   },

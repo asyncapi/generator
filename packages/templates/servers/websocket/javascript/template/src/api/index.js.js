@@ -33,6 +33,8 @@ const start = () => {
     }
 
     wss.handleUpgrade(req, socket, head, async (ws) => {
+      // Without this listener, one invalid frame from a client would stop the whole server.
+      ws.on('error', (err) => console.error(err));
       try {
         await handler(ws, { path: url.pathname, query: Object.fromEntries(url.searchParams) });
       } catch (err) {
@@ -41,8 +43,13 @@ const start = () => {
     });
   });
 
-  server.listen(config.port);
-  console.info(\`Listening on port \${config.port}\`);
+  server.on('error', (err) => {
+    console.error(\`The server could not start on port \${config.port}: \${err.message}\`);
+    process.exitCode = 1;
+  });
+  server.listen(config.port, () => {
+    console.info(\`Listening on port \${config.port}\`);
+  });
 };
 
 start();

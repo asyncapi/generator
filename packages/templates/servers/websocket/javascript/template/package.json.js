@@ -14,10 +14,11 @@ export default function ({ asyncapi }) {
   const packageJson = {
     name: kebabCase(getTitle(asyncapi)),
     // Why: the Parser returns undefined for a document without info.description, and JSON.stringify drops an undefined property.
-    description: oneLine(info.description() || ''),
+    description: oneLine(info.description() || '').trim(),
     version: info.version(),
     scripts: {
-      start: 'node src/api/index.js'
+      start: 'node src/api/index.js',
+      example: 'node example.js'
     },
     dependencies: {
       ws: '^8'

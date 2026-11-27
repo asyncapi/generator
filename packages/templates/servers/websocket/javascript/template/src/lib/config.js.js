@@ -12,8 +12,9 @@ import { getServer, getServerPort } from '@asyncapi/generator-helpers';
  */
 export default function ({ asyncapi, params }) {
   const server = getServer(asyncapi.servers(), params.server);
-  // getServerPort returns undefined for a host without a port, and the generated server then listens on 80.
-  const defaultPort = getServerPort(server) ?? 80;
+  // getServerPort returns undefined for a host without a port. The generated server then listens on 3000,
+  // because a port below 1024 needs elevated rights on Linux.
+  const defaultPort = getServerPort(server) ?? 3000;
 
   return (
     <File name="config.js">

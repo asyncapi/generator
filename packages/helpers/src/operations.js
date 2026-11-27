@@ -56,12 +56,12 @@ const getRequiredOperationId = (operation) => {
 
 /**
  * Get the operation ids of a channel as one comma separated string:
- * the id of its first send operation, then the id of its first receive operation.
+ * the ids of its send operations, then the ids of its receive operations.
  *
  * @param {object} channel - The AsyncAPI channel object.
  * @throws {Error} If one of these operations has no operationId.
  *
- * @returns {string} The operation ids joined with `, `, or an empty string when the channel has neither operation.
+ * @returns {string} The operation ids joined with `, `, or an empty string when the channel has no operations.
  */
 const getOperationIds = (channel) => {
   const operations = channel.operations();
@@ -69,14 +69,7 @@ const getOperationIds = (channel) => {
   // `subscribe` before `publish`: a 2.x `subscribe` is what the application sends, and `publish` what it receives.
   const sendOperations = operations.filterBySend();
   const receiveOperations = operations.filterByReceive();
-  const operationIds = [];
-  if (sendOperations.length > 0) {
-    operationIds.push(getRequiredOperationId(sendOperations[0]));
-  }
-  if (receiveOperations.length > 0) {
-    operationIds.push(getRequiredOperationId(receiveOperations[0]));
-  }
-  return operationIds.join(', ');
+  return [...sendOperations, ...receiveOperations].map(getRequiredOperationId).join(', ');
 };
 
 module.exports = {

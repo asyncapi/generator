@@ -85,10 +85,10 @@ describe('getOperationIds integration test with AsyncAPI', () => {
     channels = parseResult.document.channels();
   });
 
-  it('should return the id of the first send operation, then the id of the first receive operation', () => {
+  it('should return the ids of every send operation, then the ids of every receive operation', () => {
     // The fixture declares the receive operation of this channel first, and gives the channel two send operations.
     const operationIds = getOperationIds(channels.get('chatRoom'));
-    expect(operationIds).toBe('sendWelcome, onChatMessage');
+    expect(operationIds).toBe('sendWelcome, sendChatMessage, onChatMessage');
   });
 
   it('should return only the send operation id when the channel has no receive operation', () => {

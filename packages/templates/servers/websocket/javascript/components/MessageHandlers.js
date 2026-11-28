@@ -42,7 +42,7 @@ function messageDoclines(operation) {
 /**
  * Renders one message handler for every receive operation of a channel.
  * The generated server calls all of these handlers for each message a client sends on the channel.
- * Each handler is named by the operation's `operationId()`, the name `src/api/routes.js` imports it by.
+ * Each handler is named by the operation's `id()`, the name `src/api/routes.js` imports it by.
  *
  * @param {object} props - Component props.
  * @param {object[]} props.operations - The receive operations of the channel, in document order.
@@ -62,7 +62,7 @@ export function MessageHandlers({ operations }) {
  * @param {string} options.path The path in which the message was received.
  * @param {object} options.query The query parameters used when connecting to the server.${messageDocs}
  */
-service.${operation.operationId()} = async (ws, { message, path, query }) => {
+service.${operation.id()} = async (ws, { message, path, query }) => {
   ws.send('Message from the server: Implement here your business logic that reacts on messages sent from a client.');
 };`}
       </Text>

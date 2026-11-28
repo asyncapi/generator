@@ -7,7 +7,6 @@ import { getOperationIds, kebabCase } from '@asyncapi/generator-helpers';
  * @param {object} props - Component props.
  * @param {object[]} props.channels - The AsyncAPI channels that have an address.
  * @returns {JSX.Element[]} One `Text` component per channel.
- * @throws {Error} If an operation of a channel has no operationId.
  */
 export function ServiceRequires({ channels }) {
   // The service file of a channel is named `kebabCase(channel.id())`, so the path required here is built the same way.

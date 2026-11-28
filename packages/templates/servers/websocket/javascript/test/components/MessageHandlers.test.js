@@ -24,7 +24,7 @@ describe('MessageHandlers component', () => {
 
   test('documents the payload properties of every message of an operation', () => {
     // The receiveMessage operation of the fixture has two messages: testMessage and messageWithDiscriminator.
-    const receiveMessage = receiveOperations.filter((operation) => operation.operationId() === 'receiveMessage');
+    const receiveMessage = receiveOperations.filter((operation) => operation.id() === 'receiveMessage');
     const result = render(<MessageHandlers operations={receiveMessage} />);
 
     expect(result).toContain('options.message.payload.content');

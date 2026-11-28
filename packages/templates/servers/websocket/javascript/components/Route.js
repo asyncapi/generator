@@ -14,10 +14,10 @@ import { Text } from '@asyncapi/generator-react-sdk';
 export function Route({ address, sendOperations, receiveOperations }) {
   const routePath = address.startsWith('/') ? address : `/${address}`;
   const connectCalls = sendOperations
-    .map((operation) => `\n  await ${operation.operationId()}(ws);`)
+    .map((operation) => `\n  await ${operation.id()}(ws);`)
     .join('');
   const messageCalls = receiveOperations
-    .map((operation) => `\n      await ${operation.operationId()}(ws, { message: msg, path, query });`)
+    .map((operation) => `\n      await ${operation.id()}(ws, { message: msg, path, query });`)
     .join('');
   const messageListener = receiveOperations.length > 0
     ? `

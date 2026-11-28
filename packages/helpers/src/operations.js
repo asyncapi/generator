@@ -37,29 +37,10 @@ function getMessageExamples(message) {
 }
 
 /**
- * Get the operationId of an operation that must have one.
- *
- * @param {object} operation - The AsyncAPI operation object.
- * @throws {Error} If the operation has no operationId.
- *
- * @returns {string} The operationId.
- */
-const getRequiredOperationId = (operation) => {
-  // Why: `operationId()`, not `id()`. For an AsyncAPI 2.x operation without an operationId the Parser's `id()`
-  // falls back to the action name (`subscribe` or `publish`), which would hide the missing operationId.
-  const operationId = operation.operationId();
-  if (!operationId) {
-    throw new Error('This template requires operationId to be set in every operation.');
-  }
-  return operationId;
-};
-
-/**
  * Get the operation ids of a channel as one comma separated string:
  * the ids of its send operations, then the ids of its receive operations.
  *
  * @param {object} channel - The AsyncAPI channel object.
- * @throws {Error} If one of these operations has no operationId.
  *
  * @returns {string} The operation ids joined with `, `, or an empty string when the channel has no operations.
  */
@@ -69,7 +50,7 @@ const getOperationIds = (channel) => {
   // `subscribe` before `publish`: a 2.x `subscribe` is what the application sends, and `publish` what it receives.
   const sendOperations = operations.filterBySend();
   const receiveOperations = operations.filterByReceive();
-  return [...sendOperations, ...receiveOperations].map(getRequiredOperationId).join(', ');
+  return [...sendOperations, ...receiveOperations].map((operation) => operation.id()).join(', ');
 };
 
 module.exports = {

@@ -8,7 +8,6 @@ import { Route } from '../../../components/Route';
  * @param {object} context - Template render context.
  * @param {object} context.asyncapi - The parsed AsyncAPI document.
  * @returns {JSX.Element} A `File` component containing the generated routes.
- * @throws {Error} If an operation that a route calls has no operationId.
  */
 export default function ({ asyncapi }) {
   // Why: an AsyncAPI 3 channel may have no address (`address: null`, or no `address` field). Such a channel

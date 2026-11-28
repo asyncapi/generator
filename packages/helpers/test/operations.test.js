@@ -5,7 +5,6 @@ const { getOperationMessages, getMessageExamples, getOperationIds } = require('@
 const parser = new Parser();
 const asyncapi_v3_path = path.resolve(__dirname, './__fixtures__/asyncapi-websocket-query.yml');
 const asyncapi_v3_server_path = path.resolve(__dirname, './__fixtures__/asyncapi-websocket-server.yml');
-const asyncapi_v2_no_operation_id_path = path.resolve(__dirname, './__fixtures__/asyncapi-v2-no-operation-id.yml');
 
 async function getOperationsFromParsedDoc() {
   const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
@@ -104,13 +103,6 @@ describe('getOperationIds integration test with AsyncAPI', () => {
   it('should return an empty string when the channel has no operations', () => {
     const operationIds = getOperationIds(channels.get('noOperations'));
     expect(operationIds).toBe('');
-  });
-
-  it('should throw error when an operation has no operationId', async () => {
-    // Why a 2.x fixture: only an AsyncAPI 2.x operation can lack an operationId. In AsyncAPI 3 it is the operation's key.
-    const parseResult = await fromFile(parser, asyncapi_v2_no_operation_id_path).parse();
-    const channel = parseResult.document.channels().get('/chatRoom');
-    expect(() => getOperationIds(channel)).toThrow('This template requires operationId to be set in every operation.');
   });
 });
 

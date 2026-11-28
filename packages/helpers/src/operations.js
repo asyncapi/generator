@@ -46,8 +46,6 @@ function getMessageExamples(message) {
  */
 const getOperationIds = (channel) => {
   const operations = channel.operations();
-  // Why: the order is send, then receive. This helper replaces a filter written for the AsyncAPI 2.x API that listed
-  // `subscribe` before `publish`: a 2.x `subscribe` is what the application sends, and `publish` what it receives.
   const sendOperations = operations.filterBySend();
   const receiveOperations = operations.filterByReceive();
   return [...sendOperations, ...receiveOperations].map((operation) => operation.id()).join(', ');

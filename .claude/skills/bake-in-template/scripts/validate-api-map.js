@@ -20,7 +20,7 @@ for (const row of rows) {
 
 // A `v3` that takes one item out of a collection must name that collection in `oneOfMany`: a 3.x document can hold
 // several items there, and the orchestrator asks the user what happens to the rest. One name per index.
-// Matches: ")[0]" in "channel.operations().filterBySend()[0].operationId()"
+// Matches: ")[0]" in "channel.operations().filterBySend()[0].id()"
 const INDEXED_COLLECTION = /\)\s*\[\d+\]/g;
 for (const row of apiMap.calls || []) {
   const indexCount = ((row.v3 || '').match(INDEXED_COLLECTION) || []).length;

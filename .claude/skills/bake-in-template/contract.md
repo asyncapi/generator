@@ -194,10 +194,10 @@ Written by `api-mapper`.
       "id": "A2",
       "old": "channel.subscribe().id()",
       "foundIn": ["filters/index.js:20"],
-      "v3": "channel.operations().filterBySend()[0].operationId()",
+      "v3": "channel.operations().filterBySend()[0].id()",
       "helper": null,
-      "grepEvidence": ["node_modules/@asyncapi/parser/cjs/models/operations.d.ts: filterBySend(): OperationInterface[];", "node_modules/@asyncapi/parser/cjs/models/operation-trait.d.ts:7: operationId(): string | undefined;", "node_modules/@asyncapi/parser/cjs/models/v2/operation-trait.js:11: return this.operationId() || this._meta.id;"],
-      "note": "v2 subscribe = the application SENDS. Use operationId(), not id(): the v2 model id() falls back to subscribe or publish, while the old API id() was the operationId only",
+      "grepEvidence": ["node_modules/@asyncapi/parser/cjs/models/operations.d.ts: filterBySend(): OperationInterface[];", "node_modules/@asyncapi/parser/cjs/models/operation-trait.d.ts:5: id(): string | undefined;"],
+      "note": "v2 subscribe = the application SENDS",
       "oneOfMany": ["the channel's send operations"],
       "forChange": null
     }

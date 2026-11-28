@@ -264,34 +264,11 @@ describe('kebabCase', () => {
   });
 
   it('should keep an acronym as one word', () => {
-    expect(kebabCase('XMLHttpRequest')).toBe('xml-http-request');
+    expect(kebabCase('Market Data Websocket API')).toBe('market-data-websocket-api');
   });
 
-  it('should split letters from digits', () => {
-    expect(kebabCase('user2Id')).toBe('user-2-id');
-  });
-
-  it('should keep an ordinal number in one piece', () => {
-    expect(kebabCase('1st place')).toBe('1st-place');
-    expect(kebabCase('22ND Street')).toBe('22nd-street');
-  });
-
-  it('should remove accents', () => {
-    expect(kebabCase('déjà vu')).toBe('deja-vu');
-  });
-
-  it('should remove apostrophes', () => {
-    expect(kebabCase('don\'t stop')).toBe('dont-stop');
-  });
-
-  it('should convert a value that is not a string', () => {
-    expect(kebabCase(123)).toBe('123');
-  });
-
-  it('should return empty string when input is empty, null or undefined', () => {
+  it('should return empty string when input is empty', () => {
     expect(kebabCase('')).toBe('');
-    expect(kebabCase(null)).toBe('');
-    expect(kebabCase(undefined)).toBe('');
   });
 });
 

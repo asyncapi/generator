@@ -89,49 +89,26 @@ const upperFirst = (inputStr) => {
   return inputStr.charAt(0).toUpperCase() + inputStr.slice(1);
 };
 
-// The parts of the word pattern that `kebabCase` uses. A letter, mark or number outside ASCII
-// has no case here: it joins the word on either side of it.
-const UPPER = '[A-Z]';
-const LOWER = '[a-z]';
-const OTHER = String.raw`(?![A-Za-z0-9])[\p{L}\p{M}\p{N}]`;
-
-// The alternatives are tried in this order at every position of the string.
-const KEBAB_CASE_WORDS = new RegExp([
-  // An acronym, up to the capital that starts the next word: `XML` in `XMLHttp`.
-  `(?:${UPPER}|${OTHER})+(?!${LOWER}|${OTHER})`,
-  // A lower-case or capitalized word.
-  `${UPPER}?(?:${LOWER}|${OTHER})+`,
-  // An ordinal number, kept in one piece: `1st`, `22ND`.
-  String.raw`\d*(?:1st|2nd|3rd|(?![123])\dth)(?=\b|[A-Z_])`,
-  String.raw`\d*(?:1ST|2ND|3RD|(?![123])\dTH)(?=\b|[a-z_])`,
-  // Any other number.
-  String.raw`\d+`
-].join('|'), 'gu');
-
 /**
  * Convert a string to kebab-case: its words in lower case, joined with `-`.
- * Accents and apostrophes are removed. Words are split at every character that is not a letter or a digit,
- * at a change from lower to upper case, and between letters and digits, as lodash `kebabCase` splits them.
+ * A word ends at every character that is not an ASCII letter or digit, and before a capital that follows
+ * a lower-case letter or a digit.
  *
  * @example
  * kebabCase('WebSockets echo server') // 'web-sockets-echo-server'
  * kebabCase('/chatRoom') // 'chat-room'
  *
  * @param {string} inputStr - The string to convert to kebab-case
- * @returns {string} The converted kebab-case string, or an empty string for `null` and `undefined`
+ * @returns {string} The converted kebab-case string
  */
 const kebabCase = (inputStr) => {
-  // `null` and `undefined` become an empty string, which has no words.
-  const plainStr = String(inputStr ?? '')
-    // Split each accented Latin letter into the letter and its accent, then drop the accents.
-    .replace(/[\u00c0-\u017f]/g, (letter) => letter.normalize('NFD'))
-    .replace(/[\u0300-\u036f\ufe20-\ufe2f\u20d0-\u20ff]/g, '')
-    // Drop apostrophes, so that `don't` stays one word.
-    .replace(/['\u2019]/g, '');
-  // `matchAll`, not `exec`: the pattern is global and every word is needed, not only the first.
-  const matches = [...plainStr.matchAll(KEBAB_CASE_WORDS)];
-  return matches
-    .map((match) => match[0].toLowerCase())
+  return inputStr
+    // Put a space before a capital that follows a lower-case letter or a digit: `chatRoom` becomes `chat Room`.
+    .replaceAll(/([a-z0-9])([A-Z])/g, '$1 $2')
+    .split(/[^a-zA-Z0-9]+/)
+    // A separator at the start or the end of the string leaves an empty word.
+    .filter((word) => word !== '')
+    .map((word) => word.toLowerCase())
     .join('-');
 };
 

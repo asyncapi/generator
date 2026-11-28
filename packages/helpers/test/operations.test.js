@@ -4,7 +4,6 @@ const { getOperationMessages, getMessageExamples, getOperationIds } = require('@
 
 const parser = new Parser();
 const asyncapi_v3_path = path.resolve(__dirname, './__fixtures__/asyncapi-websocket-query.yml');
-const asyncapi_v3_server_path = path.resolve(__dirname, './__fixtures__/asyncapi-websocket-server.yml');
 
 async function getOperationsFromParsedDoc() {
   const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
@@ -80,28 +79,20 @@ describe('getOperationIds integration test with AsyncAPI', () => {
   let channels;
 
   beforeAll(async () => {
-    const parseResult = await fromFile(parser, asyncapi_v3_server_path).parse();
+    const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
     channels = parseResult.document.channels();
   });
 
   it('should return the ids of every send operation, then the ids of every receive operation', () => {
-    // The fixture declares the receive operation of this channel first, and gives the channel two send operations.
-    const operationIds = getOperationIds(channels.get('chatRoom'));
-    expect(operationIds).toBe('sendWelcome, sendChatMessage, onChatMessage');
-  });
-
-  it('should return only the send operation id when the channel has no receive operation', () => {
-    const operationIds = getOperationIds(channels.get('notifications'));
-    expect(operationIds).toBe('sendNotification');
-  });
-
-  it('should return only the receive operation id when the channel has no send operation', () => {
-    const operationIds = getOperationIds(channels.get('commands'));
-    expect(operationIds).toBe('onCommand');
+    // The fixture declares the send and receive operations of this channel in turns: send, receive, send, and so on.
+    const sendOperationIds = ['noMessage', 'noSummaryOperations', 'noSummaryNoDescriptionOperations', 'mixedMessageExamples', 'operation_with_snake_case'];
+    const receiveOperationIds = ['noMessageExamples', 'oneMessageExample', 'multipleExamples', 'PascalCaseOperation', 'receiveMarketUpdate'];
+    const operationIds = getOperationIds(channels.get('marketDataV1'));
+    expect(operationIds).toBe([...sendOperationIds, ...receiveOperationIds].join(', '));
   });
 
   it('should return an empty string when the channel has no operations', () => {
-    const operationIds = getOperationIds(channels.get('noOperations'));
+    const operationIds = getOperationIds(channels.get('emptyChannel'));
     expect(operationIds).toBe('');
   });
 });

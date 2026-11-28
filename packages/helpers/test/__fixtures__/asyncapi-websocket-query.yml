@@ -28,6 +28,9 @@ servers:
     host: api.gemini.com
     protocol: wss
     pathname: /v1/marketdata
+  withPort:
+    host: api.gemini.com:443
+    protocol: wss
 
 channels:
   marketDataV1:
@@ -205,6 +208,46 @@ operations:
       - $ref: '#/channels/marketDataV1/messages/MessageWithDiscriminatorNoConst'
 
 components:
+  messages:
+    MessageWithDocumentedProperties:
+      summary: Message whose headers and payload have descriptions, default values and nested properties
+      headers:
+        type: object
+        properties:
+          correlationId:
+            type: string
+            description: Identifies the message this one answers.
+      payload:
+        type: object
+        properties:
+          text:
+            type: string
+            description: The text of the message.
+          room:
+            type: string
+            default: general
+          priority:
+            type: integer
+            description: |
+              How urgent the message is.
+              A higher number is more urgent.
+            default: 1
+          silent:
+            type: boolean
+            default: false
+          metadata:
+            description: Free-form data the client attaches.
+          sender:
+            type: object
+            description: The user who wrote the message.
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+                description: The display name of the user.
+          attachments:
+            type: object
   parameters:
     symbol:
       description: >

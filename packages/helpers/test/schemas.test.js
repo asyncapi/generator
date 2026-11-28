@@ -3,7 +3,7 @@ const { Parser, fromFile } = require('@asyncapi/parser');
 const { docline } = require('@asyncapi/generator-helpers');
 
 const parser = new Parser();
-const asyncapi_v3_server_path = path.resolve(__dirname, './__fixtures__/asyncapi-websocket-server.yml');
+const asyncapi_v3_path = path.resolve(__dirname, './__fixtures__/asyncapi-websocket-query.yml');
 const HEADERS_SCOPE = 'options.message.headers';
 const PAYLOAD_SCOPE = 'options.message.payload';
 
@@ -11,8 +11,8 @@ describe('docline integration test with AsyncAPI', () => {
   let headers, payload;
 
   beforeAll(async () => {
-    const parseResult = await fromFile(parser, asyncapi_v3_server_path).parse();
-    const message = parseResult.document.channels().get('chatRoom').messages().get('chatMessage');
+    const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
+    const message = parseResult.document.components().messages().get('MessageWithDocumentedProperties');
     headers = message.headers().properties();
     payload = message.payload().properties();
   });

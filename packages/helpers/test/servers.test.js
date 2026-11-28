@@ -4,7 +4,6 @@ const { getServerUrl, getServer, getServerHost, getServerProtocol, getServerPort
 
 const parser = new Parser();
 const asyncapi_v3_path = path.resolve(__dirname, './__fixtures__/asyncapi-websocket-query.yml');
-const asyncapi_v3_server_path = path.resolve(__dirname, './__fixtures__/asyncapi-websocket-server.yml');
 const GEMINI_HOST = 'api.gemini.com';
 
 describe('getServerUrl integration test with AsyncAPI', () => {
@@ -192,7 +191,7 @@ describe('getServerPort integration test with AsyncAPI', () => {
   let servers;
 
   beforeAll(async () => {
-    const parseResult = await fromFile(parser, asyncapi_v3_server_path).parse();
+    const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
     servers = parseResult.document.servers();
   });
 
@@ -201,11 +200,11 @@ describe('getServerPort integration test with AsyncAPI', () => {
 
     const serverPort = getServerPort(server);
 
-    expect(serverPort).toBe(3000);
+    expect(serverPort).toBe(443);
   });
 
   it('should return undefined when the host has no port', () => {
-    const server = servers.get('withoutPort');
+    const server = servers.get('withoutPathName');
 
     const serverPort = getServerPort(server);
 

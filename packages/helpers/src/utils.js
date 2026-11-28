@@ -89,6 +89,42 @@ const upperFirst = (inputStr) => {
   return inputStr.charAt(0).toUpperCase() + inputStr.slice(1);
 };
 
+/**
+ * Convert a string to kebab-case: its words in lower case, joined with `-`.
+ * A word ends at every character that is not an ASCII letter or digit, and before a capital that follows
+ * a lower-case letter or a digit.
+ *
+ * @example
+ * kebabCase('WebSockets echo server') // 'web-sockets-echo-server'
+ * kebabCase('/chatRoom') // 'chat-room'
+ *
+ * @param {string} inputStr - The string to convert to kebab-case
+ * @returns {string} The converted kebab-case string
+ */
+const kebabCase = (inputStr) => {
+  return inputStr
+    // Put a space before a capital that follows a lower-case letter or a digit: `chatRoom` becomes `chat Room`.
+    .replaceAll(/([a-z0-9])([A-Z])/g, '$1 $2')
+    .split(/[^a-zA-Z0-9]+/)
+    // A separator at the start or the end of the string leaves an empty word.
+    .filter((word) => word !== '')
+    .map((word) => word.toLowerCase())
+    .join('-');
+};
+
+/**
+ * Turn a multiline string into a single line: every line feed becomes a space.
+ *
+ * @param {string} inputStr - The string to put on one line
+ * @returns {string} The string on one line. A falsy value, such as `undefined` or an empty string, is returned unchanged
+ */
+const oneLine = (inputStr) => {
+  if (!inputStr) {
+    return inputStr;
+  }
+  return inputStr.replaceAll('\n', ' ');
+};
+
 module.exports = {
   getClientName,
   getTitle,
@@ -96,5 +132,7 @@ module.exports = {
   toSnakeCase,
   toCamelCase,
   lowerFirst,
-  upperFirst
+  upperFirst,
+  kebabCase,
+  oneLine
 };

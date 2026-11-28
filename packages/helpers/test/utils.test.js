@@ -1,6 +1,6 @@
 const path = require('path');
 const { Parser, fromFile } = require('@asyncapi/parser');
-const { getClientName, getInfo, getTitle, toSnakeCase, toCamelCase, lowerFirst, upperFirst } = require('@asyncapi/generator-helpers');
+const { getClientName, getInfo, getTitle, toSnakeCase, toCamelCase, lowerFirst, upperFirst, kebabCase, oneLine } = require('@asyncapi/generator-helpers');
 
 const parser = new Parser();
 const asyncapi_v3_path = path.resolve(__dirname, './__fixtures__/asyncapi-websocket-query.yml');
@@ -247,5 +247,47 @@ describe('upperFirst', () => {
     const actualResult = upperFirst('a');
     const expectedResult = 'A';
     expect(actualResult).toBe(expectedResult);
+  });
+});
+
+describe('kebabCase', () => {
+  it('should join the words of a title with dashes, in lower case', () => {
+    expect(kebabCase('WebSockets echo server')).toBe('web-sockets-echo-server');
+  });
+
+  it('should split camelCase and drop characters that are not letters or digits', () => {
+    expect(kebabCase('/chatRoom')).toBe('chat-room');
+  });
+
+  it('should convert snake_case with surrounding underscores', () => {
+    expect(kebabCase('__FOO_BAR__')).toBe('foo-bar');
+  });
+
+  it('should keep an acronym as one word', () => {
+    expect(kebabCase('Market Data Websocket API')).toBe('market-data-websocket-api');
+  });
+
+  it('should return empty string when input is empty', () => {
+    expect(kebabCase('')).toBe('');
+  });
+});
+
+describe('oneLine', () => {
+  it('should replace every line feed with a space', () => {
+    const actualResult = oneLine('first line\nsecond line\nthird line');
+    const expectedResult = 'first line second line third line';
+    expect(actualResult).toBe(expectedResult);
+  });
+
+  it('should leave a string without line feeds unchanged', () => {
+    const actualResult = oneLine('single line');
+    const expectedResult = 'single line';
+    expect(actualResult).toBe(expectedResult);
+  });
+
+  it('should return a missing or empty value unchanged', () => {
+    expect(oneLine(undefined)).toBeUndefined();
+    expect(oneLine(null)).toBeNull();
+    expect(oneLine('')).toBe('');
   });
 });

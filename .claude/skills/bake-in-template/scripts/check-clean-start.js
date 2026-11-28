@@ -1,4 +1,4 @@
-// Usage: node .claude/skills/bake-in-template/scripts/start-check.js <exitFile> <errFile>  → {"exited","exitCode","errorLines","ignoredLines"}
+// Usage: node .claude/skills/bake-in-template/scripts/check-clean-start.js <exitFile> <errFile>  → {"exited","exitCode","errorLines","ignoredLines"}
 // errorLines: stderr lines that count as error output. npm warn/notice lines and Node deprecation warnings don't.
 const fs = require('fs');
 
@@ -10,7 +10,7 @@ const NODE_WARNING_HINT = /^\(Use `.+ --trace-(deprecation|warnings) \.\.\.` to 
 
 const [exitFile, errFile] = process.argv.slice(2);
 
-// launch.js writes the exit file only when the command has exited.
+// start-generated-project.js writes the exit file only when the command has exited.
 const exitInfo = fs.existsSync(exitFile) ? JSON.parse(fs.readFileSync(exitFile, 'utf8')) : null;
 const stderrText = fs.existsSync(errFile) ? fs.readFileSync(errFile, 'utf8') : '';
 const stderrLines = stderrText.split(/\r?\n/).map((line) => line.trim()).filter(Boolean);

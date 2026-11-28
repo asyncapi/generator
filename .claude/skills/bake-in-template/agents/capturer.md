@@ -20,19 +20,19 @@ From the spawn prompt: the run-variable table (`SCRATCH_DIR`, `SOURCE_URL`, `ENG
 2. **Write the parameters** `CAPTURE_PARAMS` as JSON to `SCRATCH_DIR/capture-params.json` with the Write tool.
 3. **Generate**, once per fixture, from the repo root. `<i>` counts from 1, in `FIXTURES` order:
    ```bash
-   node .claude/skills/bake-in-template/scripts/capture.js <SCRATCH_DIR> <fixture> <SCRATCH_DIR>/capture-params.json > <SCRATCH_DIR>/capture-run-<i>.json
+   node .claude/skills/bake-in-template/scripts/capture-golden-output.js <SCRATCH_DIR> <fixture> <SCRATCH_DIR>/capture-params.json > <SCRATCH_DIR>/capture-run-<i>.json
    ```
-   The script runs the **old** generator from `SCRATCH_DIR/oldgen` (not the repo's) on `SCRATCH_DIR/source`, writes into `SCRATCH_DIR/golden/<fixture file name without extension>/`, and prints one JSON run object: `fixture`, `params`, `outputDir`, and the path of every generated file. Deprecation warnings on stderr (e.g. `DEP0169 url.parse()`) are not failures; only a non-zero exit is. Two fixtures with the same file name without extension (e.g. `a/asyncapi.yml` and `b/asyncapi.json`) would share a golden directory, and `capture.js` empties that directory first. So before the first run, check that these names are unique across `FIXTURES`; if two clash, run nothing and return as in "On failure", with the clash in `summary`.
+   The script runs the **old** generator from `SCRATCH_DIR/oldgen` (not the repo's) on `SCRATCH_DIR/source`, writes into `SCRATCH_DIR/golden/<fixture file name without extension>/`, and prints one JSON run object: `fixture`, `params`, `outputDir`, and the path of every generated file. Deprecation warnings on stderr (e.g. `DEP0169 url.parse()`) are not failures; only a non-zero exit is. Two fixtures with the same file name without extension (e.g. `a/asyncapi.yml` and `b/asyncapi.json`) would share a golden directory, and `capture-golden-output.js` empties that directory first. So before the first run, check that these names are unique across `FIXTURES`; if two clash, run nothing and return as in "On failure", with the clash in `summary`.
 4. **Record** `SCRATCH_DIR/capture.json`. Don't write it by hand: run the script below with the run files in `FIXTURES` order. `<commit>` is the full SHA from `git -C <SCRATCH_DIR>/source rev-parse HEAD`. Then delete the params and run files; `capture.json` holds everything they had.
    ```bash
-   node .claude/skills/bake-in-template/scripts/write-capture.js <SCRATCH_DIR> <SOURCE_URL> <commit> <ENGINE> <SOURCE_API_VERSION> <CAPTURE_GENERATOR_VERSION> <SCRATCH_DIR>/capture-run-1.json …
-   node .claude/skills/bake-in-template/scripts/clean.js <SCRATCH_DIR>/capture-params.json <SCRATCH_DIR>/capture-run-1.json …
+   node .claude/skills/bake-in-template/scripts/write-capture-json.js <SCRATCH_DIR> <SOURCE_URL> <commit> <ENGINE> <SOURCE_API_VERSION> <CAPTURE_GENERATOR_VERSION> <SCRATCH_DIR>/capture-run-1.json …
+   node .claude/skills/bake-in-template/scripts/delete-temp-files.js <SCRATCH_DIR>/capture-params.json <SCRATCH_DIR>/capture-run-1.json …
    ```
 5. **Return** the envelope. `files_written` lists `capture.json` and each golden directory. `dependencies` is `{}`. `summary` gives the file count per fixture.
 
 ## On failure
 
-If `capture.js` exits non-zero for a fixture, don't try another fixture or other parameters. Return `success: false` with:
+If `capture-golden-output.js` exits non-zero for a fixture, don't try another fixture or other parameters. Return `success: false` with:
 - `summary`: the error message, verbatim;
 - `unresolved: ["capture:<fixture>"]`.
 

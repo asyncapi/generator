@@ -77,12 +77,30 @@ const getServerProtocol = (server) => {
   
   return serverProtocol;
 };
-  
+
+/**
+ * Get the port written in the host of an AsyncAPI server object.
+ *
+ * @param {object} server - The AsyncAPI server object.
+ *
+ * @returns {number|undefined} - The port as a number (`3000` for the host `localhost:3000`), or `undefined` when the host has no port.
+ */
+const getServerPort = (server) => {
+  // Why: an AsyncAPI 3 `host` has no scheme (Server Object, `host`: "The server host name. It MAY include the port."),
+  // so `new URL('localhost:3000')` reads `localhost:` as the scheme and reports no port. The digits are read from the text instead.
+  const portMatch = server.host().match(/:(\d+)$/);
+  if (!portMatch) {
+    return undefined;
+  }
+  return Number(portMatch[1]);
+};
+
 module.exports = {
   getServerUrl,
   getServer,
   getServerHost,
-  getServerProtocol
+  getServerProtocol,
+  getServerPort
 };
 
 //TODO: this separate file for helpers for servers represents approach to keep all helpers in separate files related to extractions of data from specific high level AsyncAPI objects. Here we will have more helpers for example related to variables extraction from servers, security, etc.

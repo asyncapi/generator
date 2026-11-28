@@ -1,4 +1,4 @@
-// Usage: node .claude/skills/bake-in-template/scripts/check-verbatim.js <SCRATCH_DIR> <generatedDir>  → {mismatches, notGenerated} as JSON
+// Usage: node .claude/skills/bake-in-template/scripts/check-verbatim-output.js <SCRATCH_DIR> <generatedDir>  → {mismatches, notGenerated} as JSON
 // Exit 1 only when a generated file differs from its golden file. A golden file the smoke run didn't generate is listed in
 // notGenerated, not counted as a mismatch: the golden output came from the capture document and parameters, and the
 // smoke document or parameters may rightly turn that file off.

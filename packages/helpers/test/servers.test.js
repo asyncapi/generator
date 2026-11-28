@@ -1,6 +1,6 @@
 const path = require('path');
 const { Parser, fromFile } = require('@asyncapi/parser');
-const { getServerUrl, getServer, getServerHost, getServerProtocol } = require('@asyncapi/generator-helpers');
+const { getServerUrl, getServer, getServerHost, getServerProtocol, getServerPort } = require('@asyncapi/generator-helpers');
 
 const parser = new Parser();
 const asyncapi_v3_path = path.resolve(__dirname, './__fixtures__/asyncapi-websocket-query.yml');
@@ -184,5 +184,30 @@ describe('getServerProtocol integration test with AsyncAPI', () => {
       const result = getServerProtocol(mockServer);
       expect(result).toBe(protocolValue);
     });
+  });
+});
+
+describe('getServerPort integration test with AsyncAPI', () => {
+  let servers;
+
+  beforeAll(async () => {
+    const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
+    servers = parseResult.document.servers();
+  });
+
+  it('should return the port as a number when the host has a port', () => {
+    const server = servers.get('withPort');
+
+    const serverPort = getServerPort(server);
+
+    expect(serverPort).toBe(443);
+  });
+
+  it('should return undefined when the host has no port', () => {
+    const server = servers.get('withoutPathName');
+
+    const serverPort = getServerPort(server);
+
+    expect(serverPort).toBeUndefined();
   });
 });

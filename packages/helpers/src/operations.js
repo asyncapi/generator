@@ -35,8 +35,24 @@ function getMessageExamples(message) {
   }
   return examples;
 }
-  
+
+/**
+ * Get the operation ids of a channel as one comma separated string:
+ * the ids of its send operations, then the ids of its receive operations.
+ *
+ * @param {object} channel - The AsyncAPI channel object.
+ *
+ * @returns {string} The operation ids joined with `, `, or an empty string when the channel has no operations.
+ */
+const getOperationIds = (channel) => {
+  const operations = channel.operations();
+  const sendOperations = operations.filterBySend();
+  const receiveOperations = operations.filterByReceive();
+  return [...sendOperations, ...receiveOperations].map((operation) => operation.id()).join(', ');
+};
+
 module.exports = {
   getOperationMessages,
   getMessageExamples,
+  getOperationIds,
 };

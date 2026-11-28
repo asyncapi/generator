@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ConnectHandlers component renders one connect handler for every send operation of the channel 1`] = `
+"
+/**
+ * Send a message
+ * @param {object} ws WebSocket connection.
+ */
+service.sendMessage = async (ws) => {
+  ws.send('Message from the server: Implement here your business logic that sends messages to a client after it connects.');
+};
+
+/**
+ * Send notification
+ * @param {object} ws WebSocket connection.
+ */
+service.sendNotification = async (ws) => {
+  ws.send('Message from the server: Implement here your business logic that sends messages to a client after it connects.');
+};
+"
+`;

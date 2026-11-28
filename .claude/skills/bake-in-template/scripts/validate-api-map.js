@@ -18,6 +18,18 @@ for (const row of rows) {
   if (needsEvidence && !hasEvidence) problems.push(`${row.id}: no grepEvidence`);
 }
 
+// A `v3` that takes one item out of a collection must name that collection in `oneOfMany`: a 3.x document can hold
+// several items there, and the orchestrator asks the user what happens to the rest. One name per index.
+// Matches: ")[0]" in "channel.operations().filterBySend()[0].id()"
+const INDEXED_COLLECTION = /\)\s*\[\d+\]/g;
+for (const row of apiMap.calls || []) {
+  const indexCount = ((row.v3 || '').match(INDEXED_COLLECTION) || []).length;
+  const nameCount = (row.oneOfMany || []).length;
+  if (indexCount !== nameCount) {
+    problems.push(`${row.id}: v3 takes one item out of ${indexCount} collection(s), but oneOfMany names ${nameCount}`);
+  }
+}
+
 // Ids must be unique across calls[] and filters[].
 const seenIds = new Set();
 for (const row of rows) {

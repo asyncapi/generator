@@ -31,6 +31,7 @@ Use the `Grep` tool. Read installed sources, not documentation or memory.
    - `helper`: grep `packages/helpers/src/` for the v3 methods you used. When an exported helper does the whole job or a prefix of the chain (e.g. `getServer` resolves the server, and `.url()` still follows), name the export, say in `note` how it combines with `v3`, and paste the `export`/`module.exports` line as evidence.
    - `note`: semantics the translator must get right. When the right v3 call differs by location (e.g. `id()` for a file name, `address()` for a route path), say which one applies to each `foundIn` entry. Say that source quirks are kept unless a change says otherwise.
    - **For 2.x documents, the intent API inverts the old names:** v2 `subscribe` (the application **sends**) maps to `filterBySend()`, and v2 `publish` (the application **receives**) maps to `filterByReceive()`. Grep `isSend` in the repo parser's `cjs/models/v2/operation.js` to confirm it.
+   - `oneOfMany`: `[]`, unless `v3` takes one item out of a collection (`…filterBySend()[0]`, `…messages().all()[0]`). Then name what each indexed collection holds, one name per index, in the same words on every row that indexes it (e.g. `["the channel's receive operations", "the operation's messages"]`). An AsyncAPI 2.x channel has at most one `publish` and one `subscribe` operation, so the old template handles one; an AsyncAPI 3 channel can have several, and the generated project would silently ignore the rest. The capture fixture has one of each, so no check shows it, and the orchestrator asks the user instead (`Q-one-of-many`). Write the item with an index, never with `.at()`, `.find()` or destructuring: the validation below looks for the index.
    - `forChange`: `null`.
    - No verified equivalent: set `v3: "NONE"`, explain why in `note`, and add the id to `unresolved`.
 5. **Changes.** For each change in `changes.md` (skip when `CHANGES` is `none`) that needs document data the old calls don't cover (e.g. "also expose the channel description"), add a row with `old: null`, `foundIn: []`, `forChange: "C<n>"`, and the grep-confirmed `v3` or `helper`.
@@ -51,7 +52,7 @@ Run:
 node .claude/skills/bake-in-template/scripts/validate-api-map.js <SCRATCH_DIR>/api-map.json <SCRATCH_DIR> <SOURCE_API_VERSION> '<CAPTURE_PARAMS>' <fixture>…
 ```
 
-`<fixture>…` is every file in `FIXTURES`. The script checks for missing `grepEvidence` and duplicate ids, then runs each `calls[]` row on each fixture (`old` on the old parser, `v3` on the repo parser) and prints one line per row:
+`<fixture>…` is every file in `FIXTURES`. The script checks for missing `grepEvidence`, duplicate ids and a `v3` whose indexes and `oneOfMany` names don't match in number, then runs each `calls[]` row on each fixture (`old` on the old parser, `v3` on the repo parser) and prints one line per row:
 - `same`: same result. Empty values (`null`, `undefined`, `{}`, `[]`) match each other, and an `old` that throws has nothing to compare.
 - `DIFF`: `v3` throws or returns something else, e.g. swapped send/receive or a method that doesn't exist. Fix the row.
 - `not run`: the chain doesn't start with `asyncapi`, `params` or `channel` (e.g. `f` inside a package filter), so it relies on `grepEvidence` alone.
@@ -60,7 +61,7 @@ It ends with `OK` or `FAIL` (exit 1). Fix every row it reports before you return
 
 ## Return
 
-The envelope: `files_written: ["<SCRATCH_DIR>/api-map.json"]`; `unresolved`: the `A<n>` ids with `v3: "NONE"`; `summary`: row counts, the dropped non-Parser candidates, and the filters that became `new-helper`.
+The envelope: `files_written: ["<SCRATCH_DIR>/api-map.json"]`; `unresolved`: the `A<n>` ids with `v3: "NONE"`; `summary`: row counts, the dropped non-Parser candidates, the filters that became `new-helper`, and the rows with a non-empty `oneOfMany`.
 
 ## Rules
 

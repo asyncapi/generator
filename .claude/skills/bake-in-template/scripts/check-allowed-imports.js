@@ -1,4 +1,4 @@
-// Usage: node .claude/skills/bake-in-template/scripts/import-gate.js <TARGET_PATH> [<helper file>...]  (run from the repo root)
+// Usage: node .claude/skills/bake-in-template/scripts/check-allowed-imports.js <TARGET_PATH> [<helper file>...]  (run from the repo root)
 // Exit 0: every generation-time import is a Node builtin, a relative path or a GENERATOR_DEPS package, and every
 // import in a <helper file> (a new or changed packages/helpers/src file) is a Node builtin, a relative path or a
 // packages/helpers dependency, because the published @asyncapi/generator-helpers ships only those. A helper file is

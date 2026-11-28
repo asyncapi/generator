@@ -1,6 +1,6 @@
 const path = require('path');
 const { Parser, fromFile } = require('@asyncapi/parser');
-const { getOperationMessages, getMessageExamples } = require('@asyncapi/generator-helpers');
+const { getOperationMessages, getMessageExamples, getOperationIds } = require('@asyncapi/generator-helpers');
 
 const parser = new Parser();
 const asyncapi_v3_path = path.resolve(__dirname, './__fixtures__/asyncapi-websocket-query.yml');
@@ -72,6 +72,28 @@ describe('getMessageExamples integration test with AsyncAPI', () => {
 
   it('should throw error when message is undefined', () => {
     expect(() => getMessageExamples(undefined)).toThrow('Message object must be provided.');
+  });
+});
+
+describe('getOperationIds integration test with AsyncAPI', () => {
+  let channels;
+
+  beforeAll(async () => {
+    const parseResult = await fromFile(parser, asyncapi_v3_path).parse();
+    channels = parseResult.document.channels();
+  });
+
+  it('should return the ids of every send operation, then the ids of every receive operation', () => {
+    // The fixture declares the send and receive operations of this channel in turns: send, receive, send, and so on.
+    const sendOperationIds = ['noMessage', 'noSummaryOperations', 'noSummaryNoDescriptionOperations', 'mixedMessageExamples', 'operation_with_snake_case'];
+    const receiveOperationIds = ['noMessageExamples', 'oneMessageExample', 'multipleExamples', 'PascalCaseOperation', 'receiveMarketUpdate'];
+    const operationIds = getOperationIds(channels.get('marketDataV1'));
+    expect(operationIds).toBe([...sendOperationIds, ...receiveOperationIds].join(', '));
+  });
+
+  it('should return an empty string when the channel has no operations', () => {
+    const operationIds = getOperationIds(channels.get('emptyChannel'));
+    expect(operationIds).toBe('');
   });
 });
 

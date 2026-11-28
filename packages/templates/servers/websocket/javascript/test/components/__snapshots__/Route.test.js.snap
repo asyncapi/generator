@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Route component calls every send handler on connect and every receive handler for each message 1`] = `
+"routes.set('/test', async (ws, { path, query }) => {
+  console.log(\`\${util.styleText('yellow', path)} client connected.\`);
+  // Listening starts before the send handlers run, so a message the client sends meanwhile isn't lost.
+  ws.on('message', async (data, isBinary) => {
+    // ws passes every frame as a Buffer. A text frame goes to the handler as a string.
+    const msg = isBinary ? data : data.toString();
+    console.log(\`\${util.styleText('yellow', path)} message was received:\`);
+    console.log(util.inspect(msg, { depth: null, colors: true }));
+    try {
+      await receiveMessage(ws, { message: msg, path, query });
+      await receiveNotification(ws, { message: msg, path, query });
+    } catch (err) {
+      console.error(err);
+    }
+  });
+  await sendMessage(ws);
+  await sendNotification(ws);
+});
+"
+`;

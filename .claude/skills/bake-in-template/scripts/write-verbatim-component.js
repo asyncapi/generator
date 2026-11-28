@@ -1,4 +1,4 @@
-// Usage: node .claude/skills/bake-in-template/scripts/wrap-static.js <sourceFile> <componentFile> <outputName>
+// Usage: node .claude/skills/bake-in-template/scripts/write-verbatim-component.js <sourceFile> <componentFile> <outputName>
 // Writes a React component whose output is <sourceFile>, byte for byte (line endings normalized to LF).
 const fs = require('fs');
 const path = require('path');

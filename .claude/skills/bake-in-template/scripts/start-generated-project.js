@@ -1,4 +1,4 @@
-// Usage: node .claude/skills/bake-in-template/scripts/launch.js <runDir> <logFile> <errFile> <exitFile> <command...>
+// Usage: node .claude/skills/bake-in-template/scripts/start-generated-project.js <runDir> <logFile> <errFile> <exitFile> <command...>
 // Starts <command> in <runDir> through the shell and writes {code, signal} to <exitFile> when it exits.
 const { spawn } = require('child_process');
 const fs = require('fs');
@@ -23,7 +23,7 @@ const child = spawn(commandWords.map(quoteIfSpaced).join(' '), {
 fs.writeFileSync(`${exitFile}.child`, String(child.pid));
 
 child.on('exit', (code, signal) => {
-  // Written under another name and then renamed, so start-check.js never reads a half-written exit file.
+  // Written under another name and then renamed, so check-clean-start.js never reads a half-written exit file.
   fs.writeFileSync(`${exitFile}.tmp`, JSON.stringify({ code, signal }));
   fs.renameSync(`${exitFile}.tmp`, exitFile);
   process.exit(0);

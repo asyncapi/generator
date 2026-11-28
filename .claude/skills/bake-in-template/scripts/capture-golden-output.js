@@ -1,4 +1,4 @@
-// Usage: node .claude/skills/bake-in-template/scripts/capture.js <SCRATCH_DIR> <fixture> <paramsFile>  (run from the repo root) → one JSON run object on stdout
+// Usage: node .claude/skills/bake-in-template/scripts/capture-golden-output.js <SCRATCH_DIR> <fixture> <paramsFile>  (run from the repo root) → one JSON run object on stdout
 const fs = require('fs');
 const path = require('path');
 

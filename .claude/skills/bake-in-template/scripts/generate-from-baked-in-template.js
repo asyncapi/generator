@@ -1,4 +1,4 @@
-// Usage: node .claude/skills/bake-in-template/scripts/generate.js <templateName> <outputDir> <asyncapiFile> <paramsFile>  (run from the repo root)
+// Usage: node .claude/skills/bake-in-template/scripts/generate-from-baked-in-template.js <templateName> <outputDir> <asyncapiFile> <paramsFile>  (run from the repo root)
 const fs = require('fs');
 const path = require('path');
 const Generator = require(path.resolve('apps/generator'));

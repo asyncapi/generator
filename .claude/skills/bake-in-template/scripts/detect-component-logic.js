@@ -1,4 +1,4 @@
-// Not run on its own: scan.js and component-tests.js require it.
+// Not run on its own: scan-source-template.js and check-component-tests.js require it.
 // hasReactLogic(text) tells whether a JS or JSX file branches or loops, which is what decides if a component needs a test.
 const { parse } = require('@babel/parser');
 

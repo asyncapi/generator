@@ -68,8 +68,8 @@ Rewrite `state.json` after every wave and every question.
 Delete only through the bundled script, never with `rm -rf` or `Remove-Item`:
 
 ```bash
-node .claude/skills/bake-in-template/scripts/clean.js <path>...
-node .claude/skills/bake-in-template/scripts/clean.js --keep <dir> <name>...
+node .claude/skills/bake-in-template/scripts/delete-temp-files.js <path>...
+node .claude/skills/bake-in-template/scripts/delete-temp-files.js --keep <dir> <name>...
 ```
 
 The first form deletes each path; the second deletes everything in `<dir>` except the named entries. It refuses any path outside `temp/bake-in-template/`, removes the read-only `.git` pack files that make a plain delete fail on Windows, and retries a file a just-stopped process still holds. Delete a run directory only after its process is stopped (rule 4). If the script exits 1, show the paths it printed as `failed:` and go on; a leftover scratch file never blocks the run.
@@ -83,7 +83,7 @@ It needs `apps/react-sdk/lib/` and `packages/components/lib/`, which preconditio
 
 **Design decisions.** These hold for every run:
 
-- **Static JS becomes a verbatim wrapper component**, not a raw file under `nonRenderableFiles`. The React engine renders every `.js`, `.jsx` and `.cjs` file under `template/` as a component. A raw copy of the source's static JS would also have to pass the root lint, and fixing a lint finding would change the generated code. A wrapper written by `wrap-static.js` (Wave 2a) reproduces the file byte for byte, with line endings normalized to LF, and passes the root lint. So the source's `nonRenderableFiles` is dropped: the generator never renders non-JS files anyway, and a glob such as `src/lib/*.js` would also match the wrapper `utils.js.js`, which would then be copied raw as JSX.
+- **Static JS becomes a verbatim wrapper component**, not a raw file under `nonRenderableFiles`. The React engine renders every `.js`, `.jsx` and `.cjs` file under `template/` as a component. A raw copy of the source's static JS would also have to pass the root lint, and fixing a lint finding would change the generated code. A wrapper written by `write-verbatim-component.js` (Wave 2a) reproduces the file byte for byte, with line endings normalized to LF, and passes the root lint. So the source's `nonRenderableFiles` is dropped: the generator never renders non-JS files anyway, and a glob such as `src/lib/*.js` would also match the wrapper `utils.js.js`, which would then be copied raw as JSX.
 - **A template file composes components**, and is never one string. The repo's templates keep each block of generated code that depends on the document in a component (`packages/README.md` principles 3 and 5), and a component with logic gets its own test, which logic left inside a `template/` file never does (AGENTS.md §4.7). A Nunjucks source has no components to carry over, so the translators create them (translator.md, **Structure**), the Wave 2b merge checks that they did, and Wave 3 checks their tests. This is about how the template's own code is organized, never about what it generates, so it needs no question (rule 1).
 - **Taking one item of many is the user's decision.** An AsyncAPI 2.x channel has at most one `publish` and one `subscribe` operation; an AsyncAPI 3 channel has any number of operations. A call-by-call port keeps the old shape (`filterBySend()[0]`), so the generated project silently ignores every operation after the first, and no gate notices: the capture fixture and most test documents have one of each. So `api-mapper` marks every such row (`oneOfMany`), its validation refuses an unmarked one, and `Q-one-of-many` asks before translation (rule 2).
 - **`--no-eslintrc` is required** in the template's lint scripts when the source `template/` ships `.eslintrc*` files. Without the flag, ESLint 6.8 cascades that config, which was written for the generated project, onto the template's own code. With it, the root config passed through `--config` still applies in full.
@@ -174,7 +174,7 @@ Otherwise, if `SCRATCH_DIR/state.json` exists, ask **`Q-previous-run`** before a
 > A previous bake-in run of `<SOURCE_NAME>` stopped after Wave `<completedWave>` on `<updatedAt>`, and can't be resumed. What should I do?
 
 When `completedWave` is `"none"`, say "stopped during Wave 0" instead. Options:
-- **Discard it and start over (Recommended):** run abort cleanup with "discard them" (see "Abort cleanup"), then delete the whole folder with `node .claude/skills/bake-in-template/scripts/clean.js <SCRATCH_DIR>`.
+- **Discard it and start over (Recommended):** run abort cleanup with "discard them" (see "Abort cleanup"), then delete the whole folder with `node .claude/skills/bake-in-template/scripts/delete-temp-files.js <SCRATCH_DIR>`.
 - **Abort:** stop, and change nothing.
 
 Then check the working tree. This must print nothing:
@@ -242,7 +242,7 @@ Resolve `CAPTURE_GENERATOR_VERSION` with the repo's `semver`. `<range>` is the s
 
 ```bash
 node .claude/skills/bake-in-template/scripts/pick-generator-version.js <SCRATCH_DIR>/generator-versions.json "<range>" <ENGINE>
-node .claude/skills/bake-in-template/scripts/clean.js <SCRATCH_DIR>/generator-versions.json
+node .claude/skills/bake-in-template/scripts/delete-temp-files.js <SCRATCH_DIR>/generator-versions.json
 ```
 
 If the first command exits 1, stop and show its message: no published generator satisfies the range. The value is derived, not asked; show it in the Wave 0 summary and the report. Install it:
@@ -259,19 +259,19 @@ These installs run here, not inside a Wave 1 agent, for two reasons. `capturer` 
 Run:
 
 ```bash
-node .claude/skills/bake-in-template/scripts/scan.js <SCRATCH_DIR> <ENGINE>
+node .claude/skills/bake-in-template/scripts/scan-source-template.js <SCRATCH_DIR> <ENGINE>
 ```
 
 It writes `SCRATCH_DIR/source-index.json` (fields in `contract.md`) and prints a one-line summary. It resolves fixtures to local paths (a URL to a file of this repo becomes that repo path, any other URL is downloaded once to `SCRATCH_DIR/fixtures/`), reads `templateParams` passed as a variable, and finds included files anywhere in the source. Each `missing:` line names an include, fixture or parameter variable it couldn't find: show these in the Wave 0 summary. A missing fixture or parameter is covered by `Q-capture-doc` or `Q-capture-params`.
 
 Set `SOURCE_API_VERSION` from its `apiVersion`, and `DETECTED_PROTOCOL` from its `detectedProtocol`.
 
-#### The `fixture-info.js` script
+#### The `describe-asyncapi-document.js` script
 
 This step, check 7, `Q-smoke-doc` and `test-wirer` use this script. It parses AsyncAPI documents the way the generator does for `apiVersion: v3` templates, including schema parsers such as Avro. Run it from the repo root with one or more files:
 
 ```bash
-node .claude/skills/bake-in-template/scripts/fixture-info.js <file>...
+node .claude/skills/bake-in-template/scripts/describe-asyncapi-document.js <file>...
 ```
 
 It prints one JSON line per file, and exits 1 when any file fails to parse:
@@ -283,7 +283,7 @@ It prints one JSON line per file, and exits 1 when any file fails to parse:
 
 #### Usable capture documents
 
-`testFixtures` holds every quoted `.yml`, `.yaml` or `.json` path in the source tests, so some entries may not be AsyncAPI documents at all. When it isn't empty, run `fixture-info.js` on all of its files. Keep the files that parse with a `version` allowed for `SOURCE_API_VERSION` (the table in `Q-capture-doc`): these are the usable fixtures `Q-capture-doc` offers. Here an `error` line, and the exit code 1 it causes, only means that file isn't usable.
+`testFixtures` holds every quoted `.yml`, `.yaml` or `.json` path in the source tests, so some entries may not be AsyncAPI documents at all. When it isn't empty, run `describe-asyncapi-document.js` on all of its files. Keep the files that parse with a `version` allowed for `SOURCE_API_VERSION` (the table in `Q-capture-doc`): these are the usable fixtures `Q-capture-doc` offers. Here an `error` line, and the exit code 1 it causes, only means that file isn't usable.
 
 ### 6. Questions
 
@@ -323,7 +323,7 @@ Round 2:  Q-capture-params · Q-what-to-change · Q-template-author · Q-config-
 #### Round 2: capture parameters, what should change, and the author
 
 **`Q-capture-params`: Which template parameters should the capture use?**
-- List every required parameter that has no default, with the detected value and where it came from: `testParams`, or, for a `server` parameter, the `servers` ids that `fixture-info.js` prints for `FIXTURES`.
+- List every required parameter that has no default, with the detected value and where it came from: `testParams`, or, for a `server` parameter, the `servers` ids that `describe-asyncapi-document.js` prints for `FIXTURES`.
 - Options: the detected values · Other (edit).
 - Step 8 check 8 checks the answer. Whenever `Q-capture-doc` is answered again, ask `Q-capture-params` again.
 
@@ -401,7 +401,7 @@ node -e "process.exit(require('path').resolve(process.argv[1]).includes('test')?
 
 #### Check on `Q-capture-doc` (the capture document)
 
-**7. The old template can read the capture document.** Run `fixture-info.js` on every file in `FIXTURES`. Each `version` it prints must be allowed for `SOURCE_API_VERSION` (the table in `Q-capture-doc`). An `error` line fails the check too. Step 6 already runs this check right after Round 1; here it confirms the final answer.
+**7. The old template can read the capture document.** Run `describe-asyncapi-document.js` on every file in `FIXTURES`. Each `version` it prints must be allowed for `SOURCE_API_VERSION` (the table in `Q-capture-doc`). An `error` line fails the check too. Step 6 already runs this check right after Round 1; here it confirms the final answer.
 - On failure: re-ask `Q-capture-doc`, then `Q-capture-params`.
 
 #### Check on `Q-capture-params` (the capture parameters)
@@ -409,7 +409,7 @@ node -e "process.exit(require('path').resolve(process.argv[1]).includes('test')?
 **8. The old generator accepts the parameters.** The capture generator validates them before it renders anything, and rejects each case below. Without this check, the rejection only shows up as a failed capture (`Q-capture-failed`) in Wave 1. Compare `CAPTURE_PARAMS` with `source-index.json` `config.parameters`:
 - every parameter name is declared in `config.parameters`;
 - every required parameter that has no default has a value;
-- when a `server` parameter is set, every file in `FIXTURES` lists that id in the `servers` that `fixture-info.js` prints.
+- when a `server` parameter is set, every file in `FIXTURES` lists that id in the `servers` that `describe-asyncapi-document.js` prints.
 - On failure: re-ask `Q-capture-params`, naming the parameter and the reason.
 
 ### 9. Prepare and summarize
@@ -426,7 +426,7 @@ Once every check passes, do these without asking:
 3. **Print the Wave 0 summary:**
    - every run variable, and where its value came from;
    - every answer, and `changes.md`;
-   - the `missing:` lines from `scan.js` (step 5);
+   - the `missing:` lines from `scan-source-template.js` (step 5);
    - the hooks kept;
    - `CAPTURE_GENERATOR_VERSION`;
    - the dropped config keys, with the reason: `generator`, because baked-in templates take none; `supportedProtocols`, because no baked-in `.ageneratorrc` declares it; and `nonRenderableFiles`, when the source has it (see "Design decisions").
@@ -536,7 +536,7 @@ Do these in one message:
 - **translator, mode `2a`**, only if `2a` rows exist. Inputs: the `2a` row ids, their `apiMapIds`, `CHANGES`. It writes into `packages/helpers/src/` and `TARGET_PATH/components/`, and returns `files_written` keyed by row id.
 - **You, meanwhile:**
   - each `copy` row: copy `SCRATCH_DIR/source/<source>` to `TARGET_PATH/<plannedPath>`;
-  - each `verbatim-component` row: run `node .claude/skills/bake-in-template/scripts/wrap-static.js <SCRATCH_DIR>/source/<source> <TARGET_PATH>/<plannedPath> <output basename>`, using the row's `outputName` as `<output basename>` when it has one. The wrapper escapes `\`, `` ` `` and `${`, so the output is byte-identical to the source file, with line endings normalized to LF.
+  - each `verbatim-component` row: run `node .claude/skills/bake-in-template/scripts/write-verbatim-component.js <SCRATCH_DIR>/source/<source> <TARGET_PATH>/<plannedPath> <output basename>`, using the row's `outputName` as `<output basename>` when it has one. The wrapper escapes `\`, `` ` `` and `${`, so the output is byte-identical to the source file, with line endings normalized to LF.
 
   You write only under `template/`. The translator writes only `packages/helpers/src/` and `components/`, so the two can run in parallel.
 
@@ -557,13 +557,13 @@ When all have returned, merge:
 0. **Unresolved Parser calls.** For each `unresolved` call that has an `api-map.json` row with a `v3` other than `NONE`, add that row's id to the translator row's `apiMapIds`. If the agent says its staged file already uses it, accept the file; otherwise re-dispatch the row once. For a call with no `api-map.json` row, re-dispatch `api-mapper` for that call, then the row.
 1. **Structure.** A staged `component` or `component-file-array` row with `hasConditionals: true` must have staged a file under `components/`, or import a component in its `template/` file: `Grep` that file's `import` lines for `components/` and `@asyncapi/generator-components`. A row that did neither wrote its file as one string. Re-dispatch its translator **once**, quoting the **Structure** rule of translator.md. If it still has no component, ask **`Q-gate-attempts-used-up`**.
 2. **Collisions.** List every staged relative path across rows, plus the files already in `TARGET_PATH` (a row's own earlier output doesn't count). A file already in `TARGET_PATH` always keeps its path. When two staged rows produce the same path, the lower row id keeps it (compare the numbers: `I3` < `I10`). Re-dispatch the other staged row's translator **once**, naming the conflicting file read-only: it either imports that file or renames its own. If the paths still collide, ask **`Q-file-collision`**. Also re-check every staged path for the substring `test`, and re-dispatch any violation to its row.
-3. **Copy** each `staging/<rowId>/` into `TARGET_PATH` (a `shared-helper` row's `packages/helpers/…` into the repo root), and record the row's `outputs` as the final repo-relative paths (not the staging paths). Then delete the staged copy, so a later `fix` starts from the merged file: `node .claude/skills/bake-in-template/scripts/clean.js <SCRATCH_DIR>/staging/<rowId>`.
+3. **Copy** each `staging/<rowId>/` into `TARGET_PATH` (a `shared-helper` row's `packages/helpers/…` into the repo root), and record the row's `outputs` as the final repo-relative paths (not the staging paths). Then delete the staged copy, so a later `fix` starts from the merged file: `node .claude/skills/bake-in-template/scripts/delete-temp-files.js <SCRATCH_DIR>/staging/<rowId>`.
 4. **Dependencies.** For every `dependencies` entry from Wave 2a and 2b:
    - a package not in `GENERATOR_DEPS` would break the published generator, whose users never install a baked-in template: ask **`Q-new-dependency`** before merging it. On "rewrite the code without it", write the answer to `SCRATCH_DIR/feedback-new-dependency.md`, dispatch one **translator, mode `fix`**, per owning row with that file, and merge it as in steps 2–3;
    - merge the others into `TARGET_PATH/package.json` `dependencies`, at the range `apps/generator/package.json` pins, so ranges never conflict. **`Q-dependency-range`** applies only to packages that `Q-new-dependency` is adding to the generator, when two rows request different ranges. Never pick a range silently.
 
    Then remove `@asyncapi/generator-helpers` or `@asyncapi/generator-components` from `TARGET_PATH/package.json` `dependencies` when no file under `TARGET_PATH/template/`, `components/` or `hooks/` imports it (`Grep` for the package name). `scaffolder` lists both before any code exists, and a translator that imports one later reports it again.
-5. **Install.** If step 4 changed any `package.json`, run `npm install --no-audit --no-fund` from the root, so the Wave 3 build sees the change. In a fix merge, after the tests have run, first delete their output with `node .claude/skills/bake-in-template/scripts/clean.js --test-output <TARGET_PATH>`, as Final "Gates" explains.
+5. **Install.** If step 4 changed any `package.json`, run `npm install --no-audit --no-fund` from the root, so the Wave 3 build sees the change. In a fix merge, after the tests have run, first delete their output with `node .claude/skills/bake-in-template/scripts/delete-temp-files.js --test-output <TARGET_PATH>`, as Final "Gates" explains.
 
 Write `state.json` with `completedWave: "2b"`. Wave 4 fixes and gate fixes use the same staging, merge, collision and dependency rules. Step 0 can re-dispatch `api-mapper` in any of those fix merges, so `oldgen/` and `source/node_modules/`, which it reads, stay until Final cleanup.
 
@@ -578,7 +578,7 @@ The orchestrator runs these steps in order. Only `test-wirer` and any `fix` tran
 5. **Import gate** (below).
 6. **Tests.** Run the template tests, `(cd <TARGET_PATH> && npm test)`, and, if `shared-helper` rows exist, the helpers tests, `(cd packages/helpers && npm test)`.
 7. **Test coverage.** The tests above can pass with a test missing (the template's script uses `--passWithNoTests`), so check:
-   - every component with logic has a test: `node .claude/skills/bake-in-template/scripts/component-tests.js <TARGET_PATH>` must exit 0. It prints `{ needTest, missing }`: `needTest` lists the files under `TARGET_PATH/components/` whose code branches or loops, whichever row wrote them, and `missing` the ones without `TARGET_PATH/test/components/<base>.test.js`. `<base>` is the file name up to its first `.`. Components with no logic and files under `template/` need no test of their own;
+   - every component with logic has a test: `node .claude/skills/bake-in-template/scripts/check-component-tests.js <TARGET_PATH>` must exit 0. It prints `{ needTest, missing }`: `needTest` lists the files under `TARGET_PATH/components/` whose code branches or loops, whichever row wrote them, and `missing` the ones without `TARGET_PATH/test/components/<base>.test.js`. `<base>` is the file name up to its first `.`. Components with no logic and files under `template/` need no test of their own;
    - every `shared-helper` row's `exportName` appears in `packages/helpers/test/<module>.test.js`. `<module>` is the `plannedPath` basename without `.js`.
 
 **If a step fails,** handle it like a failed Final gate (see "Final, Gates"), with the gate keys `build`, `templateLint`, `importGate`, `templateTest` and `helpers`, then repeat that step. If a test is missing, re-dispatch `test-wirer` once, naming the missing test; if it's still missing, ask **`Q-gate-attempts-used-up`**.
@@ -588,7 +588,7 @@ The orchestrator runs these steps in order. Only `test-wirer` and any `fix` tran
 Every bare import in the template's own code must be a Node builtin or in `GENERATOR_DEPS`. Every bare import a run adds to a `packages/helpers/src` file must be a Node builtin or a `packages/helpers` dependency (packages the file already imported at HEAD aren't the run's to fix): monorepo hoisting lets anything else pass every local test, then the published `@asyncapi/generator-helpers` fails to load it. Run, with each `shared-helper` row's `plannedPath` as a `<helper file>` (none when there are no such rows):
 
 ```bash
-node .claude/skills/bake-in-template/scripts/import-gate.js <TARGET_PATH> [<helper file>...]
+node .claude/skills/bake-in-template/scripts/check-allowed-imports.js <TARGET_PATH> [<helper file>...]
 ```
 
 The script:
@@ -618,26 +618,26 @@ Mark no `Q-smoke-doc` option "(Recommended)". This is an exception to rule 2, be
 
 When a change came from `Q-one-of-many`, add to the `Q-smoke-doc` question what the document needs for that change to be exercised, e.g. "a channel with two receive operations".
 
-**The user's document.** Resolve a URL: a URL to a file in this repo becomes that repo path, and any other URL is downloaded once to `SCRATCH_DIR/smoke/<basename>`. Not `fixtures/`, where a capture fixture with the same name may already sit. Then run `node .claude/skills/bake-in-template/scripts/fixture-info.js <SMOKE_DOC>`. If it prints an `error`, show the error and ask `Q-smoke-doc` again. Show its `title`, `send` / `receive` counts and `servers` ids in `Q-smoke-params`.
+**The user's document.** Resolve a URL: a URL to a file in this repo becomes that repo path, and any other URL is downloaded once to `SCRATCH_DIR/smoke/<basename>`. Not `fixtures/`, where a capture fixture with the same name may already sit. Then run `node .claude/skills/bake-in-template/scripts/describe-asyncapi-document.js <SMOKE_DOC>`. If it prints an `error`, show the error and ask `Q-smoke-doc` again. Show its `title`, `send` / `receive` counts and `servers` ids in `Q-smoke-params`.
 
 **The parameters.** Check the `Q-smoke-params` answer before using it: every name is declared in `TARGET_PATH/.ageneratorrc`, every required parameter without a default has a value, and a `server` value is one of `SMOKE_DOC`'s `servers` ids. If not, ask `Q-smoke-params` again, naming the parameter. Otherwise a wrong answer would look like a template bug and use up a fix attempt.
 
 **Fallbacks** apply the `ROLE`-matching fixture rule below. After Wave 3, at least one fixture matches, because `test-wirer` writes `asyncapi-<ROLE>.yml` when none did.
 
-**`ROLE`-matching fixture rule** (`test-wirer` uses it too). The candidates are the `.yml`, `.yaml` and `.json` files directly inside every `packages/templates/*/<PROTOCOL>/test/__fixtures__/` directory, so a new `servers/` template can reuse a server-perspective fixture kept beside the protocol's clients (e.g. `clients/websocket/test/__fixtures__/asyncapi-hoppscotch-server.yml`). Subfolders such as `__fixtures__/commons/` hold `$ref` fragments (e.g. `commons/servers.yml`), not documents, so leave them out. Keep only files git tracks (`git ls-files -- <dir>`): a gitignored file such as websocket's `bundled.yml` exists only locally, so a test using it would fail in CI. Run `node .claude/skills/bake-in-template/scripts/fixture-info.js <candidates>`, and keep only the files it parses with a `version` of `3.0.0` or later. It prints an `error` line and exits 1 for anything else, which is expected here. A candidate matches when its file name or its `title` names `ROLE`, ignoring case. For `ROLE` `client`, every candidate under `clients/<PROTOCOL>/test/__fixtures__/` also matches unless its file name or `title` names `server`: the protocol's clients already share that fixture whatever its name (e.g. kafka's `asyncapi-adeo.yml`), and the repo keeps one fixture per protocol (AGENTS.md §4.7). AsyncAPI 3 operations are written from the application's perspective, so a client document fed to a server template inverts `send` and `receive`.
+**`ROLE`-matching fixture rule** (`test-wirer` uses it too). The candidates are the `.yml`, `.yaml` and `.json` files directly inside every `packages/templates/*/<PROTOCOL>/test/__fixtures__/` directory, so a new `servers/` template can reuse a server-perspective fixture kept beside the protocol's clients (e.g. `clients/websocket/test/__fixtures__/asyncapi-hoppscotch-server.yml`). Subfolders such as `__fixtures__/commons/` hold `$ref` fragments (e.g. `commons/servers.yml`), not documents, so leave them out. Keep only files git tracks (`git ls-files -- <dir>`): a gitignored file such as websocket's `bundled.yml` exists only locally, so a test using it would fail in CI. Run `node .claude/skills/bake-in-template/scripts/describe-asyncapi-document.js <candidates>`, and keep only the files it parses with a `version` of `3.0.0` or later. It prints an `error` line and exits 1 for anything else, which is expected here. A candidate matches when its file name or its `title` names `ROLE`, ignoring case. For `ROLE` `client`, every candidate under `clients/<PROTOCOL>/test/__fixtures__/` also matches unless its file name or `title` names `server`: the protocol's clients already share that fixture whatever its name (e.g. kafka's `asyncapi-adeo.yml`), and the repo keeps one fixture per protocol (AGENTS.md §4.7). AsyncAPI 3 operations are written from the application's perspective, so a client document fed to a server template inverts `send` and `receive`.
 
 ### 2. Generate by name
 
 The run number `n` is `ITERATIONS + 1`. When `n` is above 1, first delete the previous generated project, whose process step 5 or `smoke-runner` has stopped. Its `run-<n-1>.json` and log files sit beside the folder, not inside it, so they stay as the fix translators' failure file:
 
 ```bash
-node .claude/skills/bake-in-template/scripts/clean.js <RUNS_DIR>/run-<n-1>
+node .claude/skills/bake-in-template/scripts/delete-temp-files.js <RUNS_DIR>/run-<n-1>
 ```
 
 Run `BUILD`, write `SMOKE_PARAMS` to `SCRATCH_DIR/smoke-params.json` with the Write tool, and run:
 
 ```bash
-node .claude/skills/bake-in-template/scripts/generate.js <BAKED_IN_NAME> <RUNS_DIR>/run-<n> <SMOKE_DOC> <SCRATCH_DIR>/smoke-params.json
+node .claude/skills/bake-in-template/scripts/generate-from-baked-in-template.js <BAKED_IN_NAME> <RUNS_DIR>/run-<n> <SMOKE_DOC> <SCRATCH_DIR>/smoke-params.json
 ```
 
 The script empties `RUNS_DIR/run-<n>` first. Generating by name exercises the built `bakedInTemplates/` copy that npm users get. Files dropped by the build's `test` filter, and local hooks loaded from the baked-in location, show up here and not in the integration suite, which loads templates from their source path. If generation throws, save its output to `SCRATCH_DIR/gate-generate-<n>.log`; that run has failed (step 6).
@@ -645,17 +645,17 @@ The script empties `RUNS_DIR/run-<n>` first. Generating by name exercises the bu
 On the first run that generates without throwing, also check the verbatim rows:
 
 ```bash
-node .claude/skills/bake-in-template/scripts/check-verbatim.js <SCRATCH_DIR> <RUNS_DIR>/run-<n>
+node .claude/skills/bake-in-template/scripts/check-verbatim-output.js <SCRATCH_DIR> <RUNS_DIR>/run-<n>
 ```
 
-It compares the generated file of every `copy` and `verbatim-component` row with its golden file, line endings normalized, prints `{ mismatches, notGenerated }` as JSON, and exits 1 on any mismatch. `notGenerated` lists golden files this run didn't produce. That isn't a failure, because `SMOKE_DOC` and `SMOKE_PARAMS` may rightly turn a file off, but show the list at `Q-does-it-work` so the user can say if one should be there. A mismatch routes to its row: redo the copy or the `wrap-static.js` call, then generate again. If it still mismatches, that run has failed (step 6).
+It compares the generated file of every `copy` and `verbatim-component` row with its golden file, line endings normalized, prints `{ mismatches, notGenerated }` as JSON, and exits 1 on any mismatch. `notGenerated` lists golden files this run didn't produce. That isn't a failure, because `SMOKE_DOC` and `SMOKE_PARAMS` may rightly turn a file off, but show the list at `Q-does-it-work` so the user can say if one should be there. A mismatch routes to its row: redo the copy or the `write-verbatim-component.js` call, then generate again. If it still mismatches, that run has failed (step 6).
 
 ### 3. Run
 
-If the generated project has no `package.json`, or its `package.json` has no `start` script, first ask **`Q-start-command`** (once; reruns reuse `RUN_COMMAND`): "How do I start the generated project?", with options the command found in its README · Other (your command). Then delete the files an earlier attempt with the same `n` may have left (a retry after `Q-start-failed`), because `launch.js` appends to the logs and `start-check.js` trusts any exit file:
+If the generated project has no `package.json`, or its `package.json` has no `start` script, first ask **`Q-start-command`** (once; reruns reuse `RUN_COMMAND`): "How do I start the generated project?", with options the command found in its README · Other (your command). Then delete the files an earlier attempt with the same `n` may have left (a retry after `Q-start-failed`), because `start-generated-project.js` appends to the logs and `check-clean-start.js` trusts any exit file:
 
 ```bash
-node .claude/skills/bake-in-template/scripts/clean.js <RUNS_DIR>/run-<n>.json <RUNS_DIR>/run-<n>.log <RUNS_DIR>/run-<n>.err.log <RUNS_DIR>/run-<n>.exit <RUNS_DIR>/run-<n>.exit.child
+node .claude/skills/bake-in-template/scripts/delete-temp-files.js <RUNS_DIR>/run-<n>.json <RUNS_DIR>/run-<n>.log <RUNS_DIR>/run-<n>.err.log <RUNS_DIR>/run-<n>.exit <RUNS_DIR>/run-<n>.exit.child
 ```
 
 Then spawn **smoke-runner** with inputs `n`, `RUNS_DIR`, `RUN_COMMAND` and `CHANGES`.
@@ -707,7 +707,7 @@ The orchestrator never reports "works" itself; only the user's "Works", "accept 
 
 First regenerate the snapshots with `(cd <SUITE_PATH> && npm run test:<INTEGRATION_KEY>:update)` and `(cd <TARGET_PATH> && npm run test:update)`, never by hand. Wave 4 fixes and verbatim redos change the generated output after Wave 3 wrote the snapshots, and the user has since accepted that output. When nothing changed, the commands rewrite the same snapshots.
 
-Then delete the test output with `node .claude/skills/bake-in-template/scripts/clean.js --test-output <TARGET_PATH>`. The integration tests generate projects into the gitignored `TARGET_PATH/test/temp/`, and the root workspaces glob `packages/**` would record any generated `package.json` there in `package-lock.json`, which then fails `npm ci` in CI. Then run `npm install --no-audit --no-fund` from the root, so `package-lock.json` includes every workspace the run added, such as a new suite. CI runs `npm ci`, which fails on a stale lockfile.
+Then delete the test output with `node .claude/skills/bake-in-template/scripts/delete-temp-files.js --test-output <TARGET_PATH>`. The integration tests generate projects into the gitignored `TARGET_PATH/test/temp/`, and the root workspaces glob `packages/**` would record any generated `package.json` there in `package-lock.json`, which then fails `npm ci` in CI. Then run `npm install --no-audit --no-fund` from the root, so `package-lock.json` includes every workspace the run added, such as a new suite. CI runs `npm ci`, which fails on a stale lockfile.
 
 Run every gate. After any fix, run all of them again. When the fix changed template or helper files, first regenerate the snapshots the same way, then delete the test output again; the report lists that code as changed after the user's "Works". Test gates run with `CI=true`, which makes jest fail on a missing snapshot instead of writing it, as CI does.
 
@@ -716,7 +716,7 @@ Run every gate. After any fix, run all of them again. When the fix changed templ
 | build (`build`) | `<BUILD>` |
 | template lint (`templateLint`) | `(cd <TARGET_PATH> && npm run lint)` |
 | suite lint (`suiteLint`) | `(cd <SUITE_PATH> && npm run lint)`. `test-wirer` changed the suite, and CI's `npm run lint` covers every workspace |
-| import gate (`importGate`) | `node .claude/skills/bake-in-template/scripts/import-gate.js <TARGET_PATH> [<helper file>...]`, with the helper files as in Wave 3 |
+| import gate (`importGate`) | `node .claude/skills/bake-in-template/scripts/check-allowed-imports.js <TARGET_PATH> [<helper file>...]`, with the helper files as in Wave 3 |
 | template test (`templateTest`) | `(cd <TARGET_PATH> && CI=true npm test)` |
 | helpers lint and test (`helpers`), only if `shared-helper` rows exist | `(cd packages/helpers && npm run lint && CI=true npm test)` |
 | full suite (`suiteTest`) | `(cd <SUITE_PATH> && CI=true npm test)`, so every client in it still passes. `test-wirer` always edits the shared suite files and scripts, which CI runs for every client. It includes `test:<INTEGRATION_KEY>`, so the new template's integration tests run here too |
@@ -796,8 +796,8 @@ The report holds everything a later reader needs: the variables, every answer, `
 2. Keep only the report, and delete the test output the gates regenerated after the root install, so the user's next root `npm install` doesn't record a generated `package.json` in `package-lock.json`:
 
    ```bash
-   node .claude/skills/bake-in-template/scripts/clean.js --test-output <TARGET_PATH>
-   node .claude/skills/bake-in-template/scripts/clean.js --keep <SCRATCH_DIR> report.md
+   node .claude/skills/bake-in-template/scripts/delete-temp-files.js --test-output <TARGET_PATH>
+   node .claude/skills/bake-in-template/scripts/delete-temp-files.js --keep <SCRATCH_DIR> report.md
    ```
 
    This removes the clone, the golden output, the handoff files, `RUNS_DIR` with every generated project and log, the feedback and gate logs, and any file an agent left behind.
@@ -844,7 +844,7 @@ Each of these either stops the run with a stated reason or asks the user. Never 
 4. **Clean `SCRATCH_DIR`**, once step 1 has stopped every process. Delete `state.json`, the generated projects and the large folders:
 
    ```bash
-   node .claude/skills/bake-in-template/scripts/clean.js <SCRATCH_DIR>/state.json <RUNS_DIR>/run-1 … <RUNS_DIR>/run-<ITERATIONS+1> <SCRATCH_DIR>/oldgen <SCRATCH_DIR>/source <SCRATCH_DIR>/staging <SCRATCH_DIR>/tmp <SCRATCH_DIR>/golden
+   node .claude/skills/bake-in-template/scripts/delete-temp-files.js <SCRATCH_DIR>/state.json <RUNS_DIR>/run-1 … <RUNS_DIR>/run-<ITERATIONS+1> <SCRATCH_DIR>/oldgen <SCRATCH_DIR>/source <SCRATCH_DIR>/staging <SCRATCH_DIR>/tmp <SCRATCH_DIR>/golden
    ```
 
    The small handoff, feedback and gate-log files stay, and so do the `RUNS_DIR/run-<n>.json` records and logs, so the user can see why the run stopped.
@@ -855,7 +855,7 @@ Each of these either stops the run with a stated reason or asks the user. Never 
 - `apps/generator/lib/generator.js`: `isCoreTemplate` (baked-in templates are never installed), `compile` defaulting to `true` (a baked-in template is transpiled again from its copied directory), and `maybeRenameSourceFile` (`{.gitignore}`, `{.npmignore}`).
 - `apps/generator/lib/hooksRegistry.js`: `registerLocalHooks` (a template's `hooks/` directory) and `registerConfigHooks`.
 - `apps/generator/lib/renderer/react.js`: `saveContentToFile` (`<File name>` replaces the component's basename in its own directory; plain `writeFile`).
-- `apps/generator/lib/parser.js`: how the generator parses (`NewParser(apiVersion, { includeSchemaParsers: true })`), which `fixture-info.js` mirrors.
+- `apps/generator/lib/parser.js`: how the generator parses (`NewParser(apiVersion, { includeSchemaParsers: true })`), which `describe-asyncapi-document.js` mirrors.
 - `packages/templates/clients/websocket/test/integration-test/`: the per-client scoped suite (`TEST_CLIENT`, `runTestSuiteForClient`, `snapshotResolver.js`).
 - `packages/templates/clients/kafka/test/integration-test/`: the single-client suite (nested `languageConfig`, one `integration.test.js.snap`).
 - `packages/templates/clients/websocket/test/__fixtures__/`: protocol fixtures, including `asyncapi-hoppscotch-server.yml`, the server-perspective document.

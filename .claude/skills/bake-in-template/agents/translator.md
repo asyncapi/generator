@@ -23,11 +23,11 @@ From the spawn prompt:
 - in modes `2b` and `fix`, the Wave 2a modules with their exports (read-only);
 - in mode `fix`, the failure file: `RUNS_DIR/run-<n>.json`, `feedback-<n>.md`, `feedback-wave3.md`, `feedback-new-dependency.md` or `gate-<name>-<attempt>.log`.
 
-Read only those slices, with the bundled `read-slice.js`:
+Read only those slices, with the bundled `read-json-rows.js`:
 
 ```bash
-node .claude/skills/bake-in-template/scripts/read-slice.js <SCRATCH_DIR>/inventory.json rows I4
-node .claude/skills/bake-in-template/scripts/read-slice.js <SCRATCH_DIR>/api-map.json calls,filters A1 A2 F1
+node .claude/skills/bake-in-template/scripts/read-json-rows.js <SCRATCH_DIR>/inventory.json rows I4
+node .claude/skills/bake-in-template/scripts/read-json-rows.js <SCRATCH_DIR>/api-map.json calls,filters A1 A2 F1
 ```
 
 The source file is `SCRATCH_DIR/source/<row.source>`. Reference output is `SCRATCH_DIR/<referenceOutput>`: what the old template produced, to guide behavior and whitespace. It is not a target. For each change id, read its section in `changes.md`, including its verification: your code must make the verification pass.
@@ -58,7 +58,7 @@ Read, once:
 - **Existing components first.** Before you write a component, look for one that already generates that code:
   - a Wave 2a component: import it by relative path;
   - an export of `@asyncapi/generator-components` for your target (`language="<target>"`): read its source under `packages/components/src/components/` and its snapshot under `packages/components/test/components/__snapshots__/`. Use it when it generates the same code as the source block. When it generates similar code with different output, write your own component and name the export in `summary`: using it would change the generated project, which only a listed change may do.
-- **Text.** Emit text as a template literal inside `Text` / `Indent`, as the repo's components do. A file that needs no component may put it straight into `<File>`. Reproduce the old output's whitespace and line breaks; compare against `referenceOutput` by reading. A staged file can't be rendered where it sits (its imports point into `TARGET_PATH`), so a render check is optional; the orchestrator's Wave 3 snapshots and Wave 4 run are the real check. If you write a render or check script, put it in `SCRATCH_DIR/tmp/translator-<rowId>/` (mode `2a`: `tmp/translator-2a/`), never in `staging/`, whose contents are merged into the template. Delete it before you return: `node .claude/skills/bake-in-template/scripts/clean.js <SCRATCH_DIR>/tmp/translator-<rowId>` (mode `2a`: `<SCRATCH_DIR>/tmp/translator-2a`).
+- **Text.** Emit text as a template literal inside `Text` / `Indent`, as the repo's components do. A file that needs no component may put it straight into `<File>`. Reproduce the old output's whitespace and line breaks; compare against `referenceOutput` by reading. A staged file can't be rendered where it sits (its imports point into `TARGET_PATH`), so a render check is optional; the orchestrator's Wave 3 snapshots and Wave 4 run are the real check. If you write a render or check script, put it in `SCRATCH_DIR/tmp/translator-<rowId>/` (mode `2a`: `tmp/translator-2a/`), never in `staging/`, whose contents are merged into the template. Delete it before you return: `node .claude/skills/bake-in-template/scripts/delete-temp-files.js <SCRATCH_DIR>/tmp/translator-<rowId>` (mode `2a`: `<SCRATCH_DIR>/tmp/translator-2a`).
 - **Escaping.** Nunjucks autoescaped every `{{ }}` without `| safe`; the React renderer escapes nothing. Don't add escaping, but name in `summary` any output (e.g. an HTML page) where document text used to be escaped.
 - **Missing values.** Nunjucks prints nothing for an undefined value, but a template literal prints `undefined`. Default optional Parser values (`description()`, `summary()` and the like), and Wave 2a helper results that can be `undefined`, to `''` where the old template printed them.
 - **Nunjucks → JSX.** `{{ x }}` becomes `${x}` inside the template literal. `{% for %}` becomes `.map(…)` (with `.join('')` when it builds a string), and `{% if %}` a ternary, `&&` or an early `return null`, both inside the component that the **Structure** rule gives the block. `{%-` / `-%}` strip whitespace, so honor them.

@@ -1,10 +1,10 @@
-// Usage: node .claude/skills/bake-in-template/scripts/component-tests.js <TARGET_PATH>  (run from the repo root)
+// Usage: node .claude/skills/bake-in-template/scripts/check-component-tests.js <TARGET_PATH>  (run from the repo root)
 // Prints {"needTest":[…],"missing":[…]} as JSON. `needTest` lists the files under <TARGET_PATH>/components/ whose code
 // branches or loops. Each one needs the test <TARGET_PATH>/test/components/<base>.test.js, where <base> is its file
 // name up to the first dot. `missing` lists the ones that don't have it. Exit 1 when `missing` isn't empty.
 const fs = require('fs');
 const path = require('path');
-const { hasReactLogic } = require('./has-logic');
+const { hasReactLogic } = require('./detect-component-logic');
 
 const templateDir = path.resolve(process.argv[2]);
 

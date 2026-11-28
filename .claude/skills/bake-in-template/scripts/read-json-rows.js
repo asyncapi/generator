@@ -1,7 +1,7 @@
-// Usage: node .claude/skills/bake-in-template/scripts/read-slice.js <jsonFile> <arrayKey[,arrayKey]> <id>...
+// Usage: node .claude/skills/bake-in-template/scripts/read-json-rows.js <jsonFile> <arrayKey[,arrayKey]> <id>...
 // Prints only the rows with the given ids. Examples:
-//   node .claude/skills/bake-in-template/scripts/read-slice.js <SCRATCH_DIR>/inventory.json rows I4
-//   node .claude/skills/bake-in-template/scripts/read-slice.js <SCRATCH_DIR>/api-map.json calls,filters A1 A2 F1
+//   node .claude/skills/bake-in-template/scripts/read-json-rows.js <SCRATCH_DIR>/inventory.json rows I4
+//   node .claude/skills/bake-in-template/scripts/read-json-rows.js <SCRATCH_DIR>/api-map.json calls,filters A1 A2 F1
 const fs = require('fs');
 
 const [jsonFile, arrayKeys, ...ids] = process.argv.slice(2);

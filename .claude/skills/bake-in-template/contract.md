@@ -14,18 +14,18 @@ This file defines what passes between the orchestrator ([SKILL.md](SKILL.md)) an
   | `RUNS_DIR/run-<n>.json` | `smoke-runner` |
 
 - **Structured handoffs are JSON; prose is Markdown.** The orchestrator checks the JSON files mechanically: `v3: "NONE"` triggers `Q-parser-gap`, `oneOfMany` triggers `Q-one-of-many`, `uncovered` triggers `Q-uncovered-files`, `outputs` routes Wave 4 failures, and `state.json` drives the previous-run check and process cleanup. Agents receive single slices of them by id. `changes.md`, `feedback-<n>.md` and `report.md` hold the user's wording and the human-facing report, so they stay Markdown.
-- **Read JSON with `scripts/read-slice.js`, never `jq`.** `jq` may not be installed on Windows. Read only the rows you need, by id:
+- **Read JSON with `scripts/read-json-rows.js`, never `jq`.** `jq` may not be installed on Windows. Read only the rows you need, by id:
 
   ```bash
-  node .claude/skills/bake-in-template/scripts/read-slice.js <SCRATCH_DIR>/api-map.json calls A1 A2
+  node .claude/skills/bake-in-template/scripts/read-json-rows.js <SCRATCH_DIR>/api-map.json calls A1 A2
   ```
 
-  `read-slice.js` reads rows that have an `id`. To read one top-level field that isn't a row array (e.g. `source-index.json` `config`), a short read-only `node -e` is fine: `node -e "console.log(JSON.stringify(require('./<file>').config, null, 2))"`.
+  `read-json-rows.js` reads rows that have an `id`. To read one top-level field that isn't a row array (e.g. `source-index.json` `config`), a short read-only `node -e` is fine: `node -e "console.log(JSON.stringify(require('./<file>').config, null, 2))"`.
 - **Return the envelope, never file contents.** Bulk data stays in files.
 - **Staging.** A translator in mode `2b` or `fix` writes only into `SCRATCH_DIR/staging/<rowId>/`, which mirrors `TARGET_PATH` (`template/`, `components/`, `hooks/`); a `shared-helper` row stages its repo-relative path instead (`staging/<rowId>/packages/helpers/…`). After Wave 2a, only the orchestrator writes into `TARGET_PATH` and `packages/helpers/`, except `test-wirer`, which writes `TARGET_PATH/test/` and `packages/helpers/test/` in Wave 3.
 - **Paths inside JSON** use forward slashes. They are relative to `SCRATCH_DIR` (`golden/<fixture>/src/index.js`), to `SCRATCH_DIR/source` (`template/src/index.js`, `filters/index.js`), or to the repo root when they start with `packages/`, `apps/`, `node_modules/` or `temp/`. A `node_modules/` path always means the repo's root `node_modules`; write files under `SCRATCH_DIR/source/node_modules` or `SCRATCH_DIR/oldgen/node_modules` with their full `temp/bake-in-template/…` path.
 - **Scripts.** Every script a step runs is bundled in [scripts/](scripts/). Run it with `node` from the repo root, exactly as the step gives it; never copy it into `SCRATCH_DIR` or rewrite it. If you write a one-off script of your own (e.g. a translator's render check), write it with the Write tool into `SCRATCH_DIR/tmp/<agent>[-<rowId or n>]/`, never through a Bash heredoc or a long `node -e`: the shell layer can drop backslashes. Never put it in the `SCRATCH_DIR` root or in `staging/`.
-- **Cleanup.** Delete what you created for yourself before you return, with `node .claude/skills/bake-in-template/scripts/clean.js <path>...` (never `rm -rf` or `Remove-Item`). Your `tmp/` folder always goes; the files the handoff table or your instructions name stay, because the orchestrator reads them. SKILL.md "Cleanup" lists what the orchestrator deletes and when.
+- **Cleanup.** Delete what you created for yourself before you return, with `node .claude/skills/bake-in-template/scripts/delete-temp-files.js <path>...` (never `rm -rf` or `Remove-Item`). Your `tmp/` folder always goes; the files the handoff table or your instructions name stay, because the orchestrator reads them. SKILL.md "Cleanup" lists what the orchestrator deletes and when.
 
 ## Agent return envelope
 
@@ -46,7 +46,7 @@ This file defines what passes between the orchestrator ([SKILL.md](SKILL.md)) an
 
 ## `source-index.json`
 
-The orchestrator writes it with `scan.js` (SKILL.md precondition 5). The examples in this file all describe the hypothetical Nunjucks HTTP server from SKILL.md's run-variable table. Excerpt:
+The orchestrator writes it with `scan-source-template.js` (SKILL.md precondition 5). The examples in this file all describe the hypothetical Nunjucks HTTP server from SKILL.md's run-variable table. Excerpt:
 
 ```json
 {
@@ -97,7 +97,7 @@ The orchestrator writes it with `scan.js` (SKILL.md precondition 5). The example
 
 | Field | Meaning |
 |---|---|
-| `engine` | `ENGINE`, as passed to `scan.js`: `nunjucks` or `react` |
+| `engine` | `ENGINE`, as passed to `scan-source-template.js`: `nunjucks` or `react` |
 | `config` | the source generator config, verbatim (`.ageneratorrc` wins over `package.json` `generator`) |
 | `apiVersion` | `config.apiVersion`, or `none` |
 | `detectedProtocol` | the protocol folder for `config.supportedProtocols[0]`, or `null` when the config declares none. A known alias maps to the repo's folder (`ws`, `wss` → `websocket`; `kafka-secure` → `kafka`; `mqtts`, `secure-mqtt` → `mqtt`; `amqps` → `amqp`; `https` → `http`); any other protocol keeps its name, lowercased |
@@ -292,7 +292,7 @@ Written by `smoke-runner`.
   "adjustments": [{ "file": "<config file>", "change": "port: 80 → port: 49152", "reason": "port 80 needs elevated rights" }],
   "placeholders": { "PORT": "49152", "HOST": "localhost", "RUN_DIR": "<repo abs>/temp/bake-in-template/<SOURCE_NAME>/runs/run-1" },
   "pid": 12345,
-  "commandLine": "node .claude/skills/bake-in-template/scripts/launch.js … npm start",
+  "commandLine": "node .claude/skills/bake-in-template/scripts/start-generated-project.js … npm start",
   "url": "http://localhost:49152",
   "startedCleanly": true,
   "running": true,
@@ -304,7 +304,7 @@ Written by `smoke-runner`.
 }
 ```
 
-`commandLine` is the string read from the live process right after the start, trimmed of surrounding whitespace, so a later PID check can compare it (also trimmed). The example abbreviates it: on Windows it is the full quoted form, e.g. `"C:\Program Files\nodejs\node.exe" "<repo abs>\.claude\skills\bake-in-template\scripts\launch.js" "…\runs\run-1" … "npm" "start"`. `pid` is the `launch.js` wrapper, which exits when the command does. `log` holds the whole log when it has 80 lines or fewer; it includes the install output. `running` is `false` once `smoke-runner` stopped the process itself (unclean start or failed verification).
+`commandLine` is the string read from the live process right after the start, trimmed of surrounding whitespace, so a later PID check can compare it (also trimmed). The example abbreviates it: on Windows it is the full quoted form, e.g. `"C:\Program Files\nodejs\node.exe" "<repo abs>\.claude\skills\bake-in-template\scripts\start-generated-project.js" "…\runs\run-1" … "npm" "start"`. `pid` is the `start-generated-project.js` wrapper, which exits when the command does. `log` holds the whole log when it has 80 lines or fewer; it includes the install output. `running` is `false` once `smoke-runner` stopped the process itself (unclean start or failed verification).
 
 ## `state.json`
 
@@ -319,7 +319,7 @@ Written by the orchestrator after every wave and every question.
   "questions": [{ "id": "Q-role", "question": "Is the generated project a server or a client? The README says: …", "answer": "server", "at": "<ISO timestamp>" }],
   "iterations": 0,
   "gateAttempts": { "build": 0, "templateLint": 0, "suiteLint": 0, "importGate": 0, "templateTest": 0, "helpers": 0, "suiteTest": 0 },
-  "runningPids": [{ "pid": 12345, "commandLine": "node .claude/skills/bake-in-template/scripts/launch.js … npm start" }]
+  "runningPids": [{ "pid": 12345, "commandLine": "node .claude/skills/bake-in-template/scripts/start-generated-project.js … npm start" }]
 }
 ```
 

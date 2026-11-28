@@ -1,7 +1,7 @@
 // Usage (run from the repo root):
-//   node .claude/skills/bake-in-template/scripts/clean.js <path>...                 deletes each path
-//   node .claude/skills/bake-in-template/scripts/clean.js --keep <dir> <name>...    deletes everything in <dir> except the named entries
-//   node .claude/skills/bake-in-template/scripts/clean.js --test-output <TARGET_PATH>  deletes <TARGET_PATH>/test/temp (gitignored test output)
+//   node .claude/skills/bake-in-template/scripts/delete-temp-files.js <path>...                 deletes each path
+//   node .claude/skills/bake-in-template/scripts/delete-temp-files.js --keep <dir> <name>...    deletes everything in <dir> except the named entries
+//   node .claude/skills/bake-in-template/scripts/delete-temp-files.js --test-output <TARGET_PATH>  deletes <TARGET_PATH>/test/temp (gitignored test output)
 // The first two forms delete only under temp/bake-in-template/, and refuse anything else. --test-output deletes
 // only a test/temp folder under packages/templates/.
 // Prints each deleted path, and `missing:` for a path that doesn't exist (e.g. an unexpanded glob); exits 1 if any

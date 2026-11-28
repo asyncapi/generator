@@ -17,19 +17,19 @@ From the spawn prompt:
    ```
    The adjustments define the placeholders: `{PORT}` (the port in use), `{HOST}` (`localhost` unless the config says otherwise), and `{RUN_DIR}` (the absolute `run-<n>` path, written with forward slashes, e.g. `C:/GS/…/run-1`: Bash drops the backslashes of a Windows path, and a file check such as `test ! -f` then passes against a path that never exists).
 3. **Install.** Run `npm install --ignore-scripts --no-audit --no-fund` in `run-<n>`, or the stack's equivalent named in the generated README. If `run-<n>` has no `package.json` and the README names no equivalent, skip this step: `npm install` would walk up to the repo root's `package.json` and reinstall the whole workspace. Append its output to `RUNS_DIR/run-<n>.log`. A failed install is a failed run: nothing was started, so go to step 8 with `pid: null`, `startedCleanly: false` and `running: false`.
-4. **Start in the background** through `scripts/launch.js`. It starts `RUN_COMMAND` through the shell in the run directory, appends stdout to the log file and stderr to the error file, writes the command's PID to `<exit>.child`, and writes `{code, signal}` to the exit file when the command exits. On Linux and macOS it puts the command in its own process group, so `kill -- -<childPid>` stops all of it. Use absolute paths for every argument. The log, error and exit files are `RUNS_DIR/run-<n>.log`, `RUNS_DIR/run-<n>.err.log` and `RUNS_DIR/run-<n>.exit`: beside the run directory, not inside it, so they never mix with the generated files and outlive the project when the orchestrator deletes `run-<n>/`.
+4. **Start in the background** through `scripts/start-generated-project.js`. It starts `RUN_COMMAND` through the shell in the run directory, appends stdout to the log file and stderr to the error file, writes the command's PID to `<exit>.child`, and writes `{code, signal}` to the exit file when the command exits. On Linux and macOS it puts the command in its own process group, so `kill -- -<childPid>` stops all of it. Use absolute paths for every argument. The log, error and exit files are `RUNS_DIR/run-<n>.log`, `RUNS_DIR/run-<n>.err.log` and `RUNS_DIR/run-<n>.exit`: beside the run directory, not inside it, so they never mix with the generated files and outlive the project when the orchestrator deletes `run-<n>/`.
    - Windows (PowerShell tool):
      ```powershell
-     $p = Start-Process -FilePath node -ArgumentList "`"<repo abs>\.claude\skills\bake-in-template\scripts\launch.js`"","`"<run dir>`"","`"<log>`"","`"<err>`"","`"<exit>`"",<RUN_COMMAND words, each quoted> -PassThru -WindowStyle Hidden; $p.Id
+     $p = Start-Process -FilePath node -ArgumentList "`"<repo abs>\.claude\skills\bake-in-template\scripts\start-generated-project.js`"","`"<run dir>`"","`"<log>`"","`"<err>`"","`"<exit>`"",<RUN_COMMAND words, each quoted> -PassThru -WindowStyle Hidden; $p.Id
      ```
    - elsewhere:
      ```bash
-     nohup node .claude/skills/bake-in-template/scripts/launch.js "<run dir>" "<log>" "<err>" "<exit>" <RUN_COMMAND> >/dev/null 2>&1 & echo $!
+     nohup node .claude/skills/bake-in-template/scripts/start-generated-project.js "<run dir>" "<log>" "<err>" "<exit>" <RUN_COMMAND> >/dev/null 2>&1 & echo $!
      ```
-   Record the PID. Read its live command line right away (Windows: `(Get-CimInstance Win32_Process -Filter 'ProcessId=<pid>').CommandLine`; elsewhere: `ps -o args= -p <pid>`) and record it, trimmed of surrounding whitespace, as `commandLine`. The orchestrator compares against it before any stop. The PID is the `launch.js` wrapper; it exits when the command does, so it stands for the whole tree.
+   Record the PID. Read its live command line right away (Windows: `(Get-CimInstance Win32_Process -Filter 'ProcessId=<pid>').CommandLine`; elsewhere: `ps -o args= -p <pid>`) and record it, trimmed of surrounding whitespace, as `commandLine`. The orchestrator compares against it before any stop. The PID is the `start-generated-project.js` wrapper; it exits when the command does, so it stands for the whole tree.
 5. **Clean start?** Wait 10 seconds (`node -e "setTimeout(()=>{},10000)"`), then run:
    ```bash
-   node .claude/skills/bake-in-template/scripts/start-check.js <exit> <err>
+   node .claude/skills/bake-in-template/scripts/check-clean-start.js <exit> <err>
    ```
    It prints `{"exited","exitCode","errorLines","ignoredLines"}`. `errorLines` are the stderr lines that count as error output; `ignoredLines` are npm `warn`/`notice` lines and Node deprecation or experimental warnings, which don't. A clean start is either:
    - **long-running:** not `exited`, the PID still alive (Windows: `Get-Process -Id <pid>`; elsewhere: `kill -0 <pid>`), and `errorLines` empty; or
@@ -46,5 +46,5 @@ From the spawn prompt:
 ## Rules
 
 - **Stop processes by their recorded PID only.** Never by image name (`taskkill /IM node.exe`, `pkill node`): that kills unrelated Node processes on the user's machine.
-- Write only under `RUNS_DIR/run-<n>/` and `RUNS_DIR/run-<n>.*`. A throwaway script of your own goes in `SCRATCH_DIR/tmp/smoke-runner-<n>/`; delete it with `node .claude/skills/bake-in-template/scripts/clean.js <SCRATCH_DIR>/tmp/smoke-runner-<n>` before you return.
+- Write only under `RUNS_DIR/run-<n>/` and `RUNS_DIR/run-<n>.*`. A throwaway script of your own goes in `SCRATCH_DIR/tmp/smoke-runner-<n>/`; delete it with `node .claude/skills/bake-in-template/scripts/delete-temp-files.js <SCRATCH_DIR>/tmp/smoke-runner-<n>` before you return.
 - Don't fix the project. A failure goes into `run-<n>.json`, and the orchestrator routes it to the translator that owns the file.

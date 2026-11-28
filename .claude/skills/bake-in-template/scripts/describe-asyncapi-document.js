@@ -1,4 +1,4 @@
-// Usage: node .claude/skills/bake-in-template/scripts/fixture-info.js <asyncapiFile>...  → one JSON line per file
+// Usage: node .claude/skills/bake-in-template/scripts/describe-asyncapi-document.js <asyncapiFile>...  → one JSON line per file
 // Parses like the generator does for apiVersion v3 templates (schema parsers included, e.g. Avro).
 const fs = require('fs');
 const path = require('path');

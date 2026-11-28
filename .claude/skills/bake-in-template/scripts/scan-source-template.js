@@ -1,5 +1,5 @@
 // Usage (from the repo root):
-//   node .claude/skills/bake-in-template/scripts/scan.js <SCRATCH_DIR> <ENGINE>
+//   node .claude/skills/bake-in-template/scripts/scan-source-template.js <SCRATCH_DIR> <ENGINE>
 //
 // <ENGINE> is nunjucks or react, as Wave 0 step 3 decided it. The config alone can't tell
 // when `renderer` isn't set, so the scan never guesses it.
@@ -13,13 +13,13 @@ const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
 const yaml = require('js-yaml');
-const { hasReactLogic } = require('./has-logic');
+const { hasReactLogic } = require('./detect-component-logic');
 
 const scratchDir = path.resolve(process.argv[2]);
 const sourceDir = path.join(scratchDir, 'source');
 const engine = process.argv[3];
 if (engine !== 'nunjucks' && engine !== 'react') {
-  console.error('Usage: node scan.js <SCRATCH_DIR> <nunjucks|react>');
+  console.error('Usage: node scan-source-template.js <SCRATCH_DIR> <nunjucks|react>');
   process.exit(1);
 }
 
